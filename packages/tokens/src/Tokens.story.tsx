@@ -31,28 +31,17 @@ const gutter = css`
   margin-left: ${spacing[3]}px;
 `;
 
-const colors = [
-  '#fb4949',
-  '#497ffb',
-  '#62e3fd',
-  '#52c825',
-  '#fdd063',
-  '#fd7fec',
-  '#a5fd8b',
-];
-
-const spacingBlockVariants = Object.keys(spacing).reduce(
-  (acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
+const spacingBlockVariants = Object.keys(spacing)
+  .filter(num => Number(num) === 0 || Number(num) > 25)
+  .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
     const key = index as PropertyKey as keyof typeof spacing;
     acc[key] = css`
-      background-color: ${colors[idx]};
+      background-color: ${palette.purple.light2};
       width: ${spacing[key]}px;
       height: ${spacing[key]}px;
     `;
     return acc;
-  },
-  {},
-);
+  }, {});
 
 function SpacingBlock({ space }: { space: keyof typeof spacing }) {
   return (
@@ -71,14 +60,18 @@ export const Spacing = () => (
     <div
       className={css`
         display: flex;
+        flex-direction: column;
+        gap: ${spacing[100]}px;
       `}
     >
-      {Object.keys(spacing).map(space => (
-        <SpacingBlock
-          space={space as PropertyKey as keyof typeof spacing}
-          key={space}
-        />
-      ))}
+      {Object.keys(spacing)
+        .filter(num => Number(num) === 0 || Number(num) > 25)
+        .map(space => (
+          <SpacingBlock
+            space={space as PropertyKey as keyof typeof spacing}
+            key={space}
+          />
+        ))}
     </div>
   </div>
 );

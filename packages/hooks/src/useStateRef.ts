@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  *
@@ -17,14 +17,17 @@ export function useStateRef<T extends any>(
   const [state, _setState] = useState<T>(initial);
   const ref = useRef<T>(state);
 
-  function setState(newVal: T): void {
-    _setState(newVal);
-    ref.current = newVal;
-  }
+  const setState = useCallback(
+    (newVal: T): void => {
+      _setState(newVal);
+      ref.current = newVal;
+    },
+    [_setState],
+  );
 
-  function getState(): T {
+  const getState = useCallback((): T => {
     return ref.current;
-  }
+  }, []);
 
   return [state, setState, getState];
 }

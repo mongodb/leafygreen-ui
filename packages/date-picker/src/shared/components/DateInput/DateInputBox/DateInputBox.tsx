@@ -1,6 +1,6 @@
 import React, { FocusEventHandler, useEffect } from 'react';
-import { isNull } from 'lodash';
 import isEqual from 'lodash/isEqual';
+import isNull from 'lodash/isNull';
 
 import {
   isDateObject,
@@ -147,6 +147,7 @@ export const DateInputBox = React.forwardRef<HTMLDivElement, DateInputBoxProps>(
           if (nextSegmentName) {
             const nextSegmentRef = segmentRefs[nextSegmentName];
             nextSegmentRef?.current?.focus();
+            nextSegmentRef?.current?.select();
           }
         }
 

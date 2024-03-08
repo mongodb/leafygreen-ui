@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from 'react';
-import { isNull, isUndefined } from 'lodash';
+import isNull from 'lodash/isNull';
+import isUndefined from 'lodash/isUndefined';
 
 import { DateType, isSameUTCDay, isValidDate } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';

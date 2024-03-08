@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 11.29.0
+
+### Minor Changes
+
+- 8142d306: Adds 'Collections', 'InternalEmployee', 'Primary', 'Recommended', 'SearchIndex', and 'Secondary' glyphs to set. Also updates 'Dashboard' glyph.
+
+## 11.28.0
+
+### Minor Changes
+
+- e6c70b73: Adds `'HorizontalDrag'` glyph to Icon set
+
 ## 11.27.1
 
 ### Patch Changes

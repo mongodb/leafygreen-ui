@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { getPackageManager, SupportedPackageManager } from '@lg-tools/meta';
 import chalk from 'chalk';
 import { spawn } from 'cross-spawn';
 import path from 'path';
@@ -6,18 +7,29 @@ import path from 'path';
 import { findDirectory } from './findDirectory';
 import { PackageDetails } from './types';
 
+interface CreateLinkOptions extends PackageDetails {
+  verbose?: boolean;
+  packageManager?: SupportedPackageManager;
+}
+
 /**
  * Runs the yarn link command in a leafygreen-ui package directory
  * @returns Promise that resolves when the yarn link command has finished
  */
 export function createLinkFrom(
-  source: string,
-  { scopeName, scopePath, packageName }: PackageDetails,
-  verbose?: boolean,
+  source: string = process.cwd(),
+  {
+    scopeName,
+    scopePath,
+    packageName,
+    packageManager,
+    verbose,
+  }: CreateLinkOptions,
 ): Promise<void> {
   const scopeSrc = scopePath;
   return new Promise<void>(resolve => {
-    const packagesDirectory = findDirectory(process.cwd(), scopeSrc);
+    const packagesDirectory = findDirectory(source, scopeSrc);
+    packageManager = packageManager ?? getPackageManager(source);
 
     if (packagesDirectory) {
       verbose &&
@@ -25,7 +37,8 @@ export function createLinkFrom(
           'Creating link for:',
           chalk.green(`${scopeName}/${packageName}`),
         );
-      spawn('yarn', ['link'], {
+
+      spawn(packageManager, ['link'], {
         cwd: path.join(packagesDirectory, packageName),
         stdio: verbose ? 'inherit' : 'ignore',
       })

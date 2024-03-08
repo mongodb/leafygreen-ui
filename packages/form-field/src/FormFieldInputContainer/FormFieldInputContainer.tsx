@@ -69,7 +69,7 @@ export const FormFieldInputContainer = forwardRef<
         )}
       >
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
-        <div className={iconsWrapperStyles(size)}>
+        <div className={iconsWrapperStyles}>
           {state === FormFieldState.Valid && !disabled && (
             <Icon
               role="presentation"

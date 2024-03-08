@@ -1,5 +1,27 @@
 # @lg-tools/storybook
 
+## 0.3.5
+
+### Patch Changes
+
+- fbc2b7c8: Upgrades Storybook packages to v7.6.17
+- Updated dependencies [fbc2b7c8]
+- Updated dependencies [3208b813]
+  - @lg-tools/storybook-decorators@0.2.5
+  - @leafygreen-ui/tokens@2.5.0
+
+## 0.3.4
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @lg-tools/storybook-decorators@0.2.4
+  - @leafygreen-ui/lib@13.2.1
+  - @lg-tools/build@0.3.2
+  - @leafygreen-ui/tokens@2.3.0
+
 ## 0.3.3
 
 ### Patch Changes

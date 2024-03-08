@@ -120,10 +120,18 @@ export const renderDatePicker = (
     const rightChevron =
       withinElement(menuContainerEl)?.queryByLabelText('Next month') ||
       withinElement(menuContainerEl)?.queryByLabelText('Next valid month');
-    const monthSelect =
-      withinElement(menuContainerEl)?.queryByLabelText('Select month');
-    const yearSelect =
-      withinElement(menuContainerEl)?.queryByLabelText('Select year');
+    const monthSelect = withinElement(menuContainerEl)?.queryByLabelText(
+      'Select month',
+      {
+        exact: false,
+      },
+    );
+    const yearSelect = withinElement(menuContainerEl)?.queryByLabelText(
+      'Select year',
+      {
+        exact: false,
+      },
+    );
 
     const queryCellByDate = (date: Date): HTMLTableCellElement | null => {
       const cell = calendarGrid?.querySelector(
@@ -191,7 +199,20 @@ export const expectedTabStopLabels = {
     'input > open menu button',
     'none',
   ],
-  open: [
+  openENUSFormat: [
+    'none',
+    'input > month',
+    'input > day',
+    'input > year',
+    'input > open menu button',
+    'menu > today cell',
+    'menu > left chevron',
+    'menu > month select',
+    'menu > year select',
+    'menu > right chevron',
+    'menu > today cell',
+  ],
+  openISOFormat: [
     'none',
     'input > year',
     'input > month',
@@ -199,8 +220,8 @@ export const expectedTabStopLabels = {
     'input > open menu button',
     'menu > today cell',
     'menu > left chevron',
-    'menu > month select',
     'menu > year select',
+    'menu > month select',
     'menu > right chevron',
     'menu > today cell',
   ],

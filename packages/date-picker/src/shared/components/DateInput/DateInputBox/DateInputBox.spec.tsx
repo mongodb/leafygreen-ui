@@ -66,8 +66,8 @@ describe('packages/date-picker/shared/date-input-box', () => {
   describe('Rendering', () => {
     describe.each(['day', 'month', 'year'])('%p', segment => {
       test('renders the correct aria attributes', () => {
-        const result = renderDateInputBox();
-        const input = result.getByLabelText(segment);
+        const { getByLabelText } = renderDateInputBox();
+        const input = getByLabelText(segment);
 
         // each segment has appropriate aria label
         expect(input).toHaveAttribute('aria-label', segment);
@@ -76,24 +76,30 @@ describe('packages/date-picker/shared/date-input-box', () => {
 
     describe('renders segments in the correct order', () => {
       test('iso8601', () => {
-        const result = renderDateInputBox(undefined, { locale: 'iso8601' });
-        const segments = result.getAllByRole('spinbutton');
+        const { getAllByRole } = renderDateInputBox(undefined, {
+          locale: 'iso8601',
+        });
+        const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'year');
         expect(segments[1]).toHaveAttribute('aria-label', 'month');
         expect(segments[2]).toHaveAttribute('aria-label', 'day');
       });
 
       test('en-US', () => {
-        const result = renderDateInputBox(undefined, { locale: 'en-US' });
-        const segments = result.getAllByRole('spinbutton');
+        const { getAllByRole } = renderDateInputBox(undefined, {
+          locale: 'en-US',
+        });
+        const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'month');
         expect(segments[1]).toHaveAttribute('aria-label', 'day');
         expect(segments[2]).toHaveAttribute('aria-label', 'year');
       });
 
       test('en-UK', () => {
-        const result = renderDateInputBox(undefined, { locale: 'en-UK' });
-        const segments = result.getAllByRole('spinbutton');
+        const { getAllByRole } = renderDateInputBox(undefined, {
+          locale: 'en-UK',
+        });
+        const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'day');
         expect(segments[1]).toHaveAttribute('aria-label', 'month');
         expect(segments[2]).toHaveAttribute('aria-label', 'year');
@@ -208,18 +214,18 @@ describe('packages/date-picker/shared/date-input-box', () => {
         expect(dayInput.value).toBe('02');
       });
 
-      test('backspace deletes characters', () => {
+      test('backspace resets the input', () => {
         const { dayInput, yearInput } = renderDateInputBox(
           { value: null },
           testContext,
         );
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
-        expect(dayInput.value).toBe('2');
+        expect(dayInput.value).toBe('');
 
         userEvent.type(yearInput, '1993');
         userEvent.type(yearInput, '{backspace}');
-        expect(yearInput.value).toBe('199');
+        expect(yearInput.value).toBe('');
       });
 
       test('segment change handler is called when typing into a segment', () => {
@@ -249,17 +255,19 @@ describe('packages/date-picker/shared/date-input-box', () => {
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
         expect(onSegmentChange).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '2' }),
+          expect.objectContaining({ value: '' }),
         );
       });
 
-      test('value setter is not called when deleting from a single segment', () => {
+      test('value setter is called when pressing backspace in a single segment', () => {
         const setValue = jest.fn();
 
         const { dayInput } = renderDateInputBox({ setValue }, testContext);
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
-        expect(setValue).not.toHaveBeenCalled();
+        expect(setValue).toHaveBeenCalledWith(
+          expect.objectContaining({ value: null }),
+        );
       });
     });
 
@@ -307,11 +315,11 @@ describe('packages/date-picker/shared/date-input-box', () => {
           },
           testContext,
         );
-        userEvent.type(dayInput, '{backspace}5');
+        userEvent.type(dayInput, '{backspace}');
         expect(setValue).toHaveBeenCalledWith(
-          expect.objectContaining(newUTC(1993, Month.December, 25)),
+          expect.objectContaining(new Date('invalid')),
         );
-        expect(dayInput).toHaveValue('25');
+        expect(dayInput).toHaveValue('');
       });
 
       test('value setter is _not_ called when new input is ambiguous', () => {
@@ -324,8 +332,8 @@ describe('packages/date-picker/shared/date-input-box', () => {
           testContext,
         );
         userEvent.type(dayInput, '{backspace}');
-        expect(setValue).not.toHaveBeenCalled();
-        expect(dayInput).toHaveValue('2');
+        expect(setValue).toHaveBeenCalled();
+        expect(dayInput).toHaveValue('');
       });
 
       test('value setter is called when the input is cleared', () => {

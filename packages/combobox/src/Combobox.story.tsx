@@ -99,6 +99,7 @@ const meta: StoryMetaType<typeof Combobox> = {
     label: { control: 'text' },
     description: { control: 'text' },
     placeholder: { control: 'text' },
+    inputValue: { control: 'text' },
     size: {
       options: Object.values(ComboboxSize),
       control: 'select',

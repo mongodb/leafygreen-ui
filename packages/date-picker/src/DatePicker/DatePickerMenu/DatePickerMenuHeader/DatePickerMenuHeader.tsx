@@ -1,28 +1,21 @@
-import React, { forwardRef, MouseEventHandler, useCallback } from 'react';
-import range from 'lodash/range';
+import React, { forwardRef, MouseEventHandler } from 'react';
 
-import {
-  getLocaleMonths,
-  isSameUTCMonth,
-  setUTCMonth,
-  setUTCYear,
-} from '@leafygreen-ui/date-utils';
-import { cx } from '@leafygreen-ui/emotion';
+import { isSameUTCMonth, setUTCMonth } from '@leafygreen-ui/date-utils';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { Option, Select } from '@leafygreen-ui/select';
 
-import { selectElementProps } from '../../../shared/constants';
 import { useSharedDatePickerContext } from '../../../shared/context';
 import { useDatePickerContext } from '../../DatePickerContext';
 import {
   menuHeaderSelectContainerStyles,
   menuHeaderStyles,
-  selectInputWidthStyles,
-  selectTruncateStyles,
 } from '../DatePickerMenu.styles';
+import {
+  DatePickerMenuSelectMonth,
+  DatePickerMenuSelectYear,
+} from '../DatePickerMenuSelect';
 
-import { shouldChevronBeDisabled, shouldMonthBeEnabled } from './utils';
+import { shouldChevronBeDisabled } from './utils';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
@@ -37,18 +30,16 @@ export const DatePickerMenuHeader = forwardRef<
   HTMLDivElement,
   DatePickerMenuHeaderProps
 >(({ setMonth, ...rest }: DatePickerMenuHeaderProps, fwdRef) => {
-  const { min, max, setIsSelectOpen, locale, isInRange } =
-    useSharedDatePickerContext();
+  const { min, max, isInRange, locale } = useSharedDatePickerContext();
   const { refs, month } = useDatePickerContext();
-
-  const monthOptions = getLocaleMonths(locale);
-  const yearOptions = range(min.getUTCFullYear(), max.getUTCFullYear() + 1);
 
   const updateMonth = (newMonth: Date) => {
     // We don't do any checks here.
     // If the month is out of range, we still display it
     setMonth(newMonth);
   };
+
+  const isIsoFormat = locale === 'iso8601';
 
   /**
    * If the month is not in range and is not the last valid month
@@ -61,7 +52,7 @@ export const DatePickerMenuHeader = forwardRef<
    * min: new Date(Date.UTC(2038, Month.March, 19));
    * current month date: new Date(Date.UTC(2038, Month.March, 18));
    */
-  const isMonthInValid = (dir: 'left' | 'right') => {
+  const isMonthInvalid = (dir: 'left' | 'right') => {
     const isOnLastValidMonth = isSameUTCMonth(
       month,
       dir === 'left' ? max : min,
@@ -88,7 +79,7 @@ export const DatePickerMenuHeader = forwardRef<
       // min: new Date(Date.UTC(1970, Month.January, 1));
       // current month date: new Date(Date.UTC(1969, Month.November, 19));
       // right chevron will change the month back to January 1970
-      if (isMonthInValid(dir)) {
+      if (isMonthInvalid(dir)) {
         const closestValidDate = dir === 'left' ? max : min;
         const newMonthIndex = closestValidDate.getUTCMonth();
         const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
@@ -101,19 +92,12 @@ export const DatePickerMenuHeader = forwardRef<
       }
     };
 
-  /** Returns whether the provided month should be enabled */
-  const isMonthEnabled = useCallback(
-    (monthName: string) =>
-      shouldMonthBeEnabled(monthName, { month, min, max, locale }),
-    [locale, max, min, month],
-  );
-
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
         ref={refs.chevronButtonRefs.left}
         aria-label={
-          isMonthInValid('left') ? 'Previous valid month' : 'Previous month'
+          isMonthInvalid('left') ? 'Previous valid month' : 'Previous month'
         }
         disabled={shouldChevronBeDisabled('left', month, min)}
         onClick={handleChevronClick('left')}
@@ -121,53 +105,21 @@ export const DatePickerMenuHeader = forwardRef<
         <Icon glyph="ChevronLeft" />
       </IconButton>
       <div className={menuHeaderSelectContainerStyles}>
-        <Select
-          {...selectElementProps}
-          aria-label="Select month"
-          value={month.getUTCMonth().toString()}
-          onChange={m => {
-            const newMonth = setUTCMonth(month, Number(m));
-            updateMonth(newMonth);
-          }}
-          className={cx(selectTruncateStyles, selectInputWidthStyles)}
-          onEntered={() => setIsSelectOpen(true)}
-          onExited={() => setIsSelectOpen(false)}
-          placeholder={monthOptions[month.getUTCMonth()].short}
-        >
-          {monthOptions.map((m, i) => (
-            <Option
-              disabled={!isMonthEnabled(m.long)}
-              value={i.toString()}
-              key={m.short}
-              aria-label={m.long}
-            >
-              {m.short}
-            </Option>
-          ))}
-        </Select>
-        <Select
-          {...selectElementProps}
-          aria-label="Select year"
-          value={month.getUTCFullYear().toString()}
-          onChange={y => {
-            const newMonth = setUTCYear(month, Number(y));
-            updateMonth(newMonth);
-          }}
-          className={cx(selectTruncateStyles, selectInputWidthStyles)}
-          onEntered={() => setIsSelectOpen(true)}
-          onExited={() => setIsSelectOpen(false)}
-          placeholder={month.getUTCFullYear().toString()}
-        >
-          {yearOptions.map(y => (
-            <Option value={y.toString()} key={y} aria-label={y.toString()}>
-              {y}
-            </Option>
-          ))}
-        </Select>
+        {isIsoFormat ? (
+          <>
+            <DatePickerMenuSelectYear updateMonth={updateMonth} />
+            <DatePickerMenuSelectMonth updateMonth={updateMonth} />
+          </>
+        ) : (
+          <>
+            <DatePickerMenuSelectMonth updateMonth={updateMonth} />
+            <DatePickerMenuSelectYear updateMonth={updateMonth} />
+          </>
+        )}
       </div>
       <IconButton
         ref={refs.chevronButtonRefs.right}
-        aria-label={isMonthInValid('right') ? 'Next valid month' : 'Next month'}
+        aria-label={isMonthInvalid('right') ? 'Next valid month' : 'Next month'}
         disabled={shouldChevronBeDisabled('right', month, max)}
         onClick={handleChevronClick('right')}
       >

@@ -1,5 +1,21 @@
 # @lg-tools/test
 
+## 0.4.2
+
+### Patch Changes
+
+- ee6ad399: Updates default jest config path to reference the correct file (in `node_modules`)
+
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [2bceccb1]
+- Updated dependencies [90bba7b2]
+  - @leafygreen-ui/testing-lib@0.4.1
+  - @lg-tools/build@0.3.2
+  - @lg-tools/meta@0.3.0
+
 ## 0.4.0
 
 ### Minor Changes

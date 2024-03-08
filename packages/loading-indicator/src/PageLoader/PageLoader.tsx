@@ -6,6 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { lottieRendererSettings } from '../constants';
 import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
@@ -27,7 +28,13 @@ const PageLoader = ({
 
   return (
     <div className={cx(rootStyles, className)} {...rest}>
-      <Lottie play loop animationData={animationJson} style={blobStyles} />
+      <Lottie
+        play
+        loop
+        animationData={animationJson}
+        style={blobStyles}
+        rendererSettings={lottieRendererSettings}
+      />
       {description && (
         <Body
           className={descriptionThemeColor[theme]}
