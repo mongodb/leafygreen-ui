@@ -3,7 +3,7 @@
  * @param query string
  * @returns `Element` | `null`
  */
-export const getByQuerySelector = <T extends Element>(
+export const findByQuerySelector = <T extends Element>(
   element: HTMLElement,
   query: string,
 ): T | null => {

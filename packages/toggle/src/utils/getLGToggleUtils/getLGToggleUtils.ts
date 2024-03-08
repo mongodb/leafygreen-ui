@@ -15,18 +15,14 @@ export const getLGToggleUtils = (
    * Returns the disabled attribute on the input.
    */
   const isInputDisabled = () => {
-    return (
-      (element as HTMLButtonElement).getAttribute('aria-disabled') === 'true'
-    );
+    return element.getAttribute('aria-disabled') === 'true';
   };
 
   /**
    * Returns the value for the aria-checked attribute on the input.
    */
   const inputValue = () => {
-    return (element as HTMLButtonElement).getAttribute(
-      'aria-checked',
-    ) as string;
+    return element.getAttribute('aria-checked') as string;
   };
 
   return {
