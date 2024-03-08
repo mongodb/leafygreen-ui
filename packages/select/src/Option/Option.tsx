@@ -139,6 +139,7 @@ export function InternalOption({
       disabled={disabled}
       role="option"
       tabIndex={-1}
+      as="li"
       ref={ref}
       className={cx(
         OptionClassName,

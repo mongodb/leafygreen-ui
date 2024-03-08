@@ -17,6 +17,7 @@ export const EmptyOption = () => {
       aria-label="No results found"
       isInteractive={false}
       className={cx(emptyOptionStyles, emptyOptionThemeStyles[theme])}
+      as="li"
     >
       <span>No results found</span>
     </InputOption>

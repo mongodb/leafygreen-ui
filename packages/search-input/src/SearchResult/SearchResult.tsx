@@ -4,7 +4,10 @@ import { cx } from '@leafygreen-ui/emotion';
 import { InputOption } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import {
   descriptionClassName,
@@ -18,17 +21,10 @@ import { SearchResultProps } from './SearchResult.types';
 
 export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
   (
-    {
-      as = 'li' as PolymorphicAs,
-      children,
-      description,
-      disabled,
-      className,
-      darkMode,
-      ...rest
-    },
+    { children, description, disabled, className, darkMode, as, ...rest },
     ref,
   ) => {
+    const { Component: renderedAs } = useInferredPolymorphic(as, rest, 'li');
     const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
     /**
@@ -42,7 +38,7 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
     return (
       <InputOption
         {...rest}
-        as={as}
+        as={renderedAs}
         ref={ref}
         className={cx(
           searchResultStyles,

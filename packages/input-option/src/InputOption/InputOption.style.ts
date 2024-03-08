@@ -8,12 +8,22 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { RenderedContext, State } from './InputOption.types';
+import { contextColors, hoverColors } from './themes';
+import { ActionType } from '.';
+
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
   'input-option-description',
 );
+export const leftGlyphClassName = createUniqueClassName(
+  'input-option-left-glyph',
+);
 
-export const inputOptionStyles = css`
+const hoverSelector = '&:hover, &[data-hover="true"]';
+const focusSelector = '&:focus, &:focus-visible, &[data-focus="true"]';
+
+export const baseStyles = css`
   position: relative;
   list-style: none;
   outline: none;
@@ -30,42 +40,11 @@ export const inputOptionStyles = css`
 
   transition: background-color ${transitionDuration.default}ms ease-in-out;
 
-  &:focus,
-  &:focus-visible {
+  ${focusSelector} {
     outline: none;
     border: unset;
   }
 `;
-
-export const titleSelectionStyles = css`
-  .${titleClassName} {
-    font-weight: bold;
-  }
-`;
-
-export const inputOptionThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light2};
-  `,
-};
-
-export const inputOptionHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:hover {
-      outline: none;
-      background-color: ${palette.gray.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    &:hover {
-      outline: none;
-      background-color: ${palette.gray.dark4};
-    }
-  `,
-};
 
 /** in px */
 const wedgeWidth = spacing[1];
@@ -91,60 +70,81 @@ export const inputOptionWedge = css`
   }
 `;
 
-export const inputOptionActiveStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+export const disabledStyles = css`
+  cursor: not-allowed;
+
+  &:before {
+    content: unset;
+  }
+`;
+
+export const wedgeActiveStyles = css`
+  &:before {
+    transform: scaleY(1) translateY(-50%);
+  }
+`;
+
+export const menuWedgeStyles = (checked?: boolean) => css`
+  &:before {
+    background-color: ${checked ? palette.green.base : palette.blue.light1};
+  }
+`;
+
+export const formWedgeStyles = (darkMode?: boolean) => css`
+  &:before {
+    background-color: ${darkMode ? palette.blue.light1 : palette.blue.base};
+  }
+`;
+
+export const getContextStyles = (
+  renderedContext: RenderedContext,
+  state: State,
+  theme: Theme,
+) => css`
+  background-color: ${contextColors[renderedContext][theme][state].bgColor};
+
+  &,
+  & .${leftGlyphClassName} {
+    color: ${contextColors[renderedContext][theme][state].leftGlyph};
+  }
+
+  .${titleClassName} {
+    color: ${contextColors[renderedContext][theme][state].title};
+    font-weight: normal;
+  }
+
+  &,
+  & .${descriptionClassName} {
+    color: ${contextColors[renderedContext][theme][state].description};
+  }
+`;
+
+export const getHoverStyles = (
+  renderedContext: RenderedContext,
+  theme: Theme,
+) => css`
+  ${hoverSelector} {
     outline: none;
-    background-color: ${palette.blue.light3};
-    color: ${palette.blue.dark2};
-
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.base};
-    }
-  `,
-  [Theme.Dark]: css`
-    outline: none;
-    background-color: ${palette.blue.dark3};
-    color: ${palette.blue.light3};
-
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.light1};
-    }
-  `,
-};
-
-export const inputOptionDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
+    background-color: ${hoverColors[renderedContext][theme].bgColor};
 
     &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.light1};
+    & .${leftGlyphClassName} {
+      color: ${hoverColors[renderedContext][theme].leftGlyph};
     }
+  }
+`;
 
-    &:hover {
-      background-color: inherit;
-    }
+export const menuTitleStyles = (actionType: ActionType) => css`
+  &,
+  & .${titleClassName} {
+    color: ${actionType === ActionType.Destructive
+      ? palette.red.light2
+      : palette.white};
+  }
+`;
 
-    &:before {
-      content: unset;
-    }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-
-    &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.dark1};
-    }
-
-    &:hover {
-      background-color: inherit;
-    }
-
-    &:before {
-      content: unset;
-    }
-  `,
-};
+export const boldTitleStyles = css`
+  .${titleClassName} {
+    font-weight: bold;
+  }
+`;

@@ -13,7 +13,12 @@ import {
   InputOptionContentProps,
 } from '../InputOptionContent';
 
-import { InputOption, type InputOptionProps } from '.';
+import {
+  ActionType,
+  InputOption,
+  type InputOptionProps,
+  RenderedContext,
+} from '.';
 
 const meta: StoryMetaType<typeof InputOption> = {
   title: 'Components/InputOption',
@@ -31,26 +36,36 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
-      combineArgs: {
-        darkMode: [false, true],
-        selected: [false, true],
-        isInteractive: [false, true],
-        showWedge: [false, true],
-        disabled: [false, true],
+      storyNames: ['FormElement', 'Menu'],
+      args: {
+        showWedge: true,
       },
+      combineArgs: {
+        disabled: [false, true],
+        highlighted: [false, true],
+        checked: [false, true],
+        darkMode: [false, true],
+        'data-hover': [false, true],
+        'data-focus': [false, true],
+      },
+      decorator: (Instance, context) => (
+        <Instance>
+          <InputOptionContent
+            description="Description"
+            leftGlyph={<Icon glyph="Cloud" />}
+            rightGlyph={<Icon glyph="ChevronDown" />}
+          >
+            Title
+          </InputOptionContent>
+        </Instance>
+      ),
     },
-  },
-  args: {
-    children: 'Some text',
   },
   argTypes: {
     disabled: {
       control: 'boolean',
     },
     highlighted: {
-      control: 'boolean',
-    },
-    selected: {
       control: 'boolean',
     },
     showWedge: {
@@ -67,6 +82,9 @@ const meta: StoryMetaType<typeof InputOption> = {
     description: {
       control: { type: 'text' },
     },
+    renderedContext: {
+      control: 'none',
+    },
     as: storybookArgTypes.as,
   },
 };
@@ -76,23 +94,70 @@ export default meta;
 export const LiveExample: StoryFn<
   InputOptionProps & InputOptionContentProps
 > = (props: InputOptionProps & InputOptionContentProps) => {
-  const { leftGlyph, rightGlyph, description, ...rest } = props;
+  const { leftGlyph, rightGlyph, description, renderedContext, ...rest } =
+    props;
   return (
-    <InputOption {...rest}>
-      <InputOptionContent
-        leftGlyph={leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined}
-        rightGlyph={
-          rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
-        }
-        description={description}
-      >
-        Some text
-      </InputOptionContent>
-    </InputOption>
+    <div style={{ display: 'flex', gap: '16px' }}>
+      <div>
+        <pre>Form</pre>
+        <InputOption
+          {...rest}
+          renderedContext={RenderedContext.Form}
+          actionType="default" // input options in forms can only be default
+        >
+          <InputOptionContent
+            leftGlyph={
+              leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined
+            }
+            rightGlyph={
+              rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+            }
+            description={description}
+          >
+            Some text
+          </InputOptionContent>
+        </InputOption>
+      </div>
+      <div>
+        <pre>Menu</pre>
+        <InputOption {...rest} renderedContext={RenderedContext.Menu}>
+          <InputOptionContent
+            leftGlyph={
+              leftGlyph ? <Icon glyph={leftGlyph as string} /> : undefined
+            }
+            rightGlyph={
+              rightGlyph ? <Icon glyph={rightGlyph as string} /> : undefined
+            }
+            description={description}
+          >
+            Some text
+          </InputOptionContent>
+        </InputOption>
+      </div>
+    </div>
   );
 };
 LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const Generated = () => {};
+export const FormElement = () => <></>;
+FormElement.parameters = {
+  generate: {
+    args: {
+      renderedContext: RenderedContext.Form,
+    },
+  },
+};
+
+export const Menu = () => <></>;
+Menu.parameters = {
+  generate: {
+    combineArgs: {
+      actionType: Object.values(ActionType),
+    },
+    args: {
+      renderedContext: RenderedContext.Menu,
+    },
+  },
+};

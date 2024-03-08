@@ -16,6 +16,7 @@ export const LoadingOption = () => {
       aria-label="Loading results"
       isInteractive={false}
       className={loadingOptionStyles}
+      as="li"
     >
       <RefreshIcon
         color={darkMode ? palette.blue.light1 : palette.blue.base}

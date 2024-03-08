@@ -3,13 +3,48 @@ import { PropsWithChildren } from 'react';
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
+const ActionType = {
+  Default: 'default',
+  Destructive: 'destructive',
+} as const;
+
+type ActionType = (typeof ActionType)[keyof typeof ActionType];
+
+export { ActionType };
+
+// InputOption components receive different styling and have different variants available to them
+// Therefore, we need to care about where the component is rendered to determine how to render the component appropriately.
+const RenderedContext = {
+  Form: 'form',
+  Menu: 'menu',
+} as const;
+
+type RenderedContext = (typeof RenderedContext)[keyof typeof RenderedContext];
+
+export { RenderedContext };
+
+const State = {
+  Default: 'default',
+  Hover: 'hover',
+  Highlight: 'highlight',
+  Disabled: 'disabled',
+  Checked: 'checked',
+  Destructive: 'destructive',
+} as const;
+
+type State = (typeof State)[keyof typeof State];
+
+export { State };
+
+export type FormState = Exclude<State, 'destructive'>;
+
 /**
  * TERMINOLOGY
  *
- * `focused`: The element is "focused" via keyboard navigation
- * (Does not mean `:focus`, since input options are not focused in this sense)
+ * `highlighted`: The element is aria-selected or "focused" via keyboard navigation
+ * (Does not mean `:focus`, since input options may not be focused in this sense)
  *
- * `active`: The element is selected, or otherwise active (including `:active`)
+ * `checked`: The element is selected, or otherwise active (including `:active`)
  */
 export interface BaseInputOptionProps {
   /**
@@ -26,9 +61,9 @@ export interface BaseInputOptionProps {
   highlighted?: boolean;
 
   /**
-   * Whether the component is selected, regardless of keyboard navigation
+   * Whether the component is checked, regardless of keyboard navigation
    */
-  selected?: boolean;
+  checked?: boolean;
 
   /**
    * Whether a wedge displays on the left side of the item
@@ -42,6 +77,17 @@ export interface BaseInputOptionProps {
    * @default true
    */
   isInteractive?: boolean;
+
+  /**
+   * Styles input based on intended action
+   * @default 'default'
+   */
+  actionType?: ActionType;
+
+  /**
+   * Determines how the items are styled
+   */
+  renderedContext?: RenderedContext;
 }
 
 export type InputOptionProps = AriaLabelProps &
