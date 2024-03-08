@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/form-field': patch
+'@lg-tools/test-harnesses': patch
 ---
 
 - Exports types for `FormElements` and `FormUtils`.
