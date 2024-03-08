@@ -16,6 +16,8 @@ export function usePortalContainer(
   //  - A component's initial hydrated render should match the server render
   const [container, setContainer] = React.useState<HTMLElement | undefined>();
 
+  // if a `portalRef` is passed to portal component, wait to set the portalReference
+  // until after the initial render
   useIsomorphicLayoutEffect(() => {
     if (customContainer) {
       if (portalRef) {
