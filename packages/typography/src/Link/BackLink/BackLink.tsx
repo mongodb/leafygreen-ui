@@ -14,9 +14,6 @@ import {
   linkModeStyles,
   linkScaleStyles,
   linkStyles,
-  overwriteDefaultStyles,
-  underlineModeStyles,
-  underlineStyles,
 } from '../shared.styles';
 
 import { backLinkBaseStyles } from './BackLink.styles';
@@ -42,7 +39,6 @@ const BackLink = InferredPolymorphic<BaseBackLinkProps, 'span'>(
       <Component
         className={cx(
           anchorClassName,
-          overwriteDefaultStyles,
           linkStyles,
           linkScaleStyles(baseFontSize),
           linkModeStyles[theme],
@@ -53,9 +49,8 @@ const BackLink = InferredPolymorphic<BaseBackLinkProps, 'span'>(
         {...rest}
       >
         <ArrowLeftIcon role="presentation" />
-        <span className={cx(underlineStyles, underlineModeStyles[theme])}>
-          {children}
-        </span>
+
+        {children}
       </Component>
     );
   },
