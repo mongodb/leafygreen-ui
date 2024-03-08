@@ -90,6 +90,7 @@ export const FormFieldInputContainer = forwardRef<
 
           {shouldRenderOptionalText && (
             <div
+              data-lgid="lg-form_field-optional"
               className={cx(
                 optionalTextBaseStyle,
                 optionalTextThemeStyle[theme],

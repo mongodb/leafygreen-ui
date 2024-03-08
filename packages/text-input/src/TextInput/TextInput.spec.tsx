@@ -29,7 +29,7 @@ function renderTextInput(props = {}) {
 
   const {
     elements: { getDescription, getErrorMessage, getInput, getLabel },
-    utils: { isDisabled, isError, isValid, inputValue },
+    utils: { isDisabled, isError, isValid, inputValue, isOptional },
   } = getLGTextInputUtils();
 
   const textInput = getInput();
@@ -52,6 +52,7 @@ function renderTextInput(props = {}) {
     isDisabled,
     isError,
     isValid,
+    isOptional,
     inputValue,
     rerenderTextInput,
   };
@@ -85,9 +86,19 @@ describe('packages/text-input', () => {
     ).toBe(true);
   });
 
-  test('renders "optional" text when the prop is set to true', () => {
-    const { getByText } = renderTextInput({ optional: true, ...defaultProps });
-    expect(getByText('Optional')).toBeVisible();
+  describe('optional', () => {
+    test('renders when the prop is set to true', () => {
+      const { isOptional } = renderTextInput({
+        optional: true,
+        ...defaultProps,
+      });
+      expect(isOptional()).toBe(true);
+    });
+
+    test('does not renders by default', () => {
+      const { isOptional } = renderTextInput({ ...defaultProps });
+      expect(isOptional()).toBe(false);
+    });
   });
 
   test('renders type as "text" by default', () => {

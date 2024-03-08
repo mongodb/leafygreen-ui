@@ -86,6 +86,18 @@ export const getLGTextInputUtils = (
     return !!warningIcon;
   };
 
+  /**
+   * Queries the `element` for the warning Icon.
+   */
+  const isOptional = () => {
+    const optionalEl = getByQuerySelector<SVGElement>(
+      element,
+      '[data-lgid="lg-form_field-optional"]',
+    );
+
+    return !!optionalEl;
+  };
+
   return {
     elements: {
       getLabel: () => label,
@@ -98,6 +110,7 @@ export const getLGTextInputUtils = (
       isValid: () => isValid(),
       isError: () => isError(),
       inputValue: () => inputValue(),
+      isOptional: () => isOptional(),
     },
   };
 };
