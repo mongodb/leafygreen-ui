@@ -123,7 +123,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
         {...defaultAnchorProps}
         {...rest}
       >
-        {children}
+        <span>{children}</span>
 
         {icon}
       </Component>
