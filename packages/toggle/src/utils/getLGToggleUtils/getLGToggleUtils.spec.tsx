@@ -66,7 +66,6 @@ describe('packages/toggle', () => {
         render(<Toggle aria-label="Toggle who?" />);
 
         try {
-          // @ts-expect-error
           // eslint-disable-next-line
           const { elements } = getLGToggleUtils();
         } catch (error) {

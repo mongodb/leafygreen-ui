@@ -74,7 +74,6 @@ describe('packages/text-input', () => {
         render(<TextArea data-lgid="lg-text_output" label="hey" />);
 
         try {
-          // @ts-expect-error
           // eslint-disable-next-line
           const { elements } = getLGTextAreaUtils('lg-text_area');
         } catch (error) {
