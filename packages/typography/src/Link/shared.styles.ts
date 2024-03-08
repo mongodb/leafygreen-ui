@@ -23,8 +23,7 @@ export const linkStyles = css`
   line-height: inherit;
 
   &:hover,
-  &:focus,
-  &:visited {
+  &:focus {
     text-decoration: underline;
     transition: text-decoration ${transitionDuration.default}ms ease-in-out;
     text-underline-offset: 4px;
