@@ -694,6 +694,20 @@ describe('packages/tooltip', () => {
       });
     });
 
+    test('onMouseDown events should fire', async () => {
+      const mouseDownHandler = jest.fn();
+      const { trigger } = renderTooltipWithTrigger(
+        'hover',
+        <button onMouseDown={mouseDownHandler}>{buttonText}</button>,
+      );
+      act(() => {
+        fireEvent.mouseDown(trigger);
+      });
+      await waitFor(() => {
+        expect(mouseDownHandler).toHaveBeenCalled();
+      });
+    });
+
     test('"onClose" callback is triggered when the tooltip is closed internally', async () => {
       const onClose = jest.fn();
       const { getByTestId, button } = renderTooltip({

@@ -148,11 +148,15 @@ function Tooltip({
               userTriggerHandler('onMouseLeave', e);
               handleClose();
             }, 35),
-            onFocus: (e: MouseEvent) => {
+            onMouseDown: (e: MouseEvent) => {
+              e.preventDefault();
+              userTriggerHandler('onMouseDown', e);
+            },
+            onFocus: (e: FocusEvent) => {
               userTriggerHandler('onFocus', e);
               setOpen(true);
             },
-            onBlur: (e: MouseEvent) => {
+            onBlur: (e: FocusEvent) => {
               userTriggerHandler('onBlur', e);
               handleClose();
             },
@@ -170,7 +174,10 @@ function Tooltip({
           };
       }
 
-      function userTriggerHandler(handler: string, e: MouseEvent): void {
+      function userTriggerHandler(
+        handler: string,
+        e: MouseEvent | FocusEvent,
+      ): void {
         // call any click handlers already on the trigger
         if (
           triggerProps &&
