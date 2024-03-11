@@ -1,4 +1,4 @@
-import { findByQuerySelector, getByLgId } from '@lg-tools/test-harnesses';
+import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { LGTextAreaUtilsReturnType } from './getLGTextAreaUtils.types';
 
@@ -14,7 +14,7 @@ export const getLGTextAreaUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const label = findByQuerySelector<HTMLElement>(
+  const label = queryByQuerySelector<HTMLElement>(
     element,
     '[data-lgid="lg-text_area-label"]',
   );
@@ -22,7 +22,7 @@ export const getLGTextAreaUtils = (
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const description = findByQuerySelector<HTMLElement>(
+  const description = queryByQuerySelector<HTMLElement>(
     element,
     '[data-lgid="lg-text_area-description"]',
   );
@@ -30,7 +30,7 @@ export const getLGTextAreaUtils = (
   /**
    * Queries the `element` for the input element. Will return `null` if the input is not found.
    */
-  const input = findByQuerySelector<HTMLTextAreaElement>(
+  const input = queryByQuerySelector<HTMLTextAreaElement>(
     element,
     '[data-lgid="lg-text_area-input"]',
   ) as HTMLTextAreaElement;
@@ -38,7 +38,7 @@ export const getLGTextAreaUtils = (
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const errorMessage = findByQuerySelector<HTMLElement>(
+  const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
     '[data-lgid="lg-text_area-error_message"]',
   );
@@ -61,7 +61,7 @@ export const getLGTextAreaUtils = (
    * Queries the `element` for `aria-invalid`.
    */
   const isError = () => {
-    const ariaInvalid = findByQuerySelector<SVGElement>(
+    const ariaInvalid = queryByQuerySelector<SVGElement>(
       element,
       'textarea[aria-invalid="true"]',
     );

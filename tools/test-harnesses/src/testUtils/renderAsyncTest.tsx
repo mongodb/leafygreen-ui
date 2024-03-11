@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 
-export const renderAsyncTest = (element: React.ReactNode, render: any) => {
+interface RenderAsyncTestReturnType {
+  openButton: HTMLButtonElement;
+  asyncTestComponentId: string;
+  [key: string]: any;
+}
+
+export const renderAsyncTest = (
+  element: React.ReactNode,
+  render: any,
+): RenderAsyncTestReturnType => {
   const asyncTestComponentId = 'async-test-component';
 
   const AsyncTestWrapper = () => {
