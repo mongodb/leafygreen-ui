@@ -3,7 +3,6 @@ import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-// import Modal from '@leafygreen-ui/modal';
 import Toggle from '../../Toggle/Toggle';
 
 import { getLGToggleUtils } from './getLGToggleUtils';

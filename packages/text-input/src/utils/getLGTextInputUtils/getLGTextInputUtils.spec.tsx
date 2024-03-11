@@ -119,8 +119,8 @@ describe('packages/text-input', () => {
           utils: { inputValue },
         } = getLGTextInputUtils();
         const input = getInput();
-        userEvent.type(input, 'what rhymes with modal? xodal');
-        expect(inputValue()).toBe('what rhymes with modal? xodal');
+        userEvent.type(input, 'leafygreen');
+        expect(inputValue()).toBe('leafygreen');
       });
     });
   });

@@ -1,42 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import Modal, { ModalView } from '@leafygreen-ui/modal';
 
 import { TextArea } from '../../TextArea';
 
 import { getLGTextAreaUtils } from './getLGTextAreaUtils';
 
-const ModalWrapper = ({
-  open: initialOpen = false,
-  ...props
-}: Partial<React.ComponentProps<typeof ModalView>>) => {
-  const [open, setOpen] = useState(initialOpen);
-  const toggleModal = () => setOpen(o => !o);
-
-  return (
-    <>
-      <button data-testid="lg-modal-button" onClick={toggleModal}></button>
-      <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
-        <p>Inside Modal</p>
-        <TextArea label="textarea label" />
-      </Modal>
-    </>
-  );
-};
-
-function renderModalWithTextArea(
-  props: Partial<React.ComponentProps<typeof ModalView>> = {},
-) {
-  const renderModalUtils = render(<ModalWrapper {...props} />);
-  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
-
-  return {
-    ...renderModalUtils,
-    modalButton,
-  };
-}
+const renderTextAreaAsync = () =>
+  renderAsyncTest(<TextArea label="textarea label" />, render);
 
 function renderMultipleInputs() {
   render(
@@ -103,25 +75,26 @@ describe('packages/text-input', () => {
     });
 
     describe('LG Modal', () => {
-      test('find LG TextArea inside a LG Modal after awaiting modal', async () => {
-        const { modalButton, findByTestId } = renderModalWithTextArea();
+      test('find LG TextArea after awaiting an async component', async () => {
+        const { openButton, findByTestId, asyncTestComponentId } =
+          renderTextAreaAsync();
 
-        userEvent.click(modalButton);
+        userEvent.click(openButton);
 
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
+        const asyncComponent = await findByTestId(asyncTestComponentId);
+        expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting modal, look for text input
+        // After awaiting asyncComponent, look for text area
         const {
           elements: { getInput },
         } = getLGTextAreaUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG TextArea inside a LG Modal awaiting getLGTextAreaUtils', async () => {
-        const { modalButton } = renderModalWithTextArea();
+      test('find LG TextArea awaiting getLGTextAreaUtils', async () => {
+        const { openButton } = renderTextAreaAsync();
 
-        userEvent.click(modalButton);
+        userEvent.click(openButton);
 
         // awaiting getLGTextAreaUtils
         await waitFor(() => {
@@ -133,20 +106,21 @@ describe('packages/text-input', () => {
       });
 
       test('Updates the value inside a LG Modal', async () => {
-        const { modalButton, findByTestId } = renderModalWithTextArea();
+        const { openButton, findByTestId, asyncTestComponentId } =
+          renderTextAreaAsync();
 
-        userEvent.click(modalButton);
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
+        userEvent.click(openButton);
+        const asyncComponent = await findByTestId(asyncTestComponentId);
+        expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting modal, look for text input
+        // After awaiting asyncComponent, look for text area
         const {
           elements: { getInput },
           utils: { inputValue },
         } = getLGTextAreaUtils();
         const input = getInput();
-        userEvent.type(input, 'what rhymes with modal? xodal');
-        expect(inputValue()).toBe('what rhymes with modal? xodal');
+        userEvent.type(input, 'whats blue and not heavy? light blue');
+        expect(inputValue()).toBe('whats blue and not heavy? light blue');
       });
     });
   });
