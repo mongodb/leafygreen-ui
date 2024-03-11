@@ -86,20 +86,24 @@ Please reach out if you would like further guidance on how to programmatically a
 
 ## getLGToggleUtils()
 
-`getLGToggleUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite.
+`getLGToggleUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found an errror will be thrown.
 
 ### Usage
 
 ```tsx
-import { render } from '@testing-library/react';
 import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
 
 const { elements, utils } = getLGToggleUtils(lgId?: string); // lgId defaults to 'lg-toggle' if left empty
 ```
 
-#### Individual `Toggle`
+#### Single `Toggle`
 
 ```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+
+...
+
 test('toggle', () => {
   render(<Toggle aria-labelledby="label" />);
   const { elements, utils } = getLGToggleUtils();
@@ -112,6 +116,11 @@ test('toggle', () => {
 #### Multiple `Toggle`'s
 
 ```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+
+...
+
 test('toggle', () => {
   render(
     <>
@@ -134,4 +143,29 @@ test('toggle', () => {
 });
 ```
 
-### Methods
+### Utils
+
+#### Elements
+
+```tsx
+const {
+  elements: { getInput },
+} = getLGToggleUtils();
+```
+
+| Util       | Description            | Returns             |
+| ---------- | ---------------------- | ------------------- |
+| `getInput` | Returns the input node | `HTMLButtonElement` |
+
+#### Utils
+
+```tsx
+const {
+  utils: { isDisabled, inputValue },
+} = getLGToggleUtils();
+```
+
+| Util         | Description                           | Returns              |
+| ------------ | ------------------------------------- | -------------------- |
+| `isDisabled` | Returns whether the input is disabled | `boolean`            |
+| `inputValue` | Returns the input value               | `'true'`\| `'false'` |
