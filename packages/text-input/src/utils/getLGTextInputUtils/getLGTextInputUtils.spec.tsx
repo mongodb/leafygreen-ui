@@ -1,42 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-import Modal, { ModalView } from '@leafygreen-ui/modal';
 
 import TextInput from '../../TextInput';
 
 import { getLGTextInputUtils } from './getLGTextInputUtils';
 
-const ModalWrapper = ({
-  open: initialOpen = false,
-  ...props
-}: Partial<React.ComponentProps<typeof ModalView>>) => {
-  const [open, setOpen] = useState(initialOpen);
-  const toggleModal = () => setOpen(o => !o);
-
-  return (
-    <>
-      <button data-testid="lg-modal-button" onClick={toggleModal}></button>
-      <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
-        <p>Inside Modal</p>
-        <TextInput label="text input label" />
-      </Modal>
-    </>
-  );
-};
-
-function renderModalWithTextInput(
-  props: Partial<React.ComponentProps<typeof ModalView>> = {},
-) {
-  const renderModalUtils = render(<ModalWrapper {...props} />);
-  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
-
-  return {
-    ...renderModalUtils,
-    modalButton,
-  };
-}
+const renderTextInputAsync = () =>
+  renderAsyncTest(<TextInput label="text input label" />, render);
 
 function renderMultipleInputs() {
   render(
@@ -102,26 +74,27 @@ describe('packages/text-input', () => {
       });
     });
 
-    describe('LG Modal', () => {
-      test('find LG TextInput inside a LG Modal after awaiting modal', async () => {
-        const { modalButton, findByTestId } = renderModalWithTextInput();
+    describe('Async', () => {
+      test('find LG TextInput after awaiting async component', async () => {
+        const { openButton, findByTestId, asyncTestComponentId } =
+          renderTextInputAsync();
 
-        userEvent.click(modalButton);
+        userEvent.click(openButton);
 
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
+        const asyncComponent = await findByTestId(asyncTestComponentId);
+        expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting modal, look for text input
+        // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
         } = getLGTextInputUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG TextInput inside a LG Modal awaiting getLGTextInputUtils', async () => {
-        const { modalButton } = renderModalWithTextInput();
+      test('find LG TextInput awaiting getLGTextInputUtils', async () => {
+        const { openButton } = renderTextInputAsync();
 
-        userEvent.click(modalButton);
+        userEvent.click(openButton);
 
         // awaiting getLGTextInputUtils
         await waitFor(() => {
@@ -132,14 +105,15 @@ describe('packages/text-input', () => {
         });
       });
 
-      test('Updates the value inside a LG Modal', async () => {
-        const { modalButton, findByTestId } = renderModalWithTextInput();
+      test('Updates the value inside an async component', async () => {
+        const { openButton, findByTestId, asyncTestComponentId } =
+          renderTextInputAsync();
 
-        userEvent.click(modalButton);
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
+        userEvent.click(openButton);
+        const asyncComponent = await findByTestId(asyncTestComponentId);
+        expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting modal, look for text input
+        // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
           utils: { inputValue },

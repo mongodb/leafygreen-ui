@@ -86,7 +86,7 @@ Please reach out if you would like further guidance on how to programmatically a
 
 ## getLGToggleUtils()
 
-`getLGToggleUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found an errror will be thrown.
+`getLGToggleUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found, an errror will be thrown.
 
 ### Usage
 

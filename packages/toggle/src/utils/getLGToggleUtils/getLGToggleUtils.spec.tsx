@@ -1,42 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import Modal, { ModalView } from '@leafygreen-ui/modal';
-
+// import Modal from '@leafygreen-ui/modal';
 import Toggle from '../../Toggle/Toggle';
 
 import { getLGToggleUtils } from './getLGToggleUtils';
 
-const ModalWrapper = ({
-  open: initialOpen = false,
-  ...props
-}: Partial<React.ComponentProps<typeof ModalView>>) => {
-  const [open, setOpen] = useState(initialOpen);
-  const toggleModal = () => setOpen(o => !o);
-
-  return (
-    <>
-      <button data-testid="lg-modal-button" onClick={toggleModal}></button>
-      <Modal data-testid="lg-modal" {...props} open={open} setOpen={setOpen}>
-        <p>Inside Modal</p>
-        <Toggle aria-label="Toggle who?" data-lgid="lg-toggle-modal" />
-      </Modal>
-    </>
-  );
-};
-
-function renderModalWithToggle(
-  props: Partial<React.ComponentProps<typeof ModalView>> = {},
-) {
-  const renderModalUtils = render(<ModalWrapper {...props} />);
-  const modalButton = renderModalUtils.getByTestId('lg-modal-button');
-
-  return {
-    ...renderModalUtils,
-    modalButton,
-  };
-}
+const renderToggleAsync = () =>
+  renderAsyncTest(<Toggle aria-label="Toggle who?" />, render);
 
 function renderMultipleToggles() {
   render(
@@ -95,47 +68,49 @@ describe('packages/toggle', () => {
     });
 
     describe('LG Modal', () => {
-      test('find LG Toggle inside a LG Modal after awaiting modal', async () => {
-        const { modalButton, findByTestId } = renderModalWithToggle();
+      test('find LG Toggle after awaiting an async component', async () => {
+        const { openButton, findByTestId, asyncTestComponentId } =
+          renderToggleAsync();
 
-        userEvent.click(modalButton);
+        userEvent.click(openButton);
 
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
+        const asyncComponent = await findByTestId(asyncTestComponentId);
+        expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting modal, look for text input
+        // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
-        } = getLGToggleUtils('lg-toggle-modal');
+        } = getLGToggleUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG Toggle inside a LG Modal awaiting getLGToggleUtils', async () => {
-        const { modalButton } = renderModalWithToggle();
+      test('find LG Toggle after awaiting getLGToggleUtils', async () => {
+        const { openButton } = renderToggleAsync();
 
-        userEvent.click(modalButton);
+        userEvent.click(openButton);
 
         // awaiting getLGToggleUtils
         await waitFor(() => {
           const {
             elements: { getInput },
-          } = getLGToggleUtils('lg-toggle-modal');
+          } = getLGToggleUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
 
-      test('Updates the value inside a LG Modal', async () => {
-        const { modalButton, findByTestId } = renderModalWithToggle();
+      test('Updates the value inside an async component', async () => {
+        const { openButton, findByTestId, asyncTestComponentId } =
+          renderToggleAsync();
 
-        userEvent.click(modalButton);
-        const modal = await findByTestId('lg-modal');
-        expect(modal).toBeInTheDocument();
+        userEvent.click(openButton);
+        const asyncComponent = await findByTestId(asyncTestComponentId);
+        expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting modal, look for toggle
+        // After awaiting asyncComponent, look for toggle
         const {
           elements: { getInput },
           utils: { inputValue },
-        } = getLGToggleUtils('lg-toggle-modal');
+        } = getLGToggleUtils();
         const input = getInput();
         userEvent.click(input);
         expect(inputValue()).toBe('true');
