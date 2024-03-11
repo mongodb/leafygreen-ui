@@ -14,7 +14,7 @@
     "src/**/*",
     "../../typings"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../emotion"

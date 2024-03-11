@@ -1,5 +1,16 @@
 # @leafygreen-ui/number-input
 
+## 1.0.19
+
+### Patch Changes
+
+- e57c35c7: Fixes a bug where onBlur would not get invoked when arrow buttons were blurred.
+  [LG-3940](https://jira.mongodb.org/browse/LG-3940)
+- Updated dependencies [8142d306]
+- Updated dependencies [3208b813]
+  - @leafygreen-ui/icon@11.29.0
+  - @leafygreen-ui/tokens@2.5.0
+
 ## 1.0.18
 
 ### Patch Changes
