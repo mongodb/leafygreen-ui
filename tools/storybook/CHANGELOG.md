@@ -1,5 +1,15 @@
 # @lg-tools/storybook
 
+## 0.3.5
+
+### Patch Changes
+
+- fbc2b7c8: Upgrades Storybook packages to v7.6.17
+- Updated dependencies [fbc2b7c8]
+- Updated dependencies [3208b813]
+  - @lg-tools/storybook-decorators@0.2.5
+  - @leafygreen-ui/tokens@2.5.0
+
 ## 0.3.4
 
 ### Patch Changes

@@ -7,11 +7,11 @@ import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 import BasicEmptyStateStoryMeta, {
   WithActionsAndLink,
   WithSmallGraphic,
-} from './BasicEmptyState/BasicEmptyState.story';
+} from './BasicEmptyState/BasicEmptyState.stories';
 import FeaturesEmptyStateStoryMeta, {
   ThreeFeaturesWithSecondaryActionAndLink,
   TwoFeaturesWithSecondaryActionAndLink,
-} from './FeaturesEmptyState/FeaturesEmptyState.story';
+} from './FeaturesEmptyState/FeaturesEmptyState.stories';
 import {
   BasicEmptyState,
   type BasicEmptyStateProps,
