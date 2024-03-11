@@ -68,7 +68,7 @@ export const getLGTextInputUtils = (
   const isValid = () => {
     const checkmarkIcon = findByQuerySelector<SVGElement>(
       element,
-      'svg[aria-label="Checkmark Icon"]',
+      'svg[title="Valid"]',
     );
 
     return !!checkmarkIcon;
@@ -80,7 +80,7 @@ export const getLGTextInputUtils = (
   const isError = () => {
     const warningIcon = findByQuerySelector<SVGElement>(
       element,
-      'svg[aria-label="Warning Icon"]',
+      'svg[title="Error"]',
     );
 
     return !!warningIcon;
