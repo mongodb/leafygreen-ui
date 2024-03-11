@@ -2,7 +2,7 @@ import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
-import { LgIdProps } from './LgIdProps';
+import { type LgIdProps } from './LgIdProps';
 import getTheme from './getTheme';
 export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';

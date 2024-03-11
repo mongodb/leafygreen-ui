@@ -91,7 +91,7 @@ describe('packages/text-area', () => {
   });
 
   describe('when the "state" props is set to "none', () => {
-    test('valid/error icons are not present', () => {
+    test('error icon is not present', () => {
       const { isError } = renderTextArea();
       expect(isError()).toBe(false);
     });

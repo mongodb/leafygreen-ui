@@ -19,7 +19,10 @@ export const renderAsyncTest = (element: React.ReactNode, render: any) => {
 
     return (
       <>
-        <button data-testid="lg-modal-button" onClick={handleClick}></button>
+        <button
+          data-testid="test-component-button"
+          onClick={handleClick}
+        ></button>
         {open && (
           <div data-testid={asyncTestComponentId}>
             <>
@@ -33,7 +36,7 @@ export const renderAsyncTest = (element: React.ReactNode, render: any) => {
   };
 
   const renderUtils = render(<AsyncTestWrapper />);
-  const openButton = renderUtils.getByTestId('lg-modal-button');
+  const openButton = renderUtils.getByTestId('test-component-button');
 
   return {
     ...renderUtils,

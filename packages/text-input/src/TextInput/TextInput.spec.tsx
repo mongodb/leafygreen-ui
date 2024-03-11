@@ -113,14 +113,9 @@ describe('packages/text-input', () => {
     spy.mockClear();
   });
 
-  test('does not render "optional" text when the prop is set to false', () => {
-    const { container } = renderTextInput({ optional: false, ...defaultProps });
-    expect(container.innerHTML).not.toContain('Optional');
-  });
-
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
-      const { container, inputValue, isValid } = renderTextInput({
+      const { inputValue, isValid, isOptional } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         optional: true,
@@ -129,11 +124,11 @@ describe('packages/text-input', () => {
 
       expect(inputValue()).toBe(validEmail);
       expect(isValid()).toBe(true);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(isOptional()).toBe(false);
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { container, inputValue } = renderTextInput({
+      const { inputValue, isOptional } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         disabled: true,
@@ -141,7 +136,7 @@ describe('packages/text-input', () => {
       });
 
       expect(inputValue()).toBe(validEmail);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(isOptional()).toBe(false);
     });
   });
 
@@ -161,7 +156,7 @@ describe('packages/text-input', () => {
 
   describe('when the "state" is "error"', () => {
     test('displays warning icon when input is invalid', () => {
-      const { container, inputValue, isError } = renderTextInput({
+      const { isOptional, inputValue, isError } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
@@ -170,7 +165,7 @@ describe('packages/text-input', () => {
 
       expect(inputValue()).toBe(invalidEmail);
       expect(isError()).toBe(true);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(isOptional()).toBe(false);
     });
 
     test('renders empty error message container', () => {
