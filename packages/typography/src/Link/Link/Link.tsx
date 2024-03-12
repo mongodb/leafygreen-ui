@@ -17,9 +17,6 @@ import {
   linkModeStyles,
   linkScaleStyles,
   linkStyles,
-  overwriteDefaultStyles,
-  underlineModeStyles,
-  underlineStyles,
 } from '../shared.styles';
 
 import {
@@ -117,7 +114,6 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       <Component
         className={cx(
           anchorClassName,
-          overwriteDefaultStyles,
           linkStyles,
           linkScaleStyles(baseFontSize),
           linkModeStyles[theme],
@@ -127,9 +123,8 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
         {...defaultAnchorProps}
         {...rest}
       >
-        <span className={cx(underlineStyles, underlineModeStyles[theme])}>
-          {children}
-        </span>
+        <span>{children}</span>
+
         {icon}
       </Component>
     );
