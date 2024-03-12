@@ -1,12 +1,16 @@
 import React from 'react';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import ClipboardJS from 'clipboard';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import CopyButton from './CopyButton';
 import { CopyProps } from './CopyButton.types';
+
+jest.mock('clipboard');
 
 describe('CopyButton', () => {
   const contents = 'Lorem ipsum';
@@ -23,19 +27,49 @@ describe('CopyButton', () => {
     );
   };
 
-  describe('mouse events', () => {
-    test('invokes onCopy onClick', () => {
-      const onCopy = jest.fn();
-      const { getByTestId } = renderCopyButton({ onCopy });
-      const copyButton = getByTestId(testIds.copyButton);
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
 
-      fireEvent.click(copyButton);
-      expect(onCopy).toHaveBeenCalledTimes(1);
+  afterEach(() => {
+    jest.runOnlyPendingTimers();
+    jest.useRealTimers();
+  });
+
+  test(`tooltip displays "${COPY_TEXT}" text while trigger is hovered`, async () => {
+    const { getByTestId, queryByTestId } = renderCopyButton({});
+    const copyButton = getByTestId(testIds.copyButton);
+    let tooltip = queryByTestId(testIds.tooltip);
+
+    await waitFor(() => {
+      fireEvent.mouseEnter(copyButton);
+      tooltip = queryByTestId(testIds.tooltip);
+      expect(tooltip).toHaveTextContent(COPY_TEXT);
+    });
+  });
+
+  test(`tooltip displays "${COPIED_TEXT}" text for ${COPIED_SUCCESS_DURATION}ms after trigger is clicked`, async () => {
+    const { getByTestId, queryByTestId } = renderCopyButton({});
+    const copyButton = getByTestId(testIds.copyButton);
+    let tooltip = queryByTestId(testIds.tooltip);
+
+    await waitFor(() => {
+      userEvent.click(copyButton);
+      tooltip = queryByTestId(testIds.tooltip);
+      expect(tooltip).toHaveTextContent(COPIED_TEXT);
     });
 
+    jest.advanceTimersByTime(COPIED_SUCCESS_DURATION);
+
+    await waitFor(() => {
+      tooltip = queryByTestId(testIds.tooltip);
+      expect(tooltip).toHaveTextContent(COPY_TEXT);
+    });
+  });
+
+  describe('mouse events', () => {
     test('opens tooltip onMouseEnter and closes tooltip onMouseLeave', async () => {
-      const onCopy = jest.fn();
-      const { getByTestId, queryByTestId } = renderCopyButton({ onCopy });
+      const { getByTestId, queryByTestId } = renderCopyButton({});
       const copyButton = getByTestId(testIds.copyButton);
       let tooltip = queryByTestId(testIds.tooltip);
 
@@ -54,9 +88,21 @@ describe('CopyButton', () => {
       });
     });
 
-    test('closes tooltip when clicking out of focused button', async () => {
+    test('invokes onCopy and copies contents to clipboard onClick', () => {
       const onCopy = jest.fn();
-      const { queryByTestId } = renderCopyButton({ onCopy });
+      const { getByTestId } = renderCopyButton({ onCopy });
+      const copyButton = getByTestId(testIds.copyButton);
+
+      userEvent.click(copyButton);
+      expect(onCopy).toHaveBeenCalledTimes(1);
+      expect(ClipboardJS).toHaveBeenCalledWith(copyButton, {
+        text: expect.any(Function),
+        container: undefined,
+      });
+    });
+
+    test('closes tooltip when clicking out of focused button', async () => {
+      const { queryByTestId } = renderCopyButton({});
       let tooltip = queryByTestId(testIds.tooltip);
 
       expect(tooltip).toBeNull();
@@ -79,8 +125,7 @@ describe('CopyButton', () => {
     test.each([keyMap.Escape, keyMap.Tab])(
       'closes tooltip when %p is keyed down',
       async key => {
-        const onCopy = jest.fn();
-        const { getByTestId, queryByTestId } = renderCopyButton({ onCopy });
+        const { getByTestId, queryByTestId } = renderCopyButton({});
         const copyButton = getByTestId(testIds.copyButton);
         let tooltip = queryByTestId(testIds.tooltip);
 
@@ -120,6 +165,10 @@ describe('CopyButton', () => {
           fireEvent.keyDown(copyButton, { key });
           tooltip = queryByTestId(testIds.tooltip);
           expect(onCopy).toHaveBeenCalledTimes(1);
+          expect(ClipboardJS).toHaveBeenCalledWith(copyButton, {
+            text: expect.any(Function),
+            container: undefined,
+          });
           expect(tooltip).toBeInTheDocument();
         });
       },

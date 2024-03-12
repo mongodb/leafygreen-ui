@@ -14,11 +14,9 @@ import {
 import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
 
+import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { copiedThemeStyle, copyButtonThemeStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
-
-const COPY_TEXT = 'Copy';
-const COPIED_TEXT = 'Copied!';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
@@ -56,7 +54,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     if (copied) {
       const timeoutId = setTimeout(() => {
         setCopied(false);
-      }, 1500);
+      }, COPIED_SUCCESS_DURATION);
 
       return () => clearTimeout(timeoutId);
     }
