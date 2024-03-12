@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { StoryMetaType } from '@leafygreen-ui/lib';
-
 import { Avatar } from '@lg-chat/avatar';
 import { InputBar } from '@lg-chat/input-bar';
 import { Message } from '@lg-chat/message';
@@ -9,6 +7,7 @@ import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feed
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import { StoryFn } from '@storybook/react';
 
+import { StoryMetaType } from '@leafygreen-ui/lib';
 import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import baseMessages from './utils/baseMessages';

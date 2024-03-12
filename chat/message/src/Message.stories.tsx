@@ -5,9 +5,9 @@ import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feed
 import { StoryFn } from '@storybook/react';
 
 import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Message, MessageSourceType } from '.';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 
 const StoryMarkdown = `
 # Heading 1
