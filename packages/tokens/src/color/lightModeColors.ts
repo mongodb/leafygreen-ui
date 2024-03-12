@@ -1,10 +1,10 @@
 import { palette } from '@leafygreen-ui/palette';
 
-import { MapVariantsToStates, State, Type, Variant } from './color.types';
+import { State, Variant } from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
 
-const lightModeBackgroundColors: MapVariantsToStates = {
+const lightModeBackgroundColors = {
   [Variant.Primary]: {
     [State.Default]: white,
     [State.Hover]: gray.light2,
@@ -47,7 +47,7 @@ const lightModeBackgroundColors: MapVariantsToStates = {
   },
 };
 
-const lightModBorderColors: MapVariantsToStates = {
+const lightModBorderColors = {
   [Variant.Primary]: {
     [State.Default]: gray.base,
     [State.Hover]: gray.base,
@@ -75,7 +75,7 @@ const lightModBorderColors: MapVariantsToStates = {
   },
 };
 
-const lightModeIconColors: MapVariantsToStates = {
+const lightModeIconColors = {
   [Variant.Primary]: {
     [State.Default]: gray.dark1,
     [State.Hover]: black,
@@ -118,7 +118,7 @@ const lightModeIconColors: MapVariantsToStates = {
   },
 };
 
-export const lightModeTextColors: MapVariantsToStates = {
+export const lightModeTextColors = {
   [Variant.Primary]: {
     [State.Default]: black,
     [State.Hover]: black,
@@ -151,7 +151,7 @@ export const lightModeTextColors: MapVariantsToStates = {
   },
 };
 
-export const lightModeColors: Record<Type, MapVariantsToStates> = {
+export const lightModeColors = {
   background: lightModeBackgroundColors,
   border: lightModBorderColors,
   icon: lightModeIconColors,
