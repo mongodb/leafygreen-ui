@@ -1,0 +1,38 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+   "compilerOptions": {
+    "jsx": "react",
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../*/src"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "references": [
+    {
+      "path": "../avatar"
+    },
+    {
+      "path": "../input-bar"
+    },
+    {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
+      "path": "../message"
+    },
+    {
+      "path": "../message-feed"
+    },
+    {
+      "path": "../message-prompts"
+    }
+  ]
+}

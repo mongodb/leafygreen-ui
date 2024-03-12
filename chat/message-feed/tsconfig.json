@@ -1,0 +1,24 @@
+
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../avatar"
+    },
+    {
+      "path": "../message"
+    },
+    {
+      "path": "../message-feedback"
+    },
+    {
+      "path": "../message-prompts"
+    }
+  ]
+}

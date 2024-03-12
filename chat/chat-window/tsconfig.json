@@ -1,0 +1,33 @@
+
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../avatar"
+    },
+    {
+      "path": "../input-bar"
+    },
+    {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
+      "path": "../message"
+    },
+    {
+      "path": "../message-feed"
+    },
+    {
+      "path": "../message-prompts"
+    },
+    {
+      "path": "../title-bar"
+    }
+  ]
+}
