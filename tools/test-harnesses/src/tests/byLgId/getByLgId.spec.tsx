@@ -1,28 +1,31 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { queryByLgId } from '../utils/getQueries';
+import { getByLgId } from '../../utils/getQueries';
 
-describe('queryByLgId', () => {
+describe('getByLgId', () => {
   test('gets element with id', () => {
     render(<div data-lgid="testing-id">test 1</div>);
-    const element = queryByLgId('testing-id');
+    const element = getByLgId('testing-id');
     expect(element).toBeInTheDocument();
   });
 
-  test('clears the DOM', () => {
+  test('clears the DOM after a test', () => {
     expect(document.body).toBeEmptyDOMElement();
   });
 
-  test('returns null if the id does not exist', () => {
+  test('throws error if the id does not exist', () => {
     render(
       <>
         <div data-lgid="testing">test 2</div>
       </>,
     );
 
-    expect(queryByLgId('testing-id')).not.toBeInTheDocument();
-    expect(queryByLgId('testing-id')).toBeNull();
+    expect(() => {
+      getByLgId('incorrect-testing-id');
+    }).toThrow(
+      'Unable to find an element by: [data-lgid="incorrect-testing-id"]',
+    );
   });
 
   test('throws error if the id is found multiple times', () => {
@@ -34,7 +37,7 @@ describe('queryByLgId', () => {
     );
 
     expect(() => {
-      queryByLgId('testing-id');
+      getByLgId('testing-id');
     }).toThrow('Found multiple elements by: [data-lgid="testing-id"]');
   });
 });

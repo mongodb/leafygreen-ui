@@ -1,5 +1,5 @@
 /**
- * Copied from [dom-testing-library](https://github.com/testing-library/dom-testing-library/blob/bd04cf95a1ed85a2238f7dfc1a77d5d16b4f59dc/src/helpers.ts#L65)
+ * Copied from [dom-testing-library](https://github.com/testing-library/dom-testing-library/blob/bd04cf95a1ed85a2238f7dfc1a77d5d16b4f59dc/src/helpers.ts#L65) since this function is not exported.
  * @param container
  */
 

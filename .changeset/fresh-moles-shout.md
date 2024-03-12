@@ -1,5 +1,5 @@
 ---
-'@lg-tools/test-harness': major
+'@lg-tools/test-harnesses': minor
 ---
 
-First major release of `Test Harnesses`. This package provides several fundamental queries that will be utilized by every test harness we ship.
+Minor pre-release of `Test Harnesses`. This package provides several fundamental queries that are used by all component specific test harnesses.

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { findByLgId, getByLgId } from '../utils/getQueries';
+import { findByLgId, getByLgId } from '../../utils/getQueries';
 
 const TestComponent = () => {
   const [open, setOpen] = useState(false);
@@ -36,7 +36,7 @@ describe('findByLgId', () => {
     expect(element).toBeInTheDocument();
   });
 
-  test('clears the DOM', () => {
+  test('clears the DOM after a test', () => {
     expect(document.body).toBeEmptyDOMElement();
   });
 
@@ -47,8 +47,8 @@ describe('findByLgId', () => {
       </>,
     );
 
-    await expect(findByLgId('testing-id')).rejects.toThrow(
-      'Unable to find an element by: [data-lgid="testing-id"]',
+    await expect(findByLgId('incorrect-testing-id')).rejects.toThrow(
+      'Unable to find an element by: [data-lgid="incorrect-testing-id"]',
     );
   });
 
