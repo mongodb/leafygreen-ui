@@ -37,7 +37,7 @@ function helloWorld() {
 `;
 
 const meta = {
-  title: 'Components/LGMarkdown',
+  title: 'Chat/LGMarkdown',
   component: LGMarkdown,
   args: {
     children: StoryMarkdown,

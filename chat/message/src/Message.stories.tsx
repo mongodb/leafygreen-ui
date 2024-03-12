@@ -42,7 +42,7 @@ function helloWorld() {
 `;
 
 const meta: StoryMetaType<typeof Message> = {
-  title: 'Components/Message',
+  title: 'Chat/Message',
   component: Message,
   args: {
     message: StoryMarkdown,

@@ -11,7 +11,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { MessageRating, MessageRatingProps } from '.';
 
 export default {
-  title: 'Components/MessageRating',
+  title: 'Chat/MessageRating',
   component: MessageRating,
   args: {
     onChange: (e: ChangeEvent<HTMLInputElement>) => {

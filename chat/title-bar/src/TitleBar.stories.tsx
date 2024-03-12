@@ -6,7 +6,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { TitleBar } from '.';
 
 export default {
-  title: 'Components/TitleBar',
+  title: 'Chat/TitleBar',
   component: TitleBar,
   args: {
     title: 'LeafyGreen Chat',

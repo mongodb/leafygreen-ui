@@ -7,7 +7,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { PopoverMessageFeedback } from '.';
 
 export default {
-  title: 'Components/MessageFeedback/PopoverMessageFeedback',
+  title: 'Chat/MessageFeedback/PopoverMessageFeedback',
   component: PopoverMessageFeedback,
   args: {
     label: 'Provide additional feedback here. How can we improve?',

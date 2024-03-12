@@ -15,7 +15,7 @@ import baseMessages from './utils/baseMessages';
 import { ChatWindow } from '.';
 
 const meta: StoryMetaType<typeof ChatWindow> = {
-  title: 'Components/ChatWindow',
+  title: 'Chat/ChatWindow',
   component: ChatWindow,
   args: {
     title: 'LG Chat Demo',

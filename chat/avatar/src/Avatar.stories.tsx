@@ -7,7 +7,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { Avatar } from '.';
 
 export default {
-  title: 'Components/Avatar',
+  title: 'Chat/Avatar',
   component: Avatar,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

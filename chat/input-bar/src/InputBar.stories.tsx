@@ -7,7 +7,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { InputBar, InputBarProps, SuggestedPrompt, SuggestedPrompts } from '.';
 
 export default {
-  title: 'Components/InputBar',
+  title: 'Chat/InputBar',
   component: InputBar,
   args: {
     onMessageSend: (messageBody: string) => {

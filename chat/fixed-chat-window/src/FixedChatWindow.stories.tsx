@@ -15,7 +15,7 @@ import baseMessages from './utils/baseMessages';
 import { FixedChatWindow } from '.';
 
 const meta: StoryMetaType<typeof FixedChatWindow> = {
-  title: 'Components/FixedChatWindow',
+  title: 'Chat/FixedChatWindow',
   component: FixedChatWindow,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,

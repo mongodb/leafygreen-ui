@@ -13,7 +13,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { InlineMessageFeedback } from '.';
 
 export default {
-  title: 'Components/MessageFeedback/InlineMessageFeedback',
+  title: 'Chat/MessageFeedback/InlineMessageFeedback',
   component: InlineMessageFeedback,
   args: {
     label: 'What did you think?',

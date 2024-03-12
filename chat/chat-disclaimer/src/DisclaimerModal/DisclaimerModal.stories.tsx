@@ -19,7 +19,7 @@ import { Link } from '@leafygreen-ui/typography';
 import { DisclaimerModal } from '.';
 
 const meta = {
-  title: 'Components/Disclaimer/DisclaimerModal',
+  title: 'Chat/Disclaimer/DisclaimerModal',
   component: DisclaimerModal,
   // below is copied from MarketingModal; imports are not possible without a compilation of the story.tsx file
   args: {

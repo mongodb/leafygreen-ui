@@ -6,7 +6,7 @@ import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { MessagePrompt, MessagePrompts } from '.';
 
 export default {
-  title: 'Components/MessagePrompts',
+  title: 'Chat/MessagePrompts',
   component: MessagePrompts,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
