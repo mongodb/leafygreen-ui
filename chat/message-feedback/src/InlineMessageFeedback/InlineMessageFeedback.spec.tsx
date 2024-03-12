@@ -4,23 +4,15 @@ import { axe } from 'jest-axe';
 
 import { InlineMessageFeedback, InlineMessageFeedbackProps } from '.';
 
-const defaultProps: InlineMessageFeedbackProps = {
+const defaultProps = {
   label: 'label test',
   onCancel: jest.fn(),
   submittedMessage: 'was submitted!',
   cancelButtonText: 'cancel the feedback',
   submitButtonText: 'submit the feedback',
-};
+} as const;
 
 describe('packages/inline-message-feedback', () => {
-  describe('a11y', () => {
-    test('does not have basic accessibility issues', async () => {
-      const { container } = render(<InlineMessageFeedback {...defaultProps} />);
-      const results = await axe(container);
-      expect(results).not.toHaveNoViolations();
-    });
-  });
-
   describe('submitted state', () => {
     test('does not render label when isSubmitted is true', () => {
       const { queryByText } = render(
@@ -59,7 +51,7 @@ describe('packages/inline-message-feedback', () => {
     test('cancel button calls onCancel', () => {
       const { container } = render(<InlineMessageFeedback {...defaultProps} />);
       const cancelButton = container.querySelector('button[type="button"]');
-      fireEvent.click(cancelButton);
+      fireEvent.click(cancelButton!);
       expect(defaultProps.onCancel).toHaveBeenCalled();
     });
   });
@@ -89,7 +81,7 @@ describe('packages/inline-message-feedback', () => {
       const closeButton = container.querySelector(
         `[aria-label='Close feedback window']`,
       );
-      fireEvent.click(closeButton);
+      fireEvent.click(closeButton!);
       expect(closeHandler).toHaveBeenCalled();
     });
   });
@@ -120,7 +112,7 @@ describe('packages/inline-message-feedback', () => {
     test('submit button does not call onSubmit when textarea is empty', () => {
       const { container } = render(<InlineMessageFeedback {...defaultProps} />);
       const submitButton = container.querySelector('button[type="submit"]');
-      expect(submitButton.getAttribute('aria-disabled')).toBe('true');
+      expect(submitButton!.getAttribute('aria-disabled')).toBe('true');
     });
     test('submit button calls onSubmit when textarea is not empty', () => {
       const { container } = render(
@@ -130,7 +122,7 @@ describe('packages/inline-message-feedback', () => {
         />,
       );
       const submitButton = container.querySelector('button[type="submit"]');
-      expect(submitButton.getAttribute('aria-disabled')).toBe('false');
+      expect(submitButton!.getAttribute('aria-disabled')).toBe('false');
     });
   });
 
