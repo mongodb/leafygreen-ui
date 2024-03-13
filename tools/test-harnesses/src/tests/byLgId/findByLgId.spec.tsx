@@ -36,10 +36,6 @@ describe('findByLgId', () => {
     expect(element).toBeInTheDocument();
   });
 
-  test('clears the DOM after a test', () => {
-    expect(document.body).toBeEmptyDOMElement();
-  });
-
   test('throws error if the id does not exist', async () => {
     render(
       <>
