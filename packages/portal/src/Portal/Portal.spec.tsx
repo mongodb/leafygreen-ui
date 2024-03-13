@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { act } from 'react-dom/test-utils';
 import { cleanup, render } from '@testing-library/react';
 
@@ -21,6 +21,34 @@ describe('packages/Portal', () => {
 
     return el;
   }
+
+  test('should create and set a default container as portal ref if custom container is not provided', () => {
+    const portalRef = createRef<HTMLElement>();
+
+    render(
+      <div>
+        <Portal portalRef={portalRef}>Portal content</Portal>
+      </div>,
+    );
+
+    expect(portalRef.current).toBeDefined();
+    expect(portalRef.current).toBeInTheDocument();
+  });
+
+  test('should set custom container as portal ref if provided', () => {
+    const customContainer = document.createElement('div');
+    const portalRef = createRef<HTMLElement>();
+
+    render(
+      <div>
+        <Portal container={customContainer} portalRef={portalRef}>
+          Portal content
+        </Portal>
+      </div>,
+    );
+
+    expect(portalRef.current).toBe(customContainer);
+  });
 
   test(`appends portal content to document body`, () => {
     render(

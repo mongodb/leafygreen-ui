@@ -1,5 +1,15 @@
 # @leafygreen-ui/typography
 
+## 18.2.2
+
+### Patch Changes
+
+- 58f4a4c5: Updates how link underlines are styled, such that the text-decoration wraps when links break on new lines
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/icon@11.29.1
+
 ## 18.2.1
 
 ### Patch Changes
