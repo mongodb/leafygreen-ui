@@ -110,5 +110,5 @@
 // });
 
 test('it does', () => {
-  expect(true).toBeTrue();
+  expect(true).toBeTruthy();
 });
