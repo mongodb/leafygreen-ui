@@ -2,12 +2,11 @@ import { AST_NODE_TYPES, TSESTree } from '@typescript-eslint/utils';
 import upperFirst from 'lodash/upperFirst';
 
 import { createRule } from '../utils/createRule';
-// import { deepOmit } from '../utils/deepOmit';
 import { isTestFile } from '../utils/isTestFile';
 import { RuleContext } from '../utils/RuleContext';
 
 const VERBS = ['is', 'are', 'has', 'should', 'did', 'does', 'will', 'use'];
-const booleanComparators = ['===', '==', '>', '>=', '<', '<=', '!=', '!=='];
+const BOOLEAN_COMPARATORS = ['===', '==', '>', '>=', '<', '<=', '!=', '!=='];
 
 type BooleanVerbPrefixOptions = [
   {
@@ -78,7 +77,7 @@ export const booleanVerbPrefixRule = createRule<
 
             if (
               node.init.type === AST_NODE_TYPES.BinaryExpression &&
-              booleanComparators.includes(node.init.operator)
+              BOOLEAN_COMPARATORS.includes(node.init.operator)
             ) {
               lintBooleanDeclaration(context, node);
             }
