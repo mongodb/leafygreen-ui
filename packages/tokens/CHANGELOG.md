@@ -1,5 +1,12 @@
 # @leafygreen-ui/tokens
 
+## 2.5.1
+
+### Patch Changes
+
+- 5ee54143: Provides support for auto-complete by removing explicit type definitions and leveraging `as const`
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
 ## 2.5.0
 
 ### Minor Changes
