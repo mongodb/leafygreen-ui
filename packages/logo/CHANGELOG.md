@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 9.0.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
 ## 9.0.0
 
 ### Major Changes

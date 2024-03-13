@@ -1,5 +1,17 @@
 # @leafygreen-ui/checkbox
 
+## 12.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+
 ## 12.1.0
 
 ### Minor Changes

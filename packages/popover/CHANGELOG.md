@@ -1,5 +1,22 @@
 # @leafygreen-ui/popover
 
+## 11.3.0
+
+### Minor Changes
+
+- 8ad4fdbc: Manually forward `portalRef` to `Portal` component and expose `portalRef` in `Popover` component
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/portal@5.1.0
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+
 ## 11.2.2
 
 ### Patch Changes

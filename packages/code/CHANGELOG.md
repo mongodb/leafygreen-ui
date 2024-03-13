@@ -1,5 +1,19 @@
 # @leafygreen-ui/code
 
+## 14.2.19
+
+### Patch Changes
+
+- 12296e6c: Exports `Panel` component
+  [LG-4076](https://jira.mongodb.org/browse/LG-4076)
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/select@11.2.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
 ## 14.2.18
 
 ### Patch Changes
