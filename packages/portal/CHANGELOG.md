@@ -1,5 +1,17 @@
 # @leafygreen-ui/portal
 
+## 5.1.0
+
+### Minor Changes
+
+- 8ad4fdbc: Manually forward `portalRef` to `Portal` component and expose `portalRef` in `Popover` component
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/hooks@8.1.2
+
 ## 5.0.3
 
 ### Patch Changes
