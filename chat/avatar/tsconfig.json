@@ -38,7 +38,7 @@
     {
       "path": "../../packages/tokens"
     }, 
-    {
+      {
       "path": "../../packages/leafygreen-provider"
     }, 
   ]

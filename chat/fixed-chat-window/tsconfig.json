@@ -14,7 +14,13 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../../packages/button"
+    },
+    {
       "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/hooks"
     },
     {
       "path": "../../packages/icon"
@@ -23,13 +29,19 @@
       "path": "../../packages/leafygreen-provider"
     },
     {
+      "path": "../../packages/logo"
+    },
+    {
       "path": "../../packages/lib"
     },
     {
       "path": "../../packages/palette"
     },
     {
-      "path": "../../packages/popover"
+      "path": "../../packages/polymorphic"
+    },
+    {
+      "path": "../../packages/text-area"
     },
     {
       "path": "../../packages/tokens"
@@ -38,10 +50,13 @@
       "path": "../../packages/typography"
     },
     {
-      "path": "../chat-window"
+      "path": "../avatar"
+    },
+     {
+      "path": "../lg-markdown"
     },
     {
-      "path": "../title-bar"
+      "path": "../message-feedback"
     },
     {
       "path": "../../packages/leafygreen-provider"
