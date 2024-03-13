@@ -267,7 +267,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     const portalProps = {
       className: portalContainer ? undefined : portalClassName,
       container: portalContainer ?? undefined,
-      _ref: portalRef,
+      portalRef,
     };
     const rootProps = usePortal ? portalProps : {};
 

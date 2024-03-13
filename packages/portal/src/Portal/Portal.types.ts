@@ -4,7 +4,7 @@ import { OneOf } from '@leafygreen-ui/lib';
 
 export type PortalProps = {
   children?: React.ReactNode;
-  _ref?: React.MutableRefObject<HTMLElement | null>;
+  portalRef?: React.MutableRefObject<HTMLElement | null>;
 } & OneOf<
   {
     /**

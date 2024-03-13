@@ -27,11 +27,12 @@ describe('packages/Portal', () => {
 
     render(
       <div>
-        <Portal _ref={portalRef}>Portal content</Portal>
+        <Portal portalRef={portalRef}>Portal content</Portal>
       </div>,
     );
 
-    expect(portalRef.current).not.toBeNull();
+    expect(portalRef.current).toBeDefined();
+    expect(portalRef.current).toBeInTheDocument();
   });
 
   test('should set custom container as portal ref if provided', () => {
@@ -40,7 +41,7 @@ describe('packages/Portal', () => {
 
     render(
       <div>
-        <Portal container={customContainer} _ref={portalRef}>
+        <Portal container={customContainer} portalRef={portalRef}>
           Portal content
         </Portal>
       </div>,

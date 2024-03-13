@@ -55,15 +55,18 @@ describe('packages/popover', () => {
     expect(ref.current).toBeDefined();
   });
 
-  test('accepts a portalRef', () => {
+  test('accepts a portalRef', async () => {
     const portalRef = createRef<HTMLElement>();
-    render(
-      <Popover portalRef={portalRef} data-testid="popover-test-id">
-        Popover Content
-      </Popover>,
-    );
+    waitFor(() => {
+      render(
+        <Popover portalRef={portalRef} data-testid="popover-test-id">
+          Popover Content
+        </Popover>,
+      );
 
-    expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBeInTheDocument();
+    });
   });
 
   test('displays popover when the "active" prop is set', () => {

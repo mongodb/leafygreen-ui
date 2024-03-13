@@ -51,9 +51,9 @@ function Portal({
   children,
   className,
   container,
-  _ref,
+  portalRef,
 }: PortalProps): React.ReactPortal | null {
-  const portalContainer = usePortalContainer(container ?? undefined, _ref);
+  const portalContainer = usePortalContainer(container ?? undefined, portalRef);
 
   useIsomorphicLayoutEffect(() => {
     if (portalContainer && !container) {
