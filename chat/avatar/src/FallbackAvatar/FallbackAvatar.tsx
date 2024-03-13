@@ -1,7 +1,6 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-// @ts-expect-error Typescript imports of icons currently not supported
 import PersonIcon from '@leafygreen-ui/icon/dist/Person';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
@@ -36,7 +35,7 @@ export const FallbackAvatar = forwardRef(
         <PersonIcon
           className={iconStyles}
           fill={darkMode ? palette.gray.light1 : palette.white}
-          alt={name}
+          aria-label={name}
         />
       </AvatarWrapper>
     );

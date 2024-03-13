@@ -1,8 +1,7 @@
 import React, { createRef } from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { axe } from 'jest-axe';
 
-import { InlineMessageFeedback, InlineMessageFeedbackProps } from '.';
+import { InlineMessageFeedback } from '.';
 
 const defaultProps = {
   label: 'label test',

@@ -1,6 +1,5 @@
 import React from 'react';
 
-// @ts-expect-error Typescript imports of icons currently not supported
 import CheckmarkWithCircle from '@leafygreen-ui/icon/dist/CheckmarkWithCircle';
 import { palette } from '@leafygreen-ui/palette';
 import { Body } from '@leafygreen-ui/typography';

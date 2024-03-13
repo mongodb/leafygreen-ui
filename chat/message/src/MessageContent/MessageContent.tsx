@@ -10,7 +10,7 @@ export function MessageContent({
   markdownProps,
   ...rest
 }: MessageContentProps) {
-  let renderedChildren = null;
+  let renderedChildren: React.ReactNode | null = null;
 
   switch (sourceType) {
     // setting up a switch/case in anticipation of other sourceTypes being supported in the future

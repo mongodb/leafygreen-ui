@@ -4,12 +4,42 @@
   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src", 
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../../packages/*/src"]
+    }
   },
   "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../avatar",
-    }
+    }, 
+    {
+      "path": "../../packages/badge"
+    },
+    {
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/icon-button"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
+    },
   ]
 }

@@ -2,9 +2,7 @@ import React, { ForwardedRef, forwardRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
-// @ts-expect-error Typescript imports of icons currently not supported
 import ThumbsDown from '@leafygreen-ui/icon/dist/ThumbsDown';
-// @ts-expect-error Typescript imports of icons currently not supported
 import ThumbsUp from '@leafygreen-ui/icon/dist/ThumbsUp';
 import LeafyGreenProvider, {
   useDarkMode,

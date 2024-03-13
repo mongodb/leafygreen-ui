@@ -1,38 +1,47 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-   "compilerOptions": {
-    "jsx": "react",
+  "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDir": "src", 
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
+      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../../packages/*/src"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../avatar"
+      "path": "../../packages/emotion"
     },
     {
-      "path": "../input-bar"
+      "path": "../../packages/icon"
     },
     {
-      "path": "../leafygreen-chat-provider"
+      "path": "../../packages/leafygreen-provider"
     },
     {
-      "path": "../message"
+      "path": "../../packages/lib"
     },
     {
-      "path": "../message-feed"
+      "path": "../../packages/palette"
     },
     {
-      "path": "../message-prompts"
-    }
+      "path": "../../packages/popover"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
+    },
+    {
+      "path": "../chat-window"
+    },
+    {
+      "path": "../title-bar"
+    },
   ]
 }

@@ -10,7 +10,6 @@ import { TransitionChildren } from 'react-transition-group/Transition';
 import { ChatWindow } from '@lg-chat/chat-window';
 
 import { cx } from '@leafygreen-ui/emotion';
-// @ts-expect-error lg icons don't support TS at the moment
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import Popover from '@leafygreen-ui/popover';
 

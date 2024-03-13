@@ -3,7 +3,6 @@ import { Avatar } from '@lg-chat/avatar';
 
 import Badge from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';
-// @ts-expect-error Typescript imports of icons currently not supported
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
