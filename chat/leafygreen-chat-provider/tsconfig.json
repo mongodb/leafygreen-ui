@@ -8,5 +8,9 @@
     "baseUrl": ".",
   },
   "include": ["src/**/*"],
-  "references": []
+  "references": [
+    {
+      "path": "../../packages/leafygreen-provider"
+    }
+  ]
 }

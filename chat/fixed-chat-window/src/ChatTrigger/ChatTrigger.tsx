@@ -1,7 +1,6 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-// @ts-expect-error lg icons don't support TS at the moment
 import SparkleIcon from '@leafygreen-ui/icon/dist/Sparkle';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';

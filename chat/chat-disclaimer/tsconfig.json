@@ -27,6 +27,9 @@
     }, 
     {
       "path": "../../packages/typography"
-    }
+    }, 
+    {
+      "path": "../../packages/leafygreen-provider"
+    }, 
   ]
 }
