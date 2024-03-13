@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 8.1.2
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
 ## 8.1.1
 
 ### Patch Changes
