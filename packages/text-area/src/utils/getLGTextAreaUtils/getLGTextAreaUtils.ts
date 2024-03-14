@@ -53,7 +53,7 @@ export const getLGTextAreaUtils = (
   /**
    * Returns the input value.
    */
-  const inputValue = () => {
+  const getInputValue = () => {
     return input.value;
   };
 
@@ -79,7 +79,7 @@ export const getLGTextAreaUtils = (
     utils: {
       isDisabled: () => isInputDisabled(),
       isError: () => isError(),
-      inputValue: () => inputValue(),
+      getInputValue: () => getInputValue(),
     },
   };
 };

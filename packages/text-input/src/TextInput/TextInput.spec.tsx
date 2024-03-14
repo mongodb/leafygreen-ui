@@ -29,7 +29,7 @@ function renderTextInput(props = {}) {
 
   const {
     elements: { getDescription, getErrorMessage, getInput, getLabel },
-    utils: { isDisabled, isError, isValid, inputValue, isOptional },
+    utils: { isDisabled, isError, isValid, getInputValue, isOptional },
   } = getLGTextInputUtils();
 
   const textInput = getInput();
@@ -53,7 +53,7 @@ function renderTextInput(props = {}) {
     isError,
     isValid,
     isOptional,
-    inputValue,
+    getInputValue,
     rerenderTextInput,
   };
 }
@@ -115,27 +115,27 @@ describe('packages/text-input', () => {
 
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
-      const { inputValue, isValid, isOptional } = renderTextInput({
+      const { getInputValue, isValid, isOptional } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         optional: true,
         ...defaultProps,
       });
 
-      expect(inputValue()).toBe(validEmail);
+      expect(getInputValue()).toBe(validEmail);
       expect(isValid()).toBe(true);
       expect(isOptional()).toBe(false);
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { inputValue, isOptional } = renderTextInput({
+      const { getInputValue, isOptional } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         disabled: true,
         ...defaultProps,
       });
 
-      expect(inputValue()).toBe(validEmail);
+      expect(getInputValue()).toBe(validEmail);
       expect(isOptional()).toBe(false);
     });
   });
@@ -156,14 +156,14 @@ describe('packages/text-input', () => {
 
   describe('when the "state" is "error"', () => {
     test('displays warning icon when input is invalid', () => {
-      const { isOptional, inputValue, isError } = renderTextInput({
+      const { isOptional, getInputValue, isError } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
         ...defaultProps,
       });
 
-      expect(inputValue()).toBe(invalidEmail);
+      expect(getInputValue()).toBe(invalidEmail);
       expect(isError()).toBe(true);
       expect(isOptional()).toBe(false);
     });
@@ -203,17 +203,17 @@ describe('packages/text-input', () => {
     });
 
     test('key presses are reflected in component and onChange function is called when value changes', () => {
-      const { inputValue, textInput } = renderTextInput({
+      const { getInputValue, textInput } = renderTextInput({
         state: State.None,
         ...defaultProps,
       });
-      expect(inputValue()).toBe('');
+      expect(getInputValue()).toBe('');
 
       fireEvent.change(textInput, {
         target: { value: 'a' },
       });
 
-      expect(inputValue()).toBe('a');
+      expect(getInputValue()).toBe('a');
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       expect(defaultProps.onChange).toHaveReturnedWith('none');
     });
@@ -286,20 +286,20 @@ describe('packages/text-input', () => {
 
   describe('returns correct value', () => {
     test('when uncontrolled', () => {
-      const { textInput, inputValue } = renderTextInput();
+      const { textInput, getInputValue } = renderTextInput();
 
       userEvent.type(textInput, '123');
-      expect(inputValue()).toBe('123');
+      expect(getInputValue()).toBe('123');
     });
 
     test('when controlled', () => {
-      const { inputValue, rerenderTextInput } = renderTextInput({
+      const { getInputValue, rerenderTextInput } = renderTextInput({
         value: '456',
       });
 
-      expect(inputValue()).toBe('456');
+      expect(getInputValue()).toBe('456');
       rerenderTextInput({ value: 'I was rerendered' });
-      expect(inputValue()).toBe('I was rerendered');
+      expect(getInputValue()).toBe('I was rerendered');
     });
   });
 

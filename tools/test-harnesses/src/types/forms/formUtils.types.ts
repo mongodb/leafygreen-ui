@@ -17,5 +17,5 @@ export interface FormUtils {
   /**
    * Returns the input value
    */
-  inputValue: () => string;
+  getInputValue: () => string;
 }

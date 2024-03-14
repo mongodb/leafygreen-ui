@@ -66,11 +66,11 @@ describe('packages/text-input', () => {
         expect(elementsTwo.getInput()).toBeInTheDocument();
       });
 
-      test('inputValue', () => {
+      test('getInputValue', () => {
         const { utilsOne, utilsTwo } = renderMultipleInputs();
 
-        expect(utilsOne.inputValue()).toBe('text input 1');
-        expect(utilsTwo.inputValue()).toBe('text input 2');
+        expect(utilsOne.getInputValue()).toBe('text input 1');
+        expect(utilsTwo.getInputValue()).toBe('text input 2');
       });
     });
 
@@ -116,11 +116,11 @@ describe('packages/text-input', () => {
         // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
-          utils: { inputValue },
+          utils: { getInputValue },
         } = getLGTextInputUtils();
         const input = getInput();
         userEvent.type(input, 'leafygreen');
-        expect(inputValue()).toBe('leafygreen');
+        expect(getInputValue()).toBe('leafygreen');
       });
     });
   });

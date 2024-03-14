@@ -58,7 +58,7 @@ export const getLGTextInputUtils = (
   /**
    * Returns the input value.
    */
-  const inputValue = () => {
+  const getInputValue = () => {
     return input.value;
   };
 
@@ -109,7 +109,7 @@ export const getLGTextInputUtils = (
       isDisabled: () => isInputDisabled(),
       isValid: () => isValid(),
       isError: () => isError(),
-      inputValue: () => inputValue(),
+      getInputValue: () => getInputValue(),
       isOptional: () => isOptional(),
     },
   };

@@ -58,11 +58,11 @@ describe('packages/toggle', () => {
         expect(elementsTwo.getInput()).toBeInTheDocument();
       });
 
-      test('inputValue', () => {
+      test('getInputValue', () => {
         const { utilsOne, utilsTwo } = renderMultipleToggles();
 
-        expect(utilsOne.inputValue()).toBe('false');
-        expect(utilsTwo.inputValue()).toBe('true');
+        expect(utilsOne.getInputValue()).toBe('false');
+        expect(utilsTwo.getInputValue()).toBe('true');
       });
     });
 
@@ -108,11 +108,11 @@ describe('packages/toggle', () => {
         // After awaiting asyncComponent, look for toggle
         const {
           elements: { getInput },
-          utils: { inputValue },
+          utils: { getInputValue },
         } = getLGToggleUtils();
         const input = getInput();
         userEvent.click(input);
-        expect(inputValue()).toBe('true');
+        expect(getInputValue()).toBe('true');
       });
     });
   });

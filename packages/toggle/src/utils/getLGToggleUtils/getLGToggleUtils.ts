@@ -21,7 +21,7 @@ export const getLGToggleUtils = (
   /**
    * Returns the value for the aria-checked attribute on the input.
    */
-  const inputValue = () => {
+  const getInputValue = () => {
     return element.getAttribute('aria-checked') as string;
   };
 
@@ -31,7 +31,7 @@ export const getLGToggleUtils = (
     },
     utils: {
       isDisabled: () => isInputDisabled(),
-      inputValue: () => inputValue(),
+      getInputValue: () => getInputValue(),
     },
   };
 };

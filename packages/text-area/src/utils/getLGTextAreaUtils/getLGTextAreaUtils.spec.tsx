@@ -66,11 +66,11 @@ describe('packages/text-input', () => {
         expect(elementsTwo.getInput()).toBeInTheDocument();
       });
 
-      test('inputValue', () => {
+      test('getInputValue', () => {
         const { utilsOne, utilsTwo } = renderMultipleInputs();
 
-        expect(utilsOne.inputValue()).toBe('text input 1');
-        expect(utilsTwo.inputValue()).toBe('text input 2');
+        expect(utilsOne.getInputValue()).toBe('text input 1');
+        expect(utilsTwo.getInputValue()).toBe('text input 2');
       });
     });
 
@@ -116,11 +116,11 @@ describe('packages/text-input', () => {
         // After awaiting asyncComponent, look for text area
         const {
           elements: { getInput },
-          utils: { inputValue },
+          utils: { getInputValue },
         } = getLGTextAreaUtils();
         const input = getInput();
         userEvent.type(input, 'whats blue and not heavy? light blue');
-        expect(inputValue()).toBe('whats blue and not heavy? light blue');
+        expect(getInputValue()).toBe('whats blue and not heavy? light blue');
       });
     });
   });

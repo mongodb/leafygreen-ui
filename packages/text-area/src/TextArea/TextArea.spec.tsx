@@ -21,7 +21,7 @@ function renderTextArea(props = {}) {
 
   const {
     elements: { getDescription, getErrorMessage, getInput, getLabel },
-    utils: { isDisabled, isError, inputValue },
+    utils: { isDisabled, isError, getInputValue },
   } = getLGTextAreaUtils();
 
   const textArea = getInput();
@@ -41,7 +41,7 @@ function renderTextArea(props = {}) {
     getErrorMessage,
     isDisabled,
     isError,
-    inputValue,
+    getInputValue,
     rerenderTextArea,
   };
 }
@@ -67,14 +67,14 @@ describe('packages/text-area', () => {
   });
 
   test('key presses are reflected in component and onChange function is called when value changes', () => {
-    const { textArea, inputValue } = renderTextArea({ onChange });
-    expect(inputValue()).toBe('');
+    const { textArea, getInputValue } = renderTextArea({ onChange });
+    expect(getInputValue()).toBe('');
 
     fireEvent.change(textArea, {
       target: { value: 'a' },
     });
 
-    expect(inputValue()).toBe('a');
+    expect(getInputValue()).toBe('a');
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
@@ -185,20 +185,20 @@ describe('packages/text-area', () => {
 
   describe('returns correct value', () => {
     test('when uncontrolled', () => {
-      const { textArea, inputValue } = renderTextArea();
+      const { textArea, getInputValue } = renderTextArea();
 
       userEvent.type(textArea, '123');
-      expect(inputValue()).toBe('123');
+      expect(getInputValue()).toBe('123');
     });
 
     test('when controlled', () => {
-      const { inputValue, rerenderTextArea } = renderTextArea({
+      const { getInputValue, rerenderTextArea } = renderTextArea({
         value: '456',
       });
 
-      expect(inputValue()).toBe('456');
+      expect(getInputValue()).toBe('456');
       rerenderTextArea({ value: 'I was rerendered' });
-      expect(inputValue()).toBe('I was rerendered');
+      expect(getInputValue()).toBe('I was rerendered');
     });
   });
 
