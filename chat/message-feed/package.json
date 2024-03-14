@@ -1,0 +1,45 @@
+{
+  "name": "@lg-chat/message-feed",
+  "version": "2.0.8",
+  "description": "lg-chat Message Feed",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.4",
+    "@leafygreen-ui/lib": "^10.1.0",
+    "@leafygreen-ui/palette": "^4.0.4",
+    "@leafygreen-ui/tokens": "^2.1.1",
+    "@lg-chat/avatar": "^2.0.6",
+    "@lg-chat/message": "^3.0.0",
+    "@lg-chat/message-rating": "^1.2.0"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^21.0.11",
+    "@leafygreen-ui/icon": "^11.26.0",
+    "@leafygreen-ui/marketing-modal": "^4.1.2",
+    "@leafygreen-ui/text-area": "^8.0.20",
+    "@leafygreen-ui/typography": "^17.0.0",
+    "@lg-chat/chat-disclaimer": "^2.0.2",
+    "@lg-chat/message-prompts": "^1.0.4"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.3",
+    "@lg-chat/leafygreen-chat-provider": "^1.0.2"
+  }
+}
