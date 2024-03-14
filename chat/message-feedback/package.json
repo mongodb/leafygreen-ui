@@ -19,7 +19,7 @@
     "docs": "lg build-tsdoc"
   },
   "publishConfig": {
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "dependencies": {
     "@leafygreen-ui/button": "^21.0.11",
