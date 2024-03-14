@@ -1,5 +1,11 @@
 # @lg-tools/storybook-addon
 
+## 0.2.0
+
+### Minor Changes
+
+- 36070800: Adds support for `@lg-chat` components
+
 ## 0.1.0
 
 ### Minor Changes
