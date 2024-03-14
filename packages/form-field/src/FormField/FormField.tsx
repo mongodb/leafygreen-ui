@@ -63,7 +63,11 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             ref={fwdRef}
             {...rest}
           >
-            <div className={textContainerStyle}>
+            <div
+              className={cx(textContainerStyle, {
+                [paddingBottom]: !!(label || description),
+              })}
+            >
               {label && (
                 <Label
                   data-testid="lg-form_field-label"
@@ -85,7 +89,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                   {description}
                 </Description>
               )}
-              {(label || description) && <div className={paddingBottom} />}
             </div>
             {children}
 
