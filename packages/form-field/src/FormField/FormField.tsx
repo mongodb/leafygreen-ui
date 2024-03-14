@@ -86,8 +86,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
             </div>
             {children}
-            <div className={errorTextContainerStyle}>
-              {state === FormFieldState.Error && !disabled && (
+
+            {state === FormFieldState.Error && !disabled && (
+              <div className={errorTextContainerStyle}>
                 <Error
                   data-testid="lg-form_field-error_message"
                   className={getFontSize({ baseFontSize, size })}
@@ -95,8 +96,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                 >
                   {errorMessage}
                 </Error>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </FormFieldProvider>
       </LeafyGreenProvider>
