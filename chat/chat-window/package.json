@@ -18,7 +18,7 @@
   },
   "license": "Apache-2.0",
   "publishConfig": {
-    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+    "access": "public"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.4",
