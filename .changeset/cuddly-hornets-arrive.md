@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/form-field': patch
+'@leafygreen-ui/form-field': major
 ---
 
-Conditionally renders div wrapping `errorMessage` content, so that styles appear as-expected.
+Conditionally renders div wrapping `errorMessage` and label/description content, so that styles appear as-expected.
