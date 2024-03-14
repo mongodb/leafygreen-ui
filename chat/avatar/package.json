@@ -1,0 +1,35 @@
+{
+  "name": "@lg-chat/avatar",
+  "version": "3.0.0",
+  "description": "lg-chat Avatar",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "registry": "https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/icon": "^11.22.2",
+    "@leafygreen-ui/lib": "^11.0.0",
+    "@leafygreen-ui/logo": "^8.0.8",
+    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/tokens": "^2.1.4"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.7",
+    "@lg-chat/leafygreen-chat-provider": "^2.0.0"
+  }
+}

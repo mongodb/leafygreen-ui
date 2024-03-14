@@ -56,6 +56,7 @@
     "caniuse-lite": "^1.0.30001585"
   },
   "workspaces": [
+    "chat/*",
     "packages/*",
     "tools/*"
   ],

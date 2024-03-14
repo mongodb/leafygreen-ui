@@ -14,8 +14,8 @@ export { previewHead } from './preview-head';
 
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
-  '../{packages,tools}/*/node_modules',
+  '../{packages,tools,chat,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
+  '../{packages,tools,chat}/*/node_modules',
 );
 
 export const addons: StorybookConfig['addons'] = [
