@@ -15,7 +15,8 @@ import { FormFieldProvider } from '../FormFieldContext';
 import {
   errorTextContainerStyle,
   getFontSize,
-  labelTextContainerStyle,
+  labelContainerStyle,
+  textContainerStyle,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';
@@ -62,17 +63,19 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             ref={fwdRef}
             {...rest}
           >
-            <div className={labelTextContainerStyle}>
+            <div className={textContainerStyle}>
               {label && (
-                <Label
-                  data-testid="lg-form_field-label"
-                  className={getFontSize({ baseFontSize, size })}
-                  htmlFor={inputId}
-                  id={labelId}
-                  disabled={disabled}
-                >
-                  {label}
-                </Label>
+                <div className={labelContainerStyle}>
+                  <Label
+                    data-testid="lg-form_field-label"
+                    className={getFontSize({ baseFontSize, size })}
+                    htmlFor={inputId}
+                    id={labelId}
+                    disabled={disabled}
+                  >
+                    {label}
+                  </Label>
+                </div>
               )}
               {description && (
                 <Description

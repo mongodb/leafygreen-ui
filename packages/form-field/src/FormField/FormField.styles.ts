@@ -30,9 +30,12 @@ export const getFontSize = ({
   }
 };
 
-export const labelTextContainerStyle = css`
+export const textContainerStyle = css`
   display: flex;
   flex-direction: column;
+`;
+
+export const labelContainerStyle = css`
   margin-bottom: ${spacing[100]}px;
 `;
 
