@@ -35,7 +35,7 @@ export const textContainerStyle = css`
   flex-direction: column;
 `;
 
-export const labelContainerStyle = css`
+export const paddingBottom = css`
   margin-bottom: ${spacing[100]}px;
 `;
 

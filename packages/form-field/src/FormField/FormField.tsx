@@ -15,7 +15,7 @@ import { FormFieldProvider } from '../FormFieldContext';
 import {
   errorTextContainerStyle,
   getFontSize,
-  labelContainerStyle,
+  paddingBottom,
   textContainerStyle,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
@@ -67,10 +67,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {label && (
                 <Label
                   data-testid="lg-form_field-label"
-                  className={cx(
-                    getFontSize({ baseFontSize, size }),
-                    labelContainerStyle,
-                  )}
+                  className={getFontSize({ baseFontSize, size })}
                   htmlFor={inputId}
                   id={labelId}
                   disabled={disabled}
@@ -88,6 +85,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                   {description}
                 </Description>
               )}
+              {(label || description) && <div className={paddingBottom} />}
             </div>
             {children}
 
