@@ -1,5 +1,18 @@
 # @lg-chat/chat-window
 
+## 2.0.0
+
+### Major Changes
+
+- 36070800: First public release of `@lg-chat` components
+
+### Patch Changes
+
+- Updated dependencies [36070800]
+  - @lg-chat/leafygreen-chat-provider@2.0.0
+  - @lg-chat/title-bar@2.0.0
+  - @lg-chat/avatar@3.0.0
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lg-chat/chat-disclaimer
 
+## 3.0.0
+
+### Major Changes
+
+- 36070800: First public release of `@lg-chat` components
+
 ## 2.0.2
 
 ### Patch Changes

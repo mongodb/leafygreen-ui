@@ -1,5 +1,11 @@
 # @lg-chat/message-prompts
 
+## 2.0.0
+
+### Major Changes
+
+- 36070800: First public release of `@lg-chat` components
+
 ## 1.0.5
 
 ### Patch Changes
