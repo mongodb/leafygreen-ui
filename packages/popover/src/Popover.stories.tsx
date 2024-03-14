@@ -181,13 +181,13 @@ LiveExample.parameters = {
   },
 };
 
-// @ts-expect-error - Portal props (usePortal)
 export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
   refButtonPosition,
   buttonText,
   ...args
 }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
+  const portalRef = useRef<HTMLElement | null>(null);
   const portalContainer = useRef<HTMLDivElement | null>(null);
 
   const position = referenceElPositions[refButtonPosition];
@@ -205,6 +205,7 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
             {...args}
             active={active}
             portalContainer={portalContainer.current}
+            portalRef={portalRef}
             scrollContainer={portalContainer.current}
           >
             <div className={popoverStyle}>Popover content</div>

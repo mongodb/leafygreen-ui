@@ -186,6 +186,11 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
+
+  /**
+   * A ref for the portal element
+   */
+  portalRef?: React.MutableRefObject<HTMLElement | null>;
 } & PortalControlProps &
   TransitionLifecycleCallbacks;
 

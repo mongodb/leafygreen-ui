@@ -1,10 +1,10 @@
 import { palette } from '@leafygreen-ui/palette';
 
-import { MapVariantsToStates, State, Type, Variant } from './color.types';
+import { State, Variant } from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
 
-const darkModeBackgroundColors: MapVariantsToStates = {
+const darkModeBackgroundColors = {
   [Variant.Primary]: {
     [State.Default]: black,
     [State.Hover]: gray.dark2,
@@ -47,7 +47,7 @@ const darkModeBackgroundColors: MapVariantsToStates = {
   },
 };
 
-const darkModeBorderColors: MapVariantsToStates = {
+const darkModeBorderColors = {
   [Variant.Primary]: {
     [State.Default]: gray.base,
     [State.Hover]: gray.base,
@@ -75,7 +75,7 @@ const darkModeBorderColors: MapVariantsToStates = {
   },
 };
 
-const darkModeIconColors: MapVariantsToStates = {
+const darkModeIconColors = {
   [Variant.Primary]: {
     [State.Default]: gray.light1,
     [State.Hover]: gray.light3,
@@ -118,7 +118,7 @@ const darkModeIconColors: MapVariantsToStates = {
   },
 };
 
-export const darkModeTextColors: MapVariantsToStates = {
+export const darkModeTextColors = {
   [Variant.Primary]: {
     [State.Default]: gray.light2,
     [State.Hover]: gray.light2,
@@ -151,7 +151,7 @@ export const darkModeTextColors: MapVariantsToStates = {
   },
 };
 
-export const darkModeColors: Record<Type, MapVariantsToStates> = {
+export const darkModeColors = {
   background: darkModeBackgroundColors,
   border: darkModeBorderColors,
   icon: darkModeIconColors,

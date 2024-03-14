@@ -1,5 +1,22 @@
 # @lg-tools/storybook
 
+## 0.4.0
+
+### Minor Changes
+
+- 5546ffa3: Deprecates `@lg-tools/storybook`. Use `@lg-tools/storybook-addon` instead
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @lg-tools/build@0.4.0
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @lg-tools/storybook-decorators@0.2.6
+
 ## 0.3.5
 
 ### Patch Changes
