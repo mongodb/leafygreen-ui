@@ -1,0 +1,378 @@
+[
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "DisclaimerModal",
+    "props": {
+      "MarketingModalProps": {
+        "title": {
+          "name": "title",
+          "defaultValue": null,
+          "description": "Text of header element",
+          "required": true,
+          "type": {
+            "name": "enum",
+            "raw": "ReactNode",
+            "value": [
+              {
+                "value": "string"
+              },
+              {
+                "value": "number"
+              },
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              },
+              {
+                "value": "ReactElement<any, string | JSXElementConstructor<any>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Iterable<ReactNode>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "ReactPortal",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "graphic": {
+          "name": "graphic",
+          "defaultValue": null,
+          "description": "React Element to be rendered as the modal's hero image",
+          "required": true,
+          "type": {
+            "name": "ReactElement<any, string | JSXElementConstructor<any>>"
+          },
+          "tags": {}
+        },
+        "graphicStyle": {
+          "name": "graphicStyle",
+          "defaultValue": null,
+          "description": "Determines the rendering style of the graphic.\n\n`fill` adds a curving effect to the bottom border of the graphic.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "GraphicStyle",
+            "value": [
+              {
+                "value": "\"center\""
+              },
+              {
+                "value": "\"fill\""
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "onButtonClick": {
+          "name": "onButtonClick",
+          "defaultValue": null,
+          "description": "Callback fired when the primary action button is clicked.",
+          "required": false,
+          "type": {
+            "name": "() => void"
+          },
+          "tags": {}
+        },
+        "onLinkClick": {
+          "name": "onLinkClick",
+          "defaultValue": null,
+          "description": "Callback fired when the secondary link element is clicked.",
+          "required": false,
+          "type": {
+            "name": "() => void"
+          },
+          "tags": {}
+        },
+        "onClose": {
+          "name": "onClose",
+          "defaultValue": null,
+          "description": "Callback fired when the modal is closed",
+          "required": false,
+          "type": {
+            "name": "() => void"
+          },
+          "tags": {}
+        },
+        "buttonText": {
+          "name": "buttonText",
+          "defaultValue": null,
+          "description": "Text of the primary CTA button",
+          "required": true,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "linkText": {
+          "name": "linkText",
+          "defaultValue": null,
+          "description": "Text of the secondary link element",
+          "required": true,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "blobPosition": {
+          "name": "blobPosition",
+          "defaultValue": null,
+          "description": "Position of the blob visual effect. Defaults to top-left.\n\nNote: The blob is only rendered if: `showBlob` prop is `true`, and the `graphicStyle` prop is `center`.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "BlobPosition",
+            "value": [
+              {
+                "value": "\"top left\""
+              },
+              {
+                "value": "\"top right\""
+              },
+              {
+                "value": "\"bottom right\""
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "showBlob": {
+          "name": "showBlob",
+          "defaultValue": null,
+          "description": "Determines whether the blob should be rendered.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "disclaimer": {
+          "name": "disclaimer",
+          "defaultValue": null,
+          "description": "Disclaimer text to be rendered under the primary action button",
+          "required": false,
+          "type": {
+            "name": "ReactElement<any, string | JSXElementConstructor<any>>"
+          },
+          "tags": {}
+        }
+      },
+      "ModalProps": {
+        "children": {
+          "name": "children",
+          "defaultValue": null,
+          "description": "Content that will appear inside of the Modal component.",
+          "required": true,
+          "type": {
+            "name": "enum",
+            "raw": "ReactNode",
+            "value": [
+              {
+                "value": "string"
+              },
+              {
+                "value": "number"
+              },
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              },
+              {
+                "value": "ReactElement<any, string | JSXElementConstructor<any>>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "Iterable<ReactNode>",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              },
+              {
+                "value": "ReactPortal",
+                "description": "",
+                "fullComment": "",
+                "tags": {}
+              }
+            ]
+          },
+          "tags": {}
+        },
+        "setOpen": {
+          "name": "setOpen",
+          "defaultValue": {
+            "value": "() => {}"
+          },
+          "description": "Callback to change the open state of the Modal.",
+          "required": false,
+          "type": {
+            "name": "(open: boolean) => void | Dispatch<SetStateAction<boolean>>"
+          },
+          "tags": {
+            "default": "() => {}"
+          }
+        },
+        "open": {
+          "name": "open",
+          "defaultValue": {
+            "value": "false"
+          },
+          "description": "Determines the open state of the modal",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false"
+          }
+        },
+        "shouldClose": {
+          "name": "shouldClose",
+          "defaultValue": {
+            "value": "() => true"
+          },
+          "description": "Callback to determine whether or not Modal should close when user tries to close it.",
+          "required": false,
+          "type": {
+            "name": "() => boolean"
+          },
+          "tags": {
+            "default": "() => true"
+          }
+        },
+        "contentClassName": {
+          "name": "contentClassName",
+          "defaultValue": null,
+          "description": "className applied to overlay div.\nDisclaimer: This prop may be deprecated in future versions of Modal",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "initialFocus": {
+          "name": "initialFocus",
+          "defaultValue": null,
+          "description": "By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus.\nWith this option you can specify a different element to receive that initial focus.\nSelector string (which will be passed to document.querySelector() to find the DOM node)",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        },
+        "closeIconColor": {
+          "name": "closeIconColor",
+          "defaultValue": {
+            "value": "'default'"
+          },
+          "description": "Determines the color of the close icon.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "CloseIconColor",
+            "value": [
+              {
+                "value": "\"light\""
+              },
+              {
+                "value": "\"dark\""
+              },
+              {
+                "value": "\"default\""
+              }
+            ]
+          },
+          "tags": {
+            "default": "'default'"
+          }
+        }
+      },
+      "HTMLAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "DarkModeProps": {
+        "darkMode": {
+          "name": "darkMode",
+          "defaultValue": {
+            "value": "false"
+          },
+          "description": "Renders the component with dark mode styles.",
+          "required": false,
+          "type": {
+            "name": "enum",
+            "raw": "boolean",
+            "value": [
+              {
+                "value": "false"
+              },
+              {
+                "value": "true"
+              }
+            ]
+          },
+          "tags": {
+            "default": "false"
+          }
+        }
+      },
+      "AriaAttributes": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes",
+      "DOMAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes"
+    }
+  },
+  {
+    "tags": {},
+    "description": "",
+    "methods": [],
+    "displayName": "DisclaimerText",
+    "props": {
+      "DisclaimerTextProps": {
+        "title": {
+          "name": "title",
+          "defaultValue": null,
+          "description": "Heading text",
+          "required": false,
+          "type": {
+            "name": "string"
+          },
+          "tags": {}
+        }
+      },
+      "DOMAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "HTMLAttributes": "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes",
+      "AriaAttributes": "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes"
+    }
+  }
+]
