@@ -6,9 +6,10 @@
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"],
+      "@lg-chat/*": ["chat/*/src"],
       "@lg-tools/*": ["tools/*/src"]
     }
   },
-  "include": ["./packages", "./tools", "./scripts"],
+  "include": ["./chat", "./packages", "./tools", "./scripts"],
   "exclude": ["node_modules", "**/dist"]
 }
