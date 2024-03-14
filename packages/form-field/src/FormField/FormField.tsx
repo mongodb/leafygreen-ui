@@ -65,17 +65,18 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           >
             <div className={textContainerStyle}>
               {label && (
-                <div className={labelContainerStyle}>
-                  <Label
-                    data-testid="lg-form_field-label"
-                    className={getFontSize({ baseFontSize, size })}
-                    htmlFor={inputId}
-                    id={labelId}
-                    disabled={disabled}
-                  >
-                    {label}
-                  </Label>
-                </div>
+                <Label
+                  data-testid="lg-form_field-label"
+                  className={cx(
+                    getFontSize({ baseFontSize, size }),
+                    labelContainerStyle,
+                  )}
+                  htmlFor={inputId}
+                  id={labelId}
+                  disabled={disabled}
+                >
+                  {label}
+                </Label>
               )}
               {description && (
                 <Description
