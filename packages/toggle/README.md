@@ -143,7 +143,33 @@ test('toggle', () => {
 });
 ```
 
-### Utils
+#### Multiple Form Elements
+
+```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+
+
+...
+
+test('Form', () => {
+  render(
+    <Form>
+      <Toggle aria-labelledby="toggle label" />
+
+    </Form>,
+  );
+  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGToggleUtils();
+
+  // First toggle
+  expect(lgElementsToggle.getInput()).toBeInTheDocument();
+  expect(lgUtilsToggle.inputValue()).toBe('false');
+
+
+});
+```
+
+### Test Utils
 
 #### Elements
 
