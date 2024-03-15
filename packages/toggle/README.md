@@ -40,32 +40,6 @@ return (
 );
 ```
 
-**Output HTML**
-
-```html
-<label for="toggle" id="label" class="leafygreen-ui-r8mbam"
-  >Change setting</label
->
-
-<div class="leafygreen-ui-19odf8z">
-  <button
-    id="toggle"
-    aria-labelledby="label"
-    role="switch"
-    aria-checked="false"
-    aria-disabled="false"
-    class="leafygreen-ui-1vdkpyx"
-    data-leafygreen-ui="toggle-button"
-  >
-    <span aria-hidden="true" class="leafygreen-ui-u8d1r2">On</span>
-    <span aria-hidden="true" class="leafygreen-ui-1eonihm">Off</span>
-    <div class="leafygreen-ui-uyx43a"></div>
-  </button>
-
-  <div data-leafygreen-ui="interaction-ring" class="leafygreen-ui-igvj0l"></div>
-</div>
-```
-
 ## Properties
 
 | Prop        | Type                               | Description                                                                                                                                                                                        | Default     |
@@ -105,11 +79,11 @@ import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
 ...
 
 test('toggle', () => {
-  render(<Toggle aria-labelledby="label" />);
+  render(<Toggle aria-label="label" />);
   const { elements, utils } = getLGToggleUtils();
 
   expect(elements.getInput()).toBeInTheDocument();
-  expect(utils.inputValue()).toBe('false');
+  expect(utils.getInputValue()).toBe('false');
 });
 ```
 
@@ -124,8 +98,8 @@ import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
 test('toggle', () => {
   render(
     <>
-      <Toggle data-lgid="toggle-1" aria-labelledby="label 1" />
-      <Toggle data-lgid="toggle-2" aria-labelledby="label 2" checked />
+      <Toggle data-lgid="toggle-1" aria-label="label 1" />
+      <Toggle data-lgid="toggle-2" aria-label="label 2" checked />
     </>,
   );
   const { elements: lgElementsToggle1, utils: lgUtilsToggle1 } =
@@ -135,35 +109,47 @@ test('toggle', () => {
 
   // First toggle
   expect(lgElementsToggle1.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle1.inputValue()).toBe('false');
+  expect(lgUtilsToggle1.getInputValue()).toBe('false');
 
   // Second Toggle
   expect(lgElementsToggle2.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle2.inputValue()).toBe('true');
+  expect(lgUtilsToggle2.getInputValue()).toBe('true');
 });
 ```
 
-#### Multiple Form Elements
+#### Toggle with other LG form elements
 
 ```tsx
 import { render } from '@testing-library/react';
 import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
-
+import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
 
 ...
 
 test('Form', () => {
   render(
     <Form>
-      <Toggle aria-labelledby="toggle label" />
-
+      <Toggle aria-label="Toggle label" />
+      <TextInput label="TextInput label" />
+      <TextArea label="TextArea label" />
     </Form>,
   );
   const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGToggleUtils();
+  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputUtils();
+  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaUtils();
 
-  // First toggle
+  // LG Toggle
   expect(lgElementsToggle.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle.inputValue()).toBe('false');
+  expect(lgUtilsToggle.getInputValue()).toBe('false');
+
+  // LG TextInput
+  expect(lgElementsTextInput.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput.getInputValue()).toBe('');
+
+  // LG TextArea
+  expect(lgElementsTextArea.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextArea.getInputValue()).toBe('');
 
 
 });
@@ -187,11 +173,11 @@ const {
 
 ```tsx
 const {
-  utils: { isDisabled, inputValue },
+  utils: { isDisabled, getInputValue },
 } = getLGToggleUtils();
 ```
 
-| Util         | Description                           | Returns              |
-| ------------ | ------------------------------------- | -------------------- |
-| `isDisabled` | Returns whether the input is disabled | `boolean`            |
-| `inputValue` | Returns the input value               | `'true'`\| `'false'` |
+| Util            | Description                           | Returns              |
+| --------------- | ------------------------------------- | -------------------- |
+| `isDisabled`    | Returns whether the input is disabled | `boolean`            |
+| `getInputValue` | Returns the input value               | `'true'`\| `'false'` |
