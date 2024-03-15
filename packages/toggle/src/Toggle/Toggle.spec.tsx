@@ -43,17 +43,17 @@ describe('packages/Toggle', () => {
 
   test('toggle is not checked by default', () => {
     const {
-      utils: { inputValue },
+      utils: { getInputValue },
     } = renderToggle();
-    expect(inputValue()).toBe('false');
+    expect(getInputValue()).toBe('false');
   });
 
   test('toggle is checked when checked prop is set', () => {
     const {
-      utils: { inputValue },
+      utils: { getInputValue },
     } = renderToggle({ checked: true });
 
-    expect(inputValue()).toBe('true');
+    expect(getInputValue()).toBe('true');
   });
 
   test(`renders "${className}" in the component's markup`, () => {
@@ -111,11 +111,11 @@ describe('packages/Toggle', () => {
     test('checkbox does not become checked when clicked', () => {
       const {
         toggle,
-        utils: { inputValue },
+        utils: { getInputValue },
       } = renderToggle({ checked: false });
 
       userEvent.click(toggle);
-      expect(inputValue()).toBe('false');
+      expect(getInputValue()).toBe('false');
     });
   });
 
@@ -140,11 +140,11 @@ describe('packages/Toggle', () => {
     test('checkbox becomes checked when clicked', () => {
       const {
         toggle,
-        utils: { inputValue },
+        utils: { getInputValue },
       } = renderToggle();
 
       userEvent.click(toggle);
-      expect(inputValue()).toBe('true');
+      expect(getInputValue()).toBe('true');
     });
   });
 });

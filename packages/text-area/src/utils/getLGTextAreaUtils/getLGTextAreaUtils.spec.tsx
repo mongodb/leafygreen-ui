@@ -105,7 +105,7 @@ describe('packages/text-input', () => {
         });
       });
 
-      test('Updates the value inside a LG Modal', async () => {
+      test('Updates the value inside an async component', async () => {
         const { openButton, findByTestId, asyncTestComponentId } =
           renderTextAreaAsync();
 
