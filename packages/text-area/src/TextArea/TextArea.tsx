@@ -47,6 +47,7 @@ import { State, TextAreaProps } from './TextArea.types';
  * @param props.darkMode Determines whether or not the component appears in dark theme.
  * @param props.handleValidation Validation callback used to validate input.
  * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description.
+ * @param props.defaultValue The default value of the input field. Unlike value, component will not be controlled if defaultValue is passed.
  */
 
 type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
@@ -70,6 +71,7 @@ export const TextArea: TextArea = forwardRef<
     'aria-labelledby': ariaLabelledby,
     baseFontSize: baseFontSizeProp,
     'data-lgid': dataLgId = 'lg-text_area',
+    defaultValue = '',
     ...rest
   }: TextAreaProps,
   forwardedRef: React.Ref<HTMLTextAreaElement>,
@@ -79,7 +81,7 @@ export const TextArea: TextArea = forwardRef<
   const { darkMode, theme } = useDarkMode(darkModeProp);
 
   const isControlled = typeof controlledValue === 'string';
-  const [uncontrolledValue, setValue] = useState('');
+  const [uncontrolledValue, setValue] = useState(defaultValue);
   const value = isControlled ? controlledValue : uncontrolledValue;
 
   // Validation
