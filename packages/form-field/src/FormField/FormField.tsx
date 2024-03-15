@@ -64,9 +64,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             {...rest}
           >
             <div
-              className={cx(textContainerStyle, {
-                [paddingBottom]: !!(label || description),
-              })}
+            // className={cx(textContainerStyle, {
+            //   [paddingBottom]: !!(label || description),
+            // })}
             >
               {label && (
                 <Label
