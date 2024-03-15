@@ -1,5 +1,12 @@
 # @leafygreen-ui/code
 
+## 14.3.0
+
+### Minor Changes
+
+- 9afcc3bd: Adds tooltip hover interaction for `Code` component copy button
+  [LG-3915](https://jira.mongodb.org/browse/LG-3915)
+
 ## 14.2.19
 
 ### Patch Changes
