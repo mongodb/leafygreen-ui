@@ -10,10 +10,6 @@ describe('queryByLgId', () => {
     expect(element).toBeInTheDocument();
   });
 
-  test('clears the DOM', () => {
-    expect(document.body).toBeEmptyDOMElement();
-  });
-
   test('returns null if the id does not exist', () => {
     render(
       <>

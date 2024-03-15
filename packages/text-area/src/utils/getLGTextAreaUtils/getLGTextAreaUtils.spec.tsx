@@ -74,7 +74,7 @@ describe('packages/text-input', () => {
       });
     });
 
-    describe('LG Modal', () => {
+    describe('Async component', () => {
       test('find LG TextArea after awaiting an async component', async () => {
         const { openButton, findByTestId, asyncTestComponentId } =
           renderTextAreaAsync();

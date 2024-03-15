@@ -66,7 +66,7 @@ describe('packages/toggle', () => {
       });
     });
 
-    describe('LG Modal', () => {
+    describe('Async component', () => {
       test('find LG Toggle after awaiting an async component', async () => {
         const { openButton, findByTestId, asyncTestComponentId } =
           renderToggleAsync();
