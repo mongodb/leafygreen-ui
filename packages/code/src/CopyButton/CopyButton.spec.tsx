@@ -48,7 +48,6 @@ describe('CopyButton', () => {
     expect(tooltip).toBeNull();
 
     fireEvent.mouseEnter(copyButton);
-
     await waitFor(() => {
       tooltip = queryByTestId(testIds.tooltip);
       expect(tooltip).toHaveTextContent(COPY_TEXT);
