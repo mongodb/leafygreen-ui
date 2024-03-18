@@ -94,6 +94,128 @@ Either `label` or `aria-labelledby` must be provided a string, or there will be 
 
 ## getLGTextInputUtils()
 
-`getLGTextInputUtils()` is a a util to reliably interact with `LG TextInput` in a product test suite.
+`getLGTextInputUtils()` is a a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an errror will be thrown.
 
-### How to use
+### Usage
+
+```tsx
+import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+
+const { elements, utils } = getLGTextInputUtils(lgId?: string); // lgId defaults to 'lg-toggle' if left empty
+```
+
+#### Single `TextInput`
+
+```tsx
+import { render } from '@testing-library/react';
+import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+
+...
+
+test('text-input', () => {
+  render(<TextInput label="label" value="text input" />);
+  const { elements, utils } = getLGTextInputUtils();
+
+  expect(elements.getInput()).toBeInTheDocument();
+  expect(utils.getInputValue()).toBe('text input');
+});
+```
+
+#### Multiple `TextInput`'s
+
+```tsx
+import { render } from '@testing-library/react';
+import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+
+...
+
+test('text-input', () => {
+  render(
+    <>
+      <TextInput data-lgid="text-input-1" label="label 1" />
+      <TextInput data-lgid="text-input-2" label="label 2" value="text input" />
+    </>,
+  );
+  const { elements: lgElementsTextInput1, utils: lgUtilsTextInput1 } =
+    getLGTextInputUtils('text-input-1');
+  const { elements: lgElementsTextInput2, utils: lgUtilsTextInput2 } =
+    getLGTextInputUtils('text-input-2');
+
+  // First TextInput
+  expect(lgElementsTextInput1.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput1.getInputValue()).toBe('');
+
+  // Second TextInput
+  expect(lgElementsTextInput2.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput2.getInputValue()).toBe('text input');
+});
+```
+
+#### TextInput with other LG form elements
+
+```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getLGTextInputUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+
+...
+
+test('Form', () => {
+  render(
+    <Form>
+      <Toggle aria-label="Toggle label" />
+      <TextInput label="TextInput label" />
+      <TextArea label="TextArea label" />
+    </Form>,
+  );
+  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextInputUtils();
+  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputUtils();
+  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaUtils();
+
+  // LG Toggle
+  expect(lgElementsToggle.getInput()).toBeInTheDocument();
+  expect(lgUtilsToggle.getInputValue()).toBe('false');
+
+  // LG TextInput
+  expect(lgElementsTextInput.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput.getInputValue()).toBe('');
+
+  // LG TextArea
+  expect(lgElementsTextArea.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextArea.getInputValue()).toBe('');
+});
+```
+
+### Test Utils
+
+#### Elements
+
+```tsx
+const {
+  elements: { getInput, getLabel, getDescription, getErrorMessage },
+} = getLGTextInputUtils();
+```
+
+| Util              | Description                    | Returns                       |
+| ----------------- | ------------------------------ | ----------------------------- |
+| `getInput`        | Returns the input node         | `HTMLButtonElement`           |
+| `getLabel`        | Returns the label node         | `HTMLButtonElement` \| `null` |
+| `getDescription`  | Returns the description node   | `HTMLButtonElement` \| `null` |
+| `getErrorMessage` | Returns the error message node | `HTMLButtonElement` \| `null` |
+
+#### Utils
+
+```tsx
+const {
+  utils: { getInputValue, isDisabled, isValid, isError, isOptional },
+} = getLGTextInputUtils();
+```
+
+| Util            | Description                                | Returns   |
+| --------------- | ------------------------------------------ | --------- |
+| `getInputValue` | Returns the input value                    | `string`  |
+| `isDisabled`    | Returns whether the input is disabled      | `boolean` |
+| `isValid`       | Returns whether the input state is `valid` | `boolean` |
+| `isError`       | Returns whether the input state is `error` | `boolean` |
+| `isOptional`    | Returns whether the input is `optional`    | `boolean` |
