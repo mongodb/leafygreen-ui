@@ -67,7 +67,7 @@ Please reach out if you would like further guidance on how to programmatically a
 ```tsx
 import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
 
-const { elements, utils } = getLGToggleUtils(lgId?: string); // lgId defaults to 'lg-toggle' if left empty
+const { elements, utils } = getLGToggleUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
 ```
 
 #### Single `Toggle`
@@ -89,6 +89,8 @@ test('toggle', () => {
 
 #### Multiple `Toggle`'s
 
+When testing multiple `Toggle`'s it is recommended to add the custom `data-lgid` attribute to each `Toggle`.
+
 ```tsx
 import { render } from '@testing-library/react';
 import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
@@ -103,9 +105,9 @@ test('toggle', () => {
     </>,
   );
   const { elements: lgElementsToggle1, utils: lgUtilsToggle1 } =
-    getLGToggleUtils('toggle-1');
+    getLGToggleUtils('toggle-1'); // data-lgid
   const { elements: lgElementsToggle2, utils: lgUtilsToggle2 } =
-    getLGToggleUtils('toggle-2');
+    getLGToggleUtils('toggle-2'); // data-lgid
 
   // First toggle
   expect(lgElementsToggle1.getInput()).toBeInTheDocument();

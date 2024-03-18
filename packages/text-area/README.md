@@ -37,24 +37,6 @@ return (
 );
 ```
 
-**Output HTML**
-
-```html
-<div class="leafygreen-ui-1iyoj2o">
-  <label for="textarea-4" class="leafygreen-ui-1x9zy2h">Text Area Label</label>
-  <p class="leafygreen-ui-1e6871j">This is the description for the text area</p>
-  <div class="leafygreen-ui-lzja97">
-    <textarea
-      data-leafygreen-ui="area-selector"
-      title="Text Area Label"
-      id="textarea-4"
-      class="leafygreen-ui-10h8b92"
-    ></textarea>
-    <div class="leafygreen-ui-19os2r6"></div>
-  </div>
-</div>
-```
-
 ## Properties
 
 | Prop          | Type                           | Description                                                                                                               | Default  |
@@ -71,6 +53,129 @@ return (
 
 ## getLGTextAreaUtils()
 
-`getLGTextAreaUtils()` is a a util to reliably interact with `LG TextArea` in a product test suite.
+`getLGTextAreaUtils()` is a util that allows consumers to reliably interact with `LG TextArea` in a product test suite. If the `TextArea` component cannot be found, an error will be thrown.
 
-### How to use
+### Usage
+
+```tsx
+import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+
+const { elements, utils } = getLGTextAreaUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextArea`. It defaults to 'lg-text_area' if left empty.
+```
+
+#### Single `TextArea`
+
+```tsx
+import { render } from '@testing-library/react';
+import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+
+...
+
+test('text-area', () => {
+  render(<TextArea label="label" value="text area" />);
+  const { elements, utils } = getLGTextAreaUtils();
+
+  expect(elements.getInput()).toBeInTheDocument();
+  expect(utils.getInputValue()).toBe('text area');
+});
+```
+
+#### Multiple `TextArea`'s
+
+When testing multiple `TextArea`'s it is recommended to add the custom `data-lgid` attribute to each `TextArea`.
+
+```tsx
+import { render } from '@testing-library/react';
+import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+
+...
+
+test('text-area', () => {
+  render(
+    <>
+      <TextArea data-lgid="text-area-1" label="label 1" />
+      <TextArea data-lgid="text-area-2" label="label 2" value="text area" />
+    </>,
+  );
+  const { elements: lgElementsTextArea1, utils: lgUtilsTextArea1 } =
+    getLGTextAreaUtils('text-area-1'); // data-lgid
+  const { elements: lgElementsTextArea2, utils: lgUtilsTextArea2 } =
+    getLGTextAreaUtils('text-area-2'); // data-lgid
+
+  // First TextArea
+  expect(lgElementsTextArea1.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextArea1.getInputValue()).toBe('');
+
+  // Second TextArea
+  expect(lgElementsTextArea2.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextArea2.getInputValue()).toBe('text area');
+});
+```
+
+#### TextArea with other LG form elements
+
+```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+
+...
+
+test('Form', () => {
+  render(
+    <Form>
+      <Toggle aria-label="Toggle label" />
+      <TextInput label="TextInput label" />
+      <TextArea label="TextArea label" />
+    </Form>,
+  );
+  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextAreaUtils();
+  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputUtils();
+  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaUtils();
+
+  // LG Toggle
+  expect(lgElementsToggle.getInput()).toBeInTheDocument();
+  expect(lgUtilsToggle.getInputValue()).toBe('false');
+
+  // LG TextInput
+  expect(lgElementsTextInput.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput.getInputValue()).toBe('');
+
+  // LG TextArea
+  expect(lgElementsTextArea.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextArea.getInputValue()).toBe('');
+});
+```
+
+### Test Utils
+
+#### Elements
+
+```tsx
+const {
+  elements: { getInput, getLabel, getDescription, getErrorMessage },
+} = getLGTextAreaUtils();
+```
+
+| Util              | Description                    | Returns                       |
+| ----------------- | ------------------------------ | ----------------------------- |
+| `getInput`        | Returns the input node         | `HTMLButtonElement`           |
+| `getLabel`        | Returns the label node         | `HTMLButtonElement` \| `null` |
+| `getDescription`  | Returns the description node   | `HTMLButtonElement` \| `null` |
+| `getErrorMessage` | Returns the error message node | `HTMLButtonElement` \| `null` |
+
+#### Utils
+
+```tsx
+const {
+  utils: { getInputValue, isDisabled, isValid, isError },
+} = getLGTextAreaUtils();
+```
+
+| Util            | Description                                | Returns   |
+| --------------- | ------------------------------------------ | --------- |
+| `getInputValue` | Returns the input value                    | `string`  |
+| `isDisabled`    | Returns whether the input is disabled      | `boolean` |
+| `isValid`       | Returns whether the input state is `valid` | `boolean` |
+| `isError`       | Returns whether the input state is `error` | `boolean` |

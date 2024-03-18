@@ -44,28 +44,6 @@ return (
 );
 ```
 
-**Output HTML**
-
-```html
-<div class="leafygreen-ui-4t2zpc">
-  <label for="text-input-2604213" class="leafygreen-ui-1ie388"> Email </label>
-  <p class="leafygreen-ui-1vlu192">Enter your email below</p>
-  <div class="leafygreen-ui-lzja97">
-    <input
-      data-leafygreen-ui="input-selector"
-      class="leafygreen-ui-86cw8t"
-      type="text"
-      required=""
-      placeholder="your.email@example.com"
-      id="text-input-2604213"
-      value=""
-    />
-    <div data-leafygreen-ui="icon-selector" class="leafygreen-ui-m329s1"></div>
-    <div class="leafygreen-ui-1andb55"></div>
-  </div>
-</div>
-```
-
 ## Properties
 
 | Prop           | Type                                                                        | Description                                                                                                               | Default   |
@@ -94,14 +72,14 @@ Either `label` or `aria-labelledby` must be provided a string, or there will be 
 
 ## getLGTextInputUtils()
 
-`getLGTextInputUtils()` is a a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an errror will be thrown.
+`getLGTextInputUtils()` is a a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
 import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
 
-const { elements, utils } = getLGTextInputUtils(lgId?: string); // lgId defaults to 'lg-text_input' if left empty
+const { elements, utils } = getLGTextInputUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextInput`. It defaults to 'lg-text_input' if left empty.
 ```
 
 #### Single `TextInput`
@@ -123,6 +101,8 @@ test('text-input', () => {
 
 #### Multiple `TextInput`'s
 
+When testing multiple `TextInput`'s it is recommended to add the custom `data-lgid` attribute to each `TextInput`.
+
 ```tsx
 import { render } from '@testing-library/react';
 import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
@@ -137,9 +117,9 @@ test('text-input', () => {
     </>,
   );
   const { elements: lgElementsTextInput1, utils: lgUtilsTextInput1 } =
-    getLGTextInputUtils('text-input-1');
+    getLGTextInputUtils('text-input-1'); // data-lgid
   const { elements: lgElementsTextInput2, utils: lgUtilsTextInput2 } =
-    getLGTextInputUtils('text-input-2');
+    getLGTextInputUtils('text-input-2'); // data-lgid
 
   // First TextInput
   expect(lgElementsTextInput1.getInput()).toBeInTheDocument();
@@ -155,7 +135,7 @@ test('text-input', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGTextInputUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
 import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
 import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
 
