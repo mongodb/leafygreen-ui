@@ -53,14 +53,14 @@ export function SideNavGroupCollapsed({
 
   // compute the entered ul wrapper styles based on the ul height
   useEffect(() => {
-    const ulHeight = ulRef?.current?.getBoundingClientRect().height ?? 0;
+    const ulHeight = ulRef.current?.getBoundingClientRect().height ?? 0;
     transitionStyles['entered'] = css`
       opacity: 1;
       max-height: ${ulHeight + 1}px; // +1 for border
       border-bottom: 1px solid
         ${darkMode ? palette.gray.dark1 : palette.gray.light2};
     `;
-  }, [open, ulRef, darkMode]);
+  }, [open, ulRef.current, darkMode]);
 
   return (
     <>
