@@ -12,7 +12,7 @@ export interface ExpandableCardProps
   /**
    * The title of the card
    */
-  title: React.ReactNode;
+  title: ReactNode;
 
   /**
    * Description text below the title
