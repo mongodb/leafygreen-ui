@@ -101,7 +101,7 @@ Either `label` or `aria-labelledby` must be provided a string, or there will be 
 ```tsx
 import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
 
-const { elements, utils } = getLGTextInputUtils(lgId?: string); // lgId defaults to 'lg-toggle' if left empty
+const { elements, utils } = getLGTextInputUtils(lgId?: string); // lgId defaults to 'lg-text_input' if left empty
 ```
 
 #### Single `TextInput`
