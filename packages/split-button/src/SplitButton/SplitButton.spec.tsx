@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -132,6 +133,19 @@ describe('packages/split-button', () => {
 
       const menu = getByTestId(menuTestId);
       expect(menu.childElementCount).toEqual(4);
+    });
+
+    test('accepts a portalRef', () => {
+      const portalRef = createRef<HTMLElement>();
+      const { container } = renderSplitButton({
+        open,
+        portalRef,
+      });
+
+      waitFor(() => {
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBe(document.body.lastElementChild);
+      });
     });
   });
 
