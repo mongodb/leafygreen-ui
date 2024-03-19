@@ -15,7 +15,7 @@ import { FormFieldProvider } from '../FormFieldContext';
 import {
   errorTextContainerStyle,
   getFontSize,
-  paddingBottom,
+  marginBottom,
   textContainerStyle,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
@@ -65,7 +65,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           >
             <div
               className={cx(textContainerStyle, {
-                [paddingBottom]: !!(label || description),
+                [marginBottom]: !!(label || description),
               })}
             >
               {label && (
