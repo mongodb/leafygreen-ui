@@ -88,6 +88,18 @@ WithMessageRating.args = {
   children: <MessageFeedbackStory />,
 };
 
+export const VerifiedAnswer: StoryFn<typeof Message> = Template.bind({});
+VerifiedAnswer.args = {
+  isSender: false,
+  avatar: <Avatar variant="mongo" />,
+  verified: {
+    verifier: 'MongoDB Staff',
+    verifiedAt: new Date('2023-08-24T16:20:00Z'),
+  },
+  // @ts-ignore onChange is passed in the story itself
+  children: <MessageFeedbackStory />,
+};
+
 export const MultipleUser = () => (
   <LeafyGreenChatProvider>
     <div>

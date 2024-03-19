@@ -3,6 +3,7 @@ import React, {
   forwardRef,
   MutableRefObject,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -14,7 +15,9 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
+import { Link } from '@leafygreen-ui/typography';
 
+import { MessageBanner } from '../MessageBanner';
 import { MessageContainer, Variant } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 
@@ -25,6 +28,7 @@ import {
   hiddenStyles,
   invisibleStyles,
   messageClassName,
+  messageContainerWedgeStyles,
   messageContainerWrapperStyles,
   rightAlignedStyles,
   senderClassName,
@@ -45,6 +49,7 @@ export const Message = forwardRef(
       children,
       componentOverrides,
       markdownProps,
+      verified,
       darkMode: darkModeProp,
       baseFontSize: baseFontSizeProp,
       ...rest
@@ -55,7 +60,7 @@ export const Message = forwardRef(
     const fallbackRef = useRef<HTMLDivElement>(null);
     const ref =
       (forwardedRef as MutableRefObject<HTMLDivElement>) || fallbackRef;
-    const { darkMode } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
     const isRightAligned = align === Align.Right || (!align && isSender);
     const isLeftAligned = align === Align.Left || (!align && !isSender);
     const [isRenderingAvatar, setIsRenderingAvatar] = useState<boolean>(true);
@@ -88,6 +93,8 @@ export const Message = forwardRef(
       }
     }, [ref.current]);
 
+    const isVerified = verified !== undefined;
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
@@ -118,7 +125,11 @@ export const Message = forwardRef(
             <Polymorph
               as={componentOverrides?.MessageContainer ?? MessageContainer}
               variant={isSender ? Variant.Primary : Variant.Secondary}
+              className={cx({
+                [messageContainerWedgeStyles[theme]]: isVerified,
+              })}
             >
+              {isVerified ? <VerifiedAnswerBanner {...verified} /> : null}
               <Polymorph
                 as={componentOverrides?.MessageContent ?? MessageContent}
                 sourceType={sourceType}
@@ -148,3 +159,39 @@ export const Message = forwardRef(
 Message.displayName = 'Message';
 
 export default Message;
+
+function VerifiedAnswerBanner({
+  verifier,
+  verifiedAt,
+  learnMoreUrl,
+}: NonNullable<MessageProps['verified']>) {
+  const text = useMemo(() => {
+    const textParts = [`Answer Verified`];
+
+    if (verifier) {
+      textParts.push(`By ${verifier}`);
+    }
+
+    if (verifiedAt) {
+      const formattedDate = verifiedAt.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      textParts.push(`On ${formattedDate}`);
+    }
+
+    return textParts.join(' ');
+  }, [verifier, verifiedAt]);
+  return (
+    <MessageBanner variant="success">
+      {text}
+      {learnMoreUrl ? (
+        <>
+          {' | '}
+          <Link href={learnMoreUrl}>Learn More</Link>
+        </>
+      ) : null}
+    </MessageBanner>
+  );
+}
