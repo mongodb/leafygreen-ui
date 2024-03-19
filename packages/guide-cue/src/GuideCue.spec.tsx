@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState } from 'react';
 import {
   act,
   render,
@@ -203,6 +203,22 @@ describe('packages/guide-cue', () => {
       });
       await act(async () => {
         expect(elem.innerHTML.includes(guideCueTitle)).toBe(true);
+      });
+    });
+
+    test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
+      const portalRef = createRef<HTMLElement>();
+      const { container } = renderGuideCue({
+        open: true,
+        portalContainer,
+        portalRef,
+      });
+
+      waitFor(() => {
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBe(portalContainer);
       });
     });
   });
