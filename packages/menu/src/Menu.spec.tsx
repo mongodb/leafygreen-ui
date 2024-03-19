@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   getAllByRole as globalGetAllByRole,
   render,
@@ -52,6 +52,19 @@ describe('packages/menu', () => {
     const menu = getByTestId(menuTestId);
     const options = globalGetAllByRole(menu, 'menuitem');
     expect(options[0]).toHaveFocus();
+  });
+
+  test('accepts a portalRef', () => {
+    const portalRef = createRef<HTMLElement>();
+    renderMenu({
+      open: true,
+      portalRef,
+    });
+
+    waitFor(() => {
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(document.body.lastElementChild);
+    });
   });
 
   describe('when uncontrolled', () => {
