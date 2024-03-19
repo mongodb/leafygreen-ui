@@ -36,6 +36,7 @@ export const Menu = ({
   baseFontSize,
   menuItems,
   containerRef,
+  portalRef,
   id,
   onTriggerClick,
   onChange,
@@ -140,6 +141,7 @@ export const Menu = ({
         id={id}
         open={open}
         ref={menuRef}
+        portalRef={portalRef}
         {...rest}
       >
         {renderMenuItems}
