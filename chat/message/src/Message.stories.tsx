@@ -43,7 +43,7 @@ const meta: StoryMetaType<typeof Message> = {
   title: 'Chat/Message',
   component: Message,
   args: {
-    message: StoryMarkdown,
+    messageBody: StoryMarkdown,
     avatar: <Avatar variant="user" name="Sean Park" />,
     sourceType: MessageSourceType.Markdown,
   },
@@ -71,7 +71,7 @@ export const Basic: StoryFn<typeof Message> = Template.bind({});
 
 export const Text: StoryFn<typeof Message> = Template.bind({});
 Text.args = {
-  sourceType: undefined,
+  sourceType: MessageSourceType.Text,
 };
 
 export const Mongo: StoryFn<typeof Message> = Template.bind({});
