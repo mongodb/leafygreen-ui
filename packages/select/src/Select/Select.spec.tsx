@@ -346,6 +346,18 @@ describe('packages/select', () => {
       expect(queryByText('Select')).not.toBeInTheDocument();
     });
 
+    test('accepts a portalRef', () => {
+      const portalRef = createRef<HTMLElement>();
+      const { container } = render(
+        <Select portalRef={portalRef} {...defaultProps} />,
+      );
+
+      waitFor(() => {
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBe(container.firstElementChild);
+      });
+    });
+
     describe.each([
       ['dark', true],
       ['light', false],

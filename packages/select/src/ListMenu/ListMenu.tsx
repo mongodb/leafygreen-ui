@@ -35,6 +35,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       dropdownWidthBasis,
       usePortal = true,
       portalContainer,
+      portalRef,
       scrollContainer,
       portalClassName,
       popoverZIndex,
@@ -76,7 +77,13 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       onExit,
       onExited,
       ...(usePortal
-        ? { usePortal, portalClassName, portalContainer, scrollContainer }
+        ? {
+            usePortal,
+            portalClassName,
+            portalContainer,
+            portalRef,
+            scrollContainer,
+          }
         : { usePortal }),
     };
 
