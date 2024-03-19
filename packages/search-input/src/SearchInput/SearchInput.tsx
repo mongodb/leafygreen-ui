@@ -81,7 +81,12 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onChange: onChangeProp,
       onSubmit: onSubmitProp,
       'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledby,
+      'aria-labelledby': ariaLabelledBy,
+      usePortal,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      scrollContainer,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -365,6 +370,18 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       isOpen && withTypeAhead,
     );
 
+    const popoverProps = {
+      ...(usePortal
+        ? {
+            usePortal,
+            portalClassName,
+            portalContainer,
+            portalRef,
+            scrollContainer,
+          }
+        : { usePortal }),
+    };
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <SearchInputContextProvider
@@ -440,6 +457,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                 open={isOpen}
                 refEl={searchBoxRef}
                 ref={menuRef}
+                {...popoverProps}
               >
                 {updatedChildren}
               </SearchResultsMenu>
