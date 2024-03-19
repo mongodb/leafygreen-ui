@@ -21,11 +21,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/code": "^14.2.13",
+    "@leafygreen-ui/code": "^14.2.19",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^11.0.0",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^17.0.0",
+    "@leafygreen-ui/lib": "^13.2.1",
+    "@leafygreen-ui/tokens": "^2.5.1",
+    "@leafygreen-ui/typography": "^18.2.2",
     "react-markdown": "^8.0.7"
   },
   "peerDependencies": {
