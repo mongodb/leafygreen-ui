@@ -132,6 +132,7 @@ export function Combobox<M extends boolean>({
   usePortal = true,
   portalClassName,
   portalContainer,
+  portalRef,
   scrollContainer,
   popoverZIndex,
   ...rest
@@ -1161,6 +1162,7 @@ export function Combobox<M extends boolean>({
           usePortal,
           portalClassName,
           portalContainer,
+          portalRef,
           scrollContainer,
         }
       : { usePortal }),
@@ -1437,6 +1439,12 @@ Combobox.propTypes = {
   usePortal: PropTypes.bool,
   scrollContainer: PropTypes.elementType,
   portalContainer: PropTypes.elementType,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
   portalClassName: PropTypes.string,
 };
 

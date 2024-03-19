@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   act,
   fireEvent,
@@ -68,6 +68,18 @@ describe('packages/combobox', () => {
       isUndefined(fn)
         ? test.todo(name)
         : testif(select === 'multiple')(name, fn);
+
+    test('accepts a portalRef', () => {
+      const portalRef = createRef<HTMLElement>();
+      const { openMenu } = renderCombobox(select, {
+        portalRef,
+      });
+      openMenu();
+      waitFor(() => {
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBe(document.body.lastElementChild);
+      });
+    });
 
     describe('Basic rendering', () => {
       // Label prop
