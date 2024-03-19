@@ -81,12 +81,8 @@ export type ConditionalUnitSelectProps =
   | WithUnitSelectProps
   | WithoutUnitSelectProps;
 
-export type PopoverProps = PortalControlProps & {
-  /**
-   * Number that controls the z-index of the popover element directly.
-   */
-  popoverZIndex?: ImportedPopoverProps['popoverZIndex'];
-};
+export type PopoverProps = PortalControlProps &
+  Pick<ImportedPopoverProps, 'popoverZIndex'>;
 
 export interface BaseNumberInputProps
   extends Omit<
