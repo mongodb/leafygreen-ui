@@ -300,6 +300,18 @@ describe('packages/select', () => {
       expect(queryByText('Select')).not.toBeInTheDocument();
     });
 
+    test('accepts a portalRef', () => {
+      const portalRef = createRef<HTMLElement>();
+      const { container } = render(
+        <Select portalRef={portalRef} {...defaultProps} />,
+      );
+
+      waitFor(() => {
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBe(container.firstElementChild);
+      });
+    });
+
     test('does not render invalid  option', async () => {
       const { queryByText } = Context.within(
         Jest.spyContext(console, 'error'),
