@@ -62,6 +62,19 @@ describe('packages/text-area', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
+  test('setting a defaultValue sets a default initial value and can be changed after', () => {
+    const { textArea } = renderTextArea({
+      defaultValue: 'a fun default value',
+    });
+    expect((textArea as HTMLTextAreaElement).value).toBe('a fun default value');
+
+    fireEvent.change(textArea, {
+      target: { value: 'a' },
+    });
+
+    expect((textArea as HTMLTextAreaElement).value).toBe('a');
+  });
+
   describe('when the "state" prop is set to error, and an "errorMessage" is set', () => {
     test('the error message appears in the DOM', () => {
       const { container } = renderTextArea({
