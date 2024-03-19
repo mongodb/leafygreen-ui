@@ -38,7 +38,6 @@ import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
-import Collections from './Collections.svg';
 import Colon from './Colon.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
@@ -106,6 +105,7 @@ import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
 import Primary from './Primary.svg';
+import Project from './Project.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Read from './Read.svg';
 import Recommended from './Recommended.svg';
@@ -192,7 +192,6 @@ const _glyphs = {
   Cloud,
   Code,
   CodeBlock,
-  Collections,
   Colon,
   Connect,
   Copy,
@@ -260,6 +259,7 @@ const _glyphs = {
   Plus,
   PlusWithCircle,
   Primary,
+  Project,
   QuestionMarkWithCircle,
   Read,
   Recommended,
