@@ -1,5 +1,11 @@
 # @leafygreen-ui/expandable-card
 
+## 3.1.0
+
+### Minor Changes
+
+- 7ec22b90: Component now responds to changes in the value of `defaultOpen` prop
+
 ## 3.0.24
 
 ### Patch Changes

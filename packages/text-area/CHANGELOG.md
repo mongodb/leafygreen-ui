@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-area
 
+## 8.1.1
+
+### Patch Changes
+
+- 54a1bfb8: Allow defaultValue to be used in TextArea
+
 ## 8.1.0
 
 ### Minor Changes
