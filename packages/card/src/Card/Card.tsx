@@ -1,26 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import { colorSet, containerStyle } from './styles';
 import { CardProps, ContentStyle } from './types';
 
-/**
- * Cards are used to organize information into consumable chunks.
- */
-export const Card = React.forwardRef(
+export const Card = InferredPolymorphic<CardProps, 'div'>(
   (
-    {
-      className,
-      contentStyle,
-      darkMode: darkModeProp,
-      ...rest
-    }: BoxProps<'div', CardProps>,
+    { as, className, contentStyle, darkMode: darkModeProp, ...rest },
     forwardRef,
   ) => {
+    const { Component } = useInferredPolymorphic(as, rest, 'div');
+    const { theme } = useDarkMode(darkModeProp);
+
     if (
       contentStyle === undefined &&
       (('onClick' in rest && rest.onClick !== undefined) ||
@@ -29,11 +27,9 @@ export const Card = React.forwardRef(
       contentStyle = ContentStyle.Clickable;
     }
 
-    const { theme } = useDarkMode(darkModeProp);
-
     return (
-      <Box
-        // @ts-expect-error
+      <Component
+        ref={forwardRef}
         className={cx(
           containerStyle,
           colorSet[theme].containerStyle,
@@ -43,7 +39,6 @@ export const Card = React.forwardRef(
           },
           className,
         )}
-        ref={forwardRef}
         {...rest}
       />
     );
@@ -57,3 +52,5 @@ Card.propTypes = {
   darkMode: PropTypes.bool,
   contentStyle: PropTypes.oneOf(Object.values(ContentStyle)),
 };
+
+export default Card;

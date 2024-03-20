@@ -13,14 +13,7 @@ function isVisuallyClickable(element: HTMLElement): boolean {
   );
 }
 
-interface PartialCardProps {
-  children?: React.ReactNode;
-  className?: string;
-  href?: string;
-  onClick?: React.MouseEventHandler;
-  as?: 'section';
-  contentStyle?: ContentStyle;
-}
+type PartialCardProps = typeof Card;
 
 function renderCard({
   children = defaultChildren,
@@ -30,7 +23,6 @@ function renderCard({
   const cardId = 'cardID';
 
   const { container, getByTestId } = render(
-    // @ts-expect-error
     <Card data-testid={cardId} className={className} {...rest}>
       {children}
     </Card>,
