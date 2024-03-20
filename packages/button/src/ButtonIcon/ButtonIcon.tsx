@@ -124,7 +124,7 @@ const iconSize: Record<Size, string> = {
 
 const disabledIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.dark1};
@@ -132,7 +132,7 @@ const disabledIconStyle: Record<Theme, string> = {
 };
 
 const disabledIconOnlyDarkModeStyle = css`
-  color: ${palette.gray.dark2};
+  color: ${palette.gray.dark1};
 `;
 
 /**
