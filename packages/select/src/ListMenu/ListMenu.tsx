@@ -82,6 +82,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     return (
       <Popover
+        data-lgid="lg-select-popover"
         active={open && !disabled}
         spacing={6}
         align={Align.Bottom}

@@ -17,6 +17,7 @@ export const Description = ({
   baseFontSize: baseFontSizeOverride,
   darkMode: darkModeProp,
   disabled = false,
+  'data-lgid': dataLgId = 'lg-description',
   children,
   className,
   ...rest
@@ -26,6 +27,7 @@ export const Description = ({
 
   return (
     <p
+      data-lgid={dataLgId}
       className={cx(
         descriptionStyle,
         descriptionColorStyle[theme],

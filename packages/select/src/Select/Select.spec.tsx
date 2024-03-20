@@ -171,6 +171,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
       render(
+        // @ts-expect-error - label missing
         <Select {...defaultProps} label={undefined}>
           <Option>Option</Option>
         </Select>,

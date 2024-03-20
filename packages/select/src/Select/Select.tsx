@@ -66,6 +66,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
+      'data-lgid': dataLgId = 'lg-select',
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,
@@ -503,7 +504,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={containerRef} className={cx(wrapperStyle, className)}>
+        <div
+          ref={containerRef}
+          className={cx(wrapperStyle, className)}
+          data-lgid={dataLgId}
+        >
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>
               {label && (
@@ -565,6 +570,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
           <SelectContext.Provider value={providerData}>
             <MenuButton
+              data-lgid="lg-select-trigger"
               {...rest}
               id={menuButtonId}
               ref={menuButtonRef}
@@ -611,6 +617,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           </SelectContext.Provider>
           {state === State.Error && errorMessage && (
             <span
+              data-lgid="lg-select-error_message"
               className={cx(
                 errorTextStyle({ darkMode, sizeSet }),
                 css`
