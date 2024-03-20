@@ -1,5 +1,12 @@
 import React from 'react';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Option, OptionGroup, Select } from '../../';
 
@@ -15,7 +22,7 @@ const defaultProps = {
     </Option>,
     <Option key="blue">Blue</Option>,
     <Option key="orange" disabled>
-      Orange
+      Orange you glad
     </Option>,
     <OptionGroup key="enabled group" label="Enabled group">
       <Option>Green</Option>
@@ -29,6 +36,10 @@ const defaultProps = {
     </OptionGroup>,
   ],
 } as const;
+
+function waitForSelectTransitionDuration() {
+  return new Promise(res => setTimeout(res, transitionDuration.slower));
+}
 
 describe('packages/select/getLGSelectTestUtils', () => {
   describe('getLabel', () => {
@@ -89,13 +100,28 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
       expect(getSelect()).toHaveTextContent('Red');
     });
+
+    test('click', async () => {
+      render(<Select {...defaultProps} value="RED" readOnly />);
+      const {
+        elements: { getSelect, getOptions },
+      } = getLGSelectTestUtils();
+
+      const trigger = getSelect();
+      userEvent.click(trigger);
+      await waitFor(() => {
+        const allOptions = getOptions();
+        // `select` is counted as an option
+        expect(allOptions).toHaveLength(8);
+      });
+    });
   });
 
   describe('mega', () => {
-    test('with value', async () => {
+    test('1', async () => {
       render(<Select {...defaultProps} />);
       const {
-        elements: { getOptions },
+        elements: { getOptions, getPopover },
         utils: { clickTrigger },
       } = getLGSelectTestUtils();
 
@@ -105,6 +131,55 @@ describe('packages/select/getLGSelectTestUtils', () => {
         // `select` is counted as an option
         expect(allOptions).toHaveLength(8);
       });
+
+      clickTrigger();
+      await waitForElementToBeRemoved(getPopover());
+    });
+
+    test('2', async () => {
+      render(<Select {...defaultProps} />);
+      const {
+        elements: { getOptionByValue },
+        utils: { clickTrigger },
+      } = getLGSelectTestUtils();
+
+      clickTrigger();
+      await waitFor(() => {
+        expect(getOptionByValue('Red')).toBeInTheDocument();
+        expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
+        expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
+      });
+    });
+
+    test('3', async () => {
+      render(<Select {...defaultProps} />);
+      const {
+        elements: { getOptionByValue },
+        utils: { clickTrigger },
+      } = getLGSelectTestUtils();
+
+      clickTrigger();
+      await waitForSelectTransitionDuration();
+      expect(getOptionByValue('Red')).toBeInTheDocument();
+      expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
+      expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
+    });
+
+    test('4', async () => {
+      render(<Select {...defaultProps} />);
+      const {
+        elements: { getPopover },
+        utils: { clickTrigger, clickOption, getSelectValue },
+      } = getLGSelectTestUtils();
+
+      expect(getSelectValue()).toBe('Select');
+      clickTrigger();
+      await waitForSelectTransitionDuration();
+      clickOption('Red');
+      await waitForElementToBeRemoved(getPopover());
+      expect(getSelectValue()).toBe('Red');
     });
   });
 });
+
+// without portal

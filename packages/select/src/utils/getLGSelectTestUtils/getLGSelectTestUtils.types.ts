@@ -23,7 +23,9 @@ export interface LGSelectTestUtilsReturnType {
     /**
      * Returns an individual `Select` option
      */
-    getOptionByValue: (value: string) => HTMLLIElement;
+    getOptionByValue: (value: string) => HTMLLIElement | null;
+
+    getPopover: () => HTMLDivElement;
   };
   utils: SelectUtils & {
     /**

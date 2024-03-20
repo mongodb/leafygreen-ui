@@ -1,6 +1,12 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import { LGSelectTestUtilsReturnType } from './getLGSelectTestUtils.types';
+
+export function waitForSelectTransitionDuration() {
+  return new Promise(res => setTimeout(res, transitionDuration.slower));
+}
 
 export const getLGSelectTestUtils = (
   lgId = 'lg-select',
@@ -74,21 +80,25 @@ export const getLGSelectTestUtils = (
     return !!warningIcon;
   };
 
+  // We cannot query within the select element because if the popover is using a portal, the element will render outside the select element
+  const getPopover = (): HTMLDivElement => getByLgId('lg-select-popover');
+
   const getAllOptions = (): Array<HTMLLIElement> => {
     // only one select popover should be open at a time
-    const popover = getByLgId('lg-select-popover');
+    const popover = getPopover();
 
     // Find all options
     const allOptions =
       popover.querySelectorAll<HTMLLIElement>('[role="option"]');
 
+    // unlikley to happen since the select will not render without options
     if (!allOptions.length)
       throw new Error('Could not find any `Select` options.');
 
     return Array.from(allOptions);
   };
 
-  const getOptionByValue = (value: string): HTMLLIElement => {
+  const getOptionByValue = (value: string) => {
     if (!value) throw new Error('Value cannot be empty');
 
     const allOptions = getAllOptions();
@@ -96,10 +106,7 @@ export const getLGSelectTestUtils = (
     // Find the option with the value
     const option = allOptions.find(node => node.textContent === value);
 
-    if (!option)
-      throw new Error(
-        `Could not find Select option with the value '${value}' .`,
-      );
+    if (!option) return null;
 
     return option;
   };
@@ -125,6 +132,7 @@ export const getLGSelectTestUtils = (
       getErrorMessage: () => errorMessage,
       getOptions: () => getAllOptions(),
       getOptionByValue: (value: string) => getOptionByValue(value),
+      getPopover: () => getPopover(),
     },
     utils: {
       isDisabled: () => isInputDisabled(),
