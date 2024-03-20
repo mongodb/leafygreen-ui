@@ -123,7 +123,6 @@ function Checkbox({
             className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
             type="checkbox"
             name={name}
-            disabled={disabled}
             checked={isChecked}
             aria-label="checkbox"
             aria-disabled={disabled}
