@@ -1,5 +1,18 @@
 # @leafygreen-ui/expandable-card
 
+## 3.2.0
+
+### Minor Changes
+
+- 9e21c595: `title` values can now be type `React.ReactNode` rather than just type `string`
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
 ## 3.1.0
 
 ### Minor Changes

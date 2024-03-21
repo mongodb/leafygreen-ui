@@ -123,18 +123,12 @@ export const TextArea: TextArea = forwardRef<
     >
       <div className={cx(containerStyles, className)} data-lgid={dataLgId}>
         {label && (
-          <Label
-            htmlFor={id}
-            disabled={disabled}
-            data-lgid="lg-text_area-label"
-          >
+          <Label htmlFor={id} disabled={disabled}>
             {label}
           </Label>
         )}
         {description && (
-          <Description disabled={disabled} data-lgid="lg-text_area-description">
-            {description}
-          </Description>
+          <Description disabled={disabled}>{description}</Description>
         )}
         <textarea
           data-lgid="lg-text_area-input"

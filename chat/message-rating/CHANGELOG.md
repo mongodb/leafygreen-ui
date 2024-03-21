@@ -1,5 +1,14 @@
 # @lg-chat/message-rating
 
+## 2.0.1
+
+### Patch Changes
+
+- 9079c0ae: Upgrades internal lg components
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
 ## 2.0.0
 
 ### Major Changes

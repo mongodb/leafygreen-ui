@@ -16,7 +16,7 @@ export const getLGTextInputUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-form_field-label"]',
+    '[data-lgid="lg-label"]',
   );
 
   /**
@@ -24,7 +24,7 @@ export const getLGTextInputUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-form_field-description"]',
+    '[data-lgid="lg-description"]',
   );
 
   /**

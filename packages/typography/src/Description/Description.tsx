@@ -15,6 +15,7 @@ import { DescriptionProps } from './Description.types';
 
 export const Description = ({
   baseFontSize: baseFontSizeOverride,
+  'data-lgid': dataLgId = 'lg-description',
   darkMode: darkModeProp,
   disabled = false,
   'data-lgid': dataLgId = 'lg-description',

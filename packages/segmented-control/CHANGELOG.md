@@ -1,5 +1,13 @@
 # @leafygreen-ui/segmented-control
 
+## 8.2.10
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
 ## 8.2.9
 
 ### Patch Changes

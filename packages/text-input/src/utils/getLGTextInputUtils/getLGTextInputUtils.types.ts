@@ -5,10 +5,5 @@ type TextInputUtils = FormUtils;
 
 export interface LGTextInputUtilsReturnType {
   elements: TextInputElements;
-  utils: TextInputUtils & {
-    /**
-     * Returns whether the input is `optional`
-     */
-    isOptional: () => boolean;
-  };
+  utils: TextInputUtils;
 }

@@ -1,5 +1,15 @@
 # @leafygreen-ui/text-input
 
+## 12.1.26
+
+### Patch Changes
+
+- Updated dependencies [223666eb]
+- Updated dependencies [74057388]
+  - @leafygreen-ui/form-field@1.0.0
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
 ## 12.1.25
 
 ### Patch Changes

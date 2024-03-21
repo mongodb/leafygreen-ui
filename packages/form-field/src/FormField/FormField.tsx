@@ -15,7 +15,8 @@ import { FormFieldProvider } from '../FormFieldContext';
 import {
   errorTextContainerStyle,
   getFontSize,
-  labelTextContainerStyle,
+  marginBottom,
+  textContainerStyle,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';
@@ -62,11 +63,14 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             ref={fwdRef}
             {...rest}
           >
-            <div className={labelTextContainerStyle}>
+            <div
+              className={cx(textContainerStyle, {
+                [marginBottom]: !!(label || description),
+              })}
+            >
               {label && (
                 <Label
                   data-testid="lg-form_field-label"
-                  data-lgid="lg-form_field-label"
                   className={getFontSize({ baseFontSize, size })}
                   htmlFor={inputId}
                   id={labelId}
@@ -78,7 +82,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {description && (
                 <Description
                   data-testid="lg-form_field-description"
-                  data-lgid="lg-form_field-description"
                   className={getFontSize({ baseFontSize, size })}
                   id={descriptionId}
                   disabled={disabled}
@@ -88,8 +91,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
             </div>
             {children}
-            <div className={errorTextContainerStyle}>
-              {state === FormFieldState.Error && !disabled && (
+
+            {state === FormFieldState.Error && !disabled && (
+              <div className={errorTextContainerStyle}>
                 <Error
                   data-testid="lg-form_field-error_message"
                   data-lgid="lg-form_field-error_message"
@@ -98,8 +102,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                 >
                   {errorMessage}
                 </Error>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </FormFieldProvider>
       </LeafyGreenProvider>
