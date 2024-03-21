@@ -3,6 +3,7 @@ import { type FormElements, type FormUtils } from '@lg-tools/test-harnesses';
 type SelectElements = Omit<FormElements, 'getInput'>;
 type SelectUtils = Omit<FormUtils, 'isValid' | 'getInputValue' | 'isOptional'>;
 
+// TODO: move these to the test-harnesses package
 export interface LGSelectTestUtilsReturnType {
   elements: SelectElements & {
     /**
