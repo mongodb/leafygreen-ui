@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.0.0
+
+### Major Changes
+
+- 74057388: Renames `'Collections'` glyph to `'Project'`
+
 ## 11.29.1
 
 ### Patch Changes

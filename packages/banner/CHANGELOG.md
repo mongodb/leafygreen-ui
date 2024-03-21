@@ -1,5 +1,14 @@
 # @leafygreen-ui/banner
 
+## 7.0.19
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
 ## 7.0.18
 
 ### Patch Changes

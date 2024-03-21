@@ -1,5 +1,12 @@
 # @leafygreen-ui/typography
 
+## 18.2.3
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+
 ## 18.2.2
 
 ### Patch Changes
