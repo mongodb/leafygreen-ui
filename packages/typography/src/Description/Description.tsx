@@ -18,7 +18,6 @@ export const Description = ({
   'data-lgid': dataLgId = 'lg-description',
   darkMode: darkModeProp,
   disabled = false,
-  'data-lgid': dataLgId = 'lg-description',
   children,
   className,
   ...rest

@@ -1,7 +1,7 @@
 import { type FormElements, type FormUtils } from '@lg-tools/test-harnesses';
 
 type SelectElements = Omit<FormElements, 'getInput'>;
-type SelectUtils = Omit<FormUtils, 'isValid' | 'getInputValue'>;
+type SelectUtils = Omit<FormUtils, 'isValid' | 'getInputValue' | 'isOptional'>;
 
 export interface LGSelectTestUtilsReturnType {
   elements: SelectElements & {
@@ -9,11 +9,6 @@ export interface LGSelectTestUtilsReturnType {
      * Returns the `Select` trigger
      */
     getSelect: () => HTMLButtonElement;
-
-    // /**
-    //  * Returns the `Select` dropdown
-    //  */
-    // getDropdown: () => HTMLDivElement;
 
     /**
      * Returns an array of `Select` options
