@@ -14,6 +14,7 @@ export const sideNavItemClassName = createUniqueClassName('side-nav-item');
 
 export const liStyle = css`
   width: 100%;
+  list-style: none;
 `;
 
 // container styles

@@ -1,5 +1,14 @@
 # @leafygreen-ui/password-input
 
+## 1.0.18
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
 ## 1.0.17
 
 ### Patch Changes

@@ -1,5 +1,17 @@
 # @leafygreen-ui/form-field
 
+## 1.0.0
+
+### Major Changes
+
+- 223666eb: Conditionally renders div wrapping `errorMessage` and label/description content, so that styles appear as-expected.
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
 ## 0.3.2
 
 ### Patch Changes

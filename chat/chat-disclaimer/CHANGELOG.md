@@ -1,5 +1,12 @@
 # @lg-chat/chat-disclaimer
 
+## 3.0.1
+
+### Patch Changes
+
+- 9079c0ae: Upgrades internal lg components
+  - @leafygreen-ui/typography@18.2.3
+
 ## 3.0.0
 
 ### Major Changes

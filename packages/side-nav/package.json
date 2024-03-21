@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "14.1.0",
+  "version": "14.1.1",
   "description": "leafyGreen UI Kit Side Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -26,13 +26,13 @@
     "@leafygreen-ui/box": "^3.1.8",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.0.1",
-    "@leafygreen-ui/icon": "^11.25.0",
+    "@leafygreen-ui/icon": "^12.0.0",
     "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/portal": "^5.0.3",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/tooltip": "^11.0.0",
-    "@leafygreen-ui/typography": "^18.0.1",
+    "@leafygreen-ui/tooltip": "^11.0.2",
+    "@leafygreen-ui/typography": "^18.2.3",
     "polished": "^4.2.2",
     "react-transition-group": "^4.4.5"
   },
@@ -40,7 +40,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.10"
   },
   "devDependencies": {
-    "@leafygreen-ui/select": "^11.1.0"
+    "@leafygreen-ui/select": "^11.2.2"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {
