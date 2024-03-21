@@ -18,4 +18,9 @@ export interface FormUtils {
    * Returns the input value
    */
   getInputValue: () => string;
+
+  /**
+   * Returns whether the input is `optional`
+   */
+  isOptional: () => boolean;
 }

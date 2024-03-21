@@ -16,7 +16,7 @@ export const getLGTextAreaUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-text_area-label"]',
+    '[data-lgid="lg-label"]',
   );
 
   /**
@@ -24,7 +24,7 @@ export const getLGTextAreaUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-text_area-description"]',
+    '[data-lgid="lg-description"]',
   );
 
   /**
