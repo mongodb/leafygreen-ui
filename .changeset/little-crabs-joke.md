@@ -3,3 +3,4 @@
 ---
 
 - Exports `getLGTextAreaUtils`, a util to reliably interact with `LG TextArea` in a product test suite.
+- Extends `DarkModeProps` from `@leafygreen-ui/lib`
