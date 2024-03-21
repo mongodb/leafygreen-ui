@@ -8,7 +8,7 @@ import userEvent from '@testing-library/user-event';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { Option, OptionGroup, Select } from '../../';
+import { Option, OptionGroup, Select, State } from '../../';
 
 import { getLGSelectTestUtils } from './getLGSelectTestUtils';
 
@@ -83,36 +83,138 @@ describe('packages/select/getLGSelectTestUtils', () => {
   });
 
   describe('getSelect', () => {
-    test('default', () => {
+    test('is in the document', () => {
       render(<Select {...defaultProps} />);
       const {
         elements: { getSelect },
       } = getLGSelectTestUtils();
 
+      expect(getSelect()).toBeInTheDocument();
       expect(getSelect()).toHaveTextContent('Select');
     });
 
-    test('with value', () => {
+    test('can be clicked', async () => {
       render(<Select {...defaultProps} value="RED" readOnly />);
       const {
-        elements: { getSelect },
-      } = getLGSelectTestUtils();
-
-      expect(getSelect()).toHaveTextContent('Red');
-    });
-
-    test('click', async () => {
-      render(<Select {...defaultProps} value="RED" readOnly />);
-      const {
-        elements: { getSelect, getOptions },
+        elements: { getSelect, getPopover },
       } = getLGSelectTestUtils();
 
       const trigger = getSelect();
       userEvent.click(trigger);
       await waitFor(() => {
-        const allOptions = getOptions();
-        // `select` is counted as an option
-        expect(allOptions).toHaveLength(8);
+        expect(getPopover()).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('getErrorMessage', () => {
+    test('is in the document', () => {
+      render(
+        <Select {...defaultProps} state={State.Error} errorMessage="whoops" />,
+      );
+      const {
+        elements: { getErrorMessage },
+      } = getLGSelectTestUtils();
+
+      expect(getErrorMessage()).toBeInTheDocument();
+      expect(getErrorMessage()).toHaveTextContent('whoops');
+    });
+
+    test('is not in the document', async () => {
+      render(<Select {...defaultProps} />);
+      const {
+        elements: { getErrorMessage },
+      } = getLGSelectTestUtils();
+
+      expect(getErrorMessage()).not.toBeInTheDocument();
+    });
+  });
+
+  describe('getOptions', () => {
+    describe.each([true, false])('usePortal={%p}', boolean => {
+      test('returns all options then await waitFor', async () => {
+        render(<Select usePortal={boolean} {...defaultProps} />);
+        const {
+          elements: { getOptions },
+          utils: { clickTrigger },
+        } = getLGSelectTestUtils();
+
+        clickTrigger();
+        await waitFor(() => {
+          // `select` is an option
+          expect(getOptions()).toHaveLength(8);
+        });
+      });
+    });
+  });
+
+  describe('getOptionByValue', () => {
+    describe.each([true, false])('usePortal={%p}', boolean => {
+      describe('is in the document', () => {
+        test('after awaiting waitFor', async () => {
+          render(<Select usePortal={boolean} {...defaultProps} />);
+          const {
+            elements: { getOptionByValue },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
+
+          clickTrigger();
+          await waitFor(() => {
+            expect(getOptionByValue('Red')).toBeInTheDocument();
+            expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('is not in the document', () => {
+        test('after awaiting waitFor', async () => {
+          render(<Select usePortal={boolean} {...defaultProps} />);
+          const {
+            elements: { getOptionByValue },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
+
+          clickTrigger();
+          await waitFor(() => {
+            expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
+          });
+        });
+      });
+    });
+  });
+
+  describe('getPopover', () => {
+    describe.each([true, false])('when usePortal={%p}', boolean => {
+      describe('is in the document', () => {
+        test('after awaiting waitFor', async () => {
+          render(<Select usePortal={boolean} {...defaultProps} />);
+          const {
+            elements: { getPopover },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
+
+          clickTrigger();
+          await waitFor(() => {
+            expect(getPopover()).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('is not in the document', () => {
+        test('after awaiting waitFor', async () => {
+          render(<Select usePortal={boolean} {...defaultProps} />);
+          const {
+            elements: { getPopover },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
+
+          clickTrigger();
+          await waitFor(() => {
+            expect(getPopover()).toBeInTheDocument();
+          });
+          clickTrigger();
+          await waitForElementToBeRemoved(getPopover());
+        });
       });
     });
   });
@@ -127,42 +229,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
       clickTrigger();
       await waitFor(() => {
-        const allOptions = getOptions();
         // `select` is counted as an option
-        expect(allOptions).toHaveLength(8);
+        expect(getOptions()).toHaveLength(8);
       });
 
       clickTrigger();
       await waitForElementToBeRemoved(getPopover());
-    });
-
-    test('2', async () => {
-      render(<Select {...defaultProps} />);
-      const {
-        elements: { getOptionByValue },
-        utils: { clickTrigger },
-      } = getLGSelectTestUtils();
-
-      clickTrigger();
-      await waitFor(() => {
-        expect(getOptionByValue('Red')).toBeInTheDocument();
-        expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
-        expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
-      });
-    });
-
-    test('3', async () => {
-      render(<Select {...defaultProps} />);
-      const {
-        elements: { getOptionByValue },
-        utils: { clickTrigger },
-      } = getLGSelectTestUtils();
-
-      clickTrigger();
-      await waitForSelectTransitionDuration();
-      expect(getOptionByValue('Red')).toBeInTheDocument();
-      expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
-      expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
     });
 
     test('4', async () => {
@@ -181,5 +253,3 @@ describe('packages/select/getLGSelectTestUtils', () => {
     });
   });
 });
-
-// without portal

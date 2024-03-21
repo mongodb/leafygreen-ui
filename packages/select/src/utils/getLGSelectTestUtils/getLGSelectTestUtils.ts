@@ -116,8 +116,11 @@ export const getLGSelectTestUtils = (
 
     const option = getOptionByValue(value);
 
+    if (!option)
+      throw new Error(`Could not find option with the value '${value}'.`);
+
     // Click option
-    option?.click();
+    option.click();
   };
 
   const clickTrigger = () => {
