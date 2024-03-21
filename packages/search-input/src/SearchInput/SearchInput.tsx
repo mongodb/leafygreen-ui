@@ -81,7 +81,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onSubmit: onSubmitProp,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
-      usePortal,
+      usePortal = true,
       portalClassName,
       portalContainer,
       portalRef,

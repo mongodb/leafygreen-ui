@@ -378,15 +378,18 @@ describe('packages/number-input', () => {
     });
 
     test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container } = renderNumberInput({
+      renderNumberInput({
+        portalContainer,
         portalRef,
         ...selectProps,
       });
-  
+
       waitFor(() => {
         expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(container.firstElementChild);
+        expect(portalRef.current).toBe(portalContainer);
       });
     });
   });

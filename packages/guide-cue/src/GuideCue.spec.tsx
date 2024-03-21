@@ -210,7 +210,7 @@ describe('packages/guide-cue', () => {
       const portalContainer = document.createElement('div');
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container } = renderGuideCue({
+      renderGuideCue({
         open: true,
         portalContainer,
         portalRef,

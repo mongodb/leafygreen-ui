@@ -347,14 +347,20 @@ describe('packages/select', () => {
     });
 
     test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container } = render(
-        <Select portalRef={portalRef} {...defaultProps} />,
+      render(
+        <Select
+          portalContainer={portalContainer}
+          portalRef={portalRef}
+          {...defaultProps}
+        />,
       );
 
       waitFor(() => {
         expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(container.firstElementChild);
+        expect(portalRef.current).toBe(portalContainer);
       });
     });
 
