@@ -1,9 +1,9 @@
 /* eslint react/prop-types: 0 */
 import React from 'react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { BoxProps } from '@leafygreen-ui/box';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import Card, { CardProps } from '.';
 

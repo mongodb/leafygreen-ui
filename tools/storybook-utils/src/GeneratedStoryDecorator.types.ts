@@ -1,8 +1,8 @@
+import React, { type ComponentProps } from 'react';
 import { Args } from '@storybook/csf';
 import { StoryFn } from '@storybook/react';
-import React, { type ComponentProps } from 'react';
 
-import { StoryMetaType, type LeafyGreenProviderProps } from './StoryMeta.types';
+import { type LeafyGreenProviderProps, StoryMetaType } from './StoryMeta.types';
 
 export type ExtendedComponentProps<
   T extends React.ElementType,

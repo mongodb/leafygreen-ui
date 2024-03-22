@@ -23,12 +23,12 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^13.2.1",
     "@leafygreen-ui/palette": "^4.0.6",
     "@leafygreen-ui/tokens": "^2.5.1",
     "@leafygreen-ui/typography": "^18.2.2",
     "@lg-tools/build": "^0.4.0",
     "@lg-tools/storybook-decorators": "^0.2.6",
+    "@lg-tools/storybook-utils": "^0.0.1",
     "@mdx-js/react": "2.3.0",
     "@storybook/addon-a11y": "7.6.17",
     "@storybook/addon-essentials": "7.6.17",

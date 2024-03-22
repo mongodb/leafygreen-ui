@@ -1,10 +1,9 @@
 import React from 'react';
-
 import {
   storybookArgTypes,
   type StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
 
 import Copyable from '.';
 

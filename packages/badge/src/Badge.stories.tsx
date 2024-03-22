@@ -1,7 +1,6 @@
 import React from 'react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import Badge, { BadgeProps, Variant } from '.';
 

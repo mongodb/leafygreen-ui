@@ -1,15 +1,15 @@
 /* eslint-disable react/display-name */
 import React from 'react';
-
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+
+import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 
 import FormFooter, { FormFooterProps } from '.';
 

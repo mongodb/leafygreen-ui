@@ -1,15 +1,15 @@
 /* eslint-disable react/display-name */
 import React, { useRef, useState } from 'react';
-import { StoryFn } from '@storybook/react';
-
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
   type StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
 import { transitionDuration } from '@leafygreen-ui/tokens';

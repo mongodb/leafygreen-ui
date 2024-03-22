@@ -30,5 +30,8 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.7"
+  },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.0.1"
   }
 }

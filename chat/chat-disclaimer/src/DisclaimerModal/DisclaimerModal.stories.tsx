@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-} from '@leafygreen-ui/lib';
 import MarketingModal, {
   BlobPosition,
   GraphicStyle,

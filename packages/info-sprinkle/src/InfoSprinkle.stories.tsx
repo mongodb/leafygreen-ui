@@ -1,12 +1,12 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import { css } from '@leafygreen-ui/emotion';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Align, InfoSprinkle, Justify } from '.';
