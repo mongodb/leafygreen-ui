@@ -1,5 +1,13 @@
 # @lg-chat/message
 
+## 4.0.1
+
+### Patch Changes
+
+- 9079c0ae: Upgrades internal lg components
+- Updated dependencies [9079c0ae]
+  - @lg-chat/lg-markdown@2.0.1
+
 ## 4.0.0
 
 ### Major Changes

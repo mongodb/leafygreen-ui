@@ -1,5 +1,16 @@
 # @leafygreen-ui/combobox
 
+## 8.1.2
+
+### Patch Changes
+
+- Updated dependencies [7c6166f9]
+- Updated dependencies [74057388]
+  - @leafygreen-ui/chip@1.0.1
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
 ## 8.1.1
 
 ### Patch Changes

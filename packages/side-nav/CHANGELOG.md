@@ -1,5 +1,20 @@
 # @leafygreen-ui/side-nav
 
+## 14.1.1
+
+### Patch Changes
+
+- f1a57ed8: `SideNavItem` previously relied on parent context for `list-style`. Now, it is reset on each individual `SideNavItem`
+  [LG-3301](https://jira.mongodb.org/browse/LG-3301)
+
+  `SideNavGroupCollapsed` had a bug on initial render due to shallow dependency check. Now, when `initialCollapsed=false`, content will properly display on initial render
+  [LG-3357](https://jira.mongodb.org/browse/LG-3357)
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/tooltip@11.0.2
+  - @leafygreen-ui/typography@18.2.3
+
 ## 14.1.0
 
 ### Minor Changes
