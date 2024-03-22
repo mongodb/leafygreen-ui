@@ -7,8 +7,6 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { transitionDuration } from '@leafygreen-ui/tokens';
-
 import { Option, OptionGroup, Select, SelectProps, State } from '../../';
 
 import { getLGSelectTestUtils } from './getLGSelectTestUtils';
@@ -76,9 +74,27 @@ function renderSelectControlled(props = {}) {
   };
 }
 
-// function waitForSelectTransitionDuration() {
-//   return new Promise(res => setTimeout(res, transitionDuration.slower));
-// }
+function renderMultipleSelects() {
+  const renderUtils = render(
+    <>
+      <Select {...defaultProps} defaultValue="RED" data-lgid="lg-select-1" />
+      <Select {...defaultProps} defaultValue="Blue" data-lgid="lg-select-2" />
+    </>,
+  );
+
+  const { elements: testElements1, utils: testUtils1 } =
+    getLGSelectTestUtils('lg-select-1');
+  const { elements: testElements2, utils: testUtils2 } =
+    getLGSelectTestUtils('lg-select-2');
+
+  return {
+    ...renderUtils,
+    testElements1,
+    testElements2,
+    testUtils1,
+    testUtils2,
+  };
+}
 
 describe('packages/select/getLGSelectTestUtils', () => {
   describe('getLabel', () => {
@@ -146,7 +162,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('getOptions', () => {
     describe.each([true, false])('usePortal={%p}', boolean => {
-      test('returns all options then await waitFor', async () => {
+      test('returns all options', async () => {
         const { getOptions, clickTrigger } = renderSelect({
           usePortal: boolean,
         });
@@ -162,17 +178,15 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('getOptionByValue', () => {
     describe.each([true, false])('usePortal={%p}', boolean => {
-      describe('is in the document', () => {
-        test('after awaiting waitFor', async () => {
-          const { getOptionByValue, clickTrigger } = renderSelect({
-            usePortal: boolean,
-          });
+      test('is in the document', async () => {
+        const { getOptionByValue, clickTrigger } = renderSelect({
+          usePortal: boolean,
+        });
 
-          clickTrigger();
-          await waitFor(() => {
-            expect(getOptionByValue('Red')).toBeInTheDocument();
-            expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
-          });
+        clickTrigger();
+        await waitFor(() => {
+          expect(getOptionByValue('Red')).toBeInTheDocument();
+          expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
         });
       });
 
@@ -239,19 +253,19 @@ describe('packages/select/getLGSelectTestUtils', () => {
   describe('isDisabled', () => {
     test('is false', () => {
       const { isDisabled } = renderSelect();
-      expect(isDisabled()).toBe(false);
+      expect(isDisabled()).toBeFalsy();
     });
 
     test('is true', () => {
       const { isDisabled } = renderSelect({ disabled: true });
-      expect(isDisabled()).toBe(true);
+      expect(isDisabled()).toBeTruthy();
     });
   });
 
   describe('isError', () => {
     test('is false', () => {
       const { isError } = renderSelect();
-      expect(isError()).toBe(false);
+      expect(isError()).toBeFalsy();
     });
 
     test('is true', () => {
@@ -259,12 +273,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
         errorMessage: 'errrror',
         state: State.Error,
       });
-      expect(isError()).toBe(true);
+      expect(isError()).toBeTruthy();
     });
   });
 
   describe('getSelectValue', () => {
-    test('returns the value', () => {
+    test('returns the default value "Select"', () => {
       const { getSelectValue } = renderSelect();
       expect(getSelectValue()).toBe('Select');
     });
@@ -387,5 +401,14 @@ describe('packages/select/getLGSelectTestUtils', () => {
     });
   });
 
-  describe('multiple selects', () => {});
+  describe('multiple selects', () => {
+    test('has correct default value', () => {
+      const { testUtils1, testUtils2 } = renderMultipleSelects();
+
+      expect(testUtils1.getSelectValue()).toBe('Red');
+      expect(testUtils2.getSelectValue()).toBe('Blue');
+    });
+
+    test.todo('has correct number of options');
+  });
 });
