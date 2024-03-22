@@ -29,8 +29,7 @@
   "devDependencies": {
     "@leafygreen-ui/button": "^21.0.12",
     "@leafygreen-ui/icon-button": "^15.0.20",
-    "@lg-tools/storybook-utils": "^0.0.1",
-    "lodash": "^4.17.21"
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-field",
   "repository": {
