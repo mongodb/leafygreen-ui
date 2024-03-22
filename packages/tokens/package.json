@@ -27,7 +27,8 @@
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
     "lodash": "^4.17.21",
-    "@leafygreen-ui/lib": "^13.2.1"
+    "@leafygreen-ui/lib": "^13.2.1",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",
   "repository": {

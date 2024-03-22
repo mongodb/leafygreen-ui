@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.0.12",
-    "@leafygreen-ui/modal": "^16.0.6"
+    "@leafygreen-ui/modal": "^16.0.6",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
   "repository": {

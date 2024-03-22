@@ -33,6 +33,7 @@
     "@emotion/styled": "^11.10.5",
     "@lg-tools/build": "^0.4.0",
     "next": "^13.1.6",
-    "@leafygreen-ui/lib": "^13.0.0"
+    "@leafygreen-ui/lib": "^13.0.0",
+    "@lg-tools/storybook-utils": "^0.0.1"
   }
 }

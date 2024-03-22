@@ -45,7 +45,8 @@
     "@lg-chat/message": "^4.0.1",
     "@lg-chat/message-feed": "^3.0.1",
     "@lg-chat/message-prompts": "^2.0.1",
-    "@lg-chat/message-feedback": "^2.0.1"
+    "@lg-chat/message-feedback": "^2.0.1",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.7"
