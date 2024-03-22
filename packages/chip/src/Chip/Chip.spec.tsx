@@ -87,9 +87,10 @@ describe('packages/chip', () => {
       expect(chipText).toHaveTextContent(longLabel);
     });
 
-    test('renders aria-disabled attribute when disabled is set', () => {
+    test('renders with aria-disabled attribute but not disabled attribute when disabled prop is set', () => {
       const { chip } = renderChip({ disabled: true });
-      expect(chip.getAttribute('aria-disabled')).toBe('true');
+      expect(chip.getAttribute('aria-disabled')).toBeTruthy();
+      expect(chip.getAttribute('disabled')).toBeFalsy();
     });
   });
 
@@ -230,11 +231,12 @@ describe('packages/chip', () => {
       expect(button?.getAttribute('aria-label')).toBe('new aria label');
     });
 
-    test('renders aria-disabled attribute when disabled is set', () => {
+    test('renders with aria-disabled attribute but not disabled attribute when disabled prop is set', () => {
       const onDismiss = jest.fn();
-      const { queryByTestId } = renderChip({ disabled: true, onDismiss });
-      const button = queryByTestId('chip-dismiss-button');
-      expect(button?.getAttribute('aria-disabled')).toBe('true');
+      const { getByTestId } = renderChip({ disabled: true, onDismiss });
+      const button = getByTestId('chip-dismiss-button');
+      expect(button.getAttribute('aria-disabled')).toBeTruthy();
+      expect(button.getAttribute('disabled')).toBeFalsy();
     });
 
     test('does nothing when disabled button is clicked', () => {

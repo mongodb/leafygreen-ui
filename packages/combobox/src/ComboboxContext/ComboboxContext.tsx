@@ -29,7 +29,7 @@ export const defaultContext = {
   withIcons: false,
   disabled: false,
   isOpen: false,
-  state: State.none,
+  state: State.None,
   searchState: SearchState.unset,
   overflow: Overflow.expandY,
 };

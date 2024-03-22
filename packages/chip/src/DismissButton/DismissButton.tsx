@@ -33,7 +33,6 @@ export function DismissButton({
       data-testid="chip-dismiss-button"
       aria-label={ariaLabel}
       aria-disabled={disabled}
-      disabled={disabled}
       className={cx(
         dismissButtonBaseStyle,
         dismissButtonThemeStyle(variant, theme),
