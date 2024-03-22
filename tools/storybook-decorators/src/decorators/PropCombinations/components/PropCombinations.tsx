@@ -3,8 +3,11 @@ import React, { ReactElement } from 'react';
 import { GeneratedStoryConfig } from '@lg-tools/storybook-utils';
 import { Args, StoryFn } from '@storybook/react';
 import entries from 'lodash/entries';
+import values from 'lodash/values';
 
 import { cx } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 
 import {
   cellStyles,
@@ -14,11 +17,19 @@ import {
   instanceCellStyles,
   tableStyles,
 } from '../PropCombinations.styles';
-import { type PropCombination, valStr } from '../utils';
+import { valStr } from '../utils';
 import { RecursiveCombinations } from '../utils/RecursiveCombinations';
 import { PropName } from '../utils/types';
 
 import { Instance } from './Instance';
+
+interface PropCombinationTableProps<T extends React.ComponentType<any>> {
+  component: T;
+  variables: Array<[PropName<T>, Array<any> | undefined]>;
+  args: Args;
+  exclude: GeneratedStoryConfig<T>['excludeCombinations'];
+  decorator: GeneratedStoryConfig<T>['decorator'];
+}
 
 /**
  * Generates all combinations of each variable
@@ -29,13 +40,7 @@ export function PropCombinations<T extends React.ComponentType<any>>({
   args,
   exclude,
   decorator = (SFn: StoryFn) => <SFn />,
-}: {
-  component: T;
-  variables: Array<[PropName<T>, Array<any> | undefined]>;
-  args: Args;
-  exclude: GeneratedStoryConfig<T>['excludeCombinations'];
-  decorator: GeneratedStoryConfig<T>['decorator'];
-}): ReactElement<any> {
+}: PropCombinationTableProps<T>): ReactElement<any> {
   const allCombinations = RecursiveCombinations({}, [...variables], exclude);
 
   const comboCount = allCombinations.length;
@@ -43,50 +48,40 @@ export function PropCombinations<T extends React.ComponentType<any>>({
     `Rendering ${comboCount} prop combinations for component: ${component.displayName}`,
   );
 
-  const tables = allCombinations.reduce(
-    (t, combo) => {
-      const mode = combo.darkMode ? 'dark' : 'light';
-      t[mode].push(combo);
-      return t;
-    },
-    { light: [], dark: [] } as Record<
-      'light' | 'dark',
-      Array<PropCombination<T>>
-    >,
-  );
-
   return (
     <div className={generatedStoryWrapper}>
-      {entries(tables).map(([mode, combos]) => (
-        <table key={mode} className={tableStyles}>
-          <tbody>
-            {combos.map(combo => (
-              <tr
-                key={JSON.stringify(combo)}
-                className={cx(combinationRowStyles, {
-                  [combinationDarkModeStyles]: combo.darkMode || args.darkMode,
-                })}
-              >
-                <td className={cellStyles}>
-                  <pre>
-                    {entries(combo).map(([n, v]) => (
-                      <div key={n + v}>
-                        <b>{n}:</b> {valStr(v)}
-                      </div>
-                    ))}
-                  </pre>
-                </td>
-                <td className={cx(cellStyles, instanceCellStyles)}>
-                  <Instance
-                    component={component}
-                    instanceProps={{ ...args, ...combo }}
-                    decorator={decorator}
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {values(Theme).map(theme => (
+        <LeafyGreenProvider key={theme} darkMode={theme === Theme.Dark}>
+          <table className={tableStyles}>
+            <tbody>
+              {allCombinations.map(combo => (
+                <tr
+                  key={JSON.stringify(combo)}
+                  className={cx(combinationRowStyles, {
+                    [combinationDarkModeStyles]: theme === Theme.Dark,
+                  })}
+                >
+                  <td className={cellStyles}>
+                    <pre>
+                      {entries(combo).map(([n, v]) => (
+                        <div key={n + v}>
+                          <b>{n}:</b> {valStr(v)}
+                        </div>
+                      ))}
+                    </pre>
+                  </td>
+                  <td className={cx(cellStyles, instanceCellStyles)}>
+                    <Instance
+                      component={component}
+                      instanceProps={{ ...args, ...combo }}
+                      decorator={decorator}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </LeafyGreenProvider>
       ))}
     </div>
   );

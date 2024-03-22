@@ -68,8 +68,14 @@ const PropCombinationsDecorator: Decorator = (
           }
         }
 
+        // Remove explicitly defined `darkMode` prop from combinedArgs
+        // (we use LeafyGreenProvider) to define dark mode
+        if (combineArgs['darkMode']) {
+          delete combineArgs['darkMode'];
+        }
+
         // Convert the object to an array & ensure darkMode is the first prop
-        const variables = entries(combineArgs).sort(sortDarkMode);
+        const variables = entries(combineArgs); //.sort(sortDarkMode);
 
         const GeneratedStory: StoryType<typeof component> = () => (
           <div className={generatedStoryWrapper}>
@@ -97,8 +103,8 @@ export default PropCombinationsDecorator;
  *
  * We want darkMode to be first so we can easily divide the tables into two clear sections.
  */
-function sortDarkMode([propA]: [string, any], [propB]: [string, any]): number {
-  if (propA === 'darkMode') return -1;
-  if (propB === 'darkMode') return 1;
-  return 0;
-}
+// function sortDarkMode([propA]: [string, any], [propB]: [string, any]): number {
+//   if (propA === 'darkMode') return -1;
+//   if (propB === 'darkMode') return 1;
+//   return 0;
+// }
