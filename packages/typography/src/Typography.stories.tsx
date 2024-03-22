@@ -1,13 +1,13 @@
 import React from 'react';
-
-import { css, cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
   type StoryMetaType,
   type StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { palette } from '@leafygreen-ui/palette';
 
 import {

@@ -2,7 +2,7 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
 
 import { Size } from '..';
 

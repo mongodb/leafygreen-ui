@@ -2,8 +2,8 @@ import React from 'react';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import {
-  DarkModeProps,
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,

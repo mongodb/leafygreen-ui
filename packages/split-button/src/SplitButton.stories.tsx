@@ -2,17 +2,17 @@
 /* eslint-disable no-console */
 /* eslint-disable react/display-name */
 import React, { MouseEvent, useRef } from 'react';
-import { StoryFn } from '@storybook/react';
-
-import { Size } from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
-import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import { Size } from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { MenuItem } from '@leafygreen-ui/menu';
 import { TestUtils } from '@leafygreen-ui/popover';
 const { getAlign, getJustify } = TestUtils;

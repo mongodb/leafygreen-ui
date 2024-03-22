@@ -1,13 +1,13 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import Button from '@leafygreen-ui/button';
 import {
   storybookArgTypes,
   StoryMetaType,
   StoryType,
   Theme,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 
 import { graphics } from '../example-graphics';

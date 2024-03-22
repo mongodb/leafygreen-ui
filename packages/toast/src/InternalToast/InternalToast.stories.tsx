@@ -1,6 +1,10 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryContext, StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -8,10 +12,6 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   LeafyGreenProviderProps,
 } from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import { Variant } from '../Toast.types';

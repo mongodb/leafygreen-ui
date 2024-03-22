@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { StoryFn } from '@storybook/react';
-
-import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import { CloseIconColor } from '@leafygreen-ui/modal';
 
 import ConfirmationModal, { ConfirmationModalProps, Variant } from '.';
