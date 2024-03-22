@@ -17,6 +17,8 @@ export type InstanceDecorator<
   T extends React.ElementType = React.ElementType<any>,
 > = (Instance: StoryFn, context?: InstanceContext) => JSX.Element;
 
+// Note — this is defined in `storybook-utils` instead of `storybook-decorators`
+// in order to ensure no circular dependencies
 export interface GeneratedStoryConfig<
   T extends React.ElementType,
   XP extends Record<string, any> = {},
