@@ -6,6 +6,7 @@ import getTheme from './getTheme';
 export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
+export { type Mutable } from './types';
 
 export {
   type ExtendedComponentProps,
