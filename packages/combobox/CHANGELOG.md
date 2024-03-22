@@ -1,5 +1,33 @@
 # @leafygreen-ui/combobox
 
+## 8.1.2
+
+### Patch Changes
+
+- Updated dependencies [7c6166f9]
+- Updated dependencies [74057388]
+  - @leafygreen-ui/chip@1.0.1
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 8.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/popover@11.3.0
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/input-option@1.1.1
+  - @leafygreen-ui/checkbox@12.1.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
 ## 8.1.0
 
 ### Minor Changes

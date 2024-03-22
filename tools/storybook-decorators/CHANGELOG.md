@@ -1,5 +1,15 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @lg-tools/build@0.4.0
+  - @leafygreen-ui/tokens@2.5.1
+
 ## 0.2.5
 
 ### Patch Changes

@@ -1,5 +1,21 @@
 # @leafygreen-ui/form-footer
 
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/banner@7.0.19
+
+## 3.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/icon@11.29.1
+
 ## 3.1.0
 
 ### Minor Changes

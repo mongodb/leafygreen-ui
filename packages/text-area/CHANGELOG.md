@@ -1,5 +1,19 @@
 # @leafygreen-ui/text-area
 
+## 8.1.2
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
+## 8.1.1
+
+### Patch Changes
+
+- 54a1bfb8: Allow defaultValue to be used in TextArea
+
 ## 8.1.0
 
 ### Minor Changes

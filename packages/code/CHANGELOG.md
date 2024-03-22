@@ -1,5 +1,40 @@
 # @leafygreen-ui/code
 
+## 14.3.1
+
+### Patch Changes
+
+- a384a3d4: Fix test mocks for `CopyButton` component
+
+  [LG-3915](https://jira.mongodb.org/browse/LG-3915)
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/select@11.2.2
+  - @leafygreen-ui/tooltip@11.0.2
+
+## 14.3.0
+
+### Minor Changes
+
+- 9afcc3bd: Adds tooltip hover interaction for `Code` component copy button
+  [LG-3915](https://jira.mongodb.org/browse/LG-3915)
+
+## 14.2.19
+
+### Patch Changes
+
+- 12296e6c: Exports `Panel` component
+  [LG-4076](https://jira.mongodb.org/browse/LG-4076)
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/select@11.2.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
 ## 14.2.18
 
 ### Patch Changes

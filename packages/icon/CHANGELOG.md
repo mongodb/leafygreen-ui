@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 12.0.0
+
+### Major Changes
+
+- 74057388: Renames `'Collections'` glyph to `'Project'`
+
+## 11.29.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
 ## 11.29.0
 
 ### Minor Changes

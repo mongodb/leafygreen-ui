@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "11.2.2",
+  "version": "11.3.0",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,10 +21,10 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/hooks": "^8.1.0",
+    "@leafygreen-ui/hooks": "^8.1.2",
     "@leafygreen-ui/lib": "^13.2.0",
-    "@leafygreen-ui/portal": "^5.0.3",
-    "@leafygreen-ui/tokens": "^2.2.0",
+    "@leafygreen-ui/portal": "^5.1.0",
+    "@leafygreen-ui/tokens": "^2.5.1",
     "react-transition-group": "^4.4.5",
     "@types/react-transition-group": "^4.4.5"
   },

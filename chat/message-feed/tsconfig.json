@@ -1,0 +1,66 @@
+
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src", 
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../../packages/*/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../avatar"
+    },
+    {
+      "path": "../chat-disclaimer"
+    },
+    {
+      "path": "../message"
+    },
+    {
+      "path": "../message-feedback"
+    },
+    {
+      "path": "../message-rating"
+    },
+    {
+      "path": "../message-prompts"
+    }, 
+    {
+      "path": "../../packages/button"
+    },
+    {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/emotion"
+    },
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/marketing-modal"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/text-area"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
+    },
+    {
+      "path": "../../packages/leafygreen-provider"
+    }, 
+  ]
+}

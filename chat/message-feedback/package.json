@@ -1,0 +1,46 @@
+{
+  "name": "@lg-chat/message-feedback",
+  "version": "2.0.1",
+  "description": "LeafyGreen UI Kit Message Feedback",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/button": "^21.0.12",
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/hooks": "^8.1.2",
+    "@leafygreen-ui/icon": "^12.0.0",
+    "@leafygreen-ui/icon-button": "^15.0.20",
+    "@leafygreen-ui/lib": "^13.2.1",
+    "@leafygreen-ui/palette": "^4.0.8",
+    "@leafygreen-ui/popover": "^11.3.0",
+    "@leafygreen-ui/text-area": "^8.1.2",
+    "@leafygreen-ui/tokens": "^2.5.1",
+    "@leafygreen-ui/typography": "^18.2.3"
+  },
+  "devDependencies": {
+    "@lg-chat/message-rating": "^2.0.1"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.11"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

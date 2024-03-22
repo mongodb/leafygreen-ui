@@ -1,5 +1,22 @@
 # @leafygreen-ui/toggle
 
+## 10.0.19
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+
+## 10.0.18
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/icon@11.29.1
+
 ## 10.0.17
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 import React from 'react';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 
 import Icon from '@leafygreen-ui/icon';
 
@@ -151,6 +157,9 @@ describe('packages/side-nav', () => {
       test('the content appears on the page by default', () => {
         const childContent = screen.getByTestId(sideNavLink);
         expect(childContent).toBeInTheDocument();
+        waitFor(() => {
+          expect(childContent).toBeVisible();
+        });
       });
     });
   });
