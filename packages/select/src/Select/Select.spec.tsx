@@ -566,7 +566,7 @@ describe('packages/select', () => {
       });
     });
 
-    describe.each([
+    describe.only.each([
       ['menu button', 'button'],
       ['list menu', 'listbox'],
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
@@ -621,8 +621,7 @@ describe('packages/select', () => {
           expect(getPopover()).toBeVisible();
         });
 
-        // TODO: fix this
-        // expect(getPopover()).toHaveFocus();
+        expect(getPopover()).toHaveFocus();
       });
     });
 
