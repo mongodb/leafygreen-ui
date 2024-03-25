@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
@@ -6,10 +10,6 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import {
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {

@@ -22,7 +22,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.0.10"
+    "@leafygreen-ui/button": "^21.0.10",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",

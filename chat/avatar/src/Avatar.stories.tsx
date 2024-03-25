@@ -1,8 +1,7 @@
 import React from 'react';
 import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { Avatar } from '.';
 

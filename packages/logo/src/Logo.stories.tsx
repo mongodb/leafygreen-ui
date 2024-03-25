@@ -1,8 +1,8 @@
 import React from 'react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { LogoNames } from './Logo';
 import { LogoProps, SupportedColors } from './utils';

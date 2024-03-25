@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { SearchResult, type SearchResultProps } from '.';
 

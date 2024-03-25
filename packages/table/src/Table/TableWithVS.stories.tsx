@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { storybookArgTypes, StoryMetaType } from '@leafygreen-ui/lib';
 
 import { makeData, Person } from '../utils/makeData.testutils';
 import {

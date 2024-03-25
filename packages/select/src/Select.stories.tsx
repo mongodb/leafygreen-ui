@@ -1,14 +1,14 @@
 import React from 'react';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
 
 import { Option, OptionGroup, Select, type SelectProps, Size, State } from '.';
 

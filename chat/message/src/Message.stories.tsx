@@ -2,10 +2,8 @@ import React from 'react';
 import { Avatar } from '@lg-chat/avatar';
 import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { Message, MessageSourceType } from '.';
 

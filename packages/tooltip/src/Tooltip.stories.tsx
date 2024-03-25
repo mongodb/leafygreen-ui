@@ -1,15 +1,15 @@
 /* eslint-disable react/display-name */
 import React, { useState } from 'react';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Button, { Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
 import { TestUtils } from '@leafygreen-ui/popover';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';

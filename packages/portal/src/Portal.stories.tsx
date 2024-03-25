@@ -1,11 +1,11 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import { css } from '@leafygreen-ui/emotion';
 
 import Portal, { PortalProps } from '.';
 

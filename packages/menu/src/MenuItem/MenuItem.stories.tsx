@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 
 import Icon from '@leafygreen-ui/icon';
-import { StoryMetaType, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 
 import { MenuContext } from '../MenuContext';
 import { Size } from '../types';
