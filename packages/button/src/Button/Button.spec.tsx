@@ -90,11 +90,12 @@ describe('packages/button', () => {
       expect(button.title).toBe(title);
     });
 
-    test(`renders aria-disabled attribute when disabled is set`, () => {
+    test(`renders with aria-disabled attribute but not disabled attribute when disabled prop is set`, () => {
       const { button } = renderButton({
         disabled: true,
       });
-      expect(button.getAttribute('aria-disabled')).toBe('true');
+      expect(button.getAttribute('aria-disabled')).toBeTruthy();
+      expect(button.getAttribute('disabled')).toBeFalsy();
     });
 
     test(`renders a button with the "button" type by default`, () => {

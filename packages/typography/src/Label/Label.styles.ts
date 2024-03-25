@@ -24,10 +24,10 @@ export const labelColorStyle: Record<Theme, string> = {
 
 export const disabledLabelColorStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.base};
+    color: ${palette.gray.dark1};
   `,
 };
 
