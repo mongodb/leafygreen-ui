@@ -234,6 +234,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             usePortal: boolean,
           });
 
+          expect(getPopover()).not.toBeInTheDocument();
           clickTrigger();
           await waitFor(() => {
             expect(getPopover()).toBeInTheDocument();
@@ -247,6 +248,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             usePortal: boolean,
           });
 
+          expect(getPopover()).not.toBeInTheDocument();
           clickTrigger();
           await waitFor(() => {
             expect(getPopover()).toBeInTheDocument();
@@ -260,6 +262,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             usePortal: boolean,
           });
 
+          expect(getPopover()).not.toBeInTheDocument();
           clickTrigger();
           await waitFor(() => {
             expect(getPopover()).toBeInTheDocument();
