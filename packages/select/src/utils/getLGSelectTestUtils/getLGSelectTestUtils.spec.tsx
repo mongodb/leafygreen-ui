@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  act,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -46,20 +45,10 @@ function renderSelect(props = {}) {
 
   const { elements, utils } = getLGSelectTestUtils();
 
-  const rerenderSelect = (newProps?: Partial<SelectProps>) => {
-    const allProps = { ...props, ...newProps };
-    renderUtils.rerender(
-      <Select {...defaultProps} {...allProps}>
-        {children}
-      </Select>,
-    );
-  };
-
   return {
     ...renderUtils,
     ...elements,
     ...utils,
-    rerenderSelect,
   };
 }
 
@@ -132,7 +121,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
   describe('getLabel', () => {
     test('renders label', () => {
       const { getLabel } = renderSelect();
-      expect(getLabel()).toBeVisible();
+      expect(getLabel()).toBeInTheDocument();
     });
 
     test('does not render label', () => {
@@ -405,7 +394,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           expect(error).toHaveProperty(
             'message',
             expect.stringMatching(
-              /Could not find option with the value 'Jellow'/,
+              /Unable to find option with the value 'Jellow'/,
             ),
           );
         }

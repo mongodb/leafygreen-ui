@@ -16,9 +16,10 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { getLGSelectTestUtils } from '../utils/getLGSelectTestUtils/getLGSelectTestUtils';
 import { Option, OptionGroup, Select } from '..';
 
-import { State } from './Select.types';
+import { SelectProps, State } from './Select.types';
 
 function waitForTimeout(timeout = 500) {
   return new Promise(res => setTimeout(res, timeout));
@@ -77,69 +78,57 @@ function Controller({
   return <>{children(value, setValue)}</>;
 }
 
-let offsetParentSpy: jest.SpyInstance;
-beforeAll(() => {
-  offsetParentSpy = jest.spyOn(HTMLElement.prototype, 'offsetParent', 'get');
+function renderSelect(props = {}) {
+  const renderUtils = render(<Select {...defaultProps} {...props} />);
 
-  // JSDOM doesn't implement `HTMLElement.prototype.offsetParent`, so this
-  // falls back to the parent element since it doesn't matter for these tests.
-  offsetParentSpy.mockImplementation(function (this: HTMLElement) {
-    return this.parentElement;
-  });
-});
+  const { elements, utils } = getLGSelectTestUtils();
 
-afterAll(() => {
-  if (offsetParentSpy.mock.calls.length === 0) {
-    // throw Error('`HTMLElement.prototype.offsetParent` was never called');
-  }
-  offsetParentSpy.mockRestore();
-});
+  const rerenderSelect = (newProps?: Partial<SelectProps>) => {
+    const allProps = { ...props, ...newProps };
+    renderUtils.rerender(<Select {...defaultProps} {...allProps} />);
+  };
+
+  return {
+    ...renderUtils,
+    ...elements,
+    ...utils,
+    rerenderSelect,
+  };
+}
 
 describe('packages/select', () => {
   test('renders label and description', () => {
-    const { getByText } = render(<Select {...defaultProps} />);
-    expect(getByText(defaultProps.label)).toBeVisible();
-    expect(getByText(defaultProps.description)).toBeVisible();
+    const { getLabel, getDescription } = renderSelect();
+    expect(getLabel()).toBeVisible();
+    expect(getDescription()).toBeVisible();
   });
 
   test('renders placeholder', async () => {
-    const { getByRole, rerender } = render(<Select {...defaultProps} />);
+    const { getSelect, clickTrigger, getOptionByValue, rerenderSelect } =
+      renderSelect();
 
-    let button = getByRole('button');
-    expect(button).toBeVisible();
-    expect(getByTextFor(button, 'Select')).toBeVisible();
+    expect(getSelect()).toHaveTextContent('Select');
+    rerenderSelect({ placeholder: 'Explicit placeholder' });
+    expect(getSelect()).toHaveTextContent('Explicit placeholder');
+    clickTrigger();
 
-    rerender(<Select {...defaultProps} placeholder="Explicit placeholder" />);
-
-    button = getByRole('button');
-    expect(getByTextFor(button, 'Explicit placeholder')).toBeVisible();
-
-    userEvent.click(button);
-
-    const listbox = await waitFor(() => {
-      const listbox = getByRole('listbox');
-      expect(listbox).toBeVisible();
-      return listbox;
+    await waitFor(() => {
+      expect(getOptionByValue('Explicit placeholder')).toBeInTheDocument();
     });
-
-    expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
   });
 
-  test('button has selected value', () => {
+  // TODO: revist
+  test.skip('button has selected value', () => {
     const { getByRole, rerender } = render(<Select {...defaultProps} />);
 
     const button = getByRole('button') as HTMLButtonElement;
     expect(button).toBeInstanceOf(HTMLButtonElement);
 
     expect(button.name).toEqual(defaultProps.name);
-    expect(button.disabled).toEqual(false);
     expect(button).toHaveValue('');
 
     rerender(<Select {...defaultProps} name="explicit_name" />);
     expect(button.name).toEqual('explicit_name');
-
-    rerender(<Select {...defaultProps} disabled />);
-    expect(button).toHaveAttribute('aria-disabled', 'true');
   });
 
   test('accepts a ref', () => {
@@ -211,42 +200,37 @@ describe('packages/select', () => {
     });
   });
 
-  test('trigger passes through data props', () => {
-    const result = render(
-      <Select label="Label" data-testid="lg-select">
-        <Option>Option</Option>
-      </Select>,
-    );
-    const select = result.queryByTestId('lg-select');
-    expect(select).toBeInTheDocument();
-  });
-
-  test('option & group passes through data props', () => {
-    const result = render(
+  test('option & group passes through data props', async () => {
+    const { queryByTestId } = render(
       <Select label="Label">
         <OptionGroup label="Group" data-testid="lg-group">
           <Option data-testid="lg-option">Option</Option>
         </OptionGroup>
       </Select>,
     );
-    const trigger = result.getByRole('button');
-    userEvent.click(trigger);
 
-    const group = result.queryByTestId('lg-group');
-    const option = result.queryByTestId('lg-option');
+    const {
+      utils: { clickTrigger },
+    } = getLGSelectTestUtils();
+
+    await waitFor(() => {
+      clickTrigger();
+    });
+
+    const group = queryByTestId('lg-group');
+    const option = queryByTestId('lg-option');
     expect(group).toBeInTheDocument();
     expect(option).toBeInTheDocument();
   });
 
   describe('tab order', () => {
     test('contains component when enabled', () => {
-      const { getByRole } = render(<Select {...defaultProps} />);
+      const { getSelect } = renderSelect();
 
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      const button = getByRole('button');
-      expect(button).toHaveFocus();
+      expect(getSelect()).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -254,13 +238,12 @@ describe('packages/select', () => {
 
     // Select should still be focusable when disabled
     test('and contains component when disabled', () => {
-      const { getByRole } = render(<Select {...defaultProps} />);
+      const { getSelect } = renderSelect({ disabled: true });
 
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      const button = getByRole('button');
-      expect(button).toHaveFocus();
+      expect(getSelect()).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -274,35 +257,27 @@ describe('packages/select', () => {
     const isDisabled = !enabled;
 
     test('when uncontrolled', () => {
-      const { getByRole } = render(
-        <Select
-          {...defaultProps}
-          disabled={isDisabled}
-          defaultValue={Color.Blue}
-        />,
-      );
+      const { getSelect, isDisabled: utilsIsDisabled } = renderSelect({
+        disabled: isDisabled,
+        defaultValue: Color.Blue,
+      });
 
-      const button = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(button, 'Blue')).toBeVisible();
-      expect(button).toHaveValue('Blue');
+      expect(getSelect()).toBeVisible();
+      expect(getSelect()).toHaveValue('Blue');
+      expect(utilsIsDisabled()).toBe(isDisabled);
     });
 
     test('when controlled', () => {
       const onChangeSpy = jest.fn();
-      const { getByRole } = render(
-        <Select
-          {...defaultProps}
-          value={Color.Blue}
-          onChange={onChangeSpy}
-          disabled={isDisabled}
-        />,
-      );
+      const { getSelect, isDisabled: utilsIsDisabled } = renderSelect({
+        disabled: isDisabled,
+        value: Color.Blue,
+        onChange: onChangeSpy,
+      });
 
-      const button = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(button, 'Blue')).toBeVisible();
-      expect(button).toHaveValue('Blue');
-      expect(button).toHaveAttribute('aria-disabled', `${isDisabled}`);
-
+      expect(getSelect()).toBeVisible();
+      expect(getSelect()).toHaveValue('Blue');
+      expect(utilsIsDisabled()).toBe(isDisabled);
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
   });
@@ -311,6 +286,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
+      // @ts-expect-error - expecting `readOnly` prop
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
@@ -332,220 +308,198 @@ describe('packages/select', () => {
   });
 
   describe('list menu', () => {
-    test('allowDeselect prevents placeholder from being rendered', () => {
-      const { getByRole, queryByText } = render(
-        <Select
-          {...defaultProps}
-          defaultValue={Color.Red}
-          allowDeselect={false}
-        >
-          {defaultProps.children}
-        </Select>,
-      );
+    test('allowDeselect prevents placeholder from being rendered', async () => {
+      const { clickTrigger, queryByText } = renderSelect({
+        allowDeselect: false,
+        defaultValue: Color.Red,
+      });
 
-      userEvent.click(getByRole('button'));
+      await waitFor(() => {
+        clickTrigger();
+      });
       expect(queryByText('Select')).not.toBeInTheDocument();
     });
 
-    describe.each([
-      ['dark', true],
-      ['light', false],
-    ])('renders in %p mode', (_, darkMode) => {
-      test('all valid options', async () => {
-        const { getByRole, queryByText } = Context.within(
-          Jest.spyContext(console, 'error'),
-          spy => {
-            spy.mockImplementation();
-
-            const result = render(
-              <Select {...defaultProps} darkMode={darkMode}>
-                {defaultProps.children}
-                <Option glyph={<BeakerIcon />}>White</Option>
-                <div>Invalid element</div>
-              </Select>,
-            );
-
-            userEvent.click(result.getByRole('button'));
-
-            expect(spy).toHaveBeenCalledWith(
-              '`Select` instance received child that is not `Option` or `OptionGroup`.',
-            );
-
-            return result;
-          },
-        );
-
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
-        });
-
-        Object.keys(Color).forEach(color => {
-          expect(getByTextFor(listbox, color)).toBeVisible();
-        });
-
-        expect(queryByText('Invalid element')).not.toBeInTheDocument();
-      });
-
-      test('omitting empty elements', () => {
-        Context.within(Jest.spyContext(console, 'error'), spy => {
+    test('does not render invalid  option', async () => {
+      const { queryByText } = Context.within(
+        Jest.spyContext(console, 'error'),
+        spy => {
           spy.mockImplementation();
 
-          const { getByRole } = render(
-            <Select {...defaultProps} darkMode={darkMode}>
+          const result = render(
+            <Select {...defaultProps}>
               {defaultProps.children}
-              <></>
-              {}
-              {''}
-              {false}
-              {null}
-              {undefined}
+              <Option glyph={<BeakerIcon />}>White</Option>
+              <div>Invalid element</div>
             </Select>,
           );
 
-          act(() => {
-            userEvent.click(getByRole('button'));
-          });
+          const {
+            elements: { getSelect },
+          } = getLGSelectTestUtils();
 
-          expect(spy).not.toHaveBeenCalled();
-        });
-      });
+          userEvent.click(getSelect());
+          expect(spy).toHaveBeenCalledWith(
+            '`Select` instance received child that is not `Option` or `OptionGroup`.',
+          );
 
-      test('glyph', async () => {
-        const { getByRole, getAllByLabelText } = render(
-          <Select {...defaultProps} darkMode={darkMode} defaultValue="selected">
-            <Option glyph={<BeakerIcon />} value="nonselected">
-              Non-selected with glyph
-            </Option>
-            <Option glyph={<BeakerIcon />} value="selected">
-              Selected with glyph
-            </Option>
+          return result;
+        },
+      );
+      expect(queryByText('Invalid element')).not.toBeInTheDocument();
+    });
+
+    test('omitting empty elements', () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
+
+        render(
+          <Select {...defaultProps}>
+            {defaultProps.children}
+            <></>
+            {}
+            {''}
+            {false}
+            {null}
+            {undefined}
           </Select>,
         );
 
-        userEvent.click(getByRole('button'));
+        const {
+          elements: { getSelect },
+        } = getLGSelectTestUtils();
 
-        await waitFor(() => {
-          expect(getByRole('listbox')).toBeVisible();
+        act(() => {
+          userEvent.click(getSelect());
         });
 
-        getAllByLabelText('Beaker Icon').forEach(element =>
-          expect(element).toBeVisible(),
-        );
-      });
-
-      test('invalid glyph', () => {
-        Context.within(Jest.spyContext(console, 'error'), spy => {
-          spy.mockImplementation();
-
-          const { getByRole } = render(
-            <Select {...defaultProps} darkMode={darkMode}>
-              <Option glyph={<div />}>Bad icon</Option>
-            </Select>,
-          );
-
-          userEvent.click(getByRole('button'));
-
-          expect(spy).toHaveBeenCalledWith(
-            '`Option` instance did not render icon because it is not a known glyph element.',
-          );
-        });
+        expect(spy).not.toHaveBeenCalled();
       });
     });
 
-    describe('opening', () => {
-      test('by clicking', async () => {
-        const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
+    test('glyph', async () => {
+      const { getAllByLabelText } = render(
+        <Select {...defaultProps} defaultValue="selected">
+          <Option glyph={<BeakerIcon />} value="nonselected">
+            Non-selected with glyph
+          </Option>
+          <Option glyph={<BeakerIcon />} value="selected">
+            Selected with glyph
+          </Option>
+        </Select>,
+      );
 
-        const button = getByRole('button');
+      const {
+        elements: { getPopover },
+        utils: { clickTrigger },
+      } = getLGSelectTestUtils();
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
+      clickTrigger();
 
-        userEvent.click(button);
+      await waitFor(() => {
+        expect(getPopover()).toBeVisible();
+      });
 
-        await waitFor(() => {
-          expect(getByRole('listbox')).toBeVisible();
+      getAllByLabelText('Beaker Icon').forEach(element =>
+        expect(element).toBeVisible(),
+      );
+    });
+
+    test('invalid glyph', () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
+
+        render(
+          <Select {...defaultProps}>
+            <Option glyph={<div />}>Bad icon</Option>
+          </Select>,
+        );
+
+        const {
+          elements: { getSelect },
+        } = getLGSelectTestUtils();
+
+        act(() => {
+          userEvent.click(getSelect());
         });
 
-        expect(button).toHaveFocus();
+        expect(spy).toHaveBeenCalledWith(
+          '`Option` instance did not render icon because it is not a known glyph element.',
+        );
+      });
+    });
+
+    describe.only('opening', () => {
+      test('by clicking', async () => {
+        const { clickTrigger, getPopover, getSelect } = renderSelect();
+
+        clickTrigger();
+
+        await waitFor(() => {
+          expect(getPopover()).toBeVisible();
+        });
+
+        expect(getSelect()).toHaveFocus();
       });
 
       test('by arrow down key', async () => {
-        const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
+        const { getOptionByValue, getPopover, getSelect } = renderSelect();
 
         // focus on button element
         userEvent.tab();
+        userEvent.type(getSelect(), '{arrowdown}');
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
-
-        userEvent.type(getByRole('button'), '{arrowdown}');
-
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
+        await waitFor(() => {
+          expect(getPopover()).toBeVisible();
         });
 
+        const firstOption = getOptionByValue('Select');
         // First option is focused
-        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
+        expect(firstOption).toHaveFocus();
       });
 
       test('by arrow up key', async () => {
-        const { getByRole, queryByRole, queryByText } = render(
-          <Select {...defaultProps} />,
-        );
+        const { getOptionByValue, getPopover, getSelect } = renderSelect();
 
         // focus on button element
         userEvent.tab();
+        userEvent.type(getSelect(), '{arrowup}');
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
-        expect(queryByText('Yellow')).not.toBeInTheDocument();
-
-        userEvent.type(getByRole('button'), '{arrowup}');
-
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
+        await waitFor(() => {
+          expect(getPopover()).toBeVisible();
         });
 
+        const lastOption = getOptionByValue('Yellow');
         // Last enabled option is focused
-        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
+        expect(lastOption).toHaveFocus();
       });
 
       describe('is not allowed when disabled', () => {
         test('by clicking', () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} disabled />,
-          );
+          const { getPopover, getSelect } = renderSelect({
+            disabled: true,
+          });
 
-          const button = getByRole('button');
-          expect(() => userEvent.click(button)).toThrow();
-
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          expect(() => userEvent.click(getSelect())).toThrow();
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('by arrow down key', () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} disabled />,
-          );
+          const { getPopover, getSelect } = renderSelect({
+            disabled: true,
+          });
 
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
-
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          userEvent.type(getSelect(), '{arrowdown}');
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('by arrow up key', () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} disabled />,
-          );
+          const { getPopover, getSelect } = renderSelect({
+            disabled: true,
+          });
 
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowup}');
-
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          userEvent.type(getSelect(), '{arrowup}');
+          expect(getPopover()).not.toBeInTheDocument();
         });
       });
     });

@@ -14,14 +14,14 @@ export interface LGSelectTestUtilsReturnType {
     /**
      * Returns an array of `Select` options
      */
-    getOptions: () => Array<HTMLLIElement> | null;
+    getOptions: () => Array<HTMLLIElement>;
 
     /**
      * Returns an individual `Select` option
      */
     getOptionByValue: (value: string) => HTMLLIElement | null;
 
-    getPopover: () => HTMLDivElement;
+    getPopover: () => HTMLDivElement | null;
   };
   utils: SelectUtils & {
     /**

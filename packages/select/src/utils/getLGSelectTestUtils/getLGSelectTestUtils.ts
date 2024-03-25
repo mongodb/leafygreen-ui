@@ -81,11 +81,20 @@ export const getLGSelectTestUtils = (
   };
 
   // We cannot query within the select element because if the popover is using a portal, the element will render outside the select element
-  const getPopover = (): HTMLDivElement => getByLgId('lg-select-popover');
+  const getPopover = () =>
+    queryByQuerySelector<HTMLDivElement>(
+      document.body,
+      '[data-lgid="lg-select-popover"]',
+    );
 
   const getAllOptions = (): Array<HTMLLIElement> => {
     // only one select popover should be open at a time
     const popover = getPopover();
+
+    if (!popover)
+      throw new Error(
+        'Unable to find an element by: [data-lgid="lg-select-popover"]',
+      );
 
     // Find all options
     const allOptions =
@@ -93,7 +102,7 @@ export const getLGSelectTestUtils = (
 
     // unlikley to happen since the select will not render without options
     if (!allOptions.length)
-      throw new Error('Could not find any `Select` options.');
+      throw new Error('Unable to find any `Select` options.');
 
     return Array.from(allOptions);
   };
@@ -117,7 +126,7 @@ export const getLGSelectTestUtils = (
     const option = getOptionByValue(value);
 
     if (!option)
-      throw new Error(`Could not find option with the value '${value}'.`);
+      throw new Error(`Unable to find option with the value '${value}'.`);
 
     // Click option
     option.click();
