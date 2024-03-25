@@ -15,35 +15,44 @@ const defaultProps = {
   label: 'Label',
   name: 'pet',
   description: 'Description',
-  children: [
-    <Option key="red" value="RED">
-      Red
-    </Option>,
-    <Option key="blue">Blue</Option>,
-    <Option key="orange" disabled>
-      Orange you glad
-    </Option>,
-    <OptionGroup key="enabled group" label="Enabled group">
-      <Option>Green</Option>
-      <Option>Yellow</Option>
-    </OptionGroup>,
-    <OptionGroup key="disabled group" label="Disabled group" disabled>
-      <Option>Indigo</Option>
-      <>
-        <Option>Violet</Option>
-      </>
-    </OptionGroup>,
-  ],
 } as const;
 
+const children = [
+  <Option key="red" value="RED">
+    Red
+  </Option>,
+  <Option key="blue">Blue</Option>,
+  <Option key="orange" disabled>
+    Orange you glad
+  </Option>,
+  <OptionGroup key="enabled group" label="Enabled group">
+    <Option>Green</Option>
+    <Option>Yellow</Option>
+  </OptionGroup>,
+  <OptionGroup key="disabled group" label="Disabled group" disabled>
+    <Option>Indigo</Option>
+    <>
+      <Option>Violet</Option>
+    </>
+  </OptionGroup>,
+];
+
 function renderSelect(props = {}) {
-  const renderUtils = render(<Select {...defaultProps} {...props} />);
+  const renderUtils = render(
+    <Select {...defaultProps} {...props}>
+      {children}
+    </Select>,
+  );
 
   const { elements, utils } = getLGSelectTestUtils();
 
   const rerenderSelect = (newProps?: Partial<SelectProps>) => {
     const allProps = { ...props, ...newProps };
-    renderUtils.rerender(<Select {...defaultProps} {...allProps} />);
+    renderUtils.rerender(
+      <Select {...defaultProps} {...allProps}>
+        {children}
+      </Select>,
+    );
   };
 
   return {
@@ -56,11 +65,15 @@ function renderSelect(props = {}) {
 
 function renderSelectControlled(props = {}) {
   const ControlledSelect = (props = {}) => {
+    // @ts-expect-error
+    // eslint-disable-next-line react/prop-types
     const { value: propValue, ...rest } = props;
     const [value, setValue] = useState(propValue);
 
     return (
-      <Select {...defaultProps} {...rest} value={value} onChange={setValue} />
+      <Select {...defaultProps} {...rest} value={value} onChange={setValue}>
+        {children}
+      </Select>
     );
   };
 
@@ -77,8 +90,12 @@ function renderSelectControlled(props = {}) {
 function renderMultipleSelects() {
   const renderUtils = render(
     <>
-      <Select {...defaultProps} defaultValue="RED" data-lgid="lg-select-1" />
-      <Select {...defaultProps} defaultValue="Blue" data-lgid="lg-select-2" />
+      <Select {...defaultProps} defaultValue="RED" data-lgid="lg-select-1">
+        {children}
+      </Select>
+      <Select {...defaultProps} defaultValue="Blue" data-lgid="lg-select-2">
+        {children.slice(0, 2)}
+      </Select>
     </>,
   );
 
@@ -97,6 +114,21 @@ function renderMultipleSelects() {
 }
 
 describe('packages/select/getLGSelectTestUtils', () => {
+  test('throws error if select is not found', () => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { getLabel } = renderSelect({ 'data-lgid': 'different-id' });
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect(error).toHaveProperty(
+        'message',
+        expect.stringMatching(
+          /Unable to find an element by: \[data-lgid="lg-select"\]/,
+        ),
+      );
+    }
+  });
+
   describe('getLabel', () => {
     test('renders label', () => {
       const { getLabel } = renderSelect();
@@ -402,13 +434,41 @@ describe('packages/select/getLGSelectTestUtils', () => {
   });
 
   describe('multiple selects', () => {
-    test('has correct default value', () => {
+    test('both have correct default value', () => {
       const { testUtils1, testUtils2 } = renderMultipleSelects();
 
       expect(testUtils1.getSelectValue()).toBe('Red');
       expect(testUtils2.getSelectValue()).toBe('Blue');
     });
 
-    test.todo('has correct number of options');
+    describe('first select', () => {
+      test('has correct number of options', async () => {
+        const {
+          testUtils1: { clickTrigger },
+          testElements1: { getOptions },
+        } = renderMultipleSelects();
+
+        clickTrigger();
+        await waitFor(() => {
+          // `select` is an option
+          expect(getOptions()).toHaveLength(8);
+        });
+      });
+    });
+
+    describe('second select', () => {
+      test('has correct number of options', async () => {
+        const {
+          testUtils2: { clickTrigger },
+          testElements2: { getOptions },
+        } = renderMultipleSelects();
+
+        clickTrigger();
+        await waitFor(() => {
+          // `select` is an option
+          expect(getOptions()).toHaveLength(3);
+        });
+      });
+    });
   });
 });
