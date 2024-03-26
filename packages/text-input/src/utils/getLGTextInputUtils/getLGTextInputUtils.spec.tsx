@@ -52,7 +52,9 @@ describe('packages/text-input', () => {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
             'message',
-            expect.stringMatching(/Unable to find an element by: /),
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-text_input"\]/,
+            ),
           );
         }
       });

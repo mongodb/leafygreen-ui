@@ -47,12 +47,14 @@ describe('packages/text-input', () => {
 
         try {
           // eslint-disable-next-line
-          const { elements } = getLGTextAreaUtils('lg-text_area');
+          const { elements } = getLGTextAreaUtils();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
             'message',
-            expect.stringMatching(/Unable to find an element by: /),
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-text_area"\]/,
+            ),
           );
         }
       });
