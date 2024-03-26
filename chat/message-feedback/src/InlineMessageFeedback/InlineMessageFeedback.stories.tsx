@@ -4,10 +4,10 @@ import {
   MessageRatingProps,
   MessageRatingValue,
 } from '@lg-chat/message-rating';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { InlineMessageFeedback } from '.';

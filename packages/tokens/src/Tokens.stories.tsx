@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import startCase from 'lodash/startCase';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';

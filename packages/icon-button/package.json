@@ -1,15 +1,13 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "15.0.19",
+  "version": "15.0.20",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+      "*": ["ts3.4/*"]
     }
   },
   "scripts": {
@@ -25,7 +23,7 @@
     "@leafygreen-ui/a11y": "^1.4.11",
     "@leafygreen-ui/box": "^3.1.8",
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.22.2",
+    "@leafygreen-ui/icon": "^12.0.0",
     "@leafygreen-ui/lib": "^13.0.0",
     "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.1.4"
@@ -41,5 +39,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.0.1"
+  }
 }

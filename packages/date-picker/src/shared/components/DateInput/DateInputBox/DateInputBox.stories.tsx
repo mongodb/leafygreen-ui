@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import {
@@ -10,7 +11,6 @@ import {
   testLocales,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import {
   SharedDatePickerContextProps,

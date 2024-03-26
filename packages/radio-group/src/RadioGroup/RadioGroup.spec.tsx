@@ -179,10 +179,10 @@ describe('packages/radio-group', () => {
       expect(label!.classList.contains(className)).toBe(true);
     });
 
-    test(`renders disabled radio when disabled prop is set`, () => {
+    test(`renders with aria-disabled attribute but not disabled attribute when disabled prop is set`, () => {
       const { radio } = renderRadio({ disabled: true });
-      expect((radio as HTMLInputElement).disabled).toBe(true);
-      expect(radio.getAttribute('aria-disabled')).toBe('true');
+      expect(radio.getAttribute('aria-disabled')).toBeTruthy();
+      expect(radio.getAttribute('disabled')).toBeFalsy();
     });
 
     test(`radio is checked when value is set`, () => {

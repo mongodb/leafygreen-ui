@@ -84,7 +84,7 @@ We also have a link script, such that you can test components that are in develo
 The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
 
 ```
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 
 const meta: StoryMetaType<typeof Component> = {
   title: 'Components/name',
@@ -97,7 +97,7 @@ const meta: StoryMetaType<typeof Component> = {
 export default meta
 ```
 
-The `StoryMetaType` utility type from `@leafygreen-ui/lib` will enforce parameters required for use with Chromatic and on `mongodb.design`
+The `StoryMetaType` utility type from `@lg-tools/storybook-utils` will enforce parameters required for use with Chromatic and on `mongodb.design`
 
 ## Preventing an interface from being imported in mongodb.design's Code Docs
 

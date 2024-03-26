@@ -6,10 +6,9 @@ import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import baseMessages from './utils/baseMessages';

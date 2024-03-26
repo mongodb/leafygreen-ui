@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-key */
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+  StoryType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-  StoryMetaType,
-  StoryType,
-} from '@leafygreen-ui/lib';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';

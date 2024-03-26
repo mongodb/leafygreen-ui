@@ -58,10 +58,6 @@ export const disabledLabelStyle = css`
   cursor: not-allowed;
 `;
 
-export const disabledLabelDarkThemeOverrideStyle = css`
-  color: ${palette.gray.base};
-`;
-
 export const inputStyle = css`
   margin: 0;
   position: absolute;
@@ -103,7 +99,3 @@ export const labelTextColorStyle: Record<Theme, string> = {
     color: ${palette.gray.light2};
   `,
 };
-
-export const disabledTextStyle = css`
-  color: ${palette.gray.dark1};
-`;

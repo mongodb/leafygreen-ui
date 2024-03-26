@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/text-input",
-  "version": "12.1.25",
+  "version": "12.1.26",
   "description": "leafyGreen UI Kit Text Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,13 +23,11 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/form-field": "^0.3.0",
+    "@leafygreen-ui/form-field": "^1.0.0",
     "@leafygreen-ui/hooks": "^8.1.0",
-    "@leafygreen-ui/icon": "^11.27.1",
     "@leafygreen-ui/lib": "^13.2.0",
-    "@leafygreen-ui/palette": "^4.0.7",
     "@leafygreen-ui/tokens": "^2.2.0",
-    "@leafygreen-ui/typography": "^18.1.0"
+    "@leafygreen-ui/typography": "^18.2.3"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.11"
@@ -42,5 +40,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.0.1"
+  }
 }

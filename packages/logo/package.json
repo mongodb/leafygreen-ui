@@ -7,9 +7,7 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+      "*": ["ts3.4/*"]
     }
   },
   "scripts": {
@@ -34,5 +32,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.0.1"
+  }
 }

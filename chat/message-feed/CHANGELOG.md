@@ -1,5 +1,15 @@
 # @lg-chat/message-feed
 
+## 3.0.1
+
+### Patch Changes
+
+- 9079c0ae: Upgrades internal lg components
+- Updated dependencies [9079c0ae]
+  - @lg-chat/message-rating@2.0.1
+  - @lg-chat/message@4.0.1
+  - @lg-chat/avatar@3.0.1
+
 ## 3.0.0
 
 ### Major Changes

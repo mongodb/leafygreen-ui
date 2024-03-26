@@ -1,5 +1,17 @@
 # @lg-chat/title-bar
 
+## 2.0.1
+
+### Patch Changes
+
+- 9079c0ae: Upgrades internal lg components
+- Updated dependencies [9079c0ae]
+- Updated dependencies [74057388]
+  - @lg-chat/avatar@3.0.1
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
 ## 2.0.0
 
 ### Major Changes
