@@ -2,7 +2,7 @@ import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { SELECT_LGID } from '../../constants';
+import { SELECT_ERROR_MESSAGE_LGID, SELECT_LGID } from '../../constants';
 
 import { LGSelectTestUtilsReturnType } from './getLGSelectTestUtils.types';
 
@@ -40,7 +40,7 @@ export const getLGSelectTestUtils = (
    */
   const selectTrigger = queryByQuerySelector<HTMLButtonElement>(
     element,
-    '[data-lgid="lg-select-trigger"]',
+    'button',
   ) as HTMLButtonElement;
 
   /**
@@ -48,7 +48,7 @@ export const getLGSelectTestUtils = (
    */
   const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-select-error_message"]',
+    `[data-lgid="${SELECT_ERROR_MESSAGE_LGID}"]`,
   );
 
   /**
