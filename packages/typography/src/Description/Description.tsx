@@ -1,4 +1,5 @@
 import React from 'react';
+import { LGID_DESCRIPTION } from 'src/constants';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -15,7 +16,7 @@ import { DescriptionProps } from './Description.types';
 
 export const Description = ({
   baseFontSize: baseFontSizeOverride,
-  'data-lgid': dataLgId = 'lg-description',
+  'data-lgid': dataLgId = LGID_DESCRIPTION,
   darkMode: darkModeProp,
   disabled = false,
   children,

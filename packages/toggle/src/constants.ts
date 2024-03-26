@@ -1,1 +1,1 @@
-export const TOGGLE_LGID = 'lg-toggle';
+export const LGID_TOGGLE = 'lg-toggle';

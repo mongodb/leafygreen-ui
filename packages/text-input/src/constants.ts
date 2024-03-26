@@ -1,1 +1,1 @@
-export const TEXT_INPUT_LGID = 'lg-text_input';
+export const LGID_TEXT_INPUT = 'lg-text_input';

@@ -1,5 +1,6 @@
 export { default as Body } from './Body/Body';
 export type { BodyProps } from './Body/Body.types';
+export * from './constants';
 export { default as Description } from './Description/Description';
 export type { DescriptionProps } from './Description/Description.types';
 export { default as Disclaimer } from './Disclaimer/Disclaimer';

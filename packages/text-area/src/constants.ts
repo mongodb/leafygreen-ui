@@ -1,3 +1,2 @@
-export const TEXT_AREA_LGID = 'lg-text_area';
-export const TEXT_AREA_INPUT_LGID = `${TEXT_AREA_LGID}-input`;
-export const TEXT_AREA_ERROR_MESSAGE_LGID = `${TEXT_AREA_LGID}-error_message`;
+export const LGID_TEXT_AREA = 'lg-text_area';
+export const LGID_TEXT_AREA_ERROR_MESSAGE = `${LGID_TEXT_AREA}-error_message`;
