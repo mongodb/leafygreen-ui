@@ -27,13 +27,13 @@ const createStorybookTheme = (theme: Theme) => {
 
     // Text colors
     textColor: color[theme].text.primary.default,
-    textInverseColor: color[theme].text.inversePrimary.default,
-    textMutedColor: color[theme].text.secondary.default,
+    textInverseColor: color[theme].text.secondary.default,
+    textMutedColor: color[theme].text.disabled.default,
 
     // Toolbar default and active colors
     barTextColor: color[theme].text.secondary.default,
-    barHoverColor: color[theme].background.secondary.hover,
-    barSelectedColor: palette.green.dark1,
+    barHoverColor: color[theme].text.secondary.hover, // text color
+    barSelectedColor: palette.green.dark1, // background color
     barBg: color[theme].background.secondary.default,
 
     // Control knob colors
@@ -41,10 +41,10 @@ const createStorybookTheme = (theme: Theme) => {
     buttonBorder: color[theme].border.secondary.default,
 
     booleanBg: color[theme].background.secondary.default,
-    booleanSelectedBg: color[theme].background.success.default,
+    booleanSelectedBg: color[theme].background.secondary.focus,
 
     inputBg: color[theme].background.secondary.default,
-    inputBorder: color[theme].border.secondary.default,
+    inputBorder: palette.red.base, //color[theme].border.secondary.default,
     inputTextColor: color[theme].text.primary.default,
     inputBorderRadius: spacing[100],
   });
