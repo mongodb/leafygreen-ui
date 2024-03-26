@@ -32,7 +32,7 @@ const createStorybookTheme = (theme: Theme) => {
 
     // Toolbar default and active colors
     barTextColor: color[theme].text.secondary.default,
-    barHoverColor: color[theme].text.secondary.hover, // text color
+    barHoverColor: color[theme].text.secondary.focus, // hover & focus text color
     barSelectedColor: palette.green.dark1, // background color
     barBg: color[theme].background.secondary.default,
 
@@ -44,7 +44,7 @@ const createStorybookTheme = (theme: Theme) => {
     booleanSelectedBg: color[theme].background.secondary.focus,
 
     inputBg: color[theme].background.secondary.default,
-    inputBorder: palette.red.base, //color[theme].border.secondary.default,
+    inputBorder: color[theme].border.secondary.default,
     inputTextColor: color[theme].text.primary.default,
     inputBorderRadius: spacing[100],
   });
