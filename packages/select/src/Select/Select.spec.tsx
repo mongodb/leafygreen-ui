@@ -16,6 +16,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
 import { getLGSelectTestUtils } from '../utils/getLGSelectTestUtils/getLGSelectTestUtils';
+import { LGSelectTestUtilsReturnType } from '../utils/getLGSelectTestUtils/getLGSelectTestUtils.types';
 import { Option, OptionGroup, Select } from '..';
 
 import { SelectProps, State } from './Select.types';
@@ -80,6 +81,7 @@ function renderSelect(props = {}) {
 
   const rerenderSelect = (newProps?: Partial<SelectProps>) => {
     const allProps = { ...props, ...newProps };
+
     renderUtils.rerender(<Select {...defaultProps} {...allProps} />);
   };
 
@@ -99,12 +101,12 @@ describe('packages/select', () => {
   });
 
   test('renders placeholder', async () => {
-    const { getSelect, clickTrigger, getOptionByValue, rerenderSelect } =
+    const { getInput, clickTrigger, getOptionByValue, rerenderSelect } =
       renderSelect();
 
-    expect(getSelect()).toHaveTextContent('Select');
+    expect(getInput()).toHaveTextContent('Select');
     rerenderSelect({ placeholder: 'Explicit placeholder' });
-    expect(getSelect()).toHaveTextContent('Explicit placeholder');
+    expect(getInput()).toHaveTextContent('Explicit placeholder');
     clickTrigger();
 
     await waitFor(() => {
@@ -206,12 +208,12 @@ describe('packages/select', () => {
 
   describe('tab order', () => {
     test('contains component when enabled', () => {
-      const { getSelect } = renderSelect();
+      const { getInput } = renderSelect();
 
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      expect(getSelect()).toHaveFocus();
+      expect(getInput()).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -219,12 +221,12 @@ describe('packages/select', () => {
 
     // Select should still be focusable when disabled
     test('and contains component when disabled', () => {
-      const { getSelect } = renderSelect({ disabled: true });
+      const { getInput } = renderSelect({ disabled: true });
 
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      expect(getSelect()).toHaveFocus();
+      expect(getInput()).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -238,26 +240,34 @@ describe('packages/select', () => {
     const isDisabled = !enabled;
 
     test('when uncontrolled', () => {
-      const { getSelect, isDisabled: utilsIsDisabled } = renderSelect({
+      const {
+        getInput,
+        isDisabled: utilsIsDisabled,
+        getInputValue,
+      } = renderSelect({
         disabled: isDisabled,
         defaultValue: Color.Blue,
       });
 
-      expect(getSelect()).toBeVisible();
-      expect(getSelect()).toHaveValue('Blue');
+      expect(getInput()).toBeVisible();
+      expect(getInputValue()).toBe('Blue');
       expect(utilsIsDisabled()).toBe(isDisabled);
     });
 
     test('when controlled', () => {
       const onChangeSpy = jest.fn();
-      const { getSelect, isDisabled: utilsIsDisabled } = renderSelect({
+      const {
+        getInput,
+        isDisabled: utilsIsDisabled,
+        getInputValue,
+      } = renderSelect({
         disabled: isDisabled,
         value: Color.Blue,
         onChange: onChangeSpy,
       });
 
-      expect(getSelect()).toBeVisible();
-      expect(getSelect()).toHaveValue('Blue');
+      expect(getInput()).toBeVisible();
+      expect(getInputValue()).toBe('Blue');
       expect(utilsIsDisabled()).toBe(isDisabled);
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
@@ -316,10 +326,10 @@ describe('packages/select', () => {
           );
 
           const {
-            elements: { getSelect },
+            elements: { getInput },
           } = getLGSelectTestUtils();
 
-          userEvent.click(getSelect());
+          userEvent.click(getInput());
           expect(spy).toHaveBeenCalledWith(
             '`Select` instance received child that is not `Option` or `OptionGroup`.',
           );
@@ -347,11 +357,11 @@ describe('packages/select', () => {
         );
 
         const {
-          elements: { getSelect },
+          elements: { getInput },
         } = getLGSelectTestUtils();
 
         act(() => {
-          userEvent.click(getSelect());
+          userEvent.click(getInput());
         });
 
         expect(spy).not.toHaveBeenCalled();
@@ -397,11 +407,11 @@ describe('packages/select', () => {
         );
 
         const {
-          elements: { getSelect },
+          elements: { getInput },
         } = getLGSelectTestUtils();
 
         act(() => {
-          userEvent.click(getSelect());
+          userEvent.click(getInput());
         });
 
         expect(spy).toHaveBeenCalledWith(
@@ -412,7 +422,7 @@ describe('packages/select', () => {
 
     describe('opening', () => {
       test('by clicking', async () => {
-        const { clickTrigger, getPopover, getSelect } = renderSelect();
+        const { clickTrigger, getPopover, getInput } = renderSelect();
 
         clickTrigger();
 
@@ -420,15 +430,15 @@ describe('packages/select', () => {
           expect(getPopover()).toBeVisible();
         });
 
-        expect(getSelect()).toHaveFocus();
+        expect(getInput()).toHaveFocus();
       });
 
       test('by arrow down key', async () => {
-        const { getOptionByValue, getPopover, getSelect } = renderSelect();
+        const { getOptionByValue, getPopover, getInput } = renderSelect();
 
         // focus on button element
         userEvent.tab();
-        userEvent.type(getSelect(), '{arrowdown}');
+        userEvent.type(getInput(), '{arrowdown}');
 
         await waitFor(() => {
           expect(getPopover()).toBeVisible();
@@ -440,11 +450,11 @@ describe('packages/select', () => {
       });
 
       test('by arrow up key', async () => {
-        const { getOptionByValue, getPopover, getSelect } = renderSelect();
+        const { getOptionByValue, getPopover, getInput } = renderSelect();
 
         // focus on button element
         userEvent.tab();
-        userEvent.type(getSelect(), '{arrowup}');
+        userEvent.type(getInput(), '{arrowup}');
 
         await waitFor(() => {
           expect(getPopover()).toBeVisible();
@@ -457,29 +467,29 @@ describe('packages/select', () => {
 
       describe('is not allowed when disabled', () => {
         test('by clicking', () => {
-          const { getPopover, getSelect } = renderSelect({
+          const { getPopover, getInput } = renderSelect({
             disabled: true,
           });
 
-          expect(() => userEvent.click(getSelect())).toThrow();
+          expect(() => userEvent.click(getInput())).toThrow();
           expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('by arrow down key', () => {
-          const { getPopover, getSelect } = renderSelect({
+          const { getPopover, getInput } = renderSelect({
             disabled: true,
           });
 
-          userEvent.type(getSelect(), '{arrowdown}');
+          userEvent.type(getInput(), '{arrowdown}');
           expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('by arrow up key', () => {
-          const { getPopover, getSelect } = renderSelect({
+          const { getPopover, getInput } = renderSelect({
             disabled: true,
           });
 
-          userEvent.type(getSelect(), '{arrowup}');
+          userEvent.type(getInput(), '{arrowup}');
           expect(getPopover()).not.toBeInTheDocument();
         });
       });
@@ -539,9 +549,9 @@ describe('packages/select', () => {
         });
 
         test('on enter', async () => {
-          const { getSelect, getPopover } = renderSelect();
+          const { getInput, getPopover } = renderSelect();
 
-          userEvent.type(getSelect(), '{arrowdown}');
+          userEvent.type(getInput(), '{arrowdown}');
           await waitFor(() => {
             expect(getPopover()).toBeVisible();
           });
@@ -552,9 +562,9 @@ describe('packages/select', () => {
         });
 
         test('on space', async () => {
-          const { getSelect, getPopover } = renderSelect();
+          const { getInput, getPopover } = renderSelect();
 
-          userEvent.type(getSelect(), '{arrowdown}');
+          userEvent.type(getInput(), '{arrowdown}');
           await waitFor(() => {
             expect(getPopover()).toBeVisible();
           });
@@ -566,7 +576,7 @@ describe('packages/select', () => {
       });
     });
 
-    describe.only.each([
+    describe.each([
       ['menu button', 'button'],
       ['list menu', 'listbox'],
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
@@ -574,10 +584,10 @@ describe('packages/select', () => {
       let getByText: RenderResult['getByText'];
       let clickTrigger: () => void;
       let getPopover: () => HTMLDivElement | null;
-      let getSelect: () => HTMLButtonElement;
+      let getInput: () => HTMLButtonElement;
 
       beforeEach(async () => {
-        ({ clickTrigger, getPopover, getByRole, getByText, getSelect } =
+        ({ clickTrigger, getPopover, getByRole, getByText, getInput } =
           renderSelect());
 
         clickTrigger();
@@ -599,7 +609,7 @@ describe('packages/select', () => {
       });
 
       test('by clicking menu button', async () => {
-        const button = getSelect();
+        const button = getInput();
         userEvent.click(button);
 
         expect(button).toHaveFocus();
@@ -609,7 +619,7 @@ describe('packages/select', () => {
       test('by escape key', async () => {
         userEvent.type(getByRole(focusedElementRole), '{esc}');
 
-        const button = getSelect();
+        const button = getInput();
         expect(button).toHaveFocus();
         await waitForElementToBeRemoved(getPopover());
       });
@@ -636,9 +646,8 @@ describe('packages/select', () => {
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void
       >;
-      // FIXME: fix when types are updateed
-      let elements: any;
-      let utils: any;
+      let elements: LGSelectTestUtilsReturnType['elements'];
+      let utils: LGSelectTestUtilsReturnType['utils'];
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
@@ -664,7 +673,7 @@ describe('packages/select', () => {
 
         const { elements: lGElements, utils: LGUtils } = getLGSelectTestUtils();
 
-        button = lGElements.getSelect();
+        button = lGElements.getInput();
         elements = lGElements;
         utils = LGUtils;
       });
@@ -862,8 +871,7 @@ describe('packages/select', () => {
 
     let rerender: RenderResult['rerender'];
     let button: HTMLElement;
-    // FIXME:
-    let utils: any;
+    let utils: LGSelectTestUtilsReturnType['utils'];
 
     beforeEach(async () => {
       ({ rerender } = render(
@@ -875,7 +883,7 @@ describe('packages/select', () => {
 
       const { elements: lGElements, utils: LGUtils } = getLGSelectTestUtils();
 
-      button = lGElements.getSelect();
+      button = lGElements.getInput();
       utils = LGUtils;
 
       userEvent.click(button);
@@ -976,7 +984,7 @@ describe('packages/select', () => {
     });
 
     test('menu renders as a child of button', async () => {
-      const { clickTrigger, getPopover, getSelect } = renderSelect({
+      const { clickTrigger, getPopover, getInput } = renderSelect({
         usePortal: false,
       });
 
@@ -985,7 +993,7 @@ describe('packages/select', () => {
       await waitFor(() => {
         const popover = getPopover();
         expect(popover).toBeInTheDocument();
-        expect(getSelect()).toContainElement(popover);
+        expect(getInput()).toContainElement(popover);
       });
     });
 
@@ -1007,12 +1015,12 @@ describe('packages/select', () => {
 
       test('on enter', async () => {
         const onChange = jest.fn();
-        const { getSelect } = renderSelect({
+        const { getInput } = renderSelect({
           usePortal: false,
           onChange: onChange,
         });
 
-        const button = getSelect();
+        const button = getInput();
         userEvent.type(button, '{arrowdown}');
         // first option is focused by default
         userEvent.keyboard('{enter}');
@@ -1021,12 +1029,12 @@ describe('packages/select', () => {
 
       test('on space', async () => {
         const onChange = jest.fn();
-        const { getSelect } = renderSelect({
+        const { getInput } = renderSelect({
           usePortal: false,
           onChange: onChange,
         });
 
-        const button = getSelect();
+        const button = getInput();
         userEvent.type(button, '{arrowdown}');
         // first option is focused by default
         userEvent.keyboard('{space}');
@@ -1050,11 +1058,11 @@ describe('packages/select', () => {
         });
 
         test('on enter', async () => {
-          const { getSelect, getPopover } = renderSelect({
+          const { getInput, getPopover } = renderSelect({
             usePortal: false,
           });
 
-          const button = getSelect();
+          const button = getInput();
           userEvent.type(button, '{arrowdown}');
           await waitFor(() => {
             expect(getPopover()).toBeInTheDocument();
@@ -1066,11 +1074,11 @@ describe('packages/select', () => {
         });
 
         test('on space', async () => {
-          const { getSelect, getPopover } = renderSelect({
+          const { getInput, getPopover } = renderSelect({
             usePortal: false,
           });
 
-          const button = getSelect();
+          const button = getInput();
           userEvent.type(button, '{arrowdown}');
           await waitFor(() => {
             expect(getPopover()).toBeInTheDocument();

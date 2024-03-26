@@ -142,21 +142,21 @@ describe('packages/select/getLGSelectTestUtils', () => {
     });
   });
 
-  describe('getSelect', () => {
+  describe('getInput', () => {
     test('is in the document', () => {
-      const { getSelect } = renderSelect();
+      const { getInput } = renderSelect();
 
-      expect(getSelect()).toBeInTheDocument();
-      expect(getSelect()).toHaveTextContent('Select');
+      expect(getInput()).toBeInTheDocument();
+      expect(getInput()).toHaveTextContent('Select');
     });
 
     test('can be clicked', async () => {
-      const { getSelect, getPopover } = renderSelect({
+      const { getInput, getPopover } = renderSelect({
         value: 'RED',
         readOnly: true,
       });
 
-      const trigger = getSelect();
+      const trigger = getInput();
       userEvent.click(trigger);
       await waitFor(() => {
         expect(getPopover()).toBeInTheDocument();
@@ -301,33 +301,33 @@ describe('packages/select/getLGSelectTestUtils', () => {
     });
   });
 
-  describe('getSelectValue', () => {
+  describe('getInputValue', () => {
     test('returns the default value "Select"', () => {
-      const { getSelectValue } = renderSelect();
-      expect(getSelectValue()).toBe('Select');
+      const { getInputValue } = renderSelect();
+      expect(getInputValue()).toBe('Select');
     });
 
     describe('value prop', () => {
       test('returns the value', () => {
-        const { getSelectValue } = renderSelect({ value: 'Yellow' });
-        expect(getSelectValue()).toBe('Yellow');
+        const { getInputValue } = renderSelect({ value: 'Yellow' });
+        expect(getInputValue()).toBe('Yellow');
       });
 
       describe.each([true, false])('when usePortal={%p}', boolean => {
         test('returns the updated value after clicking on an option', async () => {
-          const { getSelectValue, clickTrigger, clickOption } =
+          const { getInputValue, clickTrigger, clickOption } =
             renderSelectControlled({
               value: 'Blue',
               usePortal: boolean,
             });
 
-          expect(getSelectValue()).toBe('Blue');
+          expect(getInputValue()).toBe('Blue');
           clickTrigger();
           await waitFor(() => {
             clickOption('Green');
           });
           await waitFor(() => {
-            expect(getSelectValue()).toBe('Green');
+            expect(getInputValue()).toBe('Green');
           });
         });
       });
@@ -335,24 +335,24 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
     describe('defaultValue prop', () => {
       test('returns the default value', () => {
-        const { getSelectValue } = renderSelect({ defaultValue: 'Green' });
-        expect(getSelectValue()).toBe('Green');
+        const { getInputValue } = renderSelect({ defaultValue: 'Green' });
+        expect(getInputValue()).toBe('Green');
       });
 
       describe.each([true, false])('when usePortal={%p}', boolean => {
         test('returns the updated value after clicking on an option', async () => {
-          const { getSelectValue, clickTrigger, clickOption } = renderSelect({
+          const { getInputValue, clickTrigger, clickOption } = renderSelect({
             defaultValue: 'Green',
             usePortal: boolean,
           });
 
-          expect(getSelectValue()).toBe('Green');
+          expect(getInputValue()).toBe('Green');
           clickTrigger();
           await waitFor(() => {
             clickOption('Yellow');
           });
           await waitFor(() => {
-            expect(getSelectValue()).toBe('Yellow');
+            expect(getInputValue()).toBe('Yellow');
           });
         });
       });
@@ -362,26 +362,26 @@ describe('packages/select/getLGSelectTestUtils', () => {
   describe('clickOption', () => {
     describe.each([true, false])('when usePortal={%p}', boolean => {
       test('clicks an option', async () => {
-        const { getSelectValue, clickTrigger, clickOption } = renderSelect({
+        const { getInputValue, clickTrigger, clickOption } = renderSelect({
           usePortal: boolean,
         });
 
-        expect(getSelectValue()).toBe('Select');
+        expect(getInputValue()).toBe('Select');
         clickTrigger();
         await waitFor(() => {
           clickOption('Yellow');
         });
         await waitFor(() => {
-          expect(getSelectValue()).toBe('Yellow');
+          expect(getInputValue()).toBe('Yellow');
         });
       });
 
       test('throws an error when the option does not exist', async () => {
-        const { getSelectValue, clickTrigger, clickOption } = renderSelect({
+        const { getInputValue, clickTrigger, clickOption } = renderSelect({
           usePortal: boolean,
         });
 
-        expect(getSelectValue()).toBe('Select');
+        expect(getInputValue()).toBe('Select');
         clickTrigger();
 
         await waitFor(() => {
@@ -429,8 +429,8 @@ describe('packages/select/getLGSelectTestUtils', () => {
     test('both have correct default value', () => {
       const { testUtils1, testUtils2 } = renderMultipleSelects();
 
-      expect(testUtils1.getSelectValue()).toBe('Red');
-      expect(testUtils2.getSelectValue()).toBe('Blue');
+      expect(testUtils1.getInputValue()).toBe('Red');
+      expect(testUtils2.getInputValue()).toBe('Blue');
     });
 
     describe('first select', () => {
