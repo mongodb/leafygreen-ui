@@ -113,7 +113,9 @@ const ExpandableCard = ({
             {flagText && <span className={flagTextStyle}>{flagText}</span>}
           </span>
           {description && (
-            <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
+            <Body as="div" className={summaryTextThemeStyle[theme]}>
+              {description}
+            </Body>
           )}
 
           <Transition

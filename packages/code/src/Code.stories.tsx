@@ -1,15 +1,15 @@
 /* eslint-disable no-useless-escape */
 import React from 'react';
-
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   type StoryMetaType,
   type StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language } from '.';

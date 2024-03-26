@@ -1,5 +1,6 @@
 import React, { ElementType, useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import random from 'lodash/random';
 import range from 'lodash/range';
 import shuffle from 'lodash/shuffle';
@@ -7,8 +8,6 @@ import shuffle from 'lodash/shuffle';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-
-import { StoryMetaType } from '../../lib/src/storybook';
 
 import {
   TestDescendant,

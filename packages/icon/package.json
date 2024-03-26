@@ -7,9 +7,7 @@
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+      "*": ["ts3.4/*"]
     }
   },
   "scripts": {
@@ -29,7 +27,8 @@
     "@types/meow": "^6.0.0",
     "@types/xml2json": "^0.11.0",
     "meow": "^6.1.0",
-    "xml2json": "^0.12.0"
+    "xml2json": "^0.12.0",
+    "@lg-tools/storybook-utils": "^0.0.1"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",

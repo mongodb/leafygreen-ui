@@ -1,8 +1,8 @@
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Size } from './Toggle/types';

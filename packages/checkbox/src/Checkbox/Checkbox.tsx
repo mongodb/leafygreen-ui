@@ -20,7 +20,6 @@ import {
   containerStyle,
   descriptionStyle,
   disabledContainerStyle,
-  disabledLabelDarkThemeOverrideStyle,
   disabledLabelStyle,
   inputClassName,
   inputFocusStyles,
@@ -116,7 +115,6 @@ function Checkbox({
           disabled={disabled}
           className={cx(labelStyle, labelHoverStyle[theme], {
             [disabledLabelStyle]: disabled,
-            [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
           })}
         >
           <input
@@ -125,7 +123,6 @@ function Checkbox({
             className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
             type="checkbox"
             name={name}
-            disabled={disabled}
             checked={isChecked}
             aria-label="checkbox"
             aria-disabled={disabled}
@@ -158,12 +155,7 @@ function Checkbox({
         </Label>
 
         {description && (
-          <Description
-            className={cx(descriptionStyle, {
-              [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
-            })}
-            disabled={disabled}
-          >
+          <Description className={descriptionStyle} disabled={disabled}>
             {description}
           </Description>
         )}

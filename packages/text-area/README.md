@@ -51,29 +51,31 @@ return (
 | `onChange`    | `function`                     | The event handler function for the 'onchange' event. Accepts the change event object as its argument and returns nothing. |          |
 | `onBlur`      | `function`                     | The event handler function for the 'onblur' event. Accepts the focus event object as its argument and returns nothing.    |          |
 
-## getLGTextAreaUtils()
+# Test Harnessess
 
-`getLGTextAreaUtils()` is a util that allows consumers to reliably interact with `LG TextArea` in a product test suite. If the `TextArea` component cannot be found, an error will be thrown.
+## getLGTextAreaTestUtils()
+
+`getLGTextAreaTestUtils()` is a util that allows consumers to reliably interact with `LG TextArea` in a product test suite. If the `TextArea` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
-import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
-const { elements, utils } = getLGTextAreaUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextArea`. It defaults to 'lg-text_area' if left empty.
+const { elements, utils } = getLGTextAreaTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextArea`. It defaults to 'lg-text_area' if left empty.
 ```
 
 #### Single `TextArea`
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 
 test('text-area', () => {
   render(<TextArea label="label" value="text area" />);
-  const { elements, utils } = getLGTextAreaUtils();
+  const { elements, utils } = getLGTextAreaTestUtils();
 
   expect(elements.getInput()).toBeInTheDocument();
   expect(utils.getInputValue()).toBe('text area');
@@ -86,7 +88,7 @@ When testing multiple `TextArea`'s it is recommended to add the custom `data-lgi
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 
@@ -98,9 +100,9 @@ test('text-area', () => {
     </>,
   );
   const { elements: lgElementsTextArea1, utils: lgUtilsTextArea1 } =
-    getLGTextAreaUtils('text-area-1'); // data-lgid
+    getLGTextAreaTestUtils('text-area-1'); // data-lgid
   const { elements: lgElementsTextArea2, utils: lgUtilsTextArea2 } =
-    getLGTextAreaUtils('text-area-2'); // data-lgid
+    getLGTextAreaTestUtils('text-area-2'); // data-lgid
 
   // First TextArea
   expect(lgElementsTextArea1.getInput()).toBeInTheDocument();
@@ -116,9 +118,9 @@ test('text-area', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
-import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 
@@ -130,9 +132,9 @@ test('Form', () => {
       <TextArea label="TextArea label" />
     </Form>,
   );
-  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextAreaUtils();
-  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputUtils();
-  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaUtils();
+  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextAreaTestUtils();
+  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputTestUtils();
+  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaTestUtils();
 
   // LG Toggle
   expect(lgElementsToggle.getInput()).toBeInTheDocument();
@@ -155,7 +157,7 @@ test('Form', () => {
 ```tsx
 const {
   elements: { getInput, getLabel, getDescription, getErrorMessage },
-} = getLGTextAreaUtils();
+} = getLGTextAreaTestUtils();
 ```
 
 | Util              | Description                    | Returns                       |
@@ -170,7 +172,7 @@ const {
 ```tsx
 const {
   utils: { getInputValue, isDisabled, isValid, isError },
-} = getLGTextAreaUtils();
+} = getLGTextAreaTestUtils();
 ```
 
 | Util            | Description                                | Returns   |

@@ -1,8 +1,8 @@
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { TruncationLocation, Variant } from './Chip/Chip.types';

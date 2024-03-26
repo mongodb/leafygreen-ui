@@ -3,7 +3,7 @@ import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getLGToggleUtils } from '../utils';
+import { getLGToggleTestUtils } from '../utils';
 import Toggle from '..';
 
 const className = 'test-className';
@@ -18,7 +18,7 @@ function renderToggle(props = {}) {
     </>,
   );
 
-  const { elements, utils } = getLGToggleUtils();
+  const { elements, utils } = getLGToggleTestUtils();
   const toggle = elements.getInput();
 
   return { ...renderUtils, elements, utils, toggle };

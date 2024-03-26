@@ -6,6 +6,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { TOGGLE_LGID } from '../constants';
+
 import {
   buttonBaseStyles,
   buttonSizeStyles,
@@ -28,7 +30,7 @@ function Toggle({
   onChange: onChangeProp,
   onClick: onClickProp,
   checked: controlledChecked,
-  'data-lgid': dataLgId = 'lg-toggle',
+  'data-lgid': dataLgId = TOGGLE_LGID,
   ...rest
 }: ToggleProps) {
   validateAriaLabelProps(rest, Toggle.displayName);

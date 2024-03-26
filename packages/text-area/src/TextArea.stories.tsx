@@ -1,11 +1,11 @@
 import React from 'react';
-
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   storybookArgTypes,
   StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import TextArea, { State, TextAreaProps } from '.';
 

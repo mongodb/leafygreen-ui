@@ -58,29 +58,31 @@ For the Toggle to be accessible to screen readers, you **must** pass either [`ar
 
 Please reach out if you would like further guidance on how to programmatically associate text with the Toggle component.
 
-## getLGToggleUtils()
+# Test Harnessess
 
-`getLGToggleUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found, an errror will be thrown.
+## getLGToggleTestUtils()
+
+`getLGToggleTestUtils()` is a a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found, an errror will be thrown.
 
 ### Usage
 
 ```tsx
-import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
 
-const { elements, utils } = getLGToggleUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
+const { elements, utils } = getLGToggleTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
 ```
 
 #### Single `Toggle`
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
 
 ...
 
 test('toggle', () => {
   render(<Toggle aria-label="label" />);
-  const { elements, utils } = getLGToggleUtils();
+  const { elements, utils } = getLGToggleTestUtils();
 
   expect(elements.getInput()).toBeInTheDocument();
   expect(utils.getInputValue()).toBe('false');
@@ -93,7 +95,7 @@ When testing multiple `Toggle`'s it is recommended to add the custom `data-lgid`
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
 
 ...
 
@@ -105,9 +107,9 @@ test('toggle', () => {
     </>,
   );
   const { elements: lgElementsToggle1, utils: lgUtilsToggle1 } =
-    getLGToggleUtils('toggle-1'); // data-lgid
+    getLGToggleTestUtils('toggle-1'); // data-lgid
   const { elements: lgElementsToggle2, utils: lgUtilsToggle2 } =
-    getLGToggleUtils('toggle-2'); // data-lgid
+    getLGToggleTestUtils('toggle-2'); // data-lgid
 
   // First toggle
   expect(lgElementsToggle1.getInput()).toBeInTheDocument();
@@ -123,9 +125,9 @@ test('toggle', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
-import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 
@@ -137,9 +139,9 @@ test('Form', () => {
       <TextArea label="TextArea label" />
     </Form>,
   );
-  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGToggleUtils();
-  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputUtils();
-  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaUtils();
+  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGToggleTestUtils();
+  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputTestUtils();
+  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaTestUtils();
 
   // LG Toggle
   expect(lgElementsToggle.getInput()).toBeInTheDocument();
@@ -164,7 +166,7 @@ test('Form', () => {
 ```tsx
 const {
   elements: { getInput },
-} = getLGToggleUtils();
+} = getLGToggleTestUtils();
 ```
 
 | Util       | Description            | Returns             |
@@ -176,7 +178,7 @@ const {
 ```tsx
 const {
   utils: { isDisabled, getInputValue },
-} = getLGToggleUtils();
+} = getLGToggleTestUtils();
 ```
 
 | Util            | Description                           | Returns              |

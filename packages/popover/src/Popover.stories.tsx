@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react';
+import {
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify, PopoverProps } from '.';

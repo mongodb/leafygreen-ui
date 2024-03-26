@@ -3,25 +3,33 @@ import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import Toggle from '../../Toggle/Toggle';
+import TextInput from '../../TextInput';
 
-import { getLGToggleUtils } from './getLGToggleUtils';
+import { getLGTextInputTestUtils } from './getLGTextInputTestUtils';
 
-const renderToggleAsync = () =>
-  renderAsyncTest(<Toggle aria-label="Toggle who?" />, render);
+const renderTextInputAsync = () =>
+  renderAsyncTest(<TextInput label="text input label" />, render);
 
-function renderMultipleToggles() {
+function renderMultipleInputs() {
   render(
     <>
-      <Toggle aria-label="Toggle who?" data-lgid="lg-toggle-1" />
-      <Toggle aria-label="Toggle who?" data-lgid="lg-toggle-2" checked={true} />
+      <TextInput
+        data-lgid="lg-text_input-1"
+        label="label 1"
+        value="text input 1"
+      />
+      <TextInput
+        data-lgid="lg-text_input-2"
+        label="label 2"
+        value="text input 2"
+      />
     </>,
   );
 
   const { elements: elementsOne, utils: utilsOne } =
-    getLGToggleUtils('lg-toggle-1');
+    getLGTextInputTestUtils('lg-text_input-1');
   const { elements: elementsTwo, utils: utilsTwo } =
-    getLGToggleUtils('lg-toggle-2');
+    getLGTextInputTestUtils('lg-text_input-2');
 
   return {
     elementsOne,
@@ -31,45 +39,47 @@ function renderMultipleToggles() {
   };
 }
 
-describe('packages/toggle', () => {
-  describe('getLGToggleUtils', () => {
-    describe('throws error if LG Toggle is not found', () => {
+describe('packages/text-input', () => {
+  describe('getLGTextInputTestUtils', () => {
+    describe('throws error if LG TextInput is not found', () => {
       test('', () => {
-        render(<Toggle aria-label="Toggle who?" />);
+        render(<TextInput data-lgid="lg-text_output" label="hey" />);
 
         try {
           // eslint-disable-next-line
-          const { elements } = getLGToggleUtils();
+          const { elements } = getLGTextInputTestUtils();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
             'message',
-            expect.stringMatching(/Unable to find an element by: /),
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-text_input"\]/,
+            ),
           );
         }
       });
     });
 
-    describe('multiple toggles', () => {
+    describe('multiple inputs', () => {
       test('getInput', () => {
-        const { elementsOne, elementsTwo } = renderMultipleToggles();
+        const { elementsOne, elementsTwo } = renderMultipleInputs();
 
         expect(elementsOne.getInput()).toBeInTheDocument();
         expect(elementsTwo.getInput()).toBeInTheDocument();
       });
 
       test('getInputValue', () => {
-        const { utilsOne, utilsTwo } = renderMultipleToggles();
+        const { utilsOne, utilsTwo } = renderMultipleInputs();
 
-        expect(utilsOne.getInputValue()).toBe('false');
-        expect(utilsTwo.getInputValue()).toBe('true');
+        expect(utilsOne.getInputValue()).toBe('text input 1');
+        expect(utilsTwo.getInputValue()).toBe('text input 2');
       });
     });
 
-    describe('Async component', () => {
-      test('find LG Toggle after awaiting an async component', async () => {
+    describe('Async', () => {
+      test('find LG TextInput after awaiting async component', async () => {
         const { openButton, findByTestId, asyncTestComponentId } =
-          renderToggleAsync();
+          renderTextInputAsync();
 
         userEvent.click(openButton);
 
@@ -79,40 +89,40 @@ describe('packages/toggle', () => {
         // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
-        } = getLGToggleUtils();
+        } = getLGTextInputTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG Toggle after awaiting getLGToggleUtils', async () => {
-        const { openButton } = renderToggleAsync();
+      test('find LG TextInput awaiting getLGTextInputTestUtils', async () => {
+        const { openButton } = renderTextInputAsync();
 
         userEvent.click(openButton);
 
-        // awaiting getLGToggleUtils
+        // awaiting getLGTextInputTestUtils
         await waitFor(() => {
           const {
             elements: { getInput },
-          } = getLGToggleUtils();
+          } = getLGTextInputTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
 
       test('Updates the value inside an async component', async () => {
         const { openButton, findByTestId, asyncTestComponentId } =
-          renderToggleAsync();
+          renderTextInputAsync();
 
         userEvent.click(openButton);
         const asyncComponent = await findByTestId(asyncTestComponentId);
         expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting asyncComponent, look for toggle
+        // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
           utils: { getInputValue },
-        } = getLGToggleUtils();
+        } = getLGTextInputTestUtils();
         const input = getInput();
-        userEvent.click(input);
-        expect(getInputValue()).toBe('true');
+        userEvent.type(input, 'leafygreen');
+        expect(getInputValue()).toBe('leafygreen');
       });
     });
   });

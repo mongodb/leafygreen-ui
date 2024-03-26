@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useRef } from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { Variant } from '@leafygreen-ui/badge';
 import { badgeVariants as variantStyle } from '@leafygreen-ui/badge/src/Badge/styles';
@@ -8,13 +9,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useBaseFontSize,
 } from '@leafygreen-ui/leafygreen-provider';
-import {
-  DarkModeProps,
-  getTheme,
-  HTMLElementProps,
-  StoryMetaType,
-  StoryType,
-} from '@leafygreen-ui/lib';
+import { DarkModeProps, getTheme, HTMLElementProps } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
