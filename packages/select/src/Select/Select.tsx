@@ -23,6 +23,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
+import { SELECT_LGID } from '../constants';
 import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
@@ -66,7 +67,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
-      'data-lgid': dataLgId = 'lg-select',
+      'data-lgid': dataLgId = SELECT_LGID,
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,

@@ -2,6 +2,8 @@ import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { SELECT_LGID } from '../../constants';
+
 import { LGSelectTestUtilsReturnType } from './getLGSelectTestUtils.types';
 
 export function waitForSelectTransitionDuration() {
@@ -9,7 +11,7 @@ export function waitForSelectTransitionDuration() {
 }
 
 export const getLGSelectTestUtils = (
-  lgId = 'lg-select',
+  lgId = SELECT_LGID,
 ): LGSelectTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
