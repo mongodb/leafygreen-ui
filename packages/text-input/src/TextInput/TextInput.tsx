@@ -60,7 +60,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       value: controlledValue,
       className,
       darkMode: darkModeProp,
-      sizeVariant = SizeVariant.Default,
+      sizeVariant: size = SizeVariant.Default,
       'aria-labelledby': ariaLabelledby,
       handleValidation,
       baseFontSize: baseFontSizeProp,
@@ -78,7 +78,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
 
-    const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
+    const handleBlur: React.FocusEventHandler<HTMLInputElement> = e => {
       if (onBlur) {
         onBlur(e);
       }
@@ -86,7 +86,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       validation.onBlur(e);
     };
 
-    const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
       if (onChange) {
         onChange(e);
       }
@@ -127,39 +127,42 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
+    const formFieldProps = {
+      baseFontSize,
+      className,
+      darkMode,
+      description,
+      disabled,
+      errorMessage,
+      id,
+      label,
+      optional,
+      size,
+      state,
+    } as const;
+
+    const inputProps = {
+      'aria-disabled': disabled,
+      'aria-invalid': state === State.Error,
+      autoComplete: disabled ? 'off' : rest?.autoComplete || 'on',
+      className: css`
+        width: 100%;
+      `,
+      onBlur: handleBlur,
+      onChange: handleChange,
+      placeholder,
+      readOnly: disabled,
+      ref: forwardRef,
+      required: !optional,
+      type,
+      value,
+      ...rest,
+    } as const;
+
     return (
-      <FormField
-        label={label}
-        description={description}
-        errorMessage={errorMessage}
-        state={state}
-        size={sizeVariant}
-        disabled={disabled}
-        baseFontSize={baseFontSize}
-        darkMode={darkMode}
-        className={className}
-        id={id}
-        optional={optional}
-        data-lgid={dataLgId}
-      >
+      <FormField {...formFieldProps}>
         <FormFieldInputContainer>
-          <input
-            {...rest}
-            aria-labelledby={ariaLabelledby}
-            type={type}
-            value={value}
-            required={!optional}
-            disabled={disabled}
-            placeholder={placeholder}
-            onChange={onValueChange}
-            onBlur={onBlurHandler}
-            ref={forwardRef}
-            autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
-            aria-invalid={state === 'error'}
-            className={css`
-              width: 100%;
-            `}
-          />
+          <input {...inputProps} />
         </FormFieldInputContainer>
       </FormField>
     );

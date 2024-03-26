@@ -105,6 +105,19 @@ describe('packages/text-input', () => {
     spy.mockClear();
   });
 
+  test('does not render "optional" text when the prop is set to false', () => {
+    const { container } = renderTextInput({ optional: false, ...defaultProps });
+    expect(container.innerHTML).not.toContain('Optional');
+  });
+
+  test(`renders with aria-disabled attribute but not disabled attribute when disabled prop is set`, () => {
+    const { textInput } = renderTextInput({
+      disabled: true,
+    });
+    expect(textInput.getAttribute('aria-disabled')).toBeTruthy();
+    expect(textInput.getAttribute('disabled')).toBeFalsy();
+  });
+
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
       const { getInputValue, isValid, isOptional } = renderTextInput({
