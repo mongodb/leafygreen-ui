@@ -86,7 +86,7 @@ export const inputWrapperModeStyles: Record<Theme, string> = {
       }
 
       &::placeholder {
-        color: ${palette.gray.light1};
+        color: ${palette.gray.base};
         font-weight: ${fontWeights.regular};
       }
     }
@@ -169,34 +169,34 @@ const iconIsButtonSelector = `&:has(button.${iconClassName})`;
 export const inputWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding-inline: 6px;
+    padding-inline: ${spacing[200]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 4px;
+      padding-inline-end: ${spacing[100]}px;
     }
   `,
   [Size.Small]: css`
     height: 28px;
-    padding-inline: 6px;
+    padding-inline: ${spacing[200]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 4px;
+      padding-inline-end: ${spacing[100]}px;
     }
   `,
   [Size.Default]: css`
     height: 36px;
-    padding-inline: 12px;
+    padding-inline: ${spacing[300]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 6px;
+      padding-inline-end: ${spacing[150]}px;
     }
   `,
   [Size.Large]: css`
     height: 48px;
-    padding-inline: 16px;
+    padding-inline: ${spacing[300]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 10px;
+      padding-inline-end: ${spacing[200]}px;
     }
   `,
 };
