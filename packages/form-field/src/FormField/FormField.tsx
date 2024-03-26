@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-import { LGID_FORM_FIELD_ERROR_MESSAGE } from 'src/constants';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -11,6 +10,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { LGID_FORM_FIELD_ERROR_MESSAGE } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 
 import {
