@@ -1,1 +1,1 @@
-export { getLGToggleUtils } from './getLGToggleUtils/getLGToggleUtils';
+export { getLGToggleTestUtils } from './getLGToggleTestUtils/getLGToggleTestUtils';

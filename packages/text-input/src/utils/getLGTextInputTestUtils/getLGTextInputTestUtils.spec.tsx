@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import TextInput from '../../TextInput';
 
-import { getLGTextInputUtils } from './getLGTextInputUtils';
+import { getLGTextInputTestUtils } from './getLGTextInputTestUtils';
 
 const renderTextInputAsync = () =>
   renderAsyncTest(<TextInput label="text input label" />, render);
@@ -27,9 +27,9 @@ function renderMultipleInputs() {
   );
 
   const { elements: elementsOne, utils: utilsOne } =
-    getLGTextInputUtils('lg-text_input-1');
+    getLGTextInputTestUtils('lg-text_input-1');
   const { elements: elementsTwo, utils: utilsTwo } =
-    getLGTextInputUtils('lg-text_input-2');
+    getLGTextInputTestUtils('lg-text_input-2');
 
   return {
     elementsOne,
@@ -40,14 +40,14 @@ function renderMultipleInputs() {
 }
 
 describe('packages/text-input', () => {
-  describe('getLGTextInputUtils', () => {
+  describe('getLGTextInputTestUtils', () => {
     describe('throws error if LG TextInput is not found', () => {
       test('', () => {
         render(<TextInput data-lgid="lg-text_output" label="hey" />);
 
         try {
           // eslint-disable-next-line
-          const { elements } = getLGTextInputUtils();
+          const { elements } = getLGTextInputTestUtils();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -89,20 +89,20 @@ describe('packages/text-input', () => {
         // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
-        } = getLGTextInputUtils();
+        } = getLGTextInputTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG TextInput awaiting getLGTextInputUtils', async () => {
+      test('find LG TextInput awaiting getLGTextInputTestUtils', async () => {
         const { openButton } = renderTextInputAsync();
 
         userEvent.click(openButton);
 
-        // awaiting getLGTextInputUtils
+        // awaiting getLGTextInputTestUtils
         await waitFor(() => {
           const {
             elements: { getInput },
-          } = getLGTextInputUtils();
+          } = getLGTextInputTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -119,7 +119,7 @@ describe('packages/text-input', () => {
         const {
           elements: { getInput },
           utils: { getInputValue },
-        } = getLGTextInputUtils();
+        } = getLGTextInputTestUtils();
         const input = getInput();
         userEvent.type(input, 'leafygreen');
         expect(getInputValue()).toBe('leafygreen');

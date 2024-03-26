@@ -2,11 +2,11 @@ import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { TEXT_AREA_LGID } from '../../constants';
 
-import { LGTextAreaUtilsReturnType } from './getLGTextAreaUtils.types';
+import { LGTextAreaTestUtilsReturnType } from './getLGTextAreaTestUtils.types';
 
-export const getLGTextAreaUtils = (
+export const getLGTextAreaTestUtils = (
   lgId = TEXT_AREA_LGID,
-): LGTextAreaUtilsReturnType => {
+): LGTextAreaTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.

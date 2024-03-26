@@ -1,1 +1,1 @@
-export { getLGTextAreaUtils } from './getLGTextAreaUtils/getLGTextAreaUtils';
+export { getLGTextAreaTestUtils } from './getLGTextAreaTestUtils/getLGTextAreaTestUtils';

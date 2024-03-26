@@ -70,29 +70,29 @@ return (
 
 Either `label` or `aria-labelledby` must be provided a string, or there will be a console error. This is to ensure that screenreaders have a description for what the Text Input does.
 
-## getLGTextInputUtils()
+## getLGTextInputTestUtils()
 
-`getLGTextInputUtils()` is a a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
+`getLGTextInputTestUtils()` is a a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
-import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
 
-const { elements, utils } = getLGTextInputUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextInput`. It defaults to 'lg-text_input' if left empty.
+const { elements, utils } = getLGTextInputTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextInput`. It defaults to 'lg-text_input' if left empty.
 ```
 
 #### Single `TextInput`
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
 
 ...
 
 test('text-input', () => {
   render(<TextInput label="label" value="text input" />);
-  const { elements, utils } = getLGTextInputUtils();
+  const { elements, utils } = getLGTextInputTestUtils();
 
   expect(elements.getInput()).toBeInTheDocument();
   expect(utils.getInputValue()).toBe('text input');
@@ -105,7 +105,7 @@ When testing multiple `TextInput`'s it is recommended to add the custom `data-lg
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
 
 ...
 
@@ -117,9 +117,9 @@ test('text-input', () => {
     </>,
   );
   const { elements: lgElementsTextInput1, utils: lgUtilsTextInput1 } =
-    getLGTextInputUtils('text-input-1'); // data-lgid
+    getLGTextInputTestUtils('text-input-1'); // data-lgid
   const { elements: lgElementsTextInput2, utils: lgUtilsTextInput2 } =
-    getLGTextInputUtils('text-input-2'); // data-lgid
+    getLGTextInputTestUtils('text-input-2'); // data-lgid
 
   // First TextInput
   expect(lgElementsTextInput1.getInput()).toBeInTheDocument();
@@ -135,9 +135,9 @@ test('text-input', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getLGTextInputUtils } from '@leafygreen-ui/text-input';
-import TextArea, { getLGTextAreaUtils } from '@leafygreen-ui/text-area';
+import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 
@@ -149,9 +149,9 @@ test('Form', () => {
       <TextArea label="TextArea label" />
     </Form>,
   );
-  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextInputUtils();
-  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputUtils();
-  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaUtils();
+  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextInputTestUtils();
+  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputTestUtils();
+  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaTestUtils();
 
   // LG Toggle
   expect(lgElementsToggle.getInput()).toBeInTheDocument();
@@ -174,7 +174,7 @@ test('Form', () => {
 ```tsx
 const {
   elements: { getInput, getLabel, getDescription, getErrorMessage },
-} = getLGTextInputUtils();
+} = getLGTextInputTestUtils();
 ```
 
 | Util              | Description                    | Returns                       |
@@ -189,7 +189,7 @@ const {
 ```tsx
 const {
   utils: { getInputValue, isDisabled, isValid, isError, isOptional },
-} = getLGTextInputUtils();
+} = getLGTextInputTestUtils();
 ```
 
 | Util            | Description                                | Returns   |

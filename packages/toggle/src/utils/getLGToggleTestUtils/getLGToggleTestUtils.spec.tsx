@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import Toggle from '../../Toggle/Toggle';
 
-import { getLGToggleUtils } from './getLGToggleUtils';
+import { getLGToggleTestUtils } from './getLGToggleTestUtils';
 
 const renderToggleAsync = () =>
   renderAsyncTest(<Toggle aria-label="Toggle who?" />, render);
@@ -19,9 +19,9 @@ function renderMultipleToggles() {
   );
 
   const { elements: elementsOne, utils: utilsOne } =
-    getLGToggleUtils('lg-toggle-1');
+    getLGToggleTestUtils('lg-toggle-1');
   const { elements: elementsTwo, utils: utilsTwo } =
-    getLGToggleUtils('lg-toggle-2');
+    getLGToggleTestUtils('lg-toggle-2');
 
   return {
     elementsOne,
@@ -32,14 +32,14 @@ function renderMultipleToggles() {
 }
 
 describe('packages/toggle', () => {
-  describe('getLGToggleUtils', () => {
+  describe('getLGToggleTestUtils', () => {
     describe('throws error if LG Toggle is not found', () => {
       test('', () => {
         render(<Toggle aria-label="Toggle who?" />);
 
         try {
           // eslint-disable-next-line
-          const { elements } = getLGToggleUtils();
+          const { elements } = getLGToggleTestUtils();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -81,20 +81,20 @@ describe('packages/toggle', () => {
         // After awaiting asyncComponent, look for text input
         const {
           elements: { getInput },
-        } = getLGToggleUtils();
+        } = getLGToggleTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG Toggle after awaiting getLGToggleUtils', async () => {
+      test('find LG Toggle after awaiting getLGToggleTestUtils', async () => {
         const { openButton } = renderToggleAsync();
 
         userEvent.click(openButton);
 
-        // awaiting getLGToggleUtils
+        // awaiting getLGToggleTestUtils
         await waitFor(() => {
           const {
             elements: { getInput },
-          } = getLGToggleUtils();
+          } = getLGToggleTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -111,7 +111,7 @@ describe('packages/toggle', () => {
         const {
           elements: { getInput },
           utils: { getInputValue },
-        } = getLGToggleUtils();
+        } = getLGToggleTestUtils();
         const input = getInput();
         userEvent.click(input);
         expect(getInputValue()).toBe('true');
