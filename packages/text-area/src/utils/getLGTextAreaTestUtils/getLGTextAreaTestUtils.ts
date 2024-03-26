@@ -1,6 +1,10 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
-import { TEXT_AREA_LGID } from '../../constants';
+import {
+  TEXT_AREA_ERROR_MESSAGE_LGID,
+  TEXT_AREA_INPUT_LGID,
+  TEXT_AREA_LGID,
+} from '../../constants';
 
 import { LGTextAreaTestUtilsReturnType } from './getLGTextAreaTestUtils.types';
 
@@ -34,7 +38,7 @@ export const getLGTextAreaTestUtils = (
    */
   const input = queryByQuerySelector<HTMLTextAreaElement>(
     element,
-    '[data-lgid="lg-text_area-input"]',
+    `[data-lgid="${TEXT_AREA_INPUT_LGID}"]`,
   ) as HTMLTextAreaElement;
 
   /**
@@ -42,7 +46,7 @@ export const getLGTextAreaTestUtils = (
    */
   const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-text_area-error_message"]',
+    `[data-lgid="${TEXT_AREA_ERROR_MESSAGE_LGID}"]`,
   );
 
   /**
