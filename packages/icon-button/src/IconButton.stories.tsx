@@ -1,13 +1,13 @@
 import React from 'react';
-
-import Icon from '@leafygreen-ui/icon/';
 import {
-  DarkModeProps,
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+
+import Icon from '@leafygreen-ui/icon/';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { Size } from './types';
 import IconButton, { AccessibleIconButtonProps } from '.';

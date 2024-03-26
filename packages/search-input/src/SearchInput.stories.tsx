@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
 import React, { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 import kebabCase from 'lodash/kebabCase';
 import startCase from 'lodash/startCase';
 
 import { css } from '@leafygreen-ui/emotion';
-import {
-  storybookArgTypes,
-  storybookExcludedControlParams,
-  StoryMetaType,
-} from '@leafygreen-ui/lib';
 import { Body, H2 } from '@leafygreen-ui/typography';
 
 import { State } from './SearchInput/SearchInput.types';

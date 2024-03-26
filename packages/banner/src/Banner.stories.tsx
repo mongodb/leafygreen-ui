@@ -2,14 +2,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { Link } from '@leafygreen-ui/typography';
 
 import Banner, { BannerProps, Variant } from '.';

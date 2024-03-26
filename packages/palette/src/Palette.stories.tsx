@@ -1,9 +1,10 @@
 import React, { MouseEventHandler, useState } from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { HTMLElementProps, StoryMetaType } from '@leafygreen-ui/lib';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import palette from './palette';
 

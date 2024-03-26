@@ -1,6 +1,5 @@
+import { GeneratedStoryConfig } from '@lg-tools/storybook-utils';
 import keys from 'lodash/keys';
-
-import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
 import { PropCombination, PropName } from './types';
 import { shouldExcludePropCombo } from '.';

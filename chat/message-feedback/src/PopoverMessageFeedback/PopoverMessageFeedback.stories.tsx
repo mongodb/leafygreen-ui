@@ -1,8 +1,7 @@
 import React, { ChangeEventHandler, useRef, useState } from 'react';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { PopoverMessageFeedback } from '.';
 

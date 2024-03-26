@@ -1,13 +1,13 @@
 // TODO: Generate Icon props with controls
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import { css } from '@leafygreen-ui/emotion';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 import { GlyphName } from './glyphs';

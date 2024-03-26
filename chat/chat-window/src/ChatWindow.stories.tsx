@@ -5,10 +5,8 @@ import { Message } from '@lg-chat/message';
 import { MessageFeed } from '@lg-chat/message-feed';
 import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
+import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { StoryMetaType } from '@leafygreen-ui/lib';
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import baseMessages from './utils/baseMessages';
 import { ChatWindow } from '.';

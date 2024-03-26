@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { defaultData } from '../TableV10/fixtures.testutils';
 import { makeData } from '../utils/makeData.testutils';

@@ -42,7 +42,7 @@ describe('packages/RadioBox', () => {
     expect(radioBox.getAttribute('aria-checked')).toBe('true');
   });
 
-  test('renders as disabled, when the disabled prop is set', () => {
+  test('renders with aria-disabled attribute but not disabled attribute when disabled prop is set', () => {
     const { container } = render(
       <RadioBox value="option-disabled" disabled>
         Input 2
@@ -61,7 +61,8 @@ describe('packages/RadioBox', () => {
       throw new Error('Could not find radio box input element');
     }
 
-    expect(radioBox.getAttribute('aria-disabled')).toBe('true');
+    expect(radioBox.getAttribute('aria-disabled')).toBeTruthy();
+    expect(radioBox.getAttribute('disabled')).toBeFalsy();
   });
 });
 
