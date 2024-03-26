@@ -357,15 +357,6 @@ export const validIconStyles: Record<Theme, string> = {
   `,
 };
 
-export const errorIconStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};
-
 export const optionalTextBaseStyle = css`
   font-size: 12px;
   line-height: 12px;
