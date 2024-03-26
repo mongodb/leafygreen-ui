@@ -1,8 +1,9 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
+import { LGID_DESCRIPTION, LGID_LABEL } from '@leafygreen-ui/typography';
 
-import { SELECT_ERROR_MESSAGE_LGID, SELECT_LGID } from '../../constants';
+import { LGID_SELECT, LGID_SELECT_ERROR_MESSAGE } from '../../constants';
 
 import { LGSelectTestUtilsReturnType } from './getLGSelectTestUtils.types';
 
@@ -11,7 +12,7 @@ export function waitForSelectTransitionDuration() {
 }
 
 export const getLGSelectTestUtils = (
-  lgId = SELECT_LGID,
+  lgId = LGID_SELECT,
 ): LGSelectTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -24,7 +25,7 @@ export const getLGSelectTestUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-label"]',
+    `[data-lgid=${LGID_LABEL}]`,
   );
 
   /**
@@ -32,7 +33,7 @@ export const getLGSelectTestUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-description"]',
+    `[data-lgid=${LGID_DESCRIPTION}]`,
   );
 
   /**
@@ -48,7 +49,7 @@ export const getLGSelectTestUtils = (
    */
   const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid="${SELECT_ERROR_MESSAGE_LGID}"]`,
+    `[data-lgid="${LGID_SELECT_ERROR_MESSAGE}"]`,
   );
 
   /**
