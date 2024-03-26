@@ -1,9 +1,9 @@
 import React from 'react';
-import { LGID_DESCRIPTION } from 'src/constants';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { LGID_DESCRIPTION } from '../constants';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
