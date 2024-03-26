@@ -15,6 +15,8 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { TEXT_AREA_LGID } from '../constants';
+
 import {
   colorSets,
   containerStyles,
@@ -70,7 +72,7 @@ export const TextArea: TextArea = forwardRef<
     handleValidation,
     'aria-labelledby': ariaLabelledby,
     baseFontSize: baseFontSizeProp,
-    'data-lgid': dataLgId = 'lg-text_area',
+    'data-lgid': dataLgId = TEXT_AREA_LGID,
     defaultValue = '',
     ...rest
   }: TextAreaProps,

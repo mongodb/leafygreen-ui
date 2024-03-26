@@ -1,9 +1,11 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
+import { TEXT_INPUT_LGID } from '../../constants';
+
 import { LGTextInputUtilsReturnType } from './getLGTextInputUtils.types';
 
 export const getLGTextInputUtils = (
-  lgId = 'lg-text_input',
+  lgId = TEXT_INPUT_LGID,
 ): LGTextInputUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.

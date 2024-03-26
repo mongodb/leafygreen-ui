@@ -1,9 +1,11 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
+import { TEXT_AREA_LGID } from '../../constants';
+
 import { LGTextAreaUtilsReturnType } from './getLGTextAreaUtils.types';
 
 export const getLGTextAreaUtils = (
-  lgId = 'lg-text_area',
+  lgId = TEXT_AREA_LGID,
 ): LGTextAreaUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
