@@ -1,11 +1,11 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
 import {
   SegmentedControl,
   SegmentedControlProps,

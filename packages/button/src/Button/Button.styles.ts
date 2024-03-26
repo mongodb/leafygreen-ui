@@ -372,7 +372,7 @@ const disabledStyle: Record<Theme, string> = {
     &,
     ${hoverSelector}, ${activeSelector} {
       background-color: ${palette.gray.dark3};
-      border-color: ${palette.gray.dark1};
+      border-color: ${palette.gray.dark2};
       color: ${palette.gray.dark1};
       box-shadow: none;
       cursor: not-allowed;

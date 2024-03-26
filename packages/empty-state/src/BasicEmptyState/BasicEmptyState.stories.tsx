@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
-import { StoryFn } from '@storybook/react';
-
-import Button from '@leafygreen-ui/button';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
-  Theme,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
+
+import Button from '@leafygreen-ui/button';
+import { Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
 
 import DarkModeGraphic from '../example-graphics/DarkModeGraphic.svg';

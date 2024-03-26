@@ -1,5 +1,13 @@
 # @leafygreen-ui/pipeline
 
+## 5.0.18
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/tooltip@11.0.2
+
 ## 5.0.17
 
 ### Patch Changes

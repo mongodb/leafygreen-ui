@@ -1,5 +1,12 @@
 # @leafygreen-ui/toggle
 
+## 10.0.19
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+
 ## 10.0.18
 
 ### Patch Changes

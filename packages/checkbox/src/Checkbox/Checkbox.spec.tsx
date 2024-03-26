@@ -51,10 +51,10 @@ describe('packages/checkbox', () => {
     expect(checkbox.getAttribute('aria-checked')).toBe('true');
   });
 
-  test('renders as disabled when the prop is set', () => {
+  test('renders with aria-disabled attribute but not disabled attribute when disabled prop is set', () => {
     const { checkbox } = renderCheckbox({ disabled: true });
-    expect((checkbox as HTMLInputElement).disabled).toBe(true);
-    expect(checkbox.getAttribute('aria-disabled')).toBe('true');
+    expect(checkbox.getAttribute('aria-disabled')).toBeTruthy();
+    expect(checkbox.getAttribute('disabled')).toBeFalsy();
   });
 
   test('renders as indeterminate when the prop is set', () => {

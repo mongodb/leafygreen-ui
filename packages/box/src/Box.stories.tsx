@@ -1,7 +1,9 @@
 import React from 'react';
+import {
+  storybookArgTypes,
+  type StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes, type StoryMetaType } from '@leafygreen-ui/lib';
 
 import Box, { BoxProps } from '.';
 

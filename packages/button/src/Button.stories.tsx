@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
-
-import Icon, { glyphs } from '@leafygreen-ui/icon';
 import {
   storybookArgTypes,
   type StoryMetaType,
   type StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 

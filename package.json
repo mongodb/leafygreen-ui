@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "private": true,
   "engines": {
-    "node": ">= 16.20.0",
+    "node": ">= 18.0.0",
     "npm": ">= 8.19.4"
   },
   "scripts": {
@@ -56,6 +56,7 @@
     "caniuse-lite": "^1.0.30001585"
   },
   "workspaces": [
+    "chat/*",
     "packages/*",
     "tools/*"
   ],

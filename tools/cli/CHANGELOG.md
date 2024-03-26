@@ -1,5 +1,13 @@
 # @lg-tools/cli
 
+## 0.5.8
+
+### Patch Changes
+
+- Updated dependencies [36070800]
+- Updated dependencies [36070800]
+  - @lg-tools/lint@0.2.0
+
 ## 0.5.7
 
 ### Patch Changes

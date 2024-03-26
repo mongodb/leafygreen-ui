@@ -6,21 +6,7 @@ import getTheme from './getTheme';
 export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
-
-export {
-  type ExtendedComponentProps,
-  type GeneratedStoryConfig,
-  type GeneratedStoryFn,
-  type InstanceDecorator,
-  type PlayFn,
-  StoryMeta,
-  type StoryMetaType,
-  type StoryType,
-  storybookArgTypes,
-  storybookExcludedArgTypes,
-  storybookExcludedControlParams,
-  IntrinsicElements,
-} from './storybook';
+export { type Mutable } from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
 export type { DarkModeProps };

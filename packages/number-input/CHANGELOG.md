@@ -1,5 +1,15 @@
 # @leafygreen-ui/number-input
 
+## 1.0.21
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/select@11.2.2
+  - @leafygreen-ui/tooltip@11.0.2
+  - @leafygreen-ui/typography@18.2.3
+
 ## 1.0.20
 
 ### Patch Changes
