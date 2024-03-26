@@ -1,5 +1,24 @@
 # @lg-tools/storybook
 
+## 0.4.1
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @lg-tools/storybook-utils@0.1.0
+  - @lg-tools/build@0.4.1
+  - @leafygreen-ui/lib@13.3.0
+  - @lg-tools/storybook-decorators@0.2.7
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 0.4.0
 
 ### Minor Changes

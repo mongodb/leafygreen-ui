@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.8
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 4.0.7
 
 ### Patch Changes
