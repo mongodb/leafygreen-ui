@@ -1,15 +1,13 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
-import {
-  TEXT_AREA_ERROR_MESSAGE_LGID,
-  TEXT_AREA_INPUT_LGID,
-  TEXT_AREA_LGID,
-} from '../../constants';
+import { LGID_DESCRIPTION, LGID_LABEL } from '@leafygreen-ui/typography';
+
+import { LGID_TEXT_AREA, LGID_TEXT_AREA_ERROR_MESSAGE } from '../../constants';
 
 import { LGTextAreaTestUtilsReturnType } from './getLGTextAreaTestUtils.types';
 
 export const getLGTextAreaTestUtils = (
-  lgId = TEXT_AREA_LGID,
+  lgId = LGID_TEXT_AREA,
 ): LGTextAreaTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -22,7 +20,7 @@ export const getLGTextAreaTestUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-label"]',
+    `[data-lgid=${LGID_LABEL}]`,
   );
 
   /**
@@ -30,7 +28,7 @@ export const getLGTextAreaTestUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    '[data-lgid="lg-description"]',
+    `[data-lgid=${LGID_DESCRIPTION}]`,
   );
 
   /**
@@ -38,7 +36,7 @@ export const getLGTextAreaTestUtils = (
    */
   const input = queryByQuerySelector<HTMLTextAreaElement>(
     element,
-    `[data-lgid="${TEXT_AREA_INPUT_LGID}"]`,
+    `textarea`,
   ) as HTMLTextAreaElement;
 
   /**
@@ -46,7 +44,7 @@ export const getLGTextAreaTestUtils = (
    */
   const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid="${TEXT_AREA_ERROR_MESSAGE_LGID}"]`,
+    `[data-lgid="${LGID_TEXT_AREA_ERROR_MESSAGE}"]`,
   );
 
   /**

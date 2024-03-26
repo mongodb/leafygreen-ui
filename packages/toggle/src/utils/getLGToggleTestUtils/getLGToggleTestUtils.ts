@@ -1,11 +1,11 @@
 import { getByLgId } from '@lg-tools/test-harnesses';
 
-import { TOGGLE_LGID } from '../../constants';
+import { LGID_TOGGLE } from '../../constants';
 
 import { LGToggleTestUtilsReturnType } from './getLGToggleTestUtils.types';
 
 export const getLGToggleTestUtils = (
-  lgId = TOGGLE_LGID,
+  lgId = LGID_TOGGLE,
 ): LGToggleTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.

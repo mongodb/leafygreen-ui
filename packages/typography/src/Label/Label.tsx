@@ -8,6 +8,7 @@ import {
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { LGID_LABEL } from '../constants';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
@@ -26,7 +27,7 @@ export const Label = Polymorphic<BaseLabelProps>(
     children,
     disabled = false,
     as = 'label' as PolymorphicAs,
-    'data-lgid': dataLgId = 'lg-label',
+    'data-lgid': dataLgId = LGID_LABEL,
     ...rest
   }) => {
     const { theme } = useDarkMode(darkModeProp);

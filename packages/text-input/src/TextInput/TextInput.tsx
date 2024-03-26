@@ -9,7 +9,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { TEXT_INPUT_LGID } from '../constants';
+import { LGID_TEXT_INPUT } from '../constants';
 
 import {
   SizeVariant,
@@ -64,7 +64,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       'aria-labelledby': ariaLabelledby,
       handleValidation,
       baseFontSize: baseFontSizeProp,
-      'data-lgid': dataLgId = TEXT_INPUT_LGID,
+      'data-lgid': dataLgId = LGID_TEXT_INPUT,
       ...rest
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -145,7 +145,6 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
         <FormFieldInputContainer>
           <input
             {...rest}
-            data-lgid="lg-text_input-input"
             aria-labelledby={ariaLabelledby}
             type={type}
             value={value}

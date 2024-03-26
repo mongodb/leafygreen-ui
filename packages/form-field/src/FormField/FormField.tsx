@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { LGID_FORM_FIELD_ERROR_MESSAGE } from 'src/constants';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -96,7 +97,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               <div className={errorTextContainerStyle}>
                 <Error
                   data-testid="lg-form_field-error_message"
-                  data-lgid="lg-form_field-error_message"
+                  data-lgid={LGID_FORM_FIELD_ERROR_MESSAGE}
                   className={getFontSize({ baseFontSize, size })}
                   id={errorId}
                 >
