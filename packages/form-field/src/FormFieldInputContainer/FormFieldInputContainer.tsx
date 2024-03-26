@@ -11,7 +11,6 @@ import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
 import {
   childrenWrapperStyles,
-  errorIconStyles,
   iconClassName,
   iconStyles,
   iconsWrapperStyles,
@@ -77,15 +76,6 @@ export const FormFieldInputContainer = forwardRef<
               title="Valid"
               glyph="Checkmark"
               className={validIconStyles[theme]}
-            />
-          )}
-
-          {state === FormFieldState.Error && !disabled && (
-            <Icon
-              aria-hidden
-              title="Error"
-              glyph="Warning"
-              className={errorIconStyles[theme]}
             />
           )}
 

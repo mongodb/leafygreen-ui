@@ -1,7 +1,10 @@
 import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import Icon from '@leafygreen-ui/icon';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import {
   Description,
@@ -14,7 +17,8 @@ import { LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 
 import {
-  errorTextContainerStyle,
+  errorContainerStyle,
+  errorIconStyles,
   getFontSize,
   marginBottom,
   textContainerStyle,
@@ -49,6 +53,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     }: FormFieldProps,
     fwdRef,
   ) => {
+    const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
     const { labelId, descriptionId, errorId, inputId, inputProps } =
@@ -94,7 +99,13 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             {children}
 
             {state === FormFieldState.Error && !disabled && (
-              <div className={errorTextContainerStyle}>
+              <div className={errorContainerStyle}>
+                <Icon
+                  role="presentation"
+                  title="Error"
+                  glyph="Warning"
+                  className={errorIconStyles[theme]}
+                />
                 <Error
                   data-testid="lg-form_field-error_message"
                   data-lgid={LGIDS_FORM_FIELD.errorMessage}
