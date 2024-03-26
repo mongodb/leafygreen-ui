@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 1.3.7
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 1.3.6
 
 ### Patch Changes

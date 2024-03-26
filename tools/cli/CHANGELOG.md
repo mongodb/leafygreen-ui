@@ -1,5 +1,22 @@
 # @lg-tools/cli
 
+## 0.5.9
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+  - @lg-tools/lint@0.2.1
+  - @lg-tools/create@0.2.6
+  - @lg-tools/install@0.1.7
+  - @lg-tools/link@0.2.2
+  - @lg-tools/slackbot@0.2.5
+  - @lg-tools/test@0.4.4
+  - @lg-tools/update@0.1.7
+  - @lg-tools/validate@0.1.9
+
 ## 0.5.8
 
 ### Patch Changes

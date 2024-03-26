@@ -1,5 +1,15 @@
 # @lg-tools/create
 
+## 0.2.6
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+  - @lg-tools/meta@0.3.2
+
 ## 0.2.5
 
 ### Patch Changes
