@@ -1,5 +1,13 @@
 # @leafygreen-ui/tokens
 
+## 2.5.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+  - @leafygreen-ui/palette@4.0.9
+
 ## 2.5.1
 
 ### Patch Changes

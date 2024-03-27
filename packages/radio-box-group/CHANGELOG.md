@@ -1,5 +1,46 @@
 # @leafygreen-ui/radio-box-group
 
+## 13.0.0
+
+### Major Changes
+
+- 7a0ff1be: [LG-4126](https://jira.mongodb.org/browse/LG-4126)
+
+  Disabled `Checkbox`, `RadioBox`, and `Radio` components no longer render the `disabled` attribute, but rely on `aria-disabled` instead.
+
+  This change is made to ensure that disabled components are still focusable to users using keyboard navigation.
+
+  For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
+
+  Additionally, styling changes are made to ensure consistent implementation of `disabled` state styles.
+
+  #### Migration guide
+
+  Functionally, migration should be seamless, however there may be unit/integration/e2e tests that relied on this behavior.
+
+  ##### Jest/RTL
+
+  Generally, only this repo should need to test that these components have a specific attribute. We recommend updating unit tests to check that some event was or was not called.
+
+  However, there are cases where this may still need to be tested. In these cases, replace any `expect(checkbox).toBeDisabled()` with an explicit check for `expect(checkbox).toHaveAttribute("aria-disabled", "true")`.
+
+  ##### Cypress
+
+  Similar to unit tests, you should generally test functionality and not implementation details. However, to test this in Cypress replace any `cy.get(checkbox).should('be.disabled');` checks with `cy.get(checkbox).invoke('attr', 'aria-disabled').should('eq', 'true');`
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 12.0.16
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @lg-tools/lint
 
+## 0.2.1
+
+### Patch Changes
+
+- 356a53fd: Update typescript peer dependency
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+
 ## 0.2.0
 
 ### Minor Changes

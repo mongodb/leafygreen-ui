@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.4.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 0.4.1
 
 ### Patch Changes

@@ -1,5 +1,26 @@
 # @leafygreen-ui/expandable-card
 
+## 3.2.1
+
+### Patch Changes
+
+- ecb7bbc8: Changes description content from being wrapped inside aa `p` tag to be wrapped in a `div`. This makes the nested content more dynamic.
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/card@10.0.7
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 3.2.0
 
 ### Minor Changes

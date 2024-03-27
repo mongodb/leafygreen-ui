@@ -1,13 +1,15 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "21.0.12",
+  "version": "21.1.0",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": ["ts3.4/*"]
+      "*": [
+        "ts3.4/*"
+      ]
     }
   },
   "scripts": {
@@ -20,22 +22,22 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.8",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^13.2.1",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/ripple": "^1.1.12",
-    "@leafygreen-ui/tokens": "^2.3.0",
+    "@leafygreen-ui/box": "^3.1.9",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/ripple": "^1.1.13",
+    "@leafygreen-ui/tokens": "^2.5.2",
     "polished": "^4.2.2"
   },
   "devDependencies": {
     "next": "^13.0.5",
-    "@leafygreen-ui/icon": "^12.0.0",
-    "@leafygreen-ui/loading-indicator": "^2.0.8",
-    "@lg-tools/storybook-utils": "^0.0.1"
+    "@leafygreen-ui/icon": "^12.0.1",
+    "@leafygreen-ui/loading-indicator": "^2.0.10",
+    "@lg-tools/storybook-utils": "^0.1.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/button",

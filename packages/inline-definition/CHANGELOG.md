@@ -1,5 +1,19 @@
 # @leafygreen-ui/inline-definition
 
+## 6.0.15
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tooltip@11.0.3
+
 ## 6.0.14
 
 ### Patch Changes
