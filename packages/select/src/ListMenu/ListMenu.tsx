@@ -96,6 +96,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         {/* Keyboard events handled in Select component through event listener hook */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <ul
+          data-lgid="lg-select-popover"
           aria-labelledby={labelId}
           role="listbox"
           ref={ref}

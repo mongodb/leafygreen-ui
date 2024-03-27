@@ -30,6 +30,7 @@
     "@leafygreen-ui/popover": "^11.3.0",
     "@leafygreen-ui/tokens": "^2.5.1",
     "@leafygreen-ui/typography": "^18.2.3",
+    "@lg-tools/test-harnesses": "0.1.0",
     "@types/react-is": "^18.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.1.3",
