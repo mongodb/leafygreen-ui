@@ -2,7 +2,7 @@ export interface FormElements<T extends HTMLElement = HTMLInputElement> {
   /**
    * Returns the label node or `null` if the label node is not found.
    */
-  getLabel: () => HTMLElement | null;
+  getLabel: () => HTMLLabelElement | null;
 
   /**
    * Returns the description node or `null` if the description node is not found.

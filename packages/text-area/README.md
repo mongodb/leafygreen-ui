@@ -62,7 +62,7 @@ return (
 ```tsx
 import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
-const { elements, utils } = getLGTextAreaTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextArea`. It defaults to 'lg-text_area' if left empty.
+const utils = getLGTextAreaTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextArea`. It defaults to 'lg-text_area' if left empty.
 ```
 
 #### Single `TextArea`
@@ -75,10 +75,10 @@ import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 test('text-area', () => {
   render(<TextArea label="label" value="text area" />);
-  const { elements, utils } = getLGTextAreaTestUtils();
+  const { getInput, getInputValue } = getLGTextAreaTestUtils();
 
-  expect(elements.getInput()).toBeInTheDocument();
-  expect(utils.getInputValue()).toBe('text area');
+  expect(getInput()).toBeInTheDocument();
+  expect(getInputValue()).toBe('text area');
 });
 ```
 
@@ -99,18 +99,16 @@ test('text-area', () => {
       <TextArea data-lgid="text-area-2" label="label 2" value="text area" />
     </>,
   );
-  const { elements: lgElementsTextArea1, utils: lgUtilsTextArea1 } =
-    getLGTextAreaTestUtils('text-area-1'); // data-lgid
-  const { elements: lgElementsTextArea2, utils: lgUtilsTextArea2 } =
-    getLGTextAreaTestUtils('text-area-2'); // data-lgid
+  const utilsOne = getLGTextAreaTestUtils('text-area-1'); // data-lgid
+  const utilsTwo = getLGTextAreaTestUtils('text-area-2'); // data-lgid
 
   // First TextArea
-  expect(lgElementsTextArea1.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextArea1.getInputValue()).toBe('');
+  expect(utilsOne.getInput()).toBeInTheDocument();
+  expect(utilsOne.getInputValue()).toBe('');
 
   // Second TextArea
-  expect(lgElementsTextArea2.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextArea2.getInputValue()).toBe('text area');
+  expect(utilsTwo.getInput()).toBeInTheDocument();
+  expect(utilsTwo.getInputValue()).toBe('text area');
 });
 ```
 
@@ -132,21 +130,22 @@ test('Form', () => {
       <TextArea label="TextArea label" />
     </Form>,
   );
-  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGTextAreaTestUtils();
-  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputTestUtils();
-  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaTestUtils();
+
+  const toggleInputUtils = getLGToggleTestUtils();
+  const textInputUtils = getLGTextInputTestUtils();
+  const textAreaUtils = getLGTextAreaTestUtils();
 
   // LG Toggle
-  expect(lgElementsToggle.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle.getInputValue()).toBe('false');
+  expect(toggleInputUtils.getInput()).toBeInTheDocument();
+  expect(toggleInputUtils.getInputValue()).toBe('false');
 
   // LG TextInput
-  expect(lgElementsTextInput.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextInput.getInputValue()).toBe('');
+  expect(textInputUtils.getInput()).toBeInTheDocument();
+  expect(textInputUtils.getInputValue()).toBe('');
 
   // LG TextArea
-  expect(lgElementsTextArea.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextArea.getInputValue()).toBe('');
+  expect(textAreaUtils.getInput()).toBeInTheDocument();
+  expect(textAreaUtils.getInputValue()).toBe('');
 });
 ```
 
@@ -156,28 +155,24 @@ test('Form', () => {
 
 ```tsx
 const {
-  elements: { getInput, getLabel, getDescription, getErrorMessage },
+  getInput,
+  getLabel,
+  getDescription,
+  getErrorMessage,
+  getInputValue,
+  isDisabled,
+  isValid,
+  isError,
 } = getLGTextAreaTestUtils();
 ```
 
-| Util              | Description                    | Returns                       |
-| ----------------- | ------------------------------ | ----------------------------- |
-| `getInput`        | Returns the input node         | `HTMLButtonElement`           |
-| `getLabel`        | Returns the label node         | `HTMLButtonElement` \| `null` |
-| `getDescription`  | Returns the description node   | `HTMLButtonElement` \| `null` |
-| `getErrorMessage` | Returns the error message node | `HTMLButtonElement` \| `null` |
-
-#### Utils
-
-```tsx
-const {
-  utils: { getInputValue, isDisabled, isValid, isError },
-} = getLGTextAreaTestUtils();
-```
-
-| Util            | Description                                | Returns   |
-| --------------- | ------------------------------------------ | --------- |
-| `getInputValue` | Returns the input value                    | `string`  |
-| `isDisabled`    | Returns whether the input is disabled      | `boolean` |
-| `isValid`       | Returns whether the input state is `valid` | `boolean` |
-| `isError`       | Returns whether the input state is `error` | `boolean` |
+| Util              | Description                                | Returns                       |
+| ----------------- | ------------------------------------------ | ----------------------------- |
+| `getInput`        | Returns the input node                     | `HTMLButtonElement`           |
+| `getLabel`        | Returns the label node                     | `HTMLButtonElement` \| `null` |
+| `getDescription`  | Returns the description node               | `HTMLButtonElement` \| `null` |
+| `getErrorMessage` | Returns the error message node             | `HTMLButtonElement` \| `null` |
+| `getInputValue`   | Returns the input value                    | `string`                      |
+| `isDisabled`      | Returns whether the input is disabled      | `boolean`                     |
+| `isValid`         | Returns whether the input state is `valid` | `boolean`                     |
+| `isError`         | Returns whether the input state is `error` | `boolean`                     |

@@ -43,12 +43,8 @@ function renderSelect(props = {}) {
     </Select>,
   );
 
-  const { elements, utils } = getLGSelectTestUtils();
-
   return {
     ...renderUtils,
-    ...elements,
-    ...utils,
   };
 }
 
@@ -67,12 +63,9 @@ function renderSelectControlled(props = {}) {
   };
 
   const renderUtils = render(<ControlledSelect {...props} />);
-  const { elements, utils } = getLGSelectTestUtils();
 
   return {
     ...renderUtils,
-    ...elements,
-    ...utils,
   };
 }
 
@@ -88,25 +81,16 @@ function renderMultipleSelects() {
     </>,
   );
 
-  const { elements: testElements1, utils: testUtils1 } =
-    getLGSelectTestUtils('lg-select-1');
-  const { elements: testElements2, utils: testUtils2 } =
-    getLGSelectTestUtils('lg-select-2');
-
   return {
     ...renderUtils,
-    testElements1,
-    testElements2,
-    testUtils1,
-    testUtils2,
   };
 }
 
 describe('packages/select/getLGSelectTestUtils', () => {
   test('throws error if select is not found', () => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { getLabel } = renderSelect({ 'data-lgid': 'different-id' });
+      renderSelect({ 'data-lgid': 'different-id' });
+      const _utils = getLGSelectTestUtils();
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
       expect(error).toHaveProperty(
@@ -120,41 +104,58 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('getLabel', () => {
     test('is in the document', () => {
-      const { getLabel } = renderSelect();
+      renderSelect();
+      const {
+        elements: { getLabel },
+      } = getLGSelectTestUtils();
       expect(getLabel()).toBeInTheDocument();
     });
 
     test('is not in the document', () => {
-      const { getLabel } = renderSelect({ label: '' });
+      renderSelect({ label: '' });
+      const {
+        elements: { getLabel },
+      } = getLGSelectTestUtils();
       expect(getLabel()).not.toBeInTheDocument();
     });
   });
 
   describe('getDescription', () => {
     test('is in the document', () => {
-      const { getDescription } = renderSelect();
+      renderSelect();
+      const {
+        elements: { getDescription },
+      } = getLGSelectTestUtils();
       expect(getDescription()).toBeVisible();
     });
 
     test('is not in the document', () => {
-      const { getDescription } = renderSelect({ description: '' });
+      renderSelect({ description: '' });
+      const {
+        elements: { getDescription },
+      } = getLGSelectTestUtils();
       expect(getDescription()).not.toBeInTheDocument();
     });
   });
 
   describe('getInput', () => {
     test('is in the document', () => {
-      const { getInput } = renderSelect();
-
+      renderSelect();
+      const {
+        elements: { getInput },
+      } = getLGSelectTestUtils();
       expect(getInput()).toBeInTheDocument();
       expect(getInput()).toHaveTextContent('Select');
     });
 
     test('can be clicked', async () => {
-      const { getInput, getPopover } = renderSelect({
+      renderSelect({
         value: 'RED',
         readOnly: true,
       });
+      const {
+        elements: { getInput, getPopover },
+      } = getLGSelectTestUtils();
 
       const trigger = getInput();
       userEvent.click(trigger);
@@ -166,17 +167,23 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('getErrorMessage', () => {
     test('is in the document', () => {
-      const { getErrorMessage } = renderSelect({
+      renderSelect({
         state: State.Error,
         errorMessage: 'whoops',
       });
 
+      const {
+        elements: { getErrorMessage },
+      } = getLGSelectTestUtils();
       expect(getErrorMessage()).toBeInTheDocument();
       expect(getErrorMessage()).toHaveTextContent('whoops');
     });
 
     test('is not in the document', async () => {
-      const { getErrorMessage } = renderSelect();
+      renderSelect();
+      const {
+        elements: { getErrorMessage },
+      } = getLGSelectTestUtils();
       expect(getErrorMessage()).not.toBeInTheDocument();
     });
   });
@@ -184,9 +191,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
   describe('getOptions', () => {
     describe.each([true, false])('usePortal={%p}', boolean => {
       test('returns all options', async () => {
-        const { getOptions, clickTrigger } = renderSelect({
+        renderSelect({
           usePortal: boolean,
         });
+        const {
+          elements: { getOptions },
+          utils: { clickTrigger },
+        } = getLGSelectTestUtils();
 
         clickTrigger();
         await waitFor(() => {
@@ -200,9 +211,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
   describe('getOptionByValue', () => {
     describe.each([true, false])('usePortal={%p}', boolean => {
       test('is in the document', async () => {
-        const { getOptionByValue, clickTrigger } = renderSelect({
+        renderSelect({
           usePortal: boolean,
         });
+        const {
+          elements: { getOptionByValue },
+          utils: { clickTrigger },
+        } = getLGSelectTestUtils();
 
         clickTrigger();
         await waitFor(() => {
@@ -213,9 +228,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
       describe('is not in the document', () => {
         test('after awaiting waitFor', async () => {
-          const { getOptionByValue, clickTrigger } = renderSelect({
+          renderSelect({
             usePortal: boolean,
           });
+          const {
+            elements: { getOptionByValue },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
 
           clickTrigger();
           await waitFor(() => {
@@ -230,9 +249,14 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe.each([true, false])('when usePortal={%p}', boolean => {
       describe('is in the document', () => {
         test('after awaiting waitFor', async () => {
-          const { getPopover, clickTrigger } = renderSelect({
+          renderSelect({
             usePortal: boolean,
           });
+
+          const {
+            elements: { getPopover },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
 
           expect(getPopover()).not.toBeInTheDocument();
           clickTrigger();
@@ -244,9 +268,14 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
       describe('is not in the document ', () => {
         test('after clicking the trigger', async () => {
-          const { getPopover, clickTrigger } = renderSelect({
+          renderSelect({
             usePortal: boolean,
           });
+
+          const {
+            elements: { getPopover },
+            utils: { clickTrigger },
+          } = getLGSelectTestUtils();
 
           expect(getPopover()).not.toBeInTheDocument();
           clickTrigger();
@@ -258,9 +287,14 @@ describe('packages/select/getLGSelectTestUtils', () => {
         });
 
         test('after clicking an option', async () => {
-          const { getPopover, clickTrigger, clickOption } = renderSelect({
+          renderSelect({
             usePortal: boolean,
           });
+
+          const {
+            elements: { getPopover },
+            utils: { clickTrigger, clickOption },
+          } = getLGSelectTestUtils();
 
           expect(getPopover()).not.toBeInTheDocument();
           clickTrigger();
@@ -276,50 +310,72 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('isDisabled', () => {
     test('is false', () => {
-      const { isDisabled } = renderSelect();
+      renderSelect();
+      const {
+        utils: { isDisabled },
+      } = getLGSelectTestUtils();
       expect(isDisabled()).toBeFalsy();
     });
 
     test('is true', () => {
-      const { isDisabled } = renderSelect({ disabled: true });
+      renderSelect({ disabled: true });
+      const {
+        utils: { isDisabled },
+      } = getLGSelectTestUtils();
       expect(isDisabled()).toBeTruthy();
     });
   });
 
   describe('isError', () => {
     test('is false', () => {
-      const { isError } = renderSelect();
+      renderSelect();
+
+      const {
+        utils: { isError },
+      } = getLGSelectTestUtils();
       expect(isError()).toBeFalsy();
     });
 
     test('is true', () => {
-      const { isError } = renderSelect({
+      renderSelect({
         errorMessage: 'errrror',
         state: State.Error,
       });
+
+      const {
+        utils: { isError },
+      } = getLGSelectTestUtils();
       expect(isError()).toBeTruthy();
     });
   });
 
   describe('getInputValue', () => {
     test('returns the default value "Select"', () => {
-      const { getInputValue } = renderSelect();
+      renderSelect();
+      const {
+        utils: { getInputValue },
+      } = getLGSelectTestUtils();
       expect(getInputValue()).toBe('Select');
     });
 
     describe('value prop', () => {
       test('returns the value', () => {
-        const { getInputValue } = renderSelect({ value: 'Yellow' });
+        renderSelect({ value: 'Yellow' });
+        const {
+          utils: { getInputValue },
+        } = getLGSelectTestUtils();
         expect(getInputValue()).toBe('Yellow');
       });
 
       describe.each([true, false])('when usePortal={%p}', boolean => {
         test('returns the updated value after clicking on an option', async () => {
-          const { getInputValue, clickTrigger, clickOption } =
-            renderSelectControlled({
-              value: 'Blue',
-              usePortal: boolean,
-            });
+          renderSelectControlled({
+            value: 'Blue',
+            usePortal: boolean,
+          });
+          const {
+            utils: { getInputValue, clickTrigger, clickOption },
+          } = getLGSelectTestUtils();
 
           expect(getInputValue()).toBe('Blue');
           clickTrigger();
@@ -335,16 +391,22 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
     describe('defaultValue prop', () => {
       test('returns the default value', () => {
-        const { getInputValue } = renderSelect({ defaultValue: 'Green' });
+        renderSelect({ defaultValue: 'Green' });
+        const {
+          utils: { getInputValue },
+        } = getLGSelectTestUtils();
         expect(getInputValue()).toBe('Green');
       });
 
       describe.each([true, false])('when usePortal={%p}', boolean => {
         test('returns the updated value after clicking on an option', async () => {
-          const { getInputValue, clickTrigger, clickOption } = renderSelect({
+          renderSelect({
             defaultValue: 'Green',
             usePortal: boolean,
           });
+          const {
+            utils: { getInputValue, clickTrigger, clickOption },
+          } = getLGSelectTestUtils();
 
           expect(getInputValue()).toBe('Green');
           clickTrigger();
@@ -362,9 +424,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
   describe('clickOption', () => {
     describe.each([true, false])('when usePortal={%p}', boolean => {
       test('clicks an option', async () => {
-        const { getInputValue, clickTrigger, clickOption } = renderSelect({
+        renderSelect({
           usePortal: boolean,
         });
+        const {
+          utils: { getInputValue, clickTrigger, clickOption },
+        } = getLGSelectTestUtils();
 
         expect(getInputValue()).toBe('Select');
         clickTrigger();
@@ -377,9 +442,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
       });
 
       test('throws an error when the option does not exist', async () => {
-        const { getInputValue, clickTrigger, clickOption } = renderSelect({
+        renderSelect({
           usePortal: boolean,
         });
+        const {
+          utils: { getInputValue, clickTrigger, clickOption },
+        } = getLGSelectTestUtils();
 
         expect(getInputValue()).toBe('Select');
         clickTrigger();
@@ -407,7 +475,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('clickTrigger', () => {
     test('opens the select menu', async () => {
-      const { clickTrigger, getPopover } = renderSelect();
+      renderSelect();
+      const {
+        elements: { getPopover },
+        utils: { clickTrigger },
+      } = getLGSelectTestUtils();
+
       clickTrigger();
       await waitFor(() => {
         expect(getPopover()).toBeInTheDocument();
@@ -415,7 +488,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
     });
 
     test('closes the select menu', async () => {
-      const { clickTrigger, getPopover } = renderSelect();
+      renderSelect();
+      const {
+        elements: { getPopover },
+        utils: { clickTrigger },
+      } = getLGSelectTestUtils();
+
       clickTrigger();
       await waitFor(() => {
         expect(getPopover()).toBeInTheDocument();
@@ -427,7 +505,10 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
   describe('multiple selects', () => {
     test('both have correct default value', () => {
-      const { testUtils1, testUtils2 } = renderMultipleSelects();
+      renderMultipleSelects();
+
+      const { utils: testUtils1 } = getLGSelectTestUtils('lg-select-1');
+      const { utils: testUtils2 } = getLGSelectTestUtils('lg-select-2');
 
       expect(testUtils1.getInputValue()).toBe('Red');
       expect(testUtils2.getInputValue()).toBe('Blue');
@@ -435,10 +516,11 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
     describe('first select', () => {
       test('has correct number of options', async () => {
+        renderMultipleSelects();
         const {
-          testUtils1: { clickTrigger },
-          testElements1: { getOptions },
-        } = renderMultipleSelects();
+          utils: { clickTrigger },
+          elements: { getOptions },
+        } = getLGSelectTestUtils('lg-select-1');
 
         clickTrigger();
         await waitFor(() => {
@@ -450,10 +532,11 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
     describe('second select', () => {
       test('has correct number of options', async () => {
+        renderMultipleSelects();
         const {
-          testUtils2: { clickTrigger },
-          testElements2: { getOptions },
-        } = renderMultipleSelects();
+          utils: { clickTrigger },
+          elements: { getOptions },
+        } = getLGSelectTestUtils('lg-select-2');
 
         clickTrigger();
         await waitFor(() => {

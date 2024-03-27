@@ -27,14 +27,11 @@ function renderTextInput(props = {}) {
     <TextInput label={defaultProps.label} {...props} />,
   );
 
-  const {
-    elements: { getDescription, getErrorMessage, getInput, getLabel },
-    utils: { isDisabled, isError, isValid, getInputValue, isOptional },
-  } = getLGTextInputTestUtils();
+  const utils = getLGTextInputTestUtils();
 
-  const textInput = getInput();
-  const label = getLabel();
-  const description = getDescription();
+  const textInput = utils.getInput();
+  const label = utils.getLabel();
+  const description = utils.getDescription();
 
   const rerenderTextInput = (newProps?: Partial<TextInputProps>) => {
     const allProps = { ...props, ...newProps };
@@ -45,15 +42,10 @@ function renderTextInput(props = {}) {
 
   return {
     ...renderUtils,
+    ...utils,
     textInput,
     label,
     description,
-    getErrorMessage,
-    isDisabled,
-    isError,
-    isValid,
-    isOptional,
-    getInputValue,
     rerenderTextInput,
   };
 }

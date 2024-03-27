@@ -19,14 +19,11 @@ const defaultProps = {
 function renderTextArea(props = {}) {
   const renderUtils = render(<TextArea label={labelProp} {...props} />);
 
-  const {
-    elements: { getDescription, getErrorMessage, getInput, getLabel },
-    utils: { isDisabled, isError, getInputValue },
-  } = getLGTextAreaTestUtils();
+  const utils = getLGTextAreaTestUtils();
 
-  const textArea = getInput();
-  const label = getLabel();
-  const description = getDescription();
+  const textArea = utils.getInput();
+  const label = utils.getLabel();
+  const description = utils.getDescription();
 
   const rerenderTextArea = (newProps?: Partial<TextAreaProps>) => {
     const allProps = { ...props, ...newProps };
@@ -35,13 +32,10 @@ function renderTextArea(props = {}) {
 
   return {
     ...renderUtils,
+    ...utils,
     textArea,
     label,
     description,
-    getErrorMessage,
-    isDisabled,
-    isError,
-    getInputValue,
     rerenderTextArea,
   };
 }

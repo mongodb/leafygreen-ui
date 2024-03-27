@@ -104,18 +104,14 @@ export const getLGTextInputTestUtils = (
   };
 
   return {
-    elements: {
-      getLabel: () => label,
-      getDescription: () => description,
-      getInput: () => input,
-      getErrorMessage: () => errorMessage,
-    },
-    utils: {
-      isDisabled: () => isInputDisabled(),
-      isValid: () => isValid(),
-      isError: () => isError(),
-      getInputValue: () => getInputValue(),
-      isOptional: () => isOptional(),
-    },
+    getLabel: () => label,
+    getDescription: () => description,
+    getInput: () => input,
+    getErrorMessage: () => errorMessage,
+    isDisabled: () => isInputDisabled(),
+    isValid: () => isValid(),
+    isError: () => isError(),
+    getInputValue: () => getInputValue(),
+    isOptional: () => isOptional(),
   };
 };

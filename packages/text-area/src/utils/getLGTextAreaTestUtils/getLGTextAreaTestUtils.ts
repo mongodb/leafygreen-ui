@@ -74,16 +74,12 @@ export const getLGTextAreaTestUtils = (
   };
 
   return {
-    elements: {
-      getLabel: () => label,
-      getDescription: () => description,
-      getInput: () => input,
-      getErrorMessage: () => errorMessage,
-    },
-    utils: {
-      isDisabled: () => isInputDisabled(),
-      isError: () => isError(),
-      getInputValue: () => getInputValue(),
-    },
+    getLabel: () => label,
+    getDescription: () => description,
+    getInput: () => input,
+    getErrorMessage: () => errorMessage,
+    isDisabled: () => isInputDisabled(),
+    isError: () => isError(),
+    getInputValue: () => getInputValue(),
   };
 };
