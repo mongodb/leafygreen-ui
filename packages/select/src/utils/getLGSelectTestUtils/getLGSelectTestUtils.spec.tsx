@@ -119,24 +119,24 @@ describe('packages/select/getLGSelectTestUtils', () => {
   });
 
   describe('getLabel', () => {
-    test('renders label', () => {
+    test('is in the document', () => {
       const { getLabel } = renderSelect();
       expect(getLabel()).toBeInTheDocument();
     });
 
-    test('does not render label', () => {
+    test('is not in the document', () => {
       const { getLabel } = renderSelect({ label: '' });
       expect(getLabel()).not.toBeInTheDocument();
     });
   });
 
   describe('getDescription', () => {
-    test('renders description', () => {
+    test('is in the document', () => {
       const { getDescription } = renderSelect();
       expect(getDescription()).toBeVisible();
     });
 
-    test('does not render description', () => {
+    test('is not in the document', () => {
       const { getDescription } = renderSelect({ description: '' });
       expect(getDescription()).not.toBeInTheDocument();
     });
