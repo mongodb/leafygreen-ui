@@ -68,8 +68,8 @@ describe('packages/text-input', () => {
   });
   test(`renders ${defaultProps.label} as the input label and ${defaultProps.description} as the description`, () => {
     const { label, description } = renderTextInput(defaultProps);
-    expect(label?.innerHTML).toContain(defaultProps.label);
-    expect(description?.innerHTML).toContain(defaultProps.description);
+    expect(label).toHaveTextContent(defaultProps.label);
+    expect(description).toHaveTextContent(defaultProps.description);
   });
 
   test(`renders ${defaultProps.placeholder} as placeholder text`, () => {

@@ -17,11 +17,13 @@ function renderMultipleInputs() {
         data-lgid="lg-text_input-1"
         label="label 1"
         value="text input 1"
+        description="description 1"
       />
       <TextInput
         data-lgid="lg-text_input-2"
         label="label 2"
         value="text input 2"
+        description="description 2"
       />
     </>,
   );
@@ -73,6 +75,20 @@ describe('packages/text-input', () => {
 
         expect(utilsOne.getInputValue()).toBe('text input 1');
         expect(utilsTwo.getInputValue()).toBe('text input 2');
+      });
+
+      test('getLabel', () => {
+        const { elementsOne, elementsTwo } = renderMultipleInputs();
+
+        expect(elementsOne.getLabel()).toHaveTextContent('label 1');
+        expect(elementsTwo.getLabel()).toHaveTextContent('label 2');
+      });
+
+      test('getDescription', () => {
+        const { elementsOne, elementsTwo } = renderMultipleInputs();
+
+        expect(elementsOne.getDescription()).toHaveTextContent('description 1');
+        expect(elementsTwo.getDescription()).toHaveTextContent('description 2');
       });
     });
 

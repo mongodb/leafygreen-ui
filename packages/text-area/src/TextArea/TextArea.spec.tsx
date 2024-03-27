@@ -56,8 +56,8 @@ describe('packages/text-area', () => {
   });
   test(`renders ${labelProp} as the input label and ${defaultProps.description} as the description`, () => {
     const { label, description } = renderTextArea(defaultProps);
-    expect(label?.innerHTML).toContain(labelProp);
-    expect(description?.innerHTML).toContain(defaultProps.description);
+    expect(label).toHaveTextContent(labelProp);
+    expect(description).toHaveTextContent(defaultProps.description);
   });
 
   test(`renders ${defaultProps.className} in the classList`, () => {
