@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon
 
+## 12.0.1
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+  - @leafygreen-ui/emotion@4.0.8
+
 ## 12.0.0
 
 ### Major Changes

@@ -1,7 +1,6 @@
-  
 {
   "name": "@lg-tools/storybook-utils",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Storybook Utilities for LeafyGreen UI",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
