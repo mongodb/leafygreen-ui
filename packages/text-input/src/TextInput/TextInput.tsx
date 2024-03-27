@@ -61,10 +61,12 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       className,
       darkMode: darkModeProp,
       sizeVariant: size = SizeVariant.Default,
-      'aria-labelledby': ariaLabelledby,
       handleValidation,
       baseFontSize: baseFontSizeProp,
       'data-lgid': dataLgId = LGIDS_TEXT_INPUT.root,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledby,
+      'aria-invalid': ariaInvalid,
       ...rest
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -108,7 +110,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       consoleOnce.warn(
         'We recommend using the Leafygreen SearchInput for `type="search"` inputs.',
       );
-      if (!rest['aria-label']) {
+      if (!ariaLabel) {
         console.error(
           'For screen-reader accessibility, aria-label must be provided to TextInput.',
         );
@@ -127,10 +129,17 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
+    const ariaProps = {
+      'aria-invalid': ariaInvalid,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledby,
+    } as const;
+
     const formFieldProps = {
       baseFontSize,
       className,
       darkMode,
+      dataLgId,
       description,
       disabled,
       errorMessage,
@@ -139,11 +148,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       optional,
       size,
       state,
+      ...ariaProps,
     } as const;
 
     const inputProps = {
-      'aria-disabled': disabled,
-      'aria-invalid': state === State.Error,
       autoComplete: disabled ? 'off' : rest?.autoComplete || 'on',
       className: css`
         width: 100%;
