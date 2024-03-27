@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Option, OptionGroup, Select, SelectProps, State } from '../../';
+import { Option, OptionGroup, Select, State } from '../../';
 
 import { getLGSelectTestUtils } from './getLGSelectTestUtils';
 
