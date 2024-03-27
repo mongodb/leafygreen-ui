@@ -34,7 +34,8 @@ type AriaLabelProps =
       label?: React.ReactNode;
 
       /**
-       * A label for screen readers
+       * A label for screen readers which is used if `label` or `aria-labelledby` are not defined
+       * {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label See aria-label MDN docs}
        */
       'aria-label': string;
       'aria-labelledby'?: string;
@@ -44,7 +45,8 @@ type AriaLabelProps =
       'aria-label'?: string;
 
       /**
-       * A reference to an external label element
+       * A reference to an external label element which is used if `label` is not defined
+       * {@link https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-labelledby See aria-labelledby MDN docs}
        */
       'aria-labelledby': string;
     };
@@ -73,7 +75,7 @@ export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
     size?: Size;
 
     /**
-     * Defines whether the component is disabled
+     * Defines whether the component is disabled. This will set the `aria-disabled` and `readonly` attributes on the input, not the `disabled` attribute.
      */
     disabled?: boolean;
 

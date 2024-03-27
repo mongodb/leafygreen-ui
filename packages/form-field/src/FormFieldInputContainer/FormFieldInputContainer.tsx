@@ -11,16 +11,12 @@ import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
 import {
   childrenWrapperStyles,
+  getInputWrapperStyles,
   iconClassName,
+  iconDisabledStyles,
   iconStyles,
   iconsWrapperStyles,
   inputElementClassName,
-  inputWrapperBaseStyles,
-  inputWrapperDisabledStyles,
-  inputWrapperFocusStyles,
-  inputWrapperModeStyles,
-  inputWrapperSizeStyles,
-  inputWrapperStateStyles,
   optionalTextBaseStyle,
   optionalTextThemeStyle,
   validIconStyles,
@@ -43,34 +39,27 @@ export const FormFieldInputContainer = forwardRef<
     const { disabled, size, state, inputProps, optional } =
       useFormFieldContext();
 
+    const inputWrapperStyles = getInputWrapperStyles({
+      disabled,
+      size: size ?? Size.Default,
+      state,
+      theme,
+    });
+
     const renderedChildren = React.cloneElement(children, {
       ...inputProps,
       className: cx(inputElementClassName, children.props.className),
     });
 
+    const shouldRenderValidIcon = state === FormFieldState.Valid && !disabled;
     const shouldRenderOptionalText =
       state === FormFieldState.None && !disabled && optional;
 
     return (
-      <div
-        {...rest}
-        ref={fwdRef}
-        aria-disabled={disabled}
-        className={cx(
-          inputWrapperBaseStyles,
-          inputWrapperModeStyles[theme],
-          inputWrapperSizeStyles[size ?? Size.Default],
-          inputWrapperStateStyles[state][theme],
-          inputWrapperFocusStyles[theme],
-          {
-            [inputWrapperDisabledStyles[theme]]: disabled,
-          },
-          className,
-        )}
-      >
+      <div {...rest} ref={fwdRef} className={cx(inputWrapperStyles, className)}>
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
         <div className={iconsWrapperStyles}>
-          {state === FormFieldState.Valid && !disabled && (
+          {shouldRenderValidIcon && (
             <Icon
               aria-hidden
               title="Valid"
@@ -96,9 +85,9 @@ export const FormFieldInputContainer = forwardRef<
               className: cx(
                 iconClassName,
                 iconStyles[theme],
+                { [iconDisabledStyles[theme]]: disabled },
                 contentEnd.props.className,
               ),
-              disabled,
             })}
         </div>
       </div>
