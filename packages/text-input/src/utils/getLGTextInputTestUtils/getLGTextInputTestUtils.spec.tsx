@@ -43,23 +43,21 @@ function renderMultipleInputs() {
 
 describe('packages/text-input', () => {
   describe('getLGTextInputTestUtils', () => {
-    describe('throws error if LG TextInput is not found', () => {
-      test('', () => {
-        render(<TextInput data-lgid="lg-text_output" label="hey" />);
+    test('throws error if LG TextInput is not found', () => {
+      render(<TextInput data-lgid="lg-text_output" label="hey" />);
 
-        try {
-          // eslint-disable-next-line
-          const { elements } = getLGTextInputTestUtils();
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-          expect(error).toHaveProperty(
-            'message',
-            expect.stringMatching(
-              /Unable to find an element by: \[data-lgid="lg-text_input"\]/,
-            ),
-          );
-        }
-      });
+      try {
+        // eslint-disable-next-line
+        const { elements } = getLGTextInputTestUtils();
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error).toHaveProperty(
+          'message',
+          expect.stringMatching(
+            /Unable to find an element by: \[data-lgid="lg-text_input"\]/,
+          ),
+        );
+      }
     });
 
     describe('multiple inputs', () => {

@@ -1,9 +1,9 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
-import { LGID_DESCRIPTION, LGID_LABEL } from '@leafygreen-ui/typography';
+import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
-import { LGID_SELECT, LGID_SELECT_ERROR_MESSAGE } from '../../constants';
+import { LGIDS_SELECT } from '../../constants';
 
 import { LGSelectTestUtilsReturnType } from './getLGSelectTestUtils.types';
 
@@ -12,7 +12,7 @@ export function waitForSelectTransitionDuration() {
 }
 
 export const getLGSelectTestUtils = (
-  lgId = LGID_SELECT,
+  lgId: string = LGIDS_SELECT.root,
 ): LGSelectTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -25,7 +25,7 @@ export const getLGSelectTestUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGID_LABEL}]`,
+    `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
 
   /**
@@ -33,7 +33,7 @@ export const getLGSelectTestUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGID_DESCRIPTION}]`,
+    `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
 
   /**
@@ -49,7 +49,7 @@ export const getLGSelectTestUtils = (
    */
   const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid="${LGID_SELECT_ERROR_MESSAGE}"]`,
+    `[data-lgid=${LGIDS_SELECT.errorMessage}]`,
   );
 
   /**
@@ -87,7 +87,7 @@ export const getLGSelectTestUtils = (
   const getPopover = () =>
     queryByQuerySelector<HTMLDivElement>(
       document.body,
-      '[data-lgid="lg-select-popover"]',
+      `[data-lgid=${LGIDS_SELECT.popover}]`,
     );
 
   const getAllOptions = (): Array<HTMLLIElement> => {
@@ -96,7 +96,7 @@ export const getLGSelectTestUtils = (
 
     if (!popover)
       throw new Error(
-        'Unable to find an element by: [data-lgid="lg-select-popover"]',
+        `Unable to find an element by: [data-lgid=${LGIDS_SELECT.popover}]`,
       );
 
     // Find all options

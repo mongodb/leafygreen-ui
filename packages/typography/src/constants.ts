@@ -1,5 +1,4 @@
-// Label
-export const LGID_LABEL = 'lg-label';
-
-// Description
-export const LGID_DESCRIPTION = 'lg-description';
+export const LGIDS_TYPOGRAPHY = {
+  label: 'lg-label',
+  description: 'lg-description',
+} as const;

@@ -1,3 +1,7 @@
-export const LGID_FORM_FIELD = 'lg-form_field';
-export const LGID_FORM_FIELD_ERROR_MESSAGE = `${LGID_FORM_FIELD}-error_message`;
-export const LGID_FORM_FIELD_OPTIONAL = `${LGID_FORM_FIELD}-optional`;
+const LGID_ROOT = 'lg-form_field';
+
+export const LGIDS_FORM_FIELD = {
+  root: LGID_ROOT,
+  errorMessage: `${LGID_ROOT}-error_message`,
+  optional: `${LGID_ROOT}-optional`,
+} as const;

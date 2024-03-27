@@ -1,17 +1,14 @@
 import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
 
-import {
-  LGID_FORM_FIELD_ERROR_MESSAGE,
-  LGID_FORM_FIELD_OPTIONAL,
-} from '@leafygreen-ui/form-field';
-import { LGID_DESCRIPTION, LGID_LABEL } from '@leafygreen-ui/typography';
+import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
+import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
-import { LGID_TEXT_INPUT } from '../../constants';
+import { LGIDS_TEXT_INPUT } from '../../constants';
 
 import { LGTextInputTestUtilsReturnType } from './getLGTextInputTestUtils.types';
 
 export const getLGTextInputTestUtils = (
-  lgId = LGID_TEXT_INPUT,
+  lgId: string = LGIDS_TEXT_INPUT.root,
 ): LGTextInputTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -24,7 +21,7 @@ export const getLGTextInputTestUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGID_LABEL}]`,
+    `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
 
   /**
@@ -32,7 +29,7 @@ export const getLGTextInputTestUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGID_DESCRIPTION}]`,
+    `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
 
   /**
@@ -48,7 +45,7 @@ export const getLGTextInputTestUtils = (
    */
   const errorMessage = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid="${LGID_FORM_FIELD_ERROR_MESSAGE}"]`,
+    `[data-lgid=${LGIDS_FORM_FIELD.errorMessage}]`,
   );
 
   /**
@@ -100,7 +97,7 @@ export const getLGTextInputTestUtils = (
   const isOptional = () => {
     const optionalEl = queryByQuerySelector<SVGElement>(
       element,
-      `[data-lgid="${LGID_FORM_FIELD_OPTIONAL}"]`,
+      `[data-lgid=${LGIDS_FORM_FIELD.optional}]`,
     );
 
     return !!optionalEl;

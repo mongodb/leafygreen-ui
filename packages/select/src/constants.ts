@@ -1,2 +1,7 @@
-export const LGID_SELECT = 'lg-select';
-export const LGID_SELECT_ERROR_MESSAGE = `${LGID_SELECT}-error_message`;
+const LGID_ROOT = 'lg-select';
+
+export const LGIDS_SELECT = {
+  root: LGID_ROOT,
+  errorMessage: `${LGID_ROOT}-error_message`,
+  popover: `${LGID_ROOT}-popover`,
+} as const;

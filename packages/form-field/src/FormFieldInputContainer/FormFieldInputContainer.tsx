@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { LGID_FORM_FIELD_OPTIONAL } from '../constants';
+import { LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldState } from '../FormField/FormField.types';
 import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
@@ -91,7 +91,7 @@ export const FormFieldInputContainer = forwardRef<
 
           {shouldRenderOptionalText && (
             <div
-              data-lgid={LGID_FORM_FIELD_OPTIONAL}
+              data-lgid={LGIDS_FORM_FIELD.optional}
               className={cx(
                 optionalTextBaseStyle,
                 optionalTextThemeStyle[theme],

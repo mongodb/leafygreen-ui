@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGID_DESCRIPTION } from '../constants';
+import { LGIDS_TYPOGRAPHY } from '../constants';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
@@ -16,7 +16,7 @@ import { DescriptionProps } from './Description.types';
 
 export const Description = ({
   baseFontSize: baseFontSizeOverride,
-  'data-lgid': dataLgId = LGID_DESCRIPTION,
+  'data-lgid': dataLgId = LGIDS_TYPOGRAPHY.description,
   darkMode: darkModeProp,
   disabled = false,
   children,

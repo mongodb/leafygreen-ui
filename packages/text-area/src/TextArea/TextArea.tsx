@@ -15,7 +15,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { LGID_TEXT_AREA, LGID_TEXT_AREA_ERROR_MESSAGE } from '../constants';
+import { LGIDS_TEXT_AREA } from '../constants';
 
 import {
   colorSets,
@@ -72,7 +72,7 @@ export const TextArea: TextArea = forwardRef<
     handleValidation,
     'aria-labelledby': ariaLabelledby,
     baseFontSize: baseFontSizeProp,
-    'data-lgid': dataLgId = LGID_TEXT_AREA,
+    'data-lgid': dataLgId = LGIDS_TEXT_AREA.root,
     defaultValue = '',
     ...rest
   }: TextAreaProps,
@@ -163,7 +163,7 @@ export const TextArea: TextArea = forwardRef<
                 bodyTypeScaleStyles[baseFontSize],
                 errorMessageLabelStyles,
               )}
-              data-lgid={LGID_TEXT_AREA_ERROR_MESSAGE}
+              data-lgid={LGIDS_TEXT_AREA.errorMessage}
             >
               {errorMessage}
             </Error>

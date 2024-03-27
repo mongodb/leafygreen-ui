@@ -33,23 +33,21 @@ function renderMultipleToggles() {
 
 describe('packages/toggle', () => {
   describe('getLGToggleTestUtils', () => {
-    describe('throws error if LG Toggle is not found', () => {
-      test('', () => {
-        render(<Toggle aria-label="Toggle who?" />);
+    test('throws error if LG Toggle is not found', () => {
+      render(<Toggle aria-label="Toggle who?" />);
 
-        try {
-          // eslint-disable-next-line
-          const { elements } = getLGToggleTestUtils();
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-          expect(error).toHaveProperty(
-            'message',
-            expect.stringMatching(
-              /Unable to find an element by: \[data-lgid="lg-toggle"\]/,
-            ),
-          );
-        }
-      });
+      try {
+        // eslint-disable-next-line
+        const { elements } = getLGToggleTestUtils();
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error).toHaveProperty(
+          'message',
+          expect.stringMatching(
+            /Unable to find an element by: \[data-lgid="lg-toggle"\]/,
+          ),
+        );
+      }
     });
 
     describe('multiple toggles', () => {

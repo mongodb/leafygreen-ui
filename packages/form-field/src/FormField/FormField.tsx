@@ -10,7 +10,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { LGID_FORM_FIELD_ERROR_MESSAGE } from '../constants';
+import { LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 
 import {
@@ -97,7 +97,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               <div className={errorTextContainerStyle}>
                 <Error
                   data-testid="lg-form_field-error_message"
-                  data-lgid={LGID_FORM_FIELD_ERROR_MESSAGE}
+                  data-lgid={LGIDS_FORM_FIELD.errorMessage}
                   className={getFontSize({ baseFontSize, size })}
                   id={errorId}
                 >
