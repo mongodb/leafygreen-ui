@@ -93,7 +93,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `label`     | `string`  | Text shown above the group's options.                     |         |
 | `disabled`  | `boolean` | Prevents all the contained options from being selectable. | `false` |
 
-# Test Harnessess
+# Test Harnesses
 
 ## getLGSelectTestUtils()
 
@@ -131,10 +131,17 @@ test('select', () => {
       </OptionGroup>
     </Select>
   );
-  const { elements, utils } = getLGSelectTestUtils();
+
+  const { elements, utils,getOptions, clickTrigger } = getLGSelectTestUtils();
 
   expect(elements.getInput()).toBeInTheDocument();
   expect(utils.getInputValue()).toBe('Select');
+
+  clickTrigger();
+  await waitFor(() => {
+    // `select` is an option
+    expect(getOptions()).toHaveLength(5);
+  });
 });
 ```
 

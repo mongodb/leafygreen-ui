@@ -58,7 +58,7 @@ For the Toggle to be accessible to screen readers, you **must** pass either [`ar
 
 Please reach out if you would like further guidance on how to programmatically associate text with the Toggle component.
 
-# Test Harnessess
+# Test Harnesses
 
 ## getLGToggleTestUtils()
 

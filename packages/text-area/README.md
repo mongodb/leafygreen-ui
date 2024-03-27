@@ -51,7 +51,7 @@ return (
 | `onChange`    | `function`                     | The event handler function for the 'onchange' event. Accepts the change event object as its argument and returns nothing. |          |
 | `onBlur`      | `function`                     | The event handler function for the 'onblur' event. Accepts the focus event object as its argument and returns nothing.    |          |
 
-# Test Harnessess
+# Test Harnesses
 
 ## getLGTextAreaTestUtils()
 
