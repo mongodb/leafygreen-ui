@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.4.1
+
+### Patch Changes
+
+- 356a53fd: Update typescript peer dependency
+
 ## 0.4.0
 
 ### Minor Changes

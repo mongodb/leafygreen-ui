@@ -1,5 +1,16 @@
 # @lg-tools/test
 
+## 0.4.4
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+  - @leafygreen-ui/testing-lib@0.4.2
+  - @lg-tools/meta@0.3.2
+
 ## 0.4.3
 
 ### Patch Changes

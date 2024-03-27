@@ -1,13 +1,15 @@
 {
   "name": "@leafygreen-ui/icon-button",
-  "version": "15.0.20",
+  "version": "15.0.21",
   "description": "LeafyGreen UI Kit Icon Buttons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "<3.9": {
-      "*": ["ts3.4/*"]
+      "*": [
+        "ts3.4/*"
+      ]
     }
   },
   "scripts": {
@@ -20,16 +22,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.11",
-    "@leafygreen-ui/box": "^3.1.8",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^12.0.0",
-    "@leafygreen-ui/lib": "^13.0.0",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.1.4"
+    "@leafygreen-ui/a11y": "^1.4.13",
+    "@leafygreen-ui/box": "^3.1.9",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^12.0.1",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.5.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button",
   "repository": {
@@ -40,6 +42,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.0.1"
+    "@lg-tools/storybook-utils": "^0.1.0"
   }
 }

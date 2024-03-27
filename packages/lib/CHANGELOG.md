@@ -1,5 +1,16 @@
 # @leafygreen-ui/lib
 
+## 13.3.0
+
+### Minor Changes
+
+- 66df9ab8: Creates `Mutable` utility type
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 13.2.1
 
 ### Patch Changes

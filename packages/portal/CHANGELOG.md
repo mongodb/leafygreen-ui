@@ -1,5 +1,16 @@
 # @leafygreen-ui/portal
 
+## 5.1.1
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/hooks@8.1.3
+
 ## 5.1.0
 
 ### Minor Changes
