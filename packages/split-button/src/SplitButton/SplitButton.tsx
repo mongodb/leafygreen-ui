@@ -43,6 +43,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       open,
       setOpen,
@@ -92,6 +93,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
             usePortal={usePortal}
             portalClassName={portalClassName}
             portalContainer={portalContainer}
+            portalRef={portalRef}
             scrollContainer={scrollContainer}
             align={align}
             justify={justify}
@@ -139,4 +141,10 @@ SplitButton.propTypes = {
       ? PropTypes.instanceOf(Element)
       : PropTypes.any,
   portalClassName: PropTypes.string,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
 } as any;

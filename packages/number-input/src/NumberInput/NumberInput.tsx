@@ -50,6 +50,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       ...rest
     }: NumberInputProps,
@@ -75,6 +76,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
     } as const;
 
@@ -195,5 +197,11 @@ NumberInput.propTypes = {
     typeof window !== 'undefined'
       ? PropTypes.instanceOf(Element)
       : PropTypes.any,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
   portalClassName: PropTypes.string,
 } as any;

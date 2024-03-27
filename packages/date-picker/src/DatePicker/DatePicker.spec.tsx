@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   fireEvent,
   // prettyDOM,
@@ -414,6 +414,22 @@ describe('packages/date-picker', () => {
         });
         const { menuContainerEl } = await findMenuElements();
         expect(container).not.toContain(menuContainerEl);
+      });
+
+      test('accepts a portalRef', () => {
+        const portalContainer = document.createElement('div');
+        document.body.appendChild(portalContainer);
+        const portalRef = createRef<HTMLElement>();
+        renderDatePicker({
+          initialOpen: true,
+          portalContainer,
+          portalRef,
+        });
+
+        waitFor(() => {
+          expect(portalRef.current).toBeDefined();
+          expect(portalRef.current).toBe(portalContainer);
+        });
       });
 
       test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
