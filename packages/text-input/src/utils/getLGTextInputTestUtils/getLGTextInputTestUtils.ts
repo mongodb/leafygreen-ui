@@ -24,7 +24,7 @@ export const getLGTextInputTestUtils = (
    */
   const label = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid="${LGID_LABEL}}"]`,
+    `[data-lgid=${LGID_LABEL}]`,
   );
 
   /**
@@ -32,7 +32,7 @@ export const getLGTextInputTestUtils = (
    */
   const description = queryByQuerySelector<HTMLElement>(
     element,
-    `[data-lgid="${LGID_DESCRIPTION}}"]`,
+    `[data-lgid=${LGID_DESCRIPTION}]`,
   );
 
   /**
