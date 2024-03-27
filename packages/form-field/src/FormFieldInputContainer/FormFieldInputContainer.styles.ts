@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -12,6 +12,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { FormFieldState } from '../FormField/FormField.types';
+import { FormFieldContextProps } from '../FormFieldContext';
 
 export const inputElementClassName = createUniqueClassName('form-field-input');
 export const iconClassName = createUniqueClassName('form-field-icon');
@@ -60,7 +61,7 @@ export const inputWrapperModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not([aria-disabled='true']):not(:focus) {
+      &:not(:focus) {
         box-shadow: ${hoverRing.light.gray};
       }
     }
@@ -73,13 +74,13 @@ export const inputWrapperModeStyles: Record<Theme, string> = {
         -webkit-text-fill-color: ${palette.black};
         box-shadow: ${autofillShadowOverride(palette.white)};
 
-        &:not([aria-disabled='true']):focus {
+        &:focus {
           box-shadow: ${autofillShadowOverride(palette.white)},
             ${focusRing.light.input};
           border-color: ${palette.white};
         }
 
-        &:not([aria-disabled='true']):hover:not(:focus) {
+        &:hover:not(:focus) {
           box-shadow: ${autofillShadowOverride(palette.white)},
             ${hoverRing.light.gray};
         }
@@ -98,7 +99,7 @@ export const inputWrapperModeStyles: Record<Theme, string> = {
 
     &:hover,
     &:active {
-      &:not([aria-disabled='true']):not(:focus) {
+      &:not(:focus) {
         box-shadow: ${hoverRing.dark.gray};
       }
     }
@@ -111,13 +112,13 @@ export const inputWrapperModeStyles: Record<Theme, string> = {
         -webkit-text-fill-color: ${palette.gray.light3};
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
-        &:not([aria-disabled='true']):focus {
+        &:focus {
           box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
             ${focusRing.dark.input};
           border-color: ${palette.blue.light1};
         }
 
-        &:not([aria-disabled='true']):hover:not(:focus) {
+        &:hover:not(:focus) {
           box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
             ${hoverRing.dark.gray};
         }
@@ -133,16 +134,14 @@ export const inputWrapperModeStyles: Record<Theme, string> = {
 
 const focusSelector = (styles: string) => css`
   @supports selector(:has(a, b)) {
-    &:not([aria-disabled='true']):focus-within:not(
-        :has(.${iconClassName}:focus)
-      ) {
+    &:focus-within:not(:has(.${iconClassName}:focus)) {
       ${styles}
     }
   }
 
   /* Fallback for when "has" is unsupported */
   @supports not selector(:has(a, b)) {
-    &:not([aria-disabled='true']):focus-within {
+    &:focus-within {
       ${styles}
     }
   }
@@ -207,26 +206,22 @@ export const inputWrapperStateStyles: Record<
 > = {
   [FormFieldState.Error]: {
     [Theme.Light]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.red.base};
+      border-color: ${palette.red.base};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.light.red};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing.light.red};
         }
       }
     `,
     [Theme.Dark]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.red.light1};
+      border-color: ${palette.red.light1};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.dark.red};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing.dark.red};
         }
       }
     `,
@@ -237,26 +232,22 @@ export const inputWrapperStateStyles: Record<
   },
   [FormFieldState.Valid]: {
     [Theme.Light]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.green.dark1};
+      border-color: ${palette.green.dark1};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.light.green};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing.light.green};
         }
       }
     `,
     [Theme.Dark]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.green.dark1};
+      border-color: ${palette.green.dark1};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.dark.green};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing.dark.green};
         }
       }
     `,
@@ -269,7 +260,14 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
     background-color: ${palette.gray.light2};
     border-color: ${palette.gray.light1};
 
-    & input {
+    &:hover,
+    &:active {
+      &:not(:focus) {
+        box-shadow: inherit;
+      }
+    }
+
+    & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
       color: ${palette.gray.base};
@@ -287,8 +285,11 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
           -webkit-text-fill-color: ${palette.gray.base};
           box-shadow: ${autofillShadowOverride(palette.gray.light2)};
         }
+
+        &:hover:not(:focus) {
+          box-shadow: inherit;
+        }
       }
-    }
   `,
   [Theme.Dark]: css`
     cursor: not-allowed;
@@ -296,14 +297,17 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
     background-color: ${palette.gray.dark3};
     border-color: ${palette.gray.dark2};
 
-    & input {
+    &:hover,
+    &:active {
+      &:not(:focus) {
+        box-shadow: inherit;
+      }
+    }
+
+    & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
       color: ${palette.gray.dark2};
-
-      &::placeholder {
-        color: inherit;
-      }
 
       &:-webkit-autofill {
         &,
@@ -314,10 +318,39 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
           -webkit-text-fill-color: ${palette.gray.dark1};
           box-shadow: ${autofillShadowOverride(palette.gray.dark2)};
         }
+
+        &:hover:not(:focus) {
+          box-shadow: inherit;
+        }
+      }
+
+      &::placeholder {
+        color: inherit;
       }
     }
   `,
 };
+
+export function getInputWrapperStyles({
+  disabled,
+  size: sizeProp,
+  state,
+  theme,
+}: Required<
+  Pick<FormFieldContextProps, 'disabled' | 'size' | 'state'> & { theme: Theme }
+>) {
+  return cx(
+    inputWrapperBaseStyles,
+    inputWrapperModeStyles[theme],
+    inputWrapperSizeStyles[sizeProp],
+    {
+      [inputWrapperModeStyles[theme]]: !disabled,
+      [inputWrapperStateStyles[state][theme]]: !disabled,
+      [inputWrapperFocusStyles[theme]]: !disabled,
+      [inputWrapperDisabledStyles[theme]]: disabled,
+    },
+  );
+}
 
 export const childrenWrapperStyles = css`
   width: 100%;
@@ -329,22 +362,21 @@ export const iconsWrapperStyles = css`
   gap: ${spacing[1]}px;
 `;
 
+export const iconDisabledStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.gray.light1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.gray.dark2};
+  `,
+};
+
 export const iconStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.base};
-
-    &[aria-disabled='true'],
-    &:disabled {
-      color: ${palette.gray.light1};
-    }
   `,
   [Theme.Dark]: css`
     color: ${palette.gray.base};
-
-    &[aria-disabled='true'],
-    &:disabled {
-      color: ${palette.gray.dark2};
-    }
   `,
 };
 
