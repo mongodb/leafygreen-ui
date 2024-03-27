@@ -1,5 +1,5 @@
-export const white = '#FFFFFF';
-export const black = '#001E2B';
+export const white = '#FFFFFF' as const;
+export const black = '#001E2B' as const;
 
 export const gray = {
   dark4: '#112733',
