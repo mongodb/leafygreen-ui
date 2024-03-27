@@ -86,7 +86,7 @@ export interface BaseTextInputProps
   optional?: boolean;
 
   /**
-   * Whether or not the field is currently disabled.
+   * Whether or not the field is disabled. This will set the `aria-disabled` and `readonly` attributes on the input, not the `disabled` attribute.
    * Default: false
    */
   disabled?: boolean;
