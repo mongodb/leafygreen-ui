@@ -1,4 +1,4 @@
-export interface FormUtils {
+export interface FormUtils<T = string> {
   /**
    * Returns whether the input is disabled
    */
@@ -17,7 +17,7 @@ export interface FormUtils {
   /**
    * Returns the input value
    */
-  getInputValue: () => string;
+  getInputValue: () => T;
 
   /**
    * Returns whether the input is `optional`

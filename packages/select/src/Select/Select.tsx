@@ -23,6 +23,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
+import { LGID_SELECT_ERROR_MESSAGE, LGID_SELECT } from '../constants';
 import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
@@ -66,6 +67,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
+      'data-lgid': dataLgId = LGID_SELECT,
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,
@@ -503,7 +505,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={containerRef} className={cx(wrapperStyle, className)}>
+        <div
+          ref={containerRef}
+          className={cx(wrapperStyle, className)}
+          data-lgid={dataLgId}
+        >
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>
               {label && (
@@ -611,6 +617,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
           </SelectContext.Provider>
           {state === State.Error && errorMessage && (
             <span
+              data-lgid={LGID_SELECT_ERROR_MESSAGE}
               className={cx(
                 errorTextStyle({ darkMode, sizeSet }),
                 css`
