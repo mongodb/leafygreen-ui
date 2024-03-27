@@ -69,7 +69,7 @@ Please reach out if you would like further guidance on how to programmatically a
 ```tsx
 import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
 
-const { elements, utils } = getLGToggleTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
+const utils = getLGToggleTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
 ```
 
 #### Single `Toggle`
@@ -82,10 +82,10 @@ import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
 
 test('toggle', () => {
   render(<Toggle aria-label="label" />);
-  const { elements, utils } = getLGToggleTestUtils();
+  const { getInput, getInputValue } = getLGToggleTestUtils();
 
-  expect(elements.getInput()).toBeInTheDocument();
-  expect(utils.getInputValue()).toBe('false');
+  expect(getInput()).toBeInTheDocument();
+  expect(getInputValue()).toBe('false');
 });
 ```
 
@@ -106,18 +106,16 @@ test('toggle', () => {
       <Toggle data-lgid="toggle-2" aria-label="label 2" checked />
     </>,
   );
-  const { elements: lgElementsToggle1, utils: lgUtilsToggle1 } =
-    getLGToggleTestUtils('toggle-1'); // data-lgid
-  const { elements: lgElementsToggle2, utils: lgUtilsToggle2 } =
-    getLGToggleTestUtils('toggle-2'); // data-lgid
+  const utilsOne = getLGToggleTestUtils('toggle-1'); // data-lgid
+  const utilsTwo = getLGToggleTestUtils('toggle-2'); // data-lgid
 
   // First toggle
-  expect(lgElementsToggle1.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle1.getInputValue()).toBe('false');
+  expect(utilsOne.getInput()).toBeInTheDocument();
+  expect(utilsOne.getInputValue()).toBe('false');
 
   // Second Toggle
-  expect(lgElementsToggle2.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle2.getInputValue()).toBe('true');
+  expect(utilsTwo.getInput()).toBeInTheDocument();
+  expect(utilsTwo.getInputValue()).toBe('true');
 });
 ```
 
@@ -139,21 +137,22 @@ test('Form', () => {
       <TextArea label="TextArea label" />
     </Form>,
   );
-  const { elements: lgElementsToggle, utils: lgUtilsToggle } = getLGToggleTestUtils();
-  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputTestUtils();
-  const { elements: lgElementsTextArea, utils: lgUtilsTextArea } = getLGTextAreaTestUtils();
+
+  const toggleInputUtils = getLGToggleTestUtils();
+  const textInputUtils = getLGTextInputTestUtils();
+  const textAreaUtils = getLGTextAreaTestUtils();
 
   // LG Toggle
-  expect(lgElementsToggle.getInput()).toBeInTheDocument();
-  expect(lgUtilsToggle.getInputValue()).toBe('false');
+  expect(toggleInputUtils.getInput()).toBeInTheDocument();
+  expect(toggleInputUtils.getInputValue()).toBe('false');
 
   // LG TextInput
-  expect(lgElementsTextInput.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextInput.getInputValue()).toBe('');
+  expect(textInputUtils.getInput()).toBeInTheDocument();
+  expect(textInputUtils.getInputValue()).toBe('');
 
   // LG TextArea
-  expect(lgElementsTextArea.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextArea.getInputValue()).toBe('');
+  expect(textAreaUtils.getInput()).toBeInTheDocument();
+  expect(textAreaUtils.getInputValue()).toBe('');
 
 
 });
@@ -164,24 +163,11 @@ test('Form', () => {
 #### Elements
 
 ```tsx
-const {
-  elements: { getInput },
-} = getLGToggleTestUtils();
-```
-
-| Util       | Description            | Returns             |
-| ---------- | ---------------------- | ------------------- |
-| `getInput` | Returns the input node | `HTMLButtonElement` |
-
-#### Utils
-
-```tsx
-const {
-  utils: { isDisabled, getInputValue },
-} = getLGToggleTestUtils();
+const { getInput, isDisabled, getInputValue } = getLGToggleTestUtils();
 ```
 
 | Util            | Description                           | Returns              |
 | --------------- | ------------------------------------- | -------------------- |
+| `getInput`      | Returns the input node                | `HTMLButtonElement`  |
 | `isDisabled`    | Returns whether the input is disabled | `boolean`            |
 | `getInputValue` | Returns the input value               | `'true'`\| `'false'` |

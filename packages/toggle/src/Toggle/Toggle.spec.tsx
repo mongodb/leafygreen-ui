@@ -18,10 +18,10 @@ function renderToggle(props = {}) {
     </>,
   );
 
-  const { elements, utils } = getLGToggleTestUtils();
-  const toggle = elements.getInput();
+  const utils = getLGToggleTestUtils();
+  const toggle = utils.getInput();
 
-  return { ...renderUtils, elements, utils, toggle };
+  return { ...renderUtils, ...utils, toggle };
 }
 
 describe('packages/Toggle', () => {
@@ -42,24 +42,18 @@ describe('packages/Toggle', () => {
   });
 
   test('toggle is not checked by default', () => {
-    const {
-      utils: { getInputValue },
-    } = renderToggle();
+    const { getInputValue } = renderToggle();
     expect(getInputValue()).toBe('false');
   });
 
   test('toggle is checked when checked prop is set', () => {
-    const {
-      utils: { getInputValue },
-    } = renderToggle({ checked: true });
+    const { getInputValue } = renderToggle({ checked: true });
 
     expect(getInputValue()).toBe('true');
   });
 
   test(`renders "${className}" in the component's markup`, () => {
-    const {
-      elements: { getInput },
-    } = renderToggle({
+    const { getInput } = renderToggle({
       className,
     });
 
@@ -68,17 +62,13 @@ describe('packages/Toggle', () => {
 
   describe('disabled', () => {
     test('is true', () => {
-      const {
-        utils: { isDisabled },
-      } = renderToggle({ disabled: true });
+      const { isDisabled } = renderToggle({ disabled: true });
 
       expect(isDisabled()).toBe(true);
     });
 
     test('is false', () => {
-      const {
-        utils: { isDisabled },
-      } = renderToggle();
+      const { isDisabled } = renderToggle();
 
       expect(isDisabled()).toBe(false);
     });
@@ -109,10 +99,7 @@ describe('packages/Toggle', () => {
     });
 
     test('checkbox does not become checked when clicked', () => {
-      const {
-        toggle,
-        utils: { getInputValue },
-      } = renderToggle({ checked: false });
+      const { toggle, getInputValue } = renderToggle({ checked: false });
 
       userEvent.click(toggle);
       expect(getInputValue()).toBe('false');
@@ -138,10 +125,7 @@ describe('packages/Toggle', () => {
     });
 
     test('checkbox becomes checked when clicked', () => {
-      const {
-        toggle,
-        utils: { getInputValue },
-      } = renderToggle();
+      const { toggle, getInputValue } = renderToggle();
 
       userEvent.click(toggle);
       expect(getInputValue()).toBe('true');

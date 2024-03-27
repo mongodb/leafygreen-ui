@@ -161,7 +161,6 @@ const {
   getErrorMessage,
   getInputValue,
   isDisabled,
-  isValid,
   isError,
 } = getLGTextAreaTestUtils();
 ```
@@ -174,5 +173,4 @@ const {
 | `getErrorMessage` | Returns the error message node             | `HTMLButtonElement` \| `null` |
 | `getInputValue`   | Returns the input value                    | `string`                      |
 | `isDisabled`      | Returns whether the input is disabled      | `boolean`                     |
-| `isValid`         | Returns whether the input state is `valid` | `boolean`                     |
 | `isError`         | Returns whether the input state is `error` | `boolean`                     |

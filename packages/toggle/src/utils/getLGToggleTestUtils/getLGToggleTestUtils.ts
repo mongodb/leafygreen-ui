@@ -28,12 +28,8 @@ export const getLGToggleTestUtils = (
   };
 
   return {
-    elements: {
-      getInput: () => element,
-    },
-    utils: {
-      isDisabled: () => isInputDisabled(),
-      getInputValue: () => getInputValue(),
-    },
+    getInput: () => element,
+    isDisabled: () => isInputDisabled(),
+    getInputValue: () => getInputValue(),
   };
 };

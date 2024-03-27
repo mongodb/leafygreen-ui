@@ -118,21 +118,7 @@ describe('packages/text-input', () => {
         });
       });
 
-      describe('getDescription', () => {
-        test('is in the document', () => {
-          renderTextInput();
-          const { getDescription } = getLGTextInputTestUtils();
-          expect(getDescription()).toBeInTheDocument();
-        });
-
-        test('is not in the document', () => {
-          renderTextInput({ description: '' });
-          const { getDescription } = getLGTextInputTestUtils();
-          expect(getDescription()).not.toBeInTheDocument();
-        });
-      });
-
-      describe('inputValue', () => {
+      describe('getInputValue', () => {
         test('returns value when uncontrolled', () => {
           renderTextInput();
           const { getInput, getInputValue } = getLGTextInputTestUtils();
