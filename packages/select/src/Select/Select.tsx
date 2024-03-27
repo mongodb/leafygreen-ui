@@ -23,7 +23,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import { LGID_SELECT_ERROR_MESSAGE, LGID_SELECT } from '../constants';
+import { LGID_SELECT,LGID_SELECT_ERROR_MESSAGE } from '../constants';
 import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
