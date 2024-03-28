@@ -128,11 +128,12 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           </div>
           {state === State.Error && errorMessage && (
             <WarningIcon
-              role="presentation"
+              aria-hidden
               className={css`
                 color: ${errorColor[theme]};
               `}
               size={sizeSet.warningIcon}
+              title="Error"
             />
           )}
         </div>

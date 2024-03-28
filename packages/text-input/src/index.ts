@@ -8,3 +8,4 @@ export {
   TextInputFontSize,
   TextInputType,
 } from './TextInput';
+export { getLGTextInputTestUtils } from './utils';

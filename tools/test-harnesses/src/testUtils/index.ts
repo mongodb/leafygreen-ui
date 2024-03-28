@@ -1,0 +1,1 @@
+export { renderAsyncTest } from './renderAsyncTest';
