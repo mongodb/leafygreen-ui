@@ -1,4 +1,4 @@
-import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
+import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
@@ -19,7 +19,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const getLabel = queryByQuerySelector<HTMLLabelElement>(
+  const getLabel = queryBySelector<HTMLLabelElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
@@ -27,7 +27,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const getDescription = queryByQuerySelector<HTMLElement>(
+  const getDescription = queryBySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
@@ -35,7 +35,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the input element.
    */
-  const getInput = queryByQuerySelector<HTMLInputElement>(
+  const getInput = queryBySelector<HTMLInputElement>(
     element,
     'input',
   ) as HTMLInputElement;
@@ -43,7 +43,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const getErrorMessage = queryByQuerySelector<HTMLElement>(
+  const getErrorMessage = queryBySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_FORM_FIELD.errorMessage}]`,
   );
@@ -52,7 +52,7 @@ export const getLGTextInputTestUtils = (
    * Queries the `element` for aria-disabled.
    */
   const isInputDisabled = () => {
-    const ariaDisabled = queryByQuerySelector<HTMLElement>(
+    const ariaDisabled = queryBySelector<HTMLElement>(
       element,
       '[aria-disabled="true"]',
     );
@@ -71,7 +71,7 @@ export const getLGTextInputTestUtils = (
    * Queries the `element` for the checkmark Icon.
    */
   const isValid = () => {
-    const checkmarkIcon = queryByQuerySelector<SVGElement>(
+    const checkmarkIcon = queryBySelector<SVGElement>(
       element,
       'svg[title="Valid"]',
     );
@@ -83,7 +83,7 @@ export const getLGTextInputTestUtils = (
    * Queries the `element` for the warning Icon.
    */
   const isError = () => {
-    const warningIcon = queryByQuerySelector<SVGElement>(
+    const warningIcon = queryBySelector<SVGElement>(
       element,
       'svg[title="Error"]',
     );
@@ -95,7 +95,7 @@ export const getLGTextInputTestUtils = (
    * Queries the `element` for the warning Icon.
    */
   const isOptional = () => {
-    const optionalEl = queryByQuerySelector<SVGElement>(
+    const optionalEl = queryBySelector<SVGElement>(
       element,
       `[data-lgid=${LGIDS_FORM_FIELD.optional}]`,
     );

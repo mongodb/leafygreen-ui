@@ -1,4 +1,4 @@
-import { getByLgId, queryByQuerySelector } from '@lg-tools/test-harnesses';
+import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
@@ -23,7 +23,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const getLabel = queryByQuerySelector<HTMLLabelElement>(
+  const getLabel = queryBySelector<HTMLLabelElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
@@ -31,7 +31,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const getDescription = queryByQuerySelector<HTMLElement>(
+  const getDescription = queryBySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
@@ -39,7 +39,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the input element.
    */
-  const getSelectTrigger = queryByQuerySelector<HTMLButtonElement>(
+  const getSelectTrigger = queryBySelector<HTMLButtonElement>(
     element,
     'button',
   ) as HTMLButtonElement;
@@ -47,7 +47,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const getErrorMessage = queryByQuerySelector<HTMLElement>(
+  const getErrorMessage = queryBySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_SELECT.errorMessage}]`,
   );
@@ -56,7 +56,7 @@ export const getLGSelectTestUtils = (
    * Queries the `element` for aria-disabled.
    */
   const isInputDisabled = () => {
-    const ariaDisabled = queryByQuerySelector<HTMLElement>(
+    const ariaDisabled = queryBySelector<HTMLElement>(
       element,
       '[aria-disabled="true"]',
     );
@@ -75,7 +75,7 @@ export const getLGSelectTestUtils = (
    * Queries the `element` for the warning Icon.
    */
   const isError = () => {
-    const warningIcon = queryByQuerySelector<SVGElement>(
+    const warningIcon = queryBySelector<SVGElement>(
       element,
       'svg[title="Error"]',
     );
@@ -85,7 +85,7 @@ export const getLGSelectTestUtils = (
 
   // We cannot query within the select element because if the popover is using a portal, the element will render outside the select element
   const getPopover = () =>
-    queryByQuerySelector<HTMLDivElement>(
+    queryBySelector<HTMLDivElement>(
       document.body,
       `[data-lgid=${LGIDS_SELECT.popover}]`,
     );
