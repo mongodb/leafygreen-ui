@@ -54,42 +54,46 @@ export const FormFieldInputContainer = forwardRef<
     const shouldRenderValidIcon = state === FormFieldState.Valid && !disabled;
     const shouldRenderOptionalText =
       state === FormFieldState.None && !disabled && optional;
+    const shouldRenderIconWrapper =
+      shouldRenderValidIcon || shouldRenderOptionalText || contentEnd;
 
     return (
       <div {...rest} ref={fwdRef} className={cx(inputWrapperStyles, className)}>
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
-        <div className={iconsWrapperStyles}>
-          {shouldRenderValidIcon && (
-            <Icon
-              aria-hidden
-              title="Valid"
-              glyph="Checkmark"
-              className={validIconStyles[theme]}
-            />
-          )}
+        {shouldRenderIconWrapper && (
+          <div className={iconsWrapperStyles}>
+            {shouldRenderValidIcon && (
+              <Icon
+                role="presentation"
+                title="Valid"
+                glyph="Checkmark"
+                className={validIconStyles[theme]}
+              />
+            )}
 
-          {shouldRenderOptionalText && (
-            <div
-              data-lgid={LGIDS_FORM_FIELD.optional}
-              className={cx(
-                optionalTextBaseStyle,
-                optionalTextThemeStyle[theme],
-              )}
-            >
-              <p>Optional</p>
-            </div>
-          )}
+            {shouldRenderOptionalText && (
+              <div
+                data-lgid={LGIDS_FORM_FIELD.optional}
+                className={cx(
+                  optionalTextBaseStyle,
+                  optionalTextThemeStyle[theme],
+                )}
+              >
+                <p>Optional</p>
+              </div>
+            )}
 
-          {contentEnd &&
-            React.cloneElement(contentEnd, {
-              className: cx(
-                iconClassName,
-                iconStyles[theme],
-                { [iconDisabledStyles[theme]]: disabled },
-                contentEnd.props.className,
-              ),
-            })}
-        </div>
+            {contentEnd &&
+              React.cloneElement(contentEnd, {
+                className: cx(
+                  iconClassName,
+                  iconStyles[theme],
+                  { [iconDisabledStyles[theme]]: disabled },
+                  contentEnd.props.className,
+                ),
+              })}
+          </div>
+        )}
       </div>
     );
   },

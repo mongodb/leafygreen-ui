@@ -290,6 +290,7 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
           box-shadow: inherit;
         }
       }
+    }
   `,
   [Theme.Dark]: css`
     cursor: not-allowed;
@@ -344,9 +345,11 @@ export function getInputWrapperStyles({
     inputWrapperModeStyles[theme],
     inputWrapperSizeStyles[sizeProp],
     {
-      [inputWrapperModeStyles[theme]]: !disabled,
-      [inputWrapperStateStyles[state][theme]]: !disabled,
-      [inputWrapperFocusStyles[theme]]: !disabled,
+      [cx(
+        inputWrapperModeStyles[theme],
+        inputWrapperStateStyles[state][theme],
+        inputWrapperFocusStyles[theme],
+      )]: !disabled,
       [inputWrapperDisabledStyles[theme]]: disabled,
     },
   );
