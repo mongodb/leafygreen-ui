@@ -104,7 +104,7 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 ```tsx
 import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
 
-const { elements, utils } = getLGSelectTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextArea`. It defaults to 'lg-select' if left empty.
+const utils = getLGSelectTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Select`. It defaults to 'lg-select' if left empty.
 ```
 
 #### Single `Select`
@@ -132,10 +132,10 @@ test('select', () => {
     </Select>
   );
 
-  const { elements, utils,getOptions, clickTrigger } = getLGSelectTestUtils();
+  const { getInputValue, getInput, getOptions, clickTrigger } = getLGSelectTestUtils();
 
-  expect(elements.getInput()).toBeInTheDocument();
-  expect(utils.getInputValue()).toBe('Select');
+  expect(getInput()).toBeInTheDocument();
+  expect(getInputValue()).toBe('Select');
 
   clickTrigger();
   await waitFor(() => {
@@ -189,17 +189,15 @@ test('select', () => {
       </Select>
     </>,
   );
-  const { elements: lgElementsSelect1, utils: lgUtilsSelect1 } =
-    getLGSelectTestUtils('select-1'); // data-lgid
-  const { elements: lgElementsSelect2, utils: lgUtilsSelect2 } =
-    getLGSelectTestUtils('select-2'); // data-lgid
+  const lgUtilsSelect1 = getLGSelectTestUtils('select-1'); // data-lgid
+  const lgUtilsSelect2 = getLGSelectTestUtils('select-2'); // data-lgid
 
   // First Select
-  expect(lgElementsSelect1.getInput()).toBeInTheDocument();
+  expect(lgUtilsSelect1.getInput()).toBeInTheDocument();
   expect(lgUtilsSelect1.getInputValue()).toBe('Select');
 
   // Second Select
-  expect(lgElementsSelect2.getInput()).toBeInTheDocument();
+  expect(lgUtilsSelect2.getInput()).toBeInTheDocument();
   expect(lgUtilsSelect2.getInputValue()).toBe('sad cat');
 });
 ```
@@ -233,17 +231,17 @@ test('Form', () => {
     </Form>,
   );
 
-  const { elements: lgElementsTextInput, utils: lgUtilsTextInput } = getLGTextInputTestUtils();
-  const { elements: lgElementsSelect, utils: lgUtilsSelect } = getLGSelectTestUtils();
+  const lgUtilsTextInput = getLGTextInputTestUtils();
+  const lgUtilsSelect = getLGSelectTestUtils();
 
 
   // LG TextInput
-  expect(lgElementsTextInput.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput.getInput()).toBeInTheDocument();
   expect(lgUtilsTextInput.getInputValue()).toBe('');
 
   // LG Select
-  expect(lgElementsSelect.getInput()).toBeInTheDocument();
-  expect(lgUtilsTextlgUtilsSelectArea.getInputValue()).toBe('Select');
+  expect(lgUtilsSelect.getInput()).toBeInTheDocument();
+  expect(lgUtilsSelect.getInputValue()).toBe('Select');
 });
 ```
 
@@ -253,47 +251,33 @@ test('Form', () => {
 
 ```tsx
 const {
-  elements: {
-    getInput,
-    getLabel,
-    getDescription,
-    getErrorMessage,
-    getOptions,
-    getOptionByValue,
-    getPopover,
-  },
+  getInput,
+  getLabel,
+  getDescription,
+  getErrorMessage,
+  getOptions,
+  getOptionByValue,
+  getPopover,
+  getInputValue,
+  isDisabled,
+  isValid,
+  isError,
+  clickOption,
+  clickTrigger,
 } = getLGSelectTestUtils();
 ```
 
-| Util                       | Description                    | Returns                       |
-| -------------------------- | ------------------------------ | ----------------------------- |
-| `getInput()`               | Returns the input node         | `HTMLButtonElement`           |
-| `getLabel()`               | Returns the label node         | `HTMLButtonElement` \| `null` |
-| `getDescription()`         | Returns the description node   | `HTMLButtonElement` \| `null` |
-| `getErrorMessage()`        | Returns the error message node | `HTMLButtonElement` \| `null` |
-| `getOptions()`             | Returns an array of options    | `Array<HTMLLIElement>`        |
-| `getOptionByValue(string)` | Returns an individual option   | `HTMLLIElement` \| `null`     |
-| `getPopover()`             | Returns the dropdown popover   | `HTMLDivElement` \| `null`    |
-
-#### Utils
-
-```tsx
-const {
-  utils: {
-    getInputValue,
-    isDisabled,
-    isValid,
-    isError,
-    clickOption,
-    clickTrigger,
-  },
-} = getLGSelectTestUtils();
-```
-
-| Util                  | Description                                | Returns   |
-| --------------------- | ------------------------------------------ | --------- |
-| `getInputValue()`     | Returns the input value                    | `string`  |
-| `isDisabled()`        | Returns whether the input is disabled      | `boolean` |
-| `isError()`           | Returns whether the input state is `error` | `boolean` |
-| `clickOption(string)` | Clicks an option                           | `void`    |
-| `clickTrigger`        | Clicks the trigger                         | `void`    |
+| Util                       | Description                                | Returns                       |
+| -------------------------- | ------------------------------------------ | ----------------------------- |
+| `getInput()`               | Returns the input node                     | `HTMLButtonElement`           |
+| `getLabel()`               | Returns the label node                     | `HTMLButtonElement` \| `null` |
+| `getDescription()`         | Returns the description node               | `HTMLButtonElement` \| `null` |
+| `getErrorMessage()`        | Returns the error message node             | `HTMLButtonElement` \| `null` |
+| `getOptions()`             | Returns an array of options                | `Array<HTMLLIElement>`        |
+| `getOptionByValue(string)` | Returns an individual option               | `HTMLLIElement` \| `null`     |
+| `getPopover()`             | Returns the dropdown popover               | `HTMLDivElement` \| `null`    |
+| `getInputValue()`          | Returns the input value                    | `string`                      |
+| `isDisabled()`             | Returns whether the input is disabled      | `boolean`                     |
+| `isError()`                | Returns whether the input state is `error` | `boolean`                     |
+| `clickOption(string)`      | Clicks an option                           | `void`                        |
+| `clickTrigger`             | Clicks the trigger                         | `void`                        |

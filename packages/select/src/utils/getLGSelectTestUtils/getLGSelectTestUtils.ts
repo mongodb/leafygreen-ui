@@ -140,21 +140,17 @@ export const getLGSelectTestUtils = (
   };
 
   return {
-    elements: {
-      getLabel: () => label,
-      getDescription: () => description,
-      getInput: () => selectTrigger,
-      getErrorMessage: () => errorMessage,
-      getOptions: () => getAllOptions(),
-      getOptionByValue: (value: string) => getOptionByValue(value),
-      getPopover: () => getPopover(),
-    },
-    utils: {
-      isDisabled: () => isInputDisabled(),
-      isError: () => isError(),
-      getInputValue: () => getSelectValue(),
-      clickOption: (value: string) => clickOption(value),
-      clickTrigger: () => clickTrigger(),
-    },
+    getLabel: () => label,
+    getDescription: () => description,
+    getInput: () => selectTrigger,
+    getErrorMessage: () => errorMessage,
+    getOptions: () => getAllOptions(),
+    getOptionByValue: (value: string) => getOptionByValue(value),
+    getPopover: () => getPopover(),
+    isDisabled: () => isInputDisabled(),
+    isError: () => isError(),
+    getInputValue: () => getSelectValue(),
+    clickOption: (value: string) => clickOption(value),
+    clickTrigger: () => clickTrigger(),
   };
 };

@@ -77,7 +77,7 @@ function Controller({
 function renderSelect(props = {}) {
   const renderUtils = render(<Select {...defaultProps} {...props} />);
 
-  const { elements, utils } = getLGSelectTestUtils();
+  const utils = getLGSelectTestUtils();
 
   const rerenderSelect = (newProps?: Partial<SelectProps>) => {
     const allProps = { ...props, ...newProps };
@@ -87,7 +87,6 @@ function renderSelect(props = {}) {
 
   return {
     ...renderUtils,
-    ...elements,
     ...utils,
     rerenderSelect,
   };
@@ -192,9 +191,7 @@ describe('packages/select', () => {
       </Select>,
     );
 
-    const {
-      utils: { clickTrigger },
-    } = getLGSelectTestUtils();
+    const { clickTrigger } = getLGSelectTestUtils();
 
     await waitFor(() => {
       clickTrigger();
@@ -325,9 +322,7 @@ describe('packages/select', () => {
             </Select>,
           );
 
-          const {
-            elements: { getInput },
-          } = getLGSelectTestUtils();
+          const { getInput } = getLGSelectTestUtils();
 
           userEvent.click(getInput());
           expect(spy).toHaveBeenCalledWith(
@@ -356,9 +351,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        const {
-          elements: { getInput },
-        } = getLGSelectTestUtils();
+        const { getInput } = getLGSelectTestUtils();
 
         act(() => {
           userEvent.click(getInput());
@@ -380,10 +373,7 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      const {
-        elements: { getPopover },
-        utils: { clickTrigger },
-      } = getLGSelectTestUtils();
+      const { getPopover, clickTrigger } = getLGSelectTestUtils();
 
       clickTrigger();
 
@@ -406,9 +396,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        const {
-          elements: { getInput },
-        } = getLGSelectTestUtils();
+        const { getInput } = getLGSelectTestUtils();
 
         act(() => {
           userEvent.click(getInput());
@@ -646,8 +634,7 @@ describe('packages/select', () => {
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void
       >;
-      let elements: LGSelectTestUtilsReturnType['elements'];
-      let utils: LGSelectTestUtilsReturnType['utils'];
+      let selectUtils: LGSelectTestUtilsReturnType;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
@@ -671,11 +658,10 @@ describe('packages/select', () => {
           ),
         );
 
-        const { elements: lGElements, utils: LGUtils } = getLGSelectTestUtils();
+        const utils = getLGSelectTestUtils();
 
-        button = lGElements.getInput();
-        elements = lGElements;
-        utils = LGUtils;
+        button = utils.getInput();
+        selectUtils = utils;
       });
 
       describe.each([
@@ -686,11 +672,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = elements.getPopover();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          const targetOption = elements.getOptionByValue(optionText);
+          const targetOption = selectUtils.getOptionByValue(optionText);
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -714,11 +700,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = elements.getPopover();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          const targetOption = elements.getOptionByValue(optionText);
+          const targetOption = selectUtils.getOptionByValue(optionText);
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -742,11 +728,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = elements.getPopover();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          utils.clickOption(optionText);
+          selectUtils.clickOption(optionText);
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(
@@ -771,11 +757,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = elements.getPopover();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          const targetOption = elements.getOptionByValue(optionText);
+          const targetOption = selectUtils.getOptionByValue(optionText);
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -797,11 +783,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = elements.getPopover();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          utils.clickOption(optionText);
+          selectUtils.clickOption(optionText);
 
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeInTheDocument();
@@ -871,7 +857,7 @@ describe('packages/select', () => {
 
     let rerender: RenderResult['rerender'];
     let button: HTMLElement;
-    let utils: LGSelectTestUtilsReturnType['utils'];
+    let selectUtils: LGSelectTestUtilsReturnType;
 
     beforeEach(async () => {
       ({ rerender } = render(
@@ -881,13 +867,13 @@ describe('packages/select', () => {
         </Select>,
       ));
 
-      const { elements: lGElements, utils: LGUtils } = getLGSelectTestUtils();
+      const utils = getLGSelectTestUtils();
 
-      button = lGElements.getInput();
-      utils = LGUtils;
+      button = utils.getInput();
+      selectUtils = utils;
 
       userEvent.click(button);
-      utils.clickOption('Selected Option');
+      selectUtils.clickOption('Selected Option');
     });
 
     test('when selected option is removed', () => {
@@ -1159,9 +1145,7 @@ describe('packages/select', () => {
         </MockPopoverProvider>,
       );
 
-      const {
-        utils: { clickTrigger },
-      } = getLGSelectTestUtils();
+      const { clickTrigger } = getLGSelectTestUtils();
 
       clickTrigger();
       await waitFor(() =>
@@ -1180,9 +1164,7 @@ describe('packages/select', () => {
         </MockPopoverProvider>,
       );
 
-      const {
-        utils: { clickTrigger },
-      } = getLGSelectTestUtils();
+      const { clickTrigger } = getLGSelectTestUtils();
 
       clickTrigger();
       await waitFor(() =>

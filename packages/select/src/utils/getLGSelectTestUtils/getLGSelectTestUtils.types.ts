@@ -10,9 +10,6 @@ export type SelectElements<T extends HTMLElement> = FormElements<T> &
 export type SelectUtils = Omit<FormUtils, 'isValid' | 'isOptional'> &
   DropdownUtils;
 
-export interface LGSelectTestUtilsReturnType<
+export type LGSelectTestUtilsReturnType<
   T extends HTMLElement = HTMLButtonElement,
-> {
-  elements: SelectElements<T>;
-  utils: SelectUtils;
-}
+> = SelectElements<T> & SelectUtils;
