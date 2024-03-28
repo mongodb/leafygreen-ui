@@ -18,7 +18,7 @@ export const getLGTextAreaTestUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const label = queryByQuerySelector<HTMLElement>(
+  const label = queryByQuerySelector<HTMLLabelElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
