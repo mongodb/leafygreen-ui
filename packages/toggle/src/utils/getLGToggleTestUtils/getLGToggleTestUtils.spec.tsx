@@ -41,7 +41,7 @@ describe('packages/toggle', () => {
       }
     });
 
-    describe('single toggles', () => {
+    describe('single toggle', () => {
       test('getInput', () => {
         renderToggle();
         const { getInput } = getLGToggleTestUtils();

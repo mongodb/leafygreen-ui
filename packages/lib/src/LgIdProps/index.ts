@@ -7,5 +7,5 @@ export interface LgIdProps {
   /**
    * LG test id passed to the component wrapper.
    */
-  ['data-lgid']?: string;
+  ['data-lgid']?: `lg-${string}`;
 }

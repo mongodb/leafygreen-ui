@@ -110,7 +110,7 @@ const utils = getLGSelectTestUtils(lgId?: string); // lgId refers to the custom 
 #### Single `Select`
 
 ```tsx
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
 
 ...
@@ -137,7 +137,7 @@ test('select', () => {
   expect(getInput()).toBeInTheDocument();
   expect(getInputValue()).toBe('Select');
 
-  clickTrigger();
+  act(() => clickTrigger());
   await waitFor(() => {
     // `select` is an option
     expect(getOptions()).toHaveLength(5);
