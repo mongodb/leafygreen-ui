@@ -23,7 +23,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const label = queryByQuerySelector<HTMLLabelElement>(
+  const getLabel = queryByQuerySelector<HTMLLabelElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
@@ -31,7 +31,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const description = queryByQuerySelector<HTMLElement>(
+  const getDescription = queryByQuerySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
@@ -39,7 +39,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the input element.
    */
-  const selectTrigger = queryByQuerySelector<HTMLButtonElement>(
+  const getSelectTrigger = queryByQuerySelector<HTMLButtonElement>(
     element,
     'button',
   ) as HTMLButtonElement;
@@ -47,7 +47,7 @@ export const getLGSelectTestUtils = (
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const errorMessage = queryByQuerySelector<HTMLElement>(
+  const getErrorMessage = queryByQuerySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_SELECT.errorMessage}]`,
   );
@@ -68,7 +68,7 @@ export const getLGSelectTestUtils = (
    * Returns the `Select` value.
    */
   const getSelectValue = () => {
-    return selectTrigger.textContent || '';
+    return getSelectTrigger.textContent || '';
   };
 
   /**
@@ -136,14 +136,14 @@ export const getLGSelectTestUtils = (
   };
 
   const clickTrigger = () => {
-    selectTrigger.click();
+    getSelectTrigger.click();
   };
 
   return {
-    getLabel: () => label,
-    getDescription: () => description,
-    getInput: () => selectTrigger,
-    getErrorMessage: () => errorMessage,
+    getLabel: () => getLabel,
+    getDescription: () => getDescription,
+    getInput: () => getSelectTrigger,
+    getErrorMessage: () => getErrorMessage,
     getOptions: () => getAllOptions(),
     getOptionByValue: (value: string) => getOptionByValue(value),
     getPopover: () => getPopover(),

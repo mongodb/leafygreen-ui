@@ -18,7 +18,7 @@ export const getLGTextAreaTestUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const label = queryByQuerySelector<HTMLLabelElement>(
+  const getLabel = queryByQuerySelector<HTMLLabelElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
@@ -26,7 +26,7 @@ export const getLGTextAreaTestUtils = (
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const description = queryByQuerySelector<HTMLElement>(
+  const getDescription = queryByQuerySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
@@ -34,7 +34,7 @@ export const getLGTextAreaTestUtils = (
   /**
    * Queries the `element` for the input element. Will return `null` if the input is not found.
    */
-  const input = queryByQuerySelector<HTMLTextAreaElement>(
+  const getInput = queryByQuerySelector<HTMLTextAreaElement>(
     element,
     `textarea`,
   ) as HTMLTextAreaElement;
@@ -42,7 +42,7 @@ export const getLGTextAreaTestUtils = (
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const errorMessage = queryByQuerySelector<HTMLElement>(
+  const getErrorMessage = queryByQuerySelector<HTMLElement>(
     element,
     `[data-lgid="${LGIDS_TEXT_AREA.errorMessage}"]`,
   );
@@ -51,14 +51,14 @@ export const getLGTextAreaTestUtils = (
    * Returns the disabled attribute on the input.
    */
   const isInputDisabled = () => {
-    return input.disabled;
+    return getInput.disabled;
   };
 
   /**
    * Returns the input value.
    */
   const getInputValue = () => {
-    return input.value;
+    return getInput.value;
   };
 
   /**
@@ -74,10 +74,10 @@ export const getLGTextAreaTestUtils = (
   };
 
   return {
-    getLabel: () => label,
-    getDescription: () => description,
-    getInput: () => input,
-    getErrorMessage: () => errorMessage,
+    getLabel: () => getLabel,
+    getDescription: () => getDescription,
+    getInput: () => getInput,
+    getErrorMessage: () => getErrorMessage,
     isDisabled: () => isInputDisabled(),
     isError: () => isError(),
     getInputValue: () => getInputValue(),

@@ -19,7 +19,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
    */
-  const label = queryByQuerySelector<HTMLLabelElement>(
+  const getLabel = queryByQuerySelector<HTMLLabelElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
   );
@@ -27,7 +27,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the description element. Will return `null` if the desription is not found.
    */
-  const description = queryByQuerySelector<HTMLElement>(
+  const getDescription = queryByQuerySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
   );
@@ -35,7 +35,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the input element.
    */
-  const input = queryByQuerySelector<HTMLInputElement>(
+  const getInput = queryByQuerySelector<HTMLInputElement>(
     element,
     'input',
   ) as HTMLInputElement;
@@ -43,7 +43,7 @@ export const getLGTextInputTestUtils = (
   /**
    * Queries the `element` for the error message element. Will return `null` if the error message is not found.
    */
-  const errorMessage = queryByQuerySelector<HTMLElement>(
+  const getErrorMessage = queryByQuerySelector<HTMLElement>(
     element,
     `[data-lgid=${LGIDS_FORM_FIELD.errorMessage}]`,
   );
@@ -64,7 +64,7 @@ export const getLGTextInputTestUtils = (
    * Returns the input value.
    */
   const getInputValue = () => {
-    return input.value;
+    return getInput.value;
   };
 
   /**
@@ -104,10 +104,10 @@ export const getLGTextInputTestUtils = (
   };
 
   return {
-    getLabel: () => label,
-    getDescription: () => description,
-    getInput: () => input,
-    getErrorMessage: () => errorMessage,
+    getLabel: () => getLabel,
+    getDescription: () => getDescription,
+    getInput: () => getInput,
+    getErrorMessage: () => getErrorMessage,
     isDisabled: () => isInputDisabled(),
     isValid: () => isValid(),
     isError: () => isError(),
