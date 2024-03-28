@@ -1,8 +1,8 @@
 import { addons } from '@storybook/addons';
 
-import theme from './theme';
+import { darkTheme } from '../themes';
 
 addons.setConfig({
   name: 'LeafyGreen UI',
-  theme,
+  theme: darkTheme,
 });

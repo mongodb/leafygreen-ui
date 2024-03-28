@@ -19,6 +19,8 @@ import {
   Subtitle,
 } from '@leafygreen-ui/typography';
 
+import { darkTheme, lightTheme } from '../themes';
+
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   argTypes: {
@@ -46,6 +48,10 @@ const parameters = {
       code: InlineCode,
     },
     source: { type: 'code' },
+  },
+  darkMode: {
+    dark: { ...darkTheme },
+    light: { ...lightTheme },
   },
 };
 

@@ -23,6 +23,7 @@ export const addons: StorybookConfig['addons'] = [
   '@storybook/addon-links',
   '@storybook/addon-interactions',
   '@storybook/addon-a11y',
+  'storybook-dark-mode',
 ];
 
 export const framework: StorybookConfig['framework'] = {
