@@ -26,7 +26,7 @@ import {
   SharedDatePickerProvider,
 } from './shared/context';
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
-import { AutoComplete } from './shared/types';
+import { AutoComplete, DatePickerState } from './shared/types';
 import { DatePicker } from './DatePicker';
 
 const ProviderWrapper = (Story: StoryFn, ctx: any) => {
@@ -64,6 +64,7 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
         value: [newUTC(2023, Month.December, 26)],
         locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
         timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
+        state: Object.values(DatePickerState),
         disabled: [false, true],
       },
       decorator: ProviderWrapper,
@@ -73,6 +74,7 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
     locale: 'iso8601',
     label: 'Pick a date',
     description: 'description',
+    errorMessage: 'Invalid date',
     size: Size.Default,
     autoComplete: AutoComplete.Off,
     min: MIN_DATE,

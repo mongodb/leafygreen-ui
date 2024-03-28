@@ -58,10 +58,12 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       value: controlledValue,
       className,
       darkMode: darkModeProp,
-      sizeVariant = SizeVariant.Default,
-      'aria-labelledby': ariaLabelledby,
+      sizeVariant: size = SizeVariant.Default,
       handleValidation,
       baseFontSize: baseFontSizeProp,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledby,
+      'aria-invalid': ariaInvalid,
       ...rest
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -75,7 +77,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
 
-    const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
+    const handleBlur: React.FocusEventHandler<HTMLInputElement> = e => {
       if (onBlur) {
         onBlur(e);
       }
@@ -83,7 +85,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       validation.onBlur(e);
     };
 
-    const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
       if (onChange) {
         onChange(e);
       }
@@ -105,7 +107,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       consoleOnce.warn(
         'We recommend using the Leafygreen SearchInput for `type="search"` inputs.',
       );
-      if (!rest['aria-label']) {
+      if (!ariaLabel) {
         console.error(
           'For screen-reader accessibility, aria-label must be provided to TextInput.',
         );
@@ -124,38 +126,47 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
+    const ariaProps = {
+      'aria-invalid': ariaInvalid,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledby,
+    } as const;
+
+    const formFieldProps = {
+      baseFontSize,
+      className,
+      darkMode,
+      description,
+      disabled,
+      errorMessage,
+      id,
+      label,
+      optional,
+      size,
+      state,
+      ...ariaProps,
+    } as const;
+
+    const inputProps = {
+      autoComplete: disabled ? 'off' : rest?.autoComplete || 'on',
+      className: css`
+        width: 100%;
+      `,
+      onBlur: handleBlur,
+      onChange: handleChange,
+      placeholder,
+      readOnly: disabled,
+      ref: forwardRef,
+      required: !optional,
+      type,
+      value,
+      ...rest,
+    } as const;
+
     return (
-      <FormField
-        label={label}
-        description={description}
-        errorMessage={errorMessage}
-        state={state}
-        size={sizeVariant}
-        disabled={disabled}
-        baseFontSize={baseFontSize}
-        darkMode={darkMode}
-        className={className}
-        id={id}
-        optional={optional}
-      >
+      <FormField {...formFieldProps}>
         <FormFieldInputContainer>
-          <input
-            {...rest}
-            aria-labelledby={ariaLabelledby}
-            type={type}
-            value={value}
-            required={!optional}
-            disabled={disabled}
-            placeholder={placeholder}
-            onChange={onValueChange}
-            onBlur={onBlurHandler}
-            ref={forwardRef}
-            autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
-            aria-invalid={state === 'error'}
-            className={css`
-              width: 100%;
-            `}
-          />
+          <input {...inputProps} />
         </FormFieldInputContainer>
       </FormField>
     );
