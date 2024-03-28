@@ -51,4 +51,29 @@ export interface MessageProps
    * Message body text passed to LGMarkdown
    */
   messageBody?: string;
+
+  /**
+   * Configure a *verified message* which includes additional styles and
+   * displays information about the message.
+   */
+  verified?: VerificationInfo;
+}
+
+export interface VerificationInfo {
+  /**
+   * The name of the entity that verified the message.
+   * @example "MongoDB Staff"
+   */
+  verifier?: string;
+
+  /**
+   * The time the message was last verified.
+   * @example new Date("2024-03-24T16:20:00Z")
+   */
+  verifiedAt?: Date;
+
+  /**
+   * URL to learn more about the verification.
+   */
+  learnMoreUrl?: string;
 }

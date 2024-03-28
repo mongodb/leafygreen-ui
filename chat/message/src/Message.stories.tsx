@@ -43,7 +43,7 @@ const meta: StoryMetaType<typeof Message> = {
   title: 'Chat/Message',
   component: Message,
   args: {
-    message: StoryMarkdown,
+    messageBody: StoryMarkdown,
     avatar: <Avatar variant="user" name="Sean Park" />,
     sourceType: MessageSourceType.Markdown,
   },
@@ -71,7 +71,7 @@ export const Basic: StoryFn<typeof Message> = Template.bind({});
 
 export const Text: StoryFn<typeof Message> = Template.bind({});
 Text.args = {
-  sourceType: undefined,
+  sourceType: MessageSourceType.Text,
 };
 
 export const Mongo: StoryFn<typeof Message> = Template.bind({});
@@ -84,6 +84,18 @@ export const WithMessageRating: StoryFn<typeof Message> = Template.bind({});
 WithMessageRating.args = {
   isSender: false,
   avatar: <Avatar variant="mongo" />,
+  // @ts-ignore onChange is passed in the story itself
+  children: <MessageFeedbackStory />,
+};
+
+export const VerifiedAnswer: StoryFn<typeof Message> = Template.bind({});
+VerifiedAnswer.args = {
+  isSender: false,
+  avatar: <Avatar variant="mongo" />,
+  verified: {
+    verifier: 'MongoDB Staff',
+    verifiedAt: new Date('2023-08-24T16:20:00Z'),
+  },
   // @ts-ignore onChange is passed in the story itself
   children: <MessageFeedbackStory />,
 };
