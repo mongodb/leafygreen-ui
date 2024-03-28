@@ -5,12 +5,25 @@
 [LG-4145](https://jira.mongodb.org/browse/LG-4145)
 
 `aria-label` and `aria-labelledby` props are passed to the input.
-- a custom `aria-labelledby` attribute will only be set on the input if `label` prop is undefined. Otherwise, the generated label component id will be used for the `aria-labelledby` attribute
-- `aria-label` attribute will only be set on the input if both `label` prop and `aria-labelledby` prop are undefined
+
+#### aria-labelledby
+`aria-labelledby` prop can only set the `aria-labelledby` attribute on the input if `label` prop is undefined. Otherwise, the generated label component id will be used for the `aria-labelledby` attribute
+
+| 👎 Does not use `aria-labelledby` prop | 👍 Does use custom `aria-labelledby` prop |
+| - | - |
+| `<TextInput label="Label" aria-labelledby="custom-label-id" />` | `<TextInput aria-labelledby="custom-label-id" />` |
+
+#### aria-label
+`aria-label` prop can only set the `aria-label` attribute on the input if both `label` prop and `aria-labelledby` prop are undefined
+| 👎 Does not use `aria-label` prop | 👎 Does not use `aria-label` prop | 👍 Does use `aria-label` prop |
+| - | - | - |
+| `<TextInput label="Label" aria-label="Custom label" />` | `<TextInput aria-label="Custom label" aria-labelledby="other-custom-label-id" />` | `<TextInput aria-label="Custom label" />` |
 
 [LG-4143](https://jira.mongodb.org/browse/LG-4143)
 
-Disabled `TextInput` component no longer renders the `disabled` attribute and instead relies on `aria-disabled`.
+1. `FormField` styling changes apply to `TextInput`. [See style changes here](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#102)
+
+2. Disabled `TextInput` component no longer renders the `disabled` attribute and instead relies on `aria-disabled`.
 
 The second change is made to ensure that disabled components are still focusable to users using keyboard navigation.
 
