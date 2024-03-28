@@ -50,6 +50,15 @@ describe('packages/text-area', () => {
     expect(container.classList.contains(defaultProps.className)).toBe(true);
   });
 
+  test(`renders with aria-disabled attribute but not disabled attribute when disabled prop is set`, () => {
+    const { textArea } = renderTextArea({
+      ...defaultProps,
+      disabled: true,
+    });
+    expect(textArea.getAttribute('aria-disabled')).toBeTruthy();
+    expect(textArea.getAttribute('disabled')).toBeFalsy();
+  });
+
   test('key presses are reflected in component and onChange function is called when value changes', () => {
     const { textArea } = renderTextArea({ onChange });
     expect((textArea as HTMLTextAreaElement).value).toBe('');

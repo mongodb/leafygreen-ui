@@ -1,13 +1,10 @@
 import React from 'react';
 
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export const State = {
-  None: 'none',
-  Error: 'error',
-} as const;
-
+export const State = FormFieldState;
 export type State = (typeof State)[keyof typeof State];
 
 export interface BaseTextAreaProps
@@ -36,7 +33,7 @@ export interface BaseTextAreaProps
   description?: React.ReactNode;
 
   /**
-   * Whether or not the field is currently disabled.
+   * Whether or not the field is disabled. This will set the `aria-disabled` and `readonly` attributes on the input, not the `disabled` attribute.
    * @default false
    */
   disabled?: boolean;
