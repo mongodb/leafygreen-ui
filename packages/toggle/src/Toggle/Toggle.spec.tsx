@@ -33,7 +33,7 @@ describe('packages/Toggle', () => {
       expect(results).toHaveNoViolations();
 
       let newResults = null as any;
-      act(() => void userEvent.click(toggle));
+      userEvent.click(toggle);
       await act(async () => {
         newResults = await axe(container);
       });
