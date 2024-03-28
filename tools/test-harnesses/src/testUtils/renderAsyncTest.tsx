@@ -6,6 +6,10 @@ interface RenderAsyncTestReturnType {
   [key: string]: any;
 }
 
+/**
+ * An example of a modal-like component that opens after a delay.
+ * This component can be utilized within a test suite to locate an element nested within another element that becomes visible after a delay.
+ */
 export const renderAsyncTest = (
   element: React.ReactNode,
   render: any,
