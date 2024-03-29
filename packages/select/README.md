@@ -234,7 +234,6 @@ test('Form', () => {
   const lgUtilsTextInput = getLGTextInputTestUtils();
   const lgUtilsSelect = getLGSelectTestUtils();
 
-
   // LG TextInput
   expect(lgUtilsTextInput.getInput()).toBeInTheDocument();
   expect(lgUtilsTextInput.getInputValue()).toBe('');

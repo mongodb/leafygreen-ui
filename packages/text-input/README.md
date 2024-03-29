@@ -74,7 +74,7 @@ Either `label` or `aria-labelledby` must be provided a string, or there will be 
 
 ## getLGTextInputTestUtils()
 
-`getLGTextInputTestUtils()` is a a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
+`getLGTextInputTestUtils()` is a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
 
 ### Usage
 
