@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  act,
-  render,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Option, OptionGroup, Select, State } from '../../';
@@ -115,7 +110,6 @@ describe('packages/select/getLGSelectTestUtils', () => {
         renderSelect({ label: '' });
         const { getLabel } = getLGSelectTestUtils();
         expect(getLabel()).not.toBeInTheDocument();
-        // expect(queryByTestId('lg-form_field-label')).not.toBeInTheDocument();
       });
     });
 
@@ -142,17 +136,23 @@ describe('packages/select/getLGSelectTestUtils', () => {
       });
 
       test('can be clicked', async () => {
-        renderSelect({
-          value: 'RED',
-          readOnly: true,
-        });
+        renderSelect();
         const { getInput, getPopover } = getLGSelectTestUtils();
 
         const trigger = getInput();
         userEvent.click(trigger);
-        await waitFor(() => {
-          expect(getPopover()).toBeInTheDocument();
-        });
+        expect(getPopover()).toBeInTheDocument();
+      });
+
+      test('can close the popover', async () => {
+        renderSelect();
+        const { getInput, getPopover } = getLGSelectTestUtils();
+
+        const trigger = getInput();
+        userEvent.click(trigger);
+        expect(getPopover()).toBeInTheDocument();
+        userEvent.click(trigger);
+        await waitForElementToBeRemoved(getPopover());
       });
     });
 
@@ -181,13 +181,11 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { clickTrigger, getOptions } = getLGSelectTestUtils();
+          const { getInput, getOptions } = getLGSelectTestUtils();
 
-          act(() => clickTrigger());
-          await waitFor(() => {
-            // `select` is an option
-            expect(getOptions()).toHaveLength(8);
-          });
+          userEvent.click(getInput());
+          // `select` is an option
+          expect(getOptions()).toHaveLength(8);
         });
       });
     });
@@ -198,27 +196,57 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { clickTrigger, getOptionByValue } = getLGSelectTestUtils();
+          const { getInput, getOptionByValue } = getLGSelectTestUtils();
 
-          act(() => clickTrigger());
-          await waitFor(() => {
-            expect(getOptionByValue('Red')).toBeInTheDocument();
-            expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
-          });
+          userEvent.click(getInput());
+          expect(getOptionByValue('Red')).toBeInTheDocument();
+          expect(getOptionByValue('Orange you glad')).toBeInTheDocument();
         });
 
-        describe('is not in the document', () => {
-          test('after awaiting waitFor', async () => {
-            renderSelect({
-              usePortal: boolean,
-            });
-            const { clickTrigger, getOptionByValue } = getLGSelectTestUtils();
-
-            act(() => clickTrigger());
-            await waitFor(() => {
-              expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
-            });
+        test('is not in the document', async () => {
+          renderSelect({
+            usePortal: boolean,
           });
+          const { getInput, getOptionByValue } = getLGSelectTestUtils();
+
+          userEvent.click(getInput());
+          expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
+        });
+
+        test('can be clicked', async () => {
+          renderSelect({
+            usePortal: boolean,
+          });
+          const { getInput, getOptionByValue, getInputValue } =
+            getLGSelectTestUtils();
+
+          userEvent.click(getInput());
+          userEvent.click(getOptionByValue('Red')!);
+          expect(getInputValue()).toBe('Red');
+        });
+
+        test('throws an error if the option does not exist', async () => {
+          renderSelect({
+            usePortal: boolean,
+          });
+          const { getInput, getOptionByValue } = getLGSelectTestUtils();
+
+          userEvent.click(getInput());
+          expect(() => userEvent.click(getOptionByValue('Jellow')!)).toThrow();
+        });
+
+        test('prevents a click on a disabled option', async () => {
+          renderSelect({
+            usePortal: boolean,
+          });
+          const { getInput, getOptionByValue, getPopover, getInputValue } =
+            getLGSelectTestUtils();
+
+          userEvent.click(getInput());
+          userEvent.click(getOptionByValue('Orange you glad')!);
+
+          expect(getPopover()).toBeInTheDocument();
+          expect(getInputValue()).toBe('Select');
         });
       });
     });
@@ -230,13 +258,11 @@ describe('packages/select/getLGSelectTestUtils', () => {
             renderSelect({
               usePortal: boolean,
             });
-            const { clickTrigger, getPopover } = getLGSelectTestUtils();
+            const { getInput, getPopover } = getLGSelectTestUtils();
 
             expect(getPopover()).not.toBeInTheDocument();
-            act(() => clickTrigger());
-            await waitFor(() => {
-              expect(getPopover()).toBeInTheDocument();
-            });
+            userEvent.click(getInput());
+            expect(getPopover()).toBeInTheDocument();
           });
         });
 
@@ -245,14 +271,12 @@ describe('packages/select/getLGSelectTestUtils', () => {
             renderSelect({
               usePortal: boolean,
             });
-            const { clickTrigger, getPopover } = getLGSelectTestUtils();
+            const { getInput, getPopover } = getLGSelectTestUtils();
 
             expect(getPopover()).not.toBeInTheDocument();
-            act(() => clickTrigger());
-            await waitFor(() => {
-              expect(getPopover()).toBeInTheDocument();
-            });
-            act(() => clickTrigger());
+            userEvent.click(getInput());
+            expect(getPopover()).toBeInTheDocument();
+            userEvent.click(getInput());
             await waitForElementToBeRemoved(getPopover());
           });
 
@@ -260,15 +284,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
             renderSelect({
               usePortal: boolean,
             });
-            const { clickTrigger, getPopover, clickOption } =
+            const { getInput, getPopover, getOptionByValue } =
               getLGSelectTestUtils();
 
             expect(getPopover()).not.toBeInTheDocument();
-            act(() => clickTrigger());
-            await waitFor(() => {
-              expect(getPopover()).toBeInTheDocument();
-            });
-            act(() => clickOption('Red'));
+            userEvent.click(getInput());
+            expect(getPopover()).toBeInTheDocument();
+            userEvent.click(getOptionByValue('Red')!);
             await waitForElementToBeRemoved(getPopover());
           });
         });
@@ -326,15 +348,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
               value: 'Blue',
               usePortal: boolean,
             });
-            const { clickTrigger, getInputValue, clickOption } =
+            const { getInput, getInputValue, getOptionByValue } =
               getLGSelectTestUtils();
 
             expect(getInputValue()).toBe('Blue');
-            act(() => clickTrigger());
-            act(() => clickOption('Green'));
-            await waitFor(() => {
-              expect(getInputValue()).toBe('Green');
-            });
+            userEvent.click(getInput());
+            userEvent.click(getOptionByValue('Green')!);
+            expect(getInputValue()).toBe('Green');
           });
         });
       });
@@ -352,93 +372,15 @@ describe('packages/select/getLGSelectTestUtils', () => {
               defaultValue: 'Green',
               usePortal: boolean,
             });
-            const { clickTrigger, getInputValue, clickOption } =
+            const { getInput, getInputValue, getOptionByValue } =
               getLGSelectTestUtils();
 
             expect(getInputValue()).toBe('Green');
-            act(() => clickTrigger());
-            await waitFor(() => {
-              clickOption('Yellow');
-            });
-            await waitFor(() => {
-              expect(getInputValue()).toBe('Yellow');
-            });
-          });
-        });
-      });
-    });
-
-    describe('clickOption', () => {
-      describe.each([true, false])('when usePortal={%p}', boolean => {
-        test('clicks an option', async () => {
-          renderSelect({
-            usePortal: boolean,
-          });
-          const { clickTrigger, getInputValue, clickOption } =
-            getLGSelectTestUtils();
-
-          expect(getInputValue()).toBe('Select');
-          act(() => clickTrigger());
-          await waitFor(() => {
-            clickOption('Yellow');
-          });
-          await waitFor(() => {
+            userEvent.click(getInput());
+            userEvent.click(getOptionByValue('Yellow')!);
             expect(getInputValue()).toBe('Yellow');
           });
         });
-
-        test('throws an error when the option does not exist', async () => {
-          renderSelect({
-            usePortal: boolean,
-          });
-          const { clickTrigger, getInputValue, clickOption } =
-            getLGSelectTestUtils();
-
-          expect(getInputValue()).toBe('Select');
-          act(() => clickTrigger());
-
-          await waitFor(() => {
-            expect(() => clickOption('Jellow')).toThrow();
-          });
-
-          try {
-            await waitFor(() => {
-              clickOption('Jellow');
-            });
-          } catch (error) {
-            expect(error).toBeInstanceOf(Error);
-            expect(error).toHaveProperty(
-              'message',
-              expect.stringMatching(
-                /Unable to find option with the value 'Jellow'/,
-              ),
-            );
-          }
-        });
-      });
-    });
-
-    describe('clickTrigger', () => {
-      test('opens the select menu', async () => {
-        renderSelect();
-        const { clickTrigger, getPopover } = getLGSelectTestUtils();
-
-        act(() => clickTrigger());
-        await waitFor(() => {
-          expect(getPopover()).toBeInTheDocument();
-        });
-      });
-
-      test('closes the select menu', async () => {
-        renderSelect();
-        const { clickTrigger, getPopover } = getLGSelectTestUtils();
-
-        act(() => clickTrigger());
-        await waitFor(() => {
-          expect(getPopover()).toBeInTheDocument();
-        });
-        act(() => clickTrigger());
-        await waitForElementToBeRemoved(getPopover());
       });
     });
   });
@@ -457,28 +399,22 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('first select', () => {
       test('has correct number of options', async () => {
         renderMultipleSelects();
-        const { clickTrigger, getOptions } =
-          getLGSelectTestUtils('lg-select-1');
+        const { getInput, getOptions } = getLGSelectTestUtils('lg-select-1');
 
-        act(() => clickTrigger());
-        await waitFor(() => {
-          // `select` is an option
-          expect(getOptions()).toHaveLength(8);
-        });
+        userEvent.click(getInput());
+        // `select` is an option
+        expect(getOptions()).toHaveLength(8);
       });
     });
 
     describe('second select', () => {
       test('has correct number of options', async () => {
         renderMultipleSelects();
-        const { clickTrigger, getOptions } =
-          getLGSelectTestUtils('lg-select-2');
+        const { getInput, getOptions } = getLGSelectTestUtils('lg-select-2');
 
-        act(() => clickTrigger());
-        await waitFor(() => {
-          // `select` is an option
-          expect(getOptions()).toHaveLength(3);
-        });
+        userEvent.click(getInput());
+        // `select` is an option
+        expect(getOptions()).toHaveLength(3);
       });
     });
   });

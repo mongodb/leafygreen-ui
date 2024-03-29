@@ -110,7 +110,8 @@ const utils = getLGSelectTestUtils(lgId?: string); // lgId refers to the custom 
 #### Single `Select`
 
 ```tsx
-import { render, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
 
 ...
@@ -132,16 +133,15 @@ test('select', () => {
     </Select>
   );
 
-  const { getInputValue, getInput, getOptions, clickTrigger } = getLGSelectTestUtils();
+  const { getInputValue, getInput, getOptions } = getLGSelectTestUtils();
 
   expect(getInput()).toBeInTheDocument();
   expect(getInputValue()).toBe('Select');
 
-  act(() => clickTrigger());
-  await waitFor(() => {
-    // `select` is an option
-    expect(getOptions()).toHaveLength(5);
-  });
+  // opens the select
+  userEvent.click(getInput());
+  // `select` is an option
+  expect(getOptions()).toHaveLength(5);
 });
 ```
 
@@ -262,8 +262,6 @@ const {
   isDisabled,
   isValid,
   isError,
-  clickOption,
-  clickTrigger,
 } = getLGSelectTestUtils();
 ```
 
@@ -279,5 +277,3 @@ const {
 | `getInputValue()`          | Returns the input value                    | `string`                      |
 | `isDisabled()`             | Returns whether the input is disabled      | `boolean`                     |
 | `isError()`                | Returns whether the input state is `error` | `boolean`                     |
-| `clickOption(string)`      | Clicks an option                           | `void`                        |
-| `clickTrigger`             | Clicks the trigger                         | `void`                        |

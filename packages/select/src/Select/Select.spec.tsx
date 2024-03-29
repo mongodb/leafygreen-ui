@@ -100,17 +100,13 @@ describe('packages/select', () => {
   });
 
   test('renders placeholder', async () => {
-    const { getInput, clickTrigger, getOptionByValue, rerenderSelect } =
-      renderSelect();
+    const { getInput, getOptionByValue, rerenderSelect } = renderSelect();
 
     expect(getInput()).toHaveTextContent('Select');
     rerenderSelect({ placeholder: 'Explicit placeholder' });
     expect(getInput()).toHaveTextContent('Explicit placeholder');
-    clickTrigger();
-
-    await waitFor(() => {
-      expect(getOptionByValue('Explicit placeholder')).toBeInTheDocument();
-    });
+    userEvent.click(getInput());
+    expect(getOptionByValue('Explicit placeholder')).toBeInTheDocument();
   });
 
   test('accepts a ref', () => {
@@ -191,11 +187,9 @@ describe('packages/select', () => {
       </Select>,
     );
 
-    const { clickTrigger } = getLGSelectTestUtils();
+    const { getInput } = getLGSelectTestUtils();
 
-    await waitFor(() => {
-      clickTrigger();
-    });
+    userEvent.click(getInput());
 
     const group = queryByTestId('lg-group');
     const option = queryByTestId('lg-option');
@@ -297,14 +291,12 @@ describe('packages/select', () => {
 
   describe('list menu', () => {
     test('allowDeselect prevents placeholder from being rendered', async () => {
-      const { clickTrigger, queryByText } = renderSelect({
+      const { getInput, queryByText } = renderSelect({
         allowDeselect: false,
         defaultValue: Color.Red,
       });
 
-      await waitFor(() => {
-        clickTrigger();
-      });
+      userEvent.click(getInput());
       expect(queryByText('Select')).not.toBeInTheDocument();
     });
 
@@ -352,11 +344,7 @@ describe('packages/select', () => {
         );
 
         const { getInput } = getLGSelectTestUtils();
-
-        act(() => {
-          userEvent.click(getInput());
-        });
-
+        userEvent.click(getInput());
         expect(spy).not.toHaveBeenCalled();
       });
     });
@@ -373,17 +361,16 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      const { getPopover, clickTrigger } = getLGSelectTestUtils();
+      const { getPopover, getInput } = getLGSelectTestUtils();
 
-      clickTrigger();
+      userEvent.click(getInput());
 
       await waitFor(() => {
         expect(getPopover()).toBeVisible();
+        getAllByLabelText('Beaker Icon').forEach(element =>
+          expect(element).toBeVisible(),
+        );
       });
-
-      getAllByLabelText('Beaker Icon').forEach(element =>
-        expect(element).toBeVisible(),
-      );
     });
 
     test('invalid glyph', () => {
@@ -398,9 +385,7 @@ describe('packages/select', () => {
 
         const { getInput } = getLGSelectTestUtils();
 
-        act(() => {
-          userEvent.click(getInput());
-        });
+        userEvent.click(getInput());
 
         expect(spy).toHaveBeenCalledWith(
           '`Option` instance did not render icon because it is not a known glyph element.',
@@ -410,9 +395,9 @@ describe('packages/select', () => {
 
     describe('opening', () => {
       test('by clicking', async () => {
-        const { clickTrigger, getPopover, getInput } = renderSelect();
+        const { getPopover, getInput } = renderSelect();
 
-        clickTrigger();
+        userEvent.click(getInput());
 
         await waitFor(() => {
           expect(getPopover()).toBeVisible();
@@ -468,6 +453,8 @@ describe('packages/select', () => {
             disabled: true,
           });
 
+          // console.error
+          // Error: unable to click element as it has or inherits pointer-events set to "none".
           userEvent.type(getInput(), '{arrowdown}');
           expect(getPopover()).not.toBeInTheDocument();
         });
@@ -477,6 +464,8 @@ describe('packages/select', () => {
             disabled: true,
           });
 
+          // console.error
+          // Error: unable to click element as it has or inherits pointer-events set to "none".
           userEvent.type(getInput(), '{arrowup}');
           expect(getPopover()).not.toBeInTheDocument();
         });
@@ -489,13 +478,13 @@ describe('packages/select', () => {
         const onEntering = jest.fn();
         const onEntered = jest.fn();
 
-        const { clickTrigger } = renderSelect({
+        const { getInput } = renderSelect({
           onEnter: onEnter,
           onEntering: onEntering,
           onEntered: onEntered,
         });
 
-        await waitFor(() => clickTrigger());
+        userEvent.click(getInput());
         expect(onEnter).toHaveBeenCalled();
         expect(onEntering).toHaveBeenCalled();
         await waitFor(() => expect(onEntered).toHaveBeenCalled());
@@ -506,14 +495,14 @@ describe('packages/select', () => {
         const onExiting = jest.fn();
         const onExited = jest.fn();
 
-        const { clickTrigger } = renderSelect({
+        const { getInput } = renderSelect({
           onExit: onExit,
           onExiting: onExiting,
           onExited: onExited,
         });
 
-        await waitFor(() => clickTrigger());
-        await waitFor(() => clickTrigger());
+        userEvent.click(getInput());
+        userEvent.click(getInput());
 
         expect(onExit).toHaveBeenCalled();
         expect(onExiting).toHaveBeenCalled();
@@ -524,14 +513,14 @@ describe('packages/select', () => {
     describe('closing', () => {
       describe('selecting an option closes menu', () => {
         test('on mouse click', async () => {
-          const { clickTrigger, getPopover, clickOption } = renderSelect();
+          const { getInput, getPopover, getOptionByValue } = renderSelect();
 
-          clickTrigger();
+          userEvent.click(getInput());
           await waitFor(() => {
             expect(getPopover()).toBeVisible();
           });
 
-          clickOption('Red');
+          userEvent.click(getOptionByValue('Red')!);
           await waitForElementToBeRemoved(getPopover());
           expect(getPopover()).not.toBeInTheDocument();
         });
@@ -570,15 +559,13 @@ describe('packages/select', () => {
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
       let getByRole: RenderResult['getByRole'];
       let getByText: RenderResult['getByText'];
-      let clickTrigger: () => void;
       let getPopover: () => HTMLDivElement | null;
       let getInput: () => HTMLButtonElement;
 
       beforeEach(async () => {
-        ({ clickTrigger, getPopover, getByRole, getByText, getInput } =
-          renderSelect());
+        ({ getPopover, getByRole, getByText, getInput } = renderSelect());
 
-        clickTrigger();
+        userEvent.click(getInput());
 
         await waitFor(() => {
           // eslint-disable-next-line jest/no-standalone-expect
@@ -732,7 +719,8 @@ describe('packages/select', () => {
             return listbox;
           });
 
-          selectUtils.clickOption(optionText);
+          const targetOption = selectUtils.getOptionByValue(optionText);
+          userEvent.click(targetOption!);
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(
@@ -787,7 +775,8 @@ describe('packages/select', () => {
             return listbox;
           });
 
-          selectUtils.clickOption(optionText);
+          const targetOption = selectUtils.getOptionByValue(optionText);
+          userEvent.click(targetOption!);
 
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeInTheDocument();
@@ -800,10 +789,10 @@ describe('packages/select', () => {
 
     describe('focus', () => {
       test('moves to next option by arrow down key', async () => {
-        const { clickTrigger, getPopover, getOptionByValue, getOptions } =
+        const { getPopover, getOptionByValue, getOptions, getInput } =
           renderSelect();
 
-        clickTrigger();
+        userEvent.click(getInput());
 
         const listbox = (await waitFor(() => {
           const listbox = getPopover();
@@ -823,9 +812,9 @@ describe('packages/select', () => {
       });
 
       test('moves to previous option by arrow down key', async () => {
-        const { clickTrigger, getPopover, getOptionByValue } = renderSelect();
+        const { getInput, getPopover, getOptionByValue } = renderSelect();
 
-        clickTrigger();
+        userEvent.click(getInput());
 
         const listbox = (await waitFor(() => {
           const listbox = getPopover();
@@ -873,7 +862,9 @@ describe('packages/select', () => {
       selectUtils = utils;
 
       userEvent.click(button);
-      selectUtils.clickOption('Selected Option');
+
+      const targetOption = selectUtils.getOptionByValue('Selected Option');
+      userEvent.click(targetOption!);
     });
 
     test('when selected option is removed', () => {
@@ -962,19 +953,18 @@ describe('packages/select', () => {
 
   describe('without Portal (usePortal="false")', () => {
     test('menu opens', async () => {
-      const { clickTrigger, getPopover } = renderSelect({ usePortal: false });
+      const { getInput, getPopover } = renderSelect({ usePortal: false });
 
-      clickTrigger();
-
-      await waitFor(() => expect(getPopover()).toBeInTheDocument());
+      userEvent.click(getInput());
+      await waitFor(() => expect(getPopover()).toBeVisible());
     });
 
     test('menu renders as a child of button', async () => {
-      const { clickTrigger, getPopover, getInput } = renderSelect({
+      const { getPopover, getInput } = renderSelect({
         usePortal: false,
       });
 
-      clickTrigger();
+      userEvent.click(getInput());
 
       await waitFor(() => {
         const popover = getPopover();
@@ -987,15 +977,13 @@ describe('packages/select', () => {
       test('on mouse click', async () => {
         const onChange = jest.fn();
 
-        const { clickTrigger, clickOption } = renderSelect({
+        const { getInput, getOptionByValue } = renderSelect({
           usePortal: false,
           onChange: onChange,
         });
 
-        clickTrigger();
-
-        await waitFor(() => clickOption('Red'));
-
+        userEvent.click(getInput());
+        userEvent.click(getOptionByValue('Red')!);
         expect(onChange).toHaveBeenCalled();
       });
 
@@ -1031,14 +1019,14 @@ describe('packages/select', () => {
     describe('closing', () => {
       describe('selecting an option closes menu', () => {
         test('on mouse click', async () => {
-          const { clickTrigger, getPopover, clickOption } = renderSelect({
+          const { getInput, getPopover, getOptionByValue } = renderSelect({
             usePortal: false,
           });
-          clickTrigger();
+          userEvent.click(getInput());
           await waitFor(() => {
-            expect(getPopover()).toBeInTheDocument();
+            expect(getPopover()).toBeVisible();
           });
-          clickOption('Red');
+          userEvent.click(getOptionByValue('Red')!);
           await waitForElementToBeRemoved(getPopover());
           expect(getPopover()).not.toBeInTheDocument();
         });
@@ -1083,14 +1071,14 @@ describe('packages/select', () => {
         const onEntering = jest.fn();
         const onEntered = jest.fn();
 
-        const { clickTrigger } = renderSelect({
+        const { getInput } = renderSelect({
           onEnter: onEnter,
           onEntering: onEntering,
           onEntered: onEntered,
           usePortal: false,
         });
 
-        await waitFor(() => clickTrigger());
+        userEvent.click(getInput());
         expect(onEnter).toHaveBeenCalled();
         expect(onEntering).toHaveBeenCalled();
         await waitFor(() => expect(onEntered).toHaveBeenCalled());
@@ -1101,15 +1089,15 @@ describe('packages/select', () => {
         const onExiting = jest.fn();
         const onExited = jest.fn();
 
-        const { clickTrigger } = renderSelect({
+        const { getInput } = renderSelect({
           onExit: onExit,
           onExiting: onExiting,
           onExited: onExited,
           usePortal: false,
         });
 
-        await waitFor(() => clickTrigger());
-        await waitFor(() => clickTrigger());
+        userEvent.click(getInput());
+        userEvent.click(getInput());
 
         expect(onExit).toHaveBeenCalled();
         expect(onExiting).toHaveBeenCalled();
@@ -1145,13 +1133,13 @@ describe('packages/select', () => {
         </MockPopoverProvider>,
       );
 
-      const { clickTrigger } = getLGSelectTestUtils();
+      const { getInput } = getLGSelectTestUtils();
 
-      clickTrigger();
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
       );
-      clickTrigger();
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
       );
@@ -1164,13 +1152,13 @@ describe('packages/select', () => {
         </MockPopoverProvider>,
       );
 
-      const { clickTrigger } = getLGSelectTestUtils();
+      const { getInput } = getLGSelectTestUtils();
 
-      clickTrigger();
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
       );
-      clickTrigger();
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
       );

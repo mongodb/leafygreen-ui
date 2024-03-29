@@ -66,9 +66,14 @@ export const getLGSelectTestUtils = (
 
   /**
    * Returns the `Select` value.
+   * We have to narrow the container to the text container since `Select`'s without a portal are rendered as children of the `button`.
    */
   const getSelectValue = () => {
-    return getSelectTrigger.textContent || '';
+    const selectTriggerTextContainer = queryBySelector<HTMLDivElement>(
+      getSelectTrigger,
+      `[data-lgid=${LGIDS_SELECT.buttonText}]`,
+    ) as HTMLDivElement;
+    return selectTriggerTextContainer.textContent || '';
   };
 
   /**
@@ -123,22 +128,6 @@ export const getLGSelectTestUtils = (
     return option;
   };
 
-  const clickOption = (value: string) => {
-    if (!value) throw new Error('Value cannot be empty');
-
-    const option = getOptionByValue(value);
-
-    if (!option)
-      throw new Error(`Unable to find option with the value '${value}'.`);
-
-    // Click option
-    option.click();
-  };
-
-  const clickTrigger = () => {
-    getSelectTrigger.click();
-  };
-
   return {
     getLabel: () => getLabel,
     getDescription: () => getDescription,
@@ -150,7 +139,5 @@ export const getLGSelectTestUtils = (
     isDisabled: () => isInputDisabled(),
     isError: () => isError(),
     getInputValue: () => getSelectValue(),
-    clickOption: (value: string) => clickOption(value),
-    clickTrigger: () => clickTrigger(),
   };
 };
