@@ -6,6 +6,7 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { Message, MessageSourceType } from '..';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 const MarkdownText = `
 # Heading 1
@@ -61,6 +62,11 @@ sharding to distribute the load across multiple servers.
 Let me know if you need any further assistance!
 `;
 
+const MessageFeedback = () => {
+  // @ts-ignore onChange is passed in the story itself
+  return <MessageFeedbackStory />;
+};
+
 const meta: StoryMetaType<typeof Message> = {
   title: 'Chat/Message',
   component: Message,
@@ -82,10 +88,9 @@ const meta: StoryMetaType<typeof Message> = {
 };
 export default meta;
 
-// eslint-disable-next-line react/prop-types
 const Template: StoryFn<typeof Message> = ({ darkMode, avatar, ...rest }) => {
   const Avatar = avatar ? React.cloneElement(avatar, { darkMode }) : undefined;
-  return <Message avatar={Avatar} darkMode={darkMode} {...rest} />;
+  return <Message avatar={Avatar} darkMode={darkMode} {...rest}></Message>;
 };
 
 export const Basic: StoryFn<typeof Message> = Template.bind({});
@@ -117,8 +122,7 @@ WithMessageRating.args = {
   isSender: false,
   messageBody: MongoText,
   avatar: <Avatar variant="mongo" />,
-  // @ts-ignore onChange is passed in the story itself
-  children: <MessageFeedbackStory />,
+  children: <MessageFeedback />,
 };
 
 export const VerifiedAnswer: StoryFn<typeof Message> = Template.bind({});
@@ -130,43 +134,97 @@ VerifiedAnswer.args = {
     verifier: 'MongoDB Staff',
     verifiedAt: new Date('2023-08-24T16:20:00Z'),
   },
-  // @ts-ignore onChange is passed in the story itself
-  children: <MessageFeedbackStory />,
+  children: <MessageFeedback />,
 };
 
-export const MultipleUser = () => (
-  <LeafyGreenChatProvider>
-    <div>
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Basic {...meta.args} {...Basic.args} />
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Basic {...meta.args} {...Basic.args} messageBody="Another message!" />
-    </div>
-  </LeafyGreenChatProvider>
-);
+function useCorrectBaseFontSize() {
+  const baseFontSize = useBaseFontSize();
+  return baseFontSize === 14 ? 13 : baseFontSize;
+}
 
-export const MultipleMongo = () => (
-  <LeafyGreenChatProvider>
-    <div>
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Mongo
-        {...meta.args}
-        {...Mongo.args}
-        messageBody="First message! Expect another from me right after this one."
-      />
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Mongo {...meta.args} {...Mongo.args} />
-    </div>
-  </LeafyGreenChatProvider>
-);
+export const MultipleUser = () => {
+  const baseFontSize = useCorrectBaseFontSize();
+  return (
+    <LeafyGreenChatProvider>
+      <div>
+        <Basic {...meta.args} {...Basic.args} baseFontSize={baseFontSize} />
+        <Basic
+          {...meta.args}
+          {...Basic.args}
+          messageBody="Another message!"
+          baseFontSize={baseFontSize}
+        />
+      </div>
+    </LeafyGreenChatProvider>
+  );
+};
 
-export const Alternating = () => (
-  <LeafyGreenChatProvider>
-    <div>
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Basic {...meta.args} {...Basic.args} />
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Mongo {...meta.args} {...Mongo.args} />
-    </div>
-  </LeafyGreenChatProvider>
-);
+export const MultipleMongo = () => {
+  const baseFontSize = useCorrectBaseFontSize();
+  return (
+    <LeafyGreenChatProvider>
+      <div>
+        <Mongo
+          {...meta.args}
+          {...Mongo.args}
+          messageBody="First message! Expect another from me right after this one."
+          baseFontSize={baseFontSize}
+        />
+        <Mongo {...meta.args} {...Mongo.args} baseFontSize={baseFontSize} />
+      </div>
+    </LeafyGreenChatProvider>
+  );
+};
+
+export const Alternating = () => {
+  const baseFontSize = useCorrectBaseFontSize();
+  return (
+    <LeafyGreenChatProvider>
+      <div>
+        <Basic {...meta.args} {...Basic.args} baseFontSize={baseFontSize} />
+        <Mongo {...meta.args} {...Mongo.args} baseFontSize={baseFontSize} />
+      </div>
+    </LeafyGreenChatProvider>
+  );
+};
+
+export const WithRichLinks: StoryFn<typeof Message> = Template.bind({});
+WithRichLinks.args = {
+  isSender: false,
+  messageBody: MongoText,
+  avatar: <Avatar variant="mongo" />,
+  children: <MessageFeedback />,
+  links: [
+    {
+      url: 'https://mongodb.design',
+      text: 'LeafyGreen UI',
+      variant: 'Website',
+    },
+    {
+      url: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+      text: 'LeafyGreen UI Docs',
+      variant: 'Docs',
+    },
+    {
+      url: 'https://learn.mongodb.com/',
+      text: 'MongoDB University',
+      variant: 'Learn',
+    },
+    {
+      url: 'https://mongodb.com/docs',
+      text: 'MongoDB Docs',
+      variant: 'Docs',
+    },
+    {
+      url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      text: 'Rick Astley - Never Gonna Give You Up',
+      variant: 'Video',
+      imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+    },
+    {
+      url: 'https://mongodb.com/',
+      text: 'MongoDB Homepage',
+      variant: 'Website',
+    },
+  ],
+};

@@ -6,6 +6,9 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { MessageContainerProps } from '../MessageContainer';
 import { MessageContentProps } from '../MessageContent';
 
+import { type RichLinkProps } from '@lg-chat/rich-links';
+import { MessageLinksProps } from 'src/MessageLinks';
+
 export const Align = {
   Right: 'right',
   Left: 'left',
@@ -16,6 +19,7 @@ export type Align = (typeof Align)[keyof typeof Align];
 export interface ComponentOverrides {
   MessageContainer?: (props: MessageContainerProps) => JSX.Element;
   MessageContent?: (props: MessageContentProps) => JSX.Element;
+  MessageLinks?: (props: MessageLinksProps) => JSX.Element;
 }
 
 export interface MessageProps
@@ -57,6 +61,16 @@ export interface MessageProps
    * displays information about the message.
    */
   verified?: VerificationInfo;
+
+  /**
+   * A list of links to render as rich links for the message.
+   */
+  links?: Array<RichLinkProps>;
+
+  /**
+   * The heading text to display for the links section.
+   */
+  linksHeading?: string;
 }
 
 export interface VerificationInfo {
