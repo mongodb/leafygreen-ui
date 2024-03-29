@@ -344,7 +344,9 @@ describe('packages/select', () => {
         );
 
         const { getInput } = getLGSelectTestUtils();
-        userEvent.click(getInput());
+        act(() => {
+          userEvent.click(getInput());
+        });
         expect(spy).not.toHaveBeenCalled();
       });
     });
