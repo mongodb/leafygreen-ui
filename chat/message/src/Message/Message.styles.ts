@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme, createUniqueClassName } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 
