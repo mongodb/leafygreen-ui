@@ -8,6 +8,8 @@ import { StoryFn } from '@storybook/react';
 import { Message, MessageSourceType } from '.';
 
 const StoryMarkdown = `
+This is a message
+
 # Heading 1
 
 ## Heading 2

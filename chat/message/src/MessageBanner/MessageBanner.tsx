@@ -8,16 +8,19 @@ import { baseStyles, variantStyles } from './MessageBanner.styles';
 import { MessageBannerProps } from './MessageBanner.types';
 
 export function MessageBanner({
+  className,
   darkMode: darkModeProp,
   children,
   variant = 'info',
+  ...divProps
 }: MessageBannerProps) {
   const { theme } = useDarkMode(darkModeProp);
   return (
     <Banner
-      className={cx(baseStyles, variantStyles[theme][variant])}
+      className={cx(baseStyles, variantStyles[theme][variant], className)}
       variant={variant}
       baseFontSize={13}
+      {...divProps}
     >
       {children}
     </Banner>

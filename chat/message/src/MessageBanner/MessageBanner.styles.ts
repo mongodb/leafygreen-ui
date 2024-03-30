@@ -16,6 +16,7 @@ export const baseStyles = css`
   border-left-color: unset;
 
   max-width: fit-content;
+  padding: ${spacing[200]}px ${spacing[300]}px;
 `;
 
 /**

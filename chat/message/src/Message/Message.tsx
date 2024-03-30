@@ -33,6 +33,7 @@ import {
   rightAlignedStyles,
   senderClassName,
   tabletBaseStyles,
+  verifiedAnswerBannerStyles,
 } from './Message.styles';
 import { Align } from './Message.types';
 import { MessageProps } from '.';
@@ -184,7 +185,7 @@ function VerifiedAnswerBanner({
     return textParts.join(' ');
   }, [verifier, verifiedAt]);
   return (
-    <MessageBanner variant="success">
+    <MessageBanner className={verifiedAnswerBannerStyles} variant="success">
       {text}
       {learnMoreUrl ? (
         <>

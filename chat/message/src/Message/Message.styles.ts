@@ -74,3 +74,8 @@ export const messageContainerWedgeStyles = {
     }
   `,
 };
+
+export const verifiedAnswerBannerStyles = css`
+  margin-top: -${spacing[200]}px;
+  margin-bottom: ${spacing[400]}px;
+`;
