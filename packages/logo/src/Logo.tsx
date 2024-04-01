@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LogoProps } from './utils';
+import { LogoProps } from './Logo.types';
 import {
   AtlasForGovernmentLogoLockup,
   AtlasLogoLockup,
@@ -12,27 +12,6 @@ import {
   UniversityLogoLockup,
 } from '.';
 
-export const LogoNames = [
-  'MongoDBLogoMark',
-  'MongoDBLogo',
-  'AtlasNavGraphic',
-  'AtlasLogoLockup',
-  'AtlasForGovernmentLogoLockup',
-  'EnterpriseAdvancedLogoLockup',
-  'CommunityEditionLogoLockup',
-  'UniversityLogoLockup',
-] as const;
-
-export type LogoName = (typeof LogoNames)[number];
-
-interface GenericLogoProps extends LogoProps {
-  /**
-   * The name of the logo to render
-   * @required
-   */
-  name: LogoName;
-}
-
 /**
  * A generic logo component that accepts a logo name as well as other LogoProps.
  *
@@ -40,7 +19,7 @@ interface GenericLogoProps extends LogoProps {
  */
 const GenericLogo = React.forwardRef(
   (
-    { name = 'MongoDBLogo', ...rest }: GenericLogoProps,
+    { name = 'MongoDBLogo', ...rest }: LogoProps,
     ref: React.Ref<SVGSVGElement> | undefined,
   ) => {
     const LogoMap = {
