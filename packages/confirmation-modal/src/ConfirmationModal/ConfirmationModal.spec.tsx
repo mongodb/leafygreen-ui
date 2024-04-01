@@ -156,7 +156,7 @@ describe('packages/confirmation-modal', () => {
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
 
-    describe('resets when the modal closes', () => {
+    describe('resets the confirm button when the modal closes', () => {
       test('on confirm', async () => {
         const { getByText, getByLabelText, getByRole, rerender } = renderModal({
           open: true,
