@@ -29,13 +29,13 @@ export const Default = Template.bind({});
 
 export const WithDescription = Template.bind({});
 WithDescription.args = {
-  description: 'Loading...',
+  description: 'Loading dot dot...',
 };
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {
   displayOption: 'default-horizontal',
-  description: 'Loading...',
+  description: 'Loading dot dot...',
 };
 
 export const SizeOverride = Template.bind({});
