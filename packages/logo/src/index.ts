@@ -1,19 +1,21 @@
 // Company Logo
-export { AtlasNavGraphic } from './AtlasNavGraphic';
-export { MongoDBLogo } from './MongoDBLogo';
-export { MongoDBLogoMark } from './MongoDBLogoMark';
+export { AtlasNavGraphic } from './Logos/AtlasNavGraphic';
+export { MongoDBLogo } from './Logos/MongoDBLogo';
+export { MongoDBLogoMark } from './Logos/MongoDBLogoMark';
 
 // Product Family Logo Lockups
-export { AtlasForGovernmentLogoLockup } from './AtlasForGovernmentLogoLockup';
-export { AtlasLogoLockup } from './AtlasLogoLockup';
-export { CommunityEditionLogoLockup } from './CommunityEditionLogoLockup';
-export { EnterpriseAdvancedLogoLockup } from './EnterpriseAdvancedLogoLockup';
-export { UniversityLogoLockup } from './UniversityLogoLockup';
+export { AtlasForGovernmentLogoLockup } from './Logos/AtlasForGovernmentLogoLockup';
+export { AtlasLogoLockup } from './Logos/AtlasLogoLockup';
+export { CommunityEditionLogoLockup } from './Logos/CommunityEditionLogoLockup';
+export { EnterpriseAdvancedLogoLockup } from './Logos/EnterpriseAdvancedLogoLockup';
+export { UniversityLogoLockup } from './Logos/UniversityLogoLockup';
 
 // Deprecated Product Logo Marks
-export { AtlasLogoMark } from './AtlasLogoMark';
-export { ChartsLogoMark } from './ChartsLogoMark';
-export type { LogoName } from './Logo';
 export { default } from './Logo';
-export { default as RealmLogoMark } from './RealmLogoMark';
-export { SupportedColors } from './utils';
+export { SupportedColors } from './Logo.types';
+export { AtlasLogoMark } from './Logos/AtlasLogoMark';
+export { ChartsLogoMark } from './Logos/ChartsLogoMark';
+export { default as RealmLogoMark } from './Logos/RealmLogoMark';
+
+// Types
+export { type LogoName, type LogoProps } from './Logo.types';

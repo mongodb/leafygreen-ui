@@ -3,11 +3,11 @@ import * as React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 import {
-  getAccessibleProps,
-  LogoProps,
+  BaseLogoProps,
   SupportedColors,
   SupportedColorsMap,
-} from './utils';
+} from '../Logo.types';
+import { getAccessibleProps } from '../utils';
 
 export const AtlasNavGraphic = React.forwardRef(
   (
@@ -18,7 +18,7 @@ export const AtlasNavGraphic = React.forwardRef(
       role = 'img',
       'aria-label': ariaLabel = 'MongoDB Logo',
       ...rest
-    }: LogoProps,
+    }: BaseLogoProps,
     ref: React.LegacyRef<SVGSVGElement> | undefined,
   ) => {
     const fill = SupportedColorsMap[color];
