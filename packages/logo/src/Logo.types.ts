@@ -22,7 +22,7 @@ type SupportedColorsMap =
 
 export { SupportedColors, SupportedColorsMap };
 
-export interface ILogoProps extends HTMLElementProps<'svg'> {
+export interface BaseLogoProps extends HTMLElementProps<'svg'> {
   /**
    * Determines Color of the Logo or LogoMark component.
    *
@@ -58,7 +58,7 @@ export const LogoNames = [
 
 export type LogoName = (typeof LogoNames)[number];
 
-export interface LogoProps extends ILogoProps {
+export interface LogoProps extends BaseLogoProps {
   /**
    * The name of the logo to render
    * @required

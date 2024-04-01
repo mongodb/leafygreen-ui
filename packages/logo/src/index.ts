@@ -11,11 +11,11 @@ export { EnterpriseAdvancedLogoLockup } from './Logos/EnterpriseAdvancedLogoLock
 export { UniversityLogoLockup } from './Logos/UniversityLogoLockup';
 
 // Deprecated Product Logo Marks
+export { default } from './Logo';
+export { SupportedColors } from './Logo.types';
 export { AtlasLogoMark } from './Logos/AtlasLogoMark';
 export { ChartsLogoMark } from './Logos/ChartsLogoMark';
-export { default } from './Logo';
 export { default as RealmLogoMark } from './Logos/RealmLogoMark';
-export { SupportedColors } from './Logo.types';
 
 // Types
-export { type LogoProps, type LogoName } from './Logo.types';
+export { type LogoName, type LogoProps } from './Logo.types';

@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 
-import { LogoNames, ILogoProps, SupportedColors } from './Logo.types';
+import { BaseLogoProps, LogoNames, SupportedColors } from './Logo.types';
 import {
   AtlasForGovernmentLogoLockup,
   AtlasLogoLockup,
@@ -98,8 +98,8 @@ const divStyle = css`
   margin: 0.5rem;
 `;
 
-export const LiveExample: StoryFn<ILogoProps & { name: LogoName }> = (
-  args: ILogoProps & { name: LogoName },
+export const LiveExample: StoryFn<BaseLogoProps & { name: LogoName }> = (
+  args: BaseLogoProps & { name: LogoName },
 ) => {
   if (!args.name) {
     args = { ...args, name: 'MongoDBLogo' };
@@ -124,9 +124,9 @@ LiveExample.parameters = {
 
 const Template = (
   LogoComponent: React.ForwardRefExoticComponent<
-    Omit<ILogoProps, 'ref'> & React.RefAttributes<SVGSVGElement>
+    Omit<BaseLogoProps, 'ref'> & React.RefAttributes<SVGSVGElement>
   >,
-  args: ILogoProps,
+  args: BaseLogoProps,
 ) => {
   const containerStyle = css`
     ${divStyle}
@@ -139,30 +139,30 @@ const Template = (
 };
 
 // Individual Components
-export const MongoDB = (args: ILogoProps) => Template(MongoDBLogo, args);
-export const Atlas = (args: ILogoProps) => Template(AtlasNavGraphic, args);
-export const MongoDBMark = (args: ILogoProps) =>
+export const MongoDB = (args: BaseLogoProps) => Template(MongoDBLogo, args);
+export const Atlas = (args: BaseLogoProps) => Template(AtlasNavGraphic, args);
+export const MongoDBMark = (args: BaseLogoProps) =>
   Template(MongoDBLogoMark, args);
-export const AtlasLockup = (args: ILogoProps) =>
+export const AtlasLockup = (args: BaseLogoProps) =>
   Template(AtlasLogoLockup, args);
-export const AtlasForGovernmentLockup = (args: ILogoProps) =>
+export const AtlasForGovernmentLockup = (args: BaseLogoProps) =>
   Template(AtlasForGovernmentLogoLockup, args);
-export const EnterpriseAdvancedLockup = (args: ILogoProps) =>
+export const EnterpriseAdvancedLockup = (args: BaseLogoProps) =>
   Template(EnterpriseAdvancedLogoLockup, args);
-export const CommunityEditionLockup = (args: ILogoProps) =>
+export const CommunityEditionLockup = (args: BaseLogoProps) =>
   Template(CommunityEditionLogoLockup, args);
-export const UniversityLockup = (args: ILogoProps) =>
+export const UniversityLockup = (args: BaseLogoProps) =>
   Template(UniversityLogoLockup, args);
 
 // Deprecated
 // @ts-ignore deprecated component
-export const AtlasMark = (args: ILogoProps) => Template(AtlasLogoMark, args);
+export const AtlasMark = (args: BaseLogoProps) => Template(AtlasLogoMark, args);
 AtlasMark.storyName = '[DEPRECATED] Atlas Mark';
 // @ts-ignore deprecated component
-export const RealmMark = (args: ILogoProps) => Template(RealmLogoMark, args);
+export const RealmMark = (args: BaseLogoProps) => Template(RealmLogoMark, args);
 RealmMark.storyName = '[DEPRECATED] Realm Mark';
 // @ts-ignore deprecated component
-export const ChartsMark = (args: ILogoProps) => Template(ChartsLogoMark, args);
+export const ChartsMark = args => Template(ChartsLogoMark, args);
 ChartsMark.storyName = '[DEPRECATED] Charts Mark';
 
 export const Generated = () => {};
