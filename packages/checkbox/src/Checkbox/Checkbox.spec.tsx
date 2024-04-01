@@ -36,14 +36,19 @@ describe('packages/checkbox', () => {
     });
   });
 
+  test('uses the aria-label prop when supplied', () => {
+    const { checkbox } = renderCheckbox({ 'aria-label': 'test string' });
+    expect(checkbox.getAttribute('aria-label')).toBe('test string');
+  });
+
   test(`passes \`className\` through to checkbox parent`, () => {
     const { wrapper } = renderCheckbox({ className });
     expect(wrapper?.classList).toContain(className);
   });
 
   test('renders as unchecked by default', () => {
-    const { checkbox } = renderCheckbox();
-    expect((checkbox as HTMLInputElement).checked).toBe(false);
+    const { checkbox, getInputValue } = renderCheckbox();
+    expect(getInputValue()).toBe(false);
     expect(checkbox.getAttribute('aria-checked')).toBe('false');
   });
 

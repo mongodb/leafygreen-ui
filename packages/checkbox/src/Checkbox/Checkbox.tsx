@@ -38,6 +38,7 @@ import { CheckboxProps } from './Checkbox.types';
  */
 function Checkbox({
   animate = true,
+  'aria-label': ariaLabel = 'checkbox',
   baseFontSize: baseFontSizeProp,
   bold: boldProp,
   checked: checkedProp,
@@ -127,7 +128,7 @@ function Checkbox({
             type="checkbox"
             name={name}
             checked={isChecked}
-            aria-label="checkbox"
+            aria-label={ariaLabel}
             aria-disabled={disabled}
             aria-checked={indeterminateProp ? 'mixed' : isChecked}
             aria-labelledby={labelId}
