@@ -10,6 +10,8 @@ import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
+import { LGIDS_CONFIRMATION_MODAL } from '../constants';
+
 import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
   baseModalStyle,
@@ -59,7 +61,7 @@ export const ConfirmationModal = React.forwardRef(
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             darkMode={darkMode}
-            data-testid="lg-confirmation-modal-confirmation-input"
+            data-testid={LGIDS_CONFIRMATION_MODAL.input}
           ></TextInput>
         );
       }
@@ -101,7 +103,7 @@ export const ConfirmationModal = React.forwardRef(
           <H3
             as="h1"
             className={cx(titleStyle)}
-            data-testid="lg-confirmation-modal-title"
+            data-testid={LGIDS_CONFIRMATION_MODAL.title}
           >
             {title}
           </H3>
@@ -114,14 +116,14 @@ export const ConfirmationModal = React.forwardRef(
             disabled={!confirmEnabled || submitDisabled}
             onClick={handleConfirm}
             className={buttonStyle}
-            data-testid="lg-confirmation-modal-footer-confirm-button"
+            data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
           >
             {buttonText}
           </Button>
           <Button
             onClick={handleCancel}
             className={buttonStyle}
-            data-testid="lg-confirmation-modal-footer-cancel-button"
+            data-testid={LGIDS_CONFIRMATION_MODAL.cancel}
           >
             Cancel
           </Button>

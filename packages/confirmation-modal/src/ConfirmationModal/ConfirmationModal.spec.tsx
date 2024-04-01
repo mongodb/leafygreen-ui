@@ -8,6 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { LGIDS_CONFIRMATION_MODAL } from '../constants';
 import ConfirmationModal from '..';
 
 const WrappedModal = ({
@@ -158,14 +159,17 @@ describe('packages/confirmation-modal', () => {
 
     describe('resets the confirm button when the modal closes', () => {
       test('on confirm', async () => {
-        const { getByText, getByLabelText, getByRole, rerender } = renderModal({
-          open: true,
-          requiredInputText: 'Confirm',
-        });
+        const { findByTestId, getByLabelText, getByRole, rerender } =
+          renderModal({
+            open: true,
+            requiredInputText: 'Confirm',
+          });
 
         const modal = getByRole('dialog');
 
-        const confirmationButton = getByText('Confirm').closest('button');
+        const confirmationButton = await findByTestId(
+          LGIDS_CONFIRMATION_MODAL.confirm,
+        );
         expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
         let textInput = getByLabelText('Type "Confirm" to confirm your action');
@@ -195,17 +199,22 @@ describe('packages/confirmation-modal', () => {
       });
 
       test('on cancel', async () => {
-        const { getByText, getByLabelText, getByRole, rerender } = renderModal({
-          open: true,
-          requiredInputText: 'Confirm',
-        });
+        const { findByTestId, getByLabelText, getByRole, rerender } =
+          renderModal({
+            open: true,
+            requiredInputText: 'Confirm',
+          });
 
         const modal = getByRole('dialog');
 
-        const confirmationButton = getByText('Confirm').closest('button');
+        const confirmationButton = await findByTestId(
+          LGIDS_CONFIRMATION_MODAL.confirm,
+        );
         expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
 
-        const cancelButton = getByText('Cancel').closest('button');
+        const cancelButton = await findByTestId(
+          LGIDS_CONFIRMATION_MODAL.cancel,
+        );
 
         let textInput = getByLabelText('Type "Confirm" to confirm your action');
 
