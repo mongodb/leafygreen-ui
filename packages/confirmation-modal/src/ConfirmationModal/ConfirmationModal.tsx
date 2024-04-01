@@ -67,6 +67,16 @@ export const ConfirmationModal = React.forwardRef(
       return textEntryConfirmation;
     }, [requiredInputText, darkMode]);
 
+    const handleOnConfirm = () => {
+      onConfirm?.();
+      setConfirmEnabled(false);
+    };
+
+    const handleOnCancel = () => {
+      onCancel?.();
+      setConfirmEnabled(false);
+    };
+
     return (
       <Modal
         {...modalProps}
@@ -102,14 +112,14 @@ export const ConfirmationModal = React.forwardRef(
           <Button
             variant={variant}
             disabled={!confirmEnabled || submitDisabled}
-            onClick={onConfirm}
+            onClick={handleOnConfirm}
             className={buttonStyle}
             data-testid="lg-confirmation-modal-footer-confirm-button"
           >
             {buttonText}
           </Button>
           <Button
-            onClick={onCancel}
+            onClick={handleOnCancel}
             className={buttonStyle}
             data-testid="lg-confirmation-modal-footer-cancel-button"
           >
