@@ -14,6 +14,7 @@ import {
 } from '@leafygreen-ui/typography';
 
 import { Check } from '../Check';
+import { LGIDS_CHECKBOX } from '../constants';
 
 import {
   checkWrapperClassName,
@@ -42,6 +43,7 @@ function Checkbox({
   checked: checkedProp,
   className,
   darkMode: darkModeProp,
+  'data-lgid': dataLgId = LGIDS_CHECKBOX.root,
   description,
   disabled = false,
   id: idProp,
@@ -107,6 +109,7 @@ function Checkbox({
           },
           className,
         )}
+        data-lgid={dataLgId}
         style={style}
       >
         <Label

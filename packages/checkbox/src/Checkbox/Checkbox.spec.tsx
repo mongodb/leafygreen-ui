@@ -2,6 +2,7 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { getLGCheckboxTestUtils } from '../utils/getLGCheckboxTestUtilts';
 import Checkbox from '..';
 
 const className = 'test-classname';
@@ -9,13 +10,14 @@ const onChange = jest.fn();
 const onClick = jest.fn();
 
 function renderCheckbox(props = {}) {
-  const utils = render(
+  const renderUtils = render(
     <Checkbox data-testid="checkbox" label="this is the label" {...props} />,
   );
-  const wrapper = utils.container.firstElementChild;
-  const checkbox = utils.getByTestId('checkbox');
-  const label = utils.container.querySelector('label');
-  return { ...utils, wrapper, checkbox, label };
+  const utils = getLGCheckboxTestUtils();
+  const wrapper = renderUtils.container.firstElementChild;
+  const checkbox = utils.getInput();
+  const label = utils.getLabel();
+  return { ...renderUtils, ...utils, wrapper, checkbox, label };
 }
 
 describe('packages/checkbox', () => {
@@ -46,14 +48,14 @@ describe('packages/checkbox', () => {
   });
 
   test('renders as checked when the prop is set', () => {
-    const { checkbox } = renderCheckbox({ checked: true });
-    expect((checkbox as HTMLInputElement).checked).toBe(true);
+    const { checkbox, getInputValue } = renderCheckbox({ checked: true });
+    expect(getInputValue()).toBe(true);
     expect(checkbox.getAttribute('aria-checked')).toBe('true');
   });
 
   test('renders with aria-disabled attribute but not disabled attribute when disabled prop is set', () => {
-    const { checkbox } = renderCheckbox({ disabled: true });
-    expect(checkbox.getAttribute('aria-disabled')).toBeTruthy();
+    const { checkbox, isDisabled } = renderCheckbox({ disabled: true });
+    expect(isDisabled).toBeTruthy();
     expect(checkbox.getAttribute('disabled')).toBeFalsy();
   });
 
@@ -63,7 +65,7 @@ describe('packages/checkbox', () => {
   });
 
   test('renders as indeterminate when prop is set and checkbox is true', () => {
-    const { checkbox, rerender } = renderCheckbox({
+    const { checkbox, getInputValue, rerender } = renderCheckbox({
       indeterminate: true,
       checked: true,
     });
@@ -77,6 +79,7 @@ describe('packages/checkbox', () => {
       />,
     );
     expect(checkbox.getAttribute('aria-checked')).toBe('true');
+    expect(getInputValue()).toBe(true);
   });
 
   describe('when controlled', () => {
@@ -93,9 +96,9 @@ describe('packages/checkbox', () => {
     });
 
     test('checkbox does not become checked when clicked', () => {
-      const { checkbox } = renderCheckbox({ checked: false });
+      const { checkbox, getInputValue } = renderCheckbox({ checked: false });
       fireEvent.click(checkbox);
-      expect((checkbox as HTMLInputElement).checked).toBe(false);
+      expect(getInputValue()).toBe(false);
     });
   });
 
@@ -116,9 +119,9 @@ describe('packages/checkbox', () => {
     });
 
     test('checkbox becomes checked when clicked', () => {
-      const { checkbox } = renderCheckbox({});
+      const { checkbox, getInputValue } = renderCheckbox({});
       fireEvent.click(checkbox);
-      expect((checkbox as HTMLInputElement).checked).toBe(true);
+      expect(getInputValue()).toBe(true);
     });
   });
 });
