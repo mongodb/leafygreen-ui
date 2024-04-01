@@ -55,6 +55,7 @@ import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
+import Escalation from './Escalation.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import Federation from './Federation.svg';
@@ -209,6 +210,7 @@ const _glyphs = {
   Edit,
   Ellipsis,
   Email,
+  Escalation,
   Export,
   Favorite,
   Federation,

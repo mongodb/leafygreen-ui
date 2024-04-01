@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 import {
-  getAccessibleProps,
-  LogoProps,
+  BaseLogoProps,
   SupportedColors,
   SupportedColorsMap,
-} from './utils';
+} from '../Logo.types';
+import { getAccessibleProps } from '../utils';
 
 /**
  * # AtlasLogoLockup
@@ -32,7 +32,7 @@ export const AtlasLogoLockup = React.forwardRef(
       role = 'img',
       'aria-label': ariaLabel = 'MongoDB Logo',
       ...rest
-    }: LogoProps,
+    }: BaseLogoProps,
     ref: React.LegacyRef<SVGSVGElement> | undefined,
   ): ReactElement => {
     const fill = SupportedColorsMap[color];
