@@ -6,6 +6,7 @@ import {
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 export const State = {
   Unset: 'unset',
@@ -13,14 +14,6 @@ export const State = {
 } as const;
 
 export type State = (typeof State)[keyof typeof State];
-
-export const Size = {
-  Small: 'small',
-  Default: 'default',
-  Large: 'large',
-} as const;
-
-export type Size = (typeof Size)[keyof typeof Size];
 
 interface BaseSearchInputProps
   extends DarkModeProps,

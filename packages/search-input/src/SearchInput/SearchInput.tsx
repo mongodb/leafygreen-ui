@@ -33,6 +33,7 @@ import {
   isComponentType,
   keyMap,
 } from '@leafygreen-ui/lib';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { SearchInputContextProvider } from '../SearchInputContext';
 import { SearchResultProps } from '../SearchResult';
@@ -41,7 +42,7 @@ import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
   baseInputStyle,
-  clearButtonSizeStyle,
+  clearButtonStyle,
   formStyle,
   inputThemeStyle,
   inputWrapperDisabledStyle,
@@ -54,7 +55,7 @@ import {
   searchIconSizeStyle,
   searchIconThemeStyle,
 } from './SearchInput.styles';
-import { SearchInputProps, Size, State } from './SearchInput.types';
+import { SearchInputProps, State } from './SearchInput.types';
 
 /**
  * # SearchInput
@@ -80,7 +81,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
       onChange: onChangeProp,
       onSubmit: onSubmitProp,
       'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
+      'aria-labelledby': ariaLabelledby,
       ...rest
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
@@ -294,7 +295,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
 
       const isFocusInComponent = isFocusOnSearchBox || isFocusInMenu;
 
-      if (isFocusInComponent) {
+      if (isFocusInComponent && !disabled) {
         switch (e.key) {
           case keyMap.Enter: {
             highlightedElementRef?.current?.click();
@@ -399,8 +400,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   [inputWrapperInteractiveStyles[theme]]: !disabled,
                 },
               )}
-              aria-label={ariaLabel}
-              aria-labelledby={ariaLabelledBy}
+              aria-label={ariaLabelledby ? undefined : ariaLabel}
+              aria-labelledby={ariaLabelledby}
             >
               <MagnifyingGlass
                 className={cx(
@@ -426,7 +427,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   type="button"
                   aria-label="Clear search"
                   onClick={handleClearButtonClick}
-                  className={clearButtonSizeStyle[size]}
+                  className={clearButtonStyle}
                   tabIndex={disabled ? -1 : 0}
                   disabled={disabled}
                 >
