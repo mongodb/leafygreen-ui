@@ -75,8 +75,5 @@
   },
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
-  },
-  "dependencies": {
-    "@leafygreen-ui/banner": "^7.0.20"
   }
 }
