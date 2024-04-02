@@ -2,9 +2,9 @@ import { getByLgId } from '@lg-tools/test-harnesses';
 
 import { LGIDS_TOGGLE } from '../../constants';
 
-import { LGToggleTestUtilsReturnType } from './getLGToggleTestUtils.types';
+import { LGToggleTestUtilsReturnType } from './getTestUtils.types';
 
-export const getLGToggleTestUtils = (
+export const getTestUtils = (
   lgId: string = LGIDS_TOGGLE.root,
 ): LGToggleTestUtilsReturnType => {
   /**

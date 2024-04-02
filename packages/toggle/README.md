@@ -60,29 +60,29 @@ Please reach out if you would like further guidance on how to programmatically a
 
 # Test Harnesses
 
-## getLGToggleTestUtils()
+## getTestUtils()
 
-`getLGToggleTestUtils()` is a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found, an error will be thrown.
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Toggle` in a product test suite. If the `Toggle` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
-import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getTestUtils } from '@leafygreen-ui/toggle';
 
-const utils = getLGToggleTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toggle`. It defaults to 'lg-toggle' if left empty.
 ```
 
 #### Single `Toggle`
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getTestUtils } from '@leafygreen-ui/toggle';
 
 ...
 
 test('toggle', () => {
   render(<Toggle aria-label="label" />);
-  const { getInput, getInputValue } = getLGToggleTestUtils();
+  const { getInput, getInputValue } = getTestUtils();
 
   expect(getInput()).toBeInTheDocument();
   expect(getInputValue()).toBe(false);
@@ -95,7 +95,7 @@ When testing multiple `Toggle`'s it is recommended to add the custom `data-lgid`
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getTestUtils } from '@leafygreen-ui/toggle';
 
 ...
 
@@ -106,8 +106,8 @@ test('toggle', () => {
       <Toggle data-lgid="toggle-2" aria-label="label 2" checked />
     </>,
   );
-  const utilsOne = getLGToggleTestUtils('toggle-1'); // data-lgid
-  const utilsTwo = getLGToggleTestUtils('toggle-2'); // data-lgid
+  const utilsOne = getTestUtils('toggle-1'); // data-lgid
+  const utilsTwo = getTestUtils('toggle-2'); // data-lgid
 
   // First toggle
   expect(utilsOne.getInput()).toBeInTheDocument();
@@ -123,7 +123,7 @@ test('toggle', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import Toggle, { getTestUtils } from '@leafygreen-ui/toggle';
 import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
 import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
@@ -138,7 +138,7 @@ test('Form', () => {
     </Form>,
   );
 
-  const toggleInputUtils = getLGToggleTestUtils();
+  const toggleInputUtils = getTestUtils();
   const textInputUtils = getLGTextInputTestUtils();
   const textAreaUtils = getLGTextAreaTestUtils();
 
@@ -163,7 +163,7 @@ test('Form', () => {
 #### Elements
 
 ```tsx
-const { getInput, isDisabled, getInputValue } = getLGToggleTestUtils();
+const { getInput, isDisabled, getInputValue } = getTestUtils();
 ```
 
 | Util            | Description                           | Returns             |
