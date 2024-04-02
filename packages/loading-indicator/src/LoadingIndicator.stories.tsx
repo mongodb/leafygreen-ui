@@ -74,5 +74,5 @@ const Template: StoryFn<typeof Spinner> = (
 
 export const LiveExample = Template.bind({});
 LiveExample.args = {
-  description: 'Loading...',
+  description: 'Loading dot dot...',
 };
