@@ -4,7 +4,11 @@ import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
 import { LGIDS_CHECKBOX } from '../constants';
 
-export const getTestUtils = (lgId: string = LGIDS_CHECKBOX.root) => {
+import { CheckboxTestUtilsReturnType } from './getTestUtils.types';
+
+export const getTestUtils = (
+  lgId: string = LGIDS_CHECKBOX.root,
+): CheckboxTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
@@ -60,5 +64,5 @@ export const getTestUtils = (lgId: string = LGIDS_CHECKBOX.root) => {
     getInput: () => getInput,
     isDisabled: () => isInputDisabled(),
     getInputValue: () => getInputValue(),
-  } as const;
+  };
 };

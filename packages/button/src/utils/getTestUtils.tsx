@@ -2,7 +2,11 @@ import { getByLgId } from '@lg-tools/test-harnesses';
 
 import { LGIDS_BUTTON } from '../constants';
 
-export const getTestUtils = (lgId: string = LGIDS_BUTTON.root) => {
+import { GetTestUtilsReturnType } from './getTestUtils.types';
+
+export const getTestUtils = (
+  lgId: string = LGIDS_BUTTON.root,
+): GetTestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
@@ -19,5 +23,5 @@ export const getTestUtils = (lgId: string = LGIDS_BUTTON.root) => {
   return {
     getButton: () => element,
     isDisabled: () => isButtonDisabled(),
-  } as const;
+  };
 };
