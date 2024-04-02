@@ -1,1 +1,1 @@
-export { getLGSelectTestUtils } from './getLGSelectTestUtils/getLGSelectTestUtils';
+export { getTestUtils } from './getTestUtils/getTestUtils';

@@ -5,15 +5,15 @@ import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
 import { LGIDS_SELECT } from '../../constants';
 
-import { LGSelectTestUtilsReturnType } from './getLGSelectTestUtils.types';
+import { TestUtilsReturnType } from './getTestUtils.types';
 
 export function waitForSelectTransitionDuration() {
   return new Promise(res => setTimeout(res, transitionDuration.slower));
 }
 
-export const getLGSelectTestUtils = (
+export const getTestUtils = (
   lgId: string = LGIDS_SELECT.root,
-): LGSelectTestUtilsReturnType => {
+): TestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.

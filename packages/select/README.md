@@ -95,16 +95,16 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 
 # Test Harnesses
 
-## getLGSelectTestUtils()
+## getTestUtils()
 
-`getLGSelectTestUtils()` is a util that allows consumers to reliably interact with `LG Select` in a product test suite. If the `Select` component cannot be found, an error will be thrown.
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Select` in a product test suite. If the `Select` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
-import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
+import { Select, getTestUtils } from '@leafygreen-ui/select';
 
-const utils = getLGSelectTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Select`. It defaults to 'lg-select' if left empty.
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Select`. It defaults to 'lg-select' if left empty.
 ```
 
 #### Single `Select`
@@ -112,7 +112,7 @@ const utils = getLGSelectTestUtils(lgId?: string); // lgId refers to the custom 
 ```tsx
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
+import { Select, getTestUtils } from '@leafygreen-ui/select';
 
 ...
 
@@ -133,7 +133,7 @@ test('select', () => {
     </Select>
   );
 
-  const { getInputValue, getInput, getOptions } = getLGSelectTestUtils();
+  const { getInputValue, getInput, getOptions } = getTestUtils();
 
   expect(getInput()).toBeInTheDocument();
   expect(getInputValue()).toBe('Select');
@@ -151,7 +151,7 @@ When testing multiple `Select`'s it is recommended to add the custom `data-lgid`
 
 ```tsx
 import { render } from '@testing-library/react';
-import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
+import { Select, getTestUtils } from '@leafygreen-ui/select';
 
 ...
 
@@ -189,8 +189,8 @@ test('select', () => {
       </Select>
     </>,
   );
-  const lgUtilsSelect1 = getLGSelectTestUtils('select-1'); // data-lgid
-  const lgUtilsSelect2 = getLGSelectTestUtils('select-2'); // data-lgid
+  const lgUtilsSelect1 = getTestUtils('select-1'); // data-lgid
+  const lgUtilsSelect2 = getTestUtils('select-2'); // data-lgid
 
   // First Select
   expect(lgUtilsSelect1.getInput()).toBeInTheDocument();
@@ -206,8 +206,8 @@ test('select', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
-import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
+import TextInput, { getTestUtils: getTextInputTestUtils } from '@leafygreen-ui/text-input';
+import { Select, getTestUtils: getSelectTestUtils } from '@leafygreen-ui/select';
 
 ...
 
@@ -231,8 +231,8 @@ test('Form', () => {
     </Form>,
   );
 
-  const lgUtilsTextInput = getTestUtils();
-  const lgUtilsSelect = getLGSelectTestUtils();
+  const lgUtilsTextInput = getTextInputTestUtils();
+  const lgUtilsSelect = getSelectTestUtils();
 
   // LG TextInput
   expect(lgUtilsTextInput.getInput()).toBeInTheDocument();
@@ -261,7 +261,7 @@ const {
   isDisabled,
   isValid,
   isError,
-} = getLGSelectTestUtils();
+} = getTestUtils();
 ```
 
 | Util                       | Description                                | Returns                       |

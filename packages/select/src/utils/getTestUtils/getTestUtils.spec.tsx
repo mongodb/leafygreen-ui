@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 
 import { Option, OptionGroup, Select, State } from '../../';
 
-import { getLGSelectTestUtils } from './getLGSelectTestUtils';
+import { getTestUtils } from './getTestUtils';
 
 const defaultProps = {
   label: 'Label',
@@ -82,11 +82,11 @@ function renderMultipleSelects() {
   };
 }
 
-describe('packages/select/getLGSelectTestUtils', () => {
+describe('packages/select/getTestUtils', () => {
   test('throws error if select is not found', () => {
     try {
       renderSelect({ 'data-lgid': 'different-id' });
-      const _utils = getLGSelectTestUtils();
+      const _utils = getTestUtils();
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
       expect(error).toHaveProperty(
@@ -102,13 +102,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('getLabel', () => {
       test('is in the document', () => {
         renderSelect();
-        const { getLabel } = getLGSelectTestUtils();
+        const { getLabel } = getTestUtils();
         expect(getLabel()).toBeInTheDocument();
       });
 
       test('is not in the document', () => {
         renderSelect({ label: '' });
-        const { getLabel } = getLGSelectTestUtils();
+        const { getLabel } = getTestUtils();
         expect(getLabel()).not.toBeInTheDocument();
       });
     });
@@ -116,13 +116,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('getDescription', () => {
       test('is in the document', () => {
         renderSelect();
-        const { getDescription } = getLGSelectTestUtils();
+        const { getDescription } = getTestUtils();
         expect(getDescription()).toBeVisible();
       });
 
       test('is not in the document', () => {
         renderSelect({ description: '' });
-        const { getDescription } = getLGSelectTestUtils();
+        const { getDescription } = getTestUtils();
         expect(getDescription()).not.toBeInTheDocument();
       });
     });
@@ -130,14 +130,14 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('getInput', () => {
       test('is in the document', () => {
         renderSelect();
-        const { getInput } = getLGSelectTestUtils();
+        const { getInput } = getTestUtils();
         expect(getInput()).toBeInTheDocument();
         expect(getInput()).toHaveTextContent('Select');
       });
 
       test('can be clicked', async () => {
         renderSelect();
-        const { getInput, getPopover } = getLGSelectTestUtils();
+        const { getInput, getPopover } = getTestUtils();
 
         const trigger = getInput();
         userEvent.click(trigger);
@@ -146,7 +146,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
       test('can close the popover', async () => {
         renderSelect();
-        const { getInput, getPopover } = getLGSelectTestUtils();
+        const { getInput, getPopover } = getTestUtils();
 
         const trigger = getInput();
         userEvent.click(trigger);
@@ -162,7 +162,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           state: State.Error,
           errorMessage: 'whoops',
         });
-        const { getErrorMessage } = getLGSelectTestUtils();
+        const { getErrorMessage } = getTestUtils();
 
         expect(getErrorMessage()).toBeInTheDocument();
         expect(getErrorMessage()).toHaveTextContent('whoops');
@@ -170,7 +170,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
 
       test('is not in the document', async () => {
         renderSelect();
-        const { getErrorMessage } = getLGSelectTestUtils();
+        const { getErrorMessage } = getTestUtils();
         expect(getErrorMessage()).not.toBeInTheDocument();
       });
     });
@@ -181,7 +181,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { getInput, getOptions } = getLGSelectTestUtils();
+          const { getInput, getOptions } = getTestUtils();
 
           userEvent.click(getInput());
           // `select` is an option
@@ -196,7 +196,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { getInput, getOptionByValue } = getLGSelectTestUtils();
+          const { getInput, getOptionByValue } = getTestUtils();
 
           userEvent.click(getInput());
           expect(getOptionByValue('Red')).toBeInTheDocument();
@@ -207,7 +207,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { getInput, getOptionByValue } = getLGSelectTestUtils();
+          const { getInput, getOptionByValue } = getTestUtils();
 
           userEvent.click(getInput());
           expect(getOptionByValue('Not an option')).not.toBeInTheDocument();
@@ -217,8 +217,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { getInput, getOptionByValue, getInputValue } =
-            getLGSelectTestUtils();
+          const { getInput, getOptionByValue, getInputValue } = getTestUtils();
 
           userEvent.click(getInput());
           userEvent.click(getOptionByValue('Red')!);
@@ -229,7 +228,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           renderSelect({
             usePortal: boolean,
           });
-          const { getInput, getOptionByValue } = getLGSelectTestUtils();
+          const { getInput, getOptionByValue } = getTestUtils();
 
           userEvent.click(getInput());
           expect(() => userEvent.click(getOptionByValue('Jellow')!)).toThrow();
@@ -240,7 +239,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             usePortal: boolean,
           });
           const { getInput, getOptionByValue, getPopover, getInputValue } =
-            getLGSelectTestUtils();
+            getTestUtils();
 
           userEvent.click(getInput());
           userEvent.click(getOptionByValue('Orange you glad')!);
@@ -258,7 +257,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             renderSelect({
               usePortal: boolean,
             });
-            const { getInput, getPopover } = getLGSelectTestUtils();
+            const { getInput, getPopover } = getTestUtils();
 
             expect(getPopover()).not.toBeInTheDocument();
             userEvent.click(getInput());
@@ -271,7 +270,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             renderSelect({
               usePortal: boolean,
             });
-            const { getInput, getPopover } = getLGSelectTestUtils();
+            const { getInput, getPopover } = getTestUtils();
 
             expect(getPopover()).not.toBeInTheDocument();
             userEvent.click(getInput());
@@ -284,8 +283,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
             renderSelect({
               usePortal: boolean,
             });
-            const { getInput, getPopover, getOptionByValue } =
-              getLGSelectTestUtils();
+            const { getInput, getPopover, getOptionByValue } = getTestUtils();
 
             expect(getPopover()).not.toBeInTheDocument();
             userEvent.click(getInput());
@@ -300,13 +298,13 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('isDisabled', () => {
       test('is false', () => {
         renderSelect();
-        const { isDisabled } = getLGSelectTestUtils();
+        const { isDisabled } = getTestUtils();
         expect(isDisabled()).toBeFalsy();
       });
 
       test('is true', () => {
         renderSelect({ disabled: true });
-        const { isDisabled } = getLGSelectTestUtils();
+        const { isDisabled } = getTestUtils();
         expect(isDisabled()).toBeTruthy();
       });
     });
@@ -314,7 +312,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('isError', () => {
       test('is false', () => {
         renderSelect();
-        const { isError } = getLGSelectTestUtils();
+        const { isError } = getTestUtils();
         expect(isError()).toBeFalsy();
       });
 
@@ -323,7 +321,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
           errorMessage: 'errrror',
           state: State.Error,
         });
-        const { isError } = getLGSelectTestUtils();
+        const { isError } = getTestUtils();
         expect(isError()).toBeTruthy();
       });
     });
@@ -331,14 +329,14 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('getInputValue', () => {
       test('returns the default value "Select"', () => {
         renderSelect();
-        const { getInputValue } = getLGSelectTestUtils();
+        const { getInputValue } = getTestUtils();
         expect(getInputValue()).toBe('Select');
       });
 
       describe('value prop', () => {
         test('returns the value', () => {
           renderSelect({ value: 'Yellow' });
-          const { getInputValue } = getLGSelectTestUtils();
+          const { getInputValue } = getTestUtils();
           expect(getInputValue()).toBe('Yellow');
         });
 
@@ -349,7 +347,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
               usePortal: boolean,
             });
             const { getInput, getInputValue, getOptionByValue } =
-              getLGSelectTestUtils();
+              getTestUtils();
 
             expect(getInputValue()).toBe('Blue');
             userEvent.click(getInput());
@@ -362,7 +360,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
       describe('defaultValue prop', () => {
         test('returns the default value', () => {
           renderSelect({ defaultValue: 'Green' });
-          const { getInputValue } = getLGSelectTestUtils();
+          const { getInputValue } = getTestUtils();
           expect(getInputValue()).toBe('Green');
         });
 
@@ -373,7 +371,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
               usePortal: boolean,
             });
             const { getInput, getInputValue, getOptionByValue } =
-              getLGSelectTestUtils();
+              getTestUtils();
 
             expect(getInputValue()).toBe('Green');
             userEvent.click(getInput());
@@ -389,8 +387,8 @@ describe('packages/select/getLGSelectTestUtils', () => {
     test('both have correct default value', () => {
       renderMultipleSelects();
 
-      const testUtils1 = getLGSelectTestUtils('lg-select-1');
-      const testUtils2 = getLGSelectTestUtils('lg-select-2');
+      const testUtils1 = getTestUtils('lg-select-1');
+      const testUtils2 = getTestUtils('lg-select-2');
 
       expect(testUtils1.getInputValue()).toBe('Red');
       expect(testUtils2.getInputValue()).toBe('Blue');
@@ -399,7 +397,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('first select', () => {
       test('has correct number of options', async () => {
         renderMultipleSelects();
-        const { getInput, getOptions } = getLGSelectTestUtils('lg-select-1');
+        const { getInput, getOptions } = getTestUtils('lg-select-1');
 
         userEvent.click(getInput());
         // `select` is an option
@@ -410,7 +408,7 @@ describe('packages/select/getLGSelectTestUtils', () => {
     describe('second select', () => {
       test('has correct number of options', async () => {
         renderMultipleSelects();
-        const { getInput, getOptions } = getLGSelectTestUtils('lg-select-2');
+        const { getInput, getOptions } = getTestUtils('lg-select-2');
 
         userEvent.click(getInput());
         // `select` is an option
