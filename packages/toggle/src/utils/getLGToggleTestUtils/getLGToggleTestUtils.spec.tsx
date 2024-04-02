@@ -54,14 +54,14 @@ describe('packages/toggle', () => {
           renderToggle();
           const { getInputValue } = getLGToggleTestUtils();
 
-          expect(getInputValue()).toBe('false');
+          expect(getInputValue()).toBe(false);
         });
 
         test('to be true', () => {
           renderToggle({ checked: true });
           const { getInputValue } = getLGToggleTestUtils();
 
-          expect(getInputValue()).toBe('true');
+          expect(getInputValue()).toBe(true);
         });
       });
 
@@ -97,8 +97,8 @@ describe('packages/toggle', () => {
         const utilsOne = getLGToggleTestUtils('lg-toggle-1');
         const utilsTwo = getLGToggleTestUtils('lg-toggle-2');
 
-        expect(utilsOne.getInputValue()).toBe('false');
-        expect(utilsTwo.getInputValue()).toBe('true');
+        expect(utilsOne.getInputValue()).toBe(false);
+        expect(utilsTwo.getInputValue()).toBe(true);
       });
     });
 
@@ -141,7 +141,7 @@ describe('packages/toggle', () => {
         const { getInput, getInputValue } = getLGToggleTestUtils();
         const input = getInput();
         userEvent.click(input);
-        expect(getInputValue()).toBe('true');
+        expect(getInputValue()).toBe(true);
       });
     });
   });

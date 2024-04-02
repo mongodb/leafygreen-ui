@@ -85,7 +85,7 @@ test('toggle', () => {
   const { getInput, getInputValue } = getLGToggleTestUtils();
 
   expect(getInput()).toBeInTheDocument();
-  expect(getInputValue()).toBe('false');
+  expect(getInputValue()).toBe(false);
 });
 ```
 
@@ -111,11 +111,11 @@ test('toggle', () => {
 
   // First toggle
   expect(utilsOne.getInput()).toBeInTheDocument();
-  expect(utilsOne.getInputValue()).toBe('false');
+  expect(utilsOne.getInputValue()).toBe(false);
 
   // Second Toggle
   expect(utilsTwo.getInput()).toBeInTheDocument();
-  expect(utilsTwo.getInputValue()).toBe('true');
+  expect(utilsTwo.getInputValue()).toBe(true);
 });
 ```
 
@@ -144,7 +144,7 @@ test('Form', () => {
 
   // LG Toggle
   expect(toggleInputUtils.getInput()).toBeInTheDocument();
-  expect(toggleInputUtils.getInputValue()).toBe('false');
+  expect(toggleInputUtils.getInputValue()).toBe(false);
 
   // LG TextInput
   expect(textInputUtils.getInput()).toBeInTheDocument();
@@ -166,8 +166,8 @@ test('Form', () => {
 const { getInput, isDisabled, getInputValue } = getLGToggleTestUtils();
 ```
 
-| Util            | Description                           | Returns              |
-| --------------- | ------------------------------------- | -------------------- |
-| `getInput`      | Returns the input node                | `HTMLButtonElement`  |
-| `isDisabled`    | Returns whether the input is disabled | `boolean`            |
-| `getInputValue` | Returns the input value               | `'true'`\| `'false'` |
+| Util            | Description                           | Returns             |
+| --------------- | ------------------------------------- | ------------------- |
+| `getInput`      | Returns the input node                | `HTMLButtonElement` |
+| `isDisabled`    | Returns whether the input is disabled | `boolean`           |
+| `getInputValue` | Returns the input value               | `boolean`           |

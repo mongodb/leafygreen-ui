@@ -24,7 +24,7 @@ export const getLGToggleTestUtils = (
    * Returns the value for the aria-checked attribute on the input.
    */
   const getInputValue = () => {
-    return element.getAttribute('aria-checked') as string;
+    return element.getAttribute('aria-checked') === 'true';
   };
 
   return {
