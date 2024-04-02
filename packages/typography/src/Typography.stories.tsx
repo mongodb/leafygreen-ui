@@ -98,6 +98,8 @@ const TypographyDemoComponent = ({
           <Link href="https://mongodb.github.io/leafygreen-ui/?path=/story/*">
             External
           </Link>
+          <br />
+          <Link as="button">As Button</Link>
         </div>
 
         <div>

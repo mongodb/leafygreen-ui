@@ -7,6 +7,7 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 
+import { LGIDS_SELECT } from '../constants';
 import { State } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet, sizeSets } from '../styleSets';
@@ -123,16 +124,20 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
         )}
       >
         <div className={menuButtonTextWrapperStyle}>
-          <div className={cx(menuButtonTextClassName, menuButtonTextStyle)}>
+          <div
+            data-lgid={LGIDS_SELECT.buttonText}
+            className={cx(menuButtonTextClassName, menuButtonTextStyle)}
+          >
             {text}
           </div>
           {state === State.Error && errorMessage && (
             <WarningIcon
-              role="presentation"
+              aria-hidden
               className={css`
                 color: ${errorColor[theme]};
               `}
               size={sizeSet.warningIcon}
+              title="Error"
             />
           )}
         </div>

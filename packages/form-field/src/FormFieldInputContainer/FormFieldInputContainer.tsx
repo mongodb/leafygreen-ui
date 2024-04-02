@@ -5,6 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
+import { LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldState } from '../FormField/FormField.types';
 import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
@@ -72,7 +73,7 @@ export const FormFieldInputContainer = forwardRef<
         <div className={iconsWrapperStyles}>
           {state === FormFieldState.Valid && !disabled && (
             <Icon
-              role="presentation"
+              aria-hidden
               title="Valid"
               glyph="Checkmark"
               className={validIconStyles[theme]}
@@ -81,7 +82,7 @@ export const FormFieldInputContainer = forwardRef<
 
           {state === FormFieldState.Error && !disabled && (
             <Icon
-              role="presentation"
+              aria-hidden
               title="Error"
               glyph="Warning"
               className={errorIconStyles[theme]}
@@ -90,6 +91,7 @@ export const FormFieldInputContainer = forwardRef<
 
           {shouldRenderOptionalText && (
             <div
+              data-lgid={LGIDS_FORM_FIELD.optional}
               className={cx(
                 optionalTextBaseStyle,
                 optionalTextThemeStyle[theme],

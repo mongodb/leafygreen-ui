@@ -52,7 +52,7 @@
 /packages/ripple/ @bruugey
 /packages/search-input/ @thesonofthomp
 /packages/segmented-control/ @thesonofthomp
-/packages/select/ @thesonofthomp
+/packages/select/ @thesonofthomp @shaneeza
 /packages/side-nav/ @thesonofthomp
 /packages/skeleton-loader/ @shaneeza
 /packages/split-button/ @shaneeza
@@ -60,8 +60,8 @@
 /packages/table/ @thesonofthomp
 /packages/tabs/ @shaneeza
 /packages/testing-lib/ @thesonofthomp
-/packages/text-area/ @thesonofthomp
-/packages/text-input/ @thesonofthomp
+/packages/text-area/ @thesonofthomp @shaneeza
+/packages/text-input/ @thesonofthomp @shaneeza
 /packages/toast/ @thesonofthomp
 /packages/toggle/ @shaneeza
 /packages/tokens/ @thesonofthomp @bruugey
@@ -70,6 +70,7 @@
 
 /scripts/ @thesonofthomp
 /tools/ @thesonofthomp
+/tools/test-harnesses @shaneeza
 
 ./storybook/ @thesonofthomp 
 ./.github/ @thesonofthomp 
