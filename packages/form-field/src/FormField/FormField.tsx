@@ -107,7 +107,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                 {isErrorState && (
                   <>
                     <Icon
-                      role="presentation"
+                      aria-hidden
                       title="Error"
                       glyph="Warning"
                       className={errorIconStyles[theme]}
@@ -125,7 +125,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
                 {isSuccessState && (
                   <>
                     <Icon
-                      role="presentation"
+                      aria-hidden
                       title="Valid"
                       glyph="Checkmark"
                       className={validIconStyles[theme]}

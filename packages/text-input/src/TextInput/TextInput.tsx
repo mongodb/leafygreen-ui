@@ -148,7 +148,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       baseFontSize,
       className,
       darkMode,
-      dataLgId,
+      'data-lgid': dataLgId,
       description,
       disabled,
       errorMessage,
