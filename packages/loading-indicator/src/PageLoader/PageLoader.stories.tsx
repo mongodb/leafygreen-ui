@@ -26,5 +26,5 @@ export const Default = Template.bind({});
 
 export const WithDescription = Template.bind({});
 WithDescription.args = {
-  description: 'Loading...',
+  description: 'Loading dot dot...',
 };
