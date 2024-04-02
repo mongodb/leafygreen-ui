@@ -123,8 +123,8 @@ test('toggle', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getTestUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import Toggle, { getTestUtils: getToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getTestUtils: getTextInputTestUtils } from '@leafygreen-ui/text-input';
 import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
@@ -138,8 +138,8 @@ test('Form', () => {
     </Form>,
   );
 
-  const toggleInputUtils = getTestUtils();
-  const textInputUtils = getLGTextInputTestUtils();
+  const toggleInputUtils = getToggleTestUtils();
+  const textInputUtils = getTextInputTestUtils();
   const textAreaUtils = getLGTextAreaTestUtils();
 
   // LG Toggle

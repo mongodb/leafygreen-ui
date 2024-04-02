@@ -5,11 +5,11 @@ import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
 import { LGIDS_TEXT_INPUT } from '../../constants';
 
-import { LGTextInputTestUtilsReturnType } from './getLGTextInputTestUtils.types';
+import { TestUtilsReturnType } from './getTestUtils.types';
 
-export const getLGTextInputTestUtils = (
+export const getTestUtils = (
   lgId: string = LGIDS_TEXT_INPUT.root,
-): LGTextInputTestUtilsReturnType => {
+): TestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.

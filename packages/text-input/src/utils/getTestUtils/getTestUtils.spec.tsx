@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import TextInput, { State } from '../../TextInput';
 
-import { getLGTextInputTestUtils } from './getLGTextInputTestUtils';
+import { getTestUtils } from './getTestUtils';
 
 const error = 'This is the error message';
 const defaultProps = {
@@ -49,12 +49,12 @@ function renderMultipleInputs() {
 }
 
 describe('packages/text-input', () => {
-  describe('getLGTextInputTestUtils', () => {
+  describe('getTestUtils', () => {
     test('throws error if LG TextInput is not found', () => {
       render(<TextInput data-lgid="lg-text_output" label="hey" />);
 
       try {
-        const _utils = getLGTextInputTestUtils();
+        const _utils = getTestUtils();
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty(
@@ -70,7 +70,7 @@ describe('packages/text-input', () => {
       describe('getInput', () => {
         test('is in the document', () => {
           renderTextInput();
-          const { getInput } = getLGTextInputTestUtils();
+          const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -78,13 +78,13 @@ describe('packages/text-input', () => {
       describe('getLabel', () => {
         test('is in the document', () => {
           renderTextInput();
-          const { getLabel } = getLGTextInputTestUtils();
+          const { getLabel } = getTestUtils();
           expect(getLabel()).toBeInTheDocument();
         });
 
         test('is not in the document', () => {
           renderTextInput({ label: '' });
-          const { getLabel } = getLGTextInputTestUtils();
+          const { getLabel } = getTestUtils();
           expect(getLabel()).not.toBeInTheDocument();
         });
       });
@@ -92,13 +92,13 @@ describe('packages/text-input', () => {
       describe('getDescription', () => {
         test('is in the document', () => {
           renderTextInput();
-          const { getDescription } = getLGTextInputTestUtils();
+          const { getDescription } = getTestUtils();
           expect(getDescription()).toBeInTheDocument();
         });
 
         test('is not in the document', () => {
           renderTextInput({ description: '' });
-          const { getDescription } = getLGTextInputTestUtils();
+          const { getDescription } = getTestUtils();
           expect(getDescription()).not.toBeInTheDocument();
         });
       });
@@ -106,14 +106,14 @@ describe('packages/text-input', () => {
       describe('getErrorMessage', () => {
         test('is in the document', () => {
           renderTextInput({ state: State.Error, errorMessage: error });
-          const { getErrorMessage } = getLGTextInputTestUtils();
+          const { getErrorMessage } = getTestUtils();
           expect(getErrorMessage()).toBeInTheDocument();
           expect(getErrorMessage()).toHaveTextContent(error);
         });
 
         test('is not in the document', () => {
           renderTextInput({ errorMessage: 'hey' });
-          const { getErrorMessage } = getLGTextInputTestUtils();
+          const { getErrorMessage } = getTestUtils();
           expect(getErrorMessage()).not.toBeInTheDocument();
         });
       });
@@ -121,14 +121,14 @@ describe('packages/text-input', () => {
       describe('getInputValue', () => {
         test('returns value when uncontrolled', () => {
           renderTextInput();
-          const { getInput, getInputValue } = getLGTextInputTestUtils();
+          const { getInput, getInputValue } = getTestUtils();
           userEvent.type(getInput(), '123');
           expect(getInputValue()).toBe('123');
         });
 
         test('returns value when controlled', () => {
           renderTextInput({ value: '456' });
-          const { getInputValue } = getLGTextInputTestUtils();
+          const { getInputValue } = getTestUtils();
           expect(getInputValue()).toBe('456');
         });
       });
@@ -136,13 +136,13 @@ describe('packages/text-input', () => {
       describe('isDisabled', () => {
         test('is true', () => {
           renderTextInput({ disabled: true });
-          const { isDisabled } = getLGTextInputTestUtils();
+          const { isDisabled } = getTestUtils();
           expect(isDisabled()).toBe(true);
         });
 
         test('is false', () => {
           renderTextInput();
-          const { isDisabled } = getLGTextInputTestUtils();
+          const { isDisabled } = getTestUtils();
           expect(isDisabled()).toBe(false);
         });
       });
@@ -150,13 +150,13 @@ describe('packages/text-input', () => {
       describe('isValid', () => {
         test('is true', () => {
           renderTextInput({ state: State.Valid });
-          const { isValid } = getLGTextInputTestUtils();
+          const { isValid } = getTestUtils();
           expect(isValid()).toBe(true);
         });
 
         test('is false', () => {
           renderTextInput();
-          const { isValid } = getLGTextInputTestUtils();
+          const { isValid } = getTestUtils();
           expect(isValid()).toBe(false);
         });
       });
@@ -164,13 +164,13 @@ describe('packages/text-input', () => {
       describe('isError', () => {
         test('is true', () => {
           renderTextInput({ state: State.Error });
-          const { isError } = getLGTextInputTestUtils();
+          const { isError } = getTestUtils();
           expect(isError()).toBe(true);
         });
 
         test('is false', () => {
           renderTextInput();
-          const { isError } = getLGTextInputTestUtils();
+          const { isError } = getTestUtils();
           expect(isError()).toBe(false);
         });
       });
@@ -178,13 +178,13 @@ describe('packages/text-input', () => {
       describe('isOptional', () => {
         test('is true', () => {
           renderTextInput({ optional: true });
-          const { isOptional } = getLGTextInputTestUtils();
+          const { isOptional } = getTestUtils();
           expect(isOptional()).toBe(true);
         });
 
         test('is false', () => {
           renderTextInput();
-          const { isOptional } = getLGTextInputTestUtils();
+          const { isOptional } = getTestUtils();
           expect(isOptional()).toBe(false);
         });
       });
@@ -193,8 +193,8 @@ describe('packages/text-input', () => {
     describe('multiple inputs', () => {
       test('getInput', () => {
         renderMultipleInputs();
-        const utilsOne = getLGTextInputTestUtils('lg-text_input-1');
-        const utilsTwo = getLGTextInputTestUtils('lg-text_input-2');
+        const utilsOne = getTestUtils('lg-text_input-1');
+        const utilsTwo = getTestUtils('lg-text_input-2');
 
         expect(utilsOne.getInput()).toBeInTheDocument();
         expect(utilsTwo.getInput()).toBeInTheDocument();
@@ -202,8 +202,8 @@ describe('packages/text-input', () => {
 
       test('getInputValue', () => {
         renderMultipleInputs();
-        const utilsOne = getLGTextInputTestUtils('lg-text_input-1');
-        const utilsTwo = getLGTextInputTestUtils('lg-text_input-2');
+        const utilsOne = getTestUtils('lg-text_input-1');
+        const utilsTwo = getTestUtils('lg-text_input-2');
 
         expect(utilsOne.getInputValue()).toBe('text input 1');
         expect(utilsTwo.getInputValue()).toBe('text input 2');
@@ -211,8 +211,8 @@ describe('packages/text-input', () => {
 
       test('getLabel', () => {
         renderMultipleInputs();
-        const utilsOne = getLGTextInputTestUtils('lg-text_input-1');
-        const utilsTwo = getLGTextInputTestUtils('lg-text_input-2');
+        const utilsOne = getTestUtils('lg-text_input-1');
+        const utilsTwo = getTestUtils('lg-text_input-2');
 
         expect(utilsOne.getLabel()).toHaveTextContent('label 1');
         expect(utilsTwo.getLabel()).toHaveTextContent('label 2');
@@ -220,8 +220,8 @@ describe('packages/text-input', () => {
 
       test('getDescription', () => {
         renderMultipleInputs();
-        const utilsOne = getLGTextInputTestUtils('lg-text_input-1');
-        const utilsTwo = getLGTextInputTestUtils('lg-text_input-2');
+        const utilsOne = getTestUtils('lg-text_input-1');
+        const utilsTwo = getTestUtils('lg-text_input-2');
 
         expect(utilsOne.getDescription()).toHaveTextContent('description 1');
         expect(utilsTwo.getDescription()).toHaveTextContent('description 2');
@@ -239,18 +239,18 @@ describe('packages/text-input', () => {
         expect(asyncComponent).toBeInTheDocument();
 
         // After awaiting asyncComponent, look for text input
-        const { getInput } = getLGTextInputTestUtils();
+        const { getInput } = getTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG TextInput awaiting getLGTextInputTestUtils', async () => {
+      test('find LG TextInput awaiting getTestUtils', async () => {
         const { openButton } = renderTextInputAsync();
 
         userEvent.click(openButton);
 
-        // awaiting getLGTextInputTestUtils
+        // awaiting getTestUtils
         await waitFor(() => {
-          const { getInput } = getLGTextInputTestUtils();
+          const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -264,7 +264,7 @@ describe('packages/text-input', () => {
         expect(asyncComponent).toBeInTheDocument();
 
         // After awaiting asyncComponent, look for text input
-        const { getInput, getInputValue } = getLGTextInputTestUtils();
+        const { getInput, getInputValue } = getTestUtils();
         const input = getInput();
         userEvent.type(input, 'leafygreen');
         expect(getInputValue()).toBe('leafygreen');

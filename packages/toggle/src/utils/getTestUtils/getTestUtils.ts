@@ -2,11 +2,11 @@ import { getByLgId } from '@lg-tools/test-harnesses';
 
 import { LGIDS_TOGGLE } from '../../constants';
 
-import { LGToggleTestUtilsReturnType } from './getTestUtils.types';
+import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
   lgId: string = LGIDS_TOGGLE.root,
-): LGToggleTestUtilsReturnType => {
+): TestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.

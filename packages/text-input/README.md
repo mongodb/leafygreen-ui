@@ -72,29 +72,29 @@ Either `label` or `aria-labelledby` must be provided a string, or there will be 
 
 # Test Harnesses
 
-## getLGTextInputTestUtils()
+## getTestUtils()
 
-`getLGTextInputTestUtils()` is a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG TextInput` in a product test suite. If the `TextInput` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
 
-const utils = getLGTextInputTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextInput`. It defaults to 'lg-text_input' if left empty.
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextInput`. It defaults to 'lg-text_input' if left empty.
 ```
 
 #### Single `TextInput`
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
 
 ...
 
 test('text-input', () => {
   render(<TextInput label="label" value="text input" />);
-  const { getInput, getInputValue } = getLGTextInputTestUtils();
+  const { getInput, getInputValue } = getTestUtils();
 
   expect(getInput()).toBeInTheDocument();
   expect(getInputValue()).toBe('text input');
@@ -107,7 +107,7 @@ When testing multiple `TextInput`'s it is recommended to add the custom `data-lg
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
 
 ...
 
@@ -118,8 +118,8 @@ test('text-input', () => {
       <TextInput data-lgid="text-input-2" label="label 2" value="text input" />
     </>,
   );
-  const utilsOne = getLGTextInputTestUtils('text-input-1'); // data-lgid
-  const utilsTwo = getLGTextInputTestUtils('text-input-2'); // data-lgid
+  const utilsOne = getTestUtils('text-input-1'); // data-lgid
+  const utilsTwo = getTestUtils('text-input-2'); // data-lgid
 
   // First TextInput
   expect(utilsOne.getInput()).toBeInTheDocument();
@@ -135,8 +135,8 @@ test('text-input', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getTestUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import Toggle, { getTestUtils: getToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getTestUtils: getTextInputTestUtils } from '@leafygreen-ui/text-input';
 import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
@@ -149,8 +149,8 @@ test('Form', () => {
       <TextArea label="TextArea label" />
     </Form>,
   );
-  const toggleInputUtils = getTestUtils();
-  const textInputUtils = getLGTextInputTestUtils();
+  const toggleInputUtils = getToggleTestUtils();
+  const textInputUtils = getTextInputTestUtils();
   const textAreaUtils = getLGTextAreaTestUtils();
 
   // LG Toggle
@@ -180,7 +180,7 @@ const {
   isValid,
   isError,
   isOptional,
-} = getLGTextInputTestUtils();
+} = getTestUtils();
 ```
 
 | Util              | Description                                | Returns                       |

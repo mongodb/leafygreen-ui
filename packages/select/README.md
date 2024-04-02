@@ -206,7 +206,7 @@ test('select', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
 import { Select, getLGSelectTestUtils } from '@leafygreen-ui/select';
 
 ...
@@ -231,7 +231,7 @@ test('Form', () => {
     </Form>,
   );
 
-  const lgUtilsTextInput = getLGTextInputTestUtils();
+  const lgUtilsTextInput = getTestUtils();
   const lgUtilsSelect = getLGSelectTestUtils();
 
   // LG TextInput
