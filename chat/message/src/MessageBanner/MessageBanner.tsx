@@ -19,7 +19,6 @@ export function MessageBanner({
     <Banner
       className={cx(baseStyles, variantStyles[theme][variant], className)}
       variant={variant}
-      baseFontSize={13}
       {...divProps}
     >
       {children}

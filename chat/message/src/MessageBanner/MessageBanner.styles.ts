@@ -4,13 +4,16 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
+/**
+ * These base styles override the default styles of the LG Banner component.
+ */
 export const baseStyles = css`
-  // Remove left wedge
+  // Remove the Banner's left border wedge
   &:before {
     content: '';
     background: transparent;
   }
-
+  // Customize the border
   border-width: ${spacing[25]}px;
   border-radius: ${spacing[600]}px;
   border-left-color: unset;
@@ -20,7 +23,7 @@ export const baseStyles = css`
 `;
 
 /**
- * These match the base border-color styles for each variant in the Banner component.
+ * These match the base border-color styles for each variant of the LG Banner component.
  */
 const lightModeInfoMessageBannerStyles = css`
   border-color: ${palette.blue.light2};

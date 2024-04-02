@@ -13,5 +13,5 @@ export interface MessageBannerProps
   /**
    * The content inside of the MessageBanner.
    */
-  children: React.ReactNode | Array<React.ReactNode>;
+  children: React.ReactNode;
 }

@@ -3,7 +3,7 @@ import { StoryFn } from '@storybook/react';
 
 import { type StoryMetaType } from '@leafygreen-ui/lib';
 
-import { MessageBanner } from './MessageBanner';
+import { MessageBanner } from '.';
 
 const meta: StoryMetaType<typeof MessageBanner> = {
   title: 'Chat/MessageBanner',

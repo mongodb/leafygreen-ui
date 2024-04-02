@@ -3,7 +3,6 @@ import React, {
   forwardRef,
   MutableRefObject,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -15,9 +14,8 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
-import { Link } from '@leafygreen-ui/typography';
 
-import { MessageBanner } from '../MessageBanner';
+import { VerifiedAnswerBanner } from '../MessageBanner';
 import { MessageContainer, Variant } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 
@@ -33,7 +31,6 @@ import {
   rightAlignedStyles,
   senderClassName,
   tabletBaseStyles,
-  verifiedAnswerBannerStyles,
 } from './Message.styles';
 import { Align } from './Message.types';
 import { MessageProps } from '.';
@@ -160,39 +157,3 @@ export const Message = forwardRef(
 Message.displayName = 'Message';
 
 export default Message;
-
-function VerifiedAnswerBanner({
-  verifier,
-  verifiedAt,
-  learnMoreUrl,
-}: NonNullable<MessageProps['verified']>) {
-  const text = useMemo(() => {
-    const textParts = [`Answer Verified`];
-
-    if (verifier) {
-      textParts.push(`By ${verifier}`);
-    }
-
-    if (verifiedAt) {
-      const formattedDate = verifiedAt.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-      textParts.push(`On ${formattedDate}`);
-    }
-
-    return textParts.join(' ');
-  }, [verifier, verifiedAt]);
-  return (
-    <MessageBanner className={verifiedAnswerBannerStyles} variant="success">
-      {text}
-      {learnMoreUrl ? (
-        <>
-          {' | '}
-          <Link href={learnMoreUrl}>Learn More</Link>
-        </>
-      ) : null}
-    </MessageBanner>
-  );
-}
