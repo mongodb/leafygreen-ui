@@ -30,6 +30,7 @@ export function VerifiedAnswerBanner({
 
     return textParts.join(' ');
   }, [verifier, verifiedAt]);
+
   return (
     <MessageBanner className={verifiedAnswerBannerStyles} variant="success">
       {text}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -31,53 +31,61 @@ import { BannerProps, Variant } from './types';
  * @param props.darkMode Determines whether or not the component will be rendered in dark mode.
  * @param props.baseFontSize The base font size of the title and text rendered in children.
  */
-export default function Banner({
-  variant = Variant.Info,
-  dismissible = false,
-  onClose = () => {},
-  image,
-  children,
-  className,
-  darkMode: darkModeProp,
-  baseFontSize: baseFontSizeProp,
-  ...rest
-}: BannerProps) {
-  const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+const Banner = forwardRef<HTMLDivElement, BannerProps>(
+  (
+    {
+      variant = Variant.Info,
+      dismissible = false,
+      onClose = () => {},
+      image,
+      children,
+      className,
+      darkMode: darkModeProp,
+      baseFontSize: baseFontSizeProp,
+      ...rest
+    },
+    ref,
+  ) => {
+    const { theme, darkMode } = useDarkMode(darkModeProp);
+    const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-  return (
-    <div
-      role="alert"
-      className={cx(
-        baseBannerStyles,
-        bodyTypeScaleStyles[baseFontSize],
-        variantStyles[theme][variant],
-        {
-          [bannerDismissibleStyles]: dismissible,
-        },
-        className,
-      )}
-      {...rest}
-    >
-      <BannerIcon
-        image={image}
-        theme={theme}
-        baseFontSize={baseFontSize}
-        variant={variant}
-      />
-      <div className={textStyles(image != null, dismissible)}>{children}</div>
-      {dismissible && (
-        <BannerDismissButton
+    return (
+      <div
+        role="alert"
+        ref={ref}
+        className={cx(
+          baseBannerStyles,
+          bodyTypeScaleStyles[baseFontSize],
+          variantStyles[theme][variant],
+          {
+            [bannerDismissibleStyles]: dismissible,
+          },
+          className,
+        )}
+        {...rest}
+      >
+        <BannerIcon
+          image={image}
           theme={theme}
           baseFontSize={baseFontSize}
           variant={variant}
-          onClose={onClose}
-          darkMode={darkMode}
         />
-      )}
-    </div>
-  );
-}
+        <div className={textStyles(image != null, dismissible)}>{children}</div>
+        {dismissible && (
+          <BannerDismissButton
+            theme={theme}
+            baseFontSize={baseFontSize}
+            variant={variant}
+            onClose={onClose}
+            darkMode={darkMode}
+          />
+        )}
+      </div>
+    );
+  },
+);
+
+export default Banner;
 
 Banner.displayName = 'Banner';
 

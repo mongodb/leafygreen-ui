@@ -64,3 +64,10 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
     [Variant.Success]: lightModeSuccessMessageBannerStyles,
   },
 };
+
+export const multilineStyles = ({ isMultiline }: { isMultiline: boolean }) =>
+  isMultiline
+    ? css`
+        border-radius: ${spacing[300]}px;
+      `
+    : undefined;
