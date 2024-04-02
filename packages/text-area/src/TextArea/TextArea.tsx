@@ -15,6 +15,8 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { LGIDS_TEXT_AREA } from '../constants';
+
 import {
   colorSets,
   containerStyles,
@@ -70,6 +72,7 @@ export const TextArea: TextArea = forwardRef<
     handleValidation,
     'aria-labelledby': ariaLabelledby,
     baseFontSize: baseFontSizeProp,
+    'data-lgid': dataLgId = LGIDS_TEXT_AREA.root,
     defaultValue = '',
     ...rest
   }: TextAreaProps,
@@ -120,7 +123,7 @@ export const TextArea: TextArea = forwardRef<
       // This works as-is because all of the Typography elements are using useUpdatedBaseFontSize to convert 14 to 13px.
       baseFontSize={baseFontSize === 16 ? 16 : 14}
     >
-      <div className={cx(containerStyles, className)}>
+      <div className={cx(containerStyles, className)} data-lgid={dataLgId}>
         {label && (
           <Label htmlFor={id} disabled={disabled}>
             {label}
@@ -148,6 +151,7 @@ export const TextArea: TextArea = forwardRef<
           onChange={onValueChange}
           onBlur={onBlurHandler}
           value={value}
+          aria-invalid={state === State.Error}
         />
         {!disabled && state === State.Error && errorMessage && (
           <div className={errorContainerStyle}>
@@ -159,6 +163,7 @@ export const TextArea: TextArea = forwardRef<
                 bodyTypeScaleStyles[baseFontSize],
                 errorMessageLabelStyles,
               )}
+              data-lgid={LGIDS_TEXT_AREA.errorMessage}
             >
               {errorMessage}
             </Error>

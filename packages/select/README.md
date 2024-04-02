@@ -42,56 +42,6 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 </Select>;
 ```
 
-**Output HTML**
-
-```html
-<div class="">
-  <label id="select-7-label" class="leafygreen-ui-xzhurf">Label</label>
-  <div id="select-7-description" class="leafygreen-ui-3gds6m">Description</div>
-  <button
-    type="button"
-    class="leafygreen-ui-1fdrra0"
-    aria-disabled="false"
-    aria-labelledby="select-7-label"
-    aria-controls="select-7-menu"
-    aria-expanded="false"
-    aria-describedby="select-7-description"
-    name="Name"
-    value="cat"
-  >
-    <span class="leafygreen-ui-tdo6z2"
-      ><div class="leafygreen-ui-ogsjyj">
-        <span class="leafygreen-ui-1ks3bq2">Cat</span
-        ><svg
-          class="leafygreen-ui-1jr2j1f"
-          height="16"
-          width="16"
-          role="presentation"
-          aria-hidden="true"
-          alt=""
-          viewBox="0 0 16 16"
-        >
-          <g
-            id="CaretDown-Copy"
-            stroke="none"
-            stroke-width="1"
-            fill="none"
-            fill-rule="evenodd"
-          >
-            <path
-              d="M4.67285687,6 L11.3271431,6 C11.9254697,6 12.224633,6.775217 11.8024493,7.22717749 L8.47530616,10.7889853 C8.21248981,11.0703382 7.78751019,11.0703382 7.52748976,10.7889853 L4.19755071,7.22717749 C3.77536701,6.775217 4.07453029,6 4.67285687,6 Z"
-              id="Path"
-              fill="currentColor"
-            ></path>
-          </g>
-        </svg>
-      </div>
-      <div></div
-    ></span>
-  </button>
-</div>
-```
-
 ## Select Properties
 
 | Prop                 | Type                                          | Description                                                                                                                                                                                                                                     | Default     |
@@ -142,3 +92,187 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 | `className` | `string`  | Adds a className to the outermost element.                |         |
 | `label`     | `string`  | Text shown above the group's options.                     |         |
 | `disabled`  | `boolean` | Prevents all the contained options from being selectable. | `false` |
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Select` in a product test suite. If the `Select` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { Select, getTestUtils } from '@leafygreen-ui/select';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Select`. It defaults to 'lg-select' if left empty.
+```
+
+#### Single `Select`
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Select, getTestUtils } from '@leafygreen-ui/select';
+
+...
+
+test('select', () => {
+  render(
+    <Select
+      label="Label"
+      description="Description"
+    >
+      <Option value="dog" description="Bark">
+        Dog
+      </Option>
+      <Option value="cat">Cat</Option>
+      <OptionGroup label="Less common">
+        <Option value="hamster">Hamster</Option>
+        <Option value="parrot">Parrot</Option>
+      </OptionGroup>
+    </Select>
+  );
+
+  const { getInputValue, getInput, getOptions } = getTestUtils();
+
+  expect(getInput()).toBeInTheDocument();
+  expect(getInputValue()).toBe('Select');
+
+  // opens the select
+  userEvent.click(getInput());
+  // `select` is an option
+  expect(getOptions()).toHaveLength(5);
+});
+```
+
+#### Multiple `Select`'s
+
+When testing multiple `Select`'s it is recommended to add the custom `data-lgid` attribute to each `Select`.
+
+```tsx
+import { render } from '@testing-library/react';
+import { Select, getTestUtils } from '@leafygreen-ui/select';
+
+...
+
+test('select', () => {
+  render(
+    <>
+      <Select
+        label="Label 1"
+        description="Description 1"
+        data-lgid="select-1"
+      >
+        <Option value="dog" description="Bark">
+          Dog
+        </Option>
+        <Option value="cat">Cat</Option>
+        <OptionGroup label="Less common">
+          <Option value="hamster">Hamster</Option>
+          <Option value="parrot">Parrot</Option>
+        </OptionGroup>
+      </Select>
+      <Select
+        label="Label 2"
+        description="Description 2"
+        data-lgid="select-2"
+        defaultValue="sad cat"
+      >
+        <Option value="sad dog" description="Sad Bark Bark">
+          Sad Dog
+        </Option>
+        <Option value="sad cat">Sad Cat</Option>
+        <OptionGroup label="Less common">
+          <Option value="sad hamster">Sad Hamster</Option>
+          <Option value="sad parrot">Sad Parrot</Option>
+        </OptionGroup>
+      </Select>
+    </>,
+  );
+  const lgUtilsSelect1 = getTestUtils('select-1'); // data-lgid
+  const lgUtilsSelect2 = getTestUtils('select-2'); // data-lgid
+
+  // First Select
+  expect(lgUtilsSelect1.getInput()).toBeInTheDocument();
+  expect(lgUtilsSelect1.getInputValue()).toBe('Select');
+
+  // Second Select
+  expect(lgUtilsSelect2.getInput()).toBeInTheDocument();
+  expect(lgUtilsSelect2.getInputValue()).toBe('sad cat');
+});
+```
+
+#### Select with other LG elements
+
+```tsx
+import { render } from '@testing-library/react';
+import TextInput, { getTestUtils as getTextInputTestUtils } from '@leafygreen-ui/text-input';
+import { Select, getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
+
+...
+
+test('Form', () => {
+  render(
+    <Form>
+      <TextInput label="TextInput label" />
+      <Select
+        label="Label 1"
+        description="Description 1"
+      >
+        <Option value="dog" description="Bark">
+          Dog
+        </Option>
+        <Option value="cat">Cat</Option>
+        <OptionGroup label="Less common">
+          <Option value="hamster">Hamster</Option>
+          <Option value="parrot">Parrot</Option>
+        </OptionGroup>
+      </Select>
+    </Form>,
+  );
+
+  const lgUtilsTextInput = getTextInputTestUtils();
+  const lgUtilsSelect = getSelectTestUtils();
+
+  // LG TextInput
+  expect(lgUtilsTextInput.getInput()).toBeInTheDocument();
+  expect(lgUtilsTextInput.getInputValue()).toBe('');
+
+  // LG Select
+  expect(lgUtilsSelect.getInput()).toBeInTheDocument();
+  expect(lgUtilsSelect.getInputValue()).toBe('Select');
+});
+```
+
+### Test Utils
+
+#### Elements
+
+```tsx
+const {
+  getInput,
+  getLabel,
+  getDescription,
+  getErrorMessage,
+  getOptions,
+  getOptionByValue,
+  getPopover,
+  getInputValue,
+  isDisabled,
+  isValid,
+  isError,
+} = getTestUtils();
+```
+
+| Util                       | Description                                | Returns                       |
+| -------------------------- | ------------------------------------------ | ----------------------------- |
+| `getInput()`               | Returns the input node                     | `HTMLButtonElement`           |
+| `getLabel()`               | Returns the label node                     | `HTMLButtonElement` \| `null` |
+| `getDescription()`         | Returns the description node               | `HTMLButtonElement` \| `null` |
+| `getErrorMessage()`        | Returns the error message node             | `HTMLButtonElement` \| `null` |
+| `getOptions()`             | Returns an array of options                | `Array<HTMLLIElement>`        |
+| `getOptionByValue(string)` | Returns an individual option               | `HTMLLIElement` \| `null`     |
+| `getPopover()`             | Returns the dropdown popover               | `HTMLDivElement` \| `null`    |
+| `getInputValue()`          | Returns the input value                    | `string`                      |
+| `isDisabled()`             | Returns whether the input is disabled      | `boolean`                     |
+| `isError()`                | Returns whether the input state is `error` | `boolean`                     |

@@ -1,17 +1,14 @@
 import React from 'react';
-import {
-  fireEvent,
-  getByLabelText,
-  render,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, getByLabelText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { getTestUtils } from '../utils';
+
 import TextInput from './TextInput';
-import { SizeVariant, State } from './TextInput.types';
+import { State, TextInputProps } from './TextInput.types';
 
 const error = 'This is the error message';
 const validEmail = 'test.email@mongodb.com';
@@ -26,17 +23,31 @@ const defaultProps = {
 };
 
 function renderTextInput(props = {}) {
-  const utils = render(
-    <TextInput
-      data-testid="text-input"
-      label={defaultProps.label}
-      {...props}
-    />,
+  const renderUtils = render(
+    <TextInput label={defaultProps.label} {...props} />,
   );
-  const textInput = utils.getByTestId('text-input');
-  const label = utils.container.querySelector('label');
-  const description = utils.container.querySelector('p');
-  return { ...utils, textInput, label, description };
+
+  const utils = getTestUtils();
+
+  const textInput = utils.getInput();
+  const label = utils.getLabel();
+  const description = utils.getDescription();
+
+  const rerenderTextInput = (newProps?: Partial<TextInputProps>) => {
+    const allProps = { ...props, ...newProps };
+    renderUtils.rerender(
+      <TextInput label={defaultProps.label} {...allProps} />,
+    );
+  };
+
+  return {
+    ...renderUtils,
+    ...utils,
+    textInput,
+    label,
+    description,
+    rerenderTextInput,
+  };
 }
 
 describe('packages/text-input', () => {
@@ -49,8 +60,8 @@ describe('packages/text-input', () => {
   });
   test(`renders ${defaultProps.label} as the input label and ${defaultProps.description} as the description`, () => {
     const { label, description } = renderTextInput(defaultProps);
-    expect(label?.innerHTML).toContain(defaultProps.label);
-    expect(description?.innerHTML).toContain(defaultProps.description);
+    expect(label).toHaveTextContent(defaultProps.label);
+    expect(description).toHaveTextContent(defaultProps.description);
   });
 
   test(`renders ${defaultProps.placeholder} as placeholder text`, () => {
@@ -67,9 +78,19 @@ describe('packages/text-input', () => {
     ).toBe(true);
   });
 
-  test('renders "optional" text when the prop is set to true', () => {
-    const { getByText } = renderTextInput({ optional: true, ...defaultProps });
-    expect(getByText('Optional')).toBeVisible();
+  describe('optional', () => {
+    test('renders when the prop is set to true', () => {
+      const { isOptional } = renderTextInput({
+        optional: true,
+        ...defaultProps,
+      });
+      expect(isOptional()).toBe(true);
+    });
+
+    test('does not renders by default', () => {
+      const { isOptional } = renderTextInput({ ...defaultProps });
+      expect(isOptional()).toBe(false);
+    });
   });
 
   test('renders type as "text" by default', () => {
@@ -84,71 +105,80 @@ describe('packages/text-input', () => {
     spy.mockClear();
   });
 
-  test('does not render "optional" text when the prop is set to false', () => {
-    const { container } = renderTextInput({ optional: false, ...defaultProps });
-    expect(container.innerHTML).not.toContain('Optional');
-  });
-
   describe('when the "state" is "valid"', () => {
     test('displays checkmark icon when input is valid', () => {
-      const { container, textInput } = renderTextInput({
+      const { getInputValue, isValid, isOptional } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         optional: true,
         ...defaultProps,
       });
 
-      expect((textInput as HTMLInputElement).value).toBe(validEmail);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(getInputValue()).toBe(validEmail);
+      expect(isValid()).toBe(true);
+      expect(isOptional()).toBe(false);
     });
 
     test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { container, textInput } = renderTextInput({
+      const { getInputValue, isOptional } = renderTextInput({
         value: validEmail,
         state: State.Valid,
         disabled: true,
         ...defaultProps,
       });
 
-      expect((textInput as HTMLInputElement).value).toBe(validEmail);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(getInputValue()).toBe(validEmail);
+      expect(isOptional()).toBe(false);
+    });
+  });
+
+  describe('disabled', () => {
+    test('is true', () => {
+      const { isDisabled } = renderTextInput({ disabled: true });
+
+      expect(isDisabled()).toBe(true);
+    });
+
+    test('is false', () => {
+      const { isDisabled } = renderTextInput();
+
+      expect(isDisabled()).toBe(false);
     });
   });
 
   describe('when the "state" is "error"', () => {
     test('displays warning icon when input is invalid', () => {
-      const { container, textInput } = renderTextInput({
+      const { isOptional, getInputValue, isError } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
         ...defaultProps,
       });
 
-      expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(getInputValue()).toBe(invalidEmail);
+      expect(isError()).toBe(true);
+      expect(isOptional()).toBe(false);
     });
 
-    test('displays warning icon even when input is disabled', () => {
-      const { container, textInput } = renderTextInput({
+    test('renders empty error message container', () => {
+      const { getErrorMessage } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
-        disabled: true,
+        optional: true,
         ...defaultProps,
       });
-
-      expect((textInput as HTMLInputElement).value).toBe(invalidEmail);
-      expect(container.innerHTML).not.toContain('Optional');
+      expect(getErrorMessage()).toHaveTextContent('');
     });
 
     test('displays error message when input is invalid', () => {
-      const { container } = renderTextInput({
+      const { getErrorMessage } = renderTextInput({
         value: invalidEmail,
         state: State.Error,
         optional: true,
         errorMessage: error,
         ...defaultProps,
       });
-      expect(container.innerHTML).toContain(error);
+      expect(getErrorMessage()).toHaveTextContent(error);
     });
   });
 
@@ -156,26 +186,26 @@ describe('packages/text-input', () => {
     defaultProps.onChange.mockReturnValue('none');
 
     test('valid/error icons are not present', () => {
-      const { container } = renderTextInput({
+      const { isValid, isError } = renderTextInput({
         state: State.None,
         ...defaultProps,
       });
-      expect(container.innerHTML).not.toContain('Checkmark Icon');
-      expect(container.innerHTML).not.toContain('Warning Icon');
+      expect(isValid()).toBe(false);
+      expect(isError()).toBe(false);
     });
 
     test('key presses are reflected in component and onChange function is called when value changes', () => {
-      const { textInput } = renderTextInput({
+      const { getInputValue, textInput } = renderTextInput({
         state: State.None,
         ...defaultProps,
       });
-      expect((textInput as HTMLInputElement).value).toBe('');
+      expect(getInputValue()).toBe('');
 
       fireEvent.change(textInput, {
         target: { value: 'a' },
       });
 
-      expect((textInput as HTMLInputElement).value).toBe('a');
+      expect(getInputValue()).toBe('a');
       expect(defaultProps.onChange).toHaveBeenCalledTimes(1);
       expect(defaultProps.onChange).toHaveReturnedWith('none');
     });
@@ -192,9 +222,17 @@ describe('packages/text-input', () => {
 
   describe('when no label is supplied', () => {
     test('no label tag renders to the DOM', () => {
-      renderTextInput();
+      const { label } = renderTextInput({ label: '' });
 
-      expect(screen.queryByRole('label')).not.toBeInTheDocument();
+      expect(label).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when no description is supplied', () => {
+    test('no description tag renders to the DOM', () => {
+      const { description } = renderTextInput({ description: '' });
+
+      expect(description).not.toBeInTheDocument();
     });
   });
 
@@ -238,21 +276,22 @@ describe('packages/text-input', () => {
     });
   });
 
-  describe('when the "sizeVariant" is "large"', () => {
-    // TODO: This type of check should be done with a visual regression test
-    // As written this test does not pass even if the font-size is inherited correctly
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('check if font-size is 18px', () => {
-      const { label } = renderTextInput({
-        value: validEmail,
-        sizeVariant: SizeVariant.Large,
-        optional: true,
-        ...defaultProps,
+  describe('returns correct value', () => {
+    test('when uncontrolled', () => {
+      const { textInput, getInputValue } = renderTextInput();
+
+      userEvent.type(textInput, '123');
+      expect(getInputValue()).toBe('123');
+    });
+
+    test('when controlled', () => {
+      const { getInputValue, rerenderTextInput } = renderTextInput({
+        value: '456',
       });
 
-      expect(label).toHaveStyle({
-        fontSize: '18px',
-      });
+      expect(getInputValue()).toBe('456');
+      rerenderTextInput({ value: 'I was rerendered' });
+      expect(getInputValue()).toBe('I was rerendered');
     });
   });
 

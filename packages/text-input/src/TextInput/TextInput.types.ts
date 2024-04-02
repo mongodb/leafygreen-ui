@@ -1,4 +1,9 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  Either,
+  HTMLElementProps,
+  LgIdProps,
+} from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
@@ -71,7 +76,9 @@ interface TextInputTypeProp {
   type?: TextInputType;
 }
 export interface BaseTextInputProps
-  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels> {
+  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels>,
+    DarkModeProps,
+    LgIdProps {
   /**
    * id associated with the TextInput component.
    */
@@ -128,11 +135,6 @@ export interface BaseTextInputProps
    * className supplied to the TextInput container.
    */
   className?: string;
-
-  /**
-   *  determines whether or not the component appears in dark theme.
-   */
-  darkMode?: boolean;
 
   /**
    * Callback called whenever validation should be run.
