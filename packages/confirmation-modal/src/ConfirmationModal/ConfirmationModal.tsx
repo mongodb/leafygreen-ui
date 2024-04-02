@@ -10,6 +10,8 @@ import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
+import { LGIDS_CONFIRMATION_MODAL } from '../constants';
+
 import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
   baseModalStyle,
@@ -59,13 +61,23 @@ export const ConfirmationModal = React.forwardRef(
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             darkMode={darkMode}
-            data-testid="lg-confirmation-modal-confirmation-input"
+            data-testid={LGIDS_CONFIRMATION_MODAL.input}
           ></TextInput>
         );
       }
 
       return textEntryConfirmation;
     }, [requiredInputText, darkMode]);
+
+    const handleConfirm = () => {
+      onConfirm?.();
+      setConfirmEnabled(false);
+    };
+
+    const handleCancel = () => {
+      onCancel?.();
+      setConfirmEnabled(false);
+    };
 
     return (
       <Modal
@@ -91,7 +103,7 @@ export const ConfirmationModal = React.forwardRef(
           <H3
             as="h1"
             className={cx(titleStyle)}
-            data-testid="lg-confirmation-modal-title"
+            data-testid={LGIDS_CONFIRMATION_MODAL.title}
           >
             {title}
           </H3>
@@ -102,16 +114,16 @@ export const ConfirmationModal = React.forwardRef(
           <Button
             variant={variant}
             disabled={!confirmEnabled || submitDisabled}
-            onClick={onConfirm}
+            onClick={handleConfirm}
             className={buttonStyle}
-            data-testid="lg-confirmation-modal-footer-confirm-button"
+            data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
           >
             {buttonText}
           </Button>
           <Button
-            onClick={onCancel}
+            onClick={handleCancel}
             className={buttonStyle}
-            data-testid="lg-confirmation-modal-footer-cancel-button"
+            data-testid={LGIDS_CONFIRMATION_MODAL.cancel}
           >
             Cancel
           </Button>
