@@ -42,7 +42,7 @@ import { SearchResultsMenu } from '../SearchResultsMenu';
 
 import {
   baseInputStyle,
-  clearButtonStyle,
+  clearButtonSizeStyle,
   formStyle,
   inputThemeStyle,
   inputWrapperDisabledStyle,
@@ -427,7 +427,7 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
                   type="button"
                   aria-label="Clear search"
                   onClick={handleClearButtonClick}
-                  className={clearButtonStyle}
+                  className={clearButtonSizeStyle[size]}
                   tabIndex={disabled ? -1 : 0}
                   disabled={disabled}
                 >

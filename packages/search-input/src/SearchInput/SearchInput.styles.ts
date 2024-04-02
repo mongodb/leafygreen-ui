@@ -37,7 +37,7 @@ export const inputWrapperSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    height: 28px;
+    height: 22px;
     grid-template-columns: 28px 1fr;
     grid-auto-columns: 36px;
   `,
@@ -271,7 +271,9 @@ export const searchIconSizeStyle: Record<Size, string> = {
   [Size.XSmall]: css`
     margin-left: 2px;
   `,
-  [Size.Small]: css``,
+  [Size.Small]: css`
+    margin-left: 0px;
+  `,
   [Size.Default]: css`
     margin-left: 8px;
   `,
@@ -289,7 +291,21 @@ export const searchIconDisabledStyle: Record<Theme, string> = {
   `,
 };
 
-export const clearButtonStyle = css`
-  height: 28px;
-  width: 28px;
-`;
+export const clearButtonSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    height: 22px;
+    width: 22px;
+  `,
+  [Size.Small]: css`
+    height: 28px;
+    width: 28px;
+  `,
+  [Size.Default]: css`
+    height: 28px;
+    width: 28px;
+  `,
+  [Size.Large]: css`
+    height: 28px;
+    width: 28px;
+  `,
+};
