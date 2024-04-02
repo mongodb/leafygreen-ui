@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import Checkbox from '../Checkbox';
 
-import { getLGCheckboxTestUtils } from './getLGCheckboxTestUtilts';
+import { getTestUtils } from './getTestUtils';
 
 const defaultProps = {
   label: 'Test Input Label',
@@ -43,7 +43,7 @@ describe('packages/checkbox', () => {
       render(<Checkbox data-lgid="lg-text_output" label="hey" />);
 
       try {
-        const _utils = getLGCheckboxTestUtils();
+        const _utils = getTestUtils();
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty(
@@ -59,7 +59,7 @@ describe('packages/checkbox', () => {
       describe('getInput', () => {
         test('is in the document', () => {
           renderCheckbox();
-          const { getInput } = getLGCheckboxTestUtils();
+          const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -67,7 +67,7 @@ describe('packages/checkbox', () => {
       describe('getLabel', () => {
         test('is in the document', () => {
           renderCheckbox();
-          const { getLabel } = getLGCheckboxTestUtils();
+          const { getLabel } = getTestUtils();
           expect(getLabel()).toBeInTheDocument();
         });
       });
@@ -75,13 +75,13 @@ describe('packages/checkbox', () => {
       describe('getDescription', () => {
         test('is in the document', () => {
           renderCheckbox();
-          const { getDescription } = getLGCheckboxTestUtils();
+          const { getDescription } = getTestUtils();
           expect(getDescription()).toBeInTheDocument();
         });
 
         test('is not in the document', () => {
           renderCheckbox({ description: '' });
-          const { getDescription } = getLGCheckboxTestUtils();
+          const { getDescription } = getTestUtils();
           expect(getDescription()).not.toBeInTheDocument();
         });
       });
@@ -89,20 +89,20 @@ describe('packages/checkbox', () => {
       describe('getInputValue', () => {
         test('returns false by default', () => {
           renderCheckbox();
-          const { getInputValue } = getLGCheckboxTestUtils();
+          const { getInputValue } = getTestUtils();
           expect(getInputValue()).toBe(false);
         });
 
         test('returns value when uncontrolled', () => {
           renderCheckbox();
-          const { getInput, getInputValue } = getLGCheckboxTestUtils();
+          const { getInput, getInputValue } = getTestUtils();
           fireEvent.click(getInput());
           expect(getInputValue()).toBe(true);
         });
 
         test('returns value when controlled', () => {
           renderCheckbox({ value: true });
-          const { getInput, getInputValue } = getLGCheckboxTestUtils();
+          const { getInput, getInputValue } = getTestUtils();
           fireEvent.click(getInput());
           expect(getInputValue()).toBe(true);
         });
@@ -111,13 +111,13 @@ describe('packages/checkbox', () => {
       describe('isDisabled', () => {
         test('is true', () => {
           renderCheckbox({ disabled: true });
-          const { isDisabled } = getLGCheckboxTestUtils();
+          const { isDisabled } = getTestUtils();
           expect(isDisabled()).toBe(true);
         });
 
         test('is false', () => {
           renderCheckbox();
-          const { isDisabled } = getLGCheckboxTestUtils();
+          const { isDisabled } = getTestUtils();
           expect(isDisabled()).toBe(false);
         });
       });
@@ -127,8 +127,8 @@ describe('packages/checkbox', () => {
       test('getInput', () => {
         renderMultipleInputs();
 
-        const utilsOne = getLGCheckboxTestUtils('lg-checkbox-1');
-        const utilsTwo = getLGCheckboxTestUtils('lg-checkbox-2');
+        const utilsOne = getTestUtils('lg-checkbox-1');
+        const utilsTwo = getTestUtils('lg-checkbox-2');
 
         expect(utilsOne.getInput()).toBeInTheDocument();
         expect(utilsTwo.getInput()).toBeInTheDocument();
@@ -136,8 +136,8 @@ describe('packages/checkbox', () => {
 
       test('getInputValue', () => {
         renderMultipleInputs();
-        const utilsOne = getLGCheckboxTestUtils('lg-checkbox-1');
-        const utilsTwo = getLGCheckboxTestUtils('lg-checkbox-2');
+        const utilsOne = getTestUtils('lg-checkbox-1');
+        const utilsTwo = getTestUtils('lg-checkbox-2');
 
         expect(utilsOne.getInputValue()).toBe(true);
         expect(utilsTwo.getInputValue()).toBe(false);
@@ -155,7 +155,7 @@ describe('packages/checkbox', () => {
         expect(asyncComponent).toBeInTheDocument();
 
         // After awaiting asyncComponent, look for text area
-        const { getInput } = getLGCheckboxTestUtils();
+        const { getInput } = getTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
@@ -166,7 +166,7 @@ describe('packages/checkbox', () => {
 
         // awaiting getLGCheckboxTestUtils
         await waitFor(() => {
-          const { getInput } = getLGCheckboxTestUtils();
+          const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -180,7 +180,7 @@ describe('packages/checkbox', () => {
         expect(asyncComponent).toBeInTheDocument();
 
         // After awaiting asyncComponent, look for text area
-        const { getInput, getInputValue } = getLGCheckboxTestUtils();
+        const { getInput, getInputValue } = getTestUtils();
         const input = getInput();
         fireEvent.click(getInput());
         expect(getInputValue()).toBe(true);

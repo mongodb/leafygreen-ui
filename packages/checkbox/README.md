@@ -87,29 +87,29 @@ _Any other properties will be spread on the `input` element._
 
 # Test Harnesses
 
-## getLGCheckboxTestUtils()
+## getTestUtils()
 
-`getLGCheckboxTestUtils()` is a util that allows consumers to reliably interact with `LG Checkbox` in a product test suite. If the `Checkbox` component cannot be found, an error will be thrown.
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Checkbox` in a product test suite. If the `Checkbox` component cannot be found, an error will be thrown.
 
 ### Usage
 
 ```tsx
-import Checkbox, { getLGCheckboxTestUtils } from '@leafygreen-ui/checkbox';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
 
-const utils = getLGCheckboxTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Checkbox`. It defaults to 'lg-checkbox' if left empty.
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Checkbox`. It defaults to 'lg-checkbox' if left empty.
 ```
 
 #### Single `Checkbox`
 
 ```tsx
 import { render } from '@testing-library/react';
-import Checkbox, { getLGCheckboxTestUtils } from '@leafygreen-ui/checkbox';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
 
 ...
 
 test('checkbox', () => {
   render(<Checkbox label="label" checked />);
-  const { getInput, getInputValue } = getLGCheckboxTestUtils();
+  const { getInput, getInputValue } = getTestUtils();
 
   expect(getInput()).toBeInTheDocument();
   expect(getInputValue()).toBe(true);
@@ -122,7 +122,7 @@ When testing multiple `Checkbox` components it is recommended to add the custom 
 
 ```tsx
 import { render } from '@testing-library/react';
-import Checkbox, { getLGCheckboxTestUtils } from '@leafygreen-ui/checkbox';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
 
 ...
 
@@ -133,8 +133,8 @@ test('checkbox', () => {
       <Checkbox data-lgid="checkbox-2" label="label 2" checked />
     </>,
   );
-  const utilsOne = getLGCheckboxTestUtils('checkbox-1'); // data-lgid
-  const utilsTwo = getLGCheckboxTestUtils('checkbox-2'); // data-lgid
+  const utilsOne = getTestUtils('checkbox-1'); // data-lgid
+  const utilsTwo = getTestUtils('checkbox-2'); // data-lgid
   // First checkbox
   expect(utilsOne.checkboxetInput()).toBeInTheDocument();
   expect(utilsOne.getInputValue()).toBe(false);
@@ -149,9 +149,9 @@ test('checkbox', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getLGToggleTestUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
-import Checkbox, { getLGCheckboxTestUtils } from '@leafygreen-ui/checkbox';
+import Toggle, { getTestUtils as getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getTestUtils as getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
 
 ...
 
@@ -166,7 +166,7 @@ test('Form', () => {
 
   const toggleInputUtils = getLGToggleTestUtils();
   const textInputUtils = getLGTextInputTestUtils();
-  const checkboxUtils = getLGCheckboxTestUtils();
+  const checkboxUtils = getTestUtils();
 
   // LG Toggle
   expect(toggleInputUtils.getInput()).toBeInTheDocument();
@@ -188,7 +188,7 @@ test('Form', () => {
 
 ```tsx
 const { getInput, getLabel, getDescription, getInputValue, isDisabled } =
-  getLGCheckboxTestUtils();
+  getTestUtils();
 ```
 
 | Util             | Description                           | Returns                       |

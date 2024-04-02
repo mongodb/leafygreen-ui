@@ -4,7 +4,7 @@ import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
 import { LGIDS_CHECKBOX } from '../constants';
 
-export const getLGCheckboxTestUtils = (lgId: string = LGIDS_CHECKBOX.root) => {
+export const getTestUtils = (lgId: string = LGIDS_CHECKBOX.root) => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.

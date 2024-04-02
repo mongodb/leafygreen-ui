@@ -1,1 +1,1 @@
-export { getLGCheckboxTestUtils } from './getLGCheckboxTestUtilts';
+export { getTestUtils } from './getTestUtils';

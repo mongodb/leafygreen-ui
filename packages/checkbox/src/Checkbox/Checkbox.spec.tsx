@@ -2,7 +2,7 @@ import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { getLGCheckboxTestUtils } from '../utils/getLGCheckboxTestUtilts';
+import { getTestUtils } from '../utils/getTestUtils';
 import Checkbox from '..';
 
 const className = 'test-classname';
@@ -13,7 +13,7 @@ function renderCheckbox(props = {}) {
   const renderUtils = render(
     <Checkbox data-testid="checkbox" label="this is the label" {...props} />,
   );
-  const utils = getLGCheckboxTestUtils();
+  const utils = getTestUtils();
   const wrapper = renderUtils.container.firstElementChild;
   const checkbox = utils.getInput();
   const label = utils.getLabel();
