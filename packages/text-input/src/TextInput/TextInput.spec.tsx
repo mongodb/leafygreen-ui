@@ -5,7 +5,7 @@ import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { getLGTextInputTestUtils } from '../utils';
+import { getTestUtils } from '../utils';
 
 import TextInput from './TextInput';
 import { State, TextInputProps } from './TextInput.types';
@@ -27,7 +27,7 @@ function renderTextInput(props = {}) {
     <TextInput label={defaultProps.label} {...props} />,
   );
 
-  const utils = getLGTextInputTestUtils();
+  const utils = getTestUtils();
 
   const textInput = utils.getInput();
   const label = utils.getLabel();

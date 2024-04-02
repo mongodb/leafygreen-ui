@@ -1,1 +1,1 @@
-export { getLGTextInputTestUtils } from './getLGTextInputTestUtils/getLGTextInputTestUtils';
+export { getTestUtils } from './getTestUtils/getTestUtils';

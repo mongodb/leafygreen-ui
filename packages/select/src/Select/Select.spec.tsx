@@ -15,8 +15,8 @@ import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
-import { getLGSelectTestUtils } from '../utils/getLGSelectTestUtils/getLGSelectTestUtils';
-import { LGSelectTestUtilsReturnType } from '../utils/getLGSelectTestUtils/getLGSelectTestUtils.types';
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
+import { TestUtilsReturnType } from '../utils/getTestUtils/getTestUtils.types';
 import { Option, OptionGroup, Select } from '..';
 
 import { SelectProps, State } from './Select.types';
@@ -77,7 +77,7 @@ function Controller({
 function renderSelect(props = {}) {
   const renderUtils = render(<Select {...defaultProps} {...props} />);
 
-  const utils = getLGSelectTestUtils();
+  const utils = getTestUtils();
 
   const rerenderSelect = (newProps?: Partial<SelectProps>) => {
     const allProps = { ...props, ...newProps };
@@ -187,7 +187,7 @@ describe('packages/select', () => {
       </Select>,
     );
 
-    const { getInput } = getLGSelectTestUtils();
+    const { getInput } = getTestUtils();
 
     userEvent.click(getInput());
 
@@ -314,7 +314,7 @@ describe('packages/select', () => {
             </Select>,
           );
 
-          const { getInput } = getLGSelectTestUtils();
+          const { getInput } = getTestUtils();
 
           userEvent.click(getInput());
           expect(spy).toHaveBeenCalledWith(
@@ -343,7 +343,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        const { getInput } = getLGSelectTestUtils();
+        const { getInput } = getTestUtils();
         act(() => {
           userEvent.click(getInput());
         });
@@ -363,7 +363,7 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      const { getPopover, getInput } = getLGSelectTestUtils();
+      const { getPopover, getInput } = getTestUtils();
 
       userEvent.click(getInput());
 
@@ -385,7 +385,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        const { getInput } = getLGSelectTestUtils();
+        const { getInput } = getTestUtils();
 
         userEvent.click(getInput());
 
@@ -623,7 +623,7 @@ describe('packages/select', () => {
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void
       >;
-      let selectUtils: LGSelectTestUtilsReturnType;
+      let selectUtils: TestUtilsReturnType;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
@@ -647,7 +647,7 @@ describe('packages/select', () => {
           ),
         );
 
-        const utils = getLGSelectTestUtils();
+        const utils = getTestUtils();
 
         button = utils.getInput();
         selectUtils = utils;
@@ -848,7 +848,7 @@ describe('packages/select', () => {
 
     let rerender: RenderResult['rerender'];
     let button: HTMLElement;
-    let selectUtils: LGSelectTestUtilsReturnType;
+    let selectUtils: TestUtilsReturnType;
 
     beforeEach(async () => {
       ({ rerender } = render(
@@ -858,7 +858,7 @@ describe('packages/select', () => {
         </Select>,
       ));
 
-      const utils = getLGSelectTestUtils();
+      const utils = getTestUtils();
 
       button = utils.getInput();
       selectUtils = utils;
@@ -1135,7 +1135,7 @@ describe('packages/select', () => {
         </MockPopoverProvider>,
       );
 
-      const { getInput } = getLGSelectTestUtils();
+      const { getInput } = getTestUtils();
 
       userEvent.click(getInput());
       await waitFor(() =>
@@ -1154,7 +1154,7 @@ describe('packages/select', () => {
         </MockPopoverProvider>,
       );
 
-      const { getInput } = getLGSelectTestUtils();
+      const { getInput } = getTestUtils();
 
       userEvent.click(getInput());
       await waitFor(() =>

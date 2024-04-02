@@ -3,7 +3,7 @@ import { fireEvent, getByLabelText, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getLGTextAreaTestUtils } from '../utils';
+import { getTestUtils } from '../utils';
 
 import { State, TextArea, TextAreaProps } from '.';
 
@@ -19,7 +19,7 @@ const defaultProps = {
 function renderTextArea(props = {}) {
   const renderUtils = render(<TextArea label={labelProp} {...props} />);
 
-  const utils = getLGTextAreaTestUtils();
+  const utils = getTestUtils();
 
   const textArea = utils.getInput();
   const label = utils.getLabel();
