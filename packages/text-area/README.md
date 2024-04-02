@@ -116,9 +116,9 @@ test('text-area', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getTestUtils: getToggleTestUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getTestUtils: getTextInputTestUtils } from '@leafygreen-ui/text-input';
-import TextArea, { getTestUtils: getTextAreaTestUtils } from '@leafygreen-ui/text-area';
+import Toggle, { getTestUtils as getToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getTestUtils as getTextInputTestUtils } from '@leafygreen-ui/text-input';
+import TextArea, { getTestUtils as getTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 

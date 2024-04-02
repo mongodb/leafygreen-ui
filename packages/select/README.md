@@ -206,8 +206,8 @@ test('select', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getTestUtils: getTextInputTestUtils } from '@leafygreen-ui/text-input';
-import { Select, getTestUtils: getSelectTestUtils } from '@leafygreen-ui/select';
+import TextInput, { getTestUtils as getTextInputTestUtils } from '@leafygreen-ui/text-input';
+import { Select, getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
 
 ...
 
