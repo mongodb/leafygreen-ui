@@ -7,6 +7,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import {
+  Body,
   Description,
   Error,
   Label,
@@ -17,11 +18,12 @@ import { LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 
 import {
-  errorContainerStyle,
   errorIconStyles,
   getFontSize,
   marginBottom,
+  stateFeedbackContainerStyle,
   textContainerStyle,
+  validIconStyles,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';
@@ -45,6 +47,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       size = Size.Default,
       disabled = false,
       errorMessage,
+      successMessage,
       className,
       darkMode,
       optional,
@@ -55,20 +58,21 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   ) => {
     const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+    const fontStyles = getFontSize({ baseFontSize, size });
 
     const { labelId, descriptionId, errorId, inputId, inputProps } =
       useFormFieldProps({ label, description, state, id, disabled, ...rest });
+
+    const isErrorState = state === FormFieldState.Error;
+    const isSuccessState = state === FormFieldState.Valid;
+    const showStateFeedback = (isErrorState || isSuccessState) && !disabled;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <FormFieldProvider
           value={{ disabled, size, state, inputProps, optional }}
         >
-          <div
-            className={cx(getFontSize({ baseFontSize, size }), className)}
-            ref={fwdRef}
-            {...rest}
-          >
+          <div className={cx(fontStyles, className)} ref={fwdRef} {...rest}>
             <div
               className={cx(textContainerStyle, {
                 [marginBottom]: !!(label || description),
@@ -77,7 +81,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {label && (
                 <Label
                   data-testid="lg-form_field-label"
-                  className={getFontSize({ baseFontSize, size })}
+                  className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
                   disabled={disabled}
@@ -88,7 +92,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               {description && (
                 <Description
                   data-testid="lg-form_field-description"
-                  className={getFontSize({ baseFontSize, size })}
+                  className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}
                 >
@@ -98,22 +102,43 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             </div>
             {children}
 
-            {state === FormFieldState.Error && !disabled && (
-              <div className={errorContainerStyle}>
-                <Icon
-                  role="presentation"
-                  title="Error"
-                  glyph="Warning"
-                  className={errorIconStyles[theme]}
-                />
-                <Error
-                  data-testid="lg-form_field-error_message"
-                  data-lgid={LGIDS_FORM_FIELD.errorMessage}
-                  className={getFontSize({ baseFontSize, size })}
-                  id={errorId}
-                >
-                  {errorMessage}
-                </Error>
+            {showStateFeedback && (
+              <div className={stateFeedbackContainerStyle}>
+                {isErrorState && (
+                  <>
+                    <Icon
+                      role="presentation"
+                      title="Error"
+                      glyph="Warning"
+                      className={errorIconStyles[theme]}
+                    />
+                    <Error
+                      data-testid="lg-form_field-error_message"
+                      data-lgid={LGIDS_FORM_FIELD.errorMessage}
+                      className={fontStyles}
+                      id={errorId}
+                    >
+                      {errorMessage}
+                    </Error>
+                  </>
+                )}
+                {isSuccessState && (
+                  <>
+                    <Icon
+                      role="presentation"
+                      title="Valid"
+                      glyph="Checkmark"
+                      className={validIconStyles[theme]}
+                    />
+                    <Body
+                      data-testid="lg-form_field-success_message"
+                      data-lgid={LGIDS_FORM_FIELD.successMessage}
+                      className={fontStyles}
+                    >
+                      {successMessage}
+                    </Body>
+                  </>
+                )}
               </div>
             )}
           </div>

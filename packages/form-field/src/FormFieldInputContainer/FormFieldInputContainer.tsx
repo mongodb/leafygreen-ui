@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -19,7 +18,6 @@ import {
   inputElementClassName,
   optionalTextBaseStyle,
   optionalTextThemeStyle,
-  validIconStyles,
 } from './FormFieldInputContainer.styles';
 import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
 
@@ -51,26 +49,15 @@ export const FormFieldInputContainer = forwardRef<
       className: cx(inputElementClassName, children.props.className),
     });
 
-    const shouldRenderValidIcon = state === FormFieldState.Valid && !disabled;
     const shouldRenderOptionalText =
       state === FormFieldState.None && !disabled && optional;
-    const shouldRenderIconWrapper =
-      shouldRenderValidIcon || shouldRenderOptionalText || contentEnd;
+    const shouldRenderIconWrapper = shouldRenderOptionalText || contentEnd;
 
     return (
       <div {...rest} ref={fwdRef} className={cx(inputWrapperStyles, className)}>
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
         {shouldRenderIconWrapper && (
           <div className={iconsWrapperStyles}>
-            {shouldRenderValidIcon && (
-              <Icon
-                role="presentation"
-                title="Valid"
-                glyph="Checkmark"
-                className={validIconStyles[theme]}
-              />
-            )}
-
             {shouldRenderOptionalText && (
               <div
                 data-lgid={LGIDS_FORM_FIELD.optional}

@@ -41,7 +41,7 @@ export const marginBottom = css`
   margin-bottom: ${spacing[100]}px;
 `;
 
-export const errorContainerStyle = css`
+export const stateFeedbackContainerStyle = css`
   margin-top: ${spacing[100]}px;
   display: flex;
   align-items: center;
@@ -54,5 +54,14 @@ export const errorIconStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     color: ${palette.red.light1};
+  `,
+};
+
+export const validIconStyles: Record<Theme, string> = {
+  [Theme.Light]: css`
+    color: ${palette.green.dark1};
+  `,
+  [Theme.Dark]: css`
+    color: ${palette.green.base};
   `,
 };

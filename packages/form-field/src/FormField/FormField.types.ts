@@ -85,6 +85,11 @@ export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
     errorMessage?: React.ReactNode;
 
     /**
+     * The message to display below the form field when in a valid state
+     */
+    successMessage?: React.ReactNode;
+
+    /**
      * Base font size of the component. Only effective when `size == 'default'`
      */
     baseFontSize?: BaseFontSize;

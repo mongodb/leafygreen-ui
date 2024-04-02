@@ -119,6 +119,11 @@ export interface BaseTextInputProps
   errorMessage?: string;
 
   /**
+   * The message shown below the input field if the value is valid.
+   */
+  successMessage?: string;
+
+  /**
    * The current state of the TextInput. This can be none, valid, or error.
    */
   state?: State;

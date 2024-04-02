@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { css } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
-import { useValidation } from '@leafygreen-ui/hooks';
+import { useForwardedRef, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -36,6 +36,7 @@ import {
  * @param props.onBlur Callback to be executed when the input stops being focused.
  * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
  * @param props.errorMessage The message shown below the input field if the value is invalid.
+ * @param props.successMessage The message shown below the input field if the value is valid.
  * @param props.state The current state of the TextInput. This can be none, valid, or error.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className className supplied to the TextInput container.
@@ -51,7 +52,8 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       onChange,
       onBlur,
       placeholder,
-      errorMessage,
+      errorMessage = 'This input needs your attention',
+      successMessage = 'Success',
       optional = false,
       disabled = false,
       state = State.None,
@@ -72,10 +74,17 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
+    const inputRef = useForwardedRef(forwardRef, null);
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
+    const handleContainerClick = () => {
+      if (!disabled) {
+        inputRef?.current?.focus();
+      }
+    };
 
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
@@ -143,6 +152,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       description,
       disabled,
       errorMessage,
+      successMessage,
       id,
       label,
       optional,
@@ -160,7 +170,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       onChange: handleChange,
       placeholder,
       readOnly: disabled,
-      ref: forwardRef,
+      ref: inputRef,
       required: !optional,
       type,
       value,
@@ -169,7 +179,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     return (
       <FormField {...formFieldProps}>
-        <FormFieldInputContainer>
+        <FormFieldInputContainer onClick={handleContainerClick}>
           <input {...inputProps} />
         </FormFieldInputContainer>
       </FormField>
@@ -189,6 +199,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
+  successMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
   value: PropTypes.string,
   className: PropTypes.string,
