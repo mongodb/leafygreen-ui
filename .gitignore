@@ -37,10 +37,10 @@ coverage/
 
 # Exported TSDocs example files
 parsed-docs.json
-packages/**/tsdoc.json
+**/tsdoc.json
 
 # Compiled story files
-packages/**/stories.js*
+**/stories.js*
 
 # Local yarn releases
 .yarn
