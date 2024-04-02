@@ -280,27 +280,21 @@ describe('packages/table/Table', () => {
 
   describe('selectable rows', () => {
     test('renders checkboxes', async () => {
-      const { getAllByLabelText } = render(
-        <BasicWithAdapter hasSelectableRows />,
-      );
+      const { getAllByRole } = render(<BasicWithAdapter hasSelectableRows />);
       // +1 for the header row checkbox
-      expect(getAllByLabelText('checkbox').length).toBe(data.length + 1);
+      expect(getAllByRole('checkbox').length).toBe(data.length + 1);
     });
 
     test('clicking checkbox marks it as checked', async () => {
-      const { getAllByLabelText } = render(
-        <BasicWithAdapter hasSelectableRows />,
-      );
-      const firstCheckbox = getAllByLabelText('checkbox')[1];
+      const { getAllByRole } = render(<BasicWithAdapter hasSelectableRows />);
+      const firstCheckbox = getAllByRole('checkbox')[1];
       fireEvent.click(firstCheckbox);
       expect(firstCheckbox.getAttribute('aria-checked')).toBe('true');
     });
 
     test('clicking the header checkbox updates all checkboxes', async () => {
-      const { getAllByLabelText } = render(
-        <BasicWithAdapter hasSelectableRows />,
-      );
-      const allCheckboxes = getAllByLabelText('checkbox');
+      const { getAllByRole } = render(<BasicWithAdapter hasSelectableRows />);
+      const allCheckboxes = getAllByRole('checkbox');
       const headerCheckbox = allCheckboxes[0];
       fireEvent.click(headerCheckbox);
       allCheckboxes.forEach(checkbox => {
