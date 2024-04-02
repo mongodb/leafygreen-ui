@@ -125,7 +125,7 @@ test('toggle', () => {
 import { render } from '@testing-library/react';
 import Toggle, { getTestUtils: getToggleTestUtils } from '@leafygreen-ui/toggle';
 import TextInput, { getTestUtils: getTextInputTestUtils } from '@leafygreen-ui/text-input';
-import TextArea, { getLGTextAreaTestUtils } from '@leafygreen-ui/text-area';
+import TextArea, { getTestUtils: getTextAreaTestUtils } from '@leafygreen-ui/text-area';
 
 ...
 
@@ -140,7 +140,7 @@ test('Form', () => {
 
   const toggleInputUtils = getToggleTestUtils();
   const textInputUtils = getTextInputTestUtils();
-  const textAreaUtils = getLGTextAreaTestUtils();
+  const textAreaUtils = getTextAreaTestUtils();
 
   // LG Toggle
   expect(toggleInputUtils.getInput()).toBeInTheDocument();

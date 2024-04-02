@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import { State, TextArea } from '../../TextArea';
 
-import { getLGTextAreaTestUtils } from './getLGTextAreaTestUtils';
+import { getTestUtils } from './getTestUtils';
 
 const error = 'This is the error message';
 const defaultProps = {
@@ -47,12 +47,12 @@ function renderMultipleInputs() {
 }
 
 describe('packages/text-input', () => {
-  describe('getLGTextAreaTestUtils', () => {
+  describe('getTestUtils', () => {
     test('throws error if LG TextArea is not found', () => {
       render(<TextArea data-lgid="lg-text_output" label="hey" />);
 
       try {
-        const _utils = getLGTextAreaTestUtils();
+        const _utils = getTestUtils();
       } catch (error) {
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty(
@@ -68,7 +68,7 @@ describe('packages/text-input', () => {
       describe('getInput', () => {
         test('is in the document', () => {
           renderTextArea();
-          const { getInput } = getLGTextAreaTestUtils();
+          const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -76,13 +76,13 @@ describe('packages/text-input', () => {
       describe('getLabel', () => {
         test('is in the document', () => {
           renderTextArea();
-          const { getLabel } = getLGTextAreaTestUtils();
+          const { getLabel } = getTestUtils();
           expect(getLabel()).toBeInTheDocument();
         });
 
         test('is not in the document', () => {
           renderTextArea({ label: '' });
-          const { getLabel } = getLGTextAreaTestUtils();
+          const { getLabel } = getTestUtils();
           expect(getLabel()).not.toBeInTheDocument();
         });
       });
@@ -90,13 +90,13 @@ describe('packages/text-input', () => {
       describe('getDescription', () => {
         test('is in the document', () => {
           renderTextArea();
-          const { getDescription } = getLGTextAreaTestUtils();
+          const { getDescription } = getTestUtils();
           expect(getDescription()).toBeInTheDocument();
         });
 
         test('is not in the document', () => {
           renderTextArea({ description: '' });
-          const { getDescription } = getLGTextAreaTestUtils();
+          const { getDescription } = getTestUtils();
           expect(getDescription()).not.toBeInTheDocument();
         });
       });
@@ -104,14 +104,14 @@ describe('packages/text-input', () => {
       describe('getErrorMessage', () => {
         test('is in the document', () => {
           renderTextArea({ state: State.Error, errorMessage: error });
-          const { getErrorMessage } = getLGTextAreaTestUtils();
+          const { getErrorMessage } = getTestUtils();
           expect(getErrorMessage()).toBeInTheDocument();
           expect(getErrorMessage()).toHaveTextContent(error);
         });
 
         test('is not in the document', () => {
           renderTextArea({ errorMessage: 'hey' });
-          const { getErrorMessage } = getLGTextAreaTestUtils();
+          const { getErrorMessage } = getTestUtils();
           expect(getErrorMessage()).not.toBeInTheDocument();
         });
       });
@@ -119,14 +119,14 @@ describe('packages/text-input', () => {
       describe('getInputValue', () => {
         test('returns value when uncontrolled', () => {
           renderTextArea();
-          const { getInput, getInputValue } = getLGTextAreaTestUtils();
+          const { getInput, getInputValue } = getTestUtils();
           userEvent.type(getInput(), '123');
           expect(getInputValue()).toBe('123');
         });
 
         test('returns value when controlled', () => {
           renderTextArea({ value: '456' });
-          const { getInputValue } = getLGTextAreaTestUtils();
+          const { getInputValue } = getTestUtils();
           expect(getInputValue()).toBe('456');
         });
       });
@@ -134,13 +134,13 @@ describe('packages/text-input', () => {
       describe('isDisabled', () => {
         test('is true', () => {
           renderTextArea({ disabled: true });
-          const { isDisabled } = getLGTextAreaTestUtils();
+          const { isDisabled } = getTestUtils();
           expect(isDisabled()).toBe(true);
         });
 
         test('is false', () => {
           renderTextArea();
-          const { isDisabled } = getLGTextAreaTestUtils();
+          const { isDisabled } = getTestUtils();
           expect(isDisabled()).toBe(false);
         });
       });
@@ -148,13 +148,13 @@ describe('packages/text-input', () => {
       describe('isError', () => {
         test('is true', () => {
           renderTextArea({ state: State.Error });
-          const { isError } = getLGTextAreaTestUtils();
+          const { isError } = getTestUtils();
           expect(isError()).toBe(true);
         });
 
         test('is false', () => {
           renderTextArea();
-          const { isError } = getLGTextAreaTestUtils();
+          const { isError } = getTestUtils();
           expect(isError()).toBe(false);
         });
       });
@@ -164,8 +164,8 @@ describe('packages/text-input', () => {
       test('getInput', () => {
         renderMultipleInputs();
 
-        const utilsOne = getLGTextAreaTestUtils('lg-text_area-1');
-        const utilsTwo = getLGTextAreaTestUtils('lg-text_area-2');
+        const utilsOne = getTestUtils('lg-text_area-1');
+        const utilsTwo = getTestUtils('lg-text_area-2');
 
         expect(utilsOne.getInput()).toBeInTheDocument();
         expect(utilsTwo.getInput()).toBeInTheDocument();
@@ -173,8 +173,8 @@ describe('packages/text-input', () => {
 
       test('getInputValue', () => {
         renderMultipleInputs();
-        const utilsOne = getLGTextAreaTestUtils('lg-text_area-1');
-        const utilsTwo = getLGTextAreaTestUtils('lg-text_area-2');
+        const utilsOne = getTestUtils('lg-text_area-1');
+        const utilsTwo = getTestUtils('lg-text_area-2');
 
         expect(utilsOne.getInputValue()).toBe('text input 1');
         expect(utilsTwo.getInputValue()).toBe('text input 2');
@@ -192,18 +192,18 @@ describe('packages/text-input', () => {
         expect(asyncComponent).toBeInTheDocument();
 
         // After awaiting asyncComponent, look for text area
-        const { getInput } = getLGTextAreaTestUtils();
+        const { getInput } = getTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
 
-      test('find LG TextArea awaiting getLGTextAreaTestUtils', async () => {
+      test('find LG TextArea awaiting getTestUtils', async () => {
         const { openButton } = renderTextAreaAsync();
 
         userEvent.click(openButton);
 
-        // awaiting getLGTextAreaTestUtils
+        // awaiting getTestUtils
         await waitFor(() => {
-          const { getInput } = getLGTextAreaTestUtils();
+          const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
         });
       });
@@ -217,7 +217,7 @@ describe('packages/text-input', () => {
         expect(asyncComponent).toBeInTheDocument();
 
         // After awaiting asyncComponent, look for text area
-        const { getInput, getInputValue } = getLGTextAreaTestUtils();
+        const { getInput, getInputValue } = getTestUtils();
         const input = getInput();
         userEvent.type(input, 'whats blue and not heavy? light blue');
         expect(getInputValue()).toBe('whats blue and not heavy? light blue');
