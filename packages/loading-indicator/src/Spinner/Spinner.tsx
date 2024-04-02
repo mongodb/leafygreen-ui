@@ -17,6 +17,7 @@ import {
   rootStyles,
   SpinnerBottomMargins,
   SpinnerSizes,
+  verticalDisplayOptionStyles,
 } from './Spinner.styles';
 import { DisplayOption, SpinnerProps } from './Spinner.types';
 
@@ -45,6 +46,8 @@ const Spinner = ({
         {
           [horizontalDisplayOptionStyles]:
             displayOption === DisplayOption.DefaultHorizontal,
+          [verticalDisplayOptionStyles]:
+            displayOption !== DisplayOption.DefaultHorizontal,
         },
         className,
       )}
