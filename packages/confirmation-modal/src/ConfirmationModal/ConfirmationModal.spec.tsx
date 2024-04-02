@@ -5,8 +5,10 @@ import {
   render,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { LGIDS_CONFIRMATION_MODAL } from '../constants';
 import ConfirmationModal from '..';
 
 const WrappedModal = ({
@@ -153,6 +155,92 @@ describe('packages/confirmation-modal', () => {
       // Case matters
       fireEvent.change(textInput, { target: { value: 'confirm' } });
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    describe('resets the confirm button when the modal closes', () => {
+      test('on confirm', async () => {
+        const { findByTestId, getByLabelText, getByRole, rerender } =
+          renderModal({
+            open: true,
+            requiredInputText: 'Confirm',
+          });
+
+        const modal = getByRole('dialog');
+
+        const confirmationButton = await findByTestId(
+          LGIDS_CONFIRMATION_MODAL.confirm,
+        );
+        expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+
+        let textInput = getByLabelText('Type "Confirm" to confirm your action');
+
+        fireEvent.change(textInput, { target: { value: 'Confirm' } });
+        expect(confirmationButton).not.toHaveAttribute('aria-disabled', 'true');
+
+        userEvent.click(confirmationButton as HTMLButtonElement);
+
+        await waitForElementToBeRemoved(modal);
+
+        rerender(
+          <ConfirmationModal
+            title="Title text"
+            buttonText="Confirm"
+            open={true}
+            requiredInputText="Confirm"
+          >
+            Content text
+          </ConfirmationModal>,
+        );
+
+        textInput = getByLabelText('Type "Confirm" to confirm your action');
+
+        expect(textInput).toHaveValue('');
+        expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+      });
+
+      test('on cancel', async () => {
+        const { findByTestId, getByLabelText, getByRole, rerender } =
+          renderModal({
+            open: true,
+            requiredInputText: 'Confirm',
+          });
+
+        const modal = getByRole('dialog');
+
+        const confirmationButton = await findByTestId(
+          LGIDS_CONFIRMATION_MODAL.confirm,
+        );
+        expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+
+        const cancelButton = await findByTestId(
+          LGIDS_CONFIRMATION_MODAL.cancel,
+        );
+
+        let textInput = getByLabelText('Type "Confirm" to confirm your action');
+
+        fireEvent.change(textInput, { target: { value: 'Confirm' } });
+        expect(confirmationButton).not.toHaveAttribute('aria-disabled', 'true');
+
+        userEvent.click(cancelButton as HTMLButtonElement);
+
+        await waitForElementToBeRemoved(modal);
+
+        rerender(
+          <ConfirmationModal
+            title="Title text"
+            buttonText="Confirm"
+            open={true}
+            requiredInputText="Confirm"
+          >
+            Content text
+          </ConfirmationModal>,
+        );
+
+        textInput = getByLabelText('Type "Confirm" to confirm your action');
+
+        expect(textInput).toHaveValue('');
+        expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+      });
     });
   });
 
