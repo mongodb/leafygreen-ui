@@ -135,17 +135,17 @@ test('checkbox', () => {
   );
   const utilsOne = getTestUtils('checkbox-1'); // data-lgid
   const utilsTwo = getTestUtils('checkbox-2'); // data-lgid
-  // First checkbox
+  // First Checkbox
   expect(utilsOne.checkboxetInput()).toBeInTheDocument();
   expect(utilsOne.getInputValue()).toBe(false);
 
-  // Second TextArea
+  // Second Checkbox
   expect(utilsTwo.getInput()).toBeInTheDocument();
   expect(utilsTwo.getInputValue()).toBe(true);
 });
 ```
 
-#### TextArea with other LG form elements
+#### Checkbox with other LG form elements
 
 ```tsx
 import { render } from '@testing-library/react';
