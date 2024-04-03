@@ -19,6 +19,9 @@ const meta: StoryMetaType<typeof Link> = {
     generate: {
       storyNames: ['StandAloneLink', 'InlineLink'],
       combineArgs: {
+        // @ts-expect-error - data-hover is not a prop
+        'data-hover': [false, true],
+        'data-focus': [false, true],
         darkMode: [false, true],
         baseFontSize: [13, 16],
         href: ['https://www.mongodb.design/', undefined],
@@ -28,6 +31,13 @@ const meta: StoryMetaType<typeof Link> = {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sodales iaculis cursus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sit amet magna id magna eleifend commodo in in mauris.',
         ],
       },
+      excludeCombinations: [
+        {
+          // @ts-expect-error - data-hover is not a prop
+          'data-hover': true,
+          'data-focus': true,
+        },
+      ],
       decorator: (Instance, context) => {
         return (
           <LeafygreenProvider

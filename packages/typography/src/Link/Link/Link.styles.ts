@@ -16,7 +16,7 @@ export const arrowRightIconHover = css`
   top: 1px;
   position: relative;
 
-  .${anchorClassName}:hover & {
+  .${anchorClassName}:hover &, .${anchorClassName}[data-hover='true'] & {
     opacity: 1;
     transform: translate3d(3px, 0, 0);
   }

@@ -18,9 +18,19 @@ const meta: StoryMetaType<typeof BackLink> = {
     default: 'LiveExample',
     generate: {
       combineArgs: {
+        // @ts-expect-error - data-hover is not a prop
+        'data-hover': [false, true],
+        'data-focus': [false, true],
         darkMode: [false, true],
         baseFontSize: [13, 16],
       },
+      excludeCombinations: [
+        {
+          // @ts-expect-error - data-hover is not a prop
+          'data-hover': true,
+          'data-focus': true,
+        },
+      ],
       decorator: (Instance, context) => {
         return (
           <LeafygreenProvider

@@ -1,6 +1,7 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
+import { css } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import InlineKeyCode from './InlineKeyCode';
@@ -8,13 +9,17 @@ import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
 export const LiveExample = ({ children, ...rest }: InlineKeyCodeProps) => {
   return (
-    <>
+    <div
+      className={css`
+        display: block;
+      `}
+    >
       <InlineKeyCode {...rest}>{children}</InlineKeyCode>
       <br></br>
       <InlineKeyCode {...rest}>CTRL</InlineKeyCode>
       <code> + </code>
       <InlineKeyCode {...rest}>C</InlineKeyCode>
-    </>
+    </div>
   );
 };
 
