@@ -3,8 +3,8 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import Description from './Description';
-import { DescriptionProps } from './Description.types';
+import Error from './Error';
+import { ErrorProps } from './Error.types';
 
 type LGProviderBaseFontSize = 14 | 16;
 
@@ -13,26 +13,25 @@ export const LiveExample = ({
   darkMode,
   children,
   ...rest
-}: DescriptionProps & {
+}: ErrorProps & {
   baseFontSize: LGProviderBaseFontSize;
 }) => {
   return (
     <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Description {...rest}>{children}</Description>
+      <Error {...rest}>{children}</Error>
     </LeafygreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof Description> = {
-  title: 'Components/Typography/Description',
-  component: Description,
+const meta: StoryMetaType<typeof Error> = {
+  title: 'Components/Typography/Error',
+  component: Error,
   parameters: {
     default: 'LiveExample',
     generate: {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
-        disabled: [false, true],
       },
     },
   },

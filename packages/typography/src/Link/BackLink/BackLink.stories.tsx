@@ -3,8 +3,8 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import Description from './Description';
-import { DescriptionProps } from './Description.types';
+import BackLink from './BackLink';
+import { BackLinkProps } from './BackLink.types';
 
 type LGProviderBaseFontSize = 14 | 16;
 
@@ -13,31 +13,32 @@ export const LiveExample = ({
   darkMode,
   children,
   ...rest
-}: DescriptionProps & {
+}: BackLinkProps & {
   baseFontSize: LGProviderBaseFontSize;
 }) => {
   return (
     <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Description {...rest}>{children}</Description>
+      {/* @ts-ignore */}
+      <BackLink {...rest}>{children}</BackLink>
     </LeafygreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof Description> = {
-  title: 'Components/Typography/Description',
-  component: Description,
+const meta: StoryMetaType<typeof BackLink> = {
+  title: 'Components/Typography/BackLink',
+  component: BackLink,
   parameters: {
     default: 'LiveExample',
     generate: {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
-        disabled: [false, true],
       },
     },
   },
   args: {
-    children: 'Lorem ipsum dolor sit amet',
+    href: 'https://www.mongodb.design/',
+    children: 'Lorem ipsum',
   },
 };
 export default meta;

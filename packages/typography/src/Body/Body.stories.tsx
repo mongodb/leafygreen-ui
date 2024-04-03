@@ -1,43 +1,24 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import Body from './Body';
+import { BodyProps } from './Body.types';
 
-const wrapperStyles = css`
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 10px;
-`;
+type LGProviderBaseFontSize = 14 | 16;
 
 export const LiveExample = ({
   baseFontSize,
   darkMode,
-}: {
-  baseFontSize: 14 | 16;
-  darkMode: boolean;
+  children,
+  ...rest
+}: BodyProps & {
+  baseFontSize: LGProviderBaseFontSize;
 }) => {
   return (
     <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <div className={cx(wrapperStyles)}>
-        <Body>Body</Body>
-        <Body>
-          <strong>Body (Semibold)</strong>
-        </Body>
-        <Body>
-          <em>Body (Italic)</em>
-        </Body>
-        <Body>
-          <strong>
-            <em>Body (Semibold Italic)</em>
-          </strong>
-        </Body>
-      </div>
+      <Body {...rest}>{children}</Body>
     </LeafygreenProvider>
   );
 };

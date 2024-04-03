@@ -3,8 +3,8 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import Description from './Description';
-import { DescriptionProps } from './Description.types';
+import InlineKeyCode from './InlineKeyCode';
+import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
 type LGProviderBaseFontSize = 14 | 16;
 
@@ -13,26 +13,29 @@ export const LiveExample = ({
   darkMode,
   children,
   ...rest
-}: DescriptionProps & {
+}: InlineKeyCodeProps & {
   baseFontSize: LGProviderBaseFontSize;
 }) => {
   return (
     <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Description {...rest}>{children}</Description>
+      <InlineKeyCode {...rest}>{children}</InlineKeyCode>
+      <br></br>
+      <InlineKeyCode {...rest}>CTRL</InlineKeyCode>
+      <code> + </code>
+      <InlineKeyCode {...rest}>C</InlineKeyCode>
     </LeafygreenProvider>
   );
 };
 
-const meta: StoryMetaType<typeof Description> = {
-  title: 'Components/Typography/Description',
-  component: Description,
+const meta: StoryMetaType<typeof InlineKeyCode> = {
+  title: 'Components/Typography/InlineKeyCode',
+  component: InlineKeyCode,
   parameters: {
     default: 'LiveExample',
     generate: {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
-        disabled: [false, true],
       },
     },
   },
