@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/tooltip": "^11.0.3",
+    "@lg-tools/build": "workspace:*",
     "@lg-tools/storybook-utils": "^0.1.0"
   }
 }

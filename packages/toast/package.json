@@ -41,6 +41,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
     "@leafygreen-ui/button": "^21.1.0",
+    "@lg-tools/build": "workspace:*",
     "@lg-tools/storybook-utils": "^0.1.0",
     "react-test-renderer": "^18.2.0"
   },

@@ -33,6 +33,7 @@ describe('findByLgId', () => {
     render(<div data-lgid="testing-id">Children</div>);
 
     const element = await findByLgId('testing-id');
+    // @ts-ignore
     expect(element).toBeInTheDocument();
   });
 
@@ -67,6 +68,7 @@ describe('findByLgId', () => {
     const button = getByLgId('test-button');
     userEvent.click(button);
     const element = await findByLgId('test-component');
+    // @ts-ignore
     expect(element).toBeInTheDocument();
   });
 });

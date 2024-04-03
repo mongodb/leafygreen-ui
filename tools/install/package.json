@@ -20,6 +20,9 @@
     "cross-spawn": "7.0.3",
     "node-fetch": "2.6.12"
   },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.11"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
   "repository": {
     "type": "git",

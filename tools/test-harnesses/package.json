@@ -14,5 +14,13 @@
   },
   "dependencies": {
     "@testing-library/dom": "9.3.1"
+  }, 
+  "devDependencies": {
+    "@lg-tools/build": "^0.4.1",
+    "@lg-tools/test": "^0.4.4",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.3"
   }
 }

@@ -35,6 +35,9 @@
     "npm-package-json-lint-config-default": "6.0.0",
     "prettier": "2.8.8"
   },
+  "devDependencies": {
+    "@types/jest": "^29.5.12"
+  },
   "peerDependencies": {
     "typescript": "~4.9.0"
   }

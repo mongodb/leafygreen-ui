@@ -7,6 +7,7 @@ describe('queryByLgId', () => {
   test('gets element with id', () => {
     render(<div data-lgid="testing-id">test 1</div>);
     const element = queryByLgId('testing-id');
+    // @ts-ignore
     expect(element).toBeInTheDocument();
   });
 
@@ -17,6 +18,7 @@ describe('queryByLgId', () => {
       </>,
     );
 
+    // @ts-ignore
     expect(queryByLgId('incorrect-testing-id')).not.toBeInTheDocument();
     expect(queryByLgId('incorrect-testing-id')).toBeNull();
   });

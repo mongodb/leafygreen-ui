@@ -21,6 +21,10 @@
     "access": "public"
   },
   "dependencies": {
+    "prop-types": "^15.8.1",
     "use-resize-observer": "^9.1.0"
+  }, 
+  "devDependencies": {
+    "@lg-tools/build": "workspace:*"
   }
 }

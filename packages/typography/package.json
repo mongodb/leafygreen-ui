@@ -41,6 +41,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
+    "@lg-tools/build": "workspace:*",
     "@lg-tools/storybook-utils": "^0.1.0"
   }
 }
