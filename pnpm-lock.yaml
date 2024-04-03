@@ -24,9 +24,15 @@ importers:
       '@lg-tools/cli':
         specifier: ^0.5.6
         version: link:tools/cli
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:tools/meta
       '@lg-tools/storybook-addon':
         specifier: '*'
         version: link:tools/storybook-addon
+      '@types/fs-extra':
+        specifier: 11.0.1
+        version: 11.0.1
       '@types/lodash':
         specifier: ^4.14.170
         version: 4.14.196
@@ -42,6 +48,9 @@ importers:
       dotenv:
         specifier: ^10.0.0
         version: 10.0.0
+      fs-extra:
+        specifier: 11.1.1
+        version: 11.1.1
       gh-pages:
         specifier: ^3.1.0
         version: 3.2.3
@@ -8134,7 +8143,6 @@ packages:
     dependencies:
       '@types/jsonfile': 6.1.1
       '@types/node': 20.4.8
-    dev: false
 
   /@types/graceful-fs@4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
@@ -8227,7 +8235,6 @@ packages:
     resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
     dependencies:
       '@types/node': 20.4.8
-    dev: false
 
   /@types/lodash@4.14.196:
     resolution: {integrity: sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==}
