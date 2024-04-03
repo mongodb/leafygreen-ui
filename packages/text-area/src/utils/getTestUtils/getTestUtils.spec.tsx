@@ -46,7 +46,7 @@ function renderMultipleInputs() {
   );
 }
 
-describe('packages/text-input', () => {
+describe('packages/text-area', () => {
   describe('getTestUtils', () => {
     test('throws error if LG TextArea is not found', () => {
       render(<TextArea data-lgid="lg-text_output" label="hey" />);
