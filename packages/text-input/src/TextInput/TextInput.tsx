@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { css } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useForwardedRef, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -11,6 +10,7 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_TEXT_INPUT } from '../constants';
 
+import { textInputStyle } from './TextInput.styles';
 import {
   SizeVariant,
   State,
@@ -163,13 +163,10 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 
     const inputProps = {
       autoComplete: disabled ? 'off' : rest?.autoComplete || 'on',
-      className: css`
-        width: 100%;
-      `,
+      className: textInputStyle,
       onBlur: handleBlur,
       onChange: handleChange,
       placeholder,
-      readOnly: disabled,
       ref: inputRef,
       required: !optional,
       type,

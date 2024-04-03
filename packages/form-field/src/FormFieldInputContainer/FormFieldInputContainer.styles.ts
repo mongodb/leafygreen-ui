@@ -359,10 +359,10 @@ export const childrenWrapperStyles = css`
   width: 100%;
 `;
 
-export const iconsWrapperStyles = css`
+export const additionalChildrenWrapperStyles = css`
   display: flex;
   align-items: center;
-  gap: ${spacing[1]}px;
+  gap: ${spacing[100]}px;
 `;
 
 export const iconDisabledStyles: Record<Theme, string> = {

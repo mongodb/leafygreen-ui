@@ -9,12 +9,12 @@ import { FormFieldState } from '../FormField/FormField.types';
 import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
 import {
+  additionalChildrenWrapperStyles,
   childrenWrapperStyles,
   getInputWrapperStyles,
   iconClassName,
   iconDisabledStyles,
   iconStyles,
-  iconsWrapperStyles,
   inputElementClassName,
   optionalTextBaseStyle,
   optionalTextThemeStyle,
@@ -49,16 +49,16 @@ export const FormFieldInputContainer = forwardRef<
       className: cx(inputElementClassName, children.props.className),
     });
 
-    const shouldRenderOptionalText =
+    const showOptionalText =
       state === FormFieldState.None && !disabled && optional;
-    const shouldRenderIconWrapper = shouldRenderOptionalText || contentEnd;
+    const showAdditionalChildren = showOptionalText || contentEnd;
 
     return (
       <div {...rest} ref={fwdRef} className={cx(inputWrapperStyles, className)}>
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
-        {shouldRenderIconWrapper && (
-          <div className={iconsWrapperStyles}>
-            {shouldRenderOptionalText && (
+        {showAdditionalChildren && (
+          <div className={additionalChildrenWrapperStyles}>
+            {showOptionalText && (
               <div
                 data-lgid={LGIDS_FORM_FIELD.optional}
                 className={cx(

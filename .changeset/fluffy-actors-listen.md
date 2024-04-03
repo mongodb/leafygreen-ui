@@ -23,9 +23,13 @@
 
 1. `FormField` styling changes apply to `TextInput`. [See style changes here](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#102)
 
-2. Disabled `TextInput` component no longer renders the `disabled` attribute and instead relies on `aria-disabled`.
+2. A default `errorMessage` of `'This input needs your attention'` will render below text input when state is invalid.
 
-The second change is made to ensure that disabled components are still focusable to users using keyboard navigation.
+3. A default `successMessage` of `'Success'` will render when state is valid. `successMessage` prop accepts a custom string.
+
+4. Disabled `TextInput` component no longer renders the `disabled` attribute and instead relies on `aria-disabled`.
+
+The last change is made to ensure that disabled components are still focusable to users using keyboard navigation.
 
 For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
 
