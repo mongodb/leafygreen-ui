@@ -37,7 +37,7 @@ export function MessageBanner({
       className={cx(
         baseStyles,
         variantStyles[theme][variant],
-        multilineStyles({ isMultiline }),
+        { [multilineStyles]: isMultiline },
         className,
       )}
       variant={variant}

@@ -65,9 +65,6 @@ export const variantStyles: Record<Theme, Record<Variant, string>> = {
   },
 };
 
-export const multilineStyles = ({ isMultiline }: { isMultiline: boolean }) =>
-  isMultiline
-    ? css`
-        border-radius: ${spacing[300]}px;
-      `
-    : undefined;
+export const multilineStyles = css`
+  border-radius: ${spacing[300]}px;
+`;
