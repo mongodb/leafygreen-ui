@@ -161,6 +161,17 @@ describe('packages/search-input', () => {
         expect(document.body).toHaveFocus();
       });
 
+      test('searchbox is NOT keyboard interactive when `disabled`', () => {
+        const { inputEl, getMenuElements } = renderSearchInput({
+          disabled: true,
+          ...defaultProps,
+        });
+
+        userEvent.type(inputEl, '{arrowdown}');
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).not.toBeInTheDocument();
+      });
+
       test('clear button is not clickable', () => {
         const changeHandler = jest.fn();
         const { inputEl, queryByRole } = renderSearchInput({
