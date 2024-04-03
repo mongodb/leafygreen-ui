@@ -6,21 +6,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Description from './Description';
 import { DescriptionProps } from './Description.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: DescriptionProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Description {...rest}>{children}</Description>
-    </LeafygreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: DescriptionProps) => {
+  return <Description {...rest}>{children}</Description>;
 };
 
 const meta: StoryMetaType<typeof Description> = {
@@ -33,6 +20,16 @@ const meta: StoryMetaType<typeof Description> = {
         darkMode: [false, true],
         baseFontSize: [13, 16],
         disabled: [false, true],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
       },
     },
   },

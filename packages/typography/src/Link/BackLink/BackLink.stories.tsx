@@ -6,22 +6,9 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import BackLink from './BackLink';
 import { BackLinkProps } from './BackLink.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: BackLinkProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      {/* @ts-ignore */}
-      <BackLink {...rest}>{children}</BackLink>
-    </LeafygreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: BackLinkProps) => {
+  // @ts-ignore
+  return <BackLink {...rest}>{children}</BackLink>;
 };
 
 const meta: StoryMetaType<typeof BackLink> = {
@@ -33,6 +20,16 @@ const meta: StoryMetaType<typeof BackLink> = {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
       },
     },
   },

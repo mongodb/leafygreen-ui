@@ -1,27 +1,14 @@
 import React from 'react';
 import { type StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import Link from './Link';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: LinkProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafyGreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      {/* @ts-ignore */}
-      <Link {...rest}>{children}</Link>
-    </LeafyGreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: LinkProps) => {
+  // @ts-ignore
+  return <Link {...rest}>{children}</Link>;
 };
 
 const meta: StoryMetaType<typeof Link> = {
@@ -41,6 +28,16 @@ const meta: StoryMetaType<typeof Link> = {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sodales iaculis cursus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Ut sit amet magna id magna eleifend commodo in in mauris.',
         ],
       },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
+      },
     },
   },
   args: {
@@ -55,10 +52,10 @@ InlineLink.parameters = {
   generate: {
     decorator: (Instance, context) => {
       return (
-        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+        <LeafygreenProvider darkMode={context?.args.darkMode}>
           <span>Lorem ipsum dolor sit amet </span>
           <Instance />
-        </LeafyGreenProvider>
+        </LeafygreenProvider>
       );
     },
   },

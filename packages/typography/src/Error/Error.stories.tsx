@@ -6,21 +6,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Error from './Error';
 import { ErrorProps } from './Error.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: ErrorProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Error {...rest}>{children}</Error>
-    </LeafygreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: ErrorProps) => {
+  return <Error {...rest}>{children}</Error>;
 };
 
 const meta: StoryMetaType<typeof Error> = {
@@ -32,6 +19,16 @@ const meta: StoryMetaType<typeof Error> = {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
       },
     },
   },

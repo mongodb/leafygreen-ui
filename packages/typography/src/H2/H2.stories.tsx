@@ -6,21 +6,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import H2 from './H2';
 import { H2Props } from './H2.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: H2Props & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <H2 {...rest}>{children}</H2>
-    </LeafygreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: H2Props) => {
+  return <H2 {...rest}>{children}</H2>;
 };
 
 const meta: StoryMetaType<typeof H2> = {
@@ -32,6 +19,16 @@ const meta: StoryMetaType<typeof H2> = {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
       },
     },
   },

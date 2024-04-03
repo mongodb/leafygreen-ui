@@ -6,21 +6,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Label from './Label';
 import { LabelProps } from './Label.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: LabelProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Label {...rest}>{children}</Label>
-    </LeafygreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: LabelProps) => {
+  return <Label {...rest}>{children}</Label>;
 };
 
 const meta: StoryMetaType<typeof Label> = {
@@ -33,6 +20,16 @@ const meta: StoryMetaType<typeof Label> = {
         darkMode: [false, true],
         baseFontSize: [13, 16],
         disabled: [false, true],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
       },
     },
   },

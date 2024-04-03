@@ -6,24 +6,15 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import InlineKeyCode from './InlineKeyCode';
 import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: InlineKeyCodeProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
+export const LiveExample = ({ children, ...rest }: InlineKeyCodeProps) => {
   return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
+    <>
       <InlineKeyCode {...rest}>{children}</InlineKeyCode>
       <br></br>
       <InlineKeyCode {...rest}>CTRL</InlineKeyCode>
       <code> + </code>
       <InlineKeyCode {...rest}>C</InlineKeyCode>
-    </LeafygreenProvider>
+    </>
   );
 };
 
@@ -36,6 +27,16 @@ const meta: StoryMetaType<typeof InlineKeyCode> = {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafygreenProvider
+            darkMode={context?.args.darkMode}
+            baseFontSize={context?.args.baseFontSize}
+          >
+            <Instance />
+          </LeafygreenProvider>
+        );
       },
     },
   },
