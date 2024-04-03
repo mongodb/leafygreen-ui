@@ -89,7 +89,7 @@ describe('packages/button', () => {
         const asyncComponent = await findByTestId(asyncTestComponentId);
         expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting asyncComponent, look for text input
+        // After awaiting asyncComponent, look for button
         const { getButton } = getTestUtils();
         expect(getButton()).toBeInTheDocument();
       });

@@ -58,11 +58,24 @@ export const getTestUtils = (
     return getInput.checked;
   };
 
+  /**
+   * Returns whether ot not the input is indeterminate.
+   */
+  const isInputIndeterminate = () => {
+    const ariaDisabled = queryBySelector<HTMLElement>(
+      element,
+      '[aria-checked="mixed"]',
+    );
+
+    return !!ariaDisabled;
+  };
+
   return {
     getLabel: () => getLabel,
     getDescription: () => getDescription,
     getInput: () => getInput,
     isDisabled: () => isInputDisabled(),
+    isIndeterminate: () => isInputIndeterminate(),
     getInputValue: () => getInputValue(),
   };
 };

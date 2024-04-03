@@ -38,7 +38,7 @@ function renderMultipleInputs() {
 }
 
 describe('packages/checkbox', () => {
-  describe('getLGCheckboxTestUtils', () => {
+  describe('getTestUtils', () => {
     test('throws error if LG Checkbox is not found', () => {
       render(<Checkbox data-lgid="lg-text_output" label="hey" />);
 
@@ -154,7 +154,7 @@ describe('packages/checkbox', () => {
         const asyncComponent = await findByTestId(asyncTestComponentId);
         expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting asyncComponent, look for text area
+        // After awaiting asyncComponent, look for checkbox
         const { getInput } = getTestUtils();
         expect(getInput()).toBeInTheDocument();
       });
@@ -164,7 +164,7 @@ describe('packages/checkbox', () => {
 
         userEvent.click(openButton);
 
-        // awaiting getLGCheckboxTestUtils
+        // awaiting getTestUtils
         await waitFor(() => {
           const { getInput } = getTestUtils();
           expect(getInput()).toBeInTheDocument();
@@ -179,7 +179,7 @@ describe('packages/checkbox', () => {
         const asyncComponent = await findByTestId(asyncTestComponentId);
         expect(asyncComponent).toBeInTheDocument();
 
-        // After awaiting asyncComponent, look for text area
+        // After awaiting asyncComponent, look for checkbox
         const { getInput, getInputValue } = getTestUtils();
         const input = getInput();
         fireEvent.click(getInput());

@@ -161,8 +161,6 @@ test('button', () => {
 
 ### Test Utils
 
-#### Elements
-
 ```tsx
 const { getButton, isDisabled } = getTestUtils();
 ```
