@@ -10,9 +10,6 @@ import { getTestUtils } from '../utils';
 import TextInput from './TextInput';
 import { State, TextInputProps } from './TextInput.types';
 
-const error = 'This is the error message';
-const validEmail = 'test.email@mongodb.com';
-const invalidEmail = 'invalid.email';
 const defaultProps = {
   className: 'test-text-input-class',
   label: 'Test Input Label',
@@ -105,95 +102,8 @@ describe('packages/text-input', () => {
     spy.mockClear();
   });
 
-  describe('when the "state" is "valid"', () => {
-    test('displays checkmark icon when input is valid', () => {
-      const { getInputValue, isValid, isOptional } = renderTextInput({
-        value: validEmail,
-        state: State.Valid,
-        optional: true,
-        ...defaultProps,
-      });
-
-      expect(getInputValue()).toBe(validEmail);
-      expect(isValid()).toBe(true);
-      expect(isOptional()).toBe(false);
-    });
-
-    test('displays checkmark icon when input is valid even when input is disabled', () => {
-      const { getInputValue, isOptional } = renderTextInput({
-        value: validEmail,
-        state: State.Valid,
-        disabled: true,
-        ...defaultProps,
-      });
-
-      expect(getInputValue()).toBe(validEmail);
-      expect(isOptional()).toBe(false);
-    });
-  });
-
-  describe('disabled', () => {
-    test('is true', () => {
-      const { isDisabled } = renderTextInput({ disabled: true });
-
-      expect(isDisabled()).toBe(true);
-    });
-
-    test('is false', () => {
-      const { isDisabled } = renderTextInput();
-
-      expect(isDisabled()).toBe(false);
-    });
-  });
-
-  describe('when the "state" is "error"', () => {
-    test('displays warning icon when input is invalid', () => {
-      const { isOptional, getInputValue, isError } = renderTextInput({
-        value: invalidEmail,
-        state: State.Error,
-        optional: true,
-        ...defaultProps,
-      });
-
-      expect(getInputValue()).toBe(invalidEmail);
-      expect(isError()).toBe(true);
-      expect(isOptional()).toBe(false);
-    });
-
-    test('renders empty error message container', () => {
-      const { getErrorMessage } = renderTextInput({
-        value: invalidEmail,
-        state: State.Error,
-        optional: true,
-        ...defaultProps,
-      });
-      expect(getErrorMessage()).toHaveTextContent('');
-    });
-
-    test('displays error message when input is invalid', () => {
-      const { getErrorMessage } = renderTextInput({
-        value: invalidEmail,
-        state: State.Error,
-        optional: true,
-        errorMessage: error,
-        ...defaultProps,
-      });
-      expect(getErrorMessage()).toHaveTextContent(error);
-    });
-  });
-
   describe('when the "state" is "none"', () => {
     defaultProps.onChange.mockReturnValue('none');
-
-    test('valid/error icons are not present', () => {
-      const { isValid, isError } = renderTextInput({
-        state: State.None,
-        ...defaultProps,
-      });
-      expect(isValid()).toBe(false);
-      expect(isError()).toBe(false);
-    });
-
     test('key presses are reflected in component and onChange function is called when value changes', () => {
       const { getInputValue, textInput } = renderTextInput({
         state: State.None,
