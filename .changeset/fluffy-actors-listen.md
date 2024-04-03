@@ -41,7 +41,7 @@ Functionally, migration should be seamless, however there may be unit/integratio
 
 Generally, only this repo should need to test that these components have a specific attribute. We recommend updating unit tests to check that some event was or was not called.
 
-However, there are cases where this may still need to be tested. In these cases, replace any `expect(textInput).toBeDisabled()` with an explicit check for `expect(textInput).toHaveAttribute("aria-disabled", "true")`.
+However, there are cases where this may still need to be tested. In cases where a test checks `expect(textInput).toBeDisabled()`, you can replace and use [test harnesses](https://github.com/mongodb/leafygreen-ui/blob/main/packages/text-input/README.md#test-harnesses).
 
 ##### Cypress
 
