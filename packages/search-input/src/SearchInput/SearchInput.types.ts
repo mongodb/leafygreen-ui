@@ -15,6 +15,8 @@ export const State = {
 
 export type State = (typeof State)[keyof typeof State];
 
+export { Size };
+
 interface BaseSearchInputProps
   extends DarkModeProps,
     Omit<ComponentPropsWithoutRef<'form'>, 'onChange'> {

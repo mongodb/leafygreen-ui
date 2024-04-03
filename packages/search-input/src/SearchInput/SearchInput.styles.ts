@@ -38,29 +38,25 @@ export const inputWrapperSizeStyle: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 22px;
-    grid-template-columns: 28px 1fr;
-    grid-auto-columns: 36px;
+    grid-template-columns: 28px 1fr 36px;
   `,
   [Size.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 28px;
-    grid-template-columns: 32px 1fr;
-    grid-auto-columns: 36px;
+    grid-template-columns: 32px 1fr 36px;
   `,
   [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
-    grid-template-columns: 36px 1fr;
-    grid-auto-columns: 36px;
+    grid-template-columns: 36px 1fr 36px;
   `,
   [Size.Large]: css`
     font-size: ${typeScales.large.fontSize}px;
     line-height: ${typeScales.large.lineHeight}px;
     height: 48px;
-    grid-template-columns: 36px 1fr;
-    grid-auto-columns: 42px;
+    grid-template-columns: 36px 1fr 44px;
   `,
 };
 

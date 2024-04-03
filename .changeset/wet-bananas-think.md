@@ -17,6 +17,6 @@ The following styling changes are made:
 - updated dark mode placeholder text color
 
 #### `onKeyDown` bug fix
-Previously, if searchbox element had focus and was disabled, user could press keys to open menu element.
+Previously, if searchbox element had focus and was disabled, user could press keys which would trigger opening the menu element.
 
-Now, if searchbox element has focus and is disabled, it will correctly return early `onKeyDown`.
+Now, if searchbox element has focus and is disabled, user can press keys, and they will not trigger any `onKeyDown` logic.
