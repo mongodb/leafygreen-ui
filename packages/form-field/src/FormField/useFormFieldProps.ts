@@ -9,7 +9,7 @@ export interface FormFieldInputElementProps {
   'aria-label'?: string;
   'aria-disabled'?: boolean;
   'aria-invalid'?: FormFieldProps['aria-invalid'];
-  readonly?: boolean;
+  readOnly?: boolean;
 }
 
 export interface FormFieldElementProps {
@@ -51,7 +51,7 @@ export const useFormFieldProps = ({
     'aria-describedby': ariaDescribedby,
     'aria-label': ariaLabel,
     'aria-disabled': disabled,
-    readonly: disabled,
+    readOnly: disabled,
     'aria-invalid': ariaInvalid,
   };
 
