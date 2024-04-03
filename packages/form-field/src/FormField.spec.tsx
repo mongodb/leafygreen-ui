@@ -296,7 +296,7 @@ describe('packages/form-field', () => {
 
   describe(`${FormFieldState.Valid} state`, () => {
     test('Success icon and message are not shown by default', () => {
-      const { container, queryByText } = render(
+      const { queryByText, queryByTitle } = render(
         <FormField
           label="Label"
           successMessage="Success"
@@ -307,14 +307,14 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      const successIcon = container.querySelector('svg');
+      const successIcon = queryByTitle('Valid');
       const successText = queryByText('Success');
       expect(successIcon).toBeNull();
       expect(successText).toBeNull();
     });
 
     test(`Success icon and message appear when state is ${FormFieldState.Valid}`, () => {
-      const { container, queryByText } = render(
+      const { queryByText, queryByTitle } = render(
         <FormField
           label="Label"
           successMessage="Success"
@@ -326,7 +326,7 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      const successIcon = container.querySelector('svg');
+      const successIcon = queryByTitle('Valid');
       const successText = queryByText('Success');
       expect(successIcon).toBeInTheDocument();
       expect(successText).toBeInTheDocument();
@@ -335,7 +335,7 @@ describe('packages/form-field', () => {
 
   describe(`${FormFieldState.Error} state`, () => {
     test('Error icon and message are not shown by default', () => {
-      const { container, queryByText } = render(
+      const { queryByText, queryByTitle } = render(
         <FormField
           label="Label"
           errorMessage="This is an error message"
@@ -346,14 +346,14 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      const errorIcon = container.querySelector('svg');
+      const errorIcon = queryByTitle('Error');
       const errorText = queryByText('This is an error message');
       expect(errorIcon).toBeNull();
       expect(errorText).toBeNull();
     });
 
     test(`Error message appears when state is ${FormFieldState.Error}`, () => {
-      const { container, queryByText } = render(
+      const { queryByText, queryByTitle } = render(
         <FormField
           label="Label"
           errorMessage="This is an error message"
@@ -365,7 +365,7 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      const errorIcon = container.querySelector('svg');
+      const errorIcon = queryByTitle('Error');
       const errorText = queryByText('This is an error message');
       expect(errorIcon).toBeInTheDocument();
       expect(errorText).toBeInTheDocument();
