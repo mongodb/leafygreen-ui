@@ -121,6 +121,20 @@ describe('packages/checkbox', () => {
           expect(isDisabled()).toBe(false);
         });
       });
+
+      describe('isIndeterminate', () => {
+        test('is true', () => {
+          renderCheckbox({ indeterminate: true });
+          const { isIndeterminate } = getTestUtils();
+          expect(isIndeterminate()).toBe(true);
+        });
+
+        test('is false', () => {
+          renderCheckbox();
+          const { isIndeterminate } = getTestUtils();
+          expect(isIndeterminate()).toBe(false);
+        });
+      });
     });
 
     describe('multiple inputs', () => {

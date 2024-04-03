@@ -191,10 +191,11 @@ const { getInput, getLabel, getDescription, getInputValue, isDisabled } =
   getTestUtils();
 ```
 
-| Util             | Description                           | Returns                       |
-| ---------------- | ------------------------------------- | ----------------------------- |
-| `getInput`       | Returns the input node                | `HTMLButtonElement`           |
-| `getLabel`       | Returns the label node                | `HTMLButtonElement` \| `null` |
-| `getDescription` | Returns the description node          | `HTMLButtonElement` \| `null` |
-| `getInputValue`  | Returns the input value               | `boolean`                     |
-| `isDisabled`     | Returns whether the input is disabled | `boolean`                     |
+| Util              | Description                                | Returns                       |
+| ----------------- | ------------------------------------------ | ----------------------------- |
+| `getInput`        | Returns the input node                     | `HTMLButtonElement`           |
+| `getLabel`        | Returns the label node                     | `HTMLButtonElement` \| `null` |
+| `getDescription`  | Returns the description node               | `HTMLButtonElement` \| `null` |
+| `getInputValue`   | Returns the input value                    | `boolean`                     |
+| `isDisabled`      | Returns whether the input is disabled      | `boolean`                     |
+| `isIndeterminate` | Returns whether the input is indeterminate | `boolean`                     |
