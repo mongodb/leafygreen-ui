@@ -4,7 +4,7 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import InlineCode from './InlineCode';
 import { InlineCodeProps } from './InlineCode.types';
 
-export const LiveExample = ({ children, ...rest }: InlineCodeProps) => {
+export const Basic = ({ children, ...rest }: InlineCodeProps) => {
   // @ts-ignore
   return <InlineCode {...rest}>{children}</InlineCode>;
 };
@@ -13,7 +13,7 @@ const meta: StoryMetaType<typeof InlineCode> = {
   title: 'Components/Typography/InlineCode',
   component: InlineCode,
   parameters: {
-    default: 'LiveExample',
+    default: 'Basic',
     generate: {
       combineArgs: {
         darkMode: [false, true],

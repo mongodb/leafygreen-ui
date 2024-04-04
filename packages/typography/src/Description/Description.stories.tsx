@@ -4,7 +4,7 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import Description from './Description';
 import { DescriptionProps } from './Description.types';
 
-export const LiveExample = ({ children, ...rest }: DescriptionProps) => {
+export const Basic = ({ children, ...rest }: DescriptionProps) => {
   return <Description {...rest}>{children}</Description>;
 };
 
@@ -12,7 +12,7 @@ const meta: StoryMetaType<typeof Description> = {
   title: 'Components/Typography/Description',
   component: Description,
   parameters: {
-    default: 'LiveExample',
+    default: 'Basic',
     generate: {
       combineArgs: {
         darkMode: [false, true],

@@ -4,7 +4,7 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import BackLink from './BackLink';
 import { BackLinkProps } from './BackLink.types';
 
-export const LiveExample = ({ children, ...rest }: BackLinkProps) => {
+export const Basic = ({ children, ...rest }: BackLinkProps) => {
   // @ts-ignore
   return <BackLink {...rest}>{children}</BackLink>;
 };
@@ -13,7 +13,7 @@ const meta: StoryMetaType<typeof BackLink> = {
   title: 'Components/Typography/BackLink',
   component: BackLink,
   parameters: {
-    default: 'LiveExample',
+    default: 'Basic',
     generate: {
       combineArgs: {
         // @ts-expect-error - data-hover is not a prop

@@ -4,7 +4,7 @@ import { type StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import Link from './Link';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
-export const LiveExample = ({ children, ...rest }: LinkProps) => {
+export const Basic = ({ children, ...rest }: LinkProps) => {
   // @ts-ignore
   return <Link {...rest}>{children}</Link>;
 };
@@ -13,7 +13,7 @@ const meta: StoryMetaType<typeof Link> = {
   title: 'Components/Typography/Link',
   component: Link,
   parameters: {
-    default: 'LiveExample',
+    default: 'Basic',
     generate: {
       storyNames: ['StandAloneLink', 'InlineLink'],
       combineArgs: {

@@ -4,7 +4,7 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import Disclaimer from './Disclaimer';
 import { DisclaimerProps } from './Disclaimer.types';
 
-export const LiveExample = ({ children, ...rest }: DisclaimerProps) => {
+export const Basic = ({ children, ...rest }: DisclaimerProps) => {
   return <Disclaimer {...rest}>{children}</Disclaimer>;
 };
 

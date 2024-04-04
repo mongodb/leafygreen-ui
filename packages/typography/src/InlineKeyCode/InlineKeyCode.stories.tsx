@@ -6,7 +6,7 @@ import { css } from '@leafygreen-ui/emotion';
 import InlineKeyCode from './InlineKeyCode';
 import { InlineKeyCodeProps } from './InlineKeyCode.types';
 
-export const LiveExample = ({ children, ...rest }: InlineKeyCodeProps) => {
+export const Basic = ({ children, ...rest }: InlineKeyCodeProps) => {
   return (
     <div
       className={css`
@@ -26,7 +26,7 @@ const meta: StoryMetaType<typeof InlineKeyCode> = {
   title: 'Components/Typography/InlineKeyCode',
   component: InlineKeyCode,
   parameters: {
-    default: 'LiveExample',
+    default: 'Basic',
     generate: {
       combineArgs: {
         darkMode: [false, true],

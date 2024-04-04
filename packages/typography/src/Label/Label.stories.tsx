@@ -4,7 +4,7 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import Label from './Label';
 import { LabelProps } from './Label.types';
 
-export const LiveExample = ({ children, ...rest }: LabelProps) => {
+export const Basic = ({ children, ...rest }: LabelProps) => {
   return <Label {...rest}>{children}</Label>;
 };
 
@@ -12,7 +12,7 @@ const meta: StoryMetaType<typeof Label> = {
   title: 'Components/Typography/Label',
   component: Label,
   parameters: {
-    default: 'LiveExample',
+    default: 'Basic',
     generate: {
       combineArgs: {
         darkMode: [false, true],
