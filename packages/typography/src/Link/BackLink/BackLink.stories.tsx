@@ -1,8 +1,6 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-
 import BackLink from './BackLink';
 import { BackLinkProps } from './BackLink.types';
 
@@ -31,16 +29,6 @@ const meta: StoryMetaType<typeof BackLink> = {
           'data-focus': true,
         },
       ],
-      decorator: (Instance, context) => {
-        return (
-          <LeafygreenProvider
-            darkMode={context?.args.darkMode}
-            baseFontSize={context?.args.baseFontSize}
-          >
-            <Instance />
-          </LeafygreenProvider>
-        );
-      },
     },
   },
   args: {

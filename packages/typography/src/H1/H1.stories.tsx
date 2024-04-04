@@ -1,8 +1,6 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-
 import H1 from './H1';
 import { H1Props } from './H1.types';
 
@@ -18,17 +16,6 @@ const meta: StoryMetaType<typeof H1> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [13, 16],
-      },
-      decorator: (Instance, context) => {
-        return (
-          <LeafygreenProvider
-            darkMode={context?.args.darkMode}
-            baseFontSize={context?.args.baseFontSize}
-          >
-            <Instance />
-          </LeafygreenProvider>
-        );
       },
     },
   },

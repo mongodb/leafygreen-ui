@@ -2,7 +2,6 @@ import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import InlineKeyCode from './InlineKeyCode';
 import { InlineKeyCodeProps } from './InlineKeyCode.types';
@@ -32,16 +31,6 @@ const meta: StoryMetaType<typeof InlineKeyCode> = {
       combineArgs: {
         darkMode: [false, true],
         baseFontSize: [13, 16],
-      },
-      decorator: (Instance, context) => {
-        return (
-          <LeafygreenProvider
-            darkMode={context?.args.darkMode}
-            baseFontSize={context?.args.baseFontSize}
-          >
-            <Instance />
-          </LeafygreenProvider>
-        );
       },
     },
   },

@@ -1,8 +1,6 @@
 import React from 'react';
 import { type StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-
 import Link from './Link';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
@@ -24,7 +22,7 @@ const meta: StoryMetaType<typeof Link> = {
         'data-focus': [false, true],
         darkMode: [false, true],
         baseFontSize: [13, 16],
-        href: ['https://www.mongodb.design/', undefined],
+        href: ['https://www.mongodb.design/', 'http://localhost:9001'],
         arrowAppearance: Object.values(ArrowAppearance),
         children: [
           'Lorem ipsum',
@@ -38,16 +36,6 @@ const meta: StoryMetaType<typeof Link> = {
           'data-focus': true,
         },
       ],
-      decorator: (Instance, context) => {
-        return (
-          <LeafygreenProvider
-            darkMode={context?.args.darkMode}
-            baseFontSize={context?.args.baseFontSize}
-          >
-            <Instance />
-          </LeafygreenProvider>
-        );
-      },
     },
   },
   args: {
@@ -60,12 +48,12 @@ export const StandAloneLink: StoryType<typeof Link> = () => <></>;
 export const InlineLink: StoryType<typeof Link> = () => <></>;
 InlineLink.parameters = {
   generate: {
-    decorator: (Instance, context) => {
+    decorator: Instance => {
       return (
-        <LeafygreenProvider darkMode={context?.args.darkMode}>
+        <>
           <span>Lorem ipsum dolor sit amet </span>
           <Instance />
-        </LeafygreenProvider>
+        </>
       );
     },
   },

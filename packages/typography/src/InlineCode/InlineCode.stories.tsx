@@ -1,8 +1,6 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-
 import InlineCode from './InlineCode';
 import { InlineCodeProps } from './InlineCode.types';
 
@@ -21,16 +19,6 @@ const meta: StoryMetaType<typeof InlineCode> = {
         darkMode: [false, true],
         baseFontSize: [13, 16],
         href: ['https://www.mongodb.design/', undefined],
-      },
-      decorator: (Instance, context) => {
-        return (
-          <LeafygreenProvider
-            darkMode={context?.args.darkMode}
-            baseFontSize={context?.args.baseFontSize}
-          >
-            <Instance />
-          </LeafygreenProvider>
-        );
       },
     },
   },

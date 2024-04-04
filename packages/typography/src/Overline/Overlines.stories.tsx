@@ -6,21 +6,8 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Overline from './Overline';
 import { OverlineProps } from './Overline.types';
 
-type LGProviderBaseFontSize = 14 | 16;
-
-export const LiveExample = ({
-  baseFontSize,
-  darkMode,
-  children,
-  ...rest
-}: OverlineProps & {
-  baseFontSize: LGProviderBaseFontSize;
-}) => {
-  return (
-    <LeafygreenProvider baseFontSize={baseFontSize} darkMode={darkMode}>
-      <Overline {...rest}>{children}</Overline>
-    </LeafygreenProvider>
-  );
+export const LiveExample = ({ children, ...rest }: OverlineProps) => {
+  return <Overline {...rest}>{children}</Overline>;
 };
 
 const meta: StoryMetaType<typeof Overline> = {
@@ -31,8 +18,14 @@ const meta: StoryMetaType<typeof Overline> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [13, 16],
       },
+    },
+    decorator: (Instance, context) => {
+      return (
+        <LeafygreenProvider darkMode={context?.args.darkMode}>
+          <Instance />
+        </LeafygreenProvider>
+      );
     },
   },
   args: {
