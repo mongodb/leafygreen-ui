@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.0.10
+
+### Patch Changes
+
+- 070736c4: Exports `black` and `white` colors `as const`
+
 ## 4.0.9
 
 ### Patch Changes

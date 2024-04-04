@@ -1,5 +1,32 @@
 # @leafygreen-ui/date-picker
 
+## 1.1.0
+
+### Minor Changes
+
+- 27ad3121: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Added stories for error state
+  - `FormField` styling changes apply to `DatePicker`. [See style changes here](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#102)
+
+### Patch Changes
+
+- Updated dependencies [9402ba0e]
+- Updated dependencies [c3906f78]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [8aec541d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [27ad3121]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/form-field@1.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/select@11.3.0
+  - @leafygreen-ui/palette@4.0.10
+
 ## 1.0.3
 
 ### Patch Changes

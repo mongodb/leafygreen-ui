@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.4.0
+
+### Minor Changes
+
+- c3906f78: Adds `LgIdProps` which exports an interface to support `['data-lgid']?: string;`, which can be extended inside components props.
+
 ## 13.3.0
 
 ### Minor Changes

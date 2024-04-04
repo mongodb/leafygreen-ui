@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.1.0
+
+### Minor Changes
+
+- 9402ba0e: Adds `'Escalation'` to glyph set
+
 ## 12.0.1
 
 ### Patch Changes
