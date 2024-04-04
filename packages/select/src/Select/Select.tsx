@@ -650,7 +650,7 @@ Select.propTypes = {
   label: PropTypes.string,
   'aria-labelledby': PropTypes.string,
   'aria-label': PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.node,
   placeholder: PropTypes.string,
   className: PropTypes.string,
   darkMode: PropTypes.bool,

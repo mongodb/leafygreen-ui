@@ -41,6 +41,17 @@ describe('packages/search-input', () => {
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
+
+    test('does not set aria-label if aria-labelledby is defined', () => {
+      const ariaLabelledby = 'custom-label-id';
+      const { searchBoxEl } = renderSearchInput({
+        ...defaultProps,
+        'aria-label': 'Label',
+        'aria-labelledby': ariaLabelledby,
+      });
+      expect(searchBoxEl?.hasAttribute('aria-label')).toBeFalsy();
+      expect(searchBoxEl?.getAttribute('aria-labelledby')).toBe(ariaLabelledby);
+    });
   });
 
   describe('Basic rendering', () => {
@@ -115,6 +126,23 @@ describe('packages/search-input', () => {
     });
 
     describe('When disabled', () => {
+      test(`renders with aria-disabled attribute but not disabled attribute`, () => {
+        const { inputEl } = renderSearchInput({
+          ...defaultProps,
+          disabled: true,
+        });
+        expect(inputEl?.hasAttribute('aria-disabled')).toBeTruthy();
+        expect(inputEl?.hasAttribute('disabled')).toBeFalsy();
+      });
+
+      test(`renders with readonly attribute`, () => {
+        const { inputEl } = renderSearchInput({
+          ...defaultProps,
+          disabled: true,
+        });
+        expect(inputEl?.hasAttribute('readonly')).toBeTruthy();
+      });
+
       test('searchbox is focusable when `disabled`', () => {
         const { inputEl } = renderSearchInput({
           disabled: true,
@@ -131,6 +159,17 @@ describe('packages/search-input', () => {
         });
         userEvent.click(searchBoxEl);
         expect(document.body).toHaveFocus();
+      });
+
+      test('searchbox is NOT keyboard interactive when `disabled`', () => {
+        const { inputEl, getMenuElements } = renderSearchInput({
+          disabled: true,
+          ...defaultProps,
+        });
+
+        userEvent.type(inputEl, '{arrowdown}');
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       test('clear button is not clickable', () => {
