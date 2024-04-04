@@ -13,7 +13,6 @@ export const baseStyles = css`
   // Customize the border
   border-width: ${spacing[25]}px;
   border-radius: ${spacing[600]}px;
-  border-left-color: unset;
 
   max-width: fit-content;
   padding: ${spacing[200]}px ${spacing[300]}px;
