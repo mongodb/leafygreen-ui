@@ -1,6 +1,8 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import Error from './Error';
 import { ErrorProps } from './Error.types';
 
@@ -16,7 +18,7 @@ const meta: StoryMetaType<typeof Error> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [13, 16],
+        baseFontSize: Object.values(BaseFontSize),
       },
     },
   },

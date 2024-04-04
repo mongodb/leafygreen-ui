@@ -1,6 +1,8 @@
 import React from 'react';
 import { type StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import Link from './Link';
 import { ArrowAppearance, LinkProps } from './Link.types';
 
@@ -21,7 +23,7 @@ const meta: StoryMetaType<typeof Link> = {
         'data-hover': [false, true],
         'data-focus': [false, true],
         darkMode: [false, true],
-        baseFontSize: [13, 16],
+        baseFontSize: Object.values(BaseFontSize),
         href: ['https://www.mongodb.design/', 'http://localhost:9001'],
         arrowAppearance: Object.values(ArrowAppearance),
         children: [

@@ -2,6 +2,7 @@ import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import InlineKeyCode from './InlineKeyCode';
 import { InlineKeyCodeProps } from './InlineKeyCode.types';
@@ -30,7 +31,7 @@ const meta: StoryMetaType<typeof InlineKeyCode> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [13, 16],
+        baseFontSize: Object.values(BaseFontSize),
       },
     },
   },

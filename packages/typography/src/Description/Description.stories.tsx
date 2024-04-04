@@ -1,6 +1,8 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import Description from './Description';
 import { DescriptionProps } from './Description.types';
 
@@ -16,7 +18,7 @@ const meta: StoryMetaType<typeof Description> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        baseFontSize: [13, 16],
+        baseFontSize: Object.values(BaseFontSize),
         disabled: [false, true],
       },
     },

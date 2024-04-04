@@ -1,6 +1,8 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import BackLink from './BackLink';
 import { BackLinkProps } from './BackLink.types';
 
@@ -20,7 +22,7 @@ const meta: StoryMetaType<typeof BackLink> = {
         'data-hover': [false, true],
         'data-focus': [false, true],
         darkMode: [false, true],
-        baseFontSize: [13, 16],
+        baseFontSize: Object.values(BaseFontSize),
       },
       excludeCombinations: [
         {
