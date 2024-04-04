@@ -1,8 +1,6 @@
 import { FormUtils } from '@lg-tools/test-harnesses';
 
-export interface GetTestUtilsReturnType<
-  T extends React.ElementType<any> | HTMLButtonElement = HTMLButtonElement,
-> {
+export interface GetTestUtilsReturnType<T extends HTMLElement> {
   getButton: () => T;
   isDisabled: FormUtils['isDisabled'];
 }

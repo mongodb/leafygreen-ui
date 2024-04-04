@@ -79,7 +79,7 @@ describe('packages/button', () => {
       });
     });
 
-    describe('Async component', () => {
+    describe('async component', () => {
       test('find LG Button after awaiting an async component', async () => {
         const { openButton, findByTestId, asyncTestComponentId } =
           renderButtonAsync();
@@ -105,6 +105,20 @@ describe('packages/button', () => {
           expect(getButton()).toBeInTheDocument();
         });
       });
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types behave as expected', () => {
+      renderButton({ as: 'a' });
+      const { getButton } = getTestUtils();
+
+      const el1: HTMLButtonElement = getButton();
+
+      const el2: HTMLAnchorElement = getButton();
+
+      // Creating a dummy object so don't have to ts-ignore the above el1 and el2 type checks.
+      // @ts-ignore
+      const dummyObj = { el1, el2 };
     });
   });
 });
