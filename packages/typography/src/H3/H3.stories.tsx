@@ -21,6 +21,7 @@ const meta: StoryMetaType<typeof H3> = {
   },
   args: {
     children: 'Lorem ipsum dolor sit amet',
+    darkMode: false,
   },
 };
 export default meta;

@@ -36,6 +36,7 @@ const meta: StoryMetaType<typeof InlineKeyCode> = {
   },
   args: {
     children: 'Lorem ipsum dolor sit amet',
+    darkMode: false,
   },
 };
 export default meta;

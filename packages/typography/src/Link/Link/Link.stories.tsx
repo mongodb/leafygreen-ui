@@ -40,6 +40,7 @@ const meta: StoryMetaType<typeof Link> = {
   },
   args: {
     children: 'Lorem ipsum',
+    darkMode: false,
   },
 };
 export default meta;

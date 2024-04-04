@@ -23,6 +23,7 @@ const meta: StoryMetaType<typeof Label> = {
   },
   args: {
     children: 'Lorem ipsum dolor sit amet',
+    darkMode: false,
   },
 };
 export default meta;

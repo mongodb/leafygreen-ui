@@ -34,6 +34,7 @@ const meta: StoryMetaType<typeof BackLink> = {
   args: {
     href: 'https://www.mongodb.design/',
     children: 'Lorem ipsum',
+    darkMode: false,
   },
 };
 export default meta;
