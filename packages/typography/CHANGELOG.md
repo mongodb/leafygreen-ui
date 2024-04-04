@@ -1,5 +1,23 @@
 # @leafygreen-ui/typography
 
+## 18.4.0
+
+### Minor Changes
+
+- c3906f78: - Exports the constant, `LGIDS_TYPOGRAPHY`, which stores `data-lgid` values.
+  - Extends `LgIdProps` on `CommonTypographyProps`.
+  - Adds the `data-lgid` attribute to `Label` and `Description`
+
+### Patch Changes
+
+- 9b71e34d: Removes `button` default browsers styles when `as="button"` [LG-3665](https://jira.mongodb.org/browse/LG-3665)
+- Updated dependencies [9402ba0e]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
 ## 18.3.0
 
 ### Minor Changes
