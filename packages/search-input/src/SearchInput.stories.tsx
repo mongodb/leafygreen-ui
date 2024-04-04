@@ -12,7 +12,7 @@ import startCase from 'lodash/startCase';
 import { css } from '@leafygreen-ui/emotion';
 import { Body, H2 } from '@leafygreen-ui/typography';
 
-import { State } from './SearchInput/SearchInput.types';
+import { Size, State } from './SearchInput/SearchInput.types';
 import {
   SearchInput,
   type SearchInputProps,
@@ -38,6 +38,7 @@ const meta: StoryMetaType<typeof SearchInput> = {
       combineArgs: {
         darkMode: [false, true],
         disabled: [false, true],
+        size: Object.values(Size),
       },
     },
   },

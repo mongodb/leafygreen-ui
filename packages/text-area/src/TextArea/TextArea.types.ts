@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  DarkModeProps,
+  Either,
+  HTMLElementProps,
+  LgIdProps,
+} from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const State = {
@@ -11,17 +16,13 @@ export const State = {
 export type State = (typeof State)[keyof typeof State];
 
 export interface BaseTextAreaProps
-  extends HTMLElementProps<'textarea', HTMLTextAreaElement> {
+  extends HTMLElementProps<'textarea', HTMLTextAreaElement>,
+    DarkModeProps,
+    LgIdProps {
   /**
    * ID associated with the TextArea component.
    */
   id?: string;
-
-  /**
-   * Determines whether or not the component appears in dark theme.
-   * @default false
-   */
-  darkMode?: boolean;
 
   /**
    * Text shown in bold above the input element.

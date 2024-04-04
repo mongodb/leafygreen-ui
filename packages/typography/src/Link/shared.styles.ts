@@ -21,6 +21,10 @@ export const linkStyles = css`
   cursor: pointer;
   font-size: inherit;
   line-height: inherit;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
 
   &:hover,
   &:focus {
