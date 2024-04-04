@@ -14,7 +14,6 @@ export const anchorClassName = createUniqueClassName();
 
 export const linkStyles = css`
   font-family: ${fontFamilies.default};
-  // display: inline-flex;
   display: inline;
   align-items: center;
   text-decoration: none;

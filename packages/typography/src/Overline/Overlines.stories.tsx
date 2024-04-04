@@ -1,8 +1,6 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
-
 import Overline from './Overline';
 import { OverlineProps } from './Overline.types';
 
@@ -19,13 +17,6 @@ const meta: StoryMetaType<typeof Overline> = {
       combineArgs: {
         darkMode: [false, true],
       },
-    },
-    decorator: (Instance, context) => {
-      return (
-        <LeafygreenProvider darkMode={context?.args.darkMode}>
-          <Instance />
-        </LeafygreenProvider>
-      );
     },
   },
   args: {
