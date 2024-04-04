@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/typography': minor
+'@leafygreen-ui/typography': major
 ---
 
 - Fixes the `Link` component so that:
