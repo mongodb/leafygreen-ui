@@ -11,6 +11,7 @@ import {
   CardSkeleton,
   CodeSkeleton,
   FormSkeleton,
+  ListSkeleton,
   ParagraphSkeleton,
   Skeleton,
   TableSkeleton,
@@ -46,44 +47,26 @@ const labelStyles = css`
   margin-top: ${spacing[5]}px;
 `;
 
+const skeletonComponents = {
+  Skeleton,
+  CardSkeleton,
+  CodeSkeleton,
+  FormSkeleton,
+  ListSkeleton,
+  ParagraphSkeleton,
+  TableSkeleton,
+};
+
 export const LiveExample: StoryFn<any> = (props: DarkModeProps) => (
   <div className={storyRootStyles}>
-    <div className={displayOptionContainerStyles}>
-      <Skeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>Skeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <ParagraphSkeleton withHeader />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>ParagraphSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <CardSkeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>CardSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <FormSkeleton {...props} />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>FormSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <TableSkeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>TableSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <CodeSkeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>CodeSkeleton</InlineCode>
-      </Body>
-    </div>
+    {Object.entries(skeletonComponents).map(([name, SkeletonVariant]) => (
+      <div key={name} className={displayOptionContainerStyles}>
+        <SkeletonVariant />
+        <Body className={labelStyles} weight="medium">
+          <InlineCode>{name}</InlineCode>
+        </Body>
+      </div>
+    ))}
   </div>
 );
 LiveExample.parameters = {
