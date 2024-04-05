@@ -54,6 +54,12 @@ export const test = (
     ...passThroughOptions,
   ].filter(v => v !== '');
 
+  console.log({
+    verbose, 
+    jestBinary,
+    commandArgs
+  })
+
   spawn(jestBinary, commandArgs, {
     env: {
       ...process.env,
