@@ -22,13 +22,13 @@ importers:
         specifier: ^2.26.0
         version: 2.26.2
       '@lg-tools/cli':
-        specifier: ^0.5.6
+        specifier: workspace:^
         version: link:tools/cli
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:tools/meta
       '@lg-tools/storybook-addon':
-        specifier: '*'
+        specifier: workspace:^
         version: link:tools/storybook-addon
       '@types/cross-spawn':
         specifier: 6.0.2
@@ -60,6 +60,9 @@ importers:
       gh-pages:
         specifier: ^3.1.0
         version: 3.2.3
+      node-fetch:
+        specifier: ^3.3.2
+        version: 3.3.2
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -299,7 +302,7 @@ importers:
         specifier: ^8.1.3
         version: link:../../packages/hooks
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../../packages/icon
       '@leafygreen-ui/input-option':
         specifier: ^1.1.2
@@ -308,10 +311,10 @@ importers:
         specifier: ^3.1.12
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../../packages/lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../../packages/palette
       '@leafygreen-ui/polymorphic':
         specifier: ^1.3.7
@@ -320,13 +323,13 @@ importers:
         specifier: ^11.3.1
         version: link:../../packages/popover
       '@leafygreen-ui/search-input':
-        specifier: ^2.1.6
+        specifier: ^3.0.0
         version: link:../../packages/search-input
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
         specifier: ^2.0.0
@@ -409,6 +412,9 @@ importers:
 
   chat/message:
     dependencies:
+      '@leafygreen-ui/banner':
+        specifier: ^7.0.20
+        version: link:../../packages/banner
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../../packages/emotion
@@ -427,15 +433,15 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
+      '@leafygreen-ui/typography':
+        specifier: ^18.3.0
+        version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
         specifier: ^2.0.0
         version: link:../leafygreen-chat-provider
       '@lg-chat/lg-markdown':
         specifier: ^2.0.1
         version: link:../lg-markdown
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
       '@lg-chat/avatar':
         specifier: ^3.0.1
@@ -443,15 +449,9 @@ importers:
       '@lg-chat/message-feedback':
         specifier: ^2.0.1
         version: link:../message-feedback
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   chat/message-feed:
     dependencies:
@@ -1153,42 +1153,33 @@ importers:
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/modal':
         specifier: ^16.0.7
         version: link:../modal
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/text-input':
-        specifier: ^12.1.27
+        specifier: ^13.0.0
         version: link:../text-input
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/copyable:
     dependencies:
@@ -1257,13 +1248,13 @@ importers:
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/form-field':
-        specifier: ^1.0.1
+        specifier: ^1.1.0
         version: link:../form-field
       '@leafygreen-ui/hooks':
         specifier: ^8.1.3
         version: link:../hooks
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/icon-button':
         specifier: ^15.0.21
@@ -1272,22 +1263,22 @@ importers:
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/popover':
         specifier: ^11.3.1
         version: link:../popover
       '@leafygreen-ui/select':
-        specifier: ^11.2.3
+        specifier: ^11.3.0
         version: link:../select
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
       date-fns:
         specifier: ^2.30.0
@@ -1509,26 +1500,23 @@ importers:
         specifier: ^8.1.3
         version: link:../hooks
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
@@ -1536,15 +1524,9 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: ^15.0.21
         version: link:../icon-button
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/form-footer:
     dependencies:
@@ -1683,19 +1665,13 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
@@ -1705,9 +1681,6 @@ importers:
       '@types/meow':
         specifier: ^6.0.0
         version: 6.0.0
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
       '@types/xml2json':
         specifier: ^0.11.0
         version: 0.11.6
@@ -1925,33 +1898,24 @@ importers:
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react-lottie-player:
         specifier: ^1.5.6
         version: 1.5.6(react@18.2.0)
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/logo:
     dependencies:
@@ -1959,24 +1923,15 @@ importers:
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/marketing-modal:
     dependencies:
@@ -2251,26 +2206,16 @@ importers:
         version: 15.7.12
 
   packages/palette:
-    dependencies:
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2368,23 +2313,16 @@ importers:
         version: 15.7.12
 
   packages/polymorphic:
-    dependencies:
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
       '@emotion/styled':
         specifier: ^11.10.5
         version: 11.11.5(@emotion/react@11.11.1)(@types/react@18.2.23)(react@18.2.0)
       '@lg-tools/build':
-        specifier: workspace:^
+        specifier: ^0.5.0
         version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
       next:
         specifier: ^13.1.6
         version: 13.5.6(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
@@ -2565,7 +2503,7 @@ importers:
         specifier: ^8.1.3
         version: link:../hooks
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/icon-button':
         specifier: ^15.0.21
@@ -2577,10 +2515,10 @@ importers:
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/polymorphic':
         specifier: ^1.3.7
@@ -2592,7 +2530,7 @@ importers:
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
       lodash:
         specifier: ^4.17.21
@@ -2684,7 +2622,7 @@ importers:
         specifier: ^8.1.3
         version: link:../hooks
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/input-option':
         specifier: ^1.1.2
@@ -2693,10 +2631,10 @@ importers:
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/popover':
         specifier: ^11.3.1
@@ -2705,8 +2643,11 @@ importers:
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: ^0.1.1
+        version: link:../../tools/test-harnesses
       '@types/react-is':
         specifier: ^18.0.0
         version: 18.2.4
@@ -3068,26 +3009,17 @@ importers:
       '@testing-library/react':
         specifier: ^12.0.0 || ^13.1.0 || ^14.0.0
         version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
-      '@testing-library/user-event':
-        specifier: 13.5.0
-        version: 13.5.0(@testing-library/dom@9.3.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     optionalDependencies:
       '@testing-library/react-hooks':
         specifier: '>=3.7.0'
         version: 8.0.1(@types/react@18.2.23)(react-dom@18.2.0)(react-test-renderer@18.2.0)(react@18.2.0)
     devDependencies:
       '@lg-tools/build':
-        specifier: workspace:^
+        specifier: 0.5.0
         version: link:../../tools/build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/text-area:
     dependencies:
@@ -3098,36 +3030,30 @@ importers:
         specifier: ^8.1.3
         version: link:../hooks
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
+      '@lg-tools/test-harnesses':
+        specifier: ^0.1.1
+        version: link:../../tools/test-harnesses
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/text-input:
     dependencies:
@@ -3135,7 +3061,7 @@ importers:
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/form-field':
-        specifier: ^1.0.1
+        specifier: ^1.1.0
         version: link:../form-field
       '@leafygreen-ui/hooks':
         specifier: ^8.1.3
@@ -3144,27 +3070,21 @@ importers:
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../typography
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
+      '@lg-tools/test-harnesses':
+        specifier: ^0.1.1
+        version: link:../../tools/test-harnesses
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/toast:
     dependencies:
@@ -3242,33 +3162,27 @@ importers:
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
+      '@lg-tools/test-harnesses':
+        specifier: ^0.1.1
+        version: link:../../tools/test-harnesses
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   packages/tokens:
     dependencies:
@@ -3353,16 +3267,16 @@ importers:
         specifier: ^4.0.8
         version: link:../emotion
       '@leafygreen-ui/icon':
-        specifier: ^12.0.1
+        specifier: ^12.1.0
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../palette
       '@leafygreen-ui/polymorphic':
         specifier: ^1.3.7
@@ -3477,60 +3391,53 @@ importers:
         specifier: ~4.9.0
         version: 4.9.5
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: 'link:'
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
 
   tools/cli:
     dependencies:
+      '@lg-tools/build':
+        specifier: 0.5.0
+        version: link:../build
       '@lg-tools/create':
-        specifier: 0.2.6
+        specifier: 0.2.7
         version: link:../create
       '@lg-tools/install':
-        specifier: 0.1.7
+        specifier: 0.1.8
         version: link:../install
       '@lg-tools/link':
-        specifier: 0.2.2
+        specifier: 0.2.3
         version: link:../link
       '@lg-tools/lint':
-        specifier: 0.2.1
+        specifier: 0.2.2
         version: link:../lint
       '@lg-tools/slackbot':
-        specifier: 0.2.5
+        specifier: 0.2.6
         version: link:../slackbot
       '@lg-tools/test':
-        specifier: 0.4.4
+        specifier: 0.4.5
         version: link:../test
       '@lg-tools/update':
-        specifier: 0.1.7
+        specifier: 0.1.8
         version: link:../update
       '@lg-tools/validate':
-        specifier: 0.1.9
+        specifier: 0.1.10
         version: link:../validate
       commander:
         specifier: ^11.0.0
         version: 11.0.0
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       read-pkg-up:
         specifier: 7.0.1
         version: 7.0.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:*
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/create:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: ^0.3.2
+        specifier: ^0.3.3
         version: link:../meta
       '@types/fs-extra':
         specifier: 11.0.1
@@ -3544,21 +3451,14 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/install:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: ^0.3.2
+        specifier: ^0.3.3
         version: link:../meta
       '@types/cross-spawn':
         specifier: 6.0.2
@@ -3569,21 +3469,18 @@ importers:
       node-fetch:
         specifier: 2.6.12
         version: 2.6.12
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
+      '@types/node-fetch':
+        specifier: ^2.6.11
+        version: 2.6.11
 
   tools/link:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: ^0.3.2
+        specifier: ^0.3.3
         version: link:../meta
       '@types/cross-spawn':
         specifier: 6.0.2
@@ -3600,16 +3497,6 @@ importers:
       fs-extra:
         specifier: 11.1.1
         version: 11.1.1
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/lint:
     dependencies:
@@ -3622,6 +3509,9 @@ importers:
       '@emotion/eslint-plugin':
         specifier: 11.11.0
         version: 11.11.0(eslint@8.43.0)
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@types/cross-spawn':
         specifier: 6.0.2
         version: 6.0.2
@@ -3673,22 +3563,15 @@ importers:
       prettier:
         specifier: 2.8.8
         version: 2.8.8
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       typescript:
         specifier: ~4.9.0
         version: 4.9.5
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/meta:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@types/fs-extra':
         specifier: 11.0.1
         version: 11.0.1
@@ -3698,21 +3581,14 @@ importers:
       fs-extra:
         specifier: 11.1.1
         version: 11.1.1
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/slackbot:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: ^0.3.2
+        specifier: ^0.3.3
         version: link:../meta
       '@slack/web-api':
         specifier: 6.7.1
@@ -3726,33 +3602,26 @@ importers:
       node-fetch:
         specifier: 2.6.11
         version: 2.6.11
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/storybook-addon:
     dependencies:
       '@leafygreen-ui/lib':
-        specifier: ^13.3.0
+        specifier: ^13.4.0
         version: link:../../packages/lib
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../../packages/palette
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
       '@leafygreen-ui/typography':
-        specifier: ^18.3.0
+        specifier: ^18.4.0
         version: link:../../packages/typography
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/storybook-decorators':
-        specifier: ^0.2.7
+        specifier: ^0.2.8
         version: link:../storybook-decorators
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
@@ -3820,9 +3689,6 @@ importers:
       path-browserify:
         specifier: 1.0.1
         version: 1.0.1
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react:
         specifier: ^17.0.0 || ^18.0.0
         version: 18.2.0
@@ -3847,13 +3713,6 @@ importers:
       webpack:
         specifier: 5.88.0
         version: 5.88.0(@swc/core@1.4.2)(esbuild@0.18.19)
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/storybook-decorators:
     dependencies:
@@ -3867,11 +3726,14 @@ importers:
         specifier: ^3.1.12
         version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/palette':
-        specifier: ^4.0.9
+        specifier: ^4.0.10
         version: link:../../packages/palette
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../storybook-utils
@@ -3881,16 +3743,6 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/storybook-utils:
     dependencies:
@@ -3928,8 +3780,11 @@ importers:
       '@leafygreen-ui/testing-lib':
         specifier: ^0.4.2
         version: link:../../packages/testing-lib
+      '@lg-tools/build':
+        specifier: 0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: 0.3.2
+        specifier: 0.3.3
         version: link:../meta
       '@testing-library/dom':
         specifier: 9.3.1
@@ -3985,22 +3840,12 @@ importers:
       jest-junit:
         specifier: 16.0.0
         version: 16.0.0
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
       react-test-renderer:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
       regenerator-runtime:
         specifier: 0.14.0
         version: 0.14.0
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:*
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/test-harnesses:
     dependencies:
@@ -4020,8 +3865,11 @@ importers:
 
   tools/update:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: ^0.3.2
+        specifier: ^0.3.3
         version: link:../meta
       '@types/cross-spawn':
         specifier: 6.0.2
@@ -4038,21 +3886,14 @@ importers:
       fs-extra:
         specifier: 11.1.1
         version: 11.1.1
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
   tools/validate:
     dependencies:
+      '@lg-tools/build':
+        specifier: ^0.5.0
+        version: link:../build
       '@lg-tools/meta':
-        specifier: ^0.3.2
+        specifier: ^0.3.3
         version: link:../meta
       '@types/cross-spawn':
         specifier: 6.0.2
@@ -4075,16 +3916,6 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
-      prop-types:
-        specifier: ^15.8.1
-        version: 15.8.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
-      '@types/prop-types':
-        specifier: ^15.7.12
-        version: 15.7.12
 
 packages:
 
@@ -7697,7 +7528,7 @@ packages:
       '@storybook/types': 7.6.17
       '@types/find-cache-dir': 3.2.1
       '@types/node': 18.19.20
-      '@types/node-fetch': 2.6.4
+      '@types/node-fetch': 2.6.11
       '@types/pretty-hrtime': 1.0.1
       chalk: 4.1.2
       esbuild: 0.18.19
@@ -9003,7 +8834,7 @@ packages:
   /@types/jest-axe@3.5.5:
     resolution: {integrity: sha512-b8WDIdoeKtr/JDJ2+QjFXMuS8UhfdMA6+15Z5KjjIie3jQrSXD9KZWMSQxc0nPtx7L9rIFKdiDpQk+m7s4a/8w==}
     dependencies:
-      '@types/jest': 29.5.3
+      '@types/jest': 29.5.12
       axe-core: 3.5.6
     dev: false
 
@@ -9012,6 +8843,13 @@ packages:
     dependencies:
       jest-matcher-utils: 28.1.3
       pretty-format: 28.1.3
+    dev: false
+
+  /@types/jest@29.5.12:
+    resolution: {integrity: sha512-eDC8bTvT/QhYdxJAulQikueigY5AsdBRH2yDKW3yveW7svY3+DzN84/2NUgkw10RTiJbWqZrTtoGVdYlvFJdLw==}
+    dependencies:
+      expect: 29.7.0
+      pretty-format: 29.7.0
     dev: false
 
   /@types/jest@29.5.3:
@@ -9082,11 +8920,11 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
-  /@types/node-fetch@2.6.4:
-    resolution: {integrity: sha512-1ZX9fcN4Rvkvgv4E6PAY5WXUFWFcRWxZa3EW83UjycOB9ljJCedb2CupIP4RZMEwF/M3eTcCihbBRgwtGbg5Rg==}
+  /@types/node-fetch@2.6.11:
+    resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
       '@types/node': 20.4.8
-      form-data: 3.0.1
+      form-data: 4.0.0
 
   /@types/node@12.20.55:
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
@@ -9178,7 +9016,7 @@ packages:
   /@types/testing-library__jest-dom@5.14.9:
     resolution: {integrity: sha512-FSYhIjFlfOpGSRyVoMBMuS3ws5ehFQODymf3vlI7U1K8c7PHwWwFY7VREfmsuzHSOnoKs/9/Y983ayOs7eRzqw==}
     dependencies:
-      '@types/jest': 29.5.3
+      '@types/jest': 29.5.12
     dev: false
 
   /@types/tough-cookie@4.0.2:
@@ -10812,6 +10650,11 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /data-uri-to-buffer@4.0.1:
+    resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
+    engines: {node: '>= 12'}
+    dev: true
+
   /data-urls@3.0.2:
     resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}
     engines: {node: '>=12'}
@@ -11928,6 +11771,14 @@ packages:
     dependencies:
       pend: 1.2.0
 
+  /fetch-blob@3.2.0:
+    resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
+    engines: {node: ^12.20 || >= 14.13}
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 3.3.3
+    dev: true
+
   /fetch-retry@5.0.6:
     resolution: {integrity: sha512-3yurQZ2hD9VISAhJJP9bpYFNQrHHBXE2JxxjY5aLEcDi46RmAzJE2OC9FAde0yis5ElW0jTTzs0zfg/Cca4XqQ==}
 
@@ -12155,14 +12006,6 @@ packages:
       mime-types: 2.1.35
     dev: false
 
-  /form-data@3.0.1:
-    resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
-    engines: {node: '>= 6'}
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
-
   /form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
@@ -12170,7 +12013,13 @@ packages:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-    dev: false
+
+  /formdata-polyfill@4.0.10:
+    resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
+    engines: {node: '>=12.20.0'}
+    dependencies:
+      fetch-blob: 3.2.0
+    dev: true
 
   /forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
@@ -14736,6 +14585,11 @@ packages:
     dependencies:
       minimatch: 3.1.2
 
+  /node-domexception@1.0.0:
+    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
+    engines: {node: '>=10.5.0'}
+    dev: true
+
   /node-expat@2.4.1:
     resolution: {integrity: sha512-uWgvQLgo883NKIL+66oJsK9ysKK3ej0YjVCPBZzO/7wMAuH68/Yb7+JwPWNaVq0yPaxrb48AoEXfYEc8gsmFbg==}
     requiresBuild: true
@@ -14769,6 +14623,15 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+
+  /node-fetch@3.3.2:
+    resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      data-uri-to-buffer: 4.0.1
+      fetch-blob: 3.2.0
+      formdata-polyfill: 4.0.10
+    dev: true
 
   /node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
@@ -17622,6 +17485,11 @@ packages:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
     dependencies:
       defaults: 1.0.4
+
+  /web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
+    engines: {node: '>= 8'}
+    dev: true
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
