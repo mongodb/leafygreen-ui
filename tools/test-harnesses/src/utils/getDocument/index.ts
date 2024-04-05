@@ -5,7 +5,7 @@
 
 export function getDocument() {
   if (typeof window === 'undefined') {
-    throw new Error('Could not find default container');
+    return undefined;
   }
 
   return window.document;
