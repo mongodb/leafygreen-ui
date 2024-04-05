@@ -28,7 +28,8 @@
     "@lg-chat/avatar": "^3.0.1",
     "@lg-chat/message": "^4.0.1",
     "@lg-chat/message-rating": "^2.0.1",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "react-keyed-flatten-children": "^3.0.0"
   },
   "devDependencies": {
     "@leafygreen-ui/typography": "^18.3.0",

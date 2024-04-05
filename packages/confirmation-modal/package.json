@@ -30,7 +30,9 @@
     "@leafygreen-ui/palette": "^4.0.10",
     "@leafygreen-ui/text-input": "^13.0.0",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.4.0"
+    "@leafygreen-ui/typography": "^18.4.0",
+    "prop-types": "^15.8.1",
+    "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
@@ -44,6 +46,8 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12",
+    "@types/react-transition-group": "^4.4.5"
   }
 }

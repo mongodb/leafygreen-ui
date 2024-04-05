@@ -197,7 +197,7 @@ importers:
         version: link:../input-bar
       '@lg-chat/message':
         specifier: ^4.0.1
-        version: 4.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-feed':
         specifier: ^3.0.1
         version: link:../message-feed
@@ -261,7 +261,7 @@ importers:
         version: link:../input-bar
       '@lg-chat/message':
         specifier: ^4.0.1
-        version: 4.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-feed':
         specifier: ^3.0.1
         version: link:../message-feed
@@ -277,6 +277,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   chat/input-bar:
     dependencies:
@@ -336,7 +339,7 @@ importers:
         version: 1.3.0(react@18.2.0)
       react-textarea-autosize:
         specifier: ^8.3.2
-        version: 8.5.3(react@18.2.0)
+        version: 8.5.3(@types/react@18.2.23)(react@18.2.0)
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
@@ -460,13 +463,16 @@ importers:
         version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: ^4.0.1
-        version: 4.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+        version: 4.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-rating':
         specifier: ^2.0.1
         version: link:../message-rating
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
+      react-keyed-flatten-children:
+        specifier: ^3.0.0
+        version: 3.0.0(react@18.2.0)
     devDependencies:
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
@@ -515,7 +521,7 @@ importers:
         version: link:../../packages/popover
       '@leafygreen-ui/text-area':
         specifier: ^8.1.3
-        version: 8.2.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+        version: 8.2.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
@@ -788,7 +794,7 @@ importers:
         version: 15.7.12
       next:
         specifier: ^13.0.5
-        version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
+        version: 13.5.6(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
 
   packages/callout:
     dependencies:
@@ -900,6 +906,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/chip:
     dependencies:
@@ -966,7 +975,7 @@ importers:
         version: link:../palette
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
@@ -1110,10 +1119,22 @@ importers:
       '@leafygreen-ui/typography':
         specifier: ^18.4.0
         version: link:../typography
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
+      react-transition-group:
+        specifier: ^4.4.5
+        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/copyable:
     dependencies:
@@ -1223,6 +1244,9 @@ importers:
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
+      react-transition-group:
+        specifier: ^4.4.5
+        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
       weekstart:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1245,6 +1269,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
       mockdate:
         specifier: ^3.0.5
         version: 3.0.5
@@ -1312,7 +1339,7 @@ importers:
     dependencies:
       '@emotion/css':
         specifier: ^11.1.3
-        version: 11.9.0
+        version: 11.9.0(@babel/core@7.24.3)
       '@emotion/server':
         specifier: ^11.4.0
         version: 11.11.0(@emotion/css@11.9.0)
@@ -1403,6 +1430,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/form-field:
     dependencies:
@@ -1569,6 +1599,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
     devDependencies:
       '@leafygreen-ui/lib':
         specifier: ^13.4.0
@@ -1585,6 +1618,9 @@ importers:
       '@types/meow':
         specifier: ^6.0.0
         version: 6.0.0
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
       '@types/xml2json':
         specifier: ^0.11.0
         version: 0.11.6
@@ -1792,6 +1828,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: ^18.4.0
         version: link:../typography
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
       react-lottie-player:
         specifier: ^1.5.6
         version: 1.5.6(react@18.2.0)
@@ -1799,6 +1838,9 @@ importers:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
 
   packages/logo:
     dependencies:
@@ -1815,6 +1857,9 @@ importers:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
 
   packages/marketing-modal:
     dependencies:
@@ -1904,6 +1949,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/modal:
     dependencies:
@@ -1964,7 +2012,7 @@ importers:
         version: link:../copyable
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
@@ -1974,6 +2022,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/number-input:
     dependencies:
@@ -2006,7 +2057,7 @@ importers:
         version: link:../popover
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
@@ -2052,7 +2103,7 @@ importers:
         version: link:../lib
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
@@ -2178,13 +2229,13 @@ importers:
     devDependencies:
       '@emotion/styled':
         specifier: ^11.10.5
-        version: 11.11.5(@emotion/react@11.11.1)(react@18.2.0)
+        version: 11.11.5(@emotion/react@11.11.1)(@types/react@18.2.23)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
       next:
         specifier: ^13.1.6
-        version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
+        version: 13.5.6(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
 
   packages/popover:
     dependencies:
@@ -2562,13 +2613,16 @@ importers:
     devDependencies:
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+        version: 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/skeleton-loader:
     dependencies:
@@ -2765,6 +2819,9 @@ importers:
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
+      '@types/react-transition-group':
+        specifier: ^4.4.5
+        version: 4.4.10
 
   packages/tabs:
     dependencies:
@@ -2835,7 +2892,7 @@ importers:
     optionalDependencies:
       '@testing-library/react-hooks':
         specifier: '>=3.7.0'
-        version: 8.0.1(react@17.0.2)
+        version: 8.0.1(@types/react@18.2.23)(react-dom@18.2.0)(react-test-renderer@18.2.0)(react@18.2.0)
 
   packages/text-area:
     dependencies:
@@ -2866,10 +2923,16 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: ^0.1.1
         version: 0.1.2
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
 
   packages/text-input:
     dependencies:
@@ -2897,10 +2960,16 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: ^0.1.1
         version: 0.1.2
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
 
   packages/toast:
     dependencies:
@@ -2992,10 +3061,16 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: ^0.1.1
         version: 0.1.2
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
+      '@types/prop-types':
+        specifier: ^15.7.12
+        version: 15.7.12
 
   packages/tokens:
     dependencies:
@@ -6418,20 +6493,6 @@ packages:
       '@emotion/weak-memoize': 0.3.1
       stylis: 4.2.0
 
-  /@emotion/css@11.9.0:
-    resolution: {integrity: sha512-S9UjCxSrxEHawOLnWw4upTwfYKb0gVQdatHejn3W9kPyXxmKv3HmjVfJ84kDLmdX8jR20OuDQwaJ4Um24qD9vA==}
-    peerDependencies:
-      '@babel/core': ^7.0.0
-    peerDependenciesMeta:
-      '@babel/core':
-        optional: true
-    dependencies:
-      '@emotion/babel-plugin': 11.11.0
-      '@emotion/cache': 11.11.0
-      '@emotion/serialize': 1.1.2
-      '@emotion/sheet': 1.2.2
-      '@emotion/utils': 1.2.1
-
   /@emotion/css@11.9.0(@babel/core@7.24.0):
     resolution: {integrity: sha512-S9UjCxSrxEHawOLnWw4upTwfYKb0gVQdatHejn3W9kPyXxmKv3HmjVfJ84kDLmdX8jR20OuDQwaJ4Um24qD9vA==}
     peerDependencies:
@@ -6462,7 +6523,6 @@ packages:
       '@emotion/serialize': 1.1.2
       '@emotion/sheet': 1.2.2
       '@emotion/utils': 1.2.1
-    dev: false
 
   /@emotion/eslint-plugin@11.11.0(eslint@8.43.0):
     resolution: {integrity: sha512-jCOYqU/0Sqm+g+6D7QuIlG99q8YAF0T7BP98zQF/MPZKfbcm46z5mizXn0YlhZ9AYZfNtZ1DeODXdncYxZzR4Q==}
@@ -6504,27 +6564,6 @@ packages:
       '@types/react': 18.2.23
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
-    dev: false
-
-  /@emotion/react@11.11.1(react@18.2.0):
-    resolution: {integrity: sha512-5mlW1DquU5HaxjLkfkGN1GA/fvVGdyHURRiX/0FHl2cfIfRxSOfmxEH5YS43edp0OldZrZ+dkBKbngxcNCdZvA==}
-    peerDependencies:
-      '@types/react': '*'
-      react: '>=16.8.0'
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      '@emotion/babel-plugin': 11.11.0
-      '@emotion/cache': 11.11.0
-      '@emotion/serialize': 1.1.4
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
-      '@emotion/utils': 1.2.1
-      '@emotion/weak-memoize': 0.3.1
-      hoist-non-react-statics: 3.3.2
-      react: 18.2.0
-    dev: true
 
   /@emotion/serialize@1.1.2:
     resolution: {integrity: sha512-zR6a/fkFP4EAcCMQtLOhIgpprZOwNmCldtpaISpvz348+DP4Mz8ZoKaGGCQpbzepNIUWbq4w6hNZkwDyKoS+HA==}
@@ -6553,7 +6592,7 @@ packages:
       '@emotion/css':
         optional: true
     dependencies:
-      '@emotion/css': 11.9.0
+      '@emotion/css': 11.9.0(@babel/core@7.24.3)
       '@emotion/utils': 1.2.1
       html-tokenize: 2.0.1
       multipipe: 1.0.2
@@ -6562,7 +6601,7 @@ packages:
   /@emotion/sheet@1.2.2:
     resolution: {integrity: sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA==}
 
-  /@emotion/styled@11.11.5(@emotion/react@11.11.1)(react@18.2.0):
+  /@emotion/styled@11.11.5(@emotion/react@11.11.1)(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-/ZjjnaNKvuMPxcIiUkf/9SHoG4Q196DRl1w82hQ3WCsjo1IUR8uaGWrC6a87CrYAW0Kb/pK7hk8BnLgLRi9KoQ==}
     peerDependencies:
       '@emotion/react': ^11.0.0-rc.0
@@ -6575,10 +6614,11 @@ packages:
       '@babel/runtime': 7.24.1
       '@emotion/babel-plugin': 11.11.0
       '@emotion/is-prop-valid': 1.2.2
-      '@emotion/react': 11.11.1(react@18.2.0)
+      '@emotion/react': 11.11.1(@types/react@18.2.23)(react@18.2.0)
       '@emotion/serialize': 1.1.4
       '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@18.2.0)
       '@emotion/utils': 1.2.1
+      '@types/react': 18.2.23
       react: 18.2.0
     dev: true
 
@@ -7166,17 +7206,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - react
-    dev: false
-
-  /@leafygreen-ui/a11y@1.4.13(react@18.2.0):
-    resolution: {integrity: sha512-ufiO4B40jyqLORhD0mQIpd4aBGpeCnM0dp9BrYggp0vJKhJV5sNSOJb5ytmSPGYXut5yhUZe4smYN5b94YWygQ==}
-    dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
-      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - react
 
   /@leafygreen-ui/banner@8.0.0(@babel/core@7.24.0)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
     resolution: {integrity: sha512-EEi9CuVh5SLKR8ZYgqbxit6I25MoiK+WR9xrwi95Wmmz7xIZF32svdLAXEomcJJprkivbcgcKO68FchUJipAuw==}
@@ -7196,19 +7225,19 @@ packages:
       - react
     dev: false
 
-  /@leafygreen-ui/banner@8.0.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+  /@leafygreen-ui/banner@8.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
     resolution: {integrity: sha512-EEi9CuVh5SLKR8ZYgqbxit6I25MoiK+WR9xrwi95Wmmz7xIZF32svdLAXEomcJJprkivbcgcKO68FchUJipAuw==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
     dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/icon': 12.1.0
-      '@leafygreen-ui/icon-button': 15.0.21(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/palette': 4.0.10
       '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/typography': 18.4.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
     transitivePeerDependencies:
       - '@babel/core'
       - react
@@ -7232,42 +7261,24 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - react
-    dev: false
 
-  /@leafygreen-ui/button@21.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
-    resolution: {integrity: sha512-GYvVHnU+yNWLmM0wowFImFCQqNqeQqveKSoX0Lk1WAi8ZJUwXVHnWQj84CEMFhLAAhNKx2kBPFrOaYOis3Pchw==}
-    peerDependencies:
-      '@leafygreen-ui/leafygreen-provider': ^3.1.12
-    dependencies:
-      '@leafygreen-ui/box': 3.1.9
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
-      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
-      '@leafygreen-ui/palette': 4.0.10
-      '@leafygreen-ui/ripple': 1.1.13
-      '@leafygreen-ui/tokens': 2.5.2
-      polished: 4.2.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - react
-
-  /@leafygreen-ui/code@14.3.2(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+  /@leafygreen-ui/code@14.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-KNv0FiJXnnVmta5mPj1mHJz122waahGuTx42DKhS1FW/h97VkYDz4408fG9igFTqf+7rIylCGfX7aj0ewIKqxQ==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
     dependencies:
-      '@leafygreen-ui/a11y': 1.4.13(react@18.2.0)
-      '@leafygreen-ui/button': 21.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
-      '@leafygreen-ui/emotion': 4.0.8
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/button': 21.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
       '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
-      '@leafygreen-ui/icon': 12.1.0
-      '@leafygreen-ui/icon-button': 15.0.21(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/palette': 4.0.10
-      '@leafygreen-ui/select': 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/select': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/tooltip': 11.0.3(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tooltip': 11.0.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@types/facepaint': 1.2.5
       '@types/highlight.js': 10.1.0
       clipboard: 2.0.11
@@ -7280,14 +7291,6 @@ packages:
       - '@babel/core'
       - react
       - react-dom
-
-  /@leafygreen-ui/emotion@4.0.8:
-    resolution: {integrity: sha512-gzEC8v9Ds8/wWuIYQ1yYbnERyIVt9X5tkG3AZIXqany+sKbWla9CfV+6vqEk1tdaIit1d0C2FS3rJH3BkA3VJg==}
-    dependencies:
-      '@emotion/css': 11.9.0
-      '@emotion/server': 11.11.0(@emotion/css@11.9.0)
-    transitivePeerDependencies:
-      - '@babel/core'
 
   /@leafygreen-ui/emotion@4.0.8(@babel/core@7.24.0):
     resolution: {integrity: sha512-gzEC8v9Ds8/wWuIYQ1yYbnERyIVt9X5tkG3AZIXqany+sKbWla9CfV+6vqEk1tdaIit1d0C2FS3rJH3BkA3VJg==}
@@ -7305,7 +7308,6 @@ packages:
       '@emotion/server': 11.11.0(@emotion/css@11.9.0)
     transitivePeerDependencies:
       - '@babel/core'
-    dev: false
 
   /@leafygreen-ui/form-field@1.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
     resolution: {integrity: sha512-8r9BEnGd/pfowUfhNR2k0IrYm/9AO1lV/C/IAo9JctzBNZx4qLUA20ICin7J4TDnD227R4sU6/3BjrOWfx0/Bw==}
@@ -7351,15 +7353,15 @@ packages:
       - react
     dev: false
 
-  /@leafygreen-ui/icon-button@15.0.21(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+  /@leafygreen-ui/icon-button@15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
     resolution: {integrity: sha512-zdgsgVDlbDO8eb7e12vHfF2UEr8XlinhwjgwFniKZngE/I8HnrA9zNNHlGiKg1icXHzzBuE9Xi6UR7DqvQaaFg==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
     dependencies:
-      '@leafygreen-ui/a11y': 1.4.13(react@18.2.0)
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
       '@leafygreen-ui/box': 3.1.9
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/icon': 12.1.0
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/palette': 4.0.10
@@ -7367,14 +7369,6 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - react
-
-  /@leafygreen-ui/icon@12.1.0:
-    resolution: {integrity: sha512-P1P5k/esKQe64tkZkEzDU6/SVPfpGqhd4BoW5Pm5G+k3wyyxLivSSHm3JycVlIiOgXjIjz72W/ZxvsYiDRjgLQ==}
-    dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - '@babel/core'
 
   /@leafygreen-ui/icon@12.1.0(@babel/core@7.24.0):
     resolution: {integrity: sha512-P1P5k/esKQe64tkZkEzDU6/SVPfpGqhd4BoW5Pm5G+k3wyyxLivSSHm3JycVlIiOgXjIjz72W/ZxvsYiDRjgLQ==}
@@ -7392,7 +7386,6 @@ packages:
       lodash: 4.17.21
     transitivePeerDependencies:
       - '@babel/core'
-    dev: false
 
   /@leafygreen-ui/input-option@1.1.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
     resolution: {integrity: sha512-DTa96OjSTzoJp9BhL/piNbdSd8YnnyoyAt7cVI6LdeC2BIA7uFG7rf4GBfbu1BZ4xv88cNxPPsayKMgm95ZdbA==}
@@ -7407,24 +7400,6 @@ packages:
       '@leafygreen-ui/polymorphic': 1.3.7
       '@leafygreen-ui/tokens': 2.5.2
       '@leafygreen-ui/typography': 18.4.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - react
-    dev: false
-
-  /@leafygreen-ui/input-option@1.1.2(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
-    resolution: {integrity: sha512-DTa96OjSTzoJp9BhL/piNbdSd8YnnyoyAt7cVI6LdeC2BIA7uFG7rf4GBfbu1BZ4xv88cNxPPsayKMgm95ZdbA==}
-    peerDependencies:
-      '@leafygreen-ui/leafygreen-provider': ^3.1.12
-    dependencies:
-      '@leafygreen-ui/a11y': 1.4.13(react@18.2.0)
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
-      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
-      '@leafygreen-ui/palette': 4.0.10
-      '@leafygreen-ui/polymorphic': 1.3.7
-      '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
     transitivePeerDependencies:
       - '@babel/core'
       - react
@@ -7451,25 +7426,6 @@ packages:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
     dependencies:
       '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
-      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
-      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
-      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
-      '@leafygreen-ui/portal': 5.1.1(react-dom@18.2.0)(react@18.2.0)
-      '@leafygreen-ui/tokens': 2.5.2
-      '@types/react-transition-group': 4.4.10
-      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
-    transitivePeerDependencies:
-      - '@babel/core'
-      - react
-      - react-dom
-    dev: false
-
-  /@leafygreen-ui/popover@11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-pkEGWOHSJ0HiRRaUEFLY42EZVGVlLVAe9ufr00QWOJ1tuu3Mr/al4yNRUSJqz9mZbUo1mAun9XXvVpwP5GfrSQ==}
-    peerDependencies:
-      '@leafygreen-ui/leafygreen-provider': ^3.1.12
-    dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
       '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
@@ -7523,47 +7479,20 @@ packages:
       - '@babel/core'
       - react
       - react-dom
-    dev: false
 
-  /@leafygreen-ui/select@11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-/ZJoOZ4nfNeLgSNN//oyQxsuWizoLLit2B0TgthbzXiFmQlYnRMrx0ecDA7gB6SAN5S7fOmnTBZd3neS5XlkvQ==}
-    peerDependencies:
-      '@leafygreen-ui/leafygreen-provider': ^3.1.12
-    dependencies:
-      '@leafygreen-ui/button': 21.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
-      '@leafygreen-ui/icon': 12.1.0
-      '@leafygreen-ui/input-option': 1.1.2(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
-      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
-      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
-      '@leafygreen-ui/palette': 4.0.10
-      '@leafygreen-ui/popover': 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
-      '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
-      '@lg-tools/test-harnesses': 0.1.2
-      '@types/react-is': 18.2.4
-      lodash: 4.17.21
-      polished: 4.2.2
-      react-is: 18.2.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - react
-      - react-dom
-
-  /@leafygreen-ui/text-area@8.2.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+  /@leafygreen-ui/text-area@8.2.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
     resolution: {integrity: sha512-Q1jxuGi5le9bQLbqv9JCHUSwSIL2gD7iNCRpXTgiFjbUkR4k2QuxZaQs8osg0NZw1qojezZtuMe7+hIOU3pCBg==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
     dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
       '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
-      '@leafygreen-ui/icon': 12.1.0
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/palette': 4.0.10
       '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/typography': 18.4.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/test-harnesses': 0.1.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -7593,20 +7522,20 @@ packages:
     dependencies:
       '@leafygreen-ui/palette': 4.0.10
 
-  /@leafygreen-ui/tooltip@11.0.3(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+  /@leafygreen-ui/tooltip@11.0.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-9yPM0QQYvq2BuCs2Tb+yKSVGHIoplKlsFIvs77eCh8Wllr+7RugQNd19sl56csxBgYzuAo/GXXK/N73l7kzV2g==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
     dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
       '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
-      '@leafygreen-ui/icon': 12.1.0
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/palette': 4.0.10
-      '@leafygreen-ui/popover': 11.3.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/popover': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/typography': 18.4.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       lodash: 4.17.21
       polished: 4.2.2
     transitivePeerDependencies:
@@ -7646,35 +7575,18 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - react
-    dev: false
 
-  /@leafygreen-ui/typography@18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
-    resolution: {integrity: sha512-2pfoBv6jEPupMzT/rciyP6oN53Fc2h0Nl/uXubSRuFcIDwUAE6CIb3+IjK3UNyQrnOixGU4lWQhxIPTrnyxCpQ==}
-    peerDependencies:
-      '@leafygreen-ui/leafygreen-provider': ^3.1.12
-    dependencies:
-      '@leafygreen-ui/emotion': 4.0.8
-      '@leafygreen-ui/icon': 12.1.0
-      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
-      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
-      '@leafygreen-ui/palette': 4.0.10
-      '@leafygreen-ui/polymorphic': 1.3.7
-      '@leafygreen-ui/tokens': 2.5.2
-    transitivePeerDependencies:
-      - '@babel/core'
-      - react
-
-  /@lg-chat/lg-markdown@2.0.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
+  /@lg-chat/lg-markdown@2.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-yQcHx0GKO5N+O7tdySMwrpQtqtyvWbRQpw3cDidsLtXA22j8dkBgCcP89Dgw3AYHvELoht8IQivdcTJdPJ8IuQ==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.7
     dependencies:
-      '@leafygreen-ui/code': 14.3.2(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
-      '@leafygreen-ui/emotion': 4.0.8
+      '@leafygreen-ui/code': 14.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/typography': 18.4.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       react-markdown: 8.0.7(@types/react@18.2.23)(react@18.2.0)
     transitivePeerDependencies:
       - '@babel/core'
@@ -7683,22 +7595,22 @@ packages:
       - react-dom
       - supports-color
 
-  /@lg-chat/message@4.1.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
+  /@lg-chat/message@4.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-vZJw8ue05BmJTrQNgL26Q28aQ2TQo1RBISEZAe+1Ecrgji7YZt9iwwYaSxS0uJaj80Q0cv4Wts10BUGGZGyxIQ==}
     peerDependencies:
       '@leafygreen-ui/leafygreen-provider': ^3.1.12
       '@lg-chat/leafygreen-chat-provider': ^2.0.0
     dependencies:
-      '@leafygreen-ui/banner': 8.0.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
-      '@leafygreen-ui/emotion': 4.0.8
+      '@leafygreen-ui/banner': 8.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
       '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
       '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
       '@leafygreen-ui/palette': 4.0.10
       '@leafygreen-ui/polymorphic': 1.3.7
       '@leafygreen-ui/tokens': 2.5.2
-      '@leafygreen-ui/typography': 18.4.0(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/typography': 18.4.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-chat/leafygreen-chat-provider': link:chat/leafygreen-chat-provider
-      '@lg-chat/lg-markdown': 2.0.1(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+      '@lg-chat/lg-markdown': 2.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/react'
@@ -10267,29 +10179,6 @@ packages:
       react-error-boundary: 3.1.4(react@18.2.0)
       react-test-renderer: 18.2.0(react@18.2.0)
     dev: false
-
-  /@testing-library/react-hooks@8.0.1(react@17.0.2):
-    resolution: {integrity: sha512-Aqhl2IVmLt8IovEVarNDFuJDVWVvhnr9/GCU6UUnrYXwgDFF9h2L2o2P9KBni1AST5sT6riAyoukFLyjQUgD/g==}
-    engines: {node: '>=12'}
-    requiresBuild: true
-    peerDependencies:
-      '@types/react': ^16.9.0 || ^17.0.0
-      react: ^16.9.0 || ^17.0.0
-      react-dom: ^16.9.0 || ^17.0.0
-      react-test-renderer: ^16.9.0 || ^17.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      react-dom:
-        optional: true
-      react-test-renderer:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 17.0.2
-      react-error-boundary: 3.1.4(react@17.0.2)
-    dev: false
-    optional: true
 
   /@testing-library/react@14.0.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==}
@@ -16178,7 +16067,7 @@ packages:
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
 
-  /next@13.5.6(react-dom@18.2.0)(react@18.2.0):
+  /next@13.5.6(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-Y2wTcTbO4WwEsVb4A8VSnOsG1I9ok+h74q0ZdxkwM3EODqrs4pasq7O0iUxbcS9VtWMicG7f3+HAj0r1+NtKSw==}
     engines: {node: '>=16.14.0'}
     hasBin: true
@@ -16200,7 +16089,7 @@ packages:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(react@18.2.0)
+      styled-jsx: 5.1.1(@babel/core@7.24.3)(react@18.2.0)
       watchpack: 2.4.0
     optionalDependencies:
       '@next/swc-darwin-arm64': 13.5.6
@@ -17184,21 +17073,10 @@ packages:
       react-is: 18.1.0
     dev: false
 
-  /react-error-boundary@3.1.4(react@17.0.2):
-    resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
-    engines: {node: '>=10', npm: '>=6'}
-    requiresBuild: true
-    peerDependencies:
-      react: '>=16.13.1'
-    dependencies:
-      '@babel/runtime': 7.24.1
-      react: 17.0.2
-    dev: false
-    optional: true
-
   /react-error-boundary@3.1.4(react@18.2.0):
     resolution: {integrity: sha512-uM9uPzZJTF6wRQORmSrvOIgt4lJ9MC1sNgEOj2XGsDTRE4kmpWxg7ENK9EWNKJRMAOY9z0MuF4yIfl6gp4sotA==}
     engines: {node: '>=10', npm: '>=6'}
+    requiresBuild: true
     peerDependencies:
       react: '>=16.13.1'
     dependencies:
@@ -17247,6 +17125,15 @@ packages:
 
   /react-keyed-flatten-children@2.2.1(react@18.2.0):
     resolution: {integrity: sha512-6yBLVO6suN8c/OcJk1mzIrUHdeEzf5rtRVBhxEXAHO49D7SlJ70cG4xrSJrBIAG7MMeQ+H/T151mM2dRDNnFaA==}
+    peerDependencies:
+      react: '>=15.0.0'
+    dependencies:
+      react: 18.2.0
+      react-is: 18.2.0
+    dev: false
+
+  /react-keyed-flatten-children@3.0.0(react@18.2.0):
+    resolution: {integrity: sha512-tSH6gvOyQjt3qtjG+kU9sTypclL1672yjpVufcE3aHNM0FhvjBUQZqsb/awIux4zEuVC3k/DP4p0GdTT/QUt/Q==}
     peerDependencies:
       react: '>=15.0.0'
     dependencies:
@@ -17369,7 +17256,7 @@ packages:
       react-shallow-renderer: 16.15.0(react@18.2.0)
       scheduler: 0.23.0
 
-  /react-textarea-autosize@8.5.3(react@18.2.0):
+  /react-textarea-autosize@8.5.3(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-XT1024o2pqCuZSuBt9FwHlaDeNtVrtCXu0Rnz88t1jUGheCLa3PhjE1GH8Ctm2axEtvdCl5SUHYschyQ0L5QHQ==}
     engines: {node: '>=10'}
     peerDependencies:
@@ -17378,7 +17265,7 @@ packages:
       '@babel/runtime': 7.24.1
       react: 18.2.0
       use-composed-ref: 1.3.0(react@18.2.0)
-      use-latest: 1.2.1(react@18.2.0)
+      use-latest: 1.2.1(@types/react@18.2.23)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
     dev: false
@@ -18260,7 +18147,7 @@ packages:
     dependencies:
       inline-style-parser: 0.1.1
 
-  /styled-jsx@5.1.1(react@18.2.0):
+  /styled-jsx@5.1.1(@babel/core@7.24.3)(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -18273,6 +18160,7 @@ packages:
       babel-plugin-macros:
         optional: true
     dependencies:
+      '@babel/core': 7.24.3
       client-only: 0.0.1
       react: 18.2.0
     dev: true
@@ -18966,7 +18854,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /use-isomorphic-layout-effect@1.1.2(react@18.2.0):
+  /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
     peerDependencies:
       '@types/react': '*'
@@ -18975,10 +18863,11 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      '@types/react': 18.2.23
       react: 18.2.0
     dev: false
 
-  /use-latest@1.2.1(react@18.2.0):
+  /use-latest@1.2.1(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
     peerDependencies:
       '@types/react': '*'
@@ -18987,8 +18876,9 @@ packages:
       '@types/react':
         optional: true
     dependencies:
+      '@types/react': 18.2.23
       react: 18.2.0
-      use-isomorphic-layout-effect: 1.1.2(react@18.2.0)
+      use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.23)(react@18.2.0)
     dev: false
 
   /use-resize-observer@9.1.0(react-dom@18.2.0)(react@18.2.0):

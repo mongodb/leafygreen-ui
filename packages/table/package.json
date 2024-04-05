@@ -47,7 +47,8 @@
     "@leafygreen-ui/code": "^14.3.2",
     "@leafygreen-ui/pagination": "^1.0.22",
     "@lg-tools/storybook-utils": "^0.1.0",
-    "@types/prop-types": "^15.7.12"
+    "@types/prop-types": "^15.7.12",
+    "@types/react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
