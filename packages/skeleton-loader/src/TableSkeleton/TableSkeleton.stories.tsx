@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { TableSkeleton } from '..';
 
 export default {
-  title: 'Components/SkeletonLoader',
+  title: 'Components/SkeletonLoader/Table',
   component: TableSkeleton,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -27,11 +27,11 @@ const TableTemplate: StoryFn<typeof TableSkeleton> = props => (
   <TableSkeleton {...props} />
 );
 
-export const TableWithoutLabels: StoryFn<typeof TableSkeleton> =
-  TableTemplate.bind({});
+export const WithoutLabels: StoryFn<typeof TableSkeleton> = TableTemplate.bind(
+  {},
+);
 
-export const TableWithLabels: StoryFn<typeof TableSkeleton> =
-  TableTemplate.bind({});
-TableWithLabels.args = {
+export const WithLabels: StoryFn<typeof TableSkeleton> = TableTemplate.bind({});
+WithLabels.args = {
   columnLabels: ['Column 1', 'Column 2', 'Column 3', ''],
 };

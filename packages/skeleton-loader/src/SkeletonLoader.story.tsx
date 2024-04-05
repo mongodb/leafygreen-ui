@@ -3,7 +3,6 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
-import { DarkModeProps } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
@@ -57,7 +56,7 @@ const skeletonComponents = {
   TableSkeleton,
 };
 
-export const LiveExample: StoryFn<any> = (props: DarkModeProps) => (
+export const LiveExample: StoryFn<any> = () => (
   <div className={storyRootStyles}>
     {Object.entries(skeletonComponents).map(([name, SkeletonVariant]) => (
       <div key={name} className={displayOptionContainerStyles}>

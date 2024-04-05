@@ -4,10 +4,10 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { ListSkeleton, type ListSkeletonProps } from '.';
 
 const meta: StoryMetaType<typeof ListSkeleton> = {
-  title: 'Components/SkeletonList',
+  title: 'Components/SkeletonLoader/List',
   component: ListSkeleton,
   parameters: {
-    default: 'LiveExample',
+    default: null,
   },
   args: {
     count: 5,
@@ -17,12 +17,20 @@ const meta: StoryMetaType<typeof ListSkeleton> = {
 
 export default meta;
 
-export const LiveExample: StoryType<typeof ListSkeleton> = (
+export const Basic: StoryType<typeof ListSkeleton> = (
   args: ListSkeletonProps,
 ) => {
   return (
     <div style={{ width: 256 }}>
       <ListSkeleton {...args} />
+    </div>
+  );
+};
+
+export const BulletsOnly: StoryType<typeof ListSkeleton> = () => {
+  return (
+    <div style={{ width: 256 }}>
+      <ListSkeleton bulletsOnly />
     </div>
   );
 };

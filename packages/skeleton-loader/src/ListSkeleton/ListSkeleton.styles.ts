@@ -2,22 +2,23 @@ import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
 export const skeletonListWrapperStyles = css`
-  padding: ${spacing[400]}px;
+  width: 100%;
+  padding: 0;
+  margin: 0;
 `;
 
 export const getSkeletonListItemStyles = (
   index = 0,
   bulletsOnly?: boolean,
 ) => css`
-  &:not(:first-child) {
+  list-style: none;
+
+  &:not(:first-child),
+  &:not(:last-child) {
     margin-block: ${spacing[300]}px;
   }
 
-  // "Forgive me, for I have sinned" - AT
-  // These styles get added _before_ the default Skeleton styles,
-  // and are immediately overridden, hence the !important.
-  // This is an issue with the emotion configuration
-  width: ${getWidth(index, bulletsOnly)} !important;
+  width: ${getWidth(index, bulletsOnly)};
 `;
 
 const getWidth = (index = 0, bulletsOnly?: boolean) => {
