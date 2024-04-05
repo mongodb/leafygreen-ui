@@ -2,7 +2,8 @@ import React from 'react';
 import range from 'lodash/range';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Skeleton } from '@leafygreen-ui/skeleton-loader';
+
+import { Skeleton } from '../Skeleton';
 
 import {
   getSkeletonListItemStyles,
