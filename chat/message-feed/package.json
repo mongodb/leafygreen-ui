@@ -32,6 +32,7 @@
     "react-keyed-flatten-children": "^3.0.0"
   },
   "devDependencies": {
+    "@lg-chat/message-feedback": "workspace:^",
     "@leafygreen-ui/typography": "^18.3.0",
     "@lg-chat/chat-disclaimer": "^3.0.1",
     "@lg-chat/message-prompts": "^2.0.1",
