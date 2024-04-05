@@ -1,36 +1,35 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
-import { ListSkeleton, type ListSkeletonProps } from '.';
+import { ListSkeleton } from '.';
 
-const meta: StoryMetaType<typeof ListSkeleton> = {
-  title: 'Components/SkeletonLoader/List',
+export default {
+  title: 'Components/SkeletonLoader',
   component: ListSkeleton,
   parameters: {
     default: null,
+    controls: { exclude: ['darkMode', 'ref', 'size'] },
+    generate: {
+      storyNames: ['List'],
+      combineArgs: {
+        darkMode: [false, true],
+        bulletsOnly: [false, true],
+      },
+      decorator: Instance => (
+        <div style={{ width: 256 }}>
+          <Instance />
+        </div>
+      ),
+    },
   },
   args: {
+    enableAnimations: false,
     count: 5,
-    bulletsOnly: false,
   },
-};
+  argTypes: {
+    enableAnimations: { control: 'boolean' },
+    count: { control: 'number' },
+  },
+} satisfies StoryMetaType<typeof ListSkeleton>;
 
-export default meta;
-
-export const Basic: StoryType<typeof ListSkeleton> = (
-  args: ListSkeletonProps,
-) => {
-  return (
-    <div style={{ width: 256 }}>
-      <ListSkeleton {...args} />
-    </div>
-  );
-};
-
-export const BulletsOnly: StoryType<typeof ListSkeleton> = () => {
-  return (
-    <div style={{ width: 256 }}>
-      <ListSkeleton bulletsOnly />
-    </div>
-  );
-};
+export const List: StoryType<typeof ListSkeleton> = () => <></>;
