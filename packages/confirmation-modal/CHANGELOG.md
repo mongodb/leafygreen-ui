@@ -1,5 +1,24 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.0.13
+
+### Patch Changes
+
+- 4fa8281c: - Resets `confirm` button so that it is not enabled in a newly opened modal. [LG-4011](https://jira.mongodb.org/browse/LG-4011)
+  - Updates `data-testid`'s to match [STYLEGUIDE.md](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#variable-naming)
+- Updated dependencies [9402ba0e]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [27ad3121]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/text-input@13.0.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
 ## 5.0.12
 
 ### Patch Changes

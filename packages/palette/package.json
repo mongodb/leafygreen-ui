@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/palette",
-  "version": "4.0.9",
+  "version": "4.0.10",
   "description": "LeafyGreen UI Palettes",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/lib": "^13.4.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
     "@lg-tools/storybook-utils": "^0.1.0"
