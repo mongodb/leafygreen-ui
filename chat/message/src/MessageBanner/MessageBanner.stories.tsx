@@ -55,11 +55,9 @@ LongText.args = {
     <>
       {"This is a success message. It's really quite long."}
       <br />
-      <p>
-        {
-          "We should make it so long that it wraps around to several new lines, just to see how that looks. So let's keep going and going and going and going and going and going and that's enough."
-        }
-      </p>
+      {
+        "We should make it so long that it wraps around to several new lines, just to see how that looks. So let's keep going and going and going and going and going and going and that's enough."
+      }
     </>
   ),
 };
