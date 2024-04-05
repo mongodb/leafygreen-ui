@@ -10,6 +10,8 @@
       "@lg-tools/*": ["../*/src"]
     }
   },
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../build"
