@@ -23,7 +23,11 @@ export function CardSkeleton({
       className={cx(rootStyles, className)}
       aria-busy
     >
-      <ParagraphSkeleton withHeader enableAnimations={enableAnimations} />
+      <ParagraphSkeleton
+        withHeader
+        enableAnimations={enableAnimations}
+        darkMode={darkMode}
+      />
     </Card>
   );
 }
