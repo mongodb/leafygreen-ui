@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.1.0",
-    "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12"
   },

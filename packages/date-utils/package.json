@@ -24,7 +24,6 @@
     "weekstart": "^2.0.0"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:^",
     "@types/prop-types": "^15.7.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-utils",

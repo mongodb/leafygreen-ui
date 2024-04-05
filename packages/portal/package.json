@@ -40,7 +40,6 @@
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12"
   }

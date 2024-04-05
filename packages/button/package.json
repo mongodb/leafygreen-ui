@@ -34,7 +34,6 @@
   "devDependencies": {
     "@leafygreen-ui/icon": "^12.0.1",
     "@leafygreen-ui/loading-indicator": "^2.0.10",
-    "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12",
     "next": "^13.0.5"

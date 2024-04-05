@@ -49,7 +49,6 @@
     "@leafygreen-ui/card": "^10.0.7",
     "@leafygreen-ui/icon": "^12.0.1",
     "@leafygreen-ui/icon-button": "^15.0.21",
-    "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12"
   }

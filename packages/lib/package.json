@@ -26,12 +26,10 @@
     "react": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "@storybook/csf": "^0.1.0",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:^",
     "@types/prop-types": "^15.7.12"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",

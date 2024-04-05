@@ -37,7 +37,6 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:^",
     "@types/prop-types": "^15.7.12"
   }
 }
