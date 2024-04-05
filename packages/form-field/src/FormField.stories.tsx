@@ -61,6 +61,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     label: 'Label',
     description: 'Description',
     errorMessage: 'This is a notification',
+    successMessage: 'Success',
     size: Size.Default,
     state: FormFieldState.None,
     glyph: 'Beaker',
@@ -70,6 +71,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     label: { control: 'text' },
     description: { control: 'text' },
     errorMessage: { control: 'text' },
+    successMessage: { control: 'text' },
     size: { control: 'select' },
     state: {
       control: 'select',

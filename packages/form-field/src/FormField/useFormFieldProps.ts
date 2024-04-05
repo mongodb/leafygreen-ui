@@ -7,6 +7,9 @@ export interface FormFieldInputElementProps {
   'aria-describedby': string;
   'aria-labelledby'?: string;
   'aria-label'?: string;
+  'aria-disabled'?: boolean;
+  'aria-invalid'?: FormFieldProps['aria-invalid'];
+  readOnly?: boolean;
 }
 
 export interface FormFieldElementProps {
@@ -22,6 +25,7 @@ export const useFormFieldProps = ({
   description,
   state,
   id,
+  disabled,
   ...rest
 }: Partial<FormFieldProps>): FormFieldElementProps => {
   const labelId = useIdAllocator({ prefix: 'lg-form-field-label' });
@@ -32,17 +36,23 @@ export const useFormFieldProps = ({
   const generatedInputId = useIdAllocator({ prefix: 'lg-form-field-input' });
   const inputId = id ?? generatedInputId;
 
+  const hasError = state === FormFieldState.Error;
+
   const ariaLabelledby = label ? labelId : rest['aria-labelledby'];
-  const ariaLabel = label ? '' : rest['aria-label'];
-  const describedBy = `${description ? descriptionId : ''} ${
-    state === FormFieldState.Error ? errorId : ''
+  const ariaLabel = label || ariaLabelledby ? undefined : rest['aria-label'];
+  const ariaDescribedby = `${description ? descriptionId : ''} ${
+    hasError ? errorId : ''
   }`.trim();
+  const ariaInvalid = rest['aria-invalid'] ?? hasError;
 
   const inputProps: FormFieldInputElementProps = {
     id: inputId,
     'aria-labelledby': ariaLabelledby,
-    'aria-describedby': describedBy,
+    'aria-describedby': ariaDescribedby,
     'aria-label': ariaLabel,
+    'aria-disabled': disabled,
+    readOnly: disabled,
+    'aria-invalid': ariaInvalid,
   };
 
   return {

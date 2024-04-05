@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.5.0
+
+### Minor Changes
+
+- c3906f78: Adds `rollup-plugin-sizes` to show bundles sizes.
+
 ## 0.4.1
 
 ### Patch Changes

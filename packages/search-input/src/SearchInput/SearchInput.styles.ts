@@ -6,11 +6,10 @@ import {
   fontFamilies,
   fontWeights,
   hoverRing,
+  Size,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
-
-import { Size } from './SearchInput.types';
 
 /**
  * Adds an inset box shadow to hide the UA background styles for autofilled inputs
@@ -35,26 +34,29 @@ export const inputWrapperStyle = css`
 `;
 
 export const inputWrapperSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    height: 22px;
+    grid-template-columns: 28px 1fr 36px;
+  `,
   [Size.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 28px;
-    grid-template-columns: 28px 1fr;
-    grid-auto-columns: 28px;
+    grid-template-columns: 32px 1fr 36px;
   `,
   [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
-    grid-template-columns: 36px 1fr;
-    grid-auto-columns: 36px;
+    grid-template-columns: 36px 1fr 36px;
   `,
   [Size.Large]: css`
-    font-size: 18px;
-    line-height: 32px;
+    font-size: ${typeScales.large.fontSize}px;
+    line-height: ${typeScales.large.lineHeight}px;
     height: 48px;
-    grid-template-columns: 48px 1fr;
-    grid-auto-columns: 48px;
+    grid-template-columns: 36px 1fr 44px;
   `,
 };
 
@@ -229,7 +231,7 @@ export const inputThemeStyle: Record<Theme, string> = {
     }
 
     &::placeholder {
-      color: ${palette.gray.base};
+      color: ${palette.gray.dark1};
       font-weight: ${fontWeights.regular};
     }
 
@@ -262,14 +264,17 @@ export const searchIconThemeStyle: Record<Theme, string> = {
 };
 
 export const searchIconSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    margin-left: 2px;
+  `,
   [Size.Small]: css`
-    left: 10px;
+    margin-left: 0px;
   `,
   [Size.Default]: css`
-    left: 12px;
+    margin-left: 8px;
   `,
   [Size.Large]: css`
-    left: 16px;
+    margin-left: 8px;
   `,
 };
 
@@ -282,11 +287,14 @@ export const searchIconDisabledStyle: Record<Theme, string> = {
   `,
 };
 
-export const clearButtonStyle = css``;
 export const clearButtonSizeStyle: Record<Size, string> = {
+  [Size.XSmall]: css`
+    height: 22px;
+    width: 22px;
+  `,
   [Size.Small]: css`
-    height: 26px;
-    width: 26px;
+    height: 28px;
+    width: 28px;
   `,
   [Size.Default]: css`
     height: 28px;

@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook-decorators",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Storybook decorators used in LeafyGreen repos",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -17,9 +17,9 @@
   "dependencies": {
     "@leafygreen-ui/banner": "^7.0.20",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/palette": "^4.0.10",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@lg-tools/build": "^0.4.1",
+    "@lg-tools/build": "^0.5.0",
     "@storybook/react": "^7.6.17",
     "@lg-tools/storybook-utils": "^0.1.0",
     "lodash": "4.17.21"
