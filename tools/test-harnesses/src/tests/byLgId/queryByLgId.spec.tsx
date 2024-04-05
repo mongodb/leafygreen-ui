@@ -1,12 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { queryByLgId } from '../../utils/getQueries';
+import { lgQueries } from '../../utils/getQueries';
+
+const { queryByLgId } = lgQueries;
 
 describe('queryByLgId', () => {
   test('gets element with id', () => {
     render(<div data-lgid="testing-id">test 1</div>);
-    const element = queryByLgId('testing-id');
+    const element = queryByLgId!('testing-id');
     expect(element).toBeInTheDocument();
   });
 
@@ -17,8 +19,8 @@ describe('queryByLgId', () => {
       </>,
     );
 
-    expect(queryByLgId('incorrect-testing-id')).not.toBeInTheDocument();
-    expect(queryByLgId('incorrect-testing-id')).toBeNull();
+    expect(queryByLgId!('incorrect-testing-id')).not.toBeInTheDocument();
+    expect(queryByLgId!('incorrect-testing-id')).toBeNull();
   });
 
   test('throws error if the id is found multiple times', () => {
@@ -30,7 +32,7 @@ describe('queryByLgId', () => {
     );
 
     expect(() => {
-      queryByLgId('testing-id');
+      queryByLgId!('testing-id');
     }).toThrow('Found multiple elements by: [data-lgid="testing-id"]');
   });
 });

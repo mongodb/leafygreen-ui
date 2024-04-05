@@ -13,7 +13,7 @@ export const getTestUtils = (
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element = getByLgId(lgId);
+  const element = getByLgId!(lgId);
 
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
