@@ -8,6 +8,7 @@ import { BoxProps } from '@leafygreen-ui/box';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
+import { getTestUtils } from '../utils/getTestUtils';
 import Button from '..';
 
 const className = 'test-button-class';
@@ -16,7 +17,8 @@ const child = 'Button child';
 
 function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
   const utils = render(<Button {...props} data-testid="button-id" />);
-  const button = utils.getByTestId('button-id');
+  const { getButton } = getTestUtils();
+  const button = getButton();
   return { ...utils, button };
 }
 

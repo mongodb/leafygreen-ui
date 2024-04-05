@@ -25,8 +25,8 @@ function renderMultipleToggles() {
   );
 }
 
-describe('packages/button', () => {
-  describe('getTestUtils', () => {
+describe('packages/button/getTestUtils', () => {
+  describe('renders properly', () => {
     test('throws error if LG Button is not found', () => {
       render(<Button>Click me</Button>);
 
@@ -42,83 +42,69 @@ describe('packages/button', () => {
         );
       }
     });
+  });
 
-    describe('single button', () => {
-      test('getButton', () => {
-        renderButton();
-        const { getButton } = getTestUtils();
-
-        expect(getButton()).toBeInTheDocument();
-      });
-
-      describe('isDisabled', () => {
-        test('to be false', () => {
-          renderButton();
-          const { isDisabled } = getTestUtils();
-
-          expect(isDisabled()).toBe(false);
-        });
-
-        test('to be true', () => {
-          renderButton({ disabled: true });
-          const { isDisabled } = getTestUtils();
-
-          expect(isDisabled()).toBe(true);
-        });
-      });
-    });
-
-    describe('multiple toggles', () => {
-      test('getButton', () => {
-        renderMultipleToggles();
-        const utilsOne = getTestUtils('lg-Button-1');
-        const utilsTwo = getTestUtils('lg-Button-2');
-
-        expect(utilsOne.getButton()).toBeInTheDocument();
-        expect(utilsTwo.getButton()).toBeInTheDocument();
-      });
-    });
-
-    describe('async component', () => {
-      test('find LG Button after awaiting an async component', async () => {
-        const { openButton, findByTestId, asyncTestComponentId } =
-          renderButtonAsync();
-
-        userEvent.click(openButton);
-
-        const asyncComponent = await findByTestId(asyncTestComponentId);
-        expect(asyncComponent).toBeInTheDocument();
-
-        // After awaiting asyncComponent, look for button
-        const { getButton } = getTestUtils();
-        expect(getButton()).toBeInTheDocument();
-      });
-
-      test('find LG Button after awaiting getTestUtils', async () => {
-        const { openButton } = renderButtonAsync();
-
-        userEvent.click(openButton);
-
-        // awaiting getTestUtils
-        await waitFor(() => {
-          const { getButton } = getTestUtils();
-          expect(getButton()).toBeInTheDocument();
-        });
-      });
-    });
-
-    // eslint-disable-next-line jest/no-disabled-tests
-    describe.skip('types behave as expected', () => {
-      renderButton({ as: 'a' });
+  describe('single button', () => {
+    test('getButton', () => {
+      renderButton();
       const { getButton } = getTestUtils();
 
-      const el1: HTMLButtonElement = getButton();
+      expect(getButton()).toBeInTheDocument();
+    });
 
-      const el2: HTMLAnchorElement = getButton();
+    describe('isDisabled', () => {
+      test('to be false', () => {
+        renderButton();
+        const { isDisabled } = getTestUtils();
 
-      // Creating a dummy object so don't have to ts-ignore the above el1 and el2 type checks.
-      // @ts-ignore
-      const dummyObj = { el1, el2 };
+        expect(isDisabled()).toBe(false);
+      });
+
+      test('to be true', () => {
+        renderButton({ disabled: true });
+        const { isDisabled } = getTestUtils();
+
+        expect(isDisabled()).toBe(true);
+      });
+    });
+  });
+
+  describe('multiple toggles', () => {
+    test('getButton', () => {
+      renderMultipleToggles();
+      const utilsOne = getTestUtils('lg-Button-1');
+      const utilsTwo = getTestUtils('lg-Button-2');
+
+      expect(utilsOne.getButton()).toBeInTheDocument();
+      expect(utilsTwo.getButton()).toBeInTheDocument();
+    });
+  });
+
+  describe('async component', () => {
+    test('find LG Button after awaiting an async component', async () => {
+      const { openButton, findByTestId, asyncTestComponentId } =
+        renderButtonAsync();
+
+      userEvent.click(openButton);
+
+      const asyncComponent = await findByTestId(asyncTestComponentId);
+      expect(asyncComponent).toBeInTheDocument();
+
+      // After awaiting asyncComponent, look for button
+      const { getButton } = getTestUtils();
+      expect(getButton()).toBeInTheDocument();
+    });
+
+    test('find LG Button after awaiting getTestUtils', async () => {
+      const { openButton } = renderButtonAsync();
+
+      userEvent.click(openButton);
+
+      // awaiting getTestUtils
+      await waitFor(() => {
+        const { getButton } = getTestUtils();
+        expect(getButton()).toBeInTheDocument();
+      });
     });
   });
 });
