@@ -5,7 +5,7 @@
 
 export function getDocument() {
   if (typeof window === 'undefined') {
-    return undefined;
+    return;
   }
 
   return window.document;
