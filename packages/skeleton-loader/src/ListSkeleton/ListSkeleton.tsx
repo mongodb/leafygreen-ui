@@ -28,8 +28,8 @@ export function ListSkeleton({
           <li
             // Update the key when `count` changes so the item animation stays in sync
             key={`${i}/${count}`}
-            // className={skeletonListItemStyles}
             className={getSkeletonListItemStyles(i, bulletsOnly)}
+            data-testid="lg-skeleton-list_item"
           >
             <Skeleton size="small" />
           </li>
