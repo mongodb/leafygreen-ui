@@ -6,6 +6,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
+import { SharedSkeletonProps } from './Skeleton/Skeleton.types';
 import {
   CardSkeleton,
   CodeSkeleton,
@@ -20,6 +21,10 @@ export default {
   title: 'Components/SkeletonLoader',
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    enableAnimations: { control: 'boolean' },
+  },
+  args: {
+    enableAnimations: true,
   },
   parameters: {
     default: 'LiveExample',
@@ -56,11 +61,11 @@ const skeletonComponents = {
   TableSkeleton,
 };
 
-export const LiveExample: StoryFn<any> = () => (
+export const LiveExample: StoryFn<any> = (args: SharedSkeletonProps) => (
   <div className={storyRootStyles}>
     {Object.entries(skeletonComponents).map(([name, SkeletonVariant]) => (
       <div key={name} className={displayOptionContainerStyles}>
-        <SkeletonVariant />
+        <SkeletonVariant {...args} />
         <Body className={labelStyles} weight="medium">
           <InlineCode>{name}</InlineCode>
         </Body>

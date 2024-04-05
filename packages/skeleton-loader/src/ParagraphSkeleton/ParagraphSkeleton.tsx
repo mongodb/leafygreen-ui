@@ -16,8 +16,9 @@ import {
 import { ParagraphSkeletonProps } from '.';
 
 export function ParagraphSkeleton({
-  withHeader = false,
   darkMode: darkModeProp,
+  enableAnimations,
+  withHeader = false,
   className,
   ...rest
 }: ParagraphSkeletonProps) {
@@ -27,13 +28,26 @@ export function ParagraphSkeleton({
       <div {...rest} className={cx(rootStyles, className)} aria-busy>
         {withHeader && (
           <Skeleton
+            enableAnimations={enableAnimations}
             className={headerStyles}
             data-testid="lg-paragraph-skeleton-header"
           />
         )}
-        <Skeleton size="small" className={lineStyles} />
-        <Skeleton size="small" className={lineStyles} />
-        <Skeleton size="small" className={lastLineStyles} />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size="small"
+          className={lineStyles}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size="small"
+          className={lineStyles}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size="small"
+          className={lastLineStyles}
+        />
       </div>
     </LeafyGreenProvider>
   );

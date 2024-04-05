@@ -11,6 +11,7 @@ import { CardSkeletonProps } from '.';
 
 export function CardSkeleton({
   darkMode: darkModeProp,
+  enableAnimations,
   className,
   ...rest
 }: CardSkeletonProps) {
@@ -22,7 +23,7 @@ export function CardSkeleton({
       className={cx(rootStyles, className)}
       aria-busy
     >
-      <ParagraphSkeleton withHeader />
+      <ParagraphSkeleton withHeader enableAnimations={enableAnimations} />
     </Card>
   );
 }

@@ -12,6 +12,7 @@ import { CodeSkeletonProps } from '.';
 
 export function CodeSkeleton({
   darkMode: darkModeProp,
+  enableAnimations,
   className,
   ...rest
 }: CodeSkeletonProps) {
@@ -19,9 +20,21 @@ export function CodeSkeleton({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div {...rest} className={cx(rootStyles, className)} aria-busy>
-        <Skeleton size="small" className={lineStyles} />
-        <Skeleton size="small" className={lineStyles} />
-        <Skeleton size="small" className={lineStyles} />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size="small"
+          className={lineStyles}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size="small"
+          className={lineStyles}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size="small"
+          className={lineStyles}
+        />
       </div>
     </LeafyGreenProvider>
   );
