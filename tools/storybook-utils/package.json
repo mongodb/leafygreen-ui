@@ -15,7 +15,8 @@
     "access": "public"
   },
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "prop-types": "^15.8.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
   "repository": {
@@ -24,5 +25,9 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   }
 }

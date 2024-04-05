@@ -35,17 +35,20 @@
     "@tanstack/react-table": "^8.13.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
+    "prop-types": "^15.8.1",
     "react-keyed-flatten-children": "^1.3.0",
     "react-transition-group": "^4.4.5",
     "react-virtual": "^2.10.4"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/code": "^14.3.2",
-    "@leafygreen-ui/button": "^21.1.0",
     "@leafygreen-ui/badge": "^8.1.2",
+    "@leafygreen-ui/button": "^21.1.0",
+    "@leafygreen-ui/code": "^14.3.2",
     "@leafygreen-ui/pagination": "^1.0.22",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

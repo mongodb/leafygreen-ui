@@ -13,6 +13,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@testing-library/dom": "9.3.1"
+    "@testing-library/dom": "9.3.1",
+    "prop-types": "^15.8.1"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   }
 }
