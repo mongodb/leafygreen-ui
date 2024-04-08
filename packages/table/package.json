@@ -45,6 +45,7 @@
     "@leafygreen-ui/badge": "^8.1.2",
     "@leafygreen-ui/button": "^21.1.0",
     "@leafygreen-ui/code": "^14.3.2",
+    "@leafygreen-ui/testing-lib": "^0.4.2",
     "@leafygreen-ui/pagination": "^1.0.22",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12",

@@ -2822,6 +2822,9 @@ importers:
       '@leafygreen-ui/pagination':
         specifier: ^1.0.22
         version: link:../pagination
+      '@leafygreen-ui/testing-lib':
+        specifier: ^0.4.2
+        version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
@@ -3031,6 +3034,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
         version: link:../button
+      '@leafygreen-ui/testing-lib':
+        specifier: ^0.4.2
+        version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
