@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  act,
   getAllByRole as globalGetAllByRole,
   render,
   waitFor,
@@ -12,6 +13,10 @@ import { Menu, MenuItem, MenuSeparator } from '.';
 
 const menuTestId = 'menu-test-id';
 const trigger = <button data-testid="menu-trigger">trigger</button>;
+
+function waitForTimeout(timeout = 500) {
+  return new Promise(res => setTimeout(res, timeout));
+}
 
 function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
   const utils = render(
@@ -88,7 +93,7 @@ describe('packages/menu', () => {
     });
   });
 
-  test('clicking a menuitem closes the menu', async () => {
+  test('clicking a menuitem does not close the menu', async () => {
     const { getByTestId } = renderMenu({
       trigger,
     });
@@ -103,11 +108,11 @@ describe('packages/menu', () => {
     const menuItem = getByTestId('menu-item-a');
     userEvent.click(menuItem);
 
-    await waitForElementToBeRemoved(menu);
-    expect(menu).not.toBeInTheDocument();
+    await act(async () => await waitForTimeout());
+    expect(menu).toBeInTheDocument();
   });
 
-  test('pressing enter on a menuitem closes the menu', async () => {
+  test('pressing enter on a menuitem does not close the menu', async () => {
     const { getByTestId } = renderMenu({
       trigger,
     });
@@ -124,11 +129,11 @@ describe('packages/menu', () => {
     menuItem.focus();
     userEvent.keyboard('[Enter]');
 
-    await waitForElementToBeRemoved(menu);
-    expect(menu).not.toBeInTheDocument();
+    await act(async () => await waitForTimeout());
+    expect(menu).toBeInTheDocument();
   });
 
-  test('pressing space on a menuitem closes the menu', async () => {
+  test('pressing space on a menuitem does not close the menu', async () => {
     const { getByTestId } = renderMenu({
       trigger,
     });
@@ -145,8 +150,8 @@ describe('packages/menu', () => {
     menuItem.focus();
     userEvent.keyboard('[Space]');
 
-    await waitForElementToBeRemoved(menu);
-    expect(menu).not.toBeInTheDocument();
+    await act(async () => await waitForTimeout());
+    expect(menu).toBeInTheDocument();
   });
 
   test('clicking outside the menu closes the menu', async () => {
@@ -180,7 +185,7 @@ describe('packages/menu', () => {
       );
     };
 
-    test('clicking a menuitem closes the menu', async () => {
+    test('clicking a menuitem does not close the menu', async () => {
       const { getByTestId } = render(<ControlledExample />);
 
       const menu = getByTestId('controlled-menu');
@@ -190,11 +195,11 @@ describe('packages/menu', () => {
 
       userEvent.click(menuItem);
 
-      await waitForElementToBeRemoved(menu);
-      expect(menu).not.toBeInTheDocument();
+      await act(async () => await waitForTimeout());
+      expect(menu).toBeInTheDocument();
     });
 
-    test('pressing enter on a menuitem closes the menu', async () => {
+    test('pressing enter on a menuitem does not close the menu', async () => {
       const { getByTestId } = render(<ControlledExample />);
 
       const menu = getByTestId('controlled-menu');
@@ -205,11 +210,11 @@ describe('packages/menu', () => {
       menuItem.focus();
       userEvent.keyboard('[Enter]');
 
-      await waitForElementToBeRemoved(menu);
-      expect(menu).not.toBeInTheDocument();
+      await act(async () => await waitForTimeout());
+      expect(menu).toBeInTheDocument();
     });
 
-    test('pressing space on a menuitem closes the menu', async () => {
+    test('pressing space on a menuitem does not close the menu', async () => {
       const { getByTestId } = render(<ControlledExample />);
 
       const menu = getByTestId('controlled-menu');
@@ -220,8 +225,8 @@ describe('packages/menu', () => {
       menuItem.focus();
       userEvent.keyboard('[Space]');
 
-      await waitForElementToBeRemoved(menu);
-      expect(menu).not.toBeInTheDocument();
+      await act(async () => await waitForTimeout());
+      expect(menu).toBeInTheDocument();
     });
 
     test('clicking outside the menu closes the menu', async () => {
