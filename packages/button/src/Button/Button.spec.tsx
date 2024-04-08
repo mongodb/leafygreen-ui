@@ -17,9 +17,9 @@ const child = 'Button child';
 
 function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
   const utils = render(<Button {...props} data-testid="button-id" />);
-  const { getButton } = getTestUtils();
+  const { getButton, isDisabled } = getTestUtils();
   const button = getButton();
-  return { ...utils, button };
+  return { ...utils, button, isDisabled };
 }
 
 describe('packages/button', () => {
@@ -93,10 +93,10 @@ describe('packages/button', () => {
     });
 
     test(`renders with aria-disabled attribute but not disabled attribute when disabled prop is set`, () => {
-      const { button } = renderButton({
+      const { button, isDisabled } = renderButton({
         disabled: true,
       });
-      expect(button.getAttribute('aria-disabled')).toBeTruthy();
+      expect(isDisabled()).toBeTruthy();
       expect(button.getAttribute('disabled')).toBeFalsy();
     });
 
@@ -182,12 +182,12 @@ describe('packages/button', () => {
     });
 
     test(`does not render the disabled attribute for a disabled link`, () => {
-      const { button } = renderButton({
+      const { button, isDisabled } = renderButton({
         href: 'http://mongodb.design',
         disabled: true,
       });
       expect(button).not.toHaveAttribute('disabled');
-      expect(button).toHaveAttribute('aria-disabled', 'true');
+      expect(isDisabled()).toBe(true);
     });
 
     test('renders additional attributes not explicitly defined in props', () => {
