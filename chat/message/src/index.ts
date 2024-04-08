@@ -1,4 +1,9 @@
-export { lgMessageStyles, Message, type MessageProps } from './Message';
+export {
+  lgMessageStyles,
+  Message,
+  type MessageProps,
+  type VerificationInfo,
+} from './Message';
 export {
   lgMessageContainerStyles,
   MessageContainer,

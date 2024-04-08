@@ -1,5 +1,36 @@
 # @leafygreen-ui/select
 
+## 11.3.1
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+- Updated dependencies [8adadc89]
+  - @lg-tools/test-harnesses@0.1.2
+
+## 11.3.0
+
+### Minor Changes
+
+- c3906f78: - Exports `getTestUtils`, a util to reliably interact with `LG Select` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select#test-harnesses) [LG-4129](https://jira.mongodb.org/browse/LG-4129)
+  - Exports the constant, `LGIDS_SELECT` which stores `data-lgid` values.
+  - Removes `role="presentation"` from `WarningIcon`
+
+### Patch Changes
+
+- 8aec541d: Correct `description` propType
+- Updated dependencies [9402ba0e]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @lg-tools/test-harnesses@0.1.1
+  - @leafygreen-ui/palette@4.0.10
+
 ## 11.2.3
 
 ### Patch Changes

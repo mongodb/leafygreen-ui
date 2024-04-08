@@ -15,6 +15,7 @@ import LeafyGreenProvider, {
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
 
+import { VerifiedAnswerBanner } from '../MessageBanner';
 import { MessageContainer, Variant } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
 
@@ -25,6 +26,7 @@ import {
   hiddenStyles,
   invisibleStyles,
   messageClassName,
+  messageContainerWedgeStyles,
   messageContainerWrapperStyles,
   rightAlignedStyles,
   senderClassName,
@@ -45,6 +47,7 @@ export const Message = forwardRef(
       children,
       componentOverrides,
       markdownProps,
+      verified,
       darkMode: darkModeProp,
       baseFontSize: baseFontSizeProp,
       ...rest
@@ -55,7 +58,7 @@ export const Message = forwardRef(
     const fallbackRef = useRef<HTMLDivElement>(null);
     const ref =
       (forwardedRef as MutableRefObject<HTMLDivElement>) || fallbackRef;
-    const { darkMode } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
     const isRightAligned = align === Align.Right || (!align && isSender);
     const isLeftAligned = align === Align.Left || (!align && !isSender);
     const [isRenderingAvatar, setIsRenderingAvatar] = useState<boolean>(true);
@@ -88,6 +91,8 @@ export const Message = forwardRef(
       }
     }, [ref.current]);
 
+    const isVerified = verified !== undefined;
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
@@ -118,7 +123,11 @@ export const Message = forwardRef(
             <Polymorph
               as={componentOverrides?.MessageContainer ?? MessageContainer}
               variant={isSender ? Variant.Primary : Variant.Secondary}
+              className={cx({
+                [messageContainerWedgeStyles[theme]]: isVerified,
+              })}
             >
+              {isVerified ? <VerifiedAnswerBanner {...verified} /> : null}
               <Polymorph
                 as={componentOverrides?.MessageContent ?? MessageContent}
                 sourceType={sourceType}
