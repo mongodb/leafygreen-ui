@@ -24,7 +24,7 @@ const meta: StoryMetaType<typeof Link> = {
         'data-focus': [false, true],
         darkMode: [false, true],
         baseFontSize: Object.values(BaseFontSize),
-        href: ['https://www.mongodb.design/', 'http://localhost:9001'],
+        href: ['https://www.mongodb.design/', window.location.href],
         arrowAppearance: Object.values(ArrowAppearance),
         children: [
           'Lorem ipsum',
