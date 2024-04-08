@@ -27,4 +27,5 @@ export const openInNewTabStyles = css`
   bottom: 2px;
   left: -1px;
   height: 12px;
+  display: none;
 `;
