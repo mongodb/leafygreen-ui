@@ -24,7 +24,7 @@ export const arrowRightIconHover = css`
 
 export const openInNewTabStyles = css`
   position: relative;
-  bottom: 4px;
+  bottom: 3px;
   left: -1px;
   height: 12px;
 `;
