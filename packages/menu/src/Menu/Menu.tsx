@@ -231,10 +231,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           return React.cloneElement(child, {
             ref: setRef,
             onFocus,
-            onClick: (e: React.MouseEvent) => {
-              child.props?.onClick?.(e);
-              handleClose();
-            },
           });
         }
 
@@ -262,7 +258,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     }
 
     return { updatedChildren: updateChildren(children), refs };
-  }, [children, open, updateCurrentSubMenu, handleClose]);
+  }, [children, open, updateCurrentSubMenu]);
 
   const focusedRef = useRef<HTMLElement | null>(refs[0] || null);
 
