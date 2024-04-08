@@ -28,7 +28,6 @@ export function ListSkeleton({
         className={skeletonListWrapperStyles}
         data-testid="lg-skeleton-list"
         aria-busy
-        data-animate={enableAnimations}
         {...rest}
       >
         {range(count).map(i => (

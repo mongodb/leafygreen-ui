@@ -5,7 +5,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { Skeleton } from '..';
+import { Size, Skeleton } from '..';
 
 import {
   headerStyles,
@@ -35,17 +35,17 @@ export function ParagraphSkeleton({
         )}
         <Skeleton
           enableAnimations={enableAnimations}
-          size="small"
+          size={Size.Small}
           className={lineStyles}
         />
         <Skeleton
           enableAnimations={enableAnimations}
-          size="small"
+          size={Size.Small}
           className={lineStyles}
         />
         <Skeleton
           enableAnimations={enableAnimations}
-          size="small"
+          size={Size.Small}
           className={lastLineStyles}
         />
       </div>
