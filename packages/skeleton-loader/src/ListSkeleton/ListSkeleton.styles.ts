@@ -12,11 +12,7 @@ export const getSkeletonListItemStyles = (
   bulletsOnly?: boolean,
 ) => css`
   list-style: none;
-
-  &:not(:first-child),
-  &:not(:last-child) {
-    margin-block: ${spacing[300]}px;
-  }
+  margin-block: ${spacing[300]}px;
 
   width: ${getWidth(index, bulletsOnly)};
 `;
@@ -26,6 +22,19 @@ const getWidth = (index = 0, bulletsOnly?: boolean) => {
     return spacing[400] + 'px';
   }
 
+  /**
+   * The first item will take up 100% of the available width.
+   * Subsequent items will take up 1/4 less space,
+   * until the item is 50% the available width.
+   * Then repeat
+   *
+   * ----------
+   * -------
+   * -----
+   * ----------
+   * -------
+   * ... etc
+   */
   const offset = 25 * (index % 3);
   return 100 - offset + '%';
 };
