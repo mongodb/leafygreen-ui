@@ -11,7 +11,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element: T = getByLgId(lgId);
+  const element: T = getByLgId!(lgId);
 
   /**
    * Returns the disabled attribute on the input.
