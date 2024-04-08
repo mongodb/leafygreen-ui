@@ -1,5 +1,11 @@
 # @leafygreen-ui/banner
 
+## 8.0.0
+
+### Major Changes
+
+- 24ee033c: Banner now forwards refs
+
 ## 7.0.20
 
 ### Patch Changes
