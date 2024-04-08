@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { findByLgId, getByLgId } from '../../utils/getQueries';
+import { lgQueries } from '../../utils/getQueries';
+const { findByLgId, getByLgId } = lgQueries;
 
 const TestComponent = () => {
   const [open, setOpen] = useState(false);
@@ -32,7 +33,7 @@ describe('findByLgId', () => {
   test('gets element with id', async () => {
     render(<div data-lgid="testing-id">Children</div>);
 
-    const element = await findByLgId('testing-id');
+    const element = await findByLgId!('testing-id');
     expect(element).toBeInTheDocument();
   });
 
@@ -43,7 +44,7 @@ describe('findByLgId', () => {
       </>,
     );
 
-    await expect(findByLgId('incorrect-testing-id')).rejects.toThrow(
+    await expect(findByLgId!('incorrect-testing-id')).rejects.toThrow(
       'Unable to find an element by: [data-lgid="incorrect-testing-id"]',
     );
   });
@@ -56,7 +57,7 @@ describe('findByLgId', () => {
       </>,
     );
 
-    await expect(findByLgId('testing-id')).rejects.toThrow(
+    await expect(findByLgId!('testing-id')).rejects.toThrow(
       'Found multiple elements by: [data-lgid="testing-id"]',
     );
   });
@@ -64,9 +65,9 @@ describe('findByLgId', () => {
   test('gets element that opens with a delay', async () => {
     render(<TestComponent />);
 
-    const button = getByLgId('test-button');
+    const button = getByLgId!('test-button');
     userEvent.click(button);
-    const element = await findByLgId('test-component');
+    const element = await findByLgId!('test-component');
     expect(element).toBeInTheDocument();
   });
 });
