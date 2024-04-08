@@ -187,8 +187,14 @@ test('Form', () => {
 #### Elements
 
 ```tsx
-const { getInput, getLabel, getDescription, getInputValue, isDisabled } =
-  getTestUtils();
+const {
+  getInput,
+  getLabel,
+  getDescription,
+  getInputValue,
+  isDisabled,
+  isIndeterminate,
+} = getTestUtils();
 ```
 
 | Util              | Description                                | Returns                       |
