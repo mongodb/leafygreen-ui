@@ -1,5 +1,12 @@
 # @leafygreen-ui/skeleton-loader
 
+## 1.2.0
+
+### Minor Changes
+
+- 6131074d: Adds `ListSkeleton` component
+- 355f0b18: Adds `enableAnimations` prop
+
 ## 1.1.3
 
 ### Patch Changes

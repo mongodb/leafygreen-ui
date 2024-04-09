@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "12.6.2",
+  "version": "12.6.3",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/checkbox": "^13.0.0",
+    "@leafygreen-ui/checkbox": "^13.1.0",
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/hooks": "^8.1.3",
     "@leafygreen-ui/icon": "^12.0.1",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
     "@leafygreen-ui/code": "^14.3.2",
-    "@leafygreen-ui/button": "^21.1.0",
+    "@leafygreen-ui/button": "^21.2.0",
     "@leafygreen-ui/badge": "^8.1.2",
     "@leafygreen-ui/pagination": "^1.0.22",
     "@lg-tools/storybook-utils": "^0.1.0"

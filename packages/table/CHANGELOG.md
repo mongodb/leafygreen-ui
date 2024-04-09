@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 12.6.3
+
+### Patch Changes
+
+- 1ec45a7e: Updates internal test suite
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/checkbox@13.1.0
+
 ## 12.6.2
 
 ### Patch Changes
