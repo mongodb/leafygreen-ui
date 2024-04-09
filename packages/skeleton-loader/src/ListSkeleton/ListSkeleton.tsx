@@ -4,6 +4,7 @@ import range from 'lodash/range';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { Skeleton } from '../Skeleton';
 
@@ -37,7 +38,7 @@ export function ListSkeleton({
             className={getSkeletonListItemStyles(i, bulletsOnly)}
             data-testid="lg-skeleton-list_item"
           >
-            <Skeleton enableAnimations={enableAnimations} size="small" />
+            <Skeleton enableAnimations={enableAnimations} size={Size.Small} />
           </li>
         ))}
       </ul>

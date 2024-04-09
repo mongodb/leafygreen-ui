@@ -1,6 +1,5 @@
 import React from 'react';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { storybookArgTypes, StoryType } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
@@ -61,7 +60,7 @@ const skeletonComponents = {
   TableSkeleton,
 };
 
-export const LiveExample: StoryFn<any> = (args: SharedSkeletonProps) => (
+export const LiveExample: StoryType<any> = (args: SharedSkeletonProps) => (
   <div className={storyRootStyles}>
     {Object.entries(skeletonComponents).map(([name, SkeletonVariant]) => (
       <div key={name} className={displayOptionContainerStyles}>
