@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/form-field": "^1.0.1",
     "@leafygreen-ui/hooks": "^8.1.3",
     "@leafygreen-ui/icon": "^12.1.0",
     "@leafygreen-ui/lib": "^13.4.0",
