@@ -1,5 +1,12 @@
 # @leafygreen-ui/form-field
 
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [e97bfcc1]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @leafygreen-ui/search-input
 
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [e97bfcc1]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/input-option@1.1.3
+
 ## 3.0.0
 
 ### Major Changes

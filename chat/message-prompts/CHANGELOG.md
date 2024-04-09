@@ -1,5 +1,12 @@
 # @lg-chat/message-prompts
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [e97bfcc1]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 2.0.1
 
 ### Patch Changes

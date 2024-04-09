@@ -1,5 +1,15 @@
 # @lg-chat/message-feedback
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [e97bfcc1]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/text-area@8.2.2
+
 ## 2.0.1
 
 ### Patch Changes

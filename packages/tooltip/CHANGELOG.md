@@ -1,5 +1,12 @@
 # @leafygreen-ui/tooltip
 
+## 11.0.4
+
+### Patch Changes
+
+- Updated dependencies [e97bfcc1]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 11.0.3
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/input-option
 
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [e97bfcc1]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 1.1.2
 
 ### Patch Changes
