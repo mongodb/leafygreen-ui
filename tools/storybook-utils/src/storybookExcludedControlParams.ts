@@ -5,6 +5,7 @@ export const storybookExcludedControlParams = [
   'aria-labelledby',
   'aria-describedby',
   'className',
+  'data-lgid',
   'id',
   'onBlur',
   'onCancel',
