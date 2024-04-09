@@ -44,5 +44,8 @@
     {
       "path": "../../packages/leafygreen-provider"
     }, 
+    {
+      "path": "../../packages/banner"
+    },
   ]
 }

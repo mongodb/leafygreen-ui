@@ -1,5 +1,16 @@
 # @lg-chat/message
 
+## 4.1.0
+
+### Minor Changes
+
+- 24ee033c: Adds verified answer support to Message
+
+### Patch Changes
+
+- Updated dependencies [24ee033c]
+  - @leafygreen-ui/banner@8.0.0
+
 ## 4.0.1
 
 ### Patch Changes
