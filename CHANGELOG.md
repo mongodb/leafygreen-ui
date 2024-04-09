@@ -1,5 +1,11 @@
 # @lg-private/canvas-header
 
+## 1.0.2
+
+### Patch Changes
+
+- 33e6b57: No functional changes. Upgrades build to use Node 18
+
 ## 1.0.1
 
 ### Patch Changes
