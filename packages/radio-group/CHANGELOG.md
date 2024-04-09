@@ -1,5 +1,12 @@
 # @leafygreen-ui/radio-group
 
+## 11.0.1
+
+### Patch Changes
+
+- Updated dependencies [c7ec7e29]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 11.0.0
 
 ### Major Changes

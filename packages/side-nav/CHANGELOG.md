@@ -1,5 +1,13 @@
 # @leafygreen-ui/side-nav
 
+## 14.1.3
+
+### Patch Changes
+
+- Updated dependencies [c7ec7e29]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/tooltip@11.0.4
+
 ## 14.1.2
 
 ### Patch Changes

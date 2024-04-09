@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pagination",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "leafyGreen UI Kit Pagination",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -35,15 +35,15 @@
     "@leafygreen-ui/icon": "^12.0.1",
     "@leafygreen-ui/icon-button": "^15.0.21",
     "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/select": "^11.2.3",
+    "@leafygreen-ui/select": "^11.3.2",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.3.0",
+    "@leafygreen-ui/typography": "^19.0.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.1"
   }
 }
