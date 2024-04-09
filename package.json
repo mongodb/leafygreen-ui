@@ -12,7 +12,8 @@
     "docs": "lg build-tsdoc"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry":"https://artifactory.corp.mongodb.com/artifactory/api/npm/leafygreen-ui/"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
