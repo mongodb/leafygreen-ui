@@ -84,3 +84,124 @@ import Checkbox from '@leafygreen-ui/checkbox';
 | ...               | native `input` attributes | Any other props will be spread on the root `input` element                                                                                                                                                                   |                           |
 
 _Any other properties will be spread on the `input` element._
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Checkbox` in a product test suite. If the `Checkbox` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Checkbox`. It defaults to 'lg-checkbox' if left empty.
+```
+
+#### Single `Checkbox`
+
+```tsx
+import { render } from '@testing-library/react';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
+
+...
+
+test('checkbox', () => {
+  render(<Checkbox label="label" checked />);
+  const { getInput, getInputValue } = getTestUtils();
+
+  expect(getInput()).toBeInTheDocument();
+  expect(getInputValue()).toBe(true);
+});
+```
+
+#### Multiple `Checkbox` components
+
+When testing multiple `Checkbox` components it is recommended to add the custom `data-lgid` attribute to each `Checkbox`.
+
+```tsx
+import { render } from '@testing-library/react';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
+
+...
+
+test('checkbox', () => {
+  render(
+    <>
+      <Checkbox data-lgid="checkbox-1" label="label 1" />
+      <Checkbox data-lgid="checkbox-2" label="label 2" checked />
+    </>,
+  );
+  const utilsOne = getTestUtils('checkbox-1'); // data-lgid
+  const utilsTwo = getTestUtils('checkbox-2'); // data-lgid
+  // First Checkbox
+  expect(utilsOne.checkboxetInput()).toBeInTheDocument();
+  expect(utilsOne.getInputValue()).toBe(false);
+
+  // Second Checkbox
+  expect(utilsTwo.getInput()).toBeInTheDocument();
+  expect(utilsTwo.getInputValue()).toBe(true);
+});
+```
+
+#### Checkbox with other LG form elements
+
+```tsx
+import { render } from '@testing-library/react';
+import Toggle, { getTestUtils as getLGToggleTestUtils } from '@leafygreen-ui/toggle';
+import TextInput, { getTestUtils as getLGTextInputTestUtils } from '@leafygreen-ui/text-input';
+import Checkbox, { getTestUtils } from '@leafygreen-ui/checkbox';
+
+...
+
+test('Form', () => {
+  render(
+    <Form>
+      <Toggle aria-label="Toggle label" />
+      <TextInput label="TextInput label" />
+      <Checkbox label="Checkbox label" />
+    </Form>,
+  );
+
+  const toggleInputUtils = getLGToggleTestUtils();
+  const textInputUtils = getLGTextInputTestUtils();
+  const checkboxUtils = getTestUtils();
+
+  // LG Toggle
+  expect(toggleInputUtils.getInput()).toBeInTheDocument();
+  expect(toggleInputUtils.getInputValue()).toBe('false');
+
+  // LG TextInput
+  expect(textInputUtils.getInput()).toBeInTheDocument();
+  expect(textInputUtils.getInputValue()).toBe('');
+
+  // LG Checkbox
+  expect(checkboxUtils.getInput()).toBeInTheDocument();
+  expect(checkboxUtils.getInputValue()).toBe(false);
+});
+```
+
+### Test Utils
+
+#### Elements
+
+```tsx
+const {
+  getInput,
+  getLabel,
+  getDescription,
+  getInputValue,
+  isDisabled,
+  isIndeterminate,
+} = getTestUtils();
+```
+
+| Util              | Description                                | Returns                       |
+| ----------------- | ------------------------------------------ | ----------------------------- |
+| `getInput`        | Returns the input node                     | `HTMLButtonElement`           |
+| `getLabel`        | Returns the label node                     | `HTMLButtonElement` \| `null` |
+| `getDescription`  | Returns the description node               | `HTMLButtonElement` \| `null` |
+| `getInputValue`   | Returns the input value                    | `boolean`                     |
+| `isDisabled`      | Returns whether the input is disabled      | `boolean`                     |
+| `isIndeterminate` | Returns whether the input is indeterminate | `boolean`                     |
