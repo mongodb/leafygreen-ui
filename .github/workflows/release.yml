@@ -1,7 +1,6 @@
 name: Release
 
 on:
-  merge_group:
   push:
     branches:
       - main
