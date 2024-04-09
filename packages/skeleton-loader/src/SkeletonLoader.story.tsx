@@ -1,11 +1,11 @@
 import React from 'react';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { storybookArgTypes, StoryType } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
+import { SharedSkeletonProps } from './Skeleton/Skeleton.types';
 import {
   CardSkeleton,
   CodeSkeleton,
@@ -20,6 +20,10 @@ export default {
   title: 'Components/SkeletonLoader',
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    enableAnimations: { control: 'boolean' },
+  },
+  args: {
+    enableAnimations: true,
   },
   parameters: {
     default: 'LiveExample',
@@ -56,11 +60,11 @@ const skeletonComponents = {
   TableSkeleton,
 };
 
-export const LiveExample: StoryFn<any> = () => (
+export const LiveExample: StoryType<any> = (args: SharedSkeletonProps) => (
   <div className={storyRootStyles}>
     {Object.entries(skeletonComponents).map(([name, SkeletonVariant]) => (
       <div key={name} className={displayOptionContainerStyles}>
-        <SkeletonVariant />
+        <SkeletonVariant {...args} />
         <Body className={labelStyles} weight="medium">
           <InlineCode>{name}</InlineCode>
         </Body>

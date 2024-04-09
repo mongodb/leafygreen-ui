@@ -1,7 +1,10 @@
 import React from 'react';
 import range from 'lodash/range';
 
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { Skeleton } from '../Skeleton';
 
@@ -12,17 +15,20 @@ import {
 import { ListSkeletonProps } from './ListSkeleton.types';
 
 export function ListSkeleton({
+  darkMode: darkModeProp,
+  enableAnimations,
   count = 5,
   bulletsOnly,
-  darkMode,
   ...rest
 }: ListSkeletonProps) {
+  const { darkMode } = useDarkMode(darkModeProp);
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <ul
         className={skeletonListWrapperStyles}
         data-testid="lg-skeleton-list"
-        aria-busy="true"
+        aria-busy
         {...rest}
       >
         {range(count).map(i => (
@@ -32,7 +38,7 @@ export function ListSkeleton({
             className={getSkeletonListItemStyles(i, bulletsOnly)}
             data-testid="lg-skeleton-list_item"
           >
-            <Skeleton size="small" />
+            <Skeleton enableAnimations={enableAnimations} size={Size.Small} />
           </li>
         ))}
       </ul>
