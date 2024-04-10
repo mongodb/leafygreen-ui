@@ -16,7 +16,6 @@ import {
   useIdAllocator,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
-import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -29,7 +28,8 @@ import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
 import SelectContext from '../SelectContext';
-import { mobileSizeSet, sizeSets } from '../styleSets';
+import { StateFeedback } from '../StateFeedback';
+import { mobileSizeSet } from '../styleSets';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -42,10 +42,6 @@ import {
 } from '../utils';
 
 import {
-  errorContainerStyles,
-  errorIconThemeStyles,
-  errorTextStyle,
-  hideErrorContainerStyles,
   labelDescriptionContainerStyle,
   largeLabelStyles,
   wrapperStyle,
@@ -68,6 +64,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       usePortal = true,
       placeholder = 'Select',
       errorMessage = 'This input needs your attention',
+      successMessage = 'Success',
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
@@ -110,7 +107,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       );
     }
 
-    const { darkMode, theme } = useDarkMode(darkModeProp);
+    const { darkMode } = useDarkMode(darkModeProp);
 
     const descriptionId = `${id}-description`;
     const menuId = `${id}-menu`;
@@ -121,8 +118,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const menuButtonRef = useStateRef<HTMLButtonElement>(null);
     const menuButtonId = useIdAllocator({ prefix: 'select' });
     const listMenuRef = useStateRef<HTMLUListElement | null>(null);
-
-    const sizeSet = sizeSets[size];
 
     const providerData = useMemo(() => {
       return { size, open, disabled };
@@ -618,35 +613,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               </ListMenu>
             </MenuButton>
           </SelectContext.Provider>
-          {state === State.Error && errorMessage && (
-            <div
-              className={cx(errorContainerStyles, {
-                // Hide error text when menu is open
-                [hideErrorContainerStyles]: open,
-              })}
-            >
-              <Icon
-                title="Error"
-                glyph="Warning"
-                fill={errorIconThemeStyles[theme]}
-                aria-hidden
-              />
-              <span
-                data-lgid={LGIDS_SELECT.errorMessage}
-                className={cx(
-                  errorTextStyle({ darkMode, sizeSet }),
-                  css`
-                    ${MobileMediaQuery} {
-                      font-size: ${mobileSizeSet.description.text}px;
-                      line-height: ${mobileSizeSet.description.lineHeight}px;
-                    }
-                  `,
-                )}
-              >
-                {errorMessage}
-              </span>
-            </div>
-          )}
+          <StateFeedback
+            state={state}
+            errorMessage={errorMessage}
+            successMessage={successMessage}
+            hideFeedback={open}
+            disabled={disabled}
+          />
         </div>
       </LeafyGreenProvider>
     );

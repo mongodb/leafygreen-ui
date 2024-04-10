@@ -132,7 +132,13 @@ export const menuButtonDisabledThemeStyles: Record<Theme, string> = {
     css`
       &[aria-disabled='true'] {
         background-color: ${palette.gray.light2};
+        border-color: ${palette.gray.light1};
         color: ${palette.gray.base};
+
+        &:hover,
+        &:active {
+          box-shadow: inherit;
+        }
 
         > *:last-child {
           > svg {
@@ -147,8 +153,13 @@ export const menuButtonDisabledThemeStyles: Record<Theme, string> = {
     css`
       &[aria-disabled='true'] {
         background-color: ${palette.gray.dark3};
-        color: ${palette.gray.dark1};
         border-color: ${palette.gray.dark2};
+        color: ${palette.gray.dark1};
+
+        &:hover,
+        &:active {
+          box-shadow: inherit;
+        }
 
         > *:last-child {
           > svg {
@@ -198,6 +209,32 @@ export const menuButtonErrorStyle: Record<Theme, string> = {
     &:active {
       border-color: ${errorColor[Theme.Dark]};
       box-shadow: ${hoverRing.dark.red};
+    }
+  `,
+};
+
+export const validColor: Record<Theme, string> = {
+  [Theme.Light]: palette.green.dark1,
+  [Theme.Dark]: palette.green.base,
+};
+
+export const menuButtonValidStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    border-color: ${errorColor[Theme.Light]};
+    background-color: ${palette.white};
+
+    &:hover,
+    &:active {
+      box-shadow: ${hoverRing.light.green};
+    }
+  `,
+  [Theme.Dark]: css`
+    border-color: ${errorColor[Theme.Dark]};
+
+    &:hover,
+    &:active {
+      border-color: ${errorColor[Theme.Dark]};
+      box-shadow: ${hoverRing.dark.green};
     }
   `,
 };

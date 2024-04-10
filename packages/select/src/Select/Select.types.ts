@@ -19,8 +19,9 @@ export const Size = {
 export type Size = (typeof Size)[keyof typeof Size];
 
 export const State = {
-  None: 'none',
   Error: 'error',
+  None: 'none',
+  Valid: 'valid',
 } as const;
 export type State = (typeof State)[keyof typeof State];
 
@@ -88,8 +89,15 @@ export interface BaseSelectProps
 
   /**
    * Error message rendered when the `state` prop is set to `error`.
+   * @default 'This input needs your attention'
    */
   errorMessage?: string;
+
+  /**
+   * Success message rendered when the `state` prop is set to `valid`.
+   * @default 'Success'
+   */
+  successMessage?: string;
 
   /**
    * Determines whether the component should be rendered in an error state.

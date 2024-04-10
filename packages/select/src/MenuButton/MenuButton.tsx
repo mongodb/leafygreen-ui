@@ -23,6 +23,7 @@ import {
   menuButtonTextClassName,
   menuButtonTextStyle,
   menuButtonTextWrapperStyle,
+  menuButtonValidStyle,
 } from './MenuButton.styles';
 import { MenuButtonProps } from './MenuButton.types';
 
@@ -75,8 +76,9 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           menuButtonFocusStyle[theme],
           {
             [menuButtonDeselectedStyles[theme]]: deselected,
-            [menuButtonDisabledThemeStyles[theme]]: disabled,
             [menuButtonErrorStyle[theme]]: state === State.Error,
+            [menuButtonValidStyle[theme]]: state === State.Valid,
+            [menuButtonDisabledThemeStyles[theme]]: disabled,
             [css`
               letter-spacing: initial;
             `]: size === ButtonSize.XSmall,
