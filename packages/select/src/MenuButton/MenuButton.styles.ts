@@ -103,10 +103,10 @@ export const menuButtonFocusStyle: Record<Theme, string> = {
 
 export const menuButtonDeselectedStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.dark1};
+    color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+    color: ${palette.gray.dark1};
 
     &:hover,
     &:active,
