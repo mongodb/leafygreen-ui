@@ -1,5 +1,12 @@
 # @leafygreen-ui/loading-indicator
 
+## 2.0.12
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 2.0.11
 
 ### Patch Changes
