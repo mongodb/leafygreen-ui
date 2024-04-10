@@ -12,6 +12,7 @@ import { FormSkeletonProps } from '.';
 
 export function FormSkeleton({
   darkMode: darkModeProp,
+  enableAnimations,
   className,
   ...rest
 }: FormSkeletonProps) {
@@ -19,11 +20,17 @@ export function FormSkeleton({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={cx(baseStyles, className)} {...rest} aria-busy>
-        <Skeleton className={fullWidthStyles} />
-        <Skeleton />
-        <Skeleton />
-        <Skeleton className={fullWidthStyles} />
-        <Skeleton />
+        <Skeleton
+          className={fullWidthStyles}
+          enableAnimations={enableAnimations}
+        />
+        <Skeleton enableAnimations={enableAnimations} />
+        <Skeleton enableAnimations={enableAnimations} />
+        <Skeleton
+          className={fullWidthStyles}
+          enableAnimations={enableAnimations}
+        />
+        <Skeleton enableAnimations={enableAnimations} />
       </div>
     </LeafyGreenProvider>
   );

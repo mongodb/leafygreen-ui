@@ -5,7 +5,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { Skeleton } from '..';
+import { Size, Skeleton } from '..';
 
 import {
   headerStyles,
@@ -16,8 +16,9 @@ import {
 import { ParagraphSkeletonProps } from '.';
 
 export function ParagraphSkeleton({
-  withHeader = false,
   darkMode: darkModeProp,
+  enableAnimations,
+  withHeader = false,
   className,
   ...rest
 }: ParagraphSkeletonProps) {
@@ -27,13 +28,26 @@ export function ParagraphSkeleton({
       <div {...rest} className={cx(rootStyles, className)} aria-busy>
         {withHeader && (
           <Skeleton
+            enableAnimations={enableAnimations}
             className={headerStyles}
             data-testid="lg-paragraph-skeleton-header"
           />
         )}
-        <Skeleton size="small" className={lineStyles} />
-        <Skeleton size="small" className={lineStyles} />
-        <Skeleton size="small" className={lastLineStyles} />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size={Size.Small}
+          className={lineStyles}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size={Size.Small}
+          className={lineStyles}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          size={Size.Small}
+          className={lastLineStyles}
+        />
       </div>
     </LeafyGreenProvider>
   );

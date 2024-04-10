@@ -1,21 +1,22 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
-import { CardSkeleton } from '..';
+import { ListSkeleton } from '.';
 
 export default {
   title: 'Components/SkeletonLoader',
-  component: CardSkeleton,
+  component: ListSkeleton,
   parameters: {
     default: null,
-    controls: { exclude: ['darkMode', 'ref'] },
+    controls: { exclude: ['darkMode', 'ref', 'size'] },
     generate: {
-      storyNames: ['Card'],
+      storyNames: ['List'],
       combineArgs: {
         darkMode: [false, true],
+        bulletsOnly: [false, true],
       },
       decorator: Instance => (
-        <div style={{ width: 500 }}>
+        <div style={{ width: 256 }}>
           <Instance />
         </div>
       ),
@@ -23,10 +24,12 @@ export default {
   },
   args: {
     enableAnimations: false,
+    count: 5,
   },
   argTypes: {
     enableAnimations: { control: 'boolean' },
+    count: { control: 'number' },
   },
-} satisfies StoryMetaType<typeof CardSkeleton>;
+} satisfies StoryMetaType<typeof ListSkeleton>;
 
-export const Card: StoryType<typeof CardSkeleton> = () => <></>;
+export const List: StoryType<typeof ListSkeleton> = () => <></>;
