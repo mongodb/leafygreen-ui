@@ -70,6 +70,7 @@ export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
   'aria-describedby': { control: 'none' },
   'aria-label': { control: 'none' },
   'aria-labelledby': { control: 'none' },
+  'data-lgid': { control: 'none' },
   className: { control: 'none' },
   id: { control: 'none' },
   onBlur: { control: 'none' },

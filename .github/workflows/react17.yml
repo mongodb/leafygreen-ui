@@ -1,6 +1,7 @@
 name: React 17
 
 on:
+  merge_group:
   pull_request:
     types: [opened, synchronize, reopened]
 
