@@ -1,0 +1,1 @@
+export { check } from './check';

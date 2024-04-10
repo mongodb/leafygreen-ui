@@ -29,7 +29,8 @@
     "start": "npx storybook dev -p 9001 --no-version-updates",
     "test": "lg test",
     "unlink": "lg unlink",
-    "validate": "lg validate"
+    "validate": "lg validate",
+    "jscodeshift":"0.15.2"
   },
   "devDependencies": {
     "@actions/core": "^1.10.1",
