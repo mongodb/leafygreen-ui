@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   fontFamilies,
@@ -25,6 +26,22 @@ export const largeLabelStyles = css`
   line-height: ${typeScales.large.lineHeight}px;
 `;
 
+export const errorContainerStyles = css`
+  padding-top: ${spacing[100]}px;
+  display: flex;
+  align-items: center;
+  gap: ${spacing[100]}px;
+`;
+
+export const hideErrorContainerStyles = css`
+  opacity: 0;
+`;
+
+export const errorIconThemeStyles: Record<Theme, string> = {
+  [Theme.Light]: palette.red.base,
+  [Theme.Dark]: palette.red.light1,
+};
+
 export const errorTextStyle = ({
   darkMode,
   sizeSet,
@@ -35,8 +52,6 @@ export const errorTextStyle = ({
   font-family: ${fontFamilies.default};
   color: ${darkMode ? palette.red.light1 : palette.red.base};
   font-size: ${sizeSet.text}px;
-  margin-top: ${spacing[1]}px;
-  padding-left: 2px;
   transition: color ${transitionDuration.faster}ms ease-in-out;
   transition-delay: ${transitionDuration.faster}ms;
 `;

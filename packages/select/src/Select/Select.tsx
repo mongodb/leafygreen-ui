@@ -16,6 +16,7 @@ import {
   useIdAllocator,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
+import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -41,7 +42,10 @@ import {
 } from '../utils';
 
 import {
+  errorContainerStyles,
+  errorIconThemeStyles,
   errorTextStyle,
+  hideErrorContainerStyles,
   labelDescriptionContainerStyle,
   largeLabelStyles,
   wrapperStyle,
@@ -63,7 +67,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       allowDeselect = true,
       usePortal = true,
       placeholder = 'Select',
-      errorMessage = '',
+      errorMessage = 'This input needs your attention',
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
@@ -106,7 +110,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       );
     }
 
-    const { darkMode } = useDarkMode(darkModeProp);
+    const { darkMode, theme } = useDarkMode(darkModeProp);
 
     const descriptionId = `${id}-description`;
     const menuId = `${id}-menu`;
@@ -615,27 +619,33 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             </MenuButton>
           </SelectContext.Provider>
           {state === State.Error && errorMessage && (
-            <span
-              data-lgid={LGIDS_SELECT.errorMessage}
-              className={cx(
-                errorTextStyle({ darkMode, sizeSet }),
-                css`
-                  ${MobileMediaQuery} {
-                    font-size: ${mobileSizeSet.description.text}px;
-                    line-height: ${mobileSizeSet.description.lineHeight}px;
-                  }
-                `,
-                {
-                  [css`
-                    // Hide error text when menu is open,
-                    // so it doesn't peek around the menu corner
-                    color: transparent;
-                  `]: open,
-                },
-              )}
+            <div
+              className={cx(errorContainerStyles, {
+                // Hide error text when menu is open
+                [hideErrorContainerStyles]: open,
+              })}
             >
-              {errorMessage}
-            </span>
+              <Icon
+                title="Error"
+                glyph="Warning"
+                fill={errorIconThemeStyles[theme]}
+                aria-hidden
+              />
+              <span
+                data-lgid={LGIDS_SELECT.errorMessage}
+                className={cx(
+                  errorTextStyle({ darkMode, sizeSet }),
+                  css`
+                    ${MobileMediaQuery} {
+                      font-size: ${mobileSizeSet.description.text}px;
+                      line-height: ${mobileSizeSet.description.lineHeight}px;
+                    }
+                  `,
+                )}
+              >
+                {errorMessage}
+              </span>
+            </div>
           )}
         </div>
       </LeafyGreenProvider>
