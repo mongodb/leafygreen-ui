@@ -4,6 +4,8 @@ import { anchorClassName } from '../shared.styles';
 
 export const arrowRightIconPersist = css`
   transform: translate3d(3px, 0, 0);
+  top: 1px;
+  position: relative;
 `;
 
 export const arrowRightIconHover = css`
@@ -11,8 +13,10 @@ export const arrowRightIconHover = css`
   transform: translate3d(-3px, 0, 0);
   transition: 100ms ease-in;
   transition-property: opacity, transform;
+  top: 1px;
+  position: relative;
 
-  .${anchorClassName}:hover & {
+  .${anchorClassName}:hover &, .${anchorClassName}[data-hover='true'] & {
     opacity: 1;
     transform: translate3d(3px, 0, 0);
   }
@@ -20,7 +24,7 @@ export const arrowRightIconHover = css`
 
 export const openInNewTabStyles = css`
   position: relative;
-  bottom: 4px;
+  bottom: 2px;
   left: -1px;
   height: 12px;
 `;
