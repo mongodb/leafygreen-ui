@@ -165,7 +165,7 @@ export const menuButtonTextWrapperStyle = css`
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  gap: ${spacing[1]}px;
+  gap: ${spacing[100]}px;
   overflow: hidden;
 `;
 

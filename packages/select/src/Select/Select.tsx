@@ -592,7 +592,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               aria-describedby={descriptionId}
               aria-invalid={state === State.Error}
               aria-disabled={disabled}
-              errorMessage={errorMessage}
               state={state}
               baseFontSize={baseFontSize}
               __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
