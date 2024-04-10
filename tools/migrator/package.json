@@ -18,6 +18,9 @@
     "lodash": "^4.17.21",
     "jscodeshift":"0.15.2"
   },
+  "devDependencies": {
+    "@types/jscodeshift":"0.11.11"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
   "repository": {
     "type": "git",

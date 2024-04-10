@@ -1,6 +1,6 @@
+/* eslint-disable no-console */
 /* eslint-disable jest/no-export, jest/valid-title */
 import fs from 'fs';
-// @ts-expect-error - no jscodeshift types
 import jscodeshift, { type FileInfo } from 'jscodeshift';
 import path from 'path';
 // @ts-expect-error - no prettier types
@@ -11,8 +11,10 @@ async function applyTransform(
   input: FileInfo,
   options?: { [option: string]: any },
 ) {
+  // TODO: don't understand whats happening here
   // Handle ES6 modules using default export for the transform
   const transformer = transform.default ? transform.default : transform;
+  console.log({ transformer });
   const output = await transformer(
     input,
     {
@@ -48,16 +50,17 @@ export function check(
     it(fixture, async () => {
       const fixtureDir = path.join(dirName);
       const inputPath = path.join(fixtureDir, `${fixture}.input.${extension}`);
-      console.log('🚨', { dirName, fixtureDir, inputPath });
       const parser = parserExtensionMap[extension];
       const source = fs.readFileSync(inputPath, 'utf8');
       const expected = fs.readFileSync(
         path.join(fixtureDir, `${fixture}.output.${extension}`),
         'utf8',
       );
-      // Assumes transform is one level up from tests directory
-      const module = await import(path.join(dirName, '..', 'transform'));
-      console.log({ module });
+
+      console.log('🚨', { dirName, fixtureDir, inputPath });
+      // Assumes transform.ts is one level up from tests directory
+      const module = await import(path.join(dirName, '..', 'transform.ts'));
+      console.log('module', path.join(dirName, '..', 'transform.ts'));
       const output = await applyTransform(
         { ...module },
         { source, path: inputPath },
