@@ -1,7 +1,8 @@
 // remove-consoles.js
-// @ts-nocheck
 
-export default (fileInfo, api) => {
+import { type API, type FileInfo } from 'jscodeshift';
+
+export default function transformer(fileInfo: FileInfo, api: API) {
   const j = api.jscodeshift;
 
   return j(fileInfo.source)
@@ -13,4 +14,4 @@ export default (fileInfo, api) => {
     })
     .remove()
     .toSource();
-};
+}

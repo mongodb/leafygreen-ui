@@ -14,4 +14,4 @@ export const TestingCodemods = () => {
 };
 
 TestingCodemods.displayName = 'TestingCodemods';
-// jscodeshift -t /Users/shaneeza.ali/Documents/sites/leafygreen-ui/tools/migrator/src/transformations/remove-consoles/transform.ts /Users/shaneeza.ali/Documents/sites/leafygreen-ui/tools/migrator/src/transformations/remove-consoles/testing.tsx -p
+// npx jscodeshift -t /Users/shaneeza.ali/Documents/sites/leafygreen-ui/tools/migrator/src/transformations/remove-consoles/transform.ts /Users/shaneeza.ali/Documents/sites/leafygreen-ui/tools/migrator/src/transformations/remove-consoles/testing.tsx -p
