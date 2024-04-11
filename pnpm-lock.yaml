@@ -2863,7 +2863,7 @@ importers:
         version: 2.10.4(react@17.0.2)
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.0.0
+        specifier: ^8.0.2
         version: 8.0.2
       '@leafygreen-ui/badge':
         specifier: ^8.1.2
