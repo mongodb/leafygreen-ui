@@ -50,15 +50,9 @@ export const test = (
     watch ? '--watch' : '',
     verbose ? '--verbose' : '',
     ...(ci ? ciFlags : []),
-    '--silent',
+    `--silent="${String(!verbose)}"`,
     ...passThroughOptions,
   ].filter(v => v !== '');
-
-  console.log({
-    verbose, 
-    jestBinary,
-    commandArgs
-  })
 
   spawn(jestBinary, commandArgs, {
     env: {
