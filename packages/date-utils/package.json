@@ -23,7 +23,6 @@
     "weekstart": "^2.0.0"
   },
   "devDependencies": {
-    "@lg-tools/build": "workspace:*", 
     "@lg-tools/test": "^0.4.4",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.3"

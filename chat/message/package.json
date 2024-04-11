@@ -33,7 +33,6 @@
   "devDependencies": {
     "@lg-chat/avatar": "^3.0.1",
     "@lg-chat/message-feedback": "^2.0.1",
-    "@lg-tools/build": "workspace:*",
     "@lg-tools/storybook-utils": "^0.1.0"
   },
   "peerDependencies": {

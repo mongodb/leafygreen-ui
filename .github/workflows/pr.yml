@@ -23,7 +23,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
@@ -54,7 +54,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -63,7 +63,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -86,7 +86,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -98,7 +98,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -121,7 +121,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -133,7 +133,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: tests
         run: pnpm run test --ci
@@ -152,7 +152,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -164,7 +164,7 @@ jobs:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: validate
         run: pnpm run validate

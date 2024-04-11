@@ -26,9 +26,6 @@
     "@leafygreen-ui/lib": "^13.3.0",
     "@leafygreen-ui/emotion": "^4.0.8"
   },
-  "devDependencies": {
-    "@lg-tools/build": "workspace:*"
-  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y",
   "repository": {
     "type": "git",

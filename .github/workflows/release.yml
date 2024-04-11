@@ -25,7 +25,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
@@ -62,7 +62,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -76,7 +76,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -102,7 +102,7 @@ jobs:
         with:
           node-version: '18'
           cache: pnpm
-          cache-dependency-path: 'pnpm.lock'
+          cache-dependency-path: 'pnpm-lock.json'
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -116,7 +116,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Version packages
         id: changesets
@@ -152,7 +152,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Notify Slack channel of new releases
         id: slackbot
