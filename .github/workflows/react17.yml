@@ -20,23 +20,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'yarn'
+          cache: 'npnpm'
 
       - name: Install node-gyp
-        run: yarn global add node-gyp
+        run: npnpm run global add node-gyp
 
       - name: Install package.json
-        run: yarn install --prefer-offline
+        run: npnpm install --prefer-offline
 
       - name: Build CLI
-        run: yarn build:cli
+        run: npnpm build:cli
 
       # TODO: Will nohoist help here?
       - name: Install testing tools for React 17
         run: npx ts-node tools/test/scripts/install-react17.ts
 
       - name: Build packages
-        run: yarn build
+        run: pnpm build
 
       - name: Run tests in React 17
-        run: yarn lg test --react17
+        run: pnpm run lg test --react17
