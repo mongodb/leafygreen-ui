@@ -1,4 +1,5 @@
 import React from 'react';
+import {StoryFn} from '@storybook/react'
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { ListSkeleton } from '.';
@@ -15,7 +16,7 @@ export default {
         darkMode: [false, true],
         bulletsOnly: [false, true],
       },
-      decorator: Instance => (
+      decorator: (Instance: StoryFn) => (
         <div style={{ width: 256 }}>
           <Instance />
         </div>

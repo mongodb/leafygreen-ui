@@ -1,4 +1,5 @@
 import React from 'react';
+import { StoryFn } from '@storybook/react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { ParagraphSkeleton } from './ParagraphSkeleton';
@@ -15,7 +16,7 @@ export default {
         darkMode: [false, true],
         withHeader: [true, false],
       },
-      decorator: Instance => (
+      decorator: (Instance: StoryFn) => (
         <div style={{ width: 500 }}>
           <Instance />
         </div>

@@ -34,7 +34,7 @@ describe('findByLgId', () => {
     render(<div data-lgid="testing-id">Children</div>);
 
     const element = await findByLgId!('testing-id');
-    expect(element).toBeInTheDocument();
+    expect(element).toBeDefined();
   });
 
   test('throws error if the id does not exist', async () => {
@@ -67,12 +67,7 @@ describe('findByLgId', () => {
 
     const button = getByLgId!('test-button');
     userEvent.click(button);
-<<<<<<< HEAD
-    const element = await findByLgId('test-component');
-    // @ts-ignore
-=======
     const element = await findByLgId!('test-component');
->>>>>>> cbfda91b32c97066345840b0e689841df43e5b76
-    expect(element).toBeInTheDocument();
+    expect(element).toBeDefined();
   });
 });

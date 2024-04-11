@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:*",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/jest-axe": "^3.5.9"
   }
 }
