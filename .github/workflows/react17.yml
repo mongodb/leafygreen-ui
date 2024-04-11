@@ -20,16 +20,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npnpm'
+          cache: 'pnpm'
 
       - name: Install node-gyp
-        run: npnpm run global add node-gyp
+        run: pnpm run global add node-gyp
 
       - name: Install package.json
-        run: npnpm install --prefer-offline
+        run: pnpm install --prefer-offline
 
       - name: Build CLI
-        run: npnpm build:cli
+        run: pnpm build:cli
 
       # TODO: Will nohoist help here?
       - name: Install testing tools for React 17
