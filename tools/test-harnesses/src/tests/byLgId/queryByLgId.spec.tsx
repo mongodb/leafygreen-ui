@@ -19,7 +19,6 @@ describe('queryByLgId', () => {
       </>,
     );
 
-    expect(queryByLgId!('incorrect-testing-id')).not.toBeDefined();
     expect(queryByLgId!('incorrect-testing-id')).toBeNull();
   });
 

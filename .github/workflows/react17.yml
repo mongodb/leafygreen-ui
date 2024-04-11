@@ -28,7 +28,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install node-gyp
-        run: pnpm add node-gyp
+        run: npm install --global node-gyp
 
       - name: Install package.json
         run: pnpm install --prefer-offline
