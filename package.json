@@ -68,8 +68,7 @@
   },
   "resolutions": {
     "caniuse-lite": "^1.0.30001585",
-    "jackspeak": "2.1.1",
-    "@types/react": "16.9.56"
+    "jackspeak": "2.1.1"
   },
   "keywords": [
     "mongodb",
