@@ -144,9 +144,6 @@ importers:
       '@leafygreen-ui/modal':
         specifier: ^16.0.7
         version: link:../../packages/modal
-      '@lg-tools/build':
-        specifier: workspace:*
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
@@ -196,9 +193,6 @@ importers:
       '@lg-chat/message-prompts':
         specifier: ^2.0.1
         version: link:../message-prompts
-      '@lg-tools/build':
-        specifier: workspace:*
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
@@ -257,9 +251,6 @@ importers:
       '@lg-chat/message-prompts':
         specifier: ^2.0.1
         version: link:../message-prompts
-      '@lg-tools/build':
-        specifier: workspace:*
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
@@ -321,9 +312,6 @@ importers:
         specifier: ^8.3.2
         version: 8.5.3(@types/react@16.9.56)(react@18.2.0)
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:*
-        version: link:../../tools/build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
@@ -1145,9 +1133,6 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
     devDependencies:
-      '@lg-tools/test':
-        specifier: ^0.4.4
-        version: link:../../tools/test
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -1628,9 +1613,6 @@ importers:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
         version: link:../../tools/storybook-utils
-      '@lg-tools/test':
-        specifier: ^0.4.4
-        version: link:../../tools/test
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -2287,6 +2269,9 @@ importers:
       polished:
         specifier: ^4.2.2
         version: 4.3.1
+      react-transition-group:
+        specifier: ^4.4.5
+        version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@leafygreen-ui/select':
         specifier: ^11.2.3

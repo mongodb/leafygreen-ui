@@ -19,7 +19,7 @@ jobs:
           
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: pnpm run global add node-gyp
+        run: pnpm add node-gyp
 
       - uses: actions/cache@v3
         name: Check for build cache
@@ -158,7 +158,7 @@ jobs:
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: pnpm global add node-gyp
+        run: pnpm node-gyp
 
       - name: Install
         run: pnpm install --frozen-lockfile --prefer-offline
