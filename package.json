@@ -37,6 +37,7 @@
     "@changesets/cli": "^2.26.0",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/cli": "workspace:^",
+    "@lg-tools/lint": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "@lg-tools/storybook-addon": "workspace:^",
     "@lg-tools/test": "workspace:^",
