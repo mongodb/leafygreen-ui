@@ -39,6 +39,7 @@
     "@lg-tools/test": "^0.4.4",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/jest": "^29.5.12",
+    "@types/jest-axe": "^3.5.9",
     "@types/node": "^20.12.3"
   }
 }

@@ -38,6 +38,7 @@
     "@lg-tools/build": "workspace:*",
     "@lg-tools/cli": "workspace:*",
     "@lg-tools/storybook-addon": "workspace:*",
+    "@storybook/react": "^8.0.5",
     "@types/lodash": "^4.14.170",
     "@types/prop-types": "^15.7.12",
     "@types/react": "18.2.23",
