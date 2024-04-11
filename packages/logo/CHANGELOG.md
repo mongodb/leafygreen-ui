@@ -1,5 +1,18 @@
 # @leafygreen-ui/logo
 
+## 9.1.0
+
+### Minor Changes
+
+- d0b1cfd8: Exports `LogoProps` from package
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
 ## 9.0.2
 
 ### Patch Changes

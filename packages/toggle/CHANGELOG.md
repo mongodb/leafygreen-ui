@@ -1,5 +1,32 @@
 # @leafygreen-ui/toggle
 
+## 10.1.1
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+- Updated dependencies [8adadc89]
+  - @lg-tools/test-harnesses@0.1.2
+
+## 10.1.0
+
+### Minor Changes
+
+- c3906f78: - Extends `DarkModeProps` from `@leafygreen-ui/lib`
+  - Exports `getTestUtils`, a util to reliably interact with `LG Toggle` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toggle#test-harnesses) [LG-4035](https://jira.mongodb.org/browse/LG-4035)
+  - Exports the constant, `LGIDS_TOGGLE`, which stores `data-lgid` values.
+
+### Patch Changes
+
+- Updated dependencies [9402ba0e]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/lib@13.4.0
+  - @lg-tools/test-harnesses@0.1.1
+  - @leafygreen-ui/palette@4.0.10
+
 ## 10.0.20
 
 ### Patch Changes

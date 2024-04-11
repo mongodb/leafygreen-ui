@@ -1,5 +1,6 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
+import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
 import { LGIDS_TEXT_AREA } from '../../constants';
@@ -13,7 +14,7 @@ export const getTestUtils = (
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element = getByLgId(lgId);
+  const element = getByLgId!(lgId);
 
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
@@ -44,14 +45,21 @@ export const getTestUtils = (
    */
   const getErrorMessage = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid="${LGIDS_TEXT_AREA.errorMessage}"]`,
+    `[data-lgid="${LGIDS_FORM_FIELD.errorMessage}"]`,
   );
 
   /**
-   * Returns the disabled attribute on the input.
+   * Returns the aria-disabled attribute on the input.
    */
-  const isInputDisabled = () => {
-    return getInput.disabled;
+  const isInputAriaDisabled = () => {
+    return getInput.getAttribute('aria-disabled') === 'true';
+  };
+
+  /**
+   * Returns the aria-disabled attribute on the input.
+   */
+  const isInputReadOnly = () => {
+    return getInput.readOnly;
   };
 
   /**
@@ -78,7 +86,7 @@ export const getTestUtils = (
     getDescription: () => getDescription,
     getInput: () => getInput,
     getErrorMessage: () => getErrorMessage,
-    isDisabled: () => isInputDisabled(),
+    isDisabled: () => isInputAriaDisabled() && isInputReadOnly(),
     isError: () => isError(),
     getInputValue: () => getInputValue(),
   };

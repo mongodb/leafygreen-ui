@@ -1,5 +1,21 @@
 # @lg-chat/input-bar
 
+## 4.0.2
+
+### Patch Changes
+
+- Updated dependencies [9402ba0e]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [f630c718]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/search-input@3.0.0
+  - @leafygreen-ui/palette@4.0.10
+
 ## 4.0.1
 
 ### Patch Changes

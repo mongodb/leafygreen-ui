@@ -1,5 +1,19 @@
 # @leafygreen-ui/loading-indicator
 
+## 2.0.11
+
+### Patch Changes
+
+- 36166b41: - Horizontally centers loading indicator with description
+  - Deletes duplicate `LoadingIndicators.styles.ts` file
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
 ## 2.0.10
 
 ### Patch Changes
