@@ -52,7 +52,6 @@ build-storybook.log
 scripts/tmp.*.ts
 
 # 
-.npmrc
 .changeset/pre.json
 
 TODO.md
