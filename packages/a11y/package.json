@@ -28,7 +28,8 @@
     "prop-types": "^15.8.1"
   },
   "devDependencies": {
-    "@leafygreen-ui/testing-lib": "^0.4.2"
+    "@leafygreen-ui/testing-lib": "^0.4.2",
+    "@types/prop-types": "^15.7.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y",
   "repository": {
@@ -37,8 +38,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  },
-  "devDependencies": {
-    "@types/prop-types": "^15.7.12"
   }
 }
