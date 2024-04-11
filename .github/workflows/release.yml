@@ -15,7 +15,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6.32.9
+          version: 8.15.6
           
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -65,7 +65,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6.32.9
+          version: 8.15.6
 
       - name: Use Node 18
         uses: actions/setup-node@v3
@@ -110,7 +110,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6.32.9
+          version: 8.15.6
 
       - name: Use Node 18
         uses: actions/setup-node@v3
@@ -154,7 +154,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6.32.9
+          version: 8.15.6
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -190,7 +190,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 6.32.9
+          version: 8.15.6
 
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2
