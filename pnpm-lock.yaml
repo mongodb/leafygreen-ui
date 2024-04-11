@@ -28,6 +28,9 @@ importers:
       '@lg-tools/cli':
         specifier: workspace:*
         version: link:tools/cli
+      '@lg-tools/lint':
+        specifier: workspace:*
+        version: link:tools/lint
       '@lg-tools/storybook-addon':
         specifier: workspace:*
         version: link:tools/storybook-addon
