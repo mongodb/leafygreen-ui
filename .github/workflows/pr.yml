@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
 
       - uses: actions/cache@v3
         name: Check for build cache
@@ -48,6 +52,10 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v3
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
 
       - name: Use Node 18
         uses: actions/setup-node@v3
@@ -80,6 +88,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
 
       - name: Use Node 18
         uses: actions/setup-node@v3
@@ -116,6 +129,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+
       - name: Use Node 18
         uses: actions/setup-node@v3
         with:
@@ -146,6 +164,11 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v3
+
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
 
       - name: Use Node 18
         uses: actions/setup-node@v3

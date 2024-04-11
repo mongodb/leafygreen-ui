@@ -12,6 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+          
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
         run: pnpm run global add node-gyp
@@ -57,6 +62,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+
       - name: Use Node 18
         uses: actions/setup-node@v3
         with:
@@ -97,6 +107,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+
       - name: Use Node 18
         uses: actions/setup-node@v3
         with:
@@ -136,6 +151,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
         run: pnpm global add node-gyp
@@ -166,6 +186,11 @@ jobs:
     if: ${{ needs.release.outputs.published == 'true' }}
     steps:
       - uses: actions/checkout@v3
+
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
 
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2
