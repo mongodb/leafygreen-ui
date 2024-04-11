@@ -12,6 +12,7 @@
     }
   },
   "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../card"

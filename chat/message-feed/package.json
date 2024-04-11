@@ -28,13 +28,16 @@
     "@lg-chat/avatar": "^3.0.1",
     "@lg-chat/message": "^4.0.1",
     "@lg-chat/message-rating": "^2.0.1",
+    "prop-types": "^15.8.1",
     "react-keyed-flatten-children": "^3.0.0"
   },
   "devDependencies": {
+    "@lg-chat/message-feedback": "workspace:^",
     "@leafygreen-ui/typography": "^18.3.0",
     "@lg-chat/chat-disclaimer": "^3.0.1",
     "@lg-chat/message-prompts": "^2.0.1",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12",

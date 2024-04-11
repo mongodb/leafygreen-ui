@@ -31,6 +31,8 @@
     "date-fns": "^2.30.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
+    "prop-types": "^15.8.1",
+    "react-transition-group": "^4.4.5",
     "weekstart": "^2.0.0"
   },
   "peerDependencies": {
@@ -42,6 +44,8 @@
     "@leafygreen-ui/modal": "^16.0.7",
     "@leafygreen-ui/testing-lib": "^0.4.2",
     "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12",
+    "@types/react-transition-group": "^4.4.5",
     "mockdate": "^3.0.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-picker",

@@ -22,7 +22,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/tokens": "^2.5.2"
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "prop-types": "^15.8.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ripple",
   "repository": {
@@ -31,5 +32,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@types/prop-types": "^15.7.12"
   }
 }

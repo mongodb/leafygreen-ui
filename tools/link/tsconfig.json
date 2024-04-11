@@ -11,5 +11,6 @@
   },
   "references": [
     {"path": "../meta"}
-  ]
+  ],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
 }

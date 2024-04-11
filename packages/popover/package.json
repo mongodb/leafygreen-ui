@@ -27,13 +27,15 @@
     "@leafygreen-ui/lib": "^13.3.0",
     "@leafygreen-ui/portal": "^5.1.1",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "react-transition-group": "^4.4.5",
-    "@types/react-transition-group": "^4.4.5"
+    "@types/react-transition-group": "^4.4.5",
+    "prop-types": "^15.8.1",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^4.0.9",
     "@leafygreen-ui/button": "^21.1.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

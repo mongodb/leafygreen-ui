@@ -13,10 +13,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@testing-library/dom": "9.3.1"
-  }, 
+    "@testing-library/dom": "9.3.1",
+    "prop-types": "^15.8.1"
+  },
   "devDependencies": {
-    "@lg-tools/build": "^0.4.1",
+    "@lg-tools/build": "workspace:^",
+    "@types/prop-types": "^15.7.12",
+    "@testing-library/dom": "9.3.1",
     "@lg-tools/test": "^0.4.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",

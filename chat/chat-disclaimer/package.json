@@ -19,12 +19,14 @@
     "@leafygreen-ui/lib": "^13.3.0",
     "@leafygreen-ui/marketing-modal": "^4.2.2",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.3.0"
+    "@leafygreen-ui/typography": "^18.3.0",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.1.0",
     "@leafygreen-ui/modal": "^16.0.7",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
   "repository": {
