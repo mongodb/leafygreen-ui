@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/test-harnesses",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Test harnesses for LeafyGreen repositories",
   "license": "Apache-2.0",
   "main": "dist/index.js",
@@ -18,6 +18,12 @@
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^",
-    "@types/prop-types": "^15.7.12"
+    "@types/prop-types": "^15.7.12",
+    "@testing-library/dom": "9.3.1",
+    "@lg-tools/test": "^0.4.4",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.3"
   }
 }

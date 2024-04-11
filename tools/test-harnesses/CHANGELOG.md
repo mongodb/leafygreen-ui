@@ -1,5 +1,11 @@
 # @lg-tools/test-harnesses
 
+## 0.1.2
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+
 ## 0.1.1
 
 ### Patch Changes

@@ -2,7 +2,7 @@ import { InputType } from '@storybook/csf';
 
 import IntrinsicElements from './IntrinsicElements';
 
-export interface StoryArgType extends InputType {
+export interface StoryArgType extends Omit<InputType, 'control'> {
   /**
    * Identify an arg to determine where the control is defined
    */
@@ -31,7 +31,7 @@ export interface StoryArgType extends InputType {
   defaultValue?: any;
 }
 
-export const storybookArgTypes: Record<string, StoryArgType> = {
+export const storybookArgTypes = {
   baseFontSize: {
     description:
       'The base font size passed to the LeafyGreenProvider that wraps the component',
@@ -70,6 +70,7 @@ export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
   'aria-describedby': { control: 'none' },
   'aria-label': { control: 'none' },
   'aria-labelledby': { control: 'none' },
+  'data-lgid': { control: 'none' },
   className: { control: 'none' },
   id: { control: 'none' },
   onBlur: { control: 'none' },

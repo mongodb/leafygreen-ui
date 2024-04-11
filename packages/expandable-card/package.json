@@ -48,6 +48,6 @@
   "devDependencies": {
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12",
-    "@types/react-transition-group": "^4.4.5"
+    "@types/react-transition-group": "^4.4.10"
   }
 }

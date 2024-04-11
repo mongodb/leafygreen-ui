@@ -12,9 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.6
+          
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: yarn global add node-gyp
+        run: npm install --global node-gyp
 
       - uses: actions/cache@v3
         name: Check for build cache
@@ -25,7 +30,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
@@ -33,20 +38,20 @@ jobs:
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
           node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          cache: pnpm
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn build
+        run: pnpm build
 
       - name: Generate docs
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn turbo run docs
+        run: pnpm run turbo run docs
 
   chromatic:
     name: Establish Chromatic baseline
@@ -57,15 +62,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.6
+
       - name: Use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          cache: pnpm
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -76,7 +86,7 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -97,15 +107,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.6
+
       - name: Use Node 18
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          cache: pnpm
+          cache-dependency-path: 'pnpm-lock.json'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -116,14 +131,14 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Version packages
         id: changesets
         uses: changesets/action@v1
         with:
-          version: yarn changeset version
-          publish: yarn run publish
+          version: pnpm run changeset version
+          publish: pnpm run publish
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
@@ -136,12 +151,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.6
+
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: yarn global add node-gyp
+        run: npm install --global node-gyp
 
       - name: Install
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         name: Restore build cache
@@ -152,11 +172,11 @@ jobs:
             !**/node_modules
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Notify Slack channel of new releases
         id: slackbot
-        run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
+        run: pnpm run slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
   dispatch-to-website:
@@ -166,6 +186,11 @@ jobs:
     if: ${{ needs.release.outputs.published == 'true' }}
     steps:
       - uses: actions/checkout@v3
+
+      - name: pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.6
 
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2

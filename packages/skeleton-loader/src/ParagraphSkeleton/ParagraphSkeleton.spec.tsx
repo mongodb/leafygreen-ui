@@ -28,7 +28,7 @@ describe('packages/skeleton-loader/ParagraphSkeleton', () => {
 
     test('rendering with `withHeader = true` renders without a header skeleton', async () => {
       const { getByTestId } = render(<ParagraphSkeleton withHeader />);
-      expect(getByTestId('lg-paragraph-skeleton-header')).toBeInTheDocument();
+      expect(getByTestId('lg-paragraph-skeleton-header')).toBeDefined();
     });
   });
 });

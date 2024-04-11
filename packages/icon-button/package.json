@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/jest-axe": "^3.5.9",
     "@types/prop-types": "^15.7.12"
   }
 }

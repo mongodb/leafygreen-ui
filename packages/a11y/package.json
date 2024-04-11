@@ -27,6 +27,9 @@
     "@leafygreen-ui/lib": "^13.3.0",
     "prop-types": "^15.8.1"
   },
+  "devDependencies": {
+    "@leafygreen-ui/testing-lib": "^0.4.2"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/a11y",
   "repository": {
     "type": "git",

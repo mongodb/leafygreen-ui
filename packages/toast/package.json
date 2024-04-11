@@ -45,7 +45,7 @@
     "@leafygreen-ui/testing-lib": "^0.4.2",
     "@lg-tools/storybook-utils": "^0.1.0",
     "@types/prop-types": "^15.7.12",
-    "@types/react-transition-group": "^4.4.5",
+    "@types/react-transition-group": "^4.4.10",
     "react-test-renderer": "^18.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",

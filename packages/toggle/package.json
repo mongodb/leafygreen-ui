@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toggle",
-  "version": "10.1.0",
+  "version": "10.1.1",
   "description": "LeafyGreen UI Kit Toggle",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -28,7 +28,7 @@
     "@leafygreen-ui/lib": "^13.4.0",
     "@leafygreen-ui/palette": "^4.0.10",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@lg-tools/test-harnesses": "^0.1.1",
+    "@lg-tools/test-harnesses": "^0.1.2",
     "prop-types": "^15.8.1"
   },
   "peerDependencies": {

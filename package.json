@@ -6,7 +6,7 @@
   "private": true,
   "engines": {
     "node": ">= 18.0.0",
-    "npm": ">= 8.19.4"
+    "pnpm": "8.15.6"
   },
   "scripts": {
     "init": "pnpm install && pnpm build",
@@ -15,6 +15,7 @@
     "prebuild": "pnpm build:cli",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
+    "build:build-tools": "turbo run build tsc --filter=@lg-tools/build",
     "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
@@ -23,8 +24,8 @@
     "fix": "lg lint --fix",
     "link": "lg link",
     "lint": "lg lint",
-    "prepublishOnly": "yarn build && turbo run docs",
-    "publish": "yarn changeset publish --public",
+    "prepublishOnly": "pnpm run build && turbo run docs",
+    "publish": "pnpm changeset publish --public",
     "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates",
     "test": "lg test",
@@ -40,11 +41,17 @@
     "@lg-tools/meta": "workspace:^",
     "@lg-tools/storybook-addon": "workspace:^",
     "@lg-tools/test": "workspace:^",
+    "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0",
+    "@testing-library/react-hooks": ">=3.7.0",
+    "@testing-library/user-event": "13.5.0",
     "@types/cross-spawn": "6.0.2",
     "@types/fs-extra": "11.0.1",
     "@types/lodash": "^4.14.170",
     "@types/node": "^20.12.5",
+    "@types/jest": "^29.5.12",
+    "@types/prop-types": "^15.7.12",
     "@types/react": "18.2.23",
+    "@types/react-transition-group": "^4.4.10",
     "@types/react-dom": "18.2.8",
     "chromatic": "^11.0.0",
     "cross-spawn": "7.0.3",
@@ -62,13 +69,9 @@
   },
   "resolutions": {
     "caniuse-lite": "^1.0.30001585",
-    "jackspeak": "2.1.1"
+    "jackspeak": "2.1.1",
+    "@types/react": "16.9.56"
   },
-  "workspaces": [
-    "chat/*",
-    "packages/*",
-    "tools/*"
-  ],
   "keywords": [
     "mongodb",
     "ui",

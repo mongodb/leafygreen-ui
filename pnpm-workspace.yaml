@@ -1,4 +1,4 @@
-'packages':
+packages:
   # all packages in direct subdirectories of chat/, packages/ & tools/
   - 'chat/*'
   - 'packages/*'

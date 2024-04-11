@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@leafygreen-ui/*": ["../*/src"]
-    }
+    }, 
   },
   "include": [
     "src/**/*"

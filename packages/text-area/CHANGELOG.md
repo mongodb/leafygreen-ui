@@ -1,5 +1,13 @@
 # @leafygreen-ui/text-area
 
+## 8.2.1
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+- Updated dependencies [8adadc89]
+  - @lg-tools/test-harnesses@0.1.2
+
 ## 8.2.0
 
 ### Minor Changes

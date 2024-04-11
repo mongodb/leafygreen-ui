@@ -27,5 +27,8 @@
     "@lg-tools/validate": "workspace:^",
     "commander": "^11.0.0",
     "read-pkg-up": "7.0.1"
+  }, 
+  "devDependencies": {
+    "@types/node": "^20.12.3"
   }
 }
