@@ -21,11 +21,7 @@ describe('tools/update', () => {
   test('Runs with no args', () => {
     update([], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
-<<<<<<< HEAD
-      'pnpm',
-=======
       packageMgr,
->>>>>>> caf2029cc4e428fa2adf5879a43d00643c1ed3c5
       expect.arrayContaining(['upgrade', '--scope', '@leafygreen-ui']),
       baseEnv,
     );
