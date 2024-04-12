@@ -22,5 +22,10 @@
     "chalk": "4.1.2",
     "lodash": "4.17.21",
     "node-fetch": "2.6.11"
+  }, 
+  "devDependencies": {
+    "@lg-tools/test": "^0.4.4", 
+    "@types/jest": "^29.5.12", 
+    "@types/node-fetch": "^2.6.11"
   }
 }

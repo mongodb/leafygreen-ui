@@ -28,9 +28,15 @@ export const lint = (options: LintCommandOptions) => {
       if (results.every(isTrue)) {
         process.exit(0);
       }
+
+      const total = results.length;
+      const successes = results.filter(isTrue).length;
+      verbose && console.error(`${successes} of ${total} linters passing`);
+
       process.exit(1);
     })
     .catch(() => {
+      console.error(`Error resolving linter(s)`);
       process.exit(1);
     });
 };

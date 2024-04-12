@@ -41,11 +41,13 @@
     "highlight.js": "~11.5.0",
     "highlightjs-graphql": "^1.0.1",
     "lodash": "^4.17.21",
-    "polished": "^4.2.2"
+    "polished": "^4.2.2",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@leafygreen-ui/testing-lib": "^0.4.2",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

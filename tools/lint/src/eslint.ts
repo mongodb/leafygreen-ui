@@ -27,8 +27,13 @@ export const eslint: LintFn = ({ fix, verbose }) => {
       },
     )
       .on('exit', code => {
+        verbose && console.log(`ESLint ${code === 0 ? 'passed' : 'failed'}`);
         resolve(!code);
       })
-      .on('error', reject);
+      .on('error', err => {
+        console.error(chalk.red(`Error running ESlint`));
+        verbose && console.error(err);
+        reject();
+      });
   });
 };

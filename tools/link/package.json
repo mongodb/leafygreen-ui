@@ -20,5 +20,9 @@
     "chalk": "4.1.2",
     "cross-spawn": "7.0.3",
     "fs-extra": "11.1.1"
+  }, 
+  "devDependencies": {
+    "@lg-tools/test": "^0.4.4",
+    "@types/jest": "^29.5.12"
   }
 }

@@ -31,11 +31,13 @@
     "@leafygreen-ui/tokens": "^2.5.2",
     "@leafygreen-ui/typography": "^18.3.0",
     "lodash": "^4.17.21",
-    "polished": "^4.2.2"
+    "polished": "^4.2.2",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.1.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

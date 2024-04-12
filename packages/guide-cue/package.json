@@ -30,9 +30,6 @@
     "access": "public"
   },
   "dependencies": {
-    "focus-trap": "6.9.4",
-    "focus-trap-react": "9.0.2",
-    "polished": "^4.2.2",
     "@leafygreen-ui/a11y": "^1.4.13",
     "@leafygreen-ui/button": "^21.1.0",
     "@leafygreen-ui/emotion": "^4.0.8",
@@ -43,11 +40,16 @@
     "@leafygreen-ui/palette": "^4.0.9",
     "@leafygreen-ui/popover": "^11.3.1",
     "@leafygreen-ui/tooltip": "^11.0.3",
-    "@leafygreen-ui/typography": "^18.3.0"
+    "@leafygreen-ui/typography": "^18.3.0",
+    "focus-trap": "6.9.4",
+    "focus-trap-react": "9.0.2",
+    "polished": "^4.2.2",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.0",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

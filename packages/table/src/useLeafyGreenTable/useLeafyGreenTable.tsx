@@ -1,7 +1,6 @@
 import React from 'react';
 import { useVirtual } from 'react-virtual';
-import { useReactTable } from '@tanstack/react-table';
-import {
+import { useReactTable, 
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,

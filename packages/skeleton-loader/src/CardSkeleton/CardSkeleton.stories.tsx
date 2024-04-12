@@ -1,4 +1,5 @@
 import React from 'react';
+import { StoryFn } from '@storybook/react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { CardSkeleton } from '..';
@@ -14,7 +15,7 @@ export default {
       combineArgs: {
         darkMode: [false, true],
       },
-      decorator: Instance => (
+      decorator: (Instance: StoryFn) => (
         <div style={{ width: 500 }}>
           <Instance />
         </div>
