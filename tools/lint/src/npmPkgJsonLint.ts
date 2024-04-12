@@ -21,9 +21,16 @@ export const npmPkgJsonLint: LintFn = ({ fix, verbose }) => {
       stdio: 'inherit',
     })
       .on('exit', code => {
+        verbose &&
+          console.log(`npmPkgJsonLint ${code === 0 ? 'passed' : 'failed'}`);
+
         resolve(!code);
       })
-      .on('error', reject);
+      .on('error', err => {
+        console.error(chalk.red(`Error running npmPkgJsonLint`));
+        verbose && console.error(err);
+        reject(err);
+      });
 
     /* TODO: use the JS API */
   });
