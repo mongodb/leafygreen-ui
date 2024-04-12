@@ -1,8 +1,11 @@
+import { getPackageManager } from '@lg-tools/meta';
 import child_process, { ChildProcess } from 'child_process';
 
 import { update } from '.';
 const spawnSpy = jest.spyOn(child_process, 'spawn');
 spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
+
+const packageMgr = getPackageManager('.');
 
 describe('tools/update', () => {
   const defaultOptions = {
@@ -18,7 +21,11 @@ describe('tools/update', () => {
   test('Runs with no args', () => {
     update([], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
+<<<<<<< HEAD
       'pnpm',
+=======
+      packageMgr,
+>>>>>>> caf2029cc4e428fa2adf5879a43d00643c1ed3c5
       expect.arrayContaining(['upgrade', '--scope', '@leafygreen-ui']),
       baseEnv,
     );
@@ -27,7 +34,7 @@ describe('tools/update', () => {
   test('Runs with `--latest` flag', () => {
     update([], { ...defaultOptions, latest: true });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'pnpm',
+      packageMgr,
       expect.arrayContaining([
         'upgrade',
         '--scope',
@@ -41,7 +48,7 @@ describe('tools/update', () => {
   test('Runs with packages list', () => {
     update(['lib', 'tokens'], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
-      'pnpm',
+      packageMgr,
       expect.arrayContaining([
         'upgrade',
         'lib',
