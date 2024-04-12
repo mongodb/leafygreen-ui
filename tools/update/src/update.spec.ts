@@ -18,7 +18,7 @@ describe('tools/update', () => {
   test('Runs with no args', () => {
     update([], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
-      'yarn',
+      'pnpm',
       expect.arrayContaining(['upgrade', '--scope', '@leafygreen-ui']),
       baseEnv,
     );
@@ -27,7 +27,7 @@ describe('tools/update', () => {
   test('Runs with `--latest` flag', () => {
     update([], { ...defaultOptions, latest: true });
     expect(spawnSpy).toHaveBeenCalledWith(
-      'yarn',
+      'pnpm',
       expect.arrayContaining([
         'upgrade',
         '--scope',
@@ -41,7 +41,7 @@ describe('tools/update', () => {
   test('Runs with packages list', () => {
     update(['lib', 'tokens'], defaultOptions);
     expect(spawnSpy).toHaveBeenCalledWith(
-      'yarn',
+      'pnpm',
       expect.arrayContaining([
         'upgrade',
         'lib',
