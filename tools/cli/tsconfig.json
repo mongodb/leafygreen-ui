@@ -10,7 +10,7 @@
       "@lg-tools/*": ["../*/src"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*"],
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
