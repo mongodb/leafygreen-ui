@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/segmented-control",
-  "version": "8.2.11",
+  "version": "8.2.12",
   "description": "leafyGreen UI Kit Segmented Control",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -29,13 +29,13 @@
     "@leafygreen-ui/lib": "^13.3.0",
     "@leafygreen-ui/palette": "^4.0.9",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.3.0",
+    "@leafygreen-ui/typography": "^19.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.1.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@leafygreen-ui/button": "^21.2.0",
+    "@lg-tools/storybook-utils": "^0.1.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

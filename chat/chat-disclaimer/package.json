@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-disclaimer",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "LeafyGreen UI Kit Chat Disclaimer",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -17,14 +17,14 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/marketing-modal": "^4.2.2",
+    "@leafygreen-ui/marketing-modal": "^4.2.3",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.3.0"
+    "@leafygreen-ui/typography": "^19.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.1.0",
+    "@leafygreen-ui/button": "^21.2.0",
     "@leafygreen-ui/modal": "^16.0.7",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "^0.1.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
   "repository": {
