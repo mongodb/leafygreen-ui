@@ -1,6 +1,6 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
 
 import { CardSkeleton } from '..';
 

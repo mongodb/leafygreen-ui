@@ -6,14 +6,14 @@ import {
   StoryType
 } from '@lg-tools/storybook-utils';
 
-import {
-  SegmentedControl,
-  type SegmentedControlProps,
-} from '.';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Size } from './SegmentedControl/SegmentedControl.types';
 import { TestChildren } from './SegmentedControl.testutils';
+import {
+  SegmentedControl,
+  type SegmentedControlProps,
+} from '.';
 
 interface LiveExampleProps {
   childrenOptions: keyof typeof TestChildren;

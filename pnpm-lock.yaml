@@ -150,7 +150,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -165,7 +165,7 @@ importers:
         version: link:../../packages/lib
       '@leafygreen-ui/marketing-modal':
         specifier: ^4.2.2
-        version: link:../../packages/marketing-modal
+        version: 4.2.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
@@ -178,13 +178,13 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../../packages/button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/modal':
         specifier: ^16.0.7
         version: link:../../packages/modal
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -214,7 +214,7 @@ importers:
         version: link:../leafygreen-chat-provider
       '@lg-chat/title-bar':
         specifier: ^2.0.1
-        version: link:../title-bar
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(react@18.2.0)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -224,22 +224,22 @@ importers:
     devDependencies:
       '@lg-chat/input-bar':
         specifier: ^4.0.1
-        version: link:../input-bar
+        version: 4.0.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message':
         specifier: ^4.0.1
-        version: link:../message
+        version: 4.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-feed':
         specifier: ^3.0.1
         version: link:../message-feed
       '@lg-chat/message-feedback':
         specifier: ^2.0.1
-        version: link:../message-feedback
+        version: 2.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-prompts':
         specifier: ^2.0.1
-        version: link:../message-prompts
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -275,7 +275,7 @@ importers:
         version: link:../chat-window
       '@lg-chat/title-bar':
         specifier: ^2.0.1
-        version: link:../title-bar
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(react@18.2.0)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -288,22 +288,22 @@ importers:
         version: link:../avatar
       '@lg-chat/input-bar':
         specifier: ^4.0.1
-        version: link:../input-bar
+        version: 4.0.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message':
         specifier: ^4.0.1
-        version: link:../message
+        version: 4.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-feed':
         specifier: ^3.0.1
         version: link:../message-feed
       '@lg-chat/message-feedback':
         specifier: ^2.0.1
-        version: link:../message-feedback
+        version: 2.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-prompts':
         specifier: ^2.0.1
-        version: link:../message-prompts
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -318,7 +318,7 @@ importers:
         version: link:../../packages/badge
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../../packages/button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../../packages/emotion
@@ -330,7 +330,7 @@ importers:
         version: link:../../packages/icon
       '@leafygreen-ui/input-option':
         specifier: ^1.1.2
-        version: link:../../packages/input-option
+        version: 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../../packages/leafygreen-provider
@@ -348,7 +348,7 @@ importers:
         version: link:../../packages/popover
       '@leafygreen-ui/search-input':
         specifier: ^3.0.0
-        version: link:../../packages/search-input
+        version: 3.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../../packages/tokens
@@ -373,7 +373,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -420,7 +420,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -429,7 +429,7 @@ importers:
     dependencies:
       '@leafygreen-ui/banner':
         specifier: ^8.0.0
-        version: link:../../packages/banner
+        version: 8.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../../packages/emotion
@@ -456,17 +456,17 @@ importers:
         version: link:../leafygreen-chat-provider
       '@lg-chat/lg-markdown':
         specifier: ^2.0.1
-        version: link:../lg-markdown
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
       '@lg-chat/avatar':
         specifier: ^3.0.1
         version: link:../avatar
       '@lg-chat/message-feedback':
         specifier: ^2.0.1
-        version: link:../message-feedback
+        version: 2.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
 
   chat/message-feed:
     dependencies:
@@ -493,10 +493,10 @@ importers:
         version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: ^4.0.1
-        version: link:../message
+        version: 4.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-rating':
         specifier: ^2.0.1
-        version: link:../message-rating
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -509,16 +509,16 @@ importers:
         version: link:../../packages/typography
       '@lg-chat/chat-disclaimer':
         specifier: ^3.0.1
-        version: link:../chat-disclaimer
+        version: 3.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-chat/message-feedback':
         specifier: workspace:^
         version: link:../message-feedback
       '@lg-chat/message-prompts':
         specifier: ^2.0.1
-        version: link:../message-prompts
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -527,7 +527,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../../packages/button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../../packages/emotion
@@ -567,10 +567,10 @@ importers:
     devDependencies:
       '@lg-chat/message-rating':
         specifier: ^2.0.1
-        version: link:../message-rating
+        version: 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -601,7 +601,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -638,7 +638,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -681,7 +681,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -731,7 +731,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -768,7 +768,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -781,7 +781,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -824,10 +824,10 @@ importers:
         version: link:../icon
       '@leafygreen-ui/loading-indicator':
         specifier: ^2.0.10
-        version: link:../loading-indicator
+        version: 2.0.12(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -867,7 +867,7 @@ importers:
         version: link:../code
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -901,7 +901,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -944,7 +944,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -981,7 +981,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -993,7 +993,7 @@ importers:
         version: link:../a11y
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1017,13 +1017,13 @@ importers:
         version: link:../palette
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: link:../select
+        version: 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@types/facepaint':
         specifier: ^1.2.1
         version: 1.2.5
@@ -1057,7 +1057,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1066,7 +1066,7 @@ importers:
     dependencies:
       '@leafygreen-ui/checkbox':
         specifier: ^13.0.0
-        version: link:../checkbox
+        version: 13.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/chip':
         specifier: ^1.0.2
         version: link:../chip
@@ -1084,7 +1084,7 @@ importers:
         version: link:../icon-button
       '@leafygreen-ui/input-option':
         specifier: ^1.1.2
-        version: link:../input-option
+        version: 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
@@ -1118,13 +1118,13 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/testing-lib':
         specifier: ^0.4.2
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1133,7 +1133,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1154,7 +1154,7 @@ importers:
         version: link:../palette
       '@leafygreen-ui/text-input':
         specifier: ^13.0.0
-        version: link:../text-input
+        version: 13.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
@@ -1170,7 +1170,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1182,7 +1182,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1206,7 +1206,7 @@ importers:
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
@@ -1225,7 +1225,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1243,7 +1243,7 @@ importers:
         version: link:../emotion
       '@leafygreen-ui/form-field':
         specifier: ^1.1.0
-        version: link:../form-field
+        version: 1.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/hooks':
         specifier: ^8.1.3
         version: link:../hooks
@@ -1267,7 +1267,7 @@ importers:
         version: link:../popover
       '@leafygreen-ui/select':
         specifier: ^11.3.0
-        version: link:../select
+        version: 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
@@ -1298,7 +1298,7 @@ importers:
         version: 29.7.0
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/modal':
         specifier: ^16.0.7
         version: link:../modal
@@ -1307,7 +1307,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1372,7 +1372,7 @@ importers:
         version: 8.0.2
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1381,7 +1381,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1406,7 +1406,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1431,7 +1431,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1477,7 +1477,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1514,22 +1514,22 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/icon-button':
         specifier: ^15.0.21
         version: link:../icon-button
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
 
   packages/form-footer:
     dependencies:
       '@leafygreen-ui/banner':
         specifier: ^8.0.0
-        version: link:../banner
+        version: 8.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1554,7 +1554,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1566,7 +1566,7 @@ importers:
         version: link:../a11y
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1593,7 +1593,7 @@ importers:
         version: link:../popover
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
@@ -1615,7 +1615,7 @@ importers:
         version: link:../tokens
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1640,7 +1640,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1665,7 +1665,7 @@ importers:
         version: link:../palette
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@svgr/core':
         specifier: ^5.3.1
         version: 5.5.0
@@ -1717,7 +1717,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/jest-axe':
         specifier: ^3.5.9
         version: 3.5.9
@@ -1747,14 +1747,14 @@ importers:
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1775,7 +1775,7 @@ importers:
         version: link:../palette
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -1785,7 +1785,7 @@ importers:
         version: link:../typography
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1825,7 +1825,7 @@ importers:
         version: link:../icon
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1847,7 +1847,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1897,7 +1897,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -1916,7 +1916,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/node':
         specifier: ^20.12.3
         version: 20.12.5
@@ -1928,7 +1928,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -1956,7 +1956,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2005,10 +2005,10 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2066,22 +2066,22 @@ importers:
         version: 8.0.2
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/code':
         specifier: ^14.3.2
         version: link:../code
       '@leafygreen-ui/copyable':
         specifier: ^8.0.24
-        version: link:../copyable
+        version: 8.0.25(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: link:../select
+        version: 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2096,7 +2096,7 @@ importers:
         version: link:../a11y
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -2120,13 +2120,13 @@ importers:
         version: link:../popover
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: link:../select
+        version: 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
@@ -2139,7 +2139,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2166,7 +2166,7 @@ importers:
         version: link:../lib
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: link:../select
+        version: 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/tokens':
         specifier: ^2.5.2
         version: link:../tokens
@@ -2182,7 +2182,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2197,7 +2197,7 @@ importers:
         version: link:../lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2243,7 +2243,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2273,7 +2273,7 @@ importers:
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -2283,7 +2283,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2295,7 +2295,7 @@ importers:
         version: 11.11.5(@emotion/react@11.11.1)(@types/react@18.2.23)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       next:
         specifier: ^13.1.6
         version: 13.5.6(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
@@ -2332,13 +2332,13 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/palette':
         specifier: ^4.0.9
         version: link:../palette
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2363,7 +2363,7 @@ importers:
         version: link:../emotion
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2394,10 +2394,10 @@ importers:
     devDependencies:
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2431,7 +2431,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2468,7 +2468,7 @@ importers:
         version: link:../icon-button
       '@leafygreen-ui/input-option':
         specifier: ^1.1.2
-        version: link:../input-option
+        version: 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
@@ -2502,7 +2502,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@testing-library/react':
         specifier: 14.0.0
         version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -2554,10 +2554,10 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2566,7 +2566,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -2578,7 +2578,7 @@ importers:
         version: link:../icon
       '@leafygreen-ui/input-option':
         specifier: ^1.1.2
-        version: link:../input-option
+        version: 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider':
         specifier: ^3.1.12
         version: link:../leafygreen-provider
@@ -2621,7 +2621,7 @@ importers:
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2660,7 +2660,7 @@ importers:
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
@@ -2676,10 +2676,10 @@ importers:
     devDependencies:
       '@leafygreen-ui/select':
         specifier: ^11.2.3
-        version: link:../select
+        version: 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2719,7 +2719,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/jest-axe':
         specifier: ^3.5.9
         version: 3.5.9
@@ -2731,7 +2731,7 @@ importers:
     dependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -2768,7 +2768,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2795,7 +2795,7 @@ importers:
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: ^11.0.3
-        version: link:../tooltip
+        version: 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/typography':
         specifier: ^18.3.0
         version: link:../typography
@@ -2805,7 +2805,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2814,7 +2814,7 @@ importers:
     dependencies:
       '@leafygreen-ui/checkbox':
         specifier: ^13.0.0
-        version: link:../checkbox
+        version: 13.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../emotion
@@ -2875,19 +2875,19 @@ importers:
         version: link:../badge
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/code':
         specifier: ^14.3.2
         version: link:../code
       '@leafygreen-ui/pagination':
         specifier: ^1.0.22
-        version: link:../pagination
+        version: 1.0.23(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
       '@leafygreen-ui/testing-lib':
         specifier: ^0.4.2
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2933,7 +2933,7 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/card':
         specifier: ^10.0.7
         version: link:../card
@@ -2945,7 +2945,7 @@ importers:
         version: link:../icon-button
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -2976,7 +2976,7 @@ importers:
         version: link:../emotion
       '@leafygreen-ui/form-field':
         specifier: ^1.0.1
-        version: link:../form-field
+        version: 1.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/hooks':
         specifier: ^8.1.3
         version: link:../hooks
@@ -3007,7 +3007,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3019,7 +3019,7 @@ importers:
         version: link:../emotion
       '@leafygreen-ui/form-field':
         specifier: ^1.1.0
-        version: link:../form-field
+        version: 1.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/hooks':
         specifier: ^8.1.3
         version: link:../hooks
@@ -3044,7 +3044,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3099,13 +3099,13 @@ importers:
         version: 8.0.2
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/testing-lib':
         specifier: ^0.4.2
         version: link:../testing-lib
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3148,7 +3148,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3167,7 +3167,7 @@ importers:
         version: link:../emotion
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3216,10 +3216,10 @@ importers:
     devDependencies:
       '@leafygreen-ui/button':
         specifier: ^21.1.0
-        version: link:../button
+        version: 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3253,7 +3253,7 @@ importers:
     devDependencies:
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../../tools/storybook-utils
+        version: 0.1.1
       '@types/prop-types':
         specifier: ^15.7.12
         version: 15.7.12
@@ -3483,6 +3483,9 @@ importers:
       '@emotion/eslint-plugin':
         specifier: 11.11.0
         version: 11.11.0(eslint@8.43.0)
+      '@eslint/js':
+        specifier: ^9.0.0
+        version: 9.0.0
       '@lg-tools/build':
         specifier: ^0.5.0
         version: link:../build
@@ -3617,7 +3620,7 @@ importers:
         version: link:../storybook-decorators
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../storybook-utils
+        version: 0.1.1
       '@mdx-js/react':
         specifier: 2.3.0
         version: 2.3.0(react@18.2.0)
@@ -3710,7 +3713,7 @@ importers:
     dependencies:
       '@leafygreen-ui/banner':
         specifier: ^8.0.0
-        version: link:../../packages/banner
+        version: 8.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
       '@leafygreen-ui/emotion':
         specifier: ^4.0.8
         version: link:../../packages/emotion
@@ -3728,7 +3731,7 @@ importers:
         version: link:../build
       '@lg-tools/storybook-utils':
         specifier: ^0.1.0
-        version: link:../storybook-utils
+        version: 0.1.1
       '@storybook/react':
         specifier: ^7.6.17
         version: 7.6.17(react-dom@18.2.0)(react@18.2.0)(typescript@4.9.5)
@@ -5536,7 +5539,6 @@ packages:
       '@emotion/serialize': 1.1.2
       '@emotion/sheet': 1.2.2
       '@emotion/utils': 1.2.1
-    dev: false
 
   /@emotion/eslint-plugin@11.11.0(eslint@8.43.0):
     resolution: {integrity: sha512-jCOYqU/0Sqm+g+6D7QuIlG99q8YAF0T7BP98zQF/MPZKfbcm46z5mizXn0YlhZ9AYZfNtZ1DeODXdncYxZzR4Q==}
@@ -5611,7 +5613,6 @@ packages:
       html-tokenize: 2.0.1
       multipipe: 1.0.2
       through: 2.3.8
-    dev: false
 
   /@emotion/sheet@1.2.2:
     resolution: {integrity: sha512-0QBtGvaqtWi+nx6doRwDdBIzhNdZrXUppvTM4dtZZWEGTXL/XE/yJxLMGlDT1Gt+UHH5IX1n+jkXyytE/av7OA==}
@@ -5864,6 +5865,11 @@ packages:
   /@eslint/js@8.43.0:
     resolution: {integrity: sha512-s2UHCoiXfxMvmfzqoN+vrQ84ahUSYde9qNO1MdxmoEhyHWsfmwOpFlwYV+ePJEVc7gFnATGUi376WowX1N7tFg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: false
+
+  /@eslint/js@9.0.0:
+    resolution: {integrity: sha512-RThY/MnKrhubF6+s1JflwUjPEsnCEmYCWwqa/aRISKWNXGZ9epUwft4bUMM35SdKF9xvBrLydAM1RDHd1Z//ZQ==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     dev: false
 
   /@faker-js/faker@8.0.2:
@@ -6200,6 +6206,683 @@ packages:
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
     dev: false
+
+  /@leafygreen-ui/a11y@1.4.13(@babel/core@7.24.3)(react@18.2.0):
+    resolution: {integrity: sha512-ufiO4B40jyqLORhD0mQIpd4aBGpeCnM0dp9BrYggp0vJKhJV5sNSOJb5ytmSPGYXut5yhUZe4smYN5b94YWygQ==}
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/badge@8.1.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-q8Ec8MmKksAxTyrx/6aY5nshbt57MrNCtcUTn67Z0oRcqYH0GxhA43mN/0J1oH8LvE65kap72KLhAhbavXqaRQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/banner@8.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-zKrSG334UW/9nGt4P4QKNM8rnOzsG62cLxfysT4UrrOS8doRNvIlKleeQFSkNd4FmljiqdRI0DjDKO0uGhx8SA==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/box@3.1.9:
+    resolution: {integrity: sha512-hY05VQKDVhqqBH/Dz1kxonjQmqrMR9URa3Dw3YgdLbVUd1hMQkoWbplamiE4S4vq2+81SQBgNw53i+/Vd0Cl0g==}
+
+  /@leafygreen-ui/button@21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-vF32fZBvRMj+NtWBFeEE8FVMa/Ol4kCFloUWtDNCKxt5UwNiLsQU79FTG80gNN4xYSzyUGmqYaubPxm28YvjKQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/box': 3.1.9
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/ripple': 1.1.13
+      '@leafygreen-ui/tokens': 2.5.2
+      '@lg-tools/test-harnesses': 0.1.2
+      polished: 4.2.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/checkbox@13.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Cu+Jqunde+yTYqdUvRe/o2gBZE/WI8nyhvS+Ozy2PB1KMN95PCQ/oCU1oMI3n5/gQTbFEXi4ia54eln0TRgh7w==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-tools/test-harnesses': 0.1.2
+      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+    dev: false
+
+  /@leafygreen-ui/code@14.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-KNv0FiJXnnVmta5mPj1mHJz122waahGuTx42DKhS1FW/h97VkYDz4408fG9igFTqf+7rIylCGfX7aj0ewIKqxQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/button': 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/select': 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/tooltip': 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@types/facepaint': 1.2.5
+      '@types/highlight.js': 10.1.0
+      clipboard: 2.0.11
+      facepaint: 1.2.1
+      highlight.js: 11.5.1
+      highlightjs-graphql: 1.0.2
+      lodash: 4.17.21
+      polished: 4.2.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/copyable@8.0.25(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-+k0vOMSsYAtvNOP80DE+PxgVWInzJgrC7hu9t3qiRaVA0xn+Ck4VycxchtYHCgQvibSETv880wa2u3GFBns/MQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/button': 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/tooltip': 11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      clipboard: 2.0.11
+      polished: 4.2.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+    dev: true
+
+  /@leafygreen-ui/emotion@4.0.8(@babel/core@7.24.3):
+    resolution: {integrity: sha512-gzEC8v9Ds8/wWuIYQ1yYbnERyIVt9X5tkG3AZIXqany+sKbWla9CfV+6vqEk1tdaIit1d0C2FS3rJH3BkA3VJg==}
+    dependencies:
+      '@emotion/css': 11.9.0(@babel/core@7.24.3)
+      '@emotion/server': 11.11.0(@emotion/css@11.9.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+
+  /@leafygreen-ui/form-field@1.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-E9M34lHll3oKlu5EPKB3WsmvmB3qWVl5O4H8/ukjWJd98FRk5GVPEOyWkwUp3Hkm2KGMZJNfSC10c+4Cbvv7CQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/hooks@8.1.3(react@18.2.0):
+    resolution: {integrity: sha512-UAHii7T+g8h8sSzogqUgIid64bbKPHGihAAoBpNzbNsjqFllYVC0FpF59jQeL6tCYd32C2KatWOvhYheBf1hsA==}
+    dependencies:
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - react
+
+  /@leafygreen-ui/icon-button@15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-zdgsgVDlbDO8eb7e12vHfF2UEr8XlinhwjgwFniKZngE/I8HnrA9zNNHlGiKg1icXHzzBuE9Xi6UR7DqvQaaFg==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/box': 3.1.9
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/icon@12.1.0(@babel/core@7.24.3):
+    resolution: {integrity: sha512-P1P5k/esKQe64tkZkEzDU6/SVPfpGqhd4BoW5Pm5G+k3wyyxLivSSHm3JycVlIiOgXjIjz72W/ZxvsYiDRjgLQ==}
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+
+  /@leafygreen-ui/input-option@1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-f6TWJg0PTxfNN3eQo2fI7h7/hOOus+K5i/axhJGQqJItV26ESadNW8xRY/T3Glxb2lpH7MHLRsG5err0BFMTnw==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/polymorphic': 1.3.7
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@leafygreen-ui/lib@13.4.0(react@18.2.0):
+    resolution: {integrity: sha512-Ju+tHF6z3ttU9UD6EXmTtIExgj/ZXnjm48CRQ6jk65LnYuX19i3I35nkCZwb8n28WlxDH7UDoEumx/hvM05Z4w==}
+    peerDependencies:
+      react: ^18.2.0
+    dependencies:
+      '@storybook/csf': 0.1.2
+      lodash: 4.17.21
+      prop-types: 15.8.1
+      react: 18.2.0
+
+  /@leafygreen-ui/loading-indicator@2.0.12(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-ZH2aOoiT4eF790PGe7yI0YLFU7Ts1vTZfc8LBPywbM5RJFJJZ243oFvPKKNAJ+aiSgYQn4Znj1Rt9B7Xj6GMFQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      react-lottie-player: 1.5.6(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+    dev: true
+
+  /@leafygreen-ui/logo@9.1.0(@babel/core@7.24.3)(react@18.2.0):
+    resolution: {integrity: sha512-cA0mrG9/55hikqz4PMDfo0UMLk7ovgx0UbpceQ0RHXbgLW0aDeI8tk39ou4vQ5/CuIlnLdqfymfoaaP3Dw+RSA==}
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+    dev: false
+
+  /@leafygreen-ui/marketing-modal@4.2.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-3rQh0SM1FYpFo/CQubCWZYcgvd0OSCWMAFxMT9ax+xoKZQPwxlPdQ8INWw0B99SF9mVMhP74cmftFQ+88hOcPw==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/button': 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/modal': 16.0.7(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/modal@16.0.7(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-z78wKOkNOvNvTJIaUvLGDlH2lU3EtbOWwtG7d9BOUnxyZ1lktCxk0gDHLm8/ITUPGEK42cOfC9qTA0FhviNrBg==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/portal': 5.1.1(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      focus-trap: 6.9.4
+      focus-trap-react: 9.0.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+      polished: 4.2.2
+      prop-types: 15.8.1
+      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/pagination@1.0.23(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-v2RlD0iEZOLhSEanZBnDjaKBbSRLx7pbjykKfzSv9ET1y1AKlpaoN1zqg78KimyV2dGgqymcXw5TMySSn2xeGQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/select': 11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+    dev: true
+
+  /@leafygreen-ui/palette@4.0.10:
+    resolution: {integrity: sha512-0vhKwMfBv7eO9txSxkgxijjI8M9L8uLFge+JpbBXql37+rKJuiQl7wCb5OPIJM+aV2HaHElGMyf9nRliabk30w==}
+
+  /@leafygreen-ui/polymorphic@1.3.7:
+    resolution: {integrity: sha512-Tr2TmpS0YFJ3hGNbVWQpeseJRo4kTrVumVlZ4aF4hId1JYDzF0TU5JJO40v+brhbgnKsyBu7+Rvz6ExY1NcKew==}
+
+  /@leafygreen-ui/popover@11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-pkEGWOHSJ0HiRRaUEFLY42EZVGVlLVAe9ufr00QWOJ1tuu3Mr/al4yNRUSJqz9mZbUo1mAun9XXvVpwP5GfrSQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/portal': 5.1.1(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@types/react-transition-group': 4.4.10
+      react-transition-group: 4.4.5(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/portal@5.1.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-8wvNdLxO3hWY7u5rf1ndYCJJ85TB6XpKp+dl7sQPoLnkq8HXd4GqnFXYwvGQp/pf3ts/Dp5FmZ/9dljkktnzQg==}
+    peerDependencies:
+      react-dom: ^18.2.0
+    dependencies:
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - react
+
+  /@leafygreen-ui/ripple@1.1.13:
+    resolution: {integrity: sha512-M8JCnV+bYVYnRaO80qFiuf4oZjatFoAeNTw8mUKCr5/hboNmOJe7vGdJ69Um7iQUYMSBa8IXwD8eHHNgUcOAnw==}
+    dependencies:
+      '@leafygreen-ui/tokens': 2.5.2
+
+  /@leafygreen-ui/search-input@3.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-D/JYpao5rhM/DnAB/g4QUoehCGfdupScgVXx4cjdvPJYYKZ9m/tgf7Mh2baVKyh0pzWOxj74ELx9N/o59VoGRQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/a11y': 1.4.13(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/input-option': 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/polymorphic': 1.3.7
+      '@leafygreen-ui/popover': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      lodash: 4.17.21
+      polished: 4.2.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/select@11.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-qPAXYibI4UNX+xW7QdspoT+fg9WfkqTwCsD9j27rTyJZ+pR2BOW5oynG5gKnm0AVPWullms5/SdxiLWai1GxNA==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/button': 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/input-option': 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/popover': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-tools/test-harnesses': 0.1.2
+      '@types/react-is': 18.2.4
+      lodash: 4.17.21
+      polished: 4.2.2
+      react-is: 18.2.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/text-area@9.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-KReK7p9SyHt/fSFfBEBafWs1Gjm5NDbM7QICqomuztShBK377dL26gpoeYLjQAF3j1uTAFiFiD2MmreMDr5rSQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/form-field': 1.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-tools/test-harnesses': 0.1.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+    dev: true
+
+  /@leafygreen-ui/text-input@13.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-+ccRVd2aKklbYyy3p6QEpH9rtC+IeHiyLub1dXyoTfFzhSaExehkbWMMVFMvaIQtc665qjulr1oQn/nXBMNixw==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/form-field': 1.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-tools/test-harnesses': 0.1.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+    dev: false
+
+  /@leafygreen-ui/tokens@2.5.2:
+    resolution: {integrity: sha512-boYt7ipOh9etagJB1my0e6xTK2bvvS4aC+dQFDLB7OTNfs3e6a5TyEMbAPYwFYfBSgpSVcEOT8AsB9emRkal1Q==}
+    dependencies:
+      '@leafygreen-ui/palette': 4.0.10
+
+  /@leafygreen-ui/tooltip@11.0.4(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-oVzkqCKqTqL/jS90+D3dCjvguRKnbI6zrEtzGj4ve0DzRfTlM6qKJj56gFjoJ0uFrkra5s2OPL+3HbUgIPL26A==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/popover': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      lodash: 4.17.21
+      polished: 4.2.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+
+  /@leafygreen-ui/typography@19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-RAzZOKGOEPRWfT2+oI6f14o3NP1v5+KWbEKS87YezlapjrQRPAu2/8TX1giTU0ELZ8r0vR7QkkPsr1j26qG2cg==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/polymorphic': 1.3.7
+      '@leafygreen-ui/tokens': 2.5.2
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@lg-chat/avatar@3.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(react@18.2.0):
+    resolution: {integrity: sha512-Q0OU2rJ+29Rt7ETufG37hpKKMHR/8cobO2mnR/yTQsOSC8T+TLpc5Ph69PwraIHk3BSz1S3WPIv8ya7IackhmA==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.7
+      '@lg-chat/leafygreen-chat-provider': ^2.0.0
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/logo': 9.1.0(@babel/core@7.24.3)(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@lg-chat/leafygreen-chat-provider': link:chat/leafygreen-chat-provider
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+    dev: false
+
+  /@lg-chat/chat-disclaimer@3.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-PHX7parDJBagMqhgF63lYiM1gnTficIQhtkepbN4TPkBpC7GvoMgrZKW5m2EB33Tb4YlfYzoMqJv5uFGsr1X9A==}
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/marketing-modal': 4.2.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@leafygreen-ui/leafygreen-provider'
+      - react
+      - react-dom
+    dev: true
+
+  /@lg-chat/input-bar@4.0.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-ajKLXqHun0bxHBHU4cNWfihCMWlXo26Qr4M/7pD7CQgxZW+K4sTAJRmqsaGzAOdQLFGoh4Jhr9EVMwFCiT3b8g==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+      '@lg-chat/leafygreen-chat-provider': ^2.0.0
+    dependencies:
+      '@leafygreen-ui/badge': 8.1.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/button': 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/input-option': 1.1.3(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/polymorphic': 1.3.7
+      '@leafygreen-ui/popover': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/search-input': 3.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-chat/leafygreen-chat-provider': link:chat/leafygreen-chat-provider
+      lodash: 4.17.21
+      react-keyed-flatten-children: 1.3.0(react@18.2.0)
+      react-textarea-autosize: 8.5.3(@types/react@18.2.23)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - react
+      - react-dom
+    dev: true
+
+  /@lg-chat/lg-markdown@2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-cYEPjl2nK+sbmvM73uUZ7EtheaJMN6ShBjRgiGvDjoQvM/nv7hhPIrJZq8vLO1hZbTPuVhlsv2+ThX9CFvahFA==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/code': 14.3.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      react-markdown: 8.0.7(@types/react@18.2.23)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - react
+      - react-dom
+      - supports-color
+
+  /@lg-chat/message-feedback@2.1.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Q3xFlJpOUmRsIRG8/pv6iFDTGN3NJQIYXhd29Qy5DaSJHXZHifZbyKQFESgAqtptxaEIci9x6l1j1u/B1cSNyA==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/button': 21.2.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/popover': 11.3.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react-dom@18.2.0)(react@18.2.0)
+      '@leafygreen-ui/text-area': 9.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+      - react-dom
+    dev: true
+
+  /@lg-chat/message-prompts@2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-uLfd57k3gDo6F+XgWtu+4H5MY//0SMQBb6wuKMW+rTratWRE8O/Q2PF3YYooeKjLeaF9yw15DAlLutLukGAfww==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+    dev: true
+
+  /@lg-chat/message-rating@2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0):
+    resolution: {integrity: sha512-PxU4eOwxQOkTpbOVVhQ3peMdhB2MJ7cAJFhEojFIzWEEzoOHYv5Vw2xs1ZGO7QOWZ4wtaysOCOpNzMOajVMTcQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/hooks': 8.1.3(react@18.2.0)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - react
+
+  /@lg-chat/message@4.1.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-1//ED3cG7zKF/U4assnQ+2rHBEwO/ZjCg2d1h3bdbThBhIOAP8gmOg//pVZjC0og750e+8VUJDoG6Dix2Lw4gw==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+      '@lg-chat/leafygreen-chat-provider': ^2.0.0
+    dependencies:
+      '@leafygreen-ui/banner': 8.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/polymorphic': 1.3.7
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-chat/leafygreen-chat-provider': link:chat/leafygreen-chat-provider
+      '@lg-chat/lg-markdown': 2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@types/react@18.2.23)(react-dom@18.2.0)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+      - react
+      - react-dom
+      - supports-color
+
+  /@lg-chat/title-bar@2.0.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(react@18.2.0):
+    resolution: {integrity: sha512-4aiEnc/g8Y9vlQEn1kinZGCzjlVGDqG/ISgDEsrwoogNq9MtzYpM8DjWPTy/Hbf4H6TEvvlQgHmbaxV0kgdolQ==}
+    peerDependencies:
+      '@leafygreen-ui/leafygreen-provider': ^3.1.12
+    dependencies:
+      '@leafygreen-ui/badge': 8.1.2(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/emotion': 4.0.8(@babel/core@7.24.3)
+      '@leafygreen-ui/icon': 12.1.0(@babel/core@7.24.3)
+      '@leafygreen-ui/icon-button': 15.0.21(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider': link:packages/leafygreen-provider
+      '@leafygreen-ui/lib': 13.4.0(react@18.2.0)
+      '@leafygreen-ui/palette': 4.0.10
+      '@leafygreen-ui/tokens': 2.5.2
+      '@leafygreen-ui/typography': 19.0.0(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(react@18.2.0)
+      '@lg-chat/avatar': 3.0.1(@babel/core@7.24.3)(@leafygreen-ui/leafygreen-provider@packages+leafygreen-provider)(@lg-chat/leafygreen-chat-provider@chat+leafygreen-chat-provider)(react@18.2.0)
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@lg-chat/leafygreen-chat-provider'
+      - react
+    dev: false
+
+  /@lg-tools/storybook-utils@0.1.1:
+    resolution: {integrity: sha512-TBp93XBkZ/UAn75SP2rAsjR1g4NF76n64wqeMUDzCC/X5p3VTa5qD/hJFXkTx6CP3Zt2Jd1M+7578I/bcKpQbg==}
+    dependencies:
+      lodash: 4.17.21
+
+  /@lg-tools/test-harnesses@0.1.2:
+    resolution: {integrity: sha512-Fb6bb9v69ey7Z9LOWMZUVNgyk5Xlgi3+CC78aqB7aFyOt0/9YSldWmxDp4tLRRu5cY8cmW3xqo5uLGT9JyWLWQ==}
+    dependencies:
+      '@testing-library/dom': 9.3.1
 
   /@manypkg/find-root@1.1.0:
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -8745,7 +9428,6 @@ packages:
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
     dependencies:
       '@types/ms': 0.7.31
-    dev: false
 
   /@types/detect-port@1.3.5:
     resolution: {integrity: sha512-Rf3/lB9WkDfIL9eEKaSYKc+1L/rNVYBjThk22JTqQw0YozXarX8YljFAz+HCoC6h4B4KwCMsBPZHaFezwT4BNA==}
@@ -8808,7 +9490,6 @@ packages:
 
   /@types/facepaint@1.2.5:
     resolution: {integrity: sha512-fi9kvwtC3IQ6Y3QVDkYEZsqEcetAdWD0zqqk8pEHlDXWkgS2WzolWN8Z5PGPT7YJ7ga71CCI0fVKVnVKqV+P6Q==}
-    dev: false
 
   /@types/find-cache-dir@3.2.1:
     resolution: {integrity: sha512-frsJrz2t/CeGifcu/6uRo4b+SzAwT4NYCVPu1GN8IB9XTzrpPkGuV0tmh9mN+/L0PklAlsC3u5Fxt0ju00LXIw==}
@@ -8828,14 +9509,12 @@ packages:
     resolution: {integrity: sha512-McWspRw8xx8J9HurkVBfYj0xKoE25tOFlHGdx4MJ5xORQrMGZNqJhVQWaIbm6Oyla5kYOXtDiopzKRJzEOkwJw==}
     dependencies:
       '@types/unist': 2.0.7
-    dev: false
 
   /@types/highlight.js@10.1.0:
     resolution: {integrity: sha512-77hF2dGBsOgnvZll1vymYiNUtqJ8cJfXPD6GG/2M0aLRc29PkvB7Au6sIDjIEFcSICBhCh2+Pyq6WSRS7LUm6A==}
     deprecated: This is a stub types definition. highlight.js provides its own type definitions, so you do not need this installed.
     dependencies:
       highlight.js: 11.5.1
-    dev: false
 
   /@types/html-minifier-terser@6.1.0:
     resolution: {integrity: sha512-oh/6byDPnL1zeNXFrDXFLyZjkr1MsBG667IM792caf1L2UPOOMf65NFzjUH/ltyfwjAGfs1rsX1eftK0jC/KIg==}
@@ -8924,7 +9603,6 @@ packages:
     resolution: {integrity: sha512-DT+iNIRNX884cx0/Q1ja7NyUPpZuv0KPyL5rGNxm1WC1OtHstl7n4Jb7nk+xacNShQMbczJjt8uFzznpp6kYBg==}
     dependencies:
       '@types/unist': 2.0.7
-    dev: false
 
   /@types/mdx@2.0.5:
     resolution: {integrity: sha512-76CqzuD6Q7LC+AtbPqrvD9AqsN0k8bsYo2bM2J8pmNldP1aIPAbzUQ7QbobyXL4eLr1wK5x8FZFe8eF/ubRuBg==}
@@ -8955,7 +9633,6 @@ packages:
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
-    dev: false
 
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
@@ -9004,7 +9681,6 @@ packages:
     resolution: {integrity: sha512-wBc7HgmbCcrvw0fZjxbgz/xrrlZKzEqmABBMeSvpTvdm25u6KI6xdIi9pRE2G0C1Lw5ETFdcn4UbYZ4/rpqUYw==}
     dependencies:
       '@types/react': 18.2.23
-    dev: false
 
   /@types/react-transition-group@4.4.10:
     resolution: {integrity: sha512-hT/+s0VQs2ojCX823m60m5f0sL5idt9SO6Tj6Dg+rdphGPIeJbJ6CxvBYkgkGKrYeDjvIpKTR38UzmtHJOGW3Q==}
@@ -9064,7 +9740,6 @@ packages:
 
   /@types/unist@2.0.7:
     resolution: {integrity: sha512-cputDpIbFgLUaGQn6Vqg3/YsJwxUwHLO13v3i5ouxT4lat0khip9AEWxtERujXV9wxIB1EyF97BSJFt6vpdI8g==}
-    dev: false
 
   /@types/uuid@9.0.8:
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -9977,7 +10652,6 @@ packages:
 
   /bail@2.0.2:
     resolution: {integrity: sha512-0xO6mYd7JB2YesxDKplafRpsiOzPt9V02ddPCLbY1xYGPOX24NTyN50qnUxgCPcSoYMhKpAuBTjQoRZCAkUDRw==}
-    dev: false
 
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
@@ -10104,7 +10778,6 @@ packages:
 
   /buffer-from@0.1.2:
     resolution: {integrity: sha512-RiWIenusJsmI2KcvqQABB83tLxCByE3upSP8QU3rJDMVFGPWLvPQJt/O1Su9moRWeH7d+Q2HYb68f6+v+tw2vg==}
-    dev: false
 
   /buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -10223,7 +10896,6 @@ packages:
 
   /character-entities@2.0.2:
     resolution: {integrity: sha512-shx7oQ0Awen/BRIdkjkvz54PnEEI/EjwXDSIZp86/KKdbafHh1Df/RYGBhn4hbe2+uKC9FnT5UCEdyPz3ai9hQ==}
-    dev: false
 
   /chardet@0.7.0:
     resolution: {integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==}
@@ -10321,7 +10993,6 @@ packages:
       good-listener: 1.2.2
       select: 1.1.2
       tiny-emitter: 2.1.0
-    dev: false
 
   /cliui@6.0.0:
     resolution: {integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==}
@@ -10397,7 +11068,6 @@ packages:
 
   /comma-separated-tokens@2.0.3:
     resolution: {integrity: sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==}
-    dev: false
 
   /commander@11.0.0:
     resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
@@ -10768,7 +11438,6 @@ packages:
     resolution: {integrity: sha512-O8x12RzrUF8xyVcY0KJowWsmaJxQbmy0/EtnNtHRpsOcT7dFk5W598coHqBVpmWo1oQQfsCqfCmkZN5DJrZVdg==}
     dependencies:
       character-entities: 2.0.2
-    dev: false
 
   /dedent@0.7.0:
     resolution: {integrity: sha512-Q6fKUPqnAHAyhiUgFU7BUzLiv0kd8saH9al7tnu5Q/okj6dnupxyTgFIBjVzJATdfIAm9NAsvXNzjaKa+bxVyA==}
@@ -10859,7 +11528,6 @@ packages:
 
   /delegate@3.2.0:
     resolution: {integrity: sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==}
-    dev: false
 
   /depcheck@1.4.3:
     resolution: {integrity: sha512-vy8xe1tlLFu7t4jFyoirMmOR7x7N601ubU9Gkifyr9z8rjBFtEdWHDBMqXyk6OkK+94NXutzddVXJuo0JlUQKQ==}
@@ -10949,7 +11617,6 @@ packages:
   /diff@5.1.0:
     resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
     engines: {node: '>=0.3.1'}
-    dev: false
 
   /dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -10989,7 +11656,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.24.1
       csstype: 3.1.2
-    dev: false
 
   /dom-serializer@1.4.1:
     resolution: {integrity: sha512-VHwB3KfrcOOkelEG2ZOfxqLZdfkil8PtJi4P8N2MMXucZq2yLp75ClViUlOVwyoHEDjYU433Aq+5zWP61+RGag==}
@@ -11073,7 +11739,6 @@ packages:
     resolution: {integrity: sha512-asLFVfWWtJ90ZyOUHMqk7/S2w2guQKxUI2itj3d92ADHhxUSbCMGi1f1cBcJ7xM1To+pE/Khbwo1yuNbMEPKeA==}
     dependencies:
       readable-stream: 2.3.8
-    dev: false
 
   /duplexify@3.7.1:
     resolution: {integrity: sha512-07z8uv2wMyS51kKhD1KsdXJg5WQ6t93RneqRxUHnskXVtlYYkLqM0gqStQZ3pj073g687jPCHrqNfCzawLYh5g==}
@@ -11739,7 +12404,6 @@ packages:
 
   /extend@3.0.2:
     resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
-    dev: false
 
   /extendable-error@0.1.7:
     resolution: {integrity: sha512-UOiS2in6/Q0FK0R0q6UY9vYpQ21mr/Qn1KOnte7vsACuNJf514WvCCUHSRCPcgjPT2bAhNIJdlE6bVap1GKmeg==}
@@ -11767,11 +12431,9 @@ packages:
 
   /facepaint@1.2.1:
     resolution: {integrity: sha512-oNvBekbhsm/0PNSOWca5raHNAi6dG960Bx6LJgxDPNF59WpuspgQ17bN5MKwOr7JcFdQYc7StW3VZ28DBZLavQ==}
-    dev: false
 
   /fast-deep-equal@3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
-    dev: false
 
   /fast-glob@3.3.1:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
@@ -11982,13 +12644,11 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tabbable: 5.3.3
-    dev: false
 
   /focus-trap@6.9.4:
     resolution: {integrity: sha512-v2NTsZe2FF59Y+sDykKY+XjqZ0cPfhq/hikWVL88BqLivnNiEffAsac6rP6H45ff9wG9LL5ToiDqrLEP9GX9mw==}
     dependencies:
       tabbable: 5.3.3
-    dev: false
 
   /follow-redirects@1.15.2:
     resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
@@ -12310,7 +12970,6 @@ packages:
     resolution: {integrity: sha512-goW1b+d9q/HIwbVYZzZ6SsTr4IgE+WA44A0GmPIQstuOrgsFcT7VEJ48nmr9GaRtNu0XTKacFLGnBPAM6Afouw==}
     dependencies:
       delegate: 3.2.0
-    dev: false
 
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -12392,7 +13051,6 @@ packages:
 
   /hast-util-whitespace@2.0.1:
     resolution: {integrity: sha512-nAxA0v8+vXSBDt3AnRUNjyRIQ0rD+ntpbAp4LnPkumc5M9yUbSMa4XDU9Q6etY4f1Wp4bNgvc1yjiZtsTTrSng==}
-    dev: false
 
   /he@1.2.0:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
@@ -12402,11 +13060,9 @@ packages:
   /highlight.js@11.5.1:
     resolution: {integrity: sha512-LKzHqnxr4CrD2YsNoIf/o5nJ09j4yi/GcH5BnYz9UnVpZdS4ucMgvP61TDty5xJcFGRjnH4DpujkS9bHT3hq0Q==}
     engines: {node: '>=12.0.0'}
-    dev: false
 
   /highlightjs-graphql@1.0.2:
     resolution: {integrity: sha512-jShTftpKQDwMXc+7OHOpHXRYSweT08EO2YOIcLbwU00e9yuwJMYXGLF1eiDO0aUPeQU4/5EjAh5HtPt3ly7rvg==}
-    dev: false
 
   /hoek@4.3.1:
     resolution: {integrity: sha512-v7E+yIjcHECn973i0xHm4kJkEpv3C8sbYS4344WXbzYqRyiDD7rjnnKo4hsJkejQBAFdRMUGNHySeSPKSH9Rqw==}
@@ -12483,7 +13139,6 @@ packages:
       minimist: 1.2.8
       readable-stream: 1.0.34
       through2: 0.4.2
-    dev: false
 
   /html-webpack-plugin@5.5.3(webpack@5.88.0):
     resolution: {integrity: sha512-6YrDKTuqaP/TquFH7h4srYWsZx+x6k6+FbsTm0ziCwGHDP78Unr1r9F/H4+sGmMbX08GQcJ+K64x55b+7VM/jg==}
@@ -12628,7 +13283,6 @@ packages:
 
   /inline-style-parser@0.1.1:
     resolution: {integrity: sha512-7NXolsK4CAS5+xvdj5OMMbI962hU/wvwoxk+LWR9Ek9bVtyuuYScDN6eS0rUm6TxApFpw7CX1o4uJzcd4AyD3Q==}
-    dev: false
 
   /internal-slot@1.0.5:
     resolution: {integrity: sha512-Y+R5hJrzs52QCG2laLn4udYVnxsfny9CpOhNhUvk/SSSVyF6T27FzRbF0sroPidSu3X8oEAkOn2K804mjpt6UQ==}
@@ -12700,7 +13354,6 @@ packages:
   /is-buffer@2.0.5:
     resolution: {integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==}
     engines: {node: '>=4'}
-    dev: false
 
   /is-builtin-module@3.2.1:
     resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
@@ -12824,7 +13477,6 @@ packages:
   /is-plain-obj@4.1.0:
     resolution: {integrity: sha512-+Pgi+vMuUNkJyExiMBt5IlFoMyKnr5zhJ4Uspz58WOhBF5QoIZkFyNHIbBAtHwzVAgk5RtndVNsDRN61/mmDqg==}
     engines: {node: '>=12'}
-    dev: false
 
   /is-plain-object@2.0.4:
     resolution: {integrity: sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og==}
@@ -12925,7 +13577,6 @@ packages:
 
   /isarray@0.0.1:
     resolution: {integrity: sha512-D2S+3GLxWH+uhrNEcoh/fnmYeP8E8/zHl644d/jdA0g2uyXvy3sb0qxotE+ne0LtccHknQzWwZEzhak7oJ0COQ==}
-    dev: false
 
   /isarray@1.0.0:
     resolution: {integrity: sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==}
@@ -13817,7 +14468,6 @@ packages:
 
   /lottie-web@5.12.2:
     resolution: {integrity: sha512-uvhvYPC8kGPjXT3MyKMrL3JitEAmDMp30lVkuq/590Mw9ok6pWcFCwXJveo0t5uqYw1UREQHofD+jVpdjBv8wg==}
-    dev: false
 
   /lower-case@2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
@@ -13926,7 +14576,6 @@ packages:
       '@types/mdast': 3.0.12
       '@types/unist': 2.0.7
       unist-util-visit: 4.1.2
-    dev: false
 
   /mdast-util-find-and-replace@2.2.2:
     resolution: {integrity: sha512-MTtdFRz/eMDHXzeK6W3dO7mXUlF82Gom4y0oOgvHhh/HXZAGvIQDUvQ0SuUx+j2tv44b8xTHOm8K/9OoRFnXKw==}
@@ -13954,7 +14603,6 @@ packages:
       uvu: 0.5.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /mdast-util-gfm-autolink-literal@1.0.3:
     resolution: {integrity: sha512-My8KJ57FYEy2W2LyNom4n3E7hKTuQk/0SES0u16tjA9Z3oFkF4RrC/hPAPgjlSpezsOvI8ObcXcElo92wn5IGA==}
@@ -14030,7 +14678,6 @@ packages:
       unist-util-generated: 2.0.1
       unist-util-position: 4.0.4
       unist-util-visit: 4.1.2
-    dev: false
 
   /mdast-util-to-markdown@1.5.0:
     resolution: {integrity: sha512-bbv7TPv/WC49thZPg3jXuqzuvI45IL2EVAr/KxF0BSdHsU0ceFHOmwQn6evxAh1GaoK/6GQ1wp4R4oW2+LFL/A==}
@@ -14053,7 +14700,6 @@ packages:
     resolution: {integrity: sha512-V4Zn/ncyN1QNSqSBxTrMOLpjr+IKdHl2v3KVLoWmDPscP4r9GcCi71gjgvUV1SFSKh92AjAG4peFuBl2/YgCJg==}
     dependencies:
       '@types/mdast': 3.0.12
-    dev: false
 
   /mdn-data@2.0.28:
     resolution: {integrity: sha512-aylIc7Z9y4yzHYAJNuESG3hfhC+0Ibp/MAMiaOZgNv4pmEdFyfZhhhny4MNiAfWdBQ1RQ2mfDWmM1x8SvGyp8g==}
@@ -14153,7 +14799,6 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-extension-gfm-autolink-literal@1.0.5:
     resolution: {integrity: sha512-z3wJSLrDf8kRDOh2qBtoTRD53vJ+CWIyo7uyZuxf/JAbNJjiHsOpG1y5wxk8drtv3ETAHutCu6N3thkOOgueWg==}
@@ -14233,7 +14878,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-label@1.1.0:
     resolution: {integrity: sha512-OLtyez4vZo/1NjxGhcpDSbHQ+m0IIGnT8BoPamh+7jVlzLJBH98zzuCoUeMxvM6WsNeh8wx8cKvqLiPHEACn0w==}
@@ -14242,14 +14886,12 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-factory-space@1.1.0:
     resolution: {integrity: sha512-cRzEj7c0OL4Mw2v6nwzttyOZe8XY/Z8G0rzmWQZTBi/jjwyw/U4uqKtUORXQrR5bAZZnbTI/feRV/R7hc4jQYQ==}
     dependencies:
       micromark-util-character: 1.2.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-title@1.1.0:
     resolution: {integrity: sha512-J7n9R3vMmgjDOCY8NPw55jiyaQnH5kBdV2/UXCtZIpnHH3P6nHUKaH7XXEYuWwx/xUJcawa8plLBEjMPU24HzQ==}
@@ -14258,7 +14900,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-factory-whitespace@1.1.0:
     resolution: {integrity: sha512-v2WlmiymVSp5oMg+1Q0N1Lxmt6pMhIHD457whWM7/GUlEks1hI9xj5w3zbc4uuMKXGisksZk8DzP2UyGbGqNsQ==}
@@ -14267,20 +14908,17 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-character@1.2.0:
     resolution: {integrity: sha512-lXraTwcX3yH/vMDaFWCQJP1uIszLVebzUa3ZHdrgxr7KEU/9mL4mVgCpGbyhvNLNlauROiNUq7WN5u7ndbY6xg==}
     dependencies:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-chunked@1.1.0:
     resolution: {integrity: sha512-Ye01HXpkZPNcV6FiyoW2fGZDUw4Yc7vT0E9Sad83+bEDiCJ1uXu0S3mr8WLpsz3HaG3x2q0HM6CTuPdcZcluFQ==}
     dependencies:
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-classify-character@1.1.0:
     resolution: {integrity: sha512-SL0wLxtKSnklKSUplok1WQFoGhUdWYKggKUiqhX+Swala+BtptGCu5iPRc+xvzJ4PXE/hwM3FNXsfEVgoZsWbw==}
@@ -14288,20 +14926,17 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-combine-extensions@1.1.0:
     resolution: {integrity: sha512-Q20sp4mfNf9yEqDL50WwuWZHUrCO4fEyeDCnMGmG5Pr0Cz15Uo7KBs6jq+dq0EgX4DPwwrh9m0X+zPV1ypFvUA==}
     dependencies:
       micromark-util-chunked: 1.1.0
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-decode-numeric-character-reference@1.1.0:
     resolution: {integrity: sha512-m9V0ExGv0jB1OT21mrWcuf4QhP46pH1KkfWy9ZEezqHKAxkj4mPCy3nIH1rkbdMlChLHX531eOrymlwyZIf2iw==}
     dependencies:
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-decode-string@1.1.0:
     resolution: {integrity: sha512-YphLGCK8gM1tG1bd54azwyrQRjCFcmgj2S2GoJDNnh4vYtnL38JS8M4gpxzOPNyHdNEpheyWXCTnnTDY3N+NVQ==}
@@ -14310,27 +14945,22 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-decode-numeric-character-reference: 1.1.0
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-encode@1.1.0:
     resolution: {integrity: sha512-EuEzTWSTAj9PA5GOAs992GzNh2dGQO52UvAbtSOMvXTxv3Criqb6IOzJUBCmEqrrXSblJIJBbFFv6zPxpreiJw==}
-    dev: false
 
   /micromark-util-html-tag-name@1.2.0:
     resolution: {integrity: sha512-VTQzcuQgFUD7yYztuQFKXT49KghjtETQ+Wv/zUjGSGBioZnkA4P1XXZPT1FHeJA6RwRXSF47yvJ1tsJdoxwO+Q==}
-    dev: false
 
   /micromark-util-normalize-identifier@1.1.0:
     resolution: {integrity: sha512-N+w5vhqrBihhjdpM8+5Xsxy71QWqGn7HYNUvch71iV2PM7+E3uWGox1Qp90loa1ephtCxG2ftRV/Conitc6P2Q==}
     dependencies:
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-resolve-all@1.1.0:
     resolution: {integrity: sha512-b/G6BTMSg+bX+xVCshPTPyAu2tmA0E4X98NSR7eIbeC6ycCqCeE7wjfDIgzEbkzdEVJXRtOG4FbEm/uGbCRouA==}
     dependencies:
       micromark-util-types: 1.1.0
-    dev: false
 
   /micromark-util-sanitize-uri@1.2.0:
     resolution: {integrity: sha512-QO4GXv0XZfWey4pYFndLUKEAktKkG5kZTdUNaTAkzbuJxn2tNBOr+QtxR2XpWaMhbImT2dPzyLrPXLlPhph34A==}
@@ -14338,7 +14968,6 @@ packages:
       micromark-util-character: 1.2.0
       micromark-util-encode: 1.1.0
       micromark-util-symbol: 1.1.0
-    dev: false
 
   /micromark-util-subtokenize@1.1.0:
     resolution: {integrity: sha512-kUQHyzRoxvZO2PuLzMt2P/dwVsTiivCK8icYTeR+3WgbuPqfHgPPy7nFKbeqRivBvn/3N3GBiNC+JRTMSxEC7A==}
@@ -14347,15 +14976,12 @@ packages:
       micromark-util-symbol: 1.1.0
       micromark-util-types: 1.1.0
       uvu: 0.5.6
-    dev: false
 
   /micromark-util-symbol@1.1.0:
     resolution: {integrity: sha512-uEjpEYY6KMs1g7QfJ2eX1SQEV+ZT4rUD3UcF6l57acZvLNK7PBZL+ty82Z1qhK1/yXIY4bdx04FKMgR0g4IAag==}
-    dev: false
 
   /micromark-util-types@1.1.0:
     resolution: {integrity: sha512-ukRBgie8TIAcacscVHSiddHjO4k/q3pnedmzMQ4iwDcK0FtFCohKOlFbaOL/mPgfnPsL3C1ZyxJa4sbWrBl3jg==}
-    dev: false
 
   /micromark@3.2.0:
     resolution: {integrity: sha512-uD66tJj54JLYq0De10AhWycZWGQNUvDI55xPgk2sQM5kn1JYlhbCMTtEeT27+vAhW2FBQxLlOmS3pmA7/2z4aA==}
@@ -14379,7 +15005,6 @@ packages:
       uvu: 0.5.6
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
@@ -14511,7 +15136,6 @@ packages:
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
-    dev: false
 
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -14538,7 +15162,6 @@ packages:
     dependencies:
       duplexer2: 0.1.4
       object-assign: 4.1.1
-    dev: false
 
   /nan@2.19.0:
     resolution: {integrity: sha512-nO1xXxfh/RWNxfd/XPfbIfFk5vgLsAxUR9y5O0cHMJu/AW9U95JLXqthYHjEp+8gQ5p96K9jUp8nbVOxCdRbtw==}
@@ -14798,7 +15421,6 @@ packages:
 
   /object-keys@0.4.0:
     resolution: {integrity: sha512-ncrLw+X55z7bkl5PnUvHwFK9FcGuFYo9gtjws2XtSzL+aZ8tm830P60WJ0dSmFVaSalWieW5MD7kEdnXda9yJw==}
-    dev: false
 
   /object-keys@1.1.1:
     resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
@@ -15381,7 +16003,6 @@ packages:
 
   /property-information@6.4.1:
     resolution: {integrity: sha512-OHYtXfu5aI2sS2LWFSN5rgJjrQ4pCy8i1jubJLe2QvMF8JJ++HXTUIVWFLfXJoaOfvYYjk2SN8J2wFUWIGXT4w==}
-    dev: false
 
   /proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
@@ -15599,7 +16220,6 @@ packages:
     dependencies:
       react: 18.2.0
       react-is: 16.13.1
-    dev: false
 
   /react-keyed-flatten-children@2.2.1(react@18.2.0):
     resolution: {integrity: sha512-6yBLVO6suN8c/OcJk1mzIrUHdeEzf5rtRVBhxEXAHO49D7SlJ70cG4xrSJrBIAG7MMeQ+H/T151mM2dRDNnFaA==}
@@ -15629,7 +16249,6 @@ packages:
       lottie-web: 5.12.2
       react: 18.2.0
       rfdc: 1.3.1
-    dev: false
 
   /react-markdown@8.0.7(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-bvWbzG4MtOU62XqBx3Xx+zB2raaFFsq4mYiAzfjXJMEz2sixgeAfraA3tvzULF02ZdOMUOKTBFFaZJDDrq+BJQ==}
@@ -15656,7 +16275,6 @@ packages:
       vfile: 5.3.7
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /react-refresh@0.14.0:
     resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
@@ -15747,7 +16365,6 @@ packages:
       use-latest: 1.2.1(@types/react@18.2.23)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
-    dev: false
 
   /react-transition-group@4.4.5(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==}
@@ -15761,7 +16378,6 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /react-virtual@2.10.4(react@18.2.0):
     resolution: {integrity: sha512-Ir6+oPQZTVHfa6+JL9M7cvMILstFZH/H3jqeYeKI4MSUX+rIruVwFC6nGVXw9wqAw8L0Kg2KvfXxI85OvYQdpQ==}
@@ -15821,7 +16437,6 @@ packages:
       inherits: 2.0.4
       isarray: 0.0.1
       string_decoder: 0.10.31
-    dev: false
 
   /readable-stream@2.3.8:
     resolution: {integrity: sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==}
@@ -15942,7 +16557,6 @@ packages:
       unified: 10.1.2
     transitivePeerDependencies:
       - supports-color
-    dev: false
 
   /remark-rehype@10.1.0:
     resolution: {integrity: sha512-EFmR5zppdBp0WQeDVZ/b66CWJipB2q2VLNFMabzDSGR66Z2fQii83G5gTBbgGEnEEA0QRussvrFHxk1HWGJskw==}
@@ -15951,7 +16565,6 @@ packages:
       '@types/mdast': 3.0.12
       mdast-util-to-hast: 12.3.0
       unified: 10.1.2
-    dev: false
 
   /remark-slug@6.1.0:
     resolution: {integrity: sha512-oGCxDF9deA8phWvxFuyr3oSJsdyUAxMFbA0mZ7Y1Sas+emILtO+e5WutF9564gDsEN4IXaQXm5pFo6MLH+YmwQ==}
@@ -16052,7 +16665,6 @@ packages:
 
   /rfdc@1.3.1:
     resolution: {integrity: sha512-r5a3l5HzYlIC68TpmYKlxWjmOP6wiPJ1vWv2HeLhNsRZMrCkxeqxiHlQ21oXmQ4F3SiryXBHhAD7JZqvOJjFmg==}
-    dev: false
 
   /rimraf@2.6.3:
     resolution: {integrity: sha512-mwqeW5XsA2qAejG46gYdENaxXjx9onRNCfn7L0duuP4hCuTIi/QO7PDK07KJfp1d+izWPrzEJDcSqBa0OZQriA==}
@@ -16118,7 +16730,6 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       mri: 1.2.0
-    dev: false
 
   /safe-array-concat@1.0.0:
     resolution: {integrity: sha512-9dVEFruWIsnie89yym+xWTAYASdpw3CJV7Li/6zBewGf9z2i1j31rP6jnY0pHEO4QZh6N0K11bFjWmdR8UGdPQ==}
@@ -16196,7 +16807,6 @@ packages:
 
   /select@1.1.2:
     resolution: {integrity: sha512-OwpTSOfy6xSs1+pwcNrv0RBMOzI39Lp3qQKUTPVVPRjCdNa5JH/oPRiqsesIskK8TVgmRiHwO4KXlV2Li9dANA==}
-    dev: false
 
   /semver-compare@1.0.0:
     resolution: {integrity: sha512-YM3/ITh2MJ5MtzaM429anh+x2jiLVjqILF4m4oyQB18W7Ggea7BfqdH/wGMK7dDiMghv/6WG7znWMwUDzJiXow==}
@@ -16374,7 +16984,6 @@ packages:
 
   /space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
-    dev: false
 
   /spawndamnit@2.0.0:
     resolution: {integrity: sha512-j4JKEcncSjFlqIwU5L/rp2N5SIPsdxaRsIv678+TZxZ0SRDJTm8JrxJMjE/XuiEZNEir3S8l0Fa3Ke339WI4qA==}
@@ -16539,7 +17148,6 @@ packages:
 
   /string_decoder@0.10.31:
     resolution: {integrity: sha512-ev2QzSzWPYmy9GuqfIVildA4OdcGLeFZQrq5ys6RtiuF+RQQiZWr8TZNyAcuVXyQRYfEO+MsoB/1BuQVhOJuoQ==}
-    dev: false
 
   /string_decoder@1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
@@ -16611,7 +17219,6 @@ packages:
     resolution: {integrity: sha512-HYNoHZa2GorYNyqiCaBgsxvcJIn7OHq6inEga+E6Ke3m5JkoqpQbnFssk4jwe+K7AhGa2fcha4wSOf1Kn01dMg==}
     dependencies:
       inline-style-parser: 0.1.1
-    dev: false
 
   /styled-jsx@5.1.1(@babel/core@7.24.3)(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
@@ -16691,7 +17298,6 @@ packages:
 
   /tabbable@5.3.3:
     resolution: {integrity: sha512-QD9qKY3StfbZqWOPLp0++pOrAVb/HbUi5xCc8cUo4XjP19808oaMiDzn0leBY5mCespIBM0CIZePzZjgzR83kA==}
-    dev: false
 
   /tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
@@ -16811,7 +17417,6 @@ packages:
     dependencies:
       readable-stream: 1.0.34
       xtend: 2.1.2
-    dev: false
 
   /through2@2.0.5:
     resolution: {integrity: sha512-/mrRod8xqpA+IHSLyGCQ2s8SPHiCDEeQJSep1jqLYeEUClOFG2Qsh+4FU6G9VeqpZnGW/Su8LQGc4YKni5rYSQ==}
@@ -16821,7 +17426,6 @@ packages:
 
   /through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
-    dev: false
 
   /timezone-mock@1.3.6:
     resolution: {integrity: sha512-YcloWmZfLD9Li5m2VcobkCDNVaLMx8ohAb/97l/wYS3m+0TIEK5PFNMZZfRcusc6sFjIfxu8qcJT0CNnOdpqmg==}
@@ -16829,7 +17433,6 @@ packages:
 
   /tiny-emitter@2.1.0:
     resolution: {integrity: sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==}
-    dev: false
 
   /tiny-invariant@1.3.1:
     resolution: {integrity: sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==}
@@ -16891,7 +17494,6 @@ packages:
 
   /trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
-    dev: false
 
   /trim-newlines@3.0.1:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
@@ -16906,7 +17508,6 @@ packages:
 
   /trough@2.1.0:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}
-    dev: false
 
   /ts-dedent@2.2.0:
     resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
@@ -17167,7 +17768,6 @@ packages:
       is-plain-obj: 4.1.0
       trough: 2.1.0
       vfile: 5.3.7
-    dev: false
 
   /unique-string@2.0.0:
     resolution: {integrity: sha512-uNaeirEPvpZWSgzwsPGtU2zVSTrn/8L5q/IexZmH0eH6SA73CmAA5U4GwORTxQAZs95TAXLNqeLoPPNO5gZfWg==}
@@ -17177,7 +17777,6 @@ packages:
 
   /unist-util-generated@2.0.1:
     resolution: {integrity: sha512-qF72kLmPxAw0oN2fwpWIqbXAVyEqUzDHMsbtPvOudIlUzXYFIeQIuxXQCRCFh22B7cixvU0MG7m3MW8FTq/S+A==}
-    dev: false
 
   /unist-util-is@4.1.0:
     resolution: {integrity: sha512-ZOQSsnce92GrxSqlnEEseX0gi7GH9zTJZ0p9dtu87WRb/37mMPO2Ilx1s/t9vBHrFhbgweUwb+t7cIn5dxPhZg==}
@@ -17187,19 +17786,16 @@ packages:
     resolution: {integrity: sha512-u9njyyfEh43npf1M+yGKDGVPbY/JWEemg5nH05ncKPfi+kBbKBJoTdsogMu33uhytuLlv9y0O7GH7fEdwLdLQw==}
     dependencies:
       '@types/unist': 2.0.7
-    dev: false
 
   /unist-util-position@4.0.4:
     resolution: {integrity: sha512-kUBE91efOWfIVBo8xzh/uZQ7p9ffYRtUbMRZBNFYwf0RK8koUMx6dGUfwylLOKmaT2cs4wSW96QoYUSXAyEtpg==}
     dependencies:
       '@types/unist': 2.0.7
-    dev: false
 
   /unist-util-stringify-position@3.0.3:
     resolution: {integrity: sha512-k5GzIBZ/QatR8N5X2y+drfpWG8IDBzdnVj6OInRNWm1oXrzydiaAT2OQiA8DPRRZyAKb9b6I2a6PxYklZD0gKg==}
     dependencies:
       '@types/unist': 2.0.7
-    dev: false
 
   /unist-util-visit-parents@3.1.1:
     resolution: {integrity: sha512-1KROIZWo6bcMrZEwiH2UrXDyalAa0uqzWCxCJj6lPOvTve2WkfgCytoDTPaMnodXh1WrXOq0haVYHj99ynJlsg==}
@@ -17213,7 +17809,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.7
       unist-util-is: 5.2.1
-    dev: false
 
   /unist-util-visit@2.0.3:
     resolution: {integrity: sha512-iJ4/RczbJMkD0712mGktuGpm/U4By4FfDonL7N/9tATGIF4imikjOuagyMY53tnZq3NP6BcmlrHhEKAfGWjh7Q==}
@@ -17229,7 +17824,6 @@ packages:
       '@types/unist': 2.0.7
       unist-util-is: 5.2.1
       unist-util-visit-parents: 5.1.3
-    dev: false
 
   /universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
@@ -17330,7 +17924,6 @@ packages:
       react: ^18.2.0
     dependencies:
       react: 18.2.0
-    dev: false
 
   /use-isomorphic-layout-effect@1.1.2(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
@@ -17343,7 +17936,6 @@ packages:
     dependencies:
       '@types/react': 18.2.23
       react: 18.2.0
-    dev: false
 
   /use-latest@1.2.1(@types/react@18.2.23)(react@18.2.0):
     resolution: {integrity: sha512-xA+AVm/Wlg3e2P/JiItTziwS7FK92LWrDB0p+hgXloIMuVCeJJ8v6f0eeHyPZaJrM+usM1FkFfbNCrJGs8A/zw==}
@@ -17357,7 +17949,6 @@ packages:
       '@types/react': 18.2.23
       react: 18.2.0
       use-isomorphic-layout-effect: 1.1.2(@types/react@18.2.23)(react@18.2.0)
-    dev: false
 
   /use-resize-observer@9.1.0(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-R25VqO9Wb3asSD4eqtcxk8sJalvIOYBqS8MNZlpDSQ4l4xMQxC/J7Id9HoTqPq8FwULIn0PVW+OAqF2dyYbjow==}
@@ -17424,7 +18015,6 @@ packages:
       diff: 5.1.0
       kleur: 4.1.5
       sade: 1.8.1
-    dev: false
 
   /v8-to-istanbul@9.1.0:
     resolution: {integrity: sha512-6z3GW9x8G1gd+JIIgQQQxXuiJtCXeAjp6RaPEPLv62mH3iPHPxV6W3robxtCzNErRo6ZwTmzWhsbNvjyEBKzKA==}
@@ -17457,7 +18047,6 @@ packages:
     dependencies:
       '@types/unist': 2.0.7
       unist-util-stringify-position: 3.0.3
-    dev: false
 
   /vfile@5.3.7:
     resolution: {integrity: sha512-r7qlzkgErKjobAmyNIkkSpizsFPYiUPuJb5pNW1RB4JcYVZhs4lIbVqk8XPk033CV/1z8ss5pkax8SuhGpcG8g==}
@@ -17466,7 +18055,6 @@ packages:
       is-buffer: 2.0.5
       unist-util-stringify-position: 3.0.3
       vfile-message: 3.1.4
-    dev: false
 
   /w3c-xmlserializer@4.0.0:
     resolution: {integrity: sha512-d+BFHzbiCx6zGfz0HyQ6Rg69w9k19nviJspaj4yNscGjrHu94sVP+aRm75yEbCh+r2/yR+7q6hux9LVtbuTGBw==}
@@ -17751,7 +18339,6 @@ packages:
     engines: {node: '>=0.4'}
     dependencies:
       object-keys: 0.4.0
-    dev: false
 
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}

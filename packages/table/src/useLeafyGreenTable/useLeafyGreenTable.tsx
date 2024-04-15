@@ -1,9 +1,9 @@
 import React from 'react';
 import { useVirtual } from 'react-virtual';
-import { useReactTable, 
-  getCoreRowModel,
+import {   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+useReactTable,
 } from '@tanstack/react-table';
 import omit from 'lodash/omit';
 
