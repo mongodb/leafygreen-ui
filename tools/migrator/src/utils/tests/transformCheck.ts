@@ -42,12 +42,12 @@ interface TestArgs {
   options?: { [option: string]: any };
 }
 
-export function check(
+export function transformCheck(
   dirName: string,
   { fixture, transform, extension = 'tsx', options = {} }: TestArgs,
 ) {
   describe(transform, () => {
-    it(fixture, async () => {
+    test(fixture, async () => {
       const fixtureDir = path.join(dirName);
       const inputPath = path.join(fixtureDir, `${fixture}.input.${extension}`);
       const parser = parserExtensionMap[extension];

@@ -1,1 +1,1 @@
-export { check } from './check';
+export { transformCheck } from './tests/transformCheck';

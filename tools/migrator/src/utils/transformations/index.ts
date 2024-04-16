@@ -1,0 +1,1 @@
+export { renameProps } from './renameProps';
