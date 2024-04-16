@@ -54,6 +54,11 @@ export type TooltipProps = Omit<
     align?: Align;
     /**
      * A slot for the element used to trigger the `Tooltip`.
+     *
+     * Note: The component passed as `trigger` _must_ accept and render `children`,
+     * even if the general use of the component does not require children.
+     * The `tooltip` content is rendered (via `Popover`) as a child of the trigger,
+     * and if the trigger does not render any children, then the trigger will not be rendered.
      */
     trigger?: React.ReactElement | Function;
 
