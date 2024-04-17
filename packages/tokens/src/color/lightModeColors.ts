@@ -50,7 +50,7 @@ const lightModeBackgroundColors = {
     [State.Hover]: gray.light2,
     [State.Focus]: gray.light2,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 const lightModBorderColors = {
   [Variant.Primary]: {
@@ -78,7 +78,7 @@ const lightModBorderColors = {
     [State.Hover]: gray.light1,
     [State.Focus]: gray.light1,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 const lightModeIconColors = {
   [Variant.Primary]: {
@@ -121,7 +121,7 @@ const lightModeIconColors = {
     [State.Hover]: gray.base,
     [State.Focus]: gray.base,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 const lightModeTextColors = {
   [Variant.Primary]: {
@@ -154,11 +154,11 @@ const lightModeTextColors = {
     [State.Hover]: gray.base,
     [State.Focus]: gray.base,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 export const lightModeColors = {
   background: lightModeBackgroundColors,
   border: lightModBorderColors,
   icon: lightModeIconColors,
   text: lightModeTextColors,
-} satisfies ModeColorRecord;
+} as const satisfies ModeColorRecord;
