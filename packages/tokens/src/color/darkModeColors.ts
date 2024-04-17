@@ -50,7 +50,7 @@ const darkModeBackgroundColors = {
     [State.Hover]: gray.dark2,
     [State.Focus]: gray.dark2,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 const darkModeBorderColors = {
   [Variant.Primary]: {
@@ -78,7 +78,7 @@ const darkModeBorderColors = {
     [State.Hover]: gray.dark2,
     [State.Focus]: gray.dark2,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 const darkModeIconColors = {
   [Variant.Primary]: {
@@ -121,7 +121,7 @@ const darkModeIconColors = {
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 const darkModeTextColors = {
   [Variant.Primary]: {
@@ -154,11 +154,11 @@ const darkModeTextColors = {
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
   },
-} satisfies VariantColorRecord;
+} as const satisfies VariantColorRecord;
 
 export const darkModeColors = {
   background: darkModeBackgroundColors,
   border: darkModeBorderColors,
   icon: darkModeIconColors,
   text: darkModeTextColors,
-} satisfies ModeColorRecord;
+} as const satisfies ModeColorRecord;
