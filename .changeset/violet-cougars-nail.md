@@ -1,5 +1,4 @@
 ---
 '@leafygreen-ui/tokens': patch
 ---
-
-Uses `satisfies` to ensure correct object color tokens structure
+Adds `satisfies` to ensure consistent & correct `colors` token structure
