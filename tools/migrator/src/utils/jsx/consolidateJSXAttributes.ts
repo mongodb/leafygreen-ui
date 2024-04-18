@@ -100,6 +100,4 @@ export function consolidateJSXAttributes({
   return;
 }
 
-// https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/9be21f72145f1f031aeb01987412eb28975ef8bf
-// https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/56e8c3f652937d28ce1873a7f0067b336b6b8417
-// https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/6b6e838a9101d665373a00d2d81a2f0c072ee8de
+// https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/2dd743eb2b9c7e66b006d6bd149cb39b11c8501e

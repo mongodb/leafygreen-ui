@@ -11,11 +11,11 @@ const Child = (props: any) => {
 export const App = () => {
   return (
     <>
-      <MyComponent prop="newPropValue" foo="bar">
+      <MyComponent prop="new prop y'all" foo="bar">
         Hello
         <Child prop="value" />
       </MyComponent>
-      <MyComponent prop="newPropValue" foo="bar">
+      <MyComponent prop="new prop y'all" foo="bar">
         Hello
       </MyComponent>
     </>

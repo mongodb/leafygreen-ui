@@ -16,7 +16,20 @@ const tests = [
     options: {
       componentName: 'MyComponent',
       attributeName: 'prop',
-      newAttributeValue: 'newPropValue',
+      newAttributeValue: "new prop y'all",
+    },
+  },
+  {
+    name: 'update-component-prop-value-array',
+    options: {
+      componentName: 'MyComponent',
+      attributeName: 'prop',
+      newAttributeValue: {
+        value1: 'value1Mapped',
+        value2: 'value2Mapped',
+        value3: 'value3Mapped',
+        value4: 'value4Mapped',
+      },
     },
   },
 ];
