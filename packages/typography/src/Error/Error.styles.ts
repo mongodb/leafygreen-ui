@@ -1,8 +1,8 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  color,
   fontFamilies,
   fontWeights,
   typeScales,
@@ -21,10 +21,10 @@ export const errorMessageStyle = css`
 
 export const errorMessageModeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.red.base};
+    color: ${color.light.text.error.default};
   `,
   [Theme.Dark]: css`
-    color: ${palette.red.light1};
+    color: ${color.dark.text.error.default};
   `,
 };
 
