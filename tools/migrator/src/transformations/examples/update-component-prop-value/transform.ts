@@ -1,16 +1,29 @@
 import type { API, FileInfo } from 'jscodeshift';
 
-import { replaceJSXAttributes } from '../../../utils/jsx/replaceJSXAttributes';
+import {
+  replaceJSXAttributes,
+  ReplaceJSXAttributesType,
+} from '../../../utils/jsx/replaceJSXAttributes';
 
-export default function transformer(file: FileInfo, { jscodeshift: j }: API) {
-  const componentName = 'MyComponent';
-  const from = 'prop';
-  const newValue = 'newPropValue';
+type TransformerOptions = ReplaceJSXAttributesType & { componentName: string };
+
+export default function transformer(
+  file: FileInfo,
+  { jscodeshift: j }: API,
+  options: TransformerOptions,
+) {
+  const { attributeName, newAttributeValue, componentName } = options;
 
   const source = j(file.source);
 
   source.findJSXElements(componentName).forEach(element => {
-    replaceJSXAttributes(j, element, from, from, newValue);
+    replaceJSXAttributes({
+      j,
+      element,
+      attributeName,
+      newAttributeName: attributeName,
+      newAttributeValue,
+    });
   });
 
   return source.toSource();

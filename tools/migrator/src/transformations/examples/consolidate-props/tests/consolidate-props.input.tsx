@@ -9,13 +9,23 @@ const Child = (props: any) => {
 };
 
 export const App = () => {
+  const props = {
+    randomProp: 'value',
+  };
+
   return (
     <>
-      <MyComponent firstProp="value" secondProp="value2">
+      <MyComponent propToUpdate="another value" />
+      <MyComponent propToUpdate="value" propToRemove="value2">
         Hello
-        <Child firstProp="value" secondProp="value2" />
+        <Child propToUpdate="value" propToRemove="value2" />
+        <MyComponent propToUpdate="another value" propToRemove="value2" />
       </MyComponent>
-      <MyComponent firstProp="another value" secondProp="value2" />
+      <MyComponent propToUpdate="another value" propToRemove="value2" />
+      <MyComponent propToRemove="value2" />
+      <MyComponent propToRemove="value2" {...props} />
+      <MyComponent propToUpdate="value" propToRemove="value2" {...props} />
+      <MyComponent propToRemove="randome value" />
     </>
   );
 };

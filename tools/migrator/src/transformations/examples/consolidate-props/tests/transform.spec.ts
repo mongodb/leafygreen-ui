@@ -7,11 +7,23 @@ const tests = [
     name: 'consolidate-props',
     options: {
       componentName: 'MyComponent',
-      propToRemove: 'secondProp',
-      propToUpdate: 'firstProp',
+      propToRemove: 'propToRemove',
+      propToUpdate: 'propToUpdate',
       propMapping: {
         value2: 'value3',
       },
+    },
+  },
+  {
+    name: 'consolidate-props-boolean',
+    options: {
+      componentName: 'MyComponent',
+      propToRemove: 'disabled',
+      propToUpdate: 'state',
+      propMapping: {
+        true: 'disabled',
+      },
+      fromPropType: 'boolean',
     },
   },
 ];

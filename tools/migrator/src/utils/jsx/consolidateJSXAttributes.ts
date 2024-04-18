@@ -19,6 +19,8 @@ export function consolidateJSXAttributes({
   propMapping,
   fromPropType,
 }: ConsolidateJSXAttributesOptions) {
+  const isBoolean = fromPropType === 'boolean';
+
   // gets all the props on the elements opening tag
   const allAttributes = element.node.openingElement.attributes;
 
@@ -45,77 +47,59 @@ export function consolidateJSXAttributes({
   // If the propToRemove does not exist then return the source without any changes
   if (!fromProp) return;
 
-  // if the propToUpdate does not exist and there is a spread operator then return early since we don't know if the propToUpdate could be inside the spread
-  if (!toProp && hasSpreadOperator) {
-    // add comment in file that this has to be done manually
-    return;
-  }
-
   // finds the index of the propToRemove so that we can use it to remove it from the array of attributes
   const index = allAttributes.indexOf(fromProp);
 
-  // if the the propToRemove is a boolean
-  if (fromPropType === 'boolean') {
-    const fromPropValue =
-      fromProp.value === null ? true : fromProp.value.expression.value;
-    const fromPropValueString = fromPropValue.toString();
+  const getFromPropValue = (isBoolean: boolean) => {
+    let fromPropValue;
 
-    const newValMapping = propMapping[fromPropValueString];
+    if (isBoolean) {
+      fromPropValue =
+        fromProp.value === null ? true : fromProp.value.expression.value;
+      return fromPropValue.toString();
+    }
+    fromPropValue = fromProp.value.value;
+    return fromPropValue;
+  };
 
-    if (newValMapping) {
-      if (toProp) {
-        toProp.value.value = newValMapping;
+  // find the new value that propToUpdate should be updated with
+  const newValueMapping = propMapping[getFromPropValue(isBoolean)];
 
-        // remove propToRemove if propToUpdate exists
-        allAttributes.splice(index, 1);
-        return;
-      }
+  // if fromProp value is not in the mapping then remove that item from the atributes and return
+  if (!newValueMapping) {
+    allAttributes.splice(index, 1);
+    return;
+  }
 
-      // if propToUpdate does not exist then update the propToRemove
-      if (!toProp) {
-        fromProp.name.name = propToUpdate;
-        fromProp.value = j.stringLiteral(newValMapping);
-        return;
-      }
+  // if the propToUpdate does not exist and there is a spread operator then return early since we don't know if the propToUpdate could be inside the spread
+  if (!toProp && hasSpreadOperator) {
+    //TODO: add comment in file that this has to be done manually
+    return;
+  }
+
+  // if the propToUpdate does not exist then we update the propToRemove
+  if (!toProp) {
+    // Update the name
+    fromProp.name.name = propToUpdate;
+
+    // if its a boolean then turn the value into a string literal
+    if (isBoolean) {
+      fromProp.value = j.stringLiteral(newValueMapping);
+      return;
     }
 
-    // remove propToRemove if there there are no updates to propToUpdate
-    allAttributes.splice(index, 1);
-    return;
-  }
-
-  // gets the current value of the propToRemove
-  const fromPropValue = fromProp.value.value;
-
-  // if fromPropValue is not a string return
-  if (typeof fromPropValue !== 'string') return;
-
-  // gets the mapped value for propToUpdate
-  const newValueMapping = propMapping[fromPropValue];
-
-  // if there is no mapped value
-  if (!newValueMapping) {
-    // remove propToRemove
-    allAttributes.splice(index, 1);
-    return;
-  }
-
-  // if the propToUpdate exists
-  if (toProp) {
     // update the value
-    toProp.value.value = newValueMapping;
-
-    // remove propToRemove
-    allAttributes.splice(index, 1);
-  }
-
-  // if the propToUpdate does not exist
-  if (!toProp) {
-    // update the propToRemove
-    fromProp.name.name = propToUpdate;
     fromProp.value.value = newValueMapping;
+    return;
   }
+
+  // update the value of the propToUpdate
+  toProp.value.value = newValueMapping;
+  // remove propToRemove
+  allAttributes.splice(index, 1);
+  return;
 }
 
 // https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/9be21f72145f1f031aeb01987412eb28975ef8bf
 // https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/56e8c3f652937d28ce1873a7f0067b336b6b8417
+// https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/6b6e838a9101d665373a00d2d81a2f0c072ee8de

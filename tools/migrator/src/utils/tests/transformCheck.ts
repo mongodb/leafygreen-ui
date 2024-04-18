@@ -58,20 +58,23 @@ export function transformCheck(
         'utf8',
       );
 
-      console.log('🚨', { dirName, fixtureDir, inputPath });
+      // console.log('🚨', { dirName, fixtureDir, inputPath });
       // Assumes transform.ts is one level up from tests directory
       const module = await import(path.join(dirName, '..', 'transform.ts'));
-      console.log('module', path.join(dirName, '..', 'transform.ts'));
+      // console.log('module', path.join(dirName, '..', 'transform.ts'));
       const output = await applyTransform(
         { ...module },
         { source, path: inputPath },
         options,
       );
 
+      const formattedOutput = prettier.format(output, { parser });
+      const formattedExpected = prettier.format(expected, { parser });
+
+      // console.log({ expected, formattedExpected, output, formattedOutput });
+
       // Format output and expected with prettier for white spaces and line breaks consistency
-      expect(prettier.format(output, { parser })).toBe(
-        prettier.format(expected, { parser }),
-      );
+      expect(formattedOutput).toBe(formattedExpected);
     });
   });
 }
