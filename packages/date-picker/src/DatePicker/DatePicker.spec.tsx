@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   fireEvent,
-  // prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -16,6 +15,7 @@ import {
   testTimeZones,
   undefinedTZ,
 } from '@leafygreen-ui/date-utils/src/testing';
+import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
 import {
   eventContainingTargetValue,
   tabNTimes,
@@ -278,7 +278,7 @@ describe('packages/date-picker', () => {
               errorMessage="Custom error message"
             />,
           );
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toBeInTheDocument();
           expect(errorElement).toHaveTextContent('Custom error message');
         });
@@ -289,7 +289,7 @@ describe('packages/date-picker', () => {
           );
           const inputContainer = getByRole('combobox');
           expect(inputContainer).toHaveAttribute('aria-invalid', 'false');
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).not.toBeInTheDocument();
         });
 
@@ -300,7 +300,7 @@ describe('packages/date-picker', () => {
           const inputContainer = getByRole('combobox');
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
 
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toBeInTheDocument();
           expect(errorElement).toHaveTextContent(
             'Date must be before 2038-01-19',
@@ -316,7 +316,7 @@ describe('packages/date-picker', () => {
           const inputContainer = getByRole('combobox');
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
 
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toBeInTheDocument();
           expect(errorElement).toHaveTextContent('Custom error message');
         });
@@ -329,7 +329,7 @@ describe('packages/date-picker', () => {
           });
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
           expect(
-            queryByTestId('lg-form_field-error_message'),
+            queryByTestId(LGIDS_FORM_FIELD.errorMessage),
           ).toHaveTextContent('Date must be before 2038-01-19');
         });
 
@@ -340,20 +340,20 @@ describe('packages/date-picker', () => {
             });
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
           expect(
-            queryByTestId('lg-form_field-error_message'),
+            queryByTestId(LGIDS_FORM_FIELD.errorMessage),
           ).toHaveTextContent('Date must be before 2038-01-19');
 
           rerenderDatePicker({ errorMessage: 'Some error', state: 'error' });
 
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
           expect(
-            queryByTestId('lg-form_field-error_message'),
+            queryByTestId(LGIDS_FORM_FIELD.errorMessage),
           ).toHaveTextContent('Some error');
 
           rerenderDatePicker({ state: 'none' });
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
           expect(
-            queryByTestId('lg-form_field-error_message'),
+            queryByTestId(LGIDS_FORM_FIELD.errorMessage),
           ).toHaveTextContent('Date must be before 2038-01-19');
         });
 
@@ -363,7 +363,7 @@ describe('packages/date-picker', () => {
               value: newUTC(1967, Month.March, 10),
             });
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toHaveTextContent(
             'Date must be after 1970-01-01',
           );
@@ -381,7 +381,7 @@ describe('packages/date-picker', () => {
               value: newUTC(2050, Month.January, 1),
             });
           expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toHaveTextContent(
             'Date must be before 2038-01-19',
           );
@@ -1165,7 +1165,7 @@ describe('packages/date-picker', () => {
                 }
 
                 const errorElement = renderResult.queryByTestId(
-                  'lg-form_field-error_message',
+                  LGIDS_FORM_FIELD.errorMessage,
                 );
 
                 await waitFor(() =>
@@ -1200,7 +1200,7 @@ describe('packages/date-picker', () => {
                 }
 
                 const errorElement = renderResult.queryByTestId(
-                  'lg-form_field-error_message',
+                  LGIDS_FORM_FIELD.errorMessage,
                 );
 
                 await waitFor(() =>
@@ -1239,7 +1239,7 @@ describe('packages/date-picker', () => {
                 }
 
                 const errorElement = renderResult.queryByTestId(
-                  'lg-form_field-error_message',
+                  LGIDS_FORM_FIELD.errorMessage,
                 );
 
                 await waitFor(() =>
@@ -1658,7 +1658,7 @@ describe('packages/date-picker', () => {
                             'true',
                           );
                           const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
+                            LGIDS_FORM_FIELD.errorMessage,
                           );
                           expect(errorElement).toBeInTheDocument();
                           expect(errorElement).toHaveTextContent(
@@ -1688,7 +1688,7 @@ describe('packages/date-picker', () => {
                             'true',
                           );
                           const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
+                            LGIDS_FORM_FIELD.errorMessage,
                           );
                           expect(errorElement).toBeInTheDocument();
                           expect(errorElement).toHaveTextContent(
@@ -1718,7 +1718,7 @@ describe('packages/date-picker', () => {
                             'false',
                           );
                           const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
+                            LGIDS_FORM_FIELD.errorMessage,
                           );
                           expect(errorElement).not.toBeInTheDocument();
                         });
@@ -1962,7 +1962,7 @@ describe('packages/date-picker', () => {
                             'true',
                           );
                           const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
+                            LGIDS_FORM_FIELD.errorMessage,
                           );
                           expect(errorElement).toBeInTheDocument();
                           expect(errorElement).toHaveTextContent(
@@ -1992,7 +1992,7 @@ describe('packages/date-picker', () => {
                             'true',
                           );
                           const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
+                            LGIDS_FORM_FIELD.errorMessage,
                           );
                           expect(errorElement).toBeInTheDocument();
                           expect(errorElement).toHaveTextContent(
@@ -2022,7 +2022,7 @@ describe('packages/date-picker', () => {
                             'false',
                           );
                           const errorElement = result.queryByTestId(
-                            'lg-form_field-error_message',
+                            LGIDS_FORM_FIELD.errorMessage,
                           );
                           expect(errorElement).not.toBeInTheDocument();
                         });
@@ -2882,7 +2882,7 @@ describe('packages/date-picker', () => {
             userEvent.type(monthInput, '02');
             userEvent.type(dayInput, '31');
             expect(inputContainer).toHaveAttribute('aria-invalid', 'true');
-            const errorElement = queryByTestId('lg-form_field-error_message');
+            const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
             expect(errorElement).toBeInTheDocument();
             expect(errorElement).toHaveTextContent(
               '2020-02-31 is not a valid date',
@@ -3512,21 +3512,21 @@ describe('packages/date-picker', () => {
           userEvent.type(monthInput, '02');
           userEvent.type(dayInput, '31');
           userEvent.tab();
-          let errorElement = queryByTestId('lg-form_field-error_message');
+          let errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toHaveTextContent(
             '2020-02-31 is not a valid date',
           );
 
           userEvent.type(dayInput, '{backspace}0');
           userEvent.tab();
-          errorElement = queryByTestId('lg-form_field-error_message');
+          errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toHaveTextContent(
             '2020-02- is not a valid date',
           );
 
           userEvent.type(dayInput, '{backspace}{backspace}');
           userEvent.tab();
-          errorElement = queryByTestId('lg-form_field-error_message');
+          errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toHaveTextContent('2020-- is not a valid date');
         });
 
@@ -3536,7 +3536,7 @@ describe('packages/date-picker', () => {
           userEvent.type(yearInput, '2020');
           userEvent.type(monthInput, '02');
           userEvent.type(dayInput, '31');
-          const errorElement = queryByTestId('lg-form_field-error_message');
+          const errorElement = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement).toHaveTextContent(
             '2020-02-31 is not a valid date',
           );
@@ -3547,7 +3547,7 @@ describe('packages/date-picker', () => {
             yearInput,
             '{backspace}{backspace}{backspace}{backspace}',
           );
-          const errorElement2 = queryByTestId('lg-form_field-error_message');
+          const errorElement2 = queryByTestId(LGIDS_FORM_FIELD.errorMessage);
           expect(errorElement2).not.toBeInTheDocument();
         });
       });

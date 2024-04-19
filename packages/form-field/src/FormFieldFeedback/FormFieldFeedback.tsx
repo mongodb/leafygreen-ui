@@ -45,6 +45,9 @@ export const FormFieldFeedback = ({
 
   return (
     <div
+      id={id}
+      data-lgid={LGIDS_FORM_FIELD.feedback}
+      data-testid={LGIDS_FORM_FIELD.feedback}
       className={cx(containerStyles, {
         [spacingTop]: showFormFieldFeedback,
         [hideContainerStyle]: hideFeedback,
@@ -61,7 +64,7 @@ export const FormFieldFeedback = ({
           {isErrorState ? (
             <Error
               data-lgid={LGIDS_FORM_FIELD.errorMessage}
-              data-testid="lg-form_field_feedback-error_message"
+              data-testid={LGIDS_FORM_FIELD.errorMessage}
               className={fontStyles}
             >
               {errorMessage}
@@ -69,7 +72,7 @@ export const FormFieldFeedback = ({
           ) : (
             <Body
               data-lgid={LGIDS_FORM_FIELD.successMessage}
-              data-testid="lg-form_field_feedback-success_message"
+              data-testid={LGIDS_FORM_FIELD.successMessage}
               className={fontStyles}
             >
               {successMessage}
