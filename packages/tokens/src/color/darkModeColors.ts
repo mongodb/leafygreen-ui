@@ -46,9 +46,9 @@ const darkModeBackgroundColors = {
     [State.Focus]: red.dark3,
   },
   [Variant.Disabled]: {
-    [State.Default]: gray.dark2,
-    [State.Hover]: gray.dark2,
-    [State.Focus]: gray.dark2,
+    [State.Default]: gray.dark3,
+    [State.Hover]: gray.dark3,
+    [State.Focus]: gray.dark3,
   },
 } as const satisfies VariantColorRecord;
 
