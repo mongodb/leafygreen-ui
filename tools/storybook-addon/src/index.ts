@@ -7,6 +7,7 @@ export {
   babel,
   core,
   docs,
+  experimental_indexers,
   framework,
   managerHead,
   previewHead,

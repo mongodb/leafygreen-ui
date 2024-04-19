@@ -3,10 +3,12 @@
  */
 
 import type { StorybookConfig } from '@storybook/react-webpack5';
+import { Indexer } from '@storybook/types';
 import isRegExp from 'lodash/isRegExp';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
 
 import { findStories } from './findStories';
+import { generatedStoriesIndexer } from './generatedStoriesIndexer';
 import { isRule } from './utils';
 
 export { managerHead } from './manager-head';
@@ -14,16 +16,16 @@ export { previewHead } from './preview-head';
 
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,chat,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
+  '../{packages,tools,chat,stories}/**/*.stor@(y|ies).@(js|ts)?(x)',
   '../{packages,tools,chat}/*/node_modules',
 );
 
 export const addons: StorybookConfig['addons'] = [
-  '@storybook/addon-essentials', // actions, controls & docs
-  '@storybook/addon-links',
-  '@storybook/addon-interactions',
-  '@storybook/addon-a11y',
-  'storybook-dark-mode',
+  // '@storybook/addon-essentials', // actions, controls & docs
+  // '@storybook/addon-links',
+  // '@storybook/addon-interactions',
+  // '@storybook/addon-a11y',
+  // 'storybook-dark-mode',
 ];
 
 export const framework: StorybookConfig['framework'] = {
@@ -41,6 +43,11 @@ export const core: StorybookConfig['core'] = {
 export const staticDirs: StorybookConfig['staticDirs'] = [
   './static',
   '../node_modules/@lg-tools/storybook-addon/static',
+];
+
+export const experimental_indexers = async (indexers: Array<Indexer>) => [
+  ...indexers,
+  generatedStoriesIndexer,
 ];
 
 export const babel: StorybookConfig['babel'] = async options => {
