@@ -1,5 +1,5 @@
 // TODO: figure out correct types
-import type { ASTNode, ASTPath, Options } from 'jscodeshift';
+import type { ASTNode, ASTPath, JSXAttribute, Options } from 'jscodeshift';
 import type core from 'jscodeshift';
 
 export interface ConsolidateJSXAttributesOptions extends Options {
@@ -12,7 +12,7 @@ export interface ConsolidateJSXAttributesOptions extends Options {
 }
 
 /**
- *
+ * //TODO: UPDATE ME
  * @param param0
  * @returns
  */
@@ -40,57 +40,30 @@ export function consolidateJSXAttributes({
   );
 
   // Finds the propToRemove from the list of attributes
-  const fromProp = allAttributesWithoutSpread.find(
-    (attribute: ASTPath) => attribute.name.name === propToRemove,
+  const fromProp: ASTPath<JSXAttribute> = allAttributesWithoutSpread.find(
+    (attribute: ASTPath<JSXAttribute>) => attribute.name.name === propToRemove,
   );
 
   // Finds the propToUpdate from the list of attributes
-  const toProp = allAttributesWithoutSpread.find(
-    (attribute: ASTPath) => attribute.name.name === propToUpdate,
+  const toProp: ASTPath<JSXAttribute> = allAttributesWithoutSpread.find(
+    (attribute: ASTPath<JSXAttribute>) => attribute.name.name === propToUpdate,
   );
 
   // If the propToRemove does not exist then return the source without any changes
   if (!fromProp) return;
 
   // finds the index of the propToRemove so that we can use it to remove it from the array of attributes
-  const index = allAttributes.indexOf(fromProp);
+  const attributeToRemoveIndex = allAttributes.indexOf(fromProp);
 
-  /**
-   *
-   * @param isBoolean
-   * @returns
-   */
-  const getFromPropValue = (isBoolean: boolean) => {
-    let fromPropValue;
-    const expressionType = fromProp.value?.type;
-    const isStringLiteralType = expressionType === 'StringLiteral';
-    const isBooleanType =
-      expressionType === 'JSXExpressionContainer' || fromProp.value === null;
-
-    if (isBoolean) {
-      if (isBooleanType) {
-        fromPropValue =
-          fromProp.value === null ? true : fromProp.value.expression.value;
-        return fromPropValue.toString();
-      }
-
-      return;
-    }
-
-    if (isStringLiteralType) {
-      fromPropValue = fromProp.value.value;
-      return fromPropValue;
-    }
-
-    return;
-  };
+  const removePropToRemove = () =>
+    allAttributes.splice(attributeToRemoveIndex, 1);
 
   // find the new value that propToUpdate should be updated with
-  const newValueMapping = propMapping[getFromPropValue(isBoolean)];
+  const newValueMapping = propMapping[getFromPropValue(isBoolean, fromProp)];
 
   // if fromProp value is not in the mapping then remove that item from the atributes and return
   if (!newValueMapping) {
-    allAttributes.splice(index, 1);
+    removePropToRemove();
     return;
   }
 
@@ -103,31 +76,66 @@ export function consolidateJSXAttributes({
 
   // if the propToUpdate does not exist then we update the propToRemove
   if (!toProp) {
-    // Update the name
-    fromProp.name.name = propToUpdate;
+    // remove the propToRemove
+    removePropToRemove();
 
-    // if its a boolean then turn the value into a string literal
-    if (isBoolean) {
-      fromProp.value = j.stringLiteral(newValueMapping);
-      return;
-    }
-
-    // update the value
-    fromProp.value.value = newValueMapping;
+    // Create a new prop for propToUpdate
+    const attributeValueNode = j.stringLiteral(newValueMapping);
+    // Create a new JSXAttribute node with the attribute name and value
+    const newAttribute = j.jsxAttribute(
+      j.jsxIdentifier(propToUpdate),
+      attributeValueNode,
+    );
+    // Add the new attribute to the opening element
+    element.node.openingElement.attributes.push(newAttribute);
     return;
   }
 
   // If the propToUpdate does exist then update the value
   if (toProp) {
     // If the propToUpdate is not a string then return
+    //@ts-expect-error = types JSXAttribute and string are overlapping but they shouldn't be since type is a string
     if (toProp.value.type !== 'StringLiteral') return;
 
     // update the value of the propToUpdate
+    // @ts-expect-error: not sure why the string is not assignable
     toProp.value.value = newValueMapping;
     // remove propToRemove
-    allAttributes.splice(index, 1);
+    removePropToRemove();
     return;
   }
 }
 
 // https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/2dd743eb2b9c7e66b006d6bd149cb39b11c8501e
+
+/**
+ *
+ * @param isBoolean
+ * @returns
+ */
+const getFromPropValue = (
+  isBoolean: boolean,
+  fromProp: ASTPath<JSXAttribute>,
+) => {
+  let fromPropValue;
+  const expressionType: string = fromProp.value?.type;
+  const isStringLiteralType = expressionType === 'StringLiteral';
+  const isBooleanType =
+    expressionType === 'JSXExpressionContainer' ||
+    fromProp.value === null ||
+    fromProp.value === undefined;
+
+  if (isBoolean) {
+    if (isBooleanType) {
+      fromPropValue =
+        // @ts-expect-error: not sure why it says expression does not exist on type 'JSXAttribute'.
+        fromProp.value === null ? true : fromProp?.value?.expression.value;
+      return fromPropValue.toString();
+    }
+  }
+
+  if (isStringLiteralType) {
+    fromPropValue = fromProp.value?.value;
+    return fromPropValue;
+  }
+};
