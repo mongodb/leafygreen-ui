@@ -6,3 +6,8 @@ export const LGIDS_FORM_FIELD = {
   successMessage: `${LGID_ROOT}-success_message`,
   optional: `${LGID_ROOT}-optional`,
 } as const;
+
+export const DEFAULT_MESSAGES = {
+  error: 'This input needs your attention',
+  success: 'Success',
+} as const;
