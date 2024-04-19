@@ -15,7 +15,7 @@ export interface FormFieldInputElementProps {
 export interface FormFieldElementProps {
   labelId: string;
   descriptionId: string;
-  errorId: string;
+  feedbackId: string;
   inputId: string;
   inputProps: FormFieldInputElementProps;
 }
@@ -32,16 +32,17 @@ export const useFormFieldProps = ({
   const descriptionId = useIdAllocator({
     prefix: 'lg-form-field-description',
   });
-  const errorId = useIdAllocator({ prefix: 'lg-form-field-description' });
+  const feedbackId = useIdAllocator({ prefix: 'lg-form-field-description' });
   const generatedInputId = useIdAllocator({ prefix: 'lg-form-field-input' });
   const inputId = id ?? generatedInputId;
 
   const hasError = state === FormFieldState.Error;
+  const hasFeedback = state !== FormFieldState.None;
 
   const ariaLabelledby = label ? labelId : rest['aria-labelledby'];
   const ariaLabel = label || ariaLabelledby ? undefined : rest['aria-label'];
   const ariaDescribedby = `${description ? descriptionId : ''} ${
-    hasError ? errorId : ''
+    hasFeedback ? feedbackId : ''
   }`.trim();
   const ariaInvalid = rest['aria-invalid'] ?? hasError;
 
@@ -58,7 +59,7 @@ export const useFormFieldProps = ({
   return {
     labelId,
     descriptionId,
-    errorId,
+    feedbackId,
     inputId,
     inputProps,
   };
