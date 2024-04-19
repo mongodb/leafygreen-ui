@@ -15,7 +15,7 @@ async function applyTransform(
   // TODO: don't understand whats happening here
   // Handle ES6 modules using default export for the transform
   const transformer = transform.default ? transform.default : transform;
-  // console.log({ transformer });
+  console.log('🐥', { transformer, transform });
   const output = await transformer(
     input,
     {
@@ -61,7 +61,7 @@ export function transformCheck(
       console.log('🚨', { dirName, fixtureDir, inputPath });
       // Assumes transform.ts is one level up from tests directory
       const module = await import(path.join(dirName, '..', 'transform.ts'));
-      // console.log('module', path.join(dirName, '..', 'transform.ts'));
+      // console.log({ module }, path.join(dirName, '..', 'transform.ts'));
       const output = await applyTransform(
         { ...module },
         { source, path: inputPath },

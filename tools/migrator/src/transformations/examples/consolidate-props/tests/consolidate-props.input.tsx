@@ -13,6 +13,10 @@ export const App = () => {
     randomProp: 'value',
   };
 
+  const Test = () => {
+    return <MyComponent propToUpdate="another value" propToRemove="value2" />;
+  };
+
   return (
     <>
       <MyComponent propToUpdate="another value" />
@@ -26,6 +30,7 @@ export const App = () => {
       <MyComponent propToRemove="value2" {...props} />
       <MyComponent propToUpdate="value" propToRemove="value2" {...props} />
       <MyComponent propToRemove="randome value" />
+      <Test />
     </>
   );
 };
