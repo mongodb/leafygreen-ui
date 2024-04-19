@@ -1,6 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { BaseFontSize, color, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  color,
+  fontFamilies,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const baseTypographyStyles = css`
   margin: unset;
