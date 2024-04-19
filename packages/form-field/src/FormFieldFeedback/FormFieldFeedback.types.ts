@@ -12,7 +12,7 @@ export interface FormFieldFeedbackProps extends HTMLElementProps<'div'> {
   /**
    * The message to display when in an error state
    */
-  errorMessage: string;
+  errorMessage: React.ReactNode;
 
   /**
    * Defines if feedback should forcibly be hidden
@@ -38,5 +38,5 @@ export interface FormFieldFeedbackProps extends HTMLElementProps<'div'> {
   /**
    * The message to display when in a valid state
    */
-  successMessage: string;
+  successMessage: React.ReactNode;
 }
