@@ -34,7 +34,6 @@ export function replaceJSXAttributes({
   // returns a Collection(Array) of NodePaths that we loop through.
   // Each attribute is a NodePath
   return getJSXAttributes(j, element, attributeName).forEach(attribute => {
-    // j(attribute).find(j.JSXIdentifier).replaceWith(j.jsxIdentifier(newAttributeName));
     attribute.node.name.name = newAttributeName;
 
     if (!newAttributeValue) {

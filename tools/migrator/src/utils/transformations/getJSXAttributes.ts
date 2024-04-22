@@ -14,7 +14,7 @@ export function getJSXAttributes(
   element: ASTPath<any>,
   attributeName: string,
 ) {
-  // TODO: reword this. Targeting the openingElement directly targets only the parent element rather than all of its children elements e.g j(element). We do this to avoid selecting children that might have props names identical to the parent element.
+  // Targeting the openingElement directly targets only the parent element rather than all of its children elements e.g j(element). We do this to avoid selecting children that might have props names identical to the parent element.
   const elementCollection = j(element.value.openingElement);
   return elementCollection.find(j.JSXAttribute).filter(attribute => {
     return attribute.value.name.name === attributeName;

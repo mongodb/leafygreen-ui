@@ -3,7 +3,7 @@ import type { API, FileInfo } from 'jscodeshift';
 import {
   replaceJSXAttributes,
   ReplaceJSXAttributesType,
-} from '../../../utils/jsx/replaceJSXAttributes';
+} from '../../../utils/transformations';
 
 type TransformerOptions = ReplaceJSXAttributesType & { componentName: string };
 

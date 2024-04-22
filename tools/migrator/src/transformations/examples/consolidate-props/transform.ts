@@ -3,7 +3,7 @@ import type { API, FileInfo } from 'jscodeshift';
 import {
   consolidateJSXAttributes,
   ConsolidateJSXAttributesOptions,
-} from '../../../utils/jsx/consolidateJSXAttributes';
+} from '../../../utils/transformations';
 
 type TransformerOptions = ConsolidateJSXAttributesOptions & {
   componentName: string;

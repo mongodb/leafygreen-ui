@@ -1,1 +1,3 @@
-export { renameProps } from './renameProps';
+export { consolidateJSXAttributes } from './consolidateJSXAttributes';
+export { getJSXAttributes } from './getJSXAttributes';
+export { replaceJSXAttributes } from './replaceJSXAttributes';

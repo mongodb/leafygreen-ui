@@ -11,7 +11,6 @@ export interface TestCommandOptions {
   verbose?: boolean;
   config?: string;
   react17?: boolean;
-  silent?: boolean;
 }
 
 export const test = (
@@ -19,7 +18,7 @@ export const test = (
   options: TestCommandOptions,
 ) => {
   const rootDir = process.cwd();
-  const { watch, ci, verbose, silent } = options;
+  const { watch, ci, verbose } = options;
   const ciFlags = [
     '--no-cache',
     '--ci',
@@ -50,8 +49,8 @@ export const test = (
     ...[`--rootDir`, rootDir],
     watch ? '--watch' : '',
     verbose ? '--verbose' : '',
-    silent ? '--silent' : '',
     ...(ci ? ciFlags : []),
+    '--silent',
     ...passThroughOptions,
   ].filter(v => v !== '');
 
