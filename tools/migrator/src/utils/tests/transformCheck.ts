@@ -1,5 +1,5 @@
 // TODO: copied from polaris
-/* eslint-disable no-console */
+
 /* eslint-disable jest/no-export, jest/valid-title */
 import fs from 'fs';
 import jscodeshift, { type FileInfo } from 'jscodeshift';
@@ -12,10 +12,9 @@ async function applyTransform(
   input: FileInfo,
   options?: { [option: string]: any },
 ) {
-  // TODO: don't understand whats happening here
+  // This get the default export from inside transform.ts
   // Handle ES6 modules using default export for the transform
   const transformer = transform.default ? transform.default : transform;
-  console.log('🐥', { transformer, transform });
   const output = await transformer(
     input,
     {
@@ -57,7 +56,6 @@ export function transformCheck(
         path.join(fixtureDir, `${fixture}.output.${extension}`),
         'utf8',
       );
-      console.log('🚨', { dirName, fixtureDir, inputPath });
       // Assumes transform.ts is two levels up from tests directory
       const module = await import(path.join(dirName, '../..', 'transform.ts'));
       const output = await applyTransform(
