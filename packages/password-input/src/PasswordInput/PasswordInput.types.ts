@@ -13,6 +13,7 @@ export const State = {
 export type State = (typeof State)[keyof typeof State];
 
 export const Size = {
+  XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
   Large: 'large',
@@ -87,6 +88,16 @@ interface BasePasswordInputProps
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
    */
   id?: string;
+
+  /**
+   * The message shown below the input when state is `error`
+   */
+  errorMessage?: React.ReactNode;
+
+  /**
+   * The message shown below the input when state is `valid`
+   */
+  successMessage?: React.ReactNode;
 }
 
 export type PasswordInputProps = BasePasswordInputProps & ConditionalProps;

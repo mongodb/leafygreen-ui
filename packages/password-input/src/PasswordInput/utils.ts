@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import { allEqual } from '@leafygreen-ui/lib';
 
 import { NotificationProps, State } from './PasswordInput.types';
@@ -26,6 +27,24 @@ export function getStateFromArray(
   if (statesArray.includes(State.Warning)) return State.Warning;
 
   return State.None;
+}
+
+/**
+ * Utility function that takes a value of `State` and converts to a value of `FormFieldState`
+ *
+ * @param state `State`
+ * @returns a value of `FormFieldState`
+ */
+export function convertStateToFormFieldState(state: State): FormFieldState {
+  if (state === State.Error || state === State.Warning) {
+    return FormFieldState.Error;
+  }
+
+  if (state === State.Valid) {
+    return FormFieldState.Valid;
+  }
+
+  return FormFieldState.None;
 }
 
 /**
