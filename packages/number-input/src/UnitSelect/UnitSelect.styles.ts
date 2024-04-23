@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color } from '@leafygreen-ui/tokens';
+import { color, typeScales } from '@leafygreen-ui/tokens';
 
 export const wrapperBaseStyles = css`
   margin-left: -1px;
@@ -24,7 +24,7 @@ export const selectStyles = css`
   }
 
   button {
-    font-size: 12px;
-    line-height: 16px;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
   }
 `;
