@@ -5,8 +5,8 @@ const test = {
   name: 'update-component-prop-value',
   options: {
     componentName: 'MyComponent',
-    attributeName: 'prop',
-    newAttributeValue: 'newPropValue',
+    propName: 'prop',
+    newPropValue: 'newPropValue',
   },
 };
 transformCheck(__dirname, {

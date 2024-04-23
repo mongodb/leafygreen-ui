@@ -6,8 +6,8 @@ const test = {
   name: 'rename-component-prop',
   options: {
     componentName: 'MyComponent',
-    attributeName: 'prop',
-    newAttributeName: 'newProp',
+    propName: 'prop',
+    newPropName: 'newProp',
   },
 };
 

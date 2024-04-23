@@ -57,15 +57,9 @@ export function transformCheck(
         path.join(fixtureDir, `${fixture}.output.${extension}`),
         'utf8',
       );
-
       console.log('🚨', { dirName, fixtureDir, inputPath });
-      // Assumes transform.ts is one level up from tests directory
+      // Assumes transform.ts is two levels up from tests directory
       const module = await import(path.join(dirName, '../..', 'transform.ts'));
-      console.log(
-        '🚨🚨🚨',
-        { module },
-        path.join(dirName, '../..', 'transform.ts'),
-      );
       const output = await applyTransform(
         { ...module },
         { source, path: inputPath },
@@ -74,8 +68,6 @@ export function transformCheck(
 
       const formattedOutput = prettier.format(output, { parser });
       const formattedExpected = prettier.format(expected, { parser });
-
-      // console.log({ expected, formattedExpected, output, formattedOutput });
 
       // Format output and expected with prettier for white spaces and line breaks consistency
       expect(formattedOutput).toBe(formattedExpected);

@@ -12,7 +12,7 @@ export default function transformer(
   { jscodeshift: j }: API,
   options: TransformerOptions,
 ) {
-  const { attributeName, newAttributeValue, componentName } = options;
+  const { propName, newPropValue, componentName } = options;
 
   const source = j(file.source);
 
@@ -20,9 +20,9 @@ export default function transformer(
     replaceJSXAttributes({
       j,
       element,
-      attributeName,
-      newAttributeName: attributeName,
-      newAttributeValue,
+      propName,
+      newPropName: propName,
+      newPropValue,
     });
   });
 

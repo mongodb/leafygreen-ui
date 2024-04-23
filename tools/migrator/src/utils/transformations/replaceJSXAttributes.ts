@@ -6,9 +6,9 @@ import { getJSXAttributes } from './getJSXAttributes';
 export interface ReplaceJSXAttributesType {
   j: core.JSCodeshift;
   element: ASTPath<any>;
-  attributeName: string;
-  newAttributeName: string;
-  newAttributeValue?:
+  propName: string;
+  newPropName: string;
+  newPropValue?:
     | string
     | {
         [key: string]: string;
@@ -16,44 +16,58 @@ export interface ReplaceJSXAttributesType {
 }
 
 /**
+ * `replaceJSXAttributes` can replace both the name and value of an attribute.
  *
- * @param j
- * @param element
- * @param attributeName
- * @param newAttributeName
- * @param newAttributeValue
- * @returns
+ * e.g:
+ * ```tsx
+ * propName: prop
+ * newPropName: newProp
+ *
+ * Before:
+ * <MyComponent prop='hey' />
+ * After:
+ * <MyComponent newProp='hey' />
+ * -----------------------------------
+ * propName: prop
+ * newPropName: prop
+ * newPropValue: {hey: 'hey new', bye: 'bye new`}
+ *
+ * Before:
+ * <MyComponent prop='hey' />
+ * After:
+ * <MyComponent prop='hey new' />
+ * ```
  */
 export function replaceJSXAttributes({
   j,
   element,
-  attributeName,
-  newAttributeName,
-  newAttributeValue,
+  propName,
+  newPropName,
+  newPropValue,
 }: ReplaceJSXAttributesType) {
   // returns a Collection(Array) of NodePaths that we loop through.
   // Each attribute is a NodePath
-  return getJSXAttributes(j, element, attributeName).forEach(attribute => {
-    attribute.node.name.name = newAttributeName;
+  return getJSXAttributes(j, element, propName).forEach(attribute => {
+    attribute.node.name.name = newPropName;
 
-    if (!newAttributeValue) {
+    if (!newPropValue) {
       return;
     }
 
     j(attribute)
       .find(j.StringLiteral)
       .forEach(literal => {
-        const isStringLiteral = typeof newAttributeValue === 'string';
+        const isStringLiteral = typeof newPropValue === 'string';
 
         if (isStringLiteral) {
-          literal.node.value = newAttributeValue;
+          literal.node.value = newPropValue;
           return;
         }
 
         const value = literal.node.value;
 
-        if (value in newAttributeValue) {
-          literal.node.value = newAttributeValue[value];
+        if (value in newPropValue) {
+          literal.node.value = newPropValue[value];
         }
       });
   });

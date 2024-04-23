@@ -6,8 +6,8 @@ const test = {
   name: 'update-component-prop-value-multiple',
   options: {
     componentName: 'MyComponent',
-    attributeName: 'prop',
-    newAttributeValue: "new prop y'all",
+    propName: 'prop',
+    newPropValue: "new prop y'all",
   },
 };
 transformCheck(__dirname, {

@@ -12,12 +12,12 @@ export default function transformer(
   { jscodeshift: j }: API,
   options: TransformerOptions,
 ) {
-  const { attributeName, newAttributeName, componentName } = options;
+  const { propName, newPropName, componentName } = options;
 
   const source = j(file.source);
 
   source.findJSXElements(componentName).forEach(element => {
-    replaceJSXAttributes({ j, element, attributeName, newAttributeName });
+    replaceJSXAttributes({ j, element, propName, newPropName });
   });
 
   return source.toSource();

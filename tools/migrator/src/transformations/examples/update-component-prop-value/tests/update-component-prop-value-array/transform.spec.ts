@@ -5,8 +5,8 @@ const test = {
   name: 'update-component-prop-value-array',
   options: {
     componentName: 'MyComponent',
-    attributeName: 'prop',
-    newAttributeValue: {
+    propName: 'prop',
+    newPropValue: {
       value1: 'value1Mapped',
       value2: 'value2Mapped',
       value3: 'value3Mapped',
