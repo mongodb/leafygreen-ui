@@ -7,7 +7,10 @@ import { color } from '@leafygreen-ui/tokens';
 import { Body, Error, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_FORM_FIELD } from '../constants';
-import { getFontSize } from '../FormField/FormField.styles';
+import {
+  convertFormFieldStateToIconVariant,
+  getFontSizeStyles,
+} from '../FormField/FormField.styles';
 import { FormFieldState } from '../FormField/FormField.types';
 
 import {
@@ -31,17 +34,20 @@ export const FormFieldFeedback = ({
 }: FormFieldFeedbackProps) => {
   const { theme } = useDarkMode();
   const baseFontSize = useUpdatedBaseFontSize();
-  const fontStyles = getFontSize({ baseFontSize, size });
+  const fontStyles = getFontSizeStyles({ baseFontSize, size });
 
   const isErrorState = state === FormFieldState.Error;
   const isValidState = state === FormFieldState.Valid;
   const showFormFieldFeedback = (isErrorState || isValidState) && !disabled;
 
-  const iconProps = {
-    glyph: isErrorState ? 'Warning' : 'Checkmark',
-    fill: color[theme].icon[isErrorState ? 'error' : 'success'].default,
-    title: isErrorState ? 'Error' : 'Valid',
-  } as const;
+  const iconProps = showFormFieldFeedback
+    ? ({
+        glyph: isErrorState ? 'Warning' : 'Checkmark',
+        fill: color[theme].icon[convertFormFieldStateToIconVariant(state)]
+          .default,
+        title: isErrorState ? 'Error' : 'Valid',
+      } as const)
+    : undefined;
 
   return (
     <div
@@ -58,9 +64,11 @@ export const FormFieldFeedback = ({
     >
       {showFormFieldFeedback && (
         <>
-          <div className={cx(iconWrapperStyles, getIconWrapperHeight(size))}>
-            <Icon {...iconProps} aria-hidden />
-          </div>
+          {iconProps && (
+            <div className={cx(iconWrapperStyles, getIconWrapperHeight(size))}>
+              <Icon {...iconProps} aria-hidden />
+            </div>
+          )}
           {isErrorState ? (
             <Error
               data-lgid={LGIDS_FORM_FIELD.errorMessage}

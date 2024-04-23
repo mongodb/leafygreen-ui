@@ -350,7 +350,11 @@ describe('packages/form-field', () => {
       const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
       expect(input).toHaveAttribute(
         'aria-describedby',
-        description?.id + ' ' + feedback?.id,
+        expect.stringContaining(description?.id!),
+      );
+      expect(input).toHaveAttribute(
+        'aria-describedby',
+        expect.stringContaining(feedback?.id),
       );
     });
   });

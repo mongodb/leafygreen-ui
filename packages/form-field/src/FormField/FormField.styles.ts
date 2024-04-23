@@ -1,7 +1,15 @@
 import { css } from '@leafygreen-ui/emotion';
-import { BaseFontSize, Size, spacing, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  Size,
+  spacing,
+  typeScales,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
-export const getFontSize = ({
+import { FormFieldState } from './FormField.types';
+
+export const getFontSizeStyles = ({
   baseFontSize,
   size,
 }: {
@@ -24,10 +32,22 @@ export const getFontSize = ({
 
   if (size === Size.Large) {
     return css`
-      font-size: 18px;
-      line-height: 24px;
+      font-size: ${typeScales.large.fontSize}px;
+      line-height: ${typeScales.large.lineHeight}px;
     `;
   }
+};
+
+export const convertFormFieldStateToIconVariant = (state: FormFieldState) => {
+  if (state === FormFieldState.Error) {
+    return Variant.Error;
+  }
+
+  if (state === FormFieldState.Valid) {
+    return Variant.Success;
+  }
+
+  return Variant.Primary;
 };
 
 export const textContainerStyle = css`
