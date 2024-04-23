@@ -21,7 +21,7 @@
   "devDependencies": {
     "@types/jscodeshift":"0.11.11"
   },
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/migrator",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"

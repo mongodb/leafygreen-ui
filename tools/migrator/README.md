@@ -1,23 +1,21 @@
-# Storybook Utils
+# Migrator
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/storybook-utils.svg)
-
-#### [View on MongoDB.design](https://www.mongodb.design/component/storybook-utils/example/)
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/migrator.svg)
 
 ## Installation
 
 ### Yarn
 
 ```shell
-yarn add @lg-tools/storybook-utils
+yarn add @lg-tools/migrator
 ```
 
 ### NPM
 
 ```shell
-npm install @lg-tools/storybook-utils
+npm install @lg-tools/migrator
 ```
 
 ## Usage
 
-`@lg-tools/storybook-utils` provides several utilities & types to help write Storybook files
+//TODO: Update me
