@@ -22,6 +22,8 @@ export const iconWrapperStyles = css`
 
 export const getIconWrapperHeight = (size: Size) => {
   return css`
-    height: ${size === Size.Large ? 24 : typeScales.body1.lineHeight}px;
+    height: ${size === Size.Large
+      ? typeScales.large.lineHeight
+      : typeScales.body1.lineHeight}px;
   `;
 };

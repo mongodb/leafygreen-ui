@@ -9,12 +9,12 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { DEFAULT_MESSAGES } from '../constants';
+import { DEFAULT_MESSAGES, LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 import { FormFieldFeedback } from '../FormFieldFeedback';
 
 import {
-  getFontSize,
+  getFontSizeStyles,
   marginBottom,
   textContainerStyle,
 } from './FormField.styles';
@@ -50,7 +50,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     fwdRef,
   ) => {
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-    const fontStyles = getFontSize({ baseFontSize, size });
+    const fontStyles = getFontSizeStyles({ baseFontSize, size });
 
     const { labelId, descriptionId, feedbackId, inputId, inputProps } =
       useFormFieldProps({ label, description, state, id, disabled, ...rest });
@@ -77,7 +77,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             >
               {label && (
                 <Label
-                  data-testid="lg-form_field-label"
+                  data-testid={LGIDS_FORM_FIELD.label}
                   className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
@@ -88,7 +88,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
-                  data-testid="lg-form_field-description"
+                  data-testid={LGIDS_FORM_FIELD.description}
                   className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}
