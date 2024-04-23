@@ -69,16 +69,16 @@ import { isValueCurrentSelection } from './utils/isValueCurrentSelection';
 import {
   baseComboboxStyles,
   baseInputElementStyle,
-  caretIconDisabledStyles,
-  caretIconThemeStyles,
   clearButtonStyle,
-  comboboxDisabledStyles,
   comboboxFocusStyle,
   comboboxOverflowShadowStyles,
   comboboxParentStyle,
   comboboxSizeStyles,
-  comboboxStateStyles,
   comboboxThemeStyles,
+  getCaretIconDisabledFill,
+  getCaretIconFill,
+  getComboboxDisabledStyles,
+  getComboboxStateStyles,
   iconStyle,
   iconsWrapperBaseStyles,
   iconsWrapperSizeStyles,
@@ -1239,12 +1239,12 @@ export function Combobox<M extends boolean>({
               baseComboboxStyles,
               comboboxThemeStyles[theme],
               comboboxSizeStyles(size, isMultiselectWithSelections),
-              comboboxStateStyles[state][theme],
+              getComboboxStateStyles(theme)[state],
               {
                 [comboboxFocusStyle[theme]]: isElementFocused(
                   ComboboxElement.Input,
                 ),
-                [comboboxDisabledStyles[theme]]: disabled,
+                [getComboboxDisabledStyles(theme)]: disabled,
                 [comboboxOverflowShadowStyles[theme]]: shouldShowOverflowShadow,
               },
             )}
@@ -1307,8 +1307,8 @@ export function Combobox<M extends boolean>({
                 glyph="CaretDown"
                 className={iconStyle}
                 fill={cx({
-                  [caretIconThemeStyles[theme]]: !disabled,
-                  [caretIconDisabledStyles[theme]]: disabled,
+                  [getCaretIconFill(theme)]: !disabled,
+                  [getCaretIconDisabledFill(theme)]: disabled,
                 })}
               />
             </div>

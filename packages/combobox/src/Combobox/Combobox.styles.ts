@@ -159,47 +159,24 @@ export const comboboxSizeStyles = (
   padding-right: ${comboboxPadding[size].xRight}px;
 `;
 
-export const comboboxDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
-    color: ${color.light.text.disabled.default};
-    background-color: ${color.light.background.disabled.default};
-    border-color: ${color.light.border.disabled.default};
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-    color: ${color.dark.text.disabled.default};
-    background-color: ${color.dark.background.disabled.default};
-    border-color: ${color.dark.border.disabled.default};
-  `,
-};
+export const getComboboxDisabledStyles = (theme: Theme) => css`
+  cursor: not-allowed;
+  color: ${color[theme].text.disabled.default};
+  background-color: ${color[theme].background.disabled.default};
+  border-color: ${color[theme].border.disabled.default};
+`;
 
-export const comboboxStateStyles: Record<State, Record<Theme, string>> = {
-  [State.Error]: {
-    [Theme.Light]: css`
-      border-color: ${color.light.border.error.default};
-    `,
-    [Theme.Dark]: css`
-      border-color: ${color.dark.border.error.default};
-    `,
-  },
-  [State.None]: {
-    [Theme.Light]: css`
-      border-color: ${color.light.border.primary.default};
-    `,
-    [Theme.Dark]: css`
-      border-color: ${color.dark.border.primary.default};
-    `,
-  },
-  [State.Valid]: {
-    [Theme.Light]: css`
-      border-color: ${color.light.border.success.default};
-    `,
-    [Theme.Dark]: css`
-      border-color: ${color.dark.border.success.default};
-    `,
-  },
-};
+export const getComboboxStateStyles = (theme: Theme) => ({
+  [State.Error]: css`
+    border-color: ${color[theme].border.error.default};
+  `,
+  [State.None]: css`
+    border-color: ${color[theme].border.primary.default};
+  `,
+  [State.Valid]: css`
+    border-color: ${color[theme].border.success.default};
+  `,
+});
 
 export const comboboxFocusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -409,12 +386,8 @@ export const comboboxOverflowShadowStyles: Record<Theme, string> = {
   `,
 };
 
-export const caretIconThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: color.light.icon.primary.default,
-  [Theme.Dark]: color.dark.icon.primary.default,
-};
+export const getCaretIconFill = (theme: Theme) =>
+  color[theme].icon.primary.default;
 
-export const caretIconDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: color.light.icon.disabled.default,
-  [Theme.Dark]: color.dark.icon.disabled.default,
-};
+export const getCaretIconDisabledFill = (theme: Theme) =>
+  color[theme].icon.disabled.default;
