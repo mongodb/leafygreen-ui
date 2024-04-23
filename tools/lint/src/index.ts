@@ -5,12 +5,12 @@ import { LintCommandOptions } from './lint.types';
 const isTrue = (test: any) => !!test;
 
 export const lint = (options: LintCommandOptions) => {
-  const { prettierOnly, pkgJsonOnly, verbose } = options;
+  const { prettierOnly, pkgJsonOnly, verbose, fix } = options;
 
   const linters: Array<Promise<unknown>> = [];
 
   if (!prettierOnly && !pkgJsonOnly) {
-    linters.push(eslint());
+    linters.push(eslint({ verbose, fix }));
   }
 
   // if (!eslintOnly && !pkgJsonOnly) {
@@ -33,8 +33,9 @@ export const lint = (options: LintCommandOptions) => {
 
       process.exit(1);
     })
-    .catch(() => {
+    .catch(err => {
       console.error(`Error resolving linter(s)`);
+      console.error(err);
       process.exit(1);
     });
 };
