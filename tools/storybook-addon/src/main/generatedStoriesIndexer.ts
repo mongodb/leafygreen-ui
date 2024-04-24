@@ -1,44 +1,39 @@
+import { DynamicStoryConfig } from '@lg-tools/storybook-utils';
 import { serverRequire } from '@storybook/core-common';
 import { loadCsf } from '@storybook/csf-tools';
-// import fsx from 'fs-extra';
 import { Indexer } from '@storybook/types';
 import { parseModule } from 'magicast';
 
-export interface DynamicStoryConfig {
-  baseCsf: string;
-  stories: () => {
-    [key: string]: any;
-  };
-}
+export const DYNAMIC_STORIES_REGEX = /\.dynamic\.[tj]sx?/;
 
-const DYNAMIC_STORIES_REGEX = /\.dynamic\.[tj]sx?/;
-
+// When we load a file that matches the `test` pattern
+// we run this indexer that tells Storybook how it should read this file
 export const generatedStoriesIndexer: Indexer = {
   test: DYNAMIC_STORIES_REGEX,
   createIndex: async (fileName, opts) => {
-    console.log('Indexing', fileName);
     delete require.cache[fileName];
-    const config = await serverRequire(fileName);
-    const compiled = await compile(config);
+    const config = await serverRequire(fileName); // load the .dynamic.tsx  file
+    const compiled = await compileDynamicStory(config); // compile the file into CSF
+    // Read & index the CSF
     const indexed = await loadCsf(compiled, {
       ...opts,
       fileName,
     }).parse();
 
-    console.log(indexed);
     return indexed.indexInputs;
   },
 };
 
-export const compile = async (config: DynamicStoryConfig) => {
+// Converts a `DynamicStoryConfig` object in to a dynamic CSF file
+export const compileDynamicStory = async (config: DynamicStoryConfig) => {
   const { baseCsf } = config;
   const stories = await config.stories();
 
-  const mod = parseModule(baseCsf);
+  const module = parseModule(baseCsf);
   Object.entries(stories).forEach(([key, story]) => {
-    mod.exports[key] = story; //prepareStory(story);
+    module.exports[key] = story;
   });
 
-  const { code } = mod.generate();
+  const { code } = module.generate();
   return code;
 };

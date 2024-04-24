@@ -1,22 +1,44 @@
 /**
  * In this file we create default values for storybook `main.ts` properties
  */
-
+import { serverRequire } from '@storybook/core-common';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import { Indexer } from '@storybook/types';
 import isRegExp from 'lodash/isRegExp';
+import { createWebpackPlugin } from 'unplugin';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
 
 import { findStories } from './findStories';
-import { generatedStoriesIndexer } from './generatedStoriesIndexer';
+import {
+  compileDynamicStory,
+  DYNAMIC_STORIES_REGEX,
+  generatedStoriesIndexer,
+} from './generatedStoriesIndexer';
 import { isRule } from './utils';
 
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
+/** A Webpack plugin to load the compiled dynamic story CSF */
+const dynamicStoriesPlugin = createWebpackPlugin<{}>(() => {
+  return {
+    name: 'dynamic-stories',
+    enforce: 'pre',
+    loadInclude(id) {
+      return DYNAMIC_STORIES_REGEX.test(id);
+    },
+    async load(fileName) {
+      delete require.cache[fileName];
+      const config = await serverRequire(fileName);
+      const result = await compileDynamicStory(config);
+      return result;
+    },
+  };
+});
+
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,chat,stories}/**/*.stor@(y|ies).@(js|ts)?(x)',
+  '../{packages,tools,chat,stories}/**/*.@(stor@(y|ies)|dynamic).@(js|ts)?(x)',
   '../{packages,tools,chat}/*/node_modules',
 );
 
@@ -45,6 +67,7 @@ export const staticDirs: StorybookConfig['staticDirs'] = [
   '../node_modules/@lg-tools/storybook-addon/static',
 ];
 
+// Add our `generatedStoriesIndexer`
 export const experimental_indexers = async (indexers: Array<Indexer>) => [
   ...indexers,
   generatedStoriesIndexer,
@@ -106,6 +129,9 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
       Buffer: ['buffer', 'Buffer'],
     }),
   );
+
+  // Make sure we're using our plugin
+  config.plugins.push(dynamicStoriesPlugin({}));
 
   return config;
 };

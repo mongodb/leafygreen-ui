@@ -1,3 +1,4 @@
+export * from './DynamicStories';
 export {
   type ExtendedComponentProps,
   type GeneratedStoryConfig,

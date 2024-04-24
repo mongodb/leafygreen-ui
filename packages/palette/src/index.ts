@@ -4,8 +4,6 @@
  * @packageDocumentation
  */
 
-import './palette.less';
-
 import palette from './palette';
 
 export { palette };
