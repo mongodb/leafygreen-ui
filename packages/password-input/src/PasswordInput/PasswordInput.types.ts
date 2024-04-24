@@ -29,7 +29,7 @@ export interface NotificationProps {
 type AriaLabelkeys = keyof AriaLabelPropsWithLabel;
 
 // Using custom notification container with aria-describedby
-interface StateOnlyProps {
+interface CustomNotificationProps {
   /**
    * The id reference to the custom notification container
    */
@@ -43,7 +43,22 @@ interface StateOnlyProps {
   stateNotifications: State;
 }
 
-// using default notification container, no aria-describedby
+// Using general notification container, no aria-describedby
+interface GeneralNotificationProps {
+  /**
+   * The id reference to the custom notification container
+   */
+  ['aria-describedby']?: never;
+
+  /**
+   * Determines what notifications will appear
+   *
+   * @default 'none'
+   */
+  stateNotifications: State;
+}
+
+// Using many notifications container, no aria-describedby
 interface StateAndNotificationProps {
   /**
    * The id reference to the custom notification container
@@ -58,7 +73,10 @@ interface StateAndNotificationProps {
   stateNotifications?: Array<NotificationProps>;
 }
 
-export type StateNotificationProps = StateAndNotificationProps | StateOnlyProps;
+export type StateNotificationProps =
+  | CustomNotificationProps
+  | GeneralNotificationProps
+  | StateAndNotificationProps;
 
 type ConditionalProps = AriaLabelPropsWithLabel & StateNotificationProps;
 

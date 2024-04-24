@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
+import { DEFAULT_MESSAGES } from '@leafygreen-ui/form-field';
 import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Label } from '@leafygreen-ui/typography';
 
+import { PasswordInputFeedback } from '../PasswordInputFeedback';
 import { PasswordToggle } from '../PasswordToggle';
-import { StateNotifications } from '../StateNotifications';
 
 import {
   getInputDisabledStyles,
@@ -101,7 +101,6 @@ export const PasswordInput = React.forwardRef<
     const hasCustomDescription = !!ariaDescribedbyProp;
 
     const formFieldFeedbackProps = {
-      id: feedbackId,
       disabled,
       errorMessage,
       size,
@@ -155,18 +154,13 @@ export const PasswordInput = React.forwardRef<
               size={size}
             />
           </div>
-          {!hasCustomDescription && (
-            <>
-              {hasStateNotifications ? (
-                <StateNotifications
-                  id={feedbackId}
-                  notifications={stateNotifications as Array<NotificationProps>}
-                />
-              ) : (
-                <FormFieldFeedback {...formFieldFeedbackProps} />
-              )}
-            </>
-          )}
+          <PasswordInputFeedback
+            id={feedbackId}
+            hasCustomDescription={hasCustomDescription}
+            hasStateNotifications={hasStateNotifications}
+            notifications={stateNotifications as Array<NotificationProps>}
+            formFieldFeedbackProps={formFieldFeedbackProps}
+          />
         </div>
       </LeafyGreenProvider>
     );

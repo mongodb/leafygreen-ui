@@ -66,11 +66,31 @@ import { PasswordInput } from '@leafygreen-ui/password-input';
 ```
 
 ```js
-// Custom notification container
+// Custom notification
+<div>
+  <PasswordInput
+    label="Password"
+    stateNotifications="error"
+    aria-describedby="custom-error-id"
+    autoComplete="current-password"
+    id="current-password"
+  />
+  <Banner id="custom-error-id" variant="danger" />
+</div>
+```
+
+```js
+// General notification
 <PasswordInput
   label="Password"
   stateNotifications="error"
-  aria-describedby="container-id"
+  autoComplete="current-password"
+  id="current-password"
+/>
+
+<PasswordInput
+  label="Password"
+  stateNotifications="valid"
   autoComplete="current-password"
   id="current-password"
 />
