@@ -118,11 +118,11 @@ const meta: StoryMetaType<typeof Combobox> = {
     },
     searchErrorMessage: {
       control: 'text',
-      if: { arg: 'searchState', eq: SearchState.error },
+      if: { arg: 'searchState', eq: SearchState.Error },
     },
     searchLoadingMessage: {
       control: 'text',
-      if: { arg: 'searchState', eq: SearchState.loading },
+      if: { arg: 'searchState', eq: SearchState.Loading },
     },
     chipTruncationLocation: {
       options: Object.values(TruncationLocation),
