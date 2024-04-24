@@ -936,14 +936,6 @@ describe('packages/select', () => {
       expect(isError).toBeTruthy();
       expect(getErrorMessage()).toBeInTheDocument();
     });
-
-    test('error message is not present if "errorMessage" is empty', () => {
-      const { isError, getErrorMessage } = renderSelect({
-        state: State.Error,
-      });
-      expect(isError).toBeTruthy();
-      expect(getErrorMessage()).not.toBeInTheDocument();
-    });
   });
 
   describe('when the "state" is "none"', () => {
