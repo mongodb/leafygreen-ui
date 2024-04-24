@@ -303,6 +303,21 @@ describe('packages/password-input', () => {
         aria-labelledby="label"
         stateNotifications={[{ notification: 'hi', state: 'error' }]}
       />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
+        stateNotifications="error"
+      />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
+        stateNotifications="valid"
+      />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
+        stateNotifications="warning"
+      />
     </>;
   });
 });
