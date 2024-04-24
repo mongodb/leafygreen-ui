@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { color, typeScales } from '@leafygreen-ui/tokens';
 
 export const wrapperBaseStyles = css`
   margin-left: -1px;
@@ -11,23 +11,20 @@ export const wrapperBaseStyles = css`
   }
 `;
 
-export const selectDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    button {
-      background-color: ${palette.gray.light2};
-      border-color: ${palette.gray.light1};
-    }
-  `,
-  [Theme.Dark]: css`
-    button {
-      background-color: ${palette.gray.dark3};
-      border-color: ${palette.gray.dark2};
-    }
-  `,
-};
+export const getSelectDisabledStyles = (theme: Theme) => css`
+  button {
+    background-color: ${color[theme].background.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
+  }
+`;
 
 export const selectStyles = css`
   > div {
     display: flex;
+  }
+
+  button {
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
   }
 `;

@@ -52,17 +52,12 @@ const meta: StoryMetaType<typeof NumberInput> = {
         label: ['Label', undefined],
         description: ['Description', undefined],
         state: Object.values(State).reverse(),
-        errorMessage: [undefined, 'Error message'],
         disabled: [false, true],
       },
       excludeCombinations: [
         {
           label: undefined,
           description: 'Description',
-        },
-        {
-          state: State.None,
-          errorMessage: 'Error message',
         },
       ],
     },
