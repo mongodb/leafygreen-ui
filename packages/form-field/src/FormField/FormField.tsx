@@ -56,6 +56,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       useFormFieldProps({ label, description, state, id, disabled, ...rest });
 
     const formFieldFeedbackProps = {
+      baseFontSize,
       disabled,
       errorMessage,
       id: feedbackId,
