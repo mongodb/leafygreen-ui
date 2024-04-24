@@ -1,9 +1,14 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { Size } from '@leafygreen-ui/tokens';
+import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { FormFieldState } from '../FormField/FormField.types';
 
 export interface FormFieldFeedbackProps extends HTMLElementProps<'div'> {
+  /**
+   * Base font size of the component. Only effective when `size == 'default'`
+   */
+  baseFontSize?: BaseFontSize;
+
   /**
    * Defines whether the component is disabled
    */

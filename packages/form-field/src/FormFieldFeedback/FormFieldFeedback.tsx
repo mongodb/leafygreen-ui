@@ -23,6 +23,7 @@ import {
 import { FormFieldFeedbackProps } from './FormFieldFeedback.types';
 
 export const FormFieldFeedback = ({
+  baseFontSize: baseFontSizeProp,
   disabled,
   errorMessage,
   hideFeedback = false,
@@ -33,7 +34,7 @@ export const FormFieldFeedback = ({
   ...rest
 }: FormFieldFeedbackProps) => {
   const { theme } = useDarkMode();
-  const baseFontSize = useUpdatedBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const fontStyles = getFontSizeStyles({ baseFontSize, size });
 
   const isErrorState = state === FormFieldState.Error;
