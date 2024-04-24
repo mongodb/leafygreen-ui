@@ -13,9 +13,9 @@ import { mobileSizeSet } from '../styleSets';
 import { MobileMediaQuery, useForwardedRef } from '../utils';
 
 import {
+  getMenuButtonDisabledThemeStyles,
+  getMenuButtonStateStyles,
   menuButtonDeselectedStyles,
-  menuButtonDisabledThemeStyles,
-  menuButtonErrorStyle,
   menuButtonFocusStyle,
   menuButtonModeOverrides,
   menuButtonSizeStyle,
@@ -23,7 +23,6 @@ import {
   menuButtonTextClassName,
   menuButtonTextStyle,
   menuButtonTextWrapperStyle,
-  menuButtonValidStyle,
 } from './MenuButton.styles';
 import { MenuButtonProps } from './MenuButton.types';
 
@@ -75,10 +74,9 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           menuButtonSizeStyle[size],
           menuButtonFocusStyle[theme],
           {
+            [getMenuButtonStateStyles(theme)[state || State.None]]: !!state,
             [menuButtonDeselectedStyles[theme]]: deselected,
-            [menuButtonErrorStyle[theme]]: state === State.Error,
-            [menuButtonValidStyle[theme]]: state === State.Valid,
-            [menuButtonDisabledThemeStyles[theme]]: disabled,
+            [getMenuButtonDisabledThemeStyles(theme)]: disabled,
             [css`
               letter-spacing: initial;
             `]: size === ButtonSize.XSmall,

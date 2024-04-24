@@ -1,7 +1,8 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   focusRing,
   fontWeights,
   hoverRing,
@@ -9,6 +10,8 @@ import {
   spacing,
   typeScales,
 } from '@leafygreen-ui/tokens';
+
+import { State } from '../Select/Select.types';
 
 export const menuButtonTextClassName = createUniqueClassName('select-menu');
 
@@ -55,23 +58,23 @@ export const menuButtonSizeStyle: Record<Size, string> = {
 
 export const menuButtonModeOverrides: Record<Theme, string> = {
   [Theme.Light]: css`
-    background-color: ${palette.white};
+    background-color: ${color.light.background.primary.default};
     // Override button default color
     > *:last-child {
       > svg {
-        color: ${palette.gray.dark2};
+        color: ${color.light.icon.primary.default};
       }
     }
   `,
   [Theme.Dark]: css`
-    border-color: ${palette.gray.base};
+    border-color: ${color.dark.border.primary.default};
     background-color: ${palette.gray.dark4};
-    color: ${palette.gray.light3};
+    color: ${color.dark.text.primary.default};
 
     // Override button default color
     > *:last-child {
       > svg {
-        color: ${palette.gray.light1};
+        color: ${color.dark.icon.primary.default};
       }
     }
 
@@ -79,7 +82,7 @@ export const menuButtonModeOverrides: Record<Theme, string> = {
     &:active,
     &:focus {
       background-color: ${palette.gray.dark4};
-      color: ${palette.gray.light3};
+      color: ${color.dark.text.primary.hover};
     }
   `,
 };
@@ -116,7 +119,7 @@ export const menuButtonDeselectedStyles: Record<Theme, string> = {
   `,
 };
 
-export const menuButtonDisabledStyles = css`
+export const getMenuButtonDisabledThemeStyles = (theme: Theme) => css`
   cursor: not-allowed;
   pointer-events: unset;
   box-shadow: unset;
@@ -124,52 +127,24 @@ export const menuButtonDisabledStyles = css`
   &:active {
     pointer-events: none;
   }
+
+  &[aria-disabled='true'] {
+    background-color: ${color[theme].background.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
+    color: ${color[theme].text.disabled.default};
+
+    &:hover,
+    &:active {
+      box-shadow: inherit;
+    }
+
+    > *:last-child {
+      > svg {
+        color: ${color[theme].icon.disabled.default};
+      }
+    }
+  }
 `;
-
-export const menuButtonDisabledThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: cx(
-    menuButtonDisabledStyles,
-    css`
-      &[aria-disabled='true'] {
-        background-color: ${palette.gray.light2};
-        border-color: ${palette.gray.light1};
-        color: ${palette.gray.base};
-
-        &:hover,
-        &:active {
-          box-shadow: inherit;
-        }
-
-        > *:last-child {
-          > svg {
-            color: ${palette.gray.base};
-          }
-        }
-      }
-    `,
-  ),
-  [Theme.Dark]: cx(
-    menuButtonDisabledStyles,
-    css`
-      &[aria-disabled='true'] {
-        background-color: ${palette.gray.dark3};
-        border-color: ${palette.gray.dark2};
-        color: ${palette.gray.dark1};
-
-        &:hover,
-        &:active {
-          box-shadow: inherit;
-        }
-
-        > *:last-child {
-          > svg {
-            color: ${palette.gray.dark1};
-          }
-        }
-      }
-    `,
-  ),
-};
 
 export const menuButtonTextWrapperStyle = css`
   display: flex;
@@ -187,54 +162,24 @@ export const menuButtonTextStyle = css`
   max-width: 100%;
 `;
 
-export const errorColor: Record<Theme, string> = {
-  [Theme.Light]: palette.red.base,
-  [Theme.Dark]: palette.red.light1,
-};
-
-export const menuButtonErrorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border-color: ${errorColor[Theme.Light]};
-    background-color: ${palette.white};
+export const getMenuButtonStateStyles = (theme: Theme) => ({
+  [State.Error]: css`
+    border-color: ${color[theme].border.error.default};
 
     &:hover,
     &:active {
-      box-shadow: ${hoverRing.light.red};
+      border-color: ${color[theme].border.error.hover};
+      box-shadow: ${hoverRing[theme].red};
     }
   `,
-  [Theme.Dark]: css`
-    border-color: ${errorColor[Theme.Dark]};
+  [State.None]: css``,
+  [State.Valid]: css`
+    border-color: ${color[theme].border.success.default};
 
     &:hover,
     &:active {
-      border-color: ${errorColor[Theme.Dark]};
-      box-shadow: ${hoverRing.dark.red};
+      border-color: ${color[theme].border.success.hover};
+      box-shadow: ${hoverRing[theme].green};
     }
   `,
-};
-
-export const validColor: Record<Theme, string> = {
-  [Theme.Light]: palette.green.dark1,
-  [Theme.Dark]: palette.green.base,
-};
-
-export const menuButtonValidStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border-color: ${errorColor[Theme.Light]};
-    background-color: ${palette.white};
-
-    &:hover,
-    &:active {
-      box-shadow: ${hoverRing.light.green};
-    }
-  `,
-  [Theme.Dark]: css`
-    border-color: ${errorColor[Theme.Dark]};
-
-    &:hover,
-    &:active {
-      border-color: ${errorColor[Theme.Dark]};
-      box-shadow: ${hoverRing.dark.green};
-    }
-  `,
-};
+});

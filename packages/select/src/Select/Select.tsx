@@ -10,6 +10,7 @@ import React, {
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
 import {
   useEventListener,
   useForwardedRef,
@@ -28,7 +29,6 @@ import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
 import SelectContext from '../SelectContext';
-import { StateFeedback } from '../StateFeedback';
 import { mobileSizeSet } from '../styleSets';
 import {
   convertToInternalElements,
@@ -63,8 +63,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       allowDeselect = true,
       usePortal = true,
       placeholder = 'Select',
-      errorMessage = 'This input needs your attention',
-      successMessage = 'Success',
+      errorMessage = DEFAULT_MESSAGES.error,
+      successMessage = DEFAULT_MESSAGES.success,
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
@@ -613,12 +613,13 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               </ListMenu>
             </MenuButton>
           </SelectContext.Provider>
-          <StateFeedback
-            state={state}
-            errorMessage={errorMessage}
-            successMessage={successMessage}
-            hideFeedback={open}
+          <FormFieldFeedback
             disabled={disabled}
+            errorMessage={errorMessage}
+            hideFeedback={open}
+            size={size}
+            state={state}
+            successMessage={successMessage}
           />
         </div>
       </LeafyGreenProvider>
@@ -643,7 +644,8 @@ Select.propTypes = {
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   readOnly: PropTypes.bool,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.node,
+  successMessage: PropTypes.node,
   state: PropTypes.oneOf(Object.values(State)),
   allowDeselect: PropTypes.bool,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),

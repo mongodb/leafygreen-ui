@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ButtonProps } from '@leafygreen-ui/button';
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import {
   DarkModeProps,
   Either,
@@ -18,11 +19,7 @@ export const Size = {
 } as const;
 export type Size = (typeof Size)[keyof typeof Size];
 
-export const State = {
-  Error: 'error',
-  None: 'none',
-  Valid: 'valid',
-} as const;
+export const State = FormFieldState;
 export type State = (typeof State)[keyof typeof State];
 
 export const DropdownWidthBasis = {
@@ -89,15 +86,13 @@ export interface BaseSelectProps
 
   /**
    * Error message rendered when the `state` prop is set to `error`.
-   * @default 'This input needs your attention'
    */
-  errorMessage?: string;
+  errorMessage?: React.ReactNode;
 
   /**
    * Success message rendered when the `state` prop is set to `valid`.
-   * @default 'Success'
    */
-  successMessage?: string;
+  successMessage?: React.ReactNode;
 
   /**
    * Determines whether the component should be rendered in an error state.
