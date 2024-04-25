@@ -44,16 +44,3 @@ export const getUnitThemeStyles = (theme: Theme) => css`
 export const getUnitDisabledStyles = (theme: Theme) => css`
   color: ${color[theme].text.disabled.default};
 `;
-
-export const errorContainerStyles = css`
-  display: flex;
-  align-items: center;
-  gap: ${spacing[100]}px;
-`;
-
-export const errorContainerMarginTop = css`
-  margin-top: ${spacing[100]}px;
-`;
-
-export const getErrorIconFill = (theme: Theme) =>
-  color[theme].icon.error.default;
