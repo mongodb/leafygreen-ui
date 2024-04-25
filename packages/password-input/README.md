@@ -127,7 +127,9 @@ const State = {
 ```
 
 ### Validation Feedback
+
 Password input has 3 different supported options for validation feedback:
+
 1. Pass the id of a custom notification as the `aria-describedby` prop and pass a `state` value string as the `stateNotifications` prop to link a custom notification to the password input.
 2. Pass an array of notifications as the `stateNotifications` prop for cases where multiple notifications may need to render. `aria-describedby` prop must be undefined in this case.
 3. Pass a `state` value string and pass a string to the `errorMessage` prop or `successMessage` prop for cases where only a single notification will ever render. `aria-describedby` prop must be undefined and `stateNotifications` prop must be a string in this case.
