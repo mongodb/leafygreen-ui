@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 2.5.3
+
+### Patch Changes
+
+- 57dedc40: Adds `satisfies` to ensure consistent & correct `colors` token structure
+
 ## 2.5.2
 
 ### Patch Changes

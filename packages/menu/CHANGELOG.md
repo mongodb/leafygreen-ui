@@ -1,5 +1,16 @@
 # @leafygreen-ui/menu
 
+## 24.1.0
+
+### Minor Changes
+
+- 433616d4: Exports `MenuGroup` from package
+
+### Patch Changes
+
+- Updated dependencies [57dedc40]
+  - @leafygreen-ui/tokens@2.5.3
+
 ## 24.0.0
 
 ### Major Changes
