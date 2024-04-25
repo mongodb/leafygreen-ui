@@ -3,6 +3,7 @@ import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
+import { migrator } from '@lg-tools/migrator';
 import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
@@ -17,6 +18,13 @@ cli
   .version(pkg?.version ?? '0.0.0')
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
   .enablePositionalOptions(true);
+
+/** Migrator */
+cli
+  .command('migrator')
+  .description('yada yada')
+  .argument('<migration>', 'The name of the migration')
+  .action(migrator);
 
 /** Create */
 cli

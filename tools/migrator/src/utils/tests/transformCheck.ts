@@ -56,8 +56,8 @@ export function transformCheck(
         path.join(fixtureDir, `${fixture}.output.${extension}`),
         'utf8',
       );
-      // Assumes transform.ts is two levels up from tests directory
-      const module = await import(path.join(dirName, '../..', 'transform.ts'));
+      // Assumes transform.ts is one levels up from tests directory
+      const module = await import(path.join(dirName, '..', 'transform.ts'));
       const output = await applyTransform(
         { ...module },
         { source, path: inputPath },

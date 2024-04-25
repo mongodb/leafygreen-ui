@@ -116,6 +116,7 @@ const external = [
   /^highlight/,
   /^lodash\//,
   /^react/,
+  'jscodeshift/src/Runner',
 ];
 
 const moduleFormatToDirectory = {

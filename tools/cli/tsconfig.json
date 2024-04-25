@@ -7,7 +7,9 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@lg-tools/*": ["../*/src"]
+      "@lg-tools/*": [
+        "../*/src"
+      ]
     }
   },
   "references": [
@@ -37,6 +39,9 @@
     },
     {
       "path": "../validate"
+    },
+    {
+      "path": "../migrator"
     }
   ]
 }

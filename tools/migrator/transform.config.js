@@ -1,0 +1,12 @@
+function resolve(transform) {
+  return require.resolve(`./dist/cjs/migrations/${transform}/transform`);
+}
+
+module.exports = {
+  presets: {
+    'consolidate-props': resolve('consolidate-props'),
+    'rename-component-prop': resolve('rename-component-prop'),
+    'update-component-prop-value': resolve('update-component-prop-value'),
+  },
+};
+// umd not esm

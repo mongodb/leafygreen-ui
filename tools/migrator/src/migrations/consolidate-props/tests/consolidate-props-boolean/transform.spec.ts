@@ -1,4 +1,4 @@
-import { transformCheck } from '../../../../../utils/tests/transformCheck';
+import { transformCheck } from '../../../../utils/tests/transformCheck';
 
 const transform = 'consolidate-props';
 

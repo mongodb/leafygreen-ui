@@ -1,12 +1,13 @@
-import { transformCheck } from '../../../../../utils/tests/transformCheck';
+import { transformCheck } from '../../../../utils/tests/transformCheck';
 
 const transform = 'update-component-prop-value';
+
 const test = {
-  name: 'update-component-prop-value',
+  name: 'update-component-prop-value-multiple',
   options: {
     componentName: 'MyComponent',
     propName: 'prop',
-    newPropValue: 'newPropValue',
+    newPropValue: "new prop y'all",
   },
 };
 transformCheck(__dirname, {
