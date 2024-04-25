@@ -33,17 +33,17 @@ export const menuButtonStyleOverrides = css`
 export const menuButtonSizeStyle: Record<Size, string> = {
   [Size.Default]: css`
     > *:last-child {
-      padding: 0 ${spacing[300]}px;
+      padding: 0 ${spacing[200]}px 0 ${spacing[300]}px;
     }
   `,
   [Size.Large]: css`
     > *:last-child {
-      padding: 0 ${spacing[300]}px;
+      padding: 0 ${spacing[200]}px 0 ${spacing[300]}px;
     }
   `,
   [Size.Small]: css`
     > *:last-child {
-      padding: 0 ${spacing[200]}px;
+      padding: 0 ${spacing[100]}px 0 ${spacing[200]}px;
     }
   `,
   [Size.XSmall]: css`
@@ -51,7 +51,7 @@ export const menuButtonSizeStyle: Record<Size, string> = {
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     > *:last-child {
-      padding: 0 ${spacing[200]}px;
+      padding: 0 ${spacing[100]}px 0 ${spacing[200]}px;
     }
   `,
 };

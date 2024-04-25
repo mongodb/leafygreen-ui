@@ -73,19 +73,19 @@ export const comboboxPadding: Record<
     y: getYPadding(Size.Small),
     xLeftWithChip: spacing[100],
     xLeftWithoutChip: spacing[200],
-    xRight: spacing[200],
+    xRight: spacing[100],
   },
   [Size.Default]: {
     y: getYPadding(Size.Default),
     xLeftWithChip: spacing[150],
     xLeftWithoutChip: spacing[300],
-    xRight: spacing[300],
+    xRight: spacing[200],
   },
   [Size.Large]: {
     y: getYPadding(Size.Large),
     xLeftWithChip: spacing[300],
     xLeftWithoutChip: spacing[300],
-    xRight: spacing[300],
+    xRight: spacing[200],
   },
 };
 
