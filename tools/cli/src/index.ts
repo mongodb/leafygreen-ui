@@ -19,13 +19,6 @@ cli
   .description('Command line tools for the LeafyGreen UI library by MongoDB')
   .enablePositionalOptions(true);
 
-/** Migrator */
-cli
-  .command('migrator')
-  .description('yada yada')
-  .argument('<migration>', 'The name of the migration')
-  .action(migrator);
-
 /** Create */
 cli
   .command('create')
@@ -173,6 +166,20 @@ cli
     false,
   )
   .action(validate);
+
+/** Migrator */
+cli
+  .command('migrator')
+  .description('yada yada')
+  .argument('<migration>', 'One of the migrations from: ')
+  .argument('<path>', 'Files or directory to transform. Can be a glob like')
+  .option('--dry', 'dry run (no changes are made to files)', false)
+  .option(
+    '--print',
+    'print transformed files to stdout, useful for development',
+    false,
+  )
+  .action(migrator);
 
 /** Build steps */
 cli

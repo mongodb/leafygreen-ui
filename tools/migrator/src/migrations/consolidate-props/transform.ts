@@ -17,11 +17,13 @@ export default function transformer(
   const source = j(file.source);
 
   const {
-    propToRemove,
-    propToUpdate,
-    propMapping,
+    propToRemove = 'propToRemove',
+    propToUpdate = 'propToUpdate',
+    propMapping = {
+      value2: 'value3',
+    },
     fromPropType = 'string',
-    componentName,
+    componentName = 'MyComponent',
   } = options;
 
   source.findJSXElements(componentName).forEach(element => {
