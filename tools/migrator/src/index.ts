@@ -4,6 +4,7 @@ const fs = require('fs');
 import { glob } from 'glob';
 import * as jscodeshift from 'jscodeshift/src/Runner';
 import path from 'path';
+// import isGitClean from 'is-git-clean';
 
 export interface MigrateOptions {
   dry?: boolean;
@@ -17,9 +18,6 @@ export const migrator = async (
   files: string | Array<string>,
   options: MigrateOptions = {},
 ) => {
-  // eslint-disable-next-line no-console
-  console.log(chalk.green('Running migration:'), migration);
-
   console.log({ options });
 
   const migrationFile = path.join(
@@ -42,6 +40,9 @@ export const migrator = async (
       throw new Error(`No migration found for ${migration}`);
     }
 
+    // eslint-disable-next-line no-console
+    console.log(chalk.green('Running migration:'), migration);
+
     await jscodeshift.run(migrationFile, filepaths, {
       babel: true,
       ignorePattern: ['**/node_modules/**', '**/.next/**', '**/build/**'],
@@ -60,3 +61,36 @@ export const migrator = async (
     process.exit(1);
   }
 };
+
+// export function checkGitStatus(force?: boolean) {
+//   let clean = false;
+//   let errorMessage = 'Unable to determine if git directory is clean';
+
+//   try {
+//     clean = isGitClean.sync(process.cwd());
+//     errorMessage = 'Git directory is not clean';
+//   } catch (err: any) {
+//     if (err && err.stderr && err.stderr.indexOf('Not a git repository') >= 0) {
+//       clean = true;
+//     }
+//   }
+
+//   if (!clean) {
+//     /* eslint-disable no-console */
+//     if (force) {
+//       console.log(`WARNING: ${errorMessage}. Forcibly continuing.`);
+//     } else {
+//       console.log('Thank you for using @shopify/polaris-migrator!');
+//       console.log(
+//         chalk.yellow(
+//           '\nBut before we continue, please stash or commit your git changes.',
+//         ),
+//       );
+//       console.log(
+//         '\nYou may use the --force flag to override this safety check.',
+//       );
+//       process.exit(1);
+//     }
+//     /* eslint-enable no-console */
+//   }
+// }
