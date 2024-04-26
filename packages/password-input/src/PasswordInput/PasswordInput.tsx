@@ -2,22 +2,20 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { DEFAULT_MESSAGES } from '@leafygreen-ui/form-field';
 import { useControlledValue, useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { Label } from '@leafygreen-ui/typography';
 
-import { InputIcon } from '../InputIcon';
+import { PasswordInputFeedback } from '../PasswordInputFeedback';
 import { PasswordToggle } from '../PasswordToggle';
-import { StateNotifications } from '../StateNotifications';
 
 import {
+  getInputDisabledStyles,
   inputBaseStyles,
   inputBaseThemeStyles,
-  inputDisabledBaseStyles,
-  inputDisabledThemeStyles,
-  inputIconSizeStyles,
   inputSizeStyles,
   inputThemeStyles,
   inputWrapperStyles,
@@ -30,7 +28,11 @@ import {
   Size,
   State,
 } from './PasswordInput.types';
-import { getStateFromArray, stateNotificationCheck } from './utils';
+import {
+  convertStateToFormFieldState,
+  getStateFromArray,
+  stateNotificationCheck,
+} from './utils';
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -46,6 +48,8 @@ export const PasswordInput = React.forwardRef<
       'aria-labelledby': ariaLabelledbyProp,
       'aria-label': ariaLabelProp,
       size = Size.Default,
+      errorMessage = DEFAULT_MESSAGES.error,
+      successMessage = DEFAULT_MESSAGES.success,
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
@@ -58,7 +62,7 @@ export const PasswordInput = React.forwardRef<
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const prefix = 'lg-passwordinput';
     const inputId = useIdAllocator({ prefix, id: idProp });
-    const descriptionId = useIdAllocator({
+    const feedbackId = useIdAllocator({
       prefix,
       id: ariaDescribedbyProp,
     });
@@ -74,17 +78,35 @@ export const PasswordInput = React.forwardRef<
     const handlePasswordToggleClick = () => setShowPassword(s => !s);
 
     /**
+     * Checks if component may render state notifications
+     */
+    const hasStateNotifications = Array.isArray(stateNotifications);
+
+    /**
      * The overall state of the component
      */
-    const state: State = Array.isArray(stateNotifications)
+    const state: State = hasStateNotifications
       ? getStateFromArray(stateNotifications)
       : stateNotifications;
 
     /**
-     * Checks if there are any notifications
+     * The form field state of the component
      */
-    const hasNotifications: boolean =
-      !ariaDescribedbyProp && Array.isArray(stateNotifications);
+    const formFieldState = convertStateToFormFieldState(state);
+
+    /**
+     * Determines rendering either custom container
+     * or one of state notifications or state feedback
+     */
+    const hasCustomDescription = !!ariaDescribedbyProp;
+
+    const formFieldFeedbackProps = {
+      disabled,
+      errorMessage,
+      size,
+      state: formFieldState,
+      successMessage,
+    } as const;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -106,7 +128,7 @@ export const PasswordInput = React.forwardRef<
               value={value}
               id={inputId}
               autoComplete={autoComplete}
-              aria-describedby={descriptionId}
+              aria-describedby={feedbackId}
               aria-labelledby={
                 !label && ariaLabelledbyProp ? ariaLabelledbyProp : undefined
               }
@@ -119,34 +141,26 @@ export const PasswordInput = React.forwardRef<
                 inputBaseThemeStyles[theme],
                 {
                   [inputThemeStyles[theme][state]]: !disabled,
-                  [cx(
-                    inputDisabledBaseStyles,
-                    inputDisabledThemeStyles[theme],
-                  )]: disabled,
-                  [inputIconSizeStyles[size]]:
-                    !hasNotifications && state !== State.None,
+                  [cx(getInputDisabledStyles(theme))]: disabled,
                 },
               )}
               onChange={handleChange}
               readOnly={disabled}
               {...rest}
             />
-            {/* If a custom message container is used, an icon will render inside the input to represent the state of the input. In the case that stateNotification === `none`, no icon will appear. */}
-            {!hasNotifications && state !== State.None && (
-              <InputIcon state={state} size={size} disabled={disabled} />
-            )}
             <PasswordToggle
               showPassword={showPassword}
               handlePasswordToggleClick={handlePasswordToggleClick}
               size={size}
             />
           </div>
-          {hasNotifications && (
-            <StateNotifications
-              id={descriptionId}
-              notifications={stateNotifications as Array<NotificationProps>}
-            />
-          )}
+          <PasswordInputFeedback
+            id={feedbackId}
+            hasCustomDescription={hasCustomDescription}
+            hasStateNotifications={hasStateNotifications}
+            notifications={stateNotifications as Array<NotificationProps>}
+            formFieldFeedbackProps={formFieldFeedbackProps}
+          />
         </div>
       </LeafyGreenProvider>
     );

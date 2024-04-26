@@ -1,29 +1,22 @@
 import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import {
-  Body,
   Description,
-  Error,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { LGIDS_FORM_FIELD } from '../constants';
+import { DEFAULT_MESSAGES, LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
+import { FormFieldFeedback } from '../FormFieldFeedback';
 
 import {
-  errorIconStyles,
-  getFontSize,
+  getFontSizeStyles,
   marginBottom,
-  stateFeedbackContainerStyle,
   textContainerStyle,
-  validIconStyles,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';
@@ -46,8 +39,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       state = FormFieldState.None,
       size = Size.Default,
       disabled = false,
-      errorMessage,
-      successMessage,
+      errorMessage = DEFAULT_MESSAGES.error,
+      successMessage = DEFAULT_MESSAGES.success,
       className,
       darkMode,
       optional,
@@ -56,16 +49,21 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     }: FormFieldProps,
     fwdRef,
   ) => {
-    const { theme } = useDarkMode();
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-    const fontStyles = getFontSize({ baseFontSize, size });
+    const fontStyles = getFontSizeStyles({ baseFontSize, size });
 
-    const { labelId, descriptionId, errorId, inputId, inputProps } =
+    const { labelId, descriptionId, feedbackId, inputId, inputProps } =
       useFormFieldProps({ label, description, state, id, disabled, ...rest });
 
-    const isErrorState = state === FormFieldState.Error;
-    const isSuccessState = state === FormFieldState.Valid;
-    const showStateFeedback = (isErrorState || isSuccessState) && !disabled;
+    const formFieldFeedbackProps = {
+      baseFontSize,
+      disabled,
+      errorMessage,
+      id: feedbackId,
+      size,
+      state,
+      successMessage,
+    } as const;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -80,7 +78,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             >
               {label && (
                 <Label
-                  data-testid="lg-form_field-label"
+                  data-testid={LGIDS_FORM_FIELD.label}
                   className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
@@ -91,7 +89,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
-                  data-testid="lg-form_field-description"
+                  data-testid={LGIDS_FORM_FIELD.description}
                   className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}
@@ -101,46 +99,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
             </div>
             {children}
-
-            {showStateFeedback && (
-              <div className={stateFeedbackContainerStyle}>
-                {isErrorState && (
-                  <>
-                    <Icon
-                      aria-hidden
-                      title="Error"
-                      glyph="Warning"
-                      className={errorIconStyles[theme]}
-                    />
-                    <Error
-                      data-testid="lg-form_field-error_message"
-                      data-lgid={LGIDS_FORM_FIELD.errorMessage}
-                      className={fontStyles}
-                      id={errorId}
-                    >
-                      {errorMessage}
-                    </Error>
-                  </>
-                )}
-                {isSuccessState && (
-                  <>
-                    <Icon
-                      aria-hidden
-                      title="Valid"
-                      glyph="Checkmark"
-                      className={validIconStyles[theme]}
-                    />
-                    <Body
-                      data-testid="lg-form_field-success_message"
-                      data-lgid={LGIDS_FORM_FIELD.successMessage}
-                      className={fontStyles}
-                    >
-                      {successMessage}
-                    </Body>
-                  </>
-                )}
-              </div>
-            )}
+            <FormFieldFeedback {...formFieldFeedbackProps} />
           </div>
         </FormFieldProvider>
       </LeafyGreenProvider>

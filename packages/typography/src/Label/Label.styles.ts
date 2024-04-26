@@ -1,8 +1,8 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  color,
   fontFamilies,
   fontWeights,
   typeScales,
@@ -15,19 +15,19 @@ export const labelStyle = css`
 
 export const labelColorStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.black};
+    color: ${color.light.text.primary.default};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light2};
+    color: ${color.dark.text.primary.default};
   `,
 };
 
 export const disabledLabelColorStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.base};
+    color: ${color.light.text.disabled.default};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
+    color: ${color.dark.text.disabled.default};
   `,
 };
 

@@ -5,6 +5,7 @@ import {
 } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import {
   PopoverProps as ImportedPopoverProps,
@@ -18,10 +19,7 @@ export const Direction = {
 
 export type Direction = (typeof Direction)[keyof typeof Direction];
 
-export const State = {
-  Error: 'error',
-  None: 'none',
-} as const;
+export const State = FormFieldState;
 
 export type State = (typeof State)[keyof typeof State];
 
@@ -29,6 +27,7 @@ export const Size = {
   XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
+  Large: 'large',
 } as const;
 
 export type Size = (typeof Size)[keyof typeof Size];
@@ -138,6 +137,11 @@ export interface BaseNumberInputProps
    * The message shown below the input element if the value is invalid.
    */
   errorMessage?: string;
+
+  /**
+   * The message shown below the input element if the value is valid.
+   */
+  successMessage?: string;
 
   /**
    * Determines the font size and padding.

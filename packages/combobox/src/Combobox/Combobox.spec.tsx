@@ -344,6 +344,15 @@ describe('packages/combobox', () => {
     });
 
     describe('When disabled', () => {
+      test(`Input element renders with aria-disabled and readonly attributes but not disabled attribute when disabled prop is set`, () => {
+        const { inputEl } = renderCombobox(select, {
+          disabled: true,
+        });
+        expect(inputEl.getAttribute('aria-disabled')).toBeTruthy();
+        expect(inputEl.hasAttribute('readonly')).toBeTruthy();
+        expect(inputEl.getAttribute('disabled')).toBeFalsy();
+      });
+
       // disabled prop
       test('Combobox is not clickable when `disabled`', () => {
         const { comboboxEl } = renderCombobox(select, { disabled: true });

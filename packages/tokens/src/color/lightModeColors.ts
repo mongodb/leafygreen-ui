@@ -52,7 +52,7 @@ const lightModeBackgroundColors = {
   },
 } as const satisfies VariantColorRecord;
 
-const lightModBorderColors = {
+const lightModeBorderColors = {
   [Variant.Primary]: {
     [State.Default]: gray.base,
     [State.Hover]: gray.base,
@@ -158,7 +158,7 @@ const lightModeTextColors = {
 
 export const lightModeColors = {
   background: lightModeBackgroundColors,
-  border: lightModBorderColors,
+  border: lightModeBorderColors,
   icon: lightModeIconColors,
   text: lightModeTextColors,
 } as const satisfies ModeColorRecord;
