@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-field",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "LeafyGreen UI Kit Form Field",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -20,8 +20,8 @@
     "@leafygreen-ui/icon": "^12.1.0",
     "@leafygreen-ui/lib": "^13.4.0",
     "@leafygreen-ui/palette": "^4.0.10",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^19.0.0"
+    "@leafygreen-ui/tokens": "^2.6.0",
+    "@leafygreen-ui/typography": "^19.1.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

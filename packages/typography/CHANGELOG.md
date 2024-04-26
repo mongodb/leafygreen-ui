@@ -1,5 +1,18 @@
 # @leafygreen-ui/typography
 
+## 19.1.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Updates typography components to use tokens where possible
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/tokens@2.6.0
+
 ## 19.0.0
 
 ### Major Changes

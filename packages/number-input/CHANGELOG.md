@@ -1,5 +1,36 @@
 # @leafygreen-ui/number-input
 
+## 2.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4134](https://jira.mongodb.org/browse/LG-4134)
+
+  1. Updated styling:
+
+  - updated spacing for `'small'` and `'xsmall'` size variants
+  - added `'large'` variant
+  - updated placeholder text color
+  - moved error icon from inside the input to underneath the input, alongside the error message
+
+  2. Added default `errorMessage` of `'This input needs your attention'`
+
+  3. Added `valid` state variant and `successMessage` prop
+
+  - `successMessage` will render a default of `'Success'` and can be customized
+  - `successMessage` will only render when `state=valid`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/select@12.0.0
+  - @leafygreen-ui/tokens@2.6.0
+
 ## 1.0.23
 
 ### Patch Changes

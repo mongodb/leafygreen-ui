@@ -1,5 +1,14 @@
 # @leafygreen-ui/tokens
 
+## 2.6.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Fixes `darkModeBackgroundColors` disabled colors
+  - Fixes `lightModeBorderColors` variable typo
+
 ## 2.5.3
 
 ### Patch Changes
