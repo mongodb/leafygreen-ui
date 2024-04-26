@@ -47,7 +47,7 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
     );
 
     return (
-      (<table
+      <table
         {...rest}
         role="grid"
         ref={fwdRef}
@@ -82,13 +82,13 @@ export const CalendarGrid = forwardRef<HTMLTableElement, CalendarGridProps>(
                   children(day, index)
                 ) : (
                   // eslint-disable-next-line jsx-a11y/no-interactive-element-to-noninteractive-role
-                  (<td key={`null-${index}`} role="none"></td>)
+                  <td key={`null-${index}`} role="none"></td>
                 );
               })}
             </tr>
           ))}
         </tbody>
-      </table>)
+      </table>
     );
   },
 );
