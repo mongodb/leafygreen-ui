@@ -23,7 +23,7 @@ export const migrator = async (
   // Gets the path of the migrations e.g: /Users/.../leafygreen-ui/tools/migrator/dist/migrations/[migration]/transform.js
   const migrationFile = path.join(
     __dirname,
-    `./migrations/${migration}/transform.js`,
+    `./cjs/migrations/${migration}/transform.js`,
   );
 
   console.log(chalk.greenBright('Migration File:'), migrationFile);

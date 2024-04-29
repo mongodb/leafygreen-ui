@@ -17,20 +17,20 @@ console.log('🛑🛑🛑🛑', {
 export default [
   esmConfig,
   umdConfig,
-  {
-    ...esmConfig,
-    input: [...migratorGlob],
-    // This updates the dist/migration dir to include .js files
-    output: {
-      ...esmConfig.output,
-      // cjs is fully supported in node.js
-      format: 'cjs', // overrides esm format from esmConfig.output
-      entryFileNames: '[name].js',
-      dir: 'dist',
-      preserveModules: true,
-      exports: 'auto',
-    },
-  },
+  // {
+  //   ...esmConfig,
+  //   input: [...migratorGlob],
+  //   // This updates the dist/migration dir to include .js files
+  //   output: {
+  //     ...esmConfig.output,
+  //     // cjs is fully supported in node.js
+  //     format: 'cjs', // overrides esm format from esmConfig.output
+  //     entryFileNames: '[name].js',
+  //     dir: 'dist',
+  //     preserveModules: true,
+  //     exports: 'auto',
+  //   },
+  // },
   {
     ...esmConfig,
     input: [...migratorGlob],
@@ -41,6 +41,19 @@ export default [
       entryFileNames: '[name].mjs',
       preserveModules: true,
       exports: 'auto',
+    },
+  },
+  {
+    ...esmConfig,
+    input: [...migratorGlob],
+    // This updates the dist/cjs dir to include the /migration dir which includes .js files
+    output: {
+      ...esmConfig.output,
+      format: 'cjs', // overrides esm format from esmConfig.output
+      entryFileNames: '[name].js',
+      preserveModules: true,
+      exports: 'auto',
+      dir: 'dist/cjs/',
     },
   },
 ];
