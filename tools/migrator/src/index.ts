@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
+import * as jscodeshift from 'jscodeshift/src/Runner';
 // import fs from 'fs';
 const fs = require('fs');
 import { glob } from 'glob';
-import * as jscodeshift from 'jscodeshift/src/Runner';
 import path from 'path';
 
 import { checkGitStatus } from './utils/checkGitStatus';
@@ -13,7 +13,6 @@ export interface MigrateOptions {
   print?: boolean;
   force?: boolean;
   stdin?: boolean;
-  verbose?: 0 | 1 | 2;
 }
 
 export const migrator = async (
