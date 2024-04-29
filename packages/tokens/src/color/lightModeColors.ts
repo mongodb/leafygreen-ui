@@ -154,6 +154,11 @@ const lightModeTextColors = {
     [State.Hover]: gray.base,
     [State.Focus]: gray.base,
   },
+  [Variant.Link]: {
+    [State.Default]: blue.base,
+    [State.Hover]: blue.base,
+    [State.Focus]: blue.base,
+  },
 } as const satisfies VariantColorRecord;
 
 export const lightModeColors = {
