@@ -21,11 +21,13 @@ export function checkGitStatus(force?: boolean) {
 
   if (!clean) {
     if (force) {
-      console.log(`WARNING: ${errorMessage}. Forcibly continuing.`);
-    } else {
-      console.log('Thank you for using @lg-tools/migrator!');
       console.log(
-        chalk.yellow(
+        chalk.yellow(`WARNING: ${errorMessage}. Forcibly continuing.`),
+      );
+    } else {
+      console.log(chalk.greenBright('Thank you for using @lg-tools/migrator!'));
+      console.log(
+        chalk.red(
           '\nBut before we continue, please stash or commit your git changes.',
         ),
       );
