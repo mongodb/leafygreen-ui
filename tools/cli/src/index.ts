@@ -171,14 +171,26 @@ cli
 cli
   .command('migrator')
   .description('yada yada')
-  .argument('<migration>', 'One of the migrations from: ')
-  .argument('<path>', 'Files or directory to transform. Can be a glob like')
+  .argument(
+    '<migration>',
+    'One of the migrations from: ADD LINK WITH ALL THE MODS',
+  )
+  .argument(
+    '<path>',
+    'Files or directory to transform. Can be a glob like like src/**.test.js',
+  )
   .option('--dry', 'dry run (no changes are made to files)', false)
   .option(
     '--print',
     'print transformed files to stdout, useful for development',
     false,
   )
+  .option(
+    '--force',
+    'Bypass Git safety checks and forcibly run codemods',
+    false,
+  )
+  .option('--stdin', 'read file/directory list from stdin', false)
   .action(migrator);
 
 /** Build steps */
