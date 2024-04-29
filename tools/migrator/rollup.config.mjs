@@ -46,7 +46,7 @@ export default [
   {
     ...esmConfig,
     input: [...migratorGlob],
-    // This updates the dist/cjs dir to include the /migration dir which includes .js files
+    // This creates the dist/cjs dir. It includes the /migration dir which includes .js files
     output: {
       ...esmConfig.output,
       format: 'cjs', // overrides esm format from esmConfig.output

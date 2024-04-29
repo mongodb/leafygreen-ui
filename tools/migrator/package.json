@@ -20,7 +20,6 @@
     "glob": "10.3.12",
     "is-git-clean": "1.1.0",
     "@lg-tools/build": "0.5.0"
-
   },
   "devDependencies": {
     "@types/jscodeshift":"0.11.11",
