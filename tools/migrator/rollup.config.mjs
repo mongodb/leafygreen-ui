@@ -20,12 +20,13 @@ export default [
   {
     ...esmConfig,
     input: [...migratorGlob],
+    // This updates the /migration dir to include .js files
     output: {
       ...esmConfig.output,
       // cjs is fully supported in node.js
       format: 'cjs', // overrides esm format from esmConfig.output
       entryFileNames: '[name].js',
-      dir: path.dirname(pkg.main),
+      dir: 'dist',
       preserveModules: true,
       exports: 'auto',
     },
@@ -33,12 +34,13 @@ export default [
   {
     ...esmConfig,
     input: [...migratorGlob],
+    // This updates the /esm dir to include the /migration dir which includes .mjs files
     output: {
       ...esmConfig.output,
       // esm is supported in node.js with the .mjs extension
       entryFileNames: '[name].mjs',
-      // dir: path.dirname(pkg.module),
       preserveModules: true,
+      exports: 'auto',
     },
   },
 ];
