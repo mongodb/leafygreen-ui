@@ -154,6 +154,11 @@ const darkModeTextColors = {
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
   },
+  [Variant.Link]: {
+    [State.Default]: blue.light1,
+    [State.Hover]: blue.light1,
+    [State.Focus]: blue.light1,
+  },
 } as const satisfies VariantColorRecord;
 
 export const darkModeColors = {
