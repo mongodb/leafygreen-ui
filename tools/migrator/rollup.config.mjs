@@ -20,7 +20,7 @@ export default [
   {
     ...esmConfig,
     input: [...migratorGlob],
-    // This updates the /migration dir to include .js files
+    // This updates the dist/migration dir to include .js files
     output: {
       ...esmConfig.output,
       // cjs is fully supported in node.js
@@ -34,7 +34,7 @@ export default [
   {
     ...esmConfig,
     input: [...migratorGlob],
-    // This updates the /esm dir to include the /migration dir which includes .mjs files
+    // This updates the dist/esm dir to include the /migration dir which includes .mjs files
     output: {
       ...esmConfig.output,
       // esm is supported in node.js with the .mjs extension
