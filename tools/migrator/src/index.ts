@@ -31,7 +31,10 @@ export const migrator = async (
 
   try {
     if (!fs.existsSync(migrationFile)) {
-      throw new Error(`No migration found for ${migration}`);
+      //TODO: add link
+      throw new Error(
+        `No migration found for ${migration}. The list of migrations can be found here: ADD LINK`,
+      );
     }
 
     if (!options.stdin && !files) {
