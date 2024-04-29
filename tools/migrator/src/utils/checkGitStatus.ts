@@ -25,14 +25,18 @@ export function checkGitStatus(force?: boolean) {
         chalk.yellow(`WARNING: ${errorMessage}. Forcibly continuing.`),
       );
     } else {
-      console.log(chalk.greenBright('Thank you for using @lg-tools/migrator!'));
+      console.log(
+        chalk.greenBright('🥬 Thank you for using @lg-tools/migrator!'),
+      );
       console.log(
         chalk.red(
           '\nBut before we continue, please stash or commit your git changes.',
         ),
       );
       console.log(
-        '\nYou may use the --force flag to override this safety check.',
+        chalk.yellow(
+          '\nYou may use the --force flag to override this safety check.',
+        ),
       );
       process.exit(1);
     }
