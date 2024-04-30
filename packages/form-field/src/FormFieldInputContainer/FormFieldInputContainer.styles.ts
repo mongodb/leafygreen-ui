@@ -263,6 +263,7 @@ export function getInputWrapperStyles({
     inputWrapperSizeStyles[sizeProp],
     {
       [cx(
+        getInputWrapperModeStyles(theme),
         getInputWrapperStateStyles({ theme, state }),
         inputWrapperFocusStyles[theme],
       )]: !disabled,
