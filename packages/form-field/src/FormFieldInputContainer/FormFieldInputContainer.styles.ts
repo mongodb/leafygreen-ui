@@ -225,10 +225,6 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
       pointer-events: none;
       color: ${color[theme].text.disabled.default};
 
-      &::placeholder {
-        color: inherit;
-      }
-
       &:-webkit-autofill {
         &,
         &:hover,
