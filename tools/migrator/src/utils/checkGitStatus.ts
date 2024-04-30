@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import isGitClean from 'is-git-clean';
-//const isGitClean = require('is-git-clean');
 
 /**
  * Check whether a Git repository is in a "clean" state, meaning there are no uncommitted changes or untracked files in the repository

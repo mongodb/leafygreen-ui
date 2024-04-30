@@ -39,12 +39,13 @@ interface TestArgs {
   fixture: string;
   transform: string;
   extension?: string;
+  level?: 1 | 2;
   options?: { [option: string]: any };
 }
-
+//TODO: rename me
 export function transformCheck(
   dirName: string,
-  { fixture, transform, extension = 'tsx', options = {} }: TestArgs,
+  { fixture, transform, extension = 'tsx', options = {}, level = 2 }: TestArgs,
 ) {
   describe(transform, () => {
     test(fixture, async () => {
@@ -57,8 +58,9 @@ export function transformCheck(
         'utf8',
       );
 
-      // Assumes transform.ts is two level up from the test directory
-      const module = await import(path.join(dirName, '../..', 'transform.ts'));
+      // How many levels to go up from the test directory to find transform.ts
+      const levelsUp = level === 2 ? '../..' : '..';
+      const module = await import(path.join(dirName, levelsUp, 'transform.ts'));
       const output = await applyTransform(
         { ...module },
         { source, path: inputPath },

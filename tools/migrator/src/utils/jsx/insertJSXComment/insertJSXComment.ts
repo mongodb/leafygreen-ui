@@ -1,7 +1,6 @@
 import type { ASTPath } from 'jscodeshift';
 import type core from 'jscodeshift';
 
-//FIXME: debug, not fully working
 export function insertJSXComment(
   j: core.JSCodeshift,
   element: ASTPath<any>,
@@ -9,14 +8,15 @@ export function insertJSXComment(
   position: 'before' | 'after' = 'before',
 ) {
   const commentContent = j.jsxEmptyExpression();
-  commentContent.comments = [j.commentBlock(` ${comment} `, false, true)];
+  const commentConcat = ` ${comment} `;
+  commentContent.comments = [j.commentBlock(commentConcat, false, true)];
 
   const jsxComment = j.jsxExpressionContainer(commentContent);
   const lineBreak = j.jsxText('\n');
 
   if (position === 'before') {
     if (element.parentPath.value.type === 'ReturnStatement') {
-      insertCommentBefore(j, element, comment);
+      insertCommentBefore(j, element, commentConcat);
     } else {
       element.insertBefore(jsxComment);
       element.insertBefore(lineBreak);
@@ -34,19 +34,17 @@ export function insertCommentBefore(
   path: ASTPath<any>,
   comment: string,
 ) {
-  const content = ` ${comment} `;
-
   path.value.comments = path.value.comments || [];
 
-  const exists = path.value.comments.find(
+  const doesCommentExist = path.value.comments.find(
     // @ts-ignore
     comment => comment.value === content,
   );
 
   // Avoiding duplicates of the same comment
-  if (exists) return;
+  if (doesCommentExist) return;
 
-  path.value.comments.push(j.commentBlock(content));
+  path.value.comments.push(j.commentBlock(comment));
 }
 
 // https://github.com/facebook/jscodeshift/issues/354

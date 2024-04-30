@@ -2,6 +2,8 @@
 import type { ASTNode, ASTPath, JSXAttribute, Options } from 'jscodeshift';
 import type core from 'jscodeshift';
 
+import { insertJSXComment } from '../jsx/insertJSXComment/insertJSXComment';
+
 export interface ConsolidateJSXAttributesOptions extends Options {
   j: core.JSCodeshift;
   element: ASTPath<any>;
@@ -92,8 +94,8 @@ export function consolidateJSXAttributes({
 
   // if the propToUpdate does not exist and there is a spread operator then return early since we don't know if the propToUpdate could be inside the spread
   if (!toProp && hasSpreadOperator) {
-    //TODO: add comment in file that this has to be done manually
-    // insertJSXComment(j, element, 'Please update manually');
+    // TODO: make string a constant
+    insertJSXComment(j, element, 'Please update manually');
     return;
   }
 

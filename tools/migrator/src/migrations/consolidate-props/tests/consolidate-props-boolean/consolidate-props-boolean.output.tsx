@@ -35,6 +35,7 @@ export const App = () => {
         <Child state="value" disabled={true} />
         <MyComponent state="disabled" />
       </MyComponent>
+      {/* Please update manually */}
       <MyComponent disabled={true} {...props} />
       <MyComponent state="disabled" {...props} />
     </>

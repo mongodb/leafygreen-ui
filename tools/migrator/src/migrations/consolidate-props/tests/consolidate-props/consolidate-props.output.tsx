@@ -14,7 +14,19 @@ export const App = () => {
   };
 
   const Test = () => {
-    return <MyComponent propToUpdate="value3" />;
+    return (
+      /* Please update manually */
+      <MyComponent propToRemove="value2" {...props} />
+    );
+  };
+
+  const TestTwo = () => {
+    return (
+      <>
+        {/* Please update manually */}
+        <MyComponent propToRemove="value2" {...props} />
+      </>
+    );
   };
 
   return (
@@ -27,10 +39,12 @@ export const App = () => {
       </MyComponent>
       <MyComponent propToUpdate="value3" />
       <MyComponent propToUpdate="value3" />
+      {/* Please update manually */}
       <MyComponent propToRemove="value2" {...props} />
       <MyComponent propToUpdate="value3" {...props} />
       <MyComponent />
       <Test />
+      <TestTwo />
     </>
   );
 };
