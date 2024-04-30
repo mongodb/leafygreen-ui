@@ -48,6 +48,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         as="a"
+        // @ts-ignore-next-line - Card with `as="a"` should accept all `a` attributes including `href`
         href={url}
         target="_blank"
         {...anchorProps}
