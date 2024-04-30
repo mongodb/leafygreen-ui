@@ -117,6 +117,7 @@ const external = [
   /^lodash\//,
   /^react/,
   'jscodeshift/src/Runner',
+  'is-git-clean',
 ];
 
 const moduleFormatToDirectory = {
