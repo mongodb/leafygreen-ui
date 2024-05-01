@@ -25,7 +25,6 @@
     "@leafygreen-ui/palette": "^4.0.9"
   },
   "devDependencies": {
-    "@leafygreen-ui/card": "^10.0.7",
     "@leafygreen-ui/emotion": "^4.0.8",
     "lodash": "^4.17.21",
     "@lg-tools/storybook-utils": "^0.1.0"

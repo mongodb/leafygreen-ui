@@ -3,7 +3,6 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import startCase from 'lodash/startCase';
 
-import Card from '@leafygreen-ui/card';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
@@ -19,6 +18,28 @@ import {
   transitionDuration,
   typeScales,
 } from '.';
+
+const Card = ({ children, darkMode }) => {
+  const theme = darkMode ? Theme.Dark : Theme.Light;
+  const darkBaseBoxShadow = 'box-shadow: 0 4px 20px -4px #01121A';
+  const lightBaseBoxShadow = '0 4px 10px -4px rgba(0, 30, 43, 0.3)';
+
+  return (
+    <div
+      className={css`
+        padding: 24px;
+        min-height: 68px; // 48px + 20px (padding + line-height)
+        border-radius: 24px;
+        color: ${color[theme].text.primary.default};
+        background-color: ${color[theme].background.primary.default};
+        border: 1px solid ${color[theme].border.secondary.default};
+        box-shadow: ${darkMode ? darkBaseBoxShadow : lightBaseBoxShadow};
+      `}
+    >
+      {children}
+    </div>
+  );
+};
 
 const meta: StoryMetaType<any> = {
   title: 'Components/Tokens',
