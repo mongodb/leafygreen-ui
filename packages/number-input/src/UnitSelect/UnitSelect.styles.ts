@@ -13,8 +13,8 @@ export const wrapperBaseStyles = css`
 
 export const getSelectDisabledStyles = (theme: Theme) => css`
   button {
-    background-color: ${color[theme].background.lowContrast.default};
-    border-color: ${color[theme].border.lowContrast.default};
+    background-color: ${color[theme].background.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
   }
 `;
 

@@ -21,7 +21,7 @@ export const getDescriptionStyle = (theme: Theme) => {
 
 export const getDisabledDescriptionColorStyle = (theme: Theme) => {
   return css`
-    color: ${color[theme].text.lowContrast.default};
+    color: ${color[theme].text.disabled.default};
   `;
 };
 

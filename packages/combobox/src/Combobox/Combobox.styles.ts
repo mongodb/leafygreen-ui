@@ -161,9 +161,9 @@ export const comboboxSizeStyles = (
 
 export const getComboboxDisabledStyles = (theme: Theme) => css`
   cursor: not-allowed;
-  color: ${color[theme].text.lowContrast.default};
-  background-color: ${color[theme].background.lowContrast.default};
-  border-color: ${color[theme].border.lowContrast.default};
+  color: ${color[theme].text.disabled.default};
+  background-color: ${color[theme].background.disabled.default};
+  border-color: ${color[theme].border.disabled.default};
 `;
 
 export const getComboboxStateStyles = (theme: Theme) => ({
@@ -390,4 +390,4 @@ export const getCaretIconFill = (theme: Theme) =>
   color[theme].icon.primary.default;
 
 export const getCaretIconDisabledFill = (theme: Theme) =>
-  color[theme].icon.lowContrast.default;
+  color[theme].icon.disabled.default;

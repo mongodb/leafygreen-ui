@@ -19,7 +19,7 @@ export const getLabelStyles = (theme: Theme) => {
 
 export const getDisabledLabelColorStyle = (theme: Theme) => {
   return css`
-    color: ${color[theme].text.lowContrast.default};
+    color: ${color[theme].text.disabled.default};
   `;
 };
 

@@ -45,7 +45,7 @@ const darkModeBackgroundColors = {
     [State.Hover]: red.dark3,
     [State.Focus]: red.dark3,
   },
-  [Variant.LowContrast]: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark3,
     [State.Hover]: gray.dark3,
     [State.Focus]: gray.dark3,
@@ -73,7 +73,7 @@ const darkModeBorderColors = {
     [State.Hover]: red.light1,
     [State.Focus]: blue.light1,
   },
-  [Variant.LowContrast]: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark2,
     [State.Hover]: gray.dark2,
     [State.Focus]: gray.dark2,
@@ -116,7 +116,7 @@ const darkModeIconColors = {
     [State.Hover]: red.light1,
     [State.Focus]: red.light1,
   },
-  [Variant.LowContrast]: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark1,
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
@@ -128,6 +128,11 @@ const darkModeTextColors = {
     [State.Default]: gray.light2,
     [State.Hover]: gray.light2,
     [State.Focus]: blue.light3,
+  },
+  [Variant.Placeholder]: {
+    [State.Default]: gray.dark1,
+    [State.Hover]: gray.dark1,
+    [State.Focus]: gray.dark1,
   },
   [Variant.Secondary]: {
     [State.Default]: gray.light1,
@@ -149,7 +154,7 @@ const darkModeTextColors = {
     [State.Hover]: red.light1,
     [State.Focus]: red.light1,
   },
-  [Variant.LowContrast]: {
+  [Variant.Disabled]: {
     [State.Default]: gray.dark1,
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,

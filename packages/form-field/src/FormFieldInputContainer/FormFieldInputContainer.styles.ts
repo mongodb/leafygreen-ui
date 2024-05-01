@@ -88,7 +88,7 @@ export const getInputWrapperModeStyles = (theme: Theme) => {
 
       &::placeholder {
         font-weight: ${fontWeights.regular};
-        color: color[theme].text.lowContrast.default;
+        color: color[theme].text.placeholder.default;
       }
     }
   `;
@@ -208,9 +208,9 @@ export const getInputWrapperStateStyles = ({
 export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
   return css`
     cursor: not-allowed;
-    color: ${color[theme].text.lowContrast.default};
-    background-color: ${color[theme].background.lowContrast.default};
-    border-color: ${color[theme].border.lowContrast.default};
+    color: ${color[theme].text.disabled.default};
+    background-color: ${color[theme].background.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
 
     &:hover,
     &:active {
@@ -222,12 +222,12 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
     & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${color[theme].text.lowContrast.default};
+      color: ${color[theme].text.disabled.default};
 
       &::placeholder {
         color: inherit;
       }
-      color: ${color[theme].text.lowContrast.default};
+      color: ${color[theme].text.disabled.default};
 
       &:-webkit-autofill {
         &,
@@ -235,10 +235,10 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
         &:focus {
           appearance: none;
 
-          border: 1px solid ${color[theme].border.lowContrast.hover};
-          -webkit-text-fill-color: ${color[theme].text.lowContrast.hover};
+          border: 1px solid ${color[theme].border.disabled.hover};
+          -webkit-text-fill-color: ${color[theme].text.disabled.hover};
           box-shadow: ${autofillShadowOverride(
-            color[theme].background.lowContrast.hover,
+            color[theme].background.disabled.hover,
           )};
         }
 
@@ -284,7 +284,7 @@ export const additionalChildrenWrapperStyles = css`
 
 export const getIconDisabledThemeStyles = (theme: Theme) => {
   return css`
-    color: ${color[theme].icon.lowContrast.default};
+    color: ${color[theme].icon.disabled.default};
   `;
 };
 

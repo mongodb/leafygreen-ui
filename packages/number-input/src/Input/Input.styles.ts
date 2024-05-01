@@ -176,9 +176,9 @@ export const getWrapperHoverStyles = (theme: Theme) => ({
 });
 
 export const getWrapperDisabledStyles = (theme: Theme) => css`
-  background-color: ${color[theme].background.lowContrast.default};
-  border-color: ${color[theme].border.lowContrast.default};
-  color: ${color[theme].text.lowContrast.default};
+  background-color: ${color[theme].background.disabled.default};
+  border-color: ${color[theme].border.disabled.default};
+  color: ${color[theme].text.disabled.default};
 `;
 
 export const inputSizeStyles: Record<Size, string> = {

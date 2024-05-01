@@ -52,6 +52,6 @@ export const getIconStateStyles = (theme: Theme) => ({
     color: ${color[theme].icon.success.default};
   `,
   [State.None]: css`
-    color: ${color[theme].icon.lowContrast.default};
+    color: ${color[theme].icon.disabled.default};
   `,
 });
