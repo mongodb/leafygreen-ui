@@ -1,14 +1,16 @@
 import React from 'react';
-import { type MessageLinksProps } from './MessageLinks.types';
-import { Subtitle } from '@leafygreen-ui/typography';
 import { RichLinksArea } from '@lg-chat/rich-links';
+
 import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Subtitle } from '@leafygreen-ui/typography';
+
 import {
   baseStyles,
   dividingLineStyles,
   linksHeadingStyles,
 } from './MessageLinks.styles';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { type MessageLinksProps } from './MessageLinks.types';
 
 export function MessageLinks({
   darkMode: darkModeProp,

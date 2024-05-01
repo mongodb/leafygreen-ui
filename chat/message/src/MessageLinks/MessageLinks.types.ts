@@ -1,5 +1,6 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { type RichLinkProps } from '@lg-chat/rich-links';
+
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 export interface MessageLinksProps
   extends DarkModeProps,

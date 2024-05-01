@@ -18,6 +18,7 @@ import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
 import { VerifiedAnswerBanner } from '../MessageBanner';
 import { MessageContainer, Variant } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
+import { MessageLinks } from '../MessageLinks';
 
 import {
   avatarClassName,
@@ -34,7 +35,6 @@ import {
 } from './Message.styles';
 import { Align } from './Message.types';
 import { MessageProps } from '.';
-import { MessageLinks } from '../MessageLinks';
 
 export const Message = forwardRef(
   (
