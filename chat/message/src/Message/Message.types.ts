@@ -1,12 +1,12 @@
 import { ReactElement } from 'react';
 import { type RichLinkProps } from '@lg-chat/rich-links';
-import { type MessageLinksProps } from '../MessageLinks';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { MessageContainerProps } from '../MessageContainer';
-import { MessageContentProps } from '../MessageContent';
+import { type MessageContainerProps } from '../MessageContainer';
+import { type MessageContentProps } from '../MessageContent';
+import { type MessageLinksProps } from '../MessageLinks';
 
 export const Align = {
   Right: 'right',
