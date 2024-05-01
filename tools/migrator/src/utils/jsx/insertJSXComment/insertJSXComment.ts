@@ -1,3 +1,5 @@
+// Credit to [Polaris](https://github.com/Shopify/polaris/blob/995079cc7c5c5087d662609c75c11eea58920f6d/polaris-migrator/src/utilities/jsx.ts#L189)
+
 import type { ASTPath, Comment } from 'jscodeshift';
 import type core from 'jscodeshift';
 
