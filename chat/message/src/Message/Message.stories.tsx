@@ -89,9 +89,8 @@ const meta: StoryMetaType<typeof Message> = {
 };
 export default meta;
 
-const Template: StoryFn<typeof Message> = ({ darkMode, avatar, ...rest }) => {
-  const Avatar = avatar ? React.cloneElement(avatar, { darkMode }) : undefined;
-  return <Message avatar={Avatar} darkMode={darkMode} {...rest}></Message>;
+const Template: StoryFn<typeof Message> = props => {
+  return <Message {...props}></Message>;
 };
 
 export const Basic: StoryFn<typeof Message> = Template.bind({});

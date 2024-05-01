@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { type RichLinkProps } from '@lg-chat/rich-links';
-import { MessageLinksProps } from 'src/MessageLinks';
+import { type MessageLinksProps } from '../MessageLinks';
 
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
