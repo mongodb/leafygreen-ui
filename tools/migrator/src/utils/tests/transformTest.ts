@@ -1,6 +1,6 @@
 // Credit to [Polaris](https://github.com/Shopify/polaris/blob/995079cc7c5c5087d662609c75c11eea58920f6d/polaris-migrator/src/utilities/check.ts)
 
-/* eslint-disable jest/no-export, jest/valid-title */
+/* eslint-disable jest/no-export */
 import fs from 'fs';
 import jscodeshift, { type FileInfo } from 'jscodeshift';
 import path from 'path';
