@@ -1,4 +1,4 @@
-// TODO: copied from polaris
+// Credit to [Polaris](https://github.com/Shopify/polaris/blob/995079cc7c5c5087d662609c75c11eea58920f6d/polaris-migrator/src/utilities/check.ts)
 
 /* eslint-disable jest/no-export, jest/valid-title */
 import fs from 'fs';
@@ -6,26 +6,6 @@ import jscodeshift, { type FileInfo } from 'jscodeshift';
 import path from 'path';
 // @ts-expect-error - no prettier types
 import prettier from 'prettier';
-
-async function applyTransform(
-  transform: any,
-  input: FileInfo,
-  options?: { [option: string]: any },
-) {
-  // This get the default export from inside transform.ts
-  // Handle ES6 modules using default export for the transform
-  const transformer = transform.default ? transform.default : transform;
-  const output = await transformer(
-    input,
-    {
-      jscodeshift: jscodeshift.withParser('tsx'),
-      stats: () => {},
-    },
-    options || {},
-  );
-
-  return (output || '').trim();
-}
 
 interface ParserExtensionMap {
   [key: string]: prettier.BuiltInParserName;
@@ -43,6 +23,33 @@ interface TestArgs {
   options?: { [option: string]: any };
 }
 
+/**
+ * Util that runs a file through jscodeshift and returns the modified code.
+ */
+async function applyTransform(
+  transform: any,
+  input: FileInfo,
+  options?: { [option: string]: any },
+) {
+  // This get the default export from transform.ts
+  // Handle ES6 modules using default export for the transform
+  const transformer = transform.default ? transform.default : transform;
+  const output = await transformer(
+    input,
+    {
+      jscodeshift: jscodeshift.withParser('tsx'),
+      stats: () => {},
+    },
+    options || {},
+  );
+
+  return (output || '').trim();
+}
+
+/**
+ * Util to test migrations in Jest.
+ * The input file within the fixture undergoes the appropriate transformation. The results are then compared to the output file.
+ */
 export function transformTest(
   dirName: string,
   { fixture, transform, extension = 'tsx', options = {}, level = 2 }: TestArgs,
