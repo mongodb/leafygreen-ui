@@ -269,8 +269,8 @@ export const inputWrapperStateStyles: Record<
 export const inputWrapperDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     cursor: not-allowed;
-    background-color: ${color.light.background.disabled.default};
-    border-color: ${color.light.border.disabled.default};
+    background-color: ${color.light.background.lowContrast.default};
+    border-color: ${color.light.border.lowContrast.default};
 
     &:hover,
     &:active {
@@ -282,7 +282,7 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
     & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${color.light.text.disabled.default};
+      color: ${color.light.text.lowContrast.default};
 
       &::placeholder {
         color: inherit;
@@ -293,10 +293,10 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
         &:hover,
         &:focus {
           appearance: none;
-          border: 1px solid ${color.light.border.disabled.hover};
-          -webkit-text-fill-color: ${color.light.text.disabled.hover};
+          border: 1px solid ${color.light.border.lowContrast.hover};
+          -webkit-text-fill-color: ${color.light.text.lowContrast.hover};
           box-shadow: ${autofillShadowOverride(
-            color.light.background.disabled.hover,
+            color.light.background.lowContrast.hover,
           )};
         }
 
@@ -308,9 +308,9 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     cursor: not-allowed;
-    color: ${color.dark.text.disabled.default};
-    background-color: ${color.dark.background.disabled.default};
-    border-color: ${color.dark.border.disabled.default};
+    color: ${color.dark.text.lowContrast.default};
+    background-color: ${color.dark.background.lowContrast.default};
+    border-color: ${color.dark.border.lowContrast.default};
 
     &:hover,
     &:active {
@@ -322,17 +322,17 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
     & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${color.dark.text.disabled.default};
+      color: ${color.dark.text.lowContrast.default};
 
       &:-webkit-autofill {
         &,
         &:hover,
         &:focus {
           appearance: none;
-          border: 1px solid ${color.dark.border.disabled.hover};
-          -webkit-text-fill-color: ${color.dark.text.disabled.hover};
+          border: 1px solid ${color.dark.border.lowContrast.hover};
+          -webkit-text-fill-color: ${color.dark.text.lowContrast.hover};
           box-shadow: ${autofillShadowOverride(
-            color.dark.background.disabled.hover,
+            color.dark.background.lowContrast.hover,
           )};
         }
 
@@ -383,10 +383,10 @@ export const additionalChildrenWrapperStyles = css`
 
 export const iconDisabledStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${color.light.icon.disabled.default};
+    color: ${color.light.icon.lowContrast.default};
   `,
   [Theme.Dark]: css`
-    color: ${color.dark.icon.disabled.default};
+    color: ${color.dark.icon.lowContrast.default};
   `,
 };
 

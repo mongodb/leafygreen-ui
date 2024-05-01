@@ -28,7 +28,7 @@ const createStorybookTheme = (theme: Theme) => {
     // Text colors
     textColor: color[theme].text.primary.default,
     textInverseColor: color[theme].text.secondary.default,
-    textMutedColor: color[theme].text.disabled.default,
+    textMutedColor: color[theme].text.lowContrast.default,
 
     // Toolbar default and active colors
     barTextColor: color[theme].text.secondary.default,

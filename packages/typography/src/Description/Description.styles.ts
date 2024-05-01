@@ -26,10 +26,10 @@ export const descriptionColorStyle: Record<Theme, string> = {
 
 export const disabledDescriptionColorStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${color.light.text.disabled.default};
+    color: ${color.light.text.lowContrast.default};
   `,
   [Theme.Dark]: css`
-    color: ${color.dark.text.disabled.default};
+    color: ${color.dark.text.lowContrast.default};
   `,
 };
 

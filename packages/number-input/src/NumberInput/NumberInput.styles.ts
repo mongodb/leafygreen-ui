@@ -42,5 +42,5 @@ export const getUnitThemeStyles = (theme: Theme) => css`
 `;
 
 export const getUnitDisabledStyles = (theme: Theme) => css`
-  color: ${color[theme].text.disabled.default};
+  color: ${color[theme].text.lowContrast.default};
 `;
