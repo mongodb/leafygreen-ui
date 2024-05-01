@@ -1,6 +1,6 @@
-import { transformCheck } from '../../../../utils/tests/transformCheck';
+import { transformTest } from '../../../tests/transformTest';
 
-transformCheck(__dirname, {
+transformTest(__dirname, {
   fixture: 'insert-jsx-comment',
   transform: 'insert-jsx-comment',
   level: 1,

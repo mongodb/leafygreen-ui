@@ -42,8 +42,8 @@ interface TestArgs {
   level?: 1 | 2;
   options?: { [option: string]: any };
 }
-//TODO: rename me
-export function transformCheck(
+
+export function transformTest(
   dirName: string,
   { fixture, transform, extension = 'tsx', options = {}, level = 2 }: TestArgs,
 ) {

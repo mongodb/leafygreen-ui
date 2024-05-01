@@ -1,4 +1,4 @@
-import { transformCheck } from '../../../../utils/tests/transformCheck';
+import { transformTest } from '../../../../utils/tests/transformTest';
 
 const transform = 'update-component-prop-value';
 
@@ -10,7 +10,7 @@ const test = {
     newPropValue: "new prop y'all",
   },
 };
-transformCheck(__dirname, {
+transformTest(__dirname, {
   fixture: test.name,
   transform,
   options: test.options,

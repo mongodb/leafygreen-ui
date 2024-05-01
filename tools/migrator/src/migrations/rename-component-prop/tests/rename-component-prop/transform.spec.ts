@@ -1,4 +1,4 @@
-import { transformCheck } from '../../../../utils/tests/transformCheck';
+import { transformTest } from '../../../../utils/tests/transformTest';
 
 const transform = 'rename-component-prop';
 
@@ -11,7 +11,7 @@ const test = {
   },
 };
 
-transformCheck(__dirname, {
+transformTest(__dirname, {
   fixture: test.name,
   transform,
   options: test.options,

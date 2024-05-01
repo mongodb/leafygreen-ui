@@ -1,4 +1,4 @@
-import { transformCheck } from '../../../../utils/tests/transformCheck';
+import { transformTest } from '../../../../utils/tests/transformTest';
 
 const transform = 'consolidate-props';
 
@@ -14,7 +14,7 @@ const test = {
     fromPropType: 'boolean',
   },
 };
-transformCheck(__dirname, {
+transformTest(__dirname, {
   fixture: test.name,
   transform,
   options: test.options,

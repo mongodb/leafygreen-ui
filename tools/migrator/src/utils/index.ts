@@ -1,2 +1,2 @@
 export { insertJSXComment } from './jsx';
-export { transformCheck } from './tests/transformCheck';
+export { transformTest } from './tests/transformTest';
