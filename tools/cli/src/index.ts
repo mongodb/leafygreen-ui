@@ -3,6 +3,7 @@ import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
+import { migrator } from '@lg-tools/migrator';
 import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
@@ -165,6 +166,32 @@ cli
     false,
   )
   .action(validate);
+
+/** Migrator */
+cli
+  .command('migrator')
+  .description('yada yada')
+  .argument(
+    '<migration>',
+    'One of the migrations from: ADD LINK WITH ALL THE MODS',
+  )
+  .argument(
+    '<path>',
+    'Files or directory to transform. Can be a glob like like src/**.test.js',
+  )
+  .option('--dry', 'dry run (no changes are made to files)', false)
+  .option(
+    '--print',
+    'print transformed files to stdout, useful for development',
+    false,
+  )
+  .option(
+    '--force',
+    'Bypass Git safety checks and forcibly run codemods',
+    false,
+  )
+  .option('--stdin', 'read file/directory list from stdin', false)
+  .action(migrator);
 
 /** Build steps */
 cli
