@@ -88,7 +88,7 @@ export const getInputWrapperModeStyles = (theme: Theme) => {
 
       &::placeholder {
         font-weight: ${fontWeights.regular};
-        color: color[theme].text.placeholder.default;
+        color: ${color[theme].text.placeholder.default};
       }
     }
   `;
