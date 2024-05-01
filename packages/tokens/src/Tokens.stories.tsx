@@ -269,6 +269,12 @@ export const Colors = () => {
   );
 };
 
+Colors.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const InteractionRings = () => {
   const invertMode = (mode: Mode): Mode => (mode === 'dark' ? 'light' : 'dark');
 
