@@ -1,4 +1,4 @@
-import type { ASTPath } from 'jscodeshift';
+import type { ASTPath, Comment } from 'jscodeshift';
 import type core from 'jscodeshift';
 
 export function insertJSXComment(
@@ -36,13 +36,13 @@ export function insertCommentBefore(
 ) {
   path.value.comments = path.value.comments || [];
 
-  const doesCommentExist = path.value.comments.find(
-    // @ts-ignore
-    comment => comment.value === content,
+  const duplicateComment = path.value.comments.find(
+    // @ts-ignore comment.value is a string
+    (comment: Comment) => comment.value === comment,
   );
 
   // Avoiding duplicates of the same comment
-  if (doesCommentExist) return;
+  if (duplicateComment) return;
 
   path.value.comments.push(j.commentBlock(comment));
 }
