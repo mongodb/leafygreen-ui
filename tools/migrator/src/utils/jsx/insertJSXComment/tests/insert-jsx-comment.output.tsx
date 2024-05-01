@@ -5,8 +5,8 @@ const MyComponent = (props: any) => {
 };
 
 export const App = () => {
-  // Random Comment
-  const Test = () => {
+  // Comment
+  const TestOne = () => {
     return (
       /* testing comment */
       <MyComponent prop="before" />
@@ -20,6 +20,45 @@ export const App = () => {
         <MyComponent prop="before" />
       </>
     );
+  };
+
+  const TestThree = () => {
+    // comment
+    return (
+      /* testing comment */
+      <MyComponent prop="before" />
+    );
+  };
+
+  const TestFour = () => {
+    return (
+      // comment
+      /* testing comment */
+      <MyComponent prop="before" />
+    );
+  };
+
+  const TestFive = () => {
+    return (
+      /* testing comment */
+      <MyComponent prop="before" />
+    );
+  };
+
+  const TestSix = () => {
+    /* testing comment */
+    return (
+      /* testing comment */
+      <MyComponent prop="before" />
+    );
+  };
+
+  const TestSeven = () => {
+    /* testing comment */
+    return (
+      /* testing comment */
+      <MyComponent prop="before" />
+    ); // comment
   };
 
   return (
@@ -38,8 +77,13 @@ export const App = () => {
 
       {/* testing comment */}
       <MyComponent prop="before" />
-      <Test />
+      <TestOne />
       <TestTwo />
+      <TestThree />
+      <TestFour />
+      <TestFive />
+      <TestSix />
+      <TestSeven />
     </>
   );
 };
