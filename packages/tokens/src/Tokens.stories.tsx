@@ -3,11 +3,14 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import startCase from 'lodash/startCase';
 
+import Card from '@leafygreen-ui/card';
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';
 import {
+  color,
   focusRing,
   fontFamilies,
   hoverRing,
@@ -121,6 +124,115 @@ export const FontFamilies = () => (
     })}
   </div>
 );
+
+const generateTable = (theme: Theme) => {
+  const isDarkMode = !!(theme === Theme.Dark);
+  return (
+    <Card darkMode={isDarkMode}>
+      <h3
+        className={css`
+          color: ${color[theme].text.primary.default};
+          text-transform: capitalize;
+        `}
+      >
+        {theme} Mode
+      </h3>
+      <div
+        className={css`
+          display: flex;
+          gap: ${spacing[400]}px;
+        `}
+      >
+        {Object.keys(color[theme]).map(type => (
+          <Card darkMode={isDarkMode}>
+            <table
+              className={css`
+                border-spacing: ${spacing[200]}px;
+              `}
+            >
+              <thead
+                className={css`
+                  font-size: 10px;
+                `}
+              >
+                <td
+                  className={css`
+                    color: ${color[theme].text.secondary.default};
+                    font-weight: bold;
+                    width: 100px;
+                  `}
+                >
+                  <code>{type}</code>
+                </td>
+                <td
+                  className={css`
+                    width: ${spacing[1600]}px;
+                  `}
+                >
+                  <code>default</code>
+                </td>
+                <td
+                  className={css`
+                    width: ${spacing[1600]}px;
+                  `}
+                >
+                  <code>hover</code>
+                </td>
+                <td
+                  className={css`
+                    width: ${spacing[1600]}px;
+                  `}
+                >
+                  <code>focus</code>
+                </td>
+              </thead>
+              {Object.keys(color[theme][type]).map(variant => (
+                <tbody
+                  className={css`
+                    font-size: 10px;
+                  `}
+                >
+                  <tr>
+                    <td>
+                      <code>{variant}</code>
+                    </td>
+
+                    {Object.keys(color[theme][type][variant]).map(state => (
+                      <td
+                        className={css`
+                          border: 1px solid
+                            ${color[theme].border.primary.default};
+                          background-color: ${color[theme][type][variant][
+                            state
+                          ]};
+                        `}
+                      />
+                    ))}
+                  </tr>
+                </tbody>
+              ))}
+            </table>
+          </Card>
+        ))}
+      </div>
+    </Card>
+  );
+};
+
+export const Colors = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${spacing[400]}px;
+      `}
+    >
+      <h2>Color Tokens</h2>
+      {Object.values(Theme).map(theme => generateTable(theme))}
+    </div>
+  );
+};
 
 export const InteractionRings = () => {
   const invertMode = (mode: Mode): Mode => (mode === 'dark' ? 'light' : 'dark');
