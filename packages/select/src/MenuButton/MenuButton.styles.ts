@@ -129,9 +129,9 @@ export const getMenuButtonDisabledThemeStyles = (theme: Theme) => css`
   }
 
   &[aria-disabled='true'] {
-    background-color: ${color[theme].background.disabled.default};
-    border-color: ${color[theme].border.disabled.default};
-    color: ${color[theme].text.disabled.default};
+    background-color: ${color[theme].background.lowContrast.default};
+    border-color: ${color[theme].border.lowContrast.default};
+    color: ${color[theme].text.lowContrast.default};
 
     &:hover,
     &:active {
@@ -140,7 +140,7 @@ export const getMenuButtonDisabledThemeStyles = (theme: Theme) => css`
 
     > *:last-child {
       > svg {
-        color: ${color[theme].icon.disabled.default};
+        color: ${color[theme].icon.lowContrast.default};
       }
     }
   }

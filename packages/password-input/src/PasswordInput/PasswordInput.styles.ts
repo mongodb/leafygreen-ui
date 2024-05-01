@@ -299,21 +299,21 @@ export const inputThemeStyles: Record<Theme, Record<State, string>> = {
 
 export const getInputDisabledStyles = (theme: Theme) => css`
   cursor: not-allowed;
-  background-color: ${color[theme].background.disabled.default};
-  border-color: ${color[theme].border.disabled.default};
-  color: ${color[theme].text.disabled.default};
+  background-color: ${color[theme].background.lowContrast.default};
+  border-color: ${color[theme].border.lowContrast.default};
+  color: ${color[theme].text.lowContrast.default};
 
   &:-webkit-autofill {
-    -webkit-text-fill-color: ${color[theme].text.disabled.default};
-    border-color: ${color[theme].border.disabled.default};
+    -webkit-text-fill-color: ${color[theme].text.lowContrast.default};
+    border-color: ${color[theme].border.lowContrast.default};
     box-shadow: ${autofillShadowOverride(
-      color[theme].background.disabled.default,
+      color[theme].background.lowContrast.default,
     )};
 
     &:focus-visible {
-      -webkit-text-fill-color: ${color[theme].text.disabled.focus};
+      -webkit-text-fill-color: ${color[theme].text.lowContrast.focus};
       box-shadow: ${autofillShadowOverride(
-          color[theme].background.disabled.focus,
+          color[theme].background.lowContrast.focus,
         )},
         ${focusRing[theme].input};
     }

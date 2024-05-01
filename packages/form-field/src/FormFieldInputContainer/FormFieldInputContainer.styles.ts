@@ -88,7 +88,7 @@ export const getInputWrapperModeStyles = (theme: Theme) => {
 
       &::placeholder {
         font-weight: ${fontWeights.regular};
-        color: color[theme].text.disabled.default;
+        color: color[theme].text.lowContrast.default;
       }
     }
   `;
@@ -208,10 +208,9 @@ export const getInputWrapperStateStyles = ({
 export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
   return css`
     cursor: not-allowed;
-    color: ${color[theme].text.disabled
-      .default}; // was not defined in light mode previously
-    background-color: ${color[theme].background.disabled.default};
-    border-color: ${color[theme].border.disabled.default};
+    color: ${color[theme].text.lowContrast.default};
+    background-color: ${color[theme].background.lowContrast.default};
+    border-color: ${color[theme].border.lowContrast.default};
 
     &:hover,
     &:active {
@@ -223,17 +222,23 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
     & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${color[theme].text.disabled.default};
+      color: ${color.light.text.lowContrast.default};
+
+      &::placeholder {
+        color: inherit;
+      }
+      color: ${color[theme].text.lowContrast.default};
 
       &:-webkit-autofill {
         &,
         &:hover,
         &:focus {
           appearance: none;
-          border: 1px solid ${color[theme].border.disabled.hover};
-          -webkit-text-fill-color: ${color[theme].text.disabled.hover};
+
+          border: 1px solid ${color.light.border.lowContrast.hover};
+          -webkit-text-fill-color: ${color.light.text.lowContrast.hover};
           box-shadow: ${autofillShadowOverride(
-            color[theme].background.disabled.hover,
+            color.light.background.lowContrast.hover,
           )};
         }
 
@@ -279,7 +284,7 @@ export const additionalChildrenWrapperStyles = css`
 
 export const getIconDisabledThemeStyles = (theme: Theme) => {
   return css`
-    color: ${color[theme].icon.disabled.default};
+    color: ${color[theme].icon.lowContrast.default};
   `;
 };
 

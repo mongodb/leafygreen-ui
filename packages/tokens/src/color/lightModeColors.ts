@@ -45,7 +45,7 @@ const lightModeBackgroundColors = {
     [State.Hover]: red.light3,
     [State.Focus]: red.light3,
   },
-  [Variant.Disabled]: {
+  [Variant.LowContrast]: {
     [State.Default]: gray.light2,
     [State.Hover]: gray.light2,
     [State.Focus]: gray.light2,
@@ -73,7 +73,7 @@ const lightModeBorderColors = {
     [State.Hover]: red.base,
     [State.Focus]: blue.light1,
   },
-  [Variant.Disabled]: {
+  [Variant.LowContrast]: {
     [State.Default]: gray.light1,
     [State.Hover]: gray.light1,
     [State.Focus]: gray.light1,
@@ -116,7 +116,7 @@ const lightModeIconColors = {
     [State.Hover]: red.base,
     [State.Focus]: red.base,
   },
-  [Variant.Disabled]: {
+  [Variant.LowContrast]: {
     [State.Default]: gray.base,
     [State.Hover]: gray.base,
     [State.Focus]: gray.base,
@@ -149,10 +149,15 @@ const lightModeTextColors = {
     [State.Hover]: red.base,
     [State.Focus]: red.base,
   },
-  [Variant.Disabled]: {
+  [Variant.LowContrast]: {
     [State.Default]: gray.base,
     [State.Hover]: gray.base,
     [State.Focus]: gray.base,
+  },
+  [Variant.Link]: {
+    [State.Default]: blue.base,
+    [State.Hover]: blue.base,
+    [State.Focus]: blue.base,
   },
 } as const satisfies VariantColorRecord;
 

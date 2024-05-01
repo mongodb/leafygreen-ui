@@ -15,7 +15,8 @@ const Variant = {
   Warning: 'warning',
   Error: 'error',
   Success: 'success',
-  Disabled: 'disabled',
+  LowContrast: 'lowContrast',
+  Link: 'link',
 } as const;
 type Variant = (typeof Variant)[keyof typeof Variant];
 
