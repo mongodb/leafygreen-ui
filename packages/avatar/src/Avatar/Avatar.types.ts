@@ -1,5 +1,6 @@
 import { ComponentProps } from 'react';
 
+import { GlyphName } from '@leafygreen-ui/icon';
 import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -8,28 +9,47 @@ export const Format = {
   MongoDB: 'mongodb',
 
   /** Renders the user's given name initial */
-  GivenInitial: 'given-initial',
-
-  /** Renders with the user's combined given + surname initials  */
-  Initials: 'initials',
+  Text: 'text',
 
   /** Renders a `Person` icon */
-  Default: 'default',
+  Icon: 'icon',
 
-  /** Renders a `Government` icon */
-  Government: 'government',
-
-  // TODO: Image avatar format
-  // /** Renders the provided image */
+  /** TODO: Renders an image avatar */
   // Image: 'image',
 };
 export type Format = (typeof Format)[keyof typeof Format];
 
-export interface AvatarProps extends ComponentProps<'div'>, DarkModeProps {
-  format: Format;
+export interface BaseAvatarProps extends ComponentProps<'div'>, DarkModeProps {
   size: Size;
-  imageUrl?: string;
 }
+
+export type DiscriminatedAvatarProps =
+  | {
+      format: typeof Format.MongoDB;
+      text: never;
+      glyph: never;
+      // imageUrl: never;
+    }
+  | {
+      format: typeof Format.Text;
+      text: string;
+      glyph: never;
+      // imageUrl: never;
+    }
+  | {
+      format: typeof Format.Icon;
+      glyph: GlyphName;
+      text: never;
+      // imageUrl: never;
+    };
+// | {
+//     format: typeof Format.Image;
+//     imageUrl: string;
+//     text: never;
+//     glyph: never;
+//   };
+
+export type AvatarProps = BaseAvatarProps & DiscriminatedAvatarProps;
 
 export interface AvatarStyleArgs {
   size: Size;

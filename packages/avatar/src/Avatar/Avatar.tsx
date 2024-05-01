@@ -8,12 +8,13 @@ import { AvatarProps } from './Avatar.types';
 import { AvatarContents } from './AvatarContents';
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-  ({ darkMode, format, size = Size.Default }, fwdRef) => {
+  (props, fwdRef) => {
+    const { darkMode, format, size = Size.Default } = props;
     const { theme } = useDarkMode(darkMode);
 
     return (
       <div ref={fwdRef} className={getAvatarStyles({ size, theme, format })}>
-        <AvatarContents format={format} size={size} />
+        <AvatarContents {...props} />
       </div>
     );
   },

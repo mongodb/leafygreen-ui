@@ -1,6 +1,6 @@
 import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -13,16 +13,33 @@ export default {
   parameters: {
     default: 'LiveExample',
     generate: {
+      storyNames: ['MongoAvatar', 'TextAvatar', 'IconAvatar', 'ImageAvatar'],
       combineArgs: {
         darkMode: [false, true],
-        format: Object.values(Format),
         size: Object.values(Size),
       },
     },
   },
+} satisfies StoryMetaType<typeof Avatar>;
+
+export const LiveExample: StoryObj<typeof Avatar> = {
+  render: props => <Avatar {...props} />,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+  args: {
+    format: Format.Icon,
+    size: Size.Default,
+    glyph: 'Building',
+    // @ts-expect-error - initial format does not allow text
+    text: 'A',
+    // name: 'アダモ トムソン',
+  },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    // name: { control: 'text' },
+    text: { control: 'text' },
     size: {
       control: 'select',
       options: Size,
@@ -32,15 +49,43 @@ export default {
       options: Format,
     },
   },
+};
+
+export const MongoAvatar: StoryObj<typeof Avatar> = {
+  render: () => <></>,
   args: {
-    format: Format.Default,
-    size: Size.Default,
-    name: 'アダモ トムソン',
+    format: Format.MongoDB,
   },
-} satisfies StoryMetaType<typeof Avatar>;
-
-export const LiveExample: StoryFn<typeof Avatar> = props => (
-  <Avatar {...props} />
-);
-
-export const Generated: StoryFn<typeof Avatar> = () => <></>;
+};
+export const TextAvatar: StoryObj<typeof Avatar> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      combineArgs: {
+        text: ['A', 'AT'],
+      },
+    },
+  },
+  args: {
+    format: Format.Text,
+  },
+};
+export const IconAvatar: StoryObj<typeof Avatar> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      combineArgs: {
+        glyph: ['Person', 'GovernmentBuilding'],
+      },
+    },
+  },
+  args: {
+    format: Format.Icon,
+  },
+};
+// export const ImageAvatar: StoryObj<typeof Avatar> = {
+//   render: () => <></>,
+//   args: {
+//     format: Format.MongoDB,
+//   },
+// };

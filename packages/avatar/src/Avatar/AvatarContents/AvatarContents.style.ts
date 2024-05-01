@@ -1,26 +1,22 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Size, spacing } from '@leafygreen-ui/tokens';
 
-import { AvatarStyleArgs, Format } from '../Avatar.types';
+import { AvatarStyleArgs } from '../Avatar.types';
 
 const avatarTextSizeMap = {
-  [Size.XSmall]: spacing[200],
+  [Size.XSmall]: spacing[150], // Not Recommended
   [Size.Small]: spacing[300],
   [Size.Default]: spacing[400],
   [Size.Large]: spacing[600],
 } as const satisfies Record<Size, number>;
 
-export const getTextAvatarContentStyles = ({
-  size,
-  format,
-}: AvatarStyleArgs) => css`
+export const getTextAvatarContentStyles = ({ size }: AvatarStyleArgs) => css`
   font-size: ${avatarTextSizeMap[size]}px;
   user-select: none;
+`;
 
-  ${format === Format.GivenInitial &&
-  css`
-    font-weight: bold;
-  `}
+export const singleInitialStyles = css`
+  font-weight: bold;
 `;
 
 export const baseIconAvatarContentStyles = css`
