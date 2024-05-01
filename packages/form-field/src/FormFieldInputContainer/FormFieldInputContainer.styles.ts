@@ -294,20 +294,18 @@ export const getIconThemeStyles = (theme: Theme) => {
   `;
 };
 
-export const optionalTextBaseStyle = css`
-  font-size: 12px;
-  line-height: 12px;
-  font-style: italic;
-  font-weight: ${fontWeights.regular};
-  display: flex;
-  align-items: center;
-  > p {
-    margin: 0;
-  }
-`;
-
-export const getOptionalTextThemeStyle = (theme: Theme) => {
+export const getOptionalTextStyle = (theme: Theme) => {
   return css`
     color: ${color[theme].text.secondary.default};
+
+    font-size: 12px;
+    line-height: 12px;
+    font-style: italic;
+    font-weight: ${fontWeights.regular};
+    display: flex;
+    align-items: center;
+    > p {
+      margin: 0;
+    }
   `;
 };

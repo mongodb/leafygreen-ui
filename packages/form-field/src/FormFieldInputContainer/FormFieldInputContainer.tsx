@@ -14,10 +14,9 @@ import {
   getIconDisabledThemeStyles,
   getIconThemeStyles,
   getInputWrapperStyles,
-  getOptionalTextThemeStyle,
+  getOptionalTextStyle,
   iconClassName,
   inputElementClassName,
-  optionalTextBaseStyle,
 } from './FormFieldInputContainer.styles';
 import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
 
@@ -61,10 +60,7 @@ export const FormFieldInputContainer = forwardRef<
             {showOptionalText && (
               <div
                 data-lgid={LGIDS_FORM_FIELD.optional}
-                className={cx(
-                  optionalTextBaseStyle,
-                  getOptionalTextThemeStyle(theme),
-                )}
+                className={getOptionalTextStyle(theme)}
               >
                 <p>Optional</p>
               </div>

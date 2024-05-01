@@ -8,29 +8,21 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-export const descriptionStyle = css`
-  font-family: ${fontFamilies.default};
-  font-weight: ${fontWeights.regular};
-  margin-top: 0;
-  margin-bottom: 0;
-`;
+export const getDescriptionStyle = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.secondary.default};
 
-export const descriptionColorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.text.secondary.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.text.secondary.default};
-  `,
+    font-family: ${fontFamilies.default};
+    font-weight: ${fontWeights.regular};
+    margin-top: 0;
+    margin-bottom: 0;
+  `;
 };
 
-export const disabledDescriptionColorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
+export const getDisabledDescriptionColorStyle = (theme: Theme) => {
+  return css`
     color: ${color.light.text.lowContrast.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.text.lowContrast.default};
-  `,
+  `;
 };
 
 export const descriptionTypeScaleStyles: Record<BaseFontSize, string> = {
