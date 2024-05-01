@@ -222,7 +222,7 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
     & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${color.light.text.lowContrast.default};
+      color: ${color[theme].text.lowContrast.default};
 
       &::placeholder {
         color: inherit;
@@ -235,10 +235,10 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
         &:focus {
           appearance: none;
 
-          border: 1px solid ${color.light.border.lowContrast.hover};
-          -webkit-text-fill-color: ${color.light.text.lowContrast.hover};
+          border: 1px solid ${color[theme].border.lowContrast.hover};
+          -webkit-text-fill-color: ${color[theme].text.lowContrast.hover};
           box-shadow: ${autofillShadowOverride(
-            color.light.background.lowContrast.hover,
+            color[theme].background.lowContrast.hover,
           )};
         }
 

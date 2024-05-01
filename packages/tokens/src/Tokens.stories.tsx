@@ -10,6 +10,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';
 import {
+  borderRadius,
   color,
   focusRing,
   fontFamilies,
@@ -144,50 +145,53 @@ const generateTable = (theme: Theme) => {
         `}
       >
         {Object.keys(color[theme]).map(type => (
-          <Card darkMode={isDarkMode}>
+          <Card darkMode={isDarkMode} key={`color-${theme}-${type}`}>
             <table
               className={css`
-                border-spacing: ${spacing[200]}px;
+                border-spacing: ${spacing[400]}px;
               `}
             >
               <thead
                 className={css`
                   font-size: 10px;
+                  text-align: left;
                 `}
               >
-                <td
-                  className={css`
-                    color: ${color[theme].text.secondary.default};
-                    font-weight: bold;
-                    width: 100px;
-                  `}
-                >
-                  <code>{type}</code>
-                </td>
-                <td
-                  className={css`
-                    width: ${spacing[1600]}px;
-                  `}
-                >
-                  <code>default</code>
-                </td>
-                <td
-                  className={css`
-                    width: ${spacing[1600]}px;
-                  `}
-                >
-                  <code>hover</code>
-                </td>
-                <td
-                  className={css`
-                    width: ${spacing[1600]}px;
-                  `}
-                >
-                  <code>focus</code>
-                </td>
+                <tr>
+                  <th
+                    className={css`
+                      color: ${color[theme].text.primary.default};
+                      width: 100px;
+                    `}
+                  >
+                    <code>{type}</code>
+                  </th>
+                  <th
+                    className={css`
+                      width: ${spacing[1600]}px;
+                    `}
+                  >
+                    <code>default</code>
+                  </th>
+                  <th
+                    className={css`
+                      width: ${spacing[1600]}px;
+                    `}
+                  >
+                    <code>hover</code>
+                  </th>
+                  <th
+                    className={css`
+                      width: ${spacing[1600]}px;
+                    `}
+                  >
+                    <code>focus</code>
+                  </th>
+                </tr>
               </thead>
               {Object.keys(color[theme][type]).map(variant => (
                 <tbody
+                  key={`color-${theme}-${type}-${variant}`}
                   className={css`
                     font-size: 10px;
                   `}
@@ -198,15 +202,19 @@ const generateTable = (theme: Theme) => {
                     </td>
 
                     {Object.keys(color[theme][type][variant]).map(state => (
-                      <td
-                        className={css`
-                          border: 1px solid
-                            ${color[theme].border.primary.default};
-                          background-color: ${color[theme][type][variant][
-                            state
-                          ]};
-                        `}
-                      />
+                      <td key={`color-${theme}-${type}-${variant}-${state}`}>
+                        <div
+                          className={css`
+                            aspect-ratio: 1/1;
+                            border: 1px solid
+                              ${color[theme].border.primary.default};
+                            background-color: ${color[theme][type][variant][
+                              state
+                            ]};
+                            border-radius: ${borderRadius[200]}px;
+                          `}
+                        />
+                      </td>
                     ))}
                   </tr>
                 </tbody>
