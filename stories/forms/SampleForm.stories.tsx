@@ -45,7 +45,7 @@ export const Vertical = () => {
         `}
       >
         {countries.map(country => (
-          <ComboboxOption value={country} />
+          <ComboboxOption key={country} value={country} />
         ))}
       </Combobox>
 

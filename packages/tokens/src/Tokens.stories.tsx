@@ -19,7 +19,13 @@ import {
   typeScales,
 } from '.';
 
-const Card = ({ children, darkMode }) => {
+const Card = ({
+  children,
+  darkMode,
+}: {
+  children: React.ReactNode;
+  darkMode: boolean;
+}) => {
   const theme = darkMode ? Theme.Dark : Theme.Light;
   const darkBaseBoxShadow = 'box-shadow: 0 4px 20px -4px #01121A';
   const lightBaseBoxShadow = '0 4px 10px -4px rgba(0, 30, 43, 0.3)';
