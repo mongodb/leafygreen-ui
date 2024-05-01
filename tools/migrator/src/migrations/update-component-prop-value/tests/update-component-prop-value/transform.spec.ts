@@ -6,7 +6,7 @@ const test = {
   options: {
     componentName: 'MyComponent',
     propName: 'prop',
-    newPropValue: 'newPropValue',
+    newPropValue: 'new prop value',
   },
 };
 transformTest(__dirname, {

@@ -12,7 +12,11 @@ export default function transformer(
   { jscodeshift: j }: API,
   options: TransformerOptions,
 ) {
-  const { propName, newPropName, componentName } = options;
+  const {
+    propName = 'prop',
+    newPropName = 'newProp',
+    componentName = 'MyComponent',
+  } = options;
 
   const source = j(file.source);
 

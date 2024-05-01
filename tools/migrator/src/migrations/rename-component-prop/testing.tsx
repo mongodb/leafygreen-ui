@@ -10,7 +10,7 @@ const Child = (props: any) => {
 
 export const App = () => {
   return (
-    <MyComponent prop="new prop value" foo="bar">
+    <MyComponent prop="value" foo="bar">
       Hello
       <Child prop="value" />
     </MyComponent>
