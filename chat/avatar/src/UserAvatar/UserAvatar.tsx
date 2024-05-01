@@ -5,7 +5,6 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { AvatarWrapper } from '../AvatarWrapper';
 import { FallbackAvatar } from '../FallbackAvatar';
-import { getInitials } from '../utils/getInitials';
 import { Size } from '..';
 
 import { baseStyles, sizeStyles } from './UserAvatar.styles';
@@ -32,7 +31,7 @@ export const UserAvatar = forwardRef(
           ref={ref}
           {...rest}
         >
-          {getInitials(name)}
+          {name.slice(0)}
         </AvatarWrapper>
       );
     } else {
