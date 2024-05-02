@@ -13,6 +13,8 @@ export const getAvatarStyles = ({
 }: AvatarStyleArgs) => css`
   height: ${avatarSizeMap[size]}px;
   width: ${avatarSizeMap[size]}px;
+  min-height: ${avatarSizeMap[size]}px;
+  min-width: ${avatarSizeMap[size]}px;
   border-radius: 100%;
   border: ${spacing[50]}px solid;
 

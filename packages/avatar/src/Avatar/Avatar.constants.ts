@@ -1,13 +1,22 @@
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { Size, spacing, Type as ColorType } from '@leafygreen-ui/tokens';
+import { spacing, Type as ColorType } from '@leafygreen-ui/tokens';
+
+import { AvatarSize } from './Avatar.types';
 
 export const avatarSizeMap = {
-  [Size.XSmall]: spacing[400],
-  [Size.Small]: spacing[400] + spacing[300],
-  [Size.Default]: spacing[900],
-  [Size.Large]: spacing[1200],
-} as const satisfies Record<Size, number>;
+  // [AvatarSize.Small]: spacing[400] + spacing[150], // 16 + 6 = 22,
+  [AvatarSize.Default]: spacing[400] + spacing[300], // 16 + 12 = 28
+  [AvatarSize.Large]: spacing[900], // 36
+  [AvatarSize.XLarge]: spacing[1200] + spacing[50], // 42
+} as const satisfies Record<AvatarSize, number>;
+
+export const avatarFontSizeMap = {
+  // [AvatarSize.Small]: spacing[200], // 6 - Not Recommended
+  [AvatarSize.Default]: spacing[300], // 12
+  [AvatarSize.Large]: spacing[400], // 16
+  [AvatarSize.XLarge]: spacing[600], // 24
+} as const satisfies Record<AvatarSize, number>;
 
 export const avatarColors = {
   [Theme.Light]: {

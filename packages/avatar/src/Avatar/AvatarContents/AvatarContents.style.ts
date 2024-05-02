@@ -1,17 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Size, spacing } from '@leafygreen-ui/tokens';
 
+import { avatarFontSizeMap } from '../Avatar.constants';
 import { AvatarStyleArgs } from '../Avatar.types';
 
-const avatarTextSizeMap = {
-  [Size.XSmall]: spacing[150], // Not Recommended
-  [Size.Small]: spacing[300],
-  [Size.Default]: spacing[400],
-  [Size.Large]: spacing[600],
-} as const satisfies Record<Size, number>;
-
 export const getTextAvatarContentStyles = ({ size }: AvatarStyleArgs) => css`
-  font-size: ${avatarTextSizeMap[size]}px;
+  font-size: ${avatarFontSizeMap[size]}px;
   user-select: none;
 `;
 

@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+import { omit } from 'lodash';
 
 import { GlyphName } from '@leafygreen-ui/icon';
 import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
@@ -19,25 +20,54 @@ export const Format = {
 };
 export type Format = (typeof Format)[keyof typeof Format];
 
+export const AvatarSize = {
+  ...omit(Size, ['XSmall', 'Small']),
+  XLarge: 'xlarge',
+} as const;
+export type AvatarSize = (typeof AvatarSize)[keyof typeof AvatarSize];
+
 export interface BaseAvatarProps extends ComponentProps<'div'>, DarkModeProps {
-  size: Size;
+  /** The relative Size of tha Avatar */
+  size: AvatarSize;
 }
 
 export type DiscriminatedAvatarProps =
   | {
+      /**
+       * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
+       * @default `"icon"`
+       */
       format: typeof Format.MongoDB;
       text: never;
       glyph: never;
       // imageUrl: never;
     }
   | {
+      /**
+       * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
+       * @default `"icon"`
+       */
       format: typeof Format.Text;
+
+      /**
+       * The text to render in the Avatar.
+       */
       text: string;
       glyph: never;
       // imageUrl: never;
     }
   | {
+      /**
+       * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
+       * @default `"icon"`
+       */
       format: typeof Format.Icon;
+
+      /**
+       * The icon glyph name to render in the Avatar
+       *
+       * @default `"Person"`
+       */
       glyph: GlyphName;
       text: never;
       // imageUrl: never;
@@ -52,7 +82,7 @@ export type DiscriminatedAvatarProps =
 export type AvatarProps = BaseAvatarProps & DiscriminatedAvatarProps;
 
 export interface AvatarStyleArgs {
-  size: Size;
+  size: AvatarSize;
   theme: Theme;
   format: Format;
 }

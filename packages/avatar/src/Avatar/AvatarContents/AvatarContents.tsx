@@ -50,7 +50,7 @@ export const AvatarContents = ({
 
     case Format.Icon:
     default: {
-      return <Icon className={baseIconAvatarContentStyles} glyph={glyph} />;
+      return <Icon size={size} glyph={glyph} />;
     }
   }
 };

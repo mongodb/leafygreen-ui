@@ -2,9 +2,7 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import { Size } from '@leafygreen-ui/tokens';
-
-import { AvatarProps, Format } from './Avatar/Avatar.types';
+import { AvatarProps, AvatarSize, Format } from './Avatar/Avatar.types';
 import { getInitials } from './utils/getInitials';
 import { Avatar } from '.';
 
@@ -13,11 +11,14 @@ export default {
   component: Avatar,
   parameters: {
     default: 'LiveExample',
+    controls: {
+      exclude: ['text'],
+    },
     generate: {
       storyNames: ['MongoAvatar', 'TextAvatar', 'IconAvatar', 'ImageAvatar'],
       combineArgs: {
         darkMode: [false, true],
-        size: Object.values(Size),
+        size: Object.values(AvatarSize),
       },
     },
   },
@@ -35,20 +36,24 @@ export const LiveExample: StoryObj<AvatarProps & { name: string }> = {
   },
   args: {
     format: Format.Icon,
-    size: Size.Default,
+    size: AvatarSize.Default,
     glyph: 'Building',
     name: 'Adam Thompson',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    text: { control: 'text' },
     size: {
       control: 'select',
-      options: Size,
+      options: AvatarSize,
     },
     format: {
       control: 'select',
       options: Format,
+    },
+    name: {
+      control: 'text',
+      description:
+        '**STORYBOOK ONLY**: Full name string that passes through `getInitials` before being passed into the `text` prop',
     },
   },
 };
