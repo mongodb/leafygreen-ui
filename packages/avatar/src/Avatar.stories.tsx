@@ -4,7 +4,8 @@ import { StoryObj } from '@storybook/react';
 
 import { Size } from '@leafygreen-ui/tokens';
 
-import { Format } from './Avatar/Avatar.types';
+import { AvatarProps, Format } from './Avatar/Avatar.types';
+import { getInitials } from './utils/getInitials';
 import { Avatar } from '.';
 
 export default {
@@ -22,8 +23,11 @@ export default {
   },
 } satisfies StoryMetaType<typeof Avatar>;
 
-export const LiveExample: StoryObj<typeof Avatar> = {
-  render: props => <Avatar {...props} />,
+export const LiveExample: StoryObj<AvatarProps & { name: string }> = {
+  render: args => {
+    const { initials } = getInitials(args.name);
+    return <Avatar {...args} text={initials} />;
+  },
   parameters: {
     chromatic: {
       disableSnapshot: true,
@@ -33,9 +37,7 @@ export const LiveExample: StoryObj<typeof Avatar> = {
     format: Format.Icon,
     size: Size.Default,
     glyph: 'Building',
-    // @ts-expect-error - initial format does not allow text
-    text: 'A',
-    // name: 'アダモ トムソン',
+    name: 'Adam Thompson',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
