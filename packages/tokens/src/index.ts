@@ -1,4 +1,4 @@
-export { default as borderRadius } from './breakpoints';
+export { default as borderRadius } from './borderRadius';
 export { default as breakpoints } from './breakpoints';
 export { color, State, Type, Variant } from './color';
 export { default as focusRing } from './focusRing';

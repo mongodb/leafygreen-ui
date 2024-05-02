@@ -4,10 +4,13 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import startCase from 'lodash/startCase';
 
 import { css } from '@leafygreen-ui/emotion';
+import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';
 import {
+  borderRadius,
+  color,
   focusRing,
   fontFamilies,
   hoverRing,
@@ -15,6 +18,34 @@ import {
   transitionDuration,
   typeScales,
 } from '.';
+
+const Card = ({
+  children,
+  darkMode,
+}: {
+  children: React.ReactNode;
+  darkMode: boolean;
+}) => {
+  const theme = darkMode ? Theme.Dark : Theme.Light;
+  const darkBaseBoxShadow = 'box-shadow: 0 4px 20px -4px #01121A';
+  const lightBaseBoxShadow = '0 4px 10px -4px rgba(0, 30, 43, 0.3)';
+
+  return (
+    <div
+      className={css`
+        padding: 24px;
+        min-height: 68px; // 48px + 20px (padding + line-height)
+        border-radius: 24px;
+        color: ${color[theme].text.primary.default};
+        background-color: ${color[theme].background.primary.default};
+        border: 1px solid ${color[theme].border.secondary.default};
+        box-shadow: ${darkMode ? darkBaseBoxShadow : lightBaseBoxShadow};
+      `}
+    >
+      {children}
+    </div>
+  );
+};
 
 const meta: StoryMetaType<any> = {
   title: 'Components/Tokens',
@@ -121,6 +152,128 @@ export const FontFamilies = () => (
     })}
   </div>
 );
+
+const generateTable = (theme: Theme) => {
+  const isDarkMode = !!(theme === Theme.Dark);
+  return (
+    <Card darkMode={isDarkMode}>
+      <h3
+        className={css`
+          color: ${color[theme].text.primary.default};
+          text-transform: capitalize;
+        `}
+      >
+        {theme} Mode
+      </h3>
+      <div
+        className={css`
+          display: flex;
+          gap: ${spacing[400]}px;
+        `}
+      >
+        {Object.keys(color[theme]).map(type => (
+          <Card darkMode={isDarkMode} key={`color-${theme}-${type}`}>
+            <table
+              className={css`
+                border-spacing: ${spacing[400]}px;
+              `}
+            >
+              <thead
+                className={css`
+                  font-size: 10px;
+                  text-align: left;
+                `}
+              >
+                <tr>
+                  <th
+                    className={css`
+                      color: ${color[theme].text.primary.default};
+                      width: 100px;
+                    `}
+                  >
+                    <code>{type}</code>
+                  </th>
+                  <th
+                    className={css`
+                      width: ${spacing[1600]}px;
+                    `}
+                  >
+                    <code>default</code>
+                  </th>
+                  <th
+                    className={css`
+                      width: ${spacing[1600]}px;
+                    `}
+                  >
+                    <code>hover</code>
+                  </th>
+                  <th
+                    className={css`
+                      width: ${spacing[1600]}px;
+                    `}
+                  >
+                    <code>focus</code>
+                  </th>
+                </tr>
+              </thead>
+              {Object.keys(color[theme][type]).map(variant => (
+                <tbody
+                  key={`color-${theme}-${type}-${variant}`}
+                  className={css`
+                    font-size: 10px;
+                  `}
+                >
+                  <tr>
+                    <td>
+                      <code>{variant}</code>
+                    </td>
+
+                    {Object.keys(color[theme][type][variant]).map(state => (
+                      <td key={`color-${theme}-${type}-${variant}-${state}`}>
+                        <div
+                          className={css`
+                            aspect-ratio: 1/1;
+                            border: 1px solid
+                              ${color[theme].border.primary.default};
+                            background-color: ${color[theme][type][variant][
+                              state
+                            ]};
+                            border-radius: ${borderRadius[200]}px;
+                          `}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              ))}
+            </table>
+          </Card>
+        ))}
+      </div>
+    </Card>
+  );
+};
+
+export const Colors = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${spacing[400]}px;
+      `}
+    >
+      <h2>Color Tokens</h2>
+      {Object.values(Theme).map(theme => generateTable(theme))}
+    </div>
+  );
+};
+
+Colors.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const InteractionRings = () => {
   const invertMode = (mode: Mode): Mode => (mode === 'dark' ? 'light' : 'dark');

@@ -54,76 +54,44 @@ export const inputWrapperBaseStyles = css`
   }
 `;
 
-export const inputWrapperModeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.text.primary.default};
-    background: ${color.light.background.primary.default};
-    border: 1px solid;
-
-    & .${inputElementClassName} {
-      &:-webkit-autofill {
-        color: ${color.light.text.primary.default};
-        background: ${color.light.background.primary.default};
-        border: 1px solid ${color.light.border.primary.default};
-        -webkit-text-fill-color: ${color.light.text.primary.default};
-        box-shadow: ${autofillShadowOverride(
-          color.light.background.primary.default,
-        )};
-
-        &:focus {
-          box-shadow: ${autofillShadowOverride(
-              color.light.background.primary.default,
-            )},
-            ${focusRing.light.input};
-          border-color: ${color.light.border.primary.focus};
-        }
-
-        &:hover:not(:focus) {
-          box-shadow: ${autofillShadowOverride(
-              color.light.background.primary.default,
-            )},
-            ${hoverRing.light.gray};
-        }
-      }
-
-      &::placeholder {
-        color: ${palette.gray.base};
-        font-weight: ${fontWeights.regular};
-      }
-    }
-  `,
+export const getInputWrapperModeStyles = (theme: Theme) => {
+  const isDarkMode = theme === Theme.Dark;
   /** token exceptions: background-color value was designated prior to token system */
-  [Theme.Dark]: css`
-    color: ${color.dark.text.primary.default};
-    background-color: ${palette.gray.dark4};
+  const backgroundColor = isDarkMode
+    ? palette.gray.dark4
+    : color.light.background.primary.default;
+
+  return css`
+    color: ${color[theme].text.primary.default};
+    background: ${backgroundColor};
     border: 1px solid;
 
     & .${inputElementClassName} {
       &:-webkit-autofill {
-        border: 1px solid ${color.dark.border.primary.default};
-        color: ${color.dark.text.primary.default};
-        background: ${palette.gray.dark4};
-        -webkit-text-fill-color: ${color.dark.text.primary.default};
-        box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
+        color: ${color[theme].text.primary.default};
+        background: ${backgroundColor};
+        border: 1px solid ${color[theme].border.primary.default};
+        -webkit-text-fill-color: ${color[theme].text.primary.default};
+        box-shadow: ${autofillShadowOverride(backgroundColor)};
 
         &:focus {
-          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-            ${focusRing.dark.input};
-          border-color: ${color.dark.border.primary.focus};
+          box-shadow: ${autofillShadowOverride(backgroundColor)},
+            ${focusRing[theme].input};
+          border-color: ${color[theme].border.primary.focus};
         }
 
         &:hover:not(:focus) {
-          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-            ${hoverRing.dark.gray};
+          box-shadow: ${autofillShadowOverride(backgroundColor)},
+            ${hoverRing[theme].gray};
         }
       }
 
       &::placeholder {
-        color: ${palette.gray.dark1};
         font-weight: ${fontWeights.regular};
+        color: ${color[theme].text.placeholder.default};
       }
     }
-  `,
+  `;
 };
 
 const focusSelector = (styles: string) => css`
@@ -194,83 +162,55 @@ export const inputWrapperSizeStyles: Record<Size, string> = {
   `,
 };
 
-export const inputWrapperStateStyles: Record<
-  FormFieldState,
-  Record<Theme, string>
-> = {
-  [FormFieldState.Error]: {
-    [Theme.Light]: css`
-      border-color: ${color.light.border.error.default};
+export const getInputWrapperStateStyles = ({
+  theme,
+  state,
+}: {
+  theme: Theme;
+  state: FormFieldState;
+}) => {
+  const styleMap = {
+    [FormFieldState.Error]: css`
+      border-color: ${color[theme].border.error.default};
 
       &:hover,
       &:active {
         &:not(:focus) {
-          box-shadow: ${hoverRing.light.red};
+          box-shadow: ${hoverRing[theme].red};
         }
       }
     `,
-    [Theme.Dark]: css`
-      border-color: ${color.dark.border.error.default};
+    [FormFieldState.None]: css`
+      border-color: ${color[theme].border.primary.default};
 
       &:hover,
       &:active {
         &:not(:focus) {
-          box-shadow: ${hoverRing.dark.red};
+          box-shadow: ${hoverRing[theme].gray};
         }
       }
     `,
-  },
-  [FormFieldState.None]: {
-    [Theme.Light]: css`
-      border-color: ${color.light.border.primary.default};
+    [FormFieldState.Valid]: css`
+      border-color: ${color[theme].border.success.default};
 
       &:hover,
       &:active {
         &:not(:focus) {
-          box-shadow: ${hoverRing.light.gray};
+          box-shadow: ${hoverRing[theme].green};
         }
       }
     `,
-    [Theme.Dark]: css`
-      border-color: ${color.dark.border.primary.default};
+  };
 
-      &:hover,
-      &:active {
-        &:not(:focus) {
-          box-shadow: ${hoverRing.dark.gray};
-        }
-      }
-    `,
-  },
-  [FormFieldState.Valid]: {
-    [Theme.Light]: css`
-      border-color: ${color.light.border.success.default};
-
-      &:hover,
-      &:active {
-        &:not(:focus) {
-          box-shadow: ${hoverRing.light.green};
-        }
-      }
-    `,
-    [Theme.Dark]: css`
-      border-color: ${color.dark.border.success.default};
-
-      &:hover,
-      &:active {
-        &:not(:focus) {
-          box-shadow: ${hoverRing.dark.green};
-        }
-      }
-    `,
-  },
+  return styleMap[state];
 };
 
-export const inputWrapperDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
+  return css`
     cursor: not-allowed;
-    background-color: ${color.light.background.disabled.default};
-    border-color: ${color.light.border.disabled.default};
+    color: ${color[theme].text.disabled.default};
+    background-color: ${color[theme].background.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
 
     &:hover,
     &:active {
@@ -282,7 +222,7 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
     & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${color.light.text.disabled.default};
+      color: ${color[theme].text.disabled.default};
 
       &::placeholder {
         color: inherit;
@@ -293,10 +233,11 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
         &:hover,
         &:focus {
           appearance: none;
-          border: 1px solid ${color.light.border.disabled.hover};
-          -webkit-text-fill-color: ${color.light.text.disabled.hover};
+
+          border: 1px solid ${color[theme].border.disabled.hover};
+          -webkit-text-fill-color: ${color[theme].text.disabled.hover};
           box-shadow: ${autofillShadowOverride(
-            color.light.background.disabled.hover,
+            color[theme].background.disabled.hover,
           )};
         }
 
@@ -305,47 +246,7 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
         }
       }
     }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-    color: ${color.dark.text.disabled.default};
-    background-color: ${color.dark.background.disabled.default};
-    border-color: ${color.dark.border.disabled.default};
-
-    &:hover,
-    &:active {
-      &:not(:focus) {
-        box-shadow: inherit;
-      }
-    }
-
-    & .${inputElementClassName} {
-      cursor: not-allowed;
-      pointer-events: none;
-      color: ${color.dark.text.disabled.default};
-
-      &:-webkit-autofill {
-        &,
-        &:hover,
-        &:focus {
-          appearance: none;
-          border: 1px solid ${color.dark.border.disabled.hover};
-          -webkit-text-fill-color: ${color.dark.text.disabled.hover};
-          box-shadow: ${autofillShadowOverride(
-            color.dark.background.disabled.hover,
-          )};
-        }
-
-        &:hover:not(:focus) {
-          box-shadow: inherit;
-        }
-      }
-
-      &::placeholder {
-        color: inherit;
-      }
-    }
-  `,
+  `;
 };
 
 export function getInputWrapperStyles({
@@ -358,15 +259,14 @@ export function getInputWrapperStyles({
 >) {
   return cx(
     inputWrapperBaseStyles,
-    inputWrapperModeStyles[theme],
+    getInputWrapperModeStyles(theme),
     inputWrapperSizeStyles[sizeProp],
     {
       [cx(
-        inputWrapperModeStyles[theme],
-        inputWrapperStateStyles[state][theme],
+        getInputWrapperStateStyles({ theme, state }),
         inputWrapperFocusStyles[theme],
       )]: !disabled,
-      [inputWrapperDisabledStyles[theme]]: disabled,
+      [getInputWrapperDisabledThemeStyles(theme)]: disabled,
     },
   );
 }
@@ -381,41 +281,30 @@ export const additionalChildrenWrapperStyles = css`
   gap: ${spacing[100]}px;
 `;
 
-export const iconDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.icon.disabled.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.icon.disabled.default};
-  `,
+export const getIconDisabledThemeStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].icon.disabled.default};
+  `;
 };
 
-export const iconStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.icon.secondary.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.icon.secondary.default};
-  `,
+export const getIconThemeStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].icon.secondary.default};
+  `;
 };
 
-export const optionalTextBaseStyle = css`
-  font-size: 12px;
-  line-height: 12px;
-  font-style: italic;
-  font-weight: ${fontWeights.regular};
-  display: flex;
-  align-items: center;
-  > p {
-    margin: 0;
-  }
-`;
+export const getOptionalTextStyle = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.secondary.default};
 
-export const optionalTextThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.text.secondary.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.text.secondary.default};
-  `,
+    font-size: 12px;
+    line-height: 12px;
+    font-style: italic;
+    font-weight: ${fontWeights.regular};
+    display: flex;
+    align-items: center;
+    > p {
+      margin: 0;
+    }
+  `;
 };

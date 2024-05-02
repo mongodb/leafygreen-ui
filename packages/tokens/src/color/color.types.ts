@@ -7,6 +7,8 @@ const Type = {
 type Type = (typeof Type)[keyof typeof Type];
 
 const Variant = {
+  Disabled: 'disabled',
+  Placeholder: 'placeholder',
   Primary: 'primary',
   Secondary: 'secondary',
   InversePrimary: 'inversePrimary',
@@ -15,7 +17,6 @@ const Variant = {
   Warning: 'warning',
   Error: 'error',
   Success: 'success',
-  Disabled: 'disabled',
   Link: 'link',
 } as const;
 type Variant = (typeof Variant)[keyof typeof Variant];

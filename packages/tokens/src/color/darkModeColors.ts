@@ -129,6 +129,11 @@ const darkModeTextColors = {
     [State.Hover]: gray.light2,
     [State.Focus]: blue.light3,
   },
+  [Variant.Placeholder]: {
+    [State.Default]: gray.dark1,
+    [State.Hover]: gray.dark1,
+    [State.Focus]: gray.dark1,
+  },
   [Variant.Secondary]: {
     [State.Default]: gray.light1,
     [State.Hover]: gray.light2,
