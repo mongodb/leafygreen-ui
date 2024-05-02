@@ -12,7 +12,11 @@ import {
   richLinkTextClassName,
   themeStyles,
 } from './RichLink.styles';
-import { RichLinkProps } from './RichLink.types';
+import {
+  RichLinkBadgeControlProps,
+  type RichLinkProps,
+  RichLinkWithBadgeProps,
+} from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './RichLinkVariants';
 
@@ -21,22 +25,31 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
     if ('variant' in props) {
-      const { variant, ...restProps } = props;
+      const { variant, ...variantProps } = props;
       const RichLinkVariant = richLinkVariants[variant];
-      return <RichLinkVariant darkMode={darkMode} {...restProps} />;
+      return <RichLinkVariant darkMode={darkMode} {...variantProps} />;
     }
 
-    const {
-      url,
-      text,
-      badgeVariant,
-      badgeLabel,
-      badgeGlyph,
-      imageUrl,
-      anchorProps,
-    } = props;
+    const badgeDefaults: Partial<RichLinkBadgeControlProps> = {
+      badgeGlyph: undefined,
+      badgeLabel: undefined,
+      badgeVariant: undefined,
+    };
 
-    const showBadge = Boolean(badgeLabel);
+    const {
+      text,
+      imageUrl,
+      badgeGlyph,
+      badgeLabel,
+      badgeVariant,
+      ...anchorProps
+    } = {
+      ...badgeDefaults,
+      ...props,
+    };
+
+    const showBadge = badgeLabel !== undefined;
+
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
     return (
@@ -48,8 +61,6 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         as="a"
-        // @ts-ignore-next-line - Card with `as="a"` should accept all `a` attributes including `href`
-        href={url}
         target="_blank"
         {...anchorProps}
       >

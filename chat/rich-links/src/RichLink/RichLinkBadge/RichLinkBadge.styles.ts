@@ -1,26 +1,19 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from './RichLinkBadge.types';
 
 export const baseStyles = css`
-  font-family: ${fontFamilies.default};
   display: inline-flex;
-  gap: 6px;
+  gap: ${spacing[150]}px;
   align-items: center;
-  font-weight: ${fontWeights.regular};
-  border-radius: 4px;
-  line-height: 18px;
-  padding: 0px 6px;
+  border-radius: ${spacing[100]}px;
+  padding: 0px ${spacing[150]}px;
   position: absolute;
-  bottom: 8px;
-  left: 8px;
-`;
-
-export const labelStyles = css`
-  line-height: 18px;
+  bottom: ${spacing[200]}px;
+  left: ${spacing[200]}px;
 `;
 
 export const badgeVariants: Record<Theme, Record<Variant, string>> = {

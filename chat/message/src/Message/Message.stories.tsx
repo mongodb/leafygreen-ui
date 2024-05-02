@@ -5,7 +5,7 @@ import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feed
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Message, MessageSourceType } from '..';
 
@@ -137,13 +137,8 @@ VerifiedAnswer.args = {
   children: <MessageFeedback />,
 };
 
-function useCorrectBaseFontSize() {
-  const baseFontSize = useBaseFontSize();
-  return baseFontSize === 14 ? 13 : baseFontSize;
-}
-
 export const MultipleUser = () => {
-  const baseFontSize = useCorrectBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize();
   return (
     <LeafyGreenChatProvider>
       <div>
@@ -160,7 +155,7 @@ export const MultipleUser = () => {
 };
 
 export const MultipleMongo = () => {
-  const baseFontSize = useCorrectBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize();
   return (
     <LeafyGreenChatProvider>
       <div>
@@ -177,7 +172,7 @@ export const MultipleMongo = () => {
 };
 
 export const Alternating = () => {
-  const baseFontSize = useCorrectBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize();
   return (
     <LeafyGreenChatProvider>
       <div>

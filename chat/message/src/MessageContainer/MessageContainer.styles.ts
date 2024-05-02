@@ -17,7 +17,7 @@ export const baseStyles = css`
 
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: ${spacing[200]}px;
 `;
 
 export const variantStyles: Record<Variant, Record<Theme, string>> = {

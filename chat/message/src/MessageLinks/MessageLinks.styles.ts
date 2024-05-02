@@ -18,6 +18,5 @@ export const dividingLineStyles: Record<Theme, string> = {
 };
 
 export const linksHeadingStyles = css`
-  margin-bottom: 8px;
-  line-height: 28px;
+  margin-bottom: ${spacing[200]}px;
 `;

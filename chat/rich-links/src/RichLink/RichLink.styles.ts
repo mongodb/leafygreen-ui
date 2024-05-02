@@ -39,7 +39,12 @@ export const themeStyles = {
 };
 
 export const badgeAreaStyles = css`
-  padding-bottom: calc(18px + 2 * ${spacing[200]}px);
+  // Extra padding to make room for the absolutely positioned badge
+  // We have to account for the badge as well as "fake padding" from the "bottom" and "left" attributes.
+  // 1. "fake padding" below the badge (spacing[200])
+  // 2. badge height (18)
+  // 3. "fake padding" on top of the badge (spacing[200])
+  padding-bottom: calc(${spacing[200]}px + 18px + ${spacing[200]}px);
 `;
 
 export const imageBackgroundStyles = (imageUrl: string) => css`
