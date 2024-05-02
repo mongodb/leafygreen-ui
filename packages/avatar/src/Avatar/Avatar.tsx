@@ -21,3 +21,9 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
 );
 
 Avatar.displayName = 'Avatar';
+
+/**
+ * Water. Earth. Fire. Air.
+ * Long ago, the four nations lived together in harmony.
+ * Then, everything changed when the Fire Nation attacked
+ */

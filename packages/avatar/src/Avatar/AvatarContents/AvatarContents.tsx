@@ -21,6 +21,10 @@ export const AvatarContents = ({
 }: AvatarProps) => {
   const { theme } = useDarkMode();
 
+  if (format == Format.Text && (!text || text.length <= 0)) {
+    format = Format.Icon;
+  }
+
   switch (format) {
     case Format.MongoDB: {
       return (
@@ -36,7 +40,7 @@ export const AvatarContents = ({
         <span
           aria-hidden
           className={cx(getTextAvatarContentStyles({ size, theme, format }), {
-            [singleInitialStyles]: text.length === 1,
+            [singleInitialStyles]: text?.length === 1,
           })}
         >
           {text}
