@@ -2,7 +2,7 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
-* @checksum 8450154477c477a6fe14cac7539fdbb8
+* @checksum 526839b68ab08786747a7e8c03d455e6
 */
 import * as React from "react";
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ const LogIn = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M1 3C1 2.44772 1.44772 2 2 2H6.25C6.66421 2 7 2.33579 7 2.75V3.25C7 3.66421 6.66421 4 6.25 4H3V12H6.25C6.66421 12 7 12.3358 7 12.75V13.25C7 13.6642 6.66421 14 6.25 14H2C1.44772 14 1 13.5523 1 13V3Z" fill={'currentColor'} /><path fillRule="evenodd" clipRule="evenodd" d="M9.4948 4.11612L6.29289 7.31802C5.90237 7.70854 5.90237 8.34171 6.29289 8.73223L9.49479 11.9341C9.78769 12.227 10.2626 12.227 10.5555 11.9341L10.909 11.5806C11.2019 11.2877 11.2019 10.8128 10.909 10.5199L9.38909 9L14.25 9C14.6642 9 15 8.66421 15 8.25V7.75C15 7.33578 14.6642 7 14.25 7L9.43934 7L10.909 5.53033C11.2019 5.23744 11.2019 4.76256 10.909 4.46967L10.5555 4.11612C10.2626 3.82322 9.78769 3.82322 9.4948 4.11612Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M15 13C15 13.5523 14.5523 14 14 14H9.75C9.33579 14 9 13.6642 9 13.25V12.75C9 12.3358 9.33579 12 9.75 12H13V4H9.75C9.33579 4 9 3.66421 9 3.25V2.75C9 2.33579 9.33579 2 9.75 2H14C14.5523 2 15 2.44771 15 3V13Z" fill={'currentColor'} /><path fillRule="evenodd" clipRule="evenodd" d="M6.5052 11.8839L9.70711 8.68198C10.0976 8.29146 10.0976 7.65829 9.70711 7.26777L6.50521 4.06586C6.21231 3.77297 5.73744 3.77297 5.44454 4.06586L5.09099 4.41942C4.7981 4.71231 4.7981 5.18718 5.09099 5.48008L6.61091 7L1.75 7C1.33579 7 1 7.33579 1 7.75V8.25C1 8.66422 1.33579 9 1.75 9L6.56066 9L5.09099 10.4697C4.7981 10.7626 4.7981 11.2374 5.09099 11.5303L5.44454 11.8839C5.73744 12.1768 6.21231 12.1768 6.5052 11.8839Z" fill={'currentColor'} /></svg>;
 };
 LogIn.displayName = 'LogIn';
 LogIn.isGlyph = true;
