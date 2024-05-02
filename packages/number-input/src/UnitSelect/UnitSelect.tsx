@@ -8,7 +8,7 @@ import { UnitOption } from '../NumberInput/NumberInput.types';
 import { UnitSelectButton } from '../UnitSelectButton';
 
 import {
-  selectDisabledStyles,
+  getSelectDisabledStyles,
   selectStyles,
   wrapperBaseStyles,
 } from './UnitSelect.styles';
@@ -67,7 +67,7 @@ export function UnitSelect({
         className={cx(
           selectStyles,
           {
-            [selectDisabledStyles[theme]]: disabled,
+            [getSelectDisabledStyles(theme)]: disabled,
           },
           className,
         )}

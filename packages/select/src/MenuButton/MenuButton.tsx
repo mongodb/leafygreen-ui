@@ -3,21 +3,19 @@ import React, { useCallback, useContext } from 'react';
 import Button, { Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 
 import { LGIDS_SELECT } from '../constants';
 import { State } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
-import { mobileSizeSet, sizeSets } from '../styleSets';
+import { mobileSizeSet } from '../styleSets';
 import { MobileMediaQuery, useForwardedRef } from '../utils';
 
 import {
-  errorColor,
+  getMenuButtonDisabledThemeStyles,
+  getMenuButtonStateStyles,
   menuButtonDeselectedStyles,
-  menuButtonDisabledThemeStyles,
-  menuButtonErrorStyle,
   menuButtonFocusStyle,
   menuButtonModeOverrides,
   menuButtonSizeStyle,
@@ -42,7 +40,6 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       readOnly,
       onClose,
       onOpen,
-      errorMessage,
       state,
       baseFontSize,
       __INTERNAL__menuButtonSlot__,
@@ -55,8 +52,6 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     const { open, size, disabled } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
-
-    const sizeSet = sizeSets[size];
 
     const onClick = useCallback(() => {
       if (open) {
@@ -79,10 +74,9 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           menuButtonSizeStyle[size],
           menuButtonFocusStyle[theme],
           {
+            [getMenuButtonStateStyles(theme)[state || State.None]]: !!state,
             [menuButtonDeselectedStyles[theme]]: deselected,
-            [menuButtonDisabledThemeStyles[theme]]: disabled,
-            [menuButtonErrorStyle[theme]]:
-              state === State.Error && !!errorMessage,
+            [getMenuButtonDisabledThemeStyles(theme)]: disabled,
             [css`
               letter-spacing: initial;
             `]: size === ButtonSize.XSmall,
@@ -130,16 +124,6 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
           >
             {text}
           </div>
-          {state === State.Error && errorMessage && (
-            <WarningIcon
-              aria-hidden
-              className={css`
-                color: ${errorColor[theme]};
-              `}
-              size={sizeSet.warningIcon}
-              title="Error"
-            />
-          )}
         </div>
         {children}
       </Component>

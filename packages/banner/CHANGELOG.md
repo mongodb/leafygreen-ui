@@ -1,5 +1,12 @@
 # @leafygreen-ui/banner
 
+## 8.0.1
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 8.0.0
 
 ### Major Changes

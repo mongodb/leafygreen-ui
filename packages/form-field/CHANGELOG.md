@@ -1,5 +1,30 @@
 # @leafygreen-ui/form-field
 
+## 1.2.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Adds and exports `FormFieldFeedback` component
+  - Adds and exports `DEFAULT_MESSAGES` constant
+  - Updates `FormField` and `FormFieldInputContainer` components to use tokens where possible
+  - Refactors `FormField` to use `FormFieldFeedback`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 1.1.0
 
 ### Minor Changes

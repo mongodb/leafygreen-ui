@@ -7,6 +7,7 @@ import {
   FormField,
   FormFieldInputContainer,
   FormFieldState,
+  LGIDS_FORM_FIELD,
   useFormFieldContext,
 } from '.';
 
@@ -294,6 +295,70 @@ describe('packages/form-field', () => {
     });
   });
 
+  describe(`when state is not ${FormFieldState.None}`, () => {
+    test('form field feedback has an id', () => {
+      const { getByTestId } = render(
+        <FormField
+          label="Label"
+          successMessage="Success"
+          state={FormFieldState.Valid}
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      expect(feedback).toHaveAttribute('id');
+    });
+
+    test('input is described by form field feedback', () => {
+      const { getByTestId } = render(
+        <FormField
+          label="Label"
+          errorMessage="This is an error message"
+          state={FormFieldState.Error}
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      expect(input).toHaveAttribute('aria-describedby', feedback?.id);
+    });
+
+    test('input is described by both description & feedback', () => {
+      const { getByTestId, queryByText } = render(
+        <FormField
+          label="Label"
+          description="Description"
+          successMessage="Success"
+          state={FormFieldState.Valid}
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      const description = queryByText('Description');
+      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      expect(input).toHaveAttribute(
+        'aria-describedby',
+        expect.stringContaining(description?.id!),
+      );
+      expect(input).toHaveAttribute(
+        'aria-describedby',
+        expect.stringContaining(feedback?.id),
+      );
+    });
+  });
+
   describe(`${FormFieldState.Valid} state`, () => {
     test('Success icon and message are not shown by default', () => {
       const { queryByText, queryByTitle } = render(
@@ -369,64 +434,6 @@ describe('packages/form-field', () => {
       const errorText = queryByText('This is an error message');
       expect(errorIcon).toBeInTheDocument();
       expect(errorText).toBeInTheDocument();
-    });
-
-    test('Error message has id', () => {
-      const { queryByText } = render(
-        <FormField
-          label="Label"
-          errorMessage="This is an error message"
-          state={FormFieldState.Error}
-          data-testid="form-field"
-        >
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const error = queryByText('This is an error message');
-      expect(error).toHaveAttribute('id');
-    });
-
-    test('input is described by error message', () => {
-      const { getByTestId, queryByText } = render(
-        <FormField
-          label="Label"
-          errorMessage="This is an error message"
-          state={FormFieldState.Error}
-          data-testid="form-field"
-        >
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const input = getByTestId('input');
-      const error = queryByText('This is an error message');
-      expect(input).toHaveAttribute('aria-describedby', error?.id);
-    });
-
-    test('input is described by both description & error message', () => {
-      const { getByTestId, queryByText } = render(
-        <FormField
-          label="Label"
-          description="Description"
-          errorMessage="This is an error message"
-          state={FormFieldState.Error}
-          data-testid="form-field"
-        >
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const input = getByTestId('input');
-      const description = queryByText('Description');
-      const error = queryByText('This is an error message');
-      expect(input).toHaveAttribute(
-        'aria-describedby',
-        description?.id + ' ' + error?.id,
-      );
     });
 
     test('input has aria-invalid attribute set to true when state is Error', () => {

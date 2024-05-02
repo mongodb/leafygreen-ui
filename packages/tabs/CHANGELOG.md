@@ -1,5 +1,12 @@
 # @leafygreen-ui/tabs
 
+## 11.1.15
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 11.1.14
 
 ### Patch Changes

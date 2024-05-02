@@ -14,6 +14,10 @@ export {
   useFormFieldContext,
 } from './FormFieldContext';
 export {
+  FormFieldFeedback,
+  type FormFieldFeedbackProps,
+} from './FormFieldFeedback';
+export {
   FormFieldInputContainer,
   type FormFieldInputContainerProps,
 } from './FormFieldInputContainer';

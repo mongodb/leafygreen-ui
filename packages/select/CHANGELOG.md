@@ -1,5 +1,43 @@
 # @leafygreen-ui/select
 
+## 12.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4138](https://jira.mongodb.org/browse/LG-4138)
+
+  1. Updated styling:
+
+  - updated spacing for `'xsmall'`, `'small'`, and `'large'` size variants
+  - updated placeholder text color
+  - removed validation icon from inside the input
+
+  2. Added default `errorMessage` of `'This input needs your attention'`
+
+  3. Added `valid` state variant and `successMessage` prop
+
+  - `successMessage` will render a default of `'Success'` and can be customized
+  - `successMessage` will only render when `state=valid`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 11.3.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/input-option@1.1.3
+
 ## 11.3.1
 
 ### Patch Changes

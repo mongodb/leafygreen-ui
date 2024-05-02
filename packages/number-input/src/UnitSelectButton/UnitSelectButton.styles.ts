@@ -2,7 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { menuButtonTextClassName } from '@leafygreen-ui/select';
-import { focusRing } from '@leafygreen-ui/tokens';
+import { focusRing, Size, spacing } from '@leafygreen-ui/tokens';
 
 export const wrapperStyles = css`
   position: relative;
@@ -50,6 +50,29 @@ export const themeStyles: Record<Theme, string> = {
     &:focus-visible {
       box-shadow: ${focusRing['dark'].input};
       border-color: ${palette.gray.dark4};
+    }
+  `,
+};
+
+export const sizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    > *:last-child {
+      padding: 0 ${spacing[100]}px 0 ${spacing[200]}px;
+    }
+  `,
+  [Size.Small]: css`
+    > *:last-child {
+      padding: 0 ${spacing[100]}px 0 ${spacing[200]}px;
+    }
+  `,
+  [Size.Default]: css`
+    > *:last-child {
+      padding: 0 ${spacing[200]}px 0 ${spacing[300]}px;
+    }
+  `,
+  [Size.Large]: css`
+    > *:last-child {
+      padding: 0 ${spacing[200]}px 0 ${spacing[300]}px;
     }
   `,
 };

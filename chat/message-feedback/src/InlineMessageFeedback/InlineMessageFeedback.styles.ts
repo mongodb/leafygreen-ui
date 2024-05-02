@@ -15,8 +15,12 @@ export const labelStyles = css`
   padding-top: 3px; // to match icon button padding
 `;
 
+export const textAreaStyle = css`
+  margin-top: ${spacing[100]}px;
+`;
+
 export const actionContainerStyles = css`
-  margin-top: ${spacing[2]}px;
+  margin-top: ${spacing[200]}px;
   display: flex;
   gap: ${spacing[2]}px;
   justify-content: end;

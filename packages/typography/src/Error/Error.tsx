@@ -10,11 +10,7 @@ import {
 
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
-import {
-  errorMessageModeStyle,
-  errorMessageStyle,
-  errorMessageTypeScaleStyles,
-} from './Error.styles';
+import { getErrorMessageStyle } from './Error.styles';
 import { BaseErrorProps } from './Error.types';
 
 const Error = Polymorphic<BaseErrorProps>(
@@ -32,12 +28,7 @@ const Error = Polymorphic<BaseErrorProps>(
     return (
       <Component
         {...rest}
-        className={cx(
-          errorMessageStyle,
-          errorMessageModeStyle[theme],
-          errorMessageTypeScaleStyles[baseFontSize],
-          className,
-        )}
+        className={cx(getErrorMessageStyle({ theme, baseFontSize }), className)}
       >
         {children}
       </Component>

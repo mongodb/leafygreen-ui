@@ -1,6 +1,11 @@
 import { palette } from '@leafygreen-ui/palette';
 
-import { State, Variant } from './color.types';
+import {
+  ModeColorRecord,
+  State,
+  Variant,
+  VariantColorRecord,
+} from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
 
@@ -41,11 +46,11 @@ const darkModeBackgroundColors = {
     [State.Focus]: red.dark3,
   },
   [Variant.Disabled]: {
-    [State.Default]: gray.dark2,
-    [State.Hover]: gray.dark2,
-    [State.Focus]: gray.dark2,
+    [State.Default]: gray.dark3,
+    [State.Hover]: gray.dark3,
+    [State.Focus]: gray.dark3,
   },
-};
+} as const satisfies VariantColorRecord;
 
 const darkModeBorderColors = {
   [Variant.Primary]: {
@@ -73,7 +78,7 @@ const darkModeBorderColors = {
     [State.Hover]: gray.dark2,
     [State.Focus]: gray.dark2,
   },
-};
+} as const satisfies VariantColorRecord;
 
 const darkModeIconColors = {
   [Variant.Primary]: {
@@ -116,13 +121,18 @@ const darkModeIconColors = {
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
   },
-};
+} as const satisfies VariantColorRecord;
 
-export const darkModeTextColors = {
+const darkModeTextColors = {
   [Variant.Primary]: {
     [State.Default]: gray.light2,
     [State.Hover]: gray.light2,
     [State.Focus]: blue.light3,
+  },
+  [Variant.Placeholder]: {
+    [State.Default]: gray.dark1,
+    [State.Hover]: gray.dark1,
+    [State.Focus]: gray.dark1,
   },
   [Variant.Secondary]: {
     [State.Default]: gray.light1,
@@ -149,11 +159,16 @@ export const darkModeTextColors = {
     [State.Hover]: gray.dark1,
     [State.Focus]: gray.dark1,
   },
-};
+  [Variant.Link]: {
+    [State.Default]: blue.light1,
+    [State.Hover]: blue.light1,
+    [State.Focus]: blue.light1,
+  },
+} as const satisfies VariantColorRecord;
 
 export const darkModeColors = {
   background: darkModeBackgroundColors,
   border: darkModeBorderColors,
   icon: darkModeIconColors,
   text: darkModeTextColors,
-};
+} as const satisfies ModeColorRecord;

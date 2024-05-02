@@ -1,5 +1,22 @@
 # @leafygreen-ui/menu
 
+## 24.1.0
+
+### Minor Changes
+
+- 433616d4: Exports `MenuGroup` from package
+
+### Patch Changes
+
+- Updated dependencies [57dedc40]
+  - @leafygreen-ui/tokens@2.5.3
+
+## 24.0.0
+
+### Major Changes
+
+- 1d55530b: Removes the closing of `Menu` on `MenuItem` click. This behavior was causing issues with clickable items inside of `MenuItem`. To control when `Menu` closes, use `open` and `setOpen`. [LG-4130](https://jira.mongodb.org/browse/LG-4130)
+
 ## 23.0.3
 
 ### Patch Changes

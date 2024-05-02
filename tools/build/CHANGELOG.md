@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.5.1
+
+### Patch Changes
+
+- 4951369a: Bumps `rollup` and related packages to v4
+
 ## 0.5.0
 
 ### Minor Changes

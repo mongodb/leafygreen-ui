@@ -1,5 +1,31 @@
 # @leafygreen-ui/date-picker
 
+## 1.1.2
+
+### Patch Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Update error message test id in `DatePicker` test specs
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/select@12.0.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/form-field@1.1.1
+  - @leafygreen-ui/select@11.3.2
+
 ## 1.1.0
 
 ### Minor Changes

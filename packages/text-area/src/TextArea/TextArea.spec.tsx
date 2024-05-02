@@ -5,12 +5,11 @@ import { axe } from 'jest-axe';
 
 import { getTestUtils } from '../utils';
 
-import { State, TextArea, TextAreaProps } from '.';
+import { TextArea, TextAreaProps } from '.';
 
 const onChange = jest.fn();
 
 const labelProp = 'Test Area Label';
-const errorMessage = 'This is an error message';
 const defaultProps = {
   className: 'test-text-area-class',
   description: 'This is the description',
@@ -85,30 +84,6 @@ describe('packages/text-area', () => {
     expect((textArea as HTMLTextAreaElement).value).toBe('a');
   });
 
-  describe('when the "state" prop is set to error, and an "errorMessage" is set', () => {
-    test('the error message appears in the DOM', () => {
-      const { isError, getErrorMessage } = renderTextArea({
-        state: State.Error,
-        errorMessage,
-      });
-
-      expect(isError()).toBe(true);
-      expect(getErrorMessage()).toHaveTextContent(errorMessage);
-    });
-  });
-
-  describe('when the "state" props is set to "none', () => {
-    test('error icon is not present', () => {
-      const { isError } = renderTextArea();
-      expect(isError()).toBe(false);
-    });
-
-    test('error message returns null', () => {
-      const { getErrorMessage } = renderTextArea();
-      expect(getErrorMessage()).not.toBeInTheDocument();
-    });
-  });
-
   test('onBlur is invoked when focus leaves the textarea', () => {
     const onBlur = jest.fn();
 
@@ -173,20 +148,6 @@ describe('packages/text-area', () => {
       userEvent.tab(); // focus
       userEvent.type(inputElement, `test`);
       expect(handleValidation).toHaveBeenCalledTimes(5); // blur + keypress * 4
-    });
-  });
-
-  describe('disabled', () => {
-    test('is true', () => {
-      const { isDisabled } = renderTextArea({ disabled: true });
-
-      expect(isDisabled()).toBe(true);
-    });
-
-    test('is false', () => {
-      const { isDisabled } = renderTextArea();
-
-      expect(isDisabled()).toBe(false);
     });
   });
 

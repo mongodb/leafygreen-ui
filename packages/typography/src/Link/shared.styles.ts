@@ -14,7 +14,7 @@ export const anchorClassName = createUniqueClassName();
 
 export const linkStyles = css`
   font-family: ${fontFamilies.default};
-  display: inline-flex;
+  display: inline;
   align-items: center;
   text-decoration: none;
   text-decoration-color: transparent;
@@ -27,7 +27,9 @@ export const linkStyles = css`
   padding: 0;
 
   &:hover,
-  &:focus {
+  &[data-hover='true'],
+  &:focus,
+  &[data-focus='true'] {
     text-decoration: underline;
     transition: text-decoration ${transitionDuration.default}ms ease-in-out;
     text-underline-offset: 4px;
@@ -44,11 +46,13 @@ export const linkModeStyles: Record<Theme, string> = {
     color: ${palette.blue.base};
     font-weight: ${fontWeights.regular};
 
-    &:hover {
+    &:hover,
+    &[data-hover='true'] {
       text-decoration-color: ${palette.gray.light2};
     }
 
-    &:focus {
+    &:focus,
+    &[data-focus='true'] {
       text-decoration-color: ${palette.blue.base};
     }
   `,
@@ -56,11 +60,13 @@ export const linkModeStyles: Record<Theme, string> = {
     color: ${palette.blue.light1};
     font-weight: ${fontWeights.bold};
 
-    &:hover {
+    &:hover,
+    &[data-hover='true'] {
       text-decoration-color: ${palette.gray.dark2};
     }
 
-    &:focus {
+    &:focus,
+    &[data-focus='true'] {
       text-decoration-color: ${palette.blue.base};
     }
   `,

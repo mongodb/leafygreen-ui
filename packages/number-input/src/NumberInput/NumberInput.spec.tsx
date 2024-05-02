@@ -8,7 +8,6 @@ import { NumberInput } from '.';
 
 const label = 'This is the label text';
 const description = 'This is the description text';
-const errorMessage = 'error message';
 const arrowTestId = {
   up: 'lg-number_input-increment_button',
   down: 'lg-number_input-decrement_button',
@@ -108,30 +107,6 @@ describe('packages/number-input', () => {
         ...defaultProps,
       });
       expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
-    });
-
-    describe('when the "state" is "error"', () => {
-      test('renders warning icon ', () => {
-        const { container } = renderNumberInput({
-          state: State.Error,
-          ...defaultProps,
-        });
-        expect(
-          container.querySelector('svg[aria-label="Warning Icon"]'),
-        ).toBeInTheDocument();
-      });
-
-      test('renders error message', () => {
-        const { queryByText } = renderNumberInput({
-          label,
-          state: State.Error,
-          errorMessage,
-          ...defaultProps,
-        });
-        const errorEl = queryByText(errorMessage);
-        expect(errorEl).not.toBeNull();
-        expect(errorEl).toBeInTheDocument();
-      });
     });
 
     test('value change triggers onChange callback', () => {
@@ -422,7 +397,6 @@ describe('packages/number-input', () => {
         onSelectChange={() => {}}
         label={label}
         state={State.None}
-        errorMessage={errorMessage}
         value="1"
         onChange={() => {}}
         darkMode={true}

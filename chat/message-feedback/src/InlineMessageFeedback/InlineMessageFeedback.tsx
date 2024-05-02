@@ -25,6 +25,7 @@ import {
   baseStyles,
   labelContainerStyles,
   labelStyles,
+  textAreaStyle,
 } from './InlineMessageFeedback.styles';
 import { InlineMessageFeedbackProps } from '.';
 
@@ -97,6 +98,7 @@ export const InlineMessageFeedback = forwardRef(
                 aria-labelledby={labelId}
                 /* eslint-disable-next-line jsx-a11y/no-autofocus */
                 autoFocus={true}
+                className={textAreaStyle}
                 {...textareaProps}
                 ref={(el: HTMLTextAreaElement) => {
                   if (textareaProps?.ref) {
