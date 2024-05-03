@@ -2,6 +2,8 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
+import { glyphs } from '@leafygreen-ui/icon';
+
 import { AvatarProps, AvatarSize, Format } from './Avatar/Avatar.types';
 import { getInitials } from './utils/getInitials';
 import { Avatar } from '.';
@@ -12,48 +14,108 @@ export default {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['text'],
+      exclude: [],
     },
     generate: {
       storyNames: ['MongoAvatar', 'TextAvatar', 'IconAvatar', 'ImageAvatar'],
       combineArgs: {
         darkMode: [false, true],
         size: Object.values(AvatarSize),
+        sizeOverride: [undefined, 64],
       },
-    },
-  },
-} satisfies StoryMetaType<typeof Avatar>;
-
-export const LiveExample: StoryObj<AvatarProps & { name: string }> = {
-  render: args => {
-    const { initials } = getInitials(args.name);
-    return <Avatar {...args} text={initials} />;
-  },
-  parameters: {
-    chromatic: {
-      disableSnapshot: true,
+      excludeCombinations: [
+        {
+          size: [AvatarSize.Large, AvatarSize.XLarge],
+          sizeOverride: 64,
+        },
+      ],
     },
   },
   args: {
     format: Format.Icon,
     size: AvatarSize.Default,
-    glyph: 'Building',
-    name: 'Adam Thompson',
+    glyph: 'PersonGroup',
+    text: 'AT',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    size: {
-      control: 'select',
-      options: AvatarSize,
-    },
     format: {
       control: 'select',
       options: Format,
     },
+    size: {
+      control: 'select',
+      options: AvatarSize,
+    },
+    sizeOverride: {
+      control: 'number',
+    },
+    glyph: {
+      control: 'select',
+      options: Object.keys(glyphs),
+      if: { arg: 'format', eq: Format.Icon },
+    },
+    text: {
+      control: 'text',
+      if: { arg: 'format', eq: Format.Text },
+    },
+  },
+} satisfies StoryMetaType<typeof Avatar>;
+
+export const LiveExample: StoryObj<AvatarProps> = {
+  render: args => {
+    return <Avatar {...args} />;
+  },
+  parameters: {
+    controls: {
+      exclude: ['sizeOverride'],
+    },
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
+
+export const SizeOverride: StoryObj<AvatarProps> = {
+  render: args => {
+    return <Avatar {...args} />;
+  },
+  parameters: {
+    controls: {
+      exclude: ['size'],
+    },
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+  args: {
+    sizeOverride: 42,
+  },
+};
+
+export const InitialsDemo: StoryObj<AvatarProps & { name: string }> = {
+  render: args => {
+    const { initials } = getInitials(args.name);
+    return <Avatar {...args} text={initials} />;
+  },
+  parameters: {
+    controls: {
+      exclude: ['sizeOverride', 'format', 'text'],
+    },
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+  args: {
+    format: Format.Text,
+    name: 'Vincent van Gogh',
+    size: AvatarSize.XLarge,
+  },
+  argTypes: {
     name: {
       control: 'text',
       description:
-        '**STORYBOOK ONLY**: Full name string that passes through `getInitials` before being passed into the `text` prop',
+        '**STORYBOOK ONLY**: A full name that passes through the `getInitials` function before being passed to Avatar as `text`',
     },
   },
 };
@@ -63,10 +125,18 @@ export const MongoAvatar: StoryObj<typeof Avatar> = {
   args: {
     format: Format.MongoDB,
   },
+  parameters: {
+    controls: {
+      exclude: ['darkMode', 'format', 'size', 'sizeOverride', 'glyph', 'text'],
+    },
+  },
 };
 export const TextAvatar: StoryObj<typeof Avatar> = {
   render: () => <></>,
   parameters: {
+    controls: {
+      exclude: ['darkMode', 'format', 'size', 'sizeOverride', 'glyph', 'text'],
+    },
     generate: {
       combineArgs: {
         text: ['A', 'AT'],
@@ -80,6 +150,9 @@ export const TextAvatar: StoryObj<typeof Avatar> = {
 export const IconAvatar: StoryObj<typeof Avatar> = {
   render: () => <></>,
   parameters: {
+    controls: {
+      exclude: ['darkMode', 'format', 'size', 'sizeOverride', 'glyph', 'text'],
+    },
     generate: {
       combineArgs: {
         glyph: ['Person', 'GovernmentBuilding'],

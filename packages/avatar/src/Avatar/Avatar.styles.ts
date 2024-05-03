@@ -4,34 +4,39 @@ import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { avatarColors, avatarSizeMap } from './Avatar.constants';
-import { AvatarStyleArgs, Format } from './Avatar.types';
+import { AvatarSize, AvatarStyleArgs, Format } from './Avatar.types';
 
 export const getAvatarStyles = ({
-  size,
-  theme,
   format,
-}: AvatarStyleArgs) => css`
-  height: ${avatarSizeMap[size]}px;
-  width: ${avatarSizeMap[size]}px;
-  min-height: ${avatarSizeMap[size]}px;
-  min-width: ${avatarSizeMap[size]}px;
-  border-radius: 100%;
-  border: ${spacing[50]}px solid;
+  theme = Theme.Light,
+  size = AvatarSize.Default,
+  sizeOverride,
+}: AvatarStyleArgs) => {
+  const sizePx = sizeOverride ?? avatarSizeMap[size];
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  return css`
+    height: ${sizePx}px;
+    width: ${sizePx}px;
+    min-height: ${sizePx}px;
+    min-width: ${sizePx}px;
+    border-radius: 100%;
+    border: ${spacing[50]}px solid;
 
-  background-color: ${avatarColors[theme].background};
-  color: ${avatarColors[theme].text};
-  border-color: ${avatarColors[theme].border};
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  ${format === Format.MongoDB &&
-  css`
-    background-color: ${theme === Theme.Dark
-      ? palette.green.dark3
-      : palette.black};
-    color: ${palette.green.base};
-    border: unset;
-  `}
-`;
+    background-color: ${avatarColors[theme].background};
+    color: ${avatarColors[theme].text};
+    border-color: ${avatarColors[theme].border};
+
+    ${format === Format.MongoDB &&
+    css`
+      background-color: ${theme === Theme.Dark
+        ? palette.green.dark3
+        : palette.black};
+      color: ${palette.green.base};
+      border: unset;
+    `}
+  `;
+};

@@ -27,8 +27,15 @@ export const AvatarSize = {
 export type AvatarSize = (typeof AvatarSize)[keyof typeof AvatarSize];
 
 export interface BaseAvatarProps extends ComponentProps<'div'>, DarkModeProps {
-  /** The relative Size of tha Avatar */
-  size: AvatarSize;
+  /**
+   * The relative Size of tha Avatar
+   *
+   * @default AvatarSize.Default
+   */
+  size?: AvatarSize;
+
+  /** Renders that Avatar at a unique size, not supported by {@link AvatarSize} */
+  sizeOverride?: number;
 }
 
 export type DiscriminatedAvatarProps =
@@ -82,7 +89,8 @@ export type DiscriminatedAvatarProps =
 export type AvatarProps = BaseAvatarProps & DiscriminatedAvatarProps;
 
 export interface AvatarStyleArgs {
-  size: AvatarSize;
-  theme: Theme;
-  format: Format;
+  size?: AvatarSize;
+  theme?: Theme;
+  format?: Format;
+  sizeOverride?: number;
 }

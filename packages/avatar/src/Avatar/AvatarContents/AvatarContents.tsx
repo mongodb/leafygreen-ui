@@ -5,19 +5,23 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { MongoDBLogoMark, SupportedColors } from '@leafygreen-ui/logo';
 
-import { AvatarProps, Format } from '../Avatar.types';
+import { AvatarProps, AvatarSize, Format } from '../Avatar.types';
 
 import {
-  baseIconAvatarContentStyles,
-  getTextAvatarContentStyles,
+  getAvatarIconStyles,
+  getAvatarLogoStyles,
+  getAvatarTextStyles,
   singleInitialStyles,
 } from './AvatarContents.style';
 
+const MAX_CHARS = 2;
+
 export const AvatarContents = ({
   format,
-  size,
   text,
+  size = AvatarSize.Default,
   glyph = 'Person',
+  sizeOverride,
 }: AvatarProps) => {
   const { theme } = useDarkMode();
 
@@ -29,7 +33,7 @@ export const AvatarContents = ({
     case Format.MongoDB: {
       return (
         <MongoDBLogoMark
-          className={baseIconAvatarContentStyles}
+          className={getAvatarLogoStyles({})}
           color={SupportedColors.GreenBase}
         />
       );
@@ -39,18 +43,27 @@ export const AvatarContents = ({
       return (
         <span
           aria-hidden
-          className={cx(getTextAvatarContentStyles({ size, theme, format }), {
-            [singleInitialStyles]: text?.length === 1,
-          })}
+          className={cx(
+            getAvatarTextStyles({ size, theme, format, sizeOverride }),
+            {
+              [singleInitialStyles]: text?.length === 1,
+            },
+          )}
         >
-          {text}
+          {text.slice(0, MAX_CHARS)}
         </span>
       );
     }
 
     case Format.Icon:
     default: {
-      return <Icon size={size} glyph={glyph} />;
+      return (
+        <Icon
+          size={size}
+          glyph={glyph}
+          className={getAvatarIconStyles({ sizeOverride })}
+        />
+      );
     }
   }
 };
