@@ -45,6 +45,11 @@ export default {
 
 export const LiveExample: StoryObj<typeof Avatar> = {
   render: props => <Avatar {...props} />,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
 };
 
 export const DefaultVariant: StoryObj<typeof Avatar> = {
