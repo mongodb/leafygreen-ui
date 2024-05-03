@@ -139,7 +139,7 @@ export const TextAvatar: StoryObj<typeof Avatar> = {
     },
     generate: {
       combineArgs: {
-        text: ['A', 'AT'],
+        text: ['A', 'MW'],
       },
     },
   },

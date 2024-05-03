@@ -1,29 +1,43 @@
 import { css } from '@leafygreen-ui/emotion';
 
-import { avatarFontSizeMap } from '../Avatar.constants';
-import { AvatarSize, AvatarStyleArgs } from '../Avatar.types';
+import {
+  avatarFontSizeMap,
+  avatarMultiCharacterFontSizeMap,
+} from '../Avatar.constants';
+import { AvatarProps, AvatarSize, AvatarStyleArgs } from '../Avatar.types';
 
-const FONT_SCALE = 0.5; // Scalar for `sizeOverride` to font-size
+const SINGLE_CHAR_FONT_SCALE = 0.5; // Scalar for `sizeOverride` to font-size
+const MULTI_CHAR_FONT_SCALE = 0.375; // Scalar for `sizeOverride` to font-size
 const LOGO_SCALE = 0.625; // Scalar for `sizeOverride` to Logo size
 const ICON_SCALE = 0.5; // Scalar for `sizeOverride` to icon size
+
+interface AvatarTextStyleArgs {
+  size: AvatarProps['size'];
+  sizeOverride: AvatarProps['sizeOverride'];
+  isSingleCharacter: boolean;
+}
 
 export const getAvatarTextStyles = ({
   size = AvatarSize.Default,
   sizeOverride,
-}: AvatarStyleArgs) => {
-  const fontSize = sizeOverride
-    ? sizeOverride * FONT_SCALE
-    : avatarFontSizeMap[size];
+  isSingleCharacter,
+}: AvatarTextStyleArgs) => {
+  const FONT_SCALE = isSingleCharacter
+    ? SINGLE_CHAR_FONT_SCALE
+    : MULTI_CHAR_FONT_SCALE;
+
+  const overriddenSize = sizeOverride ? sizeOverride * FONT_SCALE : undefined;
+  const defaultFontSize = isSingleCharacter
+    ? avatarFontSizeMap[size]
+    : avatarMultiCharacterFontSizeMap[size];
+  const fontSize = overriddenSize ?? defaultFontSize;
 
   return css`
-    font-size: ${fontSize}px;
     user-select: none;
+    font-size: ${fontSize}px;
+    font-weight: ${isSingleCharacter ? 'bold' : 'normal'};
   `;
 };
-
-export const singleInitialStyles = css`
-  font-weight: bold;
-`;
 
 export const getAvatarLogoStyles = (_: AvatarStyleArgs) => css`
   // set to percentage to keep it responsive to all sizeOverride values

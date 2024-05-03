@@ -1,8 +1,6 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { MongoDBLogoMark, SupportedColors } from '@leafygreen-ui/logo';
 
 import { AvatarProps, AvatarSize, Format } from '../Avatar.types';
@@ -11,7 +9,6 @@ import {
   getAvatarIconStyles,
   getAvatarLogoStyles,
   getAvatarTextStyles,
-  singleInitialStyles,
 } from './AvatarContents.style';
 
 const MAX_CHARS = 2;
@@ -23,8 +20,6 @@ export const AvatarContents = ({
   glyph = 'Person',
   sizeOverride,
 }: AvatarProps) => {
-  const { theme } = useDarkMode();
-
   if (format == Format.Text && (!text || text.length <= 0)) {
     format = Format.Icon;
   }
@@ -40,17 +35,19 @@ export const AvatarContents = ({
     }
 
     case Format.Text: {
+      const isSingleCharacter = text?.length === 1;
+      const truncatedText = text?.slice(0, MAX_CHARS);
+
       return (
         <span
           aria-hidden
-          className={cx(
-            getAvatarTextStyles({ size, theme, format, sizeOverride }),
-            {
-              [singleInitialStyles]: text?.length === 1,
-            },
-          )}
+          className={getAvatarTextStyles({
+            size,
+            sizeOverride,
+            isSingleCharacter,
+          })}
         >
-          {text?.slice(0, MAX_CHARS)}
+          {truncatedText}
         </span>
       );
     }
