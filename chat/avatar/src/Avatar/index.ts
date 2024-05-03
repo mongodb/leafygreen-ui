@@ -1,7 +1,10 @@
-export { ChatAvatar } from './Avatar';
+export {
+  ChatAvatar,
+  chatAvatarSizeMap,
+  variantToAvatarFormatMap,
+} from './Avatar';
 export {
   type ChatAvatarProps,
   ChatAvatarSize,
-  chatAvatarSizeMap,
   ChatAvatarVariant,
 } from './Avatar.types';
