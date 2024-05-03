@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import { GlyphName } from '@leafygreen-ui/icon';
 import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
