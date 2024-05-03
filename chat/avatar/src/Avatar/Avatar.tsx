@@ -5,7 +5,7 @@ import { Avatar, Format, getInitials } from '@leafygreen-ui/avatar';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import {
-  ChatAvatarProps,
+  type ChatAvatarProps,
   ChatAvatarSize,
   chatAvatarSizeMap,
   ChatAvatarVariant,

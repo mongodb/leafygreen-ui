@@ -50,7 +50,7 @@ export const AvatarContents = ({
             },
           )}
         >
-          {text.slice(0, MAX_CHARS)}
+          {text?.slice(0, MAX_CHARS - 1)}
         </span>
       );
     }

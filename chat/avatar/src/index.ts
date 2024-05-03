@@ -1,6 +1,6 @@
 export {
   ChatAvatar as Avatar,
-  ChatAvatarProps,
+  type ChatAvatarProps,
   ChatAvatarSize,
   chatAvatarSizeMap,
   ChatAvatarVariant,
