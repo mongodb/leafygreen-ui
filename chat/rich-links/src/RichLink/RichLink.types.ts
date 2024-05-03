@@ -1,11 +1,10 @@
-import { GlyphName } from '@leafygreen-ui/icon/src/glyphs';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { Variant as RichLinkBadgeVariantName } from './RichLinkBadge/RichLinkBadge.types';
+import { RichLinkBadgeProps } from './RichLinkBadge/RichLinkBadge.types';
 import { RichLinkVariantName } from './RichLinkVariants';
 
 export interface BaseRichLinkProps
-  extends HTMLElementProps<'a', never>,
+  extends Omit<HTMLElementProps<'a', never>, 'href'>,
     DarkModeProps {
   /**
    * The text that shows on the rich link
@@ -16,6 +15,8 @@ export interface BaseRichLinkProps
    * A URL for the background image of the rich link
    */
   imageUrl?: string;
+
+  href: Required<HTMLElementProps<'a', never>>['href'];
 }
 
 export interface RichLinkVariantControlProps {
@@ -29,17 +30,17 @@ export interface RichLinkBadgeControlProps {
   /**
    * The glyph of the badge
    */
-  badgeGlyph: GlyphName;
+  badgeGlyph: RichLinkBadgeProps['glyph'];
 
   /**
    * The label of the badge
    */
-  badgeLabel: string;
+  badgeLabel: RichLinkBadgeProps['label'];
 
   /**
    * The variant of the badge. This determines its background, text, and icon color.
    */
-  badgeVariant?: RichLinkBadgeVariantName;
+  badgeVariant?: RichLinkBadgeProps['variant'];
 }
 
 export type RichLinkWithVariantProps = BaseRichLinkProps &

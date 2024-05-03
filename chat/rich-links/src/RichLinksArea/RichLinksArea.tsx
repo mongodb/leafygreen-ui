@@ -20,7 +20,7 @@ export function RichLinksArea({
     <LeafygreenProvider darkMode={darkMode}>
       <div className={cx(baseStyles)} {...props}>
         {links.map(richLinkProps => (
-          <RichLink key={richLinkProps.url} {...richLinkProps} />
+          <RichLink key={richLinkProps.href} {...richLinkProps} />
         ))}
       </div>
     </LeafygreenProvider>

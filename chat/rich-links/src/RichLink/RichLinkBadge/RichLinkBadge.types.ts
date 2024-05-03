@@ -1,3 +1,4 @@
+import { GlyphName } from '@leafygreen-ui/icon/src/glyphs';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -24,7 +25,7 @@ export interface RichLinkBadgeProps
   /**
    * The name of the glyph to display in the badge
    */
-  glyph?: string;
+  glyph?: GlyphName;
 
   /**
    * Determines the base font-size of the component

@@ -1,5 +1,5 @@
 ---
-'@lg-chat/rich-links': patch
+'@lg-chat/rich-links': major
 ---
 
 Initial release

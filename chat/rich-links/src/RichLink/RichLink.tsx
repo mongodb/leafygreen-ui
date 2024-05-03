@@ -15,7 +15,6 @@ import {
 import {
   RichLinkBadgeControlProps,
   type RichLinkProps,
-  RichLinkWithBadgeProps,
 } from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './RichLinkVariants';
@@ -53,6 +52,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
     return (
+      // @ts-expect-error-next-line - `as` prop is not recognized
       <Card
         darkMode={darkMode}
         ref={ref}
