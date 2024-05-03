@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -14,6 +15,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       format,
       size = Size.Default,
       sizeOverride,
+      className,
       ...rest
     } = props;
     const { theme } = useDarkMode(darkMode);
@@ -21,7 +23,10 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <div
         ref={fwdRef}
-        className={getAvatarStyles({ size, theme, format, sizeOverride })}
+        className={cx(
+          getAvatarStyles({ size, theme, format, sizeOverride }),
+          className,
+        )}
         {...rest}
       >
         <AvatarContents {...props} />

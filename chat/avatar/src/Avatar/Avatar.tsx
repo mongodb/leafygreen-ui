@@ -2,6 +2,8 @@ import React, { ForwardedRef, forwardRef } from 'react';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
 import { Avatar, Format, getInitials } from '@leafygreen-ui/avatar';
+import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import {
@@ -9,6 +11,11 @@ import {
   ChatAvatarSize,
   ChatAvatarVariant,
 } from './Avatar.types';
+import {
+  iconAvatarStyleOverrides,
+  logoAvatarStyleOverrides,
+  textAvatarStyleOverrides,
+} from './ChatAvatar.styles';
 
 export const chatAvatarSizeMap: Record<ChatAvatarSize, number> = {
   [ChatAvatarSize.Default]: 52,
@@ -27,11 +34,13 @@ export const ChatAvatar = forwardRef(
       variant = ChatAvatarVariant.Default,
       size: sizeProp,
       sizeOverride: sizeOverrideProp,
+      darkMode: darkModeProp,
       name,
       ...rest
     }: ChatAvatarProps,
     fwdRef: ForwardedRef<HTMLDivElement>,
   ) => {
+    const { theme } = useDarkMode(darkModeProp);
     const { containerWidth } = useLeafyGreenChatContext();
     const size =
       sizeProp || (containerWidth && containerWidth < breakpoints.Tablet)
@@ -49,18 +58,16 @@ export const ChatAvatar = forwardRef(
         text={initials ?? undefined}
         glyph="Person"
         sizeOverride={sizeOverride}
+        className={cx({
+          [textAvatarStyleOverrides]: variant === ChatAvatarVariant.User,
+          [iconAvatarStyleOverrides(theme)]:
+            variant === ChatAvatarVariant.Default,
+          [logoAvatarStyleOverrides(theme)]:
+            variant === ChatAvatarVariant.Mongo,
+        })}
         {...rest}
       />
     );
-
-    // switch (variant) {
-    //   case ChatAvatarVariant.Mongo:
-    //     return <MongoAvatar {...rest} size={size} ref={ref} />;
-    //   case ChatAvatarVariant.User:
-    //     return <UserAvatar {...rest} size={size} ref={ref} />;
-    //   default:
-    //     return <FallbackAvatar {...rest} size={size} ref={ref} />;
-    // }
   },
 );
 
