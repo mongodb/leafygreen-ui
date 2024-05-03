@@ -20,7 +20,13 @@ export default function transformer(
 
   const source = j(file.source);
 
-  source.findJSXElements(componentName).forEach(element => {
+  // Check if the element is on the page
+  const elements = source.findJSXElements(componentName);
+
+  // If there are not elements then return the original file
+  if (elements.length === 0) return file.source;
+
+  elements.forEach(element => {
     replaceJSXAttributes({ j, element, propName, newPropName });
   });
 
