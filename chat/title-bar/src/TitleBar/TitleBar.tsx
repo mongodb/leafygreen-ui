@@ -45,7 +45,7 @@ export const TitleBar = forwardRef(
               [contentAlignmentStyles]: align === Align.Center,
             })}
           >
-            <Avatar variant="mongo" color="green-base" sizeOverride={24} />
+            <Avatar variant="mongo" sizeOverride={24} />
             <Body>
               <strong>{title}</strong>
             </Body>
