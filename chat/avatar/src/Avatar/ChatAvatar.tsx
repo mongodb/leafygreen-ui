@@ -7,15 +7,15 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
 import {
-  type ChatAvatarProps,
-  ChatAvatarSize,
-  ChatAvatarVariant,
-} from './Avatar.types';
-import {
   iconAvatarStyleOverrides,
   logoAvatarStyleOverrides,
   textAvatarStyleOverrides,
 } from './ChatAvatar.styles';
+import {
+  type ChatAvatarProps,
+  ChatAvatarSize,
+  ChatAvatarVariant,
+} from './ChatAvatar.types';
 
 export const chatAvatarSizeMap: Record<ChatAvatarSize, number> = {
   [ChatAvatarSize.Default]: 52,
