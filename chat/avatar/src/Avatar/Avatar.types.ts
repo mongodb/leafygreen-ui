@@ -26,11 +26,6 @@ export const ChatAvatarSize = {
 export type ChatAvatarSize =
   (typeof ChatAvatarSize)[keyof typeof ChatAvatarSize];
 
-export const chatAvatarSizeMap: Record<ChatAvatarSize, number> = {
-  [ChatAvatarSize.Default]: 52,
-  [ChatAvatarSize.Small]: 40,
-};
-
 export interface ChatAvatarProps extends DarkModeProps {
   /**
    * If provided, overrides the size prop to a customizable number (in px)

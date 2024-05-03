@@ -7,9 +7,13 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import {
   type ChatAvatarProps,
   ChatAvatarSize,
-  chatAvatarSizeMap,
   ChatAvatarVariant,
 } from './Avatar.types';
+
+export const chatAvatarSizeMap: Record<ChatAvatarSize, number> = {
+  [ChatAvatarSize.Default]: 52,
+  [ChatAvatarSize.Small]: 40,
+};
 
 export const variantToAvatarFormatMap: Record<ChatAvatarVariant, Format> = {
   [ChatAvatarVariant.Default]: Format.Icon,
