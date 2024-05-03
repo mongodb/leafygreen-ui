@@ -1,35 +1,63 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
+import { Avatar, Format, getInitials } from '@leafygreen-ui/avatar';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
-import { FallbackAvatar } from '../FallbackAvatar/FallbackAvatar';
-import { MongoAvatar } from '../MongoAvatar';
-import { UserAvatar } from '../UserAvatar/UserAvatar';
-import { AvatarProps, Size } from '..';
+import {
+  ChatAvatarProps,
+  ChatAvatarSize,
+  chatAvatarSizeMap,
+  ChatAvatarVariant,
+} from './Avatar.types';
 
-import { Variant } from './Avatar.types';
+export const variantToAvatarFormatMap: Record<ChatAvatarVariant, Format> = {
+  [ChatAvatarVariant.Default]: Format.Icon,
+  [ChatAvatarVariant.Mongo]: Format.MongoDB,
+  [ChatAvatarVariant.User]: Format.Text,
+};
 
-export const Avatar = forwardRef(
+export const ChatAvatar = forwardRef(
   (
-    { variant = Variant.Default, size: sizeProp, ...rest }: AvatarProps,
-    ref: ForwardedRef<HTMLDivElement>,
+    {
+      variant = ChatAvatarVariant.Default,
+      size: sizeProp,
+      sizeOverride: sizeOverrideProp,
+      name,
+      ...rest
+    }: ChatAvatarProps,
+    fwdRef: ForwardedRef<HTMLDivElement>,
   ) => {
     const { containerWidth } = useLeafyGreenChatContext();
     const size =
       sizeProp || (containerWidth && containerWidth < breakpoints.Tablet)
-        ? Size.Small
-        : Size.Default;
+        ? ChatAvatarSize.Small
+        : ChatAvatarSize.Default;
 
-    switch (variant) {
-      case Variant.Mongo:
-        return <MongoAvatar {...rest} size={size} ref={ref} />;
-      case Variant.User:
-        return <UserAvatar {...rest} size={size} ref={ref} />;
-      default:
-        return <FallbackAvatar {...rest} size={size} ref={ref} />;
-    }
+    const sizeOverride = sizeOverrideProp ?? chatAvatarSizeMap[size];
+    const format = variantToAvatarFormatMap[variant];
+    const { initials } = getInitials(name);
+
+    return (
+      <Avatar
+        ref={fwdRef}
+        format={format}
+        text={initials ?? undefined}
+        glyph="Person"
+        sizeOverride={sizeOverride}
+        {...rest}
+      />
+    );
+
+    // switch (variant) {
+    //   case ChatAvatarVariant.Mongo:
+    //     return <MongoAvatar {...rest} size={size} ref={ref} />;
+    //   case ChatAvatarVariant.User:
+    //     return <UserAvatar {...rest} size={size} ref={ref} />;
+    //   default:
+    //     return <FallbackAvatar {...rest} size={size} ref={ref} />;
+    // }
   },
 );
 
-Avatar.displayName = 'Avatar';
+ChatAvatar.displayName = 'Avatar';

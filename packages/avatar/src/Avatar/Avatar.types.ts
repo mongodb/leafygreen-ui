@@ -45,8 +45,8 @@ export type DiscriminatedAvatarProps =
        * @default `"icon"`
        */
       format: typeof Format.MongoDB;
-      text: never;
-      glyph: never;
+      text?: string;
+      glyph?: string;
       // imageUrl: never;
     }
   | {
@@ -60,7 +60,13 @@ export type DiscriminatedAvatarProps =
        * The text to render in the Avatar.
        */
       text: string;
-      glyph: never;
+
+      /**
+       * The icon glyph name to render in the Avatar
+       *
+       * @default `"Person"`
+       */
+      glyph?: string;
       // imageUrl: never;
     }
   | {
@@ -76,7 +82,11 @@ export type DiscriminatedAvatarProps =
        * @default `"Person"`
        */
       glyph: GlyphName;
-      text: never;
+
+      /**
+       * The text to render in the Avatar.
+       */
+      text?: string;
       // imageUrl: never;
     };
 // | {

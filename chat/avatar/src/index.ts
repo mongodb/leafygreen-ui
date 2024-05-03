@@ -1,2 +1,7 @@
-export { Avatar, type AvatarProps, Variant } from './Avatar';
-export { avatarSizes, Size, type SizeProps } from './Avatar.types';
+export {
+  ChatAvatar as Avatar,
+  ChatAvatarProps,
+  ChatAvatarSize,
+  chatAvatarSizeMap,
+  ChatAvatarVariant,
+} from './Avatar';
