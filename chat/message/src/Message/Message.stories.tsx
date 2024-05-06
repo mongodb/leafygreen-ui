@@ -44,21 +44,15 @@ function helloWorld() {
 const UserText = `How can I delete a massive amount of documents from a collection?`;
 
 const MongoText = `
-To efficiently delete a large number of documents from a MongoDB collection, you
-can use the \`deleteMany()\` method. This method allows you to delete multiple
-documents that match a specified filter.
+To efficiently delete a large number of documents from a MongoDB collection, you can use the \`deleteMany()\` method. This method allows you to delete multiple documents that match a specified filter.
 
-Here's an example of how to use the \`deleteMany()\` method to delete a large
-number of documents:
+Here's an example of how to use the \`deleteMany()\` method to delete a large number of documents:
 
 \`\`\`javascript
 db.collection.deleteMany({ <filter> });
 \`\`\`
 
-Keep in mind that deleting a large number of documents can be resource-intensive
-and may impact the performance of your MongoDB server. It's recommended to
-perform such operations during periods of low activity or to use techniques like
-sharding to distribute the load across multiple servers.
+Keep in mind that deleting a large number of documents can be resource-intensive and may impact the performance of your MongoDB server. It's recommended to perform such operations during periods of low activity or to use techniques like sharding to distribute the load across multiple servers.
 
 Let me know if you need any further assistance!
 `;
