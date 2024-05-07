@@ -1,3 +1,4 @@
+import { ButtonProps } from '@leafygreen-ui/button';
 import { ModalProps } from '@leafygreen-ui/modal';
 
 export const Variant = {
@@ -6,6 +7,16 @@ export const Variant = {
 } as const;
 
 export type Variant = (typeof Variant)[keyof typeof Variant];
+
+type CustomButtonProps = Pick<
+  ButtonProps,
+  | 'children'
+  | 'leftGlyph'
+  | 'onClick'
+  | 'isLoading'
+  | 'loadingIndicator'
+  | 'loadingText'
+>;
 
 export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   /**
@@ -19,14 +30,17 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   open?: boolean;
   /**
    * Callback fired when the primary action button is clicked.
+   * @deprecated
    */
   onConfirm?: () => void;
   /**
    * Callback fired when the cancel button is clicked.
+   * @deprecated
    */
   onCancel?: () => void;
   /**
    * Text rendered in the primary button. Defaults to `"Confirm"`
+   * @deprecated
    */
   buttonText: string;
   /**
@@ -41,4 +55,8 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
    * If `true`, the primary action button will be disabled
    */
   submitDisabled?: boolean;
+
+  primaryButtonProps: CustomButtonProps;
+
+  cancelButtonProps: CustomButtonProps;
 }

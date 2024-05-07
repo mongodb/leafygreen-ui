@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Button from '@leafygreen-ui/button';
+import Icon from '@leafygreen-ui/icon';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 
 import { FormFooterProps } from './FormFooter.types';
@@ -190,5 +191,52 @@ describe('packages/form-footer', () => {
 
       expect(getByText('Error')).toBeInTheDocument();
     });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('types behave as expected', () => {
+    <>
+      {/* @ts-expect-error - primaryButtonProps are required */}
+      <FormFooter />
+      <FormFooter primaryButtonProps={{ children: 'Confirm' }} />
+      {/* @ts-expect-error - Missing children  */}
+      <FormFooter primaryButtonProps={{ variant: 'primary' }} />
+      {/* @ts-expect-error - Confirm is not a variant  */}
+      <FormFooter primaryButtonProps={{ variant: 'Confirm' }} />
+
+      <FormFooter
+        primaryButtonProps={{ children: 'Confirm' }}
+        // @ts-expect-error - cancelButtonProps, variant does not exist in CustomCancelButtonProps
+        cancelButtonProps={{ variant: 'primary' }}
+      />
+      <FormFooter
+        primaryButtonProps={{ children: 'Confirm' }}
+        cancelButtonProps={{ isLoading: true }}
+      />
+
+      <FormFooter
+        primaryButtonProps={{ children: 'Confirm' }}
+        // @ts-expect-error - primary is not a variant
+        backButtonProps={{ isLoading: true, variant: 'primary' }}
+      />
+      <FormFooter
+        primaryButtonProps={{ children: 'Confirm' }}
+        backButtonProps={{
+          isLoading: true,
+          variant: 'dangerOutline',
+          leftGlyph: <Icon glyph="ArrowLeft" />,
+        }}
+      />
+
+      <FormFooter
+        primaryButtonProps={{ children: 'Confirm' }}
+        backButtonProps={{ children: 'Back', variant: 'dangerOutline' }}
+        cancelButtonProps={{ onClick: () => {} }}
+        errorMessage="that's not leafy"
+        contentClassName="contentClassname"
+        className="classname"
+        darkMode
+      />
+    </>;
   });
 });

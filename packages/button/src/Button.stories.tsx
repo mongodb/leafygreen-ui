@@ -178,11 +178,11 @@ Loading.parameters = {
       loadingText: [undefined, 'Saving'],
     },
     args: {
-      isLoading: true,
+      // isLoading: true,
       variant: Variant.Default,
       rightGlyph: undefined,
       leftGlyph: undefined,
-      loadingIndicator: <Spinner />,
+      // loadingIndicator: <Spinner />,
     },
   },
   // Avoids flakey Chromatic tests

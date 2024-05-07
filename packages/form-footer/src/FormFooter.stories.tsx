@@ -7,7 +7,6 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
-import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 
@@ -31,12 +30,7 @@ const meta: StoryMetaType<typeof FormFooter> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'contentClassName',
-        'onBackClick',
-        'primaryButton',
-      ],
+      exclude: [...storybookExcludedControlParams, 'contentClassName'],
     },
     generate: {
       storyNames: ['LightMode', 'DarkMode'],
@@ -45,8 +39,13 @@ const meta: StoryMetaType<typeof FormFooter> = {
           undefined,
           { children: 'Back', leftGlyph: undefined },
           { children: 'Back', leftGlyph: <Icon glyph="ArrowLeft" /> },
+          { children: 'Delete Trigger', variant: 'dangerOutline' },
         ],
         cancelButtonProps: [undefined, { children: 'Cancel' }],
+        primaryButtonProps: [
+          { children: 'Confirm', variant: 'primary' },
+          { children: 'Confirm', variant: 'danger' },
+        ],
         errorMessage: [undefined, 'This is an error message'],
       },
       decorator: StoryFn => (
@@ -58,22 +57,12 @@ const meta: StoryMetaType<typeof FormFooter> = {
   },
   args: {
     darkMode: false,
-    primaryButtonText: 'Button',
-    primaryButton: { text: 'Button' },
-    cancelButtonText: '', // TODO @stephl3: remove once deprecated props are removed
     errorMessage: 'Error message',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    cancelButtonText: { control: 'text' },
-    backButtonText: { control: 'text' },
     errorMessage: { control: 'text' },
     contentClassName: { control: 'text' },
-    primaryButtonText: {
-      control: 'text',
-      description:
-        '*Storybook only prop* The primary (right-most) button text.',
-    },
   },
 };
 export default meta;
@@ -81,15 +70,12 @@ export default meta;
 type FormFooterStoryProps = FormFooterProps & { primaryButtonText?: string };
 
 const Template: StoryType<typeof FormFooter> = ({
-  primaryButtonText,
-  primaryButton,
+  primaryButtonProps,
   ...args
 }: FormFooterStoryProps) => (
   <FormFooter
     {...args}
-    primaryButton={
-      primaryButton ? primaryButton : { text: primaryButtonText as string }
-    }
+    primaryButtonProps={{ children: 'Button', variant: 'primary' }}
   />
 );
 
@@ -104,33 +90,33 @@ LiveExample.args = {
   cancelButtonProps: { children: 'Cancel' },
 };
 
-export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
-  Template.bind({});
-WithCustomPrimaryButton.args = {
-  primaryButton: (
-    <Button
-      leftGlyph={<Icon glyph={'Cloud'} />}
-      rightGlyph={<Icon glyph={'Checkmark'} />}
-      variant="primary"
-      disabled
-    >
-      Save to cloud
-    </Button>
-  ),
-  backButtonProps: { children: 'Back' },
-  cancelButtonProps: { children: 'Cancel' },
-};
-WithCustomPrimaryButton.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-  controls: {
-    exclude: [
-      ...(meta.parameters.controls?.exclude ?? []),
-      'primaryButtonText',
-    ],
-  },
-};
+// export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
+//   Template.bind({});
+// WithCustomPrimaryButton.args = {
+//   primaryButton: (
+//     <Button
+//       leftGlyph={<Icon glyph={'Cloud'} />}
+//       rightGlyph={<Icon glyph={'Checkmark'} />}
+//       variant="primary"
+//       disabled
+//     >
+//       Save to cloud
+//     </Button>
+//   ),
+//   backButtonProps: { children: 'Back' },
+//   cancelButtonProps: { children: 'Cancel' },
+// };
+// WithCustomPrimaryButton.parameters = {
+//   chromatic: {
+//     disableSnapshot: true,
+//   },
+//   controls: {
+//     exclude: [
+//       ...(meta.parameters.controls?.exclude ?? []),
+//       'primaryButtonText',
+//     ],
+//   },
+// };
 
 export const LightMode: StoryType<typeof FormFooter> = () => <></>;
 LightMode.args = {

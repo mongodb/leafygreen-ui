@@ -1,17 +1,26 @@
-import { ButtonProps } from '@leafygreen-ui/button';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { ButtonProps, type Variant } from '@leafygreen-ui/button';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { PrimaryButtonProps } from './PrimaryButton';
 
-type CustomButtonProps = Pick<
-  ButtonProps,
-  'children' | 'leftGlyph' | 'onClick'
->;
+type ButtonPropsWithOmits = Omit<ButtonProps, 'variant'>;
+type ButtonPropsWithChildren = Required<Pick<ButtonProps, 'children'>>;
 
-export interface FormFooterProps extends HTMLElementProps<'footer'> {
+export type CustomCancelButtonProps = ButtonPropsWithOmits;
+export type CustomBackButtonProps = ButtonPropsWithOmits & {
+  variant?: Extract<Variant, 'default' | 'dangerOutline'>;
+};
+export type CustomPrimaryButtonProps = ButtonPropsWithOmits &
+  ButtonPropsWithChildren & {
+    variant?: Extract<Variant, 'primary' | 'danger'>;
+  };
+
+export interface FormFooterProps
+  extends HTMLElementProps<'footer'>,
+    DarkModeProps {
   /**
    * The primary (right-most) button.
-   * Defined as a `<Button>` element, or as an object with the shape:
+   * Defined as an object with the shape:
    *
    * ```ts
    * interface PrimaryButtonProps {
@@ -24,54 +33,33 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
    * ```
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
+   * @deprecated since 4.0.0 - use primaryButtonProps
    */
-  primaryButton: React.ReactElement | PrimaryButtonProps;
+  primaryButton?: React.ReactElement | PrimaryButtonProps;
 
   /**
-   * The cancel button which will only appear if cancelButtonProps is defined.
-   * Customizable props include children, leftGlyph, and onClick.
+   * The primary (right-most) button.
+   * An object that accepts all Button props but `variant` is limited to `primary` and `danger`
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  cancelButtonProps?: CustomButtonProps;
+  primaryButtonProps: CustomPrimaryButtonProps;
 
   /**
-   * The back button which will only appear if backButtonProps is defined.
-   * Customizable props include children, leftGlyph, and onClick.
+   * The cancel button, to the left of the primary button, will only appear if cancelButtonProps is defined.
+   * An object that accepts all Button props except for the `variant` prop. The variant is `default`.
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  backButtonProps?: CustomButtonProps;
+  cancelButtonProps?: CustomCancelButtonProps;
 
   /**
-   * Text for the cancel button.
-   * A cancel button will only appear if this text is defined.
+   * The back button, the left-most button, will only appear if backButtonProps is defined.
+   * An object that accepts all Button props but `variant` is limited to `default` and `dangerOutline`
    *
-   * @default "Cancel"
-   * @deprecated since version 3.1.0 - use cancelButtonProps instead
+   * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  cancelButtonText?: string;
-
-  /**
-   * onClick callback for the cancel button
-   *
-   * @deprecated since version 3.1.0 - use cancelButtonProps instead
-   */
-  onCancel?: React.MouseEventHandler<HTMLButtonElement>;
-
-  /**
-   * Text for the back button. A back button will only appear if text is defined.
-   *
-   * @deprecated since version 3.1.0 - use backButtonProps instead
-   */
-  backButtonText?: string;
-
-  /**
-   * onClick callback for the back button
-   *
-   * @deprecated since version 3.1.0 - use backButtonProps instead
-   */
-  onBackClick?: React.MouseEventHandler<HTMLButtonElement>;
+  backButtonProps?: CustomBackButtonProps;
 
   /**
    * Text within the error banner. The banner will only appear if an error message is defined.
@@ -83,16 +71,4 @@ export interface FormFooterProps extends HTMLElementProps<'footer'> {
    * Useful for setting left and right margins, or max-width
    */
   contentClassName?: string;
-
-  /**
-   * Styling prop
-   */
-  className?: string;
-
-  /**
-   * Determines whether or not the component will be rendered in dark theme.
-   *
-   * @default false
-   */
-  darkMode?: boolean;
 }

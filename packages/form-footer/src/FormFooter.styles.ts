@@ -10,6 +10,10 @@ export const footerBaseStyle = css`
   padding: 26px 24px;
   display: flex;
   align-items: center;
+
+  button {
+    white-space: nowrap;
+  }
 `;
 
 export const footerThemeStyle: Record<Theme, string> = {
@@ -42,8 +46,4 @@ export const bannerStyle = css`
   flex-grow: 0;
   padding-block: 7px;
   max-width: 700px;
-`;
-
-export const buttonStyle = css`
-  white-space: nowrap;
 `;
