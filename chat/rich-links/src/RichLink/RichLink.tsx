@@ -53,6 +53,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
     return (
+      // @ts-expect-error - Card does not correctly infer props based on `as` prop
       <Card
         darkMode={darkMode}
         ref={ref}
@@ -61,7 +62,6 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         as="a"
-        // @ts-expect-error-next-line - Card does not correctly infer props based on `as` prop
         href={href}
         target="_blank"
         {...anchorProps}
