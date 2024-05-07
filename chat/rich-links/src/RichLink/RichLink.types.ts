@@ -3,9 +3,7 @@ import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { RichLinkBadgeProps } from './RichLinkBadge/RichLinkBadge.types';
 import { RichLinkVariantName } from './RichLinkVariants';
 
-export interface BaseRichLinkProps
-  extends Omit<HTMLElementProps<'a', never>, 'href'>,
-    DarkModeProps {
+export interface BaseRichLinkProps extends DarkModeProps {
   /**
    * The text that shows on the rich link
    */
@@ -16,7 +14,15 @@ export interface BaseRichLinkProps
    */
   imageUrl?: string;
 
+  /**
+   * The URL that the rich link navigates to
+   */
   href: Required<HTMLElementProps<'a', never>>['href'];
+
+  /**
+   * Props to spread on the anchor element
+   */
+  anchorProps?: Omit<HTMLElementProps<'a', never>, 'children' | 'href'>;
 }
 
 export interface RichLinkVariantControlProps {
@@ -40,7 +46,7 @@ export interface RichLinkBadgeControlProps {
   /**
    * The variant of the badge. This determines its background, text, and icon color.
    */
-  badgeVariant?: RichLinkBadgeProps['variant'];
+  badgeColor?: RichLinkBadgeProps['color'];
 }
 
 export type RichLinkWithVariantProps = BaseRichLinkProps &

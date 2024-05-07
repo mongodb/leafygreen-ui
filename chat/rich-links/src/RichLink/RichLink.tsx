@@ -32,7 +32,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const badgeDefaults: Partial<RichLinkBadgeControlProps> = {
       badgeGlyph: undefined,
       badgeLabel: undefined,
-      badgeVariant: undefined,
+      badgeColor: undefined,
     };
 
     const {
@@ -40,8 +40,9 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
       imageUrl,
       badgeGlyph,
       badgeLabel,
-      badgeVariant,
-      ...anchorProps
+      badgeColor,
+      href,
+      anchorProps,
     } = {
       ...badgeDefaults,
       ...props,
@@ -52,7 +53,6 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
     return (
-      // @ts-expect-error-next-line - `as` prop is not recognized
       <Card
         darkMode={darkMode}
         ref={ref}
@@ -61,6 +61,8 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         as="a"
+        // @ts-expect-error-next-line - Card does not correctly infer props based on `as` prop
+        href={href}
         target="_blank"
         {...anchorProps}
       >
@@ -70,7 +72,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
         {showBadge ? (
           <RichLinkBadge
             darkMode={darkMode}
-            variant={badgeVariant}
+            color={badgeColor}
             label={badgeLabel}
             glyph={badgeGlyph}
           />

@@ -1,10 +1,10 @@
 import { GlyphName } from '@leafygreen-ui/icon/src/glyphs';
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export { BaseFontSize };
 
-export const Variant = {
+export const RichLinkBadgeColors = {
   Gray: 'gray',
   Blue: 'blue',
   Green: 'green',
@@ -12,11 +12,10 @@ export const Variant = {
   Red: 'red',
   Yellow: 'yellow',
 } as const;
-export type Variant = (typeof Variant)[keyof typeof Variant];
+export type RichLinkBadgeColor =
+  (typeof RichLinkBadgeColors)[keyof typeof RichLinkBadgeColors];
 
-export interface RichLinkBadgeProps
-  extends HTMLElementProps<'span', never>,
-    DarkModeProps {
+export interface RichLinkBadgeProps extends DarkModeProps {
   /**
    * The badge's label text
    */
@@ -35,8 +34,8 @@ export interface RichLinkBadgeProps
   baseFontSize?: BaseFontSize;
 
   /**
-   * The color of the chip
+   * The background color of the badge
    * @default 'gray'
    */
-  variant?: Variant;
+  color?: RichLinkBadgeColor;
 }

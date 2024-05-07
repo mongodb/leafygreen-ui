@@ -5,37 +5,37 @@ import { RichLink } from '.';
 
 const richLinkVariantProps = {
   Blog: {
-    badgeVariant: 'green',
+    badgeColor: 'green',
     badgeLabel: 'Blog',
     badgeGlyph: 'SMS',
   },
   Book: {
-    badgeVariant: 'yellow',
+    badgeColor: 'yellow',
     badgeLabel: 'Book',
     badgeGlyph: 'University',
   },
   Code: {
-    badgeVariant: 'gray',
+    badgeColor: 'gray',
     badgeLabel: 'Code',
     badgeGlyph: 'CodeBlock',
   },
   Docs: {
-    badgeVariant: 'blue',
+    badgeColor: 'blue',
     badgeLabel: 'Docs',
     badgeGlyph: 'Note',
   },
   Learn: {
-    badgeVariant: 'red',
+    badgeColor: 'red',
     badgeLabel: 'Learn',
     badgeGlyph: 'Cap',
   },
   Video: {
-    badgeVariant: 'red',
+    badgeColor: 'red',
     badgeLabel: 'Video',
     badgeGlyph: 'Play',
   },
   Website: {
-    badgeVariant: 'purple',
+    badgeColor: 'purple',
     badgeLabel: 'Website',
     badgeGlyph: 'Laptop',
   },

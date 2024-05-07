@@ -3,7 +3,10 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { Variant } from './RichLinkBadge.types';
+import {
+  type RichLinkBadgeColor,
+  RichLinkBadgeColors,
+} from './RichLinkBadge.types';
 
 export const baseStyles = css`
   display: inline-flex;
@@ -16,9 +19,12 @@ export const baseStyles = css`
   left: ${spacing[200]}px;
 `;
 
-export const badgeVariants: Record<Theme, Record<Variant, string>> = {
+export const badgeVariants: Record<
+  Theme,
+  Record<RichLinkBadgeColor, string>
+> = {
   [Theme.Dark]: {
-    [Variant.Gray]: css`
+    [RichLinkBadgeColors.Gray]: css`
       background-color: ${palette.gray.dark1};
       & svg {
         color: ${palette.gray.light3};
@@ -27,7 +33,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.gray.light3};
       }
     `,
-    [Variant.Blue]: css`
+    [RichLinkBadgeColors.Blue]: css`
       background-color: ${palette.blue.dark3};
       & svg {
         color: ${palette.blue.light2};
@@ -36,7 +42,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.blue.light2};
       }
     `,
-    [Variant.Green]: css`
+    [RichLinkBadgeColors.Green]: css`
       background-color: ${palette.green.dark3};
       & svg {
         color: ${palette.green.light2};
@@ -45,7 +51,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.light2};
       }
     `,
-    [Variant.Red]: css`
+    [RichLinkBadgeColors.Red]: css`
       background-color: ${palette.red.dark3};
       & svg {
         color: ${palette.red.light2};
@@ -54,7 +60,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.red.light2};
       }
     `,
-    [Variant.Purple]: css`
+    [RichLinkBadgeColors.Purple]: css`
       background-color: ${palette.purple.dark3};
       & svg {
         color: ${palette.purple.light2};
@@ -63,7 +69,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.purple.light2};
       }
     `,
-    [Variant.Yellow]: css`
+    [RichLinkBadgeColors.Yellow]: css`
       background-color: ${palette.yellow.dark3};
       & svg {
         color: ${palette.yellow.light2};
@@ -74,7 +80,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
     `,
   },
   [Theme.Light]: {
-    [Variant.Gray]: css`
+    [RichLinkBadgeColors.Gray]: css`
       background-color: ${palette.gray.light2};
       & svg {
         color: ${palette.gray.dark1};
@@ -83,7 +89,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.black};
       }
     `,
-    [Variant.Blue]: css`
+    [RichLinkBadgeColors.Blue]: css`
       background-color: ${palette.blue.light3};
       & svg {
         color: ${palette.blue.dark2};
@@ -92,7 +98,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.blue.dark1};
       }
     `,
-    [Variant.Green]: css`
+    [RichLinkBadgeColors.Green]: css`
       background-color: ${palette.green.light3};
       & svg {
         color: ${palette.green.dark2};
@@ -101,7 +107,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.green.dark3};
       }
     `,
-    [Variant.Red]: css`
+    [RichLinkBadgeColors.Red]: css`
       background-color: ${palette.red.light3};
       & svg {
         color: ${palette.red.dark2};
@@ -110,7 +116,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.red.dark3};
       }
     `,
-    [Variant.Purple]: css`
+    [RichLinkBadgeColors.Purple]: css`
       background-color: ${palette.purple.light3};
       & svg {
         color: ${palette.purple.dark2};
@@ -119,7 +125,7 @@ export const badgeVariants: Record<Theme, Record<Variant, string>> = {
         color: ${palette.purple.dark3};
       }
     `,
-    [Variant.Yellow]: css`
+    [RichLinkBadgeColors.Yellow]: css`
       background-color: ${palette.yellow.light3};
       & svg {
         color: ${palette.yellow.dark2};

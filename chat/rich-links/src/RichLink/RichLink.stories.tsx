@@ -20,7 +20,7 @@ Basic.args = {
   text: 'Introduction to MongoDB',
   badgeGlyph: 'Database',
   badgeLabel: 'Database',
-  badgeVariant: 'green',
+  badgeColor: 'green',
 };
 
 export const LongText = Template.bind({});

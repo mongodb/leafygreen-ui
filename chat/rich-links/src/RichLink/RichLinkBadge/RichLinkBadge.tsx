@@ -11,13 +11,13 @@ import { type RichLinkBadgeProps } from './RichLinkBadge.types';
 export const RichLinkBadge = ({
   darkMode: darkModeProp,
   glyph: glyphName,
-  variant = 'gray',
+  color = 'gray',
   label,
 }: RichLinkBadgeProps) => {
   const { theme } = useDarkMode(darkModeProp);
 
   return (
-    <div className={cx(baseStyles, badgeVariants[theme][variant])}>
+    <div className={cx(baseStyles, badgeVariants[theme][color])}>
       {glyphName ? <Icon glyph={glyphName} /> : null}
       <Body>{label}</Body>
     </div>
