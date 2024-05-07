@@ -8,27 +8,19 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-export const labelStyle = css`
-  font-family: ${fontFamilies.default};
-  font-weight: ${fontWeights.bold};
-`;
+export const getLabelStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.primary.default};
 
-export const labelColorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.text.primary.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.text.primary.default};
-  `,
+    font-family: ${fontFamilies.default};
+    font-weight: ${fontWeights.bold};
+  `;
 };
 
-export const disabledLabelColorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${color.light.text.disabled.default};
-  `,
-  [Theme.Dark]: css`
-    color: ${color.dark.text.disabled.default};
-  `,
+export const getDisabledLabelColorStyle = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.disabled.default};
+  `;
 };
 
 export const labelTypeScaleStyles: Record<BaseFontSize, string> = {

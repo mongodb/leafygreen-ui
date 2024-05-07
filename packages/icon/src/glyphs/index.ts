@@ -55,6 +55,7 @@ import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
+import Eraser from './Eraser.svg';
 import Escalation from './Escalation.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
@@ -62,6 +63,7 @@ import Federation from './Federation.svg';
 import File from './File.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
+import Format from './Format.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
 import Gauge from './Gauge.svg';
@@ -210,6 +212,7 @@ const _glyphs = {
   Edit,
   Ellipsis,
   Email,
+  Eraser,
   Escalation,
   Export,
   Favorite,
@@ -219,6 +222,7 @@ const _glyphs = {
   FullScreenEnter,
   FullScreenExit,
   Folder,
+  Format,
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,

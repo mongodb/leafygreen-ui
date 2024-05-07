@@ -154,6 +154,11 @@ const lightModeTextColors = {
     [State.Hover]: gray.base,
     [State.Focus]: gray.base,
   },
+  [Variant.Placeholder]: {
+    [State.Default]: gray.base,
+    [State.Hover]: gray.base,
+    [State.Focus]: gray.base,
+  },
   [Variant.Link]: {
     [State.Default]: blue.base,
     [State.Hover]: blue.base,
