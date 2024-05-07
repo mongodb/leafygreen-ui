@@ -28,5 +28,8 @@
     {
       "path": "../../packages/typography"
     },
+    {
+      "path": "../../packages/polymorphic"
+    },
   ]
 }

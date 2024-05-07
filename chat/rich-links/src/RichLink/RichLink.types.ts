@@ -1,4 +1,9 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  PolymorphicAs,
+  PolymorphicProps,
+  PolymorphicPropsWithRef,
+} from '@leafygreen-ui/polymorphic';
 
 import { RichLinkBadgeProps } from './RichLinkBadge/RichLinkBadge.types';
 import { RichLinkVariantName } from './RichLinkVariants';
@@ -24,6 +29,9 @@ export interface BaseRichLinkProps extends DarkModeProps {
    */
   anchorProps?: Omit<HTMLElementProps<'a', never>, 'children' | 'href'>;
 }
+
+export interface PolymorphicBaseRichLinkProps
+  extends PolymorphicPropsWithRef<PolymorphicAs, BaseRichLinkProps> {}
 
 export interface RichLinkVariantControlProps {
   /**
@@ -52,10 +60,25 @@ export interface RichLinkBadgeControlProps {
 export type RichLinkWithVariantProps = BaseRichLinkProps &
   RichLinkVariantControlProps;
 
+export type PolymorphicRichLinkWithVariantProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  RichLinkWithVariantProps
+>;
+
 export type RichLinkWithBadgeProps = BaseRichLinkProps &
   RichLinkBadgeControlProps;
+
+export type PolymorphicRichLinkWithBadgeProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  RichLinkWithBadgeProps
+>;
 
 export type RichLinkProps =
   | BaseRichLinkProps
   | RichLinkWithVariantProps
   | RichLinkWithBadgeProps;
+
+export type PolymorphicRichLinkProps = PolymorphicPropsWithRef<
+  PolymorphicAs,
+  RichLinkProps
+>;

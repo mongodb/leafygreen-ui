@@ -1,6 +1,11 @@
 import React from 'react';
 
-import { BaseRichLinkProps, RichLinkBadgeControlProps } from './RichLink.types';
+import {
+  BaseRichLinkProps,
+  PolymorphicBaseRichLinkProps,
+  PolymorphicRichLinkWithBadgeProps,
+  RichLinkProps,
+} from './RichLink.types';
 import { RichLink } from '.';
 
 const richLinkVariantProps = {
@@ -41,20 +46,23 @@ const richLinkVariantProps = {
   },
 } as const satisfies Record<string, CreateRichLinkVariantArgs>;
 
-export type CreateRichLinkVariantArgs = RichLinkBadgeControlProps;
+export type CreateRichLinkVariantArgs = Omit<
+  PolymorphicRichLinkWithBadgeProps,
+  keyof BaseRichLinkProps
+>;
 
-export function createRichLinkVariant(args: CreateRichLinkVariantArgs) {
-  const RichLinkVariant = (props: BaseRichLinkProps) => (
+export const createRichLinkVariant = (args: CreateRichLinkVariantArgs) => {
+  const RichLinkVariant = (props: PolymorphicBaseRichLinkProps) => (
     <RichLink {...args} {...props} />
   );
   return RichLinkVariant;
-}
+};
 
 export type RichLinkVariantName = keyof typeof richLinkVariantProps;
 
 export type RichLinkVariantMap = Record<
   RichLinkVariantName,
-  React.ComponentType<BaseRichLinkProps>
+  React.ComponentType<RichLinkProps>
 >;
 
 const variantEntries = Object.entries(richLinkVariantProps) as Array<
@@ -68,5 +76,5 @@ export const richLinkVariants = variantEntries.reduce(
       [variantName]: createRichLinkVariant(createRichLinkVariantArgs),
     };
   },
-  {} as RichLinkVariantMap,
-);
+  {},
+) as RichLinkVariantMap;
