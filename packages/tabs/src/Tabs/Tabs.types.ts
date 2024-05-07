@@ -1,7 +1,7 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { Either, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export interface TabsProps extends HTMLElementProps<'div'> {
+export interface TabsProps extends HTMLElementProps<'div'>, LgIdProps {
   /**
    * Content that will appear inside of Tabs component.
    * Should be comprised of at least two `<Tab />` components.
