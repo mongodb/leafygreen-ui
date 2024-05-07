@@ -16,12 +16,10 @@ export function RichLinksArea({
   ...props
 }: RichLinksAreaProps) {
   const { darkMode } = useDarkMode(darkModeProp);
-  console.log('RichLinksArea -> links', links);
   return (
     <LeafygreenProvider darkMode={darkMode}>
       <div className={cx(baseStyles)} {...props}>
         {links.map(richLinkProps => {
-          console.log('RichLinksArea -> richLinkProps', richLinkProps);
           return <RichLink key={richLinkProps.href} {...richLinkProps} />;
         })}
       </div>
