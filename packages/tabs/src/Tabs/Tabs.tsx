@@ -18,6 +18,8 @@ import {
   listStyle,
   modeColors,
   tabContainerStyle,
+  tabListElementClassName,
+  tabPanelsElementClassName,
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
 
@@ -163,7 +165,11 @@ function Tabs(props: AccessibleTabsProps) {
         <div className={tabContainerStyle}>
           {/* renderedTabs portals the tab title into this element */}
           <div
-            className={cx(listStyle, modeColors[theme].underlineColor)}
+            className={cx(
+              listStyle,
+              modeColors[theme].underlineColor,
+              tabListElementClassName,
+            )}
             role="tablist"
             ref={setTabNode}
             aria-orientation="horizontal"
@@ -175,7 +181,7 @@ function Tabs(props: AccessibleTabsProps) {
         </div>
 
         {/* renderedTabs portals the contents into this element */}
-        <div ref={setPanelNode} />
+        <div className={tabPanelsElementClassName} ref={setPanelNode} />
       </div>
     </LeafyGreenProvider>
   );

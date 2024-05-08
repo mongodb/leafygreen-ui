@@ -1,6 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+
+export const tabListElementClassName = createUniqueClassName('tab-list');
+export const tabPanelsElementClassName = createUniqueClassName('tab-panels');
 
 // Using a background allows the "border" to appear underneath the individual tab color
 export const modeColors = {
