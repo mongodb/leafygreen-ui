@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 
@@ -23,7 +22,7 @@ const renderFooter = (props: FormFooterProps) => {
 describe('packages/form-footer', () => {
   test('does not have basic accessibility issues', async () => {
     const { container } = renderFooter({
-      primaryButton: { text: 'Test button' },
+      primaryButtonProps: { children: 'Test button' },
     });
     const results = await axe(container);
     expect(results).toHaveNoViolations();
@@ -32,56 +31,17 @@ describe('packages/form-footer', () => {
   describe('rendering', () => {
     test('renders basic primary button', () => {
       const { getByText } = renderFooter({
-        primaryButton: { text: 'Test button' },
+        primaryButtonProps: { children: 'Test button' },
       });
       const ButtonElement = getByText('Test button');
       expect(ButtonElement).toBeInTheDocument();
-    });
-
-    test('renders JSX primary button', () => {
-      const { getByText } = render(
-        <FormFooter
-          primaryButton={<Button data-testid="test-button">Test button</Button>}
-        />,
-      );
-      const ButtonElement = getByText('Test button');
-      expect(ButtonElement).toBeInTheDocument();
-    });
-
-    // TODO @stephl3: remove once deprecated props are removed
-    describe('deprecated cancel button and back button props', () => {
-      test('renders cancel button', () => {
-        const { getByText } = renderFooter({
-          primaryButton: { text: 'Test button' },
-        });
-        const Cancel = getByText('Cancel');
-        expect(Cancel).toBeInTheDocument();
-      });
-
-      test('renders cancel button with custom text', () => {
-        const { getByText } = renderFooter({
-          primaryButton: { text: 'Test button' },
-          cancelButtonText: 'CancelText',
-        });
-        const Cancel = getByText('CancelText');
-        expect(Cancel).toBeInTheDocument();
-      });
-
-      test('renders back button', () => {
-        const { getByText } = renderFooter({
-          primaryButton: { text: 'Test button' },
-          backButtonText: 'Back',
-        });
-        const Back = getByText('Back');
-        expect(Back).toBeInTheDocument();
-      });
     });
 
     describe('cancel button', () => {
       test('renders with custom text if cancelButtonProps is defined', () => {
         const cancelButtonText = 'Cancel';
         const { queryByText } = renderFooter({
-          primaryButton: { text: 'Test button' },
+          primaryButtonProps: { children: 'Test button' },
           cancelButtonProps: {
             children: cancelButtonText,
           },
@@ -92,8 +52,7 @@ describe('packages/form-footer', () => {
 
       test('does not render if cancelButtonProps is not defined', () => {
         const { queryByTestId } = renderFooter({
-          primaryButton: { text: 'Test button' },
-          cancelButtonText: '', // TODO @stephl3: remove once deprecated props are removed
+          primaryButtonProps: { children: 'Test button' },
         });
         const Cancel = queryByTestId(testId.cancelButton);
         expect(Cancel).not.toBeInTheDocument();
@@ -102,7 +61,7 @@ describe('packages/form-footer', () => {
       describe('left glyph', () => {
         test('does not render if cancelButtonProps is defined and cancelButtonProps.leftGlyph is undefined', () => {
           const { getByTestId } = renderFooter({
-            primaryButton: { text: 'Test button' },
+            primaryButtonProps: { children: 'Test button' },
             cancelButtonProps: {
               children: 'Cancel',
             },
@@ -114,7 +73,7 @@ describe('packages/form-footer', () => {
         test('renders custom leftGlyph if cancelButtonProps is defined and cancelButtonProps.leftGlyph is defined', () => {
           const leftGlyphTestId = 'custom-icon-id';
           const { queryByTestId } = renderFooter({
-            primaryButton: { text: 'Test button' },
+            primaryButtonProps: { children: 'Test button' },
             cancelButtonProps: {
               children: 'Cancel',
               leftGlyph: <XIcon data-testid={leftGlyphTestId} />,
@@ -130,7 +89,7 @@ describe('packages/form-footer', () => {
       test('renders with custom text if backButtonProps is defined', () => {
         const backButtonText = 'Back';
         const { queryByText } = renderFooter({
-          primaryButton: { text: 'Test button' },
+          primaryButtonProps: { children: 'Test button' },
           backButtonProps: {
             children: backButtonText,
           },
@@ -141,27 +100,19 @@ describe('packages/form-footer', () => {
 
       test('does not render if backButtonProps is undefined', () => {
         const { queryByTestId } = renderFooter({
-          primaryButton: { text: 'Test button' },
+          primaryButtonProps: { children: 'Test button' },
         });
         const Back = queryByTestId(testId.backButton);
         expect(Back).not.toBeInTheDocument();
       });
 
       describe('left glyph', () => {
-        test('renders ArrowLeftIcon if backButtonProps is undefined and backButtonText is defined', () => {
-          const { queryByTestId } = renderFooter({
-            primaryButton: { text: 'Test button' },
-            backButtonText: 'Back',
-          });
-          const BackButtonIcon = queryByTestId(testId.backButtonIcon);
-          expect(BackButtonIcon).toBeInTheDocument();
-        });
-
         test('does not render if backButtonProps is defined and backButtonProps.leftGlyph is undefined', () => {
           const { getByTestId } = renderFooter({
-            primaryButton: { text: 'Test button' },
+            primaryButtonProps: { children: 'Test button' },
             backButtonProps: {
               children: 'Back',
+              leftGlyph: undefined,
             },
           });
           const Back = getByTestId(testId.backButton);
@@ -171,7 +122,7 @@ describe('packages/form-footer', () => {
         test('renders custom leftGlyph if backButtonProps is defined and backButtonProps.leftGlyph is defined', () => {
           const leftGlyphTestId = 'custom-icon-id';
           const { queryByTestId } = renderFooter({
-            primaryButton: { text: 'Test button' },
+            primaryButtonProps: { children: 'Test button' },
             backButtonProps: {
               children: 'Back',
               leftGlyph: <XIcon data-testid={leftGlyphTestId} />,
@@ -186,7 +137,7 @@ describe('packages/form-footer', () => {
     test('Renders error message', () => {
       const { getByText } = renderFooter({
         errorMessage: 'Error',
-        primaryButton: { text: 'Test button' },
+        primaryButtonProps: { children: 'Test button' },
       });
 
       expect(getByText('Error')).toBeInTheDocument();
@@ -232,7 +183,7 @@ describe('packages/form-footer', () => {
         primaryButtonProps={{ children: 'Confirm' }}
         backButtonProps={{ children: 'Back', variant: 'dangerOutline' }}
         cancelButtonProps={{ onClick: () => {} }}
-        errorMessage="that's not leafy"
+        errorMessage="that's not very leafy of you"
         contentClassName="contentClassname"
         className="classname"
         darkMode
