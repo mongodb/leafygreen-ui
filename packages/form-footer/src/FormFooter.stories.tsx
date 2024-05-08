@@ -37,7 +37,7 @@ const meta: StoryMetaType<typeof FormFooter> = {
       combineArgs: {
         backButtonProps: [
           undefined,
-          { children: 'Back' },
+          { children: 'Back', leftGlyph: undefined },
           { children: 'Back', leftGlyph: <Icon glyph="ArrowLeft" /> },
           { children: 'Delete Trigger', variant: 'dangerOutline' },
         ],
