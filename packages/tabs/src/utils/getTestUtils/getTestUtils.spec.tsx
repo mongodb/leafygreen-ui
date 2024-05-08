@@ -131,7 +131,7 @@ describe('packages/tabs/getTestUtils', () => {
     });
   });
 
-  describe('multiple selects', () => {
+  describe('multiple tabs', () => {
     test('both have correct selected value', () => {
       renderMultipleTabs();
       const testUtils1 = getTestUtils('lg-tabs-1');

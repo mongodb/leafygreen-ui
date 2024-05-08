@@ -269,12 +269,15 @@ describe('packages/tabs', () => {
   });
 
   describe('when there are two sets of tabs on the page', () => {
-    let testUtils: TestUtilsReturnType;
+    let testUtils1: TestUtilsReturnType;
 
     beforeEach(() => {
       render(
         <>
-          <Tabs aria-label="Description of another set of test tabs">
+          <Tabs
+            data-lgid="lg-tabs-1"
+            aria-label="Description of another set of test tabs"
+          >
             <Tab default name="Tab Set 1-A" data-testid="tab-1-a">
               Content 1-A
             </Tab>
@@ -295,11 +298,11 @@ describe('packages/tabs', () => {
           </Tabs>
         </>,
       );
-      testUtils = getTestUtils();
+      testUtils1 = getTestUtils('lg-tabs-1');
     });
 
     test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
-      const { getAllTabsInTabList } = testUtils;
+      const { getAllTabsInTabList } = testUtils1;
       const [tab1A, tab1B] = getAllTabsInTabList();
 
       // Tab to first tab
