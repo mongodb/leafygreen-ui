@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { MouseEventHandler, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
@@ -37,6 +37,8 @@ export const ConfirmationModal = React.forwardRef(
       onConfirm,
       onCancel,
       darkMode: darkModeProp,
+      confirmButtonProps = {},
+      cancelButtonProps = {},
       ...modalProps
     }: ConfirmationModalProps,
     forwardRef: React.ForwardedRef<HTMLDivElement | null>,
@@ -69,15 +71,22 @@ export const ConfirmationModal = React.forwardRef(
       return textEntryConfirmation;
     }, [requiredInputText, darkMode]);
 
-    const handleConfirm = () => {
-      onConfirm?.();
+    const handleConfirm: MouseEventHandler<HTMLButtonElement> = e => {
+      // TODO: remove - onConfirm is deprecated
+      const _onConfirm = confirmButtonProps?.onClick || onConfirm;
+      _onConfirm?.(e);
       setConfirmEnabled(false);
     };
 
-    const handleCancel = () => {
-      onCancel?.();
+    const handleCancel: MouseEventHandler<HTMLButtonElement> = e => {
+      // TODO: remove - onCancel is deprecated
+      const _onCancel = cancelButtonProps?.onClick || onCancel;
+      _onCancel?.(e);
       setConfirmEnabled(false);
     };
+
+    // TODO: remove - submitDisabled is deprecated
+    const isConfirmDisabled = confirmButtonProps?.disabled || submitDisabled;
 
     return (
       <Modal
@@ -112,17 +121,19 @@ export const ConfirmationModal = React.forwardRef(
         </div>
         <Footer>
           <Button
-            variant={variant}
-            disabled={!confirmEnabled || submitDisabled}
-            onClick={handleConfirm}
-            className={buttonStyle}
+            {...confirmButtonProps}
             data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
+            disabled={!confirmEnabled || isConfirmDisabled}
+            className={cx(buttonStyle, confirmButtonProps?.className)}
+            variant={variant}
+            onClick={handleConfirm}
           >
-            {buttonText}
+            {confirmButtonProps?.children || 'Confirm'}
           </Button>
           <Button
+            {...cancelButtonProps}
             onClick={handleCancel}
-            className={buttonStyle}
+            className={cx(buttonStyle, cancelButtonProps?.className)}
             data-testid={LGIDS_CONFIRMATION_MODAL.cancel}
           >
             Cancel
