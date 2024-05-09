@@ -428,7 +428,7 @@ describe('packages/confirmation-modal', () => {
       <ConfirmationModal
         title="Title text"
         confirmButtonProps={{
-          // @ts-expect-error - variant is does exist in  confirmButtonProps
+          // @ts-expect-error - variant does exist in  confirmButtonProps
           variant: 'primary',
         }}
       >

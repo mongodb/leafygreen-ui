@@ -71,17 +71,18 @@ export const ConfirmationModal = React.forwardRef(
       return textEntryConfirmation;
     }, [requiredInputText, darkMode]);
 
-    const handleConfirm: MouseEventHandler<HTMLButtonElement> = e => {
-      // TODO: remove - onConfirm is deprecated
-      const _onConfirm = confirmButtonProps?.onClick || onConfirm;
-      _onConfirm?.(e);
+    // TODO: remove - onConfirm is deprecated
+    const _onConfirm = confirmButtonProps?.onClick || onConfirm;
+    // TODO: remove - onCancel is deprecated
+    const _onCancel = cancelButtonProps?.onClick || onCancel;
+
+    const handleConfirm: MouseEventHandler<HTMLButtonElement> = () => {
+      _onConfirm?.();
       setConfirmEnabled(false);
     };
 
-    const handleCancel: MouseEventHandler<HTMLButtonElement> = e => {
-      // TODO: remove - onCancel is deprecated
-      const _onCancel = cancelButtonProps?.onClick || onCancel;
-      _onCancel?.(e);
+    const handleCancel: MouseEventHandler<HTMLButtonElement> = () => {
+      _onCancel?.();
       setConfirmEnabled(false);
     };
 
@@ -92,7 +93,7 @@ export const ConfirmationModal = React.forwardRef(
       <Modal
         {...modalProps}
         contentClassName={baseModalStyle}
-        setOpen={onCancel}
+        setOpen={_onCancel}
         darkMode={darkMode}
         ref={forwardRef}
       >

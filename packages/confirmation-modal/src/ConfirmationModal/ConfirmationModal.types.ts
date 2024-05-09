@@ -8,8 +8,13 @@ export const Variant = {
 
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
-type CustomConfirmButtonProps = Omit<ButtonProps, 'variant'>;
-type CustomCancelButtonProps = ButtonProps;
+interface CustomButtonOnClick {
+  onClick?: () => void;
+}
+type CustomConfirmButtonProps = Omit<ButtonProps, 'variant' | 'onClick'> &
+  CustomButtonOnClick;
+type CustomCancelButtonProps = Omit<ButtonProps, 'onClick'> &
+  CustomButtonOnClick;
 
 export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   /**
