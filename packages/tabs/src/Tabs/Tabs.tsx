@@ -19,6 +19,8 @@ import {
   listStyle,
   modeColors,
   tabContainerStyle,
+  tabListElementClassName,
+  tabPanelsElementClassName,
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
 
@@ -165,7 +167,11 @@ function Tabs(props: AccessibleTabsProps) {
         <div className={tabContainerStyle}>
           {/* renderedTabs portals the tab title into this element */}
           <div
-            className={cx(listStyle, modeColors[theme].underlineColor)}
+            className={cx(
+              listStyle,
+              modeColors[theme].underlineColor,
+              tabListElementClassName,
+            )}
             data-lgid={LGIDS_TABS.tabList}
             role="tablist"
             ref={setTabNode}
@@ -178,7 +184,11 @@ function Tabs(props: AccessibleTabsProps) {
         </div>
 
         {/* renderedTabs portals the contents into this element */}
-        <div data-lgid={LGIDS_TABS.tabPanels} ref={setPanelNode} />
+        <div
+          className={tabPanelsElementClassName}
+          data-lgid={LGIDS_TABS.tabPanels}
+          ref={setPanelNode}
+        />
       </div>
     </LeafyGreenProvider>
   );
