@@ -66,6 +66,7 @@ describe('packages/confirmation-modal', () => {
     expect(getByText('Cancel')).toBeVisible();
   });
 
+  // TODO: remove test
   test('fires `onConfirm` on confirmation', () => {
     const confirmSpy = jest.fn();
     const cancelSpy = jest.fn();
@@ -84,6 +85,7 @@ describe('packages/confirmation-modal', () => {
     expect(cancelSpy).not.toHaveBeenCalled();
   });
 
+  // TODO: remove test
   test('fires `onCancel` on cancel', () => {
     const confirmSpy = jest.fn();
     const cancelSpy = jest.fn();
@@ -184,7 +186,6 @@ describe('packages/confirmation-modal', () => {
         rerender(
           <ConfirmationModal
             title="Title text"
-            buttonText="Confirm"
             open={true}
             requiredInputText="Confirm"
           >

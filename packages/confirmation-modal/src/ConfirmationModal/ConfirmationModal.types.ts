@@ -38,7 +38,7 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
    * Text rendered in the primary button. Defaults to `"Confirm"`
    * @deprecated
    */
-  buttonText: string;
+  buttonText?: string;
 
   /**
    * Variant of the modal that represents the type of action handled by the modal.
