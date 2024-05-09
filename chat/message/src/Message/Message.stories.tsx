@@ -186,33 +186,33 @@ WithRichLinks.args = {
   links: [
     {
       href: 'https://mongodb.design',
-      text: 'LeafyGreen UI',
+      children: 'LeafyGreen UI',
       variant: 'Website',
     },
     {
       href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
-      text: 'LeafyGreen UI Docs',
+      children: 'LeafyGreen UI Docs',
       variant: 'Docs',
     },
     {
       href: 'https://learn.mongodb.com/',
-      text: 'MongoDB University',
+      children: 'MongoDB University',
       variant: 'Learn',
     },
     {
       href: 'https://mongodb.com/docs',
-      text: 'MongoDB Docs',
+      children: 'MongoDB Docs',
       variant: 'Docs',
     },
     {
       href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      text: 'Rick Astley - Never Gonna Give You Up',
+      children: 'Rick Astley - Never Gonna Give You Up',
       variant: 'Video',
       imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
     },
     {
       href: 'https://mongodb.com/',
-      text: 'MongoDB Homepage',
+      children: 'MongoDB Homepage',
       variant: 'Website',
     },
   ],

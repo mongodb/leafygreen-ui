@@ -26,7 +26,7 @@ All `RichLink` components support the following props:
 
 | Prop          | Type                                                           | Description                                                              | Default  |
 | ------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------ | -------- |
-| `text`        | `string`                                                       | The text that shows on the rich link                                     |          |
+| `children`    | `string`                                                       | The text that shows on the rich link                                     |          |
 | `href`        | `string`                                                       | The URL that the rich link navigates to                                  |          |
 | `imageUrl`    | `string?`                                                      | A URL for the background image of the rich link                          |          |
 | `anchorProps` | `Omit<HTMLAnchorElement, 'children' \| 'href'>?`               | Props to spread on the anchor element                                    |          |
@@ -44,11 +44,9 @@ consistency across all documentation links.
 To use a variant, specify it in the `variant` prop.
 
 ```tsx
-<RichLink
-  text="Example Link"
-  href="https://www.example.com"
-  variant="Website"
-/>
+<RichLink href="https://www.example.com" variant="Website">
+  Example Link
+</RichLink>
 ```
 
 The following variants are supported:
@@ -69,10 +67,11 @@ define the badge props:
 
 ```tsx
 <RichLink
-  text="Example Link"
   href="https://www.example.com"
   badgeGlyph="ArrowRight"
   badgeLabel="My Link"
   badgeColor="blue"
-/>
+>
+  Example Link
+</RichLink>
 ```

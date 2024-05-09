@@ -14,10 +14,23 @@ const Template: StoryFn<typeof RichLink> = props => (
   </div>
 );
 
+export const Kiddos: StoryFn<typeof RichLink> = props => (
+  <div style={{ width: '250px', display: 'flex' }}>
+    <RichLink
+      href="https://www.example.com"
+      badgeGlyph="ArrowRight"
+      badgeLabel="My Link"
+      badgeColor="blue"
+    >
+      Example Link
+    </RichLink>
+  </div>
+);
+
 export const Basic = Template.bind({});
 Basic.args = {
   href: 'javascript:;',
-  text: 'Introduction to MongoDB',
+  children: 'Introduction to MongoDB',
   badgeGlyph: 'Database',
   badgeLabel: 'Database',
   badgeColor: 'green',
@@ -26,20 +39,21 @@ Basic.args = {
 export const LongText = Template.bind({});
 LongText.args = {
   href: 'javascript:;',
-  text: 'Introduction to MongoDB - a full course that covers everything you need to know about MongoDB',
+  children:
+    'Introduction to MongoDB - a full course that covers everything you need to know about MongoDB',
 };
 
 export const DocsVariant = Template.bind({});
 DocsVariant.args = {
   href: 'https://www.mongodb.com/docs/atlas/create-connect-deployments/',
-  text: 'Create and Connect to Database Deployments',
+  children: 'Create and Connect to Database Deployments',
   variant: 'Docs',
 };
 
 export const VideoVariant = Template.bind({});
 VideoVariant.args = {
   href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-  text: 'Never Gonna Give You Up - Rick Astley (Official Music Video)',
+  children: 'Never Gonna Give You Up - Rick Astley (Official Music Video)',
   variant: 'Video',
   imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
 };
@@ -47,27 +61,28 @@ VideoVariant.args = {
 export const WebsiteVariant = Template.bind({});
 WebsiteVariant.args = {
   href: 'https://www.mongodb.com/products/platform/atlas-vector-search',
-  text: 'MongoDB Atlas Vector Search',
+  children: 'MongoDB Atlas Vector Search',
   variant: 'Website',
 };
 
 export const CodeVariant = Template.bind({});
 CodeVariant.args = {
   href: 'https://github.com/mongodb-developer/nodejs-quickstart',
-  text: 'Quick Start: Node.js and MongoDB',
+  children: 'Quick Start: Node.js and MongoDB',
   variant: 'Code',
 };
 
 export const BlogVariant = Template.bind({});
 BlogVariant.args = {
   href: 'https://www.mongodb.com/developer/products/atlas/harnessing-natural-language-mongodb-queries-google-gemini/',
-  text: 'Harnessing Natural Language for MongoDB Queries with Google Gemini',
+  children:
+    'Harnessing Natural Language for MongoDB Queries with Google Gemini',
   variant: 'Blog',
 };
 
 export const LearnVariant = Template.bind({});
 LearnVariant.args = {
   href: 'https://learn.mongodb.com/learn/course/intro-to-atlas-device-sync/learning-byte/learn',
-  text: 'Intro to Atlas Device Sync',
+  children: 'Intro to Atlas Device Sync',
   variant: 'Learn',
 };

@@ -7,7 +7,7 @@ export interface BaseRichLinkProps extends DarkModeProps {
   /**
    * The text that shows on the rich link
    */
-  text: string;
+  children: string;
 
   /**
    * A URL for the background image of the rich link

@@ -36,7 +36,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     };
 
     const {
-      text,
+      children,
       imageUrl,
       badgeGlyph,
       badgeLabel,
@@ -67,7 +67,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
         {...anchorProps}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
-          {text}
+          {children}
         </Body>
         {showBadge ? (
           <RichLinkBadge
