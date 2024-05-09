@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import Card from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
@@ -18,7 +19,6 @@ import {
 } from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './RichLinkVariants';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 type DivProps = HTMLElementProps<'div', never>;
 
