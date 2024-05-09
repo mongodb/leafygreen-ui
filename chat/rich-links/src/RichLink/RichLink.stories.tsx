@@ -14,19 +14,6 @@ const Template: StoryFn<typeof RichLink> = props => (
   </div>
 );
 
-export const Kiddos: StoryFn<typeof RichLink> = props => (
-  <div style={{ width: '250px', display: 'flex' }}>
-    <RichLink
-      href="https://www.example.com"
-      badgeGlyph="ArrowRight"
-      badgeLabel="My Link"
-      badgeColor="blue"
-    >
-      Example Link
-    </RichLink>
-  </div>
-);
-
 export const Basic = Template.bind({});
 Basic.args = {
   href: 'javascript:;',
