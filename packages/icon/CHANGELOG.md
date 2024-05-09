@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.2.0
+
+### Minor Changes
+
+- eeea253c: Adds `Format` `Eraser` glyphs, and updates `LogIn` glyph.
+
 ## 12.1.0
 
 ### Minor Changes
