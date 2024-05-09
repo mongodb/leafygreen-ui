@@ -18,6 +18,9 @@ import {
 } from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './RichLinkVariants';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
+type DivProps = HTMLElementProps<'div', never>;
 
 export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
   ({ darkMode: darkModeProp, ...props }, ref) => {
@@ -53,7 +56,6 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
     return (
-      // @ts-expect-error - Card does not correctly infer props based on `as` prop
       <Card
         darkMode={darkMode}
         ref={ref}
@@ -62,9 +64,8 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         as="a"
-        href={href}
-        target="_blank"
-        {...anchorProps}
+        // Cast to div props to get around Card's Box typing
+        {...({ href, target: '_blank', ...anchorProps } as DivProps)}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
           {children}
