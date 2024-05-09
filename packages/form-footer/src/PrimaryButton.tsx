@@ -7,7 +7,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
  * Types
  */
 export interface PrimaryButtonProps {
-  children: string;
+  text: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   variant?: 'primary' | 'danger';
   disabled?: boolean;
@@ -28,11 +28,11 @@ const PrimaryButton = (props: PrimaryButtonProps) => {
     );
   }
 
-  const { variant, children, ...rest } = props;
+  const { variant, text, ...rest } = props;
 
   return (
     <Button variant={variant ? variant : 'primary'} {...rest}>
-      {children}
+      {text}
     </Button>
   );
 };

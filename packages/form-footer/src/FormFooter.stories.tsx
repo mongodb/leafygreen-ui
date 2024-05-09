@@ -7,6 +7,7 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 
@@ -88,6 +89,34 @@ LiveExample.parameters = {
 LiveExample.args = {
   backButtonProps: { children: 'Back' },
   cancelButtonProps: { children: 'Cancel' },
+};
+
+export const WithCustomPrimaryButton: StoryType<typeof FormFooter> =
+  Template.bind({});
+WithCustomPrimaryButton.args = {
+  primaryButton: (
+    <Button
+      leftGlyph={<Icon glyph={'Cloud'} />}
+      rightGlyph={<Icon glyph={'Checkmark'} />}
+      variant="primary"
+      disabled
+    >
+      Save to cloud
+    </Button>
+  ),
+  backButtonProps: { children: 'Back' },
+  cancelButtonProps: { children: 'Cancel' },
+};
+WithCustomPrimaryButton.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+  controls: {
+    exclude: [
+      ...(meta.parameters.controls?.exclude ?? []),
+      'primaryButtonText',
+    ],
+  },
 };
 
 export const LightMode: StoryType<typeof FormFooter> = () => <></>;

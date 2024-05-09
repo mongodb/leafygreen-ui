@@ -33,7 +33,7 @@ export interface FormFooterProps
    * ```
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
-   * @deprecated since 4.0.0 - use primaryButtonProps
+   * @deprecated since 4.0.0 - use `primaryButtonProps`
    */
   primaryButton?: React.ReactElement | PrimaryButtonProps;
 
@@ -43,7 +43,7 @@ export interface FormFooterProps
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
-  primaryButtonProps: CustomPrimaryButtonProps;
+  primaryButtonProps?: CustomPrimaryButtonProps;
 
   /**
    * The cancel button, to the left of the primary button, will only appear if cancelButtonProps is defined.

@@ -8,6 +8,7 @@ import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 import {
   bannerStyle,
@@ -17,8 +18,10 @@ import {
   footerThemeStyle,
 } from './FormFooter.styles';
 import { FormFooterProps } from './FormFooter.types';
+import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 
 export default function FormFooter({
+  primaryButton,
   primaryButtonProps,
   cancelButtonProps,
   backButtonProps,
@@ -31,6 +34,7 @@ export default function FormFooter({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const showBackButton = backButtonProps;
   const showCancelButton = cancelButtonProps;
+  const showDepricatedPrimaryButton = primaryButton;
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -67,11 +71,26 @@ export default function FormFooter({
                 {cancelButtonProps?.children || 'Cancel'}
               </Button>
             )}
-            <Button
-              variant="primary"
-              data-testid="lg-form_footer-primary_button"
-              {...primaryButtonProps}
-            />
+            {showDepricatedPrimaryButton ? (
+              isComponentType(primaryButton as React.ReactElement, 'Button') ? (
+                React.cloneElement(primaryButton as React.ReactElement, {
+                  darkMode: darkMode,
+                  ['data-testid']: 'lg-form_footer-primary_button',
+                })
+              ) : (
+                <PrimaryButton
+                  darkMode={darkMode}
+                  data-testid="lg-form_footer-primary_button"
+                  {...(primaryButton as PrimaryButtonProps)}
+                />
+              )
+            ) : (
+              <Button
+                variant="primary"
+                data-testid="lg-form_footer-primary_button"
+                {...primaryButtonProps}
+              />
+            )}
           </div>
         </div>
       </footer>
