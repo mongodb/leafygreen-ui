@@ -7,6 +7,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+import { truncate } from 'lodash';
 
 import { LGIDS_CONFIRMATION_MODAL } from '../constants';
 import ConfirmationModal from '..';
@@ -407,6 +408,8 @@ describe('packages/confirmation-modal', () => {
         buttonText="Confirm"
         onConfirm={() => {}}
         onCancel={() => {}}
+        open={true}
+        submitDisabled={false}
       >
         Hey
       </ConfirmationModal>
@@ -415,6 +418,30 @@ describe('packages/confirmation-modal', () => {
         title="Title text"
         confirmButtonProps={{
           children: 'confirm',
+          onClick: () => {},
+          disabled: true,
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        confirmButtonProps={{
+          // @ts-expect-error - variant is does exist in  confirmButtonProps
+          variant: 'primary',
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        cancelButtonProps={{
+          children: 'confirm',
+          variant: 'primary',
+          disabled: true,
+          isLoading: true,
         }}
       >
         Hey
