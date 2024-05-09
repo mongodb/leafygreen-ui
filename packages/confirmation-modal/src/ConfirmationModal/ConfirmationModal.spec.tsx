@@ -398,4 +398,27 @@ describe('packages/confirmation-modal', () => {
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('types behave as expected', () => {
+    <>
+      <ConfirmationModal
+        title="Title text"
+        buttonText="Confirm"
+        onConfirm={() => {}}
+        onCancel={() => {}}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        confirmButtonProps={{
+          children: 'confirm',
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+    </>;
+  });
 });
