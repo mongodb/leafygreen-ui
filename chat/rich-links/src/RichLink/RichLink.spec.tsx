@@ -6,7 +6,7 @@ import { RichLink } from '.';
 describe('@lg-chat/rich-links', () => {
   describe('RichLink', () => {
     it('renders a basic RichLink component', () => {
-      render(<RichLink text="Basic rich link" />);
+      render(<RichLink href="javascript:;">Basic rich link</RichLink>);
 
       const richLink = screen.getByText('Basic rich link');
       expect(richLink).toBeInTheDocument();
@@ -15,11 +15,13 @@ describe('@lg-chat/rich-links', () => {
     it('renders a RichLink component with a custom badge', () => {
       render(
         <RichLink
-          text="Regular rich link with a test badge"
+          href="javascript:;"
           badgeLabel="Test label"
           badgeGlyph="ArrowRight"
-          badgeVariant="blue"
-        />,
+          badgeColor="blue"
+        >
+          Regular rich link with a test badge
+        </RichLink>,
       );
 
       const richLink = screen.getByText('Regular rich link with a test badge');
@@ -32,13 +34,27 @@ describe('@lg-chat/rich-links', () => {
     it('renders the built-in RichLink component variants', () => {
       render(
         <div>
-          <RichLink text="Link to Docs" variant="Docs" />
-          <RichLink text="Link to Code" variant="Code" />
-          <RichLink text="Link to Blog" variant="Blog" />
-          <RichLink text="Link to Book" variant="Book" />
-          <RichLink text="Link to Learn" variant="Learn" />
-          <RichLink text="Link to Video" variant="Video" />
-          <RichLink text="Link to Website" variant="Website" />
+          <RichLink href="javascript:;" variant="Docs">
+            Link to Docs
+          </RichLink>
+          <RichLink href="javascript:;" variant="Code">
+            Link to Code
+          </RichLink>
+          <RichLink href="javascript:;" variant="Blog">
+            Link to Blog
+          </RichLink>
+          <RichLink href="javascript:;" variant="Book">
+            Link to Book
+          </RichLink>
+          <RichLink href="javascript:;" variant="Learn">
+            Link to Learn
+          </RichLink>
+          <RichLink href="javascript:;" variant="Video">
+            Link to Video
+          </RichLink>
+          <RichLink href="javascript:;" variant="Website">
+            Link to Website
+          </RichLink>
         </div>,
       );
 
