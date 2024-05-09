@@ -128,7 +128,7 @@ export const ConfirmationModal = React.forwardRef(
             variant={variant}
             onClick={handleConfirm}
           >
-            {confirmButtonProps?.children || 'Confirm'}
+            {buttonText || confirmButtonProps?.children || 'Confirm'}
           </Button>
           <Button
             {...cancelButtonProps}
@@ -157,4 +157,8 @@ ConfirmationModal.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
   darkMode: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  confirmButtonProps: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  cancelButtonProps: PropTypes.object,
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Banner from '@leafygreen-ui/banner';
 import Button from '@leafygreen-ui/button';
@@ -77,3 +78,17 @@ export default function FormFooter({
     </LeafyGreenProvider>
   );
 }
+
+FormFooter.displayName = 'ConfirmationModal';
+
+FormFooter.propTypes = {
+  contentClassName: PropTypes.string,
+  errorMessage: PropTypes.string,
+  darkMode: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
+  primaryButtonProps: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  cancelButtonProps: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  backButtonProps: PropTypes.object,
+};

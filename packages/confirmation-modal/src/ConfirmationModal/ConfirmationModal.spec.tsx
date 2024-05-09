@@ -66,42 +66,119 @@ describe('packages/confirmation-modal', () => {
     expect(getByText('Cancel')).toBeVisible();
   });
 
-  // TODO: remove test
-  test('fires `onConfirm` on confirmation', () => {
-    const confirmSpy = jest.fn();
-    const cancelSpy = jest.fn();
+  describe('button text', () => {
+    // TODO: remove - buttonText is deprecated
+    test('renders from "buttonText"', () => {
+      const { getByText } = renderModal({
+        open: true,
+        buttonText: 'custom button text',
+      });
 
-    const { getByText } = renderModal({
-      open: true,
-      onConfirm: confirmSpy,
-      onCancel: cancelSpy,
+      expect(getByText('custom button text')).toBeVisible();
     });
 
-    const button = getByText('Confirm');
-    expect(button).toBeVisible();
+    test('renders from "confirmButtonProps"', () => {
+      const { getByText } = renderModal({
+        open: true,
+        buttonText: undefined,
+        confirmButtonProps: {
+          children: 'custom confirm',
+        },
+      });
 
-    fireEvent.click(button);
-    expect(confirmSpy).toHaveBeenCalledTimes(1);
-    expect(cancelSpy).not.toHaveBeenCalled();
+      expect(getByText('custom confirm')).toBeVisible();
+    });
+
+    // TODO: remove - buttonText is deprecated
+    test('overrides "confirmButtonProps"', () => {
+      const { getByText } = renderModal({
+        open: true,
+        buttonText: 'custom button text',
+        confirmButtonProps: {
+          children: 'custom confirm',
+        },
+      });
+
+      expect(getByText('custom button text')).toBeVisible();
+    });
   });
 
-  // TODO: remove test
-  test('fires `onCancel` on cancel', () => {
-    const confirmSpy = jest.fn();
-    const cancelSpy = jest.fn();
+  describe('on confirm', () => {
+    // TODO: remove test  - onConfirm is deprecated
+    test('fires `onConfirm` on confirmation', () => {
+      const confirmSpy = jest.fn();
+      const cancelSpy = jest.fn();
 
-    const { getByText } = renderModal({
-      open: true,
-      onConfirm: confirmSpy,
-      onCancel: cancelSpy,
+      const { getByText } = renderModal({
+        open: true,
+        onConfirm: confirmSpy,
+        onCancel: cancelSpy,
+      });
+
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      fireEvent.click(button);
+      expect(confirmSpy).toHaveBeenCalledTimes(1);
+      expect(cancelSpy).not.toHaveBeenCalled();
     });
 
-    const button = getByText('Cancel');
-    expect(button).toBeVisible();
+    test('fires `onClick` from "confirmButtonProps"', () => {
+      const confirmSpy = jest.fn();
 
-    fireEvent.click(button);
-    expect(confirmSpy).not.toHaveBeenCalled();
-    expect(cancelSpy).toHaveBeenCalledTimes(1);
+      const { getByText } = renderModal({
+        open: true,
+        confirmButtonProps: {
+          onClick: confirmSpy,
+        },
+      });
+
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      fireEvent.click(button);
+      expect(confirmSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('on cancel', () => {
+    // TODO: remove test - OnCancel is deprecated
+    test('fires `onCancel` on cancel', () => {
+      const confirmSpy = jest.fn();
+      const cancelSpy = jest.fn();
+
+      const { getByText } = renderModal({
+        open: true,
+        onConfirm: confirmSpy,
+        onCancel: cancelSpy,
+      });
+
+      const button = getByText('Cancel');
+      expect(button).toBeVisible();
+
+      fireEvent.click(button);
+      expect(confirmSpy).not.toHaveBeenCalled();
+      expect(cancelSpy).toHaveBeenCalledTimes(1);
+    });
+
+    test('fires `onClick` from "cancelButtonProps"', () => {
+      const confirmSpy = jest.fn();
+      const cancelSpy = jest.fn();
+
+      const { getByText } = renderModal({
+        open: true,
+        cancelButtonProps: {
+          onClick: cancelSpy,
+        },
+      });
+
+      const button = getByText('Cancel');
+      expect(button).toBeVisible();
+
+      fireEvent.click(button);
+      expect(confirmSpy).not.toHaveBeenCalled();
+      expect(cancelSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
   describe('closes when', () => {
@@ -246,10 +323,51 @@ describe('packages/confirmation-modal', () => {
   });
 
   describe('submit is disabled when', () => {
+    // TODO: remove this test - submitDisabled is deprecated
     test('"submitDisabled" prop is set', () => {
       const { getByText } = renderModal({
         open: true,
         submitDisabled: true,
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      // Modal doesn't close when button is clicked
+      fireEvent.click(button);
+      expect(button).toBeVisible();
+    });
+
+    test('"confirmButtonProps" includes "disabled"', () => {
+      const { getByText } = renderModal({
+        open: true,
+        confirmButtonProps: {
+          disabled: true,
+        },
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      // Modal doesn't close when button is clicked
+      fireEvent.click(button);
+      expect(button).toBeVisible();
+    });
+
+    // TODO: remove this test - submitDisabled is deprecated
+    test('"submitDisabled" prop is set and "confirmButtonProps" has "disabled: false"', () => {
+      const { getByText } = renderModal({
+        open: true,
+        submitDisabled: true,
+        confirmButtonProps: {
+          disabled: false,
+        },
       });
 
       const confirmationButton = getByText('Confirm').closest('button');
