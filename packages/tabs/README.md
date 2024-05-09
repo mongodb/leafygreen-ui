@@ -70,7 +70,7 @@ _Any other properties supplied will be spread on the root element._
 ### Usage
 
 ```tsx
-import { Tabs, getTestUtils } from '@leafygreen-ui/tabs';
+import { getTestUtils } from '@leafygreen-ui/tabs';
 
 const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Tabs`. It defaults to 'lg-tabs' if left empty.
 ```
@@ -80,7 +80,7 @@ const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lg
 ```tsx
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Tabs, getTestUtils } from '@leafygreen-ui/tabs';
+import { Tabs, Tab, getTestUtils } from '@leafygreen-ui/tabs';
 
 ...
 
@@ -126,7 +126,7 @@ When testing multiple `Tabs` components, it is recommended to add the custom `da
 ```tsx
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Tabs, getTestUtils } from '@leafygreen-ui/tabs';
+import { Tabs, Tab, getTestUtils } from '@leafygreen-ui/tabs';
 
 ...
 
