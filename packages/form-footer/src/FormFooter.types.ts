@@ -20,7 +20,7 @@ export interface FormFooterProps
     DarkModeProps {
   /**
    * The primary (right-most) button.
-   * Defined as an object with the shape:
+   * Defined as a `<Button>` element, or as an object with the shape:
    *
    * ```ts
    * interface PrimaryButtonProps {
@@ -39,7 +39,7 @@ export interface FormFooterProps
 
   /**
    * The primary (right-most) button.
-   * An object that accepts all Button props but `variant` is limited to `primary` and `danger`
+   * An object that accepts all `Button` props but `variant` is limited to `primary` and `danger`
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
@@ -47,7 +47,7 @@ export interface FormFooterProps
 
   /**
    * The cancel button, to the left of the primary button, will only appear if cancelButtonProps is defined.
-   * An object that accepts all Button props except for the `variant` prop. The variant is `default`.
+   * An object that accepts all `Button` props except for the `variant` prop. The variant is `default`.
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */
@@ -55,7 +55,7 @@ export interface FormFooterProps
 
   /**
    * The back button, the left-most button, will only appear if backButtonProps is defined.
-   * An object that accepts all Button props but `variant` is limited to `default` and `dangerOutline`
+   * An object that accepts all `Button` props but `variant` is limited to `default` and `dangerOutline`
    *
    * darkMode is handled internally so you do not have to pass the darkMode prop.
    */

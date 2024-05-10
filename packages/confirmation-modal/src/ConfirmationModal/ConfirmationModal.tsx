@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
@@ -76,12 +76,12 @@ export const ConfirmationModal = React.forwardRef(
     // TODO: remove - onCancel is deprecated
     const _onCancel = cancelButtonProps?.onClick || onCancel;
 
-    const handleConfirm: MouseEventHandler<HTMLButtonElement> = () => {
+    const handleConfirm = () => {
       _onConfirm?.();
       setConfirmEnabled(false);
     };
 
-    const handleCancel: MouseEventHandler<HTMLButtonElement> = () => {
+    const handleCancel = () => {
       _onCancel?.();
       setConfirmEnabled(false);
     };

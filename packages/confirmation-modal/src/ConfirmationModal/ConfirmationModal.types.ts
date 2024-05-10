@@ -67,7 +67,7 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   confirmButtonProps?: CustomConfirmButtonProps;
 
   /**
-   * An object that accepts all Button props.
+   * An object that accepts all Button props. The `onClick` property will also fire when the `X` button, or backdrop is clicked.
    */
   cancelButtonProps?: CustomCancelButtonProps;
 }

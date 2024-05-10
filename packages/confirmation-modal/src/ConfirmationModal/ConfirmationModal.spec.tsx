@@ -7,7 +7,6 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { truncate } from 'lodash';
 
 import { LGIDS_CONFIRMATION_MODAL } from '../constants';
 import ConfirmationModal from '..';
