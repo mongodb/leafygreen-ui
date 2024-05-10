@@ -45,7 +45,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
       badgeLabel,
       badgeColor,
       href,
-      anchorProps,
+      ...anchorProps
     } = {
       ...badgeDefaults,
       ...props,
@@ -65,7 +65,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
         })}
         as="a"
         // Cast to div props to get around Card's Box typing https://jira.mongodb.org/browse/LG-4259
-        {...({ href, target: '_blank', ...anchorProps } as DivProps)}
+        {...({ target: '_blank', ...anchorProps } as DivProps)}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
           {children}

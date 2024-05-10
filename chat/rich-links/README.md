@@ -24,16 +24,15 @@ npm install @lg-chat/rich-links
 
 All `RichLink` components support the following props:
 
-| Prop          | Type                                                           | Description                                                              | Default  |
-| ------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------ | -------- |
-| `children`    | `string`                                                       | The text that shows on the rich link                                     |          |
-| `href`        | `string`                                                       | The URL that the rich link navigates to                                  |          |
-| `imageUrl`    | `string?`                                                      | A URL for the background image of the rich link                          |          |
-| `anchorProps` | `Omit<HTMLAnchorElement, 'children' \| 'href'>?`               | Props to spread on the anchor element                                    |          |
-| `variant`     | `Variant`                                                      | Render as a built-in Rich Link [Variant](#Variants)                      |          |
-| `badgeGlyph`  | `GlyphName`                                                    | A [@leafygreen-ui/icon](../../packages/icon/) glyph to show in the badge |          |
-| `badgeLabel`  | `string \| React.ReactNode`                                    | A string or component to show in the badge                               |          |
-| `badgeColor`  | `"green" \| "gray" \| "blue" \| "purple" \| "red" \| "yellow"` | The background color of the badge                                        | `"gray"` |
+| Prop             | Type                                                           | Description                                                              | Default  |
+| ---------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------ | -------- |
+| `children`       | `string`                                                       | The text that shows on the rich link                                     |          |
+| `imageUrl`       | `string?`                                                      | A URL for the background image of the rich link                          |          |
+| `variant`        | `Variant`                                                      | Render as a built-in Rich Link [Variant](#Variants)                      |          |
+| `badgeGlyph`     | `GlyphName`                                                    | A [@leafygreen-ui/icon](../../packages/icon/) glyph to show in the badge |          |
+| `badgeLabel`     | `string \| React.ReactNode`                                    | A string or component to show in the badge                               |          |
+| `badgeColor`     | `"green" \| "gray" \| "blue" \| "purple" \| "red" \| "yellow"` | The background color of the badge                                        | `"gray"` |
+| `...anchorProps` | `HTMLAnchorElement?`                                           | Additional props to spread on the anchor element                         |          |
 
 ### Variants
 
