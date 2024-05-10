@@ -64,7 +64,7 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
         as="a"
-        // Cast to div props to get around Card's Box typing
+        // Cast to div props to get around Card's Box typing https://jira.mongodb.org/browse/LG-4259
         {...({ href, target: '_blank', ...anchorProps } as DivProps)}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
