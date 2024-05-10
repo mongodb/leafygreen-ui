@@ -544,6 +544,49 @@ describe('packages/form-field', () => {
     expect(label.getAttribute('for')).toBe(id);
   });
 
+  describe('readonly', () => {
+    test('input has readonly prop', () => {
+      const { getByTestId } = render(
+        <FormField label="Label" data-testid="form-field" readOnly>
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('readonly');
+    });
+
+    test('disabled overrides readOnly prop', () => {
+      const { getByTestId } = render(
+        <FormField
+          label="Label"
+          data-testid="form-field"
+          readOnly={false}
+          disabled
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('readonly');
+    });
+
+    test('input does not have readonly prop', () => {
+      const { getByTestId } = render(
+        <FormField label="Label" data-testid="form-field" readOnly={false}>
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).not.toHaveAttribute('readonly');
+    });
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Types', () => {
     render(

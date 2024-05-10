@@ -54,7 +54,7 @@ export const useFormFieldProps = ({
     'aria-describedby': ariaDescribedby,
     'aria-label': ariaLabel,
     'aria-disabled': disabled,
-    readOnly: disabled,
+    readOnly: rest.readOnly ? rest.readOnly : disabled,
     'aria-invalid': ariaInvalid,
   };
 
