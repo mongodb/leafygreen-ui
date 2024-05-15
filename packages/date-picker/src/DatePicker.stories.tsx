@@ -87,8 +87,8 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
     label: { control: 'text' },
     min: { control: 'date' },
     max: { control: 'date' },
-    size: { control: 'select' },
-    state: { control: 'select' },
+    size: { control: 'select', options: Object.values(Size) },
+    state: { control: 'select', options: Object.values(State) },
     timeZone: {
       control: 'select',
       options: [undefined, ...testTimeZoneLabels],
