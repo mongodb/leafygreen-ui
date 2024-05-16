@@ -74,7 +74,7 @@ const meta: StoryMetaType<typeof Logo> = {
     },
     name: {
       control: 'select',
-      options: LogoNames,
+      options: Object.values(LogoNames),
     },
   },
   args: {
