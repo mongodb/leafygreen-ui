@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-field",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "LeafyGreen UI Kit Form Field",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -27,7 +27,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/button": "^21.2.1",
     "@leafygreen-ui/icon-button": "^15.0.21",
     "@lg-tools/storybook-utils": "^0.1.1"
   },

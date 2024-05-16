@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-field
 
+## 1.2.2
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 1.2.1
 
 ### Patch Changes

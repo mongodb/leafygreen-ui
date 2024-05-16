@@ -1,5 +1,11 @@
 # @leafygreen-ui/pipeline
 
+## 5.0.20
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 5.0.19
 
 ### Patch Changes
