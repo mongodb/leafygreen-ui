@@ -1,5 +1,11 @@
 # @leafygreen-ui/chip
 
+## 1.0.3
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 1.0.2
 
 ### Patch Changes
