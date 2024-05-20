@@ -34,7 +34,7 @@ export default function FormFooter({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const showBackButton = backButtonProps;
   const showCancelButton = cancelButtonProps;
-  const showDepricatedPrimaryButton = primaryButton;
+  const showDeprecatedPrimaryButton = primaryButton;
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
@@ -71,7 +71,7 @@ export default function FormFooter({
                 {cancelButtonProps?.children || 'Cancel'}
               </Button>
             )}
-            {showDepricatedPrimaryButton ? (
+            {showDeprecatedPrimaryButton ? (
               isComponentType(primaryButton as React.ReactElement, 'Button') ? (
                 React.cloneElement(primaryButton as React.ReactElement, {
                   darkMode: darkMode,
