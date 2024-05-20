@@ -22,7 +22,7 @@ export default function transformer(
     propMapping = {
       value2: 'value3',
     },
-    fromPropType = 'string',
+    propToRemoveType = 'string',
     componentName = 'MyComponent',
   } = options;
 
@@ -39,7 +39,7 @@ export default function transformer(
       propToRemove,
       propToUpdate,
       propMapping,
-      fromPropType,
+      propToRemoveType,
     });
   });
 

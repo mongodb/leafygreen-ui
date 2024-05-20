@@ -1,15 +1,39 @@
 import type { ASTNode, ASTPath, JSXAttribute, Options } from 'jscodeshift';
 import type core from 'jscodeshift';
 
+import { MIGRATOR_ERROR } from '../../constants';
 import { insertJSXComment } from '../jsx/insertJSXComment/insertJSXComment';
 
 export interface ConsolidateJSXAttributesOptions extends Options {
+  /**
+   *  A reference to the jscodeshift library
+   */
   j: core.JSCodeshift;
+
+  /**
+   *  The element to manipulate
+   */
   element: ASTPath<any>;
+
+  /**
+   *  The prop to remove on the element
+   */
   propToRemove: string;
+
+  /**
+   *  The prop to update on the element
+   */
   propToUpdate: string;
+
+  /**
+   *  A map of values that will be used to update the value of `propToUpdate`
+   */
   propMapping: { [value: string]: string };
-  fromPropType?: 'string' | 'boolean';
+
+  /**
+   *  Whether the `propToRemove` is a string or boolean
+   */
+  propToRemoveType?: 'string' | 'boolean';
 }
 
 // https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/25313acbbef360bf7ca503db3bd9cb2d3d335ce3
@@ -50,9 +74,9 @@ export function consolidateJSXAttributes({
   propToRemove,
   propToUpdate,
   propMapping,
-  fromPropType,
+  propToRemoveType,
 }: ConsolidateJSXAttributesOptions) {
-  const isPropToRemoveABoolean = fromPropType === 'boolean';
+  const isPropToRemoveABoolean = propToRemoveType === 'boolean';
 
   // gets all the props on the elements opening tag
   const allAttributes = element.node.openingElement.attributes;
@@ -98,8 +122,7 @@ export function consolidateJSXAttributes({
 
   // if the propToUpdate does not exist and there is a spread operator then return early since we don't know if the propToUpdate could be inside the spread
   if (!_propToUpdate && hasSpreadOperator) {
-    // TODO: make string a constant
-    insertJSXComment(j, element, 'Please update manually');
+    insertJSXComment(j, element, MIGRATOR_ERROR.manual);
     return;
   }
 
@@ -108,7 +131,6 @@ export function consolidateJSXAttributes({
     // remove the propToRemove
     removePropToRemove();
 
-    // Create a new prop for propToUpdate
     // Creates a new stringLiteral node
     const attributeValueNode = j.stringLiteral(newValueMapping);
     // Create a new jsxAttribute node with the attribute name and value
@@ -145,27 +167,27 @@ const getPropToRemoveValue = (
 ) => {
   let propToRemoveValue;
   const expressionType: string = propToRemove.value?.type;
-  const isStringLiteralType = expressionType === 'StringLiteral';
-  const isPropToRemoveABooleanType =
+  const isString = expressionType === 'StringLiteral';
+  const isBoolean =
     expressionType === 'JSXExpressionContainer' ||
     propToRemove.value === null ||
     propToRemove.value === undefined;
 
   if (isPropToRemoveABoolean) {
-    if (isPropToRemoveABooleanType) {
+    if (isBoolean) {
       propToRemoveValue =
         propToRemove.value === null
           ? true
-          : // @ts-expect-error: not sure why it says expression does not exist on type 'JSXAttribute'.
+          : // @ts-expect-error: unsure why it says expression does not exist on type 'JSXAttribute'.
             propToRemove?.value?.expression.value;
       return propToRemoveValue.toString();
     }
-
-    return '';
   }
 
-  if (isStringLiteralType) {
+  if (isString) {
     propToRemoveValue = propToRemove.value?.value;
     return propToRemoveValue;
   }
+
+  return '';
 };

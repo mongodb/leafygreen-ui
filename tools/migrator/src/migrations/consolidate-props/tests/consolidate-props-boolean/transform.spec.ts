@@ -11,7 +11,7 @@ const test = {
     propMapping: {
       true: 'disabled',
     },
-    fromPropType: 'boolean',
+    propToRemoveType: 'boolean',
   },
 };
 transformTest(__dirname, {
