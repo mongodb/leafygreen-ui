@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import type { API, FileInfo } from 'jscodeshift';
 
 import { getJSXAttributes } from '../../transformations';

@@ -1,4 +1,3 @@
-// TODO: figure out correct types
 import type { ASTNode, ASTPath, JSXAttribute, Options } from 'jscodeshift';
 import type core from 'jscodeshift';
 
@@ -37,6 +36,11 @@ export interface ConsolidateJSXAttributesOptions extends Options {
  * <MyComponent disabled={false} state='valid' />
  * After:
  * <MyComponent state='valid' />
+ * -----------------------------------
+ * Before:
+ * <MyComponent disabled={true} />
+ * After:
+ * <MyComponent state='disabled' />
  * ```
  *
  */
@@ -48,7 +52,7 @@ export function consolidateJSXAttributes({
   propMapping,
   fromPropType,
 }: ConsolidateJSXAttributesOptions) {
-  const isFromPropABoolean = fromPropType === 'boolean';
+  const isPropToRemoveABoolean = fromPropType === 'boolean';
 
   // gets all the props on the elements opening tag
   const allAttributes = element.node.openingElement.attributes;
@@ -64,27 +68,27 @@ export function consolidateJSXAttributes({
   );
 
   // Finds the propToRemove from the list of attributes
-  const fromProp: ASTPath<JSXAttribute> = allAttributesWithoutSpread.find(
+  const _propToRemove: ASTPath<JSXAttribute> = allAttributesWithoutSpread.find(
     (attribute: ASTPath<JSXAttribute>) => attribute.name.name === propToRemove,
   );
 
   // Finds the propToUpdate from the list of attributes
-  const toProp: ASTPath<JSXAttribute> = allAttributesWithoutSpread.find(
+  const _propToUpdate: ASTPath<JSXAttribute> = allAttributesWithoutSpread.find(
     (attribute: ASTPath<JSXAttribute>) => attribute.name.name === propToUpdate,
   );
 
   // If the propToRemove does not exist then return the source without any changes
-  if (!fromProp) return;
+  if (!_propToRemove) return;
 
   // finds the index of the propToRemove so that we can use it to remove it from the array of attributes
-  const attributeToRemoveIndex = allAttributes.indexOf(fromProp);
+  const attributeToRemoveIndex = allAttributes.indexOf(_propToRemove);
 
   const removePropToRemove = () =>
     allAttributes.splice(attributeToRemoveIndex, 1);
 
   // find the new value that propToUpdate should be updated with
   const newValueMapping =
-    propMapping[getFromPropValue(isFromPropABoolean, fromProp)];
+    propMapping[getPropToRemoveValue(isPropToRemoveABoolean, _propToRemove)];
 
   // if fromProp value is not in the mapping then remove that item from the atributes and return
   if (!newValueMapping) {
@@ -93,14 +97,14 @@ export function consolidateJSXAttributes({
   }
 
   // if the propToUpdate does not exist and there is a spread operator then return early since we don't know if the propToUpdate could be inside the spread
-  if (!toProp && hasSpreadOperator) {
+  if (!_propToUpdate && hasSpreadOperator) {
     // TODO: make string a constant
     insertJSXComment(j, element, 'Please update manually');
     return;
   }
 
   // if the propToUpdate does not exist then we update the propToRemove
-  if (!toProp) {
+  if (!_propToUpdate) {
     // remove the propToRemove
     removePropToRemove();
 
@@ -118,8 +122,8 @@ export function consolidateJSXAttributes({
   }
 
   // If the propToUpdate does exist then update the value
-  if (toProp) {
-    j(toProp)
+  if (_propToUpdate) {
+    j(_propToUpdate)
       .find(j.StringLiteral)
       .forEach(literal => {
         literal.node.value = newValueMapping;
@@ -130,35 +134,38 @@ export function consolidateJSXAttributes({
 }
 
 /**
+ *  This function checks whether the propToRemove is a string or a boolean and returns that value as a string.
  *
- * @param isFromPropABoolean
- * @returns
+ * @param isPropToRemoveABoolean
+ * @returns string
  */
-const getFromPropValue = (
-  isFromPropABoolean: boolean,
-  fromProp: ASTPath<JSXAttribute>,
+const getPropToRemoveValue = (
+  isPropToRemoveABoolean: boolean,
+  propToRemove: ASTPath<JSXAttribute>,
 ) => {
-  let fromPropValue;
-  const expressionType: string = fromProp.value?.type;
+  let propToRemoveValue;
+  const expressionType: string = propToRemove.value?.type;
   const isStringLiteralType = expressionType === 'StringLiteral';
-  const isFromPropABooleanType =
+  const isPropToRemoveABooleanType =
     expressionType === 'JSXExpressionContainer' ||
-    fromProp.value === null ||
-    fromProp.value === undefined;
+    propToRemove.value === null ||
+    propToRemove.value === undefined;
 
-  if (isFromPropABoolean) {
-    if (isFromPropABooleanType) {
-      fromPropValue =
-        // @ts-expect-error: not sure why it says expression does not exist on type 'JSXAttribute'.
-        fromProp.value === null ? true : fromProp?.value?.expression.value;
-      return fromPropValue.toString();
+  if (isPropToRemoveABoolean) {
+    if (isPropToRemoveABooleanType) {
+      propToRemoveValue =
+        propToRemove.value === null
+          ? true
+          : // @ts-expect-error: not sure why it says expression does not exist on type 'JSXAttribute'.
+            propToRemove?.value?.expression.value;
+      return propToRemoveValue.toString();
     }
 
-    return;
+    return '';
   }
 
   if (isStringLiteralType) {
-    fromPropValue = fromProp.value?.value;
-    return fromPropValue;
+    propToRemoveValue = propToRemove.value?.value;
+    return propToRemoveValue;
   }
 };

@@ -23,7 +23,7 @@ export default function transformer(
   // Check if the element is on the page
   const elements = source.findJSXElements(componentName);
 
-  // If there are not elements then return the original file
+  // If there are no elements then return the original file
   if (elements.length === 0) return file.source;
 
   elements.forEach(element => {

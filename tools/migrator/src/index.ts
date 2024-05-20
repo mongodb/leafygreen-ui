@@ -70,5 +70,3 @@ export const migrator = async (
     process.exit(1);
   }
 };
-
-// packages/**/src/
