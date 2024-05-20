@@ -11,7 +11,7 @@ export interface ConsolidateJSXAttributesOptions extends Options {
   j: core.JSCodeshift;
 
   /**
-   *  The element to manipulate
+   *  The element(component) to transform
    */
   element: ASTPath<any>;
 
@@ -38,7 +38,7 @@ export interface ConsolidateJSXAttributesOptions extends Options {
 
 // https://astexplorer.net/#/gist/9aa98b850fc7004100e1c13915fd147b/25313acbbef360bf7ca503db3bd9cb2d3d335ce3
 /**
- * `consolidateJSXAttributes` takes in two props to consolidate, a `propToRemove` and a `propToUpdate`. The `propToRemove` is removed and the `propToUpdate` is updated based on the value provided in `propMapping`.
+ * `consolidateJSXAttributes` takes in two attributes(props) to consolidate, a `propToRemove` and a `propToUpdate`. The `propToRemove` is removed and the `propToUpdate` is updated based on the value provided in `propMapping`.
  *
  * e.g:
  * ```tsx

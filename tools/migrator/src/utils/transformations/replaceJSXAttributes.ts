@@ -4,10 +4,29 @@ import type core from 'jscodeshift';
 import { getJSXAttributes } from './getJSXAttributes';
 
 export interface ReplaceJSXAttributesType {
+  /**
+   *  A reference to the jscodeshift library
+   */
   j: core.JSCodeshift;
+
+  /**
+   *  The element(component) to transform
+   */
   element: ASTPath<any>;
+
+  /**
+   *  The name of the prop that will be replaced on the element
+   */
   propName: string;
+
+  /**
+   *  The new name of the prop
+   */
   newPropName: string;
+
+  /**
+   *  The new value of the prop. This can either be a string or a map of values.
+   */
   newPropValue?:
     | string
     | {
@@ -16,7 +35,7 @@ export interface ReplaceJSXAttributesType {
 }
 
 /**
- * `replaceJSXAttributes` can replace both the name and value of an attribute.
+ * `replaceJSXAttributes` can replace both the name and value of an attribute(prop).
  *
  * e.g:
  * ```tsx

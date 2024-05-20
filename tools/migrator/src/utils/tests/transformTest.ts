@@ -16,10 +16,35 @@ const parserExtensionMap: ParserExtensionMap = {
 };
 
 interface TestArgs {
+  /**
+   * The file name of the test. This name will be used to get the input and output file for the test.
+   */
   fixture: string;
+
+  /**
+   * The name of the transformation to run the test through
+   */
   transform: string;
+
+  /**
+   * The extension of the file which is used as a parser for prettier.
+   *
+   * @default 'tsx'
+   */
   extension?: string;
+
+  /**
+   * How many levels to go up from the test directory to find the transform.ts file
+   *
+   * @default 2
+   */
   level?: 1 | 2;
+
+  /**
+   * Options to pass to the transformation
+   *
+   * @default {}
+   */
   options?: { [option: string]: any };
 }
 
