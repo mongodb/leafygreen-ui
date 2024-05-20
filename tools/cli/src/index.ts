@@ -170,7 +170,7 @@ cli
 /** Migrator */
 cli
   .command('migrator')
-  .description('yada yada')
+  .description('Runs codemod transformations to upgrade LG components')
   .argument(
     '<migration>',
     'One of the migrations from: ADD LINK WITH ALL THE MODS',
