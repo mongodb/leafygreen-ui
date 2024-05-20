@@ -79,9 +79,6 @@ export const WithMessageRating: StoryFn<typeof MessageRating> = args => {
         {...args}
         value={rating}
         onChange={handleRatingChange}
-        className={css`
-          margin-bottom: ${spacing[1]}px;
-        `}
         hideThumbsUp={isSubmitted}
       />
       {rating === 'disliked' && (!isSubmitted || isDisplayingSubmitted) && (

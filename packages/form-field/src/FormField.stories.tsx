@@ -72,7 +72,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     description: { control: 'text' },
     errorMessage: { control: 'text' },
     successMessage: { control: 'text' },
-    size: { control: 'select' },
+    size: { control: 'select', options: Object.values(Size) },
     state: {
       control: 'select',
       options: Object.values(FormFieldState),

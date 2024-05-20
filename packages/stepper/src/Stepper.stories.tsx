@@ -36,11 +36,15 @@ const meta: StoryMetaType<typeof Stepper> = {
       <Step key="Address">Address</Step>,
       <Step key="Confirmation">Confirmation</Step>,
     ],
+    currentStep: 1,
+    maxDisplayedSteps: 5,
+    completedStepsShown: 3,
   },
   argTypes: {
     currentStep: {
       control: {
         type: 'range',
+        min: 0,
         max: 7, // numSteps' max
       },
     },

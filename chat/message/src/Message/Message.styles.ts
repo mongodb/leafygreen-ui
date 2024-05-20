@@ -11,7 +11,7 @@ export const avatarClassName = createUniqueClassName('lg-message-avatar');
 
 export const baseStyles = css`
   display: flex;
-  gap: ${spacing[2]}px;
+  gap: ${spacing[200]}px;
   align-items: flex-end;
   width: 100%;
 
