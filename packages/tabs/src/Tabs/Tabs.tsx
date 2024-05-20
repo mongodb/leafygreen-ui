@@ -10,6 +10,7 @@ import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { LGIDS_TABS } from '../constants';
 import { InternalTab } from '../Tab';
 
 import {
@@ -50,6 +51,7 @@ function Tabs(props: AccessibleTabsProps) {
     setSelected: setControlledSelected,
     selected: controlledSelected,
     darkMode: darkModeProp,
+    'data-lgid': dataLgId = LGIDS_TABS.root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
@@ -156,7 +158,7 @@ function Tabs(props: AccessibleTabsProps) {
 
   return (
     <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
-      <div {...rest} className={className}>
+      <div {...rest} className={className} data-lgid={dataLgId}>
         {/* render the portaled contents */}
         {renderedTabs}
 
@@ -164,6 +166,7 @@ function Tabs(props: AccessibleTabsProps) {
           {/* renderedTabs portals the tab title into this element */}
           <div
             className={cx(listStyle, modeColors[theme].underlineColor)}
+            data-lgid={LGIDS_TABS.tabList}
             role="tablist"
             ref={setTabNode}
             aria-orientation="horizontal"
@@ -175,7 +178,7 @@ function Tabs(props: AccessibleTabsProps) {
         </div>
 
         {/* renderedTabs portals the contents into this element */}
-        <div ref={setPanelNode} />
+        <div data-lgid={LGIDS_TABS.tabPanels} ref={setPanelNode} />
       </div>
     </LeafyGreenProvider>
   );

@@ -39,6 +39,10 @@ const meta: StoryMetaType<typeof Pipeline> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
   },
 };
 export default meta;

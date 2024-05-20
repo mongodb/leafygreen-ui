@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/avatar",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "lg-chat Avatar",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,7 +25,7 @@
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/lib": "^13.3.0",
     "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.5.2"
+    "@leafygreen-ui/tokens": "^2.7.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12",

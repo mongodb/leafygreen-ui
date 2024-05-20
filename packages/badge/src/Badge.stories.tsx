@@ -21,6 +21,11 @@ const meta: StoryMetaType<typeof Badge> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+      defaultValue: Variant.Info,
+    },
   },
 };
 export default meta;
