@@ -91,6 +91,11 @@ const meta: StoryMetaType<typeof Button> = {
     loadingText: {
       control: 'text',
     },
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+      defaultValue: Variant.Default,
+    },
   },
 };
 

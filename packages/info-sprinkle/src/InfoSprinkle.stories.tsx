@@ -57,6 +57,14 @@ const meta: StoryMetaType<typeof InfoSprinkle> = {
       control: 'radio',
       options: Object.values(BaseFontSize),
     },
+    justify: {
+      control: 'select',
+      options: Object.values(Justify),
+    },
+    align: {
+      control: 'select',
+      options: Object.values(Align),
+    },
   },
 };
 

@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 9.1.1
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 9.1.0
 
 ### Minor Changes
