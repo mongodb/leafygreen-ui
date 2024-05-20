@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 21.2.1
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 21.2.0
 
 ### Minor Changes

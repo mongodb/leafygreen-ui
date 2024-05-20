@@ -1,5 +1,21 @@
 # @leafygreen-ui/tabs
 
+## 11.2.0
+
+### Minor Changes
+
+- 4cfd6dd5: [LG-4250](https://jira.mongodb.org/browse/LG-4250)
+
+  - Exports `getTestUtils`, a util to reliably interact with `LG Tabs` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs#test-harnesses)
+
+### Patch Changes
+
+- Updated dependencies [3364b542]
+- Updated dependencies [0864a420]
+- Updated dependencies [0864a420]
+  - @leafygreen-ui/tokens@2.7.0
+  - @leafygreen-ui/typography@19.1.1
+
 ## 11.1.15
 
 ### Patch Changes

@@ -38,7 +38,7 @@ const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
     },
     argTypes: {
       variant: {
-        control: 'radio',
+        control: 'select',
         options: Object.values(StoryVariant),
       },
       darkMode: storybookArgTypes.darkMode,
