@@ -1,5 +1,13 @@
 # @leafygreen-ui/date-picker
 
+## 1.1.3
+
+### Patch Changes
+
+- c86227a6: Updates Storybook file for mongodb.design
+- Updated dependencies [c86227a6]
+  - @leafygreen-ui/form-field@1.2.2
+
 ## 1.1.2
 
 ### Patch Changes

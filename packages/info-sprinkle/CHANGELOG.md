@@ -1,5 +1,11 @@
 # @leafygreen-ui/info-sprinkle
 
+## 1.0.5
+
+### Patch Changes
+
+- c86227a6: Updates storybook for .design
+
 ## 1.0.4
 
 ### Patch Changes

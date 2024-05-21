@@ -1,5 +1,12 @@
 # @leafygreen-ui/tokens
 
+## 2.7.0
+
+### Minor Changes
+
+- 3364b542: Adds link to text color tokens
+- 0864a420: Adds `placeholder` token
+
 ## 2.6.0
 
 ### Minor Changes

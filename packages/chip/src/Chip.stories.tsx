@@ -47,6 +47,21 @@ const meta: StoryMetaType<typeof Chip> = {
     chipCharacterLimit: 15,
     disabled: false,
   },
+  argTypes: {
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+    },
+    chipTruncationLocation: {
+      options: [
+        TruncationLocation.End,
+        TruncationLocation.Middle,
+        TruncationLocation.None,
+        TruncationLocation.Start,
+      ],
+      control: { type: 'select' },
+    },
+  },
 };
 export default meta;
 
