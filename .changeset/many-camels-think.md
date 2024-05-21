@@ -2,7 +2,7 @@
 '@leafygreen-ui/avatar': major
 ---
 
-Moves base Avatar component to `@leafygreen-ui`.
+Moves base Avatar component to `@leafygreen-ui` from `@lg-chat`.
 
 Updates supported sizes, and renames `variant` prop to `format`.
 
