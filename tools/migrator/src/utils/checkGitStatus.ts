@@ -4,7 +4,7 @@ import isGitClean from 'is-git-clean';
 
 /**
  * Check whether a Git repository is in a "clean" state, meaning there are no uncommitted changes or untracked files in the repository
- * @param force boolean. Whether to forcibly continuing even though the git directory is not clean
+ * @param force boolean. Whether to forcibly continue even though the git directory is not clean
  */
 export function checkGitStatus(force?: boolean) {
   let clean = false;

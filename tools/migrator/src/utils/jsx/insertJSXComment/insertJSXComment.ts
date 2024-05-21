@@ -5,6 +5,11 @@ import type core from 'jscodeshift';
 
 /**
  * Util that inserts comments before or after a line of code
+ *
+ * @param j a reference to the jscodeshift library
+ * @param element The element(component) to transform
+ * @param comment The comment to add
+ * @param position The position of the comment.
  * */
 export function insertJSXComment(
   j: core.JSCodeshift,

@@ -83,10 +83,10 @@ export function replaceJSXAttributes({
           return;
         }
 
-        const value = literal.node.value;
+        const currentPropValue = literal.node.value;
 
-        if (value in newPropValue) {
-          literal.node.value = newPropValue[value];
+        if (currentPropValue in newPropValue) {
+          literal.node.value = newPropValue[currentPropValue];
         }
       });
   });

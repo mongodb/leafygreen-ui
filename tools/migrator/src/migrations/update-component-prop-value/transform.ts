@@ -8,7 +8,7 @@ import {
 type TransformerOptions = ReplaceJSXAttributesType & { componentName: string };
 
 /**
- * Example transformer function to consolidate props
+ * Example transformer function to update a component prop value
  *
  * @param file the file to transform
  * @param jscodeshiftOptions an object containing at least a reference to the jscodeshift library

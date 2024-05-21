@@ -5,7 +5,7 @@ import type core from 'jscodeshift';
 /**
  *  Loops through each prop on the element and returns the specified prop
  *
- * @param j
+ * @param j A reference to the jscodeshift library
  * @param element The element to search for a specific prop
  * @param propName Prop name to find on the element
  * @returns Returns a collection with the node-path of the specified attribute(prop)
