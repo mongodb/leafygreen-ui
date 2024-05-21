@@ -18,6 +18,7 @@ import { BaseFontSize, breakpoints } from '@leafygreen-ui/tokens';
 import { VerifiedAnswerBanner } from '../MessageBanner';
 import { MessageContainer, Variant } from '../MessageContainer';
 import { MessageContent } from '../MessageContent';
+import { MessageLinks } from '../MessageLinks';
 
 import {
   avatarClassName,
@@ -46,6 +47,8 @@ export const Message = forwardRef(
       className,
       children,
       componentOverrides,
+      links,
+      linksHeading,
       markdownProps,
       verified,
       darkMode: darkModeProp,
@@ -136,6 +139,13 @@ export const Message = forwardRef(
               >
                 {messageBody ?? ''}
               </Polymorph>
+              {links ? (
+                <Polymorph
+                  as={componentOverrides?.MessageLinks ?? MessageLinks}
+                  headingText={linksHeading}
+                  links={links}
+                />
+              ) : null}
               {children}
             </Polymorph>
           </div>
