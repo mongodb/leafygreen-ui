@@ -47,5 +47,8 @@
     {
       "path": "../../packages/banner"
     },
+    {
+      "path": "../rich-links"
+    },
   ]
 }
