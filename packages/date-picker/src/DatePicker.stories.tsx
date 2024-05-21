@@ -142,6 +142,11 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
     </div>
   );
 };
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {
   return <DatePicker {...props} />;
