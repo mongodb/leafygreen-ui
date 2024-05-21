@@ -18,4 +18,14 @@ npm install @lg-tools/migrator
 
 ## Usage
 
-//TODO: Update me
+`yarn lg migrator <migration> <path>`
+
+## Migrations
+
+_NOTE:_ These migrations are for testing purposes only
+
+### consolidate-props
+
+### rename-component-prop
+
+### update-component-prop-value

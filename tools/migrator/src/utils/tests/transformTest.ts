@@ -22,7 +22,7 @@ interface TestArgs {
   fixture: string;
 
   /**
-   * The name of the transformation to run the test through
+   * The name of the transformation to test
    */
   transform: string;
 
@@ -41,7 +41,7 @@ interface TestArgs {
   level?: 1 | 2;
 
   /**
-   * Options to pass to the transformation
+   * Options to pass to the transformer function
    *
    * @default {}
    */
@@ -49,7 +49,11 @@ interface TestArgs {
 }
 
 /**
- * Util that runs a file through jscodeshift and returns the modified code.
+ * Test util that runs a file through jscodeshift and returns the modified code.
+ *
+ * @param tranform an import of the transform file e.g. transform.ts
+ * @param input the file to run the transformation against
+ * @param options options to pass to the transform function
  */
 async function applyTransform(
   transform: any,
@@ -72,8 +76,11 @@ async function applyTransform(
 }
 
 /**
- * Util to test migrations in Jest.
+ * Test util to test migrations in Jest.
  * The input file within the fixture undergoes the appropriate transformation. The results are then compared to the output file.
+ *
+ * @param dirName the current directory
+ * @param options an object containing at least the fixture(test name) and transformation name
  */
 export function transformTest(
   dirName: string,

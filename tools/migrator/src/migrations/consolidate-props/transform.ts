@@ -9,6 +9,14 @@ type TransformerOptions = ConsolidateJSXAttributesOptions & {
   componentName: string;
 };
 
+/**
+ * Example transformer function to consolidate props
+ *
+ * @param file the file to transform
+ * @param jscodeshiftOptions an object containing at least a reference to the jscodeshift library
+ * @param options an object containing options to pass to the transform function
+ * @returns Either the modified file or the original file
+ */
 export default function transformer(
   file: FileInfo,
   { jscodeshift: j }: API,

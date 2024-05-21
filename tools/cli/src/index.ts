@@ -173,7 +173,7 @@ cli
   .description('Runs codemod transformations to upgrade LG components')
   .argument(
     '<migration>',
-    'One of the migrations from: ADD LINK WITH ALL THE MODS',
+    'One of the migrations from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/migrator/README.md#migrations',
   )
   .argument(
     '<path>',

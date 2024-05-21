@@ -30,9 +30,8 @@ export const migrator = async (
 
   try {
     if (!fs.existsSync(migrationFile)) {
-      //TODO: add link
       throw new Error(
-        `No migration found for ${migration}. The list of migrations can be found here: ADD LINK`,
+        `No migration found for ${migration}. The list of migrations can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/migrator/README.md#migrations`,
       );
     }
 
