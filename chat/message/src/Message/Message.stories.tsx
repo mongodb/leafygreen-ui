@@ -5,6 +5,8 @@ import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feed
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
 import { Message, MessageSourceType } from '..';
 
 const MarkdownText = `
@@ -42,24 +44,23 @@ function helloWorld() {
 const UserText = `How can I delete a massive amount of documents from a collection?`;
 
 const MongoText = `
-To efficiently delete a large number of documents from a MongoDB collection, you
-can use the \`deleteMany()\` method. This method allows you to delete multiple
-documents that match a specified filter.
+To efficiently delete a large number of documents from a MongoDB collection, you can use the \`deleteMany()\` method. This method allows you to delete multiple documents that match a specified filter.
 
-Here's an example of how to use the \`deleteMany()\` method to delete a large
-number of documents:
+Here's an example of how to use the \`deleteMany()\` method to delete a large number of documents:
 
 \`\`\`javascript
 db.collection.deleteMany({ <filter> });
 \`\`\`
 
-Keep in mind that deleting a large number of documents can be resource-intensive
-and may impact the performance of your MongoDB server. It's recommended to
-perform such operations during periods of low activity or to use techniques like
-sharding to distribute the load across multiple servers.
+Keep in mind that deleting a large number of documents can be resource-intensive and may impact the performance of your MongoDB server. It's recommended to perform such operations during periods of low activity or to use techniques like sharding to distribute the load across multiple servers.
 
 Let me know if you need any further assistance!
 `;
+
+const MessageFeedback = () => {
+  // @ts-ignore onChange is passed in the story itself
+  return <MessageFeedbackStory />;
+};
 
 const meta: StoryMetaType<typeof Message> = {
   title: 'Chat/Message',
@@ -82,10 +83,8 @@ const meta: StoryMetaType<typeof Message> = {
 };
 export default meta;
 
-// eslint-disable-next-line react/prop-types
-const Template: StoryFn<typeof Message> = ({ darkMode, avatar, ...rest }) => {
-  const Avatar = avatar ? React.cloneElement(avatar, { darkMode }) : undefined;
-  return <Message avatar={Avatar} darkMode={darkMode} {...rest} />;
+const Template: StoryFn<typeof Message> = props => {
+  return <Message {...props}></Message>;
 };
 
 export const Basic: StoryFn<typeof Message> = Template.bind({});
@@ -117,8 +116,7 @@ WithMessageRating.args = {
   isSender: false,
   messageBody: MongoText,
   avatar: <Avatar variant="mongo" />,
-  // @ts-ignore onChange is passed in the story itself
-  children: <MessageFeedbackStory />,
+  children: <MessageFeedback />,
 };
 
 export const VerifiedAnswer: StoryFn<typeof Message> = Template.bind({});
@@ -130,43 +128,92 @@ VerifiedAnswer.args = {
     verifier: 'MongoDB Staff',
     verifiedAt: new Date('2023-08-24T16:20:00Z'),
   },
-  // @ts-ignore onChange is passed in the story itself
-  children: <MessageFeedbackStory />,
+  children: <MessageFeedback />,
 };
 
-export const MultipleUser = () => (
-  <LeafyGreenChatProvider>
-    <div>
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Basic {...meta.args} {...Basic.args} />
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Basic {...meta.args} {...Basic.args} messageBody="Another message!" />
-    </div>
-  </LeafyGreenChatProvider>
-);
+export const MultipleUser = () => {
+  const baseFontSize = useUpdatedBaseFontSize();
+  return (
+    <LeafyGreenChatProvider>
+      <div>
+        <Basic {...meta.args} {...Basic.args} baseFontSize={baseFontSize} />
+        <Basic
+          {...meta.args}
+          {...Basic.args}
+          messageBody="Another message!"
+          baseFontSize={baseFontSize}
+        />
+      </div>
+    </LeafyGreenChatProvider>
+  );
+};
 
-export const MultipleMongo = () => (
-  <LeafyGreenChatProvider>
-    <div>
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Mongo
-        {...meta.args}
-        {...Mongo.args}
-        messageBody="First message! Expect another from me right after this one."
-      />
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Mongo {...meta.args} {...Mongo.args} />
-    </div>
-  </LeafyGreenChatProvider>
-);
+export const MultipleMongo = () => {
+  const baseFontSize = useUpdatedBaseFontSize();
+  return (
+    <LeafyGreenChatProvider>
+      <div>
+        <Mongo
+          {...meta.args}
+          {...Mongo.args}
+          messageBody="First message! Expect another from me right after this one."
+          baseFontSize={baseFontSize}
+        />
+        <Mongo {...meta.args} {...Mongo.args} baseFontSize={baseFontSize} />
+      </div>
+    </LeafyGreenChatProvider>
+  );
+};
 
-export const Alternating = () => (
-  <LeafyGreenChatProvider>
-    <div>
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Basic {...meta.args} {...Basic.args} />
-      {/* @ts-expect-error baseFontSize is not a number */}
-      <Mongo {...meta.args} {...Mongo.args} />
-    </div>
-  </LeafyGreenChatProvider>
-);
+export const Alternating = () => {
+  const baseFontSize = useUpdatedBaseFontSize();
+  return (
+    <LeafyGreenChatProvider>
+      <div>
+        <Basic {...meta.args} {...Basic.args} baseFontSize={baseFontSize} />
+        <Mongo {...meta.args} {...Mongo.args} baseFontSize={baseFontSize} />
+      </div>
+    </LeafyGreenChatProvider>
+  );
+};
+
+export const WithRichLinks: StoryFn<typeof Message> = Template.bind({});
+WithRichLinks.args = {
+  isSender: false,
+  messageBody: MongoText,
+  avatar: <Avatar variant="mongo" />,
+  children: <MessageFeedback />,
+  links: [
+    {
+      href: 'https://mongodb.design',
+      children: 'LeafyGreen UI',
+      variant: 'Website',
+    },
+    {
+      href: 'https://mongodb.github.io/leafygreen-ui/?path=/docs/overview-introduction--docs',
+      children: 'LeafyGreen UI Docs',
+      variant: 'Docs',
+    },
+    {
+      href: 'https://learn.mongodb.com/',
+      children: 'MongoDB University',
+      variant: 'Learn',
+    },
+    {
+      href: 'https://mongodb.com/docs',
+      children: 'MongoDB Docs',
+      variant: 'Docs',
+    },
+    {
+      href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      children: 'Rick Astley - Never Gonna Give You Up',
+      variant: 'Video',
+      imageUrl: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+    },
+    {
+      href: 'https://mongodb.com/',
+      children: 'MongoDB Homepage',
+      variant: 'Website',
+    },
+  ],
+};
