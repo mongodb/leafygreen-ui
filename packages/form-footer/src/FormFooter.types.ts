@@ -3,15 +3,15 @@ import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { PrimaryButtonProps } from './PrimaryButton';
 
-type ButtonPropsWithOmits = Omit<ButtonProps, 'variant'>;
-type ButtonPropsWithChildren = Required<Pick<ButtonProps, 'children'>>;
+type ButtonPropsOmittingVariant = Omit<ButtonProps, 'variant'>;
+type ButtonPropsWithRequiredChildren = Required<Pick<ButtonProps, 'children'>>;
 
-export type CustomCancelButtonProps = ButtonPropsWithOmits;
-export type CustomBackButtonProps = ButtonPropsWithOmits & {
+export type CustomCancelButtonProps = ButtonPropsOmittingVariant;
+export type CustomBackButtonProps = ButtonPropsOmittingVariant & {
   variant?: Extract<Variant, 'default' | 'dangerOutline'>;
 };
-export type CustomPrimaryButtonProps = ButtonPropsWithOmits &
-  ButtonPropsWithChildren & {
+export type CustomPrimaryButtonProps = ButtonPropsOmittingVariant &
+  ButtonPropsWithRequiredChildren & {
     variant?: Extract<Variant, 'primary' | 'danger'>;
   };
 
@@ -67,7 +67,7 @@ export interface FormFooterProps
   errorMessage?: string;
 
   /**
-   * Styling prop for the content.
+   * Styling prop for the first child <div> of <footer>
    * Useful for setting left and right margins, or max-width
    */
   contentClassName?: string;

@@ -2,7 +2,7 @@
 '@leafygreen-ui/confirmation-modal': minor
 ---
 
-- Adds new prop `confirmButtonProps`. This props is an object that accepts all `Button` props except for the `variant` prop. The variant is controlled by the `variant` prop.
+- Adds new prop `confirmButtonProps`. This prop is an object that accepts all `Button` props except for the `variant` prop. The variant is controlled by the `variant` prop.
 - Adds new prop `cancelButtonProps`. This prop is an object that accepts all `Button` props. The `onClick` property will also fire when the `X` button, or backdrop is clicked.
 - Prop `onConfirm` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `onClick` property.
   ```js

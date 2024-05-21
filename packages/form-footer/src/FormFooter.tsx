@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Banner from '@leafygreen-ui/banner';
-import Button from '@leafygreen-ui/button';
+import Button, { Variant } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
@@ -10,6 +10,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
+import { LGIDS_FORM_FOOTER } from './constants';
 import {
   bannerStyle,
   contentStyle,
@@ -39,18 +40,18 @@ export default function FormFooter({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <footer
-        data-testid="lg-form_footer-footer"
+        data-testid={LGIDS_FORM_FOOTER.root}
         className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
         {...rest}
       >
         <div className={cx(contentStyle, contentClassName)}>
           {showBackButton && (
             <Button
-              variant="default"
+              variant={Variant.default}
               leftGlyph={
-                <ArrowLeftIcon data-testid="lg-form_footer-back_button-icon" />
+                <ArrowLeftIcon data-testid={LGIDS_FORM_FOOTER.backButtonIcon} />
               }
-              data-testid="lg-form_footer-back_button"
+              data-testid={LGIDS_FORM_FOOTER.backButton}
               {...backButtonProps}
             >
               {backButtonProps?.children || 'Back'}
@@ -64,9 +65,9 @@ export default function FormFooter({
             )}
             {showCancelButton && (
               <Button
-                data-testid="lg-form_footer-cancel_button"
+                data-testid={LGIDS_FORM_FOOTER.cancelButton}
                 {...cancelButtonProps}
-                variant="default"
+                variant={Variant.default}
               >
                 {cancelButtonProps?.children || 'Cancel'}
               </Button>
@@ -74,20 +75,18 @@ export default function FormFooter({
             {showDeprecatedPrimaryButton ? (
               isComponentType(primaryButton as React.ReactElement, 'Button') ? (
                 React.cloneElement(primaryButton as React.ReactElement, {
-                  darkMode: darkMode,
-                  ['data-testid']: 'lg-form_footer-primary_button',
+                  ['data-testid']: LGIDS_FORM_FOOTER.primaryButton,
                 })
               ) : (
                 <PrimaryButton
-                  darkMode={darkMode}
-                  data-testid="lg-form_footer-primary_button"
+                  data-testid={LGIDS_FORM_FOOTER.primaryButton}
                   {...(primaryButton as PrimaryButtonProps)}
                 />
               )
             ) : (
               <Button
                 variant="primary"
-                data-testid="lg-form_footer-primary_button"
+                data-testid={LGIDS_FORM_FOOTER.primaryButton}
                 {...primaryButtonProps}
               />
             )}
@@ -105,9 +104,9 @@ FormFooter.propTypes = {
   errorMessage: PropTypes.string,
   darkMode: PropTypes.bool,
   // eslint-disable-next-line react/forbid-prop-types
-  primaryButtonProps: PropTypes.object,
+  primaryButtonProps: PropTypes.objectOf(PropTypes.any),
   // eslint-disable-next-line react/forbid-prop-types
-  cancelButtonProps: PropTypes.object,
+  cancelButtonProps: PropTypes.objectOf(PropTypes.any),
   // eslint-disable-next-line react/forbid-prop-types
-  backButtonProps: PropTypes.object,
+  backButtonProps: PropTypes.objectOf(PropTypes.any),
 };

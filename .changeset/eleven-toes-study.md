@@ -2,6 +2,7 @@
 '@leafygreen-ui/form-footer': major
 ---
 
+- Updates `data-testid` on `<footer>` from `lg-form_footer-footer` to `lg-form_footer`.
 - Adds `primaryButtonProps`. This prop is an object that accepts all `Button` props but `variant` is limited to `primary` and `danger`.
 - Prop `primaryButton` is marked as `deprecated`. Please transition to `primaryButtonProps`.
 - Removes `cancelButtonText`. Please transition to `cancelButtonProps` and pass the `children` property.
