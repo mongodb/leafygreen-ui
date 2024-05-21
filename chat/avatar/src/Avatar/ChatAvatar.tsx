@@ -50,6 +50,17 @@ export const ChatAvatar = forwardRef(
     const sizeOverride = sizeOverrideProp ?? chatAvatarSizeMap[size];
     const format = variantToAvatarFormatMap[variant];
     const { initials } = getInitials(name);
+    const testid = (() => {
+      switch (variant) {
+        case 'mongo':
+          return 'mongo-avatar';
+        case 'user':
+          return 'user-avatar';
+        case 'default':
+        default:
+          return 'fallback-avatar';
+      }
+    })();
 
     return (
       <Avatar
@@ -58,6 +69,7 @@ export const ChatAvatar = forwardRef(
         text={initials ?? undefined}
         glyph="Person"
         sizeOverride={sizeOverride}
+        data-testid={testid}
         className={cx({
           [textAvatarStyleOverrides]: variant === ChatAvatarVariant.User,
           [iconAvatarStyleOverrides(theme)]:

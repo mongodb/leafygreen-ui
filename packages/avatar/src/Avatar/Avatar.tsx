@@ -27,6 +27,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
           getAvatarStyles({ size, theme, format, sizeOverride }),
           className,
         )}
+        data-testid="lg-avatar"
         {...rest}
       >
         <AvatarContents {...props} />
