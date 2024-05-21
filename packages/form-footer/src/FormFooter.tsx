@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Banner from '@leafygreen-ui/banner';
-import Button, { Variant } from '@leafygreen-ui/button';
+import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
+import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
 import LeafyGreenProvider, {
@@ -47,7 +47,7 @@ export default function FormFooter({
         <div className={cx(contentStyle, contentClassName)}>
           {showBackButton && (
             <Button
-              variant={Variant.default}
+              variant={ButtonVariant.Default}
               leftGlyph={
                 <ArrowLeftIcon data-testid={LGIDS_FORM_FOOTER.backButtonIcon} />
               }
@@ -59,7 +59,7 @@ export default function FormFooter({
           )}
           <div className={flexEndContent}>
             {errorMessage && (
-              <Banner className={bannerStyle} variant="danger">
+              <Banner className={bannerStyle} variant={BannerVariant.Danger}>
                 {errorMessage}
               </Banner>
             )}
@@ -67,7 +67,7 @@ export default function FormFooter({
               <Button
                 data-testid={LGIDS_FORM_FOOTER.cancelButton}
                 {...cancelButtonProps}
-                variant={Variant.default}
+                variant={ButtonVariant.Default}
               >
                 {cancelButtonProps?.children || 'Cancel'}
               </Button>
@@ -85,7 +85,7 @@ export default function FormFooter({
               )
             ) : (
               <Button
-                variant="primary"
+                variant={ButtonVariant.Primary}
                 data-testid={LGIDS_FORM_FOOTER.primaryButton}
                 {...primaryButtonProps}
               />
