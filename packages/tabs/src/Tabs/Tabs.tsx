@@ -2,7 +2,13 @@ import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
+import {
+  createDescendantsContext,
+  DescendantsProvider,
+  useInitDescendants,
+} from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -11,18 +17,25 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_TABS } from '../constants';
-import { InternalTab } from '../Tab';
+import TabPanel from '../TabPanel';
+import TabTitle from '../TabTitle';
 
 import {
+  getListThemeStyles,
   inlineChildrenContainerStyle,
   inlineChildrenWrapperStyle,
-  listStyle,
-  modeColors,
   tabContainerStyle,
   tabListElementClassName,
   tabPanelsElementClassName,
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
+
+export const TabsDescendantsContext = createDescendantsContext<HTMLDivElement>(
+  'TabsDescendantsContext',
+);
+
+export const TabPanelsDescendantsContext =
+  createDescendantsContext<HTMLDivElement>('TabPanelsDescendantsContext');
 
 /**
  * # Tabs
@@ -35,53 +48,53 @@ import { AccessibleTabsProps } from './Tabs.types';
   <Tab name='Second Tab'>Tab 2</Tab>
 </Tabs>
 ```
- * @param props.children Content to appear inside of Tabs component.
- * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
- * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
- * @param props.className className applied to Tabs container.
  * @param props.as HTML Element that wraps name in Tab List.
+ * @param props.children Content to appear inside of Tabs component.
+ * @param props.className className applied to Tabs container.
+ * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
+ * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
  */
-function Tabs(props: AccessibleTabsProps) {
+const Tabs = (props: AccessibleTabsProps) => {
   validateAriaLabelProps(props, 'Tabs');
 
   const {
-    children,
-    inlineChildren,
-    className,
     as = 'button',
     baseFontSize: baseFontSizeProp,
-    setSelected: setControlledSelected,
-    selected: controlledSelected,
+    children,
+    className,
     darkMode: darkModeProp,
+    inlineChildren,
+    selected: controlledSelected,
+    setSelected: setControlledSelected,
     'data-lgid': dataLgId = LGIDS_TABS.root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
   } = props;
+
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
-
-  const [tabNode, setTabNode] = useState<HTMLDivElement | null>(null);
-  const [panelNode, setPanelNode] = useState<HTMLDivElement | null>(null);
-
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
   };
 
+  const id = useIdAllocator({ prefix: rest.id || 'tabs' });
+  const { descendants: tabDescendants, dispatch: tabDispatch } =
+    useInitDescendants<HTMLDivElement>();
+  const { descendants: tabPanelDescendants, dispatch: tabPanelDispatch } =
+    useInitDescendants<HTMLDivElement>();
+
+  const [uncontrolledSelected, setUncontrolledSelected] = useState(0);
+  const [selected, setSelected] = [
+    controlledSelected ? controlledSelected : uncontrolledSelected,
+    controlledSelected ? setControlledSelected : setUncontrolledSelected,
+  ];
+
   const childrenArray = useMemo(
     () => React.Children.toArray(children) as Array<React.ReactElement>,
     [children],
   );
-
-  const isControlled = typeof controlledSelected === 'number';
-  const [uncontrolledSelected, setUncontrolledSelected] = useState(
-    childrenArray.findIndex(child => child.props.default || 0),
-  );
-  const selected = isControlled ? controlledSelected : uncontrolledSelected;
-  const setSelected = isControlled
-    ? setControlledSelected
-    : setUncontrolledSelected;
 
   const handleChange = useCallback(
     (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
@@ -117,82 +130,87 @@ function Tabs(props: AccessibleTabsProps) {
     [getEnabledIndexes, setSelected],
   );
 
-  const renderedTabs = React.Children.map(children, (child, index) => {
+  const renderedTabs = React.Children.map(children, child => {
     if (!isComponentType(child, 'Tab')) {
       return child;
     }
 
-    const isTabSelected = index === selected;
-    const { disabled, onClick, onKeyDown, className, ...rest } = child.props;
+    const { disabled, onClick, onKeyDown, name, ...rest } = child.props;
 
     const tabProps = {
       as,
       disabled,
       darkMode,
-      parentRef: tabNode,
-      className,
+      name,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
         handleArrowKeyPress(event);
       },
       onClick: !disabled
-        ? (event: React.MouseEvent) => {
+        ? (event: React.MouseEvent, index: number) => {
             onClick?.(event);
             handleChange(event, index);
           }
         : undefined,
+      selectedIndex: selected,
       ...rest,
-    };
+    } as const;
 
-    return (
-      // Since the <Tab /> children contain both the tab title and content,
-      // and since we want these elements to be in different places in the DOM
-      // we use a Portal in InternalTab to place the conten in the correct spot
-      <InternalTab
-        child={child}
-        selected={isTabSelected}
-        tabRef={tabNode}
-        panelRef={panelNode}
-        {...tabProps}
-      />
-    );
+    return <TabTitle {...tabProps}>{name}</TabTitle>;
+  });
+
+  const renderedTabPanels = React.Children.map(children, child => {
+    if (!isComponentType(child, 'Tab')) {
+      return child;
+    }
+
+    return <TabPanel child={child} selectedIndex={selected} />;
   });
 
   return (
     <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
-      <div {...rest} className={className} data-lgid={dataLgId}>
-        {/* render the portaled contents */}
-        {renderedTabs}
-
-        <div className={tabContainerStyle}>
-          {/* renderedTabs portals the tab title into this element */}
-          <div
-            className={cx(
-              listStyle,
-              modeColors[theme].underlineColor,
-              tabListElementClassName,
-            )}
-            data-lgid={LGIDS_TABS.tabList}
-            role="tablist"
-            ref={setTabNode}
-            aria-orientation="horizontal"
-            {...accessibilityProps}
-          />
-          <div className={inlineChildrenContainerStyle}>
-            <div className={inlineChildrenWrapperStyle}>{inlineChildren}</div>
+      <DescendantsProvider
+        context={TabsDescendantsContext}
+        descendants={tabDescendants}
+        dispatch={tabDispatch}
+      >
+        <DescendantsProvider
+          context={TabPanelsDescendantsContext}
+          descendants={tabPanelDescendants}
+          dispatch={tabPanelDispatch}
+        >
+          <div {...rest} className={className} data-lgid={dataLgId}>
+            <div className={tabContainerStyle} id={id}>
+              <div
+                className={cx(
+                  getListThemeStyles(theme),
+                  tabListElementClassName,
+                )}
+                data-lgid={LGIDS_TABS.tabList}
+                role="tablist"
+                aria-orientation="horizontal"
+                {...accessibilityProps}
+              >
+                {renderedTabs}
+              </div>
+              <div className={inlineChildrenContainerStyle}>
+                <div className={inlineChildrenWrapperStyle}>
+                  {inlineChildren}
+                </div>
+              </div>
+            </div>
+            <div
+              className={tabPanelsElementClassName}
+              data-lgid={LGIDS_TABS.tabPanels}
+            >
+              {renderedTabPanels}
+            </div>
           </div>
-        </div>
-
-        {/* renderedTabs portals the contents into this element */}
-        <div
-          className={tabPanelsElementClassName}
-          data-lgid={LGIDS_TABS.tabPanels}
-          ref={setPanelNode}
-        />
-      </div>
+        </DescendantsProvider>
+      </DescendantsProvider>
     </LeafyGreenProvider>
   );
-}
+};
 
 Tabs.displayName = 'Tabs';
 

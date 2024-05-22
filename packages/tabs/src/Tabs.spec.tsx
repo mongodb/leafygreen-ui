@@ -196,19 +196,21 @@ describe('packages/tabs', () => {
     test('keyboard navigation is supported', () => {
       const { getTabUtilsByName } = renderTabs({}, { default: true });
       const firstTabUtils = getTabUtilsByName('First');
+      const firstTab = firstTabUtils?.getTab();
       const secondTabUtils = getTabUtilsByName('Second');
+      const secondTab = secondTabUtils?.getTab();
 
       // Focus on first tab
       userEvent.tab();
-      expect(firstTabUtils?.getTab()).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      if (firstTabUtils) {
-        fireEvent.keyDown(firstTabUtils.getTab(), {
+      if (firstTab) {
+        fireEvent.keyDown(firstTab, {
           key: keyMap.ArrowRight,
         });
       }
-      expect(secondTabUtils?.getTab()).toHaveFocus();
+      expect(secondTab).toHaveFocus();
     });
 
     test('keyboard navigation skips disabled tabs', () => {

@@ -40,7 +40,6 @@ Tab.propTypes = {
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   content: PropTypes.node,
   disabled: PropTypes.bool,
-  ariaControl: PropTypes.string,
 };
 
 export default Tab;
