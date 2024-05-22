@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.3.0
+
+### Minor Changes
+
+- 684c87f1: Adds `Moon` and `Sun` glyphs.
+
 ## 12.2.0
 
 ### Minor Changes
