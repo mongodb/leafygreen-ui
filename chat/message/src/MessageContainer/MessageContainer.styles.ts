@@ -14,6 +14,10 @@ export const baseStyles = css`
   box-shadow: 0px 4px 10px -4px ${palette.black}4D; // 4D is 30% opacity
 
   position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[200]}px;
 `;
 
 export const variantStyles: Record<Variant, Record<Theme, string>> = {

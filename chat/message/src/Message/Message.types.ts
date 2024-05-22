@@ -1,10 +1,12 @@
 import { ReactElement } from 'react';
+import { type RichLinkProps } from '@lg-chat/rich-links';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { MessageContainerProps } from '../MessageContainer';
-import { MessageContentProps } from '../MessageContent';
+import { type MessageContainerProps } from '../MessageContainer';
+import { type MessageContentProps } from '../MessageContent';
+import { type MessageLinksProps } from '../MessageLinks';
 
 export const Align = {
   Right: 'right',
@@ -16,6 +18,7 @@ export type Align = (typeof Align)[keyof typeof Align];
 export interface ComponentOverrides {
   MessageContainer?: (props: MessageContainerProps) => JSX.Element;
   MessageContent?: (props: MessageContentProps) => JSX.Element;
+  MessageLinks?: (props: MessageLinksProps) => JSX.Element;
 }
 
 export interface MessageProps
@@ -57,6 +60,16 @@ export interface MessageProps
    * displays information about the message.
    */
   verified?: VerificationInfo;
+
+  /**
+   * A list of links to render as rich links for the message.
+   */
+  links?: Array<RichLinkProps>;
+
+  /**
+   * The heading text to display for the links section.
+   */
+  linksHeading?: string;
 }
 
 export interface VerificationInfo {

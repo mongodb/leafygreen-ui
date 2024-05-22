@@ -98,4 +98,9 @@ export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
      * Whether or not the field is labeled as optional.
      */
     optional?: boolean;
+
+    /**
+     * Whether or not the field is readonly.
+     */
+    readOnly?: boolean;
   };
