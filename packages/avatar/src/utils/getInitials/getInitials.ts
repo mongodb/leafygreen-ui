@@ -72,6 +72,14 @@ export const getInitials = (
   };
 };
 
+/**
+ * Returns the first character of every word in the provided string
+ * that begins with an upper-case letter
+ *
+ * e.g.
+ * Adam Thompson => AT
+ * Vincent van Gogh => VG
+ */
 const getSimpleInitials = (str: string): string => {
   return str
     .split(' ')

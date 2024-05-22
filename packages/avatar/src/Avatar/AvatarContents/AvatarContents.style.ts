@@ -6,10 +6,10 @@ import {
 } from '../Avatar.constants';
 import { AvatarProps, AvatarSize, AvatarStyleArgs } from '../Avatar.types';
 
-const SINGLE_CHAR_FONT_SCALE = 0.5; // Scalar for `sizeOverride` to font-size
-const MULTI_CHAR_FONT_SCALE = 0.375; // Scalar for `sizeOverride` to font-size
-const LOGO_SCALE = 0.625; // Scalar for `sizeOverride` to Logo size
-const ICON_SCALE = 0.5; // Scalar for `sizeOverride` to icon size
+const SINGLE_CHAR_FONT_SCALE = 0.5; // Scale factor for `sizeOverride` to font-size
+const MULTI_CHAR_FONT_SCALE = 0.375; // Scale factor for `sizeOverride` to font-size
+const LOGO_SCALE = 0.625; // Scale factor for `sizeOverride` to Logo size
+const ICON_SCALE = 0.5; // Scale factor for `sizeOverride` to icon size
 
 interface AvatarTextStyleArgs {
   size: AvatarProps['size'];

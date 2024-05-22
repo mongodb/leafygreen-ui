@@ -17,7 +17,7 @@ export const Format = {
 
   /** TODO: Renders an image avatar */
   // Image: 'image',
-};
+} as const;
 export type Format = (typeof Format)[keyof typeof Format];
 
 export const AvatarSize = {
@@ -30,11 +30,13 @@ export interface BaseAvatarProps extends ComponentProps<'div'>, DarkModeProps {
   /**
    * The relative Size of tha Avatar
    *
-   * @default AvatarSize.Default
+   * @default `'default'`
    */
   size?: AvatarSize;
 
-  /** Renders that Avatar at a unique size, not supported by {@link AvatarSize} */
+  /**
+   * Renders the Avatar at a specific pixel size, not supported by the {@link AvatarSize} map
+   */
   sizeOverride?: number;
 }
 
@@ -42,12 +44,22 @@ export type DiscriminatedAvatarProps =
   | {
       /**
        * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
+       *
        * @default `"icon"`
        */
       format: typeof Format.MongoDB;
+
+      /**
+       * The text to render in the Avatar when `format === 'text'`
+       */
       text?: string;
-      glyph?: string;
-      // imageUrl: never;
+
+      /**
+       * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
+       *
+       * @default `"Person"`
+       */
+      glyph?: GlyphName;
     }
   | {
       /**
@@ -57,17 +69,16 @@ export type DiscriminatedAvatarProps =
       format: typeof Format.Text;
 
       /**
-       * The text to render in the Avatar.
+       * The text to render in the Avatar when `format === 'text'`
        */
       text: string;
 
       /**
-       * The icon glyph name to render in the Avatar
+       * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
        *
        * @default `"Person"`
        */
-      glyph?: string;
-      // imageUrl: never;
+      glyph?: GlyphName;
     }
   | {
       /**
@@ -77,18 +88,18 @@ export type DiscriminatedAvatarProps =
       format: typeof Format.Icon;
 
       /**
-       * The icon glyph name to render in the Avatar
+       * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
        *
        * @default `"Person"`
        */
       glyph: GlyphName;
 
       /**
-       * The text to render in the Avatar.
+       * The text to render in the Avatar when `format === 'text'`
        */
       text?: string;
-      // imageUrl: never;
     };
+// TODO: image Avatar
 // | {
 //     format: typeof Format.Image;
 //     imageUrl: string;

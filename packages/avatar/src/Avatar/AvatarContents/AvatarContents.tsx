@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Icon from '@leafygreen-ui/icon';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import { MongoDBLogoMark, SupportedColors } from '@leafygreen-ui/logo';
 
 import { AvatarProps, AvatarSize, Format } from '../Avatar.types';
@@ -21,6 +22,9 @@ export const AvatarContents = ({
   sizeOverride,
 }: AvatarProps) => {
   if (format == Format.Text && (!text || text.length <= 0)) {
+    consoleOnce.warn(
+      'Avatar received `text` format without any `text` prop. Defaulting to `icon` format.',
+    );
     format = Format.Icon;
   }
 
