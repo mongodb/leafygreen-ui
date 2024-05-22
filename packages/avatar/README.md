@@ -62,6 +62,6 @@ interface Initials {
 
 ### Notes & Known issues:
 
-- Names including characters _other than_ the English alphabet, and common European accented letters will be ignored, and will return `null`. (Includes Letters in Unicode Basic Latin, Latin-1 Supplement and Latin Extended-A. See [Wikipedia: List of Unicode characters](https://en.wikipedia.org/wiki/List_of_Unicode_characters))
+- Names including characters _other than_ the English alphabet and common Latin accented letters will be ignored, and will return `null` for each property in the returned object. (Includes Letters in Unicode Basic Latin, Latin-1 Supplement and Latin Extended-A. See [Wikipedia: List of Unicode characters](https://en.wikipedia.org/wiki/List_of_Unicode_characters))
 
 - Names with suffixes (e.g. Jr., Sr., etc.) will include the first letter of the suffix in the surname initial (e.g. `getInitials("Robert Downey Jr.") // RDJ`)
