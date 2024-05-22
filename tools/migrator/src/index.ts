@@ -13,6 +13,7 @@ export interface MigrateOptions {
   print?: boolean;
   force?: boolean;
   stdin?: boolean;
+  ignore?: Array<string>;
 }
 
 export const migrator = async (
@@ -20,6 +21,7 @@ export const migrator = async (
   files: string | Array<string>,
   options: MigrateOptions = {},
 ) => {
+  console.log('😈', { options });
   // Gets the path of the migrations e.g: /Users/.../leafygreen-ui/tools/migrator/dist/migrations/[migration]/transform.js
   const migrationFile = path.join(
     __dirname,
@@ -40,7 +42,7 @@ export const migrator = async (
     }
 
     if (!options.dry) {
-      // Checks if the Git repo is in a "clean" state -- there are no uncommited changes or untracked files in the repo
+      // Checks if the Git directory is in a "clean" state -- there are no uncommited changes or untracked files in the repo
       checkGitStatus(options.force);
     }
 
@@ -53,17 +55,20 @@ export const migrator = async (
     console.log(chalk.greenBright('filepaths:'), filepaths);
     console.log(chalk.greenBright('Running migration:'), migration);
 
+    const { ignore, ...allOptions } = options;
+
     await jscodeshift.run(migrationFile, filepaths, {
       ignorePattern: [
         '**/node_modules/**',
         '**/.next/**',
         '**/build/**',
         '**/dist/**',
+        ...(ignore ? ignore : []),
       ],
       extensions: 'tsx,ts,jsx,js',
       parser: 'tsx',
       verbose: 2,
-      ...options,
+      ...allOptions,
     });
 
     console.log(

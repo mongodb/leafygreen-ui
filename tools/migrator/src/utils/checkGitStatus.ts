@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import isGitClean from 'is-git-clean';
 
 /**
- * Check whether a Git repository is in a "clean" state, meaning there are no uncommitted changes or untracked files in the repository
+ * Check whether a Git directory is in a "clean" state, meaning there are no uncommitted changes or untracked files in the repository
  * @param force boolean. Whether to forcibly continue even though the git directory is not clean
  */
 export function checkGitStatus(force?: boolean) {
@@ -30,7 +30,7 @@ export function checkGitStatus(force?: boolean) {
       );
       console.log(
         chalk.yellow(
-          '\nBut before we continue, please stash or commit your git changes. \nYou may use the --force flag to override this safety check.',
+          '\nBut before we continue, please stash or commit your git changes. \nYou may use the --force flag to override this safety check.\n',
         ),
       );
       process.exit(1);

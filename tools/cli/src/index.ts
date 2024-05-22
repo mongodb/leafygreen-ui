@@ -179,6 +179,11 @@ cli
     '<path>',
     'Files or directory to transform. Can be a glob like like src/**.test.js',
   )
+  .option(
+    '--i, --ignore <items...>',
+    'Glob patterns to ignore. E.g. --i **/node_modules/** **/.next/**',
+    false,
+  )
   .option('--dry', 'dry run (no changes are made to files)', false)
   .option(
     '--print',
