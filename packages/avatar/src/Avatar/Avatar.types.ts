@@ -40,31 +40,13 @@ export interface BaseAvatarProps extends ComponentProps<'div'>, DarkModeProps {
   sizeOverride?: number;
 }
 
+/**
+ * A discriminated union of Avatar props for each {@link Format} value
+ */
 export type DiscriminatedAvatarProps =
   | {
       /**
        * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
-       *
-       * @default `"icon"`
-       */
-      format: typeof Format.MongoDB;
-
-      /**
-       * The text to render in the Avatar when `format === 'text'`
-       */
-      text?: string;
-
-      /**
-       * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
-       *
-       * @default `"Person"`
-       */
-      glyph?: GlyphName;
-    }
-  | {
-      /**
-       * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
-       * @default `"icon"`
        */
       format: typeof Format.Text;
 
@@ -83,7 +65,6 @@ export type DiscriminatedAvatarProps =
   | {
       /**
        * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
-       * @default `"icon"`
        */
       format: typeof Format.Icon;
 
@@ -92,12 +73,30 @@ export type DiscriminatedAvatarProps =
        *
        * @default `"Person"`
        */
-      glyph: GlyphName;
+      glyph?: GlyphName;
 
       /**
        * The text to render in the Avatar when `format === 'text'`
        */
       text?: string;
+    }
+  | {
+      /**
+       * The format of the avatar. Can be one of `mongodb`, `text`, or `icon`.
+       */
+      format: typeof Format.MongoDB;
+
+      /**
+       * The text to render in the Avatar when `format === 'text'`
+       */
+      text?: string;
+
+      /**
+       * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
+       *
+       * @default `"Person"`
+       */
+      glyph?: GlyphName;
     };
 // TODO: image Avatar
 // | {

@@ -28,6 +28,23 @@ export const variantToAvatarFormatMap: Record<ChatAvatarVariant, Format> = {
   [ChatAvatarVariant.User]: Format.Text,
 };
 
+/**
+ * Returns the Avatar Format mapped from ChatAvatarVariant,
+ * unless the `initials` property is `null`, then returns `Format.Icon`
+ */
+export const getFormat = (
+  variant: ChatAvatarVariant,
+  initials?: string | null,
+) => {
+  const _format = variantToAvatarFormatMap[variant];
+
+  if (_format === Format.Text && !initials) {
+    return Format.Icon;
+  }
+
+  return _format;
+};
+
 export const ChatAvatar = forwardRef(
   (
     {
@@ -48,8 +65,8 @@ export const ChatAvatar = forwardRef(
         : ChatAvatarSize.Default;
 
     const sizeOverride = sizeOverrideProp ?? chatAvatarSizeMap[size];
-    const format = variantToAvatarFormatMap[variant];
     const { initials } = getInitials(name);
+    const format = getFormat(variant, initials);
     const testid = (() => {
       switch (variant) {
         case 'mongo':
@@ -66,7 +83,7 @@ export const ChatAvatar = forwardRef(
       <Avatar
         ref={fwdRef}
         format={format}
-        text={initials ?? undefined}
+        text={initials ?? ''}
         glyph="Person"
         sizeOverride={sizeOverride}
         data-testid={testid}

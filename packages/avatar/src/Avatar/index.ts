@@ -8,5 +8,6 @@ export {
   type AvatarProps,
   AvatarSize,
   type BaseAvatarProps,
+  type DiscriminatedAvatarProps,
   Format,
 } from './Avatar.types';
