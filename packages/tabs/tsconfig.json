@@ -22,6 +22,9 @@
       "path": "../box"
     },
     {
+      "path": "../descendants"
+    },
+    {
       "path": "../emotion"
     },
     {
