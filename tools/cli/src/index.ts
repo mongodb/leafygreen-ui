@@ -184,18 +184,17 @@ cli
     'Glob patterns to ignore. E.g. --i **/node_modules/** **/.next/**',
     false,
   )
-  .option('--dry', 'dry run (no changes are made to files)', false)
+  .option('--d, --dry', 'dry run (no changes are made to files)', false)
   .option(
-    '--print',
+    '--p, --print',
     'print transformed files to stdout, useful for development',
     false,
   )
   .option(
-    '--force',
+    '--f, --force',
     'Bypass Git safety checks and forcibly run codemods',
     false,
   )
-  .option('--stdin', 'read file/directory list from stdin', false)
   .action(migrator);
 
 /** Build steps */

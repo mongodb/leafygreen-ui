@@ -12,7 +12,6 @@ export interface MigrateOptions {
   dry?: boolean;
   print?: boolean;
   force?: boolean;
-  stdin?: boolean;
   ignore?: Array<string>;
 }
 
@@ -37,7 +36,7 @@ export const migrator = async (
       );
     }
 
-    if (!options.stdin && !files) {
+    if (!files) {
       throw new Error(`No path provided for migration`);
     }
 
