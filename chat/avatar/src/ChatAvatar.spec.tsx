@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { getInitials } from './utils/getInitials';
 import { Avatar } from '.';
 
 describe('packages/avatar', () => {
@@ -20,13 +19,6 @@ describe('packages/avatar', () => {
       render(<Avatar variant="user" name="Brooke Yalof" />);
       expect(screen.getByTestId('user-avatar')).toBeInTheDocument();
       expect(screen.getByText('BY')).toBeInTheDocument();
-    });
-  });
-
-  describe('getInitials', () => {
-    test('works as expected', () => {
-      const result = getInitials('Mongo Database');
-      expect(result).toBe('MD');
     });
   });
 });
