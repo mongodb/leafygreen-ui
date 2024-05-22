@@ -54,7 +54,12 @@ export const migrator = async (
     console.log(chalk.greenBright('Running migration:'), migration);
 
     await jscodeshift.run(migrationFile, filepaths, {
-      ignorePattern: ['**/node_modules/**', '**/.next/**', '**/build/**'],
+      ignorePattern: [
+        '**/node_modules/**',
+        '**/.next/**',
+        '**/build/**',
+        '**/dist/**',
+      ],
       extensions: 'tsx,ts,jsx,js',
       parser: 'tsx',
       verbose: 2,

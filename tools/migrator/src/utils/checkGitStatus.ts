@@ -29,13 +29,8 @@ export function checkGitStatus(force?: boolean) {
         chalk.greenBright('🥬 Thank you for using @lg-tools/migrator!'),
       );
       console.log(
-        chalk.red(
-          '\nBut before we continue, please stash or commit your git changes.',
-        ),
-      );
-      console.log(
         chalk.yellow(
-          '\nYou may use the --force flag to override this safety check.',
+          '\nBut before we continue, please stash or commit your git changes. \nYou may use the --force flag to override this safety check.',
         ),
       );
       process.exit(1);
