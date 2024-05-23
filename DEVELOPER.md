@@ -44,6 +44,8 @@ As far as design patterns leveraged by our components we tend to favor:
 
 ## Code Style
 
+For a full style guide, see [STYLEGUIDE.md](./STYLEGUIDE.md).
+
 ### Accessibility
 
 Approaching components in an accessible manner is something we take seriously on this team. That being said, we have some technologies in place to enforce that new components, or updates to existing components, are being developed with these standards in mind.
