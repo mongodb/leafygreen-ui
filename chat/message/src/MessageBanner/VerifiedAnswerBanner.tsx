@@ -13,10 +13,10 @@ export function VerifiedAnswerBanner({
   learnMoreUrl,
 }: VerificationInfo) {
   const text = useMemo(() => {
-    const textParts = [`Answer Verified`];
+    const textParts = [`Verified`];
 
     if (verifier) {
-      textParts.push(`By ${verifier}`);
+      textParts.push(`by ${verifier}`);
     }
 
     if (verifiedAt) {
@@ -25,7 +25,7 @@ export function VerifiedAnswerBanner({
         month: 'long',
         day: 'numeric',
       });
-      textParts.push(`On ${formattedDate}`);
+      textParts.push(`on ${formattedDate}`);
     }
 
     return textParts.join(' ');
