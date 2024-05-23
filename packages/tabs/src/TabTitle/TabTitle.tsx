@@ -44,25 +44,22 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
   const theme = darkMode ? Theme.Dark : Theme.Light;
   const selected = index === selectedIndex;
 
-  // Checks to see if the current activeElement is a part of the same tab set
-  // as the current TabTitle. If so, and the current TabTitle is not disabled
-  // and is selected, we manually move focus to that TabTitle.
   useEffect(() => {
+    // if tab is disabled or not selected, return early
+    // otherwise, focus may need to be manually moved
+    if (disabled || !selected || !titleRef.current) return;
+
+    // if focus is not on tab descendants, return early
+    // otherwise, focus needs to be manually moved
+    const activeEl = document.activeElement;
     const tabList = tabDescendants.map(
       descendant => descendant.element.parentElement,
     );
-    const activeEl = document.activeElement;
+    const isFocusOnTabDescendants =
+      activeEl instanceof HTMLElement && tabList.indexOf(activeEl) !== -1;
+    if (!isFocusOnTabDescendants) return;
 
-    if (
-      activeEl &&
-      activeEl instanceof HTMLElement &&
-      tabList.indexOf(activeEl) !== -1 &&
-      !disabled &&
-      selected &&
-      titleRef.current
-    ) {
-      titleRef.current.focus();
-    }
+    titleRef.current.focus();
   }, [disabled, selected, tabDescendants, titleRef]);
 
   const relatedTabPanel = useMemo(() => {
