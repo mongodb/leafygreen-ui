@@ -1,15 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Banner from '@leafygreen-ui/banner';
-import Button from '@leafygreen-ui/button';
+import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
+import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 import ArrowLeftIcon from '@leafygreen-ui/icon/dist/ArrowLeft';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
+import { LGIDS_FORM_FOOTER } from './constants';
 import {
   bannerStyle,
-  buttonStyle,
   contentStyle,
   flexEndContent,
   footerBaseStyle,
@@ -20,12 +23,9 @@ import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
 
 export default function FormFooter({
   primaryButton,
+  primaryButtonProps,
   cancelButtonProps,
   backButtonProps,
-  onCancel,
-  cancelButtonText = 'Cancel',
-  backButtonText,
-  onBackClick,
   errorMessage,
   contentClassName,
   className,
@@ -33,84 +33,77 @@ export default function FormFooter({
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const showBackButton = backButtonProps || backButtonText;
-  /**
-   * versions prior to 3.1.0 will render the cancel button if cancelButtonText is undefined or
-   * a nonempty string so we need to explicitly check for an empty string
-   */
-  const showCancelButton = cancelButtonProps || cancelButtonText !== '';
-
-  // TODO @stephl3: remove once deprecated props are removed
-  const _backButtonProps = {
-    children: backButtonProps?.children || backButtonText,
-    onClick: backButtonProps?.onClick || onBackClick,
-    leftGlyph: backButtonProps ? (
-      backButtonProps.leftGlyph
-    ) : (
-      <ArrowLeftIcon data-testid="lg-form_footer-back_button-icon" />
-    ),
-  };
-  const _cancelButtonProps = {
-    children: cancelButtonProps?.children || cancelButtonText,
-    onClick: cancelButtonProps?.onClick || onCancel,
-    leftGlyph: cancelButtonProps?.leftGlyph ?? undefined,
-  };
+  const showBackButton = backButtonProps;
+  const showCancelButton = cancelButtonProps;
+  const showDeprecatedPrimaryButton = primaryButton;
 
   return (
-    <footer
-      data-testid="lg-form_footer-footer"
-      className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
-      {...rest}
-    >
-      <div className={cx(contentStyle, contentClassName)}>
-        {showBackButton && (
-          <Button
-            variant="default"
-            onClick={_backButtonProps.onClick}
-            className={buttonStyle}
-            leftGlyph={_backButtonProps.leftGlyph}
-            darkMode={darkMode}
-            data-testid="lg-form_footer-back_button"
-          >
-            {_backButtonProps.children}
-          </Button>
-        )}
-        <div className={flexEndContent}>
-          {errorMessage && (
-            <Banner
-              darkMode={darkMode}
-              className={bannerStyle}
-              variant="danger"
-            >
-              {errorMessage}
-            </Banner>
-          )}
-          {showCancelButton && (
+    <LeafyGreenProvider darkMode={darkMode}>
+      <footer
+        data-testid={LGIDS_FORM_FOOTER.root}
+        className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
+        {...rest}
+      >
+        <div className={cx(contentStyle, contentClassName)}>
+          {showBackButton && (
             <Button
-              variant="default"
-              onClick={_cancelButtonProps.onClick}
-              className={buttonStyle}
-              leftGlyph={_cancelButtonProps.leftGlyph}
-              darkMode={darkMode}
-              data-testid="lg-form_footer-cancel_button"
+              variant={ButtonVariant.Default}
+              leftGlyph={
+                <ArrowLeftIcon data-testid={LGIDS_FORM_FOOTER.backButtonIcon} />
+              }
+              data-testid={LGIDS_FORM_FOOTER.backButton}
+              {...backButtonProps}
             >
-              {_cancelButtonProps.children || 'Cancel'}
+              {backButtonProps?.children || 'Back'}
             </Button>
           )}
-          {isComponentType(primaryButton as React.ReactElement, 'Button') ? (
-            React.cloneElement(primaryButton as React.ReactElement, {
-              darkMode: darkMode,
-              ['data-testid']: 'lg-form_footer-primary_button',
-            })
-          ) : (
-            <PrimaryButton
-              darkMode={darkMode}
-              data-testid="lg-form_footer-primary_button"
-              {...(primaryButton as PrimaryButtonProps)}
-            />
-          )}
+          <div className={flexEndContent}>
+            {errorMessage && (
+              <Banner className={bannerStyle} variant={BannerVariant.Danger}>
+                {errorMessage}
+              </Banner>
+            )}
+            {showCancelButton && (
+              <Button
+                data-testid={LGIDS_FORM_FOOTER.cancelButton}
+                {...cancelButtonProps}
+                variant={ButtonVariant.Default}
+              >
+                {cancelButtonProps?.children || 'Cancel'}
+              </Button>
+            )}
+            {showDeprecatedPrimaryButton ? (
+              isComponentType(primaryButton as React.ReactElement, 'Button') ? (
+                React.cloneElement(primaryButton as React.ReactElement, {
+                  ['data-testid']: LGIDS_FORM_FOOTER.primaryButton,
+                })
+              ) : (
+                <PrimaryButton
+                  data-testid={LGIDS_FORM_FOOTER.primaryButton}
+                  {...(primaryButton as PrimaryButtonProps)}
+                />
+              )
+            ) : (
+              <Button
+                variant={ButtonVariant.Primary}
+                data-testid={LGIDS_FORM_FOOTER.primaryButton}
+                {...primaryButtonProps}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </LeafyGreenProvider>
   );
 }
+
+FormFooter.displayName = 'ConfirmationModal';
+
+FormFooter.propTypes = {
+  contentClassName: PropTypes.string,
+  errorMessage: PropTypes.string,
+  darkMode: PropTypes.bool,
+  primaryButtonProps: PropTypes.objectOf(PropTypes.any),
+  cancelButtonProps: PropTypes.objectOf(PropTypes.any),
+  backButtonProps: PropTypes.objectOf(PropTypes.any),
+};
