@@ -2,22 +2,25 @@
 
 ## Table of Contents
 
-- [To Contribute](#to-contribute)
-- [Typing](#typing)
-- [Functions](#functions)
-- [Variable naming](#variable-naming)
-- [Variable placement](#variable-placement)
-- [Whitespace and line breaks](#whitespace-and-line-breaks)
-- [JSX/React](#jsxreact)
-- [Forwarding refs](#forwarding-refs)
-- [Consuming darkMode from `LeafyGreenProvider`](#consuming-darkmode-from-leafygreenprovider)
-- [Passing darkMode to children](#passing-darkMode-to-children)
-- [CSS-in-JS](#css-in-js)
-- [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
-- [API Patterns](#api-patterns)
+- **[Contribution Guide](#contribution-guide)**
+- **[TypeScript](#typescript)**
+- **[JavaScript](#javascript)**
+  - [Functions](#functions)
+  - [Variable naming](#variable-naming)
+  - [Variable placement](#variable-placement)
+  - [Whitespace and line breaks](#whitespace-and-line-breaks)
+- **[Styling](#styling)**
+- **[React](#react)**
+  - [React/JSX Basics](#reactjsx-basics)
+  - [Forwarding refs](#forwarding-refs)
+- **[LeafyGreen API](#leafygreen)**
+  - [Consuming darkMode from `LeafyGreenProvider`](#consuming-darkmode-from-leafygreenprovider)
+  - [Passing darkMode to children](#passing-darkMode-to-children)
+  - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
+  - [API Patterns](#api-patterns)
 - [References](#references)
 
-## To Contribute
+# Contribution Guide
 
 To propose updates to this style guide, please make the relevant changes in a branch and submit a PR. We review these PRs synchronously in our weekly Team Code Review and collectively gavel on new standards there.
 
@@ -39,7 +42,7 @@ _Example_
 
 ---
 
-## Typing
+# TypeScript
 
 ### Prefer constants and types over enums.
 
@@ -76,6 +79,8 @@ enum someConstant = {
 Maintains organization within files and makes them consistently more readable.
 
 ---
+
+# JavaScript
 
 ## Functions
 
@@ -251,34 +256,119 @@ The main issue with strict BEM syntax is that it creates a poor user experience 
 
 ### Use a space before every prop defined in an interface
 
+<!-- TODO: -->
+
 ---
 
-## JSX/React
+# Styling
 
-### Prefer factoring out any more-than-1-line event handlers into their own functions
+### Avoid writing Emotion styles directly in JSX
 
 #### Why
 
-Minimizes inline javascript logic, and also creates a named function that will show up in stack traces.
+Enforces a separation of concerns and helps with readability of both the styles and markup.
 
 #### Prefer
 
 ```typescript
-const handleClick = (e) => {
-    e.preventDefault()
-    setState(curr => !curr)
-}
-
-<button onClick={handleClick}>
+const myStyles = css`...`
+<div className={myStyles} />
 ```
 
 #### Avoid
 
 ```typescript
-<button onClick={(e) => {
-    e.preventDefault()
-    setState(curr => !curr)
-}}>
+<div className={css`...`} />
+```
+
+---
+
+### Postfix style variable names appropriately
+
+#### Why
+
+When using Emotion `css`, postfix your variable with the word `styles` (or `style`).
+When creating a selector with `createUniqueClassName`, postfix the variable with `className`.
+This helps with readability, and makes it easier to tell what a given variable is meant to do.
+
+#### Prefer
+
+```typescript
+const myComponentStyles = css``;
+const myComponentClassName = createUniqueClassName();
+```
+
+---
+
+### Avoid CSS Variables
+
+#### Why
+
+While custom properties (i.e. `var(--my-color)`) can be powerful, try to avoid using them since it can be hard to trace the origin of these variables vs. JS variables. Within a single component, prefer using a JS constant to store a style token. If you want to leverage the inheritance afforded by custom properties, consider if using static selectors can solve the problem.
+
+#### Prefer
+
+```typescript
+const childClassName = createUniqueClassName();
+
+const parentStyles = css`
+  .${childClassName} {
+    color: blue;
+  }
+
+  &:hover .${childClassName} {
+    color: green;
+  }
+`;
+```
+
+#### Avoid
+
+```typescript
+const parentStyles = css`
+  --color: blue
+  &:hover {
+    --color: green;
+  }
+`;
+
+const childStyles = css`
+  color: var(--color);
+`;
+```
+
+---
+
+# React
+
+## React/JSX Basics
+
+### Prefer factoring out complex (i.e. >1 line) event handlers into their own functions
+
+#### Why
+
+Minimizes inline JavaScript logic, and creates a named function that will show up in stack traces. Helps with debugging.
+
+#### Prefer
+
+```jsx
+const handleClick = e => {
+  e.preventDefault();
+  setState(curr => !curr);
+};
+
+<button onClick={handleClick} />;
+```
+
+#### Avoid
+
+```jsx
+<button
+  onClick={e => {
+    e.preventDefault();
+    setState(curr => !curr);
+  }}
+/>
 ```
 
 ---
@@ -291,21 +381,21 @@ Standardizes how we name and search for functions that handle events
 
 #### Prefer
 
-```typescript
+```jsx
 const handleClick = () => {};
 return <button onClick={handleClick} />;
 ```
 
 #### Avoid
 
-```typescript
+```jsx
 const onClick = () => {};
 return <button onClick={onClick} />;
 ```
 
 ---
 
-### Prefer using fragments over divs whenever possible
+### Prefer using fragments over `div` whenever possible
 
 #### Why
 
@@ -313,17 +403,64 @@ Consolidates the number of levels of DOM
 
 #### Prefer
 
-```typescript
+```jsx
 return <></>;
 ```
 
 #### Avoid
 
-```typescript
+```jsx
 return <div></div>;
 ```
 
 ---
+
+### Avoid `cloneElement`
+
+#### Why
+
+Using cloneElement is uncommon and can lead to fragile code.
+Prefer render props, context, or custom Hook
+
+Passing a **render prop** into a component instead of cloning a prop/child is more explicit, and makes it easier to trace a child component's state.
+
+See [react.dev](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop) for more details.
+
+#### Prefer
+
+```jsx
+// MyComponent.tsx
+return (
+  <Menu
+    renderTrigger={triggerProps => (
+      <Button {...triggerProps} leftGlyph="Beaker" />
+    )}
+  />
+);
+```
+
+```jsx
+// Menu.tsx
+const triggerProps = {...}
+return (
+  <>
+    {renderTrigger(triggerProps)}
+  </>
+);
+```
+
+#### Avoid
+
+```jsx
+// MyComponent.tsx
+return <Menu trigger={<Button leftGlyph="Beaker">}>;
+```
+
+```jsx
+// Menu.tsx
+const triggerProps = {...}
+return <>{React.cloneElement(trigger, triggerProps)}</>;
+```
 
 ### Prefer using spread operator to avoid mutation of arrays and objects
 
@@ -354,11 +491,13 @@ function changeValues(object) {
 
 ### Avoid nesting ternary operators
 
+<!-- TODO: -->
+
 ---
 
 ### Prefer utility functions when full component state is not required
 
----
+<!-- TODO: -->
 
 ## Forwarding refs
 
@@ -390,6 +529,8 @@ const Button = props => <button>{props.children}</button>;
 ```
 
 ---
+
+# LeafyGreen
 
 ## Consuming `darkMode` from `LeafyGreenProvider`
 
@@ -459,86 +600,7 @@ return (
 
 ---
 
-## CSS in JS
-
-### Avoid writing Emotion styles directly in JSX
-
-#### Why
-
-Enforces a separation of concerns and helps with readability of both the styles and markup.
-
-#### Prefer
-
-```typescript
-const myStyles = css`...`
-<div className={myStyles} />
-```
-
-#### Avoid
-
-```typescript
-<div className={css`...`} />
-```
-
----
-
-### Postfix style variable names appropriately
-
-#### Why
-
-When using Emotion `css`, postfix your variable with the word `styles` (or `style`). When creating a selector with `createUniqueClassName`, postfix the variable with `className`.
-
-#### Prefer
-
-```typescript
-const myComponentStyles = css``;
-const myComponentClassName = createUniqueClassName();
-```
-
----
-
-### Avoid CSS Variables
-
-#### Why
-
-While custom properties (i.e. var(--my-color)) can be powerful, we try to avoid using them since it can be hard to trace the origin of these variables vs. JS variables. Within a single component, prefer using a JS constant to store a style token. If you want to leverage the inheritance afforded by custom properties, consider if using static selectors can solve the problem.
-
-#### Prefer
-
-```typescript
-const childClassName = createUniqueClassName();
-
-const parentStyles = css`
-  .${childClassName} {
-    color: blue;
-  }
-
-  &:hover .${childClassName} {
-    color: green;
-  }
-`;
-```
-
-#### Avoid
-
-```typescript
-const parentStyles = css`
-  --color: blue
-  &:hover {
-    --color: green;
-  }
-`;
-
-const childStyles = css`
-  color: var(--color);
-`;
-```
-
----
-
 ## API Patterns
-
----
 
 ### Input Errors
 
@@ -547,8 +609,6 @@ const childStyles = css`
 - Use `state='error'` to show the input with a warning icon and red border. This property must be set to `error` in order for an `errorMessage` to render, otherwise the `errorMessage` will be ignored.
 - Use `errorMessage` prop to set the error message that is displayed next to the input.
 - If `state='error'` but `errorMessage` is not defined, require `aria-describedby`
-
----
 
 ## References
 

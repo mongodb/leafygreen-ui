@@ -58,12 +58,12 @@ export interface BaseTextAreaProps
   /**
    * The message shown below the input element if the value is invalid.
    */
-  errorMessage?: string;
+  errorMessage?: React.ReactNode;
 
   /**
    * The message shown below the input element if the value is valid.
    */
-  successMessage?: string;
+  successMessage?: React.ReactNode;
 
   /**
    * Callback called whenever validation should be run.

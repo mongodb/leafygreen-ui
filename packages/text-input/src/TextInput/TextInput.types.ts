@@ -116,12 +116,12 @@ export interface BaseTextInputProps
   /**
    * The message shown below the input field if the value is invalid.
    */
-  errorMessage?: string;
+  errorMessage?: React.ReactNode;
 
   /**
    * The message shown below the input field if the value is valid.
    */
-  successMessage?: string;
+  successMessage?: React.ReactNode;
 
   /**
    * The current state of the TextInput. This can be none, valid, or error.

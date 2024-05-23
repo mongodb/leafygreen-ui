@@ -68,8 +68,12 @@ export const LiveExample: StoryFn<ConfirmationModalProps> = ({
       <ConfirmationModal
         {...args}
         open={open}
-        onCancel={handleClose}
-        onConfirm={handleClose}
+        confirmButtonProps={{
+          onClick: handleClose,
+        }}
+        cancelButtonProps={{
+          onClick: handleClose,
+        }}
         darkMode={darkMode}
       />
     </div>
