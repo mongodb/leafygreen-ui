@@ -2,11 +2,6 @@ import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import {
-  createDescendantsContext,
-  DescendantsProvider,
-  useInitDescendants,
-} from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -17,6 +12,10 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_TABS } from '../constants';
+import {
+  TabDescendantsProvider,
+  TabPanelDescendantsProvider,
+} from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
 
@@ -29,13 +28,6 @@ import {
   tabPanelsElementClassName,
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
-
-export const TabsDescendantsContext = createDescendantsContext<HTMLDivElement>(
-  'TabsDescendantsContext',
-);
-
-export const TabPanelsDescendantsContext =
-  createDescendantsContext<HTMLDivElement>('TabPanelsDescendantsContext');
 
 /**
  * # Tabs
@@ -80,10 +72,6 @@ const Tabs = (props: AccessibleTabsProps) => {
   };
 
   const id = useIdAllocator({ prefix: rest.id || 'tabs' });
-  const { descendants: tabDescendants, dispatch: tabDispatch } =
-    useInitDescendants<HTMLDivElement>();
-  const { descendants: tabPanelDescendants, dispatch: tabPanelDispatch } =
-    useInitDescendants<HTMLDivElement>();
 
   const [uncontrolledSelected, setUncontrolledSelected] = useState(0);
   const [selected, setSelected] = [
@@ -169,16 +157,8 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   return (
     <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
-      <DescendantsProvider
-        context={TabsDescendantsContext}
-        descendants={tabDescendants}
-        dispatch={tabDispatch}
-      >
-        <DescendantsProvider
-          context={TabPanelsDescendantsContext}
-          descendants={tabPanelDescendants}
-          dispatch={tabPanelDispatch}
-        >
+      <TabDescendantsProvider>
+        <TabPanelDescendantsProvider>
           <div {...rest} className={className} data-lgid={dataLgId}>
             <div className={tabContainerStyle} id={id}>
               <div
@@ -206,8 +186,8 @@ const Tabs = (props: AccessibleTabsProps) => {
               {renderedTabPanels}
             </div>
           </div>
-        </DescendantsProvider>
-      </DescendantsProvider>
+        </TabPanelDescendantsProvider>
+      </TabDescendantsProvider>
     </LeafyGreenProvider>
   );
 };

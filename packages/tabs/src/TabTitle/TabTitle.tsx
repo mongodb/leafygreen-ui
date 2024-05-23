@@ -7,19 +7,16 @@ import React, {
 } from 'react';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
-import {
-  useDescendant,
-  useDescendantsContext,
-} from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
-  TabPanelsDescendantsContext,
-  TabsDescendantsContext,
-} from '../Tabs/Tabs';
+  useTabDescendant,
+  useTabDescendantsContext,
+  useTabPanelDescendantsContext,
+} from '../context';
 
 import {
   listTitleChildrenStyles,
@@ -40,13 +37,9 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
 }: BaseTabTitleProps) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
-  const { index, ref, id } = useDescendant(TabsDescendantsContext);
-  const { descendants: tabDescendants } = useDescendantsContext(
-    TabsDescendantsContext,
-  );
-  const { descendants: tabPanelDescendants } = useDescendantsContext(
-    TabPanelsDescendantsContext,
-  );
+  const { index, ref, id } = useTabDescendant();
+  const { tabDescendants } = useTabDescendantsContext();
+  const { tabPanelDescendants } = useTabPanelDescendantsContext();
 
   const theme = darkMode ? Theme.Dark : Theme.Light;
   const selected = index === selectedIndex;
