@@ -351,7 +351,7 @@ Minimizes inline JavaScript logic, and creates a named function that will show u
 
 #### Prefer
 
-```tsx
+```jsx
 const handleClick = e => {
   e.preventDefault();
   setState(curr => !curr);
@@ -362,7 +362,7 @@ const handleClick = e => {
 
 #### Avoid
 
-```tsx
+```jsx
 <button
   onClick={e => {
     e.preventDefault();
@@ -381,14 +381,14 @@ Standardizes how we name and search for functions that handle events
 
 #### Prefer
 
-```tsx
+```jsx
 const handleClick = () => {};
 return <button onClick={handleClick} />;
 ```
 
 #### Avoid
 
-```tsx
+```jsx
 const onClick = () => {};
 return <button onClick={onClick} />;
 ```
@@ -403,17 +403,61 @@ Consolidates the number of levels of DOM
 
 #### Prefer
 
-```tsx
+```jsx
 return <></>;
 ```
 
 #### Avoid
 
-```tsx
+```jsx
 return <div></div>;
 ```
 
 ---
+
+### Prefer render props over `cloneElement`
+
+#### Why
+
+Passing a render prop into a component instead of cloning a prop/child is more explicit, and makes it easier to trace a child component's state.
+
+See [react.dev](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop) for more details.
+
+#### Prefer
+
+```jsx
+// MyComponent.tsx
+return (
+  <Menu
+    renderTrigger={triggerProps => (
+      <Button {...triggerProps} leftGlyph="Beaker" />
+    )}
+  />
+);
+```
+
+```jsx
+// Menu.tsx
+const triggerProps = {...}
+return (
+  <>
+    {renderTrigger(triggerProps)}
+  </>
+);
+```
+
+#### Avoid
+
+```jsx
+// MyComponent.tsx
+return <Menu trigger={<Button leftGlyph="Beaker">}>;
+```
+
+```jsx
+// Menu.tsx
+const triggerProps = {...}
+return <>{React.cloneElement(trigger, triggerProps)}</>;
+```
 
 ### Prefer using spread operator to avoid mutation of arrays and objects
 
