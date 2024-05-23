@@ -1,5 +1,17 @@
 # @lg-chat/message
 
+## 4.2.0
+
+### Minor Changes
+
+- 691877cd: Adds the links prop which renders link data as rich links after the message content
+
+### Patch Changes
+
+- f5da3fe9: The verified answer banner now uses sentence case instead of title case
+- Updated dependencies [691877cd]
+  - @lg-chat/rich-links@1.0.0
+
 ## 4.1.1
 
 ### Patch Changes
