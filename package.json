@@ -13,6 +13,7 @@
     "init17": "yarn && yarn build:cli && npx ts-node tools/test/scripts/install-react17.ts && yarn build",
     "create-package": "lg create",
     "preactBuild": "yarn prebuild && yarn build",
+    "postinstall": "yarn prebuild",
     "prebuild": "yarn build:cli",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
