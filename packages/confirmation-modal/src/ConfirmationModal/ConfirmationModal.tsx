@@ -32,7 +32,7 @@ export const ConfirmationModal = React.forwardRef(
       title,
       requiredInputText,
       buttonText,
-      submitDisabled = false,
+      submitDisabled,
       variant = Variant.Default,
       onConfirm,
       onCancel,
@@ -72,9 +72,9 @@ export const ConfirmationModal = React.forwardRef(
     }, [requiredInputText, darkMode]);
 
     // TODO: remove - onConfirm is deprecated
-    const _onConfirm = confirmButtonProps?.onClick || onConfirm;
+    const _onConfirm = onConfirm || confirmButtonProps?.onClick;
     // TODO: remove - onCancel is deprecated
-    const _onCancel = cancelButtonProps?.onClick || onCancel;
+    const _onCancel = onCancel || cancelButtonProps?.onClick;
 
     const handleConfirm = () => {
       _onConfirm?.();
@@ -87,7 +87,8 @@ export const ConfirmationModal = React.forwardRef(
     };
 
     // TODO: remove - submitDisabled is deprecated
-    const isConfirmDisabled = confirmButtonProps?.disabled || submitDisabled;
+    const isConfirmDisabled =
+      submitDisabled ?? confirmButtonProps?.disabled ?? false;
 
     return (
       <Modal

@@ -29,19 +29,19 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
 
   /**
    * Callback fired when the primary action button is clicked.
-   * @deprecated
+   * @deprecated Use `confirmButtonProps`.
    */
   onConfirm?: () => void;
 
   /**
    * Callback fired when the cancel button is clicked.
-   * @deprecated
+   * @deprecated Use `cancelButtonProps`.
    */
   onCancel?: () => void;
 
   /**
    * Text rendered in the primary button. Defaults to `"Confirm"`
-   * @deprecated
+   * @deprecated Use `confirmButtonProps`.
    */
   buttonText?: string;
 
@@ -57,7 +57,7 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
 
   /**
    * If `true`, the primary action button will be disabled
-   * @deprecated
+   * @deprecated Use `confirmButtonProps`.
    */
   submitDisabled?: boolean;
 

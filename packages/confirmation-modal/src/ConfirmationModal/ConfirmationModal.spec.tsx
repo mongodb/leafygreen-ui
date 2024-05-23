@@ -128,6 +128,7 @@ describe('packages/confirmation-modal', () => {
 
       const { getByText } = renderModal({
         open: true,
+        onConfirm: undefined,
         confirmButtonProps: {
           onClick: confirmSpy,
         },
@@ -167,6 +168,7 @@ describe('packages/confirmation-modal', () => {
 
       const { getByText } = renderModal({
         open: true,
+        onCancel: undefined,
         cancelButtonProps: {
           onClick: cancelSpy,
         },
@@ -322,25 +324,60 @@ describe('packages/confirmation-modal', () => {
     });
   });
 
-  describe('submit is disabled when', () => {
-    // TODO: remove this test - submitDisabled is deprecated
-    test('"submitDisabled" prop is set', () => {
+  describe('confirm is not disabled when', () => {
+    test('By default', () => {
       const { getByText } = renderModal({
         open: true,
-        submitDisabled: true,
       });
 
       const confirmationButton = getByText('Confirm').closest('button');
-      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'false');
+    });
 
+    // TODO: remove this test - submitDisabled is deprecated
+    test('"submitDisabled" prop is false and "confirmButtonProps" has "disabled: true"', async () => {
+      const { getByText, getByRole } = renderModal({
+        open: true,
+        submitDisabled: false,
+        confirmButtonProps: {
+          disabled: true,
+        },
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'false');
+
+      const modal = getByRole('dialog');
       const button = getByText('Confirm');
       expect(button).toBeVisible();
 
       // Modal doesn't close when button is clicked
       fireEvent.click(button);
-      expect(button).toBeVisible();
+      await waitForElementToBeRemoved(modal);
     });
 
+    test('"confirmButtonProps" has "disabled: false"', async () => {
+      const { getByText, getByRole } = renderModal({
+        open: true,
+        confirmButtonProps: {
+          disabled: false,
+        },
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'false');
+
+      const modal = getByRole('dialog');
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      // Modal doesn't close when button is clicked
+      fireEvent.click(button);
+      await waitForElementToBeRemoved(modal);
+    });
+  });
+
+  describe('confirm is disabled when', () => {
     test('"confirmButtonProps" includes "disabled"', () => {
       const { getByText } = renderModal({
         open: true,
@@ -361,7 +398,25 @@ describe('packages/confirmation-modal', () => {
     });
 
     // TODO: remove this test - submitDisabled is deprecated
-    test('"submitDisabled" prop is set and "confirmButtonProps" has "disabled: false"', () => {
+    test('"submitDisabled" prop is set', () => {
+      const { getByText } = renderModal({
+        open: true,
+        submitDisabled: true,
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+
+      const button = getByText('Confirm');
+      expect(button).toBeVisible();
+
+      // Modal doesn't close when button is clicked
+      fireEvent.click(button);
+      expect(button).toBeVisible();
+    });
+
+    // TODO: remove this test - submitDisabled is deprecated
+    test('"submitDisabled" prop is true and "confirmButtonProps" has "disabled: false"', () => {
       const { getByText } = renderModal({
         open: true,
         submitDisabled: true,
@@ -381,6 +436,26 @@ describe('packages/confirmation-modal', () => {
       expect(button).toBeVisible();
     });
 
+    test('"confirmButtonProps" has "disabled: true" and the "requiredInputText" prop is also set', () => {
+      const { getByText, getByLabelText } = renderModal({
+        open: true,
+        confirmButtonProps: {
+          disabled: true,
+        },
+        requiredInputText: 'Confirm',
+      });
+
+      const confirmationButton = getByText('Confirm').closest('button');
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+
+      const textInput = getByLabelText('Type "Confirm" to confirm your action');
+      expect(textInput).toBeVisible();
+
+      fireEvent.change(textInput, { target: { value: 'Confirm' } });
+      expect(confirmationButton).toHaveAttribute('aria-disabled', 'true');
+    });
+
+    // TODO: remove this test - submitDisabled is deprecated
     test('"submitDisabled" prop is set and the "requiredInputText" prop is also set', () => {
       const { getByText, getByLabelText } = renderModal({
         open: true,
