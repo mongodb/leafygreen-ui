@@ -160,8 +160,6 @@ ConfirmationModal.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
   darkMode: PropTypes.bool,
-  // eslint-disable-next-line react/forbid-prop-types
   confirmButtonProps: PropTypes.objectOf(PropTypes.any),
-  // eslint-disable-next-line react/forbid-prop-types
   cancelButtonProps: PropTypes.objectOf(PropTypes.any),
 };
