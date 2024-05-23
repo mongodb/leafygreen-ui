@@ -415,11 +415,14 @@ return <div></div>;
 
 ---
 
-### Prefer render props over `cloneElement`
+### Avoid `cloneElement`
 
 #### Why
 
-Passing a render prop into a component instead of cloning a prop/child is more explicit, and makes it easier to trace a child component's state.
+Using cloneElement is uncommon and can lead to fragile code.
+Prefer render props, context, or custom Hook
+
+Passing a **render prop** into a component instead of cloning a prop/child is more explicit, and makes it easier to trace a child component's state.
 
 See [react.dev](https://react.dev/reference/react/cloneElement#passing-data-with-a-render-prop) for more details.
 
