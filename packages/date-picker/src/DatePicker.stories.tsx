@@ -1,14 +1,10 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 
 import Button from '@leafygreen-ui/button';
 import {
   DateType,
-  isValidDate,
   Month,
   newUTC,
   testLocales,
@@ -18,7 +14,6 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
-import { Overline } from '@leafygreen-ui/typography';
 
 import { MAX_DATE, MIN_DATE } from './shared/constants';
 import {
@@ -130,15 +125,6 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
           console.log('Storybook: onChange🚨', { value: e.target.value })
         }
       />
-      <br />
-      <Overline>Current value</Overline>
-      <code>
-        {isValidDate(value)
-          ? value.toISOString()
-          : isNull(value) || isUndefined(value)
-          ? String(value)
-          : value.toDateString()}
-      </code>
     </div>
   );
 };

@@ -66,10 +66,8 @@ const meta: StoryMetaType<typeof SegmentedControl> = {
     followFocus: { control: 'boolean' },
     'aria-controls': { control: 'text' },
     size: {
-      control: {
-        type: 'radio',
-        options: [...Object.values(Size)],
-      },
+      control: 'select',
+      options: Object.values(Size),
     },
     darkMode: storybookArgTypes.darkMode,
     baseFontSize: storybookArgTypes.updatedBaseFontSize,

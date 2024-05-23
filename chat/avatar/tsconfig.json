@@ -18,6 +18,9 @@
       "path": "../leafygreen-chat-provider"
     },
     {
+      "path": "../../packages/avatar"
+    }, 
+    {
       "path": "../../packages/emotion"
     }, 
     {
