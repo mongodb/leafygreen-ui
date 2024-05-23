@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.4.0
+
+### Minor Changes
+
+- ae44834e: Exports type `GlyphName`, a union of all default LeafyGreen icon names
+
 ## 12.3.0
 
 ### Minor Changes
