@@ -1,5 +1,11 @@
 # @leafygreen-ui/callout
 
+## 9.0.22
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 9.0.21
 
 ### Patch Changes

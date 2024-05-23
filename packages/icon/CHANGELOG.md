@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 12.3.0
+
+### Minor Changes
+
+- 684c87f1: Adds `Moon` and `Sun` glyphs.
+
+## 12.2.0
+
+### Minor Changes
+
+- eeea253c: Adds `Format` `Eraser` glyphs, and updates `LogIn` glyph.
+
 ## 12.1.0
 
 ### Minor Changes

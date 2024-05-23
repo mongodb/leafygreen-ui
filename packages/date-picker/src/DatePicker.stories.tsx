@@ -1,14 +1,10 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-import isNull from 'lodash/isNull';
-import isUndefined from 'lodash/isUndefined';
 
 import Button from '@leafygreen-ui/button';
 import {
   DateType,
-  isValidDate,
   Month,
   newUTC,
   testLocales,
@@ -18,7 +14,6 @@ import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
 import { Size } from '@leafygreen-ui/tokens';
-import { Overline } from '@leafygreen-ui/typography';
 
 import { MAX_DATE, MIN_DATE } from './shared/constants';
 import {
@@ -87,8 +82,8 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
     label: { control: 'text' },
     min: { control: 'date' },
     max: { control: 'date' },
-    size: { control: 'select' },
-    state: { control: 'select' },
+    size: { control: 'select', options: Object.values(Size) },
+    state: { control: 'select', options: Object.values(DatePickerState) },
     timeZone: {
       control: 'select',
       options: [undefined, ...testTimeZoneLabels],
@@ -130,17 +125,13 @@ export const LiveExample: StoryFn<typeof DatePicker> = props => {
           console.log('Storybook: onChange🚨', { value: e.target.value })
         }
       />
-      <br />
-      <Overline>Current value</Overline>
-      <code>
-        {isValidDate(value)
-          ? value.toISOString()
-          : isNull(value) || isUndefined(value)
-          ? String(value)
-          : value.toDateString()}
-      </code>
     </div>
   );
+};
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
 export const Uncontrolled: StoryFn<typeof DatePicker> = props => {

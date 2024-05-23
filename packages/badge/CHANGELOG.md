@@ -1,5 +1,11 @@
 # @leafygreen-ui/badge
 
+## 8.1.3
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
 ## 8.1.2
 
 ### Patch Changes
