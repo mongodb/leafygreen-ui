@@ -1,5 +1,13 @@
 # @lg-tools/cli
 
+## 0.5.12-beta.0
+
+### Patch Changes
+
+- 445a9c4dc: Pre-release of cli.
+- Updated dependencies [445a9c4dc]
+  - @lg-tools/migrator@0.0.2-beta.0
+
 ## 0.5.11
 
 ### Patch Changes
