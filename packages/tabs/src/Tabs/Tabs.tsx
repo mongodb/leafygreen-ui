@@ -84,7 +84,7 @@ const Tabs = (props: AccessibleTabsProps) => {
     [children],
   );
 
-  const handleChange = useCallback(
+  const handleClickTab = useCallback(
     (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
       setSelected?.(index);
     },
@@ -99,7 +99,7 @@ const Tabs = (props: AccessibleTabsProps) => {
     return [enabledIndexes, enabledIndexes.indexOf(selected!)];
   }, [childrenArray, selected]);
 
-  const handleArrowKeyPress = useCallback(
+  const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!(e.metaKey || e.ctrlKey)) {
         if (e.key === keyMap.ArrowRight) {
@@ -132,12 +132,12 @@ const Tabs = (props: AccessibleTabsProps) => {
       name,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
-        handleArrowKeyPress(event);
+        handleKeyDown(event);
       },
       onClick: !disabled
         ? (event: React.MouseEvent, index: number) => {
             onClick?.(event);
-            handleChange(event, index);
+            handleClickTab(event, index);
           }
         : undefined,
       selectedIndex: selected,
