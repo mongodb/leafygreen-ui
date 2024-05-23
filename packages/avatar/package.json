@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/avatar",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "LeafyGreen UI Avatar",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/icon": "^12.1.0",
+    "@leafygreen-ui/icon": "^12.4.0",
     "@leafygreen-ui/lib": "^13.4.0",
     "@leafygreen-ui/logo": "^9.1.0",
     "@leafygreen-ui/palette": "^4.0.10",

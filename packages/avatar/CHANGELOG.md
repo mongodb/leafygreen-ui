@@ -1,5 +1,20 @@
 # @leafygreen-ui/avatar
 
+## 1.0.0
+
+### Major Changes
+
+- ae44834e: Moves base Avatar component to `@leafygreen-ui` from `@lg-chat`.
+
+  Updates supported sizes, and renames `variant` prop to `format`.
+
+  Avatar no longer calls `getInitials` internally, and will render the first two characters of the `text` prop. `getInitials` must now be called external to Avatar, and one of its results (`initials`, `givenInitial` or `surnameInitial`) passed into the `text` prop.
+
+### Patch Changes
+
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/icon@12.4.0
+
 ## Forked from `@lg-chat/avatar` at v3.0.1
 
 ## @lg-chat/avatar@3.0.1

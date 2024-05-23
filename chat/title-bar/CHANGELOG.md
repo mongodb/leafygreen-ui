@@ -1,5 +1,16 @@
 # @lg-chat/title-bar
 
+## 2.0.3
+
+### Patch Changes
+
+- ae44834e: Removes `color` prop from Avatar
+- Updated dependencies [ae44834e]
+- Updated dependencies [ae44834e]
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/icon@12.4.0
+  - @lg-chat/avatar@3.1.0
+
 ## 2.0.2
 
 ### Patch Changes

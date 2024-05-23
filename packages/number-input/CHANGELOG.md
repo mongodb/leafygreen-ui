@@ -1,5 +1,18 @@
 # @leafygreen-ui/number-input
 
+## 2.1.0
+
+### Minor Changes
+
+- 3b86b3bd: Allow type of `ReactNode` for `errorMessage` and `successMessage` props in `NumberInput`, `TextArea`, and `TextInput`
+
+### Patch Changes
+
+- Updated dependencies [ae44834e]
+- Updated dependencies [3273045c]
+  - @leafygreen-ui/icon@12.4.0
+  - @leafygreen-ui/form-field@1.2.3
+
 ## 2.0.0
 
 ### Major Changes

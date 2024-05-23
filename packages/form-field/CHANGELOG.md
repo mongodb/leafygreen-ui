@@ -1,5 +1,13 @@
 # @leafygreen-ui/form-field
 
+## 1.2.3
+
+### Patch Changes
+
+- 3273045c: Correctly sets the `readOnly` prop in the `useFormFieldProps` hook. Previously, `readOnly` was only added to an input if `disabled` was true. Now, passing the `readOnly` prop adds it to the resulting input.
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/icon@12.4.0
+
 ## 1.2.2
 
 ### Patch Changes
