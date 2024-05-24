@@ -15,6 +15,7 @@ interface UpdatedChildrenArgs extends Pick<MenuProps, 'children' | 'open'> {
   setFocus: (el: HTMLElement | null) => void;
 }
 
+/** @deprecated */
 export const useUpdatedChildren = ({
   children,
   open,
