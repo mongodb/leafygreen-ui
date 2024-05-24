@@ -12,6 +12,7 @@ export const MenuContext = createContext<MenuData>({
   theme: 'light',
   darkMode: false,
   onItemFocus: () => {},
+  highlightIndex: undefined,
 });
 
 export default MenuContext;
