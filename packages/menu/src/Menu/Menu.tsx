@@ -16,42 +16,19 @@ import {
   useForceRerender,
 } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType, keyMap, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { MenuContext } from '../MenuContext/MenuContext';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { type SubMenuProps } from '../SubMenu/';
 
+import {
+  rootMenuStyle,
+  rootMenuThemeStyles,
+  scrollContainerStyle,
+} from './Menu.styles';
 import { MenuProps, type SubMenuType } from './Menu.types';
-
-const rootMenuStyle = css`
-  width: 210px;
-  border-radius: 12px;
-  overflow: auto;
-  padding: 14px 0;
-`;
-
-const rootMenuThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.black};
-    border: 1px solid ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark3};
-    border: 1px solid ${palette.gray.dark2};
-  `,
-};
-
-const scrollContainerStyle = css`
-  overflow: auto;
-  list-style: none;
-  margin-block-start: 0px;
-  margin-block-end: 0px;
-  padding-inline-start: 0px;
-  padding: 0px;
-`;
 
 /**
  *
