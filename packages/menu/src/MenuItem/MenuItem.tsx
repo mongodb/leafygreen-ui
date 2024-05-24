@@ -58,7 +58,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     fwdRef: React.Ref<any>,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme } = useContext(MenuContext);
+    const { theme, onItemFocus } = useContext(MenuContext);
     const { id, index, ref } = useDescendant(MenuDescendantsContext, fwdRef);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
@@ -147,6 +147,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           {...baseProps}
           {...anchorProps}
           {...rest}
+          onFocus={onItemFocus}
           className={cx(
             menuItemContainerClassName,
             menuItemContainerStyle,
