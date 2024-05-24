@@ -1,4 +1,12 @@
-export { RichLink, type RichLinkProps } from './RichLink';
+export {
+  RichLink,
+  type RichLinkProps,
+  createRichLinkVariant,
+  type CreateRichLinkVariantArgs,
+  type RichLinkVariantMap,
+  type RichLinkVariantName,
+  richLinkVariants,
+} from './RichLink';
 export {
   RichLinkBadge,
   type RichLinkBadgeProps,
