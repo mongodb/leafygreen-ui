@@ -6,7 +6,11 @@ import {
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
+import {
+  useBackdropClick,
+  useEventListener,
+  usePrevious,
+} from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
@@ -16,6 +20,7 @@ import {
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
 
+import { useHighlightReducer } from './utils/HighlightReducer';
 import { useMenuHeight } from './utils/useMenuHeight';
 import { useUpdatedChildren } from './utils/useUpdatedChildren';
 import {
@@ -97,6 +102,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     maxHeight,
   });
 
+  /** @deprecated */
   const focusedRef = useRef<HTMLElement | null>(null);
 
   const setFocus = (el: HTMLElement | null) => {
@@ -108,7 +114,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     el.focus();
   };
 
-  const { updatedChildren, refs } = useUpdatedChildren({
+  const { updatedChildren: _c, refs: _r } = useUpdatedChildren({
     children,
     open,
     focusedRef,
@@ -118,34 +124,34 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setFocus,
   });
 
-  useEffect(() => {
-    if (open) {
-      hasSetInitialFocus.current = false;
-      hasSetInitialOpen.current = false;
-    }
-  }, [open]);
-
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
-  function handleKeyDown(e: KeyboardEvent) {
-    let refToFocus: HTMLElement;
+  const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
+    descendants,
+    nextIndex => {
+      // TODO: wait for nextTick?
+      // descendants may not be initialized yet on initial open
+      descendants[nextIndex]?.element?.focus();
+    },
+  );
 
+  const prevOpen = usePrevious(open);
+  useEffect(() => {
+    if (open && !prevOpen) {
+      updateHighlightIndex('first');
+    }
+  }, [open, prevOpen, updateHighlightIndex]);
+
+  function handleKeyDown(e: KeyboardEvent) {
     switch (e.key) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          refs[(refs.indexOf(focusedRef.current!) + 1) % refs.length];
-
-        setFocus(refToFocus);
+        updateHighlightIndex('next');
         break;
 
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
-        refToFocus =
-          refs[
-            (refs.indexOf(focusedRef.current!) - 1 + refs.length) % refs.length
-          ];
-        setFocus(refToFocus);
+        updateHighlightIndex('prev');
         break;
 
       case keyMap.Tab:
@@ -162,7 +168,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.Space:
       case keyMap.Enter:
         if (!open) {
-          setFocus(refs[0]);
+          updateHighlightIndex('first');
         }
         break;
     }
@@ -193,6 +199,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         value={{
           theme,
           darkMode,
+          highlightIndex,
           onItemFocus: ({ target }) => {
             focusedRef.current = target;
           },
@@ -227,8 +234,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               onClick={e => e.stopPropagation()}
               ref={popoverRef}
             >
-              {updatedChildren}
-              {/* {children} */}
+              {/* {updatedChildren} */}
+              {children}
             </ul>
           </div>
         </Popover>

@@ -6,4 +6,5 @@ export interface MenuData {
   theme: Theme;
   darkMode: boolean;
   onItemFocus: FocusEventHandler<HTMLElement>;
+  highlightIndex?: number;
 }
