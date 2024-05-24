@@ -318,17 +318,21 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       : { spacing, usePortal }),
   };
 
-  const providerData = useMemo(() => {
-    return { theme, darkMode };
-  }, [theme, darkMode]);
-
   const popoverContent = (
     <DescendantsProvider
       context={MenuDescendantsContext}
       descendants={descendants}
       dispatch={dispatch}
     >
-      <MenuContext.Provider value={providerData}>
+      <MenuContext.Provider
+        value={{
+          theme,
+          darkMode,
+          onItemFocus: ({ target }) => {
+            focusedRef.current = target;
+          },
+        }}
+      >
         <Popover
           key="popover"
           active={open}
@@ -358,7 +362,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               onClick={e => e.stopPropagation()}
               ref={popoverRef}
             >
-              {updatedChildren}
+              {/* {updatedChildren} */}
+              {children}
             </ul>
           </div>
         </Popover>
