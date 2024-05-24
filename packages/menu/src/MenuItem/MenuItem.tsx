@@ -59,7 +59,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme, onItemFocus } = useContext(MenuContext);
-    const { id, index, ref } = useDescendant(MenuDescendantsContext, fwdRef);
+    const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
     const isDestructive = variant === Variant.Destructive;
