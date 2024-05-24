@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
@@ -8,7 +9,9 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import MenuContext from '../MenuContext/MenuContext';
+import MenuContext, {
+  MenuDescendantsContext,
+} from '../MenuContext/MenuContext';
 import {
   activeDescriptionTextStyle,
   activeIconStyle,
@@ -52,10 +55,11 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       variant = Variant.Default,
       ...rest
     },
-    ref: React.Ref<any>,
+    fwdRef: React.Ref<any>,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme } = useContext(MenuContext);
+    const { id, index, ref } = useDescendant(MenuDescendantsContext, fwdRef);
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
     const isDestructive = variant === Variant.Destructive;
@@ -81,7 +85,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       });
 
     const baseProps = {
-      ref,
       role: 'menuitem',
       tabIndex: -1,
       'aria-disabled': disabled,
@@ -140,6 +143,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     return (
       <li role="none">
         <Component
+          ref={ref}
           {...baseProps}
           {...anchorProps}
           {...rest}
@@ -158,6 +162,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           )}
         >
           {content}
+          {index}
         </Component>
       </li>
     );
