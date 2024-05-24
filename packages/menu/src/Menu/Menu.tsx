@@ -5,9 +5,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
+import {
   DescendantsProvider,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
@@ -90,7 +90,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const [, setClosed] = useState(false);
   const currentSubMenuRef = useRef<SubMenuType | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
-  const popoverRef = useRef<HTMLUListElement | null>(null);
+
+  const { descendants, dispatch } = useInitDescendants();
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
@@ -105,16 +106,11 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Used to trigger a state update when the current subMenu changes since the current subMenu is stored in a ref to avoid extra rerenders on initial load.
   const updateCurrentSubMenu = useForceRerender();
 
-  const triggerRef = useRef<HTMLElement>(null);
-  // This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
-  const availableSpace = useAvailableSpace(refEl || triggerRef, spacing);
-  const memoizedAvailableSpace = useMemo(
-    () => availableSpace,
-    [availableSpace],
-  );
-  const maxMenuHeightValue = !isUndefined(memoizedAvailableSpace)
-    ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
-    : 'unset';
+  const maxMenuHeightValue = useMenuHeight({
+    refEl: refEl || triggerRef,
+    spacing,
+    maxHeight,
+  });
 
   const { updatedChildren, refs } = React.useMemo(() => {
     if (
@@ -327,27 +323,21 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }, [theme, darkMode]);
 
   const popoverContent = (
-    <MenuContext.Provider value={providerData}>
-      <Popover
-        key="popover"
-        active={open}
-        align={align}
-        justify={justify}
-        refEl={refEl}
-        adjustOnMutation={adjustOnMutation}
-        {...popoverProps}
-      >
-        <div
-          className={cx(
-            rootMenuStyle,
-            rootMenuThemeStyles[theme],
-            css`
-            `,
-            className,
-          )}
-          ref={forwardRef}
+    <DescendantsProvider
+      context={MenuDescendantsContext}
+      descendants={descendants}
+      dispatch={dispatch}
+    >
+      <MenuContext.Provider value={providerData}>
+        <Popover
+          key="popover"
+          active={open}
+          align={align}
+          justify={justify}
+          refEl={refEl}
+          adjustOnMutation={adjustOnMutation}
+          {...popoverProps}
         >
-          {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
           <div
             className={cx(
               rootMenuStyle,
