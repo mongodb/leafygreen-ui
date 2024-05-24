@@ -53,7 +53,7 @@ export type DiscriminatedAvatarProps =
       /**
        * The text to render in the Avatar when `format === 'text'`
        */
-      text: string;
+      text: string | null;
 
       /**
        * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
@@ -78,7 +78,7 @@ export type DiscriminatedAvatarProps =
       /**
        * The text to render in the Avatar when `format === 'text'`
        */
-      text?: string;
+      text?: string | null;
     }
   | {
       /**
@@ -89,7 +89,7 @@ export type DiscriminatedAvatarProps =
       /**
        * The text to render in the Avatar when `format === 'text'`
        */
-      text?: string;
+      text?: string | null;
 
       /**
        * The LeafyGreen icon glyph name to render in the Avatar when `format === 'icon'`
