@@ -8,9 +8,11 @@ import React, {
 import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
+  DescendantsProvider,
+  useInitDescendants,
+} from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
-  useAvailableSpace,
   useBackdropClick,
   useEventListener,
   useForceRerender,
@@ -19,10 +21,14 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
-import { MenuContext } from '../MenuContext/MenuContext';
+import {
+  MenuContext,
+  MenuDescendantsContext,
+} from '../MenuContext/MenuContext';
 import MenuSeparator from '../MenuSeparator/MenuSeparator';
 import { type SubMenuProps } from '../SubMenu/';
 
+import { useMenuHeight } from './utils/useMenuHeight';
 import {
   rootMenuStyle,
   rootMenuThemeStyles,
@@ -74,6 +80,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   forwardRef,
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+
+  const popoverRef = useRef<HTMLUListElement | null>(null);
+  const triggerRef = useRef<HTMLElement>(null);
 
   const hasSetInitialFocus = useRef(false);
   const hasSetInitialOpen = useRef(false);
@@ -333,26 +342,38 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             rootMenuStyle,
             rootMenuThemeStyles[theme],
             css`
-              max-height: ${maxMenuHeightValue};
             `,
             className,
           )}
           ref={forwardRef}
         >
           {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-          <ul
-            {...rest}
-            className={scrollContainerStyle}
-            role="menu"
-            onClick={e => e.stopPropagation()}
-            ref={popoverRef}
+          <div
+            className={cx(
+              rootMenuStyle,
+              rootMenuThemeStyles[theme],
+              css`
+                max-height: ${maxMenuHeightValue};
+              `,
+              className,
+            )}
+            ref={forwardRef}
           >
-            {updatedChildren}
-          </ul>
-        </div>
-      </Popover>
-    </MenuContext.Provider>
+            {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
+            <ul
+              {...rest}
+              className={scrollContainerStyle}
+              role="menu"
+              onClick={e => e.stopPropagation()}
+              ref={popoverRef}
+            >
+              {updatedChildren}
+            </ul>
+          </div>
+        </Popover>
+      </MenuContext.Provider>
+    </DescendantsProvider>
   );
 
   if (trigger) {
