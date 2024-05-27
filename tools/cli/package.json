@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@lg-tools/build": "0.5.1",
+    "@lg-tools/codemods": "0.0.1",
     "@lg-tools/create": "0.2.7",
     "@lg-tools/install": "0.1.8",
     "@lg-tools/link": "0.2.3",
@@ -25,7 +26,6 @@
     "@lg-tools/test": "0.4.6",
     "@lg-tools/update": "0.1.8",
     "@lg-tools/validate": "0.1.10",
-    "@lg-tools/migrator": "0.0.1",
     "commander": "^11.0.0",
     "read-pkg-up": "7.0.1"
   }

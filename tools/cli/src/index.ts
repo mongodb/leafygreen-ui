@@ -1,9 +1,9 @@
 import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
+import { migrator } from '@lg-tools/codemods';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
-import { migrator } from '@lg-tools/migrator';
 import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';

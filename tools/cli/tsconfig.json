@@ -17,6 +17,9 @@
       "path": "../build"
     },
     {
+      "path": "../codemods"
+    },
+    {
       "path": "../create"
     },
     {
@@ -39,9 +42,6 @@
     },
     {
       "path": "../validate"
-    },
-    {
-      "path": "../migrator"
     }
   ]
 }
