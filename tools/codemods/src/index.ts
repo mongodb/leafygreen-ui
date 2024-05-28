@@ -21,23 +21,23 @@ export const migrator = async (
   options: MigrateOptions = {},
 ) => {
   console.log('😈', { options });
-  // Gets the path of the migrations e.g: /Users/.../leafygreen-ui/tools/migrator/dist/migrations/[migration]/transform.js
+  // Gets the path of the migrations e.g: /Users/.../leafygreen-ui/tools/codemods/dist/migrations/[migration]/transform.js
   const migrationFile = path.join(
     __dirname,
     `./migrations/${migration}/transform.js`,
   );
 
-  console.log(chalk.greenBright('Migration File:'), migrationFile);
+  console.log(chalk.greenBright('Codemod File:'), migrationFile);
 
   try {
     if (!fs.existsSync(migrationFile)) {
       throw new Error(
-        `No migration found for ${migration}. The list of migrations can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/migrator/README.md#migrations`,
+        `No codemod found for ${migration}. The list of codemods can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1`,
       );
     }
 
     if (!files) {
-      throw new Error(`No path provided for migration`);
+      throw new Error(`No path provided for codemod`);
     }
 
     if (!options.dry) {
@@ -52,7 +52,7 @@ export const migrator = async (
     }
 
     console.log(chalk.greenBright('filepaths:'), filepaths);
-    console.log(chalk.greenBright('Running migration:'), migration);
+    console.log(chalk.greenBright('Running codemod:'), migration);
 
     const { ignore, ...allOptions } = options;
 

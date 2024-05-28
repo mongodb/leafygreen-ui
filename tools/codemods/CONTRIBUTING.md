@@ -97,7 +97,7 @@ Using a tool like [AST Explorer](https://astexplorer.net/) can help you visualiz
 
 ## Testing
 
-To test codemods, we need to create input and output files. We then pass the input file through the transformer function and use [Jest](https://jestjs.io/) to verify if the transformed input file matches the output file.
+To test codemods, we need to create an input and output file. We then pass the input file through the transformer function and use [Jest](https://jestjs.io/) to verify if the transformed input file matches the output file.
 
 e.g.
 
