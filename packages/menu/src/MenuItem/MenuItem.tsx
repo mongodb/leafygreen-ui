@@ -9,9 +9,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import MenuContext, {
-  MenuDescendantsContext,
-} from '../MenuContext/MenuContext';
+import { MenuContext, MenuDescendantsContext } from '../MenuContext';
 import {
   activeDescriptionTextStyle,
   activeIconStyle,
