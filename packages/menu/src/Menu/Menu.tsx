@@ -101,6 +101,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   /** @deprecated */
   const focusedRef = useRef<HTMLElement | null>(null);
 
+  /** @deprecated */
   const setFocus = (el: HTMLElement | null) => {
     if (el == null) {
       return;
@@ -122,6 +123,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
+  // Tracks the currently highlighted (focused) item index
+  // Fires `.focus()` when the index is updated
   const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
     descendants,
     index => {
@@ -131,10 +134,14 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     },
   );
 
+  // Callback fired when the popover transition finishes.
+  // Handling on this event ensures that the `descendants` elements
+  // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
     updateHighlightIndex('first');
   };
 
+  // Fired on global keyDown event
   function handleKeyDown(e: KeyboardEvent) {
     switch (e.key) {
       case keyMap.ArrowDown:
@@ -150,12 +157,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.Tab:
         e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
         handleClose();
-        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
+        (refEl || triggerRef)?.current?.focus(); // Focus the trigger on close
         break;
 
       case keyMap.Escape:
         handleClose();
-        setFocus((refEl || triggerRef)?.current); // Focus the trigger on close
+        (refEl || triggerRef)?.current?.focus(); // Focus the trigger on close
         break;
 
       case keyMap.Space:
