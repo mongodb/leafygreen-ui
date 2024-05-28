@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -109,6 +109,26 @@ export const LiveExample: StoryFn<TabsProps> = ({
     />
   </LeafyGreenProvider>
 );
+
+export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  return (
+    <LiveExample
+      {...args}
+      selected={selectedTab}
+      setSelected={setSelectedTab}
+    />
+  );
+};
+Controlled.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+Controlled.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const WithInlineChildren = LiveExample.bind({});
 WithInlineChildren.args = {

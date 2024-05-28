@@ -77,16 +77,6 @@ describe('packages/tabs', () => {
   });
 
   describe('when controlled', () => {
-    test('clicking a tab fires setSelected callback', () => {
-      const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
-      const tabUtils = getTabUtilsByName('Second');
-
-      if (tabUtils) {
-        fireEvent.click(tabUtils.getTab());
-      }
-      expect(setSelected).toHaveBeenCalled();
-    });
-
     test(`renders "${tabsClassName}" to the tabs classList`, () => {
       renderTabs({
         setSelected,
@@ -134,8 +124,16 @@ describe('packages/tabs', () => {
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
     });
+    test('clicking a tab fires setSelected callback', () => {
+      const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
+      const tabUtils = getTabUtilsByName('Second');
 
-    test('clicking a tab does not change the selected tab panel', () => {
+      if (tabUtils) {
+        fireEvent.click(tabUtils.getTab());
+      }
+      expect(setSelected).toHaveBeenCalled();
+    });
+    test('clicking a tab does not update selected index and calls setSelected callback', () => {
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
         setSelected,
         selected: 1,
@@ -148,9 +146,10 @@ describe('packages/tabs', () => {
 
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
+      expect(setSelected).toHaveBeenCalled();
     });
 
-    test('keyboard nav is not supported', () => {
+    test('keying down arrow keys does not update selected index and calls setSelected callback', () => {
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
         setSelected,
         selected: 1,
@@ -165,6 +164,7 @@ describe('packages/tabs', () => {
       }
 
       expect(activeTab).toBeVisible();
+      expect(setSelected).toHaveBeenCalled();
     });
   });
 
