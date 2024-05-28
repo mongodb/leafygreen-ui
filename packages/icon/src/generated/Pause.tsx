@@ -2,7 +2,7 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
-* @checksum 0dd07e363132d108f31290cfc995f2c3
+* @checksum 6539d57af969d965e0b7d9c2ccc4a8e5
 */
 import * as React from "react";
 import PropTypes from 'prop-types';
@@ -33,7 +33,7 @@ const Pause = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M4.5 2C3.94772 2 3.5 2.44772 3.5 3V13C3.5 13.5523 3.94772 14 4.5 14H5.5C6.05228 14 6.5 13.5523 6.5 13V3C6.5 2.44772 6.05228 2 5.5 2H4.5Z" fill={'currentColor'} /><path d="M10.5 2C9.94772 2 9.5 2.44772 9.5 3V13C9.5 13.5523 9.94771 14 10.5 14H11.5C12.0523 14 12.5 13.5523 12.5 13V3C12.5 2.44772 12.0523 2 11.5 2H10.5Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M3.5 3.83333C3.5 3.3731 3.94771 3 4.5 3H5.5C6.05228 3 6.5 3.3731 6.5 3.83333V12.1667C6.5 12.6269 6.05228 13 5.5 13H4.5C3.94771 13 3.5 12.6269 3.5 12.1667V3.83333Z" fill={'currentColor'} /><path d="M9.5 3.83333C9.5 3.3731 9.94772 3 10.5 3H11.5C12.0523 3 12.5 3.3731 12.5 3.83333V12.1667C12.5 12.6269 12.0523 13 11.5 13H10.5C9.94771 13 9.5 12.6269 9.5 12.1667V3.83333Z" fill={'currentColor'} /></svg>;
 };
 Pause.displayName = 'Pause';
 Pause.isGlyph = true;
