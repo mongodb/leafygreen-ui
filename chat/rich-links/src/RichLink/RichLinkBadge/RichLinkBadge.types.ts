@@ -1,4 +1,4 @@
-import { GlyphName } from '@leafygreen-ui/icon/src/glyphs';
+import { GlyphName } from '@leafygreen-ui/icon';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 

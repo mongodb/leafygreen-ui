@@ -1,5 +1,11 @@
 # @lg-chat/rich-links
 
+## 1.0.1
+
+### Patch Changes
+
+- 53ff5692: Fixes a malformed import & exports rich link variants
+
 ## 1.0.0
 
 ### Major Changes
