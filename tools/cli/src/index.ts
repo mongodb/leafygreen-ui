@@ -169,11 +169,11 @@ cli
 
 /** Migrator */
 cli
-  .command('migrator')
+  .command('codemod')
   .description('Runs codemod transformations to upgrade LG components')
   .argument(
-    '<migration>',
-    'One of the migrations from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/migrator/README.md#migrations',
+    '<codemod>',
+    'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#migrations',
   )
   .argument(
     '<path>',
