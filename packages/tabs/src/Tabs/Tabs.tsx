@@ -1,7 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
+import {
+  DescendantsProvider,
+  useInitDescendants,
+} from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -12,12 +16,10 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_TABS } from '../constants';
-import {
-  TabDescendantsProvider,
-  TabPanelDescendantsProvider,
-} from '../context';
+import { TabDescendantsContext, TabPanelDescendantsContext } from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
+import { getActiveAndEnabledIndices } from '../utils';
 
 import {
   getListThemeStyles,
@@ -66,23 +68,24 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const id = useIdAllocator({ prefix: rest.id || 'tabs' });
+
+  const { descendants: tabDescendants, dispatch: tabDispatch } =
+    useInitDescendants<HTMLDivElement>();
+  const { descendants: tabPanelDescendants, dispatch: tabPanelDispatch } =
+    useInitDescendants<HTMLDivElement>();
+
+  const isControlled = typeof controlledSelected !== 'undefined';
+  const [uncontrolledSelected, setUncontrolledSelected] = useState(0);
+  const [selected, setSelected] = [
+    isControlled ? controlledSelected : uncontrolledSelected,
+    isControlled ? setControlledSelected : setUncontrolledSelected,
+  ];
+
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
   };
-
-  const id = useIdAllocator({ prefix: rest.id || 'tabs' });
-
-  const [uncontrolledSelected, setUncontrolledSelected] = useState(0);
-  const [selected, setSelected] = [
-    controlledSelected ? controlledSelected : uncontrolledSelected,
-    controlledSelected ? setControlledSelected : setUncontrolledSelected,
-  ];
-
-  const childrenArray = useMemo(
-    () => React.Children.toArray(children) as Array<React.ReactElement>,
-    [children],
-  );
 
   const handleClickTab = useCallback(
     (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
@@ -91,31 +94,31 @@ const Tabs = (props: AccessibleTabsProps) => {
     [setSelected],
   );
 
-  const getEnabledIndexes: () => [Array<number>, number] = useCallback(() => {
-    const enabledIndexes = childrenArray
-      .filter(child => !child.props.disabled)
-      .map(child => childrenArray.indexOf(child));
-
-    return [enabledIndexes, enabledIndexes.indexOf(selected!)];
-  }, [childrenArray, selected]);
+  const tabTitleElements = tabDescendants.map(
+    descendant => descendant.element.parentNode as HTMLElement,
+  );
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (!(e.metaKey || e.ctrlKey)) {
-        if (e.key === keyMap.ArrowRight) {
-          const [enabledIndexes, current] = getEnabledIndexes();
-          setSelected?.(enabledIndexes[(current + 1) % enabledIndexes.length]);
-        } else if (e.key === keyMap.ArrowLeft) {
-          const [enabledIndexes, current] = getEnabledIndexes();
-          setSelected?.(
-            enabledIndexes[
-              (current - 1 + enabledIndexes.length) % enabledIndexes.length
-            ],
-          );
-        }
-      }
+      if (e.metaKey || e.ctrlKey) return;
+
+      if (e.key !== keyMap.ArrowRight && e.key !== keyMap.ArrowLeft) return;
+
+      const { activeIndex, enabledIndices } = getActiveAndEnabledIndices(
+        tabTitleElements,
+        selected,
+      );
+      const numberOfEnabledTabs = enabledIndices.length;
+      const indexToUpdateTo =
+        enabledIndices[
+          (e.key === keyMap.ArrowRight
+            ? activeIndex + 1
+            : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
+        ];
+      setSelected?.(indexToUpdateTo);
+      tabTitleElements[indexToUpdateTo].focus();
     },
-    [getEnabledIndexes, setSelected],
+    [selected, setSelected, tabTitleElements],
   );
 
   const renderedTabs = React.Children.map(children, child => {
@@ -157,8 +160,16 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   return (
     <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
-      <TabDescendantsProvider>
-        <TabPanelDescendantsProvider>
+      <DescendantsProvider
+        context={TabDescendantsContext}
+        descendants={tabDescendants}
+        dispatch={tabDispatch}
+      >
+        <DescendantsProvider
+          context={TabPanelDescendantsContext}
+          descendants={tabPanelDescendants}
+          dispatch={tabPanelDispatch}
+        >
           <div {...rest} className={className} data-lgid={dataLgId}>
             <div className={tabContainerStyle} id={id}>
               <div
@@ -186,8 +197,8 @@ const Tabs = (props: AccessibleTabsProps) => {
               {renderedTabPanels}
             </div>
           </div>
-        </TabPanelDescendantsProvider>
-      </TabDescendantsProvider>
+        </DescendantsProvider>
+      </DescendantsProvider>
     </LeafyGreenProvider>
   );
 };

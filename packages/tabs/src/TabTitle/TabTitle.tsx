@@ -1,20 +1,14 @@
-import React, {
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import React, { RefObject, useCallback, useMemo, useRef } from 'react';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import {
-  useTabDescendant,
-  useTabDescendantsContext,
+  TabDescendantsContext,
   useTabPanelDescendantsContext,
 } from '../context';
 
@@ -37,30 +31,11 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
 }: BaseTabTitleProps) => {
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
   const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
-  const { index, ref, id } = useTabDescendant();
-  const { tabDescendants } = useTabDescendantsContext();
+  const { index, ref, id } = useDescendant(TabDescendantsContext);
   const { tabPanelDescendants } = useTabPanelDescendantsContext();
 
   const theme = darkMode ? Theme.Dark : Theme.Light;
   const selected = index === selectedIndex;
-
-  useEffect(() => {
-    // if tab is disabled or not selected, return early
-    // otherwise, focus may need to be manually moved
-    if (disabled || !selected || !titleRef.current) return;
-
-    // if focus is not on tab descendants, return early
-    // otherwise, focus needs to be manually moved
-    const activeEl = document.activeElement;
-    const tabList = tabDescendants.map(
-      descendant => descendant.element.parentElement,
-    );
-    const isFocusOnTabDescendants =
-      activeEl instanceof HTMLElement && tabList.indexOf(activeEl) !== -1;
-    if (!isFocusOnTabDescendants) return;
-
-    titleRef.current.focus();
-  }, [disabled, selected, tabDescendants, titleRef]);
 
   const relatedTabPanel = useMemo(() => {
     return tabPanelDescendants.find(
@@ -84,7 +59,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
       listTitleStyles,
       listTitleModeStyles[theme].base,
       {
-        [listTitleModeStyles[theme].selected]: selected,
+        [listTitleModeStyles[theme].selected]: !disabled && selected,
         [listTitleModeStyles[theme].hover]: !disabled && !selected,
         [listTitleModeStyles[theme].disabled]: disabled,
       },
@@ -98,7 +73,7 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
     role: 'tab',
     tabIndex: selected ? 0 : -1,
     ['aria-controls']: relatedTabPanel?.id,
-    ['aria-selected']: selected,
+    ['aria-selected']: !disabled && selected,
     ['data-text']: nodeText,
   } as const;
 

@@ -1,11 +1,16 @@
 import React, { useMemo } from 'react';
 
-import { useTabDescendantsContext, useTabPanelDescendant } from '../context';
+import { useDescendant } from '@leafygreen-ui/descendants';
+
+import {
+  TabPanelDescendantsContext,
+  useTabDescendantsContext,
+} from '../context';
 
 import { TabPanelProps } from './TabPanel.types';
 
 const TabPanel = ({ child, selectedIndex }: TabPanelProps) => {
-  const { id, index, ref } = useTabPanelDescendant();
+  const { id, index, ref } = useDescendant(TabPanelDescendantsContext);
   const { tabDescendants } = useTabDescendantsContext();
 
   const relatedTab = useMemo(() => {
@@ -16,7 +21,7 @@ const TabPanel = ({ child, selectedIndex }: TabPanelProps) => {
     <div ref={ref}>
       {React.cloneElement(child, {
         id,
-        selected: index === selectedIndex,
+        selected: !child.props.disabled && index === selectedIndex,
         ['aria-labelledby']: relatedTab?.id,
       })}
     </div>
