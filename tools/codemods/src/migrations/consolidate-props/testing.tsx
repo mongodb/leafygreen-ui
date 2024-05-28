@@ -1,3 +1,5 @@
+// This file is to test the consolidate-props codemode with `yarn lg codemod consolidate-props tools/codemods/src/migrations/consolidate-props/testing.tsx`
+
 import React from 'react';
 
 const MyComponent = (props: any) => {
