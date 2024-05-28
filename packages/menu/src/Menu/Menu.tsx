@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -6,13 +6,9 @@ import {
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  useBackdropClick,
-  useEventListener,
-  usePrevious,
-} from '@leafygreen-ui/hooks';
+import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { keyMap } from '@leafygreen-ui/lib';
+import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import {
@@ -128,19 +124,16 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
     descendants,
-    nextIndex => {
-      // TODO: wait for nextTick?
-      // descendants may not be initialized yet on initial open
-      descendants[nextIndex]?.element?.focus();
+    index => {
+      if (isDefined(index)) {
+        descendants[index]?.element?.focus();
+      }
     },
   );
 
-  const prevOpen = usePrevious(open);
-  useEffect(() => {
-    if (open && !prevOpen) {
-      updateHighlightIndex('first');
-    }
-  }, [open, prevOpen, updateHighlightIndex]);
+  const handlePopoverOpen = () => {
+    updateHighlightIndex('first');
+  };
 
   function handleKeyDown(e: KeyboardEvent) {
     switch (e.key) {
@@ -212,6 +205,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           justify={justify}
           refEl={refEl}
           adjustOnMutation={adjustOnMutation}
+          onEntered={handlePopoverOpen}
           {...popoverProps}
         >
           <div
@@ -245,6 +239,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   if (trigger) {
     const triggerClickHandler = (event?: React.MouseEvent) => {
+      event?.preventDefault();
       setOpen((curr: boolean) => !curr);
 
       if (trigger && typeof trigger !== 'function') {
