@@ -34,7 +34,11 @@ import {
 } from '../styles';
 import { Size } from '../types';
 
-import { destructiveIconStyle, disabledIconStyle } from './MenuItem.styles';
+import {
+  destructiveIconStyle,
+  disabledIconStyle,
+  menuItemContainerStyles,
+} from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
 const menuItemContainerClassName = createUniqueClassName('menu-item-container');
@@ -142,7 +146,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     );
 
     return (
-      <li role="none">
+      <li role="none" className={menuItemContainerStyles}>
         <Component
           ref={ref}
           {...baseProps}

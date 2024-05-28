@@ -22,7 +22,6 @@ export const rootMenuThemeStyles: Record<Theme, string> = {
 
 export const scrollContainerStyle = css`
   overflow: auto;
-  list-style: none;
   margin-block-start: 0px;
   margin-block-end: 0px;
   padding-inline-start: 0px;
