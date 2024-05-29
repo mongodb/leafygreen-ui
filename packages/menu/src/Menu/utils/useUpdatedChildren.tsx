@@ -96,6 +96,7 @@ export const useUpdatedChildren = ({
           return React.cloneElement(child, {
             ref: setRef,
             open: isCurrentSubMenu,
+            // @ts-expect-error - we're deprecating this soon
             setOpen: (state: boolean) => {
               if (currentChildRef) {
                 focusedRef.current = currentChildRef;
