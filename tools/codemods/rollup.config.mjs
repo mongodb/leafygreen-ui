@@ -1,7 +1,4 @@
 import { esmConfig, umdConfig } from '@lg-tools/build/config/rollup.config.mjs';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as url from 'url';
 import { glob } from 'glob';
 
 const codemodGlobs = glob.sync('./src/codemods/*!(tests)/*.ts');
