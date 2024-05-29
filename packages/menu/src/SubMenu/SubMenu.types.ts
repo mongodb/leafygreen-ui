@@ -1,3 +1,4 @@
+import { type Dispatch, type SetStateAction } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
