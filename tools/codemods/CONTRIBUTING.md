@@ -6,12 +6,11 @@ All codemods can be found under `src/codemods` and each codemod should have its 
 
 ```
 src
- ┣ codemods                                     # directory for all codemods
- ┃ ┣ <name-of-codemod>                          # directory for individual codemod
+ ┣ codemods                                       # directory for all codemods
+ ┃ ┣ <name-of-codemod>                            # directory for individual codemod
  ┃ ┃ ┣ tests                                      # directory for codemod tests
- ┃ ┃ ┃ ┗ <name-of-codemod>                      # directory for a specific test
- ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.input.tsx          # input file for test
- ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.output.tsx         # output file for test
+ ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.input.tsx            # input file for test
+ ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.output.tsx           # output file for test
  ┃ ┃ ┃ ┃ ┗ transform.spec.ts                      # jest test file
  ┃ ┃ ┣ testing.tsx                                # (optional) file used to test `yarn lg codemod...`
  ┃ ┃ ┗ transform.ts                               # transformer function (file that modifies the code )
@@ -27,11 +26,9 @@ src
  ┃ ┣ transformations                              # directory for reusable transformations
  ┃ ┃ ┣ <name-of-transformation>                   # directory for individual transformation
  ┃ ┃ ┃ ┣ tests                                    # directory for transformation tests
- ┃ ┃ ┃ ┃ ┣ <test-name>                            # directory for a specific test
- ┃ ┃ ┃ ┃ ┃ ┣ <test-name>.input.tsx                # input file for test
- ┃ ┃ ┃ ┃ ┃ ┣ <test-name>.output.tsx               # output file for test
- ┃ ┃ ┃ ┃ ┃ ┗ transform.spec.ts
- ┃ ┃ ┃ ┃ ┗ ...
+ ┃ ┃ ┃ ┃ ┣ <test-name>.input.tsx                  # input file for test
+ ┃ ┃ ┃ ┃ ┣ <test-name>.output.tsx                 # output file for test
+ ┃ ┃ ┃ ┃ ┗ transform.spec.ts                      # jest test file
  ┃ ┃ ┃ ┣ <name-of-transformation>.ts              # transformation code
  ┃ ┃ ┃ ┣ index.ts                                 # file to add exports
  ┃ ┃ ┃ ┗ transform.ts                             # transfomer function used for testing purposes

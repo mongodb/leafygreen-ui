@@ -34,13 +34,6 @@ interface TestArgs {
   extension?: string;
 
   /**
-   * How many levels to go up from the test directory to find the transform.ts file
-   *
-   * @default 2
-   */
-  level?: 1 | 2;
-
-  /**
    * Options to pass to the transformer function
    *
    * @default {}
@@ -67,7 +60,6 @@ async function applyTransform(
     input,
     {
       jscodeshift: jscodeshift.withParser('tsx'),
-      stats: () => {},
     },
     options || {},
   );
@@ -84,7 +76,7 @@ async function applyTransform(
  */
 export function transformTest(
   dirName: string,
-  { fixture, transform, extension = 'tsx', options = {}, level = 2 }: TestArgs,
+  { fixture, transform, extension = 'tsx', options = {} }: TestArgs,
 ) {
   describe(transform, () => {
     test(fixture, async () => {
@@ -98,7 +90,7 @@ export function transformTest(
       );
 
       // How many levels to go up from the test directory to find transform.ts
-      const levelsUp = level === 2 ? '../..' : '..';
+      const levelsUp = '..';
       const module = await import(path.join(dirName, levelsUp, 'transform.ts'));
       const output = await applyTransform(
         { ...module },

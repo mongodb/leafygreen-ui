@@ -1,4 +1,4 @@
-import { transformTest } from '../../../../utils/tests/transformTest';
+import { transformTest } from '../../../utils/tests/transformTest';
 
 transformTest(__dirname, {
   fixture: 'consolidate-props',
