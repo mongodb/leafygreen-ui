@@ -18,13 +18,12 @@ import {
 
 import { useHighlightReducer } from './utils/HighlightReducer';
 import { useMenuHeight } from './utils/useMenuHeight';
-import { useUpdatedChildren } from './utils/useUpdatedChildren';
 import {
   rootMenuStyle,
   rootMenuThemeStyles,
   scrollContainerStyle,
 } from './Menu.styles';
-import { MenuProps, type SubMenuType } from './Menu.types';
+import { MenuProps } from './Menu.types';
 
 /**
  *
@@ -74,10 +73,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);
 
-  const hasSetInitialFocus = useRef(false);
-  const hasSetInitialOpen = useRef(false);
-
-  const currentSubMenuRef = useRef<SubMenuType | null>(null);
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
 
   const { descendants, dispatch } = useInitDescendants();
@@ -96,29 +91,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     refEl: refEl || triggerRef,
     spacing,
     maxHeight,
-  });
-
-  /** @deprecated */
-  const focusedRef = useRef<HTMLElement | null>(null);
-
-  /** @deprecated */
-  const setFocus = (el: HTMLElement | null) => {
-    if (el == null) {
-      return;
-    }
-
-    focusedRef.current = el;
-    el.focus();
-  };
-
-  const { updatedChildren: _c, refs: _r } = useUpdatedChildren({
-    children,
-    open,
-    focusedRef,
-    hasSetInitialFocus,
-    hasSetInitialOpen,
-    currentSubMenuRef,
-    setFocus,
   });
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
