@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.2.0",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@lg-tools/storybook-utils": "^0.1.1",
+    "@storybook/react": "^7.6.17"
   }
 }
