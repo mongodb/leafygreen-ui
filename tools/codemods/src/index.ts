@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import * as jscodeshift from 'jscodeshift/src/Runner';
-// import fs from 'fs';
-const fs = require('fs');
+import fse from 'fs-extra';
 import { glob } from 'glob';
+import * as jscodeshift from 'jscodeshift/src/Runner';
 import path from 'path';
 
 import { checkGitStatus } from './utils/checkGitStatus';
@@ -30,7 +29,7 @@ export const migrator = async (
   console.log(chalk.greenBright('Codemod File:'), codemodFile);
 
   try {
-    if (!fs.existsSync(codemodFile)) {
+    if (!fse.existsSync(codemodFile)) {
       throw new Error(
         `No codemod found for ${codemod}. The list of codemods can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1`,
       );
