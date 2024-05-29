@@ -16,23 +16,23 @@ export interface MigrateOptions {
 }
 
 export const migrator = async (
-  migration: string,
+  codemod: string,
   files: string | Array<string>,
   options: MigrateOptions = {},
 ) => {
   console.log('😈', { options });
-  // Gets the path of the migrations e.g: /Users/.../leafygreen-ui/tools/codemods/dist/migrations/[migration]/transform.js
-  const migrationFile = path.join(
+  // Gets the path of the codemod e.g: /Users/.../leafygreen-ui/tools/codemods/dist/codemod/[codemod]/transform.js
+  const codemodFile = path.join(
     __dirname,
-    `./migrations/${migration}/transform.js`,
+    `./codemods/${codemod}/transform.js`,
   );
 
-  console.log(chalk.greenBright('Codemod File:'), migrationFile);
+  console.log(chalk.greenBright('Codemod File:'), codemodFile);
 
   try {
-    if (!fs.existsSync(migrationFile)) {
+    if (!fs.existsSync(codemodFile)) {
       throw new Error(
-        `No codemod found for ${migration}. The list of codemods can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1`,
+        `No codemod found for ${codemod}. The list of codemods can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1`,
       );
     }
 
@@ -52,11 +52,11 @@ export const migrator = async (
     }
 
     console.log(chalk.greenBright('filepaths:'), filepaths);
-    console.log(chalk.greenBright('Running codemod:'), migration);
+    console.log(chalk.greenBright('Running codemod:'), codemod);
 
     const { ignore, ...allOptions } = options;
 
-    await jscodeshift.run(migrationFile, filepaths, {
+    await jscodeshift.run(codemodFile, filepaths, {
       ignorePattern: [
         '**/node_modules/**',
         '**/.next/**',
@@ -71,7 +71,7 @@ export const migrator = async (
     });
 
     console.log(
-      chalk.greenBright('🥬 Thank you for using @lg-tools/migrator!'),
+      chalk.greenBright('🥬 Thank you for using @lg-tools/codemods!'),
     );
   } catch (error) {
     console.error(error);

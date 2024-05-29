@@ -7,10 +7,10 @@ import { glob } from 'glob';
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json')));
 
-const migratorGlob = glob.sync('./src/migrations/*!(tests)/*.ts');
+const codemodGlobs = glob.sync('./src/codemods/*!(tests)/*.ts');
 
 console.log('🛑🛑🛑🛑', {
-  migratorGlob,
+  codemodGlobs,
   dir: __dirname,
 });
 
@@ -19,8 +19,8 @@ export default [
   umdConfig,
   {
     ...esmConfig,
-    input: [...migratorGlob],
-    // This updates the dist/migration dir to include .js files
+    input: [...codemodGlobs],
+    // This updates the dist/codemods dir to include .js files
     output: {
       ...esmConfig.output,
       // cjs is fully supported in node.js
@@ -33,8 +33,8 @@ export default [
   },
   {
     ...esmConfig,
-    input: [...migratorGlob],
-    // This updates the dist/esm dir to include the /migration dir which includes .mjs files
+    input: [...codemodGlobs],
+    // This updates the dist/esm dir to include the /codemods dir which includes .mjs files
     output: {
       ...esmConfig.output,
       // esm is supported in node.js with the .mjs extension
@@ -45,8 +45,8 @@ export default [
   },
   // {
   //   ...esmConfig,
-  //   input: [...migratorGlob],
-  //   // This creates the dist/cjs dir. It includes the /migration dir which includes .js files
+  //   input: [...codemodGlobs],
+  //   // This creates the dist/cjs dir. It includes the /codemods dir which includes .js files
   //   output: {
   //     ...esmConfig.output,
   //     format: 'cjs', // overrides esm format from esmConfig.output

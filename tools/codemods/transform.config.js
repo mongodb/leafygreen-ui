@@ -1,6 +1,6 @@
 //TODO: is this doing anything?
 function resolve(transform) {
-  return require.resolve(`./dist/migrations/${transform}/transform`);
+  return require.resolve(`./dist/codemods/${transform}/transform`);
 }
 
 module.exports = {

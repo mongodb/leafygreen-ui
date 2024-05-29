@@ -2,16 +2,16 @@
 
 ## Getting Started
 
-All codemods/migrations can be found under `src/migrations` and each migration should have its own directory.
+All codemods can be found under `src/codemods` and each codemod should have its own directory.
 
 ```
 src
- ┣ migrations                                     # directory for all migrations
- ┃ ┣ <name-of-migration>                          # directory for individual migration
- ┃ ┃ ┣ tests                                      # directory for migration tests
- ┃ ┃ ┃ ┗ <name-of-migration>                      # directory for a specific test
- ┃ ┃ ┃ ┃ ┣ <name-of-migration>.input.tsx          # input file for test
- ┃ ┃ ┃ ┃ ┣ <name-of-migration>.output.tsx         # output file for test
+ ┣ codemods                                     # directory for all codemods
+ ┃ ┣ <name-of-codemod>                          # directory for individual codemod
+ ┃ ┃ ┣ tests                                      # directory for codemod tests
+ ┃ ┃ ┃ ┗ <name-of-codemod>                      # directory for a specific test
+ ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.input.tsx          # input file for test
+ ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.output.tsx         # output file for test
  ┃ ┃ ┃ ┃ ┗ transform.spec.ts                      # jest test file
  ┃ ┃ ┣ testing.tsx                                # (optional) file used to test `yarn lg codemod...`
  ┃ ┃ ┗ transform.ts                               # transformer function (file that modifies the code )
@@ -65,17 +65,12 @@ export default function transformer(
   const source = j(file.source); // Use jscodeshift (j) to parse the source code into an AST
 
   const {
-    propToRemove = 'propToRemove',
-    propToUpdate = 'propToUpdate',
-    propMapping = {
-      value2: 'value3',
-    },
-    propToRemoveType = 'string',
-    componentName = 'MyComponent',
+    propToRemove,
+    propToUpdate,
+    propMapping,
+    propToRemoveType,
+    componentName,
   } = options;
-
-  const elements = source.findJSXElements(componentName);
-  if (elements.length === 0) return file.source;
 
   elements.forEach(element => {
     // Perform transformations on the AST

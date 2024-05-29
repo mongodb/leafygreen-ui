@@ -2,4 +2,4 @@
 '@lg-tools/cli': patch
 ---
 
-Pre-release of cli.
+Adds pre-release of codemods command

@@ -1,5 +1,5 @@
 ---
-'@lg-tools/migrator': patch
+'@lg-tools/codemods': patch
 ---
 
-Pre-release of migrator. This is not production ready.
+Pre-release of codemods.
