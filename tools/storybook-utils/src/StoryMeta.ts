@@ -1,6 +1,6 @@
 import mergeWith from 'lodash/mergeWith';
 
-import { StoryMetaType } from './StoryMeta.types';
+import { StoryMetaType } from './types';
 
 /**
  *
@@ -11,11 +11,10 @@ import { StoryMetaType } from './StoryMeta.types';
  * Example:
  *
  * ```ts
- * const meta: StoryMetaType<typeof Component> = {
+ * export default {
  *  component: Component,
  *  ...baseStoryMeta
- * }
- * export default meta
+ * } satisfies StoryMetaType<typeof Component>
  * ```
  *
  *

@@ -1,16 +1,10 @@
 import React, { ComponentProps } from 'react';
-import { PlayFunction } from '@storybook/csf';
-import { Meta, ReactRenderer, StoryFn } from '@storybook/react';
+import { Meta } from '@storybook/react';
+
+import { StoryArgType } from '../storybookArgTypes';
 
 import { GeneratedStoryConfig } from './GeneratedStoryDecorator.types';
-import { StoryArgType } from './storybookArgTypes';
-
-// Re-defining LG provider prop keys here since importing from the package
-// will cause circular dependencies
-export interface LeafyGreenProviderProps {
-  darkMode?: boolean;
-  baseFontSize?: number;
-}
+import { LeafyGreenProviderProps } from './shared.types';
 
 export interface ControlsConfig {
   /**
@@ -43,7 +37,7 @@ export interface ChromaticConfig {
 /**
  * Story Parameters
  */
-type StoryParameters<
+export type StoryParameters<
   /** The component type */
   T extends React.ElementType,
   /** Any eXtra Props the story should support */
@@ -74,7 +68,7 @@ type StoryParameters<
 /**
  * Story control arg types
  */
-type ArgTypes<
+export type ArgTypes<
   /** The component type */
   T extends React.ElementType,
   /** Any eXtra Props the story should support */
@@ -92,7 +86,7 @@ type ArgTypes<
 >;
 
 /**
- * Type of the Story default export
+ * Custom typed extension of {@link Meta}, the Story default export
  */
 export type StoryMetaType<
   /** The component type */
@@ -106,23 +100,3 @@ export type StoryMetaType<
   argTypes?: ArgTypes<T, XP>;
   args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
 };
-
-export type StoryType<
-  /** The component type */
-  T extends React.ElementType,
-  /** Any eXtra Props the story should support */
-  XP extends Record<string, any> = {},
-> = StoryFn<ComponentProps<T> & XP> & {
-  parameters?: Omit<StoryParameters<T, XP>, 'default'>;
-  argTypes?: ArgTypes<T, XP>;
-  args?: Partial<ComponentProps<T> | LeafyGreenProviderProps | XP>;
-  play?: PlayFn<T, XP>;
-};
-
-/** Storybook PlayFunction extension typed with ReactRenderer */
-export type PlayFn<
-  /** The component type */
-  T extends React.ElementType,
-  /** Any eXtra Props the story should support */
-  XP extends Record<string, any> = {},
-> = PlayFunction<ReactRenderer, ComponentProps<T> & XP>;
