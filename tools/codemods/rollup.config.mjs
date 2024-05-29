@@ -4,15 +4,7 @@ import * as path from 'path';
 import * as url from 'url';
 import { glob } from 'glob';
 
-const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json')));
-
 const codemodGlobs = glob.sync('./src/codemods/*!(tests)/*.ts');
-
-console.log('🛑🛑🛑🛑', {
-  codemodGlobs,
-  dir: __dirname,
-});
 
 export default [
   esmConfig,
