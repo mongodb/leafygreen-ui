@@ -14,6 +14,8 @@ describe('packages/Avatar', () => {
     <Avatar format="mongodb" />;
     // Accepts (but ignores) `text` prop;
     <Avatar format="mongodb" text="AT" />;
+    // Accepts (but ignores) null `text` prop;
+    <Avatar format="mongodb" text={null} />;
     // Accepts (but ignores) `glyph` prop;
     <Avatar format="mongodb" glyph="PersonGroup" />;
 
@@ -28,12 +30,16 @@ describe('packages/Avatar', () => {
     <Avatar format="icon" glyph="NotAnIcon" />;
     // Accepts (but ignores) `text` prop;
     <Avatar format="icon" text="AT" />;
+    // Accepts (but ignores) null `text` prop;
+    <Avatar format="icon" text={null} />;
 
     /**
      * TEXT FORMAT
      */
     // @ts-expect-error - Requires `text` prop
     <Avatar format="text" />;
+    // Accepts null text prop
+    <Avatar format="text" text={null} />;
     // Accepts text prop
     <Avatar format="text" text="AT" />;
     // Accepts (but ignores) `glyph` prop;
@@ -49,8 +55,10 @@ describe('packages/Avatar', () => {
       Format.Text,
     ]) as Format;
 
-    // @ts-expect-error expects required props for all formats
+    // @ts-expect-error - requires defined text prop
     <Avatar format={arbitraryFormat} />;
+    // Accepts null text prop
+    <Avatar format={arbitraryFormat} text={null} />;
     // Accepts text prop
     <Avatar format={arbitraryFormat} text="AT" />;
     // Accepts glyph prop
