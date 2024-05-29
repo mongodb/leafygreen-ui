@@ -86,11 +86,19 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     fwdRef: React.Ref<any>,
   ): React.ReactElement => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme, darkMode, highlightIndex } = useContext(MenuContext);
-    const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef, {
-      active,
-      disabled,
-    });
+    const {
+      theme,
+      darkMode,
+      highlightIndex: _highlightIndex,
+    } = useContext(MenuContext);
+    const { index: _index, ref } = useDescendant(
+      MenuDescendantsContext,
+      fwdRef,
+      {
+        active,
+        disabled,
+      },
+    );
 
     const [open, setOpen] = useControlledState(false, openProp, setOpenProp);
 
@@ -229,7 +237,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
           )}
         >
           {content}
-          {(index === highlightIndex).toString()}
           <IconButton
             data-testid="lg-sub-menu-icon-button"
             darkMode={!darkMode}
