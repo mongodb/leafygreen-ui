@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -159,13 +159,36 @@ export const LiveExample = {
       disableSnapshot: true,
     },
   },
-} satisfies StoryObj<typeof Menu, Pick<MenuItemProps, 'size'>>;
+} satisfies StoryObj<typeof Menu & Pick<MenuItemProps, 'size'>>;
 
 export const InitialOpen = {
   render: () => {
     return (
       <Menu
         initialOpen
+        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+      >
+        <MenuItem>Lorem</MenuItem>
+        <MenuItem>Ipsum</MenuItem>
+        <MenuItem>Adipiscing</MenuItem>
+      </Menu>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof Menu>;
+
+export const Controlled = {
+  render: () => {
+    const [open, setOpen] = useState(true);
+
+    return (
+      <Menu
+        open={open}
+        setOpen={setOpen}
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
       >
         <MenuItem>Lorem</MenuItem>
