@@ -17,10 +17,10 @@ export interface MigrateOptions {
 
 export const migrator = async (
   codemod: string,
-  files: string | Array<string>,
+  files?: string | Array<string>,
   options: MigrateOptions = {},
 ) => {
-  console.log('😈', { options });
+  let _files = files;
   // Gets the path of the codemod e.g: /Users/.../leafygreen-ui/tools/codemods/dist/codemod/[codemod]/transform.js
   const codemodFile = path.join(
     __dirname,
@@ -36,8 +36,13 @@ export const migrator = async (
       );
     }
 
-    if (!files) {
-      throw new Error(`No path provided for codemod`);
+    if (!_files) {
+      console.log(
+        chalk.yellow(
+          `No path provided. The current working directory, ${process.cwd()}, will be used`,
+        ),
+      );
+      _files = process.cwd();
     }
 
     if (!options.dry) {
@@ -45,7 +50,7 @@ export const migrator = async (
       checkGitStatus(options.force);
     }
 
-    const filepaths = glob.sync(files, { cwd: process.cwd() });
+    const filepaths = glob.sync(_files, { cwd: process.cwd() });
 
     if (filepaths.length === 0) {
       throw new Error(`No files found for ${files}`);

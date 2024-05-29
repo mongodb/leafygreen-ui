@@ -176,7 +176,7 @@ cli
     'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
   )
   .argument(
-    '<path>',
+    '[path]',
     'Files or directory to transform. Can be a glob like like src/**.test.js',
   )
   .option(
