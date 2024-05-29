@@ -200,9 +200,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           theme,
           darkMode,
           highlightIndex,
-          onItemFocus: ({ target }) => {
-            focusedRef.current = target;
-          },
         }}
       >
         <Popover
