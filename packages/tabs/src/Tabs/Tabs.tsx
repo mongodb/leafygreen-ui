@@ -23,7 +23,7 @@ import {
 } from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
-import { getActiveAndEnabledIndices } from '../utils';
+import { getEnabledIndices } from '../utils';
 
 import {
   getListThemeStyles,
@@ -107,11 +107,10 @@ const Tabs = (props: AccessibleTabsProps) => {
 
       if (e.key !== keyMap.ArrowRight && e.key !== keyMap.ArrowLeft) return;
 
-      const { activeIndex, enabledIndices } = getActiveAndEnabledIndices(
-        tabTitleElements,
-        selected,
-      );
+      const enabledIndices = getEnabledIndices(tabTitleElements);
       const numberOfEnabledTabs = enabledIndices.length;
+      const activeIndex = enabledIndices.indexOf(selected);
+
       const indexToUpdateTo =
         enabledIndices[
           (e.key === keyMap.ArrowRight

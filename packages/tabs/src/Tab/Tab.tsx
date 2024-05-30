@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useTabsContext } from '../context';
-
 import { TabProps } from './Tab.types';
 
 /**

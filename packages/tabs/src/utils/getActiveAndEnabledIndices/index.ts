@@ -1,1 +1,0 @@
-export { getActiveAndEnabledIndices } from './getActiveAndEnabledIndices';

@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { Tab, Tabs } from '../..';
 import { getTestUtils } from '..';
 
-import { getActiveAndEnabledIndices } from './getActiveAndEnabledIndices';
+import { getEnabledIndices } from './getEnabledIndices';
 
 const renderTabs = (
   tabsProps = {},
@@ -32,7 +32,7 @@ const renderTabs = (
   };
 };
 
-describe('getActiveAndEnabledIndices', () => {
+describe('getEnabledIndices', () => {
   test('should return correct activeIndex and enabledIndices for enabled tabs', () => {
     const selected = 2;
     const { getAllTabsInTabList } = renderTabs(
@@ -41,12 +41,8 @@ describe('getActiveAndEnabledIndices', () => {
     );
     const tabTitleElements = getAllTabsInTabList();
 
-    const { activeIndex, enabledIndices } = getActiveAndEnabledIndices(
-      tabTitleElements,
-      selected,
-    );
+    const enabledIndices = getEnabledIndices(tabTitleElements);
 
-    expect(activeIndex).toBe(1);
     expect(enabledIndices).toEqual([0, 2]);
   });
 
@@ -55,12 +51,8 @@ describe('getActiveAndEnabledIndices', () => {
     const { getAllTabsInTabList } = renderTabs({ selected }, {});
     const tabTitleElements = getAllTabsInTabList();
 
-    const { activeIndex, enabledIndices } = getActiveAndEnabledIndices(
-      tabTitleElements,
-      selected,
-    );
+    const enabledIndices = getEnabledIndices(tabTitleElements);
 
-    expect(activeIndex).toBe(1);
     expect(enabledIndices).toEqual([0, 1, 2]);
   });
 
@@ -72,12 +64,7 @@ describe('getActiveAndEnabledIndices', () => {
     );
     const tabTitleElements = getAllTabsInTabList();
 
-    const { activeIndex, enabledIndices } = getActiveAndEnabledIndices(
-      tabTitleElements,
-      selected,
-    );
-
-    expect(activeIndex).toBe(-1);
+    const enabledIndices = getEnabledIndices(tabTitleElements);
     expect(enabledIndices).toEqual([]);
   });
 });
