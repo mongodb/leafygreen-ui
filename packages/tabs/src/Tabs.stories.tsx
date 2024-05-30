@@ -88,13 +88,14 @@ const meta: StoryMetaType<typeof Tabs> = {
         </CardWithMargin>
       </Tab>,
     ],
+    forceRenderAllTabPanels: false,
   },
   argTypes: {
     as: storybookArgTypes.as,
+    forceRenderAllTabPanels: { control: 'boolean' },
     selected: { control: 'number' },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook
-  // @ts-expect-error
   subcomponents: { tab: Tab },
 };
 export default meta;

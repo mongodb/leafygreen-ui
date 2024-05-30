@@ -13,6 +13,7 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import {
   TabDescendantsContext,
   useTabPanelDescendantsContext,
+  useTabsContext,
 } from '../context';
 
 import {
@@ -25,22 +26,14 @@ import { BaseTabTitleProps } from './TabTitle.types';
 
 const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
   (
-    {
-      as,
-      children,
-      className,
-      darkMode,
-      disabled = false,
-      onClick,
-      selectedIndex,
-      ...rest
-    },
+    { as, children, className, darkMode, disabled = false, onClick, ...rest },
     fwdRef,
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { index, ref, id } = useDescendant(TabDescendantsContext);
     const { tabPanelDescendants } = useTabPanelDescendantsContext();
+    const { selectedIndex } = useTabsContext();
 
     const theme = darkMode ? Theme.Dark : Theme.Light;
     const selected = index === selectedIndex;

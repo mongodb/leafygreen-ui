@@ -5,6 +5,5 @@ export interface BaseTabTitleProps {
   className?: string;
   disabled?: boolean;
   isAnyTabFocused?: boolean;
-  selectedIndex: number;
   [key: string]: any;
 }

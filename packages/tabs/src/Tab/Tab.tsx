@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useTabsContext } from '../context';
+
 import { TabProps } from './Tab.types';
 
 /**
@@ -20,14 +22,20 @@ import { TabProps } from './Tab.types';
  * @param props.to Destination when name is rendered as `Link` tag.
  *
  */
-function Tab({ selected, children, ...rest }: TabProps) {
+function Tab({ children, disabled, selected, ...rest }: TabProps) {
   // default and name are not an HTML properties
   // onClick applies to TabTitle component, not Tab component
   delete rest.default, delete rest.name, delete rest.onClick, delete rest.href;
 
+  const { forceRenderAllTabPanels } = useTabsContext();
+
+  const shouldRender = !disabled && (forceRenderAllTabPanels || selected);
+
+  if (!shouldRender) return null;
+
   return (
     <div {...rest} role="tabpanel">
-      {selected ? children : null}
+      {children}
     </div>
   );
 }

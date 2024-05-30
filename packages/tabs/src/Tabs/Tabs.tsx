@@ -16,7 +16,11 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_TABS } from '../constants';
-import { TabDescendantsContext, TabPanelDescendantsContext } from '../context';
+import {
+  TabDescendantsContext,
+  TabPanelDescendantsContext,
+  TabsContext,
+} from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
 import { getActiveAndEnabledIndices } from '../utils';
@@ -60,6 +64,7 @@ const Tabs = (props: AccessibleTabsProps) => {
     inlineChildren,
     selected: controlledSelected,
     setSelected: setControlledSelected,
+    forceRenderAllTabPanels = false,
     'data-lgid': dataLgId = LGIDS_TABS.root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
@@ -143,7 +148,6 @@ const Tabs = (props: AccessibleTabsProps) => {
             handleClickTab(event, index);
           }
         : undefined,
-      selectedIndex: selected,
       ...rest,
     } as const;
 
@@ -155,7 +159,7 @@ const Tabs = (props: AccessibleTabsProps) => {
       return child;
     }
 
-    return <TabPanel child={child} selectedIndex={selected} />;
+    return <TabPanel child={child} />;
   });
 
   return (
@@ -170,33 +174,40 @@ const Tabs = (props: AccessibleTabsProps) => {
           descendants={tabPanelDescendants}
           dispatch={tabPanelDispatch}
         >
-          <div {...rest} className={className} data-lgid={dataLgId}>
-            <div className={tabContainerStyle} id={id}>
-              <div
-                className={cx(
-                  getListThemeStyles(theme),
-                  tabListElementClassName,
-                )}
-                data-lgid={LGIDS_TABS.tabList}
-                role="tablist"
-                aria-orientation="horizontal"
-                {...accessibilityProps}
-              >
-                {renderedTabs}
-              </div>
-              <div className={inlineChildrenContainerStyle}>
-                <div className={inlineChildrenWrapperStyle}>
-                  {inlineChildren}
+          <TabsContext.Provider
+            value={{
+              forceRenderAllTabPanels,
+              selectedIndex: selected,
+            }}
+          >
+            <div {...rest} className={className} data-lgid={dataLgId}>
+              <div className={tabContainerStyle} id={id}>
+                <div
+                  className={cx(
+                    getListThemeStyles(theme),
+                    tabListElementClassName,
+                  )}
+                  data-lgid={LGIDS_TABS.tabList}
+                  role="tablist"
+                  aria-orientation="horizontal"
+                  {...accessibilityProps}
+                >
+                  {renderedTabs}
+                </div>
+                <div className={inlineChildrenContainerStyle}>
+                  <div className={inlineChildrenWrapperStyle}>
+                    {inlineChildren}
+                  </div>
                 </div>
               </div>
+              <div
+                className={tabPanelsElementClassName}
+                data-lgid={LGIDS_TABS.tabPanels}
+              >
+                {renderedTabPanels}
+              </div>
             </div>
-            <div
-              className={tabPanelsElementClassName}
-              data-lgid={LGIDS_TABS.tabPanels}
-            >
-              {renderedTabPanels}
-            </div>
-          </div>
+          </TabsContext.Provider>
         </DescendantsProvider>
       </DescendantsProvider>
     </LeafyGreenProvider>
