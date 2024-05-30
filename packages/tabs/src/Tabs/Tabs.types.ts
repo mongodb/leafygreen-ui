@@ -1,4 +1,5 @@
 import { Either, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export interface TabsProps extends HTMLElementProps<'div'>, LgIdProps {
@@ -33,10 +34,8 @@ export interface TabsProps extends HTMLElementProps<'div'>, LgIdProps {
 
   /**
    * HTML Element that wraps title in Tab List.
-   *
-   * @type HTMLElement | React.Component
    */
-  as?: React.ElementType<any>;
+  as?: PolymorphicAs;
 
   /**
    * Accessible label that describes the set of tabs
