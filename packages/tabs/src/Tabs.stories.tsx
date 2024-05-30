@@ -28,6 +28,13 @@ const CardWithMargin = (props: any) => (
 
 const Lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla.`;
 
+const defaultExcludedControls = [
+  ...storybookExcludedControlParams,
+  'children',
+  'as',
+  'setSelected',
+];
+
 const meta: StoryMetaType<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
@@ -39,12 +46,7 @@ const meta: StoryMetaType<typeof Tabs> = {
       },
     },
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'children',
-        'as',
-        'setSelected',
-      ],
+      exclude: defaultExcludedControls,
     },
   },
   args: {
@@ -123,10 +125,8 @@ export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
 };
 Controlled.parameters = {
   chromatic: { disableSnapshot: true },
-};
-Controlled.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+  controls: {
+    exclude: [...defaultExcludedControls, 'selected'],
   },
 };
 
