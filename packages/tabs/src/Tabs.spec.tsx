@@ -77,16 +77,6 @@ describe('packages/tabs', () => {
   });
 
   describe('when controlled', () => {
-    test('clicking a tab fires setSelected callback', () => {
-      const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
-      const tabUtils = getTabUtilsByName('Second');
-
-      if (tabUtils) {
-        fireEvent.click(tabUtils.getTab());
-      }
-      expect(setSelected).toHaveBeenCalled();
-    });
-
     test(`renders "${tabsClassName}" to the tabs classList`, () => {
       renderTabs({
         setSelected,
@@ -134,8 +124,16 @@ describe('packages/tabs', () => {
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
     });
+    test('clicking a tab fires setSelected callback', () => {
+      const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
+      const tabUtils = getTabUtilsByName('Second');
 
-    test('clicking a tab does not change the selected tab panel', () => {
+      if (tabUtils) {
+        fireEvent.click(tabUtils.getTab());
+      }
+      expect(setSelected).toHaveBeenCalled();
+    });
+    test('clicking a tab does not update selected index and calls setSelected callback', () => {
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
         setSelected,
         selected: 1,
@@ -148,9 +146,10 @@ describe('packages/tabs', () => {
 
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
+      expect(setSelected).toHaveBeenCalled();
     });
 
-    test('keyboard nav is not supported', () => {
+    test('keying down arrow keys does not update selected index and calls setSelected callback', () => {
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
         setSelected,
         selected: 1,
@@ -165,6 +164,7 @@ describe('packages/tabs', () => {
       }
 
       expect(activeTab).toBeVisible();
+      expect(setSelected).toHaveBeenCalled();
     });
   });
 
@@ -196,19 +196,21 @@ describe('packages/tabs', () => {
     test('keyboard navigation is supported', () => {
       const { getTabUtilsByName } = renderTabs({}, { default: true });
       const firstTabUtils = getTabUtilsByName('First');
+      const firstTab = firstTabUtils?.getTab();
       const secondTabUtils = getTabUtilsByName('Second');
+      const secondTab = secondTabUtils?.getTab();
 
       // Focus on first tab
       userEvent.tab();
-      expect(firstTabUtils?.getTab()).toHaveFocus();
+      expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      if (firstTabUtils) {
-        fireEvent.keyDown(firstTabUtils.getTab(), {
+      if (firstTab) {
+        fireEvent.keyDown(firstTab, {
           key: keyMap.ArrowRight,
         });
       }
-      expect(secondTabUtils?.getTab()).toHaveFocus();
+      expect(secondTab).toHaveFocus();
     });
 
     test('keyboard navigation skips disabled tabs', () => {
