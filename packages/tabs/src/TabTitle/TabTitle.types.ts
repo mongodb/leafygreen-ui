@@ -1,9 +1,8 @@
 export interface BaseTabTitleProps {
-  darkMode?: boolean;
-  href?: string;
   children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
-  isAnyTabFocused?: boolean;
+  name: React.ReactNode;
+  onClick?: (event: React.MouseEvent, index: number) => void;
   [key: string]: any;
 }

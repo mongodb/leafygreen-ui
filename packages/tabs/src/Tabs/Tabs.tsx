@@ -56,7 +56,7 @@ const Tabs = (props: AccessibleTabsProps) => {
   validateAriaLabelProps(props, 'Tabs');
 
   const {
-    as,
+    as = 'button',
     baseFontSize: baseFontSizeProp,
     children,
     className,
@@ -99,9 +99,7 @@ const Tabs = (props: AccessibleTabsProps) => {
     [setSelected],
   );
 
-  const tabTitleElements = tabDescendants.map(
-    descendant => descendant.element.parentNode as HTMLElement,
-  );
+  const tabTitleElements = tabDescendants.map(descendant => descendant.element);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -134,9 +132,7 @@ const Tabs = (props: AccessibleTabsProps) => {
     const { disabled, onClick, onKeyDown, name, ...rest } = child.props;
 
     const tabProps = {
-      as,
       disabled,
-      darkMode,
       name,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
@@ -159,7 +155,9 @@ const Tabs = (props: AccessibleTabsProps) => {
       return child;
     }
 
-    return <TabPanel child={child} />;
+    const { children, disabled } = child.props;
+
+    return <TabPanel disabled={disabled}>{children}</TabPanel>;
   });
 
   return (
@@ -176,6 +174,8 @@ const Tabs = (props: AccessibleTabsProps) => {
         >
           <TabsContext.Provider
             value={{
+              as,
+              darkMode,
               forceRenderAllTabPanels,
               selectedIndex: selected,
             }}

@@ -14,40 +14,34 @@ import { TabProps } from './Tab.types';
   <Tab name='First Tab'>Tab 1</Tab>
 ```
  * @param props.children Content that will appear inside of Tab panel.
- * @param props.disabled Boolean that determines if the Tab is disabled.
- * @param props.name Name that will appear in Tab List.
  * @param props.className Adds a className to the root element.
  * @param props.default If Tabs component is uncontrolled, this determines what Tab will be selected on first render.
+ * @param props.disabled Boolean that determines if the Tab is disabled.
+ * @param props.name Name that will appear in Tab List.
  * @param props.href Destination when name is rendered as `a` tag.
+ * @param props.selected Whether this tab is currently selected
  * @param props.to Destination when name is rendered as `Link` tag.
  *
  */
-function Tab({ children, disabled, selected, ...rest }: TabProps) {
+function Tab({ children, ...rest }: TabProps) {
   // default and name are not an HTML properties
   // onClick applies to TabTitle component, not Tab component
   delete rest.default, delete rest.name, delete rest.onClick, delete rest.href;
 
-  const { forceRenderAllTabPanels } = useTabsContext();
-
-  const shouldRender = !disabled && (forceRenderAllTabPanels || selected);
-
-  if (!shouldRender) return null;
-
-  return (
-    <div {...rest} role="tabpanel">
-      {children}
-    </div>
-  );
+  return <div {...rest}>{children}</div>;
 }
 
 Tab.displayName = 'Tab';
 
 Tab.propTypes = {
-  selected: PropTypes.bool,
   children: PropTypes.node,
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  content: PropTypes.node,
+  className: PropTypes.string,
+  default: PropTypes.bool,
   disabled: PropTypes.bool,
+  href: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  selected: PropTypes.bool,
+  to: PropTypes.string,
 };
 
 export default Tab;

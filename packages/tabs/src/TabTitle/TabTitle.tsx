@@ -26,14 +26,14 @@ import { BaseTabTitleProps } from './TabTitle.types';
 
 const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
   (
-    { as, children, className, darkMode, disabled = false, onClick, ...rest },
+    { children, className, disabled = false, name, onClick, ...rest },
     fwdRef,
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
-    const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { index, ref, id } = useDescendant(TabDescendantsContext);
+    const { index, ref, id } = useDescendant(TabDescendantsContext, fwdRef);
     const { tabPanelDescendants } = useTabPanelDescendantsContext();
-    const { selectedIndex } = useTabsContext();
+    const { as, darkMode, selectedIndex } = useTabsContext();
+    const { Component } = useInferredPolymorphic(as, rest, 'button');
 
     const theme = darkMode ? Theme.Dark : Theme.Light;
     const selected = index === selectedIndex;
@@ -46,12 +46,12 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
 
     const handleClick = useCallback(
       (event: React.MouseEvent) => {
-        onClick(event, index);
+        onClick?.(event, index);
       },
       [index, onClick],
     );
 
-    const nodeText = getNodeTextContent(rest.name);
+    const nodeText = getNodeTextContent(name);
 
     const componentProps = {
       ...rest,
@@ -71,7 +71,7 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
       id,
       name: nodeText,
       onClick: handleClick,
-      ref: fwdRef,
+      ref,
       role: 'tab',
       tabIndex: selected ? 0 : -1,
       ['aria-controls']: relatedTabPanel?.id,
@@ -81,9 +81,7 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
 
     return (
       <Component {...componentProps}>
-        <div className={listTitleChildrenStyles} ref={ref}>
-          {children}
-        </div>
+        <div className={listTitleChildrenStyles}>{children}</div>
       </Component>
     );
   },

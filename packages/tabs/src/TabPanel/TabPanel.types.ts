@@ -1,3 +1,5 @@
-export interface TabPanelProps {
-  child: React.ReactElement;
+import { PropsWithChildren } from 'react';
+
+export interface TabPanelProps extends PropsWithChildren {
+  disabled?: boolean;
 }

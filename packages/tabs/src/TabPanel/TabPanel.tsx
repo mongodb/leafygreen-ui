@@ -12,10 +12,10 @@ import {
 import { hiddenTabPanelStyle } from './TabPanel.styles';
 import { TabPanelProps } from './TabPanel.types';
 
-const TabPanel = ({ child }: TabPanelProps) => {
+const TabPanel = ({ children, disabled }: TabPanelProps) => {
   const { id, index, ref } = useDescendant(TabPanelDescendantsContext);
   const { tabDescendants } = useTabDescendantsContext();
-  const { selectedIndex } = useTabsContext();
+  const { forceRenderAllTabPanels, selectedIndex } = useTabsContext();
 
   const relatedTab = useMemo(() => {
     return tabDescendants.find(tabDescendant => tabDescendant.index === index);
@@ -23,16 +23,20 @@ const TabPanel = ({ child }: TabPanelProps) => {
 
   const selected = index === selectedIndex;
 
+  const shouldRender = !disabled && (forceRenderAllTabPanels || selected);
+
+  const tabPanelProps = {
+    className: cx({
+      [hiddenTabPanelStyle]: !selected,
+    }),
+    id,
+    role: 'tabpanel',
+    ['aria-labelledby']: relatedTab?.id,
+  } as const;
+
   return (
     <div ref={ref}>
-      {React.cloneElement(child, {
-        id,
-        selected: index === selectedIndex,
-        className: cx({
-          [hiddenTabPanelStyle]: !selected,
-        }),
-        ['aria-labelledby']: relatedTab?.id,
-      })}
+      {shouldRender ? <div {...tabPanelProps}>{children}</div> : null}
     </div>
   );
 };
