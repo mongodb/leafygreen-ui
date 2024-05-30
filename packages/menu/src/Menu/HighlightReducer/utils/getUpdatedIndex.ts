@@ -9,11 +9,11 @@ import { isDescendantsSet } from './isDescendantsSet';
  * Computes the next index given a direction
  */
 // prettier-ignore
-function getNewIndex(direction: Direction, currentIndex: number, totalItems: number): number;
+function getNextIndex(direction: Direction, currentIndex: number, totalItems: number): number;
 // prettier-ignore
-function getNewIndex(direction: Direction, currentIndex: undefined, totalItems: number): undefined;
+function getNextIndex(direction: Direction, currentIndex: undefined, totalItems: number): undefined;
 // prettier-ignore
-function getNewIndex(direction: Direction, currentIndex: Index, totalItems: number): Index {
+function getNextIndex(direction: Direction, currentIndex: Index, totalItems: number): Index {
   if (!isDefined(currentIndex)) return currentIndex;
 
   switch (direction) {
@@ -32,7 +32,7 @@ function getNewIndex(direction: Direction, currentIndex: Index, totalItems: numb
 /**
  * Finds the index of the subsequent `enabled` descendant element
  */
-function getEnabledIndex(
+function getNextEnabledIndex(
   direction: Direction,
   currentIndex: number,
   descendants: DescendantsList<HTMLElement>,
@@ -42,7 +42,7 @@ function getEnabledIndex(
     return undefined;
   }
 
-  let updatedIndex = getNewIndex(direction, currentIndex, descendants.length);
+  let updatedIndex = getNextIndex(direction, currentIndex, descendants.length);
   let item = descendants[updatedIndex];
 
   // If the subsequent item is disabled,
@@ -60,7 +60,11 @@ function getEnabledIndex(
           return direction;
       }
     })();
-    updatedIndex = getNewIndex(nextDirection, updatedIndex, descendants.length);
+    updatedIndex = getNextIndex(
+      nextDirection,
+      updatedIndex,
+      descendants.length,
+    );
     item = descendants[updatedIndex];
   }
 
@@ -78,7 +82,7 @@ export const getUpdatedIndex = (
     return currentIndex;
   }
 
-  const updatedIndex = getEnabledIndex(
+  const updatedIndex = getNextEnabledIndex(
     direction,
     currentIndex ?? 0,
     descendants,
