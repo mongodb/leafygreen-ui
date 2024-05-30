@@ -16,8 +16,8 @@ import {
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
 
-import { useHighlightReducer } from './utils/HighlightReducer';
 import { useMenuHeight } from './utils/useMenuHeight';
+import { useHighlightReducer } from './HighlightReducer';
 import {
   rootMenuStyle,
   rootMenuThemeStyles,
