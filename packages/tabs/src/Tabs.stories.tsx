@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
@@ -31,7 +32,6 @@ const Lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec u
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
   'children',
-  'as',
   'setSelected',
 ];
 
@@ -50,6 +50,7 @@ const meta: StoryMetaType<typeof Tabs> = {
     },
   },
   args: {
+    as: 'button',
     darkMode: false,
     children: [
       <Tab key="Tab 1" default name="Tab 1">
@@ -89,6 +90,7 @@ const meta: StoryMetaType<typeof Tabs> = {
     ],
   },
   argTypes: {
+    as: storybookArgTypes.as,
     selected: { control: 'number' },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook

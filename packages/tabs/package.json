@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.4.13",
-    "@leafygreen-ui/box": "^3.1.9",
     "@leafygreen-ui/descendants": "^0.1.1",
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/hooks": "^8.1.3",
     "@leafygreen-ui/lib": "^13.3.0",
     "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/polymorphic": "^1.3.7",
     "@leafygreen-ui/tokens": "^2.7.0",
     "@leafygreen-ui/typography": "^19.1.1",
     "@lg-tools/test-harnesses": "0.1.2"
