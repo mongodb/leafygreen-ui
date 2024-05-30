@@ -168,3 +168,8 @@ jobs:
 
       - name: validate
         run: yarn validate
+  build-main:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - run: git reset --hard; git fetch -n origin main; git reset --hard main; git reset --hard 34ac734021212d31a30c83e1fe89efb162ab365d; yarn run clean; yarn --frozen-lockfile; yarn run build;
