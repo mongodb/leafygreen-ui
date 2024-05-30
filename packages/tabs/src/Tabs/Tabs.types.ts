@@ -32,13 +32,6 @@ export interface TabsProps extends HTMLElementProps<'div'>, LgIdProps {
   darkMode?: boolean;
 
   /**
-   * HTML Element that wraps title in Tab List.
-   *
-   * @type HTMLElement | React.Component
-   */
-  as?: React.ElementType<any>;
-
-  /**
    * Accessible label that describes the set of tabs
    */
   ['aria-label']?: string;

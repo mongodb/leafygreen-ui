@@ -1,4 +1,7 @@
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+
 export interface BaseTabTitleProps {
+  as?: PolymorphicAs;
   darkMode?: boolean;
   href?: string;
   children?: React.ReactNode;

@@ -19,9 +19,6 @@
       "path": "../a11y"
     },
     {
-      "path": "../box"
-    },
-    {
       "path": "../descendants"
     },
     {
@@ -35,6 +32,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"
