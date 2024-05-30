@@ -195,6 +195,7 @@ jobs:
 
       - run: git reset --hard;
       - run: git fetch -n origin main;
+      - run: git branch --list;
       - run: git reset --hard main;
       - run: git reset --hard 34ac734021212d31a30c83e1fe89efb162ab365d;
       - run: yarn run clean;
