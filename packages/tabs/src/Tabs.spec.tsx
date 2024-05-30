@@ -111,6 +111,7 @@ describe('packages/tabs', () => {
         );
 
         expect(selectedPanel).toBeVisible();
+        expect(hiddenPanels).toHaveLength(2);
         hiddenPanels.forEach(panel => {
           expect(panel).not.toBeVisible();
           expect(panel).toBeInTheDocument();
