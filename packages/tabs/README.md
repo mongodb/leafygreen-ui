@@ -99,9 +99,10 @@ test('tabs', () => {
     </Tabs>
   );
 
-  const { getAllTabsInTabList, getTabUtilsByName, getSelectedPanel } = getTestUtils();
+  const { getAllTabPanelsInDOM, getAllTabsInTabList, getSelectedPanel, getTabUtilsByName } = getTestUtils();
 
   expect(getAllTabsInTabList()).toHaveLength(3);
+  expect(getAllTabPanelsInDOM()).toHaveLength(1);
 
   const firstTabUtils = getTabUtilsByName('First');
   expect(firstTabUtils.isSelected()).toBeTruthy();
@@ -144,7 +145,7 @@ test('tabs', () => {
           Content C
         </Tab>
       </Tabs>
-      <Tabs aria-label="Label XY" data-lgid="tabs-xy">
+      <Tabs aria-label="Label XY" data-lgid="tabs-xy" forceRenderAllTabPanels={true}>
         <Tab name="X">
           Content X
         </Tab>
@@ -160,11 +161,13 @@ test('tabs', () => {
 
   // First tabs
   expect(testUtils1.getAllTabsInTabList()).toHaveLength(3);
+  expect(testUtils1.getAllTabPanelsInDOM()).toHaveLength(1);
   expect(testUtils1.getSelectedPanel()).toHaveTextContent('Content A');
 
   // Second tabs
-  expect(testUtils1.getAllTabsInTabList()).toHaveLength(2);
-  expect(testUtils1.getSelectedPanel()).toHaveTextContent('Content Y');
+  expect(testUtils2.getAllTabsInTabList()).toHaveLength(2);
+  expect(testUtils2.getAllTabPanelsInDOM()).toHaveLength(2);
+  expect(testUtils2.getSelectedPanel()).toHaveTextContent('Content Y');
 });
 ```
 
@@ -172,21 +175,23 @@ test('tabs', () => {
 
 ```tsx
 const {
+  getAllTabPanelsInDOM,
   getAllTabsInTabList,
   getTabUtilsByName: { getTab, isSelected, isDisabled },
   getSelectedPanel,
 } = getTestUtils();
 ```
 
-| Util                    | Description                                          | Returns                 |
-| ----------------------- | ---------------------------------------------------- | ----------------------- |
-| `getAllTabsInTabList()` | Returns an array of tabs                             | `Array<HTMLElement>`    |
-| `getSelectedPanel()`    | Returns the selected tab panel                       | `HTMLElement` \| `null` |
-| `getTabUtilsByName()`   | Returns tab utils if tab with matching name is found | `TabUtils` \| `null`    |
-| TabUtils                |                                                      |                         |
-| `getTab()`              | Returns the tab                                      | `HTMLElement`           |
-| `isSelected()`          | Returns whether the tab is selected                  | `boolean`               |
-| `isDisabled()`          | Returns whether the tab is disabled                  | `boolean`               |
+| Util                     | Description                                          | Returns                 |
+| ------------------------ | ---------------------------------------------------- | ----------------------- |
+| `getAllTabPanelsInDOM()` | Returns an array of tab panels                       | `Array<HTMLElement>`    |
+| `getAllTabsInTabList()`  | Returns an array of tabs                             | `Array<HTMLElement>`    |
+| `getSelectedPanel()`     | Returns the selected tab panel                       | `HTMLElement` \| `null` |
+| `getTabUtilsByName()`    | Returns tab utils if tab with matching name is found | `TabUtils` \| `null`    |
+| TabUtils                 |                                                      |                         |
+| `getTab()`               | Returns the tab                                      | `HTMLElement`           |
+| `isSelected()`           | Returns whether the tab is selected                  | `boolean`               |
+| `isDisabled()`           | Returns whether the tab is disabled                  | `boolean`               |
 
 ## Reference
 

@@ -120,6 +120,16 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
+    describe('getAllTabPanelsInDOM', () => {
+      test('returns all tab panels in DOM', () => {
+        renderTabs();
+        const { getAllTabPanelsInDOM } = getTestUtils();
+        const allTabPanels = getAllTabPanelsInDOM();
+
+        expect(allTabPanels).toHaveLength(1);
+      });
+    });
+
     describe('getSelectedPanel', () => {
       test('is in the document', () => {
         renderTabs();

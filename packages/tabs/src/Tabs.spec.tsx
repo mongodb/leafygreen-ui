@@ -74,6 +74,49 @@ describe('packages/tabs', () => {
 
       expect(getByTestId('inline-children')).toBeInTheDocument();
     });
+
+    describe('forceRenderAllTabPanels', () => {
+      test('renders only selected panel in DOM when prop is false', () => {
+        const { getAllTabsInTabList, getAllTabPanelsInDOM, getSelectedPanel } =
+          renderTabs({
+            forceRenderAllTabPanels: false,
+          });
+        const tabs = getAllTabsInTabList();
+        const tabPanels = getAllTabPanelsInDOM();
+        expect(tabs).toHaveLength(3);
+        expect(tabPanels).toHaveLength(1);
+
+        const selectedPanel = getSelectedPanel();
+        const hiddenPanels = tabPanels.filter(
+          panel => panel.id !== selectedPanel?.id,
+        );
+
+        expect(selectedPanel).toBeVisible();
+        expect(hiddenPanels).toHaveLength(0);
+      });
+
+      test('renders all tab panels in DOM but only selected panel is visible when prop is true', () => {
+        const { getAllTabsInTabList, getAllTabPanelsInDOM, getSelectedPanel } =
+          renderTabs({
+            forceRenderAllTabPanels: true,
+          });
+        const tabs = getAllTabsInTabList();
+        const tabPanels = getAllTabPanelsInDOM();
+        expect(tabs).toHaveLength(3);
+        expect(tabPanels).toHaveLength(3);
+
+        const selectedPanel = getSelectedPanel();
+        const hiddenPanels = tabPanels.filter(
+          panel => panel.id !== selectedPanel?.id,
+        );
+
+        expect(selectedPanel).toBeVisible();
+        hiddenPanels.forEach(panel => {
+          expect(panel).not.toBeVisible();
+          expect(panel).toBeInTheDocument();
+        });
+      });
+    });
   });
 
   describe('when controlled', () => {
