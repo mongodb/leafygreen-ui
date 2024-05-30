@@ -8,21 +8,12 @@ import { isDescendantsSet } from './isDescendantsSet';
 /**
  * Computes the next index given a direction
  */
-function getNewIndex(
-  direction: Direction,
-  currentIndex: number,
-  totalItems: number,
-): number;
-function getNewIndex(
-  direction: Direction,
-  currentIndex: undefined,
-  totalItems: number,
-): undefined;
-function getNewIndex(
-  direction: Direction,
-  currentIndex: Index,
-  totalItems: number,
-): Index {
+// prettier-ignore
+function getNewIndex(direction: Direction, currentIndex: number, totalItems: number): number;
+// prettier-ignore
+function getNewIndex(direction: Direction, currentIndex: undefined, totalItems: number): undefined;
+// prettier-ignore
+function getNewIndex(direction: Direction, currentIndex: Index, totalItems: number): Index {
   if (!isDefined(currentIndex)) return currentIndex;
 
   switch (direction) {
