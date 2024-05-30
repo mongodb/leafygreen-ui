@@ -1,4 +1,5 @@
 import { Either, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export interface TabsProps extends HTMLElementProps<'div'>, LgIdProps {
@@ -30,6 +31,11 @@ export interface TabsProps extends HTMLElementProps<'div'>, LgIdProps {
    * @default false
    */
   darkMode?: boolean;
+
+  /**
+   * HTML Element that wraps title in Tab List.
+   */
+  as?: PolymorphicAs;
 
   /**
    * Accessible label that describes the set of tabs

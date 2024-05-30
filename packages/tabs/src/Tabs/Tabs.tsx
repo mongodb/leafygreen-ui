@@ -12,7 +12,6 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
-import { Polymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -49,7 +48,7 @@ import { AccessibleTabsProps } from './Tabs.types';
  * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
  * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
  */
-const Tabs = Polymorphic<AccessibleTabsProps>(props => {
+const Tabs = (props: AccessibleTabsProps) => {
   validateAriaLabelProps(props, 'Tabs');
 
   const {
@@ -202,7 +201,7 @@ const Tabs = Polymorphic<AccessibleTabsProps>(props => {
       </DescendantsProvider>
     </LeafyGreenProvider>
   );
-});
+};
 
 Tabs.displayName = 'Tabs';
 
