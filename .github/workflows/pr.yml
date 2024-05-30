@@ -193,5 +193,8 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
-      - name: build main
-        run: git reset --hard; git fetch -n origin main; git reset --hard main; git reset --hard 34ac734021212d31a30c83e1fe89efb162ab365d; yarn run clean; yarn --frozen-lockfile; yarn run build;
+      - run: git reset --hard;
+      - run: git fetch -n origin main;
+      - run: git reset --hard main; git reset --hard 34ac734021212d31a30c83e1fe89efb162ab365d;
+      - run: yarn run clean; yarn --frozen-lockfile;
+      - run: yarn run build;
