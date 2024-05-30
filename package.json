@@ -18,7 +18,7 @@
     "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
-    "clean:builds": "rm -rf {packages,tools,chat}/*/{dist,tsconfig.tsbuildinfo,stories.js}",
+    "clean:builds": "rm -rf {packages,tools,chat}/*/{dist,tsconfig.tsbuildinfo,stories.js, .turbo}",
     "clean:modules": "rm -rf node_modules {packages,tools,chat}/*/node_modules",
     "fix": "lg lint --fix",
     "link": "lg link",
