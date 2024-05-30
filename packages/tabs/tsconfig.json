@@ -22,6 +22,9 @@
       "path": "../box"
     },
     {
+      "path": "../descendants"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -32,9 +35,6 @@
     },
     {
       "path": "../palette"
-    },
-    {
-      "path": "../portal"
     },
     {
       "path": "../tokens"

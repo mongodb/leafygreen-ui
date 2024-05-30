@@ -1,10 +1,16 @@
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { RefObject, useCallback, useMemo, useRef } from 'react';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
+import {
+  TabDescendantsContext,
+  useTabPanelDescendantsContext,
+} from '../context';
 
 import {
   listTitleChildrenStyles,
@@ -15,36 +21,34 @@ import {
 import { BaseTabTitleProps } from './TabTitle.types';
 
 const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
-  selected = false,
-  disabled = false,
   children,
   className,
   darkMode,
-  parentRef,
+  disabled = false,
+  onClick,
+  selectedIndex,
   ...rest
 }: BaseTabTitleProps) => {
-  const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
+  const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
+  const { index, ref, id } = useDescendant(TabDescendantsContext);
+  const { tabPanelDescendants } = useTabPanelDescendantsContext();
 
   const theme = darkMode ? Theme.Dark : Theme.Light;
+  const selected = index === selectedIndex;
 
-  // Checks to see if the current activeElement is a part of the same tab set
-  // as the current TabTitle. If so, and the current TabTitle is not disabled
-  // and is selected, we manually move focus to that TabTitle.
-  useEffect(() => {
-    const tabsList = Array.from(parentRef?.children ?? []);
-    const activeEl = document.activeElement;
+  const relatedTabPanel = useMemo(() => {
+    return tabPanelDescendants.find(
+      tabPanelDescendant => tabPanelDescendant.index === index,
+    );
+  }, [tabPanelDescendants, index]);
 
-    if (
-      activeEl &&
-      tabsList.indexOf(activeEl) !== -1 &&
-      !disabled &&
-      selected &&
-      titleRef.current
-    ) {
-      titleRef.current.focus();
-    }
-  }, [parentRef, disabled, selected, titleRef]);
+  const handleClick = useCallback(
+    (event: React.MouseEvent) => {
+      onClick(event, index);
+    },
+    [index, onClick],
+  );
 
   const nodeText = getNodeTextContent(rest.name);
 
@@ -55,19 +59,22 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
       listTitleStyles,
       listTitleModeStyles[theme].base,
       {
-        [listTitleModeStyles[theme].selected]: selected,
+        [listTitleModeStyles[theme].selected]: !disabled && selected,
         [listTitleModeStyles[theme].hover]: !disabled && !selected,
         [listTitleModeStyles[theme].disabled]: disabled,
       },
       listTitleModeStyles[theme].focus,
       className,
     ),
+    disabled,
+    id,
+    name: nodeText,
+    onClick: handleClick,
     role: 'tab',
     tabIndex: selected ? 0 : -1,
-    ['aria-selected']: selected,
-    name: nodeText,
+    ['aria-controls']: relatedTabPanel?.id,
+    ['aria-selected']: !disabled && selected,
     ['data-text']: nodeText,
-    disabled,
   } as const;
 
   if (typeof rest.href === 'string') {
@@ -77,7 +84,9 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
         ref={titleRef as RefObject<HTMLAnchorElement>}
         {...sharedTabProps}
       >
-        <div className={listTitleChildrenStyles}>{children}</div>
+        <div className={listTitleChildrenStyles} ref={ref}>
+          {children}
+        </div>
       </Box>
     );
   }
@@ -88,7 +97,9 @@ const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
       ref={titleRef as RefObject<HTMLButtonElement>}
       {...sharedTabProps}
     >
-      <div className={listTitleChildrenStyles}>{children}</div>
+      <div className={listTitleChildrenStyles} ref={ref}>
+        {children}
+      </div>
     </Box>
   );
 };
