@@ -66,8 +66,6 @@ export const getInputOptionStyles = ({
         background-color: ${color[theme].background.primary.hover};
 
         .${leftGlyphClassName} {
-
-export const inputOptionClassName = createUniqueClassName('')
           color: ${color[theme].icon.primary.hover};
         }
       }
