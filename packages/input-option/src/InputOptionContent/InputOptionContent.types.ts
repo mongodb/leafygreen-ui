@@ -1,4 +1,6 @@
-export interface InputOptionContentProps {
+import { ComponentProps } from 'react';
+
+export interface InputOptionContentProps extends ComponentProps<'div'> {
   /**
    * Content to appear inside of option
    */

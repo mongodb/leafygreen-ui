@@ -8,12 +8,12 @@ import {
   titleClassName,
 } from '../InputOption/InputOption.style';
 import {
-  contentWrapper,
   descriptionBaseStyles,
-  glyphContainer,
-  glyphRightStyles,
+  getContentWrapperStyles,
   leftGlyphClassName,
-  textWrapper,
+  leftGlyphContainerStyles,
+  rightGlyphContainerStyles,
+  textContainerStyles,
   titleBaseStyles,
 } from '../InputOptionContent/InputOptionContent.styles';
 
@@ -29,15 +29,17 @@ export const InputOptionContent = ({
   description,
   leftGlyph,
   rightGlyph,
+  className,
+  ...rest
 }: InputOptionContentProps) => {
   return (
-    <div className={contentWrapper}>
+    <div className={cx(getContentWrapperStyles, className)} {...rest}>
       {leftGlyph && (
-        <div className={cx(leftGlyphClassName, glyphContainer)}>
+        <div className={cx(leftGlyphClassName, leftGlyphContainerStyles)}>
           {leftGlyph}
         </div>
       )}
-      <div className={textWrapper}>
+      <div className={textContainerStyles}>
         <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
         {description && (
           <Description
@@ -48,7 +50,11 @@ export const InputOptionContent = ({
         )}
       </div>
       {rightGlyph && (
-        <div className={cx(glyphContainer, glyphRightStyles)}>{rightGlyph}</div>
+        <div
+          className={cx(leftGlyphContainerStyles, rightGlyphContainerStyles)}
+        >
+          {rightGlyph}
+        </div>
       )}
     </div>
   );

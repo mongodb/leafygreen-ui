@@ -6,37 +6,37 @@ export const leftGlyphClassName = createUniqueClassName(
   'input-option-left-glyph',
 );
 
-export const titleBaseStyles = css`
-  overflow-wrap: anywhere;
-`;
-
-export const descriptionBaseStyles = css`
-  max-height: ${spacing[3] * 3}px;
-  overflow: hidden;
-  font-size: inherit;
-  text-overflow: ellipsis;
-`;
-
-export const contentWrapper = css`
+export const getContentWrapperStyles = css`
   display: grid;
-  grid-template-columns: ${spacing[3]}px 1fr;
-  gap: ${spacing[2]}px;
+  grid-template-columns: ${spacing[400]}px 1fr ${spacing[400]}px;
+  grid-template-areas: 'left-glyph text right-glyph';
+  gap: ${spacing[200]}px;
   align-items: center;
   width: 100%;
 `;
 
-export const textWrapper = css`
-  grid-column: 2;
-`;
-
-export const glyphContainer = css`
+export const leftGlyphContainerStyles = css`
+  grid-area: left-glyph;
   display: flex;
   height: 20px;
   align-items: center;
 `;
 
-export const glyphRightStyles = css`
-  width: ${spacing[3]}px;
-  grid-column: 3;
-  grid-row: 1;
+export const textContainerStyles = css`
+  grid-area: text;
+`;
+
+export const rightGlyphContainerStyles = css`
+  grid-area: right-glyph;
+`;
+
+export const titleBaseStyles = css`
+  overflow-wrap: anywhere;
+`;
+
+export const descriptionBaseStyles = css`
+  max-height: ${spacing[1200]}px;
+  overflow: hidden;
+  font-size: inherit;
+  text-overflow: ellipsis;
 `;
