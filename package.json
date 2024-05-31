@@ -12,7 +12,7 @@
     "init": "yarn && yarn build",
     "init17": "yarn && yarn build:cli && npx ts-node tools/test/scripts/install-react17.ts && yarn build",
     "create-package": "lg create",
-    "prebuild": "yarn build:cli",
+    "prebuild": "yarn build:cli --no-cache",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
     "build-storybook": "npx storybook build",
