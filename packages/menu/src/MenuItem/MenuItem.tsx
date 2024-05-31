@@ -109,46 +109,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         }
       : {};
 
-    const content = (
-      <>
-        {updatedGlyph}
-        <div className={textContainer}>
-          <div
-            // Add text as data attribute to ensure no layout shift on hover
-            data-text={getNodeTextContent(children)}
-            className={cx(
-              titleTextStyle,
-              hoverStyles.text,
-              {
-                [activeTitleTextStyle[theme]]: showActiveStyles,
-                [hoverStyles.activeText]: showActiveStyles,
-                [destructiveTextStyle[theme]]: isDestructive,
-                [disabledTextStyle[theme]]: disabled,
-              },
-              focusStyles.textStyle,
-            )}
-          >
-            {children}
-          </div>
-          {description && (
-            <div
-              className={cx(
-                descriptionTextThemeStyle[theme],
-                {
-                  [activeDescriptionTextStyle[theme]]: showActiveStyles,
-                  [disabledTextStyle[theme]]: disabled,
-                  [linkDescriptionTextStyle]: isAnchor,
-                },
-                focusStyles.descriptionStyle,
-              )}
-            >
-              {description}
-            </div>
-          )}
-        </div>
-      </>
-    );
-
     return (
       <li role="none" className={menuItemContainerStyles}>
         <Component
@@ -170,7 +130,41 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
             className,
           )}
         >
-          {content}
+          {updatedGlyph}
+          <div className={textContainer}>
+            <div
+              // Add text as data attribute to ensure no layout shift on hover
+              data-text={getNodeTextContent(children)}
+              className={cx(
+                titleTextStyle,
+                hoverStyles.text,
+                {
+                  [activeTitleTextStyle[theme]]: showActiveStyles,
+                  [hoverStyles.activeText]: showActiveStyles,
+                  [destructiveTextStyle[theme]]: isDestructive,
+                  [disabledTextStyle[theme]]: disabled,
+                },
+                focusStyles.textStyle,
+              )}
+            >
+              {children}
+            </div>
+            {description && (
+              <div
+                className={cx(
+                  descriptionTextThemeStyle[theme],
+                  {
+                    [activeDescriptionTextStyle[theme]]: showActiveStyles,
+                    [disabledTextStyle[theme]]: disabled,
+                    [linkDescriptionTextStyle]: isAnchor,
+                  },
+                  focusStyles.descriptionStyle,
+                )}
+              >
+                {description}
+              </div>
+            )}
+          </div>
         </Component>
       </li>
     );
