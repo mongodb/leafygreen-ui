@@ -200,5 +200,5 @@ jobs:
       - run: git reset --hard dccd44fb7182e8c313221135052f1ee178ea6d16;
       - run: yarn run clean;
       - run: yarn --frozen-lockfile;
-      - run: turbo run build tsc --filter=@lg-tools/cli --force;
-      - run: turbo run build tsc;
+      - run: yarn build:cli --force;
+      - run: yarn build
