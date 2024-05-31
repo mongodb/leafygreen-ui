@@ -156,7 +156,7 @@ ConfirmationModal.propTypes = {
   onCancel: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
+  buttonText: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
   darkMode: PropTypes.bool,
