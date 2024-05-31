@@ -109,7 +109,7 @@ export const Content = {
       },
       combineArgs: {
         leftGlyph: [undefined, <Icon glyph="Cloud" />],
-        rightGlyph: [undefined, <Icon glyph="CaretDown" />],
+        rightGlyph: [undefined, <Icon glyph="ChevronDown" />],
         description: [undefined, 'Description'],
       },
       decorator: (Instance, ctx) => {

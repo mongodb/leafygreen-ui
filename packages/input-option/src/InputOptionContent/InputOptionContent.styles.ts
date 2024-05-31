@@ -26,16 +26,32 @@ export const getLeftGlyphStyles = ({
   theme,
   disabled,
   highlighted,
+  selected,
 }: InputOptionStyleArgs) => {
   const variant = disabled ? Variant.Disabled : Variant.Primary;
-  const ixnState = highlighted ? State.Focus : State.Default;
+  const ixnState = highlighted || selected ? State.Focus : State.Default;
 
   return css`
     grid-area: left-glyph;
     display: flex;
     height: 20px;
     align-items: center;
-    color: ${color[theme].icon?.[variant]?.[ixnState]};
+    color: ${color[theme].icon[variant][ixnState]};
+  `;
+};
+
+export const getRightGlyphStyles = ({
+  theme,
+  disabled,
+}: InputOptionStyleArgs) => {
+  const variant = disabled ? Variant.Disabled : Variant.Primary;
+
+  return css`
+    grid-area: right-glyph;
+    display: flex;
+    height: 20px;
+    align-items: center;
+    color: ${color[theme].icon[variant].default};
   `;
 };
 
@@ -44,24 +60,18 @@ export const textContainerStyles = css`
   line-height: ${spacing[400]}px;
 `;
 
-export const getRightGlyphStyles = ({
-  theme,
-  disabled,
+export const getTitleStyles = ({
   highlighted,
-}: InputOptionStyleArgs) => {
-  const variant = disabled ? Variant.Disabled : Variant.Primary;
-  const ixnState = highlighted ? State.Focus : State.Default;
-
-  return css`
-    grid-area: right-glyph;
-    color: ${color[theme].icon?.[variant]?.[ixnState]};
-  `;
-};
-
-export const titleBaseStyles = css`
+  selected,
+}: InputOptionStyleArgs) => css`
   overflow-wrap: anywhere;
   font-size: inherit;
   line-height: inherit;
+
+  ${(highlighted || selected) &&
+  css`
+    font-weight: bold;
+  `}
 `;
 
 export const getDescriptionStyles = ({
@@ -76,6 +86,6 @@ export const getDescriptionStyles = ({
     font-size: inherit;
     line-height: inherit;
     text-overflow: ellipsis;
-    color: ${color[theme].text?.[variant]?.default};
+    color: ${color[theme].text[variant].default};
   `;
 };

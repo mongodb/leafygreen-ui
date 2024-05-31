@@ -13,9 +13,9 @@ import {
   getDescriptionStyles,
   getLeftGlyphStyles,
   getRightGlyphStyles,
+  getTitleStyles,
   leftGlyphClassName,
   textContainerStyles,
-  titleBaseStyles,
 } from '../InputOptionContent/InputOptionContent.styles';
 import { useInputOptionContext } from '../InputOptionContext';
 
@@ -37,26 +37,33 @@ export const InputOptionContent = ({
   ...rest
 }: InputOptionContentProps) => {
   const { theme } = useDarkMode();
-  const { disabled, highlighted } = useInputOptionContext();
+  const { disabled, highlighted, selected } = useInputOptionContext();
   return (
     <div className={cx(getContentWrapperStyles, className)} {...rest}>
       {leftGlyph && (
         <div
           className={cx(
             leftGlyphClassName,
-            getLeftGlyphStyles({ theme, disabled, highlighted }),
+            getLeftGlyphStyles({ theme, disabled, highlighted, selected }),
           )}
         >
           {leftGlyph}
         </div>
       )}
       <div className={textContainerStyles}>
-        <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
+        <div
+          className={cx(
+            titleClassName,
+            getTitleStyles({ theme, highlighted, selected }),
+          )}
+        >
+          {children}
+        </div>
         {description && (
           <Description
             className={cx(
               descriptionClassName,
-              getDescriptionStyles({ theme, disabled, highlighted }),
+              getDescriptionStyles({ theme, disabled, highlighted, selected }),
             )}
           >
             {description}
@@ -64,7 +71,12 @@ export const InputOptionContent = ({
         )}
       </div>
       {rightGlyph && (
-        <div className={getRightGlyphStyles({ theme, disabled, highlighted })}>
+        <div
+          className={getRightGlyphStyles({
+            theme,
+            disabled,
+          })}
+        >
           {rightGlyph}
         </div>
       )}
