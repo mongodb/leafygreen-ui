@@ -1,6 +1,4 @@
-import { PropsWithChildren } from 'react';
-
-import { AriaLabelProps } from '@leafygreen-ui/a11y';
+import { AriaLabelPropsWithChildren } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 /**
@@ -44,6 +42,6 @@ export interface BaseInputOptionProps {
   isInteractive?: boolean;
 }
 
-export type InputOptionProps = AriaLabelProps &
-  DarkModeProps &
-  PropsWithChildren<BaseInputOptionProps>;
+export type InputOptionProps = DarkModeProps &
+  AriaLabelPropsWithChildren &
+  BaseInputOptionProps;
