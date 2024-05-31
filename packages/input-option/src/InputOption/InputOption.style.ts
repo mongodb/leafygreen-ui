@@ -1,10 +1,10 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   color,
   fontFamilies,
   spacing,
+  State,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -14,68 +14,77 @@ export const descriptionClassName = createUniqueClassName(
   'input-option-description',
 );
 
-export const inputOptionStyles = css`
-  position: relative;
-  list-style: none;
-  outline: none;
-  border: unset;
-  margin: 0;
-  text-align: left;
-  text-decoration: none;
-  cursor: pointer;
+interface InputOptionStyleArgs {
+  theme: Theme;
+  disabled?: boolean;
+  highlighted?: boolean;
+  selected?: boolean;
+  isInteractive?: boolean;
+}
 
-  font-size: ${typeScales.body1.fontSize}px;
-  line-height: ${typeScales.body1.lineHeight}px;
-  font-family: ${fontFamilies.default};
-  padding: ${spacing[2]}px ${spacing[2] + spacing[1]}px;
-
-  transition: background-color ${transitionDuration.default}ms ease-in-out;
-
-  &:focus,
-  &:focus-visible {
+export const getInputOptionStyles = ({
+  theme,
+  disabled,
+  highlighted,
+  selected,
+  isInteractive,
+}: InputOptionStyleArgs) => {
+  const ixnState = highlighted || selected ? State.Focus : State.Default;
+  return css`
+    position: relative;
+    list-style: none;
     outline: none;
     border: unset;
-  }
-`;
+    margin: 0;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
 
-export const titleSelectionStyles = css`
-  .${titleClassName} {
-    font-weight: bold;
-  }
-`;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    font-family: ${fontFamilies.default};
+    padding: ${spacing[200]}px ${spacing[300]}px;
 
-export const inputOptionThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${color[Theme.Light].background.primary.default};
-    color: ${color[Theme.Light].text.primary.default};
-  `,
-  [Theme.Dark]: css`
-    background-color: ${color[Theme.Dark].background.primary.default};
-    color: ${color[Theme.Dark].text.primary.default};
-  `,
-};
+    transition: background-color ${transitionDuration.default}ms ease-in-out;
 
-export const inputOptionHoverStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:hover {
-      outline: none;
-      background-color: ${palette.gray.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    &:hover {
-      outline: none;
-      background-color: ${palette.gray.dark4};
-    }
-  `,
+    color: ${color[theme].text.primary[ixnState]};
+    background-color: ${color[theme].background.primary[ixnState]};
+
+    ${disabled &&
+    css`
+      cursor: not-allowed;
+      color: ${color[theme].text.disabled[ixnState]};
+    `}
+
+    /* Interactive states */
+    ${isInteractive &&
+    !disabled &&
+    css`
+      &:hover {
+        outline: none;
+        background-color: ${color[theme].background.primary.hover};
+      }
+
+      &:focus,
+      &:focus-visible {
+        outline: none;
+        border: unset;
+      }
+    `}
+  `;
 };
 
 /** in px */
-const wedgeWidth = spacing[1];
+const wedgeWidth = spacing[100];
 /** in px */
-const wedgePaddingY = spacing[2];
+const wedgePaddingY = spacing[200];
 
-export const inputOptionWedge = css`
+export const getInputOptionWedge = ({
+  theme,
+  disabled,
+  highlighted,
+  selected,
+}: InputOptionStyleArgs) => css`
   // Left wedge
   &:before {
     content: '';
@@ -91,63 +100,16 @@ export const inputOptionWedge = css`
     transform-origin: 0%; // 0% since we use translateY
     transition: ${transitionDuration.default}ms ease-in-out;
     transition-property: transform, background-color;
+
+    ${(highlighted || selected) &&
+    css`
+      transform: scaleY(1) translateY(-50%);
+      background-color: ${color[theme].icon.primary.focus};
+    `}
+
+    ${disabled &&
+    css`
+      content: unset;
+    `}
   }
 `;
-
-export const inputOptionActiveStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    outline: none;
-    background-color: ${palette.blue.light3};
-    color: ${palette.blue.dark2};
-
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.base};
-    }
-  `,
-  [Theme.Dark]: css`
-    outline: none;
-    background-color: ${palette.blue.dark3};
-    color: ${palette.blue.light3};
-
-    &:before {
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.light1};
-    }
-  `,
-};
-
-export const inputOptionDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
-
-    &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.light1};
-    }
-
-    &:hover {
-      background-color: inherit;
-    }
-
-    &:before {
-      content: unset;
-    }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-
-    &,
-    & .${descriptionClassName} {
-      color: ${palette.gray.dark1};
-    }
-
-    &:hover {
-      background-color: inherit;
-    }
-
-    &:before {
-      content: unset;
-    }
-  `,
-};
