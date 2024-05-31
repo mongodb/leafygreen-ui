@@ -32,17 +32,4 @@ export default [
       exports: 'auto',
     },
   },
-  // {
-  //   ...esmConfig,
-  //   input: [...codemodGlobs],
-  //   // This creates the dist/cjs dir. It includes the /codemods dir which includes .js files
-  //   output: {
-  //     ...esmConfig.output,
-  //     format: 'cjs', // overrides esm format from esmConfig.output
-  //     entryFileNames: '[name].js',
-  //     preserveModules: true,
-  //     exports: 'auto',
-  //     dir: 'dist/cjs/',
-  //   },
-  // },
 ];
