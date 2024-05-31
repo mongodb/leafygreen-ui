@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
@@ -12,7 +12,7 @@ import {
 import { hiddenTabPanelStyle } from './TabPanel.styles';
 import { TabPanelProps } from './TabPanel.types';
 
-const TabPanel = ({ children, disabled }: TabPanelProps) => {
+const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
   const { id, index, ref } = useDescendant(TabPanelDescendantsContext);
   const { tabDescendants } = useTabDescendantsContext();
   const { forceRenderAllTabPanels, selectedIndex } = useTabsContext();
