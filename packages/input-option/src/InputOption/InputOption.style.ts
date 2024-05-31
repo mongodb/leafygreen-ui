@@ -2,6 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   fontFamilies,
   spacing,
   transitionDuration,
@@ -45,10 +46,12 @@ export const titleSelectionStyles = css`
 
 export const inputOptionThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.black};
+    background-color: ${color[Theme.Light].background.primary.default};
+    color: ${color[Theme.Light].text.primary.default};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light2};
+    background-color: ${color[Theme.Dark].background.primary.default};
+    color: ${color[Theme.Dark].text.primary.default};
   `,
 };
 
