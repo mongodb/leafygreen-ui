@@ -181,6 +181,15 @@ jobs:
           cache: yarn
           cache-dependency-path: 'yarn.lock'
 
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+
       - name: Install Dependencies
         run: yarn install --frozen-lockfile --prefer-offline
 
