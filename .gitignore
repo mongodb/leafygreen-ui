@@ -56,3 +56,6 @@ scripts/tmp.*.ts
 .changeset/pre.json
 
 TODO.md
+
+# PR train config (https://github.com/realyze/pr-train)
+.pr-train.yml
