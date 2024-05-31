@@ -201,3 +201,4 @@ jobs:
       - run: yarn run clean;
       - run: yarn --frozen-lockfile;
       - run: turbo run build tsc --filter=@lg-tools/cli --force;
+      - run: turbo run build tsc;
