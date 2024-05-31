@@ -1,3 +1,6 @@
+/**
+ * The element property a color token applies to
+ */
 const Property = {
   Background: 'background',
   Border: 'border',
@@ -6,6 +9,9 @@ const Property = {
 } as const;
 type Property = (typeof Property)[keyof typeof Property];
 
+/**
+ * The context variant in which a color token should be applied
+ */
 const Variant = {
   Disabled: 'disabled',
   Placeholder: 'placeholder',
@@ -21,17 +27,29 @@ const Variant = {
 } as const;
 type Variant = (typeof Variant)[keyof typeof Variant];
 
-const State = {
+/**
+ * The interaction state in which a color token should be applied
+ */
+const InteractionState = {
   Default: 'default',
   Hover: 'hover',
   Focus: 'focus',
 } as const;
-type State = (typeof State)[keyof typeof State];
+type InteractionState =
+  (typeof InteractionState)[keyof typeof InteractionState];
 
+/**
+ * A partial Record,
+ * mapping a subset of {@link Variant} keys
+ * to a Record of {@link InteractionState} color tokens
+ */
 export type VariantColorRecord = Partial<
-  Record<Variant, Record<State, string>>
+  Record<Variant, Record<InteractionState, string>>
 >;
 
-export type ThemeColorRecord = Record<Property, VariantColorRecord>;
+/**
+ * A Record mapping {@link Property} keys to {@link VariantColorRecord}
+ */
+export type PropertyColorRecord = Record<Property, VariantColorRecord>;
 
-export { Property, State, Variant };
+export { InteractionState, Property, Variant };
