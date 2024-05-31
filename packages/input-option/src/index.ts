@@ -3,6 +3,7 @@ export {
   descriptionClassName,
   InputOption,
   type InputOptionProps,
+  titleClassName,
 } from './InputOption';
 export {
   InputOptionContent,

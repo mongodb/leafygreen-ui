@@ -24,6 +24,7 @@ export const leftGlyphContainerStyles = css`
 
 export const textContainerStyles = css`
   grid-area: text;
+  line-height: ${spacing[400]}px;
 `;
 
 export const rightGlyphContainerStyles = css`
@@ -32,11 +33,14 @@ export const rightGlyphContainerStyles = css`
 
 export const titleBaseStyles = css`
   overflow-wrap: anywhere;
+  font-size: inherit;
+  line-height: inherit;
 `;
 
 export const descriptionBaseStyles = css`
   max-height: ${spacing[1200]}px;
   overflow: hidden;
   font-size: inherit;
+  line-height: inherit;
   text-overflow: ellipsis;
 `;
