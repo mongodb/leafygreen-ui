@@ -1,10 +1,10 @@
 import { palette } from '@leafygreen-ui/palette';
 
 import {
-  ModeColorRecord,
   State,
+  type ThemeColorRecord,
   Variant,
-  VariantColorRecord,
+  type VariantColorRecord,
 } from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
@@ -171,4 +171,4 @@ export const darkModeColors = {
   border: darkModeBorderColors,
   icon: darkModeIconColors,
   text: darkModeTextColors,
-} as const satisfies ModeColorRecord;
+} as const satisfies ThemeColorRecord;

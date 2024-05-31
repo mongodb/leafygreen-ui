@@ -1,10 +1,10 @@
-const Type = {
+const Property = {
   Background: 'background',
   Border: 'border',
   Icon: 'icon',
   Text: 'text',
 } as const;
-type Type = (typeof Type)[keyof typeof Type];
+type Property = (typeof Property)[keyof typeof Property];
 
 const Variant = {
   Disabled: 'disabled',
@@ -31,6 +31,7 @@ type State = (typeof State)[keyof typeof State];
 export type VariantColorRecord = Partial<
   Record<Variant, Record<State, string>>
 >;
-export type ModeColorRecord = Record<Type, VariantColorRecord>;
 
-export { State, Type, Variant };
+export type ThemeColorRecord = Record<Property, VariantColorRecord>;
+
+export { Property, State, Variant };
