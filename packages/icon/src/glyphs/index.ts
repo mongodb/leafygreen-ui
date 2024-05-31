@@ -133,6 +133,7 @@ import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
+import Stop from './Stop.svg';
 import String from './String.svg';
 import Sun from './Sun.svg';
 import Support from './Support.svg';
@@ -292,6 +293,7 @@ const _glyphs = {
   SplitHorizontal,
   SplitVertical,
   Stitch,
+  Stop,
   String,
   Sun,
   Support,
