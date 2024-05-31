@@ -35,14 +35,12 @@ const meta: StoryMetaType<typeof InputOption> = {
       storyNames: ['Generated', 'Content'],
       combineArgs: {
         darkMode: [false, true],
-        selected: [false, true],
-        showWedge: [false, true],
-        disabled: [false, true],
       },
     },
   },
   args: {
     children: 'Some text',
+    showWedge: true,
   },
   argTypes: {
     disabled: {
@@ -98,6 +96,14 @@ LiveExample.parameters = {
 
 export const Generated = {
   render: () => <></>,
+  parameters: {
+    generate: {
+      combineArgs: {
+        selected: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
 } satisfies StoryObj<typeof InputOption>;
 
 export const Content = {
@@ -108,10 +114,18 @@ export const Content = {
         showWedge: true,
       },
       combineArgs: {
+        description: [undefined, 'Description'],
         leftGlyph: [undefined, <Icon glyph="Cloud" />],
         rightGlyph: [undefined, <Icon glyph="ChevronDown" />],
-        description: [undefined, 'Description'],
+        selected: [false, true],
+        disabled: [false, true],
       },
+      excludeCombinations: [
+        {
+          leftGlyph: undefined,
+          rightGlyph: <Icon glyph="ChevronDown" />,
+        },
+      ],
       decorator: (Instance, ctx) => {
         return (
           <Instance>

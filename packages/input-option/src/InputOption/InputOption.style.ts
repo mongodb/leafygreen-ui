@@ -9,6 +9,8 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+import { leftGlyphClassName } from '../InputOptionContent';
+
 export const titleClassName = createUniqueClassName('input-option-title');
 export const descriptionClassName = createUniqueClassName(
   'input-option-description',
@@ -45,7 +47,8 @@ export const getInputOptionStyles = ({
     font-family: ${fontFamilies.default};
     padding: ${spacing[200]}px ${spacing[300]}px;
 
-    transition: background-color ${transitionDuration.default}ms ease-in-out;
+    transition: ${transitionDuration.default}ms ease-in-out;
+    transition-property: background-color, color;
 
     color: ${color[theme].text.primary[ixnState]};
     background-color: ${color[theme].background.primary[ixnState]};
@@ -62,7 +65,12 @@ export const getInputOptionStyles = ({
     css`
       &:hover {
         outline: none;
+        color: ${color[theme].text.primary.hover};
         background-color: ${color[theme].background.primary.hover};
+
+        .${leftGlyphClassName} {
+          color: ${color[theme].icon.primary.hover};
+        }
       }
 
       &:focus,

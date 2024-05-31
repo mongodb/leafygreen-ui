@@ -1,6 +1,12 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { color, spacing, State, Variant } from '@leafygreen-ui/tokens';
+import {
+  color,
+  spacing,
+  State,
+  transitionDuration,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
 export const leftGlyphClassName = createUniqueClassName(
   'input-option-left-glyph',
@@ -36,7 +42,9 @@ export const getLeftGlyphStyles = ({
     display: flex;
     height: 20px;
     align-items: center;
+    // Hover styles set by parent InputOption
     color: ${color[theme].icon[variant][ixnState]};
+    transition: color ${transitionDuration.default}ms ease-in-out;
   `;
 };
 
@@ -52,6 +60,7 @@ export const getRightGlyphStyles = ({
     height: 20px;
     align-items: center;
     color: ${color[theme].icon[variant].default};
+    transition: color ${transitionDuration.default}ms ease-in-out;
   `;
 };
 
