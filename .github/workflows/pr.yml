@@ -193,7 +193,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile --prefer-offline
       - run: yarn run build;
-      - run: yarn run clean;
       - run: git reset --hard;
       - run: git fetch -n origin main;
       - run: git branch --list;
@@ -201,4 +200,5 @@ jobs:
       - run: git reset --hard dccd44fb7182e8c313221135052f1ee178ea6d16;
       - run: yarn run clean;
       - run: yarn --frozen-lockfile;
-      - run: yarn run build;
+      - run: yarn build:cli;
+      - run: turbo run build tsc --filter=@lg-tools/cli --force;
