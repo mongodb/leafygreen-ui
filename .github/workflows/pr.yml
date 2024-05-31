@@ -197,7 +197,7 @@ jobs:
       - run: git fetch -n origin main;
       - run: git branch --list;
       - run: git reset --hard origin/main;
-      - run: git reset --hard 34ac734021212d31a30c83e1fe89efb162ab365d;
+      - run: git reset --hard dccd44fb7182e8c313221135052f1ee178ea6d16;
       - run: yarn run clean;
       - run: yarn --frozen-lockfile;
       - run: yarn run build;
