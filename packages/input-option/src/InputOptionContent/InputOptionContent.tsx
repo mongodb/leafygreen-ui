@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Description } from '@leafygreen-ui/typography';
 
 import {
@@ -8,21 +9,24 @@ import {
   titleClassName,
 } from '../InputOption/InputOption.style';
 import {
-  descriptionBaseStyles,
   getContentWrapperStyles,
+  getDescriptionStyles,
+  getLeftGlyphStyles,
+  getRightGlyphStyles,
   leftGlyphClassName,
-  leftGlyphContainerStyles,
-  rightGlyphContainerStyles,
   textContainerStyles,
   titleBaseStyles,
 } from '../InputOptionContent/InputOptionContent.styles';
+import { useInputOptionContext } from '../InputOptionContext';
 
 import { InputOptionContentProps } from './InputOptionContent.types';
 
 /**
  * @internal
  *
- * This is a temp workaround to add consistent option styles. Once all components that use an input option are consistent we can add this directly inside `InputOption`.
+ * This is a temp workaround to add consistent option styles.
+ * Once all components that use an input option are consistent
+ * we can add this directly inside `InputOption`.
  */
 export const InputOptionContent = ({
   children,
@@ -32,10 +36,17 @@ export const InputOptionContent = ({
   className,
   ...rest
 }: InputOptionContentProps) => {
+  const { theme } = useDarkMode();
+  const { disabled, highlighted } = useInputOptionContext();
   return (
     <div className={cx(getContentWrapperStyles, className)} {...rest}>
       {leftGlyph && (
-        <div className={cx(leftGlyphClassName, leftGlyphContainerStyles)}>
+        <div
+          className={cx(
+            leftGlyphClassName,
+            getLeftGlyphStyles({ theme, disabled, highlighted }),
+          )}
+        >
           {leftGlyph}
         </div>
       )}
@@ -43,16 +54,17 @@ export const InputOptionContent = ({
         <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
         {description && (
           <Description
-            className={cx(descriptionClassName, descriptionBaseStyles)}
+            className={cx(
+              descriptionClassName,
+              getDescriptionStyles({ theme, disabled, highlighted }),
+            )}
           >
             {description}
           </Description>
         )}
       </div>
       {rightGlyph && (
-        <div
-          className={cx(leftGlyphContainerStyles, rightGlyphContainerStyles)}
-        >
+        <div className={getRightGlyphStyles({ theme, disabled, highlighted })}>
           {rightGlyph}
         </div>
       )}

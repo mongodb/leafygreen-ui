@@ -8,6 +8,8 @@ import {
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { InputOptionContext } from '../InputOptionContext';
+
 import {
   inputOptionActiveStyles,
   inputOptionDisabledStyles,
@@ -38,29 +40,37 @@ export const InputOption = Polymorphic<InputOptionProps>(
     const { Component } = usePolymorphic(as);
     const { theme } = useDarkMode(darkModeProp);
     return (
-      <Component
-        ref={ref}
-        role="option"
-        aria-selected={highlighted}
-        aria-disabled={disabled}
-        tabIndex={-1}
-        className={cx(
-          inputOptionStyles,
-          inputOptionThemeStyles[theme],
-          {
-            [inputOptionWedge]: showWedge,
-            [inputOptionHoverStyles[theme]]: isInteractive,
-            [inputOptionActiveStyles[theme]]:
-              isInteractive && (selected || highlighted),
-            [inputOptionDisabledStyles[theme]]: disabled,
-            [titleSelectionStyles]: selected,
-          },
-          className,
-        )}
-        {...rest}
+      <InputOptionContext.Provider
+        value={{
+          disabled,
+          highlighted,
+          selected,
+        }}
       >
-        {children}
-      </Component>
+        <Component
+          ref={ref}
+          role="option"
+          aria-selected={highlighted}
+          aria-disabled={disabled}
+          tabIndex={-1}
+          className={cx(
+            inputOptionStyles,
+            inputOptionThemeStyles[theme],
+            {
+              [inputOptionWedge]: showWedge,
+              [inputOptionHoverStyles[theme]]: isInteractive,
+              [inputOptionActiveStyles[theme]]:
+                isInteractive && (selected || highlighted),
+              [inputOptionDisabledStyles[theme]]: disabled,
+              [titleSelectionStyles]: selected,
+            },
+            className,
+          )}
+          {...rest}
+        >
+          {children}
+        </Component>
+      </InputOptionContext.Provider>
     );
   },
 );
