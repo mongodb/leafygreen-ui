@@ -2,12 +2,16 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
+  PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Description } from '@leafygreen-ui/typography';
 
 import { MenuContext, MenuDescendantsContext } from '../MenuContext';
 import {
@@ -46,7 +50,7 @@ const menuItemContainerClassName = createUniqueClassName('menu-item-container');
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
-      as,
+      as = 'button' as PolymorphicAs,
       disabled = false,
       active = false,
       size = Size.Default,
@@ -59,7 +63,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     },
     fwdRef: React.Ref<any>,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest, 'button');
+    // const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme, highlightIndex: _highlightIndex } = useContext(MenuContext);
     const { index: _index, ref } = useDescendant(
       MenuDescendantsContext,
@@ -73,8 +77,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
     const isDestructive = variant === Variant.Destructive;
     const showActiveStyles = active && !isDestructive;
-
-    const isAnchor = Component === 'a';
 
     const updatedGlyph =
       glyph &&
@@ -93,79 +95,51 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         ),
       });
 
-    const baseProps = {
-      role: 'menuitem',
-      tabIndex: -1,
-      'aria-disabled': disabled,
-      'aria-current': active ?? undefined,
-      // only add a disabled prop if not an anchor
-      ...(!isAnchor && { disabled }),
-    };
-
-    const anchorProps = isAnchor
-      ? {
-          target: '_self',
-          rel: '',
-        }
-      : {};
+    const conditionalProps =
+      as === 'a'
+        ? {
+            target: '_self',
+            rel: '',
+          }
+        : { disabled };
 
     return (
-      <li role="none" className={menuItemContainerStyles}>
-        <Component
-          ref={ref}
-          {...baseProps}
-          {...anchorProps}
+      <li role="none" ref={ref} className={menuItemContainerStyles}>
+        <InputOption
+          showWedge
+          as={as}
+          role="menuitem"
+          tabIndex={-1}
+          aria-disabled={disabled}
+          aria-current={active ?? undefined}
+          highlighted={active}
+          {...conditionalProps}
           {...rest}
-          className={cx(
-            menuItemContainerClassName,
-            menuItemContainerStyle,
-            menuItemContainerThemeStyle[theme],
-            menuItemHeight(size),
-            linkStyle,
-            {
-              [activeMenuItemContainerStyle[theme]]: showActiveStyles,
-              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-            },
-            focusedMenuItemContainerStyle[theme],
-            className,
-          )}
+          className={css`
+            width: 100%;
+            min-height: ${spacing[800]}px;
+            padding-block: ${spacing[50]}px;
+            padding-inline-start: ${glyph ? spacing[400] : spacing[600]}px;
+          `}
         >
-          {updatedGlyph}
-          <div className={textContainer}>
+          <InputOptionContent
+            className={css`
+              grid-template-areas: '${glyph
+                ? 'left-glyph'
+                : 'text'} text ${'text'}';
+            `}
+            leftGlyph={glyph}
+            description={description}
+          >
             <div
-              // Add text as data attribute to ensure no layout shift on hover
-              data-text={getNodeTextContent(children)}
-              className={cx(
-                titleTextStyle,
-                hoverStyles.text,
-                {
-                  [activeTitleTextStyle[theme]]: showActiveStyles,
-                  [hoverStyles.activeText]: showActiveStyles,
-                  [destructiveTextStyle[theme]]: isDestructive,
-                  [disabledTextStyle[theme]]: disabled,
-                },
-                focusStyles.textStyle,
-              )}
+              className={css`
+                font-weight: 500;
+              `}
             >
               {children}
             </div>
-            {description && (
-              <div
-                className={cx(
-                  descriptionTextThemeStyle[theme],
-                  {
-                    [activeDescriptionTextStyle[theme]]: showActiveStyles,
-                    [disabledTextStyle[theme]]: disabled,
-                    [linkDescriptionTextStyle]: isAnchor,
-                  },
-                  focusStyles.descriptionStyle,
-                )}
-              >
-                {description}
-              </div>
-            )}
-          </div>
-        </Component>
+          </InputOptionContent>
+        </InputOption>
       </li>
     );
   },

@@ -3,6 +3,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
 export const menuItemContainerStyles = css`
+  width: 100%;
+  padding: 0;
   list-style: none;
 `;
 
