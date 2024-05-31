@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 
@@ -31,10 +32,10 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
+      storyNames: ['Generated', 'Content'],
       combineArgs: {
         darkMode: [false, true],
         selected: [false, true],
-        isInteractive: [false, true],
         showWedge: [false, true],
         disabled: [false, true],
       },
@@ -95,4 +96,35 @@ LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const Generated = () => {};
+export const Generated = {
+  render: () => <></>,
+} satisfies StoryObj<typeof InputOption>;
+
+export const Content = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        showWedge: true,
+      },
+      combineArgs: {
+        leftGlyph: [undefined, <Icon glyph="Cloud" />],
+        rightGlyph: [undefined, <Icon glyph="CaretDown" />],
+        description: [undefined, 'Description'],
+      },
+      decorator: (Instance, ctx) => {
+        return (
+          <Instance>
+            <InputOptionContent
+              leftGlyph={ctx.args.leftGlyph}
+              rightGlyph={ctx.args.rightGlyph}
+              description={ctx.args.description}
+            >
+              {ctx.args.children}
+            </InputOptionContent>
+          </Instance>
+        );
+      },
+    },
+  },
+} satisfies StoryObj<typeof InputOptionContent>;
