@@ -76,14 +76,19 @@ export const ConfirmationModal = React.forwardRef(
     // TODO: remove - onCancel is deprecated
     const _onCancel = onCancel || cancelButtonProps?.onClick;
 
+    const resetConfirmButton = () => {
+      if (!requiredInputText) return;
+      setConfirmEnabled(false);
+    };
+
     const handleConfirm = () => {
       _onConfirm?.();
-      setConfirmEnabled(false);
+      resetConfirmButton();
     };
 
     const handleCancel = () => {
       _onCancel?.();
-      setConfirmEnabled(false);
+      resetConfirmButton();
     };
 
     // TODO: remove - submitDisabled is deprecated
@@ -94,7 +99,7 @@ export const ConfirmationModal = React.forwardRef(
       <Modal
         {...modalProps}
         contentClassName={baseModalStyle}
-        setOpen={_onCancel}
+        setOpen={handleCancel}
         darkMode={darkMode}
         ref={forwardRef}
       >
