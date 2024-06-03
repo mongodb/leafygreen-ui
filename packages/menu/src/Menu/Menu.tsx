@@ -56,6 +56,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     open: controlledOpen,
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
+    renderDarkMenu,
     children,
     className,
     refEl,
@@ -68,7 +69,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }: MenuProps,
   forwardRef,
 ) {
-  const { theme, darkMode } = useDarkMode(darkModeProp);
+  const renderDarkMode = renderDarkMenu || darkModeProp;
+  const { theme, darkMode } = useDarkMode(renderDarkMode);
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);

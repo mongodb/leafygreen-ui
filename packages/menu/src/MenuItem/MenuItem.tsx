@@ -35,7 +35,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     },
     fwdRef: React.Ref<any>,
   ) => {
-    const { theme, highlightIndex } = useContext(MenuContext);
+    const { theme, darkMode, highlightIndex } = useContext(MenuContext);
     const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
@@ -58,6 +58,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         className={cx(menuItemClassName, menuItemContainerStyles, className)}
       >
         <InputOption
+          darkMode={darkMode}
           showWedge
           as={as}
           role="menuitem"

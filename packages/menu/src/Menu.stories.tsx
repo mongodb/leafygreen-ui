@@ -60,6 +60,7 @@ export default {
         'refEl',
         'setOpen',
         'as',
+        'usePortal',
       ],
     },
     chromatic: {
@@ -67,16 +68,13 @@ export default {
     },
   },
   args: {
-    open: true,
     align: 'bottom',
     usePortal: true,
     darkMode: false,
+    renderDarkMenu: true,
   },
   argTypes: {
     open: {
-      control: 'boolean',
-    },
-    usePortal: {
       control: 'boolean',
     },
     size: {
@@ -86,12 +84,15 @@ export default {
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
     darkMode: storybookArgTypes.darkMode,
+    renderDarkMenu: {
+      control: 'boolean',
+    },
   },
 } satisfies StoryMetaType<typeof Menu>;
 
 export const LiveExample = {
   render: ({
-    open: _,
+    open,
     size,
     darkMode,
     ...args
@@ -104,6 +105,7 @@ export const LiveExample = {
             Menu
           </Button>
         }
+        open={open}
         {...args}
       >
         <MenuItem size={size} glyph={<CloudIcon />}>
