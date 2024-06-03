@@ -78,23 +78,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     const isDestructive = variant === Variant.Destructive;
     const showActiveStyles = active && !isDestructive;
 
-    const updatedGlyph =
-      glyph &&
-      React.cloneElement(glyph, {
-        role: 'presentation',
-        className: cx(
-          mainIconBaseStyle,
-          mainIconThemeStyle[theme],
-          focusStyles.iconStyle,
-          {
-            [activeIconStyle[theme]]: showActiveStyles,
-            [destructiveIconStyle[theme]]: isDestructive,
-            [disabledIconStyle[theme]]: disabled,
-          },
-          glyph.props?.className,
-        ),
-      });
-
     const conditionalProps =
       as === 'a'
         ? {
@@ -117,19 +100,19 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           {...rest}
           className={css`
             width: 100%;
-            min-height: ${spacing[800]}px;
+            min-height: ${size === Size.Large ? spacing[1200] : spacing[800]}px;
             padding-block: ${spacing[50]}px;
-            padding-inline-start: ${glyph ? spacing[400] : spacing[600]}px;
           `}
         >
           <InputOptionContent
-            className={css`
-              grid-template-areas: '${glyph
-                ? 'left-glyph'
-                : 'text'} text ${'text'}';
-            `}
             leftGlyph={glyph}
             description={description}
+            preserveIconSpace={false}
+            className={cx({
+              [css`
+                padding-inline-start: ${spacing[300]}px;
+              `]: !glyph,
+            })}
           >
             <div
               className={css`

@@ -30,6 +30,7 @@ export default {
         description: [undefined, 'This is a description'],
         glyph: [undefined, <Icon glyph="Cloud" size="large" />],
         active: [false, true],
+        size: [Size.Default, Size.Large],
       },
 
       decorator: (Instance, ctx) => {
