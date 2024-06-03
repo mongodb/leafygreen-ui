@@ -50,10 +50,9 @@ export const getLeftGlyphStyles = ({
   theme,
   disabled,
   highlighted,
-  selected,
 }: InputOptionStyleArgs) => {
   const variant = disabled ? Variant.Disabled : Variant.Primary;
-  const ixnState = highlighted || selected ? State.Focus : State.Default;
+  const ixnState = highlighted ? State.Focus : State.Default;
 
   return css`
     grid-area: left-glyph;
