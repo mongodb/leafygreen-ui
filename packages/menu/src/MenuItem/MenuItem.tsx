@@ -4,48 +4,20 @@ import PropTypes from 'prop-types';
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
-import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
-import {
-  InferredPolymorphic,
-  PolymorphicAs,
-  useInferredPolymorphic,
-} from '@leafygreen-ui/polymorphic';
-import { spacing } from '@leafygreen-ui/tokens';
-import { Description } from '@leafygreen-ui/typography';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import { MenuContext, MenuDescendantsContext } from '../MenuContext';
-import {
-  activeDescriptionTextStyle,
-  activeIconStyle,
-  activeMenuItemContainerStyle,
-  activeTitleTextStyle,
-  descriptionTextThemeStyle,
-  destructiveTextStyle,
-  disabledMenuItemContainerThemeStyle,
-  disabledTextStyle,
-  focusedMenuItemContainerStyle,
-  getFocusedStyles,
-  getHoverStyles,
-  linkDescriptionTextStyle,
-  linkStyle,
-  mainIconBaseStyle,
-  mainIconThemeStyle,
-  menuItemContainerStyle,
-  menuItemContainerThemeStyle,
-  menuItemHeight,
-  textContainer,
-  titleTextStyle,
-} from '../styles';
 import { Size } from '../types';
 
 import {
-  destructiveIconStyle,
-  disabledIconStyle,
+  getMenuItemContentStyles,
+  getMenuItemStyles,
   menuItemContainerStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
-const menuItemContainerClassName = createUniqueClassName('menu-item-container');
+const menuItemClassName = createUniqueClassName('menu_item');
 
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
@@ -63,7 +35,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     },
     fwdRef: React.Ref<any>,
   ) => {
-    // const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { theme, highlightIndex } = useContext(MenuContext);
     const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
@@ -71,11 +42,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     });
 
     const isHighlighted = index === highlightIndex;
-
-    // const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
-    // const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
-    // const isDestructive = variant === Variant.Destructive;
-    // const showActiveStyles = active && !isDestructive;
 
     const conditionalProps =
       as === 'a'
@@ -86,7 +52,11 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         : { disabled };
 
     return (
-      <li role="none" ref={ref} className={menuItemContainerStyles}>
+      <li
+        role="none"
+        ref={ref}
+        className={cx(menuItemClassName, menuItemContainerStyles, className)}
+      >
         <InputOption
           showWedge
           as={as}
@@ -98,20 +68,19 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           highlighted={isHighlighted}
           {...conditionalProps}
           {...rest}
-          className={css`
-            width: 100%;
-            min-height: ${size === Size.Large ? spacing[1200] : spacing[800]}px;
-            padding-block: ${spacing[50]}px;
-          `}
+          className={getMenuItemStyles({
+            theme,
+            size,
+            active,
+            variant,
+          })}
         >
           <InputOptionContent
             leftGlyph={glyph}
             description={description}
             preserveIconSpace={false}
-            className={cx({
-              [css`
-                padding-inline-start: ${spacing[300]}px;
-              `]: !glyph,
+            className={getMenuItemContentStyles({
+              hasGlyph: !!glyph,
             })}
           >
             <div

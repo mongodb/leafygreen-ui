@@ -8,18 +8,18 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { Theme } from '@leafygreen-ui/lib';
 
-import { Menu, MenuProps } from '../Menu/Menu.types';
+import { Menu, MenuProps } from '../Menu';
 import { MenuContext } from '../MenuContext';
 import { Size } from '../types';
 
-import { MenuItem } from '.';
+import { MenuItem, Variant } from '.';
 
 const _withMenuContext =
   (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
     return (
       <MenuContext.Provider
         value={{
-          // highlightIndex: -1,
+          highlightIndex: ctx?.args?.highlighted ? -1 : undefined,
           darkMode: ctx?.args?.darkMode ?? false,
           theme: ctx?.args?.darkMode ? Theme.Dark : Theme.Light,
         }}
@@ -40,12 +40,12 @@ export default {
   component: MenuItem,
   args: {
     children: 'Menu Item',
-    active: true,
+    active: false,
   },
   parameters: {
     default: null,
     generate: {
-      storyNames: ['Default', 'Active', 'Destructive', 'Disabled'],
+      storyNames: ['Default', 'Active', 'Focused', 'Destructive', 'Disabled'],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -98,6 +98,13 @@ export const Active = {
   },
 } satisfies StoryObj<typeof MenuItem>;
 
+export const Focused = {
+  render: () => <></>,
+  args: {
+    highlighted: true,
+  },
+} satisfies StoryObj<typeof MenuItem>;
+
 export const Disabled = {
   render: () => <></>,
   args: {
@@ -108,7 +115,7 @@ export const Disabled = {
 export const Destructive = {
   render: () => <></>,
   args: {
-    variant: 'destructive',
+    variant: Variant.Destructive,
     active: false,
   },
   parameters: {
