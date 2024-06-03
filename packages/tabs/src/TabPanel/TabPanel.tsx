@@ -25,18 +25,20 @@ const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
 
   const shouldRender = !disabled && (forceRenderAllTabPanels || selected);
 
-  const tabPanelProps = {
-    className: cx({
-      [hiddenTabPanelStyle]: !selected,
-    }),
-    id,
-    role: 'tabpanel',
-    ['aria-labelledby']: relatedTab?.id,
-  } as const;
-
   return (
     <div ref={ref}>
-      {shouldRender ? <div {...tabPanelProps}>{children}</div> : null}
+      {shouldRender ? (
+        <div
+          aria-labelledby={relatedTab?.id}
+          className={cx({
+            [hiddenTabPanelStyle]: !selected,
+          })}
+          id={id}
+          role="tabpanel"
+        >
+          {children}
+        </div>
+      ) : null}
     </div>
   );
 };

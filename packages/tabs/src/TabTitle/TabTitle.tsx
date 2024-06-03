@@ -53,34 +53,32 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
 
     const nodeText = getNodeTextContent(name);
 
-    const componentProps = {
-      ...rest,
-      className: cx(
-        listTitleFontSize[baseFontSize],
-        listTitleStyles,
-        listTitleModeStyles[theme].base,
-        {
-          [listTitleModeStyles[theme].selected]: !disabled && selected,
-          [listTitleModeStyles[theme].hover]: !disabled && !selected,
-          [listTitleModeStyles[theme].disabled]: disabled,
-        },
-        listTitleModeStyles[theme].focus,
-        className,
-      ),
-      disabled,
-      id,
-      name: nodeText,
-      onClick: handleClick,
-      ref,
-      role: 'tab',
-      tabIndex: selected ? 0 : -1,
-      ['aria-controls']: relatedTabPanel?.id,
-      ['aria-selected']: !disabled && selected,
-      ['data-text']: nodeText,
-    } as const;
-
     return (
-      <Component {...componentProps}>
+      <Component
+        aria-controls={relatedTabPanel?.id}
+        aria-selected={!disabled && selected}
+        className={cx(
+          listTitleFontSize[baseFontSize],
+          listTitleStyles,
+          listTitleModeStyles[theme].base,
+          {
+            [listTitleModeStyles[theme].selected]: !disabled && selected,
+            [listTitleModeStyles[theme].hover]: !disabled && !selected,
+            [listTitleModeStyles[theme].disabled]: disabled,
+          },
+          listTitleModeStyles[theme].focus,
+          className,
+        )}
+        data-text={nodeText}
+        disabled={disabled}
+        id={id}
+        name={nodeText}
+        onClick={handleClick}
+        ref={ref}
+        role="tab"
+        tabIndex={selected ? 0 : -1}
+        {...rest}
+      >
         <div className={listTitleChildrenStyles}>{children}</div>
       </Component>
     );
