@@ -1,12 +1,14 @@
 export {
   type BaseInputOptionProps,
-  descriptionClassName,
   InputOption,
+  inputOptionClassName,
   type InputOptionProps,
-  titleClassName,
 } from './InputOption';
 export {
+  descriptionClassName,
   InputOptionContent,
+  inputOptionContentClassName,
   type InputOptionContentProps,
   leftGlyphClassName,
+  titleClassName,
 } from './InputOptionContent';
