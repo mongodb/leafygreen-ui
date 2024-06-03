@@ -49,7 +49,7 @@ const meta: StoryMetaType<typeof InputOption> = {
     highlighted: {
       control: 'boolean',
     },
-    selected: {
+    checked: {
       control: 'boolean',
     },
     showWedge: {
@@ -136,7 +136,7 @@ export const WithContent = {
         preserveIconSpace: [false, true],
         leftGlyph: [undefined, <Icon glyph="Cloud" />],
         rightGlyph: [undefined, <Icon glyph="ChevronDown" />],
-        selected: [false, true],
+        highlighted: [false, true],
         disabled: [false, true],
       },
       excludeCombinations: [

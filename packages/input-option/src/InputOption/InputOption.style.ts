@@ -17,7 +17,7 @@ interface InputOptionStyleArgs {
   theme: Theme;
   disabled?: boolean;
   highlighted?: boolean;
-  selected?: boolean;
+  checked?: boolean;
   isInteractive?: boolean;
 }
 
@@ -25,10 +25,10 @@ export const getInputOptionStyles = ({
   theme,
   disabled,
   highlighted,
-  selected,
+  checked,
   isInteractive,
 }: InputOptionStyleArgs) => {
-  const ixnState = highlighted || selected ? State.Focus : State.Default;
+  const ixnState = highlighted || checked ? State.Focus : State.Default;
   return css`
     position: relative;
     list-style: none;
@@ -90,7 +90,7 @@ export const getInputOptionWedge = ({
   theme,
   disabled,
   highlighted,
-  selected,
+  checked,
 }: InputOptionStyleArgs) => css`
   // Left wedge
   &:before {
@@ -108,7 +108,7 @@ export const getInputOptionWedge = ({
     transition: ${transitionDuration.default}ms ease-in-out;
     transition-property: transform, background-color;
 
-    ${(highlighted || selected) &&
+    ${(highlighted || checked) &&
     css`
       transform: scaleY(1) translateY(-50%);
       background-color: ${color[theme].icon.primary.focus};

@@ -24,7 +24,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
       children,
       disabled,
       highlighted,
-      selected,
+      checked,
       darkMode: darkModeProp,
       showWedge = true,
       isInteractive = true,
@@ -40,7 +40,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
         value={{
           disabled,
           highlighted,
-          selected,
+          checked,
         }}
       >
         <Component
@@ -55,7 +55,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
               theme,
               disabled,
               highlighted,
-              selected,
+              checked,
               isInteractive,
             }),
             {
@@ -63,7 +63,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
                 theme,
                 disabled,
                 highlighted,
-                selected,
+                checked,
                 isInteractive,
               })]: showWedge,
             },
