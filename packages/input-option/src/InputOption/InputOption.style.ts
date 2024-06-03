@@ -28,7 +28,7 @@ export const getInputOptionStyles = ({
   checked,
   isInteractive,
 }: InputOptionStyleArgs) => {
-  const ixnState = highlighted || checked ? State.Focus : State.Default;
+  const ixnState = highlighted ? State.Focus : State.Default;
   return css`
     position: relative;
     list-style: none;
@@ -66,8 +66,6 @@ export const getInputOptionStyles = ({
         background-color: ${color[theme].background.primary.hover};
 
         .${leftGlyphClassName} {
-
-export const inputOptionClassName = createUniqueClassName('')
           color: ${color[theme].icon.primary.hover};
         }
       }
@@ -77,6 +75,11 @@ export const inputOptionClassName = createUniqueClassName('')
         outline: none;
         border: unset;
       }
+
+      ${checked &&
+      css`
+        font-weight: 600;
+      `}
     `}
   `;
 };
@@ -90,7 +93,6 @@ export const getInputOptionWedge = ({
   theme,
   disabled,
   highlighted,
-  checked,
 }: InputOptionStyleArgs) => css`
   // Left wedge
   &:before {
@@ -108,7 +110,7 @@ export const getInputOptionWedge = ({
     transition: ${transitionDuration.default}ms ease-in-out;
     transition-property: transform, background-color;
 
-    ${(highlighted || checked) &&
+    ${highlighted &&
     css`
       transform: scaleY(1) translateY(-50%);
       background-color: ${color[theme].icon.primary.focus};

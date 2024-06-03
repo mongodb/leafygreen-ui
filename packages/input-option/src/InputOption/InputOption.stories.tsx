@@ -5,7 +5,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { Decorator, StoryFn, StoryObj } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 
@@ -16,7 +16,7 @@ import {
 
 import { InputOption, type InputOptionProps } from '.';
 
-const meta: StoryMetaType<typeof InputOption> = {
+export default {
   title: 'Components/InputOption',
   component: InputOption,
   parameters: {
@@ -68,9 +68,7 @@ const meta: StoryMetaType<typeof InputOption> = {
     },
     as: storybookArgTypes.as,
   },
-};
-
-export default meta;
+} satisfies StoryMetaType<typeof InputOption>;
 
 export const LiveExample: StoryFn<
   InputOptionProps & InputOptionContentProps
@@ -99,57 +97,10 @@ export const Generated = {
   parameters: {
     generate: {
       combineArgs: {
-        selected: [false, true],
+        highlighted: [false, true],
+        checked: [false, true],
         disabled: [false, true],
       },
     },
   },
 } satisfies StoryObj<typeof InputOption>;
-
-const _withContentDecorator: Decorator<InputOptionContentProps> = (
-  Instance,
-  ctx,
-) => {
-  return (
-    <Instance>
-      <InputOptionContent
-        leftGlyph={ctx.args.leftGlyph}
-        rightGlyph={ctx.args.rightGlyph}
-        description={ctx.args.description}
-        {...ctx.args}
-      >
-        {ctx.args.children}
-      </InputOptionContent>
-    </Instance>
-  );
-};
-
-export const WithContent = {
-  render: () => <></>,
-  parameters: {
-    generate: {
-      args: {
-        showWedge: true,
-      },
-      combineArgs: {
-        description: [undefined, 'Description'],
-        preserveIconSpace: [false, true],
-        leftGlyph: [undefined, <Icon glyph="Cloud" />],
-        rightGlyph: [undefined, <Icon glyph="ChevronDown" />],
-        highlighted: [false, true],
-        disabled: [false, true],
-      },
-      excludeCombinations: [
-        {
-          leftGlyph: undefined,
-          rightGlyph: <Icon glyph="ChevronDown" />,
-        },
-        {
-          preserveIconSpace: false,
-          leftGlyph: <Icon glyph="Cloud" />,
-        },
-      ],
-      decorator: _withContentDecorator,
-    },
-  },
-} satisfies StoryObj<typeof InputOptionContent>;
