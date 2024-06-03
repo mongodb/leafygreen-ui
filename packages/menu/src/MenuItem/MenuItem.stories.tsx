@@ -1,18 +1,39 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/display-name */
 import React from 'react';
-import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { InstanceDecorator, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { Theme } from '@leafygreen-ui/lib';
 
-import { MenuProps } from '../Menu/Menu.types';
+import { Menu, MenuProps } from '../Menu/Menu.types';
 import { MenuContext } from '../MenuContext';
 import { Size } from '../types';
 
-import MenuItem from './MenuItem';
+import { MenuItem } from '.';
+
+const _withMenuContext =
+  (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
+    return (
+      <MenuContext.Provider
+        value={{
+          // highlightIndex: -1,
+          darkMode: ctx?.args?.darkMode ?? false,
+          theme: ctx?.args?.darkMode ? Theme.Dark : Theme.Light,
+        }}
+      >
+        <ul
+          className={css`
+            width: 256px;
+          `}
+        >
+          <Instance />
+        </ul>
+      </MenuContext.Provider>
+    );
+  };
 
 export default {
   title: 'Components/Menu/MenuItem',
@@ -24,33 +45,14 @@ export default {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['Default', 'Destructive', 'Disabled'],
+      storyNames: ['Default', 'Active', 'Destructive', 'Disabled'],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
-        glyph: [undefined, <Icon glyph="Cloud" size="large" />],
-        active: [false, true],
+        glyph: [undefined, <Icon glyph="Cloud" />],
         size: [Size.Default, Size.Large],
       },
-
-      decorator: (Instance, ctx) => {
-        return (
-          <MenuContext.Provider
-            value={{
-              darkMode: ctx?.args?.darkMode ?? false,
-              theme: ctx?.args?.darkMode ? Theme.Dark : Theme.Light,
-            }}
-          >
-            <div
-              className={css`
-                width: 200px;
-              `}
-            >
-              <Instance />
-            </div>
-          </MenuContext.Provider>
-        );
-      },
+      decorator: _withMenuContext(),
     },
   },
 } satisfies StoryMetaType<typeof MenuItem, Partial<MenuProps>>;
@@ -87,6 +89,13 @@ export const LiveExample = {
 
 export const Default = {
   render: () => <></>,
+} satisfies StoryObj<typeof MenuItem>;
+
+export const Active = {
+  render: () => <></>,
+  args: {
+    active: true,
+  },
 } satisfies StoryObj<typeof MenuItem>;
 
 export const Disabled = {

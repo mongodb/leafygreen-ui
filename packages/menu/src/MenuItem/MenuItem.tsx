@@ -64,19 +64,18 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     fwdRef: React.Ref<any>,
   ) => {
     // const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme, highlightIndex: _highlightIndex } = useContext(MenuContext);
-    const { index: _index, ref } = useDescendant(
-      MenuDescendantsContext,
-      fwdRef,
-      {
-        active,
-        disabled,
-      },
-    );
-    const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
-    const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
-    const isDestructive = variant === Variant.Destructive;
-    const showActiveStyles = active && !isDestructive;
+    const { theme, highlightIndex } = useContext(MenuContext);
+    const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef, {
+      active,
+      disabled,
+    });
+
+    const isHighlighted = index === highlightIndex;
+
+    // const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
+    // const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
+    // const isDestructive = variant === Variant.Destructive;
+    // const showActiveStyles = active && !isDestructive;
 
     const conditionalProps =
       as === 'a'
@@ -93,9 +92,10 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           as={as}
           role="menuitem"
           tabIndex={-1}
+          data-index={index}
           aria-disabled={disabled}
           aria-current={active ?? undefined}
-          highlighted={active}
+          highlighted={isHighlighted}
           {...conditionalProps}
           {...rest}
           className={css`
