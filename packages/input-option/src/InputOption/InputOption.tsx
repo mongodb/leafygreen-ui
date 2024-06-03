@@ -10,7 +10,11 @@ import {
 
 import { InputOptionContext } from '../InputOptionContext';
 
-import { getInputOptionStyles, getInputOptionWedge } from './InputOption.style';
+import {
+  getInputOptionStyles,
+  getInputOptionWedge,
+  inputOptionClassName,
+} from './InputOption.style';
 import { InputOptionProps } from './InputOption.types';
 
 export const InputOption = Polymorphic<InputOptionProps>(
@@ -46,6 +50,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
           aria-disabled={disabled}
           tabIndex={-1}
           className={cx(
+            inputOptionClassName,
             getInputOptionStyles({
               theme,
               disabled,

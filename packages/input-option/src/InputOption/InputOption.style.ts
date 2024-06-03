@@ -11,10 +11,7 @@ import {
 
 import { leftGlyphClassName } from '../InputOptionContent';
 
-export const titleClassName = createUniqueClassName('input-option-title');
-export const descriptionClassName = createUniqueClassName(
-  'input-option-description',
-);
+export const inputOptionClassName = createUniqueClassName('input_option');
 
 interface InputOptionStyleArgs {
   theme: Theme;
@@ -69,6 +66,8 @@ export const getInputOptionStyles = ({
         background-color: ${color[theme].background.primary.hover};
 
         .${leftGlyphClassName} {
+
+export const inputOptionClassName = createUniqueClassName('')
           color: ${color[theme].icon.primary.hover};
         }
       }

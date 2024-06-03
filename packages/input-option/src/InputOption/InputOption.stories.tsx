@@ -5,7 +5,7 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn, StoryObj } from '@storybook/react';
+import { Decorator, StoryFn, StoryObj } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 
@@ -32,7 +32,7 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
-      storyNames: ['Generated', 'Content'],
+      storyNames: ['Generated', 'WithContent'],
       combineArgs: {
         darkMode: [false, true],
       },
@@ -106,7 +106,25 @@ export const Generated = {
   },
 } satisfies StoryObj<typeof InputOption>;
 
-export const Content = {
+const _withContentDecorator: Decorator<InputOptionContentProps> = (
+  Instance,
+  ctx,
+) => {
+  return (
+    <Instance>
+      <InputOptionContent
+        leftGlyph={ctx.args.leftGlyph}
+        rightGlyph={ctx.args.rightGlyph}
+        description={ctx.args.description}
+        {...ctx.args}
+      >
+        {ctx.args.children}
+      </InputOptionContent>
+    </Instance>
+  );
+};
+
+export const WithContent = {
   render: () => <></>,
   parameters: {
     generate: {
@@ -115,6 +133,7 @@ export const Content = {
       },
       combineArgs: {
         description: [undefined, 'Description'],
+        preserveIconSpace: [false, true],
         leftGlyph: [undefined, <Icon glyph="Cloud" />],
         rightGlyph: [undefined, <Icon glyph="ChevronDown" />],
         selected: [false, true],
@@ -125,20 +144,12 @@ export const Content = {
           leftGlyph: undefined,
           rightGlyph: <Icon glyph="ChevronDown" />,
         },
+        {
+          preserveIconSpace: false,
+          leftGlyph: <Icon glyph="Cloud" />,
+        },
       ],
-      decorator: (Instance, ctx) => {
-        return (
-          <Instance>
-            <InputOptionContent
-              leftGlyph={ctx.args.leftGlyph}
-              rightGlyph={ctx.args.rightGlyph}
-              description={ctx.args.description}
-            >
-              {ctx.args.children}
-            </InputOptionContent>
-          </Instance>
-        );
-      },
+      decorator: _withContentDecorator,
     },
   },
 } satisfies StoryObj<typeof InputOptionContent>;

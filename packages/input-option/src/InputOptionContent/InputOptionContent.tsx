@@ -6,16 +6,15 @@ import { Description } from '@leafygreen-ui/typography';
 
 import {
   descriptionClassName,
-  titleClassName,
-} from '../InputOption/InputOption.style';
-import {
   getContentWrapperStyles,
   getDescriptionStyles,
   getLeftGlyphStyles,
   getRightGlyphStyles,
   getTitleStyles,
+  inputOptionContentClassName,
   leftGlyphClassName,
   textContainerStyles,
+  titleClassName,
 } from '../InputOptionContent/InputOptionContent.styles';
 import { useInputOptionContext } from '../InputOptionContext';
 
@@ -33,13 +32,24 @@ export const InputOptionContent = ({
   description,
   leftGlyph,
   rightGlyph,
+  preserveIconSpace = true,
   className,
   ...rest
 }: InputOptionContentProps) => {
   const { theme } = useDarkMode();
   const { disabled, highlighted, selected } = useInputOptionContext();
   return (
-    <div className={cx(getContentWrapperStyles, className)} {...rest}>
+    <div
+      className={cx(
+        inputOptionContentClassName,
+        getContentWrapperStyles({
+          hasLeftGlyph: !!leftGlyph || preserveIconSpace,
+          hasRightGlyph: !!rightGlyph,
+        }),
+        className,
+      )}
+      {...rest}
+    >
       {leftGlyph && (
         <div
           className={cx(
