@@ -2,7 +2,7 @@ import { ButtonProps } from '@leafygreen-ui/button';
 
 import { PopoverProps, UnitSelectProps } from '../UnitSelect/UnitSelect.types';
 
-export interface UnitSelectButtonProps extends ButtonProps, PopoverProps {
+export type UnitSelectButtonProps = {
   /**
    * Determines if the dropdown is disabled.
    */
@@ -12,4 +12,5 @@ export interface UnitSelectButtonProps extends ButtonProps, PopoverProps {
    * The select option that is shown in the select menu button.
    */
   displayName?: string;
-}
+} & ButtonProps &
+  PopoverProps;
