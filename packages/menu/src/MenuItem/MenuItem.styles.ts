@@ -103,6 +103,10 @@ export const getMenuItemContentStyles = ({
   `}
 `;
 
+export const menuItemContainerStyles = css`
+  list-style: none;
+`;
+
 export const disabledIconStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark2};

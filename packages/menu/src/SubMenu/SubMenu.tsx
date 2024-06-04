@@ -91,14 +91,10 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       darkMode,
       highlightIndex: _highlightIndex,
     } = useContext(MenuContext);
-    const { index: _index, ref } = useDescendant(
-      MenuDescendantsContext,
-      fwdRef,
-      {
-        active,
-        disabled,
-      },
-    );
+    const { ref } = useDescendant(MenuDescendantsContext, fwdRef, {
+      active,
+      disabled,
+    });
 
     const [open, setOpen] = useControlledState(false, openProp, setOpenProp);
 
