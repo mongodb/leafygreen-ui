@@ -7,7 +7,6 @@ import {
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
@@ -17,12 +16,9 @@ import {
 } from '../MenuContext/MenuContext';
 
 import { useMenuHeight } from './utils/useMenuHeight';
+import { useMenuTheme } from './utils/useMenuTheme';
 import { useHighlightReducer } from './HighlightReducer';
-import {
-  rootMenuStyle,
-  rootMenuThemeStyles,
-  scrollContainerStyle,
-} from './Menu.styles';
+import { getMenuStyles, scrollContainerStyle } from './Menu.styles';
 import { MenuProps } from './Menu.types';
 
 /**
@@ -69,8 +65,10 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }: MenuProps,
   forwardRef,
 ) {
-  const renderDarkMode = renderDarkMenu || darkModeProp;
-  const { theme, darkMode } = useDarkMode(renderDarkMode);
+  const { theme, darkMode } = useMenuTheme({
+    darkModeProp,
+    renderDarkMenu,
+  });
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);
@@ -188,8 +186,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         >
           <div
             className={cx(
-              rootMenuStyle,
-              rootMenuThemeStyles[theme],
+              getMenuStyles({ theme }),
               css`
                 max-height: ${maxMenuHeightValue};
               `,

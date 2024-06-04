@@ -74,6 +74,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
             size,
             active,
             variant,
+            highlighted: isHighlighted,
           })}
         >
           <InputOptionContent

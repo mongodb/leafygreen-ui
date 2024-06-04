@@ -1,7 +1,7 @@
-import { Theme } from '@leafygreen-ui/lib';
+import { MenuTheme } from '../types';
 
 export interface MenuContextData {
-  theme: Theme;
+  theme: MenuTheme;
   darkMode: boolean;
   highlightIndex?: number;
 }

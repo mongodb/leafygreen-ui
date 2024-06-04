@@ -7,7 +7,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, Type as ElementType } from '@leafygreen-ui/tokens';
 
-import { Size } from '../types';
+import { getBaseTheme, menuBackgroundColors } from '../Menu/utils/useMenuTheme';
+import { MenuTheme, Size } from '../types';
 
 import { Variant } from './MenuItem.types';
 
@@ -34,10 +35,11 @@ const activeColors = {
 } as const satisfies Record<Theme, Record<ElementType, string>>;
 
 interface MenuItemStyleArgs {
-  theme: Theme;
+  theme: MenuTheme;
   size: Size;
   variant: Variant;
   active: boolean;
+  highlighted: boolean;
 }
 
 export const getMenuItemStyles = ({
@@ -45,28 +47,35 @@ export const getMenuItemStyles = ({
   size,
   active,
   variant,
+  highlighted,
 }: MenuItemStyleArgs) => css`
   width: 100%;
   min-height: ${size === Size.Large ? spacing[1200] : spacing[800]}px;
   padding-block: ${spacing[50]}px;
 
+  // Override the default input option colors
+  ${!highlighted &&
+  css`
+    background-color: ${menuBackgroundColors[theme]};
+  `}
+
   ${active &&
   css`
     &,
     &:hover {
-      background-color: ${activeColors[theme].background};
+      background-color: ${activeColors[getBaseTheme(theme)].background};
 
       &:before {
         transform: scaleY(1) translateY(-50%);
-        background-color: ${activeColors[theme].border};
+        background-color: ${activeColors[getBaseTheme(theme)].border};
       }
 
       .${titleClassName} {
-        color: ${activeColors[theme].text};
+        color: ${activeColors[getBaseTheme(theme)].text};
         font-weight: bold;
       }
       .${leftGlyphClassName} {
-        color: ${activeColors[theme].icon};
+        color: ${activeColors[getBaseTheme(theme)].icon};
       }
     }
   `}
@@ -74,19 +83,19 @@ export const getMenuItemStyles = ({
   ${variant === Variant.Destructive &&
   css`
     .${titleClassName} {
-      color: ${color[theme].text.error.default};
+      color: ${color[getBaseTheme(theme)].text.error.default};
     }
     .${leftGlyphClassName} {
-      color: ${color[theme].icon.error.default};
+      color: ${color[getBaseTheme(theme)].icon.error.default};
     }
 
     &:hover {
-      background-color: ${color[theme].background.error.hover};
+      background-color: ${color[getBaseTheme(theme)].background.error.hover};
       .${titleClassName} {
-        color: ${color[theme].text.error.hover};
+        color: ${color[getBaseTheme(theme)].text.error.hover};
       }
       .${leftGlyphClassName} {
-        color: ${color[theme].icon.error.hover};
+        color: ${color[getBaseTheme(theme)].icon.error.hover};
       }
     }
   `}
