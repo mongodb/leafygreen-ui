@@ -47,9 +47,10 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       successMessage = DEFAULT_MESSAGES.success,
       onChange,
       popoverZIndex,
-      usePortal,
+      usePortal = true,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       ...rest
     }: NumberInputProps,
@@ -71,10 +72,15 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 
     const popoverProps = {
       popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      scrollContainer,
+      ...(usePortal
+        ? {
+            usePortal,
+            portalClassName,
+            portalContainer,
+            portalRef,
+            scrollContainer,
+          }
+        : { usePortal }),
     } as const;
 
     const formFieldFeedbackProps = {
@@ -194,5 +200,11 @@ NumberInput.propTypes = {
     typeof window !== 'undefined'
       ? PropTypes.instanceOf(Element)
       : PropTypes.any,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
   portalClassName: PropTypes.string,
 } as any;

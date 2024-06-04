@@ -1,2 +1,2 @@
 export { color } from './color';
-export { State, Type, Variant } from './color.types';
+export { InteractionState, Property, Variant } from './color.types';

@@ -29,6 +29,7 @@ export function UnitSelect({
   className,
   portalClassName,
   portalContainer,
+  portalRef,
   scrollContainer,
   popoverZIndex,
 }: UnitSelectProps) {
@@ -39,6 +40,7 @@ export function UnitSelect({
     usePortal,
     portalClassName,
     portalContainer,
+    portalRef,
     scrollContainer,
   } as const;
 
