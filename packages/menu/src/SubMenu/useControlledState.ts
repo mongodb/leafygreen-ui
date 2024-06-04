@@ -18,7 +18,7 @@ export const useControlledState = <T extends any>(
       consoleOnce.error(
         `Warning: \`useControlledState\` hook is being used without a \`controlledState\` or \`initialState\`.` +
           `This will cause a React warning when the input changes.` +
-          `Please decide between using a controlled or uncontrolled input element, and provide either a controlledValue or initialValue to \`useControlledValue\``,
+          `Please decide between using a controlled or uncontrolled input element, and provide either a \`controlledState\` or \`initialState\` to \`useControlledState\``,
       );
     }
   }, [isControlled, initialState]);
