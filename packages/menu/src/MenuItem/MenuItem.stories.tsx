@@ -16,12 +16,22 @@ import { MenuItem, Variant } from '.';
 
 const _withMenuContext =
   (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
+    const {
+      args: { darkMode, renderDarkMenu, highlighted },
+    } = ctx ?? {
+      args: {
+        darkMode: false,
+        renderDarkMenu: false,
+        highlighted: false,
+      },
+    };
+    const _darkMode = (renderDarkMenu || darkMode) ?? false;
     return (
       <MenuContext.Provider
         value={{
-          highlightIndex: ctx?.args?.highlighted ? -1 : undefined,
-          darkMode: ctx?.args?.darkMode ?? false,
-          theme: ctx?.args?.darkMode ? Theme.Dark : Theme.Light,
+          highlightIndex: highlighted ? -1 : undefined,
+          darkMode: _darkMode,
+          theme: _darkMode ? Theme.Dark : Theme.Light,
         }}
       >
         <ul
@@ -45,7 +55,14 @@ export default {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['Default', 'Active', 'Focused', 'Destructive', 'Disabled'],
+      storyNames: [
+        'Default',
+        'Active',
+        'Focused',
+        'Destructive',
+        'Disabled',
+        'DarkInLightMode',
+      ],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -126,3 +143,23 @@ export const Destructive = {
     },
   },
 } satisfies StoryObj<typeof MenuItem>;
+
+export const DarkInLightMode = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        darkMode: false,
+        description: 'This is a description',
+        glyph: <Icon glyph="Cloud" />,
+        size: Size.Default,
+        renderDarkMenu: true,
+      },
+      combineArgs: {
+        active: [false, true],
+        highlighted: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
+};
