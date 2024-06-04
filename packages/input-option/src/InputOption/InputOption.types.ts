@@ -35,6 +35,8 @@ export interface BaseInputOptionProps {
    * Functionally similar to a checkbox/radio's `checked` attribute,
    * this identifies an option as currently selected.
    *
+   * Note: There are no styling changes applied by this prop.
+   * `Checked` styles must be applied by the implementing component
    */
   checked?: boolean;
 
@@ -46,7 +48,7 @@ export interface BaseInputOptionProps {
   showWedge?: boolean;
 
   /**
-   * Determines whether to show hover, highlight and selected styles
+   * Determines whether to show hover, highlight and checked styles
    * @default true
    */
   isInteractive?: boolean;
