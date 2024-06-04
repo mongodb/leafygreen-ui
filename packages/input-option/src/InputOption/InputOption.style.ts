@@ -17,7 +17,6 @@ interface InputOptionStyleArgs {
   theme: Theme;
   disabled?: boolean;
   highlighted?: boolean;
-  checked?: boolean;
   isInteractive?: boolean;
 }
 
@@ -25,7 +24,6 @@ export const getInputOptionStyles = ({
   theme,
   disabled,
   highlighted,
-  checked,
   isInteractive,
 }: InputOptionStyleArgs) => {
   const ixnState = highlighted ? State.Focus : State.Default;
@@ -77,12 +75,6 @@ export const getInputOptionStyles = ({
         outline: none;
         border: unset;
       }
-    `}
-    
-    /* Checked */
-    ${checked &&
-    css`
-      font-weight: 600;
     `}
   `;
 };

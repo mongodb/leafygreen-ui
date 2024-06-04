@@ -43,7 +43,6 @@ interface InputOptionStyleArgs {
   theme: Theme;
   disabled?: boolean;
   highlighted?: boolean;
-  selected?: boolean;
 }
 
 export const getLeftGlyphStyles = ({
@@ -86,15 +85,12 @@ export const textContainerStyles = css`
   line-height: ${spacing[400]}px;
 `;
 
-export const getTitleStyles = ({
-  highlighted,
-  selected,
-}: InputOptionStyleArgs) => css`
+export const getTitleStyles = ({ highlighted }: InputOptionStyleArgs) => css`
   overflow-wrap: anywhere;
   font-size: inherit;
   line-height: inherit;
 
-  ${(highlighted || selected) &&
+  ${highlighted &&
   css`
     font-weight: bold;
   `}

@@ -36,12 +36,7 @@ export const InputOptionContent = ({
   className,
   ...rest
 }: InputOptionContentProps) => {
-  const {
-    disabled,
-    highlighted,
-    checked: selected,
-    darkMode,
-  } = useInputOptionContext();
+  const { disabled, highlighted, darkMode } = useInputOptionContext();
   const { theme } = useDarkMode(darkMode);
   return (
     <div
@@ -59,7 +54,7 @@ export const InputOptionContent = ({
         <div
           className={cx(
             leftGlyphClassName,
-            getLeftGlyphStyles({ theme, disabled, highlighted, selected }),
+            getLeftGlyphStyles({ theme, disabled, highlighted }),
           )}
         >
           {leftGlyph}
@@ -67,10 +62,7 @@ export const InputOptionContent = ({
       )}
       <div className={textContainerStyles}>
         <div
-          className={cx(
-            titleClassName,
-            getTitleStyles({ theme, highlighted, selected }),
-          )}
+          className={cx(titleClassName, getTitleStyles({ theme, highlighted }))}
         >
           {children}
         </div>
@@ -78,7 +70,7 @@ export const InputOptionContent = ({
           <Description
             className={cx(
               descriptionClassName,
-              getDescriptionStyles({ theme, disabled, highlighted, selected }),
+              getDescriptionStyles({ theme, disabled, highlighted }),
             )}
           >
             {description}
