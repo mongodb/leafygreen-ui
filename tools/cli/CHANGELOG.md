@@ -1,5 +1,13 @@
 # @lg-tools/cli
 
+## 0.5.12
+
+### Patch Changes
+
+- af208260: Adds pre-release of codemods command
+- Updated dependencies [af208260]
+  - @lg-tools/codemods@0.0.2
+
 ## 0.5.11
 
 ### Patch Changes
