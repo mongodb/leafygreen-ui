@@ -111,22 +111,6 @@ export const Highlighted = {
   },
 } satisfies StoryObj<typeof InputOptionContent>;
 
-export const Checked = {
-  render: () => <></>,
-  parameters: {
-    generate: {
-      args: {
-        description: 'Description',
-        rightGlyph: <Icon glyph="ChevronDown" />,
-        checked: true,
-      },
-      combineArgs: {
-        highlighted: [false, true],
-      },
-    },
-  },
-} satisfies StoryObj<typeof InputOptionContent>;
-
 export const Disabled = {
   render: () => <></>,
   parameters: {
