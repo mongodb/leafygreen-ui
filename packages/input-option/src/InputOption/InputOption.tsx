@@ -34,13 +34,14 @@ export const InputOption = Polymorphic<InputOptionProps>(
     ref,
   ) => {
     const { Component } = usePolymorphic(as);
-    const { theme } = useDarkMode(darkModeProp);
+    const { theme, darkMode } = useDarkMode(darkModeProp);
     return (
       <InputOptionContext.Provider
         value={{
+          checked,
+          darkMode,
           disabled,
           highlighted,
-          checked,
         }}
       >
         <Component

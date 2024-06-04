@@ -36,8 +36,13 @@ export const InputOptionContent = ({
   className,
   ...rest
 }: InputOptionContentProps) => {
-  const { theme } = useDarkMode();
-  const { disabled, highlighted, checked: selected } = useInputOptionContext();
+  const {
+    disabled,
+    highlighted,
+    checked: selected,
+    darkMode,
+  } = useInputOptionContext();
+  const { theme } = useDarkMode(darkMode);
   return (
     <div
       className={cx(
