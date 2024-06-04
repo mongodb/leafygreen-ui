@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -350,6 +350,21 @@ describe('packages/number-input', () => {
         displayName: selectProps.unitOptions[1].displayName,
         value: selectProps.unitOptions[1].value,
       });
+    });
+
+    test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
+      const portalRef = createRef<HTMLElement>();
+      const { getByRole } = renderNumberInput({
+        ...selectProps,
+        portalContainer,
+        portalRef,
+      });
+      const trigger = getByRole('button', { name: unitProps.unit });
+      fireEvent.click(trigger);
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
     });
   });
 

@@ -35,6 +35,7 @@ export const SearchResultsMenu = React.forwardRef<
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       footerSlot,
       ...rest
@@ -76,6 +77,7 @@ export const SearchResultsMenu = React.forwardRef<
         usePortal={usePortal}
         portalClassName={usePortal ? portalClassName : undefined}
         portalContainer={usePortal ? portalContainer : null}
+        portalRef={portalRef}
         scrollContainer={usePortal ? scrollContainer : null}
       >
         {state === 'loading' ? (

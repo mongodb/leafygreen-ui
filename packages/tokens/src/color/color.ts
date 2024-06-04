@@ -1,10 +1,10 @@
-import { Mode } from '../mode';
+import { Theme } from '@leafygreen-ui/lib';
 
-import { ModeColorRecord } from './color.types';
+import { PropertyColorRecord } from './color.types';
 import { darkModeColors } from './darkModeColors';
 import { lightModeColors } from './lightModeColors';
 
 export const color = {
-  [Mode.Dark]: darkModeColors,
-  [Mode.Light]: lightModeColors,
-} as const satisfies Record<Mode, ModeColorRecord>;
+  [Theme.Dark]: darkModeColors,
+  [Theme.Light]: lightModeColors,
+} as const satisfies Record<Theme, PropertyColorRecord>;

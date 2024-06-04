@@ -74,6 +74,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.portalRef A ref for the portal element
  * @param props.onClose Callback that is fired when the tooltip is closed.
  */
 function Tooltip({
@@ -93,6 +94,7 @@ function Tooltip({
   shouldClose,
   portalClassName,
   portalContainer,
+  portalRef,
   scrollContainer,
   popoverZIndex,
   refEl,
@@ -196,6 +198,7 @@ function Tooltip({
           usePortal,
           portalClassName,
           portalContainer,
+          portalRef,
           scrollContainer,
         }
       : { spacing, usePortal }),
@@ -322,6 +325,12 @@ Tooltip.propTypes = {
   shouldClose: PropTypes.func,
   usePortal: PropTypes.bool,
   portalClassName: PropTypes.string,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
 };
 
 export default Tooltip;
