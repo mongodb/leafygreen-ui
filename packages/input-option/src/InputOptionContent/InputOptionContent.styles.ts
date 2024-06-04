@@ -52,7 +52,7 @@ export const getLeftGlyphStyles = ({
   highlighted,
 }: InputOptionStyleArgs) => {
   const variant = disabled ? Variant.Disabled : Variant.Primary;
-  const ixnState = highlighted ? State.Focus : State.Default;
+  const interactionState = highlighted ? State.Focus : State.Default;
 
   return css`
     grid-area: left-glyph;
@@ -60,7 +60,7 @@ export const getLeftGlyphStyles = ({
     height: 20px;
     align-items: center;
     // Hover styles set by parent InputOption
-    color: ${color[theme].icon[variant][ixnState]};
+    color: ${color[theme].icon[variant][interactionState]};
     transition: color ${transitionDuration.default}ms ease-in-out;
   `;
 };
