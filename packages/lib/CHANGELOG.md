@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.5.0
+
+### Minor Changes
+
+- 7bc4fcde: Adds `RecursiveRecord` type
+
 ## 13.4.0
 
 ### Minor Changes
