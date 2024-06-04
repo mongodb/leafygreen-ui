@@ -6,12 +6,13 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import Icon from '@leafygreen-ui/icon';
 import { Theme } from '@leafygreen-ui/lib';
 
+import { MenuProps } from '../Menu/Menu.types';
 import { MenuContext } from '../MenuContext';
 import { Size } from '../types';
 
 import MenuItem from './MenuItem';
 
-const meta: StoryMetaType<typeof MenuItem> = {
+export default {
   title: 'Components/Menu/MenuItem',
   component: MenuItem,
   parameters: {
@@ -33,8 +34,8 @@ const meta: StoryMetaType<typeof MenuItem> = {
         return (
           <MenuContext.Provider
             value={{
-              darkMode: ctx?.args.darkMode,
-              theme: ctx?.args.darkMode ? Theme.Dark : Theme.Light,
+              darkMode: ctx?.args?.darkMode ?? false,
+              theme: ctx?.args?.darkMode ? Theme.Dark : Theme.Light,
             }}
           >
             <Instance />
@@ -43,7 +44,6 @@ const meta: StoryMetaType<typeof MenuItem> = {
       },
     },
   },
-};
-export default meta;
+} satisfies StoryMetaType<typeof MenuItem, Partial<MenuProps>>;
 
 export const Generated = () => {};

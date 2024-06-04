@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/display-name */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -15,16 +15,41 @@ import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Align, Justify } from '@leafygreen-ui/popover';
 import { TestUtils } from '@leafygreen-ui/popover';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 const { getAlign, getJustify } = TestUtils;
 
 import { Size } from './types';
-import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
+import {
+  Menu,
+  MenuItem,
+  MenuItemProps,
+  MenuProps,
+  MenuSeparator,
+  SubMenu,
+} from '.';
 
-const meta: StoryMetaType<typeof Menu> = {
+const getDecoratorStyles = (args: Partial<MenuProps>) => {
+  return css`
+    width: 256px;
+    height: 250px;
+    display: flex;
+    align-items: ${['left', 'right'].includes(args.align!)
+      ? 'end'
+      : getAlign(args.align!, args.justify!)};
+    justify-content: ${getJustify(args.align!, args.justify!)};
+  `;
+};
+
+export default {
   title: 'Components/Menu',
   component: Menu,
+  decorators: [
+    (StoryFn, _ctx) => (
+      <LeafyGreenProvider darkMode={_ctx?.args?.darkMode}>
+        <StoryFn />
+      </LeafyGreenProvider>
+    ),
+  ],
   parameters: {
     default: 'LiveExample',
     controls: {
@@ -39,66 +64,6 @@ const meta: StoryMetaType<typeof Menu> = {
     },
     chromatic: {
       disableSnapshot: true,
-    },
-    generate: {
-      combineArgs: {
-        darkMode: [false, true],
-        // Popover props
-        align: Object.values(Align),
-        justify: Object.values(Justify),
-      },
-      args: {
-        open: true,
-        maxHeight: 200,
-        children: (
-          <>
-            <MenuItem>Lorem</MenuItem>
-            <SubMenu
-              title="Fruit"
-              description="A selection of fruit"
-              glyph={<CloudIcon size="large" />}
-              active={true}
-            >
-              <MenuItem active>Apple</MenuItem>
-              <MenuItem variant="destructive">Banana</MenuItem>
-              <MenuItem>Carrot</MenuItem>
-              <MenuItem>Dragonfruit</MenuItem>
-              <MenuItem>Eggplant</MenuItem>
-              <MenuItem>Fig</MenuItem>
-            </SubMenu>
-          </>
-        ),
-      },
-      excludeCombinations: [
-        {
-          align: [Align.CenterHorizontal, Align.CenterVertical],
-        },
-        {
-          justify: Justify.Fit,
-          align: [Align.Left, Align.Right],
-        },
-      ],
-      decorator: (Instance, ctx) => (
-        <div
-          className={css`
-            width: 256px;
-            height: 250px;
-            display: flex;
-            align-items: ${['left', 'right'].includes(ctx?.args.align)
-              ? 'end'
-              : getAlign(ctx?.args.align, ctx?.args.justify)};
-            justify-content: ${getJustify(ctx?.args.align, ctx?.args.justify)};
-          `}
-        >
-          <Instance
-            trigger={
-              <Button darkMode={ctx?.args.darkMode} size="xsmall">
-                trigger
-              </Button>
-            }
-          />
-        </div>
-      ),
     },
   },
   args: {
@@ -122,17 +87,16 @@ const meta: StoryMetaType<typeof Menu> = {
     },
     darkMode: storybookArgTypes.darkMode,
   },
-};
-export default meta;
+} satisfies StoryMetaType<typeof Menu>;
 
-export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
-  open: _,
-  size,
-  darkMode,
-  ...args
-}: MenuProps & { size: Size }) => {
-  return (
-    <LeafyGreenProvider>
+export const LiveExample = {
+  render: ({
+    open: _,
+    size,
+    darkMode,
+    ...args
+  }: MenuProps & { size: MenuItemProps['size'] }) => {
+    return (
       <Menu
         darkMode={darkMode}
         trigger={
@@ -193,18 +157,18 @@ export const LiveExample: StoryFn<MenuProps & { size: Size }> = ({
         <MenuItem size={size}>Inceptos</MenuItem>
         <MenuItem size={size}>Risus</MenuItem>
       </Menu>
-    </LeafyGreenProvider>
-  );
-};
-LiveExample.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+    );
   },
-};
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof Menu & { size: MenuItemProps['size'] }>;
 
-export const InitialOpen = () => {
-  return (
-    <LeafyGreenProvider>
+export const InitialOpen = {
+  render: () => {
+    return (
       <Menu
         initialOpen
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
@@ -213,13 +177,87 @@ export const InitialOpen = () => {
         <MenuItem>Ipsum</MenuItem>
         <MenuItem>Adipiscing</MenuItem>
       </Menu>
-    </LeafyGreenProvider>
-  );
-};
-InitialOpen.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+    );
   },
-};
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof Menu>;
 
-export const Generated = () => <></>;
+export const Controlled = {
+  render: () => {
+    const [open, setOpen] = useState(true);
+
+    return (
+      <Menu
+        open={open}
+        setOpen={setOpen}
+        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+      >
+        <MenuItem>Lorem</MenuItem>
+        <MenuItem>Ipsum</MenuItem>
+        <MenuItem>Adipiscing</MenuItem>
+      </Menu>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof Menu>;
+
+export const Generated = {
+  render: () => <></>,
+  args: {
+    open: true,
+    maxHeight: 200,
+    children: (
+      <>
+        <MenuItem>Lorem</MenuItem>
+        <SubMenu
+          title="Fruit"
+          description="A selection of fruit"
+          glyph={<CloudIcon size="large" />}
+          active={true}
+        >
+          <MenuItem active>Apple</MenuItem>
+          <MenuItem variant="destructive">Banana</MenuItem>
+          <MenuItem>Carrot</MenuItem>
+          <MenuItem>Dragonfruit</MenuItem>
+          <MenuItem>Eggplant</MenuItem>
+          <MenuItem>Fig</MenuItem>
+        </SubMenu>
+      </>
+    ),
+    trigger: <Button size="xsmall">trigger</Button>,
+  },
+  parameters: {
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        align: Object.values(Align),
+        justify: Object.values(Justify),
+      },
+
+      excludeCombinations: [
+        {
+          align: [Align.CenterHorizontal, Align.CenterVertical],
+        },
+        {
+          justify: Justify.Fit,
+          align: [Align.Left, Align.Right],
+        },
+      ],
+      decorator: (Instance, ctx) => (
+        <LeafyGreenProvider darkMode={ctx?.args?.darkMode}>
+          <div className={getDecoratorStyles(ctx?.args)}>
+            <Instance />
+          </div>
+        </LeafyGreenProvider>
+      ),
+    },
+  },
+} satisfies StoryObj<typeof Menu>;
