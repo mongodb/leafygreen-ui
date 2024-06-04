@@ -2,11 +2,16 @@ import { transparentize } from 'polished';
 
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { MenuTheme } from '../types';
 
-import { menuBackgroundColors } from './utils/useMenuTheme';
+export const menuBackgroundColors = {
+  [MenuTheme.Light]: color.light.background.primary.default,
+  [MenuTheme.Dark]: palette.gray.dark3,
+  /** The color of a dark menu in light mode */
+  [MenuTheme.Hybrid]: color.dark.background.primary.default,
+};
 
 interface MenuStyleArgs {
   theme: MenuTheme;

@@ -7,7 +7,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, Type as ElementType } from '@leafygreen-ui/tokens';
 
-import { getBaseTheme, menuBackgroundColors } from '../Menu/utils/useMenuTheme';
+import { menuBackgroundColors } from '../Menu/Menu.styles';
+import { getBaseTheme } from '../Menu/utils/useMenuTheme';
 import { MenuTheme, Size } from '../types';
 
 import { Variant } from './MenuItem.types';
