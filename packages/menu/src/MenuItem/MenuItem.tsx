@@ -58,6 +58,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         className={cx(menuItemClassName, menuItemContainerStyles, className)}
       >
         <InputOption
+          {...rest}
           darkMode={darkMode}
           showWedge
           as={as}
@@ -68,7 +69,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           aria-current={active ?? undefined}
           highlighted={isHighlighted}
           {...conditionalProps}
-          {...rest}
           className={getMenuItemStyles({
             theme,
             size,

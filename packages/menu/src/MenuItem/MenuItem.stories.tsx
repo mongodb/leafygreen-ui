@@ -17,7 +17,7 @@ import { MenuItem, Variant } from '.';
 const _withMenuContext =
   (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
     const {
-      args: { darkMode, renderDarkMenu, highlighted },
+      args: { darkMode: darkModeProp, renderDarkMenu, highlighted, ...props },
     } = ctx ?? {
       args: {
         darkMode: false,
@@ -25,13 +25,16 @@ const _withMenuContext =
         highlighted: false,
       },
     };
-    const _darkMode = (renderDarkMenu || darkMode) ?? false;
+
+    const darkMode = (renderDarkMenu || darkModeProp) ?? false;
+    const theme = darkMode ? Theme.Dark : Theme.Light;
+
     return (
       <MenuContext.Provider
         value={{
           highlightIndex: highlighted ? -1 : undefined,
-          darkMode: _darkMode,
-          theme: _darkMode ? Theme.Dark : Theme.Light,
+          darkMode,
+          theme,
         }}
       >
         <ul
@@ -39,7 +42,11 @@ const _withMenuContext =
             width: 256px;
           `}
         >
-          <Instance />
+          <Instance
+            darkMode={undefined}
+            renderDarkMenu={undefined}
+            {...props}
+          />
         </ul>
       </MenuContext.Provider>
     );
@@ -90,6 +97,9 @@ export const LiveExample = {
       control: 'select',
       options: Object.values(Size),
     },
+    renderDarkMenu: {
+      control: 'boolean',
+    },
   },
   render: ({ children, glyph, ...args }) => (
     // @ts-expect-error
@@ -97,6 +107,7 @@ export const LiveExample = {
       {children}
     </MenuItem>
   ),
+  decorators: [_withMenuContext()],
   parameters: {
     chromatic: {
       disableSnapshot: true,
