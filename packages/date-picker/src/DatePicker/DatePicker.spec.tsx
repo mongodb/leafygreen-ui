@@ -417,15 +417,16 @@ describe('packages/date-picker', () => {
       });
 
       test('accepts a portalRef', () => {
+        const portalContainer = document.createElement('div');
+        document.body.appendChild(portalContainer);
         const portalRef = createRef<HTMLElement>();
-        const { container } = renderDatePicker({
+        renderDatePicker({
           initialOpen: true,
+          portalContainer,
+          portalRef,
         });
-
-        waitFor(() => {
-          expect(portalRef.current).toBeDefined();
-          expect(portalRef.current).toBe(container.firstElementChild);
-        });
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBe(portalContainer);
       });
 
       test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {

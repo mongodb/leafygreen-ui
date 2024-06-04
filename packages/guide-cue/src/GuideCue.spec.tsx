@@ -206,20 +206,17 @@ describe('packages/guide-cue', () => {
       });
     });
 
-    test('accepts a portalRef', () => {
+    test('accepts a portalRef', async () => {
       const portalContainer = document.createElement('div');
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container } = renderGuideCue({
+      renderGuideCue({
         open: true,
         portalContainer,
         portalRef,
       });
-
-      waitFor(() => {
-        expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(portalContainer);
-      });
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
     });
   });
 

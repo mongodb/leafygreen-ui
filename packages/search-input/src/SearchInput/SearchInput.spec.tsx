@@ -115,16 +115,17 @@ describe('packages/search-input', () => {
     });
 
     test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container, openMenu } = renderSearchInput({
+      const { openMenu } = renderSearchInput({
+        ...defaultProps,
+        portalContainer,
         portalRef,
       });
       openMenu();
-
-      waitFor(() => {
-        expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(container.firstElementChild);
-      });
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
     });
   });
 

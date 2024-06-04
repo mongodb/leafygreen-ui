@@ -7,10 +7,8 @@ import {
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import {
-  PopoverProps as ImportedPopoverProps,
-  PortalControlProps,
-} from '@leafygreen-ui/popover';
+
+import { PopoverProps } from '../UnitSelect/UnitSelect.types';
 
 export const Direction = {
   Increment: 'increment',
@@ -80,9 +78,6 @@ export interface WithoutUnitSelectProps {
 export type ConditionalUnitSelectProps =
   | WithUnitSelectProps
   | WithoutUnitSelectProps;
-
-export type PopoverProps = PortalControlProps &
-  Pick<ImportedPopoverProps, 'popoverZIndex'>;
 
 export interface BaseNumberInputProps
   extends Omit<

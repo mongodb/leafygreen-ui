@@ -301,15 +301,16 @@ describe('packages/select', () => {
     });
 
     test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container } = render(
-        <Select portalRef={portalRef} {...defaultProps} />,
-      );
-
-      waitFor(() => {
-        expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(container.firstElementChild);
+      const { getInput } = renderSelect({
+        portalContainer,
+        portalRef,
       });
+      userEvent.click(getInput());
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
     });
 
     test('does not render invalid  option', async () => {
@@ -499,6 +500,7 @@ describe('packages/select', () => {
         });
 
         userEvent.click(getInput());
+
         expect(onEnter).toHaveBeenCalled();
         expect(onEntering).toHaveBeenCalled();
         await waitFor(() => expect(onEntered).toHaveBeenCalled());

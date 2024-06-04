@@ -1,5 +1,5 @@
 import React, { createRef } from 'react';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -353,16 +353,18 @@ describe('packages/number-input', () => {
     });
 
     test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
-      const { container } = renderNumberInput({
-        portalRef,
+      const { getByRole } = renderNumberInput({
         ...selectProps,
+        portalContainer,
+        portalRef,
       });
-  
-      waitFor(() => {
-        expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(container.firstElementChild);
-      });
+      const trigger = getByRole('button', { name: unitProps.unit });
+      fireEvent.click(trigger);
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
     });
   });
 
