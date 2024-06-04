@@ -169,11 +169,12 @@ export const LiveExample = {
 } satisfies StoryObj<typeof Menu & { size: MenuItemProps['size'] }>;
 
 export const InitialOpen = {
-  render: () => {
+  render: args => {
     return (
       <Menu
         initialOpen
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        {...args}
       >
         <MenuItem>Lorem</MenuItem>
         <MenuItem>Ipsum</MenuItem>
