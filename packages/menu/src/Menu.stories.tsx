@@ -212,6 +212,29 @@ export const Controlled = {
   },
 } satisfies StoryObj<typeof Menu>;
 
+export const Controlled = {
+  render: () => {
+    const [open, setOpen] = useState(true);
+
+    return (
+      <Menu
+        open={open}
+        setOpen={setOpen}
+        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+      >
+        <MenuItem>Lorem</MenuItem>
+        <MenuItem>Ipsum</MenuItem>
+        <MenuItem>Adipiscing</MenuItem>
+      </Menu>
+    );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof Menu>;
+
 export const Generated = {
   render: () => <></>,
   args: {

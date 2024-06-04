@@ -203,7 +203,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               onClick={e => e.stopPropagation()}
               ref={popoverRef}
             >
-              {/* {updatedChildren} */}
               {children}
             </ul>
           </div>
