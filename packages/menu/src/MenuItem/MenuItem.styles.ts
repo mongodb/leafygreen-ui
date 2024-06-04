@@ -102,16 +102,3 @@ export const getMenuItemContentStyles = ({
     padding-inline-start: ${spacing[300]}px;
   `}
 `;
-
-export const menuItemContainerStyles = css`
-  list-style: none;
-`;
-
-export const disabledIconStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark2};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark1};
-  `,
-};
