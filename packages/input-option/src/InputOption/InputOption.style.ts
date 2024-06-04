@@ -60,6 +60,7 @@ export const getInputOptionStyles = ({
     ${isInteractive &&
     !disabled &&
     css`
+      /* Hover */
       &:hover {
         outline: none;
         color: ${color[theme].text.primary.hover};
@@ -70,16 +71,18 @@ export const getInputOptionStyles = ({
         }
       }
 
+      /* Focus (styling handled by highlighted prop) */
       &:focus,
       &:focus-visible {
         outline: none;
         border: unset;
       }
-
-      ${checked &&
-      css`
-        font-weight: 600;
-      `}
+    `}
+    
+    /* Checked */
+    ${checked &&
+    css`
+      font-weight: 600;
     `}
   `;
 };
@@ -113,7 +116,7 @@ export const getInputOptionWedge = ({
     ${highlighted &&
     css`
       transform: scaleY(1) translateY(-50%);
-      background-color: ${color[theme].icon.primary.focus};
+      background-color: ${color[theme].border.primary.focus};
     `}
 
     ${disabled &&
