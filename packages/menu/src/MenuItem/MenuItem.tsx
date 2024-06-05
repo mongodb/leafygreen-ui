@@ -5,7 +5,10 @@ import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
-import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphicComponent,
+} from '@leafygreen-ui/polymorphic';
 
 import { MenuContext, MenuDescendantsContext } from '../MenuContext';
 import { Size } from '../types';
@@ -22,7 +25,7 @@ const menuItemClassName = createUniqueClassName('menu_item');
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
-      as = 'button' as PolymorphicAs,
+      as: asProp,
       disabled = false,
       active = false,
       size = Size.Default,
@@ -35,6 +38,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     },
     fwdRef: React.Ref<any>,
   ) => {
+    const as = useInferredPolymorphicComponent(asProp, rest, 'button');
     const { theme, darkMode, highlightIndex } = useContext(MenuContext);
     const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
@@ -43,38 +47,35 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
 
     const isHighlighted = index === highlightIndex;
 
-    const conditionalProps =
-      as === 'a'
-        ? {
-            target: '_self',
-            rel: '',
-          }
-        : { disabled };
-
     return (
       <li
         role="none"
         ref={ref}
-        className={cx(menuItemClassName, menuItemContainerStyles, className)}
+        className={cx(menuItemClassName, menuItemContainerStyles)}
       >
         <InputOption
-          {...rest}
-          darkMode={darkMode}
-          showWedge
           as={as}
           role="menuitem"
+          target="_self"
+          rel=""
           tabIndex={-1}
           data-index={index}
           aria-disabled={disabled}
           aria-current={active ?? undefined}
+          disabled={disabled}
+          darkMode={darkMode}
+          showWedge
           highlighted={isHighlighted}
-          {...conditionalProps}
-          className={getMenuItemStyles({
-            theme,
-            size,
-            active,
-            variant,
-          })}
+          className={cx(
+            getMenuItemStyles({
+              theme,
+              size,
+              active,
+              variant,
+            }),
+            className,
+          )}
+          {...rest}
         >
           <InputOptionContent
             leftGlyph={glyph}

@@ -14,6 +14,7 @@ import { Size } from '../types';
 
 import { MenuItem, Variant } from '.';
 
+/** Implements a MenuContext wrapper around each `MenuItem` */
 const _withMenuContext =
   (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
     const {
@@ -42,11 +43,7 @@ const _withMenuContext =
             width: 256px;
           `}
         >
-          <Instance
-            darkMode={undefined}
-            renderDarkMenu={undefined}
-            {...props}
-          />
+          <MenuItem {...props} />
         </ul>
       </MenuContext.Provider>
     );
