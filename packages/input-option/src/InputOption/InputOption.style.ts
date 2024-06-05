@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   color,
   fontFamilies,
@@ -85,7 +86,6 @@ const wedgeWidth = spacing[100];
 const wedgePaddingY = spacing[200];
 
 export const getInputOptionWedge = ({
-  theme,
   disabled,
   highlighted,
 }: InputOptionStyleArgs) => css`
@@ -108,7 +108,7 @@ export const getInputOptionWedge = ({
     ${highlighted &&
     css`
       transform: scaleY(1) translateY(-50%);
-      background-color: ${color[theme].border.primary.focus};
+      background-color: ${palette.blue.base};
     `}
 
     ${disabled &&
