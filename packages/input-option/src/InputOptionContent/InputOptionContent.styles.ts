@@ -56,7 +56,6 @@ export const getLeftGlyphStyles = ({
   return css`
     grid-area: left-glyph;
     display: flex;
-    height: 20px;
     align-items: center;
     // Hover styles set by parent InputOption
     color: ${color[theme].icon[variant][interactionState]};
@@ -73,7 +72,6 @@ export const getRightGlyphStyles = ({
   return css`
     grid-area: right-glyph;
     display: flex;
-    height: 20px;
     align-items: center;
     color: ${color[theme].icon[variant].default};
     transition: color ${transitionDuration.default}ms ease-in-out;
@@ -85,29 +83,30 @@ export const textContainerStyles = css`
   line-height: ${spacing[400]}px;
 `;
 
-export const getTitleStyles = ({ highlighted }: InputOptionStyleArgs) => css`
+export const getTitleStyles = ({
+  theme,
+  highlighted,
+}: InputOptionStyleArgs) => css`
   overflow-wrap: anywhere;
   font-size: inherit;
   line-height: inherit;
+  font-weight: normal;
+  transition: color ${transitionDuration.default}ms ease-in-out;
 
   ${highlighted &&
   css`
     font-weight: bold;
+    color: ${color[theme].text.primary.focus};
   `}
 `;
 
-export const getDescriptionStyles = ({
-  theme,
-  disabled,
-}: InputOptionStyleArgs) => {
-  const variant = disabled ? Variant.Disabled : Variant.Secondary;
-
+export const getDescriptionStyles = () => {
   return css`
     max-height: ${spacing[1200]}px;
     overflow: hidden;
     font-size: inherit;
     line-height: inherit;
     text-overflow: ellipsis;
-    color: ${color[theme].text[variant].default};
+    transition: color ${transitionDuration.default}ms ease-in-out;
   `;
 };

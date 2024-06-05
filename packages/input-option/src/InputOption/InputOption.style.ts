@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   color,
   fontFamilies,
@@ -9,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { leftGlyphClassName } from '../InputOptionContent';
+import { leftGlyphClassName, titleClassName } from '../InputOptionContent';
 
 export const inputOptionClassName = createUniqueClassName('input_option');
 
@@ -64,6 +65,10 @@ export const getInputOptionStyles = ({
         color: ${color[theme].text.primary.hover};
         background-color: ${color[theme].background.primary.hover};
 
+        .${titleClassName} {
+          color: ${color[theme].text.primary.hover};
+        }
+
         .${leftGlyphClassName} {
           color: ${color[theme].icon.primary.hover};
         }
@@ -85,7 +90,6 @@ const wedgeWidth = spacing[100];
 const wedgePaddingY = spacing[200];
 
 export const getInputOptionWedge = ({
-  theme,
   disabled,
   highlighted,
 }: InputOptionStyleArgs) => css`
@@ -108,7 +112,7 @@ export const getInputOptionWedge = ({
     ${highlighted &&
     css`
       transform: scaleY(1) translateY(-50%);
-      background-color: ${color[theme].border.primary.focus};
+      background-color: ${palette.blue.base};
     `}
 
     ${disabled &&
