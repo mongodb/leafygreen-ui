@@ -17,7 +17,9 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@lg-tools/build": "0.5.1"
+    "@lg-tools/build": "0.5.1",
+    "@types/react-transition-group": "^4.4.5",
+    "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
     "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0"
