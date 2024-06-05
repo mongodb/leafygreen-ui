@@ -94,18 +94,12 @@ export const getTitleStyles = ({ highlighted }: InputOptionStyleArgs) => css`
   `}
 `;
 
-export const getDescriptionStyles = ({
-  theme,
-  disabled,
-}: InputOptionStyleArgs) => {
-  const variant = disabled ? Variant.Disabled : Variant.Secondary;
-
+export const getDescriptionStyles = () => {
   return css`
     max-height: ${spacing[1200]}px;
     overflow: hidden;
     font-size: inherit;
     line-height: inherit;
     text-overflow: ellipsis;
-    color: ${color[theme].text[variant].default};
   `;
 };

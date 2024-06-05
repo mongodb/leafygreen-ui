@@ -68,10 +68,8 @@ export const InputOptionContent = ({
         </div>
         {description && (
           <Description
-            className={cx(
-              descriptionClassName,
-              getDescriptionStyles({ theme, disabled, highlighted }),
-            )}
+            disabled={disabled}
+            className={cx(descriptionClassName, getDescriptionStyles())}
           >
             {description}
           </Description>
