@@ -6,7 +6,7 @@ import { act } from '../RTLOverrides';
  * Fires the `transitionEnd` event on the provided element,
  * triggering any event handlers attached to this CSS transition events.
  *
- * Ensures `onEnter`,`onEntering`,`onEntered`, `onExit`, `onExiting` and `onExited` handlers are fired when
+ * Ensures `onEntered`, `onExited` handlers are fired when
  * using `react-transition-group`
  */
 export async function waitForTransition(
