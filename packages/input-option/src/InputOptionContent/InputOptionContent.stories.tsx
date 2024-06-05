@@ -103,7 +103,6 @@ export const Highlighted = {
   parameters: {
     generate: {
       args: {
-        description: 'Description',
         rightGlyph: <Icon glyph="ChevronDown" />,
         highlighted: true,
       },
