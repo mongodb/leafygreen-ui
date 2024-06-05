@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
@@ -28,6 +29,12 @@ const CardWithMargin = (props: any) => (
 
 const Lipsum = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper nulla non metus auctor fringilla.`;
 
+const defaultExcludedControls = [
+  ...storybookExcludedControlParams,
+  'children',
+  'setSelected',
+];
+
 const meta: StoryMetaType<typeof Tabs> = {
   title: 'Components/Tabs',
   component: Tabs,
@@ -39,15 +46,11 @@ const meta: StoryMetaType<typeof Tabs> = {
       },
     },
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'children',
-        'as',
-        'setSelected',
-      ],
+      exclude: defaultExcludedControls,
     },
   },
   args: {
+    as: 'button',
     darkMode: false,
     children: [
       <Tab key="Tab 1" default name="Tab 1">
@@ -85,12 +88,14 @@ const meta: StoryMetaType<typeof Tabs> = {
         </CardWithMargin>
       </Tab>,
     ],
+    forceRenderAllTabPanels: false,
   },
   argTypes: {
+    as: storybookArgTypes.as,
+    forceRenderAllTabPanels: { control: 'boolean' },
     selected: { control: 'number' },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook
-  // @ts-expect-error
   subcomponents: { tab: Tab },
 };
 export default meta;
@@ -109,6 +114,24 @@ export const LiveExample: StoryFn<TabsProps> = ({
     />
   </LeafyGreenProvider>
 );
+
+export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  return (
+    <LiveExample
+      {...args}
+      selected={selectedTab}
+      setSelected={setSelectedTab}
+    />
+  );
+};
+Controlled.parameters = {
+  chromatic: { disableSnapshot: true },
+  controls: {
+    exclude: [...defaultExcludedControls, 'selected'],
+  },
+};
 
 export const WithInlineChildren = LiveExample.bind({});
 WithInlineChildren.args = {

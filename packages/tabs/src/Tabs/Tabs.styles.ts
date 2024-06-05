@@ -1,29 +1,9 @@
 import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { color } from '@leafygreen-ui/tokens';
 
-// Using a background allows the "border" to appear underneath the individual tab color
-export const modeColors = {
-  [Theme.Light]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.light2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-
-  [Theme.Dark]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.dark2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-};
+export const tabListElementClassName = createUniqueClassName('tab-list');
+export const tabPanelsElementClassName = createUniqueClassName('tab-panels');
 
 export const tabContainerStyle = css`
   display: flex;
@@ -31,21 +11,19 @@ export const tabContainerStyle = css`
   justify-content: space-between;
 `;
 
-export const inlineChildrenContainerStyle = css`
-  display: flex;
-`;
-
-export const inlineChildrenWrapperStyle = css`
-  display: flex;
-  align-items: center;
-`;
-
-export const listStyle = css`
+export const getListThemeStyles = (theme: Theme) => css`
   list-style: none;
   padding: 0;
   display: flex;
   width: 100%;
   overflow-x: auto;
+
+  /* Using a background allows the "border" to appear underneath the individual tab color */
+  background: linear-gradient(
+    0deg,
+    ${color[theme].border.secondary.default} 1px,
+    rgb(255 255 255 / 0%) 1px
+  );
 
   /* Remove scrollbar */
 
@@ -56,4 +34,13 @@ export const listStyle = css`
 
   -ms-overflow-style: none; /* IE */
   scrollbar-width: none; /* Firefox */
+`;
+
+export const inlineChildrenContainerStyle = css`
+  display: flex;
+`;
+
+export const inlineChildrenWrapperStyle = css`
+  display: flex;
+  align-items: center;
 `;

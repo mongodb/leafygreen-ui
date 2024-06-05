@@ -15,7 +15,6 @@ export const getTestUtils = (
 
   /**
    * Queries the `element` for the tab list element. Will throw if no element is found.
-   *
    * Then, finds and returns all elements with role=tab. Will throw if no tabs are found.
    */
   const getAllTabsInTabList = (): Array<HTMLElement> => {
@@ -56,18 +55,50 @@ export const getTestUtils = (
   };
 
   /**
-   * Queries the `element` for the selected panel. Returns null if selected panel is not found.
+   * Queries the `element` for the tab panels element. Will throw if no element is found.
+   * Then, finds and returns all elements with role=tabpanel. Will throw if no tab panels are found.
+   */
+  const getAllTabPanelsInDOM = () => {
+    const tabPanels = queryBySelector<HTMLElement>(
+      element,
+      `[data-lgid=${LGIDS_TABS.tabPanels}]`,
+    );
+
+    if (!tabPanels) {
+      throw new Error('Unable to find tab panels container');
+    }
+
+    const allTabPanels =
+      tabPanels.querySelectorAll<HTMLElement>('[role="tabpanel"]');
+
+    if (allTabPanels.length === 0) {
+      throw new Error(
+        'Unable to find any tabpanel elements in tab panels container',
+      );
+    }
+
+    return Array.from(allTabPanels);
+  };
+
+  /**
+   * Gets all tab panels and filters for the displayed tab panel. Returns null if selected panel is not found.
    */
   const getSelectedPanel = () => {
-    return queryBySelector<HTMLElement>(
-      element,
-      '[role="tabpanel"]:not(:empty)',
+    const allTabPanels = getAllTabPanelsInDOM();
+
+    const visibleTabPanel = allTabPanels.find(
+      tabPanel => getComputedStyle(tabPanel).display !== 'none',
     );
+
+    if (!visibleTabPanel) return null;
+
+    return visibleTabPanel;
   };
 
   return {
     getAllTabsInTabList: () => getAllTabsInTabList(),
     getTabUtilsByName: (name: string) => getTabUtilsByName(name),
+    getAllTabPanelsInDOM: () => getAllTabPanelsInDOM(),
     getSelectedPanel: () => getSelectedPanel(),
   };
 };

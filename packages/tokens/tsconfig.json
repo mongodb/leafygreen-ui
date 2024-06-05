@@ -16,6 +16,9 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../lib"
+    },
+    {
       "path": "../palette"
     }
   ]

@@ -3,6 +3,7 @@ import * as jest from './jest';
 import * as JestDOM from './jest-dom';
 export { act, renderHook } from './RTLOverrides';
 export { waitForState } from './waitForState';
+export { waitForTransition } from './waitForTransition';
 
 export { Context, jest, JestDOM };
 

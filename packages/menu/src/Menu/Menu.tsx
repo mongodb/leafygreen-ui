@@ -62,6 +62,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     trigger,
     portalClassName,
     portalContainer,
+    portalRef,
     scrollContainer,
     popoverZIndex,
     ...rest
@@ -156,6 +157,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           usePortal,
           portalClassName,
           portalContainer,
+          portalRef,
           scrollContainer,
         }
       : { spacing, usePortal }),
@@ -264,6 +266,12 @@ Menu.propTypes = {
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
   refEl: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
+  portalRef: PropTypes.shape({
     current:
       typeof window !== 'undefined'
         ? PropTypes.instanceOf(Element)
