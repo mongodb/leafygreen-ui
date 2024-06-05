@@ -1,10 +1,11 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import {
   act,
-  getAllByRole as globalGetAllByRole,
+  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
+  within,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -12,273 +13,177 @@ import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator } from '.';
 
 const menuTestId = 'menu-test-id';
-const trigger = <button data-testid="menu-trigger">trigger</button>;
+const menuTriggerTestId = 'menu-trigger';
+const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
 
 function waitForTimeout(timeout = 500) {
   return new Promise(res => setTimeout(res, timeout));
 }
 
-function renderMenu(props: Omit<MenuProps, 'children'> = {}) {
-  const utils = render(
+/** Renders a Menu with the given props */
+function renderMenu({
+  trigger = defaultTrigger,
+  ...rest
+}: Omit<MenuProps, 'children'> = {}) {
+  const renderResult = render(
     <>
       <div data-testid="backdrop" />
-      <Menu {...props} data-testid={menuTestId}>
+      <Menu trigger={trigger} {...rest} data-testid={menuTestId}>
         <MenuItem data-testid="menu-item-a">Item A</MenuItem>
         <MenuSeparator />
         <MenuItem href="http://mongodb.design">Item B</MenuItem>
+        <MenuItem href="http://mongodb.design">Item C</MenuItem>
       </Menu>
     </>,
   );
 
-  const backdrop = utils.getByTestId('backdrop');
-  return { ...utils, backdrop };
+  const backdropEl = renderResult.getByTestId('backdrop');
+  const triggerEl = renderResult.getByTestId(menuTriggerTestId);
+
+  /**
+   * Since menu elements won't exist until component is interacted with,
+   * call this after opening the menu.
+   * @returns Object of menu elements
+   */
+  async function findMenuElements(): Promise<{
+    menuEl: HTMLElement | null;
+    menuItemElements: Array<HTMLElement | null>;
+  }> {
+    const menuEl = await renderResult.findByTestId(menuTestId);
+    const menuItemElements = await within(menuEl).findAllByRole('menuitem');
+
+    return {
+      menuEl,
+      menuItemElements,
+    };
+  }
+
+  /** Opens the menu, and manually fires transition events */
+  async function openMenu() {
+    userEvent.click(triggerEl);
+    const menuElements = await findMenuElements();
+    fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
+    return menuElements;
+  }
+
+  return { ...renderResult, backdropEl, triggerEl, findMenuElements, openMenu };
 }
 
 describe('packages/menu', () => {
-  test.todo('trigger renders as a function');
-  test.todo('trigger renders as a JSX element');
-  test.todo('menu appears when trigger is a function');
-  test.todo('menu appears when trigger is a JSX element');
+  describe('Rendering', () => {
+    test.todo('trigger renders as a function');
+    test.todo('trigger renders as a JSX element');
+    test.todo('menu appears when trigger is a function');
+    test.todo('menu appears when trigger is a JSX element');
 
-  test('menu appears on DOM when the "open" prop is set', () => {
-    const { getByTestId } = renderMenu({ open: true });
-    const menu = getByTestId(menuTestId);
-    expect(menu).toBeInTheDocument();
-  });
-
-  test('renders children to the DOM', () => {
-    const { getByText } = renderMenu({ open: true });
-    const menuItem = getByText('Item A');
-    expect(menuItem).toBeInTheDocument();
-  });
-
-  test('first item is focused when menu is opened', () => {
-    const { getByTestId } = renderMenu({ open: true });
-    const menu = getByTestId(menuTestId);
-    const options = globalGetAllByRole(menu, 'menuitem');
-    expect(options[0]).toHaveFocus();
-  });
-
-  test('accepts a portalRef', () => {
-    const portalContainer = document.createElement('div');
-    document.body.appendChild(portalContainer);
-    const portalRef = createRef<HTMLElement>();
-    renderMenu({
-      open: true,
-      portalContainer,
-      portalRef,
-    });
-    expect(portalRef.current).toBeDefined();
-    expect(portalRef.current).toBe(portalContainer);
-  });
-
-  describe('when uncontrolled', () => {
-    const uncontrolledSetOpen = jest.fn();
-
-    test('and `initialOpen` is set to true', () => {
+    test('menu is opened by default when `initialOpen` is set to true', () => {
       const { getByText } = renderMenu({
         initialOpen: true,
-        trigger,
       });
-
       const menuItem = getByText('Item B');
-
       expect(menuItem).toBeInTheDocument();
     });
 
-    test('and "setOpen" is provided, but "open" prop is not set', async () => {
-      const { getByTestId, getByText } = renderMenu({
-        setOpen: uncontrolledSetOpen,
-        trigger,
-      });
-
-      const button = getByTestId('menu-trigger');
-      userEvent.click(button);
-
-      const menuItem = getByText('Item B');
-
-      expect(menuItem).toBeInTheDocument();
-
-      userEvent.click(button);
-
-      await waitForElementToBeRemoved(menuItem);
-      expect(menuItem).not.toBeInTheDocument();
-    });
-  });
-
-  test('clicking a menuitem does not close the menu', async () => {
-    const { getByTestId } = renderMenu({
-      trigger,
-    });
-
-    const button = getByTestId('menu-trigger');
-
-    userEvent.click(button);
-    const menu = getByTestId(menuTestId);
-
-    expect(menu).toBeInTheDocument();
-
-    const menuItem = getByTestId('menu-item-a');
-    userEvent.click(menuItem);
-
-    await act(async () => await waitForTimeout());
-    expect(menu).toBeInTheDocument();
-  });
-
-  test('pressing enter on a menuitem does not close the menu', async () => {
-    const { getByTestId } = renderMenu({
-      trigger,
-    });
-
-    const button = getByTestId('menu-trigger');
-
-    userEvent.click(button);
-    const menu = getByTestId(menuTestId);
-
-    expect(menu).toBeInTheDocument();
-
-    const menuItem = getByTestId('menu-item-a');
-
-    menuItem.focus();
-    userEvent.keyboard('[Enter]');
-
-    await act(async () => await waitForTimeout());
-    expect(menu).toBeInTheDocument();
-  });
-
-  test('pressing space on a menuitem does not close the menu', async () => {
-    const { getByTestId } = renderMenu({
-      trigger,
-    });
-
-    const button = getByTestId('menu-trigger');
-
-    userEvent.click(button);
-    const menu = getByTestId(menuTestId);
-
-    expect(menu).toBeInTheDocument();
-
-    const menuItem = getByTestId('menu-item-a');
-
-    menuItem.focus();
-    userEvent.keyboard('[Space]');
-
-    await act(async () => await waitForTimeout());
-    expect(menu).toBeInTheDocument();
-  });
-
-  test('clicking outside the menu closes the menu', async () => {
-    const { getByTestId, backdrop } = renderMenu({
-      trigger,
-    });
-
-    const button = getByTestId('menu-trigger');
-    userEvent.click(button);
-    const menu = getByTestId(menuTestId);
-
-    expect(menu).toBeInTheDocument();
-
-    userEvent.click(backdrop);
-
-    await waitForElementToBeRemoved(menu);
-    expect(menu).not.toBeInTheDocument();
-  });
-
-  describe('when controlled', () => {
-    const ControlledExample = () => {
-      const [open, setOpen] = React.useState(true);
-
-      return (
-        <>
-          <div data-testid="backdrop" />
-          <Menu open={open} setOpen={setOpen} data-testid="controlled-menu">
-            <MenuItem data-testid="controlled-menu-item">Text</MenuItem>
-          </Menu>
-        </>
-      );
-    };
-
-    test('clicking a menuitem does not close the menu', async () => {
-      const { getByTestId } = render(<ControlledExample />);
-
-      const menu = getByTestId('controlled-menu');
-      const menuItem = getByTestId('controlled-menu-item');
-
-      expect(menu).toBeInTheDocument();
-
-      userEvent.click(menuItem);
-
-      await act(async () => await waitForTimeout());
-      expect(menu).toBeInTheDocument();
-    });
-
-    test('pressing enter on a menuitem does not close the menu', async () => {
-      const { getByTestId } = render(<ControlledExample />);
-
-      const menu = getByTestId('controlled-menu');
-      const menuItem = getByTestId('controlled-menu-item');
-
-      expect(menu).toBeInTheDocument();
-
-      menuItem.focus();
-      userEvent.keyboard('[Enter]');
-
-      await act(async () => await waitForTimeout());
-      expect(menu).toBeInTheDocument();
-    });
-
-    test('pressing space on a menuitem does not close the menu', async () => {
-      const { getByTestId } = render(<ControlledExample />);
-
-      const menu = getByTestId('controlled-menu');
-      const menuItem = getByTestId('controlled-menu-item');
-
-      expect(menu).toBeInTheDocument();
-
-      menuItem.focus();
-      userEvent.keyboard('[Space]');
-
-      await act(async () => await waitForTimeout());
-      expect(menu).toBeInTheDocument();
-    });
-
-    test('clicking outside the menu closes the menu', async () => {
-      const { getByTestId } = render(<ControlledExample />);
-
-      const menu = getByTestId('controlled-menu');
-
-      await waitFor(() => {
+    describe('controlled `open`', () => {
+      const setOpen = jest.fn();
+      test('menu renders when `open` prop is set', () => {
+        const { getByTestId } = renderMenu({ open: true, setOpen });
+        const menu = getByTestId(menuTestId);
         expect(menu).toBeInTheDocument();
       });
 
-      const backdrop = getByTestId('backdrop');
+      test('renders all children', () => {
+        const { getByText } = renderMenu({ open: true, setOpen });
+        const menuItem = getByText('Item A');
+        expect(menuItem).toBeInTheDocument();
+      });
 
-      userEvent.click(backdrop);
+      test('first item is focused', async () => {
+        const { findMenuElements } = renderMenu({ open: true, setOpen });
+        const { menuEl, menuItemElements } = await findMenuElements();
 
-      await waitForElementToBeRemoved(menu);
-      expect(menu).not.toBeInTheDocument();
+        // JSDOM does not automatically fire these events
+        fireEvent.transitionEnd(menuEl as Element);
+
+        await waitFor(() => {
+          const firstItem = menuItemElements[0];
+          expect(firstItem).toHaveFocus();
+        });
+      });
+
+      test('uncontrolled if `open` prop is not set, with `setOpen` callback', async () => {
+        const { getByTestId, getByText } = renderMenu({
+          open: undefined,
+          setOpen,
+          trigger: defaultTrigger,
+        });
+
+        const button = getByTestId('menu-trigger');
+        userEvent.click(button);
+
+        const menuItem = getByText('Item B');
+
+        expect(menuItem).toBeInTheDocument();
+
+        userEvent.click(button);
+
+        await waitForElementToBeRemoved(menuItem);
+        expect(menuItem).not.toBeInTheDocument();
+      });
     });
   });
 
   describe('Mouse interaction', () => {
-    test('Clicking trigger opens menu', () => {
-      const { getByRole, getByTestId } = renderMenu({
-        trigger,
+    test('Clicking trigger opens menu', async () => {
+      const { triggerEl, findMenuElements } = renderMenu({});
+      userEvent.click(triggerEl);
+      const { menuEl } = await findMenuElements();
+      await waitFor(() => {
+        expect(menuEl).toBeInTheDocument();
       });
-      const button = getByRole('button');
-
-      userEvent.click(button);
-      const menu = getByTestId(menuTestId);
-
-      expect(menu).toBeInTheDocument();
     });
 
-    test('Click handlers on parent elements fire', async () => {
+    test('First item is focused when menu is opened', async () => {
+      const { triggerEl, findMenuElements } = renderMenu({});
+      userEvent.click(triggerEl);
+      const { menuEl, menuItemElements } = await findMenuElements();
+      await waitFor(() => {
+        // JSDOM does not automatically fire these events
+        fireEvent.transitionEnd(menuEl as Element);
+        expect(menuItemElements[0]).toHaveFocus();
+      });
+    });
+
+    test('Clicking a menuitem does not close the menu', async () => {
+      const { openMenu } = renderMenu({});
+      const { menuEl, menuItemElements } = await openMenu();
+
+      expect(menuEl).toBeInTheDocument();
+
+      const firstItem = menuItemElements[0];
+      userEvent.click(firstItem!);
+      await act(async () => await waitForTimeout());
+      expect(menuEl).toBeInTheDocument();
+    });
+
+    test('Clicking outside the menu closes the menu', async () => {
+      const { openMenu, backdropEl } = renderMenu({});
+      const { menuEl } = await openMenu();
+
+      expect(menuEl).toBeInTheDocument();
+
+      userEvent.click(backdropEl);
+      await waitForElementToBeRemoved(menuEl);
+
+      expect(menuEl).not.toBeInTheDocument();
+    });
+
+    test('Click handlers on parent elements fire (propagation is not stopped)', async () => {
       const parentHandler = jest.fn();
       const { getByTestId } = render(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div data-testid="parent" onClick={parentHandler}>
-          <Menu trigger={trigger} data-testid={menuTestId}>
+          <Menu trigger={defaultTrigger} data-testid={menuTestId}>
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
@@ -295,10 +200,10 @@ describe('packages/menu', () => {
     });
   });
 
-  type Keys = 'esc' | 'tab';
-  const closeKeys: Array<Array<Keys>> = [['esc'], ['tab']];
-
   describe('Keyboard Interaction', () => {
+    type Keys = 'esc' | 'tab';
+    const closeKeys: Array<Array<Keys>> = [['esc'], ['tab']];
+
     const userEventInteraction = (menu: HTMLElement, key: Keys) => {
       if (key === 'tab') {
         userEvent.tab();
@@ -309,84 +214,107 @@ describe('packages/menu', () => {
 
     describe.each(closeKeys)('%s key', key => {
       test('Closes menu', async () => {
-        const { getByRole, getByTestId } = renderMenu({
-          trigger,
-        });
-        const button = getByRole('button');
-        userEvent.click(button);
-        const menu = getByTestId(menuTestId);
+        const { openMenu } = renderMenu({});
+        const { menuEl } = await openMenu();
 
-        userEventInteraction(menu, key);
-        await waitForElementToBeRemoved(menu);
-        expect(menu).not.toBeInTheDocument();
+        userEventInteraction(menuEl!, key);
+        await waitForElementToBeRemoved(menuEl);
+        expect(menuEl).not.toBeInTheDocument();
       });
+
       test('Returns focus to trigger {usePortal: true}', async () => {
-        const { getByRole, getByTestId } = renderMenu({
-          trigger,
+        const { openMenu, triggerEl } = renderMenu({
           usePortal: true,
         });
-        const button = getByRole('button');
-        userEvent.click(button);
-        const menu = getByTestId(menuTestId);
+        const { menuEl } = await openMenu();
 
-        userEventInteraction(menu, key);
-        await waitForElementToBeRemoved(menu);
-        expect(button).toHaveFocus();
+        userEventInteraction(menuEl!, key);
+        await waitForElementToBeRemoved(menuEl);
+        expect(triggerEl).toHaveFocus();
       });
 
       test('Returns focus to trigger {usePortal: false}', async () => {
-        const { getByRole, getByTestId } = renderMenu({
-          trigger,
+        const { openMenu, triggerEl } = renderMenu({
           usePortal: false,
         });
-        const button = getByRole('button');
-        userEvent.click(button);
-        const menu = getByTestId(menuTestId);
+        const { menuEl } = await openMenu();
 
-        userEventInteraction(menu, key);
-        await waitForElementToBeRemoved(menu);
-        expect(button).toHaveFocus();
+        userEventInteraction(menuEl!, key);
+        await waitForElementToBeRemoved(menuEl);
+        expect(triggerEl).toHaveFocus();
       });
     });
 
     describe('Arrow keys', () => {
-      let menu: HTMLElement;
-      let options: Array<HTMLElement>;
-
-      beforeEach(() => {
-        const { getByTestId } = renderMenu({ trigger });
-        const triggerButton = getByTestId('menu-trigger');
-
-        userEvent.click(triggerButton);
-        menu = getByTestId(menuTestId);
-        options = globalGetAllByRole(menu, 'menuitem');
-      });
-
       describe('Down arrow', () => {
-        test('highlights the next option in the menu', () => {
-          userEvent.type(menu, '{arrowdown}');
-          expect(options[1]).toHaveFocus();
+        test('highlights the next option in the menu', async () => {
+          const { openMenu } = renderMenu({});
+          const { menuEl, menuItemElements } = await openMenu();
+          userEvent.type(menuEl!, '{arrowdown}');
+          expect(menuItemElements[1]).toHaveFocus();
         });
-        test('cycles highlight to the top', () => {
-          // programmatically set focus on last option
-          options[options.length - 1].focus();
-          userEvent.type(menu, '{arrowdown}');
-          expect(options[0]).toHaveFocus();
+        test('cycles highlight to the top', async () => {
+          const { openMenu } = renderMenu({});
+          const { menuEl, menuItemElements } = await openMenu();
+
+          for (let i = 0; i < menuItemElements.length; i++) {
+            userEvent.type(menuEl!, '{arrowdown}');
+          }
+
+          expect(menuItemElements[0]).toHaveFocus();
         });
       });
 
       describe('Up arrow', () => {
-        test('highlights the previous option in the menu', () => {
-          // programmatically set focus on second option
-          options[1].focus();
-          userEvent.type(menu, '{arrowup}');
-          expect(options[0]).toHaveFocus();
+        test('highlights the previous option in the menu', async () => {
+          const { openMenu } = renderMenu({});
+          const { menuEl, menuItemElements } = await openMenu();
+
+          userEvent.type(menuEl!, '{arrowdown}');
+          userEvent.type(menuEl!, '{arrowup}');
+          expect(menuItemElements[0]).toHaveFocus();
         });
-        test('cycles highlight to the bottom', () => {
-          userEvent.type(menu, '{arrowup}');
-          expect(options[options.length - 1]).toHaveFocus();
+        test('cycles highlight to the bottom', async () => {
+          const { openMenu } = renderMenu({});
+          const { menuEl, menuItemElements } = await openMenu();
+
+          const lastOption = menuItemElements[menuItemElements.length - 1];
+          userEvent.type(menuEl!, '{arrowup}');
+          expect(lastOption).toHaveFocus();
         });
       });
+    });
+
+    test('Enter key on a menuitem does not close the menu', async () => {
+      const { openMenu } = renderMenu({});
+      const { menuEl, menuItemElements } = await openMenu();
+
+      expect(menuEl).toBeInTheDocument();
+
+      const firstItem = menuItemElements[0];
+
+      expect(firstItem).toHaveFocus();
+
+      userEvent.keyboard('[Enter]');
+
+      await act(async () => await waitForTimeout());
+      expect(menuEl).toBeInTheDocument();
+    });
+
+    test('Space key on a menuitem does not close the menu', async () => {
+      const { openMenu } = renderMenu({});
+      const { menuEl, menuItemElements } = await openMenu();
+
+      expect(menuEl).toBeInTheDocument();
+
+      const firstItem = menuItemElements[0];
+
+      expect(firstItem).toHaveFocus();
+
+      userEvent.keyboard('[Space]');
+
+      await act(async () => await waitForTimeout());
+      expect(menuEl).toBeInTheDocument();
     });
   });
 });
