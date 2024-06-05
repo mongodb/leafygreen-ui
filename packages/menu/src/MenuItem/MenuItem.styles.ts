@@ -5,7 +5,7 @@ import {
 } from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, spacing, Type as ElementType } from '@leafygreen-ui/tokens';
+import { color, Property, spacing } from '@leafygreen-ui/tokens';
 
 import { Size } from '../types';
 
@@ -20,18 +20,18 @@ export const menuItemContainerStyles = css`
 /** Define colors for the active elements */
 const activeColors = {
   [Theme.Light]: {
-    [ElementType.Background]: palette.green.light3,
-    [ElementType.Text]: palette.green.dark2,
-    [ElementType.Icon]: palette.green.dark1,
-    [ElementType.Border]: palette.green.dark1,
+    [Property.Background]: palette.green.light3,
+    [Property.Text]: palette.green.dark2,
+    [Property.Icon]: palette.green.dark1,
+    [Property.Border]: palette.green.dark1,
   },
   [Theme.Dark]: {
-    [ElementType.Background]: palette.green.dark3,
-    [ElementType.Text]: palette.green.base,
-    [ElementType.Icon]: palette.green.base,
-    [ElementType.Border]: palette.green.base,
+    [Property.Background]: palette.green.dark3,
+    [Property.Text]: palette.green.base,
+    [Property.Icon]: palette.green.base,
+    [Property.Border]: palette.green.base,
   },
-} as const satisfies Record<Theme, Record<ElementType, string>>;
+} as const satisfies Record<Theme, Record<Property, string>>;
 
 interface MenuItemStyleArgs {
   theme: Theme;
@@ -47,8 +47,13 @@ export const getMenuItemStyles = ({
   variant,
 }: MenuItemStyleArgs) => css`
   width: 100%;
-  min-height: ${size === Size.Large ? spacing[1200] : spacing[800]}px;
-  padding-block: ${spacing[50]}px;
+  min-height: ${spacing[800]}px;
+
+  ${size === Size.Large &&
+  css`
+    min-height: ${spacing[1200]}px;
+    // TODO: align on \`large\` size text styles
+  `}
 
   ${active &&
   css`
@@ -65,6 +70,7 @@ export const getMenuItemStyles = ({
         color: ${activeColors[theme].text};
         font-weight: bold;
       }
+
       .${leftGlyphClassName} {
         color: ${activeColors[theme].icon};
       }
