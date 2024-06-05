@@ -1,4 +1,5 @@
 import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
+import { migrator } from '@lg-tools/codemods';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
@@ -165,6 +166,36 @@ cli
     false,
   )
   .action(validate);
+
+/** Migrator */
+cli
+  .command('codemod')
+  .description('Runs codemod transformations to upgrade LG components')
+  .argument(
+    '<codemod>',
+    'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
+  )
+  .argument(
+    '[path]',
+    'Files or directory to transform. Can be a glob like like src/**.test.js',
+  )
+  .option(
+    '--i, --ignore <items...>',
+    'Glob patterns to ignore. E.g. --i **/node_modules/** **/.next/**',
+    false,
+  )
+  .option('--d, --dry', 'dry run (no changes are made to files)', false)
+  .option(
+    '--p, --print',
+    'print transformed files to stdout, useful for development',
+    false,
+  )
+  .option(
+    '--f, --force',
+    'Bypass Git safety checks and forcibly run codemods',
+    false,
+  )
+  .action(migrator);
 
 /** Build steps */
 cli

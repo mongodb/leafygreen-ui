@@ -27,6 +27,11 @@ export interface TestUtilsReturnType {
   getTabUtilsByName: (name: string) => TabUtils | null;
 
   /**
+   * Returns an array of tab panels in the tab panels container.
+   */
+  getAllTabPanelsInDOM: () => Array<HTMLElement>;
+
+  /**
    * Returns selected tab panel or null if a selected tab panel is not found
    */
   getSelectedPanel: () => HTMLElement | null;

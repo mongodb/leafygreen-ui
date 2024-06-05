@@ -1,5 +1,19 @@
 # @leafygreen-ui/popover
 
+## 11.4.0
+
+### Minor Changes
+
+- 02e1d77e: Reclassify `portalRef` prop as part of `PortalControlProps` in `Popover` component
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+
 ## 11.3.1
 
 ### Patch Changes

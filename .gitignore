@@ -57,5 +57,5 @@ scripts/tmp.*.ts
 
 TODO.md
 
-# PR trains (https://github.com/realyze/pr-train)
+# PR train config (https://github.com/realyze/pr-train)
 .pr-train.yml

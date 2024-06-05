@@ -1,5 +1,18 @@
 # @leafygreen-ui/tokens
 
+## 2.8.0
+
+### Minor Changes
+
+- 7bc4fcde: - Improves semantics of color token segment type names (e.g. `Type` -> `Property`, `State` -> `InteractionState`).
+  - Adds TSDoc to color types
+  - Deprecates `Mode` enum in favor if `Theme` (exported from `lib`)
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+  - @leafygreen-ui/lib@13.5.0
+
 ## 2.7.0
 
 ### Minor Changes

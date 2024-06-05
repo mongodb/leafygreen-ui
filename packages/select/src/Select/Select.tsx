@@ -81,6 +81,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange,
       readOnly,
       portalContainer,
+      portalRef,
       scrollContainer,
       portalClassName,
       popoverZIndex,
@@ -497,6 +498,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             usePortal,
             portalClassName,
             portalContainer,
+            portalRef,
             scrollContainer,
           }
         : { usePortal }),
@@ -650,4 +652,10 @@ Select.propTypes = {
   allowDeselect: PropTypes.bool,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   dropdownWidthBasis: PropTypes.oneOf(Object.values(DropdownWidthBasis)),
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
 } as WeakValidationMap<ComponentProps<typeof Select>>;

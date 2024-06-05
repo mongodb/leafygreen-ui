@@ -38,6 +38,7 @@ export const UnitSelectButton = React.forwardRef(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       ...props
     }: UnitSelectButtonProps,
@@ -55,6 +56,7 @@ export const UnitSelectButton = React.forwardRef(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
     } as const;
 

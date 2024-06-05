@@ -1,5 +1,30 @@
 # @leafygreen-ui/search-input
 
+## 3.1.0
+
+### Minor Changes
+
+- 02e1d77e: Exposes the following props in `SearchInput` component:
+
+  - `usePortal`
+  - `portalClassName`
+  - `portalContainer`
+  - `portalRef`
+  - `scrollContainer`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
 ## 3.0.1
 
 ### Patch Changes

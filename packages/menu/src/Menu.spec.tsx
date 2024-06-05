@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   act,
   fireEvent,
@@ -76,7 +76,42 @@ describe('packages/menu', () => {
     test.todo('menu appears when trigger is a function');
     test.todo('menu appears when trigger is a JSX element');
 
-    test('menu is opened by default when `initialOpen` is set to true', () => {
+  test('menu appears on DOM when the "open" prop is set', () => {
+    const { getByTestId } = renderMenu({ open: true });
+    const menu = getByTestId(menuTestId);
+    expect(menu).toBeInTheDocument();
+  });
+
+  test('renders children to the DOM', () => {
+    const { getByText } = renderMenu({ open: true });
+    const menuItem = getByText('Item A');
+    expect(menuItem).toBeInTheDocument();
+  });
+
+  test('first item is focused when menu is opened', () => {
+    const { getByTestId } = renderMenu({ open: true });
+    const menu = getByTestId(menuTestId);
+    const options = globalGetAllByRole(menu, 'menuitem');
+    expect(options[0]).toHaveFocus();
+  });
+
+  test('accepts a portalRef', () => {
+    const portalContainer = document.createElement('div');
+    document.body.appendChild(portalContainer);
+    const portalRef = createRef<HTMLElement>();
+    renderMenu({
+      open: true,
+      portalContainer,
+      portalRef,
+    });
+    expect(portalRef.current).toBeDefined();
+    expect(portalRef.current).toBe(portalContainer);
+  });
+
+  describe('when uncontrolled', () => {
+    const uncontrolledSetOpen = jest.fn();
+
+    test('and `initialOpen` is set to true', () => {
       const { getByText } = renderMenu({
         initialOpen: true,
       });
