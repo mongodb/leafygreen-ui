@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.5.0
+
+### Minor Changes
+
+- 961be3f9: Adds Stop to glyph set and updates Pause glyph
+
 ## 12.4.0
 
 ### Minor Changes

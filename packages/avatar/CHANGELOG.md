@@ -1,5 +1,17 @@
 # @leafygreen-ui/avatar
 
+## 1.0.1
+
+### Patch Changes
+
+- 34ac7340: Avatar `text` prop can now be `null` even when `format === 'text'`, allowing for a more seamless integration with the `getInitials` function. If `text === null`, the Avatar will fall back to `Icon` format.
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
 ## 1.0.0
 
 ### Major Changes

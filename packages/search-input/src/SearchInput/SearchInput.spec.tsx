@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   createEvent,
   fireEvent,
@@ -112,6 +112,20 @@ describe('packages/search-input', () => {
       });
       const { resultsElements } = getMenuElements();
       expect(resultsElements).toHaveLength(1);
+    });
+
+    test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
+      const portalRef = createRef<HTMLElement>();
+      const { openMenu } = renderSearchInput({
+        ...defaultProps,
+        portalContainer,
+        portalRef,
+      });
+      openMenu();
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
     });
   });
 

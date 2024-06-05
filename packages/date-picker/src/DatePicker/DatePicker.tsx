@@ -102,6 +102,13 @@ DatePicker.propTypes = {
     typeof window !== 'undefined'
       ? PropTypes.instanceOf(Element)
       : PropTypes.any,
+  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
   scrollContainer:
     typeof window !== 'undefined'
       ? PropTypes.instanceOf(Element)

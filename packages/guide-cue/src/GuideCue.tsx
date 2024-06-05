@@ -29,6 +29,7 @@ function GuideCue({
   tooltipJustify = TooltipJustify.Middle,
   beaconAlign = Align.CenterHorizontal,
   portalContainer,
+  portalRef,
   scrollContainer,
   popoverZIndex,
   ...tooltipProps
@@ -107,6 +108,7 @@ function GuideCue({
   const sharedProps = {
     portalClassName,
     portalContainer,
+    portalRef,
     scrollContainer,
   };
 
@@ -236,6 +238,12 @@ GuideCue.propTypes = {
       ? PropTypes.instanceOf(Element)
       : PropTypes.any,
   portalClassName: PropTypes.string,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
 };
 
 export default GuideCue;
