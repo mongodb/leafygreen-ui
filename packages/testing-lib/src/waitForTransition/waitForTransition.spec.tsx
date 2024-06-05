@@ -1,8 +1,7 @@
 import React, { createRef } from 'react';
 import { Transition } from 'react-transition-group';
+import { css } from '@emotion/react';
 import { render, waitFor } from '@testing-library/react';
-
-import { css } from '@leafygreen-ui/emotion';
 
 import { waitForTransition } from '.';
 
