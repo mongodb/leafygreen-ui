@@ -10,7 +10,7 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-import { leftGlyphClassName } from '../InputOptionContent';
+import { leftGlyphClassName, titleClassName } from '../InputOptionContent';
 
 export const inputOptionClassName = createUniqueClassName('input_option');
 
@@ -64,6 +64,10 @@ export const getInputOptionStyles = ({
         outline: none;
         color: ${color[theme].text.primary.hover};
         background-color: ${color[theme].background.primary.hover};
+
+        .${titleClassName} {
+          color: ${color[theme].text.primary.hover};
+        }
 
         .${leftGlyphClassName} {
           color: ${color[theme].icon.primary.hover};

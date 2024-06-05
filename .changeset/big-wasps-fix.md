@@ -23,10 +23,10 @@
 
 #### Colors overview
  - Left & right icon color: `color.[theme].icon.primary` tokens 
- - Label & Description: use default `Label` & `Description` styles from `typography`
+ - Label & Description: use default `Label` & `Description` colors from `typography`
  - Background uses `color[theme].background.primary` tokens (including hover & focus states)
  - Wedge uses `palette.blue.base` for all modes
- - Icon, Text & Background colors use `.hover` state color for `:hover` styles, and `.focus` state color for the `highlight` prop
+ - The `highlight` prop uses the `.focus` state color for Icon, Text & Background colors
 
 
 ### Internal updates

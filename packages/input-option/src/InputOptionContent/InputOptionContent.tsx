@@ -2,7 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Description } from '@leafygreen-ui/typography';
+import { Description, Label } from '@leafygreen-ui/typography';
 
 import {
   descriptionClassName,
@@ -61,13 +61,17 @@ export const InputOptionContent = ({
         </div>
       )}
       <div className={textContainerStyles}>
-        <div
+        <Label
+          as="div"
+          htmlFor={''}
+          darkMode={darkMode}
           className={cx(titleClassName, getTitleStyles({ theme, highlighted }))}
         >
           {children}
-        </div>
+        </Label>
         {description && (
           <Description
+            darkMode={darkMode}
             disabled={disabled}
             className={cx(descriptionClassName, getDescriptionStyles())}
           >

@@ -83,14 +83,20 @@ export const textContainerStyles = css`
   line-height: ${spacing[400]}px;
 `;
 
-export const getTitleStyles = ({ highlighted }: InputOptionStyleArgs) => css`
+export const getTitleStyles = ({
+  theme,
+  highlighted,
+}: InputOptionStyleArgs) => css`
   overflow-wrap: anywhere;
   font-size: inherit;
   line-height: inherit;
+  font-weight: normal;
+  transition: color ${transitionDuration.default}ms ease-in-out;
 
   ${highlighted &&
   css`
     font-weight: bold;
+    color: ${color[theme].text.primary.focus};
   `}
 `;
 
@@ -101,5 +107,6 @@ export const getDescriptionStyles = () => {
     font-size: inherit;
     line-height: inherit;
     text-overflow: ellipsis;
+    transition: color ${transitionDuration.default}ms ease-in-out;
   `;
 };
