@@ -56,7 +56,6 @@ export const getLeftGlyphStyles = ({
   return css`
     grid-area: left-glyph;
     display: flex;
-    height: 20px;
     align-items: center;
     // Hover styles set by parent InputOption
     color: ${color[theme].icon[variant][interactionState]};
@@ -73,7 +72,6 @@ export const getRightGlyphStyles = ({
   return css`
     grid-area: right-glyph;
     display: flex;
-    height: 20px;
     align-items: center;
     color: ${color[theme].icon[variant].default};
     transition: color ${transitionDuration.default}ms ease-in-out;
