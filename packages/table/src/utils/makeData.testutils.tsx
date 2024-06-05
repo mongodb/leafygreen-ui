@@ -87,7 +87,9 @@ const SampleExpandedContent = (row: LeafyGreenTableRow<object>) => {
       <Code language="js" style={{ width: '100%' }}>
         {`          
           function greeting(row) {
-            return \`Hello, you're looking at row ID ${row.id}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+            return \`Hello, you're looking at row ID ${row.id}, parent ID ${
+          row.parentId ?? '0'
+        }! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
           }
           
           console.log(greeting(row));

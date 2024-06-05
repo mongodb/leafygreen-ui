@@ -16,9 +16,6 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
     /** returns the table row object with the provided `id` */
     getRowById?: (id?: string) => LeafyGreenTableRow<T> | undefined;
 
-    /** returns the parent table row object for the provided `id` if it is nested */
-    getParentRow?: (id?: string) => LeafyGreenTableRow<T> | undefined;
-
     /**
      * The `useLeafyGreenTable` return value
      */
