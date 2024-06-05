@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
@@ -12,7 +13,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { MenuContext } from '../MenuContext';
+import { MenuContext, MenuDescendantsContext } from '../MenuContext';
 import {
   activeDescriptionTextStyle,
   activeIconStyle,
@@ -60,8 +61,9 @@ import {
   ulThemeStyles,
 } from './SubMenu.styles';
 import { SubMenuProps } from './SubMenu.types';
+import { useControlledState } from './useControlledState';
 
-const subMenuItemHeight = 32;
+const subMenuItemHeight = 36;
 
 export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
   (
@@ -70,21 +72,32 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       children,
       onClick,
       description,
-      setOpen,
       className,
       glyph,
       onExited = () => {},
-      open = false,
+      open: openProp = false,
+      setOpen: setOpenProp,
       active = false,
       disabled = false,
       size = Size.Default,
       as,
       ...rest
     },
-    ref: React.Ref<any>,
+    fwdRef: React.Ref<any>,
   ): React.ReactElement => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme, darkMode } = useContext(MenuContext);
+    const {
+      theme,
+      darkMode,
+      highlightIndex: _highlightIndex,
+    } = useContext(MenuContext);
+    const { ref } = useDescendant(MenuDescendantsContext, fwdRef, {
+      active,
+      disabled,
+    });
+
+    const [open, setOpen] = useControlledState(false, openProp, setOpenProp);
+
     const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
     const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
 
@@ -118,10 +131,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     const handleChevronClick = (e: React.MouseEvent) => {
       // we stop the event from propagating and closing the entire menu
       e.nativeEvent.stopImmediatePropagation();
-
-      if (setOpen) {
-        setOpen(!open);
-      }
+      setOpen(o => !o);
     };
 
     // TODO: This code is duplicated in `MenuItem`
@@ -145,7 +155,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       });
 
     const baseProps = {
-      ref,
       role: 'menuitem',
       'aria-haspopup': true,
       onClick: onRootClick,
@@ -203,6 +212,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     return (
       <li role="none">
         <Component
+          ref={ref}
           {...baseProps}
           {...anchorProps}
           {...rest}
@@ -284,6 +294,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
               role="menu"
               aria-label={title}
             >
+              {/* TODO: Remove map. Replace with SubMenu context. Read from this context in MenuItem */}
               {React.Children.map(
                 children as React.ReactElement,
                 (child, index) => {

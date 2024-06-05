@@ -1,1 +1,1 @@
-export { default as MenuContext } from './MenuContext';
+export { default as MenuContext, MenuDescendantsContext } from './MenuContext';

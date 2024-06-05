@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
 import {
@@ -8,7 +9,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import MenuContext from '../MenuContext/MenuContext';
+import { MenuContext, MenuDescendantsContext } from '../MenuContext';
 import {
   activeDescriptionTextStyle,
   activeIconStyle,
@@ -33,7 +34,11 @@ import {
 } from '../styles';
 import { Size } from '../types';
 
-import { destructiveIconStyle, disabledIconStyle } from './MenuItem.styles';
+import {
+  destructiveIconStyle,
+  disabledIconStyle,
+  menuItemContainerStyles,
+} from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
 const menuItemContainerClassName = createUniqueClassName('menu-item-container');
@@ -52,10 +57,14 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       variant = Variant.Default,
       ...rest
     },
-    ref: React.Ref<any>,
+    fwdRef: React.Ref<any>,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme } = useContext(MenuContext);
+    const { theme, highlightIndex: _highlightIndex } = useContext(MenuContext);
+    const { ref } = useDescendant(MenuDescendantsContext, fwdRef, {
+      active,
+      disabled,
+    });
     const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
     const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
     const isDestructive = variant === Variant.Destructive;
@@ -81,7 +90,6 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       });
 
     const baseProps = {
-      ref,
       role: 'menuitem',
       tabIndex: -1,
       'aria-disabled': disabled,
@@ -138,8 +146,9 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     );
 
     return (
-      <li role="none">
+      <li role="none" className={menuItemContainerStyles}>
         <Component
+          ref={ref}
           {...baseProps}
           {...anchorProps}
           {...rest}

@@ -1,3 +1,4 @@
+import { type Dispatch, type SetStateAction } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -13,7 +14,7 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
   /**
    * Function to set the value of `open` in `<SubMenu />`
    */
-  setOpen?: (value: boolean) => void;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 
   /**
    * className applied to `SubMenu` root element
