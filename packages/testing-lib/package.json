@@ -17,6 +17,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@leafygreen-ui/emotion": "^4.0.8",
     "@lg-tools/build": "0.5.1",
     "@types/react-transition-group": "^4.4.5",
     "react-transition-group": "^4.4.5"
