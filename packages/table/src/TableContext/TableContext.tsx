@@ -3,7 +3,6 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
-import getParentRowId from '../utils/getParentRowId';
 
 import { type TableContextValues } from './TableContext.types';
 
@@ -26,9 +25,6 @@ const TableContextProvider = <T extends LGRowData>({
   const getRowById = (id?: string) =>
     id ? table?.getRowModel().rowsById?.[id] : undefined;
 
-  const getParentRow = (childId?: string) =>
-    getRowById(getParentRowId(childId));
-
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableContextValues<T>>)
     .Provider;
@@ -39,7 +35,6 @@ const TableContextProvider = <T extends LGRowData>({
         value={{
           table,
           getRowById,
-          getParentRow,
           shouldAlternateRowColor,
           disableAnimations,
         }}

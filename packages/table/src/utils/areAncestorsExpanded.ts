@@ -2,24 +2,22 @@ import { type TableContextValues } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 /**
- * Returns whether a given row has _all_ ancestor rows expanded
+ * Returns whether a given row has _all_ ancestor rows expanded. E.g. parents of parent
  */
 export function getAreAncestorsExpanded<T extends LGRowData>(
-  /** The starting id */
-  startId: string,
-  /** The parent getter function */
-  getParentRow: TableContextValues<T>['getParentRow'],
+  /** The parent id */
+  parentId: string | undefined,
+  /** The row getter function */
+  getRowById: TableContextValues<T>['getRowById'],
 ) {
-  if (!getParentRow) return false;
+  if (!getRowById) return false;
 
-  let id = startId;
-  let parent = getParentRow(id);
+  let parent = getRowById(parentId);
   let isExpanded;
 
   while (parent) {
     isExpanded = (isExpanded ?? true) && parent?.getIsExpanded();
-    id = parent.id;
-    parent = getParentRow(id);
+    parent = getRowById(parent.parentId || undefined); // If parentId is 0, return undefined
   }
 
   return isExpanded;

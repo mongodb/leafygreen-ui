@@ -33,8 +33,8 @@ const InternalRowWithRT = <T extends LGRowData>({
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const { disabled } = useRowContext();
-  const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
-  const parentRow = getParentRow?.(row.id);
+  const { table, shouldAlternateRowColor, getRowById } = useTableContext();
+  const parentRow = getRowById?.(row.parentId);
   const rowRef = virtualRow?.measureRef;
 
   const isTableExpandable = table?.getCanSomeRowsExpand();

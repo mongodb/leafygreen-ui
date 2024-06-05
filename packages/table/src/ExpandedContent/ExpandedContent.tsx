@@ -21,11 +21,14 @@ const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { disableAnimations, getParentRow } = useTableContext();
+  const { disableAnimations, getRowById } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
   const transitionRef = useRef<HTMLElement | null>(null);
-  const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
-  const isNestedRow = !!getParentRow?.(row.id);
+  const areAncestorsExpanded = getAreAncestorsExpanded(
+    row.parentId,
+    getRowById,
+  );
+  const isNestedRow = !!getRowById?.(row.parentId);
   const isExpanded =
     row.getIsExpanded() && (!isNestedRow || areAncestorsExpanded);
   const content =

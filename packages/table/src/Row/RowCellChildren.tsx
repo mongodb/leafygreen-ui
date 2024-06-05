@@ -21,12 +21,15 @@ const RowCellChildren = <T extends LGRowData>({
   row,
   children: CellChildren,
 }: RowCellChildrenProps<T>) => {
-  const { getParentRow } = useTableContext();
+  const { getRowById } = useTableContext();
   const { disabled } = useRowContext();
-  const parentRow = getParentRow?.(row.id);
+  const parentRow = getRowById?.(row.parentId);
   const isNested = !!parentRow;
   const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
-  const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
+  const areAncestorsExpanded = getAreAncestorsExpanded(
+    row.parentId,
+    getRowById,
+  );
   const isRowVisible = (areAncestorsExpanded && isParentExpanded) || !isNested;
 
   const isExpandable = row.getCanExpand();
