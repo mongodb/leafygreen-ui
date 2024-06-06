@@ -100,6 +100,32 @@ export const TestDescendant = ({
 };
 ```
 
+### Handling Sale Descendants
+
+Sometimes you'll need to access descendants from within an event handler or `useEffect` callback, where the descendants may have updated between renders, resulting in a `descendants` object with references to stale/non-existent DOM nodes. In this case, use the `getDescendants()` function to access the most up-to-date descendants object.
+
+```typescript
+const { descendants, dispatch, getDescendants } =
+  useInitDescendants<HTMLDivElement>();
+
+const handleTransition = () => {
+  console.log(descendants); // this list will be empty, or contain references to old DOM nodes
+  console.log(getDescendants()); // this call will return a list of the updated descendants list
+};
+
+return (
+  <DescendantsProvider
+    context={MyDescendantsContext}
+    descendants={descendants}
+    dispatch={dispatch}
+  >
+    <Transition onEntered={handleTransition}>
+      <div {...rest}>{children}</div>
+    </Transition>
+  </DescendantsProvider>
+);
+```
+
 ## Prior Art
 
 This package heavily references the work of [`pacocoursey/use-descendants`](https://github.com/pacocoursey/use-descendants/tree/v0) and [`@reach-ui/descendants`](https://github.com/reach/reach-ui/tree/dev/packages/descendants). Many thanks to the authors of those packages!
