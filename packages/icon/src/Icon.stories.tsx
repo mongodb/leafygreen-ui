@@ -76,7 +76,7 @@ Single.argTypes = {
 };
 Single.parameters = { chromatic: { disableSnapshot: true } };
 
-export const AllIcons: StoryFn<IconProps> = (
+export const LiveExample: StoryFn<IconProps> = (
   args: Omit<IconProps, 'glyph'>,
 ) => (
   <div
