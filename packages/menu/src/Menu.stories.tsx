@@ -92,12 +92,7 @@ export default {
 } satisfies StoryMetaType<typeof Menu>;
 
 export const LiveExample = {
-  render: ({
-    open,
-    size,
-    darkMode,
-    ...args
-  }: MenuProps & { size: MenuItemProps['size'] }) => {
+  render: ({ open, size, darkMode, ...args }) => {
     return (
       <Menu
         darkMode={darkMode}
@@ -167,7 +162,7 @@ export const LiveExample = {
       disableSnapshot: true,
     },
   },
-} satisfies StoryObj<typeof Menu & { size: MenuItemProps['size'] }>;
+} satisfies StoryObj<typeof Menu & { size?: MenuItemProps['size'] }>;
 
 export const InitialOpen = {
   render: args => {
