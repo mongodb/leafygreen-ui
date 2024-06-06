@@ -22,6 +22,10 @@ const meta: StoryMetaType<typeof Icon> = {
       exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
   },
+  args: {
+    fill: '#fff',
+    size: Size.Default,
+  },
   argTypes: {
     size: {
       control: 'select',
