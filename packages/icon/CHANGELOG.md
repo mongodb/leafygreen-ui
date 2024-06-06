@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.5.1
+
+### Patch Changes
+
+- 95093066c: Rename `AllIcons` to `LiveExample` for .design
+
 ## 12.5.0
 
 ### Minor Changes
