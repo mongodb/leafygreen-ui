@@ -60,6 +60,7 @@ export default {
         'refEl',
         'setOpen',
         'as',
+        'portalRef',
         'usePortal',
       ],
     },
@@ -207,6 +208,23 @@ export const Controlled = {
     );
   },
   parameters: {
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'trigger',
+        'children',
+        'refEl',
+        'setOpen',
+        'as',
+        'portalRef',
+        'usePortal',
+        'align',
+        'darkMode',
+        'justify',
+        'renderDarkMenu',
+        'size',
+      ],
+    },
     chromatic: {
       disableSnapshot: true,
     },
