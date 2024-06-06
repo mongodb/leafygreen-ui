@@ -1,5 +1,13 @@
 # @leafygreen-ui/testing-lib
 
+## 0.5.0
+
+### Minor Changes
+
+- ed9bead67: Creates a `waitForTransition` test utility. Fires the `transitionend` event on a given element to ensure event handlers are called after CSS transitions complete.
+
+  This is useful for testing `onEntered` or `onExited` callbacks on `Transition` or `Popover` elements.
+
 ## 0.4.2
 
 ### Patch Changes
