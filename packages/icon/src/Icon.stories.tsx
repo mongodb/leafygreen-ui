@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof Icon> = {
     },
   },
   args: {
-    fill: '#fff',
+    fill: 'black',
     size: Size.Default,
   },
   argTypes: {
