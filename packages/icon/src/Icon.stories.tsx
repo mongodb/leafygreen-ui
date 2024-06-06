@@ -17,7 +17,7 @@ const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
   parameters: {
-    default: 'AllIcons',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
