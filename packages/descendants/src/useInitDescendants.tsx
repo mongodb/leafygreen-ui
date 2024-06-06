@@ -1,15 +1,17 @@
-import { Dispatch, useReducer } from 'react';
+import { Dispatch, useCallback } from 'react';
+
+import { useStateRef } from '@leafygreen-ui/hooks';
 
 import { DescendantsList } from './Descendants.types';
 import {
   descendantsReducer,
   DescendantsReducerAction,
-  DescendantsReducerType,
 } from './DescendantsReducer';
 
 export interface InitDescendantsReturnObject<T extends HTMLElement> {
   descendants: DescendantsList<T>;
   dispatch: Dispatch<DescendantsReducerAction<T>>;
+  getDescendants: () => DescendantsList<T>;
 }
 
 /**
@@ -18,15 +20,26 @@ export interface InitDescendantsReturnObject<T extends HTMLElement> {
 export const useInitDescendants = <
   T extends HTMLElement,
 >(): InitDescendantsReturnObject<T> => {
-  const [state, dispatch] = useReducer<DescendantsReducerType<T>>(
-    descendantsReducer,
-    {
-      descendants: [] as DescendantsList<T>,
+  const [descendants, setDescendants, getDescendants] = useStateRef<
+    DescendantsList<T>
+  >([]);
+
+  const dispatch: Dispatch<DescendantsReducerAction<T>> = useCallback(
+    action => {
+      const { descendants } = descendantsReducer(
+        {
+          descendants: getDescendants(),
+        },
+        action,
+      );
+      setDescendants(descendants);
     },
+    [getDescendants, setDescendants],
   );
 
   return {
-    descendants: state.descendants,
+    descendants,
     dispatch,
+    getDescendants,
   };
 };
