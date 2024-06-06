@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { ComponentProps, ElementType, useRef, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
@@ -214,7 +215,7 @@ const Parent = ({
     useInitDescendants<HTMLDivElement>();
 
   const handleTransition = () => {
-    getDescendants()[0].element.focus();
+    console.log(getDescendants().map(d => d.id));
   };
 
   return (
@@ -244,26 +245,10 @@ export const WithPopover = {
   render: ({ open }) => {
     return (
       <Parent open={open}>
-        <TestDescendant
-          data-testid="child"
-          tabIndex={0}
-          className={css`
-            &:focus {
-              background: red;
-            }
-          `}
-        >
+        <TestDescendant data-testid="child" tabIndex={0}>
           Apple
         </TestDescendant>
-        <TestDescendant
-          data-testid="child"
-          tabIndex={0}
-          className={css`
-            &:focus {
-              background: red;
-            }
-          `}
-        >
+        <TestDescendant data-testid="child" tabIndex={0}>
           Banana
         </TestDescendant>
       </Parent>

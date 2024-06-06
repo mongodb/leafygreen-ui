@@ -9,8 +9,13 @@ import {
 } from './DescendantsReducer';
 
 export interface InitDescendantsReturnObject<T extends HTMLElement> {
+  /** The descendants list in the current render */
   descendants: DescendantsList<T>;
+
+  /** A setter function for the descendants state */
   dispatch: Dispatch<DescendantsReducerAction<T>>;
+
+  /** Accessor function for the most up-to-date descendants list */
   getDescendants: () => DescendantsList<T>;
 }
 
@@ -20,18 +25,17 @@ export interface InitDescendantsReturnObject<T extends HTMLElement> {
 export const useInitDescendants = <
   T extends HTMLElement,
 >(): InitDescendantsReturnObject<T> => {
+  // We avoid using `useReducer` here, since we need to internally keep track
+  // of the `descendants`, and provide a means to access the updated list
+  // to avoid accessing a stale descendants list
+
   const [descendants, setDescendants, getDescendants] = useStateRef<
     DescendantsList<T>
   >([]);
 
   const dispatch: Dispatch<DescendantsReducerAction<T>> = useCallback(
     action => {
-      const { descendants } = descendantsReducer(
-        {
-          descendants: getDescendants(),
-        },
-        action,
-      );
+      const descendants = descendantsReducer(getDescendants(), action);
       setDescendants(descendants);
     },
     [getDescendants, setDescendants],
