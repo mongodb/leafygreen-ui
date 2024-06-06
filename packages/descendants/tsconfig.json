@@ -23,5 +23,8 @@
     {
       "path": "../hooks"
     },
+    {
+      "path": "../testing-lib"
+    },
   ]
 }

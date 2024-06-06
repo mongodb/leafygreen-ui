@@ -1,10 +1,7 @@
-import React, { ComponentProps, StrictMode, useEffect, useState } from 'react';
-import { prettyDOM, render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import React, { ComponentProps, StrictMode } from 'react';
+import { render, waitFor } from '@testing-library/react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
-import { usePrevious } from '@leafygreen-ui/hooks';
-import { waitForState } from '@leafygreen-ui/testing-lib';
+import Popover from '@leafygreen-ui/popover';
 
 import {
   TestDescendant,
@@ -15,9 +12,7 @@ import {
 } from './test/components.testutils';
 import { renderDescendantsTestContext } from './test/renderDescendantsTestContext.testutils';
 import { DescendantsProvider } from './DescendantProvider';
-import { useDescendant } from './useDescendant';
 import { useInitDescendants } from './useInitDescendants';
-import Popover from '@leafygreen-ui/popover';
 
 describe('packages/descendants', () => {
   describe('rendering', () => {
@@ -238,13 +233,13 @@ describe('packages/descendants', () => {
     test('descendants object has access to child props', () => {
       const { hook } = renderDescendantsTestContext(
         <>
-          <TestDescendant type="fruit">Apple</TestDescendant>
-          <TestDescendant type="fruit">Banana</TestDescendant>
+          <TestDescendant group="fruit">Apple</TestDescendant>
+          <TestDescendant group="fruit">Banana</TestDescendant>
         </>,
       );
 
       const appleDescendant = hook.result.current.descendants[0];
-      expect(appleDescendant.props?.type).toEqual('fruit');
+      expect(appleDescendant.props?.group).toEqual('fruit');
     });
 
     test('descendants object index updates after rerender', () => {
@@ -291,32 +286,20 @@ describe('packages/descendants', () => {
       }
     });
 
-    test.only('Accessing descendants from a callback are not stale', async () => {
+    test('Accessing descendants from a callback are not stale', async () => {
       const logDescendants = jest.fn();
-      const mapDescendants = (descendants: Array<any>) =>
-        descendants.map(d => d.id);
 
       const Parent = ({
         children,
         open,
         ...rest
       }: ComponentProps<'div'> & { open: boolean }) => {
-        const { descendants, dispatch } = useInitDescendants<HTMLDivElement>();
-        const prevOpen = usePrevious(open);
+        const { descendants, dispatch, getDescendants } =
+          useInitDescendants<HTMLDivElement>();
 
-        useEffect(() => {
-          console.log('Rendering Parent', mapDescendants(descendants));
-        }, [descendants]);
-
-        useEffect(() => {
-          if (open && !prevOpen) {
-            console.log('Opened', {
-              open,
-              descendants: mapDescendants(descendants),
-            });
-            logDescendants(descendants);
-          }
-        }, [descendants, open, prevOpen]);
+        const handleTransition = () => {
+          logDescendants(getDescendants());
+        };
 
         return (
           <StrictMode>
@@ -325,7 +308,7 @@ describe('packages/descendants', () => {
               descendants={descendants}
               dispatch={dispatch}
             >
-              <Popover active={open}>
+              <Popover active={open} onEntered={handleTransition}>
                 <div {...rest} data-testid="parent">
                   {children}
                 </div>
@@ -352,7 +335,7 @@ describe('packages/descendants', () => {
         const expectedDescendants = expect.arrayContaining([
           expect.objectContaining({ element: child }),
         ]);
-        // expect(logDescendants).toHaveBeenCalledWith(expectedDescendants);
+        expect(logDescendants).toHaveBeenCalledWith(expectedDescendants);
       });
     });
   });
