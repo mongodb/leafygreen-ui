@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { RichLink } from '.';
+import { RichLinkVariantName } from '../../dist';
 
 describe('@lg-chat/rich-links', () => {
   describe('RichLink', () => {
@@ -65,6 +66,33 @@ describe('@lg-chat/rich-links', () => {
       expect(screen.getByText('Link to Learn')).toBeInTheDocument();
       expect(screen.getByText('Link to Video')).toBeInTheDocument();
       expect(screen.getByText('Link to Website')).toBeInTheDocument();
+    });
+
+    it('ignores unknown variants', () => {
+      render(
+        <div>
+          <RichLink
+            href="javascript:;"
+            variant={'NotARichLinkVariant' as RichLinkVariantName}
+          >
+            Invalid Variant Link
+          </RichLink>
+        </div>,
+      );
+
+      expect(screen.queryByText('Invalid Variant Link')).toBeInTheDocument();
+    });
+
+    it('ignores explicitly undefined variants', () => {
+      render(
+        <div>
+          <RichLink href="javascript:;" variant={undefined}>
+            Undefined Variant Link
+          </RichLink>
+        </div>,
+      );
+
+      expect(screen.queryByText('Undefined Variant Link')).toBeInTheDocument();
     });
   });
 });
