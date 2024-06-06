@@ -72,6 +72,7 @@ export const descendantsReducer = <T extends HTMLElement>(
         const index = findDOMIndex(element, state.descendants);
 
         const thisDescendant: Descendant<T> = {
+          ref: action.ref,
           element,
           id: action.id,
           props: action.props,
