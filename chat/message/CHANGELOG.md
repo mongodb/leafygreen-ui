@@ -1,5 +1,11 @@
 # @lg-chat/message
 
+## 4.2.1
+
+### Patch Changes
+
+- e5a13a22b: Fixes an import issue with the `links` prop implementation
+
 ## 4.2.0
 
 ### Minor Changes
