@@ -190,7 +190,7 @@ export const InitialOpen = {
 } satisfies StoryObj<typeof Menu>;
 
 export const Controlled = {
-  render: () => {
+  render: args => {
     const [open, setOpen] = useState(true);
 
     return (
@@ -198,6 +198,7 @@ export const Controlled = {
         open={open}
         setOpen={setOpen}
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        {...args}
       >
         <MenuItem>Lorem</MenuItem>
         <MenuItem>Ipsum</MenuItem>

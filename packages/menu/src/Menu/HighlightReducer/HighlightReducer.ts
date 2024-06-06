@@ -1,4 +1,5 @@
 import { type Dispatch, type Reducer, useReducer } from 'react';
+import { isEqual } from 'lodash';
 
 import { DescendantsList } from '@leafygreen-ui/descendants';
 
@@ -15,13 +16,18 @@ const getInitialIndex = (descendants: DescendantsList<HTMLElement>) =>
  */
 export const useHighlightReducer = (
   descendants: DescendantsList<HTMLElement>,
-  onChange?: (newIndex: Index) => void,
+  onChange?: (
+    newIndex: Index,
+    updatedDescendants: DescendantsList<HTMLElement>,
+  ) => void,
 ): [Index, Dispatch<Direction>] => {
   // Initializes a new reducer function
   const highlightReducerFunction: Reducer<Index, Direction> = (
     _index,
     direction,
   ) => getUpdatedIndex(direction, _index, descendants);
+
+  // Create the reducer
   const [index, dispatch] = useReducer<Reducer<Index, Direction>>(
     highlightReducerFunction,
     getInitialIndex(descendants),
@@ -32,9 +38,56 @@ export const useHighlightReducer = (
    */
   const updateIndex = (direction: Direction) => {
     const updatedIndex = highlightReducerFunction(index, direction);
-    onChange?.(updatedIndex);
+    // console.log('\nREDUCER: updateIndex');
+    // logDescendants(descendants);
+
+    onChange?.(updatedIndex, descendants);
     dispatch(direction);
   };
 
   return [index, updateIndex];
+};
+
+export const logDescendants = (
+  currentDescendants: DescendantsList<HTMLElement>,
+  prevDescendants?: DescendantsList<HTMLElement>,
+) => {
+  // console.log({ currentDescendants, prevDescendants });
+
+  if (currentDescendants && currentDescendants.length > 0) {
+    const allExist = currentDescendants.every(d =>
+      document.contains(d?.ref?.current),
+    );
+
+    console.log(
+      allExist ? '✔️ Descendants Exist' : 'Descendant refs are stale 🚫',
+    );
+
+    console.log(currentDescendants.map(d => d.id));
+
+    if (prevDescendants && prevDescendants.length > 0) {
+      const allEqual =
+        currentDescendants.every((d, i) => isEqual(d, prevDescendants?.[i])) &&
+        prevDescendants.every((p, i) => isEqual(p, currentDescendants?.[i]));
+
+      !allEqual && console.log('‼️ Descendants have changed');
+
+      if (!allEqual) {
+        const allPrevExist = prevDescendants.every(d =>
+          document.contains(d.ref.current),
+        );
+
+        if (allPrevExist !== allExist)
+          console.log(
+            allPrevExist
+              ? 'Prev. descendants exist in DOM'
+              : 'Prev. descendants are stale',
+          );
+      }
+    }
+  } else {
+    console.log('No descendants registered');
+  }
+
+  console.log('');
 };

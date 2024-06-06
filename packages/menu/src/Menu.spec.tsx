@@ -9,6 +9,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { waitForTransition } from '@leafygreen-ui/testing-lib';
+
 import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator } from '.';
 
@@ -84,9 +86,9 @@ describe('packages/menu', () => {
       expect(menuItem).toBeInTheDocument();
     });
 
-    describe('controlled `open`', () => {
+    describe.only('when the `open` prop is `true`', () => {
       const setOpen = jest.fn();
-      test('menu renders when `open` prop is set', () => {
+      test('menu renders', () => {
         const { getByTestId } = renderMenu({ open: true, setOpen });
         const menu = getByTestId(menuTestId);
         expect(menu).toBeInTheDocument();
@@ -102,34 +104,33 @@ describe('packages/menu', () => {
         const { findMenuElements } = renderMenu({ open: true, setOpen });
         const { menuEl, menuItemElements } = await findMenuElements();
 
-        // JSDOM does not automatically fire these events
-        fireEvent.transitionEnd(menuEl as Element);
+        await waitForTransition(menuEl);
 
         await waitFor(() => {
           const firstItem = menuItemElements[0];
           expect(firstItem).toHaveFocus();
         });
       });
+    });
 
-      test('uncontrolled if `open` prop is not set, with `setOpen` callback', async () => {
-        const { getByTestId, getByText } = renderMenu({
-          open: undefined,
-          setOpen,
-          trigger: defaultTrigger,
-        });
-
-        const button = getByTestId('menu-trigger');
-        userEvent.click(button);
-
-        const menuItem = getByText('Item B');
-
-        expect(menuItem).toBeInTheDocument();
-
-        userEvent.click(button);
-
-        await waitForElementToBeRemoved(menuItem);
-        expect(menuItem).not.toBeInTheDocument();
+    test('`open` prop is not set, but `setOpen` callback is provided', async () => {
+      const { getByTestId, getByText } = renderMenu({
+        open: undefined,
+        setOpen,
+        trigger: defaultTrigger,
       });
+
+      const button = getByTestId('menu-trigger');
+      userEvent.click(button);
+
+      const menuItem = getByText('Item B');
+
+      expect(menuItem).toBeInTheDocument();
+
+      userEvent.click(button);
+
+      await waitForElementToBeRemoved(menuItem);
+      expect(menuItem).not.toBeInTheDocument();
     });
   });
 

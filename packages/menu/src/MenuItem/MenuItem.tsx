@@ -40,7 +40,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   ) => {
     const as = useInferredPolymorphicComponent(asProp, rest, 'button');
     const { theme, darkMode, highlightIndex } = useContext(MenuContext);
-    const { index, ref } = useDescendant(MenuDescendantsContext, fwdRef, {
+    const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
     });
@@ -49,8 +49,9 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
 
     return (
       <li
-        role="none"
         ref={ref}
+        id={id}
+        role="none"
         className={cx(menuItemClassName, menuItemContainerStyles)}
       >
         <InputOption
@@ -58,14 +59,15 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           role="menuitem"
           target="_self"
           rel=""
-          tabIndex={-1}
+          // tabIndex={-1}
           data-index={index}
           aria-disabled={disabled}
           aria-current={active ?? undefined}
           disabled={disabled}
           darkMode={darkMode}
           showWedge
-          highlighted={isHighlighted}
+          // highlighted={isHighlighted}
+          data-highlighted={isHighlighted}
           className={cx(
             getMenuItemStyles({
               theme,

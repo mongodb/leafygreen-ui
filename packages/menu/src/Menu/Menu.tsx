@@ -1,4 +1,9 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  // useEffect,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -6,7 +11,11 @@ import {
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
+import {
+  useBackdropClick,
+  useEventListener,
+  // usePrevious,
+} from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
@@ -16,6 +25,7 @@ import {
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
 
+import { logDescendants } from './HighlightReducer/HighlightReducer';
 import { useMenuHeight } from './utils/useMenuHeight';
 import { useHighlightReducer } from './HighlightReducer';
 import {
@@ -78,8 +88,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
 
-  const { descendants, dispatch } = useInitDescendants();
-
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
@@ -98,13 +106,35 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
+  const { descendants, dispatch } = useInitDescendants();
+  // const prevDescendants = usePrevious(descendants);
+
+  // console.log('\n ---- RENDER ----');
+
+  // useEffect(() => {
+  //   console.log('\n USE-EFFECT');
+  //   logDescendants(descendants, prevDescendants);
+  // }, [descendants, prevDescendants]);
+
   // Tracks the currently highlighted (focused) item index
   // Fires `.focus()` when the index is updated
   const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
     descendants,
     index => {
       if (isDefined(index)) {
-        descendants[index]?.element?.focus();
+        console.log('\n CALLBACK');
+        logDescendants(descendants);
+
+        // const currentDescendantElement = descendants[index]?.ref.current;
+
+        // if (document.contains(currentDescendantElement)) {
+        //   currentDescendantElement?.focus();
+        // } else {
+        //   console.log(
+        //     'useHighlightReducer',
+        //     'Could not find descendant element',
+        //   );
+        // }
       }
     },
   );
@@ -113,7 +143,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
-    updateHighlightIndex('first');
+    requestIdleCallback(() => {
+      updateHighlightIndex('first');
+    });
   };
 
   // Fired on global keyDown event
