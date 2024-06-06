@@ -49,25 +49,24 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
 
     return (
       <li
-        ref={ref}
         id={id}
         role="none"
         className={cx(menuItemClassName, menuItemContainerStyles)}
       >
         <InputOption
+          ref={ref}
           as={as}
           role="menuitem"
           target="_self"
           rel=""
-          // tabIndex={-1}
           data-index={index}
           aria-disabled={disabled}
           aria-current={active ?? undefined}
           disabled={disabled}
           darkMode={darkMode}
+          data-id={id}
           showWedge
-          // highlighted={isHighlighted}
-          data-highlighted={isHighlighted}
+          highlighted={isHighlighted}
           className={cx(
             getMenuItemStyles({
               theme,

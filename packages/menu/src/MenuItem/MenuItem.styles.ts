@@ -46,6 +46,7 @@ export const getMenuItemStyles = ({
   active,
   variant,
 }: MenuItemStyleArgs) => css`
+  display: block;
   width: 100%;
   min-height: ${spacing[800]}px;
 
