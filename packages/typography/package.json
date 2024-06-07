@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "19.1.1",
+  "version": "19.1.2",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/icon": "^12.2.0",
+    "@leafygreen-ui/icon": "^12.5.2",
     "@leafygreen-ui/lib": "^13.4.0",
     "@leafygreen-ui/palette": "^4.0.10",
     "@leafygreen-ui/polymorphic": "^1.3.7",

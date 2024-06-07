@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.5.2
+
+### Patch Changes
+
+- df0d6faee: Adds args to Icon meta for .design
+
 ## 12.5.1
 
 ### Patch Changes
