@@ -17,9 +17,9 @@ import {
   TestDescendantContext,
   TestParent,
   TestParent2,
-} from './test/components.testutils';
-import { DescendantsProvider } from './DescendantProvider';
-import { useInitDescendants } from './useInitDescendants';
+} from '../test/components.testutils';
+
+import { DescendantsProvider, useInitDescendants } from '.';
 
 faker.seed(0);
 
