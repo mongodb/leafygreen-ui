@@ -9,10 +9,10 @@ import {
   TestDescendantContext,
   TestParent,
   TestParent2,
-} from './test/components.testutils';
-import { renderDescendantsTestContext } from './test/renderDescendantsTestContext.testutils';
-import { DescendantsProvider } from './DescendantProvider';
-import { useInitDescendants } from './useInitDescendants';
+} from '../test/components.testutils';
+import { renderDescendantsTestContext } from '../test/renderDescendantsTestContext.testutils';
+
+import { DescendantsProvider, useInitDescendants } from '.';
 
 describe('packages/descendants', () => {
   describe('rendering', () => {

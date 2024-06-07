@@ -3,8 +3,7 @@ import { render } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { DescendantsProvider } from '../DescendantProvider';
-import { useInitDescendants } from '../useInitDescendants';
+import { DescendantsProvider, useInitDescendants } from '..';
 
 import { TestDescendantContext } from './components.testutils';
 
