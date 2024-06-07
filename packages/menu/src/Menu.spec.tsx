@@ -114,6 +114,7 @@ describe('packages/menu', () => {
     });
 
     test('`open` prop is not set, but `setOpen` callback is provided', async () => {
+      const setOpen = jest.fn();
       const { getByTestId, getByText } = renderMenu({
         open: undefined,
         setOpen,

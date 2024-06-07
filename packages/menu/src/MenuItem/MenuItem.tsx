@@ -74,6 +74,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
             }),
             className,
           )}
+          // FIXME: explicit labelledby
           aria-labelledby={rest['aria-labelledby'] ?? ''}
           {...rest}
         >

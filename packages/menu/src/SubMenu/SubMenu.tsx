@@ -1,4 +1,10 @@
-import React, { MouseEventHandler, useContext, useEffect, useRef } from 'react';
+import React, {
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useContext,
+  useEffect,
+  useRef,
+} from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
@@ -6,6 +12,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
+import { keyMap } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
   useInferredPolymorphicComponent,
@@ -51,6 +58,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
 
     const submenuRef = useRef<HTMLUListElement>(null);
     const submenuTriggerRef = useRef<HTMLButtonElement>(null);
+    const subMenuHeight = useChildrenHeight(submenuRef, [open]);
 
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
 
@@ -73,18 +81,30 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       setOpen(x => !x);
     };
 
-    const subMenuHeight = useChildrenHeight(submenuRef, [open]);
+    const handleKeydown: KeyboardEventHandler<HTMLElement> = e => {
+      switch (e.key) {
+        case keyMap.ArrowLeft: {
+          setOpen(false);
+          break;
+        }
+
+        case keyMap.ArrowRight: {
+          setOpen(true);
+          break;
+        }
+      }
+    };
 
     return (
       <>
-        {/* @ts-expect-error */}
         <MenuItem
           as={as}
           ref={fwdRef}
           onClick={handleClick}
+          onKeyDown={handleKeydown}
+          href={rest.href ?? ''} // FIXME: explicit href
           {...rest}
           className={cx(subMenuContainerClassName, className)}
-          // data-height={calcSubmenuHeight()}
           rightGlyph={
             <IconButton
               data-testid="lg-sub-menu-icon-button"
@@ -93,11 +113,7 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
               onClick={handleChevronClick}
               className={cx(subMenuTriggerClassName)}
             >
-              <ChevronIcon
-                role="presentation"
-                // className={cx( chevronIconStyles)}
-                size={14}
-              />
+              <ChevronIcon role="presentation" size={14} />
             </IconButton>
           }
         >
