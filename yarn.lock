@@ -3798,16 +3798,6 @@
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
-"@leafygreen-ui/testing-lib@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@leafygreen-ui/testing-lib/-/testing-lib-0.4.2.tgz#2aaeffa39f93d1d28635237a603eff1249b70fef"
-  integrity sha512-uEqSdQowdvp70QI9BR58LbD9m9DPXpOZTT0Td4JAiaRdxBQDOnbmVajwLDVY04XE/Cv4f/heQ/Ns41TsnIiJ7g==
-  dependencies:
-    "@testing-library/user-event" "13.5.0"
-    lodash "^4.17.21"
-  optionalDependencies:
-    "@testing-library/react-hooks" ">=3.7.0"
-
 "@leafygreen-ui/typography@^18.4.0":
   version "18.4.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-18.4.0.tgz#d157bc2fa64eb72f6d0baf86385575e60454c522"

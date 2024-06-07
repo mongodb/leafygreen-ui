@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
   useInferredPolymorphicComponent,
@@ -14,13 +13,11 @@ import { MenuContext, MenuDescendantsContext } from '../MenuContext';
 import { Size } from '../types';
 
 import {
-  getMenuItemContentStyles,
   getMenuItemStyles,
+  menuItemClassName,
   menuItemContainerStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
-
-const menuItemClassName = createUniqueClassName('menu_item');
 
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
@@ -28,12 +25,13 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       as: asProp,
       disabled = false,
       active = false,
-      size = Size.Default,
-      className,
-      children,
       description,
       glyph,
+      size = Size.Default,
       variant = Variant.Default,
+      children,
+      className,
+      rightGlyph,
       ...rest
     },
     fwdRef: React.Ref<any>,
@@ -76,15 +74,14 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
             }),
             className,
           )}
+          aria-labelledby={rest['aria-labelledby'] ?? ''}
           {...rest}
         >
           <InputOptionContent
             leftGlyph={glyph}
             description={description}
+            rightGlyph={rightGlyph}
             preserveIconSpace={false}
-            className={getMenuItemContentStyles({
-              hasGlyph: !!glyph,
-            })}
           >
             <div
               className={css`

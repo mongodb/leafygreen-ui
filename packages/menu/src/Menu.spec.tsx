@@ -86,7 +86,7 @@ describe('packages/menu', () => {
       expect(menuItem).toBeInTheDocument();
     });
 
-    describe.only('when the `open` prop is `true`', () => {
+    describe('when the `open` prop is `true`', () => {
       const setOpen = jest.fn();
       test('menu renders', () => {
         const { getByTestId } = renderMenu({ open: true, setOpen });

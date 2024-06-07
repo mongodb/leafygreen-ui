@@ -27,6 +27,8 @@
     "publish": "yarn changeset publish --public",
     "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates",
+    "storybook:build": "yarn build-storybook --test",
+    "storybook:serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
     "validate": "lg validate"

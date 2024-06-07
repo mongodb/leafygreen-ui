@@ -3,13 +3,15 @@ import {
   leftGlyphClassName,
   titleClassName,
 } from '@leafygreen-ui/input-option';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, Property, spacing } from '@leafygreen-ui/tokens';
 
 import { Size } from '../types';
 
 import { Variant } from './MenuItem.types';
+
+export const menuItemClassName = createUniqueClassName('menu_item');
 
 export const menuItemContainerStyles = css`
   width: 100%;

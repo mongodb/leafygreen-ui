@@ -3,9 +3,11 @@ import { ExitHandler } from 'react-transition-group/Transition';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { Size } from '../types';
+import { MenuItemProps } from '../MenuItem';
 
-export interface SubMenuProps extends HTMLElementProps<'button'> {
+export interface SubMenuProps
+  extends HTMLElementProps<'button'>,
+    Omit<MenuItemProps, 'children' | 'rightGlyph' | 'variant'> {
   /**
    * Determines if `<SubMenu />` item appears open
    */
@@ -17,36 +19,9 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
   setOpen?: Dispatch<SetStateAction<boolean>>;
 
   /**
-   * className applied to `SubMenu` root element
-   */
-  className?: string;
-
-  /**
-   * Content to appear below main text of SubMenu
-   */
-  description?: string | React.ReactElement;
-
-  /**
-   * Determines if `<SubMenu />` item appears disabled
-   */
-  disabled?: boolean;
-
-  /**
-   * Determines if `<SubMenu />` item appears active
-   */
-  active?: boolean;
-
-  /**
-   * Slot to pass in an Icon rendered to the left of `SubMenu` text.
-   *
-   * @type `<Icon />` component
-   *
-   */
-  glyph?: React.ReactElement;
-
-  /**
    * Main text rendered in `SubMenu`.
    */
+  // TODO: Should this be a `ReactNode`?
   title?: string;
 
   /**
@@ -55,14 +30,13 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
    */
   children?: React.ReactNode;
 
-  onClick?: React.MouseEventHandler;
-
-  onExited?: ExitHandler<HTMLElement>;
-
-  href?: string;
+  /**
+   * Callback fired when the Submenu opens
+   */
+  onEntered?: ExitHandler<HTMLElement>;
 
   /**
-   * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
+   * Callback fired when the Submenu closes
    */
-  size?: Size;
+  onExited?: ExitHandler<HTMLElement>;
 }

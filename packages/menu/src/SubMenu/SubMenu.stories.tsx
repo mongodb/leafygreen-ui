@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
@@ -31,6 +32,7 @@ export const LiveExample = {
       <div
         className={css`
           width: 256px;
+          outline: 1px solid gray;
         `}
       >
         <SubMenu {...args} open={open} setOpen={setOpen}>
@@ -44,4 +46,4 @@ export const LiveExample = {
     title: 'Sub menu',
     description: 'This is a description',
   },
-} satisfies StoryObj<typeof Submenu>;
+} satisfies StoryObj<typeof SubMenu>;
