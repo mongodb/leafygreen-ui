@@ -15,7 +15,7 @@
     "prebuild": "yarn build:cli",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
-    "build:storybook": "npx storybook build",
+    "build-storybook": "npx storybook build",
     "build:tsc": "turbo run tsc",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
