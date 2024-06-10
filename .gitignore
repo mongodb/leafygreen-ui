@@ -28,6 +28,7 @@ yarn-error.log
 
 # TypeScript type-checking artifact
 tsconfig.tsbuildinfo
+ts-trace/
 
 # Environment variables
 .env
@@ -59,3 +60,4 @@ TODO.md
 
 # PR train config (https://github.com/realyze/pr-train)
 .pr-train.yml
+
