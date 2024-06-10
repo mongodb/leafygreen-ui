@@ -17,10 +17,14 @@ const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
   parameters: {
-    default: 'AllIcons',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
+  },
+  args: {
+    fill: 'black',
+    size: Size.Default,
   },
   argTypes: {
     size: {
@@ -76,7 +80,7 @@ Single.argTypes = {
 };
 Single.parameters = { chromatic: { disableSnapshot: true } };
 
-export const AllIcons: StoryFn<IconProps> = (
+export const LiveExample: StoryFn<IconProps> = (
   args: Omit<IconProps, 'glyph'>,
 ) => (
   <div
