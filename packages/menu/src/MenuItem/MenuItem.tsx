@@ -43,7 +43,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       disabled,
     });
 
-    const isHighlighted = index === highlightIndex;
+    const highlighted = index === highlightIndex;
 
     return (
       <li
@@ -64,12 +64,13 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           darkMode={darkMode}
           data-id={id}
           showWedge
-          highlighted={isHighlighted}
+          highlighted={highlighted}
           className={cx(
             getMenuItemStyles({
-              theme,
-              size,
               active,
+              highlighted,
+              size,
+              theme,
               variant,
             }),
             className,

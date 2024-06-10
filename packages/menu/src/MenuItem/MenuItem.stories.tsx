@@ -85,18 +85,18 @@ export const LiveExample = {
     glyph: undefined,
   },
   argTypes: {
+    active: { control: 'boolean' },
     description: { control: 'text' },
     glyph: {
       control: 'select',
       options: [undefined, ...Object.keys(glyphs)],
     },
+    highlighted: { control: 'boolean' },
     size: {
       control: 'select',
       options: Object.values(Size),
     },
-    renderDarkMenu: {
-      control: 'boolean',
-    },
+    renderDarkMenu: { control: 'boolean' },
   },
   render: ({ children, glyph, ...args }) => (
     // @ts-expect-error

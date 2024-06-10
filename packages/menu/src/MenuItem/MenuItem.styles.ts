@@ -36,16 +36,18 @@ const activeColors = {
 } as const satisfies Record<Theme, Record<Property, string>>;
 
 interface MenuItemStyleArgs {
-  theme: Theme;
-  size: Size;
-  variant: Variant;
   active: boolean;
+  highlighted: boolean;
+  size: Size;
+  theme: Theme;
+  variant: Variant;
 }
 
 export const getMenuItemStyles = ({
-  theme,
-  size,
   active,
+  highlighted,
+  size,
+  theme,
   variant,
 }: MenuItemStyleArgs) => css`
   display: block;
@@ -59,6 +61,7 @@ export const getMenuItemStyles = ({
   `}
 
   ${active &&
+  !highlighted &&
   css`
     &,
     &:hover {
