@@ -10,6 +10,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build17:
+    name: Build in React 17
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        name: Check for R17 build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+
+      - name: Setup Node 18
+        uses: actions/setup-node@v3
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          node-version: '18'
+          cache: 'yarn'
+
+      - name: Install node-gyp
+        run: yarn global add node-gyp
+
+      - name: Install package.json Dependencies
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn install --prefer-offline
+
+      - name: Build CLI
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn build:cli
+
+      - name: Install testing tools for React 17
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: npx ts-node tools/test/scripts/install-react17.ts
+
+      - name: Build packages
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        run: yarn build
+
   react17:
     name: Test in React 17
     runs-on: ubuntu-latest
@@ -25,17 +66,22 @@ jobs:
       - name: Install node-gyp
         run: yarn global add node-gyp
 
-      - name: Install package.json
+      - name: Install package.json Dependencies
         run: yarn install --prefer-offline
 
-      - name: Build CLI
-        run: yarn build:cli
+      - uses: actions/cache/restore@v3
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
-      # TODO: Will nohoist help here?
       - name: Install testing tools for React 17
         run: npx ts-node tools/test/scripts/install-react17.ts
 
-      - name: Build packages
+      - name: Re-build packages
         run: yarn build
 
       - name: Run tests in React 17
