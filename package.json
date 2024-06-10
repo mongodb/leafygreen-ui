@@ -27,11 +27,11 @@
     "publish": "yarn changeset publish --public",
     "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates",
-    "storybook:build": "yarn build-storybook --test",
-    "storybook:serve": "npx http-server storybook-static -c5",
+    "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
-    "validate": "lg validate"
+    "validate": "lg validate",
+    "watch": "npx nodemon --watch packages/ -e tsx --exec 'yarn build-storybook --test'"
   },
   "devDependencies": {
     "@actions/core": "^1.10.1",
