@@ -78,6 +78,9 @@ jobs:
             !**/node_modules
           key: ${{ runner.os }}-react17-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
+      - name: Build CLI
+        run: yarn build:cli    
+
       - name: Install testing tools for React 17
         run: npx ts-node tools/test/scripts/install-react17.ts
 
