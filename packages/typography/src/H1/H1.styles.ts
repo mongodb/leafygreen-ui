@@ -6,7 +6,7 @@ import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 export const h1Styles = css`
   font-weight: ${fontWeights.regular};
   font-size: 48px;
-  line-height: 62px;
+  line-height: 64px;
   font-family: ${fontFamilies.serif};
 `;
 
