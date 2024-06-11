@@ -4,11 +4,12 @@
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "noErrorTruncation": false
+    "noErrorTruncation": false,
+    "noUnusedLocals": false
   },
   "include": [
-    "src/**/*"
+    "src/**/*",
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "exclude": ["src/Example/*", "**/*.stories.*"],
   "references": []
 }
