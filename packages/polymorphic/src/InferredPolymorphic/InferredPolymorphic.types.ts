@@ -50,10 +50,21 @@ export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
 /**
  * Inferred extension of {@link PolymorphicProps}
  *
- * If `T` is an anchor, or undefined, then we explicitly add an `href`
+ * If `T` is an anchor, (or undefined),
+ *  - then we explicitly add a required `href` prop
+ *  - and extend the Inherited Props of T,
+ *  Additionally, if `T` is undefined,
+ *    - then we explicitly set as = 'a'
  *
- * else if T is something else and href is defined, we force `as` to be 'a',
- * otherwise, href is `never`.
+ * Otherwise, (if T is anything else)
+ *  and if href is defined in the provided props
+ *    - we force `as` to be 'a',
+ *    - add a required `href` prop
+ *    - inherit all anchor props
+ *  otherwise (if href is not defined)
+ *  - href is `never`
+ *  - `as` prop is extended as T
+ *  - inherit all props from T
  *
  * Note: It's a known issue that passing a component with no props (`() => <></>`)
  * as the `as` prop will be improperly flagged as `AnchorLike`.

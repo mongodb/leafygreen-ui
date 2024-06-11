@@ -1,4 +1,12 @@
-/* eslint-disable no-console, @typescript-eslint/no-unused-vars */
+/**
+ * Spec file for InferredPolymorphic types
+ *
+ * Here we simply declare typed variables
+ * and expect them to satisfy the type constraints
+ *
+ */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { ReactElement } from 'react';
 
 // import { InferredPolymorphic } from '../InferredPolymorphic';
@@ -20,7 +28,7 @@ import {
 
 const TestAnchorLike = (_props: { href: string }) => <></>;
 const TestNotAnchorLike = (_props: { children?: any }) => <></>;
-const getRandAs = () => (Math.random() > 0.5 ? 'div' : 'a');
+const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
 // AnchorLike
 {
@@ -284,7 +292,7 @@ const getRandAs = () => (Math.random() > 0.5 ? 'div' : 'a');
 }
 
 // InferredPolymorphicRenderFunction
-/*
+
 {
   type InferredRenderFunction = <T extends PolymorphicAs = PolymorphicAs>(
     props: InferredPolymorphicPropsWithRef<T, {}>,
@@ -327,10 +335,8 @@ const getRandAs = () => (Math.random() > 0.5 ? 'div' : 'a');
   const { as, href } = getPolymorphicProps();
   renderPoly({ as: as, href: href }, null); // <- Type 'PolymorphicAs' is not assignable to type 'FunctionComponent<any> | undefined'.
 }
-*/
 
 // InferredPolymorphic
-/*
 {
   const MyInferredPoly = InferredPolymorphic<{}, 'button'>(_props => {
     return <></>;
@@ -363,4 +369,3 @@ const getRandAs = () => (Math.random() > 0.5 ? 'div' : 'a');
   const { as, href } = getPolymorphicProps();
   <MyInferredPoly as={as} href={href} />;
 }
-*/
