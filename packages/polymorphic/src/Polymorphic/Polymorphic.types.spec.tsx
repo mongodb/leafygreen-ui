@@ -18,37 +18,66 @@ const TestAnchorLike = (_props: { href: string }) => <></>;
 const TestNotAnchorLike = (_props: { children?: any }) => <></>;
 const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
+// PolymorphicAs
+{
+  const _A: PolymorphicAs = 'a';
+  const _A2 = 'a' satisfies PolymorphicAs;
+
+  const _B: PolymorphicAs = 'button';
+  const _B2 = 'button' satisfies PolymorphicAs;
+
+  const _C: PolymorphicAs = TestAnchorLike;
+  const _C2 = TestAnchorLike satisfies PolymorphicAs;
+
+  const _D: PolymorphicAs = TestNotAnchorLike;
+  const _D2 = TestNotAnchorLike satisfies PolymorphicAs;
+}
+
 // InheritedProps
 {
-  const _A: InheritedProps<'a'> = {
-    href: '',
-  };
+  // anchor
+  {
+    const _A: InheritedProps<'a'> = {
+      href: '',
+    };
 
-  const _A2: InheritedProps<'a'> = {
-    // @ts-expect-error - 'as' is not inherited from anchor
-    as: 'a',
-    href: '',
-  };
+    const _A2: InheritedProps<'a'> = {
+      // @ts-expect-error - 'as' is not inherited from anchor
+      as: 'a',
+      href: '',
+    };
+  }
 
-  const _B: InheritedProps<'button'> = {
-    type: 'submit',
-  };
+  // button
+  {
+    const _B: InheritedProps<'button'> = {
+      type: 'submit',
+    };
+  }
 
-  const _C: InheritedProps<typeof TestAnchorLike> = {
-    href: '',
-  };
+  // anchor-like
+  {
+    const _C: InheritedProps<typeof TestAnchorLike> = {
+      href: '',
+    };
+  }
 
-  const _D: InheritedProps<typeof TestNotAnchorLike> = {
-    children: 'foobar',
-  };
+  // not anchor-like
+  {
+    const _D: InheritedProps<typeof TestNotAnchorLike> = {
+      children: 'foobar',
+    };
+  }
 
-  const _G1: InheritedProps<PolymorphicAs> = {
-    id: '',
-  };
-  const _G2: InheritedProps<PolymorphicAs> = {
-    // @ts-expect-error - href not inherited by a generic PolymorphicAs
-    href: '',
-  };
+  {
+    const _G1: InheritedProps<PolymorphicAs> = {
+      id: '',
+    };
+    const _G2: InheritedProps<PolymorphicAs> = {
+      // @ts-expect-error - href not inherited by a generic PolymorphicAs
+      href: '',
+    };
+  }
 
   const randAs: PolymorphicAs = getRandAs();
   const _R: InheritedProps<typeof randAs> = {

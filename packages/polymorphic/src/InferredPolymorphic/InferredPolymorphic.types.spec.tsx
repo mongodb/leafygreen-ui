@@ -7,10 +7,12 @@
  */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React, { ReactElement } from 'react';
+import React, { ComponentPropsWithRef, ReactElement } from 'react';
 
 // import { InferredPolymorphic } from '../InferredPolymorphic';
 import {
+  AsProp,
+  InheritedProps,
   PolymorphicAs,
   PolymorphicRef,
 } from '../Polymorphic/Polymorphic.types';
@@ -22,12 +24,16 @@ import {
   AnchorLikeProps,
   InferredPolymorphicProps,
   InferredPolymorphicPropsWithRef,
-  // InferredPolymorphicRenderFunction,
+  InferredPolymorphicRenderFunction,
   InferredProps,
 } from './InferredPolymorphic.types';
 
-const TestAnchorLike = (_props: { href: string }) => <></>;
-const TestNotAnchorLike = (_props: { children?: any }) => <></>;
+const TestAnchorLike = ((_props: { href: string }) => (
+  <></>
+)) satisfies PolymorphicAs;
+const TestNotAnchorLike = ((_props: { someProp: any }) => (
+  <></>
+)) satisfies PolymorphicAs;
 const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
 // AnchorLike
@@ -42,6 +48,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 }
 
 // AnchorLikeProps
+
 {
   // explicit 'a'
   {
@@ -85,10 +92,10 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
   // undefined
   {
-    // undefined type sets as = 'a'
-    const _U: AnchorLikeProps<undefined> = { as: 'a', href: '' };
+    const _U: AnchorLikeProps<undefined> = { as: 'a', href: '' }; // undefined type arg sets `as` = 'a'
+    const _U2: AnchorLikeProps<undefined> = { href: '' }; // undefined type arg infers `as` = 'a'
     // @ts-expect-error - undefined type sets as = 'a'
-    const _U2: AnchorLikeProps<undefined> = { as: 'button', href: '' };
+    const _U3: AnchorLikeProps<undefined> = { as: 'button', href: '' };
   }
 
   // generic PolymorphicAs
@@ -128,7 +135,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     const _B4: InferredProps<'button'> = { as: 'button', href: '' };
   }
 
-  // anchor-like
+  anchor - like;
   {
     const _C: InferredProps<typeof TestAnchorLike> = {
       /**
@@ -158,29 +165,35 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
   {
     const _G1a: InferredProps<PolymorphicAs> = {
       as: 'a',
-      href: '',
+      href: 'mongodb.design',
     };
     const _G2a: InferredProps<PolymorphicAs> = {
       as: 'button',
     };
     const _G3a: InferredProps<PolymorphicAs> = {
       as: TestAnchorLike,
+      href: 'mongodb.design', // href should be inherited
     };
     const _G4a: InferredProps<PolymorphicAs> = {
       as: TestNotAnchorLike,
+      someProp: 'foobar', // someProp should be inherited,
+      someOtherProp: false,
     };
 
     const _G1b: InferredProps<PolymorphicAs> = {
       as: 'a' as PolymorphicAs,
+      href: 'mongodb.design', // href should be inherited
     };
     const _G2b: InferredProps<PolymorphicAs> = {
       as: 'button' as PolymorphicAs,
     };
     const _G3b: InferredProps<PolymorphicAs> = {
       as: TestAnchorLike as PolymorphicAs,
+      href: 'mongodb.design', // href should be inherited
     };
     const _G4b: InferredProps<PolymorphicAs> = {
       as: TestNotAnchorLike as PolymorphicAs,
+      someProp: 'foobar', // someProp should be inherited
     };
   }
 }
@@ -219,9 +232,9 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
       href: 'mongodb.design',
     };
 
-    // @ts-expect-error href not valid on explicit button
     const _B4: InferredPolymorphicProps<'button'> = {
       as: 'button',
+      // @ts-expect-error href not valid on explicit button
       href: 'mongodb.design',
     };
   }
@@ -242,9 +255,10 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
   {
     const _D: InferredPolymorphicProps<typeof TestNotAnchorLike> = {
       as: TestNotAnchorLike,
+      someProp: 'foobar',
     };
 
-    // @ts-expect-error
+    // @ts-expect-error - href is not valid on TestNotAnchorLike
     const _D2: InferredPolymorphicProps<typeof TestNotAnchorLike> = {
       as: TestNotAnchorLike,
       href: 'mongodb.design',
@@ -253,6 +267,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
   // typed generic PolymorphicAs
   {
+    const _G0: InferredPolymorphicProps<PolymorphicAs> = {}; // empty object is technically valid
     const _G1a: InferredPolymorphicProps<PolymorphicAs> = {
       as: 'a',
       href: '',
@@ -261,26 +276,28 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
       as: 'button',
     };
     const _G3a: InferredPolymorphicProps<PolymorphicAs> = {
-      as: TestAnchorLike,
-      href: '',
+      as: TestAnchorLike, // extends InheritedExplicitAnchorLikeProps
+      href: 'mongodb.design',
     };
     const _G4a: InferredPolymorphicProps<PolymorphicAs> = {
       as: TestNotAnchorLike,
+      someProp: 'foobar',
     };
 
     const _G1b: InferredPolymorphicProps<PolymorphicAs> = {
       as: 'a' as PolymorphicAs,
-      href: '',
+      href: 'mongodb.design',
     };
     const _G2b: InferredPolymorphicProps<PolymorphicAs> = {
       as: 'button' as PolymorphicAs,
     };
     const _G3b: InferredPolymorphicProps<PolymorphicAs> = {
       as: TestAnchorLike as PolymorphicAs,
-      href: '',
+      href: 'mongodb.design',
     };
     const _G4b: InferredPolymorphicProps<PolymorphicAs> = {
       as: TestNotAnchorLike as PolymorphicAs,
+      someProp: 'foobar',
     };
   }
 
@@ -291,15 +308,51 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
   };
 }
 
+/* {
+  const makeInferredProps = <T extends PolymorphicAs>(
+    arg: { as?: T } & ComponentPropsWithRef<T>,
+  ) => arg;
+
+  type ExtractAsProp<P> = P extends { as: infer T } ? T : never;
+
+  type InferredProps<P extends { as: PolymorphicAs }> = ReturnType<
+    typeof makeInferredProps<ExtractAsProp<P>>
+  >;
+
+  const _A: InferredProps<{ as: 'a'; href: 'mongo' }> = {
+    as: 'a',
+    href: 'mongo',
+  };
+
+  type RenderFunction = <P extends { as: PolymorphicAs } & Record<string, any>>(
+    props: InferredProps<P>,
+  ) => ReactElement;
+
+  const Render: RenderFunction = _props => <></>;
+
+  const _B: Parameters<RenderFunction>[0] = {
+    as: 'a',
+    href: 'mongo',
+  };
+
+  Render({});
+  Render({ as: 'button', type: 'submit' });
+  Render({ as: 'a', href: '' });
+
+  <>
+    <Render />
+    <Render as="a" />
+  </>;
+} */
 // InferredPolymorphicRenderFunction
 
 {
-  type InferredRenderFunction = <T extends PolymorphicAs = PolymorphicAs>(
-    props: InferredPolymorphicPropsWithRef<T, {}>,
-    ref: PolymorphicRef<T>,
-  ) => ReactElement | null;
+  // type InferredRenderFunction = <T extends PolymorphicAs>(
+  //   props: InferredPolymorphicPropsWithRef<T, {}>,
+  //   ref: PolymorphicRef<T>,
+  // ) => ReactElement | null;
 
-  const renderPoly: InferredRenderFunction = (_props, _ref) => <></>;
+  const renderPoly: InferredPolymorphicRenderFunction = (_props, _ref) => <></>;
 
   renderPoly({}, null);
   renderPoly({ as: 'button' }, null);
@@ -313,16 +366,16 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
   renderPoly({ as: 'button' as PolymorphicAs, href: '' }, null); // <- as: Type 'string' is not assignable to type 'FunctionComponent<any>'
 
   renderPoly({ as: TestAnchorLike, href: 'mongodb.design' }, null);
-  renderPoly({ as: TestNotAnchorLike, children: 'lorem' }, null);
+  renderPoly({ as: TestNotAnchorLike, someProp: 'lorem' }, null);
   renderPoly(
     // @ts-expect-error - when as is indeterminate, href is required
-    { as: TestNotAnchorLike as PolymorphicAs, children: 'lorem' },
+    { as: TestNotAnchorLike as PolymorphicAs, someProp: 'lorem' },
     null,
   );
   renderPoly(
     {
       as: TestNotAnchorLike as PolymorphicAs, // <- Type 'PolymorphicAs' is not assignable to type 'FunctionComponent<any> | undefined'.
-      children: 'lorem',
+      someProp: 'lorem',
       href: 'mongodb.design',
     },
     null,
