@@ -1,4 +1,5 @@
 export {
+  type AnchorLike,
   InferredPolymorphic,
   type InferredPolymorphicComponentType,
   type InferredPolymorphicProps,
@@ -18,6 +19,7 @@ export {
   usePolymorphicComponent,
   usePolymorphicRef,
 } from './Polymorphic';
+export { getPolymorphicProps } from './utils/getPolymorphicProps';
 export {
   type LoosePolymorphicProps,
   type PropsOf,
