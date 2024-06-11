@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@emotion/react": "^11.11.4",
-    "@lg-tools/build": "0.5.1",
+    "@lg-tools/build": "0.6.0",
     "@types/react-transition-group": "^4.4.5",
     "react-transition-group": "^4.4.5"
   },
