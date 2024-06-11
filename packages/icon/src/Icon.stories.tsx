@@ -23,7 +23,7 @@ const meta: StoryMetaType<typeof Icon> = {
     },
   },
   args: {
-    fill: 'black',
+    fill: palette.gray.base,
     size: Size.Default,
   },
   argTypes: {
@@ -87,7 +87,7 @@ export const LiveExample: StoryFn<IconProps> = (
     className={css`
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     `}
   >
     {Object.keys(glyphs).map(glyph => {
