@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': patch
 ---
 
-Adds args to Icon meta for .design
+Slight tweaks for .design story
