@@ -7,7 +7,6 @@ import {
 } from 'react';
 
 import {
-  AsProp,
   InheritedProps,
   PolymorphicAs,
 } from '../Polymorphic/Polymorphic.types';
@@ -35,36 +34,42 @@ export type AnchorLikeProps<
 >;
 
 /**
- * If `href` is provided to the component as a prop, but `as` is not
+ * Union of {@link AnchorLikeProps} and {@link InheritedProps}
+ */
+export type InheritedExplicitAnchorLikeProps<
+  T extends AnchorLike | undefined,
+  XP = {},
+> = AnchorLikeProps<T, XP> &
+  (T extends AnchorLike ? InheritedProps<T, XP> : {});
+
+/**
+ * A Discriminated Union, where:
+ * - If `href` is provided to the component as a prop, (but `as` is not)
  * then we infer that the `as` prop is `a`, and inherit anchor props.
- * Otherwise `href` is invalid, and we treat the `as` prop as usual
+ * - Otherwise `href` is invalid, and we treat the `as` prop as the provided T
  */
 export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
-  XP &
-    (
-      | ({ href: string; as?: 'a' } & InheritedProps<'a', XP>)
-      | (({ href?: never } & AsProp<T>) & InheritedProps<T, XP>)
-    )
+  (
+    | ({
+        href: string;
+        as?: 'a';
+      } & InheritedProps<'a', XP>)
+    | ({
+        href?: never;
+        as?: T;
+      } & InheritedProps<T, XP>)
+  ) &
+    XP
 >;
 
 /**
  * Inferred extension of {@link PolymorphicProps}
  *
- * If `T` is an anchor, (or undefined),
- *  - then we explicitly add a required `href` prop
- *  - and extend the Inherited Props of T,
- *  Additionally, if `T` is undefined,
- *    - then we explicitly set as = 'a'
+ * If `T` is {@link AnchorLike}, (or undefined),
+ *  - then we extend {@link InheritedExplicitAnchorLikeProps}
  *
- * Otherwise, (if T is anything else)
- *  and if href is defined in the provided props
- *    - we force `as` to be 'a',
- *    - add a required `href` prop
- *    - inherit all anchor props
- *  otherwise (if href is not defined)
- *  - href is `never`
- *  - `as` prop is extended as T
- *  - inherit all props from T
+ * Otherwise, (if T is anything else),
+ * - we extend the {@link InferredProps} Discriminated Union
  *
  * Note: It's a known issue that passing a component with no props (`() => <></>`)
  * as the `as` prop will be improperly flagged as `AnchorLike`.
@@ -74,7 +79,7 @@ export type InferredPolymorphicProps<
   T extends PolymorphicAs,
   XP = {},
 > = T extends AnchorLike | undefined
-  ? AnchorLikeProps<T, XP> & InheritedProps<T, XP>
+  ? InheritedExplicitAnchorLikeProps<T, XP>
   : InferredProps<T, XP>;
 
 /**
