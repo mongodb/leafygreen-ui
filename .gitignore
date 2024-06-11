@@ -48,6 +48,7 @@ parsed-docs.json
 
 # Storybook/Chromatic logs
 build-storybook.log
+doctor-storybook.log
 
 .turbo
 scripts/tmp.*.ts
