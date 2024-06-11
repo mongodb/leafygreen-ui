@@ -36,6 +36,7 @@
     "next": "^13.1.6"
   },
   "dependencies": {
+    "@leafygreen-ui/lib": "^13.5.0",
     "lodash": "^4.17.21"
   }
 }
