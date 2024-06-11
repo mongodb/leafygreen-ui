@@ -1,4 +1,5 @@
 import {
+  ComponentType,
   PropsWithChildren,
   ReactElement,
   RefAttributes,
@@ -11,14 +12,13 @@ import {
   PolymorphicAs,
 } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
-import { React18ChildlessComponentType } from '../utils/React18ChildlessComponentType';
 import { PolymorphicRef } from '..';
 
 /** Either an anchor tag, or a component that accepts an `href` */
 export type AnchorLike =
   | 'a'
-  | React18ChildlessComponentType<{ href: string }>
-  | React18ChildlessComponentType<{ href: NodeUrlLike }>;
+  | ComponentType<{ href: string }>
+  | ComponentType<{ href: NodeUrlLike }>;
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
@@ -35,7 +35,7 @@ export type AnchorLikeProps<
 >;
 
 /**
- * If `href` is provided to the compomnent as a prop, but `as` is not
+ * If `href` is provided to the component as a prop, but `as` is not
  * then we infer that the `as` prop is `a`, and inherit anchor props.
  * Otherwise `href` is invalid, and we treat the `as` prop as usual
  */

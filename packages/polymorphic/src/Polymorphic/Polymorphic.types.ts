@@ -53,7 +53,7 @@ export type AllInheritedProps<T extends PolymorphicAs> = T extends 'a'
   : ComponentPropsWithoutRef<T>;
 
 /**
- * Omits any props inclided in type `P` from the inherited props
+ * Omits any props included in type `P` from the inherited props
  */
 export type InheritedProps<T extends PolymorphicAs, XP = {}> = Omit<
   AllInheritedProps<T>,
