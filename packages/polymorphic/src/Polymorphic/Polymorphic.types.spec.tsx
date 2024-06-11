@@ -31,6 +31,12 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
   const _D: PolymorphicAs = TestNotAnchorLike;
   const _D2 = TestNotAnchorLike satisfies PolymorphicAs;
+
+  const _E: React.ElementType<any> = (() => <></>) satisfies PolymorphicAs;
+
+  const _F: React.FunctionComponent<any> = (() => (
+    <></>
+  )) satisfies PolymorphicAs;
 }
 
 // InheritedProps

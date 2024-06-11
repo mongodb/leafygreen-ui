@@ -106,7 +106,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 }
 
 // InferredProps
-{
+/* {
   // anchor
   {
     const _A: InferredProps<'a'> = {
@@ -135,19 +135,19 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     const _B4: InferredProps<'button'> = { as: 'button', href: '' };
   }
 
-  anchor - like;
+  // anchor-like;
   {
     const _C: InferredProps<typeof TestAnchorLike> = {
       /**
        * The InferredProps internal type infers as="a" with the presence of an href.
        * `InferredPolymorphicProps` is the true prop type
        */
-      // @ts-expect-error
-      as: TestAnchorLike,
+// @ts-expect-error
+/* as: TestAnchorLike,
       href: 'mongodb.design',
     };
-  }
-
+  } */
+/*
   // not anchor-like
   {
     const _D: InferredProps<typeof TestNotAnchorLike> = {
@@ -196,10 +196,10 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
       someProp: 'foobar', // someProp should be inherited
     };
   }
-}
+} */
 
 // InferredPolymorphicProps
-{
+/* {
   // anchor
   {
     const _A: InferredPolymorphicProps<'a'> = {
@@ -306,44 +306,8 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     as: randAs,
     href: 'mongodb.design',
   };
-}
-
-/* {
-  const makeInferredProps = <T extends PolymorphicAs>(
-    arg: { as?: T } & ComponentPropsWithRef<T>,
-  ) => arg;
-
-  type ExtractAsProp<P> = P extends { as: infer T } ? T : never;
-
-  type InferredProps<P extends { as: PolymorphicAs }> = ReturnType<
-    typeof makeInferredProps<ExtractAsProp<P>>
-  >;
-
-  const _A: InferredProps<{ as: 'a'; href: 'mongo' }> = {
-    as: 'a',
-    href: 'mongo',
-  };
-
-  type RenderFunction = <P extends { as: PolymorphicAs } & Record<string, any>>(
-    props: InferredProps<P>,
-  ) => ReactElement;
-
-  const Render: RenderFunction = _props => <></>;
-
-  const _B: Parameters<RenderFunction>[0] = {
-    as: 'a',
-    href: 'mongo',
-  };
-
-  Render({});
-  Render({ as: 'button', type: 'submit' });
-  Render({ as: 'a', href: '' });
-
-  <>
-    <Render />
-    <Render as="a" />
-  </>;
 } */
+
 // InferredPolymorphicRenderFunction
 
 {

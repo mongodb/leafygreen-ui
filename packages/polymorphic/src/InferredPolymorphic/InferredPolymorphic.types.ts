@@ -13,6 +13,8 @@ import {
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 import { PolymorphicRef } from '..';
 
+export type HrefLike = string | NodeUrlLike;
+
 /** Either an anchor tag, or a component that accepts an `href` */
 export type AnchorLike =
   | 'a'
@@ -75,12 +77,16 @@ export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
  * as the `as` prop will be improperly flagged as `AnchorLike`.
  * We have decided not to add additional type complexity to address this minor edge case.
  */
-export type InferredPolymorphicProps<
+/* export type InferredPolymorphicProps<
   T extends PolymorphicAs,
   XP = {},
 > = T extends AnchorLike | undefined
   ? InheritedExplicitAnchorLikeProps<T, XP>
-  : InferredProps<T, XP>;
+  : InferredProps<T, XP>; */
+export type InferredPolymorphicProps<
+  T extends PolymorphicAs,
+  XP = {},
+> = InferredProps<T, XP>;
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
