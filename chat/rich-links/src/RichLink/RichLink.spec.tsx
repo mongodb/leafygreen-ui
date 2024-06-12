@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { RichLink } from '.';
 import { RichLinkVariantName } from '../../dist';
+
+import { RichLink } from '.';
 
 describe('@lg-chat/rich-links', () => {
   describe('RichLink', () => {

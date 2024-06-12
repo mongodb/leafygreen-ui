@@ -1,8 +1,8 @@
 export {
   RichLink,
   type RichLinkProps,
-  richLinkVariants,
   type RichLinkVariantName,
+  richLinkVariants,
 } from './RichLink';
 export {
   RichLinkBadge,

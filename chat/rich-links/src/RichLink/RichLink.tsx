@@ -13,10 +13,7 @@ import {
   richLinkTextClassName,
   themeStyles,
 } from './RichLink.styles';
-import {
-  RichLinkBadgeControlProps,
-  type RichLinkProps,
-} from './RichLink.types';
+import { type RichLinkProps } from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './richLinkVariants';
 
