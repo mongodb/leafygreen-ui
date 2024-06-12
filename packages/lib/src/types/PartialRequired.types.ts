@@ -1,4 +1,3 @@
-import type { Optional } from './Optional';
 /**
  * Constructs a type consisting of all properties of type `T`,
  * with a subset set of properties `K` marked required.

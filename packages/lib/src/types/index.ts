@@ -1,4 +1,4 @@
-export type { Mutable } from './Mutable';
-export type { Optional } from './Optional';
-export type { PartialRequired } from './PartialRequired';
-export type { RecursiveRecord } from './RecursiveRecord';
+export type { Mutable } from './Mutable.types';
+export type { Optional } from './Optional.types';
+export type { PartialRequired } from './PartialRequired.types';
+export type { RecursiveRecord } from './RecursiveRecord.types';
