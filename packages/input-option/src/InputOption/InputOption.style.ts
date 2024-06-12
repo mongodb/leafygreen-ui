@@ -4,8 +4,8 @@ import { palette } from '@leafygreen-ui/palette';
 import {
   color,
   fontFamilies,
+  InteractionState,
   spacing,
-  State,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -27,7 +27,9 @@ export const getInputOptionStyles = ({
   highlighted,
   isInteractive,
 }: InputOptionStyleArgs) => {
-  const ixnState = highlighted ? State.Focus : State.Default;
+  const ixnState = highlighted
+    ? InteractionState.Focus
+    : InteractionState.Default;
   return css`
     position: relative;
     list-style: none;
@@ -74,9 +76,8 @@ export const getInputOptionStyles = ({
         }
       }
 
-      /* Focus (styling handled by highlighted prop) */
-      &:focus,
-      &:focus-visible {
+      /* Focus (majority of styling handled by the 'highlighted' prop) */
+      &:focus {
         outline: none;
         border: unset;
       }
