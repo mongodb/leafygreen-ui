@@ -53,8 +53,8 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       const { as, href } = getInferredPolymorphicProps(undefined, {
         id: 'some-id',
       });
-      expect(as).toBe('a');
-      expect(href).toBe('mongodb.design');
+      expect(as).toBe('div');
+      expect(href).toBeUndefined();
 
       // TS
       as satisfies PolymorphicAs;
@@ -79,7 +79,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       const { as, href } = getInferredPolymorphicProps(asProp, {
         href: 'mongodb.design',
       });
-      expect(as).toBe(asProp);
+      expect(as).toBe('a');
       expect(href).toBe('mongodb.design');
       // TS
       as satisfies PolymorphicAs;

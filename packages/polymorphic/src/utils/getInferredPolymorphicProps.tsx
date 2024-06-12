@@ -11,14 +11,12 @@ export const getInferredPolymorphicProps = <
   as: PolymorphicAs;
   href?: string;
 } => {
-  if (asProp && propsArg?.href) {
+  if (propsArg?.href) {
     // TODO: do a better AnchorLike check
-    if (asProp !== 'a') {
-      return {
-        as: 'a',
-        href: propsArg.href,
-      };
-    }
+    return {
+      as: 'a',
+      href: propsArg.href,
+    };
   }
 
   return {

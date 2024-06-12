@@ -24,7 +24,6 @@ import {
 
 // prettier-ignore
 describe('Typescript types', () => {
-  
   // eslint-disable-next-line react/display-name
   const WrapperWithRef = React.forwardRef<HTMLSpanElement, WrapperProps>(
     ({ children, ...rest }: WrapperProps, ref) => {
