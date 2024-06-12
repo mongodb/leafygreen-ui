@@ -39,3 +39,9 @@ export const richLinkVariants = {
 } as const satisfies Record<string, RichLinkBadgeControlProps>;
 
 export type RichLinkVariantName = keyof typeof richLinkVariants;
+
+const richLinkVariantNames = Object.keys(richLinkVariants);
+
+export function isRichLinkVariantName(str: string): str is RichLinkVariantName {
+  return richLinkVariantNames.includes(str);
+}

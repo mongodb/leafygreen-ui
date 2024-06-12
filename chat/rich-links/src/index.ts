@@ -1,4 +1,5 @@
 export {
+  isRichLinkVariantName,
   RichLink,
   type RichLinkProps,
   type RichLinkVariantName,

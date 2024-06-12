@@ -1,3 +1,7 @@
 export { RichLink } from './RichLink';
 export { type RichLinkProps } from './RichLink.types';
-export { type RichLinkVariantName, richLinkVariants } from './richLinkVariants';
+export {
+  isRichLinkVariantName,
+  type RichLinkVariantName,
+  richLinkVariants,
+} from './richLinkVariants';
