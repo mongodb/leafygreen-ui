@@ -91,14 +91,13 @@ export type InferredPolymorphicProps<
         'href'
       >
     :
-        | InferredAnchorProps
-        | (TAsProp extends PolymorphicAs
-            ? {
-                as?: PolymorphicAs;
-              } & ComponentPropsWithoutRef<TAsProp>
-            : {
-                ERROR: 'Provided `as` prop must extend `React.ElementType`';
-              }));
+        | ({
+            href: string;
+            as?: 'a';
+          } & ComponentPropsWithoutRef<'a'>)
+        | ({
+            as?: PolymorphicAs;
+          } & ComponentPropsWithoutRef<TAsProp>));
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}

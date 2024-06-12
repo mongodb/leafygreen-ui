@@ -7,15 +7,9 @@
  */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import React, { ComponentPropsWithRef, ReactElement } from 'react';
+import React from 'react';
 
-// import { InferredPolymorphic } from '../InferredPolymorphic';
-import {
-  AsProp,
-  InheritedProps,
-  PolymorphicAs,
-  PolymorphicRef,
-} from '../Polymorphic/Polymorphic.types';
+import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 import { getPolymorphicProps } from '../utils/getPolymorphicProps';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 
@@ -215,12 +209,8 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 }
 
 // InferredPolymorphicRenderFunction
-
 {
-  const renderInferredPoly: InferredPolymorphicRenderFunction = (
-    props,
-    ref,
-  ) => <></>;
+  const renderInferredPoly: InferredPolymorphicRenderFunction = (p, r) => <></>;
 
   // accepts empty props
   renderInferredPoly({}, null);
@@ -337,8 +327,6 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     <MyInferredPoly as="button" href="mongodb.design" />;
     // @ts-expect-error misc. props not valid
     <MyInferredPoly as="button" foo="bar" />;
-    /* <MyInferredPoly as={'button' as PolymorphicAs} />;
-    <MyInferredPoly as={'button' as PolymorphicAs} hre }f="" />; */
   }
 
   // anchor-like
