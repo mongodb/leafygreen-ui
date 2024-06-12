@@ -10,7 +10,7 @@
 import React from 'react';
 
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
-import { getPolymorphicProps } from '../utils/getPolymorphicProps';
+import { getInferredPolymorphicProps } from '../utils/getInferredPolymorphicProps';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 
 import { InferredPolymorphic } from './InferredPolymorphic';
@@ -296,7 +296,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     // @ts-expect-error - misc props not allowed when As is generically defined
     renderInferredPoly({ as: randAs, foo: 'bar' }, null);
 
-    const { as, href } = getPolymorphicProps();
+    const { as, href } = getInferredPolymorphicProps();
     renderInferredPoly({ as: as, href: href }, null);
   }
 }
@@ -388,7 +388,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     // @ts-expect-error - misc props not allowed when as is generically defined
     <MyInferredPoly as={randAs} foo={'bar'} />;
 
-    const { as, href } = getPolymorphicProps();
+    const { as, href } = getInferredPolymorphicProps();
     <MyInferredPoly as={as} href={href} />;
   }
 }
