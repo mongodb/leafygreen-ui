@@ -303,12 +303,21 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
 // InferredPolymorphic
 {
-  const MyInferredPoly = InferredPolymorphic<{}, 'button'>(props => {
+  interface MyProps {
+    value?: { id: string };
+  }
+
+  const MyInferredPoly = InferredPolymorphic<MyProps, 'button'>(props => {
     return <></>;
   });
 
   // accepts empty props
   <MyInferredPoly />;
+  // extends default element intrinsic attributes
+  <MyInferredPoly name="some name" />;
+  // @ts-expect-error - intrinsic attribute types get overridden by PropType
+  <MyInferredPoly value="some-value" />;
+  <MyInferredPoly value={{ id: '1234' }} />; // intrinsic attribute types get overridden
 
   // accepts href without `as`
   <MyInferredPoly href="" />;
@@ -348,7 +357,6 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
   }
 
   // generically typed
-
   {
     <MyInferredPoly as={'a' as PolymorphicAs} />;
     <MyInferredPoly as={'a' as PolymorphicAs} href="" />;
@@ -384,3 +392,6 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     <MyInferredPoly as={as} href={href} />;
   }
 }
+
+// // @ts-expect-error
+// const bool = false;

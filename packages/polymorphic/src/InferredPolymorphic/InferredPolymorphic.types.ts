@@ -32,34 +32,9 @@ export interface AnchorLikeProps<TAsProp extends AnchorLike | undefined> {
 /**
  * Union of {@link AnchorLikeProps} and {@link InheritedProps}
  */
-export type InheritedExplicitAnchorLikeProps<
-  TAsProp extends AnchorLike | undefined,
-> = { as?: TAsProp } & (TAsProp extends AnchorLike
-  ? PartialRequired<ComponentPropsWithoutRef<TAsProp>, 'href'>
-  : { ERROR: 'Component `as` prop undefined' });
-
-/**
- * A Discriminated Union, where:
- * - If `href` is provided to the component as a prop, (but `as` is not)
- * then we infer that the `as` prop is `a`, and inherit anchor props.
- * - Otherwise `href` is invalid, and we treat the `as` prop as the provided T
- */
-/* export type InferredProps<
-  TAsProp extends PolymorphicAs,
-  TComponentProps = {},
-> = PropsWithChildren<
-  (
-    | ({
-        href: string;
-        as?: 'a';
-      } & InheritedProps<'a', TComponentProps>)
-    | ({
-        href?: never;
-        as?: TAsProp;
-      } & InheritedProps<TAsProp, TComponentProps>)
-  ) &
-    TComponentProps
->; */
+export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
+  as?: TAsProp;
+} & PartialRequired<ComponentPropsWithoutRef<TAsProp>, 'href'>;
 
 /** Anchor props where `href` is required */
 export type InferredAnchorProps = {
@@ -68,36 +43,48 @@ export type InferredAnchorProps = {
 } & ComponentPropsWithoutRef<'a'>;
 
 /**
- * Inferred extension of {@link PolymorphicProps}
+ * Extends the default component props (or intrinsic attributes)
+ * of the provided `TAsProp` type.
  *
- * If `T` is {@link AnchorLike}, (or undefined),
- *  - then we extend {@link InheritedExplicitAnchorLikeProps}
+ * We also omit any inherited keys that may be overridden by
+ * explicit component props
  *
- * Otherwise, (if T is anything else),
- * - we extend the {@link InferredProps} Discriminated Union
+ * e.g.
+ * - if `as = "label"`, the component should accept the `htmlFor` attribute)
+ * - if `as = {RemixLink}`, the component should accept the `to` prop.
+ * ([see Remix docs](https://remix.run/docs/en/main/components/link))
+ */
+export type InheritedComponentProps<
+  TAsProp extends PolymorphicAs,
+  TComponentProps,
+> = {
+  as?: PolymorphicAs;
+} & Omit<ComponentPropsWithoutRef<TAsProp>, keyof TComponentProps>;
+
+/**
  *
- * Note: It's a known issue that passing a component with no props (`() => <></>`)
- * as the `as` prop will be improperly flagged as `AnchorLike`.
- * We have decided not to add additional type complexity to address this minor edge case.
+ * Sets the inferred prop types of an inferred Polymorphic component
+ *
+ * First, we extend any provided component props (`TComponentProps`)
+ *
+ * If the provided `as` prop (`TAsProp`) extends the type {@link AnchorLike}
+ * then we extend {@link InheritedExplicitAnchorLikeProps}
+ *
+ * Otherwise, (if `TAsProp` is any other type),
+ * then we create a Discriminated Union of
+ *  - {@link InferredAnchorProps} - which expects `href` to be defined,
+ * and sets the component props to the default `a` element props, and
+ *  - {@link InheritedComponentProps} - which extends the intrinsic attributes
+ * of the provided `as` prop
+ *
  */
 export type InferredPolymorphicProps<
   TAsProp extends PolymorphicAs,
   TComponentProps = {},
-> = TComponentProps &
-  (TAsProp extends 'a'
-    ? // if the `as` prop is AnchorLike, return explicit AnchorLike props
-      { as?: TAsProp } & PartialRequired<
-        ComponentPropsWithoutRef<TAsProp>,
-        'href'
-      >
-    :
-        | ({
-            href: string;
-            as?: 'a';
-          } & ComponentPropsWithoutRef<'a'>)
-        | ({
-            as?: PolymorphicAs;
-          } & ComponentPropsWithoutRef<TAsProp>));
+> = (TAsProp extends AnchorLike
+  ? InheritedExplicitAnchorLikeProps<TAsProp> // if the `as` prop is AnchorLike, return explicit AnchorLike props
+  : InferredAnchorProps | InheritedComponentProps<TAsProp, TComponentProps>) &
+  TComponentProps;
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
