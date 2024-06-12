@@ -380,9 +380,9 @@ test.skip('Inferred Polymorphic types', () => {
       <MyInferredPoly as={TestAnchorLike as PolymorphicAs} foo="bar" />;
 
       <MyInferredPoly as={TestNotAnchorLike as PolymorphicAs} />;
-      // @ts-expect-error - when generically defined, non-JSXIntrinsicAttributes are not valid
       <MyInferredPoly
         as={TestNotAnchorLike as PolymorphicAs}
+        // @ts-expect-error - when generically defined, non-JSX Intrinsic Attributes are not valid
         someProp="lorem"
       />;
     }
