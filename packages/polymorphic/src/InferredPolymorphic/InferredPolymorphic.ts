@@ -14,13 +14,16 @@ import {
  * For more, see {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/polymorphic/README.md | README.md}
  */
 export const InferredPolymorphic = <
-  XP extends object = {},
-  DefaultAs extends PolymorphicAs = PolymorphicAs,
+  TComponentProps extends object = {},
+  TDefaultAs extends PolymorphicAs = PolymorphicAs,
 >(
-  render: InferredPolymorphicRenderFunction<XP, DefaultAs>,
+  render: InferredPolymorphicRenderFunction<TComponentProps, TDefaultAs>,
   displayName?: string,
-): InferredPolymorphicComponentType<XP, DefaultAs> => {
-  let PolyComponent: InferredPolymorphicComponentType<XP, DefaultAs>;
+): InferredPolymorphicComponentType<TComponentProps, TDefaultAs> => {
+  let PolyComponent: InferredPolymorphicComponentType<
+    TComponentProps,
+    TDefaultAs
+  >;
 
   if (render.length === 1) {
     PolyComponent = render;

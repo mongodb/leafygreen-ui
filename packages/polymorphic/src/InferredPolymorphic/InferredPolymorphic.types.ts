@@ -1,18 +1,14 @@
 import {
   ComponentPropsWithoutRef,
   ComponentType,
-  PropsWithChildren,
   ReactElement,
   RefAttributes,
   WeakValidationMap,
 } from 'react';
 
-import { Optional } from '@leafygreen-ui/lib';
+import { PartialRequired } from '@leafygreen-ui/lib';
 
-import {
-  InheritedProps,
-  PolymorphicAs,
-} from '../Polymorphic/Polymorphic.types';
+import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 import { PolymorphicRef } from '..';
 
@@ -28,24 +24,19 @@ export type AnchorLike =
  * Wrapping props in this type ensures that if `href` is defined,
  * the `as` type can only be `AnchorLike`, and all anchor props are accepted
  */
-export type AnchorLikeProps<
-  T extends AnchorLike | undefined,
-  P = {},
-> = PropsWithChildren<
-  {
-    href: string | NodeUrlLike;
-    as?: T extends AnchorLike ? T : 'a';
-  } & P
->;
+export interface AnchorLikeProps<TAsProp extends AnchorLike | undefined> {
+  href: string | NodeUrlLike;
+  as?: TAsProp extends undefined ? 'a' : TAsProp;
+}
 
 /**
  * Union of {@link AnchorLikeProps} and {@link InheritedProps}
  */
 export type InheritedExplicitAnchorLikeProps<
-  T extends AnchorLike | undefined,
-  XP = {},
-> = AnchorLikeProps<T, XP> &
-  (T extends AnchorLike ? InheritedProps<T, XP> : {});
+  TAsProp extends AnchorLike | undefined,
+> = { as?: TAsProp } & (TAsProp extends AnchorLike
+  ? PartialRequired<ComponentPropsWithoutRef<TAsProp>, 'href'>
+  : { ERROR: 'Component `as` prop undefined' });
 
 /**
  * A Discriminated Union, where:
@@ -53,19 +44,28 @@ export type InheritedExplicitAnchorLikeProps<
  * then we infer that the `as` prop is `a`, and inherit anchor props.
  * - Otherwise `href` is invalid, and we treat the `as` prop as the provided T
  */
-export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
+/* export type InferredProps<
+  TAsProp extends PolymorphicAs,
+  TComponentProps = {},
+> = PropsWithChildren<
   (
     | ({
         href: string;
         as?: 'a';
-      } & InheritedProps<'a', XP>)
+      } & InheritedProps<'a', TComponentProps>)
     | ({
         href?: never;
-        as?: T;
-      } & InheritedProps<T, XP>)
+        as?: TAsProp;
+      } & InheritedProps<TAsProp, TComponentProps>)
   ) &
-    XP
->;
+    TComponentProps
+>; */
+
+/** Anchor props where `href` is required */
+export type InferredAnchorProps = {
+  href: string;
+  as?: 'a';
+} & ComponentPropsWithoutRef<'a'>;
 
 /**
  * Inferred extension of {@link PolymorphicProps}
@@ -80,66 +80,47 @@ export type InferredProps<T extends PolymorphicAs, XP = {}> = PropsWithChildren<
  * as the `as` prop will be improperly flagged as `AnchorLike`.
  * We have decided not to add additional type complexity to address this minor edge case.
  */
-/* export type InferredPolymorphicProps<
-  T extends PolymorphicAs,
-  XP = {},
-> = T extends AnchorLike | undefined
-  ? InheritedExplicitAnchorLikeProps<T, XP>
-  : InferredProps<T, XP>; */
-
-/** Given some props object `P`, extracts the `as` prop, or returns the default `D` */
-export type ExtractInferredAsProp<
-  P extends {},
-  D extends PolymorphicAs = PolymorphicAs,
-> = P extends {
-  as: infer T;
-}
-  ? T
-  : P extends { href: infer H }
-  ? H extends HrefLike
-    ? 'a'
-    : never
-  : D;
-
-/**
- * Given some props object `P` (that may include an `as` prop)
- * determine the remaining props based on the inferred `as` prop
- */
-export type InferredPolymorphicProps<P extends {}> = P extends {
-  as: infer T extends PolymorphicAs;
-}
-  ? T extends 'a' // If `as` is defined...
-    ? InheritedExplicitAnchorLikeProps<T, P> // and `as` is AnchorLike, return explicit AnchorLike props
-    : ComponentPropsWithoutRef<T> // else, `as` is anything other than AnchorLike, return that `as` prop's props //
-  : P extends {
-      href: infer H;
-    }
-  ? H extends HrefLike // If `as` is NOT  defined, but `href` is defined
-    ? AnchorLikeProps<'a', P> // when `href` is valid, return AnchorLike props
-    : never // `href` must be HrefLike
-  : P; // Neither `as` nor `href` are defined; return the props we're given
+export type InferredPolymorphicProps<
+  TAsProp extends PolymorphicAs,
+  TComponentProps = {},
+> = TComponentProps &
+  (TAsProp extends 'a'
+    ? // if the `as` prop is AnchorLike, return explicit AnchorLike props
+      { as?: TAsProp } & PartialRequired<
+        ComponentPropsWithoutRef<TAsProp>,
+        'href'
+      >
+    :
+        | InferredAnchorProps
+        | (TAsProp extends PolymorphicAs
+            ? {
+                as?: PolymorphicAs;
+              } & ComponentPropsWithoutRef<TAsProp>
+            : {
+                ERROR: 'Provided `as` prop must extend `React.ElementType`';
+              }));
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
  */
 export type InferredPolymorphicPropsWithRef<
-  P extends {},
-  D extends PolymorphicAs = PolymorphicAs,
-> = InferredPolymorphicProps<P> & {
+  TAsProp extends PolymorphicAs,
+  TComponentProps = {},
+> = InferredPolymorphicProps<TAsProp, TComponentProps> & {
   /** The ref object returned by `React.useRef` */
-  ref?: PolymorphicRef<ExtractInferredAsProp<P, D>>;
+  ref?: PolymorphicRef<TAsProp>;
 };
 
 /**
  * Inferred Props clone of {@link PolymorphicRenderFunction}
  */
 export interface InferredPolymorphicRenderFunction<
-  XP = {},
-  D extends PolymorphicAs = PolymorphicAs,
+  TComponentProps = {},
+  TDefaultAs extends PolymorphicAs = PolymorphicAs,
 > {
-  <P extends {}>(
-    props: InferredPolymorphicProps<P>,
-    ref: PolymorphicRef<ExtractInferredAsProp<P, D>>,
+  <TAsProp extends PolymorphicAs = TDefaultAs>(
+    props: InferredPolymorphicProps<TAsProp, TComponentProps>,
+    ref: PolymorphicRef<TAsProp>,
   ): ReactElement | null;
   displayName?: string;
   propTypes?: never;
@@ -149,13 +130,14 @@ export interface InferredPolymorphicRenderFunction<
  * Inferred props clone of {@link PolymorphicComponentType}
  */
 export type InferredPolymorphicComponentType<
-  XP = {},
-  D extends PolymorphicAs = PolymorphicAs,
-> = InferredPolymorphicRenderFunction<XP, D> & {
+  TComponentProps = {},
+  TDefaultAs extends PolymorphicAs = PolymorphicAs,
+> = InferredPolymorphicRenderFunction<TComponentProps, TDefaultAs> & {
   // FIXME: propTypes will be broken for any inherited props
   propTypes?:
     | WeakValidationMap<
-        InferredPolymorphicProps<{ as: any } & XP> & RefAttributes<any>
+        InferredPolymorphicProps<PolymorphicAs, TComponentProps> &
+          RefAttributes<any>
       >
     | undefined;
 };

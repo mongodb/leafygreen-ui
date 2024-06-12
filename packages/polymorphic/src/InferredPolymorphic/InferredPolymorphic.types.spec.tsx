@@ -24,9 +24,7 @@ import {
   AnchorLike,
   AnchorLikeProps,
   InferredPolymorphicProps,
-  InferredPolymorphicPropsWithRef,
   InferredPolymorphicRenderFunction,
-  InferredProps,
 } from './InferredPolymorphic.types';
 
 const TestAnchorLike = ((_props: { href: string }) => (
@@ -93,7 +91,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
   // undefined
   {
-    const _U: AnchorLikeProps<undefined> = { as: 'a', href: '' }; // undefined type arg sets `as` = 'a'
+    const _U: AnchorLikeProps<undefined> = { as: 'a', href: '' }; // undefined type arg sets expected `as` = 'a'
     const _U2: AnchorLikeProps<undefined> = { href: '' }; // undefined type arg infers `as` = 'a'
     // @ts-expect-error - undefined type sets as = 'a'
     const _U3: AnchorLikeProps<undefined> = { as: 'button', href: '' };
@@ -106,101 +104,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
   }
 }
 
-// InferredProps
-/* {
-  // anchor
-  {
-    const _A: InferredProps<'a'> = {
-      href: 'mongodb.design',
-    };
-    const _A2: InferredProps<'a'> = {
-      as: 'a',
-      href: 'mongodb.design',
-    };
-    // @ts-expect-error - requires href
-    const _A3: InferredProps<'a'> = {};
-    // @ts-expect-error - explicit `as` can't be reassigned
-    const _A4: InferredProps<'a'> = { as: 'button' };
-  }
-
-  // 'button'
-  {
-    const _B: InferredProps<'button'> = {
-      as: 'button',
-    };
-
-    // as='a' inferred from href regardless of type T
-    const _B2: InferredProps<'button'> = { href: '' };
-    const _B3: InferredProps<'button'> = { as: 'a', href: '' };
-    // @ts-expect-error href not valid on explicit button
-    const _B4: InferredProps<'button'> = { as: 'button', href: '' };
-  }
-
-  // anchor-like;
-  {
-    const _C: InferredProps<typeof TestAnchorLike> = {
-      /**
-       * The InferredProps internal type infers as="a" with the presence of an href.
-       * `InferredPolymorphicProps` is the true prop type
-       */
-//// @ts-expect-error
-/* as: TestAnchorLike,
-      href: 'mongodb.design',
-    };
-  } */
-/*
-  // not anchor-like
-  {
-    const _D: InferredProps<typeof TestNotAnchorLike> = {
-      as: TestNotAnchorLike,
-    };
-
-    const _D2: InferredProps<typeof TestNotAnchorLike> = {
-      // @ts-expect-error
-      as: TestAnchorLike,
-      href: 'mongodb.design',
-    };
-  }
-
-  // generic PolymorphicAs
-  {
-    const _G1a: InferredProps<PolymorphicAs> = {
-      as: 'a',
-      href: 'mongodb.design',
-    };
-    const _G2a: InferredProps<PolymorphicAs> = {
-      as: 'button',
-    };
-    const _G3a: InferredProps<PolymorphicAs> = {
-      as: TestAnchorLike,
-      href: 'mongodb.design', // href should be inherited
-    };
-    const _G4a: InferredProps<PolymorphicAs> = {
-      as: TestNotAnchorLike,
-      someProp: 'foobar', // someProp should be inherited,
-      someOtherProp: false,
-    };
-
-    const _G1b: InferredProps<PolymorphicAs> = {
-      as: 'a' as PolymorphicAs,
-      href: 'mongodb.design', // href should be inherited
-    };
-    const _G2b: InferredProps<PolymorphicAs> = {
-      as: 'button' as PolymorphicAs,
-    };
-    const _G3b: InferredProps<PolymorphicAs> = {
-      as: TestAnchorLike as PolymorphicAs,
-      href: 'mongodb.design', // href should be inherited
-    };
-    const _G4b: InferredProps<PolymorphicAs> = {
-      as: TestNotAnchorLike as PolymorphicAs,
-      someProp: 'foobar', // someProp should be inherited
-    };
-  }
-} */
-
 // InferredPolymorphicProps
-/* OLD
 {
   // anchor
   {
@@ -236,7 +140,7 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
     const _B4: InferredPolymorphicProps<'button'> = {
       as: 'button',
-      // @ts-expect-error href not valid on explicit button
+      // @ts-expect-error href does not exist explicit button
       href: 'mongodb.design',
     };
   }
@@ -260,9 +164,9 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
       someProp: 'foobar',
     };
 
-    // @ts-expect-error - href is not valid on TestNotAnchorLike
     const _D2: InferredPolymorphicProps<typeof TestNotAnchorLike> = {
       as: TestNotAnchorLike,
+      // @ts-expect-error - href does not exist on TestNotAnchorLike
       href: 'mongodb.design',
     };
   }
@@ -309,235 +213,186 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     href: 'mongodb.design',
   };
 }
-*/
-
-// InferredPolymorphicProps
-{
-  // anchor
-  {
-    // Explicit as anchor
-    const _A: InferredPolymorphicProps<{
-      as: 'a';
-      href: string;
-    }> = {
-      as: 'a',
-      href: 'mongodb.design',
-    };
-
-    // Inferred as anchor
-    const _A2: InferredPolymorphicProps<{}> = {
-      href: 'mongodb.design',
-    };
-
-    // Inferred anchor can be made explicit
-    const _A3: InferredPolymorphicProps<{}> = {
-      as: 'a',
-      href: 'mongodb.design',
-    };
-
-    // @ts-expect-error - 'a' requires href
-    const _A4: InferredPolymorphicProps<{ as: 'a' }> = {};
-    // @ts-expect-error - explicit `as` can't be reassigned
-    const _A5: InferredPolymorphicProps<{ as: 'a' }> = { as: 'button' };
-  }
-
-  // button
-  {
-    const _B: InferredPolymorphicProps<{
-      as: 'button';
-    }> = {
-      as: 'button',
-    };
-
-    // as = 'a' inferred from href regardless of type T
-    const _B2: InferredPolymorphicProps<{
-      as: 'button';
-    }> = {
-      // @ts-expect-error - TODO: Explicit `href` overrides explicit `as`
-      href: 'mongodb.design',
-    };
-
-    const _B3: InferredPolymorphicProps<{
-      as: 'button';
-    }> = {
-      // @ts-expect-error - TODO: Explicit `href` overrides explicit `as`
-      as: 'a',
-      href: 'mongodb.design',
-    };
-
-    const _B4: InferredPolymorphicProps<{
-      as: 'button';
-    }> = {
-      as: 'button',
-      // @ts-expect-error href not valid on explicit button
-      href: 'mongodb.design',
-    };
-  }
-
-  // anchor-like
-  {
-    const _C: InferredPolymorphicProps<{
-      as: typeof TestAnchorLike;
-    }> = {
-      as: TestAnchorLike,
-      href: 'mongodb.design',
-    };
-
-    // @ts-expect-error - href required on anchor-like
-    const _C2: InferredPolymorphicProps<{
-      as: typeof TestAnchorLike;
-    }> = {
-      as: TestAnchorLike,
-    };
-  }
-
-  // not anchor-like
-  {
-    const _D: InferredPolymorphicProps<{
-      as: typeof TestNotAnchorLike;
-    }> = {
-      as: TestNotAnchorLike,
-      someProp: 'foobar', // accepts other component props
-    };
-
-    const _D2: InferredPolymorphicProps<{
-      as: typeof TestNotAnchorLike;
-    }> = {
-      as: TestNotAnchorLike,
-      // @ts-expect-error - href is not valid on TestNotAnchorLike
-      href: 'mongodb.design',
-    };
-  }
-
-  // typed generic PolymorphicAs
-  {
-    const _G0: InferredPolymorphicProps<{ as: PolymorphicAs }> = {}; // empty object is technically valid
-
-    const _G1a: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: 'a',
-      href: '',
-    };
-    const _G2a: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: 'button',
-    };
-    const _G3a: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: TestAnchorLike, // extends InheritedExplicitAnchorLikeProps
-      href: 'mongodb.design',
-    };
-    const _G4a: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: TestNotAnchorLike,
-      someProp: 'foobar',
-    };
-
-    const _G1b: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: 'a' as PolymorphicAs,
-      href: 'mongodb.design',
-    };
-    const _G2b: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: 'button' as PolymorphicAs,
-    };
-    const _G3b: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: TestAnchorLike as PolymorphicAs,
-      href: 'mongodb.design',
-    };
-    const _G4b: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: TestNotAnchorLike as PolymorphicAs,
-      someProp: 'foobar',
-    };
-  }
-
-  // Arbitrary PolymorphicAs
-  {
-    const randAs = getRandAs();
-    const _R: InferredPolymorphicProps<{ as: PolymorphicAs }> = {
-      as: randAs,
-      href: 'mongodb.design',
-    };
-    const _R2: InferredPolymorphicProps<{ as: typeof randAs }> = {
-      as: randAs,
-      href: 'mongodb.design',
-    };
-  }
-}
 
 // InferredPolymorphicRenderFunction
 
 {
-  // @ts-expect-error
-  const hasTypeChecked: boolean = false;
+  const renderInferredPoly: InferredPolymorphicRenderFunction = (
+    props,
+    ref,
+  ) => <></>;
 
-  const renderPoly: InferredPolymorphicRenderFunction = (_props, _ref) => <></>;
+  // accepts empty props
+  renderInferredPoly({}, null);
 
-  renderPoly({}, null);
+  // Accepts href without `as`
+  renderInferredPoly({ href: '' }, null);
 
-  // @ts-expect-error - href is required on anchor
-  renderPoly({ as: 'a' }, null);
-  renderPoly({ as: 'a', href: 'mongodb.design' }, null);
-  renderPoly({ as: 'a', href: 'mongodb.design', id: 'abc' }, null);
+  // as = anchor
+  {
+    // @ts-expect-error - href is required on anchor
+    renderInferredPoly({ as: 'a' }, null);
+    renderInferredPoly({ as: 'a', href: '' }, null);
+    renderInferredPoly({ as: 'a', href: '', id: 'abc' }, null);
+  }
 
-  renderPoly({ as: 'button' }, null);
-  // @ts-expect-error href not valid on explicit button
-  renderPoly({ as: 'button', href: 'mongodb.design' }, null);
-  // @ts-expect-error misc. props not valid
-  renderPoly({ as: 'button', foobar: 'lorem_ipsum' }, null);
-  // @ts-expect-error - when as is indeterminate, href is required
-  renderPoly({ as: 'button' as PolymorphicAs }, null);
-  renderPoly({ as: 'button' as PolymorphicAs, href: '' }, null); // <- as: Type 'string' is not assignable to type 'FunctionComponent<any>'
+  // button
+  {
+    renderInferredPoly({ as: 'button' }, null);
+    // @ts-expect-error href not valid on explicit button
+    renderInferredPoly({ as: 'button', href: '' }, null);
+    // @ts-expect-error misc. props not valid
+    renderInferredPoly({ as: 'button', foo: 'bar' }, null);
+  }
 
-  renderPoly({ as: TestAnchorLike, href: 'mongodb.design' }, null);
-  renderPoly({ as: TestNotAnchorLike, someProp: 'lorem' }, null);
-  renderPoly(
-    { as: TestNotAnchorLike as PolymorphicAs, someProp: 'lorem' },
-    null,
-  );
-  renderPoly(
-    {
-      as: TestNotAnchorLike as PolymorphicAs, // <- Type 'PolymorphicAs' is not assignable to type 'FunctionComponent<any> | undefined'.
-      someProp: 'lorem',
-      href: 'mongodb.design',
-    },
-    null,
-  );
+  // anchor-like
+  {
+    renderInferredPoly({ as: TestAnchorLike, href: 'mongodb.design' }, null);
+    // @ts-expect-error - href is required on TestAnchorLike
+    renderInferredPoly({ as: TestAnchorLike }, null);
+  }
 
-  const randAs: PolymorphicAs = getRandAs();
-  const href1 = '';
-  renderPoly({ as: randAs, href: href1 }, null); // <- Type 'string' is not assignable to type 'undefined'.
+  // not anchor-like
+  {
+    renderInferredPoly({ as: TestNotAnchorLike, someProp: 'lorem' }, null);
+    // @ts-expect-error - someProp is required
+    renderInferredPoly({ as: TestNotAnchorLike }, null);
+    renderInferredPoly(
+      // @ts-expect-error - href is not valid
+      { as: TestNotAnchorLike, someProp: 'lorem', href: '' },
+      null,
+    );
+    // @ts-expect-error - misc. props not valid
+    renderInferredPoly({ as: TestNotAnchorLike, foo: 'bar' }, null);
+  }
 
-  const { as, href } = getPolymorphicProps();
-  renderPoly({ as: as, href: href }, null); // <- Type 'PolymorphicAs' is not assignable to type 'FunctionComponent<any> | undefined'.
+  // generically typed
+  {
+    renderInferredPoly({ as: 'a' as PolymorphicAs }, null);
+    renderInferredPoly({ as: 'a' as PolymorphicAs, href: '' }, null);
+
+    renderInferredPoly({ as: 'button' as PolymorphicAs }, null);
+    renderInferredPoly({ as: 'button' as PolymorphicAs, href: '' }, null);
+    renderInferredPoly(
+      { as: 'button' as PolymorphicAs, 'aria-label': 'bar' },
+      null,
+    );
+    // @ts-expect-error - misc. props not allowed
+    renderInferredPoly({ as: 'button' as PolymorphicAs, foo: 'bar' }, null);
+
+    renderInferredPoly({ as: TestAnchorLike as PolymorphicAs }, null);
+    renderInferredPoly({ as: TestAnchorLike as PolymorphicAs, href: '' }, null);
+    renderInferredPoly(
+      // @ts-expect-error - misc. props not allowed
+      { as: TestAnchorLike as PolymorphicAs, foo: 'bar' },
+      null,
+    );
+
+    renderInferredPoly({ as: TestNotAnchorLike as PolymorphicAs }, null);
+    renderInferredPoly(
+      // @ts-expect-error - when generically defined, non-JSXIntrinsicAttributes are not valid
+      { as: TestNotAnchorLike as PolymorphicAs, someProp: 'lorem' },
+      null,
+    );
+  }
+
+  // Arbitrary
+  {
+    const randAs: PolymorphicAs = getRandAs();
+    const href1 = '';
+    renderInferredPoly({ as: randAs }, null); // href not required
+    renderInferredPoly({ as: randAs, href: href1 }, null); // but href is allowed
+    renderInferredPoly({ as: randAs, 'aria-label': 'bar' }, null); // any intrinsic attribute is allowed
+    // @ts-expect-error - misc props not allowed when As is generically defined
+    renderInferredPoly({ as: randAs, foo: 'bar' }, null);
+
+    const { as, href } = getPolymorphicProps();
+    renderInferredPoly({ as: as, href: href }, null);
+  }
 }
 
 // InferredPolymorphic
 {
-  const MyInferredPoly = InferredPolymorphic<{}, 'button'>(_props => {
+  const MyInferredPoly = InferredPolymorphic<{}, 'button'>(props => {
     return <></>;
   });
 
+  // accepts empty props
   <MyInferredPoly />;
 
-  // @ts-expect-error - href is required
-  <MyInferredPoly as={'a'} />;
-  <MyInferredPoly as={'a'} href={'mongodb.design'} />;
+  // accepts href without `as`
+  <MyInferredPoly href="" />;
 
-  <MyInferredPoly as="button" href="mongodb.design" />;
-  <MyInferredPoly as={'button' as PolymorphicAs} />;
-  <MyInferredPoly as={'button' as PolymorphicAs} href="" />;
+  // as = anchor
+  {
+    // @ts-expect-error - href is required
+    <MyInferredPoly as={'a'} />;
+    <MyInferredPoly as={'a'} href={'mongodb.design'} />;
+  }
 
-  <MyInferredPoly as={TestAnchorLike} href="mongodb.design" />;
-  <MyInferredPoly as={TestAnchorLike as PolymorphicAs} href="mongodb.design" />;
-  // @ts-expect-error
-  <MyInferredPoly as={TestAnchorLike} />;
-  <MyInferredPoly as={TestNotAnchorLike}>lorem</MyInferredPoly>;
-  // @ts-expect-error - when as is indeterminate, href is required
-  <MyInferredPoly as={TestNotAnchorLike as PolymorphicAs} href="">
-    foo
-  </MyInferredPoly>;
-  <MyInferredPoly as={TestNotAnchorLike as PolymorphicAs}>foo</MyInferredPoly>;
+  // as = 'button'
+  {
+    <MyInferredPoly as="button" />;
+    // @ts-expect-error href not valid on explicit button
+    <MyInferredPoly as="button" href="mongodb.design" />;
+    // @ts-expect-error misc. props not valid
+    <MyInferredPoly as="button" foo="bar" />;
+    /* <MyInferredPoly as={'button' as PolymorphicAs} />;
+    <MyInferredPoly as={'button' as PolymorphicAs} hre }f="" />; */
+  }
 
-  const randAs: PolymorphicAs = getRandAs();
-  const href1 = '';
-  <MyInferredPoly as={randAs} href={href1} />;
+  // anchor-like
+  {
+    <MyInferredPoly as={TestAnchorLike} href="mongodb.design" />;
+    // @ts-expect-error - href is required for TestAnchorLike
+    <MyInferredPoly as={TestAnchorLike} />;
+  }
 
-  const { as, href } = getPolymorphicProps();
-  <MyInferredPoly as={as} href={href} />;
+  // not anchor-like
+  {
+    <MyInferredPoly as={TestNotAnchorLike} someProp="lorem" />;
+    // @ts-expect-error - someProp is required
+    <MyInferredPoly as={TestNotAnchorLike} />;
+    // @ts-expect-error - href is not valid
+    <MyInferredPoly as={TestNotAnchorLike} someProp="lorem" href="" />;
+    // @ts-expect-error - misc. props not valid
+    <MyInferredPoly as={TestNotAnchorLike} someProp="lorem" foo="bar" />;
+  }
+
+  // generically typed
+
+  {
+    <MyInferredPoly as={'a' as PolymorphicAs} />;
+    <MyInferredPoly as={'a' as PolymorphicAs} href="" />;
+
+    <MyInferredPoly as={'button' as PolymorphicAs} />;
+    <MyInferredPoly as={'button' as PolymorphicAs} href="" />;
+    <MyInferredPoly as={'button' as PolymorphicAs} aria-label="bar" />;
+
+    // @ts-expect-error - misc. props not allowed
+    <MyInferredPoly as={'button' as PolymorphicAs} foo="bar" />;
+
+    <MyInferredPoly as={TestAnchorLike as PolymorphicAs} />;
+    <MyInferredPoly as={TestAnchorLike as PolymorphicAs} href="" />;
+    // @ts-expect-error - misc. props not allowed
+    <MyInferredPoly as={TestAnchorLike as PolymorphicAs} foo="bar" />;
+
+    <MyInferredPoly as={TestNotAnchorLike as PolymorphicAs} />;
+    // @ts-expect-error - when generically defined, non-JSXIntrinsicAttributes are not valid
+    <MyInferredPoly as={TestNotAnchorLike as PolymorphicAs} someProp="lorem" />;
+  }
+
+  // arbitrary
+  {
+    const randAs: PolymorphicAs = getRandAs();
+    const href1 = '';
+    <MyInferredPoly as={randAs} />; // href not required
+    <MyInferredPoly as={randAs} href={href1} />; // but href is allowed
+    <MyInferredPoly as={randAs} aria-label={'bar'} />; // any intrinsic attribute is allowed
+    // @ts-expect-error - misc props not allowed when as is generically defined
+    <MyInferredPoly as={randAs} foo={'bar'} />;
+
+    const { as, href } = getPolymorphicProps();
+    <MyInferredPoly as={as} href={href} />;
+  }
 }

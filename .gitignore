@@ -51,7 +51,7 @@ build-storybook.log
 doctor-storybook.log
 
 .turbo
-scripts/tmp.*.ts
+scripts/tmp.*
 
 # 
 .npmrc
