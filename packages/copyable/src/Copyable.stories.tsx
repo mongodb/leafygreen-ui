@@ -49,7 +49,7 @@ export default meta;
 
 export const LiveExample: StoryType<typeof Copyable> = args => (
   <div>
-    <Copyable {...args} />
+    <Copyable {...args} onCopy={e => console.log(e)} />
   </div>
 );
 
