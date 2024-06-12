@@ -90,6 +90,10 @@ export default function Copyable({
       onCopy?.(event);
     });
 
+    clipboard.on('error', (event: React.ClipboardEvent<HTMLDivElement>) => {
+      onCopy?.(event);
+    });
+
     if (copied) {
       const timeoutId = setTimeout(() => {
         setCopied(false);
