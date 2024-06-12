@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.5.3
+
+### Patch Changes
+
+- 838a95b73: Slight tweaks for .design story
+
 ## 12.5.2
 
 ### Patch Changes
