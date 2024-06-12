@@ -392,3 +392,6 @@ const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
     <MyInferredPoly as={as} href={href} />;
   }
 }
+
+// // @ts-expect-error
+// const bool = false;
