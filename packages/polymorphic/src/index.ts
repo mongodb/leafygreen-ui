@@ -19,10 +19,8 @@ export {
   usePolymorphicComponent,
   usePolymorphicRef,
 } from './Polymorphic';
-export {
-  getLooseInferredPolymorphicProps,
-  getStronglyInferredPolymorphicProps,
-} from './utils/getInferredPolymorphicProps';
+export { getStronglyInferredPolymorphicProps } from './utils/getInferredPolymorphicProps';
+export { hasAnchorProps } from './utils/hasAnchorProps/hasAnchorProps';
 export {
   type LoosePolymorphicProps,
   type PropsOf,

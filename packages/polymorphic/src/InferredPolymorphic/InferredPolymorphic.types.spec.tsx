@@ -10,10 +10,6 @@
 import React from 'react';
 
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
-import {
-  getLooseInferredPolymorphicProps,
-  isAnchorProps,
-} from '../utils/getInferredPolymorphicProps';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 
 import { InferredPolymorphic } from './InferredPolymorphic';
@@ -23,6 +19,7 @@ import {
   InferredPolymorphicProps,
   InferredPolymorphicRenderFunction,
 } from './InferredPolymorphic.types';
+import { useInferredPolymorphicProps } from './useInferredPolymorphic';
 
 const TestAnchorLike = ((_props: { href: string }) => (
   <></>
@@ -300,7 +297,7 @@ describe.skip('Inferred Polymorphic types', () => {
       // @ts-expect-error - misc props not allowed when As is generically defined
       renderInferredPoly({ as: randAs, foo: 'bar' }, null);
 
-      const { as, href } = getLooseInferredPolymorphicProps(randAs, {});
+      const { as, href } = useInferredPolymorphicProps(randAs, {});
       renderInferredPoly({ as: as, href: href }, null);
     }
   });
@@ -393,7 +390,7 @@ describe.skip('Inferred Polymorphic types', () => {
       // @ts-expect-error - misc props not allowed when as is generically defined
       <MyInferredPoly as={randAs} foo={'bar'} />;
 
-      const { as, href } = getLooseInferredPolymorphicProps(randAs, {});
+      const { as, href } = useInferredPolymorphicProps(randAs, {});
       <MyInferredPoly as={as} href={href} />;
     }
   });
@@ -405,13 +402,13 @@ describe.skip('Inferred Polymorphic types', () => {
     }
     const MyInferredPoly = InferredPolymorphic<MyProps, 'button'>(
       ({ as: asProp, ...props }) => {
-        const { as, href, ...rest } = getLooseInferredPolymorphicProps(
+        const { as, href, ...rest } = useInferredPolymorphicProps(
           asProp,
           props,
         );
 
-        const value = rest.value;
-        const variant = rest.variant;
+        rest.value satisfies MyProps['value'];
+        rest.variant satisfies MyProps['variant'];
         rest.href satisfies string | undefined;
         rest.target satisfies string | undefined;
         rest.rel satisfies string | undefined;
@@ -420,7 +417,4 @@ describe.skip('Inferred Polymorphic types', () => {
       },
     );
   });
-
-  // // @ts-expect-error
-  // const bool = false;
 });

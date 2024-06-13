@@ -7,71 +7,14 @@ import { PolymorphicAs } from '../Polymorphic';
 const fallbackAs = 'div';
 
 /**
- * Returns a loosely typed prop object,
- * with a defined `as` value,
- * a potentially defined `href` prop,
- * and the rest of the provided props,
- * typed as a union of attributes on all PolymorphicAs value
- */
-export function getLooseInferredPolymorphicProps(
-  as?: PolymorphicAs,
-  rest?: Record<string, any>,
-  defaultAs?: PolymorphicAs,
-): {
-  as: PolymorphicAs;
-  href?: string;
-} & ComponentPropsWithoutRef<PolymorphicAs> {
-  const href = rest?.href;
-
-  // If `as` is explicitly "a", we return anchor props, with explicit href
-  if (as && as === 'a') {
-    if (!href || typeof href !== 'string') {
-      consoleOnce.error(
-        'LG Polymorphic error',
-        'Component received `as="a"`, but did not receive an `href` prop',
-      );
-    }
-
-    return {
-      as: 'a' as PolymorphicAs,
-      href: typeof href === 'string' ? href : undefined,
-      ...rest,
-    };
-  }
-
-  // If `as` is anything else, but rest.href is a string, return explicit anchor props
-  if (href) {
-    return {
-      as: 'a',
-      href,
-      ...rest,
-    };
-  }
-
-  // If `as` is otherwise defined, we return that element's component props
-  if (as) {
-    return {
-      as,
-      href: undefined,
-      ...rest,
-    };
-  }
-
-  // If `as` is undefined, we return the default argument's props
-  return {
-    as: defaultAs || fallbackAs,
-    ...rest,
-  };
-}
-
-/**
  *
  * Returns a strongly-typed props object,
  *
  * WARING - using this function unnecessarily can cause TypeScript
  * to slow down dramatically.
  *
- * In most cases {@link getLooseInferredPolymorphicProps} will be sufficient
+ * In most cases simply calling `useInferredPolymorphic`,
+ * and leveraging appropriate type guards will be sufficient
  *
  * If `as` is explicitly "a", we return anchor props, with explicit href.
  * If `as` is something else, but rest.href is a string, return explicit anchor props.
@@ -135,16 +78,45 @@ export function getStronglyInferredPolymorphicProps<
   TRest extends Record<string, any>,
   TDefault extends PolymorphicAs = typeof fallbackAs,
 >(as?: TAs, rest?: TRest, defaultAs?: TDefault) {
-  return getLooseInferredPolymorphicProps(as, rest, defaultAs);
-}
+  const href = rest?.href;
 
-/**
- * A type guard asserting that the provided `as` prop and rest props
- * satisfy the intrinsic attributes of an anchor (`<a>`) element
- */
-export const isAnchorProps = <TProps extends any>(
-  as?: PolymorphicAs,
-  props?: TProps,
-): props is ComponentPropsWithoutRef<'a'> & TProps => {
-  return as === 'a';
-};
+  // If `as` is explicitly "a", we return anchor props, with explicit href
+  if (as && as === 'a') {
+    if (!href || typeof href !== 'string') {
+      consoleOnce.error(
+        'LG Polymorphic error',
+        'Component received `as="a"`, but did not receive an `href` prop',
+      );
+    }
+
+    return {
+      as: 'a' as PolymorphicAs,
+      href: typeof href === 'string' ? href : undefined,
+      ...rest,
+    };
+  }
+
+  // If `as` is anything else, but rest.href is a string, return explicit anchor props
+  if (href) {
+    return {
+      as: 'a',
+      href,
+      ...rest,
+    };
+  }
+
+  // If `as` is otherwise defined, we return that element's component props
+  if (as) {
+    return {
+      as,
+      href: undefined,
+      ...rest,
+    };
+  }
+
+  // If `as` is undefined, we return the default argument's props
+  return {
+    as: defaultAs || fallbackAs,
+    ...rest,
+  };
+}
