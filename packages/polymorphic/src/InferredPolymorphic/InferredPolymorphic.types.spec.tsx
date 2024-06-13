@@ -8,6 +8,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests */
 
 import React from 'react';
+import NextLink from 'next/link';
 
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
@@ -24,20 +25,26 @@ import {
 const TestAnchorLike = ((_props: { href: string }) => (
   <></>
 )) satisfies PolymorphicAs;
-const TestNotAnchorLike = ((_props: { someProp: any }) => (
+const TestNodeURLAnchorLike = ((_props: { href: NodeUrlLike }) => (
   <></>
 )) satisfies PolymorphicAs;
+
+const TestArbitraryComponent = ((_props: { someProp: any }) => (
+  <></>
+)) satisfies PolymorphicAs;
+
 const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
 describe.skip('Inferred Polymorphic types', () => {
   test('AnchorLike', () => {
-    const _A: AnchorLike = 'a';
+    'a' satisfies AnchorLike;
     // @ts-expect-error - not assignable to AnchorLike
-    const _B: AnchorLike = 'button';
-    const _C: AnchorLike = TestAnchorLike;
-    const _D: AnchorLike = (_props: { href: NodeUrlLike }) => <></>;
+    'button' satisfies AnchorLike;
+    TestAnchorLike satisfies AnchorLike;
     // @ts-expect-error - not assignable to AnchorLike
-    const _E: AnchorLike = TestNotAnchorLike;
+    TestArbitraryComponent satisfies AnchorLike;
+    TestNodeURLAnchorLike satisfies AnchorLike;
+    NextLink satisfies AnchorLike;
   });
 
   test('AnchorLikeProps', () => {
@@ -78,6 +85,36 @@ describe.skip('Inferred Polymorphic types', () => {
       // explicit as is not required here
       const _C3: AnchorLikeProps<typeof TestAnchorLike> = {
         href: '',
+      };
+    }
+
+    // TestNodeURLAnchorLike
+    {
+      const _E: AnchorLikeProps<typeof TestNodeURLAnchorLike> = {
+        as: TestNodeURLAnchorLike,
+        // @ts-expect-error - expect href to be NodeUrl
+        href: '',
+      };
+
+      const _E2: AnchorLikeProps<typeof TestNodeURLAnchorLike> = {
+        as: TestNodeURLAnchorLike,
+        href: {
+          hostname: 'mongodb.design',
+        },
+      };
+    }
+
+    // NextLink
+    {
+      const _N: AnchorLikeProps<typeof NextLink> = {
+        as: NextLink,
+        href: '',
+      };
+      const _N2: AnchorLikeProps<typeof NextLink> = {
+        as: NextLink,
+        href: {
+          hostname: 'mongodb.design',
+        },
       };
     }
 
@@ -136,7 +173,7 @@ describe.skip('Inferred Polymorphic types', () => {
       };
     }
 
-    // anchor-like
+    // AnchorLike
     {
       const _C: InferredPolymorphicProps<typeof TestAnchorLike> = {
         as: TestAnchorLike,
@@ -148,17 +185,47 @@ describe.skip('Inferred Polymorphic types', () => {
       };
     }
 
-    // not anchor-like
+    // not AnchorLike
     {
-      const _D: InferredPolymorphicProps<typeof TestNotAnchorLike> = {
-        as: TestNotAnchorLike,
+      const _D: InferredPolymorphicProps<typeof TestArbitraryComponent> = {
+        as: TestArbitraryComponent,
         someProp: 'foobar',
       };
 
-      const _D2: InferredPolymorphicProps<typeof TestNotAnchorLike> = {
-        as: TestNotAnchorLike,
+      const _D2: InferredPolymorphicProps<typeof TestArbitraryComponent> = {
+        as: TestArbitraryComponent,
         // @ts-expect-error - href does not exist on TestNotAnchorLike
         href: 'mongodb.design',
+      };
+    }
+
+    // NodeURL AnchorLike
+    {
+      const _E: InferredPolymorphicProps<typeof TestNodeURLAnchorLike> = {
+        as: TestNodeURLAnchorLike,
+        // @ts-expect-error - expect href to be NodeUrl
+        href: '',
+      };
+
+      const _E2: InferredPolymorphicProps<typeof TestNodeURLAnchorLike> = {
+        as: TestNodeURLAnchorLike,
+        href: {
+          hostname: 'mongodb.design',
+        },
+      };
+    }
+
+    // NextLink
+    {
+      const _N: InferredPolymorphicProps<typeof NextLink> = {
+        as: NextLink,
+        href: '',
+      };
+      const _N2: InferredPolymorphicProps<typeof NextLink> = {
+        as: NextLink,
+        href: {
+          hostname: 'mongodb.design',
+        },
       };
     }
 
@@ -177,8 +244,16 @@ describe.skip('Inferred Polymorphic types', () => {
         href: 'mongodb.design',
       };
       const _G4a: InferredPolymorphicProps<PolymorphicAs> = {
-        as: TestNotAnchorLike,
+        as: TestArbitraryComponent,
         someProp: 'foobar',
+      };
+      const _G5a: InferredPolymorphicProps<PolymorphicAs> = {
+        as: TestNodeURLAnchorLike,
+        href: { hostname: 'mongodb.design' },
+      };
+      const _G6a: InferredPolymorphicProps<PolymorphicAs> = {
+        as: NextLink,
+        href: 'mongodb.design',
       };
 
       const _G1b: InferredPolymorphicProps<PolymorphicAs> = {
@@ -193,8 +268,16 @@ describe.skip('Inferred Polymorphic types', () => {
         href: 'mongodb.design',
       };
       const _G4b: InferredPolymorphicProps<PolymorphicAs> = {
-        as: TestNotAnchorLike as PolymorphicAs,
+        as: TestArbitraryComponent as PolymorphicAs,
         someProp: 'foobar',
+      };
+      const _G5b: InferredPolymorphicProps<PolymorphicAs> = {
+        as: TestNodeURLAnchorLike as PolymorphicAs,
+        href: { hostname: 'mongodb.design' },
+      };
+      const _G6b: InferredPolymorphicProps<PolymorphicAs> = {
+        as: NextLink as PolymorphicAs,
+        href: 'mongodb.design',
       };
     }
 
@@ -233,25 +316,57 @@ describe.skip('Inferred Polymorphic types', () => {
       renderInferredPoly({ as: 'button', foo: 'bar' }, null);
     }
 
-    // anchor-like
+    // AnchorLike
     {
       renderInferredPoly({ as: TestAnchorLike, href: 'mongodb.design' }, null);
       // @ts-expect-error - href is required on TestAnchorLike
       renderInferredPoly({ as: TestAnchorLike }, null);
     }
 
-    // not anchor-like
+    // not AnchorLike
     {
-      renderInferredPoly({ as: TestNotAnchorLike, someProp: 'lorem' }, null);
+      renderInferredPoly(
+        { as: TestArbitraryComponent, someProp: 'lorem' },
+        null,
+      );
       // @ts-expect-error - someProp is required
-      renderInferredPoly({ as: TestNotAnchorLike }, null);
+      renderInferredPoly({ as: TestArbitraryComponent }, null);
       renderInferredPoly(
         // @ts-expect-error - href is not valid
-        { as: TestNotAnchorLike, someProp: 'lorem', href: '' },
+        { as: TestArbitraryComponent, someProp: 'lorem', href: '' },
         null,
       );
       // @ts-expect-error - misc. props not valid
-      renderInferredPoly({ as: TestNotAnchorLike, foo: 'bar' }, null);
+      renderInferredPoly({ as: TestArbitraryComponent, foo: 'bar' }, null);
+    }
+
+    // NodeURL AnchorLike
+    {
+      renderInferredPoly({ as: TestNodeURLAnchorLike, href: '' }, null);
+
+      renderInferredPoly(
+        {
+          as: TestNodeURLAnchorLike,
+          href: {
+            hostname: 'mongodb.design',
+          },
+        },
+        null,
+      );
+    }
+
+    // NextLink
+    {
+      renderInferredPoly({ as: NextLink, href: '' }, null);
+      renderInferredPoly(
+        {
+          as: NextLink,
+          href: {
+            hostname: 'mongodb.design',
+          },
+        },
+        null,
+      );
     }
 
     // generically typed
@@ -279,12 +394,19 @@ describe.skip('Inferred Polymorphic types', () => {
         null,
       );
 
-      renderInferredPoly({ as: TestNotAnchorLike as PolymorphicAs }, null);
+      renderInferredPoly({ as: TestArbitraryComponent as PolymorphicAs }, null);
       renderInferredPoly(
         // @ts-expect-error - when generically defined, non-JSXIntrinsicAttributes are not valid
-        { as: TestNotAnchorLike as PolymorphicAs, someProp: 'lorem' },
+        { as: TestArbitraryComponent as PolymorphicAs, someProp: 'lorem' },
         null,
       );
+
+      renderInferredPoly(
+        { as: TestNodeURLAnchorLike as PolymorphicAs, href: '' },
+        null,
+      );
+
+      renderInferredPoly({ as: NextLink as PolymorphicAs, href: '' }, null);
     }
 
     // Arbitrary
@@ -346,13 +468,23 @@ describe.skip('Inferred Polymorphic types', () => {
 
     // not anchor-like
     {
-      <MyInferredPoly as={TestNotAnchorLike} someProp="lorem" />;
+      <MyInferredPoly as={TestArbitraryComponent} someProp="lorem" />;
       // @ts-expect-error - someProp is required
-      <MyInferredPoly as={TestNotAnchorLike} />;
+      <MyInferredPoly as={TestArbitraryComponent} />;
       // @ts-expect-error - href is not valid
-      <MyInferredPoly as={TestNotAnchorLike} someProp="lorem" href="" />;
+      <MyInferredPoly as={TestArbitraryComponent} someProp="lorem" href="" />;
       // @ts-expect-error - misc. props not valid
-      <MyInferredPoly as={TestNotAnchorLike} someProp="lorem" foo="bar" />;
+      <MyInferredPoly as={TestArbitraryComponent} someProp="lorem" foo="bar" />;
+    }
+
+    // TestNodeURLAnchorLike
+    {
+      <MyInferredPoly as={TestNodeURLAnchorLike} href={{ hostname: '' }} />;
+    }
+
+    {
+      <MyInferredPoly as={NextLink} href="" />;
+      <MyInferredPoly as={NextLink} href={{ hostname: '' }} />;
     }
 
     // generically typed
@@ -372,12 +504,21 @@ describe.skip('Inferred Polymorphic types', () => {
       // @ts-expect-error - misc. props not allowed
       <MyInferredPoly as={TestAnchorLike as PolymorphicAs} foo="bar" />;
 
-      <MyInferredPoly as={TestNotAnchorLike as PolymorphicAs} />;
+      <MyInferredPoly as={TestArbitraryComponent as PolymorphicAs} />;
       <MyInferredPoly
-        as={TestNotAnchorLike as PolymorphicAs}
+        as={TestArbitraryComponent as PolymorphicAs}
         // @ts-expect-error - when generically defined, non-JSX Intrinsic Attributes are not valid
         someProp="lorem"
       />;
+
+      <MyInferredPoly
+        as={TestNodeURLAnchorLike as PolymorphicAs}
+        // @ts-expect-error - when generically defined, non-JSX Intrinsic Attributes are not valid
+        href={{ hostname: '' }}
+      />;
+      <MyInferredPoly as={NextLink as PolymorphicAs} href="" />;
+      // @ts-expect-error - when generically defined, non-JSX Intrinsic Attributes are not valid
+      <MyInferredPoly as={NextLink as PolymorphicAs} href={{ hostname: '' }} />;
     }
 
     // arbitrary
