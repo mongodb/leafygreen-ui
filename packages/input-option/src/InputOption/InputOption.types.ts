@@ -18,11 +18,12 @@ export interface BaseInputOptionProps {
 
   /**
    * Defines the currently highlighted option,
-   * and applies the relevant styles and aria attributes.
+   * and applies the relevant highlight styles and `aria-selected` attribute
+   * (either )
    *
-   * Functionally similar to `:focus` state, however highlight not always implemented with true browser focus state
+   * Functionally similar to `:focus` state, however `highlight` behaviors are not always implemented with true browser focus state
    * (e.g. some components maintain the browser focus on the trigger element,
-   * and identify the "highlighted" option with the `aria-selected` attribute).
+   * and identify the "highlighted" option with only the `aria-selected` attribute).
    *
    * Not to be confused with `checked`, which identifies the currently active/selected option.
    * @default false

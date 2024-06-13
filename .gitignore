@@ -59,3 +59,4 @@ TODO.md
 
 # PR train config (https://github.com/realyze/pr-train)
 .pr-train.yml
+scripts/tmp.inferred.tsx
