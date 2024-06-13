@@ -94,10 +94,10 @@ describe('Polymorphic/Example Higher-order Components', () => {
         expect(queryByTestId('wrapper')?.tagName.toLowerCase()).toBe('span');
       });
 
-      describe('With explicit default JS value (not recommended)', () => {
+      describe('Improperly implemented InferredPolymorphic components', () => {
         const TestComponent = InferredPolymorphic<{}, 'button'>(
           // NOTE: in general, `as` should *not* be given a default JS value
-          ({ as = 'button', ...rest }) => {
+          ({ as = 'button' as PolymorphicAs, ...rest }) => {
             const { Component } = useInferredPolymorphic(as, rest, 'button');
             return <Component data-testid="component" />;
           },
@@ -106,13 +106,17 @@ describe('Polymorphic/Example Higher-order Components', () => {
         test('should render with the given default', () => {
           const { getByTestId } = render(<TestComponent />);
           const component = getByTestId('component');
+
           expect(component.tagName.toLowerCase()).toBe('button');
         });
 
-        test('will infer `as` from href', () => {
+        test('will NOT infer as from href', () => {
           const { getByTestId } = render(<TestComponent href="string" />);
           const component = getByTestId('component');
-          expect(component.tagName.toLowerCase()).toBe('a');
+
+          // This is NOT what we want generally,
+          // but is a sign of an improperly implemented InferredPolymorphic component
+          expect(component.tagName.toLowerCase()).not.toBe('a');
         });
       });
     });
@@ -179,8 +183,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
       });
 
       test('Works with NextLink', () => {
-        NextLink satisfies PolymorphicAs;
-
         const { getByText } = render(
           <ExampleInferred
             as={NextLink}
