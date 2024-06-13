@@ -60,6 +60,8 @@ export default {
         'refEl',
         'setOpen',
         'as',
+        'portalRef',
+        'usePortal',
       ],
     },
     chromatic: {
@@ -67,16 +69,13 @@ export default {
     },
   },
   args: {
-    open: true,
     align: 'bottom',
     usePortal: true,
     darkMode: false,
+    renderDarkMenu: true,
   },
   argTypes: {
     open: {
-      control: 'boolean',
-    },
-    usePortal: {
       control: 'boolean',
     },
     size: {
@@ -86,16 +85,14 @@ export default {
         'Size of the `MenuItem` component, can be `default` or `large`',
     },
     darkMode: storybookArgTypes.darkMode,
+    renderDarkMenu: {
+      control: 'boolean',
+    },
   },
 } satisfies StoryMetaType<typeof Menu>;
 
 export const LiveExample = {
-  render: ({
-    open: _,
-    size,
-    darkMode,
-    ...args
-  }: MenuProps & { size: MenuItemProps['size'] }) => {
+  render: ({ open, size, darkMode, ...args }) => {
     return (
       <Menu
         darkMode={darkMode}
@@ -104,6 +101,7 @@ export const LiveExample = {
             Menu
           </Button>
         }
+        open={open}
         {...args}
       >
         <MenuItem size={size} glyph={<CloudIcon />}>
@@ -164,14 +162,15 @@ export const LiveExample = {
       disableSnapshot: true,
     },
   },
-} satisfies StoryObj<typeof Menu & { size: MenuItemProps['size'] }>;
+} satisfies StoryObj<typeof Menu & { size?: MenuItemProps['size'] }>;
 
 export const InitialOpen = {
-  render: () => {
+  render: args => {
     return (
       <Menu
         initialOpen
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        {...args}
       >
         <MenuItem>Lorem</MenuItem>
         <MenuItem>Ipsum</MenuItem>
@@ -187,7 +186,7 @@ export const InitialOpen = {
 } satisfies StoryObj<typeof Menu>;
 
 export const Controlled = {
-  render: () => {
+  render: args => {
     const [open, setOpen] = useState(true);
 
     return (
@@ -195,6 +194,7 @@ export const Controlled = {
         open={open}
         setOpen={setOpen}
         trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        {...args}
       >
         <MenuItem>Lorem</MenuItem>
         <MenuItem>Ipsum</MenuItem>
@@ -203,6 +203,23 @@ export const Controlled = {
     );
   },
   parameters: {
+    controls: {
+      exclude: [
+        ...storybookExcludedControlParams,
+        'trigger',
+        'children',
+        'refEl',
+        'setOpen',
+        'as',
+        'portalRef',
+        'usePortal',
+        'align',
+        'darkMode',
+        'justify',
+        'renderDarkMenu',
+        'size',
+      ],
+    },
     chromatic: {
       disableSnapshot: true,
     },

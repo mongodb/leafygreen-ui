@@ -15,13 +15,18 @@ const getInitialIndex = (descendants: DescendantsList<HTMLElement>) =>
  */
 export const useHighlightReducer = (
   descendants: DescendantsList<HTMLElement>,
-  onChange?: (newIndex: Index) => void,
+  onChange?: (
+    newIndex: Index,
+    updatedDescendants: DescendantsList<HTMLElement>,
+  ) => void,
 ): [Index, Dispatch<Direction>] => {
   // Initializes a new reducer function
   const highlightReducerFunction: Reducer<Index, Direction> = (
     _index,
     direction,
   ) => getUpdatedIndex(direction, _index, descendants);
+
+  // Create the reducer
   const [index, dispatch] = useReducer<Reducer<Index, Direction>>(
     highlightReducerFunction,
     getInitialIndex(descendants),
@@ -32,7 +37,8 @@ export const useHighlightReducer = (
    */
   const updateIndex = (direction: Direction) => {
     const updatedIndex = highlightReducerFunction(index, direction);
-    onChange?.(updatedIndex);
+
+    onChange?.(updatedIndex, descendants);
     dispatch(direction);
   };
 

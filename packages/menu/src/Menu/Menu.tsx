@@ -56,6 +56,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     open: controlledOpen,
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
+    renderDarkMenu = true,
     children,
     className,
     refEl,
@@ -69,14 +70,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }: MenuProps,
   forwardRef,
 ) {
-  const { theme, darkMode } = useDarkMode(darkModeProp);
+  const renderDarkMode = renderDarkMenu || darkModeProp;
+  const { theme, darkMode } = useDarkMode(renderDarkMode);
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
-
-  const { descendants, dispatch } = useInitDescendants();
 
   const setOpen =
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
@@ -96,13 +96,16 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
+  const { descendants, dispatch, getDescendants } = useInitDescendants();
+
   // Tracks the currently highlighted (focused) item index
   // Fires `.focus()` when the index is updated
   const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
     descendants,
     index => {
       if (isDefined(index)) {
-        descendants[index]?.element?.focus();
+        const descendantElement = getDescendants()[index]?.ref.current;
+        descendantElement?.focus();
       }
     },
   );

@@ -2,51 +2,30 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import { cx } from '@leafygreen-ui/emotion';
-import { createUniqueClassName, getNodeTextContent } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  useInferredPolymorphic,
+  useInferredPolymorphicComponent,
 } from '@leafygreen-ui/polymorphic';
 
 import { MenuContext, MenuDescendantsContext } from '../MenuContext';
-import {
-  activeDescriptionTextStyle,
-  activeIconStyle,
-  activeMenuItemContainerStyle,
-  activeTitleTextStyle,
-  descriptionTextThemeStyle,
-  destructiveTextStyle,
-  disabledMenuItemContainerThemeStyle,
-  disabledTextStyle,
-  focusedMenuItemContainerStyle,
-  getFocusedStyles,
-  getHoverStyles,
-  linkDescriptionTextStyle,
-  linkStyle,
-  mainIconBaseStyle,
-  mainIconThemeStyle,
-  menuItemContainerStyle,
-  menuItemContainerThemeStyle,
-  menuItemHeight,
-  textContainer,
-  titleTextStyle,
-} from '../styles';
 import { Size } from '../types';
 
 import {
-  destructiveIconStyle,
-  disabledIconStyle,
+  getMenuItemContentStyles,
+  getMenuItemStyles,
   menuItemContainerStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
-const menuItemContainerClassName = createUniqueClassName('menu-item-container');
+const menuItemClassName = createUniqueClassName('menu_item');
 
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
     {
-      as,
+      as: asProp,
       disabled = false,
       active = false,
       size = Size.Default,
@@ -59,115 +38,63 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
     },
     fwdRef: React.Ref<any>,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme, highlightIndex: _highlightIndex } = useContext(MenuContext);
-    const { ref } = useDescendant(MenuDescendantsContext, fwdRef, {
+    const as = useInferredPolymorphicComponent(asProp, rest, 'button');
+    const { theme, darkMode, highlightIndex } = useContext(MenuContext);
+    const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
     });
-    const hoverStyles = getHoverStyles(menuItemContainerClassName, theme);
-    const focusStyles = getFocusedStyles(menuItemContainerClassName, theme);
-    const isDestructive = variant === Variant.Destructive;
-    const showActiveStyles = active && !isDestructive;
 
-    const isAnchor = Component === 'a';
-
-    const updatedGlyph =
-      glyph &&
-      React.cloneElement(glyph, {
-        role: 'presentation',
-        className: cx(
-          mainIconBaseStyle,
-          mainIconThemeStyle[theme],
-          focusStyles.iconStyle,
-          {
-            [activeIconStyle[theme]]: showActiveStyles,
-            [destructiveIconStyle[theme]]: isDestructive,
-            [disabledIconStyle[theme]]: disabled,
-          },
-          glyph.props?.className,
-        ),
-      });
-
-    const baseProps = {
-      role: 'menuitem',
-      tabIndex: -1,
-      'aria-disabled': disabled,
-      'aria-current': active ?? undefined,
-      // only add a disabled prop if not an anchor
-      ...(!isAnchor && { disabled }),
-    };
-
-    const anchorProps = isAnchor
-      ? {
-          target: '_self',
-          rel: '',
-        }
-      : {};
-
-    const content = (
-      <>
-        {updatedGlyph}
-        <div className={textContainer}>
-          <div
-            // Add text as data attribute to ensure no layout shift on hover
-            data-text={getNodeTextContent(children)}
-            className={cx(
-              titleTextStyle,
-              hoverStyles.text,
-              {
-                [activeTitleTextStyle[theme]]: showActiveStyles,
-                [hoverStyles.activeText]: showActiveStyles,
-                [destructiveTextStyle[theme]]: isDestructive,
-                [disabledTextStyle[theme]]: disabled,
-              },
-              focusStyles.textStyle,
-            )}
-          >
-            {children}
-          </div>
-          {description && (
-            <div
-              className={cx(
-                descriptionTextThemeStyle[theme],
-                {
-                  [activeDescriptionTextStyle[theme]]: showActiveStyles,
-                  [disabledTextStyle[theme]]: disabled,
-                  [linkDescriptionTextStyle]: isAnchor,
-                },
-                focusStyles.descriptionStyle,
-              )}
-            >
-              {description}
-            </div>
-          )}
-        </div>
-      </>
-    );
+    const isHighlighted = index === highlightIndex;
 
     return (
-      <li role="none" className={menuItemContainerStyles}>
-        <Component
+      <li
+        id={id}
+        role="none"
+        className={cx(menuItemClassName, menuItemContainerStyles)}
+      >
+        <InputOption
           ref={ref}
-          {...baseProps}
-          {...anchorProps}
-          {...rest}
+          as={as}
+          role="menuitem"
+          target="_self"
+          rel=""
+          data-index={index}
+          aria-disabled={disabled}
+          aria-current={active ?? undefined}
+          disabled={disabled}
+          darkMode={darkMode}
+          data-id={id}
+          showWedge
+          highlighted={isHighlighted}
           className={cx(
-            menuItemContainerClassName,
-            menuItemContainerStyle,
-            menuItemContainerThemeStyle[theme],
-            menuItemHeight(size),
-            linkStyle,
-            {
-              [activeMenuItemContainerStyle[theme]]: showActiveStyles,
-              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-            },
-            focusedMenuItemContainerStyle[theme],
+            getMenuItemStyles({
+              theme,
+              size,
+              active,
+              variant,
+            }),
             className,
           )}
+          {...rest}
         >
-          {content}
-        </Component>
+          <InputOptionContent
+            leftGlyph={glyph}
+            description={description}
+            preserveIconSpace={false}
+            className={getMenuItemContentStyles({
+              hasGlyph: !!glyph,
+            })}
+          >
+            <div
+              className={css`
+                font-weight: 500;
+              `}
+            >
+              {children}
+            </div>
+          </InputOptionContent>
+        </InputOption>
       </li>
     );
   },
