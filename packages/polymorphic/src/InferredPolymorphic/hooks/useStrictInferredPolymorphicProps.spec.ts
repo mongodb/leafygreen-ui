@@ -1,6 +1,6 @@
-import { PolymorphicAs } from '../Polymorphic';
+import { PolymorphicAs } from '../../Polymorphic';
 
-import { getStronglyInferredPolymorphicProps } from './getInferredPolymorphicProps';
+import { useStrictInferredPolymorphicProps } from './useStrictInferredPolymorphicProps';
 
 const getRandAs = (): PolymorphicAs | undefined =>
   Math.random() > 0.5 ? 'div' : 'a';
@@ -10,10 +10,7 @@ const getProps = (anchor?: boolean): Record<string, any> =>
 describe('packages/polymorphic/getPolymorphicProps', () => {
   describe('explicit', () => {
     test('explicit `as="a"`', () => {
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
-        'a',
-        {},
-      );
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps('a', {});
       expect(as).toBe('a');
       expect(href).toBeUndefined();
 
@@ -27,7 +24,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('explicit `as="a"` with href', () => {
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps('a', {
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps('a', {
         href: 'mongodb.design',
       });
       expect(as).toBe('a');
@@ -42,7 +39,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('explicit `as="button"`', () => {
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         'button',
         {},
       );
@@ -61,7 +58,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
 
   describe('inferred', () => {
     test('inferred as anchor', () => {
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         undefined,
         {
           href: 'mongodb.design',
@@ -79,7 +76,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('inferred as default', () => {
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         undefined,
         {
           id: 'id',
@@ -98,7 +95,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('inferred as fallback', () => {
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         undefined,
         {
           id: 'id',
@@ -120,7 +117,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     test('without href', () => {
       const asProp = getRandAs();
 
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         asProp,
         {},
       );
@@ -137,12 +134,9 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     test('with href', () => {
       const asProp = getRandAs();
 
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
-        asProp,
-        {
-          href: 'mongodb.design',
-        },
-      );
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(asProp, {
+        href: 'mongodb.design',
+      });
       expect(as).toBe('a');
       expect(href).toBe('mongodb.design');
       // TS
@@ -158,7 +152,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       const asProp = getRandAs();
       const props = getProps(false);
 
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         asProp,
         props,
       );
@@ -175,7 +169,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       const asProp = getRandAs();
       const props = getProps(true);
 
-      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+      const { as, href, ...rest } = useStrictInferredPolymorphicProps(
         asProp,
         props,
       );

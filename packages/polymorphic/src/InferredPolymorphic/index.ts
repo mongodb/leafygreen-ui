@@ -1,6 +1,8 @@
 export {
   useInferredPolymorphic,
   useInferredPolymorphicComponent,
+  useInferredPolymorphicProps,
+  useStrictInferredPolymorphicProps,
 } from './hooks';
 export { InferredPolymorphic } from './InferredPolymorphic';
 export type {

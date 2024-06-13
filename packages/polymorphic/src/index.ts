@@ -6,6 +6,8 @@ export {
   type InferredPolymorphicPropsWithRef,
   useInferredPolymorphic,
   useInferredPolymorphicComponent,
+  useInferredPolymorphicProps,
+  useStrictInferredPolymorphicProps,
 } from './InferredPolymorphic';
 export {
   Polymorph,
@@ -19,7 +21,6 @@ export {
   usePolymorphicComponent,
   usePolymorphicRef,
 } from './Polymorphic';
-export { getStronglyInferredPolymorphicProps } from './utils/getInferredPolymorphicProps';
 export { hasAnchorProps } from './utils/hasAnchorProps/hasAnchorProps';
 export {
   type LoosePolymorphicProps,

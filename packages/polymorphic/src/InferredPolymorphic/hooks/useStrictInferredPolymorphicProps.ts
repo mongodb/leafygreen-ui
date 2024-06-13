@@ -2,13 +2,11 @@ import { ComponentPropsWithoutRef } from 'react';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { PolymorphicAs } from '../Polymorphic';
-
-const fallbackAs = 'div';
+import { FALLBACK, PolymorphicAs } from '../../Polymorphic';
 
 /**
  *
- * Returns a strongly-typed props object,
+ * Returns a strongly-typed props object including the `as` prop,
  *
  * WARING - using this function unnecessarily can cause TypeScript
  * to slow down dramatically.
@@ -16,18 +14,18 @@ const fallbackAs = 'div';
  * In most cases simply calling `useInferredPolymorphic`,
  * and leveraging appropriate type guards will be sufficient
  *
- * If `as` is explicitly "a", we return anchor props, with explicit href.
- * If `as` is something else, but rest.href is a string, return explicit anchor props.
- * If `as` is otherwise defined, we return that element's component props.
- * If `as` is undefined, we return the default argument's props.
- * If default is undefined, use the fallback as 'div'
+ * - If `as` is explicitly "a", we return anchor props, with explicit href.
+ * - If `as` is something else, but rest.href is a string, return explicit anchor props.
+ * - If `as` is otherwise defined, we return that element's component props.
+ * - If `as` is undefined, we return the default argument's props.
+ * - If default is undefined, use the fallback as 'div'
  *
  */
 // If `as` is explicitly "a", we return anchor props, with explicit href
-export function getStronglyInferredPolymorphicProps<
+export function useStrictInferredPolymorphicProps<
   TAs extends 'a',
   TRestRest extends Record<string, any>,
-  TDefault extends PolymorphicAs = typeof fallbackAs,
+  TDefault extends PolymorphicAs = typeof FALLBACK,
 >(
   as: TAs,
   rest: TRestRest,
@@ -35,10 +33,10 @@ export function getStronglyInferredPolymorphicProps<
 ): { as: 'a'; href: string } & ComponentPropsWithoutRef<'a'> & TRestRest;
 
 // If `as` is something else, but rest.href is a string, return explicit anchor props
-export function getStronglyInferredPolymorphicProps<
+export function useStrictInferredPolymorphicProps<
   TAs extends PolymorphicAs | undefined,
   TRest extends { href: string },
-  TDefault extends PolymorphicAs = typeof fallbackAs,
+  TDefault extends PolymorphicAs = typeof FALLBACK,
 >(
   as: TAs,
   rest: TRest,
@@ -46,10 +44,10 @@ export function getStronglyInferredPolymorphicProps<
 ): { as: 'a'; href: string } & ComponentPropsWithoutRef<'a'> & TRest;
 
 // If `as` is otherwise defined, we return that element's component props
-export function getStronglyInferredPolymorphicProps<
+export function useStrictInferredPolymorphicProps<
   TAs extends PolymorphicAs | undefined,
   TRest extends Record<string, any>,
-  TDefault extends PolymorphicAs = typeof fallbackAs,
+  TDefault extends PolymorphicAs = typeof FALLBACK,
 >(
   as: TAs,
   rest: TRest,
@@ -60,7 +58,7 @@ export function getStronglyInferredPolymorphicProps<
       TRest;
 
 // If default is undefined, use the fallback as
-export function getStronglyInferredPolymorphicProps<
+export function useStrictInferredPolymorphicProps<
   TAs extends PolymorphicAs | undefined,
   TRest extends Record<string, any>,
   TDefault extends undefined,
@@ -68,15 +66,15 @@ export function getStronglyInferredPolymorphicProps<
   as: TAs,
   rest: TRest,
   defaultAs?: TDefault,
-): { as: typeof fallbackAs; href?: string } & ComponentPropsWithoutRef<
-  typeof fallbackAs
+): { as: typeof FALLBACK; href?: string } & ComponentPropsWithoutRef<
+  typeof FALLBACK
 > &
   TRest;
 
-export function getStronglyInferredPolymorphicProps<
+export function useStrictInferredPolymorphicProps<
   TAs extends PolymorphicAs | undefined,
   TRest extends Record<string, any>,
-  TDefault extends PolymorphicAs = typeof fallbackAs,
+  TDefault extends PolymorphicAs = typeof FALLBACK,
 >(as?: TAs, rest?: TRest, defaultAs?: TDefault) {
   const href = rest?.href;
 
@@ -116,7 +114,7 @@ export function getStronglyInferredPolymorphicProps<
 
   // If `as` is undefined, we return the default argument's props
   return {
-    as: defaultAs || fallbackAs,
+    as: defaultAs || FALLBACK,
     ...rest,
   };
 }
