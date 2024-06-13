@@ -3,7 +3,6 @@ import { ComponentPropsWithoutRef } from 'react';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { FALLBACK, PolymorphicAs } from '../../Polymorphic';
-import { NodeUrlLike } from '../../utils/Polymorphic.utils';
 
 /**
  * Returns a loosely typed prop object,
@@ -25,7 +24,7 @@ export function useInferredPolymorphicProps<
   defaultAs?: D,
 ): {
   as: PolymorphicAs;
-  href?: string | NodeUrlLike;
+  href?: string;
 } & ComponentPropsWithoutRef<PolymorphicAs> {
   const href = rest?.href;
 

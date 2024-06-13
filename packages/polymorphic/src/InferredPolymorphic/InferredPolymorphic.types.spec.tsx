@@ -400,7 +400,11 @@ describe.skip('Inferred Polymorphic types', () => {
       );
 
       renderInferredPoly(
-        { as: TestNodeURLAnchorLike as PolymorphicAs, href: '' },
+        {
+          as: TestNodeURLAnchorLike as PolymorphicAs,
+          // @ts-expect-error - when generically defined, non-JSXIntrinsicAttributes are not valid
+          href: { hostname: 'mongo' },
+        },
         null,
       );
 
