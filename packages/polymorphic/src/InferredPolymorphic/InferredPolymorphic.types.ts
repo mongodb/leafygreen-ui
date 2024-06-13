@@ -50,7 +50,7 @@ export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
  *
  * e.g.
  * - if `as = "label"`, the component should accept the `htmlFor` attribute)
- * - if `as = {RemixLink}`, the component should accept the `to` prop.
+ * - if `as = { RemixLink }`, the component should accept the `to` prop.
  * ([see Remix docs](https://remix.run/docs/en/main/components/link))
  */
 export type InheritedComponentProps<
