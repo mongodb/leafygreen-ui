@@ -29,9 +29,8 @@ const TestNotAnchorLike = ((_props: { someProp: any }) => (
 )) satisfies PolymorphicAs;
 const getRandAs = (): PolymorphicAs => (Math.random() > 0.5 ? 'div' : 'a');
 
-test.skip('Inferred Polymorphic types', () => {
-  // AnchorLike
-  {
+describe.skip('Inferred Polymorphic types', () => {
+  test('AnchorLike', () => {
     const _A: AnchorLike = 'a';
     // @ts-expect-error - not assignable to AnchorLike
     const _B: AnchorLike = 'button';
@@ -39,11 +38,9 @@ test.skip('Inferred Polymorphic types', () => {
     const _D: AnchorLike = (_props: { href: NodeUrlLike }) => <></>;
     // @ts-expect-error - not assignable to AnchorLike
     const _E: AnchorLike = TestNotAnchorLike;
-  }
+  });
 
-  // AnchorLikeProps
-
-  {
+  test('AnchorLikeProps', () => {
     // explicit 'a'
     {
       const _A: AnchorLikeProps<'a'> = {
@@ -97,10 +94,9 @@ test.skip('Inferred Polymorphic types', () => {
       // @ts-expect-error T must extend AnchorLike
       const _G: AnchorLikeProps<PolymorphicAs> = { as: 'a' };
     }
-  }
+  });
 
-  // InferredPolymorphicProps
-  {
+  test('InferredPolymorphicProps', () => {
     // anchor
     {
       const _A: InferredPolymorphicProps<'a'> = {
@@ -207,10 +203,9 @@ test.skip('Inferred Polymorphic types', () => {
       as: randAs,
       href: 'mongodb.design',
     };
-  }
+  });
 
-  // InferredPolymorphicRenderFunction
-  {
+  test('InferredPolymorphicRenderFunction', () => {
     const renderInferredPoly: InferredPolymorphicRenderFunction = (p, r) => (
       <></>
     );
@@ -305,10 +300,9 @@ test.skip('Inferred Polymorphic types', () => {
       const { as, href } = getInferredPolymorphicProps();
       renderInferredPoly({ as: as, href: href }, null);
     }
-  }
+  });
 
-  // InferredPolymorphic
-  {
+  test('InferredPolymorphicComponentType', () => {
     interface MyProps {
       value?: { id: string };
     }
@@ -316,6 +310,9 @@ test.skip('Inferred Polymorphic types', () => {
     const MyInferredPoly = InferredPolymorphic<MyProps, 'button'>(props => {
       return <></>;
     });
+
+    MyInferredPoly.displayName = 'MyInferredPoly';
+    MyInferredPoly.propTypes = {};
 
     // accepts empty props
     <MyInferredPoly />;
@@ -400,7 +397,7 @@ test.skip('Inferred Polymorphic types', () => {
       const { as, href } = getInferredPolymorphicProps();
       <MyInferredPoly as={as} href={href} />;
     }
-  }
+  });
 
   // // @ts-expect-error
   // const bool = false;

@@ -2,7 +2,6 @@ import {
   ComponentPropsWithoutRef,
   ComponentType,
   ReactElement,
-  RefAttributes,
   WeakValidationMap,
 } from 'react';
 
@@ -109,7 +108,7 @@ export interface InferredPolymorphicRenderFunction<
     ref: PolymorphicRef<TAsProp>,
   ): ReactElement | null;
   displayName?: string;
-  propTypes?: never;
+  // propTypes?: never;
 }
 
 /**
@@ -122,8 +121,7 @@ export type InferredPolymorphicComponentType<
   // FIXME: propTypes will be broken for any inherited props
   propTypes?:
     | WeakValidationMap<
-        InferredPolymorphicProps<PolymorphicAs, TComponentProps> &
-          RefAttributes<any>
+        InferredPolymorphicProps<PolymorphicAs, TComponentProps>
       >
     | undefined;
 };
