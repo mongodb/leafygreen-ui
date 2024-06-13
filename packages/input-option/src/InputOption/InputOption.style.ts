@@ -76,9 +76,8 @@ export const getInputOptionStyles = ({
         }
       }
 
-      /* Focus (styling handled by highlighted prop) */
-      &:focus,
-      &:focus-visible {
+      /* Focus (majority of styling handled by the 'highlighted' prop) */
+      &:focus {
         outline: none;
         border: unset;
       }

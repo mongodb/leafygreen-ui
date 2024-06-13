@@ -3,11 +3,12 @@
 ---
 
 ### API changes
-- Renames `selected` prop to `checked` (this is done to avoid confusion with the `aria-selected` attribute, witch is conditionally applied via the `highlighted` prop)
+- Renames `selected` prop to `checked` (this is done to avoid confusion with the `aria-selected` attribute, which is conditionally applied via the `highlighted` prop)
  - `checked` applies the `aria-checked` attribute
- - `checked` _does not_ apply any styles. Any "checked" styles must be applied by the consuming component
+ - Note: `checked` _does not_ apply any styles. Any "checked" styles must be applied by the consuming component (this is consistent with previous behavior)
 - Adds `preserveIconSpace` prop to `InputOptionContent` to determine whether menu items should preserve space for a left glyph, or left align all text content. Use this prop in menus where some items may or may not have icons/glyphs, in order to keep text across menu items aligned.
 - Extends `AriaLabelPropsWithChildren` in `InputOptionProps`
+  - [`AriaLabelPropsWithChildren`](../packages/a11y/src/AriaLabelProps.ts) allows a component to accept any of `aria-label`, `aria-labelledby` or `children` as sufficient text for screen-reader accessibility
 
 ### Styling changes
 
