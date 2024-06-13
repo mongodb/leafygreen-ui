@@ -4,5 +4,7 @@
  *
  * The inverse of `Optional`
  */
-export type PartialRequired<T, K extends keyof T> = Required<Pick<T, K>> &
+export type PartialRequired<T, K extends keyof (T | any)> = (K extends keyof T
+  ? Required<Pick<T, K>>
+  : T) &
   Omit<T, K>;
