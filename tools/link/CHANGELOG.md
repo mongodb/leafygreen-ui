@@ -1,5 +1,13 @@
 # @lg-tools/link
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+  - @lg-tools/meta@0.3.4
+
 ## 0.2.3
 
 ### Patch Changes

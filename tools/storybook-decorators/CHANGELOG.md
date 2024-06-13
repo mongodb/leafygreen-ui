@@ -1,5 +1,12 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.10
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+
 ## 0.2.9
 
 ### Patch Changes
