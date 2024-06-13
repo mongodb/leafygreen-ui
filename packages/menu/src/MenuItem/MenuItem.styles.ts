@@ -58,6 +58,7 @@ export const getMenuItemStyles = ({
   css`
     min-height: ${spacing[1200]}px;
     // TODO: align on \`large\` size text styles
+    // https://jira.mongodb.org/browse/LG-4060
   `}
 
   ${active &&
