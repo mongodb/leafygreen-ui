@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.6.0
+
+### Minor Changes
+
+- fdd63dbe4: Allows passing flags to `tsc` from the `lg build-ts` command
+
 ## 0.5.1
 
 ### Patch Changes
