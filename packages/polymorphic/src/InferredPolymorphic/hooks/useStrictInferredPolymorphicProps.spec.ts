@@ -52,7 +52,6 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       href satisfies string | undefined;
       // @ts-expect-error - target does not exist for explicit `button`
       rest.target;
-      rest.rel;
     });
   });
 
