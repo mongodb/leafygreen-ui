@@ -1,6 +1,7 @@
-export {
-  type AriaLabelProps,
-  type AriaLabelPropsWithLabel,
+export type {
+  AriaLabelProps,
+  AriaLabelPropsWithChildren,
+  AriaLabelPropsWithLabel,
 } from './AriaLabelProps';
 export { default as prefersReducedMotion } from './prefersReducedMotion';
 export { default as useAccessibleForm } from './useAccessibleForm';

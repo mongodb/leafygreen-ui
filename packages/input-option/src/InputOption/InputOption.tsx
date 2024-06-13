@@ -8,14 +8,12 @@ import {
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { InputOptionContext } from '../InputOptionContext';
+
 import {
-  inputOptionActiveStyles,
-  inputOptionDisabledStyles,
-  inputOptionHoverStyles,
-  inputOptionStyles,
-  inputOptionThemeStyles,
-  inputOptionWedge,
-  titleSelectionStyles,
+  getInputOptionStyles,
+  getInputOptionWedge,
+  inputOptionClassName,
 } from './InputOption.style';
 import { InputOptionProps } from './InputOption.types';
 
@@ -26,7 +24,7 @@ export const InputOption = Polymorphic<InputOptionProps>(
       children,
       disabled,
       highlighted,
-      selected,
+      checked,
       darkMode: darkModeProp,
       showWedge = true,
       isInteractive = true,
@@ -36,31 +34,46 @@ export const InputOption = Polymorphic<InputOptionProps>(
     ref,
   ) => {
     const { Component } = usePolymorphic(as);
-    const { theme } = useDarkMode(darkModeProp);
+    const { theme, darkMode } = useDarkMode(darkModeProp);
     return (
-      <Component
-        ref={ref}
-        role="option"
-        aria-selected={highlighted}
-        aria-disabled={disabled}
-        tabIndex={-1}
-        className={cx(
-          inputOptionStyles,
-          inputOptionThemeStyles[theme],
-          {
-            [inputOptionWedge]: showWedge,
-            [inputOptionHoverStyles[theme]]: isInteractive,
-            [inputOptionActiveStyles[theme]]:
-              isInteractive && (selected || highlighted),
-            [inputOptionDisabledStyles[theme]]: disabled,
-            [titleSelectionStyles]: selected,
-          },
-          className,
-        )}
-        {...rest}
+      <InputOptionContext.Provider
+        value={{
+          checked,
+          darkMode,
+          disabled,
+          highlighted,
+        }}
       >
-        {children}
-      </Component>
+        <Component
+          ref={ref}
+          role="option"
+          aria-selected={highlighted}
+          aria-checked={checked}
+          aria-disabled={disabled}
+          tabIndex={-1}
+          className={cx(
+            inputOptionClassName,
+            getInputOptionStyles({
+              theme,
+              disabled,
+              highlighted,
+              isInteractive,
+            }),
+            {
+              [getInputOptionWedge({
+                theme,
+                disabled,
+                highlighted,
+                isInteractive,
+              })]: showWedge,
+            },
+            className,
+          )}
+          {...rest}
+        >
+          {children}
+        </Component>
+      </InputOptionContext.Provider>
     );
   },
 );
