@@ -5,6 +5,7 @@ import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
+  getLooseInferredPolymorphicProps,
   InferredPolymorphic,
   PolymorphicProps,
   PolymorphicPropsWithRef,
@@ -45,8 +46,8 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       hideExternalIcon = false,
       baseFontSize: baseFontSizeOverride,
       darkMode: darkModeProp,
-      as,
-      ...rest
+      as: asProp,
+      ...props
     },
     fwdRef,
   ) => {
@@ -57,6 +58,7 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
 
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const { as, rest } = getLooseInferredPolymorphicProps(asProp, props);
     const { Component } = useInferredPolymorphic(as, rest, 'span');
 
     const hrefHostname = useMemo(() => {
@@ -78,9 +80,9 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       rel: undefined,
     };
 
-    if ((rest as AnchorLikeProps).target || (rest as AnchorLikeProps).rel) {
-      defaultAnchorProps.target = (rest as AnchorLikeProps).target;
-      defaultAnchorProps.rel = (rest as AnchorLikeProps).rel;
+    if (rest.target || rest.rel) {
+      defaultAnchorProps.target = rest.target;
+      defaultAnchorProps.rel = rest.rel;
     } else if (Component === 'a') {
       // Sets defaults for target and rel props when Component is an anchor tag
       if (hrefHostname === currentHostname) {
