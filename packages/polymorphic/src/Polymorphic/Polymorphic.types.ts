@@ -12,6 +12,13 @@ import {
   WeakValidationMap,
 } from 'react';
 
+export type IntrinsicElements<P = any> =
+  | {
+      [K in keyof JSX.IntrinsicElements]: P extends JSX.IntrinsicElements[K]
+        ? K
+        : never;
+    }[keyof JSX.IntrinsicElements];
+
 export type PolymorphicAs = ElementType;
 
 /**

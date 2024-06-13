@@ -19,7 +19,7 @@ export {
   usePolymorphicComponent,
   usePolymorphicRef,
 } from './Polymorphic';
-export { getInferredPolymorphicProps } from './utils/getInferredPolymorphicProps';
+export { getStronglyInferredPolymorphicProps as getInferredPolymorphicProps } from './utils/getInferredPolymorphicProps';
 export {
   type LoosePolymorphicProps,
   type PropsOf,

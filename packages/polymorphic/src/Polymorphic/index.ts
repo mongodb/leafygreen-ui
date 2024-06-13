@@ -6,6 +6,7 @@ export {
   usePolymorphicRef,
 } from './Polymorphic.hooks';
 export type {
+  IntrinsicElements,
   PolymorphicAs,
   PolymorphicComponentType,
   PolymorphicProps,

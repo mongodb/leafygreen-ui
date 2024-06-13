@@ -1,6 +1,6 @@
 import { PolymorphicAs } from '../Polymorphic';
 
-import { getInferredPolymorphicProps } from './getInferredPolymorphicProps';
+import { getStronglyInferredPolymorphicProps } from './getInferredPolymorphicProps';
 
 const getRandAs = (): PolymorphicAs | undefined =>
   Math.random() > 0.5 ? 'div' : 'a';
@@ -10,7 +10,10 @@ const getProps = (anchor?: boolean): Record<string, any> =>
 describe('packages/polymorphic/getPolymorphicProps', () => {
   describe('explicit', () => {
     test('explicit `as="a"`', () => {
-      const { as, href, ...rest } = getInferredPolymorphicProps('a', {});
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        'a',
+        {},
+      );
       expect(as).toBe('a');
       expect(href).toBeUndefined();
 
@@ -24,7 +27,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('explicit `as="a"` with href', () => {
-      const { as, href, ...rest } = getInferredPolymorphicProps('a', {
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps('a', {
         href: 'mongodb.design',
       });
       expect(as).toBe('a');
@@ -39,7 +42,10 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('explicit `as="button"`', () => {
-      const { as, href, ...rest } = getInferredPolymorphicProps('button', {});
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        'button',
+        {},
+      );
       expect(as).toBe('button');
       expect(href).toBeUndefined();
 
@@ -55,9 +61,12 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
 
   describe('inferred', () => {
     test('inferred as anchor', () => {
-      const { as, href, ...rest } = getInferredPolymorphicProps(undefined, {
-        href: 'mongodb.design',
-      });
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        undefined,
+        {
+          href: 'mongodb.design',
+        },
+      );
       expect(as).toBe('a');
       expect(href).toBe('mongodb.design');
 
@@ -70,7 +79,7 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('inferred as default', () => {
-      const { as, href, ...rest } = getInferredPolymorphicProps(
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
         undefined,
         {
           id: 'id',
@@ -89,9 +98,12 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     });
 
     test('inferred as fallback', () => {
-      const { as, href, ...rest } = getInferredPolymorphicProps(undefined, {
-        id: 'id',
-      });
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        undefined,
+        {
+          id: 'id',
+        },
+      );
       expect(as).toBe('div');
       expect(href).toBeUndefined();
 
@@ -108,7 +120,10 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     test('without href', () => {
       const asProp = getRandAs();
 
-      const { as, href, ...rest } = getInferredPolymorphicProps(asProp, {});
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        asProp,
+        {},
+      );
       expect(as).toBe(asProp);
       expect(href).toBeUndefined();
       // TS
@@ -122,9 +137,12 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
     test('with href', () => {
       const asProp = getRandAs();
 
-      const { as, href, ...rest } = getInferredPolymorphicProps(asProp, {
-        href: 'mongodb.design',
-      });
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        asProp,
+        {
+          href: 'mongodb.design',
+        },
+      );
       expect(as).toBe('a');
       expect(href).toBe('mongodb.design');
       // TS
@@ -140,7 +158,10 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       const asProp = getRandAs();
       const props = getProps(false);
 
-      const { as, href, ...rest } = getInferredPolymorphicProps(asProp, props);
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        asProp,
+        props,
+      );
       expect(as).toBe(asProp);
       expect(href).toBeUndefined();
       // TS
@@ -154,7 +175,10 @@ describe('packages/polymorphic/getPolymorphicProps', () => {
       const asProp = getRandAs();
       const props = getProps(true);
 
-      const { as, href, ...rest } = getInferredPolymorphicProps(asProp, props);
+      const { as, href, ...rest } = getStronglyInferredPolymorphicProps(
+        asProp,
+        props,
+      );
       expect(as).toBe('a');
       expect(href).toBe('mongodb.design');
       // TS
