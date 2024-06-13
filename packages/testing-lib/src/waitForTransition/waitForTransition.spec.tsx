@@ -1,6 +1,7 @@
+// eslint-disable-next-line simple-import-sort/imports
 import React, { createRef } from 'react';
 import { Transition } from 'react-transition-group';
-import { css } from '@emotion/react';
+import { css } from '@emotion/css';
 import { render, waitFor } from '@testing-library/react';
 
 import { waitForTransition } from '.';
@@ -29,6 +30,7 @@ const renderTransitionElement = (in0: boolean) => {
         <div
           data-testid="test-div"
           className={css`
+            transition: opacity 10ms linear;
             opacity: ${state === 'entered' ? 1 : 0};
           `}
         >
@@ -51,6 +53,7 @@ const renderTransitionElement = (in0: boolean) => {
           <div
             data-testid="test-div"
             className={css`
+              transition: opacity 10ms linear;
               opacity: ${state === 'entered' ? 1 : 0};
             `}
           >
