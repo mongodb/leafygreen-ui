@@ -71,7 +71,7 @@ describe('packages/polymorphic/useInferredPolymorphicProps', () => {
       expect(rest.someProp).toBe('foo');
     });
 
-    test.skip('as NextLink', () => {
+    test('as NextLink', () => {
       const { as, ...rest } = useInferredPolymorphicProps(NextLink, {
         href: 'foo',
       });
