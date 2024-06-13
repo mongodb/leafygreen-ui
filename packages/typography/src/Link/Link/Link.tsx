@@ -5,10 +5,8 @@ import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
-  getLooseInferredPolymorphicProps,
+  hasAnchorProps,
   InferredPolymorphic,
-  PolymorphicProps,
-  PolymorphicPropsWithRef,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -26,16 +24,6 @@ import {
   openInNewTabStyles,
 } from './Link.styles';
 import { ArrowAppearance, BaseLinkProps } from './Link.types';
-
-type LinkRenderProps = PolymorphicPropsWithRef<'span', BaseLinkProps>;
-
-type AnchorLikeProps = PolymorphicProps<'a', BaseLinkProps>;
-
-const hasAnchorLikeProps = (
-  props: LinkRenderProps | AnchorLikeProps,
-): props is AnchorLikeProps => {
-  return (props as AnchorLikeProps).href !== undefined;
-};
 
 const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
   (
@@ -58,17 +46,20 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
 
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
-    const { as, rest } = getLooseInferredPolymorphicProps(asProp, props);
-    const { Component } = useInferredPolymorphic(as, rest, 'span');
+    const { Component, as, rest } = useInferredPolymorphic(
+      asProp,
+      props,
+      'span',
+    );
 
     const hrefHostname = useMemo(() => {
-      if (hasAnchorLikeProps(rest)) {
+      if (hasAnchorProps(as, rest)) {
         const httpRegex = /^http(s)?:\/\//;
         return httpRegex.test(rest.href)
           ? new URL(rest.href).hostname
           : currentHostname;
       }
-    }, [rest, currentHostname]);
+    }, [as, rest, currentHostname]);
 
     let icon;
 
