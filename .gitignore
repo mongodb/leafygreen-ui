@@ -49,7 +49,7 @@ parsed-docs.json
 build-storybook.log
 
 .turbo
-scripts/tmp.*.ts
+scripts/tmp.*
 
 # 
 .npmrc
