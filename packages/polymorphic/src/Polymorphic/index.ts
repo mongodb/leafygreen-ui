@@ -1,3 +1,4 @@
+export { FALLBACK } from './constants';
 export { Polymorph } from './Polymorph';
 export { Polymorphic } from './Polymorphic';
 export {
@@ -6,6 +7,7 @@ export {
   usePolymorphicRef,
 } from './Polymorphic.hooks';
 export type {
+  IntrinsicElements,
   PolymorphicAs,
   PolymorphicComponentType,
   PolymorphicProps,

@@ -28,7 +28,7 @@ export const linkStyles = css`
 
   &:hover,
   &[data-hover='true'],
-  &:focus,
+  &:focus-visible,
   &[data-focus='true'] {
     text-decoration: underline;
     transition: text-decoration ${transitionDuration.default}ms ease-in-out;
@@ -51,7 +51,7 @@ export const linkModeStyles: Record<Theme, string> = {
       text-decoration-color: ${palette.gray.light2};
     }
 
-    &:focus,
+    &:focus-visible,
     &[data-focus='true'] {
       text-decoration-color: ${palette.blue.base};
     }
@@ -65,7 +65,7 @@ export const linkModeStyles: Record<Theme, string> = {
       text-decoration-color: ${palette.gray.dark2};
     }
 
-    &:focus,
+    &:focus-visible,
     &[data-focus='true'] {
       text-decoration-color: ${palette.blue.base};
     }
