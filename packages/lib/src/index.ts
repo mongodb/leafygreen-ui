@@ -7,7 +7,12 @@ import getTheme from './getTheme';
 export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
-export type { Mutable, RecursiveRecord } from './types';
+export type {
+  Mutable,
+  RecursiveRecord,
+  Optional,
+  PartialRequired,
+} from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
 export type { DarkModeProps, LgIdProps };

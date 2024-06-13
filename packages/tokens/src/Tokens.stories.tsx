@@ -59,7 +59,7 @@ type TypeScale = keyof typeof typeScales;
 type FontFamily = keyof typeof fontFamilies;
 
 const gutter = css`
-  margin-left: ${spacing[3]}px;
+  margin-left: ${spacing[400]}px;
 `;
 
 const spacingBlockVariants = Object.keys(spacing)
@@ -122,7 +122,7 @@ export const TypeScales = () => {
                 : fontFamilies.default};
               font-size: ${typeScales[scale].fontSize}px;
               line-height: ${typeScales[scale].lineHeight}px;
-              margin: ${spacing[3]}px 0;
+              margin: ${spacing[400]}px 0;
             `}
           >
             <div>{scale}</div>
@@ -143,7 +143,7 @@ export const FontFamilies = () => (
           key={family}
           className={css`
             font-family: ${fontFamilies[family]};
-            margin: ${spacing[3]}px 0;
+            margin: ${spacing[400]}px 0;
           `}
         >
           <div>{family}</div>
@@ -280,14 +280,14 @@ export const InteractionRings = () => {
 
   const modeWrapper = (mode: Mode) => css`
     display: flex;
-    gap: ${spacing[2]}px;
+    gap: ${spacing[200]}px;
     color: ${mode === 'dark' ? palette.white : palette.black};
     background-color: ${mode === 'dark' ? palette.black : palette.white};
     border: 1px solid
       ${mode === 'dark' ? palette.gray.light3 : palette.gray.dark3};
-    border-radius: ${spacing[3]}px;
-    padding: ${spacing[4]}px;
-    margin: ${spacing[3]}px 0;
+    border-radius: ${spacing[400]}px;
+    padding: ${spacing[600]}px;
+    margin: ${spacing[400]}px 0;
   `;
 
   const buttonBase = css`
@@ -296,8 +296,8 @@ export const InteractionRings = () => {
     outline: none;
     background-color: unset;
     border: unset;
-    padding: ${spacing[2]}px;
-    border-radius: ${spacing[1]}px;
+    padding: ${spacing[200]}px;
+    border-radius: ${spacing[100]}px;
     cursor: pointer;
     transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
   `;
