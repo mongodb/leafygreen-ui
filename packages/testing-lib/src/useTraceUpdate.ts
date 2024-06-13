@@ -3,6 +3,19 @@ import { useEffect, useRef } from 'react';
 
 /**
  * Used to log & debug what props caused a component to re-render
+ *
+ * e.g.
+ * ```typescript
+ * const MyComponent = ({prop1, prop2, prop3, ...rest}: SomeProps) => {
+ * const [myState, setState] = useState();
+ *
+ * // When debugging a rendering issue, use `useTraceUpdate`
+ * // to log which prop/state caused a component to rerender
+ * // (is the parent passing different props? Are we calling `setState` too often?, etc)
+ * useTraceUpdate({myState, prop1, prop2, prop3, ...rest})
+ * return <...>
+ * ```
+}
  */
 export function useTraceUpdate(
   props: Record<string, any>,
