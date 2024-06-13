@@ -1,66 +1,41 @@
 // eslint-disable-next-line simple-import-sort/imports
-import React, { createRef } from 'react';
-import { Transition } from 'react-transition-group';
-import { css } from '@emotion/css';
+import React, { TransitionEventHandler } from 'react';
 import { render, waitFor } from '@testing-library/react';
 
 import { waitForTransition } from '.';
 
-const ref = createRef<HTMLElement>();
-
-const callbacks = {
-  onEnter: jest.fn(),
-  onEntered: jest.fn(),
-  onEntering: jest.fn(),
-  onExit: jest.fn(),
-  onExited: jest.fn(),
-  onExiting: jest.fn(),
-};
-
-const renderTransitionElement = (in0: boolean) => {
+const renderTransitionElement = (
+  shouldEnter: boolean,
+  onTransitionEnd: TransitionEventHandler,
+) => {
   const result = render(
-    <Transition
-      nodeRef={ref}
-      in={in0}
-      timeout={0}
-      onEntered={callbacks.onEntered}
-      onExited={callbacks.onExited}
+    <div
+      data-testid="test-div"
+      onTransitionEnd={onTransitionEnd}
+      style={{
+        transition: 'opacity 10ms linear',
+        opacity: shouldEnter ? 1 : 0,
+      }}
     >
-      {state => (
-        <div
-          data-testid="test-div"
-          className={css`
-            transition: opacity 10ms linear;
-            opacity: ${state === 'entered' ? 1 : 0};
-          `}
-        >
-          {state}
-        </div>
-      )}
-    </Transition>,
+      {shouldEnter.toString()}
+    </div>,
   );
 
-  const rerender = (in1: boolean) =>
+  const rerender = (
+    shouldEnter: boolean,
+    onTransitionEnd: TransitionEventHandler,
+  ) =>
     result.rerender(
-      <Transition
-        nodeRef={ref}
-        in={in1}
-        timeout={0}
-        onEntered={callbacks.onEntered}
-        onExited={callbacks.onExited}
+      <div
+        data-testid="test-div"
+        onTransitionEnd={onTransitionEnd}
+        style={{
+          transition: 'opacity 10ms linear',
+          opacity: shouldEnter ? 1 : 0,
+        }}
       >
-        {state => (
-          <div
-            data-testid="test-div"
-            className={css`
-              transition: opacity 10ms linear;
-              opacity: ${state === 'entered' ? 1 : 0};
-            `}
-          >
-            {state}
-          </div>
-        )}
-      </Transition>,
+        {shouldEnter.toString()}
+      </div>,
     );
 
   return {
@@ -70,50 +45,51 @@ const renderTransitionElement = (in0: boolean) => {
 };
 
 describe('packages/testing-lib/waitForTransition', () => {
-  afterEach(() => {
-    Object.values(callbacks).forEach(cb => cb.mockReset());
-  });
-
-  describe('triggers react-transition-group handlers', () => {
-    test('onEntered', async () => {
-      const renderResult = renderTransitionElement(false);
+  describe('triggers css transition handlers', () => {
+    test('on enter transition', async () => {
+      const onTransition = jest.fn();
+      const renderResult = renderTransitionElement(false, onTransition);
       const testDiv = await renderResult.findByTestId('test-div');
 
       /** ENTER */
-      renderResult.rerender(true);
+      renderResult.rerender(true, onTransition);
 
       // onEnter will be called immediately
       await waitFor(() => {
         // onEntering will be called after a timeout
-        // but onEntered is not called until CSS transitions are finished
-        expect(callbacks.onEntered).not.toHaveBeenCalled();
+        // but onTransition is not called until CSS transitions are finished
+        expect(onTransition).not.toHaveBeenCalled();
       });
 
       await waitForTransition(testDiv);
 
-      // onEntered is finally called after we wait for the transition
-      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
+      // onTransition is finally called after we wait for the transition
+      expect(onTransition).toHaveBeenCalledTimes(1);
     });
 
-    test('onExited', async () => {
-      const renderResult = renderTransitionElement(false);
+    test('on exit transition', async () => {
+      const onTransition = jest.fn();
+
+      const renderResult = renderTransitionElement(false, onTransition);
       const testDiv = await renderResult.findByTestId('test-div');
 
-      await waitFor(() => /** ENTER */ renderResult.rerender(true));
+      /** ENTER */
+      renderResult.rerender(true, onTransition);
+      await waitForTransition(testDiv);
 
       /** EXIT */
-      renderResult.rerender(false);
+      renderResult.rerender(false, onTransition);
 
       // onExit will be called immediately
       await waitFor(() => {
         // onExiting will be called after a timeout
         // but onExited is not called until CSS transitions are finished
-        expect(callbacks.onExited).not.toHaveBeenCalled();
+        expect(onTransition).toHaveBeenCalledTimes(1);
       });
 
       await waitForTransition(testDiv);
-      // onEntered is finally called after we wait for the transition
-      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+      // onTransition is finally called after we wait for the transition
+      expect(onTransition).toHaveBeenCalledTimes(2);
     });
   });
 });
