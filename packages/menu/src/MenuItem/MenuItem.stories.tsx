@@ -99,7 +99,7 @@ export const LiveExample = {
     },
   },
   render: ({ children, glyph, ...args }) => (
-    // @ts-expect-error
+    // @ts-expect-error - Polymorphic issues - type of href is not compatible
     <MenuItem {...args} glyph={glyph && <Icon glyph={glyph} />}>
       {children}
     </MenuItem>

@@ -37,8 +37,6 @@ export const useHighlightReducer = (
    */
   const updateIndex = (direction: Direction) => {
     const updatedIndex = highlightReducerFunction(index, direction);
-    // console.log('\nREDUCER: updateIndex');
-    // logDescendants(descendants);
 
     onChange?.(updatedIndex, descendants);
     dispatch(direction);
