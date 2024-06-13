@@ -9,7 +9,7 @@
       "outputs": ["dist/**", "stories.js"]
     },
     "tsc": {
-      "dependsOn": ["^tsc", "^build"],
+      "dependsOn": ["^tsc"],
       "outputs": ["dist/**", "tsconfig.tsbuildinfo"]
     },
     "docs": {
