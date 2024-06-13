@@ -1,3 +1,4 @@
+export { FALLBACK } from './constants';
 export { Polymorph } from './Polymorph';
 export { Polymorphic } from './Polymorphic';
 export {

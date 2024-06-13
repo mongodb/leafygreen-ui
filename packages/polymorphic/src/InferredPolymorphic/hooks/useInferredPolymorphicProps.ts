@@ -2,28 +2,7 @@ import { ComponentPropsWithoutRef } from 'react';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import { usePolymorphicRef } from '../Polymorphic/Polymorphic.hooks';
-import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
-
-const fallbackAs = 'div';
-
-/**
- * A hook that computes & returns the inferred polymorphic component based on the `as` prop, and any other props passed in.
- *
- * For client-side components, prefer using `useInferredPolymorphic`,
- * which also returns a typed `ref`
- */
-export function useInferredPolymorphicComponent<
-  T extends PolymorphicAs,
-  R extends { [key: string]: any },
-  D extends PolymorphicAs,
->(as?: T, rest?: R, defaultAs?: D): PolymorphicAs {
-  return as
-    ? as
-    : typeof rest?.href === 'string'
-    ? 'a'
-    : defaultAs ?? ('div' as PolymorphicAs);
-}
+import { FALLBACK, PolymorphicAs } from '../../Polymorphic';
 
 /**
  * Returns a loosely typed prop object,
@@ -85,36 +64,7 @@ export function useInferredPolymorphicProps<
 
   // If `as` is undefined, we return the default argument's props
   return {
-    as: defaultAs || fallbackAs,
+    as: defaultAs || FALLBACK,
     ...rest,
-  };
-}
-
-/**
- * A hook that returns a Component and `ref` based on the `as` prop passed in,
- * and any other props provided.
- *
- * The returned `Component` can be inferred by the additional props passed in.
- * (i.e. if no `as` prop is provided, but an `href` prop is defined, then `as` will
- * be inferred to be `a`
- */
-export function useInferredPolymorphic<
-  T extends PolymorphicAs,
-  R extends { [key: string]: any },
-  D extends PolymorphicAs,
->(asProp?: T, restArg?: R, defaultAs?: D) {
-  const { as, ...rest } = useInferredPolymorphicProps(
-    asProp,
-    restArg,
-    defaultAs,
-  );
-
-  const ref = usePolymorphicRef(as);
-
-  return {
-    Component: as,
-    as,
-    ref,
-    rest,
   };
 }

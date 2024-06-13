@@ -1,3 +1,7 @@
+export {
+  useInferredPolymorphic,
+  useInferredPolymorphicComponent,
+} from './hooks';
 export { InferredPolymorphic } from './InferredPolymorphic';
 export type {
   AnchorLike,
@@ -5,7 +9,3 @@ export type {
   InferredPolymorphicProps,
   InferredPolymorphicPropsWithRef,
 } from './InferredPolymorphic.types';
-export {
-  useInferredPolymorphic,
-  useInferredPolymorphicComponent,
-} from './useInferredPolymorphic';

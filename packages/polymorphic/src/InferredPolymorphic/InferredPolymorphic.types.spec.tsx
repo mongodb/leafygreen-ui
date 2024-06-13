@@ -12,6 +12,7 @@ import React from 'react';
 import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 
+import { useInferredPolymorphicProps } from './hooks';
 import { InferredPolymorphic } from './InferredPolymorphic';
 import {
   AnchorLike,
@@ -19,7 +20,6 @@ import {
   InferredPolymorphicProps,
   InferredPolymorphicRenderFunction,
 } from './InferredPolymorphic.types';
-import { useInferredPolymorphicProps } from './useInferredPolymorphic';
 
 const TestAnchorLike = ((_props: { href: string }) => (
   <></>
