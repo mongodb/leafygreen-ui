@@ -1,5 +1,6 @@
 ---
-last_updated: 2024-02-01
+first_written: 2024-02-01
+last_updated: 2024-06-12
 ---
 
 # Descendants
@@ -100,7 +101,7 @@ export const TestDescendant = ({
 };
 ```
 
-### Handling Sale Descendants
+### Handling Stale Descendants
 
 Sometimes you'll need to access descendants from within an event handler or `useEffect` callback, where the descendants may have updated between renders, resulting in a `descendants` object with references to stale/non-existent DOM nodes. In this case, use the `getDescendants()` function to access the most up-to-date descendants object.
 
