@@ -1,26 +1,114 @@
+import { ComponentPropsWithoutRef } from 'react';
+
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import { PolymorphicAs } from '../Polymorphic';
 
-export const getInferredPolymorphicProps = <
-  T extends PolymorphicAs,
-  P extends Record<string, any>,
+const fallbackAs = 'div';
+
+// If `as` is explicitly "a", we return anchor props, with explicit href
+export function getInferredPolymorphicProps<
+  TAs extends 'a',
+  TRestRest extends Record<string, any>,
+  TDefault extends PolymorphicAs = typeof fallbackAs,
 >(
-  asProp?: T,
-  propsArg?: P,
-  defaultAs: PolymorphicAs = 'div',
-): {
-  as: PolymorphicAs;
-  href?: string;
-} => {
-  if (propsArg?.href) {
-    // TODO: do a better AnchorLike check
+  as: TAs,
+  rest: TRestRest,
+  defaultAs?: TDefault,
+): { as: 'a'; href: string } & ComponentPropsWithoutRef<'a'> & TRestRest;
+
+// If `as` is something else, but rest.href is a string, return explicit anchor props
+export function getInferredPolymorphicProps<
+  TAs extends PolymorphicAs | undefined,
+  TRest extends { href: string },
+  TDefault extends PolymorphicAs = typeof fallbackAs,
+>(
+  as: TAs,
+  rest: TRest,
+  defaultAs?: TDefault,
+): { as: 'a'; href: string } & ComponentPropsWithoutRef<'a'> & TRest;
+
+// If `as` is otherwise defined, we return that element's component props
+export function getInferredPolymorphicProps<
+  TAs extends PolymorphicAs | undefined,
+  TRest extends Record<string, any>,
+  TDefault extends PolymorphicAs = typeof fallbackAs,
+>(
+  as: TAs,
+  rest: TRest,
+  defaultAs?: TDefault,
+): TAs extends PolymorphicAs
+  ? { as: TAs; href?: string } & ComponentPropsWithoutRef<TAs> & TRest
+  : { as: TDefault; href?: string } & ComponentPropsWithoutRef<TDefault> &
+      TRest;
+
+// If default is undefined, use the fallback as
+export function getInferredPolymorphicProps<
+  TAs extends PolymorphicAs | undefined,
+  TRest extends Record<string, any>,
+  TDefault extends undefined,
+>(
+  as: TAs,
+  rest: TRest,
+  defaultAs?: TDefault,
+): { as: typeof fallbackAs; href?: string } & ComponentPropsWithoutRef<
+  typeof fallbackAs
+> &
+  TRest;
+
+/**
+ *
+ * If `as` is explicitly "a", we return anchor props, with explicit href.
+ * If `as` is something else, but rest.href is a string, return explicit anchor props.
+ * If `as` is otherwise defined, we return that element's component props.
+ * If `as` is undefined, we return the default argument's props.
+ * If default is undefined, use the fallback as 'div'
+ *
+ */
+export function getInferredPolymorphicProps<
+  TAs extends undefined,
+  TRest extends Record<string, any>,
+  TDefault extends PolymorphicAs = typeof fallbackAs,
+>(as?: TAs, rest?: TRest, defaultAs?: TDefault) {
+  const href = rest?.href;
+
+  // If `as` is explicitly "a", we return anchor props, with explicit href
+  if (as && as === 'a') {
+    if (!href) {
+      consoleOnce.error(
+        'LG Inferred Polymorphic error',
+        'Component received `as="a"`, but did not receive an `href` prop',
+      );
+    }
+
     return {
       as: 'a',
-      href: propsArg.href,
+      href: href || '',
+      ...rest,
     };
   }
 
+  // If `as` is anything else, but rest.href is a string, return explicit anchor props
+  if (href) {
+    return {
+      as: 'a',
+      href,
+      ...rest,
+    };
+  }
+
+  // If `as` is otherwise defined, we return that element's component props
+  if (as) {
+    return {
+      as,
+      href: undefined,
+      ...rest,
+    };
+  }
+
+  // If `as` is undefined, we return the default argument's props
   return {
-    as: (asProp ?? defaultAs) as PolymorphicAs,
-    href: propsArg?.href,
+    as: defaultAs || fallbackAs,
+    ...rest,
   };
-};
+}
