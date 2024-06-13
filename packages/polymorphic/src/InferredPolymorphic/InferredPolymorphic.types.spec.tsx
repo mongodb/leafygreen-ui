@@ -92,15 +92,14 @@ describe.skip('Inferred Polymorphic types', () => {
     {
       const _E: AnchorLikeProps<typeof TestNodeURLAnchorLike> = {
         as: TestNodeURLAnchorLike,
-        // @ts-expect-error - expect href to be NodeUrl
-        href: '',
+        href: '', // FIXME: if `href` is a string, we infer `as="a"`
       };
 
       const _E2: AnchorLikeProps<typeof TestNodeURLAnchorLike> = {
         as: TestNodeURLAnchorLike,
         href: {
           hostname: 'mongodb.design',
-        },
+        } as NodeUrlLike,
       };
     }
 
@@ -203,8 +202,7 @@ describe.skip('Inferred Polymorphic types', () => {
     {
       const _E: InferredPolymorphicProps<typeof TestNodeURLAnchorLike> = {
         as: TestNodeURLAnchorLike,
-        // @ts-expect-error - expect href to be NodeUrl
-        href: '',
+        href: '', // FIXME: if `href` is a string, we infer `as="a"`
       };
 
       const _E2: InferredPolymorphicProps<typeof TestNodeURLAnchorLike> = {

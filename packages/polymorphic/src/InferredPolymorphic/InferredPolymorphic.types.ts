@@ -28,18 +28,18 @@ export interface AnchorLikeProps<TAsProp extends AnchorLike | undefined> {
   as?: TAsProp extends undefined ? 'a' : TAsProp;
 }
 
-/**
- * Union of {@link AnchorLikeProps} and {@link InheritedProps}
- */
-export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
-  as?: TAsProp;
-} & PartialRequired<ComponentPropsWithoutRef<TAsProp>, 'href'>;
-
 /** Anchor props where `href` is required */
 export type InferredAnchorProps = {
   href: string;
   as?: 'a';
 } & ComponentPropsWithoutRef<'a'>;
+
+/**
+ * Union of {@link AnchorLikeProps} and {@link InheritedProps}
+ */
+export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
+  as?: TAsProp;
+} & Omit<PartialRequired<ComponentPropsWithoutRef<TAsProp>, 'href'>, 'as'>;
 
 /**
  * Extends the default component props (or intrinsic attributes)
@@ -58,7 +58,7 @@ export type InheritedComponentProps<
   TComponentProps,
 > = {
   as?: PolymorphicAs;
-} & Omit<ComponentPropsWithoutRef<TAsProp>, keyof TComponentProps>;
+} & Omit<ComponentPropsWithoutRef<TAsProp>, keyof TComponentProps | 'as'>;
 
 /**
  *
@@ -83,7 +83,7 @@ export type InferredPolymorphicProps<
 > = (TAsProp extends AnchorLike
   ? InheritedExplicitAnchorLikeProps<TAsProp> // if the `as` prop is AnchorLike, return explicit AnchorLike props
   : InferredAnchorProps | InheritedComponentProps<TAsProp, TComponentProps>) &
-  TComponentProps;
+  Omit<TComponentProps, 'as'>;
 
 /**
  * Inferred props clone of {@link PolymorphicPropsWithRef}
