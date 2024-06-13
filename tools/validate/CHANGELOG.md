@@ -1,5 +1,13 @@
 # @lg-tools/validate
 
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+  - @lg-tools/meta@0.3.4
+
 ## 0.1.10
 
 ### Patch Changes

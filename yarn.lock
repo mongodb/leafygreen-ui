@@ -3123,35 +3123,10 @@
     "@emotion/weak-memoize" "^0.3.1"
     hoist-non-react-statics "^3.3.1"
 
-"@emotion/react@^11.11.4":
-  version "11.11.4"
-  resolved "https://registry.yarnpkg.com/@emotion/react/-/react-11.11.4.tgz#3a829cac25c1f00e126408fab7f891f00ecc3c1d"
-  integrity sha512-t8AjMlF0gHpvvxk5mAtCqR4vmxiGHCeJBaQO6gncUSdklELOgtwjerNY2yuJNfwnc6vi16U/+uMF+afIawJ9iw==
-  dependencies:
-    "@babel/runtime" "^7.18.3"
-    "@emotion/babel-plugin" "^11.11.0"
-    "@emotion/cache" "^11.11.0"
-    "@emotion/serialize" "^1.1.3"
-    "@emotion/use-insertion-effect-with-fallbacks" "^1.0.1"
-    "@emotion/utils" "^1.2.1"
-    "@emotion/weak-memoize" "^0.3.1"
-    hoist-non-react-statics "^3.3.1"
-
 "@emotion/serialize@^1.0.3", "@emotion/serialize@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@emotion/serialize/-/serialize-1.1.2.tgz#017a6e4c9b8a803bd576ff3d52a0ea6fa5a62b51"
   integrity sha512-zR6a/fkFP4EAcCMQtLOhIgpprZOwNmCldtpaISpvz348+DP4Mz8ZoKaGGCQpbzepNIUWbq4w6hNZkwDyKoS+HA==
-  dependencies:
-    "@emotion/hash" "^0.9.1"
-    "@emotion/memoize" "^0.8.1"
-    "@emotion/unitless" "^0.8.1"
-    "@emotion/utils" "^1.2.1"
-    csstype "^3.0.2"
-
-"@emotion/serialize@^1.1.3":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@emotion/serialize/-/serialize-1.1.4.tgz#fc8f6d80c492cfa08801d544a05331d1cc7cd451"
-  integrity sha512-RIN04MBT8g+FnDwgvIUi8czvr1LU1alUMI05LekWB5DGyTm8cCBMCRpq3GqaiyEDRptEXOyXnvZ58GZYu4kBxQ==
   dependencies:
     "@emotion/hash" "^0.9.1"
     "@emotion/memoize" "^0.8.1"
@@ -3842,6 +3817,203 @@
     rollup-plugin-node-externals "6.1.1"
     rollup-plugin-polyfill-node "0.12.0"
     rollup-plugin-sizes "1.0.6"
+
+"@lg-tools/build@0.5.1", "@lg-tools/build@^0.5.0":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@lg-tools/build/-/build-0.5.1.tgz#8e5f670e923d7495361e83de572f527d055ad82a"
+  integrity sha512-n96X/Ycq+uJt4ke665Hx+osbhU+iXyCzd76o4w37ODHuUf9Z5AlaveJW8rvCaK9FBI9Mvksk/1XzU3xf2mLT+A==
+  dependencies:
+    "@babel/core" "7.24.3"
+    "@babel/plugin-proposal-export-default-from" "7.24.1"
+    "@babel/preset-env" "7.24.3"
+    "@babel/preset-react" "7.24.1"
+    "@babel/preset-typescript" "7.24.1"
+    "@babel/register" "^7.23.7"
+    "@babel/runtime" "7.24.1"
+    "@emotion/babel-plugin" "11.11.0"
+    "@rollup/plugin-babel" "6.0.4"
+    "@rollup/plugin-node-resolve" "15.1.0"
+    "@rollup/plugin-terser" "0.4.3"
+    "@rollup/plugin-url" "8.0.1"
+    "@svgr/babel-plugin-replace-jsx-attribute-value" "8.0.0"
+    "@svgr/cli" "8.0.1"
+    "@svgr/rollup" "^8.1.0"
+    "@types/cross-spawn" "6.0.2"
+    "@types/fs-extra" "11.0.1"
+    chalk "4.1.2"
+    cross-spawn "7.0.3"
+    fs-extra "11.1.1"
+    glob "10.3.12"
+    lodash "4.17.21"
+    react-docgen-typescript "2.2.2"
+    rollup "4.16.1"
+    rollup-plugin-node-externals "7.1.1"
+    rollup-plugin-polyfill-node "0.13.0"
+    rollup-plugin-sizes "1.0.6"
+
+"@lg-tools/cli@^0.5.6":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@lg-tools/cli/-/cli-0.5.13.tgz#ffd83bc8a10924589d1bc55694319bef79dd3a87"
+  integrity sha512-YwYQw7f4RceIfB/P6MBBododnbUP+3ObZJSze9ZeIrItnN4i7RaPjvNFwtNPfFFA1ZZl9/4MaQ1X9YMerFppPQ==
+  dependencies:
+    "@lg-tools/build" "0.5.1"
+    "@lg-tools/codemods" "0.0.2"
+    "@lg-tools/create" "0.2.7"
+    "@lg-tools/install" "0.1.8"
+    "@lg-tools/link" "0.2.3"
+    "@lg-tools/lint" "0.2.2"
+    "@lg-tools/slackbot" "0.2.6"
+    "@lg-tools/test" "0.4.7"
+    "@lg-tools/update" "0.1.8"
+    "@lg-tools/validate" "0.1.10"
+    commander "^11.0.0"
+    read-pkg-up "7.0.1"
+
+"@lg-tools/create@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@lg-tools/create/-/create-0.2.7.tgz#674ea0b39f98326a29ab84ff0680e5088eea0284"
+  integrity sha512-0JpDbXMHE64SXphWka7go+8Rf/NJ06S+1MzRm6nuImUBtxS+jnDi6/clhH07Ll1/wj3iM2p2IsOsWwFGcgTTHg==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@lg-tools/meta" "^0.3.3"
+    "@types/fs-extra" "11.0.1"
+    chalk "4.1.2"
+    fs-extra "11.1.1"
+    lodash "4.17.21"
+
+"@lg-tools/install@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@lg-tools/install/-/install-0.1.8.tgz#440d633c53f6bb253836e1b052579571fc9f7fb7"
+  integrity sha512-nhv7IlAOsDfdKmAcuBaQM6+nFcmvvHVl7YMHHGquEGupAa70m4vEwObc/Whndi4/tvA23ejBdeDdKAiRK0ZizQ==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@lg-tools/meta" "^0.3.3"
+    "@types/cross-spawn" "6.0.2"
+    cross-spawn "7.0.3"
+    node-fetch "2.6.12"
+
+"@lg-tools/link@0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@lg-tools/link/-/link-0.2.3.tgz#e075f48805a8dfb712527e710b09ba7042253ac6"
+  integrity sha512-RZN8G4igFaLJm8ouCsxtna221EHzznBsFlKzJOsXJmEUE+/QmldlaVpTcdzXQ5BTT0DOMj6ROBmQ454zJSjRtA==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@lg-tools/meta" "^0.3.3"
+    "@types/cross-spawn" "6.0.2"
+    "@types/fs-extra" "11.0.1"
+    chalk "4.1.2"
+    cross-spawn "7.0.3"
+    fs-extra "11.1.1"
+
+"@lg-tools/lint@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@lg-tools/lint/-/lint-0.2.2.tgz#6d82b118ea77933301d325520a87cd46917ae378"
+  integrity sha512-S7Ss930FLSORwS3kFl8Ztudh2TvjTMeebBZUmja3p3Gm+us7/N4UjizwzU+n2UCx7cj2PsIDLzQROZVTS6XMIQ==
+  dependencies:
+    "@babel/core" "7.23.2"
+    "@babel/eslint-parser" "7.22.15"
+    "@emotion/eslint-plugin" "11.11.0"
+    "@lg-tools/build" "^0.5.0"
+    "@types/cross-spawn" "6.0.2"
+    "@typescript-eslint/eslint-plugin" "5.60.0"
+    "@typescript-eslint/parser" "5.60.0"
+    chalk "4.1.2"
+    cross-spawn "7.0.3"
+    eslint "8.43.0"
+    eslint-config-prettier "8.8.0"
+    eslint-plugin-import "2.27.5"
+    eslint-plugin-jest "27.2.2"
+    eslint-plugin-jsx-a11y "6.7.1"
+    eslint-plugin-react "7.32.2"
+    eslint-plugin-react-hooks "4.6.0"
+    eslint-plugin-simple-import-sort "10.0.0"
+    eslint-plugin-storybook "0.6.12"
+    npm-package-json-lint "7.0.0"
+    npm-package-json-lint-config-default "6.0.0"
+    prettier "2.8.8"
+
+"@lg-tools/meta@0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@lg-tools/meta/-/meta-0.3.3.tgz#ac8631833d8540582bf69006df0a3af9b539bff4"
+  integrity sha512-wkY/LVqfs21C0Nl0tSEy0u2w8TzWiIl6KiaRfKXcmrPgwdiGrvQgZ7ApAeO5Ztl0gVPyuJjbMe+x+18zMdKOtA==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@types/fs-extra" "11.0.1"
+    chalk "4.1.2"
+    fs-extra "11.1.1"
+
+"@lg-tools/slackbot@0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@lg-tools/slackbot/-/slackbot-0.2.6.tgz#c1e04ed91dceeedf719eecefe6265067ef3e92ee"
+  integrity sha512-95dreUFBzHLZUkghaF7uVLjP818vKfdEqsHMwEk0fuChARI/RjNg7BQ8M8qLAxjpZ6jHJo2YZreZCcZONNuJDQ==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@lg-tools/meta" "^0.3.3"
+    "@slack/web-api" "6.7.1"
+    chalk "4.1.2"
+    lodash "4.17.21"
+    node-fetch "2.6.11"
+
+"@lg-tools/test@0.4.7":
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/@lg-tools/test/-/test-0.4.7.tgz#8a973dcc1f821339372eae0465cee6f9a888462b"
+  integrity sha512-2Lw0xZRFM/YsqNjlJE+3nBhsIE7dcKas7KzEicZWNP1wN7P9F/7buAVQzRz3jH8I7q3+8N7ARRLg5TsiXwJnNg==
+  dependencies:
+    "@emotion/cache" "11.11.0"
+    "@emotion/css" "11.9.0"
+    "@emotion/react" "11.11.1"
+    "@emotion/server" "11.11.0"
+    "@leafygreen-ui/testing-lib" "^0.5.0"
+    "@lg-tools/build" "0.5.1"
+    "@lg-tools/meta" "0.3.3"
+    "@testing-library/dom" "9.3.1"
+    "@testing-library/jest-dom" "5.17.0"
+    "@testing-library/react" "14.0.0"
+    "@testing-library/react-hooks" "8.0.1"
+    "@testing-library/user-event" "13.5.0"
+    "@types/cross-spawn" "6.0.2"
+    "@types/fs-extra" "11.0.1"
+    "@types/jest" "29.5.3"
+    "@types/jest-axe" "3.5.5"
+    babel-jest "29.7.0"
+    chalk "4.1.2"
+    cross-spawn "7.0.3"
+    fs-extra "11.1.1"
+    jest "29.6.2"
+    jest-axe "8.0.0"
+    jest-canvas-mock "2.5.1"
+    jest-environment-jsdom "29.6.2"
+    jest-junit "16.0.0"
+    react-test-renderer "18.2.0"
+    regenerator-runtime "0.14.0"
+
+"@lg-tools/update@0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@lg-tools/update/-/update-0.1.8.tgz#8e9fff7b20fffb5b9e44b45685fb5b836241c308"
+  integrity sha512-/oEsn9avjTrvl6L+0ESj3YyMv6C+9GYo6h7TtEcelQxod9xLaXG4Ta6bIARWoPvs7IUUK6FCgs74p1nPRcttcA==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@lg-tools/meta" "^0.3.3"
+    "@types/cross-spawn" "6.0.2"
+    "@types/fs-extra" "11.0.1"
+    chalk "4.1.2"
+    cross-spawn "7.0.3"
+    fs-extra "11.1.1"
+
+"@lg-tools/validate@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@lg-tools/validate/-/validate-0.1.10.tgz#5c5125b5392334b2c60237b4df025cfe721065b4"
+  integrity sha512-RosUAtIWsk3Vms9zEC3TnxLEmNdyjF42qfmAGHsMbKkH5W+fMbp60jA9DFXdqSNsHDeGY4mU2HWkidCJJBOJxA==
+  dependencies:
+    "@lg-tools/build" "^0.5.0"
+    "@lg-tools/meta" "^0.3.3"
+    "@types/cross-spawn" "6.0.2"
+    "@types/fs-extra" "11.0.1"
+    chalk "4.1.2"
+    cross-spawn "7.0.3"
+    depcheck "1.4.3"
+    fs-extra "11.1.1"
+    lodash "4.17.21"
 
 "@manypkg/find-root@^1.1.0":
   version "1.1.0"
