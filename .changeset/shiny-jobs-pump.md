@@ -2,4 +2,4 @@
 '@leafygreen-ui/icon': patch
 ---
 
-Slight tweaks for .design story
+Updates Federation icon

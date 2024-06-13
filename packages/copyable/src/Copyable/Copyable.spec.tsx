@@ -9,7 +9,7 @@ import {
 import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
 
-import { Context, jest } from '@leafygreen-ui/testing-lib';
+import { Context, jest as localJest } from '@leafygreen-ui/testing-lib';
 
 import Copyable from '.';
 
@@ -29,7 +29,7 @@ describe('packages/copyable', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container, getByText } = Context.within(
-        jest.spyContext(ClipboardJS, 'isSupported'),
+        localJest.spyContext(ClipboardJS, 'isSupported'),
         spy => {
           spy.mockReturnValue(true);
 
@@ -54,9 +54,42 @@ describe('packages/copyable', () => {
   });
 
   describe('copy button', () => {
+    test('fires onCopy callback when clicked', async () => {
+      const onCopy = jest.fn();
+
+      await Context.within(
+        localJest.spyContext(ClipboardJS, 'isSupported'),
+        async spy => {
+          spy.mockReturnValue(true);
+
+          const { getByText, queryByText } = render(
+            <Copyable label="Label" description="Description" onCopy={onCopy}>
+              Hello world
+            </Copyable>,
+          );
+
+          expect(queryByText('Copied!')).not.toBeInTheDocument();
+
+          const copyButton = getByText('Copy');
+          expect(copyButton).toBeVisible();
+
+          await Context.within(
+            localJest.spyContext(ClipboardJS.prototype, 'onClick'),
+            async spy => {
+              expect(spy).not.toHaveBeenCalled();
+              fireEvent.click(copyButton);
+              await waitFor(() => expect(spy).toHaveBeenCalled());
+            },
+          );
+
+          await waitFor(() => expect(onCopy).toHaveBeenCalled());
+        },
+      );
+    });
+
     test('has tooltip when clicked', async () => {
       await Context.within(
-        jest.spyContext(ClipboardJS, 'isSupported'),
+        localJest.spyContext(ClipboardJS, 'isSupported'),
         async spy => {
           spy.mockReturnValue(true);
 
@@ -72,7 +105,7 @@ describe('packages/copyable', () => {
           expect(copyButton).toBeVisible();
 
           await Context.within(
-            jest.spyContext(ClipboardJS.prototype, 'onClick'),
+            localJest.spyContext(ClipboardJS.prototype, 'onClick'),
             async spy => {
               expect(spy).not.toHaveBeenCalled();
               fireEvent.click(copyButton);
@@ -104,7 +137,7 @@ describe('packages/copyable', () => {
 
     test('is shown by default when clipboard API is supported', () => {
       const { queryByText } = Context.within(
-        jest.spyContext(ClipboardJS, 'isSupported'),
+        localJest.spyContext(ClipboardJS, 'isSupported'),
         spy => {
           spy.mockReturnValue(true);
 
@@ -121,7 +154,7 @@ describe('packages/copyable', () => {
 
     test('is not shown when clipboard API is not supported', () => {
       const { queryByText } = Context.within(
-        jest.spyContext(ClipboardJS, 'isSupported'),
+        localJest.spyContext(ClipboardJS, 'isSupported'),
         spy => {
           spy.mockReturnValue(false);
 
