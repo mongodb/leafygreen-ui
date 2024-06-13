@@ -15,6 +15,7 @@ const spacing = {
   1200: 48,
   1400: 56,
   1600: 64,
+  1800: 72,
 
   /**  @deprecated use 100 instead */
   1: 4,
