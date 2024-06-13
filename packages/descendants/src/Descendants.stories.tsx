@@ -1,4 +1,5 @@
-import React, { ElementType, useState } from 'react';
+/* eslint-disable no-console */
+import React, { ComponentProps, ElementType, useRef, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import random from 'lodash/random';
@@ -8,13 +9,17 @@ import shuffle from 'lodash/shuffle';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import Popover from '@leafygreen-ui/popover';
 
 import {
   TestDescendant,
   TestDescendant2,
+  TestDescendantContext,
   TestParent,
   TestParent2,
-} from './test/components.testutils';
+} from '../test/components.testutils';
+
+import { DescendantsProvider, useInitDescendants } from '.';
 
 faker.seed(0);
 
@@ -87,7 +92,11 @@ export const Basic = () => {
         <br />
         <TestParent>
           {items.map((x, i) => (
-            <TestDescendant className={testItemStyle} key={x + i} type="person">
+            <TestDescendant
+              className={testItemStyle}
+              key={x + i}
+              group="person"
+            >
               {x}
             </TestDescendant>
           ))}
@@ -193,4 +202,64 @@ export const MultipleContexts = () => {
       </TestDescendant>
     </TestParent>
   );
+};
+
+const Parent = ({
+  children,
+  open,
+  ...rest
+}: ComponentProps<'div'> & { open: boolean }) => {
+  const elRef = useRef(null);
+  const parentRef = useRef(null);
+  const { descendants, dispatch, getDescendants } =
+    useInitDescendants<HTMLDivElement>();
+
+  const handleTransition = () => {
+    console.log(getDescendants().map(d => d.id));
+  };
+
+  return (
+    <>
+      <span ref={elRef} />
+      <DescendantsProvider
+        context={TestDescendantContext}
+        descendants={descendants}
+        dispatch={dispatch}
+      >
+        <Popover
+          refEl={elRef}
+          style={{ border: '1px solid red' }}
+          active={open}
+          onEntered={handleTransition}
+        >
+          <div {...rest} ref={parentRef} data-testid="parent">
+            {children}
+          </div>
+        </Popover>
+      </DescendantsProvider>
+    </>
+  );
+};
+
+export const WithPopover = {
+  render: ({ open }) => {
+    return (
+      <Parent open={open}>
+        <TestDescendant data-testid="child" tabIndex={0}>
+          Apple
+        </TestDescendant>
+        <TestDescendant data-testid="child" tabIndex={0}>
+          Banana
+        </TestDescendant>
+      </Parent>
+    );
+  },
+  args: {
+    open: false,
+  },
+  argTypes: {
+    open: {
+      control: 'boolean',
+    },
+  },
 };

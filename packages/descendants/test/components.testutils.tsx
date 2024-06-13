@@ -34,7 +34,7 @@ export const TestParent = ({ children, ...rest }: ComponentProps<'div'>) => {
 };
 
 interface TestDescendantProps extends ComponentProps<'div'> {
-  type?: string;
+  group?: string;
 }
 
 export const TestDescendant = forwardRef<HTMLDivElement, TestDescendantProps>(
