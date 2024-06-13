@@ -104,8 +104,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     descendants,
     index => {
       if (isDefined(index)) {
-        const firstDescendant = getDescendants()[index]?.ref.current;
-        firstDescendant?.focus();
+        const descendantElement = getDescendants()[index]?.ref.current;
+        descendantElement?.focus();
       }
     },
   );
