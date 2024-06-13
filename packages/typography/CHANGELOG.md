@@ -1,5 +1,13 @@
 # @leafygreen-ui/typography
 
+## 19.1.2
+
+### Patch Changes
+
+- 5d44c6b16: Updates `line-height` of H1 component from 62 to 64px to align better with our grid
+- Updated dependencies [df0d6faee]
+  - @leafygreen-ui/icon@12.5.2
+
 ## 19.1.1
 
 ### Patch Changes

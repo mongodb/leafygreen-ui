@@ -30,6 +30,7 @@ export function DismissButton({
 
   return (
     <button
+      type="button"
       data-testid="chip-dismiss-button"
       aria-label={ariaLabel}
       aria-disabled={disabled}
