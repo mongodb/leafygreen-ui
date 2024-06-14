@@ -6,7 +6,7 @@ import { LGIDs } from '../constants';
 import { menuItemContainerStyles } from '../MenuItem/MenuItem.styles';
 
 export const subMenuContainerClassName = createUniqueClassName(LGIDs.submenu);
-export const subMenuTriggerClassName = createUniqueClassName(
+export const subMenuToggleClassName = createUniqueClassName(
   LGIDs.submenu + '-trigger',
 );
 
@@ -15,7 +15,7 @@ export const subMenuContainerStyles = css`
   position: relative;
 `;
 
-export const submenuTriggerStyles = css`
+export const submenuToggleStyles = css`
   position: absolute;
   right: ${spacing[300]}px;
   // Ensure the trigger is centered regardless of element height

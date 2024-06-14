@@ -2,6 +2,7 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { LGIDs } from '../constants';
 import { MenuItem, SubMenu, SubMenuProps } from '..';
 
 const subMenuTestId = 'sub-menu-1-id';
@@ -25,6 +26,13 @@ describe('packages/sub-menu', () => {
       const { getByTestId } = renderSubMenu();
       const subMenu = getByTestId(subMenuTestId);
       expect(subMenu).toBeInTheDocument();
+    });
+
+    test('submenu toggle button is not a child of the submenu button', () => {
+      const { getByTestId } = renderSubMenu();
+      const subMenu = getByTestId(subMenuTestId);
+      const toggle = getByTestId(LGIDs.submenuToggle);
+      expect(subMenu.contains(toggle)).toBe(false);
     });
 
     test('renders a SubMenu open by default, when the SubMenu is active', () => {
