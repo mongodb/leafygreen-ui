@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   act,
-  fireEvent,
+  prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -74,7 +74,10 @@ function renderMenu(
   async function openMenu() {
     userEvent.click(triggerEl);
     const menuElements = await findMenuElements();
-    fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
+    await waitForTransition(menuElements.menuEl);
+    await waitFor(() => {
+      expect(menuElements.menuItemElements[0]).toHaveFocus();
+    });
     return menuElements;
   }
 
@@ -159,9 +162,18 @@ describe('packages/menu', () => {
       const { triggerEl, findMenuElements } = renderMenu({});
       userEvent.click(triggerEl);
       const { menuEl, menuItemElements } = await findMenuElements();
+      await waitForTransition(menuEl);
       await waitFor(() => {
-        // JSDOM does not automatically fire these events
-        fireEvent.transitionEnd(menuEl as Element);
+        expect(menuItemElements[0]).toHaveFocus();
+      });
+    });
+
+    test('First item is focused when { usePortal: false }', async () => {
+      const { triggerEl, findMenuElements } = renderMenu({ usePortal: false });
+      userEvent.click(triggerEl);
+      const { menuEl, menuItemElements } = await findMenuElements();
+      await waitForTransition(menuEl);
+      await waitFor(() => {
         expect(menuItemElements[0]).toHaveFocus();
       });
     });
@@ -220,7 +232,7 @@ describe('packages/menu', () => {
       if (key === 'tab') {
         userEvent.tab();
       } else {
-        userEvent.type(menu, `{${key}}`);
+        userEvent.keyboard(`{${key}}`);
       }
     };
 
@@ -249,11 +261,16 @@ describe('packages/menu', () => {
         const { openMenu, triggerEl } = renderMenu({
           usePortal: false,
         });
-        const { menuEl } = await openMenu();
-
+        const { menuEl, menuItemElements } = await openMenu();
+        await waitFor(() => {
+          expect(menuEl).toBeInTheDocument();
+          expect(menuItemElements[0]).toHaveFocus();
+        });
         userEventInteraction(menuEl!, key);
         await waitForElementToBeRemoved(menuEl);
-        expect(triggerEl).toHaveFocus();
+        await waitFor(() => {
+          expect(triggerEl).toHaveFocus();
+        });
       });
     });
 
@@ -348,7 +365,7 @@ describe('packages/menu', () => {
 
       expect(firstItem).toHaveFocus();
 
-      userEvent.keyboard('[Enter]');
+      userEvent.type(menuEl!, '[Enter]');
 
       await act(async () => await waitForTimeout());
       expect(menuEl).toBeInTheDocument();
@@ -364,7 +381,7 @@ describe('packages/menu', () => {
 
       expect(firstItem).toHaveFocus();
 
-      userEvent.keyboard('[Space]');
+      userEvent.type(menuEl!, '[Space]');
 
       await act(async () => await waitForTimeout());
       expect(menuEl).toBeInTheDocument();
