@@ -2,11 +2,12 @@ import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
+import { LGIDs } from '../constants';
 import { menuItemContainerStyles } from '../MenuItem/MenuItem.styles';
 
-export const subMenuContainerClassName = createUniqueClassName('menu-sub_menu');
+export const subMenuContainerClassName = createUniqueClassName(LGIDs.submenu);
 export const subMenuTriggerClassName = createUniqueClassName(
-  'menu-sub_menu-trigger',
+  LGIDs.submenu + '-trigger',
 );
 
 export const subMenuContainerStyles = css`

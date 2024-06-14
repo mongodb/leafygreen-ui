@@ -5,6 +5,7 @@ import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
+import { LGIDs } from '../constants';
 import { MenuDescendantsContext } from '../MenuContext';
 
 import { InternalMenuItemContent } from './InternalMenuItemContent';
@@ -26,6 +27,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         id={id}
         role="none"
         className={cx(menuItemClassName, menuItemContainerStyles)}
+        data-testid={LGIDs.item}
       >
         <InternalMenuItemContent
           as={as}

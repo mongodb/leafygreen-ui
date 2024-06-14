@@ -11,6 +11,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
+import { LGIDs } from '../constants';
 import {
   MenuContext,
   MenuDescendantsContext,
@@ -187,6 +188,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={refEl}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
+          data-testid={LGIDs.root}
+          data-lgid={LGIDs.root}
           {...popoverProps}
         >
           <div

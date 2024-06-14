@@ -19,6 +19,7 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { LGIDs } from '../constants';
 import { MenuContext } from '../MenuContext';
 import { MenuDescendantsContext } from '../MenuContext';
 import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
@@ -113,6 +114,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
           id={id}
           role="none"
           className={cx(subMenuContainerClassName, subMenuContainerStyles)}
+          data-testid={LGIDs.submenu}
+          data-lgid={LGIDs.submenu}
         >
           <InternalMenuItemContent
             as={as}
