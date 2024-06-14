@@ -8,6 +8,7 @@ import React, {
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
@@ -19,12 +20,15 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { MenuContext } from '../MenuContext';
-import { MenuItem } from '../MenuItem';
+import { MenuDescendantsContext } from '../MenuContext';
+import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
   getSubmenuListStyles,
   subMenuContainerClassName,
+  subMenuContainerStyles,
   subMenuTriggerClassName,
+  submenuTriggerStyles,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
 import { useChildrenHeight } from './useChildrenHeight';
@@ -48,8 +52,12 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     fwdRef,
   ): React.ReactElement => {
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
+    const { active, disabled } = rest;
 
-    // Note: descendants tracking is handled by the internal `MenuItem` component
+    const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
+      active,
+      disabled,
+    });
     const { theme } = useContext(MenuContext);
 
     const [open, setOpen] = useControlledState(
@@ -101,27 +109,34 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     return (
       <>
-        <MenuItem
-          as={as}
-          ref={fwdRef}
-          onClick={handleClick}
-          onKeyDown={handleKeydown}
-          {...rest}
-          className={cx(subMenuContainerClassName, className)}
-          rightGlyph={
-            <IconButton
-              data-testid="lg-sub-menu-icon-button"
-              ref={submenuTriggerRef}
-              aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-              onClick={handleChevronClick}
-              className={cx(subMenuTriggerClassName)}
-            >
-              <ChevronIcon role="presentation" size={14} />
-            </IconButton>
-          }
+        <li
+          id={id}
+          role="none"
+          className={cx(subMenuContainerClassName, subMenuContainerStyles)}
         >
-          {title}
-        </MenuItem>
+          <InternalMenuItemContent
+            as={as}
+            ref={ref}
+            index={index}
+            active={active}
+            disabled={disabled}
+            onClick={handleClick}
+            onKeyDown={handleKeydown}
+            data-id={id}
+            {...rest}
+          >
+            {title}
+          </InternalMenuItemContent>
+          <IconButton
+            data-testid="lg-sub-menu-icon-button"
+            ref={submenuTriggerRef}
+            aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+            onClick={handleChevronClick}
+            className={cx(subMenuTriggerClassName, submenuTriggerStyles)}
+          >
+            <ChevronIcon role="presentation" size={14} />
+          </IconButton>
+        </li>
         <Transition
           in={open}
           timeout={{

@@ -1,49 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import { css, cx } from '@leafygreen-ui/emotion';
-import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
-import {
-  InferredPolymorphic,
-  useInferredPolymorphicComponent,
-} from '@leafygreen-ui/polymorphic';
+import { cx } from '@leafygreen-ui/emotion';
+import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
-import { MenuContext, MenuDescendantsContext } from '../MenuContext';
-import { Size } from '../types';
+import { MenuDescendantsContext } from '../MenuContext';
 
-import {
-  getMenuItemStyles,
-  menuItemClassName,
-  menuItemContainerStyles,
-} from './MenuItem.styles';
-import { MenuItemProps, Variant } from './MenuItem.types';
+import { InternalMenuItemContent } from './InternalMenuItemContent';
+import { menuItemClassName, menuItemContainerStyles } from './MenuItem.styles';
+import { MenuItemProps } from './MenuItem.types';
 
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
-    {
-      as: asProp,
-      disabled = false,
-      active = false,
-      description,
-      glyph,
-      size = Size.Default,
-      variant = Variant.Default,
-      children,
-      className,
-      rightGlyph,
-      ...rest
-    },
+    { as, disabled = false, active = false, ...rest },
     fwdRef: React.Ref<any>,
   ) => {
-    const as = useInferredPolymorphicComponent(asProp, rest, 'button');
-    const { theme, darkMode, highlightIndex } = useContext(MenuContext);
     const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
     });
-
-    const highlighted = index === highlightIndex;
 
     return (
       <li
@@ -51,49 +27,15 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
         role="none"
         className={cx(menuItemClassName, menuItemContainerStyles)}
       >
-        <InputOption
-          ref={ref}
+        <InternalMenuItemContent
           as={as}
-          role="menuitem"
-          target="_self"
-          rel=""
-          data-index={index}
-          aria-disabled={disabled}
-          aria-current={active ?? undefined}
+          ref={ref}
+          index={index}
+          active={active}
           disabled={disabled}
-          darkMode={darkMode}
           data-id={id}
-          showWedge
-          highlighted={highlighted}
-          className={cx(
-            getMenuItemStyles({
-              active,
-              highlighted,
-              size,
-              theme,
-              variant,
-            }),
-            className,
-          )}
-          // FIXME: explicit labelledby
-          aria-labelledby={rest['aria-labelledby'] ?? ''}
           {...rest}
-        >
-          <InputOptionContent
-            leftGlyph={glyph}
-            description={description}
-            rightGlyph={rightGlyph}
-            preserveIconSpace={false}
-          >
-            <div
-              className={css`
-                font-weight: 500;
-              `}
-            >
-              {children}
-            </div>
-          </InputOptionContent>
-        </InputOption>
+        />
       </li>
     );
   },
