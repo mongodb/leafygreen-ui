@@ -15,7 +15,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
-  useInferredPolymorphicComponent,
+  useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
 import { MenuContext } from '../MenuContext';
@@ -42,11 +42,11 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       onExited,
       className,
       children,
-      ...rest
+      ...restProps
     },
     fwdRef,
   ): React.ReactElement => {
-    const as = useInferredPolymorphicComponent(asProp, rest, 'button');
+    const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
 
     // Note: descendants tracking is handled by the internal `MenuItem` component
     const { theme } = useContext(MenuContext);
@@ -62,26 +62,15 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
 
     const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
 
-    const handleClick: MouseEventHandler<HTMLElement> = e => {
+    const handleClick: MouseEventHandler = e => {
       if (onClick || rest.href) {
-        // @ts-expect-error
         onClick?.(e);
       } else {
         setOpen(x => !x);
       }
     };
 
-    const handleChevronClick: MouseEventHandler<HTMLButtonElement> = e => {
-      // Prevent links from navigating
-      e.preventDefault();
-      // we stop the event from propagating and closing the entire menu
-      e.nativeEvent.stopImmediatePropagation();
-      e.stopPropagation();
-
-      setOpen(x => !x);
-    };
-
-    const handleKeydown: KeyboardEventHandler<HTMLElement> = e => {
+    const handleKeydown: KeyboardEventHandler = e => {
       switch (e.key) {
         case keyMap.ArrowLeft: {
           setOpen(false);
@@ -95,6 +84,16 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
       }
     };
 
+    const handleChevronClick: MouseEventHandler<HTMLButtonElement> = e => {
+      // Prevent links from navigating
+      e.preventDefault();
+      // we stop the event from propagating and closing the entire menu
+      e.nativeEvent.stopImmediatePropagation();
+      e.stopPropagation();
+
+      setOpen(x => !x);
+    };
+
     return (
       <>
         <MenuItem
@@ -102,7 +101,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
           ref={fwdRef}
           onClick={handleClick}
           onKeyDown={handleKeydown}
-          href={rest.href ?? ''} // FIXME: explicit href
           {...rest}
           className={cx(subMenuContainerClassName, className)}
           rightGlyph={
@@ -119,7 +117,6 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
         >
           {title}
         </MenuItem>
-
         <Transition
           in={open}
           timeout={{

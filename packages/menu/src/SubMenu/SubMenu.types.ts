@@ -1,13 +1,10 @@
 import { type Dispatch, type SetStateAction } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-
 import { MenuItemProps } from '../MenuItem';
 
 export interface SubMenuProps
-  extends HTMLElementProps<'button'>,
-    Omit<MenuItemProps, 'children' | 'rightGlyph' | 'variant'> {
+  extends Omit<MenuItemProps, 'children' | 'rightGlyph' | 'variant'> {
   /**
    * Determines if `<SubMenu />` item appears open
    */
