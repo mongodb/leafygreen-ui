@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import {
   InferredPolymorphic,
-  InferredPolymorphicProps,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 import { cx } from '@leafygreen-ui/emotion';
@@ -15,14 +14,12 @@ import { CardProps, ContentStyle } from './types';
 /**
  * Cards are used to organize information into consumable chunks.
  */
-export const Card = InferredPolymorphic<
-  InferredPolymorphicProps<'div', CardProps>
->(
+export const Card = InferredPolymorphic<CardProps, 'div'>(
   (
     { as, className, contentStyle, darkMode: darkModeProp, title, ...rest },
     ref,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest);
+    const { Component } = useInferredPolymorphic(as, rest, 'div');
 
     if (
       contentStyle === undefined &&

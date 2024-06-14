@@ -104,7 +104,7 @@ export interface InferredPolymorphicRenderFunction<
   TDefaultAs extends PolymorphicAs = PolymorphicAs,
 > {
   <TAsProp extends PolymorphicAs = TDefaultAs>(
-    props: InferredPolymorphicProps<TAsProp, TComponentProps>,
+    props: InferredPolymorphicPropsWithRef<TAsProp, TComponentProps>,
     ref: PolymorphicRef<TAsProp>,
   ): ReactElement | null;
   displayName?: string;
@@ -121,7 +121,7 @@ export type InferredPolymorphicComponentType<
   // FIXME: propTypes will be broken for any inherited props
   propTypes?:
     | WeakValidationMap<
-        InferredPolymorphicProps<PolymorphicAs, TComponentProps>
+        InferredPolymorphicPropsWithRef<PolymorphicAs, TComponentProps>
       >
     | undefined;
 };
