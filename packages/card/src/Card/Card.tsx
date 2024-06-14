@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   InferredPolymorphic,
+  PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 import { cx } from '@leafygreen-ui/emotion';
@@ -16,7 +17,14 @@ import { CardProps, ContentStyle } from './types';
  */
 export const Card = InferredPolymorphic<CardProps, 'div'>(
   (
-    { as, className, contentStyle, darkMode: darkModeProp, title, ...rest },
+    {
+      as = 'div' as PolymorphicAs,
+      className,
+      contentStyle,
+      darkMode: darkModeProp,
+      title,
+      ...rest
+    },
     ref,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'div');

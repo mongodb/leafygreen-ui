@@ -30,7 +30,6 @@ function renderCard({
   const cardId = 'cardID';
 
   const { container, getByTestId } = render(
-    // @ts-expect-error
     <Card data-testid={cardId} className={className} {...rest}>
       {children}
     </Card>,
@@ -124,7 +123,7 @@ describe('packages/Card', () => {
     });
 
     test('Accepts `href` prop', () => {
-      <Card href="http://mongodb.design" />;
+      <Card as="a" href="http://mongodb.design" />;
     });
   });
 });

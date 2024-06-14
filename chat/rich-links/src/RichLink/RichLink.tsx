@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import Card from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
@@ -52,16 +53,24 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
 
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
+    const conditionalProps = href
+      ? {
+          as: 'a' as PolymorphicAs,
+          target: '_blank',
+          href,
+          ref,
+          ...anchorProps,
+        }
+      : {};
+
     return (
       <Card
         darkMode={darkMode}
-        ref={ref}
         className={cx(baseStyles, themeStyles[theme], {
           [badgeAreaStyles]: showBadge,
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
-        as="a"
-        {...{ target: '_blank', href, ...anchorProps }}
+        {...conditionalProps}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
           {children}
