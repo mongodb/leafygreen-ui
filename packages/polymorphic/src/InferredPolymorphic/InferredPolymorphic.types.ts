@@ -1,5 +1,5 @@
 import {
-  ComponentPropsWithoutRef,
+  ComponentPropsWithRef,
   ComponentType,
   ReactElement,
   WeakValidationMap,
@@ -32,14 +32,14 @@ export interface AnchorLikeProps<TAsProp extends AnchorLike | undefined> {
 export type InferredAnchorProps = {
   href: string;
   as?: 'a';
-} & ComponentPropsWithoutRef<'a'>;
+} & ComponentPropsWithRef<'a'>;
 
 /**
  * Union of {@link AnchorLikeProps} and {@link InheritedProps}
  */
 export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
   as?: TAsProp;
-} & Omit<PartialRequired<ComponentPropsWithoutRef<TAsProp>, 'href'>, 'as'>;
+} & Omit<PartialRequired<ComponentPropsWithRef<TAsProp>, 'href'>, 'as'>;
 
 /**
  * Extends the default component props (or intrinsic attributes)
@@ -58,7 +58,7 @@ export type InheritedComponentProps<
   TComponentProps,
 > = {
   as?: PolymorphicAs;
-} & Omit<ComponentPropsWithoutRef<TAsProp>, keyof TComponentProps | 'as'>;
+} & Omit<ComponentPropsWithRef<TAsProp>, keyof TComponentProps | 'as'>;
 
 /**
  *
@@ -104,7 +104,7 @@ export interface InferredPolymorphicRenderFunction<
   TDefaultAs extends PolymorphicAs = PolymorphicAs,
 > {
   <TAsProp extends PolymorphicAs = TDefaultAs>(
-    props: InferredPolymorphicProps<TAsProp, TComponentProps>,
+    props: InferredPolymorphicPropsWithRef<TAsProp, TComponentProps>,
     ref: PolymorphicRef<TAsProp>,
   ): ReactElement | null;
   displayName?: string;
