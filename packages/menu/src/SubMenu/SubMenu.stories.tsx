@@ -35,7 +35,7 @@ export const LiveExample = {
           outline: 1px solid gray;
         `}
       >
-        <SubMenu {...args} open={open} setOpen={setOpen}>
+        <SubMenu {...(args as any)} open={open} setOpen={setOpen}>
           <MenuItem>Apple</MenuItem>
           <MenuItem>Banana</MenuItem>
         </SubMenu>

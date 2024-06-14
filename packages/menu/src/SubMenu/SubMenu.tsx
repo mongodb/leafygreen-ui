@@ -26,16 +26,17 @@ import {
   subMenuContainerClassName,
   subMenuTriggerClassName,
 } from './SubMenu.styles';
-import { SubMenuProps } from './SubMenu.types';
+import { InternalSubMenuProps } from './SubMenu.types';
 import { useChildrenHeight } from './useChildrenHeight';
 import { useControlledState } from './useControlledState';
 
-export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
+export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
   (
     {
       as: asProp,
       open: openProp,
       setOpen: setOpenProp,
+      initialOpen = false,
       title,
       onClick,
       onEntered,
@@ -51,7 +52,11 @@ export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
     // Note: descendants tracking is handled by the internal `MenuItem` component
     const { theme } = useContext(MenuContext);
 
-    const [open, setOpen] = useControlledState(false, openProp, setOpenProp);
+    const [open, setOpen] = useControlledState(
+      initialOpen,
+      openProp,
+      setOpenProp,
+    );
     useEffect(() => {
       setOpen(!!rest.active);
     }, [rest.active, setOpen]);

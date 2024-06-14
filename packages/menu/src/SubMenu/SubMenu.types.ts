@@ -1,9 +1,14 @@
 import { type Dispatch, type SetStateAction } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
 
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
+
 import { MenuItemProps } from '../MenuItem';
 
-export interface SubMenuProps
+export interface InternalSubMenuProps
   extends Omit<MenuItemProps, 'children' | 'rightGlyph' | 'variant'> {
   /**
    * Determines if `<SubMenu />` item appears open
@@ -14,6 +19,13 @@ export interface SubMenuProps
    * Function to set the value of `open` in `<SubMenu />`
    */
   setOpen?: Dispatch<SetStateAction<boolean>>;
+
+  /**
+   * Whether the submenu should initially be open.
+   *
+   * (will be overridden by either `open` or `active`)
+   */
+  initialOpen?: boolean;
 
   /**
    * Main text rendered in `SubMenu`.
@@ -37,3 +49,9 @@ export interface SubMenuProps
    */
   onExited?: ExitHandler<HTMLElement>;
 }
+
+// External only
+export type SubMenuProps = InferredPolymorphicProps<
+  PolymorphicAs,
+  InternalSubMenuProps
+>;
