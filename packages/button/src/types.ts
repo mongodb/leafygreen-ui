@@ -132,21 +132,4 @@ export interface ButtonProps extends LgIdProps {
    * Visual indicator display to convey that component is loading.
    */
   loadingIndicator?: React.ReactElement;
-
-  /**
-   * The component or HTML Element that the button is rendered as.
-   *
-   * To use with NextJS Links, pass in a component that wraps the Link:
-   * ```js
-   * const Linker = ({ href, children, ...props }) => (
-   *  <NextLink href={href}>
-   *    <a {...props}>{children}</a>
-   *  </NextLink>
-   * );
-   * <Button as={Linker} />
-   * ```
-   * @type HTMLElement | React.Component
-   * @default button
-   */
-  as?: React.ElementType<any>;
 }
