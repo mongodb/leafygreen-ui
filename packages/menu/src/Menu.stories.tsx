@@ -61,7 +61,6 @@ export default {
         'setOpen',
         'as',
         'portalRef',
-        'usePortal',
       ],
     },
     chromatic: {
@@ -86,6 +85,9 @@ export default {
     },
     darkMode: storybookArgTypes.darkMode,
     renderDarkMenu: {
+      control: 'boolean',
+    },
+    usePortal: {
       control: 'boolean',
     },
   },

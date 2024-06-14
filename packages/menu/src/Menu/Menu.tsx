@@ -1,4 +1,10 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, {
+  KeyboardEventHandler,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
+import { prettyDOM } from '@testing-library/react';
 import PropTypes from 'prop-types';
 
 import {
@@ -6,7 +12,11 @@ import {
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
-import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
+import {
+  useBackdropClick,
+  useEventListener,
+  useForwardedRef,
+} from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
@@ -69,12 +79,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     popoverZIndex,
     ...rest
   }: MenuProps,
-  forwardRef,
+  fwdRef,
 ) {
   const renderDarkMode = renderDarkMenu || darkModeProp;
   const { theme, darkMode } = useDarkMode(renderDarkMode);
 
-  const popoverRef = useRef<HTMLUListElement | null>(null);
+  const popoverRef = useForwardedRef(fwdRef, null);
   const triggerRef = useRef<HTMLElement>(null);
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
@@ -119,7 +129,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   };
 
   // Fired on global keyDown event
-  function handleKeyDown(e: KeyboardEvent) {
+  const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = e => {
     switch (e.key) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
@@ -149,9 +159,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         }
         break;
     }
-  }
-
-  useEventListener('keydown', handleKeyDown, { enabled: open });
+  };
 
   const popoverProps = {
     popoverZIndex,
@@ -182,14 +190,20 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       >
         <Popover
           key="popover"
+          // @ts-expect-error ref types are too complex to match
+          ref={popoverRef as React.Ref<HTMLDivElement>}
           active={open}
           align={align}
           justify={justify}
           refEl={refEl}
           adjustOnMutation={adjustOnMutation}
+          // Need to stop propagation, otherwise Menu will closed automatically when clicked
+          onClick={e => e.stopPropagation()}
+          onKeyDown={handleKeyDown}
           onEntered={handlePopoverOpen}
           data-testid={LGIDs.root}
           data-lgid={LGIDs.root}
+          {...rest}
           {...popoverProps}
         >
           <div
@@ -201,17 +215,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               `,
               className,
             )}
-            ref={forwardRef}
           >
-            {/* Need to stop propagation, otherwise Menu will closed automatically when clicked */}
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
-            <ul
-              {...rest}
-              className={scrollContainerStyle}
-              role="menu"
-              onClick={e => e.stopPropagation()}
-              ref={popoverRef}
-            >
+            <ul className={scrollContainerStyle} role="menu">
               {children}
             </ul>
           </div>

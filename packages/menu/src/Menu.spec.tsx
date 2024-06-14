@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   act,
-  fireEvent,
+  prettyDOM,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -30,7 +30,7 @@ function renderMenu({
   const renderResult = render(
     <>
       <div data-testid="backdrop" />
-      <Menu trigger={trigger} {...rest} data-testid={menuTestId}>
+      <Menu trigger={trigger} {...rest} data-testid={menuTestId} ref={null}>
         <MenuItem data-testid="menu-item-a">Item A</MenuItem>
         <MenuSeparator />
         <MenuItem href="http://mongodb.design">Item B</MenuItem>
@@ -64,7 +64,10 @@ function renderMenu({
   async function openMenu() {
     userEvent.click(triggerEl);
     const menuElements = await findMenuElements();
-    fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
+    await waitForTransition(menuElements.menuEl);
+    await waitFor(() => {
+      expect(menuElements.menuItemElements[0]).toHaveFocus();
+    });
     return menuElements;
   }
 
@@ -149,9 +152,18 @@ describe('packages/menu', () => {
       const { triggerEl, findMenuElements } = renderMenu({});
       userEvent.click(triggerEl);
       const { menuEl, menuItemElements } = await findMenuElements();
+      await waitForTransition(menuEl);
       await waitFor(() => {
-        // JSDOM does not automatically fire these events
-        fireEvent.transitionEnd(menuEl as Element);
+        expect(menuItemElements[0]).toHaveFocus();
+      });
+    });
+
+    test('First item is focused when { usePortal: false }', async () => {
+      const { triggerEl, findMenuElements } = renderMenu({ usePortal: false });
+      userEvent.click(triggerEl);
+      const { menuEl, menuItemElements } = await findMenuElements();
+      await waitForTransition(menuEl);
+      await waitFor(() => {
         expect(menuItemElements[0]).toHaveFocus();
       });
     });
@@ -210,7 +222,7 @@ describe('packages/menu', () => {
       if (key === 'tab') {
         userEvent.tab();
       } else {
-        userEvent.type(menu, `{${key}}`);
+        userEvent.keyboard(`{${key}}`);
       }
     };
 
@@ -239,11 +251,16 @@ describe('packages/menu', () => {
         const { openMenu, triggerEl } = renderMenu({
           usePortal: false,
         });
-        const { menuEl } = await openMenu();
-
+        const { menuEl, menuItemElements } = await openMenu();
+        await waitFor(() => {
+          expect(menuEl).toBeInTheDocument();
+          expect(menuItemElements[0]).toHaveFocus();
+        });
         userEventInteraction(menuEl!, key);
         await waitForElementToBeRemoved(menuEl);
-        expect(triggerEl).toHaveFocus();
+        await waitFor(() => {
+          expect(triggerEl).toHaveFocus();
+        });
       });
     });
 
@@ -251,16 +268,16 @@ describe('packages/menu', () => {
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
-          userEvent.type(menuEl!, '{arrowdown}');
+          const { menuItemElements } = await openMenu();
+          userEvent.keyboard('{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
           for (let i = 0; i < menuItemElements.length; i++) {
-            userEvent.type(menuEl!, '{arrowdown}');
+            userEvent.keyboard('{arrowdown}');
           }
 
           expect(menuItemElements[0]).toHaveFocus();
@@ -270,18 +287,18 @@ describe('packages/menu', () => {
       describe('Up arrow', () => {
         test('highlights the previous option in the menu', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
-          userEvent.type(menuEl!, '{arrowdown}');
-          userEvent.type(menuEl!, '{arrowup}');
+          userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
           const lastOption = menuItemElements[menuItemElements.length - 1];
-          userEvent.type(menuEl!, '{arrowup}');
+          userEvent.keyboard('{arrowup}');
           expect(lastOption).toHaveFocus();
         });
       });
@@ -297,7 +314,7 @@ describe('packages/menu', () => {
 
       expect(firstItem).toHaveFocus();
 
-      userEvent.keyboard('[Enter]');
+      userEvent.type(menuEl!, '[Enter]');
 
       await act(async () => await waitForTimeout());
       expect(menuEl).toBeInTheDocument();
@@ -313,7 +330,7 @@ describe('packages/menu', () => {
 
       expect(firstItem).toHaveFocus();
 
-      userEvent.keyboard('[Space]');
+      userEvent.type(menuEl!, '[Space]');
 
       await act(async () => await waitForTimeout());
       expect(menuEl).toBeInTheDocument();
