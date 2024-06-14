@@ -4,7 +4,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { prettyDOM } from '@testing-library/react';
 import PropTypes from 'prop-types';
 
 import {
@@ -12,11 +11,7 @@ import {
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
-import {
-  useBackdropClick,
-  useEventListener,
-  useForwardedRef,
-} from '@leafygreen-ui/hooks';
+import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined, keyMap } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';

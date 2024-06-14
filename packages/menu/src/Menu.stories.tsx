@@ -93,8 +93,16 @@ export default {
   },
 } satisfies StoryMetaType<typeof Menu>;
 
-export const LiveExample = {
-  render: ({ open, size, darkMode, ...args }) => {
+export const LiveExample: StoryObj<
+  typeof Menu & { size?: MenuItemProps['size'] }
+> = {
+  render: ({
+    open,
+    darkMode,
+    // @ts-expect-error
+    size,
+    ...args
+  }) => {
     return (
       <Menu
         darkMode={darkMode}
@@ -164,7 +172,7 @@ export const LiveExample = {
       disableSnapshot: true,
     },
   },
-} satisfies StoryObj<typeof Menu & { size?: MenuItemProps['size'] }>;
+};
 
 export const InitialOpen = {
   render: args => {
