@@ -1,4 +1,4 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const ContentStyle = {
   None: 'none',
