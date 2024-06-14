@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   InferredPolymorphic,
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { colorSet, containerStyle } from './styles';
 import { CardProps, ContentStyle } from './types';
