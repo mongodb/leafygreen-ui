@@ -56,9 +56,9 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
     const conditionalProps = href
       ? {
           as: 'a' as PolymorphicAs,
-          target: '_blank',
           href,
-          ref,
+          ref: ref,
+          target: '_blank',
           ...anchorProps,
         }
       : {};
