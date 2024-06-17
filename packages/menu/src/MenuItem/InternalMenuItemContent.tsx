@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
@@ -7,8 +7,11 @@ import {
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
-import { MenuContext } from '../MenuContext';
+import { useMenuContext } from '../MenuContext';
+import { menuColor } from '../styles';
+import { useSubMenuContext } from '../SubMenu';
 
 import {
   getDarkInLightModeMenuItemStyles,
@@ -49,7 +52,8 @@ export const InternalMenuItemContent = React.forwardRef<
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
     const { theme, darkMode, highlightIndex, renderDarkMenu } =
-      useContext(MenuContext);
+      useMenuContext();
+    const { depth, hasIcon: parentHasIcon } = useSubMenuContext();
     const highlighted = index === highlightIndex;
 
     const defaultAnchorProps =
@@ -73,6 +77,7 @@ export const InternalMenuItemContent = React.forwardRef<
         darkMode={darkMode}
         showWedge
         highlighted={highlighted}
+        data-depth={depth}
         className={cx(
           getMenuItemStyles({
             active,
@@ -82,9 +87,21 @@ export const InternalMenuItemContent = React.forwardRef<
             variant,
           }),
 
-          // TODO: Remove dark-in-light mode styles
-          // after https://jira.mongodb.org/browse/LG-3974
           {
+            [css`
+              &:after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+                height: 1px;
+                background-color: ${menuColor[theme].border.default};
+              }
+            `]: depth > 0,
+
+            // TODO: Remove dark-in-light mode styles
+            // after https://jira.mongodb.org/browse/LG-3974
             [getDarkInLightModeMenuItemStyles({
               active,
               disabled,
@@ -92,6 +109,11 @@ export const InternalMenuItemContent = React.forwardRef<
               theme,
               variant,
             })]: theme === 'light' && renderDarkMenu,
+            [css`
+              &:after {
+                background-color: ${color.dark.border.secondary.default};
+              }
+            `]: theme === 'light' && renderDarkMenu && depth > 0,
           },
           className,
         )}
@@ -103,6 +125,13 @@ export const InternalMenuItemContent = React.forwardRef<
           description={description}
           rightGlyph={rightGlyph}
           preserveIconSpace={false}
+          className={cx({
+            [css`
+              position: relative;
+              padding-left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+              border-top: 1px solid transparent;
+            `]: depth > 0,
+          })}
         >
           <div
             className={css`

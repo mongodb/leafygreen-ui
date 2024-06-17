@@ -1,7 +1,6 @@
 import React, {
   KeyboardEventHandler,
   MouseEventHandler,
-  useContext,
   useEffect,
   useRef,
 } from 'react';
@@ -20,7 +19,6 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { LGIDs } from '../constants';
-import { MenuContext } from '../MenuContext';
 import { MenuDescendantsContext } from '../MenuContext';
 import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
@@ -32,6 +30,7 @@ import {
   submenuToggleStyles,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
+import { SubMenuProvider, useSubMenuContext } from './SubMenuContext';
 import { useChildrenHeight } from './useChildrenHeight';
 import { useControlledState } from './useControlledState';
 
@@ -59,7 +58,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       active,
       disabled,
     });
-    const { theme } = useContext(MenuContext);
+    const { depth } = useSubMenuContext();
 
     const [open, setOpen] = useControlledState(
       initialOpen,
@@ -141,38 +140,37 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             <ChevronIcon role="presentation" size={14} />
           </IconButton>
         </li>
-        <Transition
-          in={open}
-          timeout={{
-            enter: 0,
-            exit: 150,
-          }}
-          mountOnEnter
-          unmountOnExit
-          onEntered={onEntered}
-          onExited={onExited}
-          nodeRef={submenuRef}
-        >
-          {(state: string) => (
-            <ul
-              ref={submenuRef}
-              role="menu"
-              aria-label={title}
-              data-state={state}
-              data-open={open}
-              className={cx(
-                getSubmenuListStyles({ theme, hasGlyph: !!rest.glyph }),
-                {
+        <SubMenuProvider depth={depth + 1} hasIcon={!!rest.glyph}>
+          <Transition
+            in={open}
+            timeout={{
+              enter: 0,
+              exit: 150,
+            }}
+            mountOnEnter
+            unmountOnExit
+            onEntered={onEntered}
+            onExited={onExited}
+            nodeRef={submenuRef}
+          >
+            {(state: string) => (
+              <ul
+                ref={submenuRef}
+                role="menu"
+                aria-label={title}
+                data-state={state}
+                data-open={open}
+                className={cx(getSubmenuListStyles(), {
                   [css`
                     max-height: ${subMenuHeight + 1}px;
                   `]: state === 'entered',
-                },
-              )}
-            >
-              {children}
-            </ul>
-          )}
-        </Transition>
+                })}
+              >
+                {children}
+              </ul>
+            )}
+          </Transition>
+        </SubMenuProvider>
       </>
     );
   },
