@@ -5,15 +5,18 @@
  * and expect them to satisfy the type constraints
  *
  */
-/* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests */
+/* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests, padding-line-between-statements */
 
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import NextLink from 'next/link';
 
-import { PolymorphicAs } from '../Polymorphic/Polymorphic.types';
+import {
+  PolymorphicAs,
+  PolymorphicRef,
+} from '../Polymorphic/Polymorphic.types';
 import { NodeUrlLike } from '../utils/Polymorphic.utils';
 
-import { useInferredPolymorphicProps } from './hooks';
+import { useInferredPolymorphic, useInferredPolymorphicProps } from './hooks';
 import { InferredPolymorphic } from './InferredPolymorphic';
 import {
   AnchorLike,
@@ -548,6 +551,117 @@ describe.skip('Inferred Polymorphic types', () => {
       const { as, href } = useInferredPolymorphicProps(randAs, {});
       <MyInferredPoly as={as} href={href} />;
     }
+
+    // With Refs & Handlers
+    {
+      // undefined
+      const btnRef = React.createRef<HTMLButtonElement>();
+      const anchorRef = React.createRef<HTMLAnchorElement>();
+      const htmlElementRef = React.createRef<HTMLElement>();
+      const anyRef = React.createRef<any>();
+      const unknownRef = React.createRef();
+      const onBtnClick: MouseEventHandler<HTMLButtonElement> = () => {};
+      const onAnchorClick: MouseEventHandler<HTMLAnchorElement> = () => {};
+      const onElementClick: MouseEventHandler<HTMLElement> = () => {};
+      const onAnyClick: MouseEventHandler = () => {};
+
+      {
+        <MyInferredPoly ref={btnRef} />;
+        <MyInferredPoly onClick={onBtnClick} />;
+        <MyInferredPoly href="" onClick={onAnchorClick} />;
+        // @ts-expect-error - when passing a ref, `as` must be explicit
+        <MyInferredPoly href="" ref={anchorRef} />;
+        // @ts-expect-error
+        <MyInferredPoly ref={anchorRef} />;
+        // when passing a ref, `as` must be explicit
+        <MyInferredPoly href="" ref={btnRef} />;
+      }
+
+      // anchor
+      {
+        <MyInferredPoly as={'a'} href={'mongodb.design'} ref={anchorRef} />;
+        <MyInferredPoly
+          as={'a'}
+          href={'mongodb.design'}
+          ref={anchorRef}
+          onClick={onAnchorClick}
+        />;
+        <MyInferredPoly
+          as={'a'}
+          href={'mongodb.design'}
+          // @ts-expect-error - incorrect ref type
+          ref={React.createRef<HTMLButtonElement>()}
+        />;
+
+        <MyInferredPoly
+          as={'a'}
+          href={'mongodb.design'}
+          // @ts-expect-error - incorrect handler type
+          onClick={onBtnClick}
+        />;
+      }
+
+      // button
+      {
+        <MyInferredPoly as={'button'} ref={btnRef} />;
+        <MyInferredPoly as={'button'} onClick={onBtnClick} />;
+        <MyInferredPoly as={'button'} onClick={onBtnClick} ref={btnRef} />;
+        // @ts-expect-error - incorrect ref type
+        <MyInferredPoly as={'button'} ref={anchorRef} />;
+        // @ts-expect-error - incorrect handler type
+        <MyInferredPoly as={'button'} onClick={onAnchorClick} />;
+        // @ts-expect-error - incorrect handler type
+        <MyInferredPoly as={'button'} onClick={onAnchorClick} ref={btnRef} />;
+      }
+
+      {
+        <MyInferredPoly
+          as={TestArbitraryComponent}
+          someProp={'lorem'}
+          ref={unknownRef}
+        />;
+
+        <MyInferredPoly
+          as={TestArbitraryComponent}
+          someProp={'lorem'}
+          ref={btnRef}
+        />;
+
+        <MyInferredPoly
+          as={TestArbitraryComponent}
+          someProp={'lorem'}
+          ref={anyRef}
+        />;
+
+        <MyInferredPoly
+          as={TestArbitraryComponent}
+          someProp={'lorem'}
+          // @ts-expect-error onClick is not a prop on TestArbitraryComponent
+          onClick={onBtnClick}
+        />;
+      }
+
+      {
+        const arbAs: PolymorphicAs = getRandAs();
+        const arbRef = btnRef as PolymorphicRef<typeof arbAs>;
+
+        <MyInferredPoly as={arbAs} ref={anyRef} />;
+        <MyInferredPoly as={arbAs} ref={arbRef} />;
+        <MyInferredPoly as={arbAs} ref={arbRef} onClick={onAnyClick} />;
+
+        // @ts-expect-error - ref type can't be unknown
+        <MyInferredPoly as={arbAs} ref={unknownRef} />;
+        // @ts-expect-error - ref type can't be explicit
+        <MyInferredPoly as={arbAs} ref={btnRef} />;
+        // @ts-expect-error - `as` can be SVG, which is not extended by HTMLElement
+        <MyInferredPoly as={arbAs} ref={htmlElementRef} />;
+
+        // @ts-expect-error - handler must match as prop
+        <MyInferredPoly as={arbAs} ref={arbRef} onClick={onBtnClick} />;
+        // @ts-expect-error `as` can be SVG, which is not extended by HTMLElement
+        <MyInferredPoly as={arbAs} ref={arbRef} onClick={onElementClick} />;
+      }
+    }
   });
 
   test('InferredPolymorphic factory', () => {
@@ -556,17 +670,17 @@ describe.skip('Inferred Polymorphic types', () => {
       variant?: 'default' | 'primary';
     }
     const MyInferredPoly = InferredPolymorphic<MyProps, 'button'>(
-      ({ as: asProp, ...props }) => {
-        const { as, href, ...rest } = useInferredPolymorphicProps(
-          asProp,
-          props,
-        );
+      ({ as: asProp, ...props }, fwdRef) => {
+        const { as, rest } = useInferredPolymorphic(asProp, props);
 
+        as satisfies PolymorphicAs;
         rest.value satisfies MyProps['value'];
         rest.variant satisfies MyProps['variant'];
         rest.href satisfies string | undefined;
         rest.target satisfies string | undefined;
         rest.rel satisfies string | undefined;
+        fwdRef satisfies React.RefObject<PolymorphicAs> | null;
+        fwdRef satisfies React.RefObject<typeof as> | null;
 
         return <></>;
       },
