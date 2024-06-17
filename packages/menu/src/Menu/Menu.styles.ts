@@ -1,23 +1,24 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
-export const rootMenuStyle = css`
-  width: 210px;
-  border-radius: 12px;
-  overflow: auto;
-  padding: 14px 0;
-`;
+import { menuColor } from '../styles';
 
-export const rootMenuThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.black};
-    border: 1px solid ${palette.black};
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark3};
-    border: 1px solid ${palette.gray.dark2};
-  `,
+export interface MenuStyleArgs {
+  theme: Theme;
+}
+
+export const getMenuStyles = ({ theme }: MenuStyleArgs) => {
+  return css`
+    width: 210px;
+    border-radius: ${spacing[300]}px;
+    overflow: auto;
+    // FIXME: Should this really be 14px?
+    padding: ${spacing[300] + spacing[50]}px 0;
+
+    background-color: ${menuColor[theme].background.default};
+    border: 1px solid ${menuColor[theme].border.default};
+  `;
 };
 
 export const scrollContainerStyle = css`

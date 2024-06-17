@@ -19,11 +19,7 @@ import {
 
 import { useMenuHeight } from './utils/useMenuHeight';
 import { useHighlightReducer } from './HighlightReducer';
-import {
-  rootMenuStyle,
-  rootMenuThemeStyles,
-  scrollContainerStyle,
-} from './Menu.styles';
+import { getMenuStyles, scrollContainerStyle } from './Menu.styles';
 import { MenuProps } from './Menu.types';
 
 /**
@@ -71,8 +67,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }: MenuProps,
   forwardRef,
 ) {
-  const renderDarkMode = renderDarkMenu || darkModeProp;
-  const { theme, darkMode } = useDarkMode(renderDarkMode);
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);
@@ -178,6 +173,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           theme,
           darkMode,
           highlightIndex,
+          renderDarkMenu,
         }}
       >
         <Popover
@@ -194,8 +190,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         >
           <div
             className={cx(
-              rootMenuStyle,
-              rootMenuThemeStyles[theme],
+              getMenuStyles({ theme }),
               css`
                 max-height: ${maxMenuHeightValue};
               `,

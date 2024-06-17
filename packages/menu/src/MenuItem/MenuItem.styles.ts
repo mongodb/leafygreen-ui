@@ -116,3 +116,7 @@ export const getMenuItemContentStyles = ({
     padding-inline-start: ${spacing[300]}px;
   `}
 `;
+
+export const getDarkInLightModeMenuStyles = () => {
+  return css``;
+};

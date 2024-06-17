@@ -11,7 +11,10 @@ import {
 import { MenuContext } from '../MenuContext';
 import { Size } from '../types';
 
-import { getMenuItemStyles } from './MenuItem.styles';
+import {
+  getDarkInLightModeMenuStyles,
+  getMenuItemStyles,
+} from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
 export type InternalMenuItemContentProps = InferredPolymorphicProps<
@@ -44,7 +47,8 @@ export const InternalMenuItemContent = React.forwardRef<
   ) => {
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
-    const { theme, darkMode, highlightIndex } = useContext(MenuContext);
+    const { theme, darkMode, highlightIndex, renderDarkMenu } =
+      useContext(MenuContext);
     const highlighted = index === highlightIndex;
 
     const defaultAnchorProps =
@@ -76,6 +80,9 @@ export const InternalMenuItemContent = React.forwardRef<
             theme,
             variant,
           }),
+          // TODO: Remove dark-in-light mode styles
+          // after https://jira.mongodb.org/browse/LG-3974
+          { [getDarkInLightModeMenuStyles()]: renderDarkMenu },
           className,
         )}
         {...defaultAnchorProps}
