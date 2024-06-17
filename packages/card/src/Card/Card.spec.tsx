@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
+
 import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
+
 import { Card, CardProps, ContentStyle } from '.';
 
 const defaultClassName = 'card-className';
@@ -110,7 +112,7 @@ describe('packages/Card', () => {
   });
 
   function AnchorLike(props: JSX.IntrinsicElements['a']) {
-    return <a {...props} />;
+    return <a {...props}>content</a>;
   }
 
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
