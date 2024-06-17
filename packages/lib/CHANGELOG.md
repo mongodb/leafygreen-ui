@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.6.0
+
+### Minor Changes
+
+- 7a901b954: Adds `PartialRequired` and `Optional` types
+
 ## 13.5.0
 
 ### Minor Changes
