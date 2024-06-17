@@ -1,4 +1,4 @@
-import { ComponentProps, ReactElement, ReactNode } from 'react';
+import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import {
   InferredPolymorphicPropsWithRef,
@@ -14,7 +14,7 @@ export type SubMenuType = ReactElement<
 
 export interface MenuProps
   extends Omit<PopoverProps, 'active'>,
-    ComponentProps<'div'> {
+    Omit<ComponentPropsWithoutRef<'div'>, 'onClick'> {
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`

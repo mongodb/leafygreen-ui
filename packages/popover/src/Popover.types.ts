@@ -190,6 +190,7 @@ export type PopoverProps = {
   /**
    * Click event handler passed to the root div element within the portal container.
    */
+  // TODO: This should be typed with `HTMLDivElement`
   onClick?: React.MouseEventHandler;
 
   /**

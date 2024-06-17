@@ -47,8 +47,8 @@ export const Menu = ({
 }: MenuProps) => {
   const { theme } = useDarkMode();
   const [uncontrolledOpen, uncontrolledSetOpen] = useState<boolean>(false);
-  const buttonRef = useRef<null | HTMLButtonElement>(null);
-  const menuRef = useRef<null | HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   // TODO: make hook
   const setOpen =
