@@ -164,6 +164,7 @@ export const getMenuItemContentStyles = ({
 // after https://jira.mongodb.org/browse/LG-3974
 export const getDarkInLightModeMenuItemStyles = ({
   active,
+  variant,
   disabled,
   highlighted,
 }: MenuItemStyleArgs) => {
@@ -214,20 +215,44 @@ export const getDarkInLightModeMenuItemStyles = ({
           }
         }
       `]: active,
+
       // Highlighted
       [css`
-        background-color: ${color.dark.background.primary.focus};
+        &,
+        &:hover,
+        &:focus {
+          background-color: ${color.dark.background.primary.focus};
 
-        .${titleClassName} {
-          color: ${color.dark.text.primary.focus};
-        }
-        .${descriptionClassName} {
-          color: ${color.dark.text.secondary.focus};
-        }
-        .${leftGlyphClassName} {
-          color: ${color.dark.icon.primary.focus};
+          .${titleClassName} {
+            color: ${color.dark.text.primary.focus};
+          }
+          .${descriptionClassName} {
+            color: ${color.dark.text.secondary.focus};
+          }
+          .${leftGlyphClassName} {
+            color: ${color.dark.icon.primary.focus};
+          }
         }
       `]: highlighted,
+
+      [css`
+        .${titleClassName} {
+          color: ${color.dark.text.error.default};
+        }
+        .${leftGlyphClassName} {
+          color: ${color.dark.icon.error.default};
+        }
+
+        &:hover {
+          background-color: ${color.dark.background.error.hover};
+          .${titleClassName} {
+            color: ${color.dark.text.error.hover};
+          }
+          .${leftGlyphClassName} {
+            color: ${color.dark.icon.error.hover};
+          }
+        }
+      `]: variant === Variant.Destructive,
 
       // Disabled
       [css`
