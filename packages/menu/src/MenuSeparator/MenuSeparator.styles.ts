@@ -1,6 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+
+import { menuColor } from '../styles';
 
 export const borderStyle = css`
   height: 16px;
@@ -20,12 +21,12 @@ export const borderStyle = css`
 export const borderThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &::before {
-      background-color: ${palette.gray.dark2};
+      background-color: ${menuColor.light.border.default};
     }
   `,
   [Theme.Dark]: css`
     &::before {
-      background-color: ${palette.gray.dark2};
+      background-color: ${menuColor.dark.border.default};
     }
   `,
 };

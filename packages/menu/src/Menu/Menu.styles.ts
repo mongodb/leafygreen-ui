@@ -1,5 +1,8 @@
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
@@ -18,6 +21,12 @@ export const getMenuStyles = ({ theme }: MenuStyleArgs) => {
 
     background-color: ${menuColor[theme].background.default};
     border: 1px solid ${menuColor[theme].border.default};
+
+    /* // Light mode only */
+    ${theme === 'light' &&
+    css`
+      box-shadow: 0 2px 4px 1px ${transparentize(0.85, palette.black)};
+    `}
   `;
 };
 

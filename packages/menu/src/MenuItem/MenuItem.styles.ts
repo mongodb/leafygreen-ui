@@ -1,14 +1,13 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   leftGlyphClassName,
   titleClassName,
 } from '@leafygreen-ui/input-option';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { color, Property, spacing } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { LGIDs } from '../constants';
-import { Size } from '../types';
+import { menuColor } from '../styles';
 
 import { Variant } from './MenuItem.types';
 
@@ -20,91 +19,105 @@ export const menuItemContainerStyles = css`
   list-style: none;
 `;
 
-/** Define colors for the active elements */
-const activeColors = {
-  [Theme.Light]: {
-    [Property.Background]: palette.green.light3,
-    [Property.Text]: palette.green.dark2,
-    [Property.Icon]: palette.green.dark1,
-    [Property.Border]: palette.green.dark1,
-  },
-  [Theme.Dark]: {
-    [Property.Background]: palette.green.dark3,
-    [Property.Text]: palette.green.base,
-    [Property.Icon]: palette.green.base,
-    [Property.Border]: palette.green.base,
-  },
-} as const satisfies Record<Theme, Record<Property, string>>;
-
 interface MenuItemStyleArgs {
   active: boolean;
+  disabled: boolean;
   highlighted: boolean;
-  size: Size;
   theme: Theme;
   variant: Variant;
 }
 
 export const getMenuItemStyles = ({
   active,
+  disabled,
   highlighted,
-  size,
   theme,
   variant,
-}: MenuItemStyleArgs) => css`
-  display: block;
-  width: 100%;
-  min-height: ${spacing[800]}px;
-
-  ${size === Size.Large &&
-  css`
-    min-height: ${spacing[1200]}px;
-    // TODO: align on \`large\` size text styles
-    // https://jira.mongodb.org/browse/LG-4060
-  `}
-
-  ${active &&
-  !highlighted &&
-  css`
-    &,
-    &:hover {
-      background-color: ${activeColors[theme].background};
-
-      &:before {
-        transform: scaleY(1) translateY(-50%);
-        background-color: ${activeColors[theme].border};
-      }
+}: MenuItemStyleArgs) =>
+  cx(
+    // Base styles
+    css`
+      display: block;
+      width: 100%;
+      min-height: ${spacing[800]}px;
+      background-color: ${menuColor[theme].background.default};
 
       .${titleClassName} {
-        color: ${activeColors[theme].text};
-        font-weight: bold;
-      }
-
-      .${leftGlyphClassName} {
-        color: ${activeColors[theme].icon};
-      }
-    }
-  `}
-
-  ${variant === Variant.Destructive &&
-  css`
-    .${titleClassName} {
-      color: ${color[theme].text.error.default};
-    }
-    .${leftGlyphClassName} {
-      color: ${color[theme].icon.error.default};
-    }
-
-    &:hover {
-      background-color: ${color[theme].background.error.hover};
-      .${titleClassName} {
-        color: ${color[theme].text.error.hover};
+        color: ${menuColor[theme].text.default};
       }
       .${leftGlyphClassName} {
-        color: ${color[theme].icon.error.hover};
+        color: ${menuColor[theme].icon.default};
       }
-    }
-  `}
-`;
+    `,
+    {
+      // Highlighted
+      [css`
+        background-color: ${menuColor[theme].background.focus};
+        .${titleClassName} {
+          color: ${menuColor[theme].text.focus};
+        }
+        .${leftGlyphClassName} {
+          color: ${menuColor[theme].icon.focus};
+        }
+      `]: highlighted,
+
+      // Active
+      [css`
+        &,
+        &:hover {
+          background-color: ${menuColor[theme].background.active};
+
+          &:before {
+            transform: scaleY(1) translateY(-50%);
+            background-color: ${menuColor[theme].border.active};
+          }
+
+          .${titleClassName} {
+            color: ${menuColor[theme].text.active};
+            font-weight: bold;
+          }
+
+          .${leftGlyphClassName} {
+            color: ${menuColor[theme].icon.active};
+          }
+        }
+      `]: active,
+
+      // Destructive
+      [css`
+        .${titleClassName} {
+          color: ${color[theme].text.error.default};
+        }
+        .${leftGlyphClassName} {
+          color: ${color[theme].icon.error.default};
+        }
+
+        &:hover {
+          background-color: ${color[theme].background.error.hover};
+          .${titleClassName} {
+            color: ${color[theme].text.error.hover};
+          }
+          .${leftGlyphClassName} {
+            color: ${color[theme].icon.error.hover};
+          }
+        }
+      `]: variant === Variant.Destructive,
+
+      // Disabled
+      [css`
+        &,
+        &:hover {
+          background-color: ${menuColor[theme].background.default};
+          .${titleClassName} {
+            color: ${color[theme].text.disabled.default};
+          }
+          .${leftGlyphClassName} {
+            color: ${color[theme].icon.disabled.default};
+          }
+        }
+      `]: disabled,
+    },
+  );
 
 export const getMenuItemContentStyles = ({
   hasGlyph,

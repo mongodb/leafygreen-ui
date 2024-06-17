@@ -9,7 +9,6 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { MenuContext } from '../MenuContext';
-import { Size } from '../types';
 
 import {
   getDarkInLightModeMenuStyles,
@@ -36,7 +35,6 @@ export const InternalMenuItemContent = React.forwardRef<
       active = false,
       description,
       glyph,
-      size = Size.Default,
       variant = Variant.Default,
       children,
       className,
@@ -75,11 +73,12 @@ export const InternalMenuItemContent = React.forwardRef<
         className={cx(
           getMenuItemStyles({
             active,
+            disabled,
             highlighted,
-            size,
             theme,
             variant,
           }),
+
           // TODO: Remove dark-in-light mode styles
           // after https://jira.mongodb.org/browse/LG-3974
           { [getDarkInLightModeMenuStyles()]: renderDarkMenu },

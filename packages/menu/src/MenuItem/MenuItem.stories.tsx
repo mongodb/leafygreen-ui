@@ -71,7 +71,7 @@ export default {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
         glyph: [undefined, <Icon glyph="Cloud" />],
-        size: [Size.Default, Size.Large],
+        disabled: [false, true],
       },
       decorator: _withMenuContext(),
     },
@@ -127,13 +127,7 @@ export const Focused = {
   render: () => <></>,
   args: {
     highlighted: true,
-  },
-} satisfies StoryObj<typeof MenuItem>;
-
-export const Disabled = {
-  render: () => <></>,
-  args: {
-    disabled: true,
+    disabled: false,
   },
 } satisfies StoryObj<typeof MenuItem>;
 

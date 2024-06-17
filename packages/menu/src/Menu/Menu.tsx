@@ -189,6 +189,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           {...popoverProps}
         >
           <div
+            data-theme={theme}
             className={cx(
               getMenuStyles({ theme }),
               css`
