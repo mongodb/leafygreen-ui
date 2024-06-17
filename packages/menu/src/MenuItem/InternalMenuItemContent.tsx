@@ -11,7 +11,7 @@ import {
 import { MenuContext } from '../MenuContext';
 
 import {
-  getDarkInLightModeMenuStyles,
+  getDarkInLightModeMenuItemStyles,
   getMenuItemStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
@@ -23,6 +23,9 @@ export type InternalMenuItemContentProps = InferredPolymorphicProps<
   index: number;
 };
 
+/**
+ * Internal component shared by MenuItem and SubMenu
+ */
 export const InternalMenuItemContent = React.forwardRef<
   HTMLElement,
   InternalMenuItemContentProps
@@ -81,7 +84,15 @@ export const InternalMenuItemContent = React.forwardRef<
 
           // TODO: Remove dark-in-light mode styles
           // after https://jira.mongodb.org/browse/LG-3974
-          { [getDarkInLightModeMenuStyles()]: renderDarkMenu },
+          {
+            [getDarkInLightModeMenuItemStyles({
+              active,
+              disabled,
+              highlighted,
+              theme,
+              variant,
+            })]: theme === 'light' && renderDarkMenu,
+          },
           className,
         )}
         {...defaultAnchorProps}

@@ -1,5 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
+import { color } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
 
@@ -30,3 +31,9 @@ export const borderThemeStyle: Record<Theme, string> = {
     }
   `,
 };
+
+export const borderDarkInLightModeStyles = css`
+  &::before {
+    background-color: ${color.dark.border.secondary.default};
+  }
+`;

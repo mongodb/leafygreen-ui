@@ -8,7 +8,7 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isDefined, keyMap } from '@leafygreen-ui/lib';
+import { isDefined, keyMap, Theme } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { LGIDs } from '../constants';
@@ -19,7 +19,11 @@ import {
 
 import { useMenuHeight } from './utils/useMenuHeight';
 import { useHighlightReducer } from './HighlightReducer';
-import { getMenuStyles, scrollContainerStyle } from './Menu.styles';
+import {
+  getDarkInLightModeMenuStyles,
+  getMenuStyles,
+  scrollContainerStyle,
+} from './Menu.styles';
 import { MenuProps } from './Menu.types';
 
 /**
@@ -195,6 +199,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               css`
                 max-height: ${maxMenuHeightValue};
               `,
+              {
+                // TODO: Remove dark-in-light mode styles
+                // after https://jira.mongodb.org/browse/LG-3974
+                [getDarkInLightModeMenuStyles()]:
+                  theme === Theme.Light && renderDarkMenu,
+              },
               className,
             )}
             ref={forwardRef}

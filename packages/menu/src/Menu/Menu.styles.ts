@@ -3,7 +3,7 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
 
@@ -36,4 +36,12 @@ export const scrollContainerStyle = css`
   margin-block-end: 0px;
   padding-inline-start: 0px;
   padding: 0px;
+`;
+
+// TODO: Remove dark-in-light mode styles
+// after https://jira.mongodb.org/browse/LG-3974
+export const getDarkInLightModeMenuStyles = () => css`
+  box-shadow: unset;
+  background-color: ${color.dark.background.primary.default};
+  border: 1px solid ${color.dark.border.primary.default};
 `;
