@@ -188,8 +188,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       >
         <Popover
           key="popover"
-          // @ts-expect-error ref types are too complex to match
-          ref={popoverRef as React.Ref<HTMLDivElement>}
+          ref={popoverRef}
           active={open}
           align={align}
           justify={justify}

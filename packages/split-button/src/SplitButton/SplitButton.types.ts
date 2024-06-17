@@ -60,6 +60,7 @@ export type SelectedMenuProps = Omit<
   | 'shouldClose'
   | 'darkMode'
   | 'onClick'
+  | 'onChange'
   | 'align'
   | 'justify'
   | 'className'
