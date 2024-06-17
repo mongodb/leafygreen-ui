@@ -10,12 +10,12 @@ import {
 import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { useMenuContext } from '../MenuContext';
-import { menuColor } from '../styles';
 import { useSubMenuContext } from '../SubMenu';
 
 import {
   getDarkInLightModeMenuItemStyles,
   getMenuItemStyles,
+  getSubMenuItemStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
@@ -54,6 +54,7 @@ export const InternalMenuItemContent = React.forwardRef<
     const { theme, darkMode, highlightIndex, renderDarkMenu } =
       useMenuContext();
     const { depth, hasIcon: parentHasIcon } = useSubMenuContext();
+    const isSubMenuItem = depth > 0;
     const highlighted = index === highlightIndex;
 
     const defaultAnchorProps =
@@ -88,17 +89,7 @@ export const InternalMenuItemContent = React.forwardRef<
           }),
 
           {
-            [css`
-              &:after {
-                content: '';
-                position: absolute;
-                top: 0;
-                right: 0;
-                left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
-                height: 1px;
-                background-color: ${menuColor[theme].border.default};
-              }
-            `]: depth > 0,
+            [getSubMenuItemStyles({ theme, parentHasIcon })]: isSubMenuItem,
 
             // TODO: Remove dark-in-light mode styles
             // after https://jira.mongodb.org/browse/LG-3974

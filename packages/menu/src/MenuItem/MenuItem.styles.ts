@@ -76,12 +76,22 @@ export const getMenuItemStyles = ({
 
       // Highlighted
       [css`
-        background-color: ${menuColor[theme].background.focus};
-        .${titleClassName} {
-          color: ${menuColor[theme].text.focus};
-        }
-        .${leftGlyphClassName} {
-          color: ${menuColor[theme].icon.focus};
+        &,
+        &:hover,
+        &:focus {
+          background-color: ${menuColor[theme].background.focus};
+
+          &:before {
+            transform: scaleY(1) translateY(-50%);
+            background-color: ${menuColor[theme].border.focus};
+          }
+
+          .${titleClassName} {
+            color: ${menuColor[theme].text.focus};
+          }
+          .${leftGlyphClassName} {
+            color: ${menuColor[theme].icon.focus};
+          }
         }
       `]: highlighted,
 
@@ -120,6 +130,24 @@ export const getMenuItemStyles = ({
       `]: disabled,
     },
   );
+
+export const getSubMenuItemStyles = ({
+  theme,
+  parentHasIcon,
+}: {
+  theme: Theme;
+  parentHasIcon: boolean;
+}) => css`
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+    height: 1px;
+    background-color: ${menuColor[theme].border.default};
+  }
+`;
 
 export const getMenuItemContentStyles = ({
   hasGlyph,

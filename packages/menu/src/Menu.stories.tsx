@@ -133,7 +133,6 @@ export const LiveExample = {
           title="Menu Item 1"
           description=".design"
           glyph={<CloudIcon size="large" />}
-          active={true}
           href="http://mongodb.design"
           size={size}
         >

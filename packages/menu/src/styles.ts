@@ -25,6 +25,7 @@ export const menuColor = {
     [Property.Border]: {
       [MenuInteractionState.Default]: palette.gray.light2,
       [MenuInteractionState.Active]: palette.green.dark1,
+      [MenuInteractionState.Focus]: palette.blue.base,
     },
     [Property.Text]: {
       [MenuInteractionState.Default]: palette.black,
