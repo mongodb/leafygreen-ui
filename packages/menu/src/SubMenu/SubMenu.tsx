@@ -65,8 +65,14 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       openProp,
       setOpenProp,
     );
+
+    // Regardless of the `open` state,
+    // if `active` has been toggled true,
+    // we open the menu
     useEffect(() => {
-      setOpen(!!rest.active);
+      if (rest.active) {
+        setOpen(true);
+      }
     }, [rest.active, setOpen]);
 
     const submenuRef = useRef<HTMLUListElement>(null);
