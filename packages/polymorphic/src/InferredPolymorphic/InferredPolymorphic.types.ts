@@ -121,7 +121,7 @@ export type InferredPolymorphicComponentType<
   // FIXME: propTypes will be broken for any inherited props
   propTypes?:
     | WeakValidationMap<
-        InferredPolymorphicPropsWithRef<PolymorphicAs, TComponentProps>
+        InferredPolymorphicProps<PolymorphicAs, TComponentProps>
       >
     | undefined;
 };

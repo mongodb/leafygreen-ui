@@ -38,7 +38,6 @@ export interface AsProp<T extends PolymorphicAs> {
 export type PolymorphicRef<T extends PolymorphicAs> =
   | ComponentPropsWithRef<T>['ref']
   | null;
-
 /**
  * Union of prop types potentially re-defined in React.ComponentProps
  */

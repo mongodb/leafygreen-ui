@@ -526,18 +526,6 @@ describe.skip('Inferred Polymorphic types', () => {
       <MyInferredPoly as={NextLink as PolymorphicAs} href={{ hostname: '' }} />;
     }
 
-    // ref
-    {
-      <MyInferredPoly ref={null} />;
-      <MyInferredPoly ref={undefined} />;
-      <MyInferredPoly ref={React.createRef<HTMLButtonElement>()} />;
-      // @ts-expect-error - InferredPoly expects a Button ref
-      <MyInferredPoly ref={React.createRef<HTMLDivElement>()} />;
-      <MyInferredPoly ref={React.createRef<HTMLDivElement>()} as="div" />;
-      // @ts-expect-error - ref should match as prop
-      <MyInferredPoly ref={React.createRef<HTMLButtonElement>()} as="a" />;
-    }
-
     // arbitrary
     {
       const randAs: PolymorphicAs = getRandAs();

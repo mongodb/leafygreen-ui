@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
-
-import { Card, ContentStyle } from '.';
+import { InferredPolymorphicProps } from '@leafygreen-ui/polymorphic';
+import { Card, CardProps, ContentStyle } from '.';
 
 const defaultClassName = 'card-className';
 const defaultChildren = 'this is my card component';
@@ -13,20 +13,17 @@ function isVisuallyClickable(element: HTMLElement): boolean {
   );
 }
 
-interface PartialCardProps {
-  children?: React.ReactNode;
-  className?: string;
-  href?: string;
-  onClick?: React.MouseEventHandler;
-  as?: 'section';
-  contentStyle?: ContentStyle;
-}
+type DivLikeProps = InferredPolymorphicProps<'div', CardProps>;
+
+type AnchorLikeProps = InferredPolymorphicProps<'a', CardProps>;
+
+type CardRenderProps = DivLikeProps | AnchorLikeProps;
 
 function renderCard({
   children = defaultChildren,
   className = defaultClassName,
   ...rest
-}: PartialCardProps = {}) {
+}: CardRenderProps = {}) {
   const cardId = 'cardID';
 
   const { container, getByTestId } = render(
@@ -64,8 +61,8 @@ describe('packages/Card', () => {
   });
 
   test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-    const { renderedCard } = renderCard({ as: 'section' });
-    expect(renderedCard.tagName.toLowerCase()).toBe('section');
+    const utils = render(<Card data-testid="section" as="section" />);
+    expect(utils.getByTestId('section').tagName.toLowerCase()).toBe('section');
   });
 
   describe('content style', () => {
@@ -112,18 +109,29 @@ describe('packages/Card', () => {
     });
   });
 
+  function AnchorLike(props: JSX.IntrinsicElements['a']) {
+    return <a {...props} />;
+  }
+
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
   describe.skip('Types behave as expected', () => {
     test('Allows no props', () => {
       <Card />;
     });
     test('Accepts `as` prop', () => {
-      <Card as="p" />;
-      <Card as={() => <></>} />;
+      <>
+        <Card as="p" />;
+        <Card as={(_props: unknown) => <></>} />;
+        <Card as="section" />
+      </>;
     });
 
     test('Accepts `href` prop', () => {
-      <Card as="a" href="http://mongodb.design" />;
+      <>
+        <Card as={AnchorLike} href="string" />;
+        <Card href="string" />
+        <Card as="a" href="http://mongodb.design" />;
+      </>;
     });
   });
 });
