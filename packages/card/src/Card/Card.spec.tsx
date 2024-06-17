@@ -121,7 +121,7 @@ describe('packages/Card', () => {
     test('Accepts `as` prop', () => {
       <>
         <Card as="p" />;
-        <Card as={(_props: unknown) => <></>} />;
+        <Card as={(_props: JSX.IntrinsicElements['div']) => <></>} />;
         <Card as="section" />
       </>;
     });

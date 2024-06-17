@@ -22,7 +22,6 @@ export const Card = InferredPolymorphic<CardProps, 'div'>(
       className,
       contentStyle,
       darkMode: darkModeProp,
-      title,
       ...rest
     },
     ref,
@@ -52,9 +51,7 @@ export const Card = InferredPolymorphic<CardProps, 'div'>(
           className,
         )}
         {...rest}
-      >
-        {title}
-      </Component>
+      />
     );
   },
 );
