@@ -117,7 +117,7 @@ export const LiveExample = {
         <SubMenu
           title="Menu Item 1"
           description=".design"
-          glyph={<CloudIcon size="large" />}
+          glyph={<CloudIcon />}
           href="http://mongodb.design"
         >
           <MenuItem>SubMenu Item 1</MenuItem>
