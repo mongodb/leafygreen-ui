@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import { Transition } from 'react-transition-group';
+import { EnterHandler, ExitHandler, Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
@@ -113,6 +113,16 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       setOpen(x => !x);
     };
 
+    const handleTransitionEntered: EnterHandler<HTMLElement> = e => {
+      console.log('Submenu entered');
+      onEntered?.(e);
+    };
+
+    const handleTransitionExited: ExitHandler<HTMLElement> = e => {
+      console.log('Submenu exited');
+      onExited?.(e);
+    };
+
     return (
       <>
         <li
@@ -155,8 +165,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             }}
             mountOnEnter
             unmountOnExit
-            onEntered={onEntered}
-            onExited={onExited}
+            onEntered={handleTransitionEntered}
+            onExited={handleTransitionExited}
             nodeRef={submenuRef}
           >
             {(state: string) => (
