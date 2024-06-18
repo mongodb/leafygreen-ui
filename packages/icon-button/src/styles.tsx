@@ -100,7 +100,7 @@ export const focusStyle: Record<Theme, string> = {
       box-shadow: ${focusRing[Theme.Light].default};
 
       &:before {
-        background-color: ${palette.gray.light2};
+        background-color: ${transparentize(0.9, palette.gray.dark2)};
       }
     }
   `,
@@ -110,7 +110,7 @@ export const focusStyle: Record<Theme, string> = {
       box-shadow: ${focusRing[Theme.Dark].default};
 
       &:before {
-        background-color: ${palette.gray.dark1};
+        background-color: ${transparentize(0.9, palette.gray.light2)};
       }
     }
   `,
