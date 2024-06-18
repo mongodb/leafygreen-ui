@@ -402,17 +402,12 @@ describe('packages/menu', () => {
       });
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests
     test('if a submenu item is highlighted, and that submenu is closed, focus should move to the submenu parent', async () => {
-      const onEntered = jest.fn();
+      const onExited = jest.fn();
       const { queryByTestId, getByTestId, openMenu } = renderMenu({
         children: (
           <>
-            <SubMenu
-              data-testid="submenu"
-              title="Submenu"
-              onEntered={onEntered}
-            >
+            <SubMenu data-testid="submenu" title="Submenu" onExited={onExited}>
               <MenuItem data-testid="item-a">A</MenuItem>
               <MenuItem data-testid="item-b">B</MenuItem>
             </SubMenu>
@@ -431,7 +426,7 @@ describe('packages/menu', () => {
       await waitForTransition();
 
       await waitFor(() => {
-        expect(onEntered).toHaveBeenCalled();
+        expect(onExited).toHaveBeenCalled();
         expect(queryByTestId('submenu')).toHaveFocus();
       });
     });

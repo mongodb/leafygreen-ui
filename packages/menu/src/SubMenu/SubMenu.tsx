@@ -55,8 +55,12 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
-    const { highlight } = useMenuContext();
-    const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
+    const { highlight, setHighlight } = useMenuContext();
+    const {
+      index: descendantIndex,
+      ref: descendantRef,
+      id: descendantId,
+    } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
     });
@@ -115,16 +119,36 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       setOpen(x => !x);
     };
 
+    // When the submenu has opened
     const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
       // this element should be highlighted
-      if (id === highlight?.id) {
+      if (descendantId === highlight?.id) {
         // ensure this element is still focused after transitioning
-        ref.current?.focus();
+        descendantRef.current?.focus();
       }
 
       onEntered?.();
     };
 
+    // When the submenu starts to close
+    const handleTransitionExiting: ExitHandler<HTMLUListElement> = () => {
+      const currentHighlightElement = highlight?.ref?.current;
+
+      if (currentHighlightElement) {
+        // if one of this submenu's children is highlighted
+        // and we close the submenu,
+        // then focus the main submenu item
+        const doesSubmenuContainCurrentHighlight =
+          submenuRef?.current?.contains(currentHighlightElement);
+
+        if (doesSubmenuContainCurrentHighlight) {
+          setHighlight?.(descendantId);
+          descendantRef?.current?.focus();
+        }
+      }
+    };
+
+    // When the submenu has closed
     const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
       onExited?.();
     };
@@ -139,14 +163,14 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
         >
           <InternalMenuItemContent
             as={as}
-            id={id}
-            ref={ref}
-            index={index}
+            id={descendantId}
+            ref={descendantRef}
+            index={descendantIndex}
             active={active}
             disabled={disabled}
             onClick={handleClick}
             onKeyDown={handleKeydown}
-            data-id={id}
+            data-id={descendantId}
             {...rest}
           >
             {title}
@@ -172,6 +196,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             mountOnEnter
             unmountOnExit
             onEntered={handleTransitionEntered}
+            onExiting={handleTransitionExiting}
             onExited={handleTransitionExited}
             nodeRef={submenuRef}
           >

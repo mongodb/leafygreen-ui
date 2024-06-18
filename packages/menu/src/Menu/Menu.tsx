@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import {
   DescendantsProvider,
   getDescendantById,
-  getDescendantByIndex,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
