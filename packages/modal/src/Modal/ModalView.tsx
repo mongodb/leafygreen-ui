@@ -87,19 +87,8 @@ const ModalView = React.forwardRef(
           fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
         };
 
-    let size: ModalSize = ModalSize.Default;
-    switch (sizeProp) {
-      case ModalSize.Large:
-        size = ModalSize.Large;
-        break;
-
-      case ModalSize.Small:
-        size = ModalSize.Small;
-        break;
-
-      default:
-        size = ModalSize.Default;
-    }
+    const allowedSize = Object.values(ModalSize).includes(sizeProp);
+    const size = allowedSize ? sizeProp : ModalSize.Default;
 
     return (
       <Transition
