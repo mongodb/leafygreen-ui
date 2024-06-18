@@ -370,4 +370,95 @@ describe('packages/menu', () => {
       expect(menuEl).toBeInTheDocument();
     });
   });
+
+  // TODO: Consider moving these to Chromatic or Playwright/Cypress
+  describe('Complex interactions', () => {
+    test('if a submenu is highlighted, and the toggle is clicked, the submenu remains in focus', async () => {
+      const onEntered = jest.fn();
+
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu
+              data-testid="submenu"
+              title="Submenu"
+              onEntered={onEntered}
+            >
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      await waitForTransition();
+      await waitFor(() => {
+        expect(onEntered).toHaveBeenCalled();
+        expect(queryByTestId('submenu')).toHaveFocus();
+      });
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    test('if a submenu item is highlighted, and that submenu is closed, focus should move to the submenu parent', async () => {
+      const onEntered = jest.fn();
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu
+              data-testid="submenu"
+              title="Submenu"
+              onEntered={onEntered}
+            >
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.keyboard('{arrowright}');
+      userEvent.keyboard('{arrowdown}');
+      expect(queryByTestId('item-a')).toHaveFocus();
+
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      await waitForTransition();
+
+      await waitFor(() => {
+        expect(onEntered).toHaveBeenCalled();
+        expect(queryByTestId('submenu')).toHaveFocus();
+      });
+    });
+
+    test('if an item after a submenu is highlighted, and the submenu opens, that element should remain highlighted', async () => {
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu data-testid="submenu" title="Submenu">
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.keyboard('{arrowup}');
+      expect(queryByTestId('item-c')).toHaveFocus();
+
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+
+      await waitForTransition();
+      await waitFor(() => {
+        expect(queryByTestId('item-c')).toHaveFocus();
+      });
+    });
+  });
 });
