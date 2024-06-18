@@ -110,6 +110,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     },
   );
 
+  // TODO: When a submenu opens, update the highlight index & focused element
+
   // Callback fired when the popover transition finishes.
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`

@@ -9,32 +9,42 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { Optional } from '@leafygreen-ui/lib';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
+import { LGIDs } from './constants';
 import { MenuProps } from './Menu';
-import { Menu, MenuItem, MenuSeparator } from '.';
+import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
 const menuTriggerTestId = 'menu-trigger';
 const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
+const defaultChildren = (
+  <>
+    <MenuItem data-testid="menu-item-a">Item A</MenuItem>
+    <MenuSeparator />
+    <MenuItem href="http://mongodb.design">Item B</MenuItem>
+    <MenuItem href="http://mongodb.design">Item C</MenuItem>
+  </>
+);
 
 function waitForTimeout(timeout = 500) {
   return new Promise(res => setTimeout(res, timeout));
 }
 
 /** Renders a Menu with the given props */
-function renderMenu({
-  trigger = defaultTrigger,
-  ...rest
-}: Omit<MenuProps, 'children'> = {}) {
+function renderMenu(
+  {
+    trigger = defaultTrigger,
+    children = defaultChildren,
+    ...rest
+  }: Optional<MenuProps, 'children'> = { children: defaultChildren },
+) {
   const renderResult = render(
     <>
       <div data-testid="backdrop" />
       <Menu trigger={trigger} {...rest} data-testid={menuTestId}>
-        <MenuItem data-testid="menu-item-a">Item A</MenuItem>
-        <MenuSeparator />
-        <MenuItem href="http://mongodb.design">Item B</MenuItem>
-        <MenuItem href="http://mongodb.design">Item C</MenuItem>
+        {children}
       </Menu>
     </>,
   );
@@ -251,37 +261,78 @@ describe('packages/menu', () => {
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
-          userEvent.type(menuEl!, '{arrowdown}');
+          const { menuItemElements } = await openMenu();
+          userEvent.keyboard('{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
           for (let i = 0; i < menuItemElements.length; i++) {
-            userEvent.type(menuEl!, '{arrowdown}');
+            userEvent.keyboard('{arrowdown}');
           }
 
           expect(menuItemElements[0]).toHaveFocus();
+        });
+
+        describe('with submenus', () => {
+          test('highlights the next submenu item', async () => {
+            const { queryByTestId, openMenu } = renderMenu({
+              children: (
+                <>
+                  <SubMenu initialOpen data-testid="submenu" title="Submenu">
+                    <MenuItem data-testid="item-a">A</MenuItem>
+                    <MenuItem data-testid="item-b">B</MenuItem>
+                  </SubMenu>
+                </>
+              ),
+            });
+
+            const { menuItemElements } = await openMenu();
+            expect(menuItemElements).toHaveLength(3);
+            expect(queryByTestId('submenu')).toHaveFocus();
+            userEvent.keyboard('{arrowdown}');
+            expect(queryByTestId('item-a')).toHaveFocus();
+          });
+
+          test('does not highlight closed submenu items', async () => {
+            const { queryByTestId, openMenu } = renderMenu({
+              children: (
+                <>
+                  <SubMenu data-testid="submenu" title="Submenu">
+                    <MenuItem data-testid="item-a">A</MenuItem>
+                    <MenuItem data-testid="item-b">B</MenuItem>
+                  </SubMenu>
+                  <MenuItem data-testid="item-c">C</MenuItem>
+                </>
+              ),
+            });
+
+            const { menuItemElements } = await openMenu();
+            expect(menuItemElements).toHaveLength(2);
+            expect(queryByTestId('submenu')).toHaveFocus();
+            userEvent.keyboard('{arrowdown}');
+            expect(queryByTestId('item-c')).toHaveFocus();
+          });
         });
       });
 
       describe('Up arrow', () => {
         test('highlights the previous option in the menu', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
-          userEvent.type(menuEl!, '{arrowdown}');
-          userEvent.type(menuEl!, '{arrowup}');
+          userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderMenu({});
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
           const lastOption = menuItemElements[menuItemElements.length - 1];
-          userEvent.type(menuEl!, '{arrowup}');
+          userEvent.keyboard('{arrowup}');
           expect(lastOption).toHaveFocus();
         });
       });
