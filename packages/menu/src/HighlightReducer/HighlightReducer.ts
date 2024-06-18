@@ -1,4 +1,4 @@
-import { type Reducer, useMemo, useReducer } from 'react';
+import { type Reducer, useReducer } from 'react';
 
 import {
   Descendant,
@@ -24,8 +24,10 @@ const getInitialHighlight = (descendants: DescendantsList<HTMLElement>) =>
  * Creates a new reducer function for closure for a given `descendants` value
  */
 const makeHighlightReducerFunction =
-  (descendants: DescendantsList): HighlightReducerFunction =>
+  (getDescendants: () => DescendantsList): HighlightReducerFunction =>
   (currentHighlight, action) => {
+    const descendants = getDescendants();
+
     // If we've received a direction, move the highlight
     if (action.direction) {
       const nextHighlight = getNextFromDirection(
@@ -50,19 +52,18 @@ const makeHighlightReducerFunction =
  * and fires any `onChange` side effects
  */
 export const useHighlightReducer = (
-  descendants: DescendantsList<HTMLElement>,
+  /** An accessor for the updated descendants list */
+  getDescendants: () => DescendantsList,
+  /** A callback fired when the highlight changes */
   onChange?: HighlightChangeHandler,
 ): HighlightReducerReturnType => {
   // Create a reducer function
-  const highlightReducerFunction = useMemo(
-    () => makeHighlightReducerFunction(descendants),
-    [descendants],
-  );
+  const highlightReducerFunction = makeHighlightReducerFunction(getDescendants);
 
   // Create the reducer
   const [highlight, dispatch] = useReducer<
     Reducer<Descendant | undefined, UpdateHighlightAction>
-  >(highlightReducerFunction, getInitialHighlight(descendants));
+  >(highlightReducerFunction, getInitialHighlight(getDescendants()));
 
   /**
    * Custom dispatch that moves the current highlight

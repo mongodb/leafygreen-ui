@@ -103,9 +103,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Tracks the currently highlighted (focused) item index
   // Fires `.focus()` when the index is updated
   const { highlight, moveHighlight, setHighlight } = useHighlightReducer(
-    descendants,
+    getDescendants,
     _next => {
-      console.log('callback', { _next });
+      // console.log('callback', { _next });
 
       if (isDefined(_next)) {
         const nextDescendant = getDescendantById(_next.id, getDescendants());

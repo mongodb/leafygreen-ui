@@ -11,7 +11,7 @@ export const MenuDescendantsContext = createDescendantsContext(
 export const MenuContext = createContext<MenuContextData>({
   theme: 'light',
   darkMode: false,
-  highlightIndex: undefined,
+  highlight: undefined,
 });
 
 export const useMenuContext = () => useContext(MenuContext);

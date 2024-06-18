@@ -24,7 +24,9 @@ export const getNextFromDirection = (
   const updatedIndex = getNextEnabledIndex(direction, current, descendants);
 
   if (isDefined(updatedIndex)) {
-    return getDescendantByIndex(updatedIndex, descendants);
+    const nextDescendant = getDescendantByIndex(updatedIndex, descendants);
+
+    return nextDescendant;
   }
 
   return current;
