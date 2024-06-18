@@ -169,7 +169,7 @@ export const activeStyle: Record<Theme, string> = {
     color: ${palette.black};
 
     &:before {
-      background-color: ${palette.gray.light2};
+      background-color: ${transparentize(0.9, palette.gray.dark2)};
       transform: scale(1);
     }
   `,
@@ -177,7 +177,7 @@ export const activeStyle: Record<Theme, string> = {
     color: ${palette.gray.light3};
 
     &:before {
-      background-color: ${palette.gray.dark1};
+      background-color: ${transparentize(0.9, palette.gray.light2)};
       transform: scale(1);
     }
   `,
