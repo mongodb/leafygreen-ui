@@ -55,7 +55,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
-    const { highlightIndex } = useMenuContext();
+    const { highlight } = useMenuContext();
     const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
@@ -105,7 +105,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       }
     };
 
-    const handleChevronClick: MouseEventHandler<HTMLButtonElement> = e => {
+    const handleToggleClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent links from navigating
       e.preventDefault();
       // we stop the event from propagating and closing the entire menu
@@ -117,7 +117,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
       // this element should be highlighted
-      if (index === highlightIndex) {
+      if (id === highlight?.id) {
         // ensure this element is still focused after transitioning
         ref.current?.focus();
       }
@@ -132,7 +132,6 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     return (
       <>
         <li
-          id={id}
           role="none"
           className={cx(subMenuContainerClassName, subMenuContainerStyles)}
           data-testid={LGIDs.submenu}
@@ -140,6 +139,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
         >
           <InternalMenuItemContent
             as={as}
+            id={id}
             ref={ref}
             index={index}
             active={active}
@@ -156,10 +156,10 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             data-lgid={LGIDs.submenuToggle}
             ref={submenuTriggerRef}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            onClick={handleChevronClick}
+            onClick={handleToggleClick}
             className={cx(subMenuToggleClassName, submenuToggleStyles)}
           >
-            <ChevronIcon role="presentation" size={14} />
+            <ChevronIcon role="presentation" />
           </IconButton>
         </li>
         <SubMenuProvider depth={depth + 1} hasIcon={!!rest.glyph}>
