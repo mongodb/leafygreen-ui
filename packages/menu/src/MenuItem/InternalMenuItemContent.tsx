@@ -37,6 +37,7 @@ export const InternalMenuItemContent = React.forwardRef<
     {
       as: asProp,
       index,
+      id,
       disabled = false,
       active = false,
       description,
@@ -51,11 +52,10 @@ export const InternalMenuItemContent = React.forwardRef<
   ) => {
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
-    const { theme, darkMode, highlightIndex, renderDarkMenu } =
-      useMenuContext();
+    const { theme, darkMode, highlight, renderDarkMenu } = useMenuContext();
     const { depth, hasIcon: parentHasIcon } = useSubMenuContext();
     const isSubMenuItem = depth > 0;
-    const highlighted = index === highlightIndex;
+    const highlighted = id === highlight?.id;
 
     const defaultAnchorProps =
       as === 'a'

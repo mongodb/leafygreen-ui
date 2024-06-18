@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import {
   DescendantsProvider,
+  getDescendantById,
+  getDescendantByIndex,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -12,13 +14,13 @@ import { isDefined, keyMap, Theme } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { LGIDs } from '../constants';
+import { useHighlightReducer } from '../HighlightReducer';
 import {
   MenuContext,
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
 
 import { useMenuHeight } from './utils/useMenuHeight';
-import { useHighlightReducer } from './HighlightReducer';
 import {
   getDarkInLightModeMenuStyles,
   getMenuStyles,
@@ -100,11 +102,14 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   // Tracks the currently highlighted (focused) item index
   // Fires `.focus()` when the index is updated
-  const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
+  const { highlight, moveHighlight, setHighlight } = useHighlightReducer(
     descendants,
-    index => {
-      if (isDefined(index)) {
-        const descendantElement = getDescendants()[index]?.ref.current;
+    _next => {
+      console.log('callback', { _next });
+
+      if (isDefined(_next)) {
+        const nextDescendant = getDescendantById(_next.id, getDescendants());
+        const descendantElement = nextDescendant?.ref.current;
         descendantElement?.focus();
       }
     },
@@ -116,7 +121,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
-    updateHighlightIndex('first');
+    moveHighlight('first');
   };
 
   // Fired on global keyDown event
@@ -124,12 +129,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     switch (e.key) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
-        updateHighlightIndex('next');
+        moveHighlight('next');
         break;
 
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
-        updateHighlightIndex('prev');
+        moveHighlight('prev');
         break;
 
       case keyMap.Tab:
@@ -146,7 +151,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.Space:
       case keyMap.Enter:
         if (!open) {
-          updateHighlightIndex('first');
+          moveHighlight('first');
         }
         break;
     }
@@ -178,7 +183,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         value={{
           theme,
           darkMode,
-          highlightIndex,
+          highlight,
+          setHighlight,
           renderDarkMenu,
         }}
       >
