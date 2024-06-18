@@ -4,7 +4,8 @@ import React, {
   useEffect,
   useRef,
 } from 'react';
-import { EnterHandler, ExitHandler, Transition } from 'react-transition-group';
+import { Transition } from 'react-transition-group';
+import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
@@ -19,7 +20,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { LGIDs } from '../constants';
-import { MenuDescendantsContext } from '../MenuContext';
+import { MenuDescendantsContext, useMenuContext } from '../MenuContext';
 import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
@@ -54,6 +55,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
+    const { highlightIndex } = useMenuContext();
     const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
@@ -113,14 +115,18 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       setOpen(x => !x);
     };
 
-    const handleTransitionEntered: EnterHandler<HTMLElement> = e => {
-      console.log('Submenu entered');
-      onEntered?.(e);
+    const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
+      // this element should be highlighted
+      if (index === highlightIndex) {
+        // ensure this element is still focused after transitioning
+        ref.current?.focus();
+      }
+
+      onEntered?.();
     };
 
-    const handleTransitionExited: ExitHandler<HTMLElement> = e => {
-      console.log('Submenu exited');
-      onExited?.(e);
+    const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
+      onExited?.();
     };
 
     return (
