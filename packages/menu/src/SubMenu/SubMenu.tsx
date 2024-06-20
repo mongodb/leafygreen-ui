@@ -125,6 +125,9 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       if (descendantId === highlight?.id) {
         // ensure this element is still focused after transitioning
         descendantRef.current?.focus();
+      } else {
+        // Otherwise ensure the focus is on the correct element
+        highlight?.ref?.current?.focus();
       }
 
       onEntered?.();
@@ -150,6 +153,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     // When the submenu has closed
     const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
+      // When the submenu closes, ensure the focus is on the correct element
+      highlight?.ref?.current?.focus();
       onExited?.();
     };
 

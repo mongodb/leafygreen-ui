@@ -53,7 +53,7 @@ export interface MenuItemProps {
    *
    * @deprecated - Size no longer has any effect
    */
-  // TODO: code mod to remove `size` props from existing implementations
+  // TODO: codemod to remove `size` props from existing implementations
   size?: Size;
 }
 

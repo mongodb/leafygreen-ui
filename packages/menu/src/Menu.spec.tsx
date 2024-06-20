@@ -431,11 +431,17 @@ describe('packages/menu', () => {
       });
     });
 
-    test('if an item after a submenu is highlighted, and the submenu opens, that element should remain highlighted', async () => {
+    test('when a submenu opens, an element below it should remain highlighted', async () => {
+      const onEntered = jest.fn();
+
       const { queryByTestId, getByTestId, openMenu } = renderMenu({
         children: (
           <>
-            <SubMenu data-testid="submenu" title="Submenu">
+            <SubMenu
+              data-testid="submenu"
+              title="Submenu"
+              onEntered={onEntered}
+            >
               <MenuItem data-testid="item-a">A</MenuItem>
               <MenuItem data-testid="item-b">B</MenuItem>
             </SubMenu>
@@ -448,10 +454,42 @@ describe('packages/menu', () => {
       userEvent.keyboard('{arrowup}');
       expect(queryByTestId('item-c')).toHaveFocus();
 
+      // Open the submenu
       userEvent.click(getByTestId(LGIDs.submenuToggle)!);
 
       await waitForTransition();
       await waitFor(() => {
+        expect(onEntered).toHaveBeenCalled();
+        expect(queryByTestId('item-c')).toHaveFocus();
+      });
+    });
+
+    test('when a submenu closes, an element below it should remain highlighted', async () => {
+      const onExited = jest.fn();
+
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu data-testid="submenu" title="Submenu" onExited={onExited}>
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.keyboard('{arrowright}'); // open the submenu
+      userEvent.keyboard('{arrowup}');
+      expect(queryByTestId('item-c')).toHaveFocus();
+
+      // Close the submenu
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+
+      await waitForTransition();
+      await waitFor(() => {
+        expect(onExited).toHaveBeenCalled();
         expect(queryByTestId('item-c')).toHaveFocus();
       });
     });
