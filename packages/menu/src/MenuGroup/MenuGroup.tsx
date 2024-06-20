@@ -7,7 +7,11 @@ import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { color } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 
-import { MenuGroupProvider, useMenuContext } from '../MenuContext';
+import {
+  MenuGroupProvider,
+  useMenuContext,
+  useMenuGroupContext,
+} from '../MenuContext';
 import { menuColor } from '../styles';
 
 import { MenuGroupProps } from './MenuGroup.types';
@@ -32,6 +36,7 @@ export function MenuGroup({
 }: MenuGroupProps) {
   const { theme, darkMode } = useMenuContext();
   const id = useIdAllocator({ prefix: 'lg-menu-group' });
+  const { depth } = useMenuGroupContext();
 
   return (
     <section {...rest} className={className}>
@@ -58,7 +63,7 @@ export function MenuGroup({
           </InputOptionContent>
         </InputOption>
       )}
-      <MenuGroupProvider depth={1} hasIcon={!!glyph}>
+      <MenuGroupProvider depth={depth + (title ? 1 : 0)} hasIcon={!!glyph}>
         <ul
           role="menu"
           aria-labelledby={id}
