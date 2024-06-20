@@ -3,6 +3,7 @@ import {
   fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
+  waitFor,
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react';
@@ -52,13 +53,19 @@ function renderSplitButton(props = {}) {
     menuEl: HTMLElement | null;
     menuItemElements: Array<HTMLElement | null>;
   }> {
-    const menuEl = await renderResult.findByTestId(menuTestId);
-    const menuItemElements = await within(menuEl).findAllByRole('menuitem');
-
-    return {
-      menuEl,
-      menuItemElements,
-    };
+    try {
+      const menuEl = await renderResult.findByTestId(menuTestId);
+      const menuItemElements = await within(menuEl).findAllByRole('menuitem');
+      return {
+        menuEl,
+        menuItemElements,
+      };
+    } catch {
+      return {
+        menuEl: null,
+        menuItemElements: null,
+      };
+    }
   }
 
   /**
@@ -138,33 +145,33 @@ describe('packages/split-button', () => {
   });
 
   describe('Menu', () => {
-    test('trigger opens the menu when clicked', () => {
-      const { menuTrigger, getByTestId } = renderSplitButton({});
+    test('trigger opens the menu when clicked', async () => {
+      const { menuTrigger, findMenuElements } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
-      const menu = getByTestId(menuTestId);
-      expect(menu).toBeInTheDocument();
+      const { menuEl } = await findMenuElements();
+      expect(menuEl).toBeInTheDocument();
     });
 
-    test('disabled trigger does not open the menu when clicked', () => {
-      const { menuTrigger, queryByTestId } = renderSplitButton({
+    test('disabled trigger does not open the menu when clicked', async () => {
+      const { menuTrigger, findMenuElements } = renderSplitButton({
         disabled: true,
       });
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
-      const menu = queryByTestId(menuTestId);
-      expect(menu).not.toBeInTheDocument();
+      const { menuEl } = await findMenuElements();
+      expect(menuEl).not.toBeInTheDocument();
     });
 
-    test('has correct menu items', () => {
-      const { menuTrigger, getByTestId } = renderSplitButton({});
+    test('has correct menu items', async () => {
+      const { menuTrigger, findMenuElements } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
-      const menu = getByTestId(menuTestId);
-      expect(menu.childElementCount).toEqual(4);
+      const { menuItemElements } = await findMenuElements();
+      expect(menuItemElements).toHaveLength(4);
     });
 
     test('accepts a portalRef', () => {
@@ -186,7 +193,7 @@ describe('packages/split-button', () => {
       const onChange = jest.fn();
       const { menuTrigger, getByTestId } = renderSplitButton({ onChange });
 
-      userEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       const options = globalGetAllByRole(menu, 'menuitem');
@@ -232,11 +239,16 @@ describe('packages/split-button', () => {
         const { openMenu, menuTrigger } = renderSplitButton({
           usePortal: false,
         });
-        const { menuEl } = await openMenu();
-
+        const { menuEl, menuItemElements } = await openMenu();
+        await waitFor(() => {
+          expect(menuEl).toBeInTheDocument();
+          expect(menuItemElements[0]).toHaveFocus();
+        });
         userEventInteraction(menuEl!, key);
         await waitForElementToBeRemoved(menuEl);
-        expect(menuTrigger).toHaveFocus();
+        await waitFor(() => {
+          expect(menuTrigger).toHaveFocus();
+        });
       });
     });
 
@@ -267,7 +279,7 @@ describe('packages/split-button', () => {
           menuItems,
         });
         const { menuItemElements } = await openMenu();
-        expect(menuItemElements[0]).toHaveFocus();
+        expect(menuItemElements?.[0]).toHaveFocus();
 
         userEvent.type(menuItemElements?.[0]!, `{${key}}`);
         expect(onClick).toHaveBeenCalled();
@@ -299,16 +311,16 @@ describe('packages/split-button', () => {
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
-          userEvent.type(menuEl!, '{arrowdown}');
+          const { menuItemElements } = await openMenu();
+          userEvent.keyboard('{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
           for (let i = 0; i < menuItemElements.length; i++) {
-            userEvent.type(menuEl!, '{arrowdown}');
+            userEvent.keyboard('{arrowdown}');
           }
 
           expect(menuItemElements[0]).toHaveFocus();
@@ -318,18 +330,18 @@ describe('packages/split-button', () => {
       describe('Up arrow', () => {
         test('highlights the previous option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
-          userEvent.type(menuEl!, '{arrowdown}');
-          userEvent.type(menuEl!, '{arrowup}');
+          userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuItemElements } = await openMenu();
 
           const lastOption = menuItemElements[menuItemElements.length - 1];
-          userEvent.type(menuEl!, '{arrowup}');
+          userEvent.keyboard('{arrowup}');
           expect(lastOption).toHaveFocus();
         });
       });
