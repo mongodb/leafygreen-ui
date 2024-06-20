@@ -1,9 +1,9 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/display-name */
-import React from 'react';
+/* eslint-disable react/jsx-key, react/display-name, react-hooks/rules-of-hooks */
+import React, { useEffect, useRef, useState } from 'react';
 import { InstanceDecorator, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
+import { Descendant } from '@leafygreen-ui/descendants';
 import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import { Theme } from '@leafygreen-ui/lib';
@@ -27,13 +27,23 @@ const _withMenuContext =
       },
     };
 
+    const ref = useRef<HTMLButtonElement>(null);
+    const [testDescendant, setTestDescendant] = useState<Descendant>();
+    useEffect(() => {
+      setTestDescendant({
+        ref,
+        element: ref.current,
+        id: ref?.current?.getAttribute('data-id'),
+        index: Number(ref?.current?.getAttribute('data-index')),
+      } as Descendant);
+    }, []);
     const darkMode = (renderDarkMenu || darkModeProp) ?? false;
     const theme = darkMode ? Theme.Dark : Theme.Light;
 
     return (
       <MenuContext.Provider
         value={{
-          highlightIndex: highlighted ? -1 : undefined,
+          highlight: highlighted ? testDescendant : undefined,
           darkMode,
           theme,
         }}
@@ -43,7 +53,7 @@ const _withMenuContext =
             width: 256px;
           `}
         >
-          <MenuItem {...props} />
+          <MenuItem ref={ref} {...props} />
         </ul>
       </MenuContext.Provider>
     );
@@ -69,9 +79,6 @@ export default {
       ],
       combineArgs: {
         darkMode: [false, true],
-        description: [undefined, 'This is a description'],
-        glyph: [undefined, <Icon glyph="Cloud" />],
-        size: [Size.Default, Size.Large],
       },
       decorator: _withMenuContext(),
     },
@@ -85,18 +92,18 @@ export const LiveExample = {
     glyph: undefined,
   },
   argTypes: {
+    active: { control: 'boolean' },
     description: { control: 'text' },
     glyph: {
       control: 'select',
       options: [undefined, ...Object.keys(glyphs)],
     },
+    highlighted: { control: 'boolean' },
     size: {
       control: 'select',
       options: Object.values(Size),
     },
-    renderDarkMenu: {
-      control: 'boolean',
-    },
+    renderDarkMenu: { control: 'boolean' },
   },
   render: ({ children, glyph, ...args }) => (
     // @ts-expect-error - Polymorphic issues - type of href is not compatible
@@ -114,6 +121,15 @@ export const LiveExample = {
 
 export const Default = {
   render: () => <></>,
+  parameters: {
+    generate: {
+      combineArgs: {
+        description: [undefined, 'This is a description'],
+        glyph: [undefined, <Icon glyph="Cloud" />],
+        disabled: [false, true],
+      },
+    },
+  },
 } satisfies StoryObj<typeof MenuItem>;
 
 export const Active = {
@@ -121,19 +137,34 @@ export const Active = {
   args: {
     active: true,
   },
+  parameters: {
+    generate: {
+      combineArgs: {
+        description: [undefined, 'This is a description'],
+        glyph: [undefined, <Icon glyph="Cloud" />],
+        disabled: [false, true],
+      },
+    },
+  },
 } satisfies StoryObj<typeof MenuItem>;
 
 export const Focused = {
   render: () => <></>,
   args: {
     highlighted: true,
+    disabled: false,
   },
-} satisfies StoryObj<typeof MenuItem>;
-
-export const Disabled = {
-  render: () => <></>,
-  args: {
-    disabled: true,
+  parameters: {
+    generate: {
+      combineArgs: {
+        description: [undefined, 'This is a description'],
+        glyph: [undefined, <Icon glyph="Cloud" />],
+        disabled: [false, true],
+      },
+    },
+    chromatic: {
+      delay: 100,
+    },
   },
 } satisfies StoryObj<typeof MenuItem>;
 
@@ -146,6 +177,8 @@ export const Destructive = {
   parameters: {
     generate: {
       combineArgs: {
+        description: [undefined, 'This is a description'],
+        glyph: [undefined, <Icon glyph="Cloud" />],
         disabled: [false, true],
       },
     },
@@ -167,7 +200,18 @@ export const DarkInLightMode = {
         active: [false, true],
         highlighted: [false, true],
         disabled: [false, true],
+        variant: [Variant.Default, Variant.Destructive],
       },
+      excludeCombinations: [
+        {
+          active: true,
+          highlighted: true,
+        },
+        {
+          active: true,
+          variant: Variant.Destructive,
+        },
+      ],
     },
   },
 };

@@ -10,6 +10,7 @@ import { StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 import CaretDown from '@leafygreen-ui/icon/dist/CaretDown';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -19,14 +20,7 @@ import { TestUtils } from '@leafygreen-ui/popover';
 const { getAlign, getJustify } = TestUtils;
 
 import { Size } from './types';
-import {
-  Menu,
-  MenuItem,
-  MenuItemProps,
-  MenuProps,
-  MenuSeparator,
-  SubMenu,
-} from '.';
+import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
 
 const getDecoratorStyles = (args: Partial<MenuProps>) => {
   return css`
@@ -92,7 +86,7 @@ export default {
 } satisfies StoryMetaType<typeof Menu>;
 
 export const LiveExample = {
-  render: ({ open, size, darkMode, ...args }) => {
+  render: ({ open, darkMode, ...args }) => {
     return (
       <Menu
         darkMode={darkMode}
@@ -104,56 +98,48 @@ export const LiveExample = {
         open={open}
         {...args}
       >
-        <MenuItem size={size} glyph={<CloudIcon />}>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem description="I am also a description" glyph={<CloudIcon />}>
           Menu Item
         </MenuItem>
-        <MenuItem
-          description="I am also a description"
-          size={size}
-          glyph={<CloudIcon />}
-        >
-          Menu Item
-        </MenuItem>
-        <MenuItem disabled description="I am a description" size={size}>
+        <MenuItem disabled description="I am a description">
           Disabled Menu Item
         </MenuItem>
         <MenuItem
           disabled
           description="I am a description"
-          size={size}
           glyph={<CloudIcon />}
         >
           Disabled Menu Item
         </MenuItem>
         <MenuSeparator />
-        <MenuItem size={size} href="http://mongodb.design">
-          I am a link!
-        </MenuItem>
+        <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
         <SubMenu
           title="Menu Item 1"
           description=".design"
-          glyph={<CloudIcon size="large" />}
-          active={true}
+          glyph={<CloudIcon />}
           href="http://mongodb.design"
-          size={size}
         >
-          <MenuItem active>SubMenu Item 1</MenuItem>
-          <MenuItem>SubMenu Item 2</MenuItem>
+          <MenuItem>SubMenu Item 1</MenuItem>
+          <MenuItem active>SubMenu Item 2</MenuItem>
           <MenuItem>SubMenu Item 3</MenuItem>
         </SubMenu>
-        <SubMenu title="Menu Item 2" description="Sed posuere" size={size}>
+        <SubMenu title="Menu Item 2" description="Sed posuere">
           <MenuItem>Support 1</MenuItem>
           <MenuItem>Support 2</MenuItem>
         </SubMenu>
+        <MenuItem variant="destructive" glyph={<Icon glyph="Trash" />}>
+          Delete
+        </MenuItem>
         <MenuSeparator />
-        <MenuItem size={size}>Lorem</MenuItem>
-        <MenuItem size={size}>Ipsum</MenuItem>
-        <MenuItem size={size}>Adipiscing</MenuItem>
-        <MenuItem size={size}>Cursus</MenuItem>
-        <MenuItem size={size}>Ullamcorper</MenuItem>
-        <MenuItem size={size}>Vulputate</MenuItem>
-        <MenuItem size={size}>Inceptos</MenuItem>
-        <MenuItem size={size}>Risus</MenuItem>
+        <MenuItem>Lorem</MenuItem>
+        <MenuItem>Ipsum</MenuItem>
+        <MenuItem>Adipiscing</MenuItem>
+        <MenuItem>Cursus</MenuItem>
+        <MenuItem>Ullamcorper</MenuItem>
+        <MenuItem>Vulputate</MenuItem>
+        <MenuItem>Inceptos</MenuItem>
+        <MenuItem>Risus</MenuItem>
       </Menu>
     );
   },
@@ -162,7 +148,7 @@ export const LiveExample = {
       disableSnapshot: true,
     },
   },
-} satisfies StoryObj<typeof Menu & { size?: MenuItemProps['size'] }>;
+} satisfies StoryObj<typeof Menu>;
 
 export const InitialOpen = {
   render: args => {

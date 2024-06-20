@@ -1,7 +1,7 @@
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
-import { consoleOnce } from '@leafygreen-ui/lib';
+import { consoleOnce, isDefined } from '@leafygreen-ui/lib';
 
 export const useControlledState = <T extends any>(
   initialState: T,
@@ -9,7 +9,7 @@ export const useControlledState = <T extends any>(
   setControlledState?: Dispatch<SetStateAction<T>>,
 ): [T, Dispatch<SetStateAction<T>>] => {
   const isControlled =
-    !isUndefined(controlledState) && !isUndefined(setControlledState);
+    isDefined(controlledState) && isDefined(setControlledState);
   const [internalState, setInternalState] = useState(initialState);
 
   useEffect(() => {

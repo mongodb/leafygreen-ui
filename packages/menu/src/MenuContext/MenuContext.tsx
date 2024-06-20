@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 
 import { createDescendantsContext } from '@leafygreen-ui/descendants';
 
@@ -11,7 +11,9 @@ export const MenuDescendantsContext = createDescendantsContext(
 export const MenuContext = createContext<MenuContextData>({
   theme: 'light',
   darkMode: false,
-  highlightIndex: undefined,
+  highlight: undefined,
 });
+
+export const useMenuContext = () => useContext(MenuContext);
 
 export default MenuContext;

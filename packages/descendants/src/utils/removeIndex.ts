@@ -1,3 +1,9 @@
+/**
+ * Removes the given index from an array
+ *
+ * @internal
+ */
+// TODO: Move to `lib`
 export function removeIndex<T extends any>(
   array: Array<T>,
   index: number,
