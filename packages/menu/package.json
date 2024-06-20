@@ -38,6 +38,13 @@
     "polished": "^4.3.1",
     "react-transition-group": "^4.4.5"
   },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/testing-lib": "^0.5.0",
+    "@leafygreen-ui/text-input": "^13.1.0",
+    "@lg-tools/storybook-utils": "^0.1.1",
+    "@storybook/react": "^7.6.17"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
@@ -49,11 +56,5 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  },
-  "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/testing-lib": "^0.5.0",
-    "@lg-tools/storybook-utils": "^0.1.1",
-    "@storybook/react": "^7.6.17"
   }
 }
