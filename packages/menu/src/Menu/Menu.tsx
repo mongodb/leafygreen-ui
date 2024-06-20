@@ -109,8 +109,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const { highlight, moveHighlight, setHighlight } = useHighlightReducer(
     getDescendants,
     _next => {
-      // console.log('callback', { _next });
-
       if (isDefined(_next)) {
         const nextDescendant = getDescendantById(_next.id, getDescendants());
         const descendantElement = nextDescendant?.ref.current;
@@ -118,8 +116,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       }
     },
   );
-
-  // TODO: When a submenu opens, update the highlight index & focused element
 
   // Callback fired when the popover transition finishes.
   // Handling on this event ensures that the `descendants` elements
