@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
@@ -7,11 +7,16 @@ import {
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
-import { MenuContext } from '../MenuContext';
-import { Size } from '../types';
+import { useMenuContext } from '../MenuContext';
+import { useSubMenuContext } from '../SubMenu';
 
-import { getMenuItemStyles } from './MenuItem.styles';
+import {
+  getDarkInLightModeMenuItemStyles,
+  getMenuItemStyles,
+  getSubMenuItemStyles,
+} from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
 export type InternalMenuItemContentProps = InferredPolymorphicProps<
@@ -21,6 +26,9 @@ export type InternalMenuItemContentProps = InferredPolymorphicProps<
   index: number;
 };
 
+/**
+ * Internal component shared by MenuItem and SubMenu
+ */
 export const InternalMenuItemContent = React.forwardRef<
   HTMLElement,
   InternalMenuItemContentProps
@@ -29,11 +37,11 @@ export const InternalMenuItemContent = React.forwardRef<
     {
       as: asProp,
       index,
+      id,
       disabled = false,
       active = false,
       description,
       glyph,
-      size = Size.Default,
       variant = Variant.Default,
       children,
       className,
@@ -44,8 +52,10 @@ export const InternalMenuItemContent = React.forwardRef<
   ) => {
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
-    const { theme, darkMode, highlightIndex } = useContext(MenuContext);
-    const highlighted = index === highlightIndex;
+    const { theme, darkMode, highlight, renderDarkMenu } = useMenuContext();
+    const { depth, hasIcon: parentHasIcon } = useSubMenuContext();
+    const isSubMenuItem = depth > 0;
+    const highlighted = id === highlight?.id;
 
     const defaultAnchorProps =
       as === 'a'
@@ -68,14 +78,34 @@ export const InternalMenuItemContent = React.forwardRef<
         darkMode={darkMode}
         showWedge
         highlighted={highlighted}
+        data-depth={depth}
         className={cx(
           getMenuItemStyles({
             active,
+            disabled,
             highlighted,
-            size,
             theme,
             variant,
           }),
+
+          {
+            [getSubMenuItemStyles({ theme, parentHasIcon })]: isSubMenuItem,
+
+            // TODO: Remove dark-in-light mode styles
+            // after https://jira.mongodb.org/browse/LG-3974
+            [getDarkInLightModeMenuItemStyles({
+              active,
+              disabled,
+              highlighted,
+              theme,
+              variant,
+            })]: theme === 'light' && renderDarkMenu,
+            [css`
+              &:after {
+                background-color: ${color.dark.border.secondary.default};
+              }
+            `]: theme === 'light' && renderDarkMenu && depth > 0,
+          },
           className,
         )}
         {...defaultAnchorProps}
@@ -86,6 +116,13 @@ export const InternalMenuItemContent = React.forwardRef<
           description={description}
           rightGlyph={rightGlyph}
           preserveIconSpace={false}
+          className={cx({
+            [css`
+              position: relative;
+              padding-left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+              border-top: 1px solid transparent;
+            `]: depth > 0,
+          })}
         >
           <div
             className={css`

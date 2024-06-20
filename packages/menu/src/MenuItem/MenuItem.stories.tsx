@@ -69,9 +69,6 @@ export default {
       ],
       combineArgs: {
         darkMode: [false, true],
-        description: [undefined, 'This is a description'],
-        glyph: [undefined, <Icon glyph="Cloud" />],
-        size: [Size.Default, Size.Large],
       },
       decorator: _withMenuContext(),
     },
@@ -114,6 +111,13 @@ export const LiveExample = {
 
 export const Default = {
   render: () => <></>,
+  parameters: {
+    combineArgs: {
+      description: [undefined, 'This is a description'],
+      glyph: [undefined, <Icon glyph="Cloud" />],
+      disabled: [false, true],
+    },
+  },
 } satisfies StoryObj<typeof MenuItem>;
 
 export const Active = {
@@ -121,19 +125,27 @@ export const Active = {
   args: {
     active: true,
   },
+  parameters: {
+    combineArgs: {
+      description: [undefined, 'This is a description'],
+      glyph: [undefined, <Icon glyph="Cloud" />],
+      disabled: [false, true],
+    },
+  },
 } satisfies StoryObj<typeof MenuItem>;
 
 export const Focused = {
   render: () => <></>,
   args: {
     highlighted: true,
+    disabled: false,
   },
-} satisfies StoryObj<typeof MenuItem>;
-
-export const Disabled = {
-  render: () => <></>,
-  args: {
-    disabled: true,
+  parameters: {
+    combineArgs: {
+      description: [undefined, 'This is a description'],
+      glyph: [undefined, <Icon glyph="Cloud" />],
+      disabled: [false, true],
+    },
   },
 } satisfies StoryObj<typeof MenuItem>;
 
@@ -146,6 +158,8 @@ export const Destructive = {
   parameters: {
     generate: {
       combineArgs: {
+        description: [undefined, 'This is a description'],
+        glyph: [undefined, <Icon glyph="Cloud" />],
         disabled: [false, true],
       },
     },
@@ -167,7 +181,18 @@ export const DarkInLightMode = {
         active: [false, true],
         highlighted: [false, true],
         disabled: [false, true],
+        variant: [Variant.Default, Variant.Destructive],
       },
+      excludeCombinations: [
+        {
+          active: true,
+          highlighted: true,
+        },
+        {
+          active: true,
+          variant: Variant.Destructive,
+        },
+      ],
     },
   },
 };

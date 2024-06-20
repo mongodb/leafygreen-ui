@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
-import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { LGIDs } from '../constants';
 import { menuItemContainerStyles } from '../MenuItem/MenuItem.styles';
@@ -23,15 +23,7 @@ export const submenuToggleStyles = css`
   transform: translateY(-50%);
 `;
 
-interface SubmenuListStyleArgs {
-  theme: Theme;
-  hasGlyph: boolean;
-}
-
-export const getSubmenuListStyles = ({
-  theme,
-  hasGlyph,
-}: SubmenuListStyleArgs) => css`
+export const getSubmenuListStyles = () => css`
   list-style: none;
   margin: 0;
   padding: 0;
@@ -40,6 +32,4 @@ export const getSubmenuListStyles = ({
   overflow: hidden;
   transition: max-height ${transitionDuration.default}ms ease-in-out;
   position: relative;
-  margin-left: ${hasGlyph ? spacing[900] : spacing[300]}px;
-  border-top: 1px solid ${color[theme].border.secondary.default};
 `;

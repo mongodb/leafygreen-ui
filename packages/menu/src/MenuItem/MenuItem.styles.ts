@@ -1,14 +1,15 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
+  descriptionClassName,
   leftGlyphClassName,
   titleClassName,
 } from '@leafygreen-ui/input-option';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, Property, spacing } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
 import { LGIDs } from '../constants';
-import { Size } from '../types';
+import { menuColor } from '../styles';
 
 import { Variant } from './MenuItem.types';
 
@@ -20,90 +21,132 @@ export const menuItemContainerStyles = css`
   list-style: none;
 `;
 
-/** Define colors for the active elements */
-const activeColors = {
-  [Theme.Light]: {
-    [Property.Background]: palette.green.light3,
-    [Property.Text]: palette.green.dark2,
-    [Property.Icon]: palette.green.dark1,
-    [Property.Border]: palette.green.dark1,
-  },
-  [Theme.Dark]: {
-    [Property.Background]: palette.green.dark3,
-    [Property.Text]: palette.green.base,
-    [Property.Icon]: palette.green.base,
-    [Property.Border]: palette.green.base,
-  },
-} as const satisfies Record<Theme, Record<Property, string>>;
-
 interface MenuItemStyleArgs {
   active: boolean;
+  disabled: boolean;
   highlighted: boolean;
-  size: Size;
   theme: Theme;
   variant: Variant;
 }
 
 export const getMenuItemStyles = ({
   active,
+  disabled,
   highlighted,
-  size,
   theme,
   variant,
-}: MenuItemStyleArgs) => css`
-  display: block;
-  width: 100%;
-  min-height: ${spacing[800]}px;
-
-  ${size === Size.Large &&
-  css`
-    min-height: ${spacing[1200]}px;
-    // TODO: align on \`large\` size text styles
-    // https://jira.mongodb.org/browse/LG-4060
-  `}
-
-  ${active &&
-  !highlighted &&
-  css`
-    &,
-    &:hover {
-      background-color: ${activeColors[theme].background};
-
-      &:before {
-        transform: scaleY(1) translateY(-50%);
-        background-color: ${activeColors[theme].border};
-      }
+}: MenuItemStyleArgs) =>
+  cx(
+    // Base styles
+    css`
+      display: block;
+      width: 100%;
+      min-height: ${spacing[800]}px;
+      background-color: ${menuColor[theme].background.default};
 
       .${titleClassName} {
-        color: ${activeColors[theme].text};
-        font-weight: bold;
-      }
-
-      .${leftGlyphClassName} {
-        color: ${activeColors[theme].icon};
-      }
-    }
-  `}
-
-  ${variant === Variant.Destructive &&
-  css`
-    .${titleClassName} {
-      color: ${color[theme].text.error.default};
-    }
-    .${leftGlyphClassName} {
-      color: ${color[theme].icon.error.default};
-    }
-
-    &:hover {
-      background-color: ${color[theme].background.error.hover};
-      .${titleClassName} {
-        color: ${color[theme].text.error.hover};
+        color: ${menuColor[theme].text.default};
       }
       .${leftGlyphClassName} {
-        color: ${color[theme].icon.error.hover};
+        color: ${menuColor[theme].icon.default};
       }
-    }
-  `}
+    `,
+    {
+      // Active
+      [css`
+        &,
+        &:hover {
+          background-color: ${menuColor[theme].background.active};
+
+          &:before {
+            transform: scaleY(1) translateY(-50%);
+            background-color: ${menuColor[theme].border.active};
+          }
+
+          .${titleClassName} {
+            color: ${menuColor[theme].text.active};
+            font-weight: bold;
+          }
+
+          .${leftGlyphClassName} {
+            color: ${menuColor[theme].icon.active};
+          }
+        }
+      `]: active,
+
+      // Highlighted
+      [css`
+        &,
+        &:hover,
+        &:focus {
+          background-color: ${menuColor[theme].background.focus};
+
+          &:before {
+            transform: scaleY(1) translateY(-50%);
+            background-color: ${menuColor[theme].border.focus};
+          }
+
+          .${titleClassName} {
+            color: ${menuColor[theme].text.focus};
+          }
+          .${leftGlyphClassName} {
+            color: ${menuColor[theme].icon.focus};
+          }
+        }
+      `]: highlighted,
+
+      // Destructive
+      [css`
+        .${titleClassName} {
+          color: ${color[theme].text.error.default};
+        }
+        .${leftGlyphClassName} {
+          color: ${color[theme].icon.error.default};
+        }
+
+        &:hover {
+          background-color: ${color[theme].background.error.hover};
+          .${titleClassName} {
+            color: ${color[theme].text.error.hover};
+          }
+          .${leftGlyphClassName} {
+            color: ${color[theme].icon.error.hover};
+          }
+        }
+      `]: variant === Variant.Destructive,
+
+      // Disabled
+      [css`
+        &,
+        &:hover {
+          background-color: ${menuColor[theme].background.default};
+          .${titleClassName} {
+            color: ${color[theme].text.disabled.default};
+          }
+          .${leftGlyphClassName} {
+            color: ${color[theme].icon.disabled.default};
+          }
+        }
+      `]: disabled,
+    },
+  );
+
+export const getSubMenuItemStyles = ({
+  theme,
+  parentHasIcon,
+}: {
+  theme: Theme;
+  parentHasIcon: boolean;
+}) => css`
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+    height: 1px;
+    background-color: ${menuColor[theme].border.default};
+  }
 `;
 
 export const getMenuItemContentStyles = ({
@@ -116,3 +159,118 @@ export const getMenuItemContentStyles = ({
     padding-inline-start: ${spacing[300]}px;
   `}
 `;
+
+// TODO: Remove dark-in-light mode styles
+// after https://jira.mongodb.org/browse/LG-3974
+export const getDarkInLightModeMenuItemStyles = ({
+  active,
+  variant,
+  disabled,
+  highlighted,
+}: MenuItemStyleArgs) => {
+  return cx(
+    css`
+      background-color: ${color.dark.background.primary.default};
+
+      .${titleClassName} {
+        color: ${color.dark.text.primary.default};
+      }
+      .${descriptionClassName} {
+        color: ${color.dark.text.secondary.default};
+      }
+      .${leftGlyphClassName} {
+        color: ${color.dark.icon.primary.default};
+      }
+
+      &:hover {
+        background-color: ${color.dark.background.primary.hover};
+
+        .${titleClassName} {
+          color: ${color.dark.text.primary.hover};
+        }
+        .${descriptionClassName} {
+          color: ${color.dark.text.secondary.hover};
+        }
+        .${leftGlyphClassName} {
+          color: ${color.dark.icon.primary.hover};
+        }
+      }
+    `,
+    {
+      // Active styles
+      [css`
+        &,
+        &:hover {
+          background-color: ${color.dark.background.primary.default};
+
+          .${titleClassName} {
+            color: ${palette.green.base};
+          }
+          .${leftGlyphClassName} {
+            color: ${palette.green.base};
+          }
+
+          &::before {
+            background-color: ${palette.green.base};
+          }
+        }
+      `]: active,
+
+      // Highlighted
+      [css`
+        &,
+        &:hover,
+        &:focus {
+          background-color: ${color.dark.background.primary.focus};
+
+          .${titleClassName} {
+            color: ${color.dark.text.primary.focus};
+          }
+          .${descriptionClassName} {
+            color: ${color.dark.text.secondary.focus};
+          }
+          .${leftGlyphClassName} {
+            color: ${color.dark.icon.primary.focus};
+          }
+        }
+      `]: highlighted,
+
+      [css`
+        .${titleClassName} {
+          color: ${color.dark.text.error.default};
+        }
+        .${leftGlyphClassName} {
+          color: ${color.dark.icon.error.default};
+        }
+
+        &:hover {
+          background-color: ${color.dark.background.error.hover};
+          .${titleClassName} {
+            color: ${color.dark.text.error.hover};
+          }
+          .${leftGlyphClassName} {
+            color: ${color.dark.icon.error.hover};
+          }
+        }
+      `]: variant === Variant.Destructive,
+
+      // Disabled
+      [css`
+        &,
+        &:hover {
+          background-color: ${color.dark.background.primary.default};
+
+          .${titleClassName} {
+            color: ${color.dark.text.disabled.default};
+          }
+          .${descriptionClassName} {
+            color: ${color.dark.text.disabled.default};
+          }
+          .${leftGlyphClassName} {
+            color: ${color.dark.icon.disabled.default};
+          }
+        }
+      `]: disabled,
+    },
+  );
+};

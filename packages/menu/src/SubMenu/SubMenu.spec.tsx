@@ -2,6 +2,8 @@ import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { waitForTransition } from '@leafygreen-ui/testing-lib';
+
 import { LGIDs } from '../constants';
 import { MenuItem, SubMenu, SubMenuProps } from '..';
 
@@ -82,6 +84,18 @@ describe('packages/sub-menu', () => {
         });
       });
 
+      test('clicking an open submenu closes it', async () => {
+        const { getByTestId, queryByTestId } = renderSubMenu({
+          initialOpen: true,
+        });
+        const subMenu = getByTestId(subMenuTestId);
+        userEvent.click(subMenu);
+
+        await waitFor(() => {
+          expect(queryByTestId(menuItem1Id)).not.toBeInTheDocument();
+        });
+      });
+
       test('clicking the submenu DOES NOT open it if a click handler is provided', async () => {
         const onClick = jest.fn();
         const { getByTestId, queryByTestId } = renderSubMenu({ onClick });
@@ -109,6 +123,51 @@ describe('packages/sub-menu', () => {
         const subMenu = getByTestId(subMenuTestId);
         userEvent.click(subMenu);
         expect(onClick).toHaveBeenCalled();
+      });
+
+      test('clicking the submenu toggle button opens it', async () => {
+        const { getByTestId, queryByTestId } = renderSubMenu();
+        const toggle = getByTestId(LGIDs.submenuToggle);
+        userEvent.click(toggle);
+
+        await waitFor(() => {
+          expect(queryByTestId(menuItem1Id)).toBeInTheDocument();
+        });
+      });
+
+      test('clicking the submenu toggle button closes an open menu', async () => {
+        const { getByTestId, queryByTestId } = renderSubMenu({
+          initialOpen: true,
+        });
+        const toggle = getByTestId(LGIDs.submenuToggle);
+        userEvent.click(toggle);
+
+        await waitFor(() => {
+          expect(queryByTestId(menuItem1Id)).not.toBeInTheDocument();
+        });
+      });
+
+      test('transition handlers are fired', async () => {
+        const onEntered = jest.fn();
+        const onExited = jest.fn();
+        const { getByTestId } = renderSubMenu({
+          onEntered,
+          onExited,
+        });
+        const subMenu = getByTestId(subMenuTestId);
+        userEvent.click(subMenu);
+        await waitForTransition();
+
+        await waitFor(() => {
+          expect(onEntered).toHaveBeenCalled();
+        });
+
+        userEvent.click(subMenu);
+        await waitForTransition();
+
+        await waitFor(() => {
+          expect(onExited).toHaveBeenCalled();
+        });
       });
     });
 

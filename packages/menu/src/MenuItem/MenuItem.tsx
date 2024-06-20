@@ -31,6 +31,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
       >
         <InternalMenuItemContent
           as={as}
+          id={id}
           ref={ref}
           index={index}
           active={active}

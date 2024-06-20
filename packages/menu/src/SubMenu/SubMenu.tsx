@@ -1,11 +1,11 @@
 import React, {
   KeyboardEventHandler,
   MouseEventHandler,
-  useContext,
   useEffect,
   useRef,
 } from 'react';
 import { Transition } from 'react-transition-group';
+import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
@@ -20,8 +20,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { LGIDs } from '../constants';
-import { MenuContext } from '../MenuContext';
-import { MenuDescendantsContext } from '../MenuContext';
+import { MenuDescendantsContext, useMenuContext } from '../MenuContext';
 import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
@@ -32,6 +31,7 @@ import {
   submenuToggleStyles,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
+import { SubMenuProvider, useSubMenuContext } from './SubMenuContext';
 import { useChildrenHeight } from './useChildrenHeight';
 import { useControlledState } from './useControlledState';
 
@@ -55,19 +55,30 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
-    const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
+    const { highlight, setHighlight } = useMenuContext();
+    const {
+      index: descendantIndex,
+      ref: descendantRef,
+      id: descendantId,
+    } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
     });
-    const { theme } = useContext(MenuContext);
+    const { depth } = useSubMenuContext();
 
     const [open, setOpen] = useControlledState(
       initialOpen,
       openProp,
       setOpenProp,
     );
+
+    // Regardless of the `open` state,
+    // if `active` has been toggled true,
+    // we open the menu
     useEffect(() => {
-      setOpen(!!rest.active);
+      if (rest.active) {
+        setOpen(true);
+      }
     }, [rest.active, setOpen]);
 
     const submenuRef = useRef<HTMLUListElement>(null);
@@ -98,7 +109,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       }
     };
 
-    const handleChevronClick: MouseEventHandler<HTMLButtonElement> = e => {
+    const handleToggleClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent links from navigating
       e.preventDefault();
       // we stop the event from propagating and closing the entire menu
@@ -108,10 +119,48 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       setOpen(x => !x);
     };
 
+    // When the submenu has opened
+    const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
+      // this element should be highlighted
+      if (descendantId === highlight?.id) {
+        // ensure this element is still focused after transitioning
+        descendantRef.current?.focus();
+      } else {
+        // Otherwise ensure the focus is on the correct element
+        highlight?.ref?.current?.focus();
+      }
+
+      onEntered?.();
+    };
+
+    // When the submenu starts to close
+    const handleTransitionExiting: ExitHandler<HTMLUListElement> = () => {
+      const currentHighlightElement = highlight?.ref?.current;
+
+      if (currentHighlightElement) {
+        // if one of this submenu's children is highlighted
+        // and we close the submenu,
+        // then focus the main submenu item
+        const doesSubmenuContainCurrentHighlight =
+          submenuRef?.current?.contains(currentHighlightElement);
+
+        if (doesSubmenuContainCurrentHighlight) {
+          setHighlight?.(descendantId);
+          descendantRef?.current?.focus();
+        }
+      }
+    };
+
+    // When the submenu has closed
+    const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
+      // When the submenu closes, ensure the focus is on the correct element
+      highlight?.ref?.current?.focus();
+      onExited?.();
+    };
+
     return (
       <>
         <li
-          id={id}
           role="none"
           className={cx(subMenuContainerClassName, subMenuContainerStyles)}
           data-testid={LGIDs.submenu}
@@ -119,13 +168,14 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
         >
           <InternalMenuItemContent
             as={as}
-            ref={ref}
-            index={index}
+            id={descendantId}
+            ref={descendantRef}
+            index={descendantIndex}
             active={active}
             disabled={disabled}
             onClick={handleClick}
             onKeyDown={handleKeydown}
-            data-id={id}
+            data-id={descendantId}
             {...rest}
           >
             {title}
@@ -135,44 +185,44 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             data-lgid={LGIDs.submenuToggle}
             ref={submenuTriggerRef}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            onClick={handleChevronClick}
+            onClick={handleToggleClick}
             className={cx(subMenuToggleClassName, submenuToggleStyles)}
           >
-            <ChevronIcon role="presentation" size={14} />
+            <ChevronIcon role="presentation" />
           </IconButton>
         </li>
-        <Transition
-          in={open}
-          timeout={{
-            enter: 0,
-            exit: 150,
-          }}
-          mountOnEnter
-          unmountOnExit
-          onEntered={onEntered}
-          onExited={onExited}
-          nodeRef={submenuRef}
-        >
-          {(state: string) => (
-            <ul
-              ref={submenuRef}
-              role="menu"
-              aria-label={title}
-              data-state={state}
-              data-open={open}
-              className={cx(
-                getSubmenuListStyles({ theme, hasGlyph: !!rest.glyph }),
-                {
+        <SubMenuProvider depth={depth + 1} hasIcon={!!rest.glyph}>
+          <Transition
+            in={open}
+            timeout={{
+              enter: 0,
+              exit: 150,
+            }}
+            mountOnEnter
+            unmountOnExit
+            onEntered={handleTransitionEntered}
+            onExiting={handleTransitionExiting}
+            onExited={handleTransitionExited}
+            nodeRef={submenuRef}
+          >
+            {(state: string) => (
+              <ul
+                ref={submenuRef}
+                role="menu"
+                aria-label={title}
+                data-state={state}
+                data-open={open}
+                className={cx(getSubmenuListStyles(), {
                   [css`
                     max-height: ${subMenuHeight + 1}px;
                   `]: state === 'entered',
-                },
-              )}
-            >
-              {children}
-            </ul>
-          )}
-        </Transition>
+                })}
+              >
+                {children}
+              </ul>
+            )}
+          </Transition>
+        </SubMenuProvider>
       </>
     );
   },

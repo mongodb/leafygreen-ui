@@ -8,25 +8,26 @@ import PropTypes from 'prop-types';
 
 import {
   DescendantsProvider,
+  getDescendantById,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isDefined, keyMap } from '@leafygreen-ui/lib';
+import { isDefined, keyMap, Theme } from '@leafygreen-ui/lib';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
 import { LGIDs } from '../constants';
+import { useHighlightReducer } from '../HighlightReducer';
 import {
   MenuContext,
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
 
 import { useMenuHeight } from './utils/useMenuHeight';
-import { useHighlightReducer } from './HighlightReducer';
 import {
-  rootMenuStyle,
-  rootMenuThemeStyles,
+  getDarkInLightModeMenuStyles,
+  getMenuStyles,
   scrollContainerStyle,
 } from './Menu.styles';
 import { MenuProps } from './Menu.types';
@@ -76,8 +77,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }: MenuProps,
   fwdRef,
 ) {
-  const renderDarkMode = renderDarkMenu || darkModeProp;
-  const { theme, darkMode } = useDarkMode(renderDarkMode);
+  const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const popoverRef = useForwardedRef(fwdRef, null);
   const triggerRef = useRef<HTMLElement>(null);
@@ -106,21 +106,26 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   // Tracks the currently highlighted (focused) item index
   // Fires `.focus()` when the index is updated
-  const [highlightIndex, updateHighlightIndex] = useHighlightReducer(
-    descendants,
-    index => {
-      if (isDefined(index)) {
-        const descendantElement = getDescendants()[index]?.ref.current;
+  const { highlight, moveHighlight, setHighlight } = useHighlightReducer(
+    getDescendants,
+    _next => {
+      // console.log('callback', { _next });
+
+      if (isDefined(_next)) {
+        const nextDescendant = getDescendantById(_next.id, getDescendants());
+        const descendantElement = nextDescendant?.ref.current;
         descendantElement?.focus();
       }
     },
   );
 
+  // TODO: When a submenu opens, update the highlight index & focused element
+
   // Callback fired when the popover transition finishes.
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
-    updateHighlightIndex('first');
+    moveHighlight('first');
   };
 
   // Fired on global keyDown event
@@ -128,12 +133,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     switch (e.key) {
       case keyMap.ArrowDown:
         e.preventDefault(); // Prevents page scrolling
-        updateHighlightIndex('next');
+        moveHighlight('next');
         break;
 
       case keyMap.ArrowUp:
         e.preventDefault(); // Prevents page scrolling
-        updateHighlightIndex('prev');
+        moveHighlight('prev');
         break;
 
       case keyMap.Tab:
@@ -150,7 +155,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.Space:
       case keyMap.Enter:
         if (!open) {
-          updateHighlightIndex('first');
+          moveHighlight('first');
         }
         break;
     }
@@ -180,7 +185,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         value={{
           theme,
           darkMode,
-          highlightIndex,
+          highlight,
+          setHighlight,
+          renderDarkMenu,
         }}
       >
         <Popover
@@ -201,12 +208,18 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           {...popoverProps}
         >
           <div
+            data-theme={theme}
             className={cx(
-              rootMenuStyle,
-              rootMenuThemeStyles[theme],
+              getMenuStyles({ theme }),
               css`
                 max-height: ${maxMenuHeightValue};
               `,
+              {
+                // TODO: Remove dark-in-light mode styles
+                // after https://jira.mongodb.org/browse/LG-3974
+                [getDarkInLightModeMenuStyles()]:
+                  theme === Theme.Light && renderDarkMenu,
+              },
               className,
             )}
           >

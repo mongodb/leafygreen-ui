@@ -8,32 +8,42 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { Optional } from '@leafygreen-ui/lib';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
+import { LGIDs } from './constants';
 import { MenuProps } from './Menu';
-import { Menu, MenuItem, MenuSeparator } from '.';
+import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const menuTestId = 'menu-test-id';
 const menuTriggerTestId = 'menu-trigger';
 const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
+const defaultChildren = (
+  <>
+    <MenuItem data-testid="menu-item-a">Item A</MenuItem>
+    <MenuSeparator />
+    <MenuItem href="http://mongodb.design">Item B</MenuItem>
+    <MenuItem href="http://mongodb.design">Item C</MenuItem>
+  </>
+);
 
 function waitForTimeout(timeout = 500) {
   return new Promise(res => setTimeout(res, timeout));
 }
 
 /** Renders a Menu with the given props */
-function renderMenu({
-  trigger = defaultTrigger,
-  ...rest
-}: Omit<MenuProps, 'children'> = {}) {
+function renderMenu(
+  {
+    trigger = defaultTrigger,
+    children = defaultChildren,
+    ...rest
+  }: Optional<MenuProps, 'children'> = { children: defaultChildren },
+) {
   const renderResult = render(
     <>
       <div data-testid="backdrop" />
-      <Menu trigger={trigger} {...rest} data-testid={menuTestId} ref={null}>
-        <MenuItem data-testid="menu-item-a">Item A</MenuItem>
-        <MenuSeparator />
-        <MenuItem href="http://mongodb.design">Item B</MenuItem>
-        <MenuItem href="http://mongodb.design">Item C</MenuItem>
+      <Menu trigger={trigger} {...rest} data-testid={menuTestId}>
+        {children}
       </Menu>
     </>,
   );
@@ -281,6 +291,47 @@ describe('packages/menu', () => {
 
           expect(menuItemElements[0]).toHaveFocus();
         });
+
+        describe('with submenus', () => {
+          test('highlights the next submenu item', async () => {
+            const { queryByTestId, openMenu } = renderMenu({
+              children: (
+                <>
+                  <SubMenu initialOpen data-testid="submenu" title="Submenu">
+                    <MenuItem data-testid="item-a">A</MenuItem>
+                    <MenuItem data-testid="item-b">B</MenuItem>
+                  </SubMenu>
+                </>
+              ),
+            });
+
+            const { menuItemElements } = await openMenu();
+            expect(menuItemElements).toHaveLength(3);
+            expect(queryByTestId('submenu')).toHaveFocus();
+            userEvent.keyboard('{arrowdown}');
+            expect(queryByTestId('item-a')).toHaveFocus();
+          });
+
+          test('does not highlight closed submenu items', async () => {
+            const { queryByTestId, openMenu } = renderMenu({
+              children: (
+                <>
+                  <SubMenu data-testid="submenu" title="Submenu">
+                    <MenuItem data-testid="item-a">A</MenuItem>
+                    <MenuItem data-testid="item-b">B</MenuItem>
+                  </SubMenu>
+                  <MenuItem data-testid="item-c">C</MenuItem>
+                </>
+              ),
+            });
+
+            const { menuItemElements } = await openMenu();
+            expect(menuItemElements).toHaveLength(2);
+            expect(queryByTestId('submenu')).toHaveFocus();
+            userEvent.keyboard('{arrowdown}');
+            expect(queryByTestId('item-c')).toHaveFocus();
+          });
+        });
       });
 
       describe('Up arrow', () => {
@@ -333,6 +384,130 @@ describe('packages/menu', () => {
 
       await act(async () => await waitForTimeout());
       expect(menuEl).toBeInTheDocument();
+    });
+  });
+
+  // TODO: Consider moving these to Chromatic or Playwright/Cypress
+  describe('Complex interactions', () => {
+    test('if a submenu is highlighted, and the toggle is clicked, the submenu remains in focus', async () => {
+      const onEntered = jest.fn();
+
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu
+              data-testid="submenu"
+              title="Submenu"
+              onEntered={onEntered}
+            >
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      await waitForTransition();
+      await waitFor(() => {
+        expect(onEntered).toHaveBeenCalled();
+        expect(queryByTestId('submenu')).toHaveFocus();
+      });
+    });
+
+    test('if a submenu item is highlighted, and that submenu is closed, focus should move to the submenu parent', async () => {
+      const onExited = jest.fn();
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu data-testid="submenu" title="Submenu" onExited={onExited}>
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.keyboard('{arrowright}');
+      userEvent.keyboard('{arrowdown}');
+      expect(queryByTestId('item-a')).toHaveFocus();
+
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      await waitForTransition();
+
+      await waitFor(() => {
+        expect(onExited).toHaveBeenCalled();
+        expect(queryByTestId('submenu')).toHaveFocus();
+      });
+    });
+
+    test('when a submenu opens, an element below it should remain highlighted', async () => {
+      const onEntered = jest.fn();
+
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu
+              data-testid="submenu"
+              title="Submenu"
+              onEntered={onEntered}
+            >
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.keyboard('{arrowup}');
+      expect(queryByTestId('item-c')).toHaveFocus();
+
+      // Open the submenu
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+
+      await waitForTransition();
+      await waitFor(() => {
+        expect(onEntered).toHaveBeenCalled();
+        expect(queryByTestId('item-c')).toHaveFocus();
+      });
+    });
+
+    test('when a submenu closes, an element below it should remain highlighted', async () => {
+      const onExited = jest.fn();
+
+      const { queryByTestId, getByTestId, openMenu } = renderMenu({
+        children: (
+          <>
+            <SubMenu data-testid="submenu" title="Submenu" onExited={onExited}>
+              <MenuItem data-testid="item-a">A</MenuItem>
+              <MenuItem data-testid="item-b">B</MenuItem>
+            </SubMenu>
+            <MenuItem data-testid="item-c">C</MenuItem>
+          </>
+        ),
+      });
+      await openMenu();
+      expect(queryByTestId('submenu')).toHaveFocus();
+      userEvent.keyboard('{arrowright}'); // open the submenu
+      userEvent.keyboard('{arrowup}');
+      expect(queryByTestId('item-c')).toHaveFocus();
+
+      // Close the submenu
+      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+
+      await waitForTransition();
+      await waitFor(() => {
+        expect(onExited).toHaveBeenCalled();
+        expect(queryByTestId('item-c')).toHaveFocus();
+      });
     });
   });
 });

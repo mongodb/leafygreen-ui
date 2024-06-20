@@ -29,11 +29,6 @@ export interface MenuItemProps {
   rightGlyph?: ReactElement;
 
   /**
-   * Size of the MenuItem component, can be `default` or `large`
-   */
-  size?: Size;
-
-  /**
    * Content to appear inside of `<MenuItem />` component
    */
   children?: ReactNode;
@@ -52,6 +47,14 @@ export interface MenuItemProps {
    * Variant of MenuItem
    */
   variant?: Variant;
+
+  /**
+   * Size of the MenuItem component, can be `default` or `large`
+   *
+   * @deprecated - Size no longer has any effect
+   */
+  // TODO: codemod to remove `size` props from existing implementations
+  size?: Size;
 }
 
 export interface FocusableMenuItemProps {

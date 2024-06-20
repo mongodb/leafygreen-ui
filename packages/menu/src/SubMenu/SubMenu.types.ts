@@ -42,12 +42,12 @@ export interface InternalSubMenuProps
   /**
    * Callback fired when the Submenu opens
    */
-  onEntered?: ExitHandler<HTMLElement>;
+  onEntered?: ExitHandler<HTMLUListElement>;
 
   /**
    * Callback fired when the Submenu closes
    */
-  onExited?: ExitHandler<HTMLElement>;
+  onExited?: ExitHandler<HTMLUListElement>;
 }
 
 // External only
