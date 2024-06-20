@@ -1,4 +1,10 @@
 export {
+  type MenuGroupContext,
+  MenuGroupContextData,
+  MenuGroupProvider,
+  useMenuGroupContext,
+} from './GroupContext';
+export {
   MenuContext,
   type MenuContextData,
   MenuDescendantsContext,
