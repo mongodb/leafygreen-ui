@@ -8,7 +8,7 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 
 import { MenuItem } from '../MenuItem';
 import { SubMenu } from '../SubMenu';
-import { withMenuContext } from '../testUtils/withMenuContextDecorator';
+import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils';
 
 import { MenuGroup } from './MenuGroup';
 

@@ -72,7 +72,7 @@ export default {
     align: 'bottom',
     usePortal: true,
     darkMode: false,
-    renderDarkMenu: true,
+    renderDarkMenu: false,
   },
   argTypes: {
     open: {
