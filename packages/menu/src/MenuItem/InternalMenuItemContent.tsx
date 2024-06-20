@@ -9,8 +9,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 import { color, spacing } from '@leafygreen-ui/tokens';
 
-import { useMenuContext } from '../MenuContext';
-import { useSubMenuContext } from '../SubMenu';
+import { useMenuContext, useSubMenuContext } from '../MenuContext';
 
 import {
   getDarkInLightModeMenuItemStyles,
