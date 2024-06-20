@@ -60,7 +60,9 @@ export const InternalMenuItemContent = React.forwardRef<
       useSubMenuContext();
     const { depth: groupDepth, hasIcon: groupHasIcon } = useMenuGroupContext();
     const isNested = !!(submenuDepth || groupDepth);
-    const highlighted = id === highlight?.id;
+    // @ts-expect-error - highlighted isn't a prop on this component, but could be passed in from MenuItem
+    const forceHighlight = rest.highlighted;
+    const highlighted = id === highlight?.id || forceHighlight;
 
     const defaultAnchorProps =
       as === 'a'
