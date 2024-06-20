@@ -20,7 +20,12 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { LGIDs } from '../constants';
-import { MenuDescendantsContext, useMenuContext } from '../MenuContext';
+import {
+  MenuDescendantsContext,
+  SubMenuProvider,
+  useMenuContext,
+  useSubMenuContext,
+} from '../MenuContext';
 import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
@@ -31,7 +36,6 @@ import {
   submenuToggleStyles,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
-import { SubMenuProvider, useSubMenuContext } from './SubMenuContext';
 import { useChildrenHeight } from './useChildrenHeight';
 import { useControlledState } from './useControlledState';
 
