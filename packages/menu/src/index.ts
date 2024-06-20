@@ -1,4 +1,5 @@
 export { Menu, type MenuProps } from './Menu';
+export { MenuDescendant } from './MenuDescendant';
 export { MenuGroup } from './MenuGroup';
 export {
   FocusableMenuItem,

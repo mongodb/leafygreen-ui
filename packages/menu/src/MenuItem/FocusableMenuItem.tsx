@@ -6,6 +6,8 @@ import { FocusableMenuItemProps } from './MenuItem.types';
 /**
  * For internal use only: Component to allow us to include non-MenuItems in a Menu's group of focusable elements
  * @internal
+ *
+ * @deprecated - Prefer using `MenuDescendant`
  */
 export const FocusableMenuItem = React.forwardRef(
   ({ children }: FocusableMenuItemProps, forwardRef) => {
