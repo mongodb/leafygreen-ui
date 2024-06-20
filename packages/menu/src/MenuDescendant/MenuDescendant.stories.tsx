@@ -7,6 +7,7 @@ import Button from '@leafygreen-ui/button';
 import TextInput from '@leafygreen-ui/text-input';
 
 import { Menu } from '../Menu';
+import { MenuItem } from '../MenuItem';
 
 import { MenuDescendant } from './MenuDescendant';
 
@@ -33,7 +34,13 @@ export const LiveExample = {
         <MenuDescendant>
           <TextInput aria-label="Test" placeholder="Input" />
         </MenuDescendant>
+        <MenuItem>Apple</MenuItem>
       </Menu>
     );
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 } satisfies StoryObj<typeof MenuDescendant>;
