@@ -7,14 +7,18 @@ import {
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { color } from '@leafygreen-ui/tokens';
 
-import { useMenuContext, useSubMenuContext } from '../MenuContext';
+import {
+  useMenuContext,
+  useMenuGroupContext,
+  useSubMenuContext,
+} from '../MenuContext';
 
 import {
   getDarkInLightModeMenuItemStyles,
   getMenuItemStyles,
-  getSubMenuItemStyles,
+  getNestedMenuItemStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
@@ -52,8 +56,10 @@ export const InternalMenuItemContent = React.forwardRef<
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
     const { theme, darkMode, highlight, renderDarkMenu } = useMenuContext();
-    const { depth, hasIcon: parentHasIcon } = useSubMenuContext();
-    const isSubMenuItem = depth > 0;
+    const { depth: submenuDepth, hasIcon: submenuHasIcon } =
+      useSubMenuContext();
+    const { depth: groupDepth, hasIcon: groupHasIcon } = useMenuGroupContext();
+    const isNested = !!(submenuDepth || groupDepth);
     const highlighted = id === highlight?.id;
 
     const defaultAnchorProps =
@@ -77,7 +83,7 @@ export const InternalMenuItemContent = React.forwardRef<
         darkMode={darkMode}
         showWedge
         highlighted={highlighted}
-        data-depth={depth}
+        data-depth={submenuDepth}
         className={cx(
           getMenuItemStyles({
             active,
@@ -88,7 +94,13 @@ export const InternalMenuItemContent = React.forwardRef<
           }),
 
           {
-            [getSubMenuItemStyles({ theme, parentHasIcon })]: isSubMenuItem,
+            [getNestedMenuItemStyles({
+              theme,
+              submenuDepth,
+              submenuHasIcon,
+              groupDepth,
+              groupHasIcon,
+            })]: isNested,
 
             // TODO: Remove dark-in-light mode styles
             // after https://jira.mongodb.org/browse/LG-3974
@@ -103,7 +115,7 @@ export const InternalMenuItemContent = React.forwardRef<
               &:after {
                 background-color: ${color.dark.border.secondary.default};
               }
-            `]: theme === 'light' && renderDarkMenu && depth > 0,
+            `]: theme === 'light' && renderDarkMenu && submenuDepth > 0,
           },
           className,
         )}
@@ -115,13 +127,6 @@ export const InternalMenuItemContent = React.forwardRef<
           description={description}
           rightGlyph={rightGlyph}
           preserveIconSpace={false}
-          className={cx({
-            [css`
-              position: relative;
-              padding-left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
-              border-top: 1px solid transparent;
-            `]: depth > 0,
-          })}
         >
           <div
             className={css`
