@@ -57,6 +57,10 @@ export const LiveExample = {
           <MenuItem>Habanero</MenuItem>
           <MenuItem>Ghost</MenuItem>
         </SubMenu>
+      </MenuGroup>
+      <MenuGroup title="Other">
+        <MenuItem>Lasagna</MenuItem>
+        <MenuItem>Haggis</MenuItem>
         <SubMenu title="Sweets" glyph={<Icon glyph="Warning" />}>
           <MenuItem>Jellybeans</MenuItem>
           <MenuItem>Chocolate</MenuItem>
