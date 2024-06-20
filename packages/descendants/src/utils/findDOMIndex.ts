@@ -21,6 +21,7 @@ import { isElementPreceding } from './isElementPreceding';
  * findDOMIndex(<C>, descendants) // 2 (since <B> is the closest _tracked_ DOM node preceding <C>)
  * ```
  *
+ * @internal
  */
 export function findDOMIndex<T extends HTMLElement>(
   element: T,

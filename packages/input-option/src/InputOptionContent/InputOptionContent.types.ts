@@ -22,6 +22,7 @@ export interface InputOptionContentProps extends ComponentProps<'div'> {
   rightGlyph?: React.ReactNode;
 
   /**
+   *
    * Preserves space before the text content for a left glyph.
    *
    * Use in menus where some items may or may not have icons/glyphs,
