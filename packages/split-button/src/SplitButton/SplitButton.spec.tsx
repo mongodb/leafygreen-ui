@@ -412,9 +412,9 @@ describe('packages/split-button', () => {
           label="label"
           menuItems={getMenuItems()}
         />
-        {/* @ts-expect-error - href not allowed when as is div*/}
         <SplitButton
           as="div"
+          {/* @ts-expect-error - href not allowed when as is div*/}
           href="string"
           label="label"
           menuItems={getMenuItems()}
