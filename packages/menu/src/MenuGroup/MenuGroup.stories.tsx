@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
@@ -7,8 +8,9 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 
 import { MenuItem } from '../MenuItem';
 import { SubMenu } from '../SubMenu';
+import { withMenuContext } from '../testUtils/withMenuContextDecorator';
 
-import MenuGroup from './MenuGroup';
+import { MenuGroup } from './MenuGroup';
 
 export default {
   title: 'Components/Menu/MenuGroup',
@@ -19,13 +21,18 @@ export default {
   args: {
     title: 'Group',
     glyph: 'AllProducts',
+    darkMode: false,
   },
   argTypes: {
+    darkMode: {
+      control: 'boolean',
+    },
     glyph: {
       control: 'select',
       options: [undefined, ...Object.keys(glyphs)],
     },
   },
+  decorators: [withMenuContext()],
 } satisfies StoryMetaType<typeof MenuGroup>;
 
 export const LiveExample = {
@@ -61,6 +68,19 @@ export const LiveExample = {
   parameters: {
     chromatic: {
       disableSnapshot: true,
+    },
+  },
+} satisfies StoryObj<typeof MenuGroup>;
+
+export const Generated = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        glyph: [undefined, <Icon glyph="Beaker" />],
+      },
+      decorator: withMenuContext(),
     },
   },
 } satisfies StoryObj<typeof MenuGroup>;

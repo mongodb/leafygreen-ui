@@ -40,6 +40,7 @@ export function MenuGroup({
           id={id}
           darkMode={darkMode}
           as="div"
+          role="none"
           isInteractive={false}
           className={css`
             cursor: unset;
