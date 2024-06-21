@@ -43,7 +43,7 @@ const ModalView = React.forwardRef(
   (
     {
       open = false,
-      size = ModalSize.Default,
+      size: sizeProp = ModalSize.Default,
       setOpen = () => {},
       shouldClose = () => true,
       closeIconColor = CloseIconColor.Default,
@@ -86,6 +86,9 @@ const ModalView = React.forwardRef(
       : {
           fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
         };
+
+    const allowedSize = Object.values(ModalSize).includes(sizeProp);
+    const size = allowedSize ? sizeProp : ModalSize.Default;
 
     return (
       <Transition

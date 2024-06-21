@@ -1,5 +1,18 @@
 # @leafygreen-ui/tokens
 
+## 2.9.0
+
+### Minor Changes
+
+- 29d50edaa: Adds 72px spacing token
+
+  [LG-4341](https://jira.mongodb.org/browse/LG-4341)
+
+### Patch Changes
+
+- Updated dependencies [7a901b954]
+  - @leafygreen-ui/lib@13.6.0
+
 ## 2.8.0
 
 ### Minor Changes
