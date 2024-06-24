@@ -40,6 +40,12 @@ export function MenuGroup({
   const id = useIdAllocator({ prefix: 'lg-menu-group' });
   const { depth } = useMenuGroupContext();
 
+  const shouldRenderGroupHeader = !!title;
+  const hasIcon = shouldRenderGroupHeader && !!glyph;
+  // We only indent the child items if we render a title here,
+  // otherwise we just pass through
+  const nextGroupDepth = depth + (shouldRenderGroupHeader ? 1 : 0);
+
   return (
     <section {...rest} className={className}>
       {title && (
@@ -58,7 +64,7 @@ export function MenuGroup({
           </InputOptionContent>
         </InputOption>
       )}
-      <MenuGroupProvider depth={depth + (title ? 1 : 0)} hasIcon={!!glyph}>
+      <MenuGroupProvider depth={nextGroupDepth} hasIcon={hasIcon}>
         <ul role="menu" aria-labelledby={id} className={menuGroupULStyles}>
           {children}
         </ul>
