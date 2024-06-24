@@ -69,6 +69,7 @@ export const red = {
 const palette = {
   white,
   black,
+  transparent,
   gray,
   green,
   purple,
