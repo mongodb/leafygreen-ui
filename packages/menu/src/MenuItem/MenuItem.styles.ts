@@ -1,7 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   descriptionClassName,
-  inputOptionContentClassName,
   leftGlyphClassName,
   titleClassName,
 } from '@leafygreen-ui/input-option';
@@ -132,6 +131,24 @@ export const getMenuItemStyles = ({
     },
   );
 
+export const getSubMenuItemStyles = ({
+  theme,
+  parentHasIcon,
+}: {
+  theme: Theme;
+  parentHasIcon: boolean;
+}) => css`
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+    height: 1px;
+    background-color: ${menuColor[theme].border.default};
+  }
+`;
+
 export const getMenuItemContentStyles = ({
   hasGlyph,
 }: {
@@ -142,52 +159,6 @@ export const getMenuItemContentStyles = ({
     padding-inline-start: ${spacing[300]}px;
   `}
 `;
-
-interface NestedItemStyleArgs {
-  theme: Theme;
-  submenuDepth: number;
-  groupDepth: number;
-  submenuHasIcon: boolean;
-  groupHasIcon: boolean;
-}
-
-/** Styling for nested items */
-export const getNestedMenuItemStyles = ({
-  theme,
-  submenuDepth,
-  submenuHasIcon,
-  groupDepth,
-  groupHasIcon,
-}: NestedItemStyleArgs) => {
-  const submenuInset =
-    submenuDepth * (submenuHasIcon ? spacing[1000] : spacing[300]);
-  const groupInset = groupDepth * (groupHasIcon ? spacing[600] : spacing[300]);
-  const totalInset = submenuInset + groupInset;
-
-  return cx(
-    {
-      // The inset border for submenu items
-      [css`
-        &:after {
-          content: '';
-          position: absolute;
-          top: 0;
-          right: 0;
-          left: ${totalInset}px;
-          height: 1px;
-          background-color: ${menuColor[theme].border.default};
-        }
-      `]: submenuDepth > 0,
-    },
-    css`
-      .${inputOptionContentClassName} {
-        position: relative;
-        padding-left: ${totalInset}px;
-        border-top: 1px solid transparent;
-      }
-    `,
-  );
-};
 
 // TODO: Remove dark-in-light mode styles
 // after https://jira.mongodb.org/browse/LG-3974
