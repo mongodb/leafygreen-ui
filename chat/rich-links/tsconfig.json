@@ -26,6 +26,9 @@
       "path": "../../packages/icon"
     },
     {
+      "path": "../../packages/polymorphic"
+    },
+    {
       "path": "../../packages/typography"
     },
   ]
