@@ -85,16 +85,16 @@ Ensure the custom props are wrapped in `InferredPolymorphicProps`, and use the `
 Make sure to pass both `as` and a `rest` object (that may contain `href`) into the hook.
 
 ```tsx
-export const MyInferredComponent = InferredPolymorphic<
-  InferredPolymorphicProps<MyProps>
->(({ as, ...rest }) => {
-  const { Component, ref } = useInferredPolymorphic(as, rest);
-  return (
-    <Component ref={ref} {...rest}>
-      {title}
-    </Component>
-  );
-});
+export const MyInferredComponent = InferredPolymorphic<MyProps>(
+  ({ as, ...rest }) => {
+    const { Component, ref } = useInferredPolymorphic(as, rest);
+    return (
+      <Component ref={ref} {...rest}>
+        {title}
+      </Component>
+    );
+  },
+);
 
 //
 
