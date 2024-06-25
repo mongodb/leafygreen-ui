@@ -1,5 +1,6 @@
 import React, {
   KeyboardEventHandler,
+  MouseEventHandler,
   useCallback,
   useRef,
   useState,
@@ -64,6 +65,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
     renderDarkMenu = true,
+    onClick,
+    onKeyDown,
     children,
     className,
     refEl,
@@ -117,6 +120,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     },
   );
 
+  const handleMenuClick: MouseEventHandler<HTMLDivElement> = e => {
+    // Need to stop propagation, otherwise Menu will closed automatically when clicked
+    e.stopPropagation();
+    onClick?.(e);
+  };
+
   // Callback fired when the popover transition finishes.
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
@@ -155,6 +164,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         }
         break;
     }
+    onKeyDown?.(e);
   };
 
   const popoverProps = {
@@ -194,8 +204,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           justify={justify}
           refEl={refEl}
           adjustOnMutation={adjustOnMutation}
-          // Need to stop propagation, otherwise Menu will closed automatically when clicked
-          onClick={e => e.stopPropagation()}
+          onClick={handleMenuClick}
           onKeyDown={handleKeyDown}
           onEntered={handlePopoverOpen}
           data-testid={LGIDs.root}
