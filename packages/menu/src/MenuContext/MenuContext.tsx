@@ -16,7 +16,7 @@ export interface MenuContextData {
   /** Sets the current highlight by index or id */
   setHighlight?: HighlightReducerReturnType['setHighlight'];
 
-  /** Whether to a dark menu in light mode */
+  /** Whether to render a dark menu in light mode */
   renderDarkMenu?: boolean;
 }
 

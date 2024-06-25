@@ -1,10 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import { css } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
-import { color } from '@leafygreen-ui/tokens';
 import { Overline } from '@leafygreen-ui/typography';
 
 import {
@@ -12,16 +10,20 @@ import {
   useMenuContext,
   useMenuGroupContext,
 } from '../MenuContext';
-import { menuColor } from '../styles';
 
+import {
+  getMenuGroupItemStyles,
+  getMenuGroupTitleStyles,
+  menuGroupULStyles,
+} from './MenuGroup.styles';
 import { MenuGroupProps } from './MenuGroup.types';
 
 /**
  * # MenuGroup
  *
  * ```
-<MenuGroup>
-  <MenuGroup>Hello World!</MenuGroup>
+<MenuGroup title="Hello World!">
+  <MenuItem>Item 1</MenuItem>
 </MenuGroup>
  * ```
  * @param props.children Content to appear inside of the MenuGroup.
@@ -38,6 +40,12 @@ export function MenuGroup({
   const id = useIdAllocator({ prefix: 'lg-menu-group' });
   const { depth } = useMenuGroupContext();
 
+  const shouldRenderGroupHeader = !!title;
+  const hasIcon = shouldRenderGroupHeader && !!glyph;
+  // We only indent the child items if we render a title here,
+  // otherwise we just pass through
+  const nextGroupDepth = depth + (shouldRenderGroupHeader ? 1 : 0);
+
   return (
     <section {...rest} className={className}>
       {title && (
@@ -47,31 +55,17 @@ export function MenuGroup({
           as="div"
           role="none"
           isInteractive={false}
-          className={css`
-            cursor: unset;
-            background-color: ${menuColor[theme].background.default};
-          `}
+          className={getMenuGroupItemStyles(theme)}
         >
           <InputOptionContent leftGlyph={glyph} preserveIconSpace={false}>
-            <Overline
-              className={css`
-                color: ${color[theme].text.secondary.default};
-              `}
-            >
+            <Overline className={getMenuGroupTitleStyles(theme)}>
               {title}
             </Overline>
           </InputOptionContent>
         </InputOption>
       )}
-      <MenuGroupProvider depth={depth + (title ? 1 : 0)} hasIcon={!!glyph}>
-        <ul
-          role="menu"
-          aria-labelledby={id}
-          className={css`
-            margin: 0;
-            padding: 0;
-          `}
-        >
+      <MenuGroupProvider depth={nextGroupDepth} hasIcon={hasIcon}>
+        <ul role="menu" aria-labelledby={id} className={menuGroupULStyles}>
           {children}
         </ul>
       </MenuGroupProvider>

@@ -60,7 +60,10 @@ export const InternalMenuItemContent = React.forwardRef<
       useSubMenuContext();
     const { depth: groupDepth, hasIcon: groupHasIcon } = useMenuGroupContext();
     const isNested = !!(submenuDepth || groupDepth);
-    // @ts-expect-error - highlighted isn't a prop on this component, but could be passed in from MenuItem
+
+    // @ts-expect-error
+    // highlighted isn't a prop on this component, but could be passed in from MenuItem.
+    // Generally this will not be provided, but is permitted here to support isolated visual testing in Storybook
     const forceHighlight = rest.highlighted;
     const highlighted = id === highlight?.id || forceHighlight;
 
