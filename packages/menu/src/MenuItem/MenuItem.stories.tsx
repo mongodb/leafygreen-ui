@@ -1,63 +1,15 @@
 /* eslint-disable react/jsx-key, react/display-name, react-hooks/rules-of-hooks */
-import React, { useEffect, useRef, useState } from 'react';
-import { InstanceDecorator, StoryMetaType } from '@lg-tools/storybook-utils';
+import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
-import { Descendant } from '@leafygreen-ui/descendants';
-import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
-import { Theme } from '@leafygreen-ui/lib';
 
-import { Menu, MenuProps } from '../Menu';
-import { MenuContext } from '../MenuContext';
+import { MenuProps } from '../Menu';
+import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils';
 import { Size } from '../types';
 
 import { MenuItem, Variant } from '.';
-
-/** Implements a MenuContext wrapper around each `MenuItem` */
-const _withMenuContext =
-  (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
-    const {
-      args: { darkMode: darkModeProp, renderDarkMenu, highlighted, ...props },
-    } = ctx ?? {
-      args: {
-        darkMode: false,
-        renderDarkMenu: false,
-        highlighted: false,
-      },
-    };
-
-    const ref = useRef<HTMLButtonElement>(null);
-    const [testDescendant, setTestDescendant] = useState<Descendant>();
-    useEffect(() => {
-      setTestDescendant({
-        ref,
-        element: ref.current,
-        id: ref?.current?.getAttribute('data-id'),
-        index: Number(ref?.current?.getAttribute('data-index')),
-      } as Descendant);
-    }, []);
-    const darkMode = (renderDarkMenu || darkModeProp) ?? false;
-    const theme = darkMode ? Theme.Dark : Theme.Light;
-
-    return (
-      <MenuContext.Provider
-        value={{
-          highlight: highlighted ? testDescendant : undefined,
-          darkMode,
-          theme,
-        }}
-      >
-        <ul
-          className={css`
-            width: 256px;
-          `}
-        >
-          <MenuItem ref={ref} {...props} />
-        </ul>
-      </MenuContext.Provider>
-    );
-  };
 
 export default {
   title: 'Components/Menu/MenuItem',
@@ -80,7 +32,7 @@ export default {
       combineArgs: {
         darkMode: [false, true],
       },
-      decorator: _withMenuContext(),
+      decorator: withMenuContext(),
     },
   },
 } satisfies StoryMetaType<typeof MenuItem, Partial<MenuProps>>;
@@ -111,7 +63,7 @@ export const LiveExample = {
       {children}
     </MenuItem>
   ),
-  decorators: [_withMenuContext()],
+  decorators: [withMenuContext()],
   parameters: {
     chromatic: {
       disableSnapshot: true,
