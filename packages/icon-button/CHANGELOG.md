@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.22
+
+### Patch Changes
+
+- a94306ab3: Changes hover state of IconButton components
+
 ## 15.0.21
 
 ### Patch Changes

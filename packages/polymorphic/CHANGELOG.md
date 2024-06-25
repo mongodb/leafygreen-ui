@@ -1,5 +1,28 @@
 # @leafygreen-ui/polymorphic
 
+## 2.0.1
+
+### Patch Changes
+
+- ef158d904: - `PolymorphicRef` extends `null`
+  - `PolymorphicProps` extends `ComponentPropsWithRef`
+  - Adds type specs for refs and event handlers
+
+## 2.0.0
+
+### Major Changes
+
+- 7a901b954: - Updates `InferredPolymorphicProps` to avoid errors when providing a generically typed as prop
+  - adds type tests for `Polymorphic` and `InferredPolymorphic`
+  - Adds `useInferredPolymorphicProps` utility for nested inferred polymorphic components
+  - Updates the return type of `useInferredPolymorphic` to match a generic `InferredPolymorphicProps`
+  - Adds `hasAnchorProps` type guard
+
+### Patch Changes
+
+- Updated dependencies [7a901b954]
+  - @leafygreen-ui/lib@13.6.0
+
 ## 1.3.7
 
 ### Patch Changes

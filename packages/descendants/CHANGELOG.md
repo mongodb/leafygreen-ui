@@ -1,5 +1,11 @@
 # @leafygreen-ui/descendants
 
+## 0.2.0
+
+### Minor Changes
+
+- 659aa9eed: Adds `getDescendants` accessor function, returned from `useInitDescendants`. Use this method when referencing descendants from withing effects/callbacks where the `descendants` object may have updated, and could be stale.
+
 ## 0.1.1
 
 ### Patch Changes
