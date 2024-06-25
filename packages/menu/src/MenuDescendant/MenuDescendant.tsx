@@ -1,35 +1,31 @@
-import React, { PropsWithChildren, ReactElement } from 'react';
+import React, { ComponentPropsWithRef, ReactElement } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import { css } from '@leafygreen-ui/emotion';
-import { InputOption } from '@leafygreen-ui/input-option';
+import { cx } from '@leafygreen-ui/emotion';
 
 import { MenuDescendantsContext, useMenuContext } from '../MenuContext';
-import { menuColor } from '../styles';
+
+import { getMenuDescendantWrapperStyles } from './MenuDescendant.styles';
 
 export const MenuDescendant = React.forwardRef<
   HTMLElement,
-  PropsWithChildren<{}>
->(({ children }, fwdRef) => {
+  ComponentPropsWithRef<'div'>
+>(({ children, className, ...rest }, fwdRef) => {
   const { theme } = useMenuContext();
   const { ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {});
   const child = React.Children.only(children) as ReactElement;
 
   return child ? (
-    <InputOption
+    <div
       id={id}
-      as="div"
-      isInteractive={false}
-      className={css`
-        cursor: unset;
-        background-color: ${menuColor[theme].background.default};
-      `}
+      className={cx(getMenuDescendantWrapperStyles(theme))}
+      {...rest}
     >
       {React.cloneElement(child, {
         ref,
       })}
-    </InputOption>
+    </div>
   ) : null;
 });
 
