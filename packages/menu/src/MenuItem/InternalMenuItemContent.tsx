@@ -7,18 +7,15 @@ import {
   PolymorphicAs,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { color } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
-import {
-  useMenuContext,
-  useMenuGroupContext,
-  useSubMenuContext,
-} from '../MenuContext';
+import { useMenuContext } from '../MenuContext';
+import { useSubMenuContext } from '../SubMenu';
 
 import {
   getDarkInLightModeMenuItemStyles,
   getMenuItemStyles,
-  getNestedMenuItemStyles,
+  getSubMenuItemStyles,
 } from './MenuItem.styles';
 import { MenuItemProps, Variant } from './MenuItem.types';
 
@@ -56,16 +53,9 @@ export const InternalMenuItemContent = React.forwardRef<
     const { as } = useInferredPolymorphic(asProp, rest, 'button');
 
     const { theme, darkMode, highlight, renderDarkMenu } = useMenuContext();
-    const { depth: submenuDepth, hasIcon: submenuHasIcon } =
-      useSubMenuContext();
-    const { depth: groupDepth, hasIcon: groupHasIcon } = useMenuGroupContext();
-    const isNested = !!(submenuDepth || groupDepth);
-
-    // @ts-expect-error
-    // highlighted isn't a prop on this component, but could be passed in from MenuItem.
-    // Generally this will not be provided, but is permitted here to support isolated visual testing in Storybook
-    const forceHighlight = rest.highlighted;
-    const highlighted = id === highlight?.id || forceHighlight;
+    const { depth, hasIcon: parentHasIcon } = useSubMenuContext();
+    const isSubMenuItem = depth > 0;
+    const highlighted = id === highlight?.id;
 
     const defaultAnchorProps =
       as === 'a'
@@ -88,7 +78,7 @@ export const InternalMenuItemContent = React.forwardRef<
         darkMode={darkMode}
         showWedge
         highlighted={highlighted}
-        data-depth={submenuDepth}
+        data-depth={depth}
         className={cx(
           getMenuItemStyles({
             active,
@@ -99,13 +89,7 @@ export const InternalMenuItemContent = React.forwardRef<
           }),
 
           {
-            [getNestedMenuItemStyles({
-              theme,
-              submenuDepth,
-              submenuHasIcon,
-              groupDepth,
-              groupHasIcon,
-            })]: isNested,
+            [getSubMenuItemStyles({ theme, parentHasIcon })]: isSubMenuItem,
 
             // TODO: Remove dark-in-light mode styles
             // after https://jira.mongodb.org/browse/LG-3974
@@ -120,7 +104,7 @@ export const InternalMenuItemContent = React.forwardRef<
               &:after {
                 background-color: ${color.dark.border.secondary.default};
               }
-            `]: theme === 'light' && renderDarkMenu && submenuDepth > 0,
+            `]: theme === 'light' && renderDarkMenu && depth > 0,
           },
           className,
         )}
@@ -132,6 +116,13 @@ export const InternalMenuItemContent = React.forwardRef<
           description={description}
           rightGlyph={rightGlyph}
           preserveIconSpace={false}
+          className={cx({
+            [css`
+              position: relative;
+              padding-left: ${parentHasIcon ? spacing[900] : spacing[600]}px;
+              border-top: 1px solid transparent;
+            `]: depth > 0,
+          })}
         >
           <div
             className={css`

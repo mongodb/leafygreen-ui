@@ -20,14 +20,7 @@ import { TestUtils } from '@leafygreen-ui/popover';
 const { getAlign, getJustify } = TestUtils;
 
 import { Size } from './types';
-import {
-  Menu,
-  MenuGroup,
-  MenuItem,
-  MenuProps,
-  MenuSeparator,
-  SubMenu,
-} from '.';
+import { Menu, MenuItem, MenuProps, MenuSeparator, SubMenu } from '.';
 
 const getDecoratorStyles = (args: Partial<MenuProps>) => {
   return css`
@@ -72,7 +65,7 @@ export default {
     align: 'bottom',
     usePortal: true,
     darkMode: false,
-    renderDarkMenu: false,
+    renderDarkMenu: true,
   },
   argTypes: {
     open: {
@@ -141,13 +134,14 @@ export const LiveExample = {
           Delete
         </MenuItem>
         <MenuSeparator />
-        <MenuGroup title="Lorem Ipsum">
-          <MenuItem>Lorem</MenuItem>
-          <MenuItem>Ipsum</MenuItem>
-          <MenuItem>Dolor</MenuItem>
-          <MenuItem>Sit</MenuItem>
-          <MenuItem>Amet</MenuItem>
-        </MenuGroup>
+        <MenuItem>Lorem</MenuItem>
+        <MenuItem>Ipsum</MenuItem>
+        <MenuItem>Adipiscing</MenuItem>
+        <MenuItem>Cursus</MenuItem>
+        <MenuItem>Ullamcorper</MenuItem>
+        <MenuItem>Vulputate</MenuItem>
+        <MenuItem>Inceptos</MenuItem>
+        <MenuItem>Risus</MenuItem>
       </Menu>
     );
   },
