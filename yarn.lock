@@ -3778,6 +3778,16 @@
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/polymorphic/-/polymorphic-1.3.7.tgz#befd1ae4a7e764ff3356a1bbfc63bb08b8a99198"
   integrity sha512-Tr2TmpS0YFJ3hGNbVWQpeseJRo4kTrVumVlZ4aF4hId1JYDzF0TU5JJO40v+brhbgnKsyBu7+Rvz6ExY1NcKew==
 
+"@leafygreen-ui/testing-lib@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/testing-lib/-/testing-lib-0.5.0.tgz#5a78bee24093f4422618343212621f6c87a70aed"
+  integrity sha512-CDknZmrQZWnguaC3tMX6v6eiIfmbKwgatFKS5wms/nyFpLZB6sncAGgBDGZ8P+AvEMK027pTbJTmxEH+ULiUmQ==
+  dependencies:
+    "@testing-library/user-event" "13.5.0"
+    lodash "^4.17.21"
+  optionalDependencies:
+    "@testing-library/react-hooks" ">=3.7.0"
+
 "@leafygreen-ui/typography@^18.4.0":
   version "18.4.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/typography/-/typography-18.4.0.tgz#d157bc2fa64eb72f6d0baf86385575e60454c522"

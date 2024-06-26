@@ -1,4 +1,4 @@
-import { FocusEventHandler, ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 import { Size } from '../types';
 
@@ -55,9 +55,4 @@ export interface MenuItemProps {
    */
   // TODO: codemod to remove `size` props from existing implementations
   size?: Size;
-}
-
-export interface FocusableMenuItemProps {
-  children: ReactElement;
-  onFocus?: FocusEventHandler;
 }
