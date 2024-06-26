@@ -4,7 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 import { menuColor } from '../styles';
 
-export const getMenuDescendantWrapperStyles = (theme: Theme) => css`
+export const getFocusableMenuItemWrapperStyles = (theme: Theme) => css`
   padding: ${spacing[100]}px;
   cursor: unset;
   background-color: ${menuColor[theme].background.default};

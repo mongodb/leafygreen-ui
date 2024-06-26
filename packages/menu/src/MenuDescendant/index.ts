@@ -1,1 +1,0 @@
-export { MenuDescendant } from './MenuDescendant';

@@ -9,11 +9,11 @@ import TextInput from '@leafygreen-ui/text-input';
 import { Menu } from '../Menu';
 import { MenuItem } from '../MenuItem';
 
-import { MenuDescendant } from './MenuDescendant';
+import { FocusableMenuItem } from './FocusableMenuItem';
 
 export default {
-  title: 'Components/Menu/Menu Descendant',
-  component: MenuDescendant,
+  title: 'Components/Menu/FocusableMenuItem',
+  component: FocusableMenuItem,
   parameters: {
     default: null,
   },
@@ -25,15 +25,15 @@ export default {
       control: 'boolean',
     },
   },
-} satisfies StoryMetaType<typeof MenuDescendant>;
+} satisfies StoryMetaType<typeof FocusableMenuItem>;
 
 export const LiveExample = {
   render: () => {
     return (
       <Menu initialOpen trigger={<Button>Menu</Button>} renderDarkMenu={false}>
-        <MenuDescendant>
+        <FocusableMenuItem>
           <TextInput aria-label="Test" placeholder="Input" />
-        </MenuDescendant>
+        </FocusableMenuItem>
         <MenuItem>Apple</MenuItem>
       </Menu>
     );
@@ -43,4 +43,4 @@ export const LiveExample = {
       disableSnapshot: true,
     },
   },
-} satisfies StoryObj<typeof MenuDescendant>;
+} satisfies StoryObj<typeof FocusableMenuItem>;

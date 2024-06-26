@@ -6,33 +6,31 @@ import { cx } from '@leafygreen-ui/emotion';
 
 import { MenuDescendantsContext, useMenuContext } from '../MenuContext';
 
-import { getMenuDescendantWrapperStyles } from './MenuDescendant.styles';
+import { getFocusableMenuItemWrapperStyles } from './FocusableMenuItem.styles';
 
 /**
  * Renders arbitrary focusable components as descendants in a menu context.
  *
- * By wrapping a single focusable component in `MenuDescendant`,
+ * By wrapping a single focusable component in `FocusableMenuItem`,
  * it will be registered as a menu item descendant,
  * and will be focusable using standard menu arrow key interactions.
  *
- * Note: the single child of `MenuDescendant` must _itself_ be focusable.
+ * Note: the single child of `FocusableMenuItem` must _itself_ be focusable.
  * Wrapping a focusable element (e.g. `input` in a `div`)
- * will not enable the menu descendant functionality.
+ * will not enable menu descendant functionality.
+ *
+ * @internal
  */
-export const MenuDescendant = React.forwardRef<
+export const FocusableMenuItem = React.forwardRef<
   HTMLElement,
   ComponentPropsWithRef<'div'>
 >(({ children, className, ...rest }, fwdRef) => {
   const { theme } = useMenuContext();
-  const { ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {});
+  const { ref } = useDescendant(MenuDescendantsContext, fwdRef, {});
   const child = React.Children.only(children) as ReactElement;
 
   return child ? (
-    <div
-      id={id}
-      className={cx(getMenuDescendantWrapperStyles(theme))}
-      {...rest}
-    >
+    <div className={cx(getFocusableMenuItemWrapperStyles(theme))} {...rest}>
       {React.cloneElement(child, {
         ref,
       })}
@@ -40,7 +38,10 @@ export const MenuDescendant = React.forwardRef<
   ) : null;
 });
 
-MenuDescendant.displayName = 'MenuDescendant';
-MenuDescendant.propTypes = {
-  children: PropTypes.node,
+FocusableMenuItem.displayName = 'FocusableMenuItem';
+
+FocusableMenuItem.propTypes = {
+  children: PropTypes.element.isRequired,
 };
+
+export default FocusableMenuItem;
