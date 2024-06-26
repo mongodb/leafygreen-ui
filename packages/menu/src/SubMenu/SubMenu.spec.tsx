@@ -114,6 +114,14 @@ describe('packages/sub-menu', () => {
         expect(onClick).toHaveBeenCalled();
       });
 
+      test('onClick is NOT fired when disabled', async () => {
+        const onClick = jest.fn();
+        const { getByTestId } = renderSubMenu({ onClick, disabled: true });
+        const subMenu = getByTestId(subMenuTestId);
+        userEvent.click(subMenu);
+        expect(onClick).not.toHaveBeenCalled();
+      });
+
       test('onClick is fired if an href is provided', async () => {
         const onClick = jest.fn();
         const { getByTestId } = renderSubMenu({
