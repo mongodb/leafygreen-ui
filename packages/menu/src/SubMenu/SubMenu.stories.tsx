@@ -51,4 +51,9 @@ export const LiveExample = {
     title: 'Sub menu',
     description: 'This is a description',
   },
+  parameters: {
+    chromatic: {
+      disableSnapshots: true,
+    },
+  },
 } satisfies StoryObj<typeof SubMenu>;
