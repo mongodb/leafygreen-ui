@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
@@ -14,13 +14,18 @@ import { MenuItemProps } from './MenuItem.types';
 
 export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   (
-    { as, disabled = false, active = false, ...rest },
+    { as, disabled = false, active = false, onClick, ...rest },
     fwdRef: React.Ref<any>,
   ) => {
     const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
     });
+
+    const handleClick: MouseEventHandler = e => {
+      if (disabled) return;
+      onClick?.(e);
+    };
 
     return (
       <li
@@ -37,6 +42,7 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
           active={active}
           disabled={disabled}
           data-id={id}
+          onClick={handleClick}
           {...rest}
         />
       </li>

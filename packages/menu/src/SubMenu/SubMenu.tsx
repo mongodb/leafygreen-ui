@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import { Transition } from 'react-transition-group';
 import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
+import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
@@ -76,6 +77,16 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       setOpenProp,
     );
 
+    const toggleMenu = (state?: boolean) => {
+      if (disabled) return;
+
+      if (!isUndefined(state)) {
+        setOpen(state);
+      } else {
+        setOpen(x => !x);
+      }
+    };
+
     // Regardless of the `open` state,
     // if `active` has been toggled true,
     // we open the menu
@@ -93,21 +104,23 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     const handleClick: MouseEventHandler = e => {
       if (onClick || rest.href) {
-        onClick?.(e);
+        if (!disabled) {
+          onClick?.(e);
+        }
       } else {
-        setOpen(x => !x);
+        toggleMenu();
       }
     };
 
     const handleKeydown: KeyboardEventHandler = e => {
       switch (e.key) {
         case keyMap.ArrowLeft: {
-          setOpen(false);
+          toggleMenu(false);
           break;
         }
 
         case keyMap.ArrowRight: {
-          setOpen(true);
+          toggleMenu(true);
           break;
         }
       }
@@ -120,7 +133,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       e.nativeEvent.stopImmediatePropagation();
       e.stopPropagation();
 
-      setOpen(x => !x);
+      toggleMenu();
     };
 
     // When the submenu has opened
