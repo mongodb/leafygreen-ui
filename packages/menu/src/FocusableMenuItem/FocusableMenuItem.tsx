@@ -32,6 +32,7 @@ export const FocusableMenuItem = React.forwardRef<
   return child ? (
     <div
       className={cx(getFocusableMenuItemWrapperStyles(theme), className)}
+      role="menuitem"
       {...rest}
     >
       {React.cloneElement(child, {
