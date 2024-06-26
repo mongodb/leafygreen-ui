@@ -96,6 +96,17 @@ describe('packages/sub-menu', () => {
         });
       });
 
+      test('clicking the submenu DOES NOT open it is disabled', async () => {
+        const { getByTestId, queryByTestId } = renderSubMenu({
+          disabled: true,
+        });
+        const subMenu = getByTestId(subMenuTestId);
+        userEvent.click(subMenu);
+        await waitFor(() => {
+          expect(queryByTestId(menuItem1Id)).not.toBeInTheDocument();
+        });
+      });
+
       test('clicking the submenu DOES NOT open it if a click handler is provided', async () => {
         const onClick = jest.fn();
         const { getByTestId, queryByTestId } = renderSubMenu({ onClick });
