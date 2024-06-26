@@ -104,7 +104,9 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     const handleClick: MouseEventHandler = e => {
       if (onClick || rest.href) {
-        onClick?.(e);
+        if (!disabled) {
+          onClick?.(e);
+        }
       } else {
         toggleMenu();
       }
