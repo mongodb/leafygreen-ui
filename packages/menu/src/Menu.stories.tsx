@@ -19,7 +19,6 @@ import { TestUtils } from '@leafygreen-ui/popover';
 
 const { getAlign, getJustify } = TestUtils;
 
-import { Size } from './types';
 import {
   Menu,
   MenuGroup,
@@ -56,12 +55,13 @@ export default {
     controls: {
       exclude: [
         ...storybookExcludedControlParams,
-        'trigger',
+        'as',
         'children',
         'refEl',
-        'setOpen',
-        'as',
         'portalRef',
+        'setOpen',
+        'size',
+        'trigger',
         'usePortal',
       ],
     },
@@ -78,12 +78,6 @@ export default {
   argTypes: {
     open: {
       control: 'boolean',
-    },
-    size: {
-      options: Object.values(Size),
-      control: 'select',
-      description:
-        'Size of the `MenuItem` component, can be `default` or `large`',
     },
     darkMode: storybookArgTypes.darkMode,
     renderDarkMenu: {
