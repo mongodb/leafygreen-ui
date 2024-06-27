@@ -18,7 +18,6 @@ import { ComboboxSize } from '../types';
 export const comboboxOptionSizeStyle = (size: ComboboxSize) => css`
   font-size: ${fontSize[size]}px;
   line-height: ${lineHeight[size]}px;
-  min-height: ${getMenuItemHeight(size)}px;
   padding: ${menuItemPadding[size].y}px ${menuItemPadding[size].x}px;
   gap: ${spacing[1]}px;
 

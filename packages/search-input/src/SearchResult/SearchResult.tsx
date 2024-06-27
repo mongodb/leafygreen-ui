@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { InputOption } from '@leafygreen-ui/input-option';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
@@ -56,12 +56,15 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}
       >
-        <div className={titleClassName}>{children}</div>
+        {/* <div className={titleClassName}>{children}</div>
         {description && (
           <div className={cx(descriptionClassName, descriptionStyle)}>
             {description}
           </div>
-        )}
+        )} */}
+        <InputOptionContent description={description} preserveIconSpace={false}>
+          <strong>{children}</strong>
+        </InputOptionContent>
       </InputOption>
     );
   },

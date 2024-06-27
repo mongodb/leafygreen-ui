@@ -18,7 +18,7 @@ export const searchResultStyles = css`
   font-family: ${fontFamilies.default};
   font-size: ${typeScales.body1.fontSize}px;
   line-height: ${spacing[3]}px;
-  padding: ${spacing[1]}px ${spacing[3]}px;
+  // padding: ${spacing[1]}px ${spacing[3]}px;
 
   & .${titleClassName} {
     font-weight: ${fontWeights.bold};
