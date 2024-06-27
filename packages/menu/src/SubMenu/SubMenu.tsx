@@ -126,6 +126,11 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       }
     };
 
+    const handleToggleMouseDown: MouseEventHandler<HTMLButtonElement> = e => {
+      // Prevent focus from moving to the toggle button when clicked
+      e.preventDefault();
+    };
+
     const handleToggleClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent links from navigating
       e.preventDefault();
@@ -138,7 +143,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     // When the submenu has opened
     const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
-      // this element should be highlighted
+      // if this element should be highlighted
       if (descendantId === highlight?.id) {
         // ensure this element is still focused after transitioning
         descendantRef.current?.focus();
@@ -155,8 +160,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       const currentHighlightElement = highlight?.ref?.current;
 
       if (currentHighlightElement) {
+        // When we close the submenu,
         // if one of this submenu's children is highlighted
-        // and we close the submenu,
         // then focus the main submenu item
         const doesSubmenuContainCurrentHighlight =
           submenuRef?.current?.contains(currentHighlightElement);
@@ -170,7 +175,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     // When the submenu has closed
     const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
-      // When the submenu closes, ensure the focus is on the correct element
+      // When the submenu closes,
+      // ensure the focus is on the correct element
       highlight?.ref?.current?.focus();
       onExited?.();
     };
@@ -203,6 +209,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             ref={submenuTriggerRef}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             onClick={handleToggleClick}
+            onMouseDownCapture={handleToggleMouseDown}
             className={cx(
               subMenuToggleClassName,
               getSubmenuToggleStyles(theme),
