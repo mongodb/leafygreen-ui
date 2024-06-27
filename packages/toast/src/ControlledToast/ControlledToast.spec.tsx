@@ -69,6 +69,22 @@ describe('packages/toast/controlled', () => {
       expect(toast).toBeInTheDocument();
     });
 
+    test('handles rerender when `open` is true without hanging', async () => {
+      const { findByTestId, rerender } = render(
+        <Toast open title="Test Rerender" data-testid="test-toast-rerender" />,
+        {
+          wrapper: ({ children }) => <ToastProvider>{children}</ToastProvider>,
+        },
+      );
+
+      rerender(
+        <Toast open title="Test Rerender" data-testid="test-toast-rerender" />,
+      );
+
+      const toast = await findByTestId('test-toast-rerender');
+      expect(toast).toBeInTheDocument();
+    });
+
     test('does not render when `open` is true and component is unmounted', async () => {
       const { queryByTestId } = render(
         <ToastProvider>
