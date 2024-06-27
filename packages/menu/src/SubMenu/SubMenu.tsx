@@ -31,10 +31,10 @@ import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
   getSubmenuListStyles,
+  getSubmenuToggleStyles,
   subMenuContainerClassName,
   subMenuContainerStyles,
   subMenuToggleClassName,
-  submenuToggleStyles,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
 import { useChildrenHeight } from './useChildrenHeight';
@@ -60,7 +60,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
-    const { highlight, setHighlight } = useMenuContext();
+    const { highlight, setHighlight, theme } = useMenuContext();
     const {
       index: descendantIndex,
       ref: descendantRef,
@@ -203,7 +203,10 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             ref={submenuTriggerRef}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             onClick={handleToggleClick}
-            className={cx(subMenuToggleClassName, submenuToggleStyles)}
+            className={cx(
+              subMenuToggleClassName,
+              getSubmenuToggleStyles(theme),
+            )}
           >
             <ChevronIcon role="presentation" />
           </IconButton>

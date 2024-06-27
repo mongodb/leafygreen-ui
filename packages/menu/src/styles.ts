@@ -36,6 +36,7 @@ export const menuColor = {
       [MenuInteractionState.Default]: palette.gray.dark1,
       [MenuInteractionState.Active]: palette.green.dark1,
       [MenuInteractionState.Focus]: color.light.icon.primary.focus,
+      [MenuInteractionState.Hover]: palette.gray.dark2,
     },
   },
   [Theme.Dark]: {
@@ -59,6 +60,7 @@ export const menuColor = {
       [MenuInteractionState.Default]: palette.gray.light1,
       [MenuInteractionState.Active]: palette.green.base,
       [MenuInteractionState.Focus]: color.dark.icon.primary.focus,
+      [MenuInteractionState.Hover]: palette.gray.light2,
     },
   },
 } as const satisfies RecursiveRecord<
