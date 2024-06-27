@@ -31,10 +31,10 @@ import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
   getSubmenuListStyles,
+  getSubmenuToggleStyles,
   subMenuContainerClassName,
   subMenuContainerStyles,
   subMenuToggleClassName,
-  submenuToggleStyles,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
 import { useChildrenHeight } from './useChildrenHeight';
@@ -60,7 +60,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
     const { active, disabled } = rest;
 
-    const { highlight, setHighlight } = useMenuContext();
+    const { highlight, setHighlight, theme } = useMenuContext();
     const {
       index: descendantIndex,
       ref: descendantRef,
@@ -126,6 +126,11 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       }
     };
 
+    const handleToggleMouseDown: MouseEventHandler<HTMLButtonElement> = e => {
+      // Prevent focus from moving to the toggle button when clicked
+      e.preventDefault();
+    };
+
     const handleToggleClick: MouseEventHandler<HTMLButtonElement> = e => {
       // Prevent links from navigating
       e.preventDefault();
@@ -138,7 +143,7 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     // When the submenu has opened
     const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
-      // this element should be highlighted
+      // if this element should be highlighted
       if (descendantId === highlight?.id) {
         // ensure this element is still focused after transitioning
         descendantRef.current?.focus();
@@ -155,8 +160,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
       const currentHighlightElement = highlight?.ref?.current;
 
       if (currentHighlightElement) {
+        // When we close the submenu,
         // if one of this submenu's children is highlighted
-        // and we close the submenu,
         // then focus the main submenu item
         const doesSubmenuContainCurrentHighlight =
           submenuRef?.current?.contains(currentHighlightElement);
@@ -170,7 +175,8 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 
     // When the submenu has closed
     const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
-      // When the submenu closes, ensure the focus is on the correct element
+      // When the submenu closes,
+      // ensure the focus is on the correct element
       highlight?.ref?.current?.focus();
       onExited?.();
     };
@@ -203,7 +209,11 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             ref={submenuTriggerRef}
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             onClick={handleToggleClick}
-            className={cx(subMenuToggleClassName, submenuToggleStyles)}
+            onMouseDownCapture={handleToggleMouseDown}
+            className={cx(
+              subMenuToggleClassName,
+              getSubmenuToggleStyles(theme),
+            )}
           >
             <ChevronIcon role="presentation" />
           </IconButton>
