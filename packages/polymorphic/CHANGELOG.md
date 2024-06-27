@@ -1,5 +1,13 @@
 # @leafygreen-ui/polymorphic
 
+## 2.0.1
+
+### Patch Changes
+
+- ef158d904: - `PolymorphicRef` extends `null`
+  - `PolymorphicProps` extends `ComponentPropsWithRef`
+  - Adds type specs for refs and event handlers
+
 ## 2.0.0
 
 ### Major Changes
