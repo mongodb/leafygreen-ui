@@ -102,7 +102,7 @@ export const getInputOptionWedge = ({
     top: 50%;
     width: ${wedgeWidth}px;
     height: calc(100% - ${2 * wedgePaddingY}px);
-    min-height: ${spacing[3]}px;
+    min-height: ${spacing[600]}px;
     background-color: rgba(255, 255, 255, 0);
     border-radius: 0 6px 6px 0;
     transform: scale3d(0, 0.3, 0) translateY(-50%);
