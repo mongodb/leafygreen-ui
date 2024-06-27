@@ -1,0 +1,42 @@
+  
+{
+  "name": "@lg-private/vertical-stepper",
+  "version": "0.0.1",
+  "description": "LeafyGreen UI Kit Vertical Stepper",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/button": "^21.2.1",
+    "@leafygreen-ui/descendants": "^0.2.0",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^12.5.4",
+    "@leafygreen-ui/lib": "^13.6.0",
+    "@leafygreen-ui/palette": "^4.0.10",
+    "@leafygreen-ui/tokens": "^2.9.0",
+    "@leafygreen-ui/typography": "^19.2.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+  },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  },
+  "homepage": "https://github.com/10gen/leafygreen-ui-private/tree/main/packages/vertical-stepper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/10gen/leafygreen-ui-private"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
