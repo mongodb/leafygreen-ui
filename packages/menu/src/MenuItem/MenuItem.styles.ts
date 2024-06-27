@@ -161,7 +161,7 @@ export const getNestedMenuItemStyles = ({
 }: NestedItemStyleArgs) => {
   const baseSubmenuInset = submenuHasIcon ? spacing[900] : spacing[300]; // item start should be aligned with the label of the submenu
   const submenuInset = submenuDepth * baseSubmenuInset;
-  const baseGroupInset = groupHasIcon ? spacing[600] : spacing[300]; // item start should align with the group label (with icon)
+  const baseGroupInset = groupHasIcon ? spacing[600] : 0; // item start should align with the group label (with icon)
   const groupInset = groupDepth * baseGroupInset;
   const totalInset = submenuInset + groupInset;
 
