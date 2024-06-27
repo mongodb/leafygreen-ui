@@ -23,7 +23,7 @@ export const withMenuContext =
       },
     };
 
-    const darkMode = (renderDarkMenu || darkModeProp) ?? false;
+    const darkMode = darkModeProp ?? false;
     const theme = darkMode ? Theme.Dark : Theme.Light;
 
     return (
@@ -36,6 +36,7 @@ export const withMenuContext =
           value={{
             darkMode,
             theme,
+            renderDarkMenu,
           }}
         >
           <Instance />
