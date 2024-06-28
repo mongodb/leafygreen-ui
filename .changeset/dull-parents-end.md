@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/menu': minor
+'@leafygreen-ui/menu': major
 ---
 
 - Updates the `FocusableMenuItem` component for new menu descendants pattern. By wrapping an input component in `FocusableMenuItem`, it will be registered as a menu item descendant, and will be focusable using standard menu arrow key interactions.
