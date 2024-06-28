@@ -144,33 +144,34 @@ export function InternalOption({
         OptionClassName,
         optionStyle,
         // FIXME: temps styles until styles are consistent with InputOption
-        {
-          [css`
-            &:focus-visible {
-              color: ${colorSet.text.focused};
-              background-color: ${colorSet.background.focused};
+        // {
+        //   [css`
+        //     &:focus-visible {
+        //       color: ${colorSet.text.focused};
+        //       background-color: ${colorSet.background.focused};
 
-              &:before {
-                opacity: 1;
-                transform: scaleY(1);
-                background-color: ${colorSet.indicator.focused};
-              }
-            }
-          `]: !disabled,
-          // FIXME: override the disabled colors since they are not consistent with InputOption
-          [css`
-            &,
-            & .${descriptionClassName} {
-              color: ${colorSet.text.disabled};
-            }
-          `]: disabled,
-        },
+        //       &:before {
+        //         opacity: 1;
+        //         transform: scaleY(1);
+        //         background-color: ${colorSet.indicator.focused};
+        //       }
+        //     }
+        //   `]: !disabled,
+        //   // FIXME: override the disabled colors since they are not consistent with InputOption
+        //   [css`
+        //     &,
+        //     & .${descriptionClassName} {
+        //       color: ${colorSet.text.disabled};
+        //     }
+        //   `]: disabled,
+        // },
         className,
       )}
       onClick={onClick}
       onFocus={onFocus}
       onKeyDown={undefined}
       checked={selected}
+      highlighted={focused}
     >
       <InputOptionContent
         leftGlyph={leftGlyph}
