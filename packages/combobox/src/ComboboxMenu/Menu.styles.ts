@@ -66,7 +66,6 @@ export const menuThemeStyle: Record<Theme, string> = {
 
 export const getMenuThemeStyles = (theme: Theme) => css`
   background-color: ${color[theme].background.primary.default};
-  // border: 1px solid ${color[theme].border.secondary.default};
 `;
 
 export const menuList = css`
