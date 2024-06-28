@@ -254,6 +254,19 @@ MultiSelect.parameters = {
   },
 };
 
+export const MultiSelectNoIcons: StoryFn<ComboboxProps<boolean>> = (
+  args: ComboboxProps<boolean>,
+) => {
+  return (
+    <Combobox {...args} multiselect={true}>
+      {getComboboxOptions(false)}
+    </Combobox>
+  );
+};
+MultiSelectNoIcons.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const DisabledInput = () => <></>;
 DisabledInput.args = {
   disabled: true,

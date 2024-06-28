@@ -15,7 +15,7 @@ const meta: StoryMetaType<typeof InternalComboboxOption> = {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['WithIcons', 'WithoutIcons'],
+      storyNames: ['WithIcons', 'WithoutIcons', 'WithoutIconsandMultipStep'],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -64,6 +64,34 @@ WithIcons.parameters = {
       /// @ts-expect-error - withIcons is not a component prop
       withIcons: true,
       glyph: <Icon glyph="Cloud" />,
+    },
+  },
+};
+
+export const WithoutIconsandMultipStep: StoryType<
+  typeof InternalComboboxOption
+> = () => <></>;
+WithoutIconsandMultipStep.parameters = {
+  generate: {
+    decorator: (Instance, context) => {
+      return (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <ComboboxContext.Provider
+            value={{
+              ...defaultContext,
+              withIcons: context?.args.withIcons,
+              multiselect: true,
+            }}
+          >
+            <Instance glyph={context?.args.glyph} />
+          </ComboboxContext.Provider>
+        </LeafyGreenProvider>
+      );
+    },
+    args: {
+      /// @ts-expect-error - withIcons is not a component prop
+      withIcons: false,
+      glyph: undefined,
     },
   },
 };
