@@ -7,12 +7,9 @@ import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import {
-  descriptionClassName,
-  descriptionStyle,
   searchResultDisabledStyle,
   searchResultStyles,
   searchResultThemeStyles,
-  titleClassName,
 } from './SearchResult.styles';
 import { SearchResultProps } from './SearchResult.types';
 

@@ -62,7 +62,10 @@ export const InputOptionContent = ({
       )}
       <div className={textContainerStyles}>
         <div
-          className={cx(titleClassName, getTitleStyles({ theme, highlighted }))}
+          className={cx(
+            titleClassName,
+            getTitleStyles({ theme, highlighted, disabled }),
+          )}
         >
           {children}
         </div>

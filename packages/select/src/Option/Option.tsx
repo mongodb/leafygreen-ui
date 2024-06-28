@@ -170,6 +170,7 @@ export function InternalOption({
       onClick={onClick}
       onFocus={onFocus}
       onKeyDown={undefined}
+      checked={selected}
     >
       <InputOptionContent
         leftGlyph={leftGlyph}
@@ -177,8 +178,7 @@ export function InternalOption({
         description={description}
       >
         <span
-          className={cx(optionTextStyle, {
-            // FIXME: temps styles since we're not passing the `selected` prop to InputOption
+          className={cx({
             [css`
               font-weight: ${fontWeights.bold};
             `]: selected,
