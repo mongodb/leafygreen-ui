@@ -5,24 +5,14 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import {
-  descriptionClassName,
-  InputOption,
-  InputOptionContent,
-} from '@leafygreen-ui/input-option';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { fontWeights } from '@leafygreen-ui/tokens';
 
 import { colorSets } from '../styleSets';
 
 import { InternalProps, OptionProps } from './Option.types';
-import {
-  glyphFocusStyle,
-  iconStyle,
-  OptionClassName,
-  optionStyle,
-  optionTextStyle,
-} from './Options.styles';
+import { iconStyle, OptionClassName, optionStyle } from './Options.styles';
 
 export function InternalOption({
   children,
