@@ -12,7 +12,7 @@ import { fontWeights } from '@leafygreen-ui/tokens';
 import { colorSets } from '../styleSets';
 
 import { InternalProps, OptionProps } from './Option.types';
-import { iconStyle, OptionClassName, optionStyle } from './Options.styles';
+import { glyphFocusStyle, OptionClassName } from './Options.styles';
 
 export function InternalOption({
   children,
@@ -79,7 +79,6 @@ export function InternalOption({
     }
   }
 
-  // FIXME: temps styles until styles are consistent with InputOption
   const glyphProp = glyph && isComponentGlyph(glyph) ? glyph : undefined;
 
   // FIXME: temps styles until styles are consistent with InputOption
@@ -87,7 +86,6 @@ export function InternalOption({
     <CheckmarkIcon
       key="checkmark"
       className={cx(
-        iconStyle,
         css`
           color: ${colorSet.icon.selected};
         `,
@@ -112,7 +110,7 @@ export function InternalOption({
       role="option"
       tabIndex={-1}
       ref={ref}
-      className={cx(OptionClassName, optionStyle, className)}
+      className={cx(OptionClassName, className)}
       onClick={onClick}
       onFocus={onFocus}
       onKeyDown={undefined}
