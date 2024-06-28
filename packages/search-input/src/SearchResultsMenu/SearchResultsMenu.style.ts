@@ -10,17 +10,6 @@ export const searchResultsMenuStyles = css`
   border-radius: 12px;
 `;
 
-// export const searchResultsMenuThemeStyles: Record<Theme, string> = {
-//   [Theme.Light]: css`
-//     background-color: ${palette.white};
-//     border: 1px solid ${palette.gray.light2};
-//   `,
-//   [Theme.Dark]: css`
-//     background-color: ${palette.gray.dark3};
-//     border: 1px solid ${palette.gray.dark2};
-//   `,
-// };
-
 export const getSearchResultsMenuThemeStyles = (theme: Theme) => css`
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};

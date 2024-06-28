@@ -34,11 +34,9 @@ export const getMenuStyles = (theme: Theme, size: Size) => {
       font-family: ${fontFamilies.default};
       font-size: ${sizeSet.option.text}px;
       min-height: ${sizeSet.height}px;
-      // background-color: ${colorSet.option.background.base};
       border-radius: 12px;
       box-shadow: 0 4px 7px 0 ${colorSet.menu.shadow};
       padding: ${spacing[2]}px 0;
-      // border: 1px solid ${colorSet.menu.border};
       background-color: ${color[theme].background.primary.default};
       border: 1px solid ${color[theme].border.secondary.default};
     `,
