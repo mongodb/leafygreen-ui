@@ -1,7 +1,7 @@
 ---
-'@leafygreen-ui/menu': minor
+'@leafygreen-ui/menu': major
 ---
 
-- Internal changes: Implements `InputOption` within `MenuItem`.
-  - Aligns spacing & colors with other dropdown menus.
-  - Creates additional `MenuItem` generated stories
+Implements `InputOption` within `MenuItem`.
+- Aligns spacing & colors with other dropdown menus.
+- Also creates additional `MenuItem` generated stories
