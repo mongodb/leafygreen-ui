@@ -52,6 +52,7 @@ WithDropdown.args = {
           Apple
         </SuggestedPrompt>
         <SuggestedPrompt
+          disabled
           onClick={() => {
             // eslint-disable-next-line no-console
             console.log('SB: Click Banana');

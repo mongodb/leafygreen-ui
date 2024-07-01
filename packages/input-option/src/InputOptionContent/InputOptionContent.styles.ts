@@ -86,6 +86,7 @@ export const textContainerStyles = css`
 export const getTitleStyles = ({
   theme,
   highlighted,
+  disabled,
 }: InputOptionStyleArgs) => css`
   overflow-wrap: anywhere;
   font-size: inherit;
@@ -94,6 +95,7 @@ export const getTitleStyles = ({
   transition: color ${transitionDuration.default}ms ease-in-out;
 
   ${highlighted &&
+  !disabled &&
   css`
     font-weight: bold;
     color: ${color[theme].text.primary.focus};

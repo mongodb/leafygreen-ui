@@ -16,7 +16,6 @@ export const themeStyles: Record<Theme, string> = {
 };
 
 export const suggestedPromptsLabelWrapperStyle = css`
-  padding: 12px 24px;
   padding-bottom: 0;
 `;
 

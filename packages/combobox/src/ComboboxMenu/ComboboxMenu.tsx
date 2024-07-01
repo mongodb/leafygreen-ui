@@ -13,13 +13,13 @@ import { ComboboxProps } from '../Combobox';
 import { ComboboxContext } from '../ComboboxContext';
 
 import {
+  getMenuThemeStyles,
   loadingIconStyle,
   menuBaseStyle,
   menuList,
   menuMessageBaseStyle,
   menuMessageSizeStyle,
   menuMessageThemeStyle,
-  menuThemeStyle,
   popoverStyle,
   popoverThemeStyle,
 } from './Menu.styles';
@@ -150,7 +150,7 @@ export const ComboboxMenu = React.forwardRef<HTMLDivElement, ComboboxMenuProps>(
           aria-expanded={isOpen}
           className={cx(
             menuBaseStyle,
-            menuThemeStyle[theme],
+            getMenuThemeStyles(theme),
             css`
               max-height: ${maxHeightValue};
             `,
