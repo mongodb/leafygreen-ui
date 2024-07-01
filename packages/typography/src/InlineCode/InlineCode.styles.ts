@@ -30,7 +30,7 @@ export const codeModes: Record<Theme, string> = {
   `,
 
   [Theme.Dark]: css`
-    background-color: transparent;
+    background-color: ${color.dark.background.secondary.default};
     border: 1px solid ${palette.gray.dark2};
     color: ${palette.gray.light1};
 
