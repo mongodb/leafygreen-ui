@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/rich-links",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "lg-chat Rich Links",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -15,13 +15,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^10.0.7",
+    "@leafygreen-ui/card": "^11.0.0",
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/icon": "^12.4.0",
     "@leafygreen-ui/leafygreen-provider": "^3.1.12",
     "@leafygreen-ui/lib": "^12.0.0",
-    "@leafygreen-ui/palette": "^4.0.10",
-    "@leafygreen-ui/polymorphic": "^2.0.0",
+    "@leafygreen-ui/palette": "^4.1.0",
+    "@leafygreen-ui/polymorphic": "^2.0.2",
     "@leafygreen-ui/tokens": "^2.6.0",
     "@leafygreen-ui/typography": "^18.4.0"
   },

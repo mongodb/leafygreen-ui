@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 2.0.2
+
+### Patch Changes
+
+- 667496f83: Adds more type safety around nested Polymorphic components accepting refs
+
 ## 2.0.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.1.0
+
+### Minor Changes
+
+- d70758dcf: Adds `transparent` key to `palette`. Ensures a consistent `transparent` color across browsers
+
 ## 4.0.10
 
 ### Patch Changes
