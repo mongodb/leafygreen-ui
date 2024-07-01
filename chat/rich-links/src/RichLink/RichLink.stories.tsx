@@ -73,3 +73,17 @@ LearnVariant.args = {
   children: 'Intro to Atlas Device Sync',
   variant: 'Learn',
 };
+
+export const UnknownVariant = Template.bind({});
+UnknownVariant.args = {
+  href: 'https://example.com',
+  children: 'Example Link (variant unknown)',
+  variant: 'NotARealVariant',
+};
+
+export const ExplicitlyUndefinedVariant = Template.bind({});
+ExplicitlyUndefinedVariant.args = {
+  href: 'https://example.com',
+  children: 'Example Link (variant undefined)',
+  variant: undefined,
+};

@@ -13,28 +13,18 @@ import {
   richLinkTextClassName,
   themeStyles,
 } from './RichLink.styles';
-import {
-  RichLinkBadgeControlProps,
-  type RichLinkProps,
-} from './RichLink.types';
+import { type RichLinkProps } from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
-import { richLinkVariants } from './RichLinkVariants';
+import { richLinkVariants } from './richLinkVariants';
 
 export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
   ({ darkMode: darkModeProp, ...props }, ref) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
 
-    if ('variant' in props) {
-      const { variant, ...variantProps } = props;
-      const RichLinkVariant = richLinkVariants[variant];
-      return <RichLinkVariant darkMode={darkMode} {...variantProps} />;
-    }
-
-    const badgeDefaults: Partial<RichLinkBadgeControlProps> = {
-      badgeGlyph: undefined,
-      badgeLabel: undefined,
-      badgeColor: undefined,
-    };
+    const richLinkVariantProps =
+      'variant' in props && props.variant !== undefined
+        ? richLinkVariants[props.variant]
+        : {};
 
     const {
       children,
@@ -45,7 +35,10 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
       href,
       ...anchorProps
     } = {
-      ...badgeDefaults,
+      badgeGlyph: undefined,
+      badgeLabel: undefined,
+      badgeColor: undefined,
+      ...richLinkVariantProps,
       ...props,
     };
 
