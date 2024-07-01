@@ -6,6 +6,7 @@ import {
   findDescendantIndexWithId,
   findDOMIndex,
   insertDescendantAt,
+  refreshDescendantIndexes,
   removeIndex,
 } from './utils/';
 import { Descendant, DescendantsList } from './Descendants.types';
@@ -65,7 +66,7 @@ export const descendantsReducer = <T extends HTMLElement>(
       if (!isElementRegistered) {
         // The element is not yet registered
 
-        // If there are no tracked descendants, then this element is at index 0,
+        // 2. If there are no tracked descendants, then this element is at index 0,
         // Otherwise, check the array of tracked elements to find what index this element should be
         const element = action.ref.current;
         const index = findDOMIndex(element, currentState);
@@ -78,14 +79,15 @@ export const descendantsReducer = <T extends HTMLElement>(
           index,
         };
 
-        // Add the new descendant at the given index
+        // 3. Add the new descendant at the given index
         const newDescendants = insertDescendantAt(
           currentState,
           thisDescendant,
           index,
         );
 
-        return newDescendants;
+        const indexedDescendants = refreshDescendantIndexes(newDescendants);
+        return indexedDescendants;
       }
 
       return currentState;
@@ -121,7 +123,9 @@ export const descendantsReducer = <T extends HTMLElement>(
       if (registeredIndex >= 0) {
         // If an element exists with the given id, remove it
         const newDescendants = removeIndex(currentState, registeredIndex);
-        return newDescendants;
+        const indexedDescendants = refreshDescendantIndexes(newDescendants);
+
+        return indexedDescendants;
       }
 
       // no change

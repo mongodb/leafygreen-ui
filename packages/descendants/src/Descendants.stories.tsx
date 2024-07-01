@@ -245,12 +245,8 @@ export const WithPopover = {
   render: ({ open }) => {
     return (
       <Parent open={open}>
-        <TestDescendant data-testid="child" tabIndex={0}>
-          Apple
-        </TestDescendant>
-        <TestDescendant data-testid="child" tabIndex={0}>
-          Banana
-        </TestDescendant>
+        <TestDescendant tabIndex={0}>Apple</TestDescendant>
+        <TestDescendant tabIndex={0}>Banana</TestDescendant>
       </Parent>
     );
   },

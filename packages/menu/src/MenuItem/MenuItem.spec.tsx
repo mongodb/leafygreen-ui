@@ -46,6 +46,17 @@ describe('packages/menu/menu-item', () => {
       expect(clickHandler).toHaveBeenCalledTimes(1);
     });
 
+    test('does not fire onClick callback disabled', () => {
+      const clickHandler = jest.fn();
+
+      const { getByTestId } = render(
+        <MenuItem data-testid="menu-item" onClick={clickHandler} disabled />,
+      );
+      const menuItem = getByTestId('menu-item');
+      userEvent.click(menuItem);
+      expect(clickHandler).not.toHaveBeenCalled();
+    });
+
     test(`renders className in the MenuItem container's classList`, () => {
       const { getByTestId } = render(
         <MenuItem data-testid="menu-item" className="menu-item-class-name" />,

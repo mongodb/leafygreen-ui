@@ -67,4 +67,11 @@ export interface MenuProps extends Omit<PopoverProps, 'active'> {
    * id passed to the menu dropdown.
    */
   id?: string;
+
+  /**
+   * Whether the menu should always render dark, regardless of the theme context
+   *
+   * @default {true}
+   */
+  renderDarkMenu?: boolean;
 }

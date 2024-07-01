@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 
@@ -15,7 +16,7 @@ import {
 
 import { InputOption, type InputOptionProps } from '.';
 
-const meta: StoryMetaType<typeof InputOption> = {
+export default {
   title: 'Components/InputOption',
   component: InputOption,
   parameters: {
@@ -31,17 +32,15 @@ const meta: StoryMetaType<typeof InputOption> = {
       ],
     },
     generate: {
+      storyNames: ['Generated', 'WithContent'],
       combineArgs: {
         darkMode: [false, true],
-        selected: [false, true],
-        isInteractive: [false, true],
-        showWedge: [false, true],
-        disabled: [false, true],
       },
     },
   },
   args: {
     children: 'Some text',
+    showWedge: true,
   },
   argTypes: {
     disabled: {
@@ -50,7 +49,7 @@ const meta: StoryMetaType<typeof InputOption> = {
     highlighted: {
       control: 'boolean',
     },
-    selected: {
+    checked: {
       control: 'boolean',
     },
     showWedge: {
@@ -69,9 +68,7 @@ const meta: StoryMetaType<typeof InputOption> = {
     },
     as: storybookArgTypes.as,
   },
-};
-
-export default meta;
+} satisfies StoryMetaType<typeof InputOption>;
 
 export const LiveExample: StoryFn<
   InputOptionProps & InputOptionContentProps
@@ -95,4 +92,15 @@ LiveExample.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
-export const Generated = () => {};
+export const Generated = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      combineArgs: {
+        highlighted: [false, true],
+        checked: [false, true],
+        disabled: [false, true],
+      },
+    },
+  },
+} satisfies StoryObj<typeof InputOption>;

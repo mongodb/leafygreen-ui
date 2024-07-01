@@ -24,11 +24,16 @@
 export type RecursiveRecord<
   Keys extends Array<any>,
   Strict extends boolean = true,
-> = Keys extends [
-  infer Key, // the current union of keys
-  ...infer Rest,
-]
-  ? Strict extends true
-    ? Record<Key & string, RecursiveRecord<Rest, Strict>>
-    : Partial<Record<Key & string, RecursiveRecord<Rest, Strict>>>
-  : Keys;
+> =
+  // If `Keys` is an array with at least 2 indexes
+  Keys extends [
+    infer Key, // the current union of keys
+    ...infer Rest extends [infer _K, ...infer _R], // (`Keys` has at least 2 indexes if 2nd argument can also be inferred)
+  ]
+    ? // If this is strict, then don't use Partial
+      Strict extends true
+      ? Record<Key & string, RecursiveRecord<Rest, Strict>>
+      : Partial<Record<Key & string, RecursiveRecord<Rest, Strict>>>
+    : Keys extends [infer Key] // If Keys has only 1 index
+    ? Key // return that index
+    : never; // otherwise there's an error
