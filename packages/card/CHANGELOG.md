@@ -1,5 +1,18 @@
 # @leafygreen-ui/card
 
+## 11.0.0
+
+### Major Changes
+
+- 667496f83: Updates Card component to leverage `@leafygreen-ui/polymorphic` rather than deprecated Box component for handling polymorphic behavior
+
+### Patch Changes
+
+- Updated dependencies [667496f83]
+- Updated dependencies [d70758dcf]
+  - @leafygreen-ui/polymorphic@2.0.2
+  - @leafygreen-ui/palette@4.1.0
+
 ## 10.0.7
 
 ### Patch Changes
