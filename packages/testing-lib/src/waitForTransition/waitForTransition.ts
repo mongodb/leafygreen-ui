@@ -10,7 +10,7 @@ import { act } from '../RTLOverrides';
  * using `react-transition-group`
  */
 export async function waitForTransition(
-  element?: HTMLElement | Parameters<typeof fireEvent.transitionEnd>[0],
+  element?: HTMLElement | Parameters<typeof fireEvent.transitionEnd>[0] | null,
   options?: Parameters<typeof fireEvent.transitionEnd>[1],
 ) {
   if (element) {

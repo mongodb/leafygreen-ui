@@ -4,7 +4,11 @@ import { axe } from 'jest-axe';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { AriaLabelProps, AriaLabelPropsWithLabel } from './AriaLabelProps';
+import {
+  AriaLabelProps,
+  AriaLabelPropsWithChildren,
+  AriaLabelPropsWithLabel,
+} from './AriaLabelProps';
 import {
   prefersReducedMotion,
   useAccessibleForm,
@@ -123,50 +127,100 @@ describe('packages/a11y', () => {
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect, @typescript-eslint/no-unused-vars */
   describe.skip('AriaLabelProps types', () => {
     test('AriaLabelProps', () => {
-      // @ts-expect-error
-      const _1: AriaLabelProps = {};
-      const _2: AriaLabelProps = {
+      // @ts-expect-error - empty object not allowed
+      const empty: AriaLabelProps = {};
+      const aria_label: AriaLabelProps = {
         'aria-label': 'some label',
       };
-      const _3: AriaLabelProps = {
+      const labelledby: AriaLabelProps = {
         'aria-labelledby': '#some-id',
       };
-      const _4: AriaLabelProps = {
+      const both_aria: AriaLabelProps = {
         'aria-label': 'some label',
         'aria-labelledby': '#some-id',
       };
-      [_1, _2, _3, _4]; // Avoid TS error
+      [empty, aria_label, labelledby, both_aria]; // Avoid TS error
     });
     test('AriaLabelPropsWithLabel', () => {
       // @ts-expect-error
-      const _1: AriaLabelPropsWithLabel = {};
-      const _2: AriaLabelPropsWithLabel = {
+      const empty: AriaLabelPropsWithLabel = {};
+      const aria_label: AriaLabelPropsWithLabel = {
         'aria-label': 'some label',
       };
-      const _3: AriaLabelPropsWithLabel = {
+      const labelledby: AriaLabelPropsWithLabel = {
         'aria-labelledby': '#some-id',
       };
-      const _4: AriaLabelPropsWithLabel = {
-        'aria-label': 'some label',
-        'aria-labelledby': '#some-id',
-      };
-      const _5: AriaLabelPropsWithLabel = {
-        label: 'some label',
-      };
-      const _6: AriaLabelPropsWithLabel = {
-        label: 'some label',
-        'aria-label': 'some label',
-      };
-      const _7: AriaLabelPropsWithLabel = {
-        label: 'some label',
-        'aria-labelledby': '#some-id',
-      };
-      const _8: AriaLabelPropsWithLabel = {
-        label: 'some label',
+      const both_aria: AriaLabelPropsWithLabel = {
         'aria-label': 'some label',
         'aria-labelledby': '#some-id',
       };
-      [_1, _2, _3, _4, _5, _6, _7, _8]; // Avoid TS error
+      const label_only: AriaLabelPropsWithLabel = {
+        label: 'some label',
+      };
+      const label_and_aria: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-label': 'some label',
+      };
+      const label_and_labelledby: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      const all: AriaLabelPropsWithLabel = {
+        label: 'some label',
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      [
+        empty,
+        aria_label,
+        labelledby,
+        both_aria,
+        label_only,
+        label_and_aria,
+        label_and_labelledby,
+        all,
+      ]; // Avoid TS error
+    });
+    test('AriaLabelPropsWithChildren', () => {
+      // @ts-expect-error - empty object not allowed
+      const empty: AriaLabelPropsWithChildren = {};
+      const label: AriaLabelPropsWithChildren = {
+        'aria-label': 'some label',
+      };
+      const labelledby: AriaLabelPropsWithChildren = {
+        'aria-labelledby': '#some-id',
+      };
+      const both_aria: AriaLabelPropsWithChildren = {
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      const children: AriaLabelPropsWithChildren = {
+        children: 'some label',
+      };
+      const label_and_children: AriaLabelPropsWithChildren = {
+        children: 'some label',
+        'aria-label': 'some label',
+      };
+      const labelledby_and_children: AriaLabelPropsWithChildren = {
+        children: 'some label',
+        'aria-labelledby': '#some-id',
+      };
+      const all: AriaLabelPropsWithChildren = {
+        children: 'some label',
+        'aria-label': 'some label',
+        'aria-labelledby': '#some-id',
+      };
+
+      [
+        empty,
+        label,
+        labelledby,
+        both_aria,
+        children,
+        label_and_children,
+        labelledby_and_children,
+        all,
+      ]; //
     });
   });
 });

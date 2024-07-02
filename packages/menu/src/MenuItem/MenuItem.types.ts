@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from 'react';
+
 import { Size } from '../types';
 
 const Variant = {
@@ -19,17 +21,17 @@ export interface MenuItemProps {
    * Slot to pass in an Icon rendered to the left of `MenuItem` text.
    * @type `<Icon />` component
    */
-  glyph?: React.ReactElement;
+  glyph?: ReactElement;
 
   /**
-   * Size of the MenuItem component, can be `default` or `large`
+   * Slot to pass an Icon rendered to the right of the MenuItem
    */
-  size?: Size;
+  rightGlyph?: ReactElement;
 
   /**
    * Content to appear inside of `<MenuItem />` component
    */
-  children?: React.ReactNode;
+  children?: ReactNode;
 
   /**
    * Determines whether or not the MenuItem is active.
@@ -39,15 +41,18 @@ export interface MenuItemProps {
   /**
    * Description element displayed below title in MenuItem.
    */
-  description?: React.ReactNode;
+  description?: ReactNode;
 
   /**
    * Variant of MenuItem
    */
   variant?: Variant;
-}
 
-export interface FocusableMenuItemProps {
-  children: React.ReactElement;
-  onFocus?: React.FocusEventHandler;
+  /**
+   * Size of the MenuItem component, can be `default` or `large`
+   *
+   * @deprecated - Size no longer has any effect
+   */
+  // TODO: codemod to remove `size` props from existing implementations
+  size?: Size;
 }

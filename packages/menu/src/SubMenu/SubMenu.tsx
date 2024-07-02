@@ -1,344 +1,256 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, {
+  KeyboardEventHandler,
+  MouseEventHandler,
+  useEffect,
+  useRef,
+} from 'react';
 import { Transition } from 'react-transition-group';
+import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
+import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
-import { getNodeTextContent } from '@leafygreen-ui/lib';
+import { keyMap } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
-import { MenuContext } from '../MenuContext';
+import { LGIDs } from '../constants';
 import {
-  activeDescriptionTextStyle,
-  activeIconStyle,
-  activeMenuItemContainerStyle,
-  activeTitleTextStyle,
-  descriptionTextThemeStyle,
-  disabledMenuItemContainerThemeStyle,
-  disabledTextStyle,
-  focusedMenuItemContainerStyle,
-  focusedSubMenuItemBorderStyles,
-  getFocusedStyles,
-  getHoverStyles,
-  linkDescriptionTextStyle,
-  linkStyle,
-  mainIconBaseStyle,
-  mainIconThemeStyle,
-  menuItemContainerStyle,
-  menuItemContainerThemeStyle,
-  menuItemHeight,
-  paddingLeftWithGlyph,
-  paddingLeftWithoutGlyph,
-  textContainer,
-  titleTextStyle,
-} from '../styles';
-import { Size } from '../types';
+  MenuDescendantsContext,
+  SubMenuProvider,
+  useMenuContext,
+  useSubMenuContext,
+} from '../MenuContext';
+import { InternalMenuItemContent } from '../MenuItem/InternalMenuItemContent';
 
 import {
-  chevronClassName,
-  closedIconStyle,
-  iconButtonClassName,
-  iconButtonFocusedThemeStyle,
-  iconButtonStyle,
-  iconButtonThemeStyle,
-  menuItemBorder,
-  menuItemBorderBottom,
-  menuItemText,
-  openIconButtonStyle,
-  openIconStyle,
-  subItemStyle,
-  subItemThemeStyle,
+  getSubmenuListStyles,
+  getSubmenuToggleStyles,
   subMenuContainerClassName,
-  subMenuOpenStyle,
-  subMenuThemeStyle,
-  ulStyle,
-  ulThemeStyles,
+  subMenuContainerStyles,
+  subMenuToggleClassName,
 } from './SubMenu.styles';
-import { SubMenuProps } from './SubMenu.types';
+import { InternalSubMenuProps } from './SubMenu.types';
+import { useChildrenHeight } from './useChildrenHeight';
+import { useControlledState } from './useControlledState';
 
-const subMenuItemHeight = 32;
-
-export const SubMenu = InferredPolymorphic<SubMenuProps, 'button'>(
+export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
   (
     {
+      as: asProp,
+      open: openProp,
+      setOpen: setOpenProp,
+      initialOpen = false,
       title,
-      children,
       onClick,
-      description,
-      setOpen,
+      onEntered,
+      onExited,
       className,
-      glyph,
-      onExited = () => {},
-      open = false,
-      active = false,
-      disabled = false,
-      size = Size.Default,
-      as,
-      ...rest
+      children,
+      ...restProps
     },
-    ref: React.Ref<any>,
+    fwdRef,
   ): React.ReactElement => {
-    const { Component } = useInferredPolymorphic(as, rest, 'button');
-    const { theme, darkMode } = useContext(MenuContext);
-    const hoverStyles = getHoverStyles(subMenuContainerClassName, theme);
-    const focusStyles = getFocusedStyles(subMenuContainerClassName, theme);
+    const { as, rest } = useInferredPolymorphic(asProp, restProps, 'button');
+    const { active, disabled } = rest;
 
-    const nodeRef = React.useRef(null);
+    const { highlight, setHighlight, theme } = useMenuContext();
+    const {
+      index: descendantIndex,
+      ref: descendantRef,
+      id: descendantId,
+    } = useDescendant(MenuDescendantsContext, fwdRef, {
+      active,
+      disabled,
+    });
+    const { depth } = useSubMenuContext();
 
-    const [iconButtonElement, setIconButtonElement] =
-      useState<HTMLElement | null>(null);
-
-    const onRootClick = useCallback(
-      (
-        e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-          React.MouseEvent<HTMLButtonElement, MouseEvent>,
-      ) => {
-        if (iconButtonElement?.contains(e.target as HTMLElement)) {
-          e.preventDefault();
-        } else if (onClick) {
-          onClick(e);
-        }
-      },
-      [iconButtonElement, onClick],
+    const [open, setOpen] = useControlledState(
+      initialOpen,
+      openProp,
+      setOpenProp,
     );
 
-    const numberOfMenuItems = React.Children.toArray(children).length;
+    const toggleMenu = (state?: boolean) => {
+      if (disabled) return;
 
-    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
-    const chevronIconStyles = cx({
-      [openIconStyle[theme]]: open,
-      [closedIconStyle[theme]]: !open,
-    });
-
-    const handleChevronClick = (e: React.MouseEvent) => {
-      // we stop the event from propagating and closing the entire menu
-      e.nativeEvent.stopImmediatePropagation();
-
-      if (setOpen) {
-        setOpen(!open);
+      if (!isUndefined(state)) {
+        setOpen(state);
+      } else {
+        setOpen(x => !x);
       }
     };
 
-    // TODO: This code is duplicated in `MenuItem`
-    // We should consider combining these.
-    // See: https://github.com/mongodb/leafygreen-ui/pull/1176
-    const isAnchor = Component === 'a';
+    // Regardless of the `open` state,
+    // if `active` has been toggled true,
+    // we open the menu
+    useEffect(() => {
+      if (rest.active) {
+        setOpen(true);
+      }
+    }, [rest.active, setOpen]);
 
-    const updatedGlyph =
-      glyph &&
-      React.cloneElement(glyph, {
-        role: 'presentation',
-        className: cx(
-          mainIconBaseStyle,
-          mainIconThemeStyle[theme],
-          focusStyles.iconStyle,
-          {
-            [activeIconStyle[theme]]: active,
-          },
-          glyph.props?.className,
-        ),
-      });
+    const submenuRef = useRef<HTMLUListElement>(null);
+    const submenuTriggerRef = useRef<HTMLButtonElement>(null);
+    const subMenuHeight = useChildrenHeight(submenuRef, [open]);
 
-    const baseProps = {
-      ref,
-      role: 'menuitem',
-      'aria-haspopup': true,
-      onClick: onRootClick,
-      tabIndex: disabled ? -1 : undefined,
-      'aria-disabled': disabled,
-      // only add a disabled prop if not an anchor
-      ...(typeof rest.href !== 'string' && { disabled }),
+    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
+
+    const handleClick: MouseEventHandler = e => {
+      if (onClick || rest.href) {
+        if (!disabled) {
+          onClick?.(e);
+        }
+      } else {
+        toggleMenu();
+      }
     };
 
-    const anchorProps = isAnchor
-      ? {
-          target: '_self',
-          rel: '',
+    const handleKeydown: KeyboardEventHandler = e => {
+      switch (e.key) {
+        case keyMap.ArrowLeft: {
+          toggleMenu(false);
+          break;
         }
-      : {};
 
-    const content = (
-      <>
-        {updatedGlyph}
-        <div className={textContainer}>
-          <div
-            data-text={getNodeTextContent(children)}
-            className={cx(
-              titleTextStyle,
-              hoverStyles.text,
-              {
-                [activeTitleTextStyle[theme]]: active,
-                [hoverStyles.activeText]: active,
-                [disabledTextStyle[theme]]: disabled,
-              },
-              focusStyles.textStyle,
-            )}
-          >
-            {title}
-          </div>
-          {description && (
-            <div
-              className={cx(
-                descriptionTextThemeStyle[theme],
-                {
-                  [activeDescriptionTextStyle[theme]]: active,
-                  [disabledTextStyle[theme]]: disabled,
-                  [linkDescriptionTextStyle]: isAnchor,
-                },
-                focusStyles.descriptionStyle,
-              )}
-            >
-              {description}
-            </div>
-          )}
-        </div>
-      </>
-    );
+        case keyMap.ArrowRight: {
+          toggleMenu(true);
+          break;
+        }
+      }
+    };
+
+    const handleToggleMouseDown: MouseEventHandler<HTMLButtonElement> = e => {
+      // Prevent focus from moving to the toggle button when clicked
+      e.preventDefault();
+    };
+
+    const handleToggleClick: MouseEventHandler<HTMLButtonElement> = e => {
+      // Prevent links from navigating
+      e.preventDefault();
+      // we stop the event from propagating and closing the entire menu
+      e.nativeEvent.stopImmediatePropagation();
+      e.stopPropagation();
+
+      toggleMenu();
+    };
+
+    // When the submenu has opened
+    const handleTransitionEntered: EnterHandler<HTMLUListElement> = () => {
+      // if this element should be highlighted
+      if (descendantId === highlight?.id) {
+        // ensure this element is still focused after transitioning
+        descendantRef.current?.focus();
+      } else {
+        // Otherwise ensure the focus is on the correct element
+        highlight?.ref?.current?.focus();
+      }
+
+      onEntered?.();
+    };
+
+    // When the submenu starts to close
+    const handleTransitionExiting: ExitHandler<HTMLUListElement> = () => {
+      const currentHighlightElement = highlight?.ref?.current;
+
+      if (currentHighlightElement) {
+        // When we close the submenu,
+        // if one of this submenu's children is highlighted
+        // then focus the main submenu item
+        const doesSubmenuContainCurrentHighlight =
+          submenuRef?.current?.contains(currentHighlightElement);
+
+        if (doesSubmenuContainCurrentHighlight) {
+          setHighlight?.(descendantId);
+          descendantRef?.current?.focus();
+        }
+      }
+    };
+
+    // When the submenu has closed
+    const handleTransitionExited: ExitHandler<HTMLUListElement> = () => {
+      // When the submenu closes,
+      // ensure the focus is on the correct element
+      highlight?.ref?.current?.focus();
+      onExited?.();
+    };
 
     return (
-      <li role="none">
-        <Component
-          {...baseProps}
-          {...anchorProps}
-          {...rest}
-          className={cx(
-            subMenuContainerClassName,
-            menuItemContainerStyle,
-            menuItemContainerThemeStyle[theme],
-            menuItemHeight(size),
-            linkStyle,
-            subMenuThemeStyle[theme],
-            {
-              [activeMenuItemContainerStyle[theme]]: active,
-              [disabledMenuItemContainerThemeStyle[theme]]: disabled,
-              [subMenuOpenStyle[theme]]: open,
-            },
-            focusedMenuItemContainerStyle[theme],
-            className,
-          )}
+      <>
+        <li
+          role="none"
+          className={cx(subMenuContainerClassName, subMenuContainerStyles)}
+          data-testid={LGIDs.submenu}
+          data-lgid={LGIDs.submenu}
         >
-          {content}
-          <IconButton
-            data-testid="lg-sub-menu-icon-button"
-            darkMode={!darkMode}
-            ref={setIconButtonElement}
-            aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
-            className={cx(
-              iconButtonClassName,
-              iconButtonStyle,
-              iconButtonThemeStyle[theme],
-              iconButtonFocusedThemeStyle[theme],
-              {
-                [openIconButtonStyle[theme]]: open,
-              },
-            )}
-            onClick={handleChevronClick}
+          <InternalMenuItemContent
+            as={as}
+            id={descendantId}
+            ref={descendantRef}
+            index={descendantIndex}
+            active={active}
+            disabled={disabled}
+            onClick={handleClick}
+            onKeyDown={handleKeydown}
+            data-id={descendantId}
+            {...rest}
           >
-            <ChevronIcon
-              role="presentation"
-              className={cx(chevronClassName, chevronIconStyles)}
-              size={14}
-            />
+            {title}
+          </InternalMenuItemContent>
+          <IconButton
+            data-testid={LGIDs.submenuToggle}
+            data-lgid={LGIDs.submenuToggle}
+            ref={submenuTriggerRef}
+            aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
+            onClick={handleToggleClick}
+            onMouseDownCapture={handleToggleMouseDown}
+            className={cx(
+              subMenuToggleClassName,
+              getSubmenuToggleStyles(theme),
+            )}
+          >
+            <ChevronIcon role="presentation" />
           </IconButton>
-        </Component>
-
-        <Transition
-          in={open}
-          timeout={{
-            enter: 0,
-            exit: 150,
-          }}
-          mountOnEnter
-          unmountOnExit
-          onExited={onExited}
-          nodeRef={nodeRef}
-        >
-          {(state: string) => (
-            <ul
-              ref={nodeRef}
-              className={cx(
-                ulStyle,
-                ulThemeStyles[theme],
-                css`
-                  &::before {
-                    // this is the width for the UL border
-                    width: calc(
-                      100% -
-                        ${glyph
-                          ? paddingLeftWithGlyph
-                          : paddingLeftWithoutGlyph}px
-                    );
-                  }
-                `,
-                {
+        </li>
+        <SubMenuProvider depth={depth + 1} hasIcon={!!rest.glyph}>
+          <Transition
+            in={open}
+            timeout={{
+              enter: 0,
+              exit: 150,
+            }}
+            mountOnEnter
+            unmountOnExit
+            onEntered={handleTransitionEntered}
+            onExiting={handleTransitionExiting}
+            onExited={handleTransitionExited}
+            nodeRef={submenuRef}
+          >
+            {(state: string) => (
+              <ul
+                ref={submenuRef}
+                role="menu"
+                aria-label={title}
+                data-state={state}
+                data-open={open}
+                className={cx(getSubmenuListStyles(), {
                   [css`
-                    height: ${subMenuItemHeight * numberOfMenuItems}px;
+                    max-height: ${subMenuHeight + 1}px;
                   `]: state === 'entered',
-                },
-              )}
-              role="menu"
-              aria-label={title}
-            >
-              {React.Children.map(
-                children as React.ReactElement,
-                (child, index) => {
-                  const { className, ...rest } = child.props;
-                  return React.cloneElement(child, {
-                    size: Size.Default,
-                    children: (
-                      <>
-                        <div className={menuItemBorder} />
-                        <span className={menuItemText}>
-                          {child.props.children}
-                        </span>
-                        {index === numberOfMenuItems - 1 && (
-                          <div className={menuItemBorderBottom} />
-                        )}
-                      </>
-                    ),
-                    className: cx(
-                      subItemStyle,
-                      subItemThemeStyle[theme],
-                      css`
-                        // padding-left of the button
-                        padding-left: ${glyph
-                          ? paddingLeftWithGlyph
-                          : paddingLeftWithoutGlyph}px;
-                        &::after {
-                          // this is the width for the button bottom border
-                          width: calc(
-                            100% -
-                              ${glyph
-                                ? paddingLeftWithGlyph
-                                : paddingLeftWithoutGlyph}px
-                          );
-                        }
-                      `,
-                      focusedSubMenuItemBorderStyles[theme],
-                      child.props.className,
-                    ),
-                    onClick: (
-                      e: React.MouseEvent<HTMLAnchorElement, MouseEvent> &
-                        React.MouseEvent<HTMLButtonElement, MouseEvent>,
-                    ) => {
-                      child.props?.onClick?.(e);
-                      if (onClick) {
-                        onClick(e);
-                      }
-                    },
-                    ...rest,
-                  });
-                },
-              )}
-            </ul>
-          )}
-        </Transition>
-      </li>
+                })}
+              >
+                {children}
+              </ul>
+            )}
+          </Transition>
+        </SubMenuProvider>
+      </>
     );
   },
 );
