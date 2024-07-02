@@ -1,29 +1,23 @@
 import { css } from '@leafygreen-ui/emotion';
 import { leftGlyphClassName } from '@leafygreen-ui/input-option';
+import {
+  descriptionClassName,
+  titleClassName,
+} from '@leafygreen-ui/input-option';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontWeights, spacing } from '@leafygreen-ui/tokens';
+import { fontWeights, spacing, typeScales } from '@leafygreen-ui/tokens';
 
-import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
-import {
-  getMenuItemHeight,
-  menuItemPadding,
-} from '../ComboboxMenu/Menu.styles';
 import { ComboboxSize } from '../types';
 
 /**
  * Styles
  */
 
-export const comboboxOptionSizeStyle = (size: ComboboxSize) => css`
-  font-size: ${fontSize[size]}px;
-  line-height: ${lineHeight[size]}px;
-  min-height: ${getMenuItemHeight(size)}px;
-  padding: ${menuItemPadding[size].y}px ${menuItemPadding[size].x}px;
-  gap: ${spacing[1]}px;
-
-  &:before {
-    max-height: ${getMenuItemHeight(size)}px;
+export const largeStyles = css`
+  .${descriptionClassName}, .${titleClassName} {
+    font-size: ${typeScales.body2.fontSize}px;
+    line-height: 20px;
   }
 `;
 
@@ -108,10 +102,14 @@ export const checkMarkDisabledStyles: Record<Theme, string> = {
 export const multiselectIconPosition = css`
   .${leftGlyphClassName} {
     align-self: baseline;
+    position: relative;
+    // aligns the checkbox with the option name
+    top: 1px;
   }
 `;
 export const multiselectIconLargePosition = css`
   .${leftGlyphClassName} {
-    height: 28px;
+    // aligns the checkbox with the option name
+    top: 3px;
   }
 `;
