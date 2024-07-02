@@ -88,6 +88,11 @@ export function InternalOption({
         css`
           color: ${colorSet.icon.selected};
         `,
+        {
+          [css`
+            color: ${colorSet.icon.disabled};
+          `]: disabled,
+        },
       )}
     />
   ) : undefined;
