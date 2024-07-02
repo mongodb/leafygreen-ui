@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/select': major
+'@leafygreen-ui/select': patch
 ---
 
 Updates `Option`

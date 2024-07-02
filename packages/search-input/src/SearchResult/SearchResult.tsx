@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
@@ -34,7 +33,7 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
         {...rest}
         as={as}
         ref={ref}
-        className={cx(className)}
+        className={className}
         disabled={disabled}
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}

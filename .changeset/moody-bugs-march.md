@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/combobox': major
+'@leafygreen-ui/combobox': patch
 ---
 
 Updates `ComboboxOption`.

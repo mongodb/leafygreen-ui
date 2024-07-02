@@ -103,11 +103,13 @@ export const multiselectIconPosition = css`
   .${leftGlyphClassName} {
     align-self: baseline;
     position: relative;
+    // aligns the checkbox with the option name
     top: 1px;
   }
 `;
 export const multiselectIconLargePosition = css`
   .${leftGlyphClassName} {
+    // aligns the checkbox with the option name
     top: 3px;
   }
 `;

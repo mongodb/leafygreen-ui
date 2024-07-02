@@ -15,7 +15,7 @@ const meta: StoryMetaType<typeof InternalComboboxOption> = {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['WithIcons', 'WithoutIcons', 'WithoutIconsandMultipStep'],
+      storyNames: ['WithIcons', 'WithoutIcons', 'WithoutIconsAndMultiStep'],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -68,10 +68,10 @@ WithIcons.parameters = {
   },
 };
 
-export const WithoutIconsandMultipStep: StoryType<
+export const WithoutIconsAndMultiStep: StoryType<
   typeof InternalComboboxOption
 > = () => <></>;
-WithoutIconsandMultipStep.parameters = {
+WithoutIconsAndMultiStep.parameters = {
   generate: {
     decorator: (Instance, context) => {
       return (

@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/search-input': major
+'@leafygreen-ui/search-input': patch
 ---
 
 Updates `SearchResults`.
