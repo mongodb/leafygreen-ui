@@ -7,15 +7,16 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { H2 } from '@leafygreen-ui/typography';
 
+import { LGIDS } from '../constants';
 import { Resource } from '../Resource';
 
 import {
   actionsStyles,
   backLinkStyles,
+  badgesStyles,
   canvasHeaderBaseStyles,
   canvasHeaderClassname,
-  titleBaseStyles,
-  titleThemeStyles,
+  getTitleStyles,
   titleWrapperStyles,
 } from './CanvasHeader.styles';
 import { type CanvasHeaderProps } from './CanvasHeader.types';
@@ -30,6 +31,7 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
       actions,
       backLink,
       className,
+      badges,
       ...rest
     }: CanvasHeaderProps,
     forwardRef,
@@ -38,6 +40,7 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <div
+          data-testid={LGIDS.root}
           className={cx(
             canvasHeaderClassname,
             canvasHeaderBaseStyles,
@@ -48,12 +51,10 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
         >
           {!!backLink && <div className={backLinkStyles}>{backLink}</div>}
           <div className={titleWrapperStyles}>
-            <H2
-              data-testid="lg-canvas_header-page_title"
-              className={cx(titleBaseStyles, titleThemeStyles[theme])}
-            >
+            <H2 data-testid={LGIDS.pageTitle} className={getTitleStyles(theme)}>
               {pageTitle}
             </H2>
+            {!!badges && <div className={badgesStyles}>{badges}</div>}
             {!!actions && <div className={actionsStyles}>{actions}</div>}
           </div>
           {!!resourceName && (
@@ -75,6 +76,8 @@ CanvasHeader.propTypes = {
   resourceIcon: PropTypes.node,
   // @ts-expect-error - PropTypes.node does not match ReactNode
   actions: PropTypes.node,
+  // @ts-expect-error - PropTypes.node does not match ReactNode
+  badges: PropTypes.node,
   // @ts-expect-error - PropTypes.node does not match ReactNode
   backLink: PropTypes.node,
 };

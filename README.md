@@ -46,16 +46,23 @@ import { BackLink } from '@leafygreen-ui/typography';
         Invite user
       </Button>
     }
+    badges={
+      <>
+        <Badge variant="green">Enabled</Badge>
+        <Badge variant="blue">In Dev Mode</Badge>
+      </>
+    }
   />
 ```
 
 ## Properties
 
-| Prop           | Type              | Description                                                          | Default |
-| -------------- | ----------------- | -------------------------------------------------------------------- | ------- |
-| `darkMode`     | `boolean`         | Determines if the component renders in dark mode                     | `false` |
-| `pageTitle`    | `React.ReactNode` | Required page title                                                  |         |
-| `resourceName` | `string`          | Opitional resource name that will copy to the clipboard when clicked |         |
-| `resourceIcon` | `React.ReachNode` | Optional icon that will render to the left of the resource name      |         |
-| `actions`      | `React.ReachNode` | Optional button that will render to the right of the resource name   |         |
-| `backLink`     | `React.ReactNode` | Optional link that will render above the page title.                 |         |
+| Prop           | Type              | Description                                                                   | Default |
+| -------------- | ----------------- | ----------------------------------------------------------------------------- | ------- |
+| `darkMode`     | `boolean`         | Determines if the component renders in dark mode                              | `false` |
+| `pageTitle`    | `React.ReactNode` | Required page title                                                           |         |
+| `resourceName` | `string`          | Opitional resource name that will copy to the clipboard when clicked          |         |
+| `resourceIcon` | `React.ReachNode` | Optional icon that will render to the left of the resource name               |         |
+| `badges`       | `React.ReachNode` | Optional badges that will render to the right of the resource name            |         |
+| `actions`      | `React.ReachNode` | Optional buttons that will render to the right of the badges or resource name |         |
+| `backLink`     | `React.ReactNode` | Optional link that will render above the page title.                          |         |

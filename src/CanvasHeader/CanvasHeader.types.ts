@@ -21,7 +21,7 @@ export interface CanvasHeaderProps
   resourceIcon?: ReactNode;
 
   /**
-   * Optional buttons that will render to the right of the resource name
+   * Optional buttons that will render to the right of the badges or resource name
    */
   actions?: ReactNode;
 
@@ -29,4 +29,9 @@ export interface CanvasHeaderProps
    * Optional link that will render above the page title.
    */
   backLink?: ReactNode;
+
+  /**
+   * Optional badges that will render to the right of the resource name
+   */
+  badges?: ReactNode;
 }

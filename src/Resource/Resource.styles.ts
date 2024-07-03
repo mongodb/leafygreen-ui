@@ -2,6 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   focusRing,
   spacing,
   transitionDuration,
@@ -18,14 +19,6 @@ export const resourceBaseStyles = css`
   gap: ${spacing[200]}px;
 `;
 
-export const resourceNameContainerBaseStyles = css`
-  line-break: anywhere;
-  cursor: pointer;
-  color: unset;
-  outline: 0;
-  border-radius: 6px;
-`;
-
 export const resourceIconBaseStyles = css`
   line-height: ${typeScales.body2.lineHeight}px;
   color: ${palette.gray.base};
@@ -33,12 +26,6 @@ export const resourceIconBaseStyles = css`
   svg {
     vertical-align: middle;
   }
-`;
-
-export const resourceNameBaseStyles = css`
-  border-bottom: 2px solid;
-  border-color: transparent;
-  padding-bottom: 2px;
 `;
 
 export const resourceNameStyles = css`
@@ -71,36 +58,27 @@ export const resourceCopiedStyles = css`
   opacity: 1;
 `;
 
-export const resourceNameContainerThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
+export const getResourceNameContainerStyles = (theme: Theme) => css`
+  line-break: anywhere;
+  cursor: pointer;
+  color: unset;
+  outline: 0;
+  border-radius: 6px;
+  color: ${color[theme].text.secondary?.default};
 
-    &:focus-visible,
-    .${canvasHeaderClassname}[data-focus="true"] & {
-      box-shadow: ${focusRing.light.default};
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
+  &:focus-visible,
+.${canvasHeaderClassname}[data-focus="true"] & {
+    box-shadow: ${focusRing[theme].default};
+  }
+`;
 
-    &:focus-visible,
-    .${canvasHeaderClassname}[data-focus="true"] & {
-      box-shadow: ${focusRing.dark.default};
-    }
-  `,
-};
+export const getResourceNameStyles = (theme: Theme) => css`
+  border-bottom: 2px solid;
+  border-color: transparent;
+  padding-bottom: 2px;
 
-export const resourceNameUnderlineStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    .${resourceNameContainerClassname}:hover &,
+  .${resourceNameContainerClassname}:hover &,
     .${canvasHeaderClassname}[data-hover="true"] & {
-      border-color: ${palette.gray.light2};
-    }
-  `,
-  [Theme.Dark]: css`
-    .${resourceNameContainerClassname}:hover &,
-    .${canvasHeaderClassname}[data-hover="true"] & {
-      border-color: ${palette.gray.dark2};
-    }
-  `,
-};
+    border-color: ${color[theme].border.secondary?.default};
+  }
+`;

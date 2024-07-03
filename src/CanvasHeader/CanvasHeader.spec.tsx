@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { Link } from '@leafygreen-ui/typography';
@@ -36,6 +37,11 @@ const renderCanvasHeader = ({ ...props }: PartialCanvasHeaderProps) => {
           Invite user
         </Button>
       }
+      badges={
+        <Badge data-testid="lg-canvas_header-badge" variant="green">
+          Enabled
+        </Badge>
+      }
       {...props}
     />,
   );
@@ -44,6 +50,7 @@ const renderCanvasHeader = ({ ...props }: PartialCanvasHeaderProps) => {
   const backLink = utils.getByTestId('lg-canvas_header-back_link');
   const resourceName = utils.getByTestId('lg-canvas_header-resource_name');
   const actionBtn = utils.getByTestId('lg-canvas_header-button');
+  const badge = utils.getByTestId('lg-canvas_header-badge');
   const resourceIcon = utils.getByLabelText('Sharded Cluster Icon');
 
   return {
@@ -53,6 +60,7 @@ const renderCanvasHeader = ({ ...props }: PartialCanvasHeaderProps) => {
     resourceIcon,
     resourceName,
     actionBtn,
+    badge,
   };
 };
 
@@ -89,6 +97,11 @@ describe('packages/canvas-header', () => {
     test('action button', () => {
       const { actionBtn } = renderCanvasHeader({});
       expect(actionBtn.textContent).toBe('Invite user');
+    });
+
+    test('badge', () => {
+      const { badge } = renderCanvasHeader({});
+      expect(badge.textContent).toBe('Enabled');
     });
 
     test('does not render resourceIcon without a resourceName', () => {
@@ -131,6 +144,11 @@ describe('packages/canvas-header', () => {
             >
               Invite user
             </Button>
+          }
+          badges={
+            <Badge data-testid="lg-canvas_header-badge" variant="green">
+              Enabled
+            </Badge>
           }
         />
         {/* @ts-expect-error Property 'children' does not exist */}

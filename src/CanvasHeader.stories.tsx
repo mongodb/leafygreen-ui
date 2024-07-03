@@ -1,10 +1,11 @@
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 import { BackLink } from '@leafygreen-ui/typography';
 
 import { CanvasHeader } from '.';
@@ -15,10 +16,10 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['resourceIcon', 'actions', 'backLink'],
+      exclude: ['resourceIcon', 'actions', 'backLink', 'badges'],
     },
     generate: {
-      storyNames: ['DarkMode', 'LightMode', 'Truncate'],
+      storyNames: ['DarkMode', 'LightMode', 'Truncate', 'Interactions'],
       decorator: Instance => {
         return (
           <div
@@ -33,9 +34,6 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
       },
       args: { pageTitle: 'Page Title' },
       combineArgs: {
-        // @ts-ignore - data-hover is not a prop
-        'data-hover': [false, true],
-        'data-focus': [false, true],
         backLink: [
           <BackLink href="/home" key="1">
             Back to Cluster
@@ -50,31 +48,23 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
         resourceIcon: [<Icon key="1" glyph={'ShardedCluster'} />, undefined],
         actions: [
           <>
+            <Button leftGlyph={<Icon glyph={'InviteUser'} />}>
+              Invite user
+            </Button>
             <Button variant="primary" leftGlyph={<Icon glyph={'InviteUser'} />}>
               Invite user
             </Button>
           </>,
           undefined,
         ],
+        badges: [
+          <>
+            <Badge variant="green">Enabled</Badge>
+            <Badge variant="blue">In Dev Mode</Badge>
+          </>,
+          undefined,
+        ],
       },
-      excludeCombinations: [
-        [
-          // @ts-ignore
-          'data-focus',
-          // @ts-ignore
-          {
-            resourceName: undefined,
-          },
-        ],
-        [
-          // @ts-ignore
-          'data-hover',
-          // @ts-ignore
-          {
-            resourceName: undefined,
-          },
-        ],
-      ],
     },
   },
   args: {
@@ -88,6 +78,12 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
       <Button variant="primary" leftGlyph={<Icon glyph={'InviteUser'} />}>
         Invite user
       </Button>
+    ),
+    badges: (
+      <>
+        <Badge variant="green">Enabled</Badge>
+        <Badge variant="blue">In Dev Mode</Badge>
+      </>
     ),
   },
   argTypes: {
@@ -109,19 +105,10 @@ const Template: StoryFn<typeof CanvasHeader> = props => (
 );
 
 export const LiveExample = Template.bind({});
-
-export const MultipleActions = Template.bind({});
-MultipleActions.args = {
-  actions: (
-    <>
-      <Button leftGlyph={<Icon glyph={'InviteUser'} />}>Invite user</Button>
-      <Button leftGlyph={<Icon glyph={'InviteUser'} />}>Invite user</Button>
-      <Button variant="primary" leftGlyph={<Icon glyph={'InviteUser'} />}>
-        Invite user
-      </Button>
-    </>
-  ),
-  pageTitle: 'A relatively long page title name that triggers truncation',
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const DarkMode: StoryType<typeof CanvasHeader> = () => <></>;
@@ -140,15 +127,37 @@ Truncate.parameters = {
   generate: {
     args: {
       pageTitle: 'A relatively long page title name that triggers truncation',
-      actions: (
-        <>
-          <Button leftGlyph={<Icon glyph={'InviteUser'} />}>Invite user</Button>
-          <Button leftGlyph={<Icon glyph={'InviteUser'} />}>Invite user</Button>
-          <Button variant="primary" leftGlyph={<Icon glyph={'InviteUser'} />}>
-            Invite user
-          </Button>
-        </>
-      ),
+      // @ts-ignore
+      'data-hover': false,
+      'data-focus': false,
     },
+  },
+};
+
+export const Interactions: StoryType<typeof CanvasHeader> = () => <></>;
+Interactions.parameters = {
+  generate: {
+    args: {
+      actions: undefined,
+      badges: undefined,
+      backLink: undefined,
+    },
+    combineArgs: {
+      darkMode: [true, false],
+      // @ts-ignore
+      'data-hover': [false, true],
+      'data-focus': [false, true],
+      resourceName: [
+        'ac_iqttxwn_shard-00-01.hvcuthh.mongodb.net:27017_324892384903284902384903284903284902384903284832908_long_name',
+        'normal not long short_name',
+      ],
+    },
+    excludeCombinations: [
+      {
+        // @ts-ignore
+        'data-hover': false,
+        'data-focus': false,
+      },
+    ],
   },
 };

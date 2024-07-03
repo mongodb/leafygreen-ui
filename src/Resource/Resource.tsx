@@ -13,17 +13,17 @@ import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, { Justify } from '@leafygreen-ui/tooltip';
 import { Body } from '@leafygreen-ui/typography';
 
+import { LGIDS } from '../constants';
+
 import {
+  getResourceNameContainerStyles,
+  getResourceNameStyles,
   resourceBaseStyles,
   resourceCopiedStyles,
   resourceCopyStyles,
   resourceIconBaseStyles,
-  resourceNameBaseStyles,
-  resourceNameContainerBaseStyles,
   resourceNameContainerClassname,
-  resourceNameContainerThemeStyles,
   resourceNameStyles,
-  resourceNameUnderlineStyles,
 } from './Resource.styles';
 import { ResourceProps } from './Resource.types';
 
@@ -70,30 +70,25 @@ export const Resource = React.forwardRef<HTMLDivElement, ResourceProps>(
         <Body
           className={cx(
             resourceNameContainerClassname,
-            resourceNameContainerBaseStyles,
-            resourceNameContainerThemeStyles[theme],
+            getResourceNameContainerStyles(theme),
           )}
           role="button"
           tabIndex={0}
           baseFontSize={16}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
-          data-testid="lg-canvas_header-resource_name"
+          data-testid={LGIDS.resourceName}
         >
           <span
-            className={cx(
-              resourceNameBaseStyles,
-              resourceNameStyles,
-              resourceNameUnderlineStyles[theme],
-            )}
+            className={cx(getResourceNameStyles(theme), resourceNameStyles)}
           >
             {resourceName}
           </span>
           <span
             className={cx(
-              resourceNameBaseStyles,
+              getResourceNameStyles(theme),
               resourceCopyStyles,
-              resourceNameUnderlineStyles[theme],
+
               {
                 [resourceCopiedStyles]: copied, // show the icon until the tooltip goes away
               },
