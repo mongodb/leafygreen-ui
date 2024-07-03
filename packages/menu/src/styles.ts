@@ -7,7 +7,7 @@ import { palette } from '@leafygreen-ui/palette';
 import { color, InteractionState, Property } from '@leafygreen-ui/tokens';
 
 /** Enumerates interaction states on a menu item */
-const MenuInteractionState = {
+export const MenuInteractionState = {
   ...InteractionState,
   Active: 'active',
 } as const;
