@@ -1,5 +1,13 @@
 # @leafygreen-ui/typography
 
+## 19.2.1
+
+### Patch Changes
+
+- db2d1d12c: Updates the background color of InlineCode component in dark mode from transparent to `gray.dark4`
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+
 ## 19.2.0
 
 ### Minor Changes

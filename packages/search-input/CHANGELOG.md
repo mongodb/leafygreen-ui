@@ -1,5 +1,28 @@
 # @leafygreen-ui/search-input
 
+## 3.1.2
+
+### Patch Changes
+
+- cfa830701: Updates `SearchResults`.
+
+  - Removes custom option styles in favor of consistent option styles from `InputOptionContent`
+
+  Updates `SearchResultsMenu`
+
+  - Updates the menu `background-color` to match the background from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/a11y@1.5.0
+  - @leafygreen-ui/typography@19.2.1
+
 ## 3.1.1
 
 ### Patch Changes
