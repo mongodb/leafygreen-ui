@@ -1,5 +1,21 @@
 # @leafygreen-ui/split-button
 
+## 1.1.2
+
+### Patch Changes
+
+- cfa830701: Updates Menu. Resolves failing tests due to Menu update
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/menu@25.0.0
+  - @leafygreen-ui/lib@13.6.1
+
 ## 1.1.1
 
 ### Patch Changes
