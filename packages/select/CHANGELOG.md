@@ -1,5 +1,26 @@
 # @leafygreen-ui/select
 
+## 12.1.1
+
+### Patch Changes
+
+- cfa830701: Updates `Option`
+
+  - Removes style overrides in favor of consistent option styles from `InputOptionContent`
+
+  Updates `ListMenu`
+
+  - Updates the menu `background-color` and `border-color` to match the background and border from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/typography@19.2.1
+
 ## 12.1.0
 
 ### Minor Changes

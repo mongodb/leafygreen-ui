@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.6.1
+
+### Patch Changes
+
+- cfa830701: Fixes `RecursiveRecord` type
+
 ## 13.6.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/testing-lib
 
+## 0.6.1
+
+### Patch Changes
+
+- cfa830701: `waitForTransition` accepts `null` arg
+
 ## 0.6.0
 
 ### Minor Changes

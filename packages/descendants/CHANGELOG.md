@@ -1,5 +1,15 @@
 # @leafygreen-ui/descendants
 
+## 0.3.0
+
+### Minor Changes
+
+- cfa830701: Adds & exports `getDescendantById` & `getDescendantByIndex` utilities
+
+### Patch Changes
+
+- cfa830701: Updates Descendant index properties after inserting & removing to ensure the index of the Descendant object matches the index within the Descendants list
+
 ## 0.2.0
 
 ### Minor Changes

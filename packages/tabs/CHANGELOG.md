@@ -1,5 +1,19 @@
 # @leafygreen-ui/tabs
 
+## 12.0.2
+
+### Patch Changes
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/descendants@0.3.0
+  - @leafygreen-ui/a11y@1.5.0
+  - @leafygreen-ui/typography@19.2.1
+
 ## 12.0.1
 
 ### Patch Changes
