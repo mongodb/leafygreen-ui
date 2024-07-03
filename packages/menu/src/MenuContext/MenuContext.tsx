@@ -20,6 +20,9 @@ export interface MenuContextData {
   renderDarkMenu?: boolean;
 }
 
+/**
+ * Used to register and consume Menu descendants
+ */
 export const MenuDescendantsContext = createDescendantsContext(
   'MenuDescendantsContext',
 );
@@ -30,4 +33,7 @@ export const MenuContext = createContext<MenuContextData>({
   highlight: undefined,
 });
 
+/**
+ * Returns the {@link MenuContextData} for a given menu context
+ */
 export const useMenuContext = () => useContext(MenuContext);

@@ -1,7 +1,12 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 export interface SubMenuContextData {
+  /** The depth of the current submenu */
   depth: number;
+  /**
+   * Whether the current submenu has an icon.
+   * Along with `depth`, this affects the indentation of submenu items
+   */
   hasIcon: boolean;
 }
 
@@ -20,4 +25,7 @@ export const SubMenuProvider = ({
   </SubMenuContext.Provider>
 );
 
+/**
+ * Returns the {@link SubMenuContextData} for a given submenu context
+ */
 export const useSubMenuContext = () => useContext(SubMenuContext);

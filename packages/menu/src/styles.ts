@@ -6,14 +6,18 @@ import { RecursiveRecord, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, InteractionState, Property } from '@leafygreen-ui/tokens';
 
+/** Enumerates interaction states on a menu item */
 const MenuInteractionState = {
   ...InteractionState,
   Active: 'active',
 } as const;
+/** Enumerates interaction states on a menu item */
 export type MenuInteractionState =
   (typeof MenuInteractionState)[keyof typeof MenuInteractionState];
 
-// Menu dark/light mode colors intentionally do not line up with tokens
+/**
+ * Custom color tokens used within `Menu` and related components
+ */
 export const menuColor = {
   [Theme.Light]: {
     [Property.Background]: {
