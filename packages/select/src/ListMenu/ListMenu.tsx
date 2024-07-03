@@ -10,7 +10,7 @@ import { LGIDS_SELECT } from '../constants';
 import { DropdownWidthBasis } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
-import { MobileMediaQuery, useForwardedRef } from '../utils';
+import { MobileMediaQuery, useForwardedRef } from '../utils/utils';
 
 import {
   autoWidthStyles,

@@ -10,4 +10,4 @@ export {
   Size,
   State,
 } from './Select';
-export { getTestUtils } from './utils/getTestUtils/getTestUtils';
+export { getTestUtils } from './utils';

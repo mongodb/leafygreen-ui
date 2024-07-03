@@ -39,7 +39,7 @@ import {
   reconcileOption,
   traverseSelectChildren,
   useStateRef,
-} from '../utils';
+} from '../utils/utils';
 
 import {
   labelDescriptionContainerStyle,
