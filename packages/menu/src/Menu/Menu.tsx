@@ -176,6 +176,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           darkMode,
           highlight,
           setHighlight,
+          moveHighlight,
           renderDarkMenu,
         }}
       >
