@@ -1,5 +1,4 @@
 export type {
-  Descendant,
   HighlightChangeHandler,
   HighlightReducerFunction,
   HighlightReducerReturnType,

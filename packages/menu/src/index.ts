@@ -1,7 +1,6 @@
 export { LGIDs } from './constants';
 export { FocusableMenuItem } from './FocusableMenuItem';
 export type {
-  Descendant,
   HighlightChangeHandler,
   HighlightReducerFunction,
   HighlightReducerReturnType,
