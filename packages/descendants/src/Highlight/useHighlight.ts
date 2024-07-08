@@ -40,12 +40,11 @@ export const useHighlight = <T extends HTMLElement>(
    * Fires any side-effects in the `onChange` callback
    */
   const moveHighlight = (direction: Direction) => {
-    const updatedHighlight = highlightReducerFunction(highlight, {
-      direction,
-    });
+    const action = { direction };
+    const updatedHighlight = highlightReducerFunction(highlight, action);
 
     onChange?.(updatedHighlight);
-    dispatch({ direction });
+    dispatch(action);
   };
 
   /**

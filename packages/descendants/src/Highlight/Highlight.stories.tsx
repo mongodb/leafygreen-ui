@@ -1,4 +1,4 @@
-import { ElementType, PropsWithChildren, useState } from 'react';
+import { ElementType, PropsWithChildren, useEffect, useState } from 'react';
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 
@@ -33,7 +33,7 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
 
   return (
     <div ref={ref} style={{ color: isHighlighted ? 'red' : 'black' }}>
-      {children}
+      {children}: {id}
     </div>
   );
 };
@@ -53,10 +53,30 @@ export const Basic = () => {
   ]);
 
   const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
-  const { highlight, setHighlight } =
+  const { highlight, moveHighlight, setHighlight } =
     useHighlight<HTMLDivElement>(getDescendants);
 
+  const handleKeyDown = e => {
+    switch (e.key) {
+      case 'ArrowDown':
+        moveHighlight('next');
+        break;
+      case 'ArrowUp':
+        moveHighlight('prev');
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    document.body.addEventListener('keydown', handleKeyDown);
+    () => document.body.removeEventListener('keydown', handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div>
       <DescendantsProvider
         context={TestDescendantContext}

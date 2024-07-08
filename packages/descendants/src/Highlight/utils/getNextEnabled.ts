@@ -16,7 +16,7 @@ export function getNextEnabledIndex(
   descendants: DescendantsList<HTMLElement>,
 ): Index {
   // If all descendants are disabled, then we skip this step
-  if (descendants.every(d => d.props.disabled)) {
+  if (descendants.every(d => d.props?.disabled)) {
     return undefined;
   }
 
@@ -29,7 +29,7 @@ export function getNextEnabledIndex(
 
   // If the subsequent item is disabled,
   // keep searching in that direction for an enabled one
-  while (item?.props.disabled) {
+  while (item?.props?.disabled) {
     // If the first/last item is disabled
     // start the search in the forward/backward direction
     const nextDirection: Direction = (() => {
