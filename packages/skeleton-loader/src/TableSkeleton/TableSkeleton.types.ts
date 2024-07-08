@@ -1,8 +1,11 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+import { SharedSkeletonProps } from '../Skeleton/Skeleton.types';
+
 export interface TableSkeletonProps
-  extends DarkModeProps,
+  extends SharedSkeletonProps,
+    DarkModeProps,
     HTMLElementProps<'table'> {
   /**
    * Base font size

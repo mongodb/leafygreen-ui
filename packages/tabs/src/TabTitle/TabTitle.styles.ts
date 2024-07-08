@@ -9,6 +9,9 @@ import {
   typeScales,
 } from '@leafygreen-ui/tokens';
 
+const TAB_TITLE_BODY_1_HEIGHT = 44;
+const TAB_TITLE_BODY_2_HEIGHT = 52;
+
 interface ListTitleMode {
   base: string;
   hover: string;
@@ -104,10 +107,12 @@ export const listTitleFontSize: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
+    height: ${TAB_TITLE_BODY_1_HEIGHT}px;
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
+    height: ${TAB_TITLE_BODY_2_HEIGHT}px;
   `,
 };
 

@@ -17,7 +17,7 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';
 import { InternalToastProps } from '../InternalToast';
-import Meta, { Basic } from '../Toast.story';
+import Meta, { Basic } from '../Toast.stories';
 import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
 import { ToastProvider, ToastProviderProps, ToastStack } from '..';
 

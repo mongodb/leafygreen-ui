@@ -7,5 +7,6 @@
   "eslint.lintTask.options": "--config ./tools/lint/eslint.config.js",
   "eslint.format.enable": true,
   "eslint.runtime": "node",
-  "eslint.workingDirectories": ["./"]
+  "eslint.workingDirectories": ["./"],
+  "typescript.preferences.importModuleSpecifier": "project-relative"
 }

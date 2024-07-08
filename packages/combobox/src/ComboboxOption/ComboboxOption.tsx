@@ -11,8 +11,8 @@ import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
 
 import {
-  comboboxOptionSizeStyle,
   displayNameStyle,
+  largeStyles,
   multiselectIconLargePosition,
   multiselectIconPosition,
 } from './ComboboxOption.styles';
@@ -110,8 +110,8 @@ export const InternalComboboxOption = React.forwardRef<
         aria-label={displayName}
         darkMode={darkMode}
         className={cx(
-          comboboxOptionSizeStyle(size),
           {
+            [largeStyles]: size === ComboboxSize.Large,
             [multiselectIconPosition]: multiSelectWithoutIcons,
             [multiselectIconLargePosition]:
               multiSelectWithoutIcons && size === ComboboxSize.Large,

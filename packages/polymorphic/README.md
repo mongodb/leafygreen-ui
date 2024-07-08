@@ -78,23 +78,23 @@ const MyComponent = Polymorphic<MyProps>(({ as, ...rest }, forwardedRef) => {
 });
 ```
 
-### Inferred `as` prop
+## Inferred `as` prop
 
 Components extended using the `Polymorphic` factory function can be made to infer the `as` prop value based on the `href` passed in.
 Ensure the custom props are wrapped in `InferredPolymorphicProps`, and use the `useInferredPolymorphic` hook.
 Make sure to pass both `as` and a `rest` object (that may contain `href`) into the hook.
 
 ```tsx
-export const MyInferredComponent = Polymorphic<
-  InferredPolymorphicProps<MyProps>
->(({ as, ...rest }) => {
-  const { Component, ref } = useInferredPolymorphic(as, rest);
-  return (
-    <Component ref={ref} {...rest}>
-      {title}
-    </Component>
-  );
-});
+export const MyInferredComponent = InferredPolymorphic<MyProps>(
+  ({ as, ...rest }) => {
+    const { Component, ref } = useInferredPolymorphic(as, rest);
+    return (
+      <Component ref={ref} {...rest}>
+        {title}
+      </Component>
+    );
+  },
+);
 
 //
 
@@ -111,7 +111,7 @@ To set a default value for the inferred as value, you'll need to provide the def
 export const MyInferredComponentWithDefault = InferredPolymorphic<
   ExampleProps,
   'button'
->(({ as = 'button' as PolymorphicAs, title, ...rest }) => {
+>(({ as = 'button', title, ...rest }) => {
   const { Component, ref } = useInferredPolymorphic(as, rest);
   return (
     <Component ref={ref} {...rest}>
@@ -119,6 +119,13 @@ export const MyInferredComponentWithDefault = InferredPolymorphic<
     </Component>
   );
 });
+```
+
+Note: When a component is `InferredPolymorphic`, the `href` will force the component to render as an anchor, and will override any default value.
+
+```tsx
+<MyInferredComponentWithDefault />; // as <button>
+<MyInferredComponentWithDefault href="mongodb.design" />; // as <button>
 ```
 
 ## With Emotion `styled` API

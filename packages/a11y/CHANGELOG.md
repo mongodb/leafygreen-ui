@@ -1,5 +1,28 @@
 # @leafygreen-ui/a11y
 
+## 1.5.0
+
+### Minor Changes
+
+- cfa830701: Adds `AriaLabelPropsWithChildren` type that requires either `children`, or other `aria-label` attributes to be defined. Allows a component to accept any of `aria-label`, `aria-labelledby` or `children` as sufficient text for screen-reader accessibility
+
+### Patch Changes
+
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+
+## 1.4.13
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+
 ## 1.4.12
 
 ### Patch Changes

@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
 import React, { ReactElement } from 'react';
+import { GeneratedStoryConfig } from '@lg-tools/storybook-utils';
 import { Args, StoryFn } from '@storybook/react';
 import entries from 'lodash/entries';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
 import {
   cellStyles,

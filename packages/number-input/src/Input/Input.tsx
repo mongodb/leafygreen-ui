@@ -1,9 +1,9 @@
 import React, {
   ChangeEvent,
+  FocusEvent,
   KeyboardEvent,
   useEffect,
   useRef,
-  useState,
 } from 'react';
 import isUndefined from 'lodash/isUndefined';
 
@@ -11,25 +11,20 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useControlledValue, useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { Arrows } from '../Arrows';
-import { ErrorIcon } from '../ErrorIcon';
 import { Direction, Size, State } from '../NumberInput/NumberInput.types';
 
 import {
-  inputAnimateStyles,
+  getWrapperDisabledStyles,
+  getWrapperHoverStyles,
+  getWrapperStateStyles,
   inputBaseStyles,
-  inputErrorAnimateStyles,
-  inputErrorPaddingTransitionStyles,
   inputSizeStyles,
   inputThemeStyles,
   selectBaseStyles,
   wrapperBaseStyles,
   wrapperClassName,
-  wrapperDisabledStyles,
-  wrapperHoverStyles,
-  wrapperStateStyles,
   wrapperThemeStyles,
 } from './Input.styles';
 import { InputProps } from './Input.types';
@@ -43,11 +38,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     {
       value: valueProp,
       onChange: onChangeProp,
+      onBlur,
       disabled = false,
       size = Size.Default,
       state = State.None,
       hasSelectOptions,
-      errorMessage,
       className,
       ...rest
     }: InputProps,
@@ -58,8 +53,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
      */
     const translateTimeout = useRef<NodeJS.Timeout>();
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const [shouldErrorTransition, setShouldErrorTransition] =
-      useState<boolean>(false);
     const isFocusedRef = useRef<boolean>(false);
     const inputRef = useForwardedRef<HTMLInputElement | null>(forwardRef, null);
     const { theme } = useDarkMode();
@@ -73,8 +66,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         }
       };
     }, []);
-
-    const shouldRenderErrorIcon = state === State.Error;
 
     const { value, handleChange } = useControlledValue(valueProp, onChangeProp);
 
@@ -129,65 +120,32 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       }
     };
 
-    /**
-     * On hover(`onMouseEnter`) or focus(`onFocus`) of the wrapper we want to add a transition to the error icon so that it animates with the arrows. By default, the error icon will not have a transition when shown which is consistent with other LG inputs.
-     *
-     * Here we set state to true which conditionally adds the transition to the CSS.
-     * We also clear the timeout that was created during `mouseLeave` or `onBlur` to prevent execution.
-     *
-     * The purpose of this is to only have the error icon animate when the arrows are visible.
-     */
-    const handleSetErrorTransition = () => {
-      setShouldErrorTransition(true);
-      if (translateTimeout.current) {
-        clearTimeout(translateTimeout.current);
-      }
-    };
-
-    /**
-     * When no longer hovering(`onMouseLeave`) or focused(`onBlur`) we want to remove the transition but we do it on a delay that matches the CSS transition duration. Without the delay the error icon would not animate with the arrows.
-     *
-     * We can't do this with CSS only because if we only have a transition on hover/focus the ease out animation will not execute when the wrapper is no longer hovered or in focus.
-     */
-    const handleRemoveErrorTransition = () => {
-      if (containerRef.current) {
-        // if the container is not focused then we can go ahead and remove the transition.
-        // An example of this is if we are focused in the container but the mouse has moved outside of the container.
-        if (!isFocusedRef.current) {
-          translateTimeout.current = setTimeout(
-            () => setShouldErrorTransition(false),
-            transitionDuration.default,
-          );
-        }
-      }
-    };
-
-    const handleOnFocus = () => {
+    const handleFocus = () => {
       isFocusedRef.current = true;
-      handleSetErrorTransition();
     };
 
-    const handleOnBlur = () => {
+    const handleBlur = (e: FocusEvent<HTMLDivElement>) => {
       isFocusedRef.current = false;
-      handleRemoveErrorTransition();
+      // If newly focused element is a child of the input container, we do not invoke onBlur
+      const inputContainer = e.currentTarget as Node;
+      const possibleChildOfInputContainer = e.relatedTarget as Node | null;
+      if (inputContainer.contains(possibleChildOfInputContainer)) return;
+      onBlur?.(e);
     };
 
     return (
       <div
         ref={containerRef}
-        onMouseEnter={() => handleSetErrorTransition()}
-        onMouseLeave={() => handleRemoveErrorTransition()}
-        onFocus={() => handleOnFocus()}
-        onBlur={() => handleOnBlur()}
-        aria-disabled={disabled}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         className={cx(
           wrapperClassName,
           wrapperBaseStyles,
           wrapperThemeStyles[theme],
-          wrapperStateStyles[theme][state],
+          getWrapperStateStyles(theme)[state],
           {
-            [wrapperHoverStyles[theme][state]]: !disabled,
-            [wrapperDisabledStyles[theme]]: disabled,
+            [getWrapperHoverStyles(theme)[state]]: !disabled,
+            [getWrapperDisabledStyles(theme)]: disabled,
             [selectBaseStyles]: hasSelectOptions,
           },
           className,
@@ -199,14 +157,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             inputBaseStyles,
             inputThemeStyles[theme],
             inputSizeStyles[size],
-            {
-              // padding without error icon
-              [inputAnimateStyles]: !disabled,
-              // padding with error icon
-              [inputErrorAnimateStyles[size]]:
-                shouldRenderErrorIcon && !disabled,
-              [inputErrorPaddingTransitionStyles]: shouldErrorTransition,
-            },
           )}
           type="number"
           value={isControlled ? valueProp : value} // TODO: temp fix for useControlledValue hook. The hook was not returning the correct value when controlled. For example when typing 2e3 the hook would return 3 but it should return 2e3 like a native number input would.
@@ -215,17 +165,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           readOnly={disabled}
           {...rest}
         />
-        <ErrorIcon
-          disabled={disabled}
-          shouldRenderErrorIcon={shouldRenderErrorIcon}
-          size={size}
-          shouldErrorTransition={shouldErrorTransition}
-        />
-
         <Arrows
           disabled={disabled}
           onClick={handleValueChange}
           onKeyDown={handleArrowKeyDown}
+          size={size}
         />
       </div>
     );

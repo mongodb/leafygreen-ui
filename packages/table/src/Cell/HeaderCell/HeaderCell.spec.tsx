@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { ColumnDef, Header } from '@tanstack/react-table';
 import {
   queryByRole as globalQueryByRole,
   render,
@@ -6,10 +7,10 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import {
-  getTestColumnsProps,
-  useTestHookCall,
-} from '../../utils/testHookCalls.testutils';
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
+import useLeafyGreenTable, { LGTableDataType } from '../../useLeafyGreenTable';
+import { Person } from '../../utils/makeData.testutils';
 
 import HeaderCell, { HeaderCellProps } from '.';
 
@@ -34,9 +35,37 @@ function renderSimpleHeaderCell(props: HeaderCellProps<unknown>) {
   );
 }
 
-const HeaderCellWithHook = (props: getTestColumnsProps) => {
-  const { containerRef, table } = useTestHookCall({
-    columnProps: props,
+const headerCellTestColumns: Array<ColumnDef<Partial<Person>>> = [
+  {
+    accessorKey: 'firstName',
+    header: 'First Name',
+    enableSorting: true,
+  },
+  {
+    accessorKey: 'age',
+    header: 'Age',
+    enableSorting: true,
+  },
+];
+
+const headerCellTestData: Array<Partial<Person>> = [
+  {
+    firstName: 'Aaron',
+    age: 99,
+  },
+  {
+    firstName: 'Zara',
+    age: 21,
+  },
+];
+
+const TestSortableHeaderCell = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const table = useLeafyGreenTable({
+    containerRef,
+    columns: headerCellTestColumns,
+    data: headerCellTestData,
   });
 
   return (
@@ -44,13 +73,9 @@ const HeaderCellWithHook = (props: getTestColumnsProps) => {
       <table>
         <thead>
           <tr>
-            <HeaderCell
-              data-testid="lg-header-cell-test"
-              header={table.getHeaderGroups()[0].headers[0]}
-            >
-              test header cell
-            </HeaderCell>
-            <th>th 2</th>
+            {table.getHeaderGroups()[0].headers.map(header => (
+              <HeaderCell key={header.id} header={header} />
+            ))}
           </tr>
         </thead>
         <tbody>
@@ -64,6 +89,20 @@ const HeaderCellWithHook = (props: getTestColumnsProps) => {
   );
 };
 
+/** Returns the `header` data for a given column def */
+const useMockTestHeaderData = (
+  columnDef: ColumnDef<any>,
+): Header<LGTableDataType<any>, unknown> => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const table = useLeafyGreenTable({
+    containerRef: React.createRef<HTMLDivElement>(),
+    data: [],
+    columns: [columnDef],
+  });
+
+  return table.getFlatHeaders()[0];
+};
+
 describe('packages/table/HeaderCell', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
@@ -75,51 +114,84 @@ describe('packages/table/HeaderCell', () => {
 
   describe('sort prop', () => {
     test('sort prop renders sort icon button', async () => {
-      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      expect(sortIconButton).toBeInTheDocument();
+      const { getAllByTestId } = render(<TestSortableHeaderCell />);
+      const sortIconButtons = getAllByTestId('lg-table-sort-icon-button');
+      expect(sortIconButtons[0]).toBeInTheDocument();
+      expect(sortIconButtons[1]).toBeInTheDocument();
     });
 
-    test('initial state of sort icon is unsorted', async () => {
-      const { queryByLabelText } = render(<HeaderCellWithHook enableSorting />);
-      const sortIcon = queryByLabelText('Unsorted Icon');
-      expect(sortIcon).toBeInTheDocument();
-    });
+    // Sorting behaves differently for string and numeric data
+    describe.each([
+      {
+        columnIndex: 0,
+        dataType: 'string',
+        initialSort: 'Ascending',
+        secondSort: 'Descending',
+      },
+      {
+        columnIndex: 1,
+        dataType: 'number',
+        initialSort: 'Descending',
+        secondSort: 'Ascending',
+      },
+    ])('for $dataType data', ({ columnIndex, initialSort, secondSort }) => {
+      const iconButtonTestId = 'lg-table-sort-icon-button';
 
-    test('clicking sort icon switches to sort descending', async () => {
-      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      userEvent.click(sortIconButton);
-      const sortIcon = globalQueryByRole(sortIconButton, 'img');
-      expect(sortIcon).toHaveAttribute('aria-label', 'Sort Descending Icon');
-    });
+      test('initial state of sort icon is unsorted', async () => {
+        const { queryAllByLabelText } = render(<TestSortableHeaderCell />);
+        const unsortedIcon = queryAllByLabelText('Unsorted Icon')[columnIndex];
+        expect(unsortedIcon).toBeInTheDocument();
+      });
 
-    test('clicking sort icon twice switches to sort ascending', async () => {
-      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      userEvent.click(sortIconButton);
-      userEvent.click(sortIconButton);
-      const sortIcon = globalQueryByRole(sortIconButton, 'img');
-      expect(sortIcon).toHaveAttribute('aria-label', 'Sort Ascending Icon');
-    });
+      test(`clicking sort icon switches to sort ${initialSort}`, async () => {
+        const { getAllByTestId } = render(<TestSortableHeaderCell />);
+        const sortIconButton = getAllByTestId(iconButtonTestId)[columnIndex];
+        userEvent.click(sortIconButton);
+        const sortIcon = globalQueryByRole(sortIconButton, 'img');
+        expect(sortIcon).toHaveAttribute(
+          'aria-label',
+          `Sort ${initialSort} Icon`,
+        );
+      });
 
-    test('clicking sort icon three times reverts to unsorted icon', async () => {
-      const { getByTestId } = render(<HeaderCellWithHook enableSorting />);
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      userEvent.click(sortIconButton);
-      userEvent.click(sortIconButton);
-      userEvent.click(sortIconButton);
-      const sortIcon = globalQueryByRole(sortIconButton, 'img');
-      expect(sortIcon).toHaveAttribute('aria-label', 'Unsorted Icon');
+      test(`clicking sort icon twice switches to sort ${secondSort}`, async () => {
+        const { getAllByTestId } = render(<TestSortableHeaderCell />);
+        const sortIconButton = getAllByTestId(iconButtonTestId)[columnIndex];
+        userEvent.click(sortIconButton);
+        userEvent.click(sortIconButton);
+        const sortIcon = globalQueryByRole(sortIconButton, 'img');
+        expect(sortIcon).toHaveAttribute(
+          'aria-label',
+          `Sort ${secondSort} Icon`,
+        );
+      });
+
+      test(`clicking sort icon three times reverts to unsorted icon`, async () => {
+        const { getAllByTestId } = render(<TestSortableHeaderCell />);
+        const sortIconButton = getAllByTestId(iconButtonTestId)[columnIndex];
+        userEvent.click(sortIconButton);
+        userEvent.click(sortIconButton);
+        userEvent.click(sortIconButton);
+        const sortIcon = globalQueryByRole(sortIconButton, 'img');
+        expect(sortIcon).toHaveAttribute('aria-label', 'Unsorted Icon');
+      });
     });
   });
-  describe('width prop', () => {
-    test('setting custom size changes HeaderCell width', async () => {
-      const { getByTestId } = render(
-        <HeaderCellWithHook enableSorting size={700} />,
-      );
-      const headerCell = getByTestId('lg-header-cell-test');
-      expect(getComputedStyle(headerCell).width).toBe('700px');
-    });
+
+  test('setting size in columnDef sets HeaderCell width', async () => {
+    const { result } = renderHook(() =>
+      useMockTestHeaderData({
+        accessorKey: 'id',
+        size: 700,
+      }),
+    );
+
+    const mockHeader = result.current;
+
+    const { getByTestId } = render(
+      <HeaderCell data-testid="lg-header-cell-test" header={mockHeader} />,
+    );
+    const headerCell = getByTestId('lg-header-cell-test');
+    expect(getComputedStyle(headerCell).width).toBe('700px');
   });
 });

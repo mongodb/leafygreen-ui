@@ -1,5 +1,34 @@
 # @leafygreen-ui/card
 
+## 11.0.0
+
+### Major Changes
+
+- 667496f83: Updates Card component to leverage `@leafygreen-ui/polymorphic` rather than deprecated Box component for handling polymorphic behavior
+
+### Patch Changes
+
+- Updated dependencies [667496f83]
+- Updated dependencies [d70758dcf]
+  - @leafygreen-ui/polymorphic@2.0.2
+  - @leafygreen-ui/palette@4.1.0
+
+## 10.0.7
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/box@3.1.9
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 10.0.6
 
 ### Patch Changes

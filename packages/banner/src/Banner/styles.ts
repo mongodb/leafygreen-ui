@@ -29,7 +29,6 @@ export const baseBannerStyles = css`
 const darkModeInfoBannerStyles = css`
   color: ${palette.blue.light2};
   border-color: ${palette.blue.dark2};
-  border-left-color: ${palette.blue.light1};
   background-color: ${palette.blue.dark3};
 
   .${anchorClassName}, a {
@@ -57,7 +56,6 @@ const darkModeInfoBannerStyles = css`
 const darkModeWarningBannerStyles = css`
   color: ${palette.yellow.light2};
   border-color: ${palette.yellow.dark2};
-  border-left-color: ${palette.yellow.dark2};
   background-color: ${palette.yellow.dark3};
 
   .${anchorClassName}, a {
@@ -85,7 +83,6 @@ const darkModeWarningBannerStyles = css`
 const darkModeDangerBannerStyles = css`
   color: ${palette.red.light2};
   border-color: ${palette.red.dark2};
-  border-left-color: ${palette.red.base};
   background-color: ${palette.red.dark3};
 
   .${anchorClassName}, a {
@@ -113,7 +110,6 @@ const darkModeDangerBannerStyles = css`
 const darkModeSuccessBannerStyles = css`
   color: ${palette.green.light2};
   border-color: ${palette.green.dark2};
-  border-left-color: ${palette.green.base};
   background-color: ${palette.green.dark3};
 
   .${anchorClassName}, a {
@@ -141,7 +137,6 @@ const darkModeSuccessBannerStyles = css`
 const lightModeInfoBannerStyles = css`
   color: ${palette.blue.dark2};
   border-color: ${palette.blue.light2};
-  border-left-color: ${palette.blue.base};
   background-color: ${palette.blue.light3};
 
   .${anchorClassName}, a {
@@ -169,7 +164,6 @@ const lightModeInfoBannerStyles = css`
 const lightModeWarningBannerStyles = css`
   color: ${palette.yellow.dark2};
   border-color: ${palette.yellow.light2};
-  border-left-color: ${palette.yellow.base};
   background-color: ${palette.yellow.light3};
 
   .${anchorClassName}, a {
@@ -197,7 +191,6 @@ const lightModeWarningBannerStyles = css`
 const lightModeDangerBannerStyles = css`
   color: ${palette.red.dark2};
   border-color: ${palette.red.light2};
-  border-left-color: ${palette.red.base};
   background-color: ${palette.red.light3};
 
   .${anchorClassName}, a {
@@ -225,7 +218,6 @@ const lightModeDangerBannerStyles = css`
 const lightModeSuccessBannerStyles = css`
   color: ${palette.green.dark2};
   border-color: ${palette.green.light2};
-  border-left-color: ${palette.green.base};
   background-color: ${palette.green.light3};
 
   .${anchorClassName}, a {

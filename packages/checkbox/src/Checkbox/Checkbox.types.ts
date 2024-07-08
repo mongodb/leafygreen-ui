@@ -2,6 +2,7 @@ import {
   createUniqueClassName,
   Either,
   HTMLElementProps,
+  LgIdProps,
   Theme,
 } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -69,7 +70,8 @@ interface InternalCheckboxProps extends HTMLElementProps<'input'> {
 export type CheckboxProps = Either<
   InternalCheckboxProps,
   'label' | 'aria-label' | 'aria-labelledby'
->;
+> &
+  LgIdProps;
 
 /**
  * Props for the internal Check SVG

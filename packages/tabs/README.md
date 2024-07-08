@@ -32,53 +32,6 @@ const [selected, setSelected] = useState(0)
 </Tabs>
 ```
 
-## Output HTML
-
-```html
-<div>
-  <div class="leafygreen-ui-4furr2" role="tablist">
-    <button
-      class="leafygreen-ui-17lvitv"
-      role="tab"
-      aria-controls="tab-0"
-      aria-selected="true"
-      tabindex="0"
-    >
-      Tab One
-    </button>
-    <button
-      class="leafygreen-ui-6uqhxy"
-      role="tab"
-      aria-controls="tab-1"
-      aria-selected="false"
-      tabindex="-1"
-    >
-      Tab Two
-    </button>
-    <button
-      class="leafygreen-ui-6uqhxy"
-      role="tab"
-      aria-controls="tab-2"
-      aria-selected="false"
-      tabindex="-1"
-    >
-      Tab Three
-    </button>
-  </div>
-  <div class="leafygreen-ui-xh3r7y">
-    <div class="leafygreen-ui-11283ir"></div>
-  </div>
-  <div
-    aria-disabled="false"
-    aria-selected="true"
-    aria-controls="tab-0"
-    role="tabpanel"
-  >
-    Tab Content One
-  </div>
-</div>
-```
-
 ## Properties
 
 | Prop           | Type                | Description                                                                                                                                                                                                                                   | Default  |
@@ -107,6 +60,138 @@ _Any other properties supplied will be spread on the root element._
 | `to`              | `string`                                           | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                             |         |
 | `children`        | `node`                                             | Content that appears inside the `<Tab />` component                                                                       |         |
 | ...               | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                        |         |
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Tabs` in a product test suite. If the `Tabs` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/tabs';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Tabs`. It defaults to 'lg-tabs' if left empty.
+```
+
+#### Single `Tabs` component
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Tabs, Tab, getTestUtils } from '@leafygreen-ui/tabs';
+
+...
+
+test('tabs', () => {
+  render(
+    <Tabs aria-label="Label">
+      <Tab name="First" default>
+        Content 1
+      </Tab>
+      <Tab name="Second">
+        Content 2
+      </Tab>
+      <Tab name="Third">
+        Content 3
+      </Tab>
+    </Tabs>
+  );
+
+  const { getAllTabPanelsInDOM, getAllTabsInTabList, getSelectedPanel, getTabUtilsByName } = getTestUtils();
+
+  expect(getAllTabsInTabList()).toHaveLength(3);
+  expect(getAllTabPanelsInDOM()).toHaveLength(1);
+
+  const firstTabUtils = getTabUtilsByName('First');
+  expect(firstTabUtils.isSelected()).toBeTruthy();
+
+  expect(getSelectedPanel()).toHaveTextContent('Content 1');
+
+  const secondTabUtils = getTabUtilsByName('Second');
+
+  // click to second tab
+  if (secondTabUtils) {
+    userEvent.click(secondTabUtils.getTab());
+  }
+  // selected panel text content is updated
+  expect(getSelectedPanel()).toHaveTextContent('Content 2');
+});
+```
+
+#### Multiple `Tabs` components
+
+When testing multiple `Tabs` components, it is recommended to add the custom `data-lgid` attribute to each `Tabs`.
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Tabs, Tab, getTestUtils } from '@leafygreen-ui/tabs';
+
+...
+
+test('tabs', () => {
+  render(
+    <>
+      <Tabs aria-label="Label ABC" data-lgid="tabs-abc">
+        <Tab name="A" default>
+          Content A
+        </Tab>
+        <Tab name="B">
+          Content B
+        </Tab>
+        <Tab name="C">
+          Content C
+        </Tab>
+      </Tabs>
+      <Tabs aria-label="Label XY" data-lgid="tabs-xy" forceRenderAllTabPanels={true}>
+        <Tab name="X">
+          Content X
+        </Tab>
+        <Tab name="Y" default>
+          Content Y
+        </Tab>
+      </Tabs>
+    </>
+  );
+
+  const testUtils1 = getTestUtils('tabs-abc'); // data-lgid
+  const testUtils2 = getTestUtils('tabs-xy'); // data-lgid
+
+  // First tabs
+  expect(testUtils1.getAllTabsInTabList()).toHaveLength(3);
+  expect(testUtils1.getAllTabPanelsInDOM()).toHaveLength(1);
+  expect(testUtils1.getSelectedPanel()).toHaveTextContent('Content A');
+
+  // Second tabs
+  expect(testUtils2.getAllTabsInTabList()).toHaveLength(2);
+  expect(testUtils2.getAllTabPanelsInDOM()).toHaveLength(2);
+  expect(testUtils2.getSelectedPanel()).toHaveTextContent('Content Y');
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  getAllTabPanelsInDOM,
+  getAllTabsInTabList,
+  getTabUtilsByName: { getTab, isSelected, isDisabled },
+  getSelectedPanel,
+} = getTestUtils();
+```
+
+| Util                     | Description                                          | Returns                 |
+| ------------------------ | ---------------------------------------------------- | ----------------------- |
+| `getAllTabPanelsInDOM()` | Returns an array of tab panels                       | `Array<HTMLElement>`    |
+| `getAllTabsInTabList()`  | Returns an array of tabs                             | `Array<HTMLElement>`    |
+| `getSelectedPanel()`     | Returns the selected tab panel                       | `HTMLElement` \| `null` |
+| `getTabUtilsByName()`    | Returns tab utils if tab with matching name is found | `TabUtils` \| `null`    |
+| TabUtils                 |                                                      |                         |
+| `getTab()`               | Returns the tab                                      | `HTMLElement`           |
+| `isSelected()`           | Returns whether the tab is selected                  | `boolean`               |
+| `isDisabled()`           | Returns whether the tab is disabled                  | `boolean`               |
 
 ## Reference
 

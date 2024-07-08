@@ -22,6 +22,7 @@ import { TableSkeletonProps } from '.';
 export function TableSkeleton({
   darkMode: darkModeProp,
   baseFontSize: baseFontSizeProp = BaseFontSize.Body1,
+  enableAnimations,
   numRows = 5,
   numCols = 4,
   columnLabels,
@@ -45,7 +46,7 @@ export function TableSkeleton({
                     {columnLabels[i]}
                   </Body>
                 ) : (
-                  <Skeleton size="small" />
+                  <Skeleton enableAnimations={enableAnimations} size="small" />
                 )}
               </th>
             ))}
@@ -57,6 +58,7 @@ export function TableSkeleton({
               {[...Array(numCols)].map((_, j) => (
                 <td key={j} className={cellStyles}>
                   <Skeleton
+                    enableAnimations={enableAnimations}
                     size="small"
                     className={cx({ [firstRowStyles]: i === 0 })}
                   />

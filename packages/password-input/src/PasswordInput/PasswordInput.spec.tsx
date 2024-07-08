@@ -3,6 +3,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { LGIDS_PASSWORD_INPUT } from '../constants';
+
 import { PasswordInput } from '.';
 
 const defaultProps = {
@@ -14,6 +16,8 @@ const defaultProps = {
   id: 'This is id',
   onChange: jest.fn(),
   onBlur: jest.fn(),
+  errorMessage: 'This is an error',
+  successMessage: 'This is a valid input',
   notifications: [
     {
       notification: 'message one',
@@ -26,12 +30,6 @@ const defaultProps = {
   ],
 };
 
-const iconAriaLabels = {
-  warning: 'Warning Icon',
-  error: 'X Icon',
-  valid: 'Checkmark Icon',
-};
-
 function renderPasswordInput(props = {}) {
   const utils = render(
     // @ts-expect-error - data-testid gives an error but passes in types checks test below
@@ -39,13 +37,15 @@ function renderPasswordInput(props = {}) {
   );
   const passwordInput = utils.getByTestId('password-input');
   const labelElement = utils.container.querySelector('label');
-  const messageContainer = utils.container.querySelector('ul');
+  const stateNotifications = utils.queryByTestId(
+    LGIDS_PASSWORD_INPUT.stateNotifications,
+  );
   const toggleButton = utils.container.querySelector('button');
   return {
     ...utils,
     passwordInput,
     labelElement,
-    messageContainer,
+    stateNotifications,
     toggleButton,
   };
 }
@@ -194,31 +194,31 @@ describe('packages/password-input', () => {
   });
 
   describe('Password input with stateNotifications array', () => {
-    test('renders message container', async () => {
-      const { messageContainer } = renderPasswordInput({
+    test('renders state notifications', async () => {
+      const { stateNotifications } = renderPasswordInput({
         label: defaultProps.label,
       });
-      expect(messageContainer).toBeInTheDocument();
+      expect(stateNotifications).toBeInTheDocument();
     });
 
-    test('renders message container with two messages', async () => {
-      const { messageContainer } = renderPasswordInput({
+    test('renders state notifications with two messages', async () => {
+      const { stateNotifications } = renderPasswordInput({
         stateNotifications: defaultProps.notifications,
         label: defaultProps.label,
       });
-      const allMessages = messageContainer?.querySelectorAll('li');
+      const allMessages = stateNotifications?.querySelectorAll('li');
       expect(allMessages).toHaveLength(2);
     });
   });
 
   describe('Password input with aria-describedby', () => {
-    test('does not render message container if aria-describedby is passed', async () => {
-      const { messageContainer } = renderPasswordInput({
+    test('does not render state notifications if aria-describedby is passed', async () => {
+      const { stateNotifications } = renderPasswordInput({
         [`aria-describedby`]: defaultProps.ariaDescribedby,
         stateNotifications: 'error',
         label: defaultProps.label,
       });
-      expect(messageContainer).not.toBeInTheDocument();
+      expect(stateNotifications).not.toBeInTheDocument();
     });
 
     test('input aria-describedby attribute matches aria-describedby prop', async () => {
@@ -231,49 +231,34 @@ describe('packages/password-input', () => {
         defaultProps.ariaDescribedby,
       );
     });
+  });
 
-    test('input shows error(x) icon', async () => {
-      const { container } = renderPasswordInput({
-        [`aria-describedby`]: defaultProps.ariaDescribedby,
+  describe('without stateNotifications array or aria-describedby', () => {
+    test(`it renders a general error message when stateNotifications is 'error'`, async () => {
+      const { queryByText } = renderPasswordInput({
         stateNotifications: 'error',
         label: defaultProps.label,
+        errorMessage: defaultProps.errorMessage,
       });
-      expect(
-        container.querySelector(`svg[aria-label='${iconAriaLabels.error}']`),
-      ).toBeInTheDocument();
+      expect(queryByText(defaultProps.errorMessage)).toBeInTheDocument();
     });
 
-    test('input shows warning icon', async () => {
-      const { container } = renderPasswordInput({
-        [`aria-describedby`]: defaultProps.ariaDescribedby,
+    test(`it renders a general error message when stateNotifications is 'warning'`, async () => {
+      const { queryByText } = renderPasswordInput({
         stateNotifications: 'warning',
         label: defaultProps.label,
+        errorMessage: defaultProps.errorMessage,
       });
-      expect(
-        container.querySelector(`svg[aria-label='${iconAriaLabels.warning}']`),
-      ).toBeInTheDocument();
+      expect(queryByText(defaultProps.errorMessage)).toBeInTheDocument();
     });
 
-    test('input shows checkmark icon', async () => {
-      const { container } = renderPasswordInput({
-        [`aria-describedby`]: defaultProps.ariaDescribedby,
+    test(`it renders a general success message when stateNotifications is 'valid'`, async () => {
+      const { queryByText } = renderPasswordInput({
         stateNotifications: 'valid',
         label: defaultProps.label,
+        successMessage: defaultProps.successMessage,
       });
-      expect(
-        container.querySelector(`svg[aria-label='${iconAriaLabels.valid}']`),
-      ).toBeInTheDocument();
-    });
-
-    test('input does not show checkmark icon', async () => {
-      const { container } = renderPasswordInput({
-        [`aria-describedby`]: defaultProps.ariaDescribedby,
-        stateNotifications: 'none',
-        label: defaultProps.label,
-      });
-      expect(
-        container.querySelector(`svg[aria-label='${iconAriaLabels.valid}']`),
-      ).not.toBeInTheDocument();
+      expect(queryByText(defaultProps.successMessage)).toBeInTheDocument();
     });
   });
 
@@ -317,6 +302,21 @@ describe('packages/password-input', () => {
         data-attribute="data test"
         aria-labelledby="label"
         stateNotifications={[{ notification: 'hi', state: 'error' }]}
+      />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
+        stateNotifications="error"
+      />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
+        stateNotifications="valid"
+      />
+      <PasswordInput
+        data-attribute="data test"
+        aria-labelledby="label"
+        stateNotifications="warning"
       />
     </>;
   });

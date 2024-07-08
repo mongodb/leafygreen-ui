@@ -1,5 +1,81 @@
 # @leafygreen-ui/tokens
 
+## 2.9.0
+
+### Minor Changes
+
+- 29d50edaa: Adds 72px spacing token
+
+  [LG-4341](https://jira.mongodb.org/browse/LG-4341)
+
+### Patch Changes
+
+- Updated dependencies [7a901b954]
+  - @leafygreen-ui/lib@13.6.0
+
+## 2.8.0
+
+### Minor Changes
+
+- 7bc4fcde: - Improves semantics of color token segment type names (e.g. `Type` -> `Property`, `State` -> `InteractionState`).
+  - Adds TSDoc to color types
+  - Deprecates `Mode` enum in favor if `Theme` (exported from `lib`)
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+  - @leafygreen-ui/lib@13.5.0
+
+## 2.7.0
+
+### Minor Changes
+
+- 3364b542: Adds link to text color tokens
+- 0864a420: Adds `placeholder` token
+
+## 2.6.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Fixes `darkModeBackgroundColors` disabled colors
+  - Fixes `lightModeBorderColors` variable typo
+
+## 2.5.3
+
+### Patch Changes
+
+- 57dedc40: Adds `satisfies` to ensure consistent & correct `colors` token structure
+
+## 2.5.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+  - @leafygreen-ui/palette@4.0.9
+
+## 2.5.1
+
+### Patch Changes
+
+- 5ee54143: Provides support for auto-complete by removing explicit type definitions and leveraging `as const`
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
+## 2.5.0
+
+### Minor Changes
+
+- 3208b813: Adds more spacing tokens
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-4065)
+
+## 2.4.0
+
+### Minor Changes
+
+- c2854e9b: Adds additional spacing tokens
+
 ## 2.3.0
 
 ### Minor Changes

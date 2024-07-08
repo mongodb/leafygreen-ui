@@ -1,12 +1,16 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { BaseFontSize, fontFamilies, typeScales } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  color,
+  fontFamilies,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 export const baseTypographyStyles = css`
   margin: unset;
   font-family: ${fontFamilies.default};
-  color: ${palette.black};
+  color: ${color.light.text.primary.default};
 `;
 
 export const bodyTypeScaleStyles: Record<BaseFontSize, string> = {
@@ -33,9 +37,9 @@ export const codeTypeScaleStyles: Record<BaseFontSize, string> = {
 
 export const defaultTextColor: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.black};
+    color: ${color.light.text.primary.default};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light2};
+    color: ${color.dark.text.primary.default};
   `,
 };

@@ -1,5 +1,74 @@
 # @leafygreen-ui/toast
 
+## 6.1.26
+
+### Patch Changes
+
+- cadc11b18: Fixed the controlled Toast component to avoid most infinite render loops
+- Updated dependencies [d70758dcf]
+  - @leafygreen-ui/palette@4.1.0
+
+## 6.1.25
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 6.1.24
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/portal@5.1.1
+  - @leafygreen-ui/tokens@2.5.2
+
+## 6.1.23
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 6.1.22
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/portal@5.1.0
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
+## 6.1.21
+
+### Patch Changes
+
+- fbc2b7c8: Removes unused storybook dev dependencies (`@storybook/types` and `storybook-mock-date-decorator`)
+- Updated dependencies [8142d306]
+- Updated dependencies [3208b813]
+  - @leafygreen-ui/icon@11.29.0
+  - @leafygreen-ui/tokens@2.5.0
+
 ## 6.1.20
 
 ### Patch Changes

@@ -1,8 +1,8 @@
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { TruncationLocation, Variant } from './Chip/Chip.types';
@@ -46,6 +46,21 @@ const meta: StoryMetaType<typeof Chip> = {
     variant: Variant.Gray,
     chipCharacterLimit: 15,
     disabled: false,
+  },
+  argTypes: {
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+    },
+    chipTruncationLocation: {
+      options: [
+        TruncationLocation.End,
+        TruncationLocation.Middle,
+        TruncationLocation.None,
+        TruncationLocation.Start,
+      ],
+      control: { type: 'select' },
+    },
   },
 };
 export default meta;

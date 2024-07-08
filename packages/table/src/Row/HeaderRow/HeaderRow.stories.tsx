@@ -2,9 +2,9 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/prop-types*/
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { HeaderCell } from '../../Cell';
 import { HeaderRow } from '../../Row';

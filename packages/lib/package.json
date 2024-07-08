@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/lib",
-  "version": "13.2.1",
+  "version": "13.6.1",
   "description": "leafyGreen UI Kit Internal Library",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

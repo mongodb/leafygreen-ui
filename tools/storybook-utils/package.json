@@ -1,0 +1,28 @@
+{
+  "name": "@lg-tools/storybook-utils",
+  "version": "0.1.1",
+  "description": "Storybook Utilities for LeafyGreen UI",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

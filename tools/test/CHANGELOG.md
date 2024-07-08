@@ -1,5 +1,61 @@
 # @lg-tools/test
 
+## 0.4.9
+
+### Patch Changes
+
+- Updated dependencies [659aa9eed]
+  - @leafygreen-ui/testing-lib@0.6.0
+
+## 0.4.8
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+  - @lg-tools/meta@0.3.4
+
+## 0.4.7
+
+### Patch Changes
+
+- Updated dependencies [ed9bead67]
+  - @leafygreen-ui/testing-lib@0.5.0
+
+## 0.4.6
+
+### Patch Changes
+
+- Updated dependencies [4951369a]
+  - @lg-tools/build@0.5.1
+
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+  - @lg-tools/build@0.5.0
+  - @lg-tools/meta@0.3.3
+
+## 0.4.4
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+  - @leafygreen-ui/testing-lib@0.4.2
+  - @lg-tools/meta@0.3.2
+
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+  - @lg-tools/build@0.4.0
+  - @lg-tools/meta@0.3.1
+
 ## 0.4.2
 
 ### Patch Changes

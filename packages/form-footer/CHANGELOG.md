@@ -1,5 +1,109 @@
 # @leafygreen-ui/form-footer
 
+## 4.0.0
+
+### Major Changes
+
+- 9ef03272: - Updates `data-testid` on `<footer>` from `lg-form_footer-footer` to `lg-form_footer`.
+  - Adds `primaryButtonProps`. This prop is an object that accepts all `Button` props but `variant` is limited to `primary` and `danger`.
+  - Prop `primaryButton` is marked as `deprecated`. Please transition to `primaryButtonProps`.
+  - Removes `cancelButtonText`. Use `cancelButtonProps` and pass the `children` property.
+    ```js
+    cancelButtonProps: {
+      {
+        children: 'hi';
+      }
+    }
+    ```
+  - Removes `onCancel`. Use `cancelButtonProps` and pass the `onClick` property.
+    ```js
+    cancelButtonProps: {
+      {
+        onClick: () => {};
+      }
+    }
+    ```
+  - Removes `backButtonText`. Use `backButtonProps` and pass the `children` property.
+    ```js
+    backButtonProps: {
+      {
+        children: 'hi';
+      }
+    }
+    ```
+  - Removes `onBackClick`. Use `backButtonProps` and pass the `onClick` property.
+    ```js
+    backButtonProps: {
+      {
+        onClick: () => {};
+      }
+    }
+    ```
+
+### Patch Changes
+
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/icon@12.4.0
+
+## 3.1.4
+
+### Patch Changes
+
+- Updated dependencies [24ee033c]
+  - @leafygreen-ui/banner@8.0.0
+
+## 3.1.3
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/button@21.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/banner@7.0.20
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+
+## 3.1.2
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/banner@7.0.19
+
+## 3.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/icon@11.29.1
+
+## 3.1.0
+
+### Minor Changes
+
+- 5a9bf08a: Adds `cancelButtonProps` and `backButtonProps` to `FormFooter` component for customizing buttons.
+  Marks `cancelButtonText`, `onCancel`, `backButtonText`, and `onBackClick` props as deprecated.
+  [LG-3685](https://jira.mongodb.org/browse/LG-3685)
+
+### Patch Changes
+
+- Updated dependencies [8142d306]
+  - @leafygreen-ui/icon@11.29.0
+
+## 3.0.16
+
+### Patch Changes
+
+- 9e7d74b0: Adds `data-testids` to subcomponents of FormFooter
+
 ## 3.0.15
 
 ### Patch Changes

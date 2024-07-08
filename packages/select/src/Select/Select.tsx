@@ -10,6 +10,7 @@ import React, {
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
+import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
 import {
   useEventListener,
   useForwardedRef,
@@ -23,11 +24,12 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
+import { LGIDS_SELECT } from '../constants';
 import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
 import SelectContext from '../SelectContext';
-import { mobileSizeSet, sizeSets } from '../styleSets';
+import { mobileSizeSet } from '../styleSets';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -37,10 +39,9 @@ import {
   reconcileOption,
   traverseSelectChildren,
   useStateRef,
-} from '../utils';
+} from '../utils/utils';
 
 import {
-  errorTextStyle,
   labelDescriptionContainerStyle,
   largeLabelStyles,
   wrapperStyle,
@@ -62,10 +63,12 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       allowDeselect = true,
       usePortal = true,
       placeholder = 'Select',
-      errorMessage = '',
+      errorMessage = DEFAULT_MESSAGES.error,
+      successMessage = DEFAULT_MESSAGES.success,
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
+      'data-lgid': dataLgId = LGIDS_SELECT.root,
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,
@@ -78,6 +81,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       onChange,
       readOnly,
       portalContainer,
+      portalRef,
       scrollContainer,
       portalClassName,
       popoverZIndex,
@@ -115,8 +119,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const menuButtonRef = useStateRef<HTMLButtonElement>(null);
     const menuButtonId = useIdAllocator({ prefix: 'select' });
     const listMenuRef = useStateRef<HTMLUListElement | null>(null);
-
-    const sizeSet = sizeSets[size];
 
     const providerData = useMemo(() => {
       return { size, open, disabled };
@@ -496,6 +498,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             usePortal,
             portalClassName,
             portalContainer,
+            portalRef,
             scrollContainer,
           }
         : { usePortal }),
@@ -503,7 +506,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div ref={containerRef} className={cx(wrapperStyle, className)}>
+        <div
+          ref={containerRef}
+          className={cx(wrapperStyle, className)}
+          data-lgid={dataLgId}
+        >
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>
               {label && (
@@ -586,7 +593,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               aria-describedby={descriptionId}
               aria-invalid={state === State.Error}
               aria-disabled={disabled}
-              errorMessage={errorMessage}
               state={state}
               baseFontSize={baseFontSize}
               __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
@@ -609,28 +615,14 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               </ListMenu>
             </MenuButton>
           </SelectContext.Provider>
-          {state === State.Error && errorMessage && (
-            <span
-              className={cx(
-                errorTextStyle({ darkMode, sizeSet }),
-                css`
-                  ${MobileMediaQuery} {
-                    font-size: ${mobileSizeSet.description.text}px;
-                    line-height: ${mobileSizeSet.description.lineHeight}px;
-                  }
-                `,
-                {
-                  [css`
-                    // Hide error text when menu is open,
-                    // so it doesn't peek around the menu corner
-                    color: transparent;
-                  `]: open,
-                },
-              )}
-            >
-              {errorMessage}
-            </span>
-          )}
+          <FormFieldFeedback
+            disabled={disabled}
+            errorMessage={errorMessage}
+            hideFeedback={open}
+            size={size}
+            state={state}
+            successMessage={successMessage}
+          />
         </div>
       </LeafyGreenProvider>
     );
@@ -643,7 +635,7 @@ Select.propTypes = {
   label: PropTypes.string,
   'aria-labelledby': PropTypes.string,
   'aria-label': PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.node,
   placeholder: PropTypes.string,
   className: PropTypes.string,
   darkMode: PropTypes.bool,
@@ -654,9 +646,16 @@ Select.propTypes = {
   defaultValue: PropTypes.string,
   onChange: PropTypes.func,
   readOnly: PropTypes.bool,
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.node,
+  successMessage: PropTypes.node,
   state: PropTypes.oneOf(Object.values(State)),
   allowDeselect: PropTypes.bool,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   dropdownWidthBasis: PropTypes.oneOf(Object.values(DropdownWidthBasis)),
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
 } as WeakValidationMap<ComponentProps<typeof Select>>;

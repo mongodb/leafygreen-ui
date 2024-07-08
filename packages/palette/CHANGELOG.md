@@ -1,5 +1,23 @@
 # @leafygreen-ui/palette
 
+## 4.1.0
+
+### Minor Changes
+
+- d70758dcf: Adds `transparent` key to `palette`. Ensures a consistent `transparent` color across browsers
+
+## 4.0.10
+
+### Patch Changes
+
+- 070736c4: Exports `black` and `white` colors `as const`
+
+## 4.0.9
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 4.0.8
 
 ### Patch Changes

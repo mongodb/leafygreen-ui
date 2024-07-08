@@ -1,5 +1,64 @@
 # @leafygreen-ui/modal
 
+## 16.0.9
+
+### Patch Changes
+
+- ccf18a59d: Ensures Modal size property value is always normalized, such that if a value is passed that falls outside of those allowed, we default to `"default"`.
+- Updated dependencies [a94306ab3]
+  - @leafygreen-ui/icon-button@15.0.22
+
+## 16.0.8
+
+### Patch Changes
+
+- 1e9f2030: Adds and exports test ids for modal and close button.
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 16.0.7
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/portal@5.1.1
+  - @leafygreen-ui/tokens@2.5.2
+
+## 16.0.6
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+
+## 16.0.5
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/portal@5.1.0
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
 ## 16.0.4
 
 ### Patch Changes

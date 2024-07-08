@@ -3,7 +3,7 @@ import { Transition } from 'react-transition-group';
 
 import Card from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { useIdAllocator, usePrevious } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
@@ -26,9 +26,6 @@ import {
 } from './ExpandableCard.styles';
 import { ExpandableCardProps } from './ExpandableCard.types';
 
-/**
- * TODO: Description
- */
 const ExpandableCard = ({
   title,
   children,
@@ -54,6 +51,14 @@ const ExpandableCard = ({
   const contentId = useIdAllocator({ prefix: 'expandable-card-content' });
 
   const transitionRef = useRef<HTMLElement | null>(null);
+
+  const previousDefaultOpen = usePrevious(defaultOpen);
+
+  useEffect(() => {
+    if (previousDefaultOpen !== defaultOpen) {
+      setIsOpen(defaultOpen);
+    }
+  }, [defaultOpen, previousDefaultOpen]);
 
   // When the controlled prop changes, update the internal state
   useEffect(() => {
@@ -108,7 +113,9 @@ const ExpandableCard = ({
             {flagText && <span className={flagTextStyle}>{flagText}</span>}
           </span>
           {description && (
-            <Body className={summaryTextThemeStyle[theme]}>{description}</Body>
+            <Body as="div" className={summaryTextThemeStyle[theme]}>
+              {description}
+            </Body>
           )}
 
           <Transition

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { createRef, ReactElement } from 'react';
 import {
   act,
   fireEvent,
@@ -506,6 +506,19 @@ describe('packages/tooltip', () => {
       const { button } = renderNestedTrigger();
       expect(button).toBeInTheDocument();
     });
+  });
+
+  test('accepts a portalRef', () => {
+    const portalContainer = document.createElement('div');
+    document.body.appendChild(portalContainer);
+    const portalRef = createRef<HTMLElement>();
+    renderTooltip({
+      open: true,
+      portalContainer,
+      portalRef,
+    });
+    expect(portalRef.current).toBeDefined();
+    expect(portalRef.current).toBe(portalContainer);
   });
 
   test('portals popover content to end of DOM, when "usePortal" is not set', () => {

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/card",
-  "version": "10.0.6",
+  "version": "11.0.0",
   "description": "leafyGreen UI Kit Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,15 +22,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.8",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^13.0.0",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.1.4",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.1.0",
+    "@leafygreen-ui/polymorphic": "^2.0.2",
+    "@leafygreen-ui/tokens": "^2.5.2",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/card",
@@ -41,5 +41,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.0"
+  }
 }

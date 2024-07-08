@@ -1,0 +1,37 @@
+{
+  "name": "@lg-chat/chat-disclaimer",
+  "version": "3.0.2",
+  "description": "LeafyGreen UI Kit Chat Disclaimer",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/marketing-modal": "^4.2.3",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/modal": "^16.0.7",
+    "@lg-tools/storybook-utils": "^0.1.1"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

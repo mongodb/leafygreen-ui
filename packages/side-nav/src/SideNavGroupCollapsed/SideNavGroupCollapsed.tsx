@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Transition, TransitionStatus } from 'react-transition-group';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -46,21 +46,27 @@ export function SideNavGroupCollapsed({
   const { width, theme, darkMode } = useSideNavContext();
   const { usingKeyboard } = useUsingKeyboardContext();
 
+  const [ulHeight, setUlHeight] = useState(0);
+
   const menuId = useIdAllocator({ prefix: 'menu' });
 
   const nodeRef = React.useRef(null);
-  const ulRef = React.useRef<HTMLUListElement>(null);
+
+  const ulRef = useCallback((node: HTMLUListElement) => {
+    if (node !== null) {
+      setUlHeight(node.getBoundingClientRect().height);
+    }
+  }, []);
 
   // compute the entered ul wrapper styles based on the ul height
   useEffect(() => {
-    const ulHeight = ulRef?.current?.getBoundingClientRect().height ?? 0;
     transitionStyles['entered'] = css`
       opacity: 1;
       max-height: ${ulHeight + 1}px; // +1 for border
       border-bottom: 1px solid
         ${darkMode ? palette.gray.dark1 : palette.gray.light2};
     `;
-  }, [open, ulRef, darkMode]);
+  }, [open, ulHeight, darkMode]);
 
   return (
     <>

@@ -9,6 +9,7 @@ import {
   arrowDisabledStyles,
   arrowsAnimateStyles,
   arrowsBaseStyles,
+  arrowsSizeStyles,
 } from './Arrows.styles';
 import { ArrowsProps } from './Arrows.types';
 
@@ -16,10 +17,10 @@ import { ArrowsProps } from './Arrows.types';
  * @internal
  */
 
-export const Arrows = ({ disabled, onClick, onKeyDown }: ArrowsProps) => {
+export const Arrows = ({ disabled, onClick, onKeyDown, size }: ArrowsProps) => {
   return (
     <div
-      className={cx(arrowsBaseStyles, {
+      className={cx(arrowsBaseStyles, arrowsSizeStyles[size], {
         [arrowsAnimateStyles]: !disabled,
         [arrowDisabledStyles]: disabled,
       })}

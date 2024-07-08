@@ -1,25 +1,32 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { CardSkeleton } from '..';
 
 export default {
   title: 'Components/SkeletonLoader',
   component: CardSkeleton,
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+  parameters: {
+    default: null,
+    controls: { exclude: ['darkMode', 'ref'] },
+    generate: {
+      storyNames: ['Card'],
+      combineArgs: {
+        darkMode: [false, true],
+      },
+      decorator: Instance => (
+        <div style={{ width: 500 }}>
+          <Instance />
+        </div>
+      ),
+    },
   },
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 700 }}>
-        <Story />
-      </div>
-    ),
-  ],
-};
+  args: {
+    enableAnimations: false,
+  },
+  argTypes: {
+    enableAnimations: { control: 'boolean' },
+  },
+} satisfies StoryMetaType<typeof CardSkeleton>;
 
-export const Card: StoryFn<typeof CardSkeleton> = props => (
-  <CardSkeleton {...props} />
-);
+export const Card: StoryType<typeof CardSkeleton> = () => <></>;

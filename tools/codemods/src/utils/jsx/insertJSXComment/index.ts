@@ -1,0 +1,1 @@
+export { insertJSXComment } from './insertJSXComment';

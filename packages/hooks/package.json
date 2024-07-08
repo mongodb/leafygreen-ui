@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/hooks",
-  "version": "8.1.1",
+  "version": "8.1.3",
   "description": "LeafyGreen UI Kit Custom Hooks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^13.2.1",
+    "@leafygreen-ui/lib": "^13.3.0",
     "lodash": "^4.17.21"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
@@ -35,6 +35,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.7"
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@lg-tools/storybook-utils": "^0.1.0"
   }
 }

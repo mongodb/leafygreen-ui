@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, fontFamilies } from '@leafygreen-ui/tokens';
+import { color, focusRing, fontFamilies } from '@leafygreen-ui/tokens';
 
 export const anchorClassName = createUniqueClassName();
 
@@ -19,8 +19,8 @@ export const code = css`
 
 export const codeModes: Record<Theme, string> = {
   [Theme.Light]: css`
-    background-color: ${palette.gray.light3};
-    border: 1px solid ${palette.gray.light2};
+    background-color: ${color.light.background.secondary.default};
+    border: 1px solid ${color.light.border.secondary.default};
     color: ${palette.gray.dark3};
 
     .${anchorClassName}:hover > & {
@@ -30,7 +30,7 @@ export const codeModes: Record<Theme, string> = {
   `,
 
   [Theme.Dark]: css`
-    background-color: transparent;
+    background-color: ${color.dark.background.secondary.default};
     border: 1px solid ${palette.gray.dark2};
     color: ${palette.gray.light1};
 

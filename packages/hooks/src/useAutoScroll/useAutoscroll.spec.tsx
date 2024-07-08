@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { testItemHeight } from './constants.test';
-import { Basic } from './useAutoScroll.story';
+import { Basic } from './useAutoScroll.stories';
 
 describe('packages/hooks/useAutoScroll', () => {
   test('Initially at the top', async () => {

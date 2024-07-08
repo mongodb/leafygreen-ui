@@ -87,7 +87,7 @@ npm install @leafygreen-ui/button
 | `size`             | `'xsmall'`, `'small'`, `'default'`, `'large'`                                              | Sets the size variant of the button.                                                                                                                                                                            | `'default'` |
 | `children`         | `node`                                                                                     | The content that will appear inside of the `<Button />` component.                                                                                                                                              | `null`      |
 | `className`        | `string`                                                                                   | Adds a className to the class attribute.                                                                                                                                                                        | `''`        |
-| `disabled`         | `boolean`                                                                                  | Disabled the button                                                                                                                                                                                             | `false`     |
+| `disabled`         | `boolean`                                                                                  | Disables the button                                                                                                                                                                                             | `false`     |
 | `as`               | `'a' \| 'button'`                                                                          | Determines the root element. An `a` tags can be supplied to replace `button` from being the DOM element that wraps the component.                                                                               | `button`    |
 | `href`             | `string`                                                                                   | If a href is supplied it will change the `as` value, such that the component renders inside of an `a` tag instead of inside of a `button` tag.                                                                  |             |
 | `leftGlyph`        | `React.ReactElement`                                                                       | Glyph that will appear to the left of text, if there is text provided via the children prop. If no children are supplied to the component, passing an Icon here will render the button as an icon-only button.  |             |
@@ -99,3 +99,73 @@ npm install @leafygreen-ui/button
 | ...                | native attributes of component passed to as prop                                           | Any other properties will be spread on the root element                                                                                                                                                         |             |
 
 _Note: In order to make this Component act as a submit button, the recommended approach is to pass `submit` as the `type` prop. Note it is also valid to pass `input` to the `as` prop, and the button's content's to the `value` prop -- in this case, do not supply children to the component._
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Button` in a product test suite. If the `Button` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import Button, { getTestUtils } from '@leafygreen-ui/button';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Button`. It defaults to 'lg-button' if left empty.
+```
+
+#### Single `Button`
+
+```tsx
+import { render } from '@testing-library/react';
+import Button, { getTestUtils } from '@leafygreen-ui/button';
+
+...
+
+test('button', () => {
+  render(<Button>Click me</Button>);
+  const { getButton } = getTestUtils();
+
+  expect(getButton()).toBeInTheDocument();
+});
+```
+
+#### Multiple `Button` components
+
+When testing multiple `Button` components it is recommended to add the custom `data-lgid` attribute to each `Button`.
+
+```tsx
+import { render } from '@testing-library/react';
+import Button, { getTestUtils } from '@leafygreen-ui/button';
+
+...
+
+test('button', () => {
+  render(
+    <>
+      <Button data-lgid="button-1">Click 1</Button>
+      <Button data-lgid="button-2" disabled>Click 2</Button>
+    </>,
+  );
+  const utilsOne = getTestUtils('button-1'); // data-lgid
+  const utilsTwo = getTestUtils('button-2'); // data-lgid
+  // First Button
+  expect(utilsOne.getButton()).toBeInTheDocument();
+  expect(utilsOne.isDisabled()).toBe(false);
+
+  // Second Button
+  expect(utilsTwo.getButton()).toBeInTheDocument();
+  expect(utilsTwo.isDisabled()).toBe(true);
+});
+```
+
+### Test Utils
+
+```tsx
+const { getButton, isDisabled } = getTestUtils();
+```
+
+| Util         | Description                           | Returns             |
+| ------------ | ------------------------------------- | ------------------- |
+| `getButton`  | Returns the input node                | `HTMLButtonElement` |
+| `isDisabled` | Returns whether the input is disabled | `boolean`           |

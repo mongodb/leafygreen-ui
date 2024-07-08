@@ -12,6 +12,13 @@ import {
   WeakValidationMap,
 } from 'react';
 
+export type IntrinsicElements<P = any> =
+  | {
+      [K in keyof JSX.IntrinsicElements]: P extends JSX.IntrinsicElements[K]
+        ? K
+        : never;
+    }[keyof JSX.IntrinsicElements];
+
 export type PolymorphicAs = ElementType;
 
 /**
@@ -29,8 +36,8 @@ export interface AsProp<T extends PolymorphicAs> {
  * The type of the Ref element based on the `as` prop type
  */
 export type PolymorphicRef<T extends PolymorphicAs> =
-  ComponentPropsWithRef<T>['ref'];
-
+  | ComponentPropsWithRef<T>['ref']
+  | null;
 /**
  * Union of prop types potentially re-defined in React.ComponentProps
  */
@@ -53,7 +60,8 @@ export type AllInheritedProps<T extends PolymorphicAs> = T extends 'a'
   : ComponentPropsWithoutRef<T>;
 
 /**
- * Omits any props inclided in type `P` from the inherited props
+ * Extends `{@link ComponentPropsWithoutRef<T>}`, but
+ * omits any props also included in type `XP`
  */
 export type InheritedProps<T extends PolymorphicAs, XP = {}> = Omit<
   AllInheritedProps<T>,

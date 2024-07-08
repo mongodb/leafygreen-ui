@@ -1,28 +1,14 @@
 import React, { forwardRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
-import Warning from '@leafygreen-ui/icon/dist/Warning';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import {
-  bodyTypeScaleStyles,
-  Description,
-  Error,
-  Label,
-  useUpdatedBaseFontSize,
-} from '@leafygreen-ui/typography';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import {
-  colorSets,
-  containerStyles,
-  errorContainerStyle,
-  errorIconStyle,
-  errorMessageLabelStyles,
-  textAreaStyle,
-} from './TextArea.styles';
+import { LGIDS_TEXT_AREA } from '../constants';
+
+import { textAreaContainerStyles, textAreaStyles } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
 /**
@@ -41,12 +27,14 @@ import { State, TextAreaProps } from './TextArea.types';
  * @param props.onBlur Callback to be executed when the input stops being focused.
  * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
  * @param props.errorMessage The error message shown below the input element if the value is invalid.
+ * @param props.successMessage The success message shown below the input element if the value is valid.
  * @param props.state The current state of the TextArea. This can be `none` or `error`.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className ClassName supplied to the TextArea container.
  * @param props.darkMode Determines whether or not the component appears in dark theme.
  * @param props.handleValidation Validation callback used to validate input.
  * @param props.baseFontSize Override the global `baseFontSize` set in LeafygreenProvider. This will only change the font size of the input text, not the label or description.
+ * @param props.defaultValue The default value of the input field. Unlike value, component will not be controlled if defaultValue is passed.
  */
 
 type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
@@ -58,7 +46,8 @@ export const TextArea: TextArea = forwardRef<
     label,
     description,
     className,
-    errorMessage,
+    errorMessage = 'This input needs your attention',
+    successMessage = 'Success',
     darkMode: darkModeProp,
     disabled = false,
     state = State.None,
@@ -67,24 +56,28 @@ export const TextArea: TextArea = forwardRef<
     onChange,
     onBlur,
     handleValidation,
+    'aria-label': ariaLabel,
     'aria-labelledby': ariaLabelledby,
+    'aria-invalid': ariaInvalid,
     baseFontSize: baseFontSizeProp,
+    'data-lgid': dataLgId = LGIDS_TEXT_AREA.root,
+    defaultValue = '',
     ...rest
   }: TextAreaProps,
   forwardedRef: React.Ref<HTMLTextAreaElement>,
 ) {
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const id = useIdAllocator({ prefix: 'textarea', id: idProp });
-  const { darkMode, theme } = useDarkMode(darkModeProp);
+  const { darkMode } = useDarkMode(darkModeProp);
 
   const isControlled = typeof controlledValue === 'string';
-  const [uncontrolledValue, setValue] = useState('');
+  const [uncontrolledValue, setValue] = useState(defaultValue);
   const value = isControlled ? controlledValue : uncontrolledValue;
 
   // Validation
   const validation = useValidation<HTMLTextAreaElement>(handleValidation);
 
-  const onBlurHandler: React.FocusEventHandler<HTMLTextAreaElement> = e => {
+  const handleBlur: React.FocusEventHandler<HTMLTextAreaElement> = e => {
     if (onBlur) {
       onBlur(e);
     }
@@ -92,7 +85,7 @@ export const TextArea: TextArea = forwardRef<
     validation.onBlur(e);
   };
 
-  const onValueChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
+  const handleChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
     if (onChange) {
       onChange(e);
     }
@@ -110,60 +103,43 @@ export const TextArea: TextArea = forwardRef<
     );
   }
 
+  const ariaProps = {
+    'aria-invalid': ariaInvalid,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
+  } as const;
+
+  const formFieldProps = {
+    baseFontSize,
+    className,
+    darkMode,
+    'data-lgid': dataLgId,
+    description,
+    disabled,
+    errorMessage,
+    id,
+    label,
+    state,
+    successMessage,
+    ...ariaProps,
+  } as const;
+
+  const textAreaProps = {
+    className: textAreaStyles,
+    onBlur: handleBlur,
+    onChange: handleChange,
+    ref: forwardedRef,
+    title: label != null ? label : undefined,
+    value,
+    ...rest,
+  } as const;
+
   return (
-    <LeafyGreenProvider
-      darkMode={darkMode}
-      // TODO: We cannot simply pass baseFontSize to the Provider, since the updatedBaseFontSize values are not in line with those accepted by the Provider.
-      // Once we fix this in this Provider, we should update to pass baseFontSize here rather than coercing the value.
-      // This works as-is because all of the Typography elements are using useUpdatedBaseFontSize to convert 14 to 13px.
-      baseFontSize={baseFontSize === 16 ? 16 : 14}
-    >
-      <div className={cx(containerStyles, className)}>
-        {label && (
-          <Label htmlFor={id} disabled={disabled}>
-            {label}
-          </Label>
-        )}
-        {description && (
-          <Description disabled={disabled}>{description}</Description>
-        )}
-        <textarea
-          {...rest}
-          aria-labelledby={ariaLabelledby}
-          ref={forwardedRef}
-          title={label != null ? label : undefined}
-          id={id}
-          className={cx(
-            textAreaStyle,
-            bodyTypeScaleStyles[baseFontSize],
-            colorSets[theme].textArea,
-            {
-              [colorSets[theme].errorBorder]:
-                state === State.Error && !disabled,
-            },
-          )}
-          disabled={disabled}
-          onChange={onValueChange}
-          onBlur={onBlurHandler}
-          value={value}
-        />
-        {!disabled && state === State.Error && errorMessage && (
-          <div className={errorContainerStyle}>
-            <Warning
-              className={cx(errorIconStyle, colorSets[theme].errorIcon)}
-            />
-            <Error
-              className={cx(
-                bodyTypeScaleStyles[baseFontSize],
-                errorMessageLabelStyles,
-              )}
-            >
-              {errorMessage}
-            </Error>
-          </div>
-        )}
-      </div>
-    </LeafyGreenProvider>
+    <FormField {...formFieldProps}>
+      <FormFieldInputContainer className={textAreaContainerStyles}>
+        <textarea {...textAreaProps} />
+      </FormFieldInputContainer>
+    </FormField>
   );
 });
 
@@ -175,5 +151,6 @@ TextArea.propTypes = {
   label: PropTypes.string,
   description: PropTypes.string,
   errorMessage: PropTypes.string,
+  successMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
 };

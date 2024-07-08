@@ -1,5 +1,165 @@
 # @leafygreen-ui/search-input
 
+## 3.1.2
+
+### Patch Changes
+
+- cfa830701: Updates `SearchResults`.
+
+  - Removes custom option styles in favor of consistent option styles from `InputOptionContent`
+
+  Updates `SearchResultsMenu`
+
+  - Updates the menu `background-color` to match the background from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/a11y@1.5.0
+  - @leafygreen-ui/typography@19.2.1
+
+## 3.1.1
+
+### Patch Changes
+
+- Updated dependencies [4fb369df7]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/typography@19.2.0
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+  - @leafygreen-ui/input-option@1.1.4
+
+## 3.1.0
+
+### Minor Changes
+
+- 02e1d77e: Exposes the following props in `SearchInput` component:
+
+  - `usePortal`
+  - `portalClassName`
+  - `portalContainer`
+  - `portalRef`
+  - `scrollContainer`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 3.0.1
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/input-option@1.1.3
+
+## 3.0.0
+
+### Major Changes
+
+- f630c718: [LG-4152](https://jira.mongodb.org/browse/LG-4152)
+
+  #### `aria-label` prop change
+
+  `aria-label` prop can only set the `aria-label` attribute on the searchbox element if `aria-labelledby` prop is undefined
+  | 👎 Does not use `aria-label` prop | 👍 Does use `aria-label` prop |
+  | - | - |
+  | `<SearchInput aria-label="Label" aria-labelledby="custom-label-id" />` | `<SearchInput aria-label="Label" />` |
+
+  #### Styling changes
+
+  The following styling changes are made:
+
+  - added `xsmall` variant
+  - updated spacing for `default`, `small`, and `large` size variants
+  - updated dark mode placeholder text color
+
+  #### `onKeyDown` bug fix
+
+  Previously, if searchbox element had focus and was disabled, user could press keys which would trigger opening the menu element.
+
+  Now, if searchbox element has focus and is disabled, user can press keys, and they will not trigger any `onKeyDown` logic.
+
+### Patch Changes
+
+- Updated dependencies [9402ba0e]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
+## 2.1.6
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/popover@11.3.1
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/a11y@1.4.13
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/input-option@1.1.2
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/polymorphic@1.3.7
+  - @leafygreen-ui/tokens@2.5.2
+
+## 2.1.5
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 2.1.4
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/popover@11.3.0
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/input-option@1.1.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
 ## 2.1.3
 
 ### Patch Changes

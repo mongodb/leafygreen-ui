@@ -1,5 +1,104 @@
 # @leafygreen-ui/split-button
 
+## 1.1.2
+
+### Patch Changes
+
+- cfa830701: Updates Menu. Resolves failing tests due to Menu update
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/menu@25.0.0
+  - @leafygreen-ui/lib@13.6.1
+
+## 1.1.1
+
+### Patch Changes
+
+- 7a901b954: - Uses updated `useInferredPolymorphic` hook & resolves a previously expected error
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+  - @leafygreen-ui/menu@24.2.1
+
+## 1.1.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/menu@24.2.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 1.0.13
+
+### Patch Changes
+
+- Updated dependencies [1ec45a7e]
+- Updated dependencies [1d55530b]
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/menu@24.0.0
+
+## 1.0.12
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/button@21.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/popover@11.3.1
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/menu@23.0.3
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/polymorphic@1.3.7
+  - @leafygreen-ui/tokens@2.5.2
+
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/menu@23.0.2
+
 ## 1.0.10
 
 ### Patch Changes

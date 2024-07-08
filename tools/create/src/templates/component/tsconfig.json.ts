@@ -13,7 +13,7 @@ export const tsConfig = `{
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../emotion"

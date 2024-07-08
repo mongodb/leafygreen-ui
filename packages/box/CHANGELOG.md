@@ -1,5 +1,12 @@
 # @leafygreen-ui/box
 
+## 3.1.9
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 3.1.8
 
 ### Patch Changes

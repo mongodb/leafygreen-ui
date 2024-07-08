@@ -1,5 +1,40 @@
 # @leafygreen-ui/lib
 
+## 13.6.1
+
+### Patch Changes
+
+- cfa830701: Fixes `RecursiveRecord` type
+
+## 13.6.0
+
+### Minor Changes
+
+- 7a901b954: Adds `PartialRequired` and `Optional` types
+
+## 13.5.0
+
+### Minor Changes
+
+- 7bc4fcde: Adds `RecursiveRecord` type
+
+## 13.4.0
+
+### Minor Changes
+
+- c3906f78: Adds `LgIdProps` which exports an interface to support `['data-lgid']?: string;`, which can be extended inside components props.
+
+## 13.3.0
+
+### Minor Changes
+
+- 66df9ab8: Creates `Mutable` utility type
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 13.2.1
 
 ### Patch Changes

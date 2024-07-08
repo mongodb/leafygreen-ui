@@ -94,7 +94,6 @@ _Any other properties will be spread on the root element._
     type="radio"
     class="leafygreen-ui-i6tne"
     aria-checked="false"
-    disabled="true"
     aria-disabled="true"
     value="option-1"
   />

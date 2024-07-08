@@ -12,22 +12,29 @@ import { bodyTypeScaleStyles } from '../styles';
 
 export const anchorClassName = createUniqueClassName();
 
-export const overwriteDefaultStyles = css`
-  &:hover,
-  &:focus,
-  &:visited {
-    text-decoration: none;
-  }
-`;
-
 export const linkStyles = css`
   font-family: ${fontFamilies.default};
-  display: inline-flex;
+  display: inline;
   align-items: center;
   text-decoration: none;
+  text-decoration-color: transparent;
   cursor: pointer;
   font-size: inherit;
   line-height: inherit;
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:hover,
+  &[data-hover='true'],
+  &:focus-visible,
+  &[data-focus='true'] {
+    text-decoration: underline;
+    transition: text-decoration ${transitionDuration.default}ms ease-in-out;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+  }
 
   &:focus {
     outline: none;
@@ -38,46 +45,29 @@ export const linkModeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.blue.base};
     font-weight: ${fontWeights.regular};
+
+    &:hover,
+    &[data-hover='true'] {
+      text-decoration-color: ${palette.gray.light2};
+    }
+
+    &:focus-visible,
+    &[data-focus='true'] {
+      text-decoration-color: ${palette.blue.base};
+    }
   `,
   [Theme.Dark]: css`
     color: ${palette.blue.light1};
     font-weight: ${fontWeights.bold};
-  `,
-};
 
-export const underlineStyles = css`
-  position: relative;
-  &::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    border-radius: 2px;
-    transition: background-color ${transitionDuration.default}ms ease-in-out;
-  }
-
-  .${anchorClassName}:focus & {
-    &::after {
-      background-color: ${palette.blue.light1};
+    &:hover,
+    &[data-hover='true'] {
+      text-decoration-color: ${palette.gray.dark2};
     }
-  }
-`;
 
-export const underlineModeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    .${anchorClassName}:hover & {
-      &::after {
-        background-color: ${palette.gray.light2};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    .${anchorClassName}:hover & {
-      &::after {
-        background-color: ${palette.gray.dark2};
-      }
+    &:focus-visible,
+    &[data-focus='true'] {
+      text-decoration-color: ${palette.blue.base};
     }
   `,
 };

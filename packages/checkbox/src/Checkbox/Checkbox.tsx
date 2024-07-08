@@ -14,13 +14,13 @@ import {
 } from '@leafygreen-ui/typography';
 
 import { Check } from '../Check';
+import { LGIDS_CHECKBOX } from '../constants';
 
 import {
   checkWrapperClassName,
   containerStyle,
   descriptionStyle,
   disabledContainerStyle,
-  disabledLabelDarkThemeOverrideStyle,
   disabledLabelStyle,
   inputClassName,
   inputFocusStyles,
@@ -38,11 +38,13 @@ import { CheckboxProps } from './Checkbox.types';
  */
 function Checkbox({
   animate = true,
+  'aria-label': ariaLabel = 'checkbox',
   baseFontSize: baseFontSizeProp,
   bold: boldProp,
   checked: checkedProp,
   className,
   darkMode: darkModeProp,
+  'data-lgid': dataLgId = LGIDS_CHECKBOX.root,
   description,
   disabled = false,
   id: idProp,
@@ -108,6 +110,7 @@ function Checkbox({
           },
           className,
         )}
+        data-lgid={dataLgId}
         style={style}
       >
         <Label
@@ -116,7 +119,6 @@ function Checkbox({
           disabled={disabled}
           className={cx(labelStyle, labelHoverStyle[theme], {
             [disabledLabelStyle]: disabled,
-            [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
           })}
         >
           <input
@@ -125,9 +127,8 @@ function Checkbox({
             className={cx(inputClassName, inputStyle, inputFocusStyles[theme])}
             type="checkbox"
             name={name}
-            disabled={disabled}
             checked={isChecked}
-            aria-label="checkbox"
+            aria-label={ariaLabel}
             aria-disabled={disabled}
             aria-checked={indeterminateProp ? 'mixed' : isChecked}
             aria-labelledby={labelId}
@@ -158,12 +159,7 @@ function Checkbox({
         </Label>
 
         {description && (
-          <Description
-            className={cx(descriptionStyle, {
-              [disabledLabelDarkThemeOverrideStyle]: disabled && darkMode,
-            })}
-            disabled={disabled}
-          >
+          <Description className={descriptionStyle} disabled={disabled}>
             {description}
           </Description>
         )}

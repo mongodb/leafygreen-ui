@@ -1,0 +1,39 @@
+{
+  "name": "@lg-chat/rich-links",
+  "version": "1.1.0",
+  "description": "lg-chat Rich Links",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/card": "^11.0.0",
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/icon": "^12.4.0",
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
+    "@leafygreen-ui/lib": "^12.0.0",
+    "@leafygreen-ui/palette": "^4.1.0",
+    "@leafygreen-ui/polymorphic": "^2.0.2",
+    "@leafygreen-ui/tokens": "^2.6.0",
+    "@leafygreen-ui/typography": "^18.4.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/rich-links",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

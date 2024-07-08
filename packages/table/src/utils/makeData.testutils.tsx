@@ -10,18 +10,19 @@ const SEED = 0;
 faker.seed(SEED);
 
 export interface Person {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   age: number;
   visits: number;
   status: 'relationship' | 'complicated' | 'single';
   subRows?: Array<Person>;
+  index?: number;
 }
 
 const newPerson = (): Person => {
   return {
-    id: faker.number.int(4),
+    id: faker.string.alphanumeric({ length: { min: 5, max: 7 } }),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     age: faker.number.int({ min: 20, max: 100 }),
@@ -59,8 +60,9 @@ export function makeData(
 
   const makeDataLevel = (depth = 0): Array<Person> => {
     const len = lens[depth]!;
-    return range(len).map((_): Person => {
+    return range(len).map((_, i): Person => {
       return {
+        index: i,
         ...newPerson(),
         ...(hasSubRows &&
           lens[depth + 1] &&

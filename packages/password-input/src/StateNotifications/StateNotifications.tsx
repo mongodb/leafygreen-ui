@@ -7,13 +7,14 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import ErrorIcon from '@leafygreen-ui/icon/dist/X';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { LGIDS_PASSWORD_INPUT } from '../constants';
 import { State } from '../PasswordInput/PasswordInput.types';
 
 import {
   baseStyles,
+  getIconStateStyles,
+  getStateStyles,
   iconBaseStyles,
-  iconThemeStateStyles,
-  themeStyles,
   wrapperStyles,
 } from './StateNotifications.styles';
 import { StateNotificationsProps } from './StateNotifications.types';
@@ -39,6 +40,7 @@ export const StateNotifications = ({
       aria-relevant="all"
       className={wrapperStyles}
       id={id}
+      data-testid={LGIDS_PASSWORD_INPUT.stateNotifications}
       {...rest}
     >
       {notifications.map((item, index) => {
@@ -47,11 +49,11 @@ export const StateNotifications = ({
         return (
           <li
             key={`${index}-${state}`}
-            className={cx(baseStyles, themeStyles[theme][state])}
+            className={cx(baseStyles, getStateStyles(theme)[state])}
             aria-hidden={state === State.None}
           >
             <ValidationIcon
-              className={cx(iconBaseStyles, iconThemeStateStyles[theme][state])}
+              className={cx(iconBaseStyles, getIconStateStyles(theme)[state])}
               aria-hidden="true"
             />
             <VisuallyHidden>{`${state}`}</VisuallyHidden>

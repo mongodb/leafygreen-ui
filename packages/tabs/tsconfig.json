@@ -13,13 +13,13 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../a11y"
     },
     {
-      "path": "../box"
+      "path": "../descendants"
     },
     {
       "path": "../emotion"
@@ -34,7 +34,7 @@
       "path": "../palette"
     },
     {
-      "path": "../portal"
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"

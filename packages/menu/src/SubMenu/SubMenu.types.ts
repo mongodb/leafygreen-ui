@@ -1,10 +1,15 @@
+import { type Dispatch, type SetStateAction } from 'react';
 import { ExitHandler } from 'react-transition-group/Transition';
 
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 
-import { Size } from '../types';
+import { MenuItemProps } from '../MenuItem';
 
-export interface SubMenuProps extends HTMLElementProps<'button'> {
+export interface InternalSubMenuProps
+  extends Omit<MenuItemProps, 'children' | 'rightGlyph' | 'variant'> {
   /**
    * Determines if `<SubMenu />` item appears open
    */
@@ -13,39 +18,19 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
   /**
    * Function to set the value of `open` in `<SubMenu />`
    */
-  setOpen?: (value: boolean) => void;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 
   /**
-   * className applied to `SubMenu` root element
-   */
-  className?: string;
-
-  /**
-   * Content to appear below main text of SubMenu
-   */
-  description?: string | React.ReactElement;
-
-  /**
-   * Determines if `<SubMenu />` item appears disabled
-   */
-  disabled?: boolean;
-
-  /**
-   * Determines if `<SubMenu />` item appears active
-   */
-  active?: boolean;
-
-  /**
-   * Slot to pass in an Icon rendered to the left of `SubMenu` text.
+   * Whether the submenu should initially be open.
    *
-   * @type `<Icon />` component
-   *
+   * (will be overridden by either `open` or `active`)
    */
-  glyph?: React.ReactElement;
+  initialOpen?: boolean;
 
   /**
    * Main text rendered in `SubMenu`.
    */
+  // TODO: Should this be a `ReactNode`?
   title?: string;
 
   /**
@@ -54,14 +39,19 @@ export interface SubMenuProps extends HTMLElementProps<'button'> {
    */
   children?: React.ReactNode;
 
-  onClick?: React.MouseEventHandler;
-
-  onExited?: ExitHandler<HTMLElement>;
-
-  href?: string;
+  /**
+   * Callback fired when the Submenu opens
+   */
+  onEntered?: ExitHandler<HTMLUListElement>;
 
   /**
-   * Size of the MenuItem component, can be `default` or `large`. This size only affects the parent MenuItem, nested child MenuItems do not change.
+   * Callback fired when the Submenu closes
    */
-  size?: Size;
+  onExited?: ExitHandler<HTMLUListElement>;
 }
+
+// External only
+export type SubMenuProps = InferredPolymorphicProps<
+  PolymorphicAs,
+  InternalSubMenuProps
+>;

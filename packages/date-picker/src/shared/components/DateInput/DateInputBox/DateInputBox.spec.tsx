@@ -214,18 +214,18 @@ describe('packages/date-picker/shared/date-input-box', () => {
         expect(dayInput.value).toBe('02');
       });
 
-      test('backspace deletes characters', () => {
+      test('backspace resets the input', () => {
         const { dayInput, yearInput } = renderDateInputBox(
           { value: null },
           testContext,
         );
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
-        expect(dayInput.value).toBe('2');
+        expect(dayInput.value).toBe('');
 
         userEvent.type(yearInput, '1993');
         userEvent.type(yearInput, '{backspace}');
-        expect(yearInput.value).toBe('199');
+        expect(yearInput.value).toBe('');
       });
 
       test('segment change handler is called when typing into a segment', () => {
@@ -255,17 +255,19 @@ describe('packages/date-picker/shared/date-input-box', () => {
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
         expect(onSegmentChange).toHaveBeenCalledWith(
-          expect.objectContaining({ value: '2' }),
+          expect.objectContaining({ value: '' }),
         );
       });
 
-      test('value setter is not called when deleting from a single segment', () => {
+      test('value setter is called when pressing backspace in a single segment', () => {
         const setValue = jest.fn();
 
         const { dayInput } = renderDateInputBox({ setValue }, testContext);
         userEvent.type(dayInput, '21');
         userEvent.type(dayInput, '{backspace}');
-        expect(setValue).not.toHaveBeenCalled();
+        expect(setValue).toHaveBeenCalledWith(
+          expect.objectContaining({ value: null }),
+        );
       });
     });
 
@@ -313,11 +315,11 @@ describe('packages/date-picker/shared/date-input-box', () => {
           },
           testContext,
         );
-        userEvent.type(dayInput, '{backspace}5');
+        userEvent.type(dayInput, '{backspace}');
         expect(setValue).toHaveBeenCalledWith(
-          expect.objectContaining(newUTC(1993, Month.December, 25)),
+          expect.objectContaining(new Date('invalid')),
         );
-        expect(dayInput).toHaveValue('25');
+        expect(dayInput).toHaveValue('');
       });
 
       test('value setter is _not_ called when new input is ambiguous', () => {
@@ -330,8 +332,8 @@ describe('packages/date-picker/shared/date-input-box', () => {
           testContext,
         );
         userEvent.type(dayInput, '{backspace}');
-        expect(setValue).not.toHaveBeenCalled();
-        expect(dayInput).toHaveValue('2');
+        expect(setValue).toHaveBeenCalled();
+        expect(dayInput).toHaveValue('');
       });
 
       test('value setter is called when the input is cleared', () => {

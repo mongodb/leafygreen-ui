@@ -93,7 +93,6 @@ function Radio({
           onChange={onChange}
           value={value}
           aria-checked={checked}
-          disabled={disabled}
           aria-disabled={disabled}
           aria-describedby={descriptionId}
           className={cx(

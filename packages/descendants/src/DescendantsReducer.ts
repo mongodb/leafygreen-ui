@@ -6,13 +6,12 @@ import {
   findDescendantIndexWithId,
   findDOMIndex,
   insertDescendantAt,
+  refreshDescendantIndexes,
   removeIndex,
 } from './utils/';
 import { Descendant, DescendantsList } from './Descendants.types';
 
-export interface DescendantsState<T extends HTMLElement> {
-  descendants: DescendantsList<T>;
-}
+export type DescendantsState<T extends HTMLElement> = DescendantsList<T>;
 
 export type DescendantsReducerAction<T extends HTMLElement> =
   | {
@@ -38,26 +37,27 @@ export type DescendantsReducerType<T extends HTMLElement> = Reducer<
 >;
 
 /**
+ * A function matching the React.Reducer signature,
+ * that accepts a `DescendantsList` as current state,
+ * and custom `action` object to modify the descendants list.
  *
- * Establishes a state with a `descendants` list, and a `dispatch` function to modify the descendants list
- *
- * @param state {@link DescendantsState} The current reducer state
+ * @param currentState {@link DescendantsState} The current reducer state
  * @param action {@link DescendantsReducerAction} The reducer action type
  * @returns A modified {@link DescendantsState} object
  */
 export const descendantsReducer = <T extends HTMLElement>(
-  state: DescendantsState<T>,
+  currentState: DescendantsState<T>,
   action: DescendantsReducerAction<T>,
 ): DescendantsState<T> => {
   switch (action.type) {
     case 'register': {
       if (!action.ref.current) {
-        return state;
+        return currentState;
       }
 
       // 1. Check if element is tracked
       const registeredIndex = findDescendantIndexWithId(
-        state.descendants,
+        currentState,
         action.id,
       );
 
@@ -66,75 +66,75 @@ export const descendantsReducer = <T extends HTMLElement>(
       if (!isElementRegistered) {
         // The element is not yet registered
 
-        // If there are no tracked descendants, then this element is at index 0,
+        // 2. If there are no tracked descendants, then this element is at index 0,
         // Otherwise, check the array of tracked elements to find what index this element should be
         const element = action.ref.current;
-        const index = findDOMIndex(element, state.descendants);
+        const index = findDOMIndex(element, currentState);
 
         const thisDescendant: Descendant<T> = {
+          ref: action.ref,
           element,
           id: action.id,
           props: action.props,
           index,
         };
 
-        // Add the new descendant at the given index
+        // 3. Add the new descendant at the given index
         const newDescendants = insertDescendantAt(
-          state.descendants,
+          currentState,
           thisDescendant,
           index,
         );
 
-        return {
-          descendants: newDescendants,
-        };
+        const indexedDescendants = refreshDescendantIndexes(newDescendants);
+        return indexedDescendants;
       }
 
-      return state;
+      return currentState;
     }
 
     case 'update': {
       const registeredIndex = findDescendantIndexWithId(
-        state.descendants,
+        currentState,
         action.id,
       );
 
       if (registeredIndex >= 0) {
-        const descendant = state.descendants[registeredIndex];
+        const descendant = currentState[registeredIndex];
         const arePropsEqual = isEqual(descendant.props, action.props);
 
         // if the props have changed, we update the descendant
         if (!isUndefined(action.props) && !arePropsEqual) {
           descendant.props = action.props;
-          return {
-            descendants: state.descendants,
-          };
+          return currentState;
         }
       }
 
-      return state;
+      return currentState;
     }
 
     case 'remove': {
       /** Remove an element from the tracked list */
       const registeredIndex = findDescendantIndexWithId(
-        state.descendants,
+        currentState,
         action.id,
       );
 
       if (registeredIndex >= 0) {
         // If an element exists with the given id, remove it
-        const newDescendants = removeIndex(state.descendants, registeredIndex);
-        return { descendants: newDescendants };
+        const newDescendants = removeIndex(currentState, registeredIndex);
+        const indexedDescendants = refreshDescendantIndexes(newDescendants);
+
+        return indexedDescendants;
       }
 
       // no change
-      return state;
+      return currentState;
     }
 
     default:
       break;
   }
 
-  return state;
+  return currentState;
 };

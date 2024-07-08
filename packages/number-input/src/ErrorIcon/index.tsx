@@ -1,1 +1,0 @@
-export { ErrorIcon } from './ErrorIcon';

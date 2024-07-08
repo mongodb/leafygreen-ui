@@ -1,5 +1,110 @@
 # @leafygreen-ui/tabs
 
+## 12.0.2
+
+### Patch Changes
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/descendants@0.3.0
+  - @leafygreen-ui/a11y@1.5.0
+  - @leafygreen-ui/typography@19.2.1
+
+## 12.0.1
+
+### Patch Changes
+
+- Updated dependencies [4fb369df7]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [659aa9eed]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/typography@19.2.0
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/descendants@0.2.0
+  - @leafygreen-ui/tokens@2.9.0
+
+## 12.0.0
+
+### Major Changes
+
+- a29ec7d4: [LG-4087](https://jira.mongodb.org/browse/LG-4087)
+
+  - Removes `@leafygreen-ui/portal` dependency
+    - In previous versions, tabs and their corresponding panels do not render on the server and instead portal content in the respective containers after hydration
+    - Moving forward, tabs and their corresponding panels render normally on the server and render content in the respective containers during initial render cycle
+  - Adds `@leafygreen-ui/descendants` dependency
+    - Handles relationships between `Tabs` component and `TabTitle` descendants
+    - Handles relationships between `Tabs` component and `TabPanel` descendants
+  - Replaces `@leafygreen-ui/box` with `@leafygreen-ui/polymorphic
+    - Allows tab elements to render as any element or component
+    - Note: it is recommended to continue to use a button or link for accessibility purposes
+  - Adds `forceRenderAllTabPanels` to `Tabs` component. By default, tab panels conditionally render in the DOM. Setting this prop to `true` will:
+    - Render all non-disabled tab panels in the DOM
+    - Hide the non-selected tab panels with CSS using `display: none;`. This will also remove the non-selected tab panels from the accessibility tree
+  - Adds fixed height to tabs
+  - Exports class names to customize styling on containers
+    - `tabListElementClassName` can be used to select tab list container
+    - `tabPanelsElementClassName` can be used to select tab panels container
+  - Adds `getAllTabPanelsInDOM` test util
+  - Updates `getSelectedPanel` test util. It now checks CSS display property to get the selected panel
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+
+## 11.2.0
+
+### Minor Changes
+
+- 4cfd6dd5: [LG-4250](https://jira.mongodb.org/browse/LG-4250)
+
+  - Exports `getTestUtils`, a util to reliably interact with `LG Tabs` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs#test-harnesses)
+
+### Patch Changes
+
+- Updated dependencies [3364b542]
+- Updated dependencies [0864a420]
+- Updated dependencies [0864a420]
+  - @leafygreen-ui/tokens@2.7.0
+  - @leafygreen-ui/typography@19.1.1
+
+## 11.1.15
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 11.1.14
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/box@3.1.9
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/a11y@1.4.13
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/portal@5.1.1
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 11.1.13
 
 ### Patch Changes

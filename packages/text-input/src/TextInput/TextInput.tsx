@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { css } from '@leafygreen-ui/emotion';
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
-import { useValidation } from '@leafygreen-ui/hooks';
+import { useForwardedRef, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { LGIDS_TEXT_INPUT } from '../constants';
+
+import { textInputStyle } from './TextInput.styles';
 import {
   SizeVariant,
   State,
@@ -34,6 +36,7 @@ import {
  * @param props.onBlur Callback to be executed when the input stops being focused.
  * @param props.placeholder The placeholder text shown in the input field before the user begins typing.
  * @param props.errorMessage The message shown below the input field if the value is invalid.
+ * @param props.successMessage The message shown below the input field if the value is valid.
  * @param props.state The current state of the TextInput. This can be none, valid, or error.
  * @param props.value The current value of the input field. If a value is passed to this prop, component will be controlled by consumer.
  * @param props.className className supplied to the TextInput container.
@@ -49,33 +52,45 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       onChange,
       onBlur,
       placeholder,
-      errorMessage,
+      errorMessage = 'This input needs your attention',
+      successMessage = 'Success',
       optional = false,
       disabled = false,
       state = State.None,
       type = TextInputType.Text,
       id,
+      readOnly,
       value: controlledValue,
       className,
       darkMode: darkModeProp,
-      sizeVariant = SizeVariant.Default,
-      'aria-labelledby': ariaLabelledby,
+      sizeVariant: size = SizeVariant.Default,
       handleValidation,
       baseFontSize: baseFontSizeProp,
+      'data-lgid': dataLgId = LGIDS_TEXT_INPUT.root,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledby,
+      'aria-invalid': ariaInvalid,
       ...rest
     }: TextInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) => {
     const { darkMode } = useDarkMode(darkModeProp);
+    const inputRef = useForwardedRef(forwardRef, null);
     const isControlled = typeof controlledValue === 'string';
     const [uncontrolledValue, setValue] = useState('');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
+    const handleContainerClick = () => {
+      if (!disabled) {
+        inputRef?.current?.focus();
+      }
+    };
+
     // Validation
     const validation = useValidation<HTMLInputElement>(handleValidation);
 
-    const onBlurHandler: React.FocusEventHandler<HTMLInputElement> = e => {
+    const handleBlur: React.FocusEventHandler<HTMLInputElement> = e => {
       if (onBlur) {
         onBlur(e);
       }
@@ -83,7 +98,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       validation.onBlur(e);
     };
 
-    const onValueChange: React.ChangeEventHandler<HTMLInputElement> = e => {
+    const handleChange: React.ChangeEventHandler<HTMLInputElement> = e => {
       if (onChange) {
         onChange(e);
       }
@@ -105,7 +120,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       consoleOnce.warn(
         'We recommend using the Leafygreen SearchInput for `type="search"` inputs.',
       );
-      if (!rest['aria-label']) {
+      if (!ariaLabel) {
         console.error(
           'For screen-reader accessibility, aria-label must be provided to TextInput.',
         );
@@ -124,38 +139,47 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       );
     }
 
+    const ariaProps = {
+      'aria-invalid': ariaInvalid,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledby,
+    } as const;
+
+    const formFieldProps = {
+      baseFontSize,
+      className,
+      darkMode,
+      'data-lgid': dataLgId,
+      description,
+      disabled,
+      errorMessage,
+      successMessage,
+      id,
+      label,
+      optional,
+      size,
+      state,
+      readOnly,
+      ...ariaProps,
+    } as const;
+
+    const inputProps = {
+      autoComplete: disabled ? 'off' : rest?.autoComplete || 'on',
+      className: textInputStyle,
+      onBlur: handleBlur,
+      onChange: handleChange,
+      placeholder,
+      ref: inputRef,
+      required: !optional,
+      type,
+      value,
+      ...rest,
+    } as const;
+
     return (
-      <FormField
-        label={label}
-        description={description}
-        errorMessage={errorMessage}
-        state={state}
-        size={sizeVariant}
-        disabled={disabled}
-        baseFontSize={baseFontSize}
-        darkMode={darkMode}
-        className={className}
-        id={id}
-        optional={optional}
-      >
-        <FormFieldInputContainer>
-          <input
-            {...rest}
-            aria-labelledby={ariaLabelledby}
-            type={type}
-            value={value}
-            required={!optional}
-            disabled={disabled}
-            placeholder={placeholder}
-            onChange={onValueChange}
-            onBlur={onBlurHandler}
-            ref={forwardRef}
-            autoComplete={disabled ? 'off' : rest?.autoComplete || 'on'}
-            aria-invalid={state === 'error'}
-            className={css`
-              width: 100%;
-            `}
-          />
+      <FormField {...formFieldProps}>
+        <FormFieldInputContainer onClick={handleContainerClick}>
+          <input {...inputProps} />
         </FormFieldInputContainer>
       </FormField>
     );
@@ -174,6 +198,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   errorMessage: PropTypes.string,
+  successMessage: PropTypes.string,
   state: PropTypes.oneOf(Object.values(State)),
   value: PropTypes.string,
   className: PropTypes.string,

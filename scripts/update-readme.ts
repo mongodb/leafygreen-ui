@@ -1,6 +1,7 @@
-import { getAllPackageNames } from '@lg-tools/meta';
+import { getAllPackageNames, getLGConfig } from '@lg-tools/meta';
 import fs from 'fs';
 import path from 'path';
+// @ts-expect-error - no prettier types
 import * as prettier from 'prettier';
 
 updateReadme();
@@ -18,18 +19,22 @@ async function updateReadme() {
 
 async function buildTable() {
   const packages = getAllPackageNames();
+  const lgConfig = getLGConfig();
+
   const packagesTable = packages.reduce(
     (md, pkg) => {
-      const [_, pkgName] = pkg.split('/');
-      const pkgMd = `[${pkg}](http://mongodb.design/component/${pkgName}/example)`;
+      const [scope, pkgName] = pkg.split('/');
+      const scopePath = lgConfig.scopes[scope];
+      const pkgMd = `[${pkg}](./${scopePath}/${pkgName})`;
       const versionMd = `[![version](https://img.shields.io/npm/v/${pkg})](https://www.npmjs.com/package/${pkg})`;
       const downloadsMd = `![downloads](https://img.shields.io/npm/dm/${pkg}?color=white)`;
-      md += '\n' + `| ${pkgMd} | ${versionMd} | ${downloadsMd} |`;
+      const docsMd = `[Docs](http://mongodb.design/component/${pkgName}/example)`;
+      md += '\n' + `| ${pkgMd} | ${versionMd} | ${downloadsMd} | ${docsMd} |`;
       return md;
     },
     `## Packages
-| Package | Latest | Downloads |
-| -------- | ------ | --------- |`,
+| Package | Latest | Downloads | Docs |
+| ------- | ------ | --------- | ---- |`,
   );
 
   const prettierConfig = await prettier.resolveConfig(

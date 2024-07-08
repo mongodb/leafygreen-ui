@@ -21,6 +21,7 @@ import isUndefined from 'lodash/isUndefined';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
 import {
   useAutoScroll,
   useBackdropClick,
@@ -68,20 +69,17 @@ import { isValueCurrentSelection } from './utils/isValueCurrentSelection';
 import {
   baseComboboxStyles,
   baseInputElementStyle,
-  caretIconDisabledStyles,
-  caretIconThemeStyles,
   clearButtonStyle,
-  comboboxDisabledStyles,
-  comboboxErrorStyles,
   comboboxFocusStyle,
   comboboxOverflowShadowStyles,
   comboboxParentStyle,
   comboboxSizeStyles,
   comboboxThemeStyles,
-  endIconStyle,
-  errorIconThemeStyles,
-  errorMessageSizeStyle,
-  errorMessageThemeStyle,
+  getCaretIconDisabledFill,
+  getCaretIconFill,
+  getComboboxDisabledStyles,
+  getComboboxStateStyles,
+  iconStyle,
   iconsWrapperBaseStyles,
   iconsWrapperSizeStyles,
   inputElementDisabledThemeStyle,
@@ -110,7 +108,8 @@ export function Combobox<M extends boolean>({
   size = ComboboxSize.Default,
   darkMode: darkModeProp,
   state = 'none',
-  errorMessage,
+  errorMessage = DEFAULT_MESSAGES.error,
+  successMessage = DEFAULT_MESSAGES.success,
   searchState = 'unset',
   searchEmptyMessage = 'No results found',
   searchErrorMessage = 'Could not get results!',
@@ -132,6 +131,7 @@ export function Combobox<M extends boolean>({
   usePortal = true,
   portalClassName,
   portalContainer,
+  portalRef,
   scrollContainer,
   popoverZIndex,
   ...rest
@@ -1161,9 +1161,18 @@ export function Combobox<M extends boolean>({
           usePortal,
           portalClassName,
           portalContainer,
+          portalRef,
           scrollContainer,
         }
       : { usePortal }),
+  } as const;
+
+  const formFieldFeedbackProps = {
+    disabled,
+    errorMessage,
+    size,
+    state,
+    successMessage,
   } as const;
 
   return (
@@ -1232,12 +1241,12 @@ export function Combobox<M extends boolean>({
               baseComboboxStyles,
               comboboxThemeStyles[theme],
               comboboxSizeStyles(size, isMultiselectWithSelections),
+              getComboboxStateStyles(theme)[state],
               {
-                [comboboxDisabledStyles[theme]]: disabled,
-                [comboboxErrorStyles[theme]]: state === State.error,
                 [comboboxFocusStyle[theme]]: isElementFocused(
                   ComboboxElement.Input,
                 ),
+                [getComboboxDisabledStyles(theme)]: disabled,
                 [comboboxOverflowShadowStyles[theme]]: shouldShowOverflowShadow,
               },
             )}
@@ -1270,7 +1279,8 @@ export function Combobox<M extends boolean>({
                   },
                 )}
                 placeholder={placeholderValue}
-                disabled={disabled ?? undefined}
+                aria-disabled={disabled}
+                readOnly={disabled}
                 onChange={handleInputChange}
                 value={inputValue}
                 autoComplete="off"
@@ -1282,17 +1292,9 @@ export function Combobox<M extends boolean>({
                 iconsWrapperSizeStyles[size],
               )}
             >
-              {state === 'error' && (
-                <Icon
-                  glyph="Warning"
-                  fill={errorIconThemeStyles[theme]}
-                  className={endIconStyle}
-                />
-              )}
               {clearable && doesSelectionExist(selection) && !disabled && (
                 <IconButton
                   aria-label="Clear selection"
-                  aria-disabled={disabled}
                   disabled={disabled}
                   ref={clearButtonRef}
                   onClick={handleClearButtonClick}
@@ -1305,25 +1307,15 @@ export function Combobox<M extends boolean>({
               )}
               <Icon
                 glyph="CaretDown"
-                className={endIconStyle}
+                className={iconStyle}
                 fill={cx({
-                  [caretIconThemeStyles[theme]]: !disabled,
-                  [caretIconDisabledStyles[theme]]: disabled,
+                  [getCaretIconFill(theme)]: !disabled,
+                  [getCaretIconDisabledFill(theme)]: disabled,
                 })}
               />
             </div>
           </div>
-
-          {state === 'error' && errorMessage && (
-            <div
-              className={cx(
-                errorMessageThemeStyle[theme],
-                errorMessageSizeStyle(size),
-              )}
-            >
-              {errorMessage}
-            </div>
-          )}
+          <FormFieldFeedback {...formFieldFeedbackProps} />
 
           {/******* /
           *  Menu  *
@@ -1437,6 +1429,12 @@ Combobox.propTypes = {
   usePortal: PropTypes.bool,
   scrollContainer: PropTypes.elementType,
   portalContainer: PropTypes.elementType,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
   portalClassName: PropTypes.string,
 };
 

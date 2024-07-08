@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Size } from '../PasswordInput/PasswordInput.types';
 
@@ -9,15 +10,20 @@ export const baseStyles = css`
 `;
 
 export const sizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    right: ${spacing[200]}px;
+    width: 22px;
+    height: 22px;
+  `,
   [Size.Small]: css`
-    right: 5px;
+    right: ${spacing[200]}px;
     width: 22px;
     height: 22px;
   `,
   [Size.Default]: css`
-    right: 5px;
+    right: ${spacing[300]}px;
   `,
   [Size.Large]: css`
-    right: 10px;
+    right: ${spacing[300]}px;
   `,
 };

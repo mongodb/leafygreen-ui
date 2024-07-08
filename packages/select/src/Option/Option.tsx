@@ -5,24 +5,14 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
-import {
-  descriptionClassName,
-  InputOption,
-  InputOptionContent,
-} from '@leafygreen-ui/input-option';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { fontWeights } from '@leafygreen-ui/tokens';
 
 import { colorSets } from '../styleSets';
 
 import { InternalProps, OptionProps } from './Option.types';
-import {
-  glyphFocusStyle,
-  iconStyle,
-  OptionClassName,
-  optionStyle,
-  optionTextStyle,
-} from './Options.styles';
+import { OptionClassName } from './Options.styles';
 
 export function InternalOption({
   children,
@@ -89,37 +79,15 @@ export function InternalOption({
     }
   }
 
-  // FIXME: temps styles until styles are consistent with InputOption
-  const glyphProp =
-    glyph && isComponentGlyph(glyph)
-      ? React.cloneElement(glyph, {
-          key: 'glyph',
-          className: cx(
-            iconStyle,
-            css`
-              color: ${colorSet.icon.base};
-            `,
-            glyphFocusStyle,
-            {
-              [css`
-                color: ${colorSet.icon.disabled};
-              `]: disabled,
-            },
-            glyph.props.className,
-          ),
-        })
-      : undefined;
+  const glyphProp = glyph && isComponentGlyph(glyph) ? glyph : undefined;
 
-  // FIXME: temps styles until styles are consistent with InputOption
   const checkmark = selected ? (
     <CheckmarkIcon
       key="checkmark"
       className={cx(
-        iconStyle,
         css`
           color: ${colorSet.icon.selected};
         `,
-        glyphFocusStyle,
         {
           [css`
             color: ${colorSet.icon.disabled};
@@ -140,36 +108,12 @@ export function InternalOption({
       role="option"
       tabIndex={-1}
       ref={ref}
-      className={cx(
-        OptionClassName,
-        optionStyle,
-        // FIXME: temps styles until styles are consistent with InputOption
-        {
-          [css`
-            &:focus-visible {
-              color: ${colorSet.text.focused};
-              background-color: ${colorSet.background.focused};
-
-              &:before {
-                opacity: 1;
-                transform: scaleY(1);
-                background-color: ${colorSet.indicator.focused};
-              }
-            }
-          `]: !disabled,
-          // FIXME: override the disabled colors since they are not consistent with InputOption
-          [css`
-            &,
-            & .${descriptionClassName} {
-              color: ${colorSet.text.disabled};
-            }
-          `]: disabled,
-        },
-        className,
-      )}
+      className={cx(OptionClassName, className)}
       onClick={onClick}
       onFocus={onFocus}
       onKeyDown={undefined}
+      checked={selected}
+      highlighted={focused}
     >
       <InputOptionContent
         leftGlyph={leftGlyph}
@@ -177,8 +121,7 @@ export function InternalOption({
         description={description}
       >
         <span
-          className={cx(optionTextStyle, {
-            // FIXME: temps styles since we're not passing the `selected` prop to InputOption
+          className={cx({
             [css`
               font-weight: ${fontWeights.bold};
             `]: selected,

@@ -38,14 +38,15 @@ import {
 import { CopyableProps, Size } from './Copyable.types';
 
 export default function Copyable({
-  darkMode: darkModeProp,
   children,
-  label,
-  description,
   className,
   copyable = true,
-  size: SizeProp,
+  darkMode: darkModeProp,
+  description,
+  label,
+  onCopy,
   shouldTooltipUsePortal = true,
+  size: SizeProp,
 }: CopyableProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const [copied, setCopied] = useState(false);
@@ -83,6 +84,14 @@ export default function Copyable({
     const clipboard = new ClipboardJS(buttonRef, {
       text: () => children,
       container: portalContainer,
+    });
+
+    clipboard.on('success', (event: React.ClipboardEvent<HTMLDivElement>) => {
+      onCopy?.(event);
+    });
+
+    clipboard.on('error', (event: React.ClipboardEvent<HTMLDivElement>) => {
+      onCopy?.(event);
     });
 
     if (copied) {
@@ -165,7 +174,9 @@ export default function Copyable({
                   variant="default"
                   darkMode={darkMode}
                   className={buttonStyle}
-                  onClick={() => setCopied(true)}
+                  onClick={() => {
+                    setCopied(true);
+                  }}
                   leftGlyph={<CopyIcon size="large" className={iconStyle} />}
                 >
                   Copy

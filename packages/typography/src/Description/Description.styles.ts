@@ -1,36 +1,28 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  color,
   fontFamilies,
   fontWeights,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-export const descriptionStyle = css`
-  font-family: ${fontFamilies.default};
-  font-weight: ${fontWeights.regular};
-  margin-top: 0;
-  margin-bottom: 0;
-`;
+export const getDescriptionStyle = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.secondary.default};
 
-export const descriptionColorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-  `,
+    font-family: ${fontFamilies.default};
+    font-weight: ${fontWeights.regular};
+    margin-top: 0;
+    margin-bottom: 0;
+  `;
 };
 
-export const disabledDescriptionColorStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-  `,
+export const getDisabledDescriptionColorStyle = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.disabled.default};
+  `;
 };
 
 export const descriptionTypeScaleStyles: Record<BaseFontSize, string> = {

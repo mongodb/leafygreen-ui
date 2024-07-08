@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.13
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 1.1.12
 
 ### Patch Changes

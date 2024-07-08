@@ -1,5 +1,41 @@
 # @lg-tools/lint
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+  - @lg-tools/build@0.5.0
+
+## 0.2.1
+
+### Patch Changes
+
+- 356a53fd: Update typescript peer dependency
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+
+## 0.2.0
+
+### Minor Changes
+
+- 36070800: Adds support for `@lg-chat` components
+- 36070800: `js` files are excluded
+
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+  - @lg-tools/build@0.4.0
+
 ## 0.1.6
 
 ### Patch Changes

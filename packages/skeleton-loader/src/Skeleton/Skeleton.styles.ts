@@ -5,27 +5,42 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 import { Size } from './Skeleton.types';
 
+interface SkeletonStyleArgs {
+  enableAnimations: boolean;
+}
+export const getSkeletonBaseStyles = ({
+  enableAnimations,
+}: SkeletonStyleArgs) => css`
+  width: 100%;
+  border-radius: ${spacing[150]}px;
+  background-position: 50vw 0;
+
+  ${enableAnimations &&
+  css`
+    animation: SkeletonShimmer 1.5s infinite linear;
+
+    @keyframes SkeletonShimmer {
+      to {
+        background-position: 100vw 0;
+      }
+    }
+  `}
+`;
+
 export const rootStyles = css`
   width: 100%;
   border-radius: 6px;
-  animation: bgslide 1.5s infinite linear;
-
-  @keyframes bgslide {
-    to {
-      background-position: 100vw 0;
-    }
-  }
 `;
 
 export const sizeStyles: Record<Size, string> = {
   [Size.Small]: css`
-    height: ${spacing[3]}px;
+    height: ${spacing[400]}px;
   `,
   [Size.Default]: css`
-    height: ${spacing[5]}px;
+    height: ${spacing[800]}px;
   `,
   [Size.Large]: css`
-    height: ${spacing[5] + spacing[3]}px;
+    height: ${spacing[1200]}px;
   `,
 };
 

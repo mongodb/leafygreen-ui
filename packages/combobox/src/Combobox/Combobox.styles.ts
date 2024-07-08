@@ -4,6 +4,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   focusRing,
   fontFamilies,
   spacing,
@@ -17,7 +18,7 @@ import {
   fontSize,
   lineHeight,
 } from '../ComboboxChip/ComboboxChip.styles';
-import { ComboboxSize as Size, Overflow } from '../types';
+import { ComboboxSize as Size, Overflow, State } from '../types';
 
 /**
  * Util to get the chip height
@@ -29,7 +30,7 @@ const inputHeight = (size: Size) => {
 };
 
 // Gap between each chip
-const flexGap = 4;
+const flexGap = spacing[100];
 
 /**
  * The min-height of the combobox.
@@ -64,27 +65,27 @@ export const comboboxPadding: Record<
 > = {
   [Size.XSmall]: {
     y: getYPadding(Size.XSmall),
-    xLeftWithChip: 1,
-    xLeftWithoutChip: 10,
-    xRight: 4,
+    xLeftWithChip: spacing[25],
+    xLeftWithoutChip: spacing[200],
+    xRight: spacing[100],
   },
   [Size.Small]: {
     y: getYPadding(Size.Small),
-    xLeftWithChip: 4,
-    xLeftWithoutChip: 10,
-    xRight: 8,
+    xLeftWithChip: spacing[100],
+    xLeftWithoutChip: spacing[200],
+    xRight: spacing[100],
   },
   [Size.Default]: {
     y: getYPadding(Size.Default),
-    xLeftWithChip: 6,
-    xLeftWithoutChip: 12,
-    xRight: 12,
+    xLeftWithChip: spacing[150],
+    xLeftWithoutChip: spacing[300],
+    xRight: spacing[200],
   },
   [Size.Large]: {
     y: getYPadding(Size.Large),
-    xLeftWithChip: spacing[2] - 1,
-    xLeftWithoutChip: spacing[2] - 1,
-    xRight: spacing[2] - 1,
+    xLeftWithChip: spacing[300],
+    xLeftWithoutChip: spacing[300],
+    xRight: spacing[200],
   },
 };
 
@@ -92,7 +93,7 @@ export const comboboxPadding: Record<
 export const clearButtonIconSize = 28;
 
 /** Width of the dropdown caret icon (in px) */
-export const caretIconSize = spacing[3];
+export const caretIconSize = spacing[400];
 
 export const comboboxParentStyle = (size: Size): string => {
   return css`
@@ -108,7 +109,7 @@ export const comboboxParentStyle = (size: Size): string => {
 export const baseComboboxStyles = css`
   display: flex;
   align-items: center;
-  gap: ${spacing[2]}px;
+  gap: ${spacing[200]}px;
   cursor: text;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color, box-shadow, border-color;
@@ -137,14 +138,12 @@ export const baseComboboxStyles = css`
 
 export const comboboxThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.gray.dark3};
-    background-color: ${palette.white};
-    border-color: ${palette.gray.base};
+    color: ${color.light.text.primary.default};
+    background-color: ${color.light.background.primary.default};
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.light2};
+    color: ${color.dark.text.primary.default};
     background-color: ${palette.gray.dark4};
-    border-color: ${palette.gray.base};
   `,
 };
 
@@ -160,29 +159,24 @@ export const comboboxSizeStyles = (
   padding-right: ${comboboxPadding[size].xRight}px;
 `;
 
-export const comboboxDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark1};
-    background-color: ${palette.gray.light2};
-    border-color: ${palette.gray.light1};
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark1};
-    background-color: ${palette.gray.dark3};
-    border-color: ${palette.gray.dark2};
-  `,
-};
+export const getComboboxDisabledStyles = (theme: Theme) => css`
+  cursor: not-allowed;
+  color: ${color[theme].text.disabled.default};
+  background-color: ${color[theme].background.disabled.default};
+  border-color: ${color[theme].border.disabled.default};
+`;
 
-export const comboboxErrorStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border-color: ${palette.red.base};
+export const getComboboxStateStyles = (theme: Theme) => ({
+  [State.Error]: css`
+    border-color: ${color[theme].border.error.default};
   `,
-  [Theme.Dark]: css`
-    border-color: ${palette.red.light1};
+  [State.None]: css`
+    border-color: ${color[theme].border.primary.default};
   `,
-};
+  [State.Valid]: css`
+    border-color: ${color[theme].border.success.default};
+  `,
+});
 
 export const comboboxFocusStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -206,16 +200,16 @@ export const iconsWrapperBaseStyles = css`
 
 export const iconsWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
-    gap: ${spacing[1]}px;
+    gap: ${spacing[100]}px;
   `,
   [Size.Small]: css`
-    gap: ${spacing[2]}px;
+    gap: ${spacing[200]}px;
   `,
   [Size.Default]: css`
-    gap: ${spacing[2]}px;
+    gap: ${spacing[200]}px;
   `,
   [Size.Large]: css`
-    gap: ${spacing[2]}px;
+    gap: ${spacing[200]}px;
   `,
 };
 
@@ -291,7 +285,7 @@ export const baseInputElementStyle = css`
 
   // Only add padding if there are chips
   &:not(:first-child) {
-    padding-left: ${spacing[1]}px;
+    padding-left: ${spacing[100]}px;
   }
 
   &:placeholder-shown {
@@ -305,12 +299,12 @@ export const baseInputElementStyle = css`
 export const inputElementThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &::placeholder {
-      color: ${palette.gray.dark1};
+      color: ${palette.gray.base};
     }
   `,
   [Theme.Dark]: css`
     &::placeholder {
-      color: ${palette.gray.light1};
+      color: ${palette.gray.dark1};
     }
   `,
 };
@@ -318,7 +312,7 @@ export const inputElementThemeStyle: Record<Theme, string> = {
 export const inputElementDisabledThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &::placeholder {
-      color: ${palette.gray.dark1};
+      color: ${palette.gray.base};
     }
   `,
   [Theme.Dark]: css`
@@ -362,28 +356,13 @@ export const clearButtonStyle = css`
   margin-inline: -6px;
 `;
 
-export const endIconStyle = css`
+export const iconStyle = css`
   height: ${caretIconSize}px;
   width: ${caretIconSize}px;
 `;
 
-export const errorMessageThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
-};
-
-export const errorMessageSizeStyle = (size: Size) => css`
-  font-size: ${fontSize[size]}px;
-  line-height: ${lineHeight[size]}px;
-  padding-top: ${comboboxPadding[size].y}px;
-`;
-
 export const labelDescriptionContainerStyle = css`
-  margin-bottom: ${spacing[1]}px;
+  margin-bottom: ${spacing[100]}px;
   display: flex;
   flex-direction: column;
 `;
@@ -407,17 +386,8 @@ export const comboboxOverflowShadowStyles: Record<Theme, string> = {
   `,
 };
 
-export const errorIconThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: palette.red.base,
-  [Theme.Dark]: palette.red.light1,
-};
+export const getCaretIconFill = (theme: Theme) =>
+  color[theme].icon.primary.default;
 
-export const caretIconThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: palette.gray.dark2,
-  [Theme.Dark]: palette.gray.light1,
-};
-
-export const caretIconDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: palette.gray.base,
-  [Theme.Dark]: palette.gray.dark1,
-};
+export const getCaretIconDisabledFill = (theme: Theme) =>
+  color[theme].icon.disabled.default;

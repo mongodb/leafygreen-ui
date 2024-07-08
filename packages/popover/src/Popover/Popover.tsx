@@ -71,6 +71,7 @@ export const contentClassName = createUniqueClassName('popover-content');
  * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
  * @param props.portalClassName Classname applied to root element of the portal.
  * @param props.portalContainer HTML element that the popover is portaled within.
+ * @param props.portalRef A ref for the Portal element.
  * @param props.scrollContainer HTML ancestor element that's scrollable to position the popover accurately within scrolling containers.
  */
 export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
@@ -88,6 +89,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       usePortal = true,
       portalClassName,
       portalContainer: portalContainerProp,
+      portalRef,
       scrollContainer: scrollContainerProp,
       onEnter,
       onEntering,
@@ -262,11 +264,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     `;
 
     const Root = usePortal ? Portal : Fragment;
-    const rootProps = usePortal
-      ? portalContainer
-        ? { container: portalContainer }
-        : { className: portalClassName ?? undefined }
-      : {};
+    const portalProps = {
+      className: portalContainer ? undefined : portalClassName,
+      container: portalContainer ?? undefined,
+      portalRef,
+    };
+    const rootProps = usePortal ? portalProps : {};
 
     let renderedChildren: null | React.ReactNode;
 

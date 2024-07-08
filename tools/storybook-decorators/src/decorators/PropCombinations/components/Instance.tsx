@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
+import { GeneratedStoryConfig } from '@lg-tools/storybook-utils';
 import { Args } from '@storybook/react';
-
-import { GeneratedStoryConfig } from '@leafygreen-ui/lib';
 
 import { PropCombination } from '../utils';
 

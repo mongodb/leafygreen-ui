@@ -110,7 +110,12 @@ export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
     /**
      * The message shown below the input when state is `error`
      */
-    errorMessage?: string;
+    errorMessage?: ReactNode;
+
+    /**
+     * The message shown below the input when state is `valid`
+     */
+    successMessage?: ReactNode;
 
     /**
      * The state of search results. Toggles search messages within the menu.

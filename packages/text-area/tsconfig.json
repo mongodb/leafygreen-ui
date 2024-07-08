@@ -13,22 +13,19 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../emotion"
     },
     {
+      "path": "../form-field"
+    },
+    {
       "path": "../hooks"
     },
     {
-      "path": "../icon"
-    },
-    {
       "path": "../lib"
-    },
-    {
-      "path": "../palette"
     },
     {
       "path": "../tokens"

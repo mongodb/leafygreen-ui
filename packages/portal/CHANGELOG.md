@@ -1,5 +1,28 @@
 # @leafygreen-ui/portal
 
+## 5.1.1
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/hooks@8.1.3
+
+## 5.1.0
+
+### Minor Changes
+
+- 8ad4fdbc: Manually forward `portalRef` to `Portal` component and expose `portalRef` in `Popover` component
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/hooks@8.1.2
+
 ## 5.0.3
 
 ### Patch Changes

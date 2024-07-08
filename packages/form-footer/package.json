@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-footer",
-  "version": "3.0.15",
+  "version": "4.0.0",
   "description": "leafyGreen UI Kit Form Footer",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,16 +22,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/banner": "^7.0.16",
-    "@leafygreen-ui/button": "^21.0.9",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.22.2",
-    "@leafygreen-ui/lib": "^13.0.0",
-    "@leafygreen-ui/palette": "^4.0.7",
+    "@leafygreen-ui/banner": "^8.0.0",
+    "@leafygreen-ui/button": "^21.1.0",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^12.4.0",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.0.9",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-footer",
   "repository": {
@@ -41,5 +41,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.0"
+  }
 }

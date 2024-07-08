@@ -5,9 +5,8 @@ import ArrowRightIcon from '@leafygreen-ui/icon/dist/ArrowRight';
 import OpenNewTabIcon from '@leafygreen-ui/icon/dist/OpenNewTab';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
+  hasAnchorProps,
   InferredPolymorphic,
-  PolymorphicProps,
-  PolymorphicPropsWithRef,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
@@ -17,9 +16,6 @@ import {
   linkModeStyles,
   linkScaleStyles,
   linkStyles,
-  overwriteDefaultStyles,
-  underlineModeStyles,
-  underlineStyles,
 } from '../shared.styles';
 
 import {
@@ -28,16 +24,6 @@ import {
   openInNewTabStyles,
 } from './Link.styles';
 import { ArrowAppearance, BaseLinkProps } from './Link.types';
-
-type LinkRenderProps = PolymorphicPropsWithRef<'span', BaseLinkProps>;
-
-type AnchorLikeProps = PolymorphicProps<'a', BaseLinkProps>;
-
-const hasAnchorLikeProps = (
-  props: LinkRenderProps | AnchorLikeProps,
-): props is AnchorLikeProps => {
-  return (props as AnchorLikeProps).href !== undefined;
-};
 
 const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
   (
@@ -48,8 +34,8 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       hideExternalIcon = false,
       baseFontSize: baseFontSizeOverride,
       darkMode: darkModeProp,
-      as,
-      ...rest
+      as: asProp,
+      ...props
     },
     fwdRef,
   ) => {
@@ -60,16 +46,20 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
 
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
-    const { Component } = useInferredPolymorphic(as, rest, 'span');
+    const { Component, as, rest } = useInferredPolymorphic(
+      asProp,
+      props,
+      'span',
+    );
 
     const hrefHostname = useMemo(() => {
-      if (hasAnchorLikeProps(rest)) {
+      if (hasAnchorProps(as, rest)) {
         const httpRegex = /^http(s)?:\/\//;
         return httpRegex.test(rest.href)
           ? new URL(rest.href).hostname
           : currentHostname;
       }
-    }, [rest, currentHostname]);
+    }, [as, rest, currentHostname]);
 
     let icon;
 
@@ -81,9 +71,9 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       rel: undefined,
     };
 
-    if ((rest as AnchorLikeProps).target || (rest as AnchorLikeProps).rel) {
-      defaultAnchorProps.target = (rest as AnchorLikeProps).target;
-      defaultAnchorProps.rel = (rest as AnchorLikeProps).rel;
+    if (rest.target || rest.rel) {
+      defaultAnchorProps.target = rest.target;
+      defaultAnchorProps.rel = rest.rel;
     } else if (Component === 'a') {
       // Sets defaults for target and rel props when Component is an anchor tag
       if (hrefHostname === currentHostname) {
@@ -117,7 +107,6 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
       <Component
         className={cx(
           anchorClassName,
-          overwriteDefaultStyles,
           linkStyles,
           linkScaleStyles(baseFontSize),
           linkModeStyles[theme],
@@ -127,9 +116,8 @@ const Link = InferredPolymorphic<BaseLinkProps, 'span'>(
         {...defaultAnchorProps}
         {...rest}
       >
-        <span className={cx(underlineStyles, underlineModeStyles[theme])}>
-          {children}
-        </span>
+        <span>{children}</span>
+
         {icon}
       </Component>
     );

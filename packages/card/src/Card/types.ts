@@ -1,4 +1,4 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export const ContentStyle = {
   None: 'none',
@@ -7,7 +7,7 @@ export const ContentStyle = {
 
 export type ContentStyle = (typeof ContentStyle)[keyof typeof ContentStyle];
 
-export interface CardProps extends DarkModeProps, HTMLElementProps<'div'> {
+export interface CardProps extends DarkModeProps {
   /**
    * Determines whether the Card should be styled as clickable.
    *
@@ -16,4 +16,10 @@ export interface CardProps extends DarkModeProps, HTMLElementProps<'div'> {
    * @default 'clickable' | 'none'
    */
   contentStyle?: ContentStyle;
+
+  /**
+   * Title for the Card component.
+   *
+   */
+  title?: string;
 }

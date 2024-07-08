@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/banner",
-  "version": "7.0.18",
+  "version": "8.0.1",
   "description": "leafyGreen UI Kit Banner",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,16 +22,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^13.1.0",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.25.1",
-    "@leafygreen-ui/icon-button": "^15.0.19",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/icon": "^12.0.1",
+    "@leafygreen-ui/icon-button": "^15.0.21",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/banner",
   "repository": {
@@ -41,5 +41,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  }
 }

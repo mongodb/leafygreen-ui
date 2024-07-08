@@ -14,15 +14,12 @@ import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
+import { TestUtilsReturnType } from '../utils/getTestUtils/getTestUtils.types';
 import { Option, OptionGroup, Select } from '..';
 
-import { State } from './Select.types';
-
-function waitForTimeout(timeout = 500) {
-  return new Promise(res => setTimeout(res, timeout));
-}
+import { SelectProps, State } from './Select.types';
 
 const Color = {
   Red: 'Explicit value: Red',
@@ -77,69 +74,39 @@ function Controller({
   return <>{children(value, setValue)}</>;
 }
 
-let offsetParentSpy: jest.SpyInstance;
-beforeAll(() => {
-  offsetParentSpy = jest.spyOn(HTMLElement.prototype, 'offsetParent', 'get');
+function renderSelect(props = {}) {
+  const renderUtils = render(<Select {...defaultProps} {...props} />);
 
-  // JSDOM doesn't implement `HTMLElement.prototype.offsetParent`, so this
-  // falls back to the parent element since it doesn't matter for these tests.
-  offsetParentSpy.mockImplementation(function (this: HTMLElement) {
-    return this.parentElement;
-  });
-});
+  const utils = getTestUtils();
 
-afterAll(() => {
-  if (offsetParentSpy.mock.calls.length === 0) {
-    // throw Error('`HTMLElement.prototype.offsetParent` was never called');
-  }
-  offsetParentSpy.mockRestore();
-});
+  const rerenderSelect = (newProps?: Partial<SelectProps>) => {
+    const allProps = { ...props, ...newProps };
+
+    renderUtils.rerender(<Select {...defaultProps} {...allProps} />);
+  };
+
+  return {
+    ...renderUtils,
+    ...utils,
+    rerenderSelect,
+  };
+}
 
 describe('packages/select', () => {
   test('renders label and description', () => {
-    const { getByText } = render(<Select {...defaultProps} />);
-    expect(getByText(defaultProps.label)).toBeVisible();
-    expect(getByText(defaultProps.description)).toBeVisible();
+    const { getLabel, getDescription } = renderSelect();
+    expect(getLabel()).toBeVisible();
+    expect(getDescription()).toBeVisible();
   });
 
   test('renders placeholder', async () => {
-    const { getByRole, rerender } = render(<Select {...defaultProps} />);
+    const { getInput, getOptionByValue, rerenderSelect } = renderSelect();
 
-    let button = getByRole('button');
-    expect(button).toBeVisible();
-    expect(getByTextFor(button, 'Select')).toBeVisible();
-
-    rerender(<Select {...defaultProps} placeholder="Explicit placeholder" />);
-
-    button = getByRole('button');
-    expect(getByTextFor(button, 'Explicit placeholder')).toBeVisible();
-
-    userEvent.click(button);
-
-    const listbox = await waitFor(() => {
-      const listbox = getByRole('listbox');
-      expect(listbox).toBeVisible();
-      return listbox;
-    });
-
-    expect(getByTextFor(listbox, 'Explicit placeholder')).toBeVisible();
-  });
-
-  test('button has selected value', () => {
-    const { getByRole, rerender } = render(<Select {...defaultProps} />);
-
-    const button = getByRole('button') as HTMLButtonElement;
-    expect(button).toBeInstanceOf(HTMLButtonElement);
-
-    expect(button.name).toEqual(defaultProps.name);
-    expect(button.disabled).toEqual(false);
-    expect(button).toHaveValue('');
-
-    rerender(<Select {...defaultProps} name="explicit_name" />);
-    expect(button.name).toEqual('explicit_name');
-
-    rerender(<Select {...defaultProps} disabled />);
-    expect(button).toHaveAttribute('aria-disabled', 'true');
+    expect(getInput()).toHaveTextContent('Select');
+    rerenderSelect({ placeholder: 'Explicit placeholder' });
+    expect(getInput()).toHaveTextContent('Explicit placeholder');
+    userEvent.click(getInput());
+    expect(getOptionByValue('Explicit placeholder')).toBeInTheDocument();
   });
 
   test('accepts a ref', () => {
@@ -171,6 +138,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'error'), spy => {
       spy.mockImplementation();
       render(
+        // @ts-expect-error - label missing
         <Select {...defaultProps} label={undefined}>
           <Option>Option</Option>
         </Select>,
@@ -210,42 +178,33 @@ describe('packages/select', () => {
     });
   });
 
-  test('trigger passes through data props', () => {
-    const result = render(
-      <Select label="Label" data-testid="lg-select">
-        <Option>Option</Option>
-      </Select>,
-    );
-    const select = result.queryByTestId('lg-select');
-    expect(select).toBeInTheDocument();
-  });
-
-  test('option & group passes through data props', () => {
-    const result = render(
+  test('option & group passes through data props', async () => {
+    const { queryByTestId } = render(
       <Select label="Label">
         <OptionGroup label="Group" data-testid="lg-group">
           <Option data-testid="lg-option">Option</Option>
         </OptionGroup>
       </Select>,
     );
-    const trigger = result.getByRole('button');
-    userEvent.click(trigger);
 
-    const group = result.queryByTestId('lg-group');
-    const option = result.queryByTestId('lg-option');
+    const { getInput } = getTestUtils();
+
+    userEvent.click(getInput());
+
+    const group = queryByTestId('lg-group');
+    const option = queryByTestId('lg-option');
     expect(group).toBeInTheDocument();
     expect(option).toBeInTheDocument();
   });
 
   describe('tab order', () => {
     test('contains component when enabled', () => {
-      const { getByRole } = render(<Select {...defaultProps} />);
+      const { getInput } = renderSelect();
 
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      const button = getByRole('button');
-      expect(button).toHaveFocus();
+      expect(getInput()).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -253,13 +212,12 @@ describe('packages/select', () => {
 
     // Select should still be focusable when disabled
     test('and contains component when disabled', () => {
-      const { getByRole } = render(<Select {...defaultProps} />);
+      const { getInput } = renderSelect({ disabled: true });
 
       expect(document.body).toHaveFocus();
 
       userEvent.tab();
-      const button = getByRole('button');
-      expect(button).toHaveFocus();
+      expect(getInput()).toHaveFocus();
 
       userEvent.tab();
       expect(document.body).toHaveFocus();
@@ -273,35 +231,35 @@ describe('packages/select', () => {
     const isDisabled = !enabled;
 
     test('when uncontrolled', () => {
-      const { getByRole } = render(
-        <Select
-          {...defaultProps}
-          disabled={isDisabled}
-          defaultValue={Color.Blue}
-        />,
-      );
+      const {
+        getInput,
+        isDisabled: utilsIsDisabled,
+        getInputValue,
+      } = renderSelect({
+        disabled: isDisabled,
+        defaultValue: Color.Blue,
+      });
 
-      const button = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(button, 'Blue')).toBeVisible();
-      expect(button).toHaveValue('Blue');
+      expect(getInput()).toBeVisible();
+      expect(getInputValue()).toBe('Blue');
+      expect(utilsIsDisabled()).toBe(isDisabled);
     });
 
     test('when controlled', () => {
       const onChangeSpy = jest.fn();
-      const { getByRole } = render(
-        <Select
-          {...defaultProps}
-          value={Color.Blue}
-          onChange={onChangeSpy}
-          disabled={isDisabled}
-        />,
-      );
+      const {
+        getInput,
+        isDisabled: utilsIsDisabled,
+        getInputValue,
+      } = renderSelect({
+        disabled: isDisabled,
+        value: Color.Blue,
+        onChange: onChangeSpy,
+      });
 
-      const button = getByRole('button') as HTMLButtonElement;
-      expect(getByTextFor(button, 'Blue')).toBeVisible();
-      expect(button).toHaveValue('Blue');
-      expect(button).toHaveAttribute('aria-disabled', `${isDisabled}`);
-
+      expect(getInput()).toBeVisible();
+      expect(getInputValue()).toBe('Blue');
+      expect(utilsIsDisabled()).toBe(isDisabled);
       expect(onChangeSpy).not.toHaveBeenCalled();
     });
   });
@@ -310,6 +268,7 @@ describe('packages/select', () => {
     Context.within(Jest.spyContext(console, 'warn'), spy => {
       spy.mockImplementation();
 
+      // @ts-expect-error - expecting `readOnly` prop
       render(<Select {...defaultProps} value="" />);
 
       expect(spy).toHaveBeenCalledTimes(1);
@@ -331,220 +290,199 @@ describe('packages/select', () => {
   });
 
   describe('list menu', () => {
-    test('allowDeselect prevents placeholder from being rendered', () => {
-      const { getByRole, queryByText } = render(
-        <Select
-          {...defaultProps}
-          defaultValue={Color.Red}
-          allowDeselect={false}
-        >
-          {defaultProps.children}
-        </Select>,
-      );
+    test('allowDeselect prevents placeholder from being rendered', async () => {
+      const { getInput, queryByText } = renderSelect({
+        allowDeselect: false,
+        defaultValue: Color.Red,
+      });
 
-      userEvent.click(getByRole('button'));
+      userEvent.click(getInput());
       expect(queryByText('Select')).not.toBeInTheDocument();
     });
 
-    describe.each([
-      ['dark', true],
-      ['light', false],
-    ])('renders in %p mode', (_, darkMode) => {
-      test('all valid options', async () => {
-        const { getByRole, queryByText } = Context.within(
-          Jest.spyContext(console, 'error'),
-          spy => {
-            spy.mockImplementation();
-
-            const result = render(
-              <Select {...defaultProps} darkMode={darkMode}>
-                {defaultProps.children}
-                <Option glyph={<BeakerIcon />}>White</Option>
-                <div>Invalid element</div>
-              </Select>,
-            );
-
-            userEvent.click(result.getByRole('button'));
-
-            expect(spy).toHaveBeenCalledWith(
-              '`Select` instance received child that is not `Option` or `OptionGroup`.',
-            );
-
-            return result;
-          },
-        );
-
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
-        });
-
-        Object.keys(Color).forEach(color => {
-          expect(getByTextFor(listbox, color)).toBeVisible();
-        });
-
-        expect(queryByText('Invalid element')).not.toBeInTheDocument();
+    test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
+      const portalRef = createRef<HTMLElement>();
+      const { getInput } = renderSelect({
+        portalContainer,
+        portalRef,
       });
+      userEvent.click(getInput());
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
+    });
 
-      test('omitting empty elements', () => {
-        Context.within(Jest.spyContext(console, 'error'), spy => {
+    test('does not render invalid  option', async () => {
+      const { queryByText } = Context.within(
+        Jest.spyContext(console, 'error'),
+        spy => {
           spy.mockImplementation();
 
-          const { getByRole } = render(
-            <Select {...defaultProps} darkMode={darkMode}>
+          const result = render(
+            <Select {...defaultProps}>
               {defaultProps.children}
-              <></>
-              {}
-              {''}
-              {false}
-              {null}
-              {undefined}
+              <Option glyph={<BeakerIcon />}>White</Option>
+              <div>Invalid element</div>
             </Select>,
           );
 
-          act(() => {
-            userEvent.click(getByRole('button'));
-          });
+          const { getInput } = getTestUtils();
 
-          expect(spy).not.toHaveBeenCalled();
-        });
-      });
+          userEvent.click(getInput());
+          expect(spy).toHaveBeenCalledWith(
+            '`Select` instance received child that is not `Option` or `OptionGroup`.',
+          );
 
-      test('glyph', async () => {
-        const { getByRole, getAllByLabelText } = render(
-          <Select {...defaultProps} darkMode={darkMode} defaultValue="selected">
-            <Option glyph={<BeakerIcon />} value="nonselected">
-              Non-selected with glyph
-            </Option>
-            <Option glyph={<BeakerIcon />} value="selected">
-              Selected with glyph
-            </Option>
+          return result;
+        },
+      );
+      expect(queryByText('Invalid element')).not.toBeInTheDocument();
+    });
+
+    test('omitting empty elements', () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
+
+        render(
+          <Select {...defaultProps}>
+            {defaultProps.children}
+            <></>
+            {}
+            {''}
+            {false}
+            {null}
+            {undefined}
           </Select>,
         );
 
-        userEvent.click(getByRole('button'));
-
-        await waitFor(() => {
-          expect(getByRole('listbox')).toBeVisible();
+        const { getInput } = getTestUtils();
+        act(() => {
+          userEvent.click(getInput());
         });
+        expect(spy).not.toHaveBeenCalled();
+      });
+    });
 
+    test('glyph', async () => {
+      const { getAllByLabelText } = render(
+        <Select {...defaultProps} defaultValue="selected">
+          <Option glyph={<BeakerIcon />} value="nonselected">
+            Non-selected with glyph
+          </Option>
+          <Option glyph={<BeakerIcon />} value="selected">
+            Selected with glyph
+          </Option>
+        </Select>,
+      );
+
+      const { getPopover, getInput } = getTestUtils();
+
+      userEvent.click(getInput());
+
+      await waitFor(() => {
+        expect(getPopover()).toBeVisible();
         getAllByLabelText('Beaker Icon').forEach(element =>
           expect(element).toBeVisible(),
         );
       });
+    });
 
-      test('invalid glyph', () => {
-        Context.within(Jest.spyContext(console, 'error'), spy => {
-          spy.mockImplementation();
+    test('invalid glyph', () => {
+      Context.within(Jest.spyContext(console, 'error'), spy => {
+        spy.mockImplementation();
 
-          const { getByRole } = render(
-            <Select {...defaultProps} darkMode={darkMode}>
-              <Option glyph={<div />}>Bad icon</Option>
-            </Select>,
-          );
+        render(
+          <Select {...defaultProps}>
+            <Option glyph={<div />}>Bad icon</Option>
+          </Select>,
+        );
 
-          userEvent.click(getByRole('button'));
+        const { getInput } = getTestUtils();
 
-          expect(spy).toHaveBeenCalledWith(
-            '`Option` instance did not render icon because it is not a known glyph element.',
-          );
-        });
+        userEvent.click(getInput());
+
+        expect(spy).toHaveBeenCalledWith(
+          '`Option` instance did not render icon because it is not a known glyph element.',
+        );
       });
     });
 
     describe('opening', () => {
       test('by clicking', async () => {
-        const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
+        const { getPopover, getInput } = renderSelect();
 
-        const button = getByRole('button');
-
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
-
-        userEvent.click(button);
+        userEvent.click(getInput());
 
         await waitFor(() => {
-          expect(getByRole('listbox')).toBeVisible();
+          expect(getPopover()).toBeVisible();
         });
 
-        expect(button).toHaveFocus();
+        expect(getInput()).toHaveFocus();
       });
 
       test('by arrow down key', async () => {
-        const { getByRole, queryByRole } = render(<Select {...defaultProps} />);
+        const { getOptionByValue, getPopover, getInput } = renderSelect();
 
         // focus on button element
         userEvent.tab();
+        userEvent.type(getInput(), '{arrowdown}');
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
-
-        userEvent.type(getByRole('button'), '{arrowdown}');
-
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
+        await waitFor(() => {
+          expect(getPopover()).toBeVisible();
         });
 
+        const firstOption = getOptionByValue('Select');
         // First option is focused
-        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
+        expect(firstOption).toHaveFocus();
       });
 
       test('by arrow up key', async () => {
-        const { getByRole, queryByRole, queryByText } = render(
-          <Select {...defaultProps} />,
-        );
+        const { getOptionByValue, getPopover, getInput } = renderSelect();
 
         // focus on button element
         userEvent.tab();
+        userEvent.type(getInput(), '{arrowup}');
 
-        expect(queryByRole('listbox')).not.toBeInTheDocument();
-        expect(queryByText('Yellow')).not.toBeInTheDocument();
-
-        userEvent.type(getByRole('button'), '{arrowup}');
-
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
+        await waitFor(() => {
+          expect(getPopover()).toBeVisible();
         });
 
+        const lastOption = getOptionByValue('Yellow');
         // Last enabled option is focused
-        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
+        expect(lastOption).toHaveFocus();
       });
 
       describe('is not allowed when disabled', () => {
         test('by clicking', () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} disabled />,
-          );
+          const { getPopover, getInput } = renderSelect({
+            disabled: true,
+          });
 
-          const button = getByRole('button');
-          expect(() => userEvent.click(button)).toThrow();
-
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          expect(() => userEvent.click(getInput())).toThrow();
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('by arrow down key', () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} disabled />,
-          );
+          const { getPopover, getInput } = renderSelect({
+            disabled: true,
+          });
 
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
-
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          // console.error
+          // Error: unable to click element as it has or inherits pointer-events set to "none".
+          userEvent.type(getInput(), '{arrowdown}');
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('by arrow up key', () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} disabled />,
-          );
+          const { getPopover, getInput } = renderSelect({
+            disabled: true,
+          });
 
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowup}');
-
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          // console.error
+          // Error: unable to click element as it has or inherits pointer-events set to "none".
+          userEvent.type(getInput(), '{arrowup}');
+          expect(getPopover()).not.toBeInTheDocument();
         });
       });
     });
@@ -554,19 +492,14 @@ describe('packages/select', () => {
         const onEnter = jest.fn();
         const onEntering = jest.fn();
         const onEntered = jest.fn();
-        const { getByRole } = render(
-          <Select
-            {...defaultProps}
-            onEnter={onEnter}
-            onEntering={onEntering}
-            onEntered={onEntered}
-          >
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
-        userEvent.click(button);
+
+        const { getInput } = renderSelect({
+          onEnter: onEnter,
+          onEntering: onEntering,
+          onEntered: onEntered,
+        });
+
+        userEvent.click(getInput());
 
         expect(onEnter).toHaveBeenCalled();
         expect(onEntering).toHaveBeenCalled();
@@ -577,20 +510,15 @@ describe('packages/select', () => {
         const onExit = jest.fn();
         const onExiting = jest.fn();
         const onExited = jest.fn();
-        const { getByRole } = render(
-          <Select
-            {...defaultProps}
-            onExit={onExit}
-            onExiting={onExiting}
-            onExited={onExited}
-          >
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
-        userEvent.click(button);
-        userEvent.click(button);
+
+        const { getInput } = renderSelect({
+          onExit: onExit,
+          onExiting: onExiting,
+          onExited: onExited,
+        });
+
+        userEvent.click(getInput());
+        userEvent.click(getInput());
 
         expect(onExit).toHaveBeenCalled();
         expect(onExiting).toHaveBeenCalled();
@@ -601,110 +529,42 @@ describe('packages/select', () => {
     describe('closing', () => {
       describe('selecting an option closes menu', () => {
         test('on mouse click', async () => {
-          const { getByRole, findAllByRole, queryByRole } = render(
-            <Select {...defaultProps}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.click(button);
+          const { getInput, getPopover, getOptionByValue } = renderSelect();
+
+          userEvent.click(getInput());
           await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            expect(getPopover()).toBeVisible();
           });
-          const options = await findAllByRole('option');
-          const apple = options[0];
-          userEvent.click(apple);
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+
+          userEvent.click(getOptionByValue('Red')!);
+          await waitForElementToBeRemoved(getPopover());
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('on enter', async () => {
-          const { getByRole } = render(
-            <Select {...defaultProps}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
+          const { getInput, getPopover } = renderSelect();
+
+          userEvent.type(getInput(), '{arrowdown}');
           await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            expect(getPopover()).toBeVisible();
           });
           // first option is focused by default
           userEvent.keyboard('{enter}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForElementToBeRemoved(getPopover());
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('on space', async () => {
-          const { getByRole } = render(
-            <Select {...defaultProps}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
+          const { getInput, getPopover } = renderSelect();
+
+          userEvent.type(getInput(), '{arrowdown}');
           await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            expect(getPopover()).toBeVisible();
           });
           // first option is focused by default
           userEvent.keyboard('{space}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
-        });
-      });
-
-      describe("selecting an option closes menu and doesn't reopen the menu", () => {
-        test('on mouse click', async () => {
-          const { getByRole, findAllByRole, queryByRole } = render(
-            <Select {...defaultProps}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.click(button);
-          const options = await findAllByRole('option');
-          const apple = options[0];
-          userEvent.click(apple);
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          await waitForTimeout(transitionDuration.slower);
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
-        });
-
-        test('on enter', async () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
-          // first option is focused by default
-          userEvent.keyboard('{enter}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          await waitForTimeout(transitionDuration.slower);
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
-        });
-
-        test('on space', async () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
-          // first option is focused by default
-          userEvent.keyboard('{space}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          await waitForTimeout(transitionDuration.slower);
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          await waitForElementToBeRemoved(getPopover());
+          expect(getPopover()).not.toBeInTheDocument();
         });
       });
     });
@@ -715,18 +575,17 @@ describe('packages/select', () => {
     ] as const)('closing when %p is focused', (_, focusedElementRole) => {
       let getByRole: RenderResult['getByRole'];
       let getByText: RenderResult['getByText'];
-      let getByTestId: RenderResult['getByTestId'];
+      let getPopover: () => HTMLDivElement | null;
+      let getInput: () => HTMLButtonElement;
 
       beforeEach(async () => {
-        ({ getByRole, getByText, getByTestId } = render(
-          <Select {...defaultProps} />,
-        ));
+        ({ getPopover, getByRole, getByText, getInput } = renderSelect());
 
-        userEvent.click(getByRole('button'));
+        userEvent.click(getInput());
 
         await waitFor(() => {
           // eslint-disable-next-line jest/no-standalone-expect
-          expect(getByRole('listbox')).toBeVisible();
+          expect(getPopover()).toBeVisible();
         });
 
         const focusedElement = getByRole(focusedElementRole);
@@ -737,38 +596,33 @@ describe('packages/select', () => {
         userEvent.click(document.body);
 
         expect(document.body).toHaveFocus();
-
-        await waitForElementToBeRemoved(getByRole('listbox'));
+        await waitForElementToBeRemoved(getPopover());
       });
 
       test('by clicking menu button', async () => {
-        const button = getByRole('button');
+        const button = getInput();
         userEvent.click(button);
 
         expect(button).toHaveFocus();
-
-        await waitForElementToBeRemoved(getByRole('listbox'));
+        await waitForElementToBeRemoved(getPopover());
       });
 
       test('by escape key', async () => {
         userEvent.type(getByRole(focusedElementRole), '{esc}');
 
-        const button = getByTestId('leafygreen-ui-select-menubutton');
+        const button = getInput();
         expect(button).toHaveFocus();
-
-        await waitForElementToBeRemoved(getByRole('listbox'));
+        await waitForElementToBeRemoved(getPopover());
       });
 
       test('does not occur by clicking on option group label', async () => {
         userEvent.click(getByText('Enabled group'));
 
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
-          return listbox;
+        await waitFor(() => {
+          expect(getPopover()).toBeVisible();
         });
 
-        expect(listbox).toHaveFocus();
+        expect(getPopover()).toHaveFocus();
       });
     });
 
@@ -776,8 +630,6 @@ describe('packages/select', () => {
       ['uncontrolled', false],
       ['controlled', true],
     ])('when %p selecting', (_, controlled) => {
-      let getByRole: RenderResult['getByRole'];
-
       let button: HTMLElement;
       let onChangeSpy: jest.MockedFunction<
         (
@@ -785,11 +637,12 @@ describe('packages/select', () => {
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void
       >;
+      let selectUtils: TestUtilsReturnType;
 
       beforeEach(() => {
         onChangeSpy = jest.fn();
 
-        ({ getByRole } = render(
+        render(
           controlled ? (
             <Controller initialValue="">
               {(value, setValue) => (
@@ -806,9 +659,12 @@ describe('packages/select', () => {
           ) : (
             <Select {...defaultProps} onChange={onChangeSpy} />
           ),
-        ));
+        );
 
-        button = getByRole('button');
+        const utils = getTestUtils();
+
+        button = utils.getInput();
+        selectUtils = utils;
       });
 
       describe.each([
@@ -819,12 +675,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          const targetOption = getByTextFor(listbox, optionText).closest('li');
+          const targetOption = selectUtils.getOptionByValue(optionText);
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -848,12 +703,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          const targetOption = getByTextFor(listbox, optionText).closest('li');
+          const targetOption = selectUtils.getOptionByValue(optionText);
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -877,12 +731,12 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          userEvent.click(getByTextFor(listbox, optionText));
+          const targetOption = selectUtils.getOptionByValue(optionText);
+          userEvent.click(targetOption!);
 
           expect(onChangeSpy).toHaveBeenCalledTimes(1);
           expect(onChangeSpy).toHaveBeenCalledWith(
@@ -907,12 +761,11 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          const targetOption = getByTextFor(listbox, optionText).closest('li');
+          const targetOption = selectUtils.getOptionByValue(optionText);
           expect(targetOption).not.toBe(null);
 
           act(() => targetOption!.focus());
@@ -921,7 +774,7 @@ describe('packages/select', () => {
           });
 
           expect(onChangeSpy).not.toHaveBeenCalled();
-          expect(listbox).toBeVisible();
+          expect(listbox).toBeInTheDocument();
 
           expect(getByTextFor(button, 'Select')).toBeVisible();
           expect(targetOption).toHaveFocus();
@@ -934,15 +787,15 @@ describe('packages/select', () => {
           userEvent.click(button);
 
           const listbox = await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            const listbox = selectUtils.getPopover();
             return listbox;
           });
 
-          userEvent.click(getByTextFor(listbox, optionText));
+          const targetOption = selectUtils.getOptionByValue(optionText);
+          userEvent.click(targetOption!);
 
           expect(onChangeSpy).not.toHaveBeenCalled();
-          expect(listbox).toBeVisible();
+          expect(listbox).toBeInTheDocument();
 
           expect(getByTextFor(button, 'Select')).toBeVisible();
           expect(button).toHaveValue('');
@@ -952,53 +805,49 @@ describe('packages/select', () => {
 
     describe('focus', () => {
       test('moves to next option by arrow down key', async () => {
-        const { getByRole } = render(<Select {...defaultProps} />);
+        const { getPopover, getOptionByValue, getOptions, getInput } =
+          renderSelect();
 
-        userEvent.click(getByRole('button'));
+        userEvent.click(getInput());
 
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
+        const listbox = (await waitFor(() => {
+          const listbox = getPopover();
+          expect(listbox).toBeInTheDocument();
           return listbox;
-        });
+        })) as HTMLDivElement;
 
         enabledOptions.forEach(expectedOptionText => {
           userEvent.type(listbox, '{arrowdown}');
-
-          expect(
-            getByTextFor(listbox, expectedOptionText).closest('li'),
-          ).toHaveFocus();
+          expect(getOptionByValue(expectedOptionText)).toHaveFocus();
         });
 
         // Moves to first option when the end is reached
         userEvent.type(listbox, '{arrowdown}');
 
-        expect(getByTextFor(listbox, 'Select').closest('li')).toHaveFocus();
+        expect(getOptions()[0]).toHaveFocus();
       });
 
       test('moves to previous option by arrow down key', async () => {
-        const { getByRole } = render(<Select {...defaultProps} />);
+        const { getInput, getPopover, getOptionByValue } = renderSelect();
 
-        userEvent.click(getByRole('button'));
+        userEvent.click(getInput());
 
-        const listbox = await waitFor(() => {
-          const listbox = getByRole('listbox');
-          expect(listbox).toBeVisible();
+        const listbox = (await waitFor(() => {
+          const listbox = getPopover();
+          expect(listbox).toBeInTheDocument();
           return listbox;
-        });
+        })) as HTMLDivElement;
 
         [...enabledOptions].reverse().forEach(expectedOptionText => {
           userEvent.type(listbox, '{arrowup}');
 
-          expect(
-            getByTextFor(listbox, expectedOptionText).closest('li'),
-          ).toHaveFocus();
+          expect(getOptionByValue(expectedOptionText)).toHaveFocus();
         });
 
         // Moves to last option when the top is reached
         userEvent.type(listbox, '{arrowup}');
 
-        expect(getByTextFor(listbox, 'Yellow').closest('li')).toHaveFocus();
+        expect(getOptionByValue('Yellow')).toHaveFocus();
       });
     });
   });
@@ -1011,29 +860,27 @@ describe('packages/select', () => {
       <Option value="nonselected">Non-selected Option</Option>
     );
 
-    let getByRole: RenderResult['getByRole'];
     let rerender: RenderResult['rerender'];
     let button: HTMLElement;
+    let selectUtils: TestUtilsReturnType;
 
     beforeEach(async () => {
-      ({ getByRole, rerender } = render(
+      ({ rerender } = render(
         <Select label="Choice" name="choice">
           {selected}
           {nonselected}
         </Select>,
       ));
 
-      button = getByRole('button');
+      const utils = getTestUtils();
+
+      button = utils.getInput();
+      selectUtils = utils;
+
       userEvent.click(button);
 
-      const listbox = await waitFor(() => {
-        const listbox = getByRole('listbox');
-        // eslint-disable-next-line jest/no-standalone-expect
-        expect(listbox).toBeVisible();
-        return listbox;
-      });
-
-      userEvent.click(getByTextFor(listbox, 'Selected Option'));
+      const targetOption = selectUtils.getOptionByValue('Selected Option');
+      userEvent.click(targetOption!);
     });
 
     test('when selected option is removed', () => {
@@ -1043,7 +890,7 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      expect(getByTextFor(button, 'Select')).toBeVisible();
+      expect(button).toHaveTextContent('Select');
     });
 
     test('when options are re-ordered', () => {
@@ -1054,7 +901,7 @@ describe('packages/select', () => {
         </Select>,
       );
 
-      expect(getByTextFor(button, 'Selected Option')).toBeVisible();
+      expect(button).toHaveTextContent('Selected Option');
     });
 
     describe('when selected option is replaced', () => {
@@ -1066,7 +913,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        expect(getByTextFor(button, 'Selected Option')).toBeVisible();
+        expect(button).toHaveTextContent('Selected Option');
       });
 
       test('with same explicit value and different text', () => {
@@ -1078,7 +925,7 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        expect(getByTextFor(button, 'Different text')).toBeVisible();
+        expect(button).toHaveTextContent('Different text');
       });
 
       test('with same computed value', () => {
@@ -1089,94 +936,73 @@ describe('packages/select', () => {
           </Select>,
         );
 
-        expect(getByTextFor(button, 'selected')).toBeVisible();
+        expect(button).toHaveTextContent('selected');
       });
     });
+  });
 
-    describe('when the "state" is "error"', () => {
-      test('error message is present', () => {
-        const { container } = render(
-          <Select
-            {...defaultProps}
-            state={State.Error}
-            errorMessage={errorMessage}
-          />,
-        );
-        expect(container.innerHTML).toContain(errorMessage);
+  describe('when the "state" is "error"', () => {
+    test('error message is present', () => {
+      const { isError, getErrorMessage } = renderSelect({
+        state: State.Error,
+        errorMessage: errorMessage,
       });
-
-      test('error message is not present if "errorMessage" is empty', () => {
-        const { container } = render(
-          <Select {...defaultProps} state={State.Error} />,
-        );
-        expect(container.innerHTML).not.toContain(errorMessage);
-      });
+      expect(isError).toBeTruthy();
+      expect(getErrorMessage()).toBeInTheDocument();
     });
+  });
 
-    describe('when the "state" is "none"', () => {
-      test('error message is not present', () => {
-        const { container } = render(<Select {...defaultProps} />);
-        expect(container.innerHTML).not.toContain(errorMessage);
-      });
+  describe('when the "state" is "none"', () => {
+    test('error message is not present', () => {
+      const { getErrorMessage } = renderSelect();
+      expect(getErrorMessage()).not.toBeInTheDocument();
     });
   });
 
   describe('without Portal (usePortal="false")', () => {
     test('menu opens', async () => {
-      const { getByRole, findByRole } = render(
-        <Select {...defaultProps} usePortal={false}>
-          <Option data-testid="option-apple">Apple</Option>
-          <Option data-testid="option-banana">Banana</Option>
-        </Select>,
-      );
-      const button = getByRole('button');
-      userEvent.click(button);
+      const { getInput, getPopover } = renderSelect({ usePortal: false });
 
-      const listbox = await findByRole('listbox');
-
-      expect(listbox).toBeInTheDocument();
+      userEvent.click(getInput());
+      await waitFor(() => expect(getPopover()).toBeVisible());
     });
 
     test('menu renders as a child of button', async () => {
-      const { getByRole, findByRole } = render(
-        <Select {...defaultProps} usePortal={false}>
-          <Option data-testid="option-apple">Apple</Option>
-          <Option data-testid="option-banana">Banana</Option>
-        </Select>,
-      );
-      const button = getByRole('button');
-      userEvent.click(button);
-      const listbox = await findByRole('listbox');
+      const { getPopover, getInput } = renderSelect({
+        usePortal: false,
+      });
 
-      expect(button).toContainElement(listbox);
+      userEvent.click(getInput());
+
+      await waitFor(() => {
+        const popover = getPopover();
+        expect(popover).toBeInTheDocument();
+        expect(getInput()).toContainElement(popover);
+      });
     });
 
     describe('fires onChange when selecting an option', () => {
       test('on mouse click', async () => {
         const onChange = jest.fn();
-        const { getByRole, findAllByRole } = render(
-          <Select {...defaultProps} usePortal={false} onChange={onChange}>
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
-        userEvent.click(button);
-        const options = await findAllByRole('option');
-        const apple = options[0];
-        userEvent.click(apple);
+
+        const { getInput, getOptionByValue } = renderSelect({
+          usePortal: false,
+          onChange: onChange,
+        });
+
+        userEvent.click(getInput());
+        userEvent.click(getOptionByValue('Red')!);
         expect(onChange).toHaveBeenCalled();
       });
 
       test('on enter', async () => {
         const onChange = jest.fn();
-        const { getByRole } = render(
-          <Select {...defaultProps} usePortal={false} onChange={onChange}>
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
+        const { getInput } = renderSelect({
+          usePortal: false,
+          onChange: onChange,
+        });
+
+        const button = getInput();
         userEvent.type(button, '{arrowdown}');
         // first option is focused by default
         userEvent.keyboard('{enter}');
@@ -1185,13 +1011,12 @@ describe('packages/select', () => {
 
       test('on space', async () => {
         const onChange = jest.fn();
-        const { getByRole } = render(
-          <Select {...defaultProps} usePortal={false} onChange={onChange}>
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
+        const { getInput } = renderSelect({
+          usePortal: false,
+          onChange: onChange,
+        });
+
+        const button = getInput();
         userEvent.type(button, '{arrowdown}');
         // first option is focused by default
         userEvent.keyboard('{space}');
@@ -1202,109 +1027,48 @@ describe('packages/select', () => {
     describe('closing', () => {
       describe('selecting an option closes menu', () => {
         test('on mouse click', async () => {
-          const { getByRole, findAllByRole } = render(
-            <Select {...defaultProps} usePortal={false}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.click(button);
-          await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+          const { getInput, getPopover, getOptionByValue } = renderSelect({
+            usePortal: false,
           });
-          const options = await findAllByRole('option');
-          const apple = options[0];
-          userEvent.click(apple);
-          await waitForElementToBeRemoved(getByRole('listbox'));
+          userEvent.click(getInput());
+          await waitFor(() => {
+            expect(getPopover()).toBeVisible();
+          });
+          userEvent.click(getOptionByValue('Red')!);
+          await waitForElementToBeRemoved(getPopover());
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('on enter', async () => {
-          const { getByRole } = render(
-            <Select {...defaultProps} usePortal={false}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
+          const { getInput, getPopover } = renderSelect({
+            usePortal: false,
+          });
+
+          const button = getInput();
           userEvent.type(button, '{arrowdown}');
           await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            expect(getPopover()).toBeInTheDocument();
           });
           // first option is focused by default
           userEvent.keyboard('{enter}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
+          await waitForElementToBeRemoved(getPopover());
+          expect(getPopover()).not.toBeInTheDocument();
         });
 
         test('on space', async () => {
-          const { getByRole } = render(
-            <Select {...defaultProps} usePortal={false}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
+          const { getInput, getPopover } = renderSelect({
+            usePortal: false,
+          });
+
+          const button = getInput();
           userEvent.type(button, '{arrowdown}');
           await waitFor(() => {
-            const listbox = getByRole('listbox');
-            expect(listbox).toBeVisible();
+            expect(getPopover()).toBeInTheDocument();
           });
           // first option is focused by default
           userEvent.keyboard('{space}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
-        });
-      });
-
-      describe("selecting an option closes menu and doesn't reopen the menu", () => {
-        test('on mouse click', async () => {
-          const { getByRole, findAllByRole, queryByRole } = render(
-            <Select {...defaultProps} usePortal={false}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.click(button);
-          const options = await findAllByRole('option');
-          const apple = options[0];
-          userEvent.click(apple);
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          await waitForTimeout(transitionDuration.slower);
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
-        });
-
-        test('on enter', async () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} usePortal={false}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
-          // first option is focused by default
-          userEvent.keyboard('{enter}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          await waitForTimeout(transitionDuration.slower);
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
-        });
-
-        test('on space', async () => {
-          const { getByRole, queryByRole } = render(
-            <Select {...defaultProps} usePortal={false}>
-              <Option data-testid="option-apple">Apple</Option>
-              <Option data-testid="option-banana">Banana</Option>
-            </Select>,
-          );
-          const button = getByRole('button');
-          userEvent.type(button, '{arrowdown}');
-          // first option is focused by default
-          userEvent.keyboard('{space}');
-          await waitForElementToBeRemoved(getByRole('listbox'));
-          await waitForTimeout(transitionDuration.slower);
-          expect(queryByRole('listbox')).not.toBeInTheDocument();
+          await waitForElementToBeRemoved(getPopover());
+          expect(getPopover()).not.toBeInTheDocument();
         });
       });
     });
@@ -1314,21 +1078,15 @@ describe('packages/select', () => {
         const onEnter = jest.fn();
         const onEntering = jest.fn();
         const onEntered = jest.fn();
-        const { getByRole } = render(
-          <Select
-            {...defaultProps}
-            usePortal={false}
-            onEnter={onEnter}
-            onEntering={onEntering}
-            onEntered={onEntered}
-          >
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
-        userEvent.click(button);
 
+        const { getInput } = renderSelect({
+          onEnter: onEnter,
+          onEntering: onEntering,
+          onEntered: onEntered,
+          usePortal: false,
+        });
+
+        userEvent.click(getInput());
         expect(onEnter).toHaveBeenCalled();
         expect(onEntering).toHaveBeenCalled();
         await waitFor(() => expect(onEntered).toHaveBeenCalled());
@@ -1338,21 +1096,16 @@ describe('packages/select', () => {
         const onExit = jest.fn();
         const onExiting = jest.fn();
         const onExited = jest.fn();
-        const { getByRole } = render(
-          <Select
-            {...defaultProps}
-            usePortal={false}
-            onExit={onExit}
-            onExiting={onExiting}
-            onExited={onExited}
-          >
-            <Option data-testid="option-apple">Apple</Option>
-            <Option data-testid="option-banana">Banana</Option>
-          </Select>,
-        );
-        const button = getByRole('button');
-        userEvent.click(button);
-        userEvent.click(button);
+
+        const { getInput } = renderSelect({
+          onExit: onExit,
+          onExiting: onExiting,
+          onExited: onExited,
+          usePortal: false,
+        });
+
+        userEvent.click(getInput());
+        userEvent.click(getInput());
 
         expect(onExit).toHaveBeenCalled();
         expect(onExiting).toHaveBeenCalled();
@@ -1382,36 +1135,38 @@ describe('packages/select', () => {
     });
 
     test('calls `setIsPopoverOpen`', async () => {
-      const { getByRole } = render(
+      render(
         <MockPopoverProvider>
           <Select {...defaultProps} />
         </MockPopoverProvider>,
       );
 
-      const triggerButton = getByRole('button');
-      userEvent.click(triggerButton);
+      const { getInput } = getTestUtils();
+
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
       );
-      userEvent.click(triggerButton);
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
       );
     });
 
     test('calls `setIsPopoverOpen` when `usePortal == false`', async () => {
-      const { getByRole } = render(
+      render(
         <MockPopoverProvider>
           <Select usePortal={false} {...defaultProps} />
         </MockPopoverProvider>,
       );
 
-      const button = getByRole('button');
-      userEvent.click(button);
+      const { getInput } = getTestUtils();
+
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(true),
       );
-      userEvent.click(button);
+      userEvent.click(getInput());
       await waitFor(() =>
         expect(mockSetIsPopoverOpen).toHaveBeenCalledWith(false),
       );

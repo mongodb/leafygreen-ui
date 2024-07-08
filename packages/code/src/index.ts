@@ -1,6 +1,7 @@
 import { Code } from './Code';
 export { Code };
 export { variantColors } from './globalStyles';
+export { Panel } from './Panel';
 export type {
   CodeProps,
   LineHighlightingDefinition,

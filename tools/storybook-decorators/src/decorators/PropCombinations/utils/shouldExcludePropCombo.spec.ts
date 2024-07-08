@@ -1,4 +1,4 @@
-import { type GeneratedStoryConfig } from '@leafygreen-ui/lib';
+import { type GeneratedStoryConfig } from '@lg-tools/storybook-utils';
 
 import { shouldExcludePropCombo } from './shouldExcludePropCombo';
 

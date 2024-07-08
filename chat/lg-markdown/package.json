@@ -1,0 +1,37 @@
+{
+  "name": "@lg-chat/lg-markdown",
+  "version": "2.0.2",
+  "description": "lg-chat LGMarkdown",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/code": "^14.3.2",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0",
+    "react-markdown": "^8.0.7"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+  },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  }
+}

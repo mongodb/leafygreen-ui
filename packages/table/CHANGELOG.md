@@ -1,5 +1,98 @@
 # @leafygreen-ui/table
 
+## 12.6.4
+
+### Patch Changes
+
+- Updated dependencies [4fb369df7]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/typography@19.2.0
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
+## 12.6.3
+
+### Patch Changes
+
+- 1ec45a7e: Updates internal test suite
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/checkbox@13.1.0
+
+## 12.6.2
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+- Updated dependencies [7a0ff1be]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/checkbox@13.0.0
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/polymorphic@1.3.7
+  - @leafygreen-ui/tokens@2.5.2
+
+## 12.6.1
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 12.6.0
+
+### Minor Changes
+
+- ea5f49d2: Exports all utilities from @tanstack/react-table for consumption
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/checkbox@12.1.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
+## 12.5.0
+
+### Minor Changes
+
+- 744092c8: Exposes `virtualizerOptions` property in `useLeafyGreenTable` options. This is used to define options for `react-virtual`.
+  As of now, we have `react-virtual@2.10.4` as out virtualizer dependency. Virtualizer options for this version can be found [on GitHub](https://github.com/TanStack/virtual/blob/v2/docs/src/pages/docs/api.md)
+  Resolves [LG-3984](https://jira.mongodb.org/browse/LG-3984)
+
+### Patch Changes
+
+- 744092c8: Fixes a bug where nested row chevrons and selectable row checkboxes would be rendered above a sticky header.
+  [Jira Ticket](https://jira.mongodb.org/browse/LG-4037)
+- Updated dependencies [c2854e9b]
+- Updated dependencies [11d12cc4]
+  - @leafygreen-ui/tokens@2.4.0
+  - @leafygreen-ui/typography@18.2.1
+
 ## 12.4.1
 
 ### Patch Changes

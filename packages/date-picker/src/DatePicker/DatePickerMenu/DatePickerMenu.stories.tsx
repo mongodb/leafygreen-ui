@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
 import React, { useRef, useState } from 'react';
+import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import { Decorator, StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/testing-library';
 import last from 'lodash/last';
@@ -14,7 +15,6 @@ import {
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { type StoryMetaType } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { InlineCode } from '@leafygreen-ui/typography';
 
@@ -58,6 +58,7 @@ const meta: StoryMetaType<typeof DatePickerMenu, DecoratorArgs> = {
     default: null,
     chromatic: {
       delay: transitionDuration.slower,
+      disableSnapshot: true,
     },
   },
   args: {

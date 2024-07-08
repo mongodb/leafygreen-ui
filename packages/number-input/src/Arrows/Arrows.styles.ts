@@ -1,7 +1,11 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  color,
+  Size,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import { wrapperClassName } from '../Input/Input.styles';
 
@@ -10,12 +14,29 @@ export const arrowsBaseStyles = css`
   flex-direction: column;
   position: absolute;
   top: 0;
-  right: ${spacing[2]}px;
   height: 100%;
   justify-content: center;
-  translate: 16px 0;
   transition: translate ${transitionDuration.default}ms ease-in-out;
 `;
+
+export const arrowsSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    right: ${spacing[200]}px;
+    translate: ${spacing[400]}px 0;
+  `,
+  [Size.Small]: css`
+    right: ${spacing[200]}px;
+    translate: ${spacing[400]}px 0;
+  `,
+  [Size.Default]: css`
+    right: ${spacing[300]}px;
+    translate: ${spacing[600]}px 0;
+  `,
+  [Size.Large]: css`
+    right: ${spacing[300]}px;
+    translate: ${spacing[600]}px 0;
+  `,
+};
 
 export const arrowsAnimateStyles = css`
   .${wrapperClassName}:hover &,
@@ -47,24 +68,14 @@ export const arrowBaseStyles = css`
   }
 `;
 
-export const arrowThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.base};
+export const getArrowThemeStyles = (theme: Theme) => css`
+  color: ${color[theme].icon.primary.default};
 
-    &:hover,
-    &:active {
-      color: ${palette.gray.dark3};
-    }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-
-    &:hover,
-    &:active {
-      color: ${palette.gray.light1};
-    }
-  `,
-};
+  &:hover,
+  &:active {
+    color: ${color[theme].icon.primary.hover};
+  }
+`;
 
 export const downArrowRotateStyles = css`
   rotate: 180deg;

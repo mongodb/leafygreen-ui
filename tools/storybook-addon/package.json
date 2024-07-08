@@ -1,0 +1,65 @@
+{
+  "name": "@lg-tools/storybook-addon",
+  "version": "0.2.4",
+  "description": "Storybook Addon for LeafyGreen UI Kit",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json",
+    "upgrade": "npx storybook@latest upgrade --config-dir ."
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-addon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "dependencies": {
+    "@leafygreen-ui/lib": "^13.4.0",
+    "@leafygreen-ui/palette": "^4.0.10",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0",
+    "@lg-tools/build": "^0.6.0",
+    "@lg-tools/storybook-decorators": "^0.2.10",
+    "@lg-tools/storybook-utils": "^0.1.1",
+    "@mdx-js/react": "2.3.0",
+    "@storybook/addon-a11y": "7.6.17",
+    "@storybook/addon-essentials": "7.6.17",
+    "@storybook/addon-interactions": "7.6.17",
+    "@storybook/addon-links": "7.6.17",
+    "@storybook/addon-mdx-gfm": "7.6.17",
+    "@storybook/addons": "7.6.17",
+    "@storybook/api": "7.6.17",
+    "@storybook/components": "7.6.17",
+    "@storybook/core-events": "7.6.17",
+    "@storybook/jest": "^0.2.3",
+    "@storybook/react": "7.6.17",
+    "@storybook/react-webpack5": "7.6.17",
+    "@storybook/testing-library": "0.2.0",
+    "@storybook/theming": "7.6.17",
+    "@svgr/webpack": "8.0.1",
+    "buffer": "6.0.3",
+    "file-loader": "6.2.0",
+    "glob": "10.3.12",
+    "lodash": "4.17.21",
+    "path-browserify": "1.0.1",
+    "react-docgen-typescript": "2.2.2",
+    "storybook-dark-mode": "^4.0.1",
+    "stream-browserify": "3.0.0",
+    "url-loader": "4.1.1",
+    "webpack": "5.88.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "storybook": "^7.6.17"
+  }
+}

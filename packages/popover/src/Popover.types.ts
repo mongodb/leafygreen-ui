@@ -86,6 +86,11 @@ export type PortalControlProps =
       portalContainer?: HTMLElement | null;
 
       /**
+       * A ref for the portal element
+       */
+      portalRef?: React.MutableRefObject<HTMLElement | null>;
+
+      /**
        * When usePortal is `true`, specifies the scrollable element to position relative to.
        */
       scrollContainer?: HTMLElement | null;
@@ -108,6 +113,11 @@ export type PortalControlProps =
        * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
        */
       portalContainer?: null;
+
+      /**
+       * A ref for the portal element
+       */
+      portalRef?: undefined;
 
       /**
        * When usePortal is `true`, specifies the scrollable element to position relative to.

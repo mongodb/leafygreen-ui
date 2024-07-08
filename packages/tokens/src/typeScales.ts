@@ -32,7 +32,7 @@ const typeScales = {
   } as const,
   large: {
     fontSize: 18,
-    lineHeight: 22,
+    lineHeight: 24,
   } as const,
 } as const;
 

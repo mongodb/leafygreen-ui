@@ -1,4 +1,5 @@
 import { buildPackage, buildTSDoc, buildTypescript } from '@lg-tools/build';
+import { migrator } from '@lg-tools/codemods';
 import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
@@ -166,6 +167,36 @@ cli
   )
   .action(validate);
 
+/** Migrator */
+cli
+  .command('codemod')
+  .description('Runs codemod transformations to upgrade LG components')
+  .argument(
+    '<codemod>',
+    'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
+  )
+  .argument(
+    '[path]',
+    'Files or directory to transform. Can be a glob like like src/**.test.js',
+  )
+  .option(
+    '--i, --ignore <items...>',
+    'Glob patterns to ignore. E.g. --i **/node_modules/** **/.next/**',
+    false,
+  )
+  .option('--d, --dry', 'dry run (no changes are made to files)', false)
+  .option(
+    '--p, --print',
+    'print transformed files to stdout, useful for development',
+    false,
+  )
+  .option(
+    '--f, --force',
+    'Bypass Git safety checks and forcibly run codemods',
+    false,
+  )
+  .action(migrator);
+
 /** Build steps */
 cli
   .command('build-package')
@@ -175,7 +206,10 @@ cli
 cli
   .command('build-ts')
   .description("Builds a package's TypeScript definitions")
+  .argument('[pass-through...]', 'Pass-through options for `tsc`')
+  .passThroughOptions(true) // allows passing flags to the `tsc` CLI
   .option('-v --verbose', 'Prints additional information to the console', false)
+  .allowUnknownOption(true)
   .action(buildTypescript);
 cli
   .command('build-tsdoc')

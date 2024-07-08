@@ -1,0 +1,50 @@
+{
+  "name": "@lg-chat/fixed-chat-window",
+  "version": "2.0.2",
+  "description": "LeafyGreen UI Kit Fixed Chat Window",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^12.0.1",
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
+    "@leafygreen-ui/lib": "^13.6.1",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/popover": "^11.3.1",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.2.1",
+    "@lg-chat/chat-window": "^2.0.1",
+    "@lg-chat/title-bar": "^2.0.2",
+    "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "@lg-chat/avatar": "^3.0.1",
+    "@lg-chat/input-bar": "^5.0.0",
+    "@lg-chat/message": "^4.1.1",
+    "@lg-chat/message-feed": "^3.0.1",
+    "@lg-chat/message-prompts": "^2.0.2",
+    "@lg-chat/message-feedback": "^2.1.0",
+    "@lg-tools/storybook-utils": "^0.1.1"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/fixed-chat-window",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

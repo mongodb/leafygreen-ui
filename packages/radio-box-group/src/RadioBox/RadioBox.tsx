@@ -132,7 +132,6 @@ export function RadioBox({
         value={value}
         checked={checked}
         aria-checked={checked}
-        disabled={disabled}
         aria-disabled={disabled}
         className={inputStyles}
       />

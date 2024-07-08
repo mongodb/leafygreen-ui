@@ -1,10 +1,20 @@
-import React, { RefObject, useEffect, useRef } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
+import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
+import {
+  TabDescendantsContext,
+  useTabPanelDescendantsContext,
+  useTabsContext,
+} from '../context';
 
 import {
   listTitleChildrenStyles,
@@ -14,84 +24,66 @@ import {
 } from './TabTitle.styles';
 import { BaseTabTitleProps } from './TabTitle.types';
 
-const TabTitle: ExtendableBox<BaseTabTitleProps, 'button'> = ({
-  selected = false,
-  disabled = false,
-  children,
-  className,
-  darkMode,
-  parentRef,
-  ...rest
-}: BaseTabTitleProps) => {
-  const titleRef = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
-  const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
+const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
+  (
+    { children, className, disabled = false, name, onClick, ...rest },
+    fwdRef,
+  ) => {
+    const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
+    const { index, ref, id } = useDescendant(TabDescendantsContext, fwdRef);
+    const { tabPanelDescendants } = useTabPanelDescendantsContext();
+    const { as, darkMode, selectedIndex } = useTabsContext();
+    const { Component } = useInferredPolymorphic(as, rest, 'button');
 
-  const theme = darkMode ? Theme.Dark : Theme.Light;
+    const theme = darkMode ? Theme.Dark : Theme.Light;
+    const selected = index === selectedIndex;
 
-  // Checks to see if the current activeElement is a part of the same tab set
-  // as the current TabTitle. If so, and the current TabTitle is not disabled
-  // and is selected, we manually move focus to that TabTitle.
-  useEffect(() => {
-    const tabsList = Array.from(parentRef?.children ?? []);
-    const activeEl = document.activeElement;
+    const relatedTabPanel = useMemo(() => {
+      return tabPanelDescendants.find(
+        tabPanelDescendant => tabPanelDescendant.index === index,
+      );
+    }, [tabPanelDescendants, index]);
 
-    if (
-      activeEl &&
-      tabsList.indexOf(activeEl) !== -1 &&
-      !disabled &&
-      selected &&
-      titleRef.current
-    ) {
-      titleRef.current.focus();
-    }
-  }, [parentRef, disabled, selected, titleRef]);
-
-  const nodeText = getNodeTextContent(rest.name);
-
-  const sharedTabProps = {
-    ...rest,
-    className: cx(
-      listTitleFontSize[baseFontSize],
-      listTitleStyles,
-      listTitleModeStyles[theme].base,
-      {
-        [listTitleModeStyles[theme].selected]: selected,
-        [listTitleModeStyles[theme].hover]: !disabled && !selected,
-        [listTitleModeStyles[theme].disabled]: disabled,
+    const handleClick = useCallback(
+      (event: React.MouseEvent) => {
+        onClick?.(event, index);
       },
-      listTitleModeStyles[theme].focus,
-      className,
-    ),
-    role: 'tab',
-    tabIndex: selected ? 0 : -1,
-    ['aria-selected']: selected,
-    name: nodeText,
-    ['data-text']: nodeText,
-    disabled,
-  } as const;
+      [index, onClick],
+    );
 
-  if (typeof rest.href === 'string') {
+    const nodeText = getNodeTextContent(name);
+
     return (
-      <Box
-        as="a"
-        ref={titleRef as RefObject<HTMLAnchorElement>}
-        {...sharedTabProps}
+      <Component
+        aria-controls={relatedTabPanel?.id}
+        aria-selected={!disabled && selected}
+        className={cx(
+          listTitleFontSize[baseFontSize],
+          listTitleStyles,
+          listTitleModeStyles[theme].base,
+          {
+            [listTitleModeStyles[theme].selected]: !disabled && selected,
+            [listTitleModeStyles[theme].hover]: !disabled && !selected,
+            [listTitleModeStyles[theme].disabled]: disabled,
+          },
+          listTitleModeStyles[theme].focus,
+          className,
+        )}
+        data-text={nodeText}
+        disabled={disabled}
+        id={id}
+        name={nodeText}
+        onClick={handleClick}
+        ref={ref}
+        role="tab"
+        tabIndex={selected ? 0 : -1}
+        {...rest}
       >
         <div className={listTitleChildrenStyles}>{children}</div>
-      </Box>
+      </Component>
     );
-  }
-
-  return (
-    <Box
-      as="button"
-      ref={titleRef as RefObject<HTMLButtonElement>}
-      {...sharedTabProps}
-    >
-      <div className={listTitleChildrenStyles}>{children}</div>
-    </Box>
-  );
-};
+  },
+);
 
 TabTitle.displayName = 'TabTitle';
 

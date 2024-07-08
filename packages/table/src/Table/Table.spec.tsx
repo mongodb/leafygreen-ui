@@ -78,43 +78,43 @@ describe('packages/table/Table', () => {
 
   describe('selectable rows', () => {
     test('renders checkboxes', async () => {
-      const { getAllByLabelText } = render(
+      const { getAllByRole } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
       const data = getDefaultTestData({});
       // +1 for the header row checkbox
-      expect(getAllByLabelText('checkbox').length).toBe(data.length + 1);
+      expect(getAllByRole('checkbox').length).toBe(data.length + 1);
     });
 
     test('clicking checkbox adds row index to rowSelection state', async () => {
-      const { getAllByLabelText, getByTestId } = render(
+      const { getAllByRole, getByTestId } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
-      const firstCheckbox = getAllByLabelText('checkbox')[1];
+      const firstCheckbox = getAllByRole('checkbox')[1];
       fireEvent.click(firstCheckbox);
       expect(getByTestId('row-selection-value').textContent).toBe('{"0":true}');
     });
 
     test('clicking selected checkbox removes row index from rowSelection state', async () => {
-      const { getAllByLabelText, getByTestId } = render(
+      const { getAllByRole, getByTestId } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
-      let firstCheckbox = getAllByLabelText('checkbox')[1];
+      let firstCheckbox = getAllByRole('checkbox')[1];
       expect(getByTestId('row-selection-value').textContent).toBe('{}');
       fireEvent.click(firstCheckbox);
       expect(getByTestId('row-selection-value')).toHaveTextContent(
         '{"0":true}',
       );
-      firstCheckbox = getAllByLabelText('checkbox')[1];
+      firstCheckbox = getAllByRole('checkbox')[1];
       fireEvent.click(firstCheckbox);
       expect(getByTestId('row-selection-value')).toHaveTextContent('{}');
     });
 
     test('clicking the header checkbox updates rowSelection state with all rows selected', async () => {
-      const { getAllByLabelText, getByTestId } = render(
+      const { getAllByRole, getByTestId } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
-      const headerCheckbox = getAllByLabelText('checkbox')[0];
+      const headerCheckbox = getAllByRole('checkbox')[0];
       fireEvent.click(headerCheckbox);
       expect(getByTestId('row-selection-value').textContent).toBe(
         '{"0":true,"1":true,"2":true}',

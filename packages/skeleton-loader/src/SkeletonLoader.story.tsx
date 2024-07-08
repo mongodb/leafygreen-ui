@@ -1,15 +1,16 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { storybookArgTypes, StoryType } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
-import { DarkModeProps, storybookArgTypes } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body, InlineCode } from '@leafygreen-ui/typography';
 
+import { SharedSkeletonProps } from './Skeleton/Skeleton.types';
 import {
   CardSkeleton,
   CodeSkeleton,
   FormSkeleton,
+  ListSkeleton,
   ParagraphSkeleton,
   Skeleton,
   TableSkeleton,
@@ -19,6 +20,10 @@ export default {
   title: 'Components/SkeletonLoader',
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    enableAnimations: { control: 'boolean' },
+  },
+  args: {
+    enableAnimations: true,
   },
   parameters: {
     default: 'LiveExample',
@@ -45,44 +50,26 @@ const labelStyles = css`
   margin-top: ${spacing[5]}px;
 `;
 
-export const LiveExample: StoryFn<any> = (props: DarkModeProps) => (
+const skeletonComponents = {
+  Skeleton,
+  CardSkeleton,
+  CodeSkeleton,
+  FormSkeleton,
+  ListSkeleton,
+  ParagraphSkeleton,
+  TableSkeleton,
+};
+
+export const LiveExample: StoryType<any> = (args: SharedSkeletonProps) => (
   <div className={storyRootStyles}>
-    <div className={displayOptionContainerStyles}>
-      <Skeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>Skeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <ParagraphSkeleton withHeader />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>ParagraphSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <CardSkeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>CardSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <FormSkeleton {...props} />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>FormSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <TableSkeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>TableSkeleton</InlineCode>
-      </Body>
-    </div>
-    <div className={displayOptionContainerStyles}>
-      <CodeSkeleton />
-      <Body className={labelStyles} weight="medium">
-        <InlineCode>CodeSkeleton</InlineCode>
-      </Body>
-    </div>
+    {Object.entries(skeletonComponents).map(([name, SkeletonVariant]) => (
+      <div key={name} className={displayOptionContainerStyles}>
+        <SkeletonVariant {...args} />
+        <Body className={labelStyles} weight="medium">
+          <InlineCode>{name}</InlineCode>
+        </Body>
+      </div>
+    ))}
   </div>
 );
 LiveExample.parameters = {

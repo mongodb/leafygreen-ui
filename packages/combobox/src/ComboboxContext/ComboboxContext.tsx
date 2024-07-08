@@ -29,8 +29,8 @@ export const defaultContext = {
   withIcons: false,
   disabled: false,
   isOpen: false,
-  state: State.none,
-  searchState: SearchState.unset,
+  state: State.None,
+  searchState: SearchState.Unset,
   overflow: Overflow.expandY,
 };
 

@@ -9,5 +9,7 @@ export const blobStyles = {
 };
 
 export const rootStyles = css`
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;

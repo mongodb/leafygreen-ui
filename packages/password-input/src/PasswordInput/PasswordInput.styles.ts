@@ -2,6 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   focusRing,
   fontFamilies,
   fontWeights,
@@ -64,33 +65,37 @@ export const inputBaseStyles = css`
 
 export const inputBaseThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.black};
-    background: ${palette.white};
+    color: ${color.light.text.primary.default};
+    background: ${color.light.background.primary.default};
 
     &:focus-visible {
       box-shadow: ${focusRing.light.input};
-      border-color: ${palette.white};
+      border-color: ${color.light.border.primary.focus};
     }
 
     &:-webkit-autofill {
-      -webkit-text-fill-color: ${palette.black};
-      box-shadow: ${autofillShadowOverride(palette.white)};
-      background: ${palette.white};
+      -webkit-text-fill-color: ${color.light.text.primary.default};
+      box-shadow: ${autofillShadowOverride(
+        color.light.background.primary.default,
+      )};
+      background: ${color.light.background.primary.default};
 
       &:focus-visible {
-        box-shadow: ${autofillShadowOverride(palette.white)},
+        box-shadow: ${autofillShadowOverride(
+            color.light.background.primary.default,
+          )},
           ${focusRing.light.input};
-        border-color: ${palette.white};
+        border-color: ${color.light.border.primary.focus};
       }
     }
 
     &::placeholder {
-      color: ${palette.gray.light1};
+      color: ${palette.gray.base};
     }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
-    color: ${palette.gray.light2};
+    color: ${color.dark.text.primary.default};
 
     &:focus-visible {
       box-shadow: ${focusRing.dark.input};
@@ -98,7 +103,7 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
     }
 
     &:-webkit-autofill {
-      -webkit-text-fill-color: ${palette.gray.light2};
+      -webkit-text-fill-color: ${color.dark.text.primary.default};
       box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
       background-color: ${palette.gray.dark4};
 
@@ -116,30 +121,40 @@ export const inputBaseThemeStyles: Record<Theme, string> = {
 };
 
 export const inputSizeStyles: Record<Size, string> = {
+  [Size.XSmall]: css`
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    height: 22px;
+    padding-left: ${spacing[200]}px;
+    padding-right: ${spacing[800]}px;
+  `,
   [Size.Small]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 28px;
-    padding: 0 ${spacing[5]}px 0 10px;
+    padding-left: ${spacing[200]}px;
+    padding-right: ${spacing[800]}px;
   `,
   [Size.Default]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     height: 36px;
-    padding: 0 ${spacing[2] * 5}px 0 12px;
+    padding-left: ${spacing[300]}px;
+    padding-right: ${spacing[1000]}px;
   `,
   [Size.Large]: css`
-    font-size: 18px;
-    line-height: ${typeScales.body1.lineHeight}px;
+    font-size: ${typeScales.large.fontSize}px;
+    line-height: ${typeScales.large.lineHeight}px;
     height: 48px;
-    padding: 0 ${spacing[2] * 5}px 0 ${spacing[3]}px;
+    padding-left: ${spacing[300]}px;
+    padding-right: ${spacing[1000]}px;
   `,
 };
 
 export const errorWarningDarkThemeStyles = css`
   &,
   &:-webkit-autofill {
-    border-color: ${palette.red.base};
+    border-color: ${color.dark.border.error.default};
   }
 
   &:-webkit-autofill {
@@ -159,12 +174,14 @@ export const errorWarningDarkThemeStyles = css`
 export const errorWarningLightThemeStyles = css`
   &,
   &:-webkit-autofill {
-    border-color: ${palette.red.base};
+    border-color: ${color.light.border.error.default};
   }
 
   &:-webkit-autofill {
     &:hover:not(:focus-visible) {
-      box-shadow: ${autofillShadowOverride(palette.white)},
+      box-shadow: ${autofillShadowOverride(
+          color.light.background.primary.default,
+        )},
         ${hoverRing.light.red};
     }
   }
@@ -188,12 +205,14 @@ export const inputThemeStyles: Record<Theme, Record<State, string>> = {
     [State.Valid]: css`
       &,
       &:-webkit-autofill {
-        border-color: ${palette.green.dark1};
+        border-color: ${color.light.border.success.default};
       }
 
       &:-webkit-autofill {
         &:hover:not(:focus-visible) {
-          box-shadow: ${autofillShadowOverride(palette.white)},
+          box-shadow: ${autofillShadowOverride(
+              color.light.background.primary.default,
+            )},
             ${hoverRing.light.green};
         }
       }
@@ -208,12 +227,14 @@ export const inputThemeStyles: Record<Theme, Record<State, string>> = {
     [State.None]: css`
       &,
       &:-webkit-autofill {
-        border-color: ${palette.gray.base};
+        border-color: ${color.light.border.primary.default};
       }
 
       &:-webkit-autofill {
         &:hover:not(:focus-visible) {
-          box-shadow: ${autofillShadowOverride(palette.white)},
+          box-shadow: ${autofillShadowOverride(
+              color.light.background.primary.default,
+            )},
             ${hoverRing.light.gray};
         }
       }
@@ -236,7 +257,7 @@ export const inputThemeStyles: Record<Theme, Record<State, string>> = {
     [State.Valid]: css`
       &,
       &:-webkit-autofill {
-        border-color: ${palette.green.dark1};
+        border-color: ${color.dark.border.success.default};
       }
 
       &:-webkit-autofill {
@@ -256,7 +277,7 @@ export const inputThemeStyles: Record<Theme, Record<State, string>> = {
     [State.None]: css`
       &,
       &:-webkit-autofill {
-        border-color: ${palette.gray.base};
+        border-color: ${color.dark.border.primary.default};
       }
 
       &:-webkit-autofill {
@@ -276,55 +297,25 @@ export const inputThemeStyles: Record<Theme, Record<State, string>> = {
   },
 };
 
-export const inputIconSizeStyles: Record<Size, string> = {
-  [Size.Small]: css`
-    padding-right: ${spacing[1] * 13}px;
-  `,
-  [Size.Default]: css`
-    padding-right: ${spacing[1] * 14}px;
-  `,
-  [Size.Large]: css`
-    padding-right: ${spacing[1] * 16}px;
-  `,
-};
-
-export const inputDisabledBaseStyles = css`
+export const getInputDisabledStyles = (theme: Theme) => css`
   cursor: not-allowed;
+  background-color: ${color[theme].background.disabled.default};
+  border-color: ${color[theme].border.disabled.default};
+  color: ${color[theme].text.disabled.default};
+
+  &:-webkit-autofill {
+    -webkit-text-fill-color: ${color[theme].text.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
+    box-shadow: ${autofillShadowOverride(
+      color[theme].background.disabled.default,
+    )};
+
+    &:focus-visible {
+      -webkit-text-fill-color: ${color[theme].text.disabled.focus};
+      box-shadow: ${autofillShadowOverride(
+          color[theme].background.disabled.focus,
+        )},
+        ${focusRing[theme].input};
+    }
+  }
 `;
-
-export const inputDisabledThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light2};
-    border-color: ${palette.gray.light1};
-    color: ${palette.gray.base};
-
-    &:-webkit-autofill {
-      -webkit-text-fill-color: ${palette.gray.base};
-      border-color: ${palette.gray.light1};
-      box-shadow: ${autofillShadowOverride(palette.gray.light2)};
-
-      &:focus-visible {
-        -webkit-text-fill-color: ${palette.gray.base};
-        box-shadow: ${autofillShadowOverride(palette.gray.light2)},
-          ${focusRing.light.input};
-      }
-    }
-  `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark3};
-    border-color: ${palette.gray.dark2};
-    color: ${palette.gray.dark1};
-
-    &:-webkit-autofill {
-      -webkit-text-fill-color: ${palette.gray.dark1};
-      border-color: ${palette.gray.dark2};
-      box-shadow: ${autofillShadowOverride(palette.gray.dark3)};
-
-      &:focus-visible {
-        -webkit-text-fill-color: ${palette.gray.dark1};
-        box-shadow: ${autofillShadowOverride(palette.gray.dark3)},
-          ${focusRing.dark.input};
-      }
-    }
-  `,
-};

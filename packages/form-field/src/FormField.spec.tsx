@@ -7,6 +7,7 @@ import {
   FormField,
   FormFieldInputContainer,
   FormFieldState,
+  LGIDS_FORM_FIELD,
   useFormFieldContext,
 } from '.';
 
@@ -78,6 +79,19 @@ describe('packages/form-field', () => {
     );
     const input = getByTestId('input');
     expect(input).toHaveAttribute('id');
+  });
+
+  test('input has aria-disabled attribute but not disabled attribute when disabled prop is defined', () => {
+    const { getByTestId } = render(
+      <FormField label="Label" data-testid="form-field" disabled={true}>
+        <FormFieldInputContainer>
+          <div data-testid="input" />
+        </FormFieldInputContainer>
+      </FormField>,
+    );
+    const input = getByTestId('input');
+    expect(input).not.toHaveAttribute('disabled');
+    expect(input).toHaveAttribute('aria-disabled');
   });
 
   describe('Label rendering', () => {
@@ -184,37 +198,110 @@ describe('packages/form-field', () => {
       );
     });
 
-    test('when aria-label is provided, input has that aria-label', () => {
-      const { getByTestId } = render(
-        <FormField aria-label="Label" data-testid="form-field">
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const input = getByTestId('input');
-      expect(input).toHaveAttribute('aria-label', 'Label');
+    const label = 'Label';
+    const ariaLabel = 'Aria label';
+    const ariaLabelledby = 'custom-label-id';
+
+    describe('when label is defined', () => {
+      test('input sets generated label id for aria-labelledby', () => {
+        const { getByTestId, getByText } = render(
+          <FormField label={label} data-testid="form-field">
+            <FormFieldInputContainer>
+              <div data-testid="input" />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId('input');
+        const generatedLabel = getByText(label);
+        expect(input).toHaveAttribute('aria-labelledby', generatedLabel.id);
+      });
+
+      test('when aria-labelledby is defined, input sets aria-labelledby attribute to generated label id and not the custom prop', () => {
+        const { getByTestId, getByText } = render(
+          <FormField
+            aria-labelledby={ariaLabelledby}
+            label={label}
+            data-testid="form-field"
+          >
+            <FormFieldInputContainer>
+              <div data-testid="input" />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId('input');
+        const generatedLabel = getByText(label);
+        expect(input).toHaveAttribute('aria-labelledby', generatedLabel.id);
+        expect(input).not.toHaveAttribute('aria-labelledby', ariaLabelledby);
+      });
+
+      test('when aria-label is defined, input does not set the aria-label', () => {
+        const { getByTestId } = render(
+          <FormField
+            aria-label={ariaLabel}
+            label={label}
+            data-testid="form-field"
+          >
+            <FormFieldInputContainer>
+              <div data-testid="input" />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId('input');
+        expect(input).not.toHaveAttribute('aria-label', ariaLabel);
+      });
     });
 
-    test('when aria-labelledby is provided, input has that aria-labelledby', () => {
-      const { getByTestId } = render(
-        <FormField aria-labelledby="label-123" data-testid="form-field">
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const input = getByTestId('input');
-      expect(input).toHaveAttribute('aria-labelledby', 'label-123');
+    describe('when label is not defined', () => {
+      test('when aria-labelledby is defined, input sets aria-labelledby attribute to custom prop', () => {
+        const { getByTestId } = render(
+          <FormField aria-labelledby={ariaLabelledby} data-testid="form-field">
+            <FormFieldInputContainer>
+              <div data-testid="input" />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId('input');
+        expect(input).toHaveAttribute('aria-labelledby', ariaLabelledby);
+      });
+
+      test('when aria-labelledby and aria-label are defined, input does not set the aria-label', () => {
+        const { getByTestId } = render(
+          <FormField
+            aria-labelledby={ariaLabelledby}
+            aria-label={ariaLabel}
+            data-testid="form-field"
+          >
+            <FormFieldInputContainer>
+              <div data-testid="input" />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId('input');
+        expect(input).toHaveAttribute('aria-labelledby', ariaLabelledby);
+        expect(input).not.toHaveAttribute('aria-label', ariaLabel);
+      });
+
+      test('when aria-labelledby is not defined and aria-label is defined, input sets aria-label attribute to custom prop', () => {
+        const { getByTestId } = render(
+          <FormField aria-label={ariaLabel} data-testid="form-field">
+            <FormFieldInputContainer>
+              <div data-testid="input" />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId('input');
+        expect(input).toHaveAttribute('aria-label', ariaLabel);
+      });
     });
   });
 
-  describe('Error state', () => {
-    test('Error message is not shown by default', () => {
-      const { queryByText } = render(
+  describe(`when state is not ${FormFieldState.None}`, () => {
+    test('form field feedback has an id', () => {
+      const { getByTestId } = render(
         <FormField
           label="Label"
-          errorMessage="This is an error message"
+          successMessage="Success"
+          state={FormFieldState.Valid}
           data-testid="form-field"
         >
           <FormFieldInputContainer>
@@ -222,46 +309,12 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      const error = queryByText('This is an error message');
-      expect(error).not.toBeInTheDocument();
+      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      expect(feedback).toHaveAttribute('id');
     });
 
-    test('Error message appears when state is Error', () => {
-      const { queryByText } = render(
-        <FormField
-          label="Label"
-          errorMessage="This is an error message"
-          state={FormFieldState.Error}
-          data-testid="form-field"
-        >
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const error = queryByText('This is an error message');
-      expect(error).toBeInTheDocument();
-    });
-
-    test('Error message has id', () => {
-      const { queryByText } = render(
-        <FormField
-          label="Label"
-          errorMessage="This is an error message"
-          state={FormFieldState.Error}
-          data-testid="form-field"
-        >
-          <FormFieldInputContainer>
-            <div data-testid="input" />
-          </FormFieldInputContainer>
-        </FormField>,
-      );
-      const error = queryByText('This is an error message');
-      expect(error).toHaveAttribute('id');
-    });
-
-    test('input is described by error message', () => {
-      const { getByTestId, queryByText } = render(
+    test('input is described by form field feedback', () => {
+      const { getByTestId } = render(
         <FormField
           label="Label"
           errorMessage="This is an error message"
@@ -274,17 +327,17 @@ describe('packages/form-field', () => {
         </FormField>,
       );
       const input = getByTestId('input');
-      const error = queryByText('This is an error message');
-      expect(input).toHaveAttribute('aria-describedby', error?.id);
+      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      expect(input).toHaveAttribute('aria-describedby', feedback?.id);
     });
 
-    test('input is described by both description & error message', () => {
+    test('input is described by both description & feedback', () => {
       const { getByTestId, queryByText } = render(
         <FormField
           label="Label"
           description="Description"
-          errorMessage="This is an error message"
-          state={FormFieldState.Error}
+          successMessage="Success"
+          state={FormFieldState.Valid}
           data-testid="form-field"
         >
           <FormFieldInputContainer>
@@ -294,11 +347,109 @@ describe('packages/form-field', () => {
       );
       const input = getByTestId('input');
       const description = queryByText('Description');
-      const error = queryByText('This is an error message');
+      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
       expect(input).toHaveAttribute(
         'aria-describedby',
-        description?.id + ' ' + error?.id,
+        expect.stringContaining(description?.id!),
       );
+      expect(input).toHaveAttribute(
+        'aria-describedby',
+        expect.stringContaining(feedback?.id),
+      );
+    });
+  });
+
+  describe(`${FormFieldState.Valid} state`, () => {
+    test('Success icon and message are not shown by default', () => {
+      const { queryByText, queryByTitle } = render(
+        <FormField
+          label="Label"
+          successMessage="Success"
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const successIcon = queryByTitle('Valid');
+      const successText = queryByText('Success');
+      expect(successIcon).toBeNull();
+      expect(successText).toBeNull();
+    });
+
+    test(`Success icon and message appear when state is ${FormFieldState.Valid}`, () => {
+      const { queryByText, queryByTitle } = render(
+        <FormField
+          label="Label"
+          successMessage="Success"
+          state={FormFieldState.Valid}
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const successIcon = queryByTitle('Valid');
+      const successText = queryByText('Success');
+      expect(successIcon).toBeInTheDocument();
+      expect(successText).toBeInTheDocument();
+    });
+  });
+
+  describe(`${FormFieldState.Error} state`, () => {
+    test('Error icon and message are not shown by default', () => {
+      const { queryByText, queryByTitle } = render(
+        <FormField
+          label="Label"
+          errorMessage="This is an error message"
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const errorIcon = queryByTitle('Error');
+      const errorText = queryByText('This is an error message');
+      expect(errorIcon).toBeNull();
+      expect(errorText).toBeNull();
+    });
+
+    test(`Error message appears when state is ${FormFieldState.Error}`, () => {
+      const { queryByText, queryByTitle } = render(
+        <FormField
+          label="Label"
+          errorMessage="This is an error message"
+          state={FormFieldState.Error}
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const errorIcon = queryByTitle('Error');
+      const errorText = queryByText('This is an error message');
+      expect(errorIcon).toBeInTheDocument();
+      expect(errorText).toBeInTheDocument();
+    });
+
+    test('input has aria-invalid attribute set to true when state is Error', () => {
+      const { getByTestId } = render(
+        <FormField
+          label="Label"
+          state={FormFieldState.Error}
+          data-testid="form-field"
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('aria-invalid', 'true');
     });
   });
 
@@ -391,6 +542,49 @@ describe('packages/form-field', () => {
 
     const label = getByText('Label');
     expect(label.getAttribute('for')).toBe(id);
+  });
+
+  describe('readonly', () => {
+    test('input has readonly prop', () => {
+      const { getByTestId } = render(
+        <FormField label="Label" data-testid="form-field" readOnly>
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('readonly');
+    });
+
+    test('disabled overrides readOnly prop', () => {
+      const { getByTestId } = render(
+        <FormField
+          label="Label"
+          data-testid="form-field"
+          readOnly={false}
+          disabled
+        >
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).toHaveAttribute('readonly');
+    });
+
+    test('input does not have readonly prop', () => {
+      const { getByTestId } = render(
+        <FormField label="Label" data-testid="form-field" readOnly={false}>
+          <FormFieldInputContainer>
+            <div data-testid="input" />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      const input = getByTestId('input');
+      expect(input).not.toHaveAttribute('readonly');
+    });
   });
 
   // eslint-disable-next-line jest/no-disabled-tests

@@ -7,6 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { ButtonContent } from '../ButtonContent/ButtonContent';
+import { LGIDS_BUTTON } from '../constants';
 import { ButtonClassName } from '../styles';
 import { ButtonProps, Size, Variant } from '../types';
 
@@ -20,6 +21,7 @@ export const Button = React.forwardRef(function Button(
     variant = Variant.Default,
     size = Size.Default,
     darkMode: darkModeProp,
+    'data-lgid': dataLgId = LGIDS_BUTTON.root,
     baseFontSize = BaseFontSize.Body1,
     disabled = false,
     onClick,
@@ -50,6 +52,7 @@ export const Button = React.forwardRef(function Button(
   });
 
   const buttonProps = {
+    'data-lgid': dataLgId,
     type: isAnchor ? undefined : type || 'button',
     className: cx(ButtonClassName, buttonStyles, className),
     ref: forwardRef,

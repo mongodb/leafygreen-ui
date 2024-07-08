@@ -1,0 +1,87 @@
+
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src", 
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../../packages/*/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../avatar"
+    },
+    {
+      "path": "../input-bar"
+    },
+    {
+      "path": "../leafygreen-chat-provider"
+    },
+    {
+      "path": "../message"
+    },
+    {
+      "path": "../message-feed"
+    },
+    {
+      "path": "../message-prompts"
+    },
+    {
+      "path": "../message-feedback"
+    },
+    {
+      "path": "../title-bar"
+    }, 
+    {
+      "path": "../../packages/badge"
+    }, 
+    {
+      "path": "../../packages/button"
+    }, 
+    {
+      "path": "../../packages/code"
+    }, 
+    {
+      "path": "../../packages/emotion"
+    }, 
+    {
+      "path": "../../packages/hooks"
+    }, 
+    {
+      "path": "../../packages/icon"
+    }, 
+    {
+      "path": "../../packages/input-option"
+    }, 
+    {
+      "path": "../../packages/lib"
+    }, 
+    {
+      "path": "../../packages/marketing-modal"
+    }, 
+    {
+      "path": "../../packages/polymorphic"
+    }, 
+    {
+      "path": "../../packages/search-input"
+    }, 
+    {
+      "path": "../../packages/text-area"
+    }, 
+    {
+      "path": "../../packages/tokens"
+    }, 
+    {
+      "path": "../../packages/typography"
+    }, 
+    {
+      "path": "../../packages/leafygreen-provider"
+    }, 
+  ]
+}

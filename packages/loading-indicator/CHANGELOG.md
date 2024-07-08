@@ -1,5 +1,54 @@
 # @leafygreen-ui/loading-indicator
 
+## 2.0.12
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 2.0.11
+
+### Patch Changes
+
+- 36166b41: - Horizontally centers loading indicator with description
+  - Deletes duplicate `LoadingIndicators.styles.ts` file
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
+## 2.0.10
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 2.0.9
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+
 ## 2.0.8
 
 ### Patch Changes

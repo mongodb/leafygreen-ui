@@ -32,6 +32,7 @@ export type ContextPropKeys = keyof SharedDatePickerProviderProps &
 export const modifiedPopoverPropNames: Array<ModifiedPopoverPropkeys> = [
   'scrollContainer',
   'portalContainer',
+  'portalRef',
   'portalClassName',
   'align',
   'justify',

@@ -9,10 +9,12 @@ import {
   menuButtonTextClassName,
   popoverClassName,
 } from '@leafygreen-ui/select';
+import { Size } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
   baseStyles,
+  sizeStyles,
   themeDisabledStyles,
   themeStyles,
   wrapperStyles,
@@ -36,6 +38,7 @@ export const UnitSelectButton = React.forwardRef(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       ...props
     }: UnitSelectButtonProps,
@@ -53,6 +56,7 @@ export const UnitSelectButton = React.forwardRef(
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
     } as const;
 
@@ -109,6 +113,7 @@ export const UnitSelectButton = React.forwardRef(
           className={cx(
             baseStyles,
             themeStyles[theme],
+            sizeStyles[props.size || Size.Default],
             {
               [themeDisabledStyles[theme]]: disabled,
             },

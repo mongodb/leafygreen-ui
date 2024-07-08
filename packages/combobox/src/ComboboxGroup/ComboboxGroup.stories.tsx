@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import { InternalComboboxOption } from '../ComboboxOption';
 

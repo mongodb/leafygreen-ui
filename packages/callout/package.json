@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/callout",
-  "version": "9.0.18",
+  "version": "9.0.22",
   "description": "leafyGreen UI Kit Callout",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,18 +22,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.25.1",
-    "@leafygreen-ui/lib": "^13.1.0",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^12.0.1",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "^14.2.18"
+    "@leafygreen-ui/code": "^14.3.2",
+    "@lg-tools/storybook-utils": "^0.1.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/callout",
   "repository": {

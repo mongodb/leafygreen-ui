@@ -1,5 +1,130 @@
 # @leafygreen-ui/text-input
 
+## 13.1.0
+
+### Minor Changes
+
+- 3b86b3bd: Allow type of `ReactNode` for `errorMessage` and `successMessage` props in `NumberInput`, `TextArea`, and `TextInput`
+
+### Patch Changes
+
+- 3273045c: Passes `readOnly` prop to `<FormField>` so that it correctly sets the `readOnly` prop.
+- Updated dependencies [3273045c]
+  - @leafygreen-ui/form-field@1.2.3
+
+## 13.0.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/form-field@1.1.1
+
+## 13.0.1
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+- Updated dependencies [8adadc89]
+  - @lg-tools/test-harnesses@0.1.2
+
+## 13.0.0
+
+### Major Changes
+
+- 27ad3121: [LG-4145](https://jira.mongodb.org/browse/LG-4145)
+
+  `aria-label` and `aria-labelledby` props are passed to the input.
+
+  #### aria-labelledby
+
+  `aria-labelledby` prop can only set the `aria-labelledby` attribute on the input if `label` prop is undefined. Otherwise, the generated label component id will be used for the `aria-labelledby` attribute
+
+  | 👎 Does not use `aria-labelledby` prop                          | 👍 Does use custom `aria-labelledby` prop         |
+  | --------------------------------------------------------------- | ------------------------------------------------- |
+  | `<TextInput label="Label" aria-labelledby="custom-label-id" />` | `<TextInput aria-labelledby="custom-label-id" />` |
+
+  #### aria-label
+
+  `aria-label` prop can only set the `aria-label` attribute on the input if both `label` prop and `aria-labelledby` prop are undefined
+  | 👎 Does not use `aria-label` prop | 👎 Does not use `aria-label` prop | 👍 Does use `aria-label` prop |
+  | - | - | - |
+  | `<TextInput label="Label" aria-label="Custom label" />` | `<TextInput aria-label="Custom label" aria-labelledby="other-custom-label-id" />` | `<TextInput aria-label="Custom label" />` |
+
+  [LG-4143](https://jira.mongodb.org/browse/LG-4143)
+
+  1. `FormField` styling changes apply to `TextInput`. [See style changes here](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#102)
+
+  2. A default `errorMessage` of `'This input needs your attention'` will render below text input when state is invalid.
+
+  3. A default `successMessage` of `'Success'` will render when state is valid. `successMessage` prop accepts a custom string.
+
+  4. Disabled `TextInput` component no longer renders the `disabled` attribute and instead relies on `aria-disabled`.
+
+  The last change is made to ensure that disabled components are still focusable to users using keyboard navigation.
+
+  For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
+
+  #### Migration guide
+
+  Functionally, migration should be seamless, however there may be unit/integration/e2e tests that relied on this behavior.
+
+  ##### Jest/RTL
+
+  Generally, only this repo should need to test that these components have a specific attribute. We recommend updating unit tests to check that some event was or was not called.
+
+  However, there are cases where this may still need to be tested. In cases where a test checks `expect(textInput).toBeDisabled()`, you can replace and use [test harnesses](https://github.com/mongodb/leafygreen-ui/blob/main/packages/text-input/README.md#test-harnesses).
+
+  ##### Cypress
+
+  Similar to unit tests, you should generally test functionality and not implementation details. However, to test this in Cypress replace any `cy.get(textInput).should('be.disabled');` checks with `cy.get(textInput).invoke('attr', 'aria-disabled').should('eq', 'true');`
+
+### Minor Changes
+
+- c3906f78: - Extends `DarkModeProps` from `@leafygreen-ui/lib`
+  - Exports `getTestUtils`, a util to reliably interact with `LG TextInput` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/text-input#test-harnesses) [LG-4035](https://jira.mongodb.org/browse/LG-4035)
+  - Exports the constant, `LGIDS_TEXT_INPUT`, which stores `data-lgid` values.
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [27ad3121]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+  - @leafygreen-ui/form-field@1.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @lg-tools/test-harnesses@0.1.1
+
+## 12.1.27
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/form-field@1.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/tokens@2.5.2
+
+## 12.1.26
+
+### Patch Changes
+
+- Updated dependencies [223666eb]
+- Updated dependencies [74057388]
+  - @leafygreen-ui/form-field@1.0.0
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
 ## 12.1.25
 
 ### Patch Changes

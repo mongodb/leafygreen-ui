@@ -1,5 +1,51 @@
 # @leafygreen-ui/logo
 
+## 9.1.1
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
+## 9.1.0
+
+### Minor Changes
+
+- d0b1cfd8: Exports `LogoProps` from package
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
+## 9.0.2
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+
+## 9.0.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
+## 9.0.0
+
+### Major Changes
+
+- 5eb27147: Forwards `refs` to Logo components, and spreads rest after property declarations
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-4054)
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-4057)
+
 ## 8.0.12
 
 ### Patch Changes

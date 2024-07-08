@@ -11,13 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
 
       - uses: preactjs/compressed-size-action@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          build-script: 'build'
+          build-script: 'build  --force'
           clean-script: 'clean'

@@ -79,7 +79,7 @@ import ExpandableCard from '@leafygreen-ui/expandable-card';
 
 | Prop             | Type                                    | Description                                                                             | Default     |
 | ---------------- | --------------------------------------- | --------------------------------------------------------------------------------------- | ----------- |
-| title            | `string`                                | The title of the card (Required)                                                        |             |
+| title            | `React.ReactNode`                       | The title of the card (Required)                                                        |             |
 | description      | `string`                                | Description text below the title                                                        |             |
 | flagText         | `string`                                | Text in parentheses immediately following the title. Typically 'optional' or 'required' |             |
 | darkMode         | `boolean`                               | Toggles dark mode                                                                       | `false`     |

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/skeleton-loader",
-  "version": "1.1.2",
+  "version": "1.2.1",
   "description": "leafyGreen UI Kit Skeleton Loader",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,15 +30,18 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^10.0.6",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^13.0.0",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/card": "^11.0.0",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.1.0",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  }
 }

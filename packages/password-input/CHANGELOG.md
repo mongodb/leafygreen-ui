@@ -1,5 +1,84 @@
 # @leafygreen-ui/password-input
 
+## 2.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4135](https://jira.mongodb.org/browse/LG-4135)
+
+  1. Updated styling:
+
+  - updated spacing for `'small'` and `'large'` size variants
+  - added `'xsmall'` variant
+  - updated placeholder text color
+  - removed validation icon from inside the input
+
+  2. Added `errorMessage` and `successMessage` props
+
+  - `errorMessage` will render a default of `'This input needs your attention'` and can be customized
+  - `errorMessage` will only render when `state` is `warning` or `error`
+  - `successMessage` will render a default of `'Success'` and can be customized
+  - `successMessage` will only render when `state` is `valid`
+  - both will only render if `aria-describedby` is undefined and `stateNotifications` is not an array
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 1.0.20
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 1.0.19
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/a11y@1.4.13
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 1.0.18
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 1.0.17
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
 ## 1.0.16
 
 ### Patch Changes

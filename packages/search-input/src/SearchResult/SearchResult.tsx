@@ -1,19 +1,9 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
-import { InputOption } from '@leafygreen-ui/input-option';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
-import {
-  descriptionClassName,
-  descriptionStyle,
-  searchResultDisabledStyle,
-  searchResultStyles,
-  searchResultThemeStyles,
-  titleClassName,
-} from './SearchResult.styles';
 import { SearchResultProps } from './SearchResult.types';
 
 export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
@@ -29,7 +19,6 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
     },
     ref,
   ) => {
-    const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
     /**
      * If `rest[aria-label]` exists, use that;
@@ -44,24 +33,14 @@ export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
         {...rest}
         as={as}
         ref={ref}
-        className={cx(
-          searchResultStyles,
-          searchResultThemeStyles[theme],
-          {
-            [searchResultDisabledStyle[theme]]: disabled,
-          },
-          className,
-        )}
+        className={className}
         disabled={disabled}
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}
       >
-        <div className={titleClassName}>{children}</div>
-        {description && (
-          <div className={cx(descriptionClassName, descriptionStyle)}>
-            {description}
-          </div>
-        )}
+        <InputOptionContent description={description} preserveIconSpace={false}>
+          <strong>{children}</strong>
+        </InputOptionContent>
       </InputOption>
     );
   },

@@ -1,10 +1,10 @@
 /* eslint-disable react/display-name */
 /* eslint-disable react/jsx-key */
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import Icon from '@leafygreen-ui/icon/';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import SelectContext from '../SelectContext';
 

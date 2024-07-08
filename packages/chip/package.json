@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/chip",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "LeafyGreen UI Kit Chip",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -15,15 +15,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^11.23.0",
-    "@leafygreen-ui/inline-definition": "^6.0.11",
-    "@leafygreen-ui/lib": "^11.0.0",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.2.0"
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/icon": "^12.5.4",
+    "@leafygreen-ui/inline-definition": "^6.0.15",
+    "@leafygreen-ui/lib": "^13.6.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.9.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.8"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chip",
   "repository": {
@@ -32,5 +32,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.0"
   }
 }

@@ -1,0 +1,37 @@
+{
+  "name": "@lg-tools/codemods",
+  "version": "0.0.2",
+  "description": "Codemods for LeafyGreen UI",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "jscodeshift": "0.15.2",
+    "chalk": "4.1.2",
+    "glob": "10.3.12",
+    "is-git-clean": "1.1.0",
+    "prettier": "2.8.8",
+    "fs-extra": "11.1.1",
+    "@lg-tools/build": "0.5.0"
+  },
+  "devDependencies": {
+    "@types/jscodeshift": "0.11.11",
+    "@types/is-git-clean": "1.1.0"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/codemods",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

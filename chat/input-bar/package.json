@@ -1,0 +1,48 @@
+{
+  "name": "@lg-chat/input-bar",
+  "version": "5.0.0",
+  "description": "lg-chat Input Bar",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/badge": "^8.1.2",
+    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/hooks": "^8.1.3",
+    "@leafygreen-ui/icon": "^12.5.4",
+    "@leafygreen-ui/input-option": "^2.0.0",
+    "@leafygreen-ui/lib": "^13.6.1",
+    "@leafygreen-ui/palette": "^4.0.10",
+    "@leafygreen-ui/polymorphic": "^2.0.0",
+    "@leafygreen-ui/popover": "^11.3.1",
+    "@leafygreen-ui/search-input": "^3.1.2",
+    "@leafygreen-ui/tokens": "^2.9.0",
+    "@leafygreen-ui/typography": "^19.2.1",
+    "lodash": "^4.17.21",
+    "react-keyed-flatten-children": "^1.3.0",
+    "react-textarea-autosize": "^8.3.2"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
+    "@lg-chat/leafygreen-chat-provider": "^2.0.0"
+  },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  }
+}

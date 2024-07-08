@@ -1,5 +1,31 @@
 # @leafygreen-ui/testing-lib
 
+## 0.6.1
+
+### Patch Changes
+
+- cfa830701: `waitForTransition` accepts `null` arg
+
+## 0.6.0
+
+### Minor Changes
+
+- 659aa9eed: Creates `useTraceUpdate` hook
+
+## 0.5.0
+
+### Minor Changes
+
+- ed9bead67: Creates a `waitForTransition` test utility. Fires the `transitionend` event on a given element to ensure event handlers are called after CSS transitions complete.
+
+  This is useful for testing `onEntered` or `onExited` callbacks on `Transition` or `Popover` elements.
+
+## 0.4.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+
 ## 0.4.1
 
 ### Patch Changes

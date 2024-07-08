@@ -88,10 +88,10 @@ export const getRadioDisplayStyles = ({
         }
       `]: checked,
       [css`
-        color: ${darkMode ? palette.gray.dark1 : palette.gray.light1};
-        background: ${darkMode ? palette.gray.dark3 : palette.gray.light3};
+        color: ${darkMode ? palette.gray.dark1 : palette.gray.base};
+        background: ${darkMode ? palette.gray.dark3 : palette.gray.light2};
         font-weight: ${fontWeights.regular};
-        border-color: ${darkMode ? palette.gray.dark2 : palette.gray.light2};
+        border-color: ${darkMode ? palette.gray.dark2 : palette.gray.light1};
         cursor: not-allowed;
         &:hover,
         &:active {

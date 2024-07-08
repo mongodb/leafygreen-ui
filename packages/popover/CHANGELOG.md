@@ -1,5 +1,52 @@
 # @leafygreen-ui/popover
 
+## 11.4.0
+
+### Minor Changes
+
+- 02e1d77e: Reclassify `portalRef` prop as part of `PortalControlProps` in `Popover` component
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+
+## 11.3.1
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/portal@5.1.1
+  - @leafygreen-ui/tokens@2.5.2
+
+## 11.3.0
+
+### Minor Changes
+
+- 8ad4fdbc: Manually forward `portalRef` to `Portal` component and expose `portalRef` in `Popover` component
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/portal@5.1.0
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+
 ## 11.2.2
 
 ### Patch Changes

@@ -2,28 +2,20 @@ import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
 import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
+import { type LgIdProps } from './LgIdProps';
 import getTheme from './getTheme';
 export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
-
-export {
-  type ExtendedComponentProps,
-  type GeneratedStoryConfig,
-  type GeneratedStoryFn,
-  type InstanceDecorator,
-  type PlayFn,
-  StoryMeta,
-  type StoryMetaType,
-  type StoryType,
-  storybookArgTypes,
-  storybookExcludedArgTypes,
-  storybookExcludedControlParams,
-  IntrinsicElements,
-} from './storybook';
+export type {
+  Mutable,
+  RecursiveRecord,
+  Optional,
+  PartialRequired,
+} from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
-export type { DarkModeProps };
+export type { DarkModeProps, LgIdProps };
 
 /** Helper type to extract an HTML element's valid props */
 export type HTMLElementProps<

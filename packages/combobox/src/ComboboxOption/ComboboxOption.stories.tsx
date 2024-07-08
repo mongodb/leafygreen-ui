@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name, react/jsx-key */
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 
 import { ComboboxContext, defaultContext } from '../ComboboxContext';
 
@@ -15,7 +15,7 @@ const meta: StoryMetaType<typeof InternalComboboxOption> = {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['WithIcons', 'WithoutIcons'],
+      storyNames: ['WithIcons', 'WithoutIcons', 'WithoutIconsAndMultiStep'],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -64,6 +64,34 @@ WithIcons.parameters = {
       /// @ts-expect-error - withIcons is not a component prop
       withIcons: true,
       glyph: <Icon glyph="Cloud" />,
+    },
+  },
+};
+
+export const WithoutIconsAndMultiStep: StoryType<
+  typeof InternalComboboxOption
+> = () => <></>;
+WithoutIconsAndMultiStep.parameters = {
+  generate: {
+    decorator: (Instance, context) => {
+      return (
+        <LeafyGreenProvider darkMode={context?.args.darkMode}>
+          <ComboboxContext.Provider
+            value={{
+              ...defaultContext,
+              withIcons: context?.args.withIcons,
+              multiselect: true,
+            }}
+          >
+            <Instance glyph={context?.args.glyph} />
+          </ComboboxContext.Provider>
+        </LeafyGreenProvider>
+      );
+    },
+    args: {
+      /// @ts-expect-error - withIcons is not a component prop
+      withIcons: false,
+      glyph: undefined,
     },
   },
 };

@@ -1,2 +1,2 @@
 export { SubMenu } from './SubMenu';
-export { SubMenuProps } from './SubMenu.types';
+export { InternalSubMenuProps, SubMenuProps } from './SubMenu.types';

@@ -1,5 +1,65 @@
 # @leafygreen-ui/toggle
 
+## 10.1.1
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+- Updated dependencies [8adadc89]
+  - @lg-tools/test-harnesses@0.1.2
+
+## 10.1.0
+
+### Minor Changes
+
+- c3906f78: - Extends `DarkModeProps` from `@leafygreen-ui/lib`
+  - Exports `getTestUtils`, a util to reliably interact with `LG Toggle` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toggle#test-harnesses) [LG-4035](https://jira.mongodb.org/browse/LG-4035)
+  - Exports the constant, `LGIDS_TOGGLE`, which stores `data-lgid` values.
+
+### Patch Changes
+
+- Updated dependencies [9402ba0e]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/lib@13.4.0
+  - @lg-tools/test-harnesses@0.1.1
+  - @leafygreen-ui/palette@4.0.10
+
+## 10.0.20
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/a11y@1.4.13
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 10.0.19
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+
+## 10.0.18
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/icon@11.29.1
+
 ## 10.0.17
 
 ### Patch Changes

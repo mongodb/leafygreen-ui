@@ -44,13 +44,16 @@ export const useDescendant = <T extends HTMLElement>(
   // On render, register the element as a descendant
   useIsomorphicLayoutEffect(() => {
     const _id = id.current;
+    const refExists = document.contains(ref.current);
 
-    // Register this component as a descendant
-    dispatch({
-      type: 'register',
-      id: _id,
-      ref,
-    });
+    if (refExists) {
+      // Register this component as a descendant
+      dispatch({
+        type: 'register',
+        id: _id,
+        ref,
+      });
+    }
 
     // On un-mount/cleanup remove the element from the descendants list
     return () => {

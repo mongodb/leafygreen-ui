@@ -1,20 +1,5 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { TabsProps } from '../Tabs/Tabs.types';
-
-export type InternalTabProps = Pick<
-  TabsProps,
-  'as' | 'darkMode' | 'className'
-> & {
-  child: React.ReactElement;
-  onKeyDown: (e: KeyboardEvent) => void;
-  onClick?: (e: React.MouseEvent) => void;
-  isAnyTabFocused?: boolean;
-  selected: boolean;
-  tabRef: HTMLDivElement | null;
-  panelRef: HTMLDivElement | null;
-};
-
 export interface TabProps extends HTMLElementProps<'div'> {
   /**
    * Content that will appear as the title in the Tab list.
@@ -56,12 +41,6 @@ export interface TabProps extends HTMLElementProps<'div'> {
    * Whether this tab is currently selected
    */
   selected?: boolean;
-
-  /**
-   * TODO: remove, or do something with this
-   * @internal
-   */
-  ariaControl?: string;
 
   // Done in order to support any Router system, such that TabTitle component can accept any URL destination prop.
   [key: string]: any;

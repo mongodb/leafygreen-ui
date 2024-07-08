@@ -8,6 +8,7 @@ import { BoxProps } from '@leafygreen-ui/box';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
+import { getTestUtils } from '../utils/getTestUtils';
 import Button from '..';
 
 const className = 'test-button-class';
@@ -16,8 +17,9 @@ const child = 'Button child';
 
 function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
   const utils = render(<Button {...props} data-testid="button-id" />);
-  const button = utils.getByTestId('button-id');
-  return { ...utils, button };
+  const { getButton, isDisabled } = getTestUtils();
+  const button = getButton();
+  return { ...utils, button, isDisabled };
 }
 
 describe('packages/button', () => {
@@ -90,11 +92,12 @@ describe('packages/button', () => {
       expect(button.title).toBe(title);
     });
 
-    test(`renders aria-disabled attribute when disabled is set`, () => {
-      const { button } = renderButton({
+    test(`renders with aria-disabled attribute but not disabled attribute when disabled prop is set`, () => {
+      const { button, isDisabled } = renderButton({
         disabled: true,
       });
-      expect(button.getAttribute('aria-disabled')).toBe('true');
+      expect(isDisabled()).toBeTruthy();
+      expect(button.getAttribute('disabled')).toBeFalsy();
     });
 
     test(`renders a button with the "button" type by default`, () => {
@@ -179,12 +182,12 @@ describe('packages/button', () => {
     });
 
     test(`does not render the disabled attribute for a disabled link`, () => {
-      const { button } = renderButton({
+      const { button, isDisabled } = renderButton({
         href: 'http://mongodb.design',
         disabled: true,
       });
       expect(button).not.toHaveAttribute('disabled');
-      expect(button).toHaveAttribute('aria-disabled', 'true');
+      expect(isDisabled()).toBe(true);
     });
 
     test('renders additional attributes not explicitly defined in props', () => {

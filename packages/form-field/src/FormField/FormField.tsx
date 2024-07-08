@@ -5,17 +5,18 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 import {
   Description,
-  Error,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { DEFAULT_MESSAGES, LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
+import { FormFieldFeedback } from '../FormFieldFeedback';
 
 import {
-  errorTextContainerStyle,
-  getFontSize,
-  labelTextContainerStyle,
+  getFontSizeStyles,
+  marginBottom,
+  textContainerStyle,
 } from './FormField.styles';
 import { type FormFieldProps, FormFieldState } from './FormField.types';
 import { useFormFieldProps } from './useFormFieldProps';
@@ -38,7 +39,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       state = FormFieldState.None,
       size = Size.Default,
       disabled = false,
-      errorMessage,
+      errorMessage = DEFAULT_MESSAGES.error,
+      successMessage = DEFAULT_MESSAGES.success,
       className,
       darkMode,
       optional,
@@ -48,25 +50,36 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     fwdRef,
   ) => {
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+    const fontStyles = getFontSizeStyles({ baseFontSize, size });
 
-    const { labelId, descriptionId, errorId, inputId, inputProps } =
-      useFormFieldProps({ label, description, state, id, ...rest });
+    const { labelId, descriptionId, feedbackId, inputId, inputProps } =
+      useFormFieldProps({ label, description, state, id, disabled, ...rest });
+
+    const formFieldFeedbackProps = {
+      baseFontSize,
+      disabled,
+      errorMessage,
+      id: feedbackId,
+      size,
+      state,
+      successMessage,
+    } as const;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <FormFieldProvider
           value={{ disabled, size, state, inputProps, optional }}
         >
-          <div
-            className={cx(getFontSize({ baseFontSize, size }), className)}
-            ref={fwdRef}
-            {...rest}
-          >
-            <div className={labelTextContainerStyle}>
+          <div className={cx(fontStyles, className)} ref={fwdRef} {...rest}>
+            <div
+              className={cx(textContainerStyle, {
+                [marginBottom]: !!(label || description),
+              })}
+            >
               {label && (
                 <Label
-                  data-testid="lg-form_field-label"
-                  className={getFontSize({ baseFontSize, size })}
+                  data-testid={LGIDS_FORM_FIELD.label}
+                  className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
                   disabled={disabled}
@@ -76,8 +89,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
-                  data-testid="lg-form_field-description"
-                  className={getFontSize({ baseFontSize, size })}
+                  data-testid={LGIDS_FORM_FIELD.description}
+                  className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}
                 >
@@ -86,17 +99,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
             </div>
             {children}
-            <div className={errorTextContainerStyle}>
-              {state === FormFieldState.Error && !disabled && (
-                <Error
-                  data-testid="lg-form_field-error_message"
-                  className={getFontSize({ baseFontSize, size })}
-                  id={errorId}
-                >
-                  {errorMessage}
-                </Error>
-              )}
-            </div>
+            <FormFieldFeedback {...formFieldFeedbackProps} />
           </div>
         </FormFieldProvider>
       </LeafyGreenProvider>

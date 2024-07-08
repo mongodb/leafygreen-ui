@@ -6,6 +6,8 @@ import { Descendant } from '../Descendants.types';
  * @param item The item to insert into the array
  * @param index The index to insert the item at
  * @returns A copy of the array with the item inserted at the specified index
+ *
+ * @internal
  */
 export function insertDescendantAt<T extends HTMLElement>(
   array: Array<Descendant<T>>,

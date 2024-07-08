@@ -2,6 +2,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   focusRing,
   fontFamilies,
   fontWeights,
@@ -31,7 +32,6 @@ export const inputBaseStyles = css`
   box-sizing: border-box;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: background-color;
-  padding: 0 0 0 12px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -43,47 +43,31 @@ export const inputBaseStyles = css`
     -moz-appearance: textfield;
   }
 
-  &[aria-disabled='true'] {
-    cursor: not-allowed;
-
-    &:hover,
-    &:active {
-      box-shadow: none;
-    }
-  }
-
   .${wrapperClassName}:hover &,
   .${wrapperClassName}:focus-within & {
     transition-property: padding;
   }
 `;
 
-export const inputErrorPaddingTransitionStyles = css`
-  transition-property: padding;
-`;
-
-export const inputAnimateStyles = css`
-  .${wrapperClassName}:hover &,
-  .${wrapperClassName}:focus-within & {
-    padding-right: ${spacing[1] * 6}px;
-  }
-`;
-
 export const inputThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     &::placeholder {
-      color: ${palette.gray.light1};
+      color: ${palette.gray.base};
     }
 
     &:-webkit-autofill {
-      -webkit-text-fill-color: ${palette.black};
+      -webkit-text-fill-color: ${color.light.text.primary.default};
       border: 0;
-      box-shadow: ${autofillShadowOverride(palette.white)};
+      box-shadow: ${autofillShadowOverride(
+        color.light.background.primary.default,
+      )};
 
       &:focus-visible,
       &:hover {
-        -webkit-text-fill-color: ${palette.black};
-        box-shadow: ${autofillShadowOverride(palette.white)};
+        -webkit-text-fill-color: ${color.light.text.primary.hover};
+        box-shadow: ${autofillShadowOverride(
+          color.light.background.primary.default,
+        )};
       }
     }
   `,
@@ -93,13 +77,13 @@ export const inputThemeStyles: Record<Theme, string> = {
     }
 
     &:-webkit-autofill {
-      -webkit-text-fill-color: ${palette.gray.light2};
+      -webkit-text-fill-color: ${color.dark.text.primary.default};
       border: 0;
       box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
 
       &:focus-visible,
       &:hover {
-        -webkit-text-fill-color: ${palette.gray.light2};
+        -webkit-text-fill-color: ${color.dark.text.primary.hover};
         box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
       }
     }
@@ -127,139 +111,95 @@ export const selectBaseStyles = css`
 
 export const wrapperThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.black};
-    background: ${palette.white};
+    background-color: ${color.light.background.primary.default};
+    color: ${color.light.text.primary.default};
 
     &:focus-within {
       box-shadow: ${focusRing.light.input};
-      border-color: ${palette.white};
+      border-color: ${color.light.border.primary.focus};
     }
   `,
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
-    color: ${palette.gray.light2};
+    color: ${color.dark.text.primary.default};
 
     &:focus-within {
       box-shadow: ${focusRing.dark.input};
-      border-color: ${palette.gray.dark4};
+      border-color: ${color.dark.border.primary.focus};
     }
   `,
 };
 
-export const wrapperStateStyles: Record<Theme, Record<State, string>> = {
-  [Theme.Light]: {
-    [State.Error]: css`
-      border-color: ${palette.red.base};
-    `,
-    [State.None]: css`
-      border-color: ${palette.gray.base};
-    `,
-  },
-  [Theme.Dark]: {
-    [State.Error]: css`
-      border-color: ${palette.red.base};
-    `,
-    [State.None]: css`
-      border-color: ${palette.gray.base};
-    `,
-  },
-};
-
-export const wrapperHoverStyles: Record<Theme, Record<State, string>> = {
-  [Theme.Light]: {
-    [State.Error]: css`
-      border-color: ${palette.red.base};
-
-      &:hover,
-      &:active {
-        &:not(:focus-within) {
-          box-shadow: ${hoverRing.light.red};
-        }
-      }
-    `,
-    [State.None]: css`
-      border-color: ${palette.gray.base};
-
-      &:hover,
-      &:active {
-        &:not(:focus-within) {
-          box-shadow: ${hoverRing.light.gray};
-        }
-      }
-    `,
-  },
-  [Theme.Dark]: {
-    [State.Error]: css`
-      border-color: ${palette.red.base};
-
-      &:hover,
-      &:active {
-        &:not(:focus-within) {
-          box-shadow: ${hoverRing.dark.red};
-        }
-      }
-    `,
-    [State.None]: css`
-      border-color: ${palette.gray.base};
-
-      &:hover,
-      &:active {
-        &:not(:focus-within) {
-          box-shadow: ${hoverRing.dark.gray};
-        }
-      }
-    `,
-  },
-};
-
-export const wrapperDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light2};
-    border-color: ${palette.gray.light1};
-    color: ${palette.gray.base};
+export const getWrapperStateStyles = (theme: Theme) => ({
+  [State.Error]: css`
+    border-color: ${color[theme].border.error.default};
   `,
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark3};
-    border-color: ${palette.gray.dark2};
-    color: ${palette.gray.dark1};
+  [State.None]: css`
+    border-color: ${color[theme].border.primary.default};
   `,
-};
+  [State.Valid]: css`
+    border-color: ${color[theme].border.success.default};
+  `,
+});
 
-export const inputErrorAnimateStyles: Record<Size, string> = {
-  [Size.XSmall]: css`
-    padding-right: ${spacing[1] * 7}px;
+export const getWrapperHoverStyles = (theme: Theme) => ({
+  [State.Error]: css`
+    border-color: ${color[theme].border.error.default};
 
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
+    &:hover,
+    &:active {
+      &:not(:focus-within) {
+        box-shadow: ${hoverRing[theme].red};
+      }
     }
   `,
-  [Size.Small]: css`
-    padding-right: ${spacing[1] * 7}px;
+  [State.None]: css`
+    border-color: ${color[theme].border.primary.default};
 
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
+    &:hover,
+    &:active {
+      &:not(:focus-within) {
+        box-shadow: ${hoverRing[theme].gray};
+      }
     }
   `,
-  [Size.Default]: css`
-    padding-right: ${spacing[1] * 8}px;
+  [State.Valid]: css`
+    border-color: ${color[theme].border.success.default};
 
-    .${wrapperClassName}:hover &,
-    .${wrapperClassName}:focus-within & {
-      padding-right: ${spacing[1] * 11}px;
+    &:hover,
+    &:active {
+      &:not(:focus-within) {
+        box-shadow: ${hoverRing[theme].green};
+      }
     }
   `,
-};
+});
+
+export const getWrapperDisabledStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background.disabled.default};
+  border-color: ${color[theme].border.disabled.default};
+  color: ${color[theme].text.disabled.default};
+`;
 
 export const inputSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
+    padding-left: ${spacing[200]}px;
+    padding-right: ${spacing[600]}px;
   `,
   [Size.Small]: css`
     height: 28px;
+    padding-left: ${spacing[200]}px;
+    padding-right: ${spacing[600]}px;
   `,
   [Size.Default]: css`
     height: 36px;
+    padding-left: ${spacing[300]}px;
+    padding-right: ${spacing[800]}px;
+  `,
+  [Size.Large]: css`
+    height: 48px;
+    padding-left: ${spacing[300]}px;
+    padding-right: ${spacing[800]}px;
   `,
 };

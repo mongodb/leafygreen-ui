@@ -1,5 +1,41 @@
 # @leafygreen-ui/button
 
+## 21.2.1
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
+## 21.2.0
+
+### Minor Changes
+
+- 1ec45a7e: - Exports `getTestUtils`, a util to reliably interact with `LG Button` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/button#test-harnesses)
+  - Exports the constant, `LGIDS_BUTTON`, which stores `data-lgid` values.
+
+## 21.1.0
+
+### Minor Changes
+
+- 7a0ff1be: [LG-4126](https://jira.mongodb.org/browse/LG-4126)
+
+  Styling changes are made to ensure consistent implementation of `disabled` state styles.
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/box@3.1.9
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/ripple@1.1.13
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 21.0.12
 
 ### Patch Changes

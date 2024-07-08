@@ -10,15 +10,14 @@
  */
 
 import React from 'react';
-import { Decorator, StoryContext, StoryFn } from '@storybook/react';
-import entries from 'lodash/entries';
-import isUndefined from 'lodash/isUndefined';
-
 import {
   type GeneratedStoryConfig,
   type StoryMetaType,
   StoryType,
-} from '@leafygreen-ui/lib';
+} from '@lg-tools/storybook-utils';
+import { Decorator, StoryContext, StoryFn } from '@storybook/react';
+import entries from 'lodash/entries';
+import isUndefined from 'lodash/isUndefined';
 
 import { Err, PropCombinations } from './components';
 import { PARAM_NAME } from './constants';

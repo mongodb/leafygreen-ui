@@ -15,7 +15,7 @@
     "../../typings/*",
     "../a11y/src/useReducedMotionQuery.ts"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../a11y"

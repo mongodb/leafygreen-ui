@@ -1,6 +1,18 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface SkeletonProps extends DarkModeProps, HTMLElementProps<'div'> {
+export interface SharedSkeletonProps {
+  /**
+   * Defines whether the loading "shimmer" animation renders
+   *
+   * @default true
+   */
+  enableAnimations?: boolean;
+}
+
+export interface SkeletonProps
+  extends SharedSkeletonProps,
+    DarkModeProps,
+    HTMLElementProps<'div'> {
   /**
    * Determines the height of the skeleton
    * @default "default"
