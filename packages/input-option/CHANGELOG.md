@@ -1,5 +1,11 @@
 # @leafygreen-ui/input-option
 
+## 2.0.1
+
+### Patch Changes
+
+- 157146b5c: Adds back `display:block` property, which was removed in style updates.
+
 ## 2.0.0
 
 ### Major Changes

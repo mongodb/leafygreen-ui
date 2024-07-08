@@ -1,5 +1,13 @@
 # @leafygreen-ui/select
 
+## 12.1.3
+
+### Patch Changes
+
+- 9c40e5335: Exports `getTestUtils` and `LGIDS_SELECT`. These were mistakenly excluded in its [initial release](https://github.com/mongodb/leafygreen-ui/blob/main/packages/select/CHANGELOG.md#1130)
+- Updated dependencies [157146b5c]
+  - @leafygreen-ui/input-option@2.0.1
+
 ## 12.1.2
 
 ### Patch Changes
