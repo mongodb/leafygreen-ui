@@ -1,6 +1,8 @@
-import { ElementType, PropsWithChildren, useEffect, useState } from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import { ElementType, PropsWithChildren, useEffect } from 'react';
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryObj } from '@storybook/react';
 
 import { TestDescendantContext } from '../../test/components.testutils';
 import {
@@ -23,6 +25,19 @@ export default {
   },
 } satisfies StoryMetaType<ElementType<unknown>>;
 
+const items = [
+  'Adam',
+  'Brooke',
+  'Chris',
+  'Dave',
+  'Eliane',
+  'Fred',
+  'George',
+  'Harry',
+  'Irena',
+  'Jeremy',
+];
+
 const TestHighlightContext = createHighlightContext('TestHighlight');
 
 const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
@@ -32,26 +47,21 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
   const isHighlighted = highlight?.id === id;
 
   return (
-    <div ref={ref} style={{ color: isHighlighted ? 'red' : 'black' }}>
+    <div
+      ref={ref}
+      style={{
+        padding: 4,
+        color: isHighlighted ? 'red' : 'black',
+        outline: `1px solid ${isHighlighted ? 'red' : 'transparent'}`,
+        outlineOffset: 2,
+      }}
+    >
       {children}: {id}
     </div>
   );
 };
 
 export const Basic = () => {
-  const [items] = useState([
-    'Adam',
-    'Brooke',
-    'Chris',
-    'Dave',
-    'Eliane',
-    'Fred',
-    'George',
-    'Harry',
-    'Irena',
-    'Jeremy',
-  ]);
-
   const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
   const { highlight, moveHighlight, setHighlight } =
     useHighlight<HTMLDivElement>(getDescendants);
@@ -96,3 +106,56 @@ export const Basic = () => {
     </div>
   );
 };
+
+export const Grid = {
+  render: () => {
+    const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
+    const { highlight, moveHighlight, setHighlight } =
+      useHighlight<HTMLDivElement>(getDescendants);
+
+    const handleKeyDown = e => {
+      switch (e.key) {
+        case 'ArrowDown':
+          moveHighlight('next');
+          break;
+        case 'ArrowUp':
+          moveHighlight('prev');
+          break;
+        default:
+          break;
+      }
+    };
+
+    useEffect(() => {
+      document.body.addEventListener('keydown', handleKeyDown);
+      () => document.body.removeEventListener('keydown', handleKeyDown);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      <div>
+        <DescendantsProvider
+          context={TestDescendantContext}
+          descendants={getDescendants()}
+          dispatch={dispatch}
+        >
+          <HighlightProvider
+            context={TestHighlightContext}
+            highlight={highlight}
+            setHighlight={setHighlight}
+          >
+            <div
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}
+            >
+              {items.map(item => (
+                <HighlightItem key={item}>{item}</HighlightItem>
+              ))}
+            </div>
+          </HighlightProvider>
+        </DescendantsProvider>
+      </div>
+    );
+  },
+  argTypes: {},
+} satisfies StoryObj<any>;
