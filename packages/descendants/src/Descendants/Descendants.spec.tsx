@@ -9,8 +9,8 @@ import {
   TestDescendantContext,
   TestParent,
   TestParent2,
-} from '../test/components.testutils';
-import { renderDescendantsTestContext } from '../test/renderDescendantsTestContext.testutils';
+} from '../../test/components.testutils';
+import { renderDescendantsTestContext } from '../../test/renderDescendantsTestContext.testutils';
 
 import { DescendantsProvider, useInitDescendants } from '.';
 

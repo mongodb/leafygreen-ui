@@ -10,4 +10,8 @@ export {
 export { useDescendant } from './useDescendant';
 export { useDescendantsContext } from './useDescendantsContext';
 export { useInitDescendants } from './useInitDescendants';
-export { getDescendantById, getDescendantByIndex } from './utils';
+export {
+  getDescendantById,
+  getDescendantByIndex,
+  isDescendantsSet,
+} from './utils';

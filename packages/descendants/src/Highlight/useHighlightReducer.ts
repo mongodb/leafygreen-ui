@@ -1,8 +1,7 @@
 import { type Reducer, useReducer } from 'react';
 
-import { Descendant, DescendantsList } from '@leafygreen-ui/descendants';
+import { Descendant, DescendantsList, isDescendantsSet } from '../Descendants';
 
-import { isDescendantsSet } from './utils/isDescendantsSet';
 import { makeHighlightReducerFunction } from './utils/makeHighlightReducerFunction';
 import type {
   Direction,

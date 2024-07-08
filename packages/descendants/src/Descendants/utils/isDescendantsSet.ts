@@ -1,5 +1,6 @@
-import { DescendantsList } from '@leafygreen-ui/descendants';
 import { isDefined } from '@leafygreen-ui/lib';
+
+import { DescendantsList } from '../../Descendants';
 
 export const isDescendantsSet = (
   descendants?: DescendantsList<any>,

@@ -1,14 +1,14 @@
+import { isDefined } from '@leafygreen-ui/lib';
+
 import {
   Descendant,
   DescendantsList,
   getDescendantByIndex,
-} from '@leafygreen-ui/descendants';
-import { isDefined } from '@leafygreen-ui/lib';
-
+  isDescendantsSet,
+} from '../../Descendants';
 import { Direction } from '../highlight.types';
 
 import { getNextEnabledIndex } from './getNextEnabled';
-import { isDescendantsSet } from './isDescendantsSet';
 
 export const getNextFromDirection = (
   direction: Direction,

@@ -2,8 +2,7 @@ import {
   DescendantsList,
   getDescendantById,
   getDescendantByIndex,
-} from '@leafygreen-ui/descendants';
-
+} from '../../Descendants';
 import type { HighlightReducerFunction } from '../highlight.types';
 
 import { getNextFromDirection } from './getNextFromDirection';

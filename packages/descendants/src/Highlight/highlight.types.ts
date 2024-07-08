@@ -1,6 +1,6 @@
 import { Reducer } from 'react';
 
-import { Descendant } from '@leafygreen-ui/descendants';
+import * as Descendants from '../Descendants';
 
 export type Index = number | undefined;
 const Direction = {
@@ -12,7 +12,7 @@ const Direction = {
 export type Direction = (typeof Direction)[keyof typeof Direction];
 
 export type HighlightChangeHandler = (
-  nextHighlight: Descendant | undefined,
+  nextHighlight: Descendants.Descendant | undefined,
 ) => void;
 
 export type UpdateHighlightAction =
@@ -33,12 +33,12 @@ export type UpdateHighlightAction =
     };
 
 export type HighlightReducerFunction = Reducer<
-  Descendant | undefined,
+  Descendants.Descendant | undefined,
   UpdateHighlightAction
 >;
 
 export interface HighlightReducerReturnType {
-  highlight: Descendant | undefined;
+  highlight: Descendants.Descendant | undefined;
   moveHighlight: (direction: Direction) => void;
   setHighlight: (indexOrId: number | string) => void;
 }
