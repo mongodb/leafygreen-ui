@@ -1,35 +1,37 @@
-import { type Reducer, useReducer } from 'react';
+import { useReducer } from 'react';
 
-import { Descendant, DescendantsList, isDescendantsSet } from '../Descendants';
+import { DescendantsList, isDescendantsSet } from '../Descendants';
 
-import { makeHighlightReducerFunction } from './utils/makeHighlightReducerFunction';
+import { HighlightReducerFunction } from './reducer/reducer.types';
 import type {
   Direction,
   HighlightChangeHandler,
-  HighlightReducerReturnType,
-  UpdateHighlightAction,
+  HighlightHookReturnType,
 } from './highlight.types';
+import { makeHighlightReducerFunction } from './reducer';
 
-const getInitialHighlight = (descendants: DescendantsList<HTMLElement>) =>
-  isDescendantsSet(descendants) ? descendants[0] : undefined;
+const getInitialHighlight = <T extends HTMLElement>(
+  descendants: DescendantsList<T>,
+) => (isDescendantsSet(descendants) ? descendants[0] : undefined);
 
 /**
  * Custom hook that handles setting the highlighted descendant index,
  * and fires any `onChange` side effects
  */
-export const useHighlightReducer = (
+export const useHighlight = <T extends HTMLElement>(
   /** An accessor for the updated descendants list */
-  getDescendants: () => DescendantsList,
+  getDescendants: () => DescendantsList<T>,
   /** A callback fired when the highlight changes */
-  onChange?: HighlightChangeHandler,
-): HighlightReducerReturnType => {
+  onChange?: HighlightChangeHandler<T>,
+): HighlightHookReturnType<T> => {
   // Create a reducer function
   const highlightReducerFunction = makeHighlightReducerFunction(getDescendants);
 
   // Create the reducer
-  const [highlight, dispatch] = useReducer<
-    Reducer<Descendant | undefined, UpdateHighlightAction>
-  >(highlightReducerFunction, getInitialHighlight(getDescendants()));
+  const [highlight, dispatch] = useReducer<HighlightReducerFunction<T>>(
+    highlightReducerFunction,
+    getInitialHighlight(getDescendants()),
+  );
 
   /**
    * Custom dispatch that moves the current highlight

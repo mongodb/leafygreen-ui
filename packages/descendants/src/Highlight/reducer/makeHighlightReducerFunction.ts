@@ -3,16 +3,17 @@ import {
   getDescendantById,
   getDescendantByIndex,
 } from '../../Descendants';
-import type { HighlightReducerFunction } from '../highlight.types';
+import { getNextFromDirection } from '../utils/getNextFromDirection';
 
-import { getNextFromDirection } from './getNextFromDirection';
+import { HighlightReducerFunction } from './reducer.types';
 
 /**
  * Creates a new reducer function for closure for a given `descendants` value
  */
-export const makeHighlightReducerFunction =
-  (getDescendants: () => DescendantsList): HighlightReducerFunction =>
-  (currentHighlight, action) => {
+export const makeHighlightReducerFunction = <T extends HTMLElement>(
+  getDescendants: () => DescendantsList<T>,
+): HighlightReducerFunction<T> =>
+  ((currentHighlight, action) => {
     const descendants = getDescendants();
 
     // If we've received a direction, move the highlight
@@ -32,4 +33,4 @@ export const makeHighlightReducerFunction =
     }
 
     return currentHighlight;
-  };
+  }) as HighlightReducerFunction<T>;

@@ -1,8 +1,9 @@
-import { Reducer } from 'react';
+import { Descendant } from '../Descendants';
 
-import * as Descendants from '../Descendants';
+import { HighlightSetter, RelativeHighlightSetter } from './reducer';
 
 export type Index = number | undefined;
+
 const Direction = {
   Next: 'next',
   Prev: 'prev',
@@ -11,34 +12,16 @@ const Direction = {
 } as const;
 export type Direction = (typeof Direction)[keyof typeof Direction];
 
-export type HighlightChangeHandler = (
-  nextHighlight: Descendants.Descendant | undefined,
-) => void;
-
-export type UpdateHighlightAction =
-  | {
-      direction: Direction;
-      index?: never;
-      id?: never;
-    }
-  | {
-      index: number;
-      direction?: never;
-      id?: never;
-    }
-  | {
-      id: string;
-      direction?: never;
-      index?: never;
-    };
-
-export type HighlightReducerFunction = Reducer<
-  Descendants.Descendant | undefined,
-  UpdateHighlightAction
->;
-
-export interface HighlightReducerReturnType {
-  highlight: Descendants.Descendant | undefined;
-  moveHighlight: (direction: Direction) => void;
-  setHighlight: (indexOrId: number | string) => void;
+export interface HighlightContextProps<T extends HTMLElement> {
+  highlight: Descendant<T> | undefined;
+  setHighlight: HighlightSetter;
 }
+
+export interface HighlightHookReturnType<T extends HTMLElement>
+  extends HighlightContextProps<T> {
+  moveHighlight: RelativeHighlightSetter;
+}
+
+export type HighlightChangeHandler<T extends HTMLElement> = (
+  nextHighlight: Descendant<T> | undefined,
+) => void;

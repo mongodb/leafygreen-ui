@@ -1,0 +1,1 @@
+describe('packages/descendants/highlight', () => {});
