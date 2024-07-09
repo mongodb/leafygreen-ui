@@ -46,7 +46,7 @@
   },
   "peerDependencies": {
     "@babel/core": "7.24.0",
-    "turbo": "^1.10.7",
+    "turbo": "^2.0.6",
     "typescript": "~4.9.0"
   }
 }
