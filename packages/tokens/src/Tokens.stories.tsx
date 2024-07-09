@@ -14,6 +14,7 @@ import {
   focusRing,
   fontFamilies,
   hoverRing,
+  shadow,
   spacing,
   transitionDuration,
   typeScales,
@@ -27,8 +28,6 @@ const Card = ({
   darkMode: boolean;
 }) => {
   const theme = darkMode ? Theme.Dark : Theme.Light;
-  const darkBaseBoxShadow = 'box-shadow: 0 4px 20px -4px #01121A';
-  const lightBaseBoxShadow = '0 4px 10px -4px rgba(0, 30, 43, 0.3)';
 
   return (
     <div
@@ -39,7 +38,7 @@ const Card = ({
         color: ${color[theme].text.primary.default};
         background-color: ${color[theme].background.primary.default};
         border: 1px solid ${color[theme].border.secondary.default};
-        box-shadow: ${darkMode ? darkBaseBoxShadow : lightBaseBoxShadow};
+        box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
       `}
     >
       {children}
@@ -64,7 +63,7 @@ const gutter = css`
 
 const spacingBlockVariants = Object.keys(spacing)
   .filter(num => Number(num) === 0 || Number(num) > 25)
-  .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
+  .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index) => {
     const key = index as PropertyKey as keyof typeof spacing;
     acc[key] = css`
       background-color: ${palette.purple.light2};
@@ -84,6 +83,35 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
     </div>
   );
 }
+
+export const Shadow = () => (
+  <div
+    className={css`
+      display: flex;
+      gap: ${spacing[400]}px;
+    `}
+  >
+    <div
+      className={css`
+        box-shadow: ${shadow.light[100]};
+        background-color: ${color.light.background.primary.default};
+        height: ${spacing[1600]}px;
+        width: ${spacing[1600]}px;
+        border-radius: ${borderRadius[200]}px;
+      `}
+    />
+
+    <div
+      className={css`
+        box-shadow: ${shadow.dark[100]};
+        background-color: ${color.dark.background.primary.default};
+        height: ${spacing[1600]}px;
+        width: ${spacing[1600]}px;
+        border-radius: ${borderRadius[200]}px;
+      `}
+    />
+  </div>
+);
 
 export const Spacing = () => (
   <div>
