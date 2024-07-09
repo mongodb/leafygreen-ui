@@ -17,6 +17,11 @@ const getInitialHighlight = <T extends HTMLElement>(
   descendants: DescendantsList<T>,
 ) => (isDescendantsSet(descendants) ? descendants[0] : undefined);
 
+interface UseHighlightOptions<T extends HTMLElement> {
+  /** A callback fired when the highlight changes */
+  onChange?: HighlightChangeHandler<T>;
+}
+
 /**
  * Custom hook that handles setting the highlighted descendant index,
  * and fires any `onChange` side effects
@@ -24,8 +29,7 @@ const getInitialHighlight = <T extends HTMLElement>(
 export const useHighlight = <T extends HTMLElement>(
   /** An accessor for the updated descendants list */
   getDescendants: () => DescendantsList<T>,
-  /** A callback fired when the highlight changes */
-  onChange?: HighlightChangeHandler<T>,
+  options?: UseHighlightOptions<T>,
 ): HighlightHookReturnType<T> => {
   // Create a reducer function
   const highlightReducerFunction = makeHighlightReducerFunction(getDescendants);
@@ -51,7 +55,7 @@ export const useHighlight = <T extends HTMLElement>(
         : { direction: dirOrDelta };
     const updatedHighlight = highlightReducerFunction(highlight, action);
 
-    onChange?.(updatedHighlight);
+    options?.onChange?.(updatedHighlight);
     dispatch(action);
   };
 
@@ -72,7 +76,7 @@ export const useHighlight = <T extends HTMLElement>(
           };
 
     const updatedHighlight = highlightReducerFunction(highlight, action);
-    onChange?.(updatedHighlight);
+    options?.onChange?.(updatedHighlight);
     dispatch(action);
   };
 
