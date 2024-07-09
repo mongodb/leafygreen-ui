@@ -95,21 +95,25 @@ export const Shadow = () => (
       className={css`
         box-shadow: ${shadow.light[100]};
         background-color: ${color.light.background.primary.default};
-        height: ${spacing[1600]}px;
-        width: ${spacing[1600]}px;
+        padding: ${spacing[1600]}px;
         border-radius: ${borderRadius[200]}px;
+        color: ${color.light.text.primary.default};
       `}
-    />
+    >
+      shadow.light[100]
+    </div>
 
     <div
       className={css`
         box-shadow: ${shadow.dark[100]};
         background-color: ${color.dark.background.primary.default};
-        height: ${spacing[1600]}px;
-        width: ${spacing[1600]}px;
+        padding: ${spacing[1600]}px;
         border-radius: ${borderRadius[200]}px;
+        color: ${color.dark.text.primary.default};
       `}
-    />
+    >
+      shadow.dark[100]
+    </div>
   </div>
 );
 
