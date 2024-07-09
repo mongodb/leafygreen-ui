@@ -2,7 +2,10 @@ import { useReducer } from 'react';
 
 import { DescendantsList, isDescendantsSet } from '../Descendants';
 
-import { HighlightReducerFunction } from './reducer/reducer.types';
+import {
+  HighlightReducerFunction,
+  UpdateHighlightAction,
+} from './reducer/reducer.types';
 import type {
   Direction,
   HighlightChangeHandler,
@@ -39,8 +42,13 @@ export const useHighlight = <T extends HTMLElement>(
    *
    * Fires any side-effects in the `onChange` callback
    */
-  const moveHighlight = (direction: Direction) => {
-    const action = { direction };
+  const moveHighlight = (dirOrDelta: Direction | number) => {
+    const action: UpdateHighlightAction =
+      typeof dirOrDelta === 'number'
+        ? {
+            delta: dirOrDelta,
+          }
+        : { direction: dirOrDelta };
     const updatedHighlight = highlightReducerFunction(highlight, action);
 
     onChange?.(updatedHighlight);
@@ -49,12 +57,12 @@ export const useHighlight = <T extends HTMLElement>(
 
   /**
    * Custom dispatch that sets the current highlight
-   * to a given `index` or `id`.
+   * to an absolute `index` or `id`.
    *
    * Fires any side-effects in the `onChange` callback
    */
   const setHighlight = (indexOrId: number | string) => {
-    const action =
+    const action: UpdateHighlightAction =
       typeof indexOrId === 'string'
         ? {
             id: indexOrId,

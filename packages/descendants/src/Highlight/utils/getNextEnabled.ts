@@ -9,6 +9,8 @@ import { getNextIndex } from './getNextIndex';
 
 /**
  * Finds the index of the subsequent `enabled` descendant element
+ *
+ * @deprecated
  */
 export function getNextEnabledIndex(
   direction: Direction,

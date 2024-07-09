@@ -4,6 +4,7 @@ import {
   getDescendantByIndex,
 } from '../../Descendants';
 import { getNextFromDirection } from '../utils/getNextFromDirection';
+import { getRelativeDescendant } from '../utils/getRelativeDescendant';
 
 import { HighlightReducerFunction } from './reducer.types';
 
@@ -24,10 +25,20 @@ export const makeHighlightReducerFunction = <T extends HTMLElement>(
         descendants,
       );
       return nextHighlight || currentHighlight;
-    } else if (action.index) {
+      // if we've received a delta, move the highlight
+    } else if (typeof action.delta === 'number') {
+      const nextHighlight = getRelativeDescendant(
+        action.delta,
+        currentHighlight,
+        descendants,
+      );
+      return nextHighlight;
+      // If we've received an explicit index, set the highlight
+    } else if (typeof action.index === 'number') {
       const nextHighlight = getDescendantByIndex(action.index, descendants);
       return nextHighlight;
-    } else if (action.id) {
+      // If we've received an explicit id, set the highlight
+    } else if (typeof action.id === 'string') {
       const nextHighlight = getDescendantById(action.id, descendants);
       return nextHighlight;
     }

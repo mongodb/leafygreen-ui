@@ -1,14 +1,11 @@
-import { isDefined } from '@leafygreen-ui/lib';
-
 import {
   Descendant,
   DescendantsList,
-  getDescendantByIndex,
   isDescendantsSet,
 } from '../../Descendants';
 import { Direction } from '../highlight.types';
 
-import { getNextEnabledIndex } from './getNextEnabled';
+import { getRelativeDescendant } from './getRelativeDescendant';
 
 export const getNextFromDirection = (
   direction: Direction,
@@ -21,13 +18,24 @@ export const getNextFromDirection = (
     return current;
   }
 
-  const updatedIndex = getNextEnabledIndex(direction, current, descendants);
+  current = current ?? descendants[0];
+  const currIndex = current.index;
 
-  if (isDefined(updatedIndex)) {
-    const nextDescendant = getDescendantByIndex(updatedIndex, descendants);
+  const delta: number = (() => {
+    switch (direction) {
+      case 'next':
+        return 1;
+      case 'prev':
+        return -1;
+      case 'last':
+        return descendants.length - currIndex;
+      case 'first':
+        return -currIndex;
+      default:
+        return 0;
+    }
+  })();
+  const nextDescendant = getRelativeDescendant(delta, current, descendants);
 
-    return nextDescendant;
-  }
-
-  return current;
+  return nextDescendant;
 };
