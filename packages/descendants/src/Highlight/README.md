@@ -43,6 +43,8 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
   const { ref, id } = useDescendant(TestDescendantContext);
   const { highlight } = useHighlightContext(TestHighlightContext);
 
+  const isHighlighted = highlight?.id === id;
+
   return (
     <div
       ref={ref}
