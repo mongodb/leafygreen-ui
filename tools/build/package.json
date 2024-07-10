@@ -38,11 +38,16 @@
     "fs-extra": "11.1.1",
     "glob": "10.3.12",
     "lodash": "4.17.21",
+    "prop-types": "^15.8.1",
     "react-docgen-typescript": "2.2.2",
     "rollup": "4.16.1",
     "rollup-plugin-node-externals": "7.1.1",
     "rollup-plugin-polyfill-node": "0.13.0",
     "rollup-plugin-sizes": "1.0.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@babel/core": "7.24.0",

@@ -53,8 +53,7 @@ doctor-storybook.log
 .turbo
 scripts/tmp.*
 
-# 
-.npmrc
+#
 .changeset/pre.json
 
 TODO.md

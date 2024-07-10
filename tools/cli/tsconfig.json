@@ -12,6 +12,8 @@
       ]
     }
   },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../build"

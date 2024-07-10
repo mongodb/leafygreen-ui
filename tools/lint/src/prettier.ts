@@ -30,8 +30,13 @@ export const prettier: LintFn = ({ fix, verbose }) => {
       },
     )
       .on('exit', code => {
+        verbose && console.log(`Prettier ${code === 0 ? 'passed' : 'failed'}`);
         resolve(!code);
       })
-      .on('error', reject);
+      .on('error', err => {
+        console.error(chalk.red(`Error running Prettier`));
+        verbose && console.error(err);
+        reject(err);
+      });
   });
 };

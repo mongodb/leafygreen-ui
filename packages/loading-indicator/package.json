@@ -30,17 +30,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.4.0",
-    "@leafygreen-ui/palette": "^4.0.10",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^19.0.0",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "prop-types": "^15.8.1",
     "react-lottie-player": "^1.5.6"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
 
 import { Size, Skeleton } from '.';
 
@@ -18,7 +19,7 @@ export default {
       args: {
         enableAnimations: false,
       },
-      decorator: Instance => (
+      decorator: (Instance: StoryFn) => (
         <div style={{ width: 256 }}>
           <Instance />
         </div>
