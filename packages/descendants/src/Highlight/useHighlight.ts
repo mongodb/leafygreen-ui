@@ -3,13 +3,15 @@ import { useReducer } from 'react';
 import { Descendant, DescendantsList } from '../Descendants';
 
 import {
+  AbsoluteSetterArg,
   HighlightReducerFunction,
+  RelativeSetterArg,
   UpdateHighlightAction,
 } from './reducer/reducer.types';
-import type {
-  Direction,
+import {
   HighlightChangeHandler,
   HighlightHookReturnType,
+  Position,
 } from './highlight.types';
 import { makeHighlightReducerFunction } from './reducer';
 
@@ -21,7 +23,6 @@ interface UseHighlightOptions<T extends HTMLElement> {
   initial?: Descendant<T> | undefined;
 
   /** Filters descendants that are enabled */
-  // TODO: Better name and/or docs
   filter?: (d: Descendant<T>) => boolean;
 }
 
@@ -52,13 +53,12 @@ export const useHighlight = <T extends HTMLElement>(
    *
    * Fires any side-effects in the `onChange` callback
    */
-  const moveHighlight = (dirOrDelta: Direction | number) => {
+  const moveHighlight = (rel: RelativeSetterArg) => {
     const action: UpdateHighlightAction =
-      typeof dirOrDelta === 'number'
-        ? { delta: dirOrDelta }
-        : { direction: dirOrDelta };
+      typeof rel === 'number' ? { delta: rel } : { direction: rel };
 
     const updatedHighlight = highlightReducerFunction(highlight, action);
+
     options?.onChange?.(updatedHighlight);
     dispatch(action);
   };
@@ -69,9 +69,8 @@ export const useHighlight = <T extends HTMLElement>(
    *
    * Fires any side-effects in the `onChange` callback
    */
-  const setHighlight = (indexOrId: number | string) => {
-    const action: UpdateHighlightAction =
-      typeof indexOrId === 'string' ? { id: indexOrId } : { index: indexOrId };
+  const setHighlight = (abs: AbsoluteSetterArg) => {
+    const action = constructAbsoluteAction(abs);
 
     const updatedHighlight = highlightReducerFunction(highlight, action);
     options?.onChange?.(updatedHighlight);
@@ -84,3 +83,27 @@ export const useHighlight = <T extends HTMLElement>(
     setHighlight,
   };
 };
+
+function constructAbsoluteAction(
+  arg: AbsoluteSetterArg,
+): UpdateHighlightAction {
+  if (typeof arg === 'number') {
+    return {
+      index: arg,
+    };
+  }
+
+  if (typeof arg === 'string') {
+    return Object.values(Position).includes(arg as Position)
+      ? {
+          position: arg as Position,
+        }
+      : {
+          id: arg,
+        };
+  }
+
+  return {
+    value: arg,
+  };
+}

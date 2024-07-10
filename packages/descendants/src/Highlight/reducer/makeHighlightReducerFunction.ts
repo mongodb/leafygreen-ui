@@ -26,8 +26,6 @@ export const makeHighlightReducerFunction = <T extends HTMLElement>(
   return (currentHighlight, action) => {
     const descendants = getDescendants();
 
-    if (!currentHighlight) return currentHighlight;
-
     // Move the highlight relative to the current highlight
     if (isDefined(action.delta) || isDefined(action.direction)) {
       const delta = action.delta ?? getDeltaFromDirection(action.direction!);

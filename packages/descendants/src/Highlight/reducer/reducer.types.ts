@@ -1,6 +1,6 @@
 import { Reducer } from 'react';
 
-import { ExclusiveUnion } from '@leafygreen-ui/lib';
+import { ExclusiveUnion, ValuesOf } from '@leafygreen-ui/lib';
 
 import { Descendant } from '../../Descendants';
 import { Direction, Position } from '../highlight.types';
@@ -20,6 +20,9 @@ export interface ActionType {
 
   /** An explicit id to set the highlight */
   id: string;
+
+  /** An explicit descendant value */
+  value: Descendant<any>;
 }
 
 export type UpdateHighlightAction = ExclusiveUnion<ActionType>;
@@ -28,5 +31,11 @@ export type HighlightReducerFunction<T extends HTMLElement> = Reducer<
   UpdateHighlightAction
 >;
 
-export type HighlightSetter = (indexOrId: number | string) => void;
-export type RelativeHighlightSetter = (dirOrRel: Direction | number) => void;
+export type AbsoluteSetterArg = ValuesOf<
+  Pick<ActionType, 'id' | 'index' | 'position' | 'value'>
+>;
+export type RelativeSetterArg = ValuesOf<
+  Pick<ActionType, 'delta' | 'direction'>
+>;
+export type AbsoluteHighlightSetter = (abs: AbsoluteSetterArg) => void;
+export type RelativeHighlightSetter = (rel: RelativeSetterArg) => void;

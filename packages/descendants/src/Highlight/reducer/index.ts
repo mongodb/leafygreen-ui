@@ -1,7 +1,8 @@
 export { makeHighlightReducerFunction } from './makeHighlightReducerFunction';
 export type {
+  AbsoluteHighlightSetter,
+  AbsoluteSetterArg,
   ActionType,
-  HighlightSetter,
   RelativeHighlightSetter,
   UpdateHighlightAction,
 } from './reducer.types';

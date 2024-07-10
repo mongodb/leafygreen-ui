@@ -85,6 +85,24 @@ export const Basic = () => {
       case 'ArrowUp':
         moveHighlight('prev');
         break;
+      case ' ':
+        setHighlight('last');
+        break;
+      case 'Escape':
+        setHighlight(0);
+        break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        setHighlight(Number(e.key));
+        break;
       default:
         break;
     }
