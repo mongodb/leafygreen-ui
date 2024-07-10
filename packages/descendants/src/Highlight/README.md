@@ -58,7 +58,7 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
 
 ## `options.onInit`: Setting the initial highlight
 
-To set the initial highlight, provide an `onInit` callback to the `options` argument of `useHighlight`.
+To set the initial highlight (or run side-effects once on init), provide an `onInit` callback to the `options` argument of `useHighlight`.
 
 ```ts
 const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
@@ -97,7 +97,7 @@ const { highlight, setHighlight } = useHighlight(getDescendants, {
 });
 ```
 
-When filtering using `descendant.props`, make sure to track the relevant props when registering the descendant:
+Note: When filtering using `descendant.props`, make sure to track the relevant props when registering the descendant:
 
 ```ts
 const HighlightItem = ({
