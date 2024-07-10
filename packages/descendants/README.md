@@ -127,6 +127,10 @@ return (
 );
 ```
 
+## Highlight Management
+
+See [Highlight/README.md](./src/Highlight/README.md)
+
 ## Prior Art
 
 This package heavily references the work of [`pacocoursey/use-descendants`](https://github.com/pacocoursey/use-descendants/tree/v0) and [`@reach-ui/descendants`](https://github.com/reach/reach-ui/tree/dev/packages/descendants). Many thanks to the authors of those packages!

@@ -39,3 +39,14 @@ export interface HighlightHookReturnType<T extends HTMLElement>
 export type HighlightChangeHandler<T extends HTMLElement> = (
   nextHighlight: Descendant<T> | undefined,
 ) => void;
+
+export interface UseHighlightOptions<T extends HTMLElement> {
+  /** A callback fired when the highlight changes */
+  onChange?: HighlightChangeHandler<T>;
+
+  /** The initially highlighted descendant */
+  initial?: Descendant<T> | undefined;
+
+  /** Filters descendants that are enabled */
+  filter?: (d: Descendant<T>) => boolean;
+}

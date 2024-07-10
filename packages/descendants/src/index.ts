@@ -1,3 +1,4 @@
+// Descendants
 export {
   createDescendantsContext,
   type Descendant,
@@ -11,3 +12,14 @@ export {
   useDescendantsContext,
   useInitDescendants,
 } from './Descendants';
+// Highlight
+export {
+  createHighlightContext,
+  type Direction,
+  type HighlightChangeHandler,
+  type HighlightContextProps,
+  type HighlightHookReturnType,
+  HighlightProvider,
+  type Index,
+  useHighlight,
+} from './Highlight';

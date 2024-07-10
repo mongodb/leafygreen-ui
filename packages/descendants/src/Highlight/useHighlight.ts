@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-import { Descendant, DescendantsList } from '../Descendants';
+import { DescendantsList } from '../Descendants';
 
 import {
   AbsoluteSetterArg,
@@ -9,22 +9,11 @@ import {
   UpdateHighlightAction,
 } from './reducer/reducer.types';
 import {
-  HighlightChangeHandler,
   HighlightHookReturnType,
   Position,
+  UseHighlightOptions,
 } from './highlight.types';
 import { makeHighlightReducerFunction } from './reducer';
-
-interface UseHighlightOptions<T extends HTMLElement> {
-  /** A callback fired when the highlight changes */
-  onChange?: HighlightChangeHandler<T>;
-
-  /** The initially highlighted descendant */
-  initial?: Descendant<T> | undefined;
-
-  /** Filters descendants that are enabled */
-  filter?: (d: Descendant<T>) => boolean;
-}
 
 /**
  * Custom hook that handles setting the highlighted descendant index,

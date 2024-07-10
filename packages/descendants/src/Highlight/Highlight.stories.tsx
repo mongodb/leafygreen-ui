@@ -66,13 +66,15 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
 };
 
 export const Basic = () => {
-  const { descendants, dispatch } = useInitDescendants<HTMLDivElement>();
+  const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
   const { highlight, moveHighlight, setHighlight } = useHighlight(
-    () => descendants,
+    getDescendants,
     {
-      initial: descendants[0],
       filter: d => {
         return !d.props.isDisabled;
+      },
+      onChange: () => {
+        setHighlight(0);
       },
     },
   );
@@ -119,7 +121,7 @@ export const Basic = () => {
     <div>
       <DescendantsProvider
         context={TestDescendantContext}
-        descendants={descendants}
+        descendants={getDescendants()}
         dispatch={dispatch}
       >
         <HighlightProvider
