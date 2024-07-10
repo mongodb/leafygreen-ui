@@ -14,6 +14,7 @@ export type {
   Optional,
   PartialRequired,
   RecursiveRecord,
+  ValuesOf,
 } from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };

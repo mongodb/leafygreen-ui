@@ -5,5 +5,5 @@
  * to `never`
  */
 export type Only<T, K extends keyof T> = Pick<T, K> & {
-  [K2 in Exclude<keyof T, K>]?: never;
+  [X in Exclude<keyof T, K>]?: never;
 };
