@@ -31,6 +31,7 @@ export const getInputOptionStyles = ({
     ? InteractionState.Focus
     : InteractionState.Default;
   return css`
+    display: block;
     position: relative;
     list-style: none;
     outline: none;
