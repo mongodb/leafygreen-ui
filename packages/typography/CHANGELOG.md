@@ -1,5 +1,72 @@
 # @leafygreen-ui/typography
 
+## 19.2.1
+
+### Patch Changes
+
+- db2d1d12c: Updates the background color of InlineCode component in dark mode from transparent to `gray.dark4`
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+
+## 19.2.0
+
+### Minor Changes
+
+- 4fb369df7: Links only display focus state on `focus-visible` not default `focus`
+
+### Patch Changes
+
+- 7a901b954: - Uses updated `useInferredPolymorphicProps` and `hasAnchorProps` from `polymorphic`
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
+## 19.1.2
+
+### Patch Changes
+
+- 5d44c6b16: Updates `line-height` of H1 component from 62 to 64px to align better with our grid
+- Updated dependencies [df0d6faee]
+  - @leafygreen-ui/icon@12.5.2
+
+## 19.1.1
+
+### Patch Changes
+
+- 0864a420: Cleans up style definitions
+- Updated dependencies [3364b542]
+- Updated dependencies [0864a420]
+- Updated dependencies [eeea253c]
+  - @leafygreen-ui/tokens@2.7.0
+  - @leafygreen-ui/icon@12.2.0
+
+## 19.1.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Updates typography components to use tokens where possible
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/tokens@2.6.0
+
+## 19.0.0
+
+### Major Changes
+
+- dfd6972c: - Fixes the `Link` component so that:
+  - links are inline with the text preceding it
+  - The Arrow Icon is inline with the last line of text. Previously it rendered in a column next to the text because of `display: inline-flex`
+  - Adds generated stories for each `Typography` component
+
 ## 18.4.0
 
 ### Minor Changes

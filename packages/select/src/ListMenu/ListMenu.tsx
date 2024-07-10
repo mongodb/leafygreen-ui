@@ -10,7 +10,7 @@ import { LGIDS_SELECT } from '../constants';
 import { DropdownWidthBasis } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
-import { MobileMediaQuery, useForwardedRef } from '../utils';
+import { MobileMediaQuery, useForwardedRef } from '../utils/utils';
 
 import {
   autoWidthStyles,
@@ -36,6 +36,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       dropdownWidthBasis,
       usePortal = true,
       portalContainer,
+      portalRef,
       scrollContainer,
       portalClassName,
       popoverZIndex,
@@ -77,7 +78,13 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       onExit,
       onExited,
       ...(usePortal
-        ? { usePortal, portalClassName, portalContainer, scrollContainer }
+        ? {
+            usePortal,
+            portalClassName,
+            portalContainer,
+            portalRef,
+            scrollContainer,
+          }
         : { usePortal }),
     };
 

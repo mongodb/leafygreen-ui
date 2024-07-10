@@ -59,6 +59,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       state = State.None,
       type = TextInputType.Text,
       id,
+      readOnly,
       value: controlledValue,
       className,
       darkMode: darkModeProp,
@@ -158,6 +159,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       optional,
       size,
       state,
+      readOnly,
       ...ariaProps,
     } as const;
 

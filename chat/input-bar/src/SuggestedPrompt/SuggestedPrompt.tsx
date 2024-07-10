@@ -1,17 +1,9 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
-import { InputOption } from '@leafygreen-ui/input-option';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
-import {
-  contentClassName,
-  suggestedPromptDisabledStyle,
-  suggestedPromptStyles,
-  suggestedPromptThemeStyles,
-} from './SuggestedPrompt.styles';
 import { SuggestedPromptProps } from './SuggestedPrompt.types';
 
 export const SuggestedPrompt = InferredPolymorphic<SuggestedPromptProps, 'li'>(
@@ -26,7 +18,6 @@ export const SuggestedPrompt = InferredPolymorphic<SuggestedPromptProps, 'li'>(
     },
     ref,
   ) => {
-    const { theme } = useDarkMode(darkMode);
     const textContent = getNodeTextContent(children);
     /**
      * If `rest[aria-label]` exists, use that;
@@ -41,19 +32,14 @@ export const SuggestedPrompt = InferredPolymorphic<SuggestedPromptProps, 'li'>(
         {...rest}
         as={as}
         ref={ref}
-        className={cx(
-          suggestedPromptStyles,
-          suggestedPromptThemeStyles[theme],
-          {
-            [suggestedPromptDisabledStyle[theme]]: disabled,
-          },
-          className,
-        )}
+        className={className}
         disabled={disabled}
         aria-labelledby={rest['aria-labelledby']}
         aria-label={ariaLabel}
       >
-        <div className={contentClassName}>{children}</div>
+        <InputOptionContent preserveIconSpace={false}>
+          {children}
+        </InputOptionContent>
       </InputOption>
     );
   },

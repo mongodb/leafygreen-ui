@@ -1,5 +1,85 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.2.0
+
+### Minor Changes
+
+- 1e9f2030: - Drops the `isRequired` from the `buttonText` prop type. As of [version 5.1.0](https://github.com/mongodb/leafygreen-ui/blob/main/packages/confirmation-modal/CHANGELOG.md#510), `buttonText` is a deprecated prop that is now optional.
+  - Fixes existing confirm button disabled state logic
+    - Previously, when the modal was closed using the cancel or confirm button and reopened, the confirm button would always reset to a disabled state, disregarding `requiredInputText` prop value.
+    - Now, the confirm button will reset to a disabled state only when `requiredInputText` is provided.
+  - Adds missing confirm button disabled state logic
+    - Previously, when the modal was closed using the modal close button and reopened, the confirm button would never reset to a disabled state.
+    - Now, the confirm button will reset to a disabled state when `requiredInputText` is provided.
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [1e9f2030]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/modal@16.0.8
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 9ef03272: - Adds new prop `confirmButtonProps`. This prop is an object that accepts all `Button` props except for the `variant` prop. The variant is controlled by the `variant` prop.
+  - Adds new prop `cancelButtonProps`. This prop is an object that accepts all `Button` props. The `onClick` property will also fire when the `X` button, or backdrop is clicked.
+  - Prop `onConfirm` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `onClick` property.
+    ```js
+    confirmButtonProps: {
+      {
+        onClick: () => {};
+      }
+    }
+    ```
+  - Prop `buttonText` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `children` property.
+    ```js
+    confirmButtonProps: {
+      {
+        children: 'hi';
+      }
+    }
+    ```
+  - Prop `submitDisabled` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `disabled` property.
+    ```js
+    confirmButtonProps: {
+      {
+        disabled: true;
+      }
+    }
+    ```
+  - Prop `onCancel` is now marked as `deprecated`. Please transition to `cancelButtonProps` and pass the `onClick` property.
+    ```js
+    cancelButtonProps: {
+      {
+        onClick: () => {};
+      }
+    }
+    ```
+
+### Patch Changes
+
+- Updated dependencies [ae44834e]
+- Updated dependencies [3273045c]
+- Updated dependencies [3b86b3bd]
+  - @leafygreen-ui/icon@12.4.0
+  - @leafygreen-ui/text-input@13.1.0
+
+## 5.0.14
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/text-input@13.0.2
+
 ## 5.0.13
 
 ### Patch Changes

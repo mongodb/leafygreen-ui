@@ -6,6 +6,9 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { spacing } from '@leafygreen-ui/tokens';
+import { Error } from '@leafygreen-ui/typography';
+
 import {
   NotificationProps,
   Size,
@@ -98,7 +101,6 @@ const meta: StoryMetaType<typeof PasswordInput> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        value: [undefined, 'password'],
         label: [undefined, 'Label'],
         stateNotifications: [
           undefined,
@@ -175,12 +177,21 @@ export const CustomContainer = ({
 }: PasswordInputProps) => {
   const ref = useRef<HTMLInputElement>(null);
   return (
-    <PasswordInput
-      {...rest}
-      stateNotifications={stateNotifications as State}
-      aria-describedby={'my-id'}
-      ref={ref}
-    />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: `${spacing[100]}px`,
+      }}
+    >
+      <PasswordInput
+        {...rest}
+        stateNotifications={stateNotifications as State}
+        aria-describedby={'my-id'}
+        ref={ref}
+      />
+      <Error id="my-id">This is a custom error</Error>
+    </div>
   );
 };
 CustomContainer.argTypes = {

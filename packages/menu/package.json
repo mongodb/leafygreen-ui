@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "23.0.3",
+  "version": "25.0.0",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -34,6 +34,13 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react-transition-group": "^4.4.5"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/testing-lib": "^0.6.1",
+    "@leafygreen-ui/text-input": "^13.1.0",
+    "@lg-tools/storybook-utils": "^0.1.1",
+    "@storybook/react": "^7.6.17"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

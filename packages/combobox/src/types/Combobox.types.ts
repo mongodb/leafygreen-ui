@@ -1,3 +1,5 @@
+import { FormFieldState } from '@leafygreen-ui/form-field';
+
 /**
  * Identifier for individual component elements within the Combobox
  */
@@ -43,18 +45,15 @@ export const Overflow = {
 } as const;
 export type Overflow = (typeof Overflow)[keyof typeof Overflow];
 
-/** The error state of the Combobox */
-export const State = {
-  none: 'none',
-  error: 'error',
-} as const;
+/** The error/valid state of the Combobox */
+export const State = FormFieldState;
 export type State = (typeof State)[keyof typeof State];
 
 /** The search state of the Combobox */
 export const SearchState = {
-  unset: 'unset',
-  error: 'error',
-  loading: 'loading',
+  Unset: 'unset',
+  Error: 'error',
+  Loading: 'loading',
 } as const;
 export type SearchState = (typeof SearchState)[keyof typeof SearchState];
 

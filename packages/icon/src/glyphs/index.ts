@@ -55,6 +55,7 @@ import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
+import Eraser from './Eraser.svg';
 import Escalation from './Escalation.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
@@ -62,6 +63,7 @@ import Federation from './Federation.svg';
 import File from './File.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
+import Format from './Format.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
 import Gauge from './Gauge.svg';
@@ -89,6 +91,7 @@ import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
 import Mobile from './Mobile.svg';
+import Moon from './Moon.svg';
 import MultiDirectionArrow from './MultiDirectionArrow.svg';
 import MultiLayers from './MultiLayers.svg';
 import NavCollapse from './NavCollapse.svg';
@@ -130,7 +133,9 @@ import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
+import Stop from './Stop.svg';
 import String from './String.svg';
+import Sun from './Sun.svg';
 import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
@@ -210,6 +215,7 @@ const _glyphs = {
   Edit,
   Ellipsis,
   Email,
+  Eraser,
   Escalation,
   Export,
   Favorite,
@@ -219,6 +225,7 @@ const _glyphs = {
   FullScreenEnter,
   FullScreenExit,
   Folder,
+  Format,
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
@@ -244,6 +251,7 @@ const _glyphs = {
   Menu,
   Minus,
   Mobile,
+  Moon,
   MultiDirectionArrow,
   MultiLayers,
   NavCollapse,
@@ -285,7 +293,9 @@ const _glyphs = {
   SplitHorizontal,
   SplitVertical,
   Stitch,
+  Stop,
   String,
+  Sun,
   Support,
   Sweep,
   Table,

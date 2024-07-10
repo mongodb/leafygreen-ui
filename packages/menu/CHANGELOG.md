@@ -1,5 +1,104 @@
 # @leafygreen-ui/menu
 
+## 25.0.0
+
+### Major Changes
+
+- cfa830701: Internally refactors Menu to leverage `@leafygreen-ui/descendants`. This improvement will enable faster feature development and bug fixes in the future.
+- cfa830701: Implements `InputOption` within `MenuItem`.
+  - Aligns spacing & colors with other dropdown menus.
+  - Also creates additional `MenuItem` generated stories
+- cfa830701: - Updates the `FocusableMenuItem` component for new menu descendants pattern. By wrapping an input component in `FocusableMenuItem`, it will be registered as a menu item descendant, and will be focusable using standard menu arrow key interactions.
+  - Note: the single child of `FocusableMenuItem` must itself be focusable. Wrapping a focusable element (e.g. `input` in a `div`) will not enable the menu descendant functionality.
+
+### Minor Changes
+
+- cfa830701: Adds `title` and `glyph` props to `MenuGroup`. Providing a title to `MenuGroup` will visually indent the child `MenuItem` components, appearing nested within the group.
+- cfa830701: ## Features
+
+  - Clicking a submenu item that _does not_ have a click handler or `href` will toggle the submenu
+  - When focused on a submenu item, pressing the left/right arrow keys will close/open the menu (respectively)
+
+  ## Structural changes
+
+  - Updates Submenu component to use `InputOption`
+  - Moves the submenu toggle button to be a sibling of the `InputOption`
+    - this avoids any potential nesting of `button` elements
+
+### Patch Changes
+
+- cfa830701: Ensures `SubMenu` does not toggle open/closed when disabled
+- cfa830701: Fixes a bug where click handlers on MenuItem or SubMenu would still fire when disabled
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/descendants@0.3.0
+  - @leafygreen-ui/typography@19.2.1
+
+## 24.2.1
+
+### Patch Changes
+
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
+## 24.2.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 24.1.0
+
+### Minor Changes
+
+- 433616d4: Exports `MenuGroup` from package
+
+### Patch Changes
+
+- Updated dependencies [57dedc40]
+  - @leafygreen-ui/tokens@2.5.3
+
+## 24.0.0
+
+### Major Changes
+
+- 1d55530b: Removes the closing of `Menu` on `MenuItem` click. This behavior was causing issues with clickable items inside of `MenuItem`. To control when `Menu` closes, use `open` and `setOpen`. [LG-4130](https://jira.mongodb.org/browse/LG-4130)
+
 ## 23.0.3
 
 ### Patch Changes

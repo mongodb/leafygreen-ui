@@ -1,5 +1,25 @@
 # @leafygreen-ui/modal
 
+## 16.0.9
+
+### Patch Changes
+
+- ccf18a59d: Ensures Modal size property value is always normalized, such that if a value is passed that falls outside of those allowed, we default to `"default"`.
+- Updated dependencies [a94306ab3]
+  - @leafygreen-ui/icon-button@15.0.22
+
+## 16.0.8
+
+### Patch Changes
+
+- 1e9f2030: Adds and exports test ids for modal and close button.
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
 ## 16.0.7
 
 ### Patch Changes

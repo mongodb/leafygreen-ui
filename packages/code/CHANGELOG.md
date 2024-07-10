@@ -1,5 +1,14 @@
 # @leafygreen-ui/code
 
+## 14.3.3
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/select@12.0.0
+  - @leafygreen-ui/tokens@2.6.0
+
 ## 14.3.2
 
 ### Patch Changes

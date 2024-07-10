@@ -17,10 +17,14 @@ const meta: StoryMetaType<typeof Icon> = {
   title: 'Components/Icon',
   component: Icon,
   parameters: {
-    default: 'AllIcons',
+    default: 'LiveExample',
     controls: {
       exclude: [...storybookExcludedControlParams, 'title', 'data-testid'],
     },
+  },
+  args: {
+    fill: palette.gray.base,
+    size: Size.Default,
   },
   argTypes: {
     size: {
@@ -76,14 +80,14 @@ Single.argTypes = {
 };
 Single.parameters = { chromatic: { disableSnapshot: true } };
 
-export const AllIcons: StoryFn<IconProps> = (
+export const LiveExample: StoryFn<IconProps> = (
   args: Omit<IconProps, 'glyph'>,
 ) => (
   <div
     className={css`
       width: 100%;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     `}
   >
     {Object.keys(glyphs).map(glyph => {

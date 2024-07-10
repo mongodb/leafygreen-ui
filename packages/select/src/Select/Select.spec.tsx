@@ -300,6 +300,19 @@ describe('packages/select', () => {
       expect(queryByText('Select')).not.toBeInTheDocument();
     });
 
+    test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
+      const portalRef = createRef<HTMLElement>();
+      const { getInput } = renderSelect({
+        portalContainer,
+        portalRef,
+      });
+      userEvent.click(getInput());
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
+    });
+
     test('does not render invalid  option', async () => {
       const { queryByText } = Context.within(
         Jest.spyContext(console, 'error'),
@@ -487,6 +500,7 @@ describe('packages/select', () => {
         });
 
         userEvent.click(getInput());
+
         expect(onEnter).toHaveBeenCalled();
         expect(onEntering).toHaveBeenCalled();
         await waitFor(() => expect(onEntered).toHaveBeenCalled());
@@ -935,14 +949,6 @@ describe('packages/select', () => {
       });
       expect(isError).toBeTruthy();
       expect(getErrorMessage()).toBeInTheDocument();
-    });
-
-    test('error message is not present if "errorMessage" is empty', () => {
-      const { isError, getErrorMessage } = renderSelect({
-        state: State.Error,
-      });
-      expect(isError).toBeTruthy();
-      expect(getErrorMessage()).not.toBeInTheDocument();
     });
   });
 

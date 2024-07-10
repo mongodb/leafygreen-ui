@@ -1,5 +1,22 @@
 # @lg-chat/message-feedback
 
+## 2.1.0
+
+### Minor Changes
+
+- cbfda91b: [LG-4144](https://jira.mongodb.org/browse/LG-4144)
+
+  Updates spacing in `InlineMessageFeedback` component due to updated styling in `TextArea` component
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+- Updated dependencies [cbfda91b]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/text-area@9.0.0
+
 ## 2.0.1
 
 ### Patch Changes

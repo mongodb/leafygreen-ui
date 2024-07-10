@@ -7,10 +7,9 @@ import { LGIDS_TYPOGRAPHY } from '../constants';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
-  descriptionColorStyle,
-  descriptionStyle,
   descriptionTypeScaleStyles,
-  disabledDescriptionColorStyle,
+  getDescriptionStyle,
+  getDisabledDescriptionColorStyle,
 } from './Description.styles';
 import { DescriptionProps } from './Description.types';
 
@@ -30,11 +29,10 @@ export const Description = ({
     <p
       data-lgid={dataLgId}
       className={cx(
-        descriptionStyle,
-        descriptionColorStyle[theme],
+        getDescriptionStyle(theme),
         descriptionTypeScaleStyles[baseFontSize],
         {
-          [disabledDescriptionColorStyle[theme]]: disabled,
+          [getDisabledDescriptionColorStyle(theme)]: disabled,
         },
         className,
       )}

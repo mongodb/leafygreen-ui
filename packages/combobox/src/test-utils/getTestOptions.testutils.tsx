@@ -22,7 +22,7 @@ export const getComboboxOptions = (withGlyphs = true) => [
     value="pomegranate"
     displayName="Pomegranate"
     glyph={withGlyphs ? <Icon glyph="Warning" /> : undefined}
-    description="Watch out, I stain everything I touch LOL"
+    description="Watch out! I stain everything I touch LOL"
     disabled
   />,
   <ComboboxOption
@@ -65,6 +65,7 @@ export const getComboboxOptions = (withGlyphs = true) => [
       key="ghost-pepper"
       value="ghost-pepper"
       displayName="Ghost pepper"
+      description="My name is Zak Bagans. I never believed in ghosts until I became face to face with one."
     />
     <ComboboxOption key="habanero" value="habanero" displayName="Habanero" />
     <ComboboxOption key="jalapeno" value="jalapeno" displayName="Jalapeño" />

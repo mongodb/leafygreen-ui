@@ -1,5 +1,33 @@
 # @leafygreen-ui/copyable
 
+## 8.1.0
+
+### Minor Changes
+
+- 5cd674753: Exposes `onCopy` callback so that consuming applications can respond to successful clipboard events
+
+### Patch Changes
+
+- Updated dependencies [4fb369df7]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/typography@19.2.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
+## 8.0.25
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/tooltip@11.0.4
+
 ## 8.0.24
 
 ### Patch Changes

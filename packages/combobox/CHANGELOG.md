@@ -1,5 +1,109 @@
 # @leafygreen-ui/combobox
 
+## 9.1.1
+
+### Patch Changes
+
+- cfa830701: Updates `ComboboxOption`.
+
+  - Removes custom `min-height`, `padding`, and `line-height`. Instead these styles will come from `InputOptionContent`.
+
+  Updates `ComboboxMenu`.
+
+  - Updates the menu `background-color` to match the background from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/typography@19.2.1
+
+## 9.1.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 9.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4133](https://jira.mongodb.org/browse/LG-4133)
+
+  1. Updated styling:
+
+  - updated spacing for `'small'`, `'xsmall'`, and `'large'` size variants
+  - updated placeholder text color
+  - moved error icon from inside the input to underneath the input, alongside the error message
+
+  2. A default `errorMessage` of `'This input needs your attention'` will render below combobox when state is invalid.
+
+  3. Added a `valid` state with success icon and `successMessage` prop. A default `successMessage` of `'Success'` will render when state is valid. `successMessage` prop allows customization.
+
+  4. Disabled `Combobox` component no longer renders the `disabled` attribute and instead relies on `aria-disabled` and `readonly` attributes.
+
+  The last change is made to ensure that disabled components are still focusable to users using keyboard navigation.
+
+  For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
+
+  #### Migration guide
+
+  Functionally, migration should be seamless, however there may be unit/integration/e2e tests that relied on this behavior.
+
+  ##### Jest/RTL
+
+  Generally, only this repo should need to test that these components have a specific attribute. We recommend updating unit tests to check that some event was or was not called.
+
+  However, there are cases where this may still need to be tested. You can replace any `expect(combobox).toBeDisabled()` with an explicit check for `expect(combobox).toHaveAttribute('aria-disabled', 'true')`.
+
+  ##### Cypress
+
+  Similar to unit tests, you should generally test functionality and not implementation details. However, to test this in Cypress replace any `cy.get(combobox).should('be.disabled');` checks with `cy.get(combobox).invoke('attr', 'aria-disabled').should('eq', 'true');`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 8.1.4
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/checkbox@13.1.0
+  - @leafygreen-ui/input-option@1.1.3
+
 ## 8.1.3
 
 ### Patch Changes

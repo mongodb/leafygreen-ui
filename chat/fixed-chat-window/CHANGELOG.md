@@ -1,5 +1,13 @@
 # @lg-chat/fixed-chat-window
 
+## 2.0.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @lg-chat/title-bar@2.0.2
+
 ## 2.0.1
 
 ### Patch Changes

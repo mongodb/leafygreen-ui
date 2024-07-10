@@ -1,5 +1,106 @@
 # @leafygreen-ui/select
 
+## 12.1.3
+
+### Patch Changes
+
+- 9c40e5335: Exports `getTestUtils` and `LGIDS_SELECT`. These were mistakenly excluded in its [initial release](https://github.com/mongodb/leafygreen-ui/blob/main/packages/select/CHANGELOG.md#1130)
+- Updated dependencies [157146b5c]
+  - @leafygreen-ui/input-option@2.0.1
+
+## 12.1.2
+
+### Patch Changes
+
+- 9c2bcf4e8: Revert changes to disabled options from this [PR](https://github.com/mongodb/leafygreen-ui/pull/2414/files#diff-342ae69a3870124b92896d144a32609a8a4538953f821c30dec1e49024fa6e07L124-L126).
+
+## 12.1.1
+
+### Patch Changes
+
+- cfa830701: Updates `Option`
+
+  - Removes style overrides in favor of consistent option styles from `InputOptionContent`
+
+  Updates `ListMenu`
+
+  - Updates the menu `background-color` and `border-color` to match the background and border from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/typography@19.2.1
+
+## 12.1.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 12.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4138](https://jira.mongodb.org/browse/LG-4138)
+
+  1. Updated styling:
+
+  - updated spacing for `'xsmall'`, `'small'`, and `'large'` size variants
+  - updated placeholder text color
+  - removed validation icon from inside the input
+
+  2. Added default `errorMessage` of `'This input needs your attention'`
+
+  3. Added `valid` state variant and `successMessage` prop
+
+  - `successMessage` will render a default of `'Success'` and can be customized
+  - `successMessage` will only render when `state=valid`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 11.3.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/input-option@1.1.3
+
 ## 11.3.1
 
 ### Patch Changes

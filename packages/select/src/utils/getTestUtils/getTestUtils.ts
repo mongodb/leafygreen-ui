@@ -1,5 +1,6 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
+import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
@@ -49,7 +50,7 @@ export const getTestUtils = (
    */
   const getErrorMessage = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_SELECT.errorMessage}]`,
+    `[data-lgid=${LGIDS_FORM_FIELD.errorMessage}]`,
   );
 
   /**

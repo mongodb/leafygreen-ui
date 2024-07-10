@@ -32,11 +32,13 @@ export const ConfirmationModal = React.forwardRef(
       title,
       requiredInputText,
       buttonText,
-      submitDisabled = false,
+      submitDisabled,
       variant = Variant.Default,
       onConfirm,
       onCancel,
       darkMode: darkModeProp,
+      confirmButtonProps = {},
+      cancelButtonProps = {},
       ...modalProps
     }: ConfirmationModalProps,
     forwardRef: React.ForwardedRef<HTMLDivElement | null>,
@@ -69,21 +71,35 @@ export const ConfirmationModal = React.forwardRef(
       return textEntryConfirmation;
     }, [requiredInputText, darkMode]);
 
-    const handleConfirm = () => {
-      onConfirm?.();
+    // TODO: remove - onConfirm is deprecated
+    const _onConfirm = onConfirm || confirmButtonProps?.onClick;
+    // TODO: remove - onCancel is deprecated
+    const _onCancel = onCancel || cancelButtonProps?.onClick;
+
+    const resetConfirmButton = () => {
+      if (!requiredInputText) return;
       setConfirmEnabled(false);
     };
 
-    const handleCancel = () => {
-      onCancel?.();
-      setConfirmEnabled(false);
+    const handleConfirm = () => {
+      _onConfirm?.();
+      resetConfirmButton();
     };
+
+    const handleCancel = () => {
+      _onCancel?.();
+      resetConfirmButton();
+    };
+
+    // TODO: remove - submitDisabled is deprecated
+    const isConfirmDisabled =
+      submitDisabled ?? confirmButtonProps?.disabled ?? false;
 
     return (
       <Modal
         {...modalProps}
         contentClassName={baseModalStyle}
-        setOpen={onCancel}
+        setOpen={handleCancel}
         darkMode={darkMode}
         ref={forwardRef}
       >
@@ -112,17 +128,20 @@ export const ConfirmationModal = React.forwardRef(
         </div>
         <Footer>
           <Button
-            variant={variant}
-            disabled={!confirmEnabled || submitDisabled}
-            onClick={handleConfirm}
-            className={buttonStyle}
+            {...confirmButtonProps}
             data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
+            disabled={!confirmEnabled || isConfirmDisabled}
+            className={cx(buttonStyle, confirmButtonProps?.className)}
+            variant={variant}
+            onClick={handleConfirm}
           >
-            {buttonText}
+            {/* TODO: remove - buttonText is deprecated */}
+            {buttonText || confirmButtonProps?.children || 'Confirm'}
           </Button>
           <Button
+            {...cancelButtonProps}
             onClick={handleCancel}
-            className={buttonStyle}
+            className={cx(buttonStyle, cancelButtonProps?.className)}
             data-testid={LGIDS_CONFIRMATION_MODAL.cancel}
           >
             Cancel
@@ -142,8 +161,10 @@ ConfirmationModal.propTypes = {
   onCancel: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
+  buttonText: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
   darkMode: PropTypes.bool,
+  confirmButtonProps: PropTypes.objectOf(PropTypes.any),
+  cancelButtonProps: PropTypes.objectOf(PropTypes.any),
 };

@@ -7,7 +7,9 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@lg-tools/*": ["../*/src"]
+      "@lg-tools/*": [
+        "../*/src"
+      ]
     }
   },
   "include": ["src/**/*"],
@@ -15,6 +17,9 @@
   "references": [
     {
       "path": "../build"
+    },
+    {
+      "path": "../codemods"
     },
     {
       "path": "../create"

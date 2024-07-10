@@ -1,5 +1,53 @@
 # @leafygreen-ui/icon
 
+## 12.5.4
+
+### Patch Changes
+
+- 342ab81b0: Updates Federation icon
+
+## 12.5.3
+
+### Patch Changes
+
+- 838a95b73: Slight tweaks for .design story
+
+## 12.5.2
+
+### Patch Changes
+
+- df0d6faee: Adds args to Icon meta for .design
+
+## 12.5.1
+
+### Patch Changes
+
+- 95093066c: Rename `AllIcons` to `LiveExample` for .design
+
+## 12.5.0
+
+### Minor Changes
+
+- 961be3f9: Adds Stop to glyph set and updates Pause glyph
+
+## 12.4.0
+
+### Minor Changes
+
+- ae44834e: Exports type `GlyphName`, a union of all default LeafyGreen icon names
+
+## 12.3.0
+
+### Minor Changes
+
+- 684c87f1: Adds `Moon` and `Sun` glyphs.
+
+## 12.2.0
+
+### Minor Changes
+
+- eeea253c: Adds `Format` `Eraser` glyphs, and updates `LogIn` glyph.
+
 ## 12.1.0
 
 ### Minor Changes

@@ -1,7 +1,7 @@
-import React, { ReactNode } from 'react';
-import { render } from '@testing-library/react';
+import React, { ComponentProps, StrictMode } from 'react';
+import { render, waitFor } from '@testing-library/react';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import Popover from '@leafygreen-ui/popover';
 
 import {
   TestDescendant,
@@ -9,203 +9,174 @@ import {
   TestDescendantContext,
   TestParent,
   TestParent2,
-} from './test/components.testutils';
-import { DescendantsProvider } from './DescendantProvider';
-import { useInitDescendants } from './useInitDescendants';
+} from '../test/components.testutils';
+import { renderDescendantsTestContext } from '../test/renderDescendantsTestContext.testutils';
+
+import { DescendantsProvider, useInitDescendants } from '.';
 
 describe('packages/descendants', () => {
-  test('renders a basic list of descendants', () => {
-    const { queryByText } = render(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-      </TestParent>,
-    );
-    const apple = queryByText('Apple');
-    const banana = queryByText('Banana');
-    const carrot = queryByText('Carrot');
+  describe('rendering', () => {
+    test('renders a basic list of descendants', () => {
+      const { queryByText } = render(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </TestParent>,
+      );
+      const apple = queryByText('Apple');
+      const banana = queryByText('Banana');
+      const carrot = queryByText('Carrot');
 
-    expect(apple).toHaveAttribute('data-index', '0');
-    expect(banana).toHaveAttribute('data-index', '1');
-    expect(carrot).toHaveAttribute('data-index', '2');
-  });
+      expect(apple).toHaveAttribute('data-index', '0');
+      expect(banana).toHaveAttribute('data-index', '1');
+      expect(carrot).toHaveAttribute('data-index', '2');
+    });
 
-  test('renders a nested list of descendants', () => {
-    const { queryByText } = render(
-      <TestParent>
-        <TestDescendant>
-          Peppers
+    test('renders a nested list of descendants', () => {
+      const { queryByText } = render(
+        <TestParent>
           <TestDescendant>
-            Bell
-            <TestDescendant>Yellow</TestDescendant>
+            Peppers
+            <TestDescendant>
+              Bell
+              <TestDescendant>Yellow</TestDescendant>
+            </TestDescendant>
           </TestDescendant>
-        </TestDescendant>
-        <TestDescendant>Watermelon</TestDescendant>
-      </TestParent>,
-    );
-
-    const peppers = queryByText('Peppers');
-    const bell = queryByText('Bell');
-    const yellow = queryByText('Yellow');
-    const watermelon = queryByText('Watermelon');
-
-    expect(peppers).toHaveAttribute('data-index', '0');
-    expect(bell).toHaveAttribute('data-index', '1');
-    expect(yellow).toHaveAttribute('data-index', '2');
-    expect(watermelon).toHaveAttribute('data-index', '3');
-  });
-
-  test('adds items to the rendered list', () => {
-    const { queryByText, rerender } = render(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-      </TestParent>,
-    );
-
-    rerender(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Watermelon</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-      </TestParent>,
-    );
-
-    const apple = queryByText('Apple');
-    const banana = queryByText('Banana');
-    const carrot = queryByText('Carrot');
-    const watermelon = queryByText('Watermelon');
-
-    expect(apple).toHaveAttribute('data-index', '0');
-    expect(watermelon).toHaveAttribute('data-index', '1');
-    expect(banana).toHaveAttribute('data-index', '2');
-    expect(carrot).toHaveAttribute('data-index', '3');
-  });
-
-  test('removes items from the rendered list', () => {
-    const { queryByText, rerender } = render(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-        <TestDescendant>Dragonfruit</TestDescendant>
-      </TestParent>,
-    );
-
-    rerender(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-        <TestDescendant>Dragonfruit</TestDescendant>
-      </TestParent>,
-    );
-
-    const apple = queryByText('Apple');
-    const banana = queryByText('Banana');
-    const carrot = queryByText('Carrot');
-    const dragonfruit = queryByText('Dragonfruit');
-
-    expect(apple).toHaveAttribute('data-index', '0');
-    expect(banana).not.toBeInTheDocument();
-    expect(carrot).toHaveAttribute('data-index', '1');
-    expect(dragonfruit).toHaveAttribute('data-index', '2');
-  });
-
-  test('reorders items in the rendered list', () => {
-    const { queryByText, rerender } = render(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-        <TestDescendant>Dragonfruit</TestDescendant>
-      </TestParent>,
-    );
-
-    rerender(
-      <TestParent>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>Dragonfruit</TestDescendant>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Carrot</TestDescendant>
-      </TestParent>,
-    );
-
-    const apple = queryByText('Apple');
-    const banana = queryByText('Banana');
-    const carrot = queryByText('Carrot');
-    const dragonfruit = queryByText('Dragonfruit');
-
-    expect(banana).toHaveAttribute('data-index', '0');
-    expect(dragonfruit).toHaveAttribute('data-index', '1');
-    expect(apple).toHaveAttribute('data-index', '2');
-    expect(carrot).toHaveAttribute('data-index', '3');
-  });
-
-  test('renders multiple nested descendants contexts', () => {
-    const { queryByText } = render(
-      <TestParent>
-        <TestDescendant>Apple</TestDescendant>
-        <TestDescendant>Banana</TestDescendant>
-        <TestDescendant>
-          Peppers
-          <TestParent2>
-            <TestDescendant2>Anaheim</TestDescendant2>
-            <TestDescendant2>Habanero</TestDescendant2>
-          </TestParent2>
-        </TestDescendant>
-      </TestParent>,
-    );
-    const apple = queryByText('Apple');
-    const banana = queryByText('Banana');
-    const peppers = queryByText('Peppers');
-    const anaheim = queryByText('Anaheim');
-    const habanero = queryByText('Habanero');
-
-    expect(apple).toHaveAttribute('data-index', '0');
-    expect(banana).toHaveAttribute('data-index', '1');
-    expect(peppers).toHaveAttribute('data-index', '2');
-    expect(anaheim).toHaveAttribute('data-index', '0');
-    expect(habanero).toHaveAttribute('data-index', '1');
-  });
-
-  describe('internal', () => {
-    const renderDescendantsParent = (descendants: ReactNode) => {
-      const hook = renderHook(() => useInitDescendants<HTMLDivElement>());
-
-      const renderResult = render(
-        <DescendantsProvider
-          context={TestDescendantContext}
-          descendants={hook.result.current.descendants}
-          dispatch={hook.result.current.dispatch}
-        >
-          {descendants}
-        </DescendantsProvider>,
+          <TestDescendant>Watermelon</TestDescendant>
+        </TestParent>,
       );
 
-      const rerender = (descendants: ReactNode) => {
-        renderResult.rerender(
-          <DescendantsProvider
-            context={TestDescendantContext}
-            descendants={hook.result.current.descendants}
-            dispatch={hook.result.current.dispatch}
-          >
-            {descendants}
-          </DescendantsProvider>,
-        );
-      };
+      const peppers = queryByText('Peppers');
+      const bell = queryByText('Bell');
+      const yellow = queryByText('Yellow');
+      const watermelon = queryByText('Watermelon');
 
-      return {
-        hook,
-        renderResult,
-        rerender,
-      };
-    };
+      expect(peppers).toHaveAttribute('data-index', '0');
+      expect(bell).toHaveAttribute('data-index', '1');
+      expect(yellow).toHaveAttribute('data-index', '2');
+      expect(watermelon).toHaveAttribute('data-index', '3');
+    });
 
+    test('adds items to the rendered list', () => {
+      const { queryByText, rerender } = render(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </TestParent>,
+      );
+
+      rerender(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Watermelon</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </TestParent>,
+      );
+
+      const apple = queryByText('Apple');
+      const banana = queryByText('Banana');
+      const carrot = queryByText('Carrot');
+      const watermelon = queryByText('Watermelon');
+
+      expect(apple).toHaveAttribute('data-index', '0');
+      expect(watermelon).toHaveAttribute('data-index', '1');
+      expect(banana).toHaveAttribute('data-index', '2');
+      expect(carrot).toHaveAttribute('data-index', '3');
+    });
+
+    test('removes items from the rendered list', () => {
+      const { queryByText, rerender } = render(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+          <TestDescendant>Dragonfruit</TestDescendant>
+        </TestParent>,
+      );
+
+      rerender(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+          <TestDescendant>Dragonfruit</TestDescendant>
+        </TestParent>,
+      );
+
+      const apple = queryByText('Apple');
+      const banana = queryByText('Banana');
+      const carrot = queryByText('Carrot');
+      const dragonfruit = queryByText('Dragonfruit');
+
+      expect(apple).toHaveAttribute('data-index', '0');
+      expect(banana).not.toBeInTheDocument();
+      expect(carrot).toHaveAttribute('data-index', '1');
+      expect(dragonfruit).toHaveAttribute('data-index', '2');
+    });
+
+    test('reorders items in the rendered list', () => {
+      const { queryByText, rerender } = render(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+          <TestDescendant>Dragonfruit</TestDescendant>
+        </TestParent>,
+      );
+
+      rerender(
+        <TestParent>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Dragonfruit</TestDescendant>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </TestParent>,
+      );
+
+      const apple = queryByText('Apple');
+      const banana = queryByText('Banana');
+      const carrot = queryByText('Carrot');
+      const dragonfruit = queryByText('Dragonfruit');
+
+      expect(banana).toHaveAttribute('data-index', '0');
+      expect(dragonfruit).toHaveAttribute('data-index', '1');
+      expect(apple).toHaveAttribute('data-index', '2');
+      expect(carrot).toHaveAttribute('data-index', '3');
+    });
+
+    test('renders multiple nested descendants contexts', () => {
+      const { queryByText } = render(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>
+            Peppers
+            <TestParent2>
+              <TestDescendant2>Anaheim</TestDescendant2>
+              <TestDescendant2>Habanero</TestDescendant2>
+            </TestParent2>
+          </TestDescendant>
+        </TestParent>,
+      );
+      const apple = queryByText('Apple');
+      const banana = queryByText('Banana');
+      const peppers = queryByText('Peppers');
+      const anaheim = queryByText('Anaheim');
+      const habanero = queryByText('Habanero');
+
+      expect(apple).toHaveAttribute('data-index', '0');
+      expect(banana).toHaveAttribute('data-index', '1');
+      expect(peppers).toHaveAttribute('data-index', '2');
+      expect(anaheim).toHaveAttribute('data-index', '0');
+      expect(habanero).toHaveAttribute('data-index', '1');
+    });
+  });
+
+  describe('useInitDescendants', () => {
     test('descendants register when wrapped in a fragment', () => {
-      const { hook } = renderDescendantsParent(
+      const { hook } = renderDescendantsTestContext(
         <>
           <TestDescendant>Apple</TestDescendant>
           <TestDescendant>Banana</TestDescendant>
@@ -217,7 +188,7 @@ describe('packages/descendants', () => {
     });
 
     test('descendants register when individually wrapped in an HTML element', () => {
-      const { hook } = renderDescendantsParent(
+      const { hook } = renderDescendantsTestContext(
         <>
           <div>
             <TestDescendant>Apple</TestDescendant>
@@ -233,20 +204,22 @@ describe('packages/descendants', () => {
     });
 
     test('elements not rendered with `useDescendants` are not registered', () => {
-      const { hook } = renderDescendantsParent(
+      const { hook, renderResult } = renderDescendantsTestContext(
         <>
           <div>Fruit</div>
-          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant data-testid="apple">Apple</TestDescendant>
           <TestDescendant>Banana</TestDescendant>
         </>,
       );
 
+      const appleElement = renderResult.getByTestId('apple');
       const appleDescendant = hook.result.current.descendants[0];
       expect(appleDescendant).toBeDefined();
+      expect(appleDescendant.element).toEqual(appleElement);
     });
 
     test('descendants object has access to index', () => {
-      const { hook } = renderDescendantsParent(
+      const { hook } = renderDescendantsTestContext(
         <>
           <TestDescendant>Apple</TestDescendant>
           <TestDescendant>Banana</TestDescendant>
@@ -258,19 +231,19 @@ describe('packages/descendants', () => {
     });
 
     test('descendants object has access to child props', () => {
-      const { hook } = renderDescendantsParent(
+      const { hook } = renderDescendantsTestContext(
         <>
-          <TestDescendant type="fruit">Apple</TestDescendant>
-          <TestDescendant type="fruit">Banana</TestDescendant>
+          <TestDescendant group="fruit">Apple</TestDescendant>
+          <TestDescendant group="fruit">Banana</TestDescendant>
         </>,
       );
 
       const appleDescendant = hook.result.current.descendants[0];
-      expect(appleDescendant.props?.type).toEqual('fruit');
+      expect(appleDescendant.props?.group).toEqual('fruit');
     });
 
     test('descendants object index updates after rerender', () => {
-      const { hook, rerender } = renderDescendantsParent(
+      const { hook, rerender } = renderDescendantsTestContext(
         <>
           <TestDescendant>Apple</TestDescendant>
           <TestDescendant>Banana</TestDescendant>
@@ -292,7 +265,7 @@ describe('packages/descendants', () => {
     });
 
     test('inserting an element updates the index of following elements', () => {
-      const { hook, rerender } = renderDescendantsParent(
+      const { hook, rerender } = renderDescendantsTestContext(
         <>
           <TestDescendant>Apple</TestDescendant>
           <TestDescendant>Carrot</TestDescendant>
@@ -311,6 +284,59 @@ describe('packages/descendants', () => {
         const descendant = hook.result.current.descendants[i];
         expect(descendant.index).toEqual(i);
       }
+    });
+
+    test('Accessing descendants from a callback are not stale', async () => {
+      const logDescendants = jest.fn();
+
+      const Parent = ({
+        children,
+        open,
+        ...rest
+      }: ComponentProps<'div'> & { open: boolean }) => {
+        const { descendants, dispatch, getDescendants } =
+          useInitDescendants<HTMLDivElement>();
+
+        const handleTransition = () => {
+          logDescendants(getDescendants());
+        };
+
+        return (
+          <StrictMode>
+            <DescendantsProvider
+              context={TestDescendantContext}
+              descendants={descendants}
+              dispatch={dispatch}
+            >
+              <Popover active={open} onEntered={handleTransition}>
+                <div {...rest} data-testid="parent">
+                  {children}
+                </div>
+              </Popover>
+            </DescendantsProvider>
+          </StrictMode>
+        );
+      };
+
+      const renderResult = render(
+        <Parent open={false}>
+          <TestDescendant data-testid="child" />
+        </Parent>,
+      );
+
+      renderResult.rerender(
+        <Parent open={true}>
+          <TestDescendant data-testid="child" />
+        </Parent>,
+      );
+
+      await waitFor(() => {
+        const child = renderResult.getByTestId('child');
+        const expectedDescendants = expect.arrayContaining([
+          expect.objectContaining({ element: child }),
+        ]);
+        expect(logDescendants).toHaveBeenCalledWith(expectedDescendants);
+      });
     });
   });
 });

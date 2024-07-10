@@ -1,5 +1,52 @@
 # @lg-tools/cli
 
+## 0.6.1
+
+### Patch Changes
+
+- @lg-tools/test@0.4.9
+
+## 0.6.0
+
+### Minor Changes
+
+- fdd63dbe4: Allows passing flags to `tsc` from the `lg build-ts` command
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+  - @lg-tools/create@0.2.8
+  - @lg-tools/install@0.1.9
+  - @lg-tools/link@0.2.4
+  - @lg-tools/lint@0.2.3
+  - @lg-tools/slackbot@0.2.7
+  - @lg-tools/test@0.4.8
+  - @lg-tools/update@0.1.9
+  - @lg-tools/validate@0.1.11
+
+## 0.5.13
+
+### Patch Changes
+
+- @lg-tools/test@0.4.7
+
+## 0.5.12
+
+### Patch Changes
+
+- af208260: Adds pre-release of codemods command
+- Updated dependencies [af208260]
+  - @lg-tools/codemods@0.0.2
+
+## 0.5.11
+
+### Patch Changes
+
+- Updated dependencies [4951369a]
+  - @lg-tools/build@0.5.1
+  - @lg-tools/test@0.4.6
+
 ## 0.5.10
 
 ### Patch Changes

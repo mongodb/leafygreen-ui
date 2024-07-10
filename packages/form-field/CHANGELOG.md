@@ -1,5 +1,57 @@
 # @leafygreen-ui/form-field
 
+## 1.2.3
+
+### Patch Changes
+
+- 3273045c: Correctly sets the `readOnly` prop in the `useFormFieldProps` hook. Previously, `readOnly` was only added to an input if `disabled` was true. Now, passing the `readOnly` prop adds it to the resulting input.
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/icon@12.4.0
+
+## 1.2.2
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
+## 1.2.1
+
+### Patch Changes
+
+- 0864a420: Cleans up style definitions
+- Updated dependencies [3364b542]
+- Updated dependencies [0864a420]
+- Updated dependencies [0864a420]
+- Updated dependencies [eeea253c]
+  - @leafygreen-ui/tokens@2.7.0
+  - @leafygreen-ui/typography@19.1.1
+  - @leafygreen-ui/icon@12.2.0
+
+## 1.2.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Adds and exports `FormFieldFeedback` component
+  - Adds and exports `DEFAULT_MESSAGES` constant
+  - Updates `FormField` and `FormFieldInputContainer` components to use tokens where possible
+  - Refactors `FormField` to use `FormFieldFeedback`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 1.1.0
 
 ### Minor Changes

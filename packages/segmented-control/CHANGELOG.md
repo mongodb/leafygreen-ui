@@ -1,5 +1,20 @@
 # @leafygreen-ui/segmented-control
 
+## 8.2.13
+
+### Patch Changes
+
+- e31fb71a: Update `Size` control in storybook
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/icon@12.4.0
+
+## 8.2.12
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 8.2.11
 
 ### Patch Changes

@@ -1,5 +1,28 @@
 # @lg-chat/avatar
 
+## 3.1.0
+
+### Minor Changes
+
+- ae44834e: Imports Avatar from '@leafygreen-ui', and removes duplicated code
+
+### Patch Changes
+
+- ae44834e: Adds Generated stories
+- Updated dependencies [ae44834e]
+  - @leafygreen-ui/avatar@1.0.0
+
+## 3.0.2
+
+### Patch Changes
+
+- a149857b: Adds Generated stories
+- Updated dependencies [3364b542]
+- Updated dependencies [0864a420]
+- Updated dependencies [eeea253c]
+  - @leafygreen-ui/tokens@2.7.0
+  - @leafygreen-ui/icon@12.2.0
+
 ## 3.0.1
 
 ### Patch Changes

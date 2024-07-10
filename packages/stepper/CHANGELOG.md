@@ -1,5 +1,21 @@
 # @leafygreen-ui/stepper
 
+## 3.2.13
+
+### Patch Changes
+
+- 01cf734c: Updates Storybook `args` for mongodb.design
+- Updated dependencies [684c87f1]
+  - @leafygreen-ui/icon@12.3.0
+
+## 3.2.12
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/tooltip@11.0.4
+
 ## 3.2.11
 
 ### Patch Changes

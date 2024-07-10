@@ -11,13 +11,12 @@ import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 import {
   additionalChildrenWrapperStyles,
   childrenWrapperStyles,
+  getIconDisabledThemeStyles,
+  getIconThemeStyles,
   getInputWrapperStyles,
+  getOptionalTextStyle,
   iconClassName,
-  iconDisabledStyles,
-  iconStyles,
   inputElementClassName,
-  optionalTextBaseStyle,
-  optionalTextThemeStyle,
 } from './FormFieldInputContainer.styles';
 import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
 
@@ -61,10 +60,7 @@ export const FormFieldInputContainer = forwardRef<
             {showOptionalText && (
               <div
                 data-lgid={LGIDS_FORM_FIELD.optional}
-                className={cx(
-                  optionalTextBaseStyle,
-                  optionalTextThemeStyle[theme],
-                )}
+                className={getOptionalTextStyle(theme)}
               >
                 <p>Optional</p>
               </div>
@@ -74,8 +70,8 @@ export const FormFieldInputContainer = forwardRef<
               React.cloneElement(contentEnd, {
                 className: cx(
                   iconClassName,
-                  iconStyles[theme],
-                  { [iconDisabledStyles[theme]]: disabled },
+                  getIconThemeStyles(theme),
+                  { [getIconDisabledThemeStyles(theme)]: disabled },
                   contentEnd.props.className,
                 ),
               })}

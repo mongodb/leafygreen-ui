@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -8,7 +8,6 @@ import { NumberInput } from '.';
 
 const label = 'This is the label text';
 const description = 'This is the description text';
-const errorMessage = 'error message';
 const arrowTestId = {
   up: 'lg-number_input-increment_button',
   down: 'lg-number_input-decrement_button',
@@ -108,30 +107,6 @@ describe('packages/number-input', () => {
         ...defaultProps,
       });
       expect(getByPlaceholderText(defaultProps.placeholder)).toBeVisible();
-    });
-
-    describe('when the "state" is "error"', () => {
-      test('renders warning icon ', () => {
-        const { container } = renderNumberInput({
-          state: State.Error,
-          ...defaultProps,
-        });
-        expect(
-          container.querySelector('svg[aria-label="Warning Icon"]'),
-        ).toBeInTheDocument();
-      });
-
-      test('renders error message', () => {
-        const { queryByText } = renderNumberInput({
-          label,
-          state: State.Error,
-          errorMessage,
-          ...defaultProps,
-        });
-        const errorEl = queryByText(errorMessage);
-        expect(errorEl).not.toBeNull();
-        expect(errorEl).toBeInTheDocument();
-      });
     });
 
     test('value change triggers onChange callback', () => {
@@ -376,6 +351,21 @@ describe('packages/number-input', () => {
         value: selectProps.unitOptions[1].value,
       });
     });
+
+    test('accepts a portalRef', () => {
+      const portalContainer = document.createElement('div');
+      document.body.appendChild(portalContainer);
+      const portalRef = createRef<HTMLElement>();
+      const { getByRole } = renderNumberInput({
+        ...selectProps,
+        portalContainer,
+        portalRef,
+      });
+      const trigger = getByRole('button', { name: unitProps.unit });
+      fireEvent.click(trigger);
+      expect(portalRef.current).toBeDefined();
+      expect(portalRef.current).toBe(portalContainer);
+    });
   });
 
   /* eslint-disable jest/no-disabled-tests */
@@ -422,7 +412,6 @@ describe('packages/number-input', () => {
         onSelectChange={() => {}}
         label={label}
         state={State.None}
-        errorMessage={errorMessage}
         value="1"
         onChange={() => {}}
         darkMode={true}

@@ -1,5 +1,25 @@
 # @leafygreen-ui/text-input
 
+## 13.1.0
+
+### Minor Changes
+
+- 3b86b3bd: Allow type of `ReactNode` for `errorMessage` and `successMessage` props in `NumberInput`, `TextArea`, and `TextInput`
+
+### Patch Changes
+
+- 3273045c: Passes `readOnly` prop to `<FormField>` so that it correctly sets the `readOnly` prop.
+- Updated dependencies [3273045c]
+  - @leafygreen-ui/form-field@1.2.3
+
+## 13.0.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/form-field@1.1.1
+
 ## 13.0.1
 
 ### Patch Changes

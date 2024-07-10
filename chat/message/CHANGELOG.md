@@ -1,5 +1,46 @@
 # @lg-chat/message
 
+## 4.2.2
+
+### Patch Changes
+
+- Updated dependencies [4fb369df7]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/typography@19.2.0
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/tokens@2.9.0
+
+## 4.2.1
+
+### Patch Changes
+
+- e5a13a22b: Fixes an import issue with the `links` prop implementation
+
+## 4.2.0
+
+### Minor Changes
+
+- 691877cd: Adds the links prop which renders link data as rich links after the message content
+
+### Patch Changes
+
+- f5da3fe9: The verified answer banner now uses sentence case instead of title case
+- Updated dependencies [691877cd]
+  - @lg-chat/rich-links@1.0.0
+
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+  - @lg-chat/lg-markdown@2.0.2
+  - @leafygreen-ui/banner@8.0.1
+
 ## 4.1.0
 
 ### Minor Changes

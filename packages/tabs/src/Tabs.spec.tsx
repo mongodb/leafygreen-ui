@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { keyMap } from '@leafygreen-ui/lib';
 
+import { TestUtilsReturnType } from './utils/getTestUtils/getTestUtils.types';
+import { getTestUtils } from './utils';
 import { Tab, Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';
@@ -17,7 +14,7 @@ const tabsTestId = 'tabs-component';
 const setSelected = jest.fn();
 
 const renderTabs = (tabsProps = {}, tabProps = {}) => {
-  return render(
+  const renderUtils = render(
     <Tabs {...tabsProps} data-testid={tabsTestId} aria-label="Testing tabs">
       <Tab {...tabProps} name="First" data-testid="first-tab">
         Content 1
@@ -31,6 +28,13 @@ const renderTabs = (tabsProps = {}, tabProps = {}) => {
       </Tab>
     </Tabs>,
   );
+
+  const testUtils = getTestUtils();
+
+  return {
+    ...renderUtils,
+    ...testUtils,
+  };
 };
 
 describe('packages/tabs', () => {
@@ -70,16 +74,53 @@ describe('packages/tabs', () => {
 
       expect(getByTestId('inline-children')).toBeInTheDocument();
     });
+
+    describe('forceRenderAllTabPanels', () => {
+      test('renders only selected panel in DOM when prop is false', () => {
+        const { getAllTabsInTabList, getAllTabPanelsInDOM, getSelectedPanel } =
+          renderTabs({
+            forceRenderAllTabPanels: false,
+          });
+        const tabs = getAllTabsInTabList();
+        const tabPanels = getAllTabPanelsInDOM();
+        expect(tabs).toHaveLength(3);
+        expect(tabPanels).toHaveLength(1);
+
+        const selectedPanel = getSelectedPanel();
+        const hiddenPanels = tabPanels.filter(
+          panel => panel.id !== selectedPanel?.id,
+        );
+
+        expect(selectedPanel).toBeVisible();
+        expect(hiddenPanels).toHaveLength(0);
+      });
+
+      test('renders all tab panels in DOM but only selected panel is visible when prop is true', () => {
+        const { getAllTabsInTabList, getAllTabPanelsInDOM, getSelectedPanel } =
+          renderTabs({
+            forceRenderAllTabPanels: true,
+          });
+        const tabs = getAllTabsInTabList();
+        const tabPanels = getAllTabPanelsInDOM();
+        expect(tabs).toHaveLength(3);
+        expect(tabPanels).toHaveLength(3);
+
+        const selectedPanel = getSelectedPanel();
+        const hiddenPanels = tabPanels.filter(
+          panel => panel.id !== selectedPanel?.id,
+        );
+
+        expect(selectedPanel).toBeVisible();
+        expect(hiddenPanels).toHaveLength(2);
+        hiddenPanels.forEach(panel => {
+          expect(panel).not.toBeVisible();
+          expect(panel).toBeInTheDocument();
+        });
+      });
+    });
   });
 
   describe('when controlled', () => {
-    test('clicking a tab fires setSelected callback', () => {
-      renderTabs({ setSelected, selected: 1 });
-      const tabListItem = screen.getByText('Second');
-      fireEvent.click(tabListItem);
-      expect(setSelected).toHaveBeenCalled();
-    });
-
     test(`renders "${tabsClassName}" to the tabs classList`, () => {
       renderTabs({
         setSelected,
@@ -92,24 +133,24 @@ describe('packages/tabs', () => {
     });
 
     test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
-      const { getAllByTestId } = renderTabs({
+      const { getTabUtilsByName } = renderTabs({
         setSelected,
         selected: 1,
         as: 'a',
       });
 
-      const [tabListItem] = getAllByTestId('first-tab');
-      expect(tabListItem.tagName.toLowerCase()).toBe('a');
+      const tabUtils = getTabUtilsByName('First');
+      expect(tabUtils?.getTab().tagName.toLowerCase()).toBe('a');
     });
 
     test('renders correct number of elements in the tablist', () => {
-      renderTabs({
+      const { getAllTabsInTabList } = renderTabs({
         setSelected,
         selected: 1,
       });
 
-      const container = screen.getByTestId(tabsTestId);
-      expect(container.querySelectorAll('[role="tab"]').length).toBe(3);
+      const tabs = getAllTabsInTabList();
+      expect(tabs.length).toBe(3);
     });
 
     test('renders only one tabpanel at a time', () => {
@@ -122,67 +163,102 @@ describe('packages/tabs', () => {
       expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
     });
 
-    test('selected tab is active on first render', () => {
-      renderTabs({ setSelected, selected: 1 });
-      const activeTab = screen.getByText('Content 2');
-      expect(activeTab).toBeVisible();
+    test('selected tab panel is active on first render', () => {
+      const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 2');
     });
+    test('clicking a tab fires setSelected callback', () => {
+      const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
+      const tabUtils = getTabUtilsByName('Second');
 
-    test('clicking a tab does not change the active tab', () => {
-      renderTabs({ setSelected, selected: 1 });
-      const tab = screen.getByText('First');
-      fireEvent.click(tab);
-
-      const secondContent = screen.getByText('Content 2');
-      expect(secondContent).toBeInTheDocument();
+      if (tabUtils) {
+        fireEvent.click(tabUtils.getTab());
+      }
+      expect(setSelected).toHaveBeenCalled();
     });
-
-    test('keyboard nav is not supported', () => {
-      renderTabs({ setSelected, selected: 1 });
-      const activeTabListItem = screen.getByText('Second');
-      const activeTab = screen.getByText('Content 2');
-      fireEvent.keyDown(activeTabListItem, {
-        key: keyMap.ArrowLeft,
+    test('clicking a tab does not update selected index and calls setSelected callback', () => {
+      const { getTabUtilsByName, getSelectedPanel } = renderTabs({
+        setSelected,
+        selected: 1,
       });
+      const tabUtils = getTabUtilsByName('First');
+
+      if (tabUtils) {
+        fireEvent.click(tabUtils.getTab());
+      }
+
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 2');
+      expect(setSelected).toHaveBeenCalled();
+    });
+
+    test('keying down arrow keys does not update selected index and calls setSelected callback', () => {
+      const { getTabUtilsByName, getSelectedPanel } = renderTabs({
+        setSelected,
+        selected: 1,
+      });
+      const tabUtils = getTabUtilsByName('Second');
+      const activeTab = getSelectedPanel();
+
+      if (tabUtils) {
+        fireEvent.keyDown(tabUtils.getTab(), {
+          key: keyMap.ArrowLeft,
+        });
+      }
+
       expect(activeTab).toBeVisible();
+      expect(setSelected).toHaveBeenCalled();
     });
   });
 
   describe('when uncontrolled', () => {
     test('default tab is visible by default', () => {
-      renderTabs({}, { default: true });
-      const defaultTabContent = screen.getByText('Content 1');
-      expect(defaultTabContent).toBeInTheDocument();
+      const { getSelectedPanel } = renderTabs({}, { default: true });
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 1');
     });
 
     test('clicking a tab changes the activeTab', () => {
-      renderTabs({}, { default: true });
-      const defaultTabContent = screen.getByText('Content 1');
-      expect(defaultTabContent).toBeInTheDocument();
+      const { getSelectedPanel, getTabUtilsByName } = renderTabs(
+        {},
+        { default: true },
+      );
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 1');
 
-      const newActiveTabTitle = screen.getByText('Second');
-      fireEvent.click(newActiveTabTitle);
-      expect(screen.getByText('Content 2')).toBeInTheDocument();
+      const newTabUtils = getTabUtilsByName('Second');
+
+      if (newTabUtils) {
+        fireEvent.click(newTabUtils.getTab());
+      }
+
+      const newSelectedPanel = getSelectedPanel();
+      expect(newSelectedPanel).toHaveTextContent('Content 2');
     });
 
     test('keyboard navigation is supported', () => {
-      const { getAllByTestId } = renderTabs({}, { default: true });
-      const [firstTab] = getAllByTestId('first-tab');
-      const [secondTab] = getAllByTestId('second-tab');
+      const { getTabUtilsByName } = renderTabs({}, { default: true });
+      const firstTabUtils = getTabUtilsByName('First');
+      const firstTab = firstTabUtils?.getTab();
+      const secondTabUtils = getTabUtilsByName('Second');
+      const secondTab = secondTabUtils?.getTab();
 
       // Focus on first tab
       userEvent.tab();
       expect(firstTab).toHaveFocus();
 
       // Keyboard navigate between tabs
-      fireEvent.keyDown(firstTab, {
-        key: keyMap.ArrowRight,
-      });
+      if (firstTab) {
+        fireEvent.keyDown(firstTab, {
+          key: keyMap.ArrowRight,
+        });
+      }
       expect(secondTab).toHaveFocus();
     });
 
     test('keyboard navigation skips disabled tabs', () => {
-      const { getAllByTestId } = render(
+      render(
         <Tabs
           data-testid={tabsTestId}
           aria-label="Description of our test tabs"
@@ -200,41 +276,54 @@ describe('packages/tabs', () => {
         </Tabs>,
       );
 
-      const [firstTab] = getAllByTestId('first-tab');
+      const { getTabUtilsByName } = getTestUtils();
+
+      const firstTabUtils = getTabUtilsByName('First');
 
       // Tab to first tab
       userEvent.tab();
-      expect(firstTab).toHaveFocus();
+      expect(firstTabUtils?.getTab()).toHaveFocus();
 
       // Keyboard navigate between tabs
-      fireEvent.keyDown(firstTab, {
-        key: keyMap.ArrowRight,
-      });
-      const [thirdTab] = getAllByTestId('third-tab');
-      expect(thirdTab).toHaveFocus();
+      if (firstTabUtils) {
+        fireEvent.keyDown(firstTabUtils.getTab(), {
+          key: keyMap.ArrowRight,
+        });
+      }
+
+      const thirdTabUtils = getTabUtilsByName('Third');
+      expect(thirdTabUtils?.getTab()).toHaveFocus();
     });
 
     test('keyboard nav does not work if modifier key is also pressed', () => {
-      renderTabs({}, { default: true });
-      const activeTabListItem = screen.getByText('First');
+      const { getTabUtilsByName, getSelectedPanel } = renderTabs(
+        {},
+        { default: true },
+      );
+      const tabUtils = getTabUtilsByName('First');
 
-      fireEvent.keyDown(activeTabListItem, {
-        key: keyMap.ArrowRight,
-        metaKey: true,
-      });
+      if (tabUtils) {
+        fireEvent.keyDown(tabUtils.getTab(), {
+          key: keyMap.ArrowRight,
+          metaKey: true,
+        });
+      }
 
-      const activeTab = screen.getByText('Content 1');
-      expect(activeTab).toBeVisible();
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 1');
     });
   });
 
   describe('when there are two sets of tabs on the page', () => {
-    let renderResult: RenderResult;
+    let testUtils1: TestUtilsReturnType;
 
     beforeEach(() => {
-      renderResult = render(
+      render(
         <>
-          <Tabs aria-label="Description of another set of test tabs">
+          <Tabs
+            data-lgid="lg-tabs-1"
+            aria-label="Description of another set of test tabs"
+          >
             <Tab default name="Tab Set 1-A" data-testid="tab-1-a">
               Content 1-A
             </Tab>
@@ -242,7 +331,10 @@ describe('packages/tabs', () => {
               Content 1-B
             </Tab>
           </Tabs>
-          <Tabs aria-label="Description of another set of test tabs">
+          <Tabs
+            data-lgid="lg-tabs-2"
+            aria-label="Description of another set of test tabs"
+          >
             <Tab default name="Tab Set 2-A" data-testid="tab-2-a">
               Content 2-A
             </Tab>
@@ -252,12 +344,12 @@ describe('packages/tabs', () => {
           </Tabs>
         </>,
       );
+      testUtils1 = getTestUtils('lg-tabs-1');
     });
 
     test('only the current Tabs set is toggled when the arrow keys are pressed', () => {
-      const { getAllByTestId } = renderResult;
-      const [tab1A] = getAllByTestId('tab-1-a');
-      const [tab1B] = getAllByTestId('tab-1-b');
+      const { getAllTabsInTabList } = testUtils1;
+      const [tab1A, tab1B] = getAllTabsInTabList();
 
       // Tab to first tab
       userEvent.tab();
@@ -272,6 +364,8 @@ describe('packages/tabs', () => {
   });
 
   describe('it maintains accessible props', () => {
+    let testUtils: TestUtilsReturnType;
+
     beforeEach(() => {
       render(
         <Tabs aria-label="testing accessible labels">
@@ -281,17 +375,19 @@ describe('packages/tabs', () => {
           <Tab name="Name 2">Content 2</Tab>
         </Tabs>,
       );
+      testUtils = getTestUtils();
     });
 
     test('tabs and panels render with appropriately related aria tags', () => {
-      const tab = screen.getAllByRole('tab')[0];
-      const panel = screen.getAllByRole('tabpanel')[0];
+      const { getAllTabsInTabList, getSelectedPanel } = testUtils;
+      const tab = getAllTabsInTabList()[0];
+      const panel = getSelectedPanel();
 
       expect(tab.getAttribute('id')).toEqual(
-        panel.getAttribute('aria-labelledby'),
+        panel?.getAttribute('aria-labelledby'),
       );
       expect(tab.getAttribute('aria-controls')).toEqual(
-        panel.getAttribute('id'),
+        panel?.getAttribute('id'),
       );
     });
   });
@@ -299,8 +395,11 @@ describe('packages/tabs', () => {
 
 describe('packages/tab', () => {
   test('props are passed to tab element through rest', () => {
-    renderTabs({}, { 'data-test-prop': 'test-prop' });
-    expect(screen.getAllByRole('tab')[0].getAttribute('data-test-prop')).toBe(
+    const { getAllTabsInTabList } = renderTabs(
+      {},
+      { 'data-test-prop': 'test-prop' },
+    );
+    expect(getAllTabsInTabList()[0].getAttribute('data-test-prop')).toBe(
       'test-prop',
     );
   });

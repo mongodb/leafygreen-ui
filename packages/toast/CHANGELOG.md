@@ -1,5 +1,20 @@
 # @leafygreen-ui/toast
 
+## 6.1.26
+
+### Patch Changes
+
+- cadc11b18: Fixed the controlled Toast component to avoid most infinite render loops
+- Updated dependencies [d70758dcf]
+  - @leafygreen-ui/palette@4.1.0
+
+## 6.1.25
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
 ## 6.1.24
 
 ### Patch Changes

@@ -16,6 +16,7 @@
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
     "build-storybook": "npx storybook build",
+    "build:tsc": "turbo run tsc",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
     "clean:builds": "pnpm recursive exec -- rm -rf ./{dist,tsconfig.tsbuildinfo,stories.js}",
@@ -27,9 +28,11 @@
     "publish": "pnpm changeset publish --public",
     "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates",
+    "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
-    "validate": "lg validate"
+    "validate": "lg validate",
+    "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'yarn build-storybook --test'"
   },
   "devDependencies": {
     "@actions/core": "^1.10.1",

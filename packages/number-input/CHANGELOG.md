@@ -1,5 +1,91 @@
 # @leafygreen-ui/number-input
 
+## 2.2.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/select@12.1.0
+  - @leafygreen-ui/tooltip@11.1.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 2.1.0
+
+### Minor Changes
+
+- 3b86b3bd: Allow type of `ReactNode` for `errorMessage` and `successMessage` props in `NumberInput`, `TextArea`, and `TextInput`
+
+### Patch Changes
+
+- Updated dependencies [ae44834e]
+- Updated dependencies [3273045c]
+  - @leafygreen-ui/icon@12.4.0
+  - @leafygreen-ui/form-field@1.2.3
+
+## 2.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4134](https://jira.mongodb.org/browse/LG-4134)
+
+  1. Updated styling:
+
+  - updated spacing for `'small'` and `'xsmall'` size variants
+  - added `'large'` variant
+  - updated placeholder text color
+  - moved error icon from inside the input to underneath the input, alongside the error message
+
+  2. Added default `errorMessage` of `'This input needs your attention'`
+
+  3. Added `valid` state variant and `successMessage` prop
+
+  - `successMessage` will render a default of `'Success'` and can be customized
+  - `successMessage` will only render when `state=valid`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/select@12.0.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 1.0.23
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/select@11.3.2
+  - @leafygreen-ui/tooltip@11.0.4
+
 ## 1.0.22
 
 ### Patch Changes

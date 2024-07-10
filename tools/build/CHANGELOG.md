@@ -1,5 +1,17 @@
 # @lg-tools/build
 
+## 0.6.0
+
+### Minor Changes
+
+- fdd63dbe4: Allows passing flags to `tsc` from the `lg build-ts` command
+
+## 0.5.1
+
+### Patch Changes
+
+- 4951369a: Bumps `rollup` and related packages to v4
+
 ## 0.5.0
 
 ### Minor Changes

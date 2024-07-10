@@ -28,6 +28,7 @@ yarn-error.log
 
 # TypeScript type-checking artifact
 tsconfig.tsbuildinfo
+ts-trace/
 
 # Environment variables
 .env
@@ -47,11 +48,15 @@ parsed-docs.json
 
 # Storybook/Chromatic logs
 build-storybook.log
+doctor-storybook.log
 
 .turbo
-scripts/tmp.*.ts
+scripts/tmp.*
 
 #
 .changeset/pre.json
 
 TODO.md
+
+# PR train config (https://github.com/realyze/pr-train)
+.pr-train.yml

@@ -1,159 +1,174 @@
 import { palette } from '@leafygreen-ui/palette';
 
-import { State, Variant } from './color.types';
+import {
+  InteractionState,
+  type PropertyColorRecord,
+  Variant,
+  type VariantColorRecord,
+} from './color.types';
 
 const { black, blue, gray, green, red, white, yellow } = palette;
 
 const lightModeBackgroundColors = {
   [Variant.Primary]: {
-    [State.Default]: white,
-    [State.Hover]: gray.light2,
-    [State.Focus]: blue.light3,
+    [InteractionState.Default]: white,
+    [InteractionState.Hover]: gray.light2,
+    [InteractionState.Focus]: blue.light3,
   },
   [Variant.Secondary]: {
-    [State.Default]: gray.light3,
-    [State.Hover]: gray.light2,
-    [State.Focus]: blue.light3,
+    [InteractionState.Default]: gray.light3,
+    [InteractionState.Hover]: gray.light2,
+    [InteractionState.Focus]: blue.light3,
   },
   [Variant.InversePrimary]: {
-    [State.Default]: black,
-    [State.Hover]: gray.dark3,
-    [State.Focus]: blue.dark2,
+    [InteractionState.Default]: black,
+    [InteractionState.Hover]: gray.dark3,
+    [InteractionState.Focus]: blue.dark2,
   },
   [Variant.Info]: {
-    [State.Default]: blue.light3,
-    [State.Hover]: blue.light3,
-    [State.Focus]: blue.light3,
+    [InteractionState.Default]: blue.light3,
+    [InteractionState.Hover]: blue.light3,
+    [InteractionState.Focus]: blue.light3,
   },
   [Variant.Warning]: {
-    [State.Default]: yellow.light3,
-    [State.Hover]: yellow.light3,
-    [State.Focus]: yellow.light3,
+    [InteractionState.Default]: yellow.light3,
+    [InteractionState.Hover]: yellow.light3,
+    [InteractionState.Focus]: yellow.light3,
   },
   [Variant.Success]: {
-    [State.Default]: green.light3,
-    [State.Hover]: green.light3,
-    [State.Focus]: green.light3,
+    [InteractionState.Default]: green.light3,
+    [InteractionState.Hover]: green.light3,
+    [InteractionState.Focus]: green.light3,
   },
   [Variant.Error]: {
-    [State.Default]: red.light3,
-    [State.Hover]: red.light3,
-    [State.Focus]: red.light3,
+    [InteractionState.Default]: red.light3,
+    [InteractionState.Hover]: red.light3,
+    [InteractionState.Focus]: red.light3,
   },
   [Variant.Disabled]: {
-    [State.Default]: gray.light2,
-    [State.Hover]: gray.light2,
-    [State.Focus]: gray.light2,
+    [InteractionState.Default]: gray.light2,
+    [InteractionState.Hover]: gray.light2,
+    [InteractionState.Focus]: gray.light2,
   },
-};
+} as const satisfies VariantColorRecord;
 
-const lightModBorderColors = {
+const lightModeBorderColors = {
   [Variant.Primary]: {
-    [State.Default]: gray.base,
-    [State.Hover]: gray.base,
-    [State.Focus]: blue.light1,
+    [InteractionState.Default]: gray.base,
+    [InteractionState.Hover]: gray.base,
+    [InteractionState.Focus]: blue.light1,
   },
   [Variant.Secondary]: {
-    [State.Default]: gray.light2,
-    [State.Hover]: gray.light2,
-    [State.Focus]: blue.light1,
+    [InteractionState.Default]: gray.light2,
+    [InteractionState.Hover]: gray.light2,
+    [InteractionState.Focus]: blue.light1,
   },
   [Variant.Success]: {
-    [State.Default]: green.dark1,
-    [State.Hover]: green.dark1,
-    [State.Focus]: blue.light1,
+    [InteractionState.Default]: green.dark1,
+    [InteractionState.Hover]: green.dark1,
+    [InteractionState.Focus]: blue.light1,
   },
   [Variant.Error]: {
-    [State.Default]: red.base,
-    [State.Hover]: red.base,
-    [State.Focus]: blue.light1,
+    [InteractionState.Default]: red.base,
+    [InteractionState.Hover]: red.base,
+    [InteractionState.Focus]: blue.light1,
   },
   [Variant.Disabled]: {
-    [State.Default]: gray.light1,
-    [State.Hover]: gray.light1,
-    [State.Focus]: gray.light1,
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: gray.light1,
   },
-};
+} as const satisfies VariantColorRecord;
 
 const lightModeIconColors = {
   [Variant.Primary]: {
-    [State.Default]: gray.dark1,
-    [State.Hover]: black,
-    [State.Focus]: blue.dark1,
+    [InteractionState.Default]: gray.dark1,
+    [InteractionState.Hover]: black,
+    [InteractionState.Focus]: blue.dark1,
   },
   [Variant.Secondary]: {
-    [State.Default]: gray.base,
-    [State.Hover]: black,
-    [State.Focus]: blue.dark1,
+    [InteractionState.Default]: gray.base,
+    [InteractionState.Hover]: black,
+    [InteractionState.Focus]: blue.dark1,
   },
   [Variant.InversePrimary]: {
-    [State.Default]: white,
-    [State.Hover]: white,
-    [State.Focus]: blue.light2,
+    [InteractionState.Default]: white,
+    [InteractionState.Hover]: white,
+    [InteractionState.Focus]: blue.light2,
   },
   [Variant.Info]: {
-    [State.Default]: blue.base,
-    [State.Hover]: blue.base,
-    [State.Focus]: blue.base,
+    [InteractionState.Default]: blue.base,
+    [InteractionState.Hover]: blue.base,
+    [InteractionState.Focus]: blue.base,
   },
   [Variant.Warning]: {
-    [State.Default]: yellow.dark2,
-    [State.Hover]: yellow.dark2,
-    [State.Focus]: yellow.dark2,
+    [InteractionState.Default]: yellow.dark2,
+    [InteractionState.Hover]: yellow.dark2,
+    [InteractionState.Focus]: yellow.dark2,
   },
   [Variant.Success]: {
-    [State.Default]: green.dark1,
-    [State.Hover]: green.dark1,
-    [State.Focus]: green.dark1,
+    [InteractionState.Default]: green.dark1,
+    [InteractionState.Hover]: green.dark1,
+    [InteractionState.Focus]: green.dark1,
   },
   [Variant.Error]: {
-    [State.Default]: red.base,
-    [State.Hover]: red.base,
-    [State.Focus]: red.base,
+    [InteractionState.Default]: red.base,
+    [InteractionState.Hover]: red.base,
+    [InteractionState.Focus]: red.base,
   },
   [Variant.Disabled]: {
-    [State.Default]: gray.base,
-    [State.Hover]: gray.base,
-    [State.Focus]: gray.base,
+    [InteractionState.Default]: gray.base,
+    [InteractionState.Hover]: gray.base,
+    [InteractionState.Focus]: gray.base,
   },
-};
+} as const satisfies VariantColorRecord;
 
-export const lightModeTextColors = {
+const lightModeTextColors = {
   [Variant.Primary]: {
-    [State.Default]: black,
-    [State.Hover]: black,
-    [State.Focus]: blue.dark1,
+    [InteractionState.Default]: black,
+    [InteractionState.Hover]: black,
+    [InteractionState.Focus]: blue.dark1,
   },
   [Variant.Secondary]: {
-    [State.Default]: gray.dark1,
-    [State.Hover]: black,
-    [State.Focus]: blue.dark1,
+    [InteractionState.Default]: gray.dark1,
+    [InteractionState.Hover]: black,
+    [InteractionState.Focus]: blue.dark1,
   },
   [Variant.InversePrimary]: {
-    [State.Default]: white,
-    [State.Hover]: white,
-    [State.Focus]: blue.light2,
+    [InteractionState.Default]: white,
+    [InteractionState.Hover]: white,
+    [InteractionState.Focus]: blue.light2,
   },
   [Variant.InverseSecondary]: {
-    [State.Default]: gray.light1,
-    [State.Hover]: white,
-    [State.Focus]: blue.light2,
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: white,
+    [InteractionState.Focus]: blue.light2,
   },
   [Variant.Error]: {
-    [State.Default]: red.base,
-    [State.Hover]: red.base,
-    [State.Focus]: red.base,
+    [InteractionState.Default]: red.base,
+    [InteractionState.Hover]: red.base,
+    [InteractionState.Focus]: red.base,
   },
   [Variant.Disabled]: {
-    [State.Default]: gray.base,
-    [State.Hover]: gray.base,
-    [State.Focus]: gray.base,
+    [InteractionState.Default]: gray.base,
+    [InteractionState.Hover]: gray.base,
+    [InteractionState.Focus]: gray.base,
   },
-};
+  [Variant.Placeholder]: {
+    [InteractionState.Default]: gray.base,
+    [InteractionState.Hover]: gray.base,
+    [InteractionState.Focus]: gray.base,
+  },
+  [Variant.Link]: {
+    [InteractionState.Default]: blue.base,
+    [InteractionState.Hover]: blue.base,
+    [InteractionState.Focus]: blue.base,
+  },
+} as const satisfies VariantColorRecord;
 
 export const lightModeColors = {
   background: lightModeBackgroundColors,
-  border: lightModBorderColors,
+  border: lightModeBorderColors,
   icon: lightModeIconColors,
   text: lightModeTextColors,
-};
+} as const satisfies PropertyColorRecord;

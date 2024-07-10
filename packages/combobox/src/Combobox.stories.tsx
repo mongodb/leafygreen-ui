@@ -118,11 +118,11 @@ const meta: StoryMetaType<typeof Combobox> = {
     },
     searchErrorMessage: {
       control: 'text',
-      if: { arg: 'searchState', eq: SearchState.error },
+      if: { arg: 'searchState', eq: SearchState.Error },
     },
     searchLoadingMessage: {
       control: 'text',
-      if: { arg: 'searchState', eq: SearchState.loading },
+      if: { arg: 'searchState', eq: SearchState.Loading },
     },
     chipTruncationLocation: {
       options: Object.values(TruncationLocation),
@@ -252,6 +252,19 @@ MultiSelect.parameters = {
       value: [undefined, multiValue],
     },
   },
+};
+
+export const MultiSelectNoIcons: StoryFn<ComboboxProps<boolean>> = (
+  args: ComboboxProps<boolean>,
+) => {
+  return (
+    <Combobox {...args} multiselect={true}>
+      {getComboboxOptions(false)}
+    </Combobox>
+  );
+};
+MultiSelectNoIcons.parameters = {
+  chromatic: { disableSnapshot: true },
 };
 
 export const DisabledInput = () => <></>;

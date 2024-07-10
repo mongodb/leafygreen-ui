@@ -44,6 +44,11 @@ const meta: StoryMetaType<typeof Callout> = {
     },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
+    variant: {
+      options: Object.values(Variant),
+      control: { type: 'select' },
+      defaultValue: Variant.Note,
+    },
   },
 };
 export default meta;
