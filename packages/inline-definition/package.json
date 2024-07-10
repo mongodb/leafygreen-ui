@@ -22,10 +22,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tooltip": "^11.0.3",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "prop-types": "^15.8.1"
   },
   "peerDependencies": {
@@ -40,8 +40,8 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "^18.3.0",
-    "@lg-tools/storybook-utils": "^0.1.0",
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
     "@types/prop-types": "^15.7.12"
   }
 }

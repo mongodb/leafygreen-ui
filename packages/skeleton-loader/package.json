@@ -30,21 +30,21 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^10.0.7",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.3.0",
-    "prop-types": "^15.8.1",
-    "lodash": "^4.17.21"
+    "@leafygreen-ui/card": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0",
-    "@types/prop-types": "^15.7.12",
-    "@types/jest-axe": "^3.5.9"
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/jest-axe": "^3.5.9",
+    "@types/prop-types": "^15.7.12"
   }
 }

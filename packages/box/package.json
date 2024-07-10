@@ -30,7 +30,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0",
+    "@lg-tools/storybook-utils": "workspace:*",
     "@types/prop-types": "^15.7.12"
   },
   "dependencies": {

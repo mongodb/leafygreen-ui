@@ -13,8 +13,8 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "@lg-tools/build": "^0.5.0",
-    "@lg-tools/meta": "^0.3.3",
+    "@lg-tools/build": "workspace:*",
+    "@lg-tools/meta": "workspace:*",
     "@types/cross-spawn": "6.0.2",
     "@types/fs-extra": "11.0.1",
     "chalk": "4.1.2",
@@ -22,9 +22,9 @@
     "depcheck": "1.4.3",
     "fs-extra": "11.1.1",
     "lodash": "4.17.21"
-  }, 
+  },
   "devDependencies": {
-    "@lg-tools/test": "^0.4.4",
+    "@lg-tools/test": "workspace:*",
     "@types/jest": "^29.5.12"
   }
 }

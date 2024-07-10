@@ -21,11 +21,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/code": "^14.3.2",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^18.3.0",
+    "@leafygreen-ui/code": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "prop-types": "^15.8.1",
     "react-markdown": "^8.0.7"
   },
@@ -33,7 +33,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0",
+    "@lg-tools/storybook-utils": "workspace:^",
     "@types/prop-types": "^15.7.12"
   }
 }
