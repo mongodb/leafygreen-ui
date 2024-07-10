@@ -8,10 +8,12 @@ export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export type {
+  ExclusiveUnion,
   Mutable,
-  RecursiveRecord,
+  Only,
   Optional,
   PartialRequired,
+  RecursiveRecord,
 } from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };

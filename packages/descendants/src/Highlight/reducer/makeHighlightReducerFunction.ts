@@ -30,11 +30,7 @@ export const makeHighlightReducerFunction = <T extends HTMLElement>(
       typeof action.direction === 'string' ||
       typeof action.delta === 'number'
     ) {
-      const currIndex = currentHighlight?.index;
-      const totalItems = descendants.length;
-      const delta =
-        action.delta ??
-        getDeltaFromDirection(action.direction, currIndex, totalItems);
+      const delta = action.delta ?? getDeltaFromDirection(action.direction);
       const nextHighlight = getRelativeDescendant(
         delta,
         currentHighlight,

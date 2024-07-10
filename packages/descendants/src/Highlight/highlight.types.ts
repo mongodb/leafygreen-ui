@@ -7,10 +7,14 @@ export type Index = number | undefined;
 const Direction = {
   Next: 'next',
   Prev: 'prev',
+} as const;
+export type Direction = (typeof Direction)[keyof typeof Direction];
+
+const Position = {
   First: 'first',
   Last: 'last',
 } as const;
-export type Direction = (typeof Direction)[keyof typeof Direction];
+export type Position = (typeof Position)[keyof typeof Position];
 
 export interface HighlightContextProps<T extends HTMLElement> {
   highlight: Descendant<T> | undefined;
