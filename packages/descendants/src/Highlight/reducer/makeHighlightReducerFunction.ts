@@ -1,3 +1,5 @@
+import { isDefined } from '@leafygreen-ui/lib';
+
 import {
   Descendant,
   DescendantsList,
@@ -5,6 +7,7 @@ import {
   getDescendantByIndex,
 } from '../../Descendants';
 import { getDeltaFromDirection } from '../utils/getDeltaFromDirection';
+import { getIndexFromPosition } from '../utils/getIndexFromPosition';
 import { getRelativeDescendant } from '../utils/getRelativeDescendant';
 
 import { HighlightReducerFunction } from './reducer.types';
@@ -26,11 +29,8 @@ export const makeHighlightReducerFunction = <T extends HTMLElement>(
     if (!currentHighlight) return currentHighlight;
 
     // Move the highlight relative to the current highlight
-    if (
-      typeof action.direction === 'string' ||
-      typeof action.delta === 'number'
-    ) {
-      const delta = action.delta ?? getDeltaFromDirection(action.direction);
+    if (isDefined(action.delta) || isDefined(action.direction)) {
+      const delta = action.delta ?? getDeltaFromDirection(action.direction!);
       const nextHighlight = getRelativeDescendant(
         delta,
         currentHighlight,
@@ -38,13 +38,14 @@ export const makeHighlightReducerFunction = <T extends HTMLElement>(
         options?.filter,
       );
       return nextHighlight; // getRelativeDescendant returns a `filter`ed value
-
-      // if we've received an explicit index, set the highlight
-    } else if (typeof action.index === 'number') {
-      const nextHighlight = getDescendantByIndex(action.index, descendants);
+    } else if (isDefined(action.index) || isDefined(action.position)) {
+      // Explicitly set the highlight to the desired position or index
+      const index =
+        action.index ?? getIndexFromPosition(action.position!, descendants);
+      const nextHighlight = getDescendantByIndex(index, descendants);
       return filteredResult(nextHighlight, currentHighlight, options?.filter);
-      // If we've received an explicit id, set the highlight
-    } else if (typeof action.id === 'string') {
+    } else if (isDefined(action.id)) {
+      // Explicitly set the highlight to the desired id
       const nextHighlight = getDescendantById(action.id, descendants);
       return filteredResult(nextHighlight, currentHighlight, options?.filter);
     }
