@@ -177,7 +177,7 @@ const meta: StoryMetaType<any> = {
 
 export default meta;
 
-export function AllColors() {
+export function LiveExample() {
   const allColors = Object.keys(palette);
   const hues = (allColors as Array<keyof typeof palette>).slice(
     baseHues.length,
