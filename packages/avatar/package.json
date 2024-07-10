@@ -14,7 +14,8 @@
   },
   "scripts": {
     "build": "lg build-package",
-    "tsc": "lg build-ts"
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
