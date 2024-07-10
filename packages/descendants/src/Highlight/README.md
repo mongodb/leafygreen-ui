@@ -56,12 +56,27 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
 };
 ```
 
+## `options.onInit`: Setting the initial highlight
+
+To set the initial highlight, provide an `onInit` callback to the `options` argument of `useHighlight`.
+
+```ts
+const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
+const { highlight, setHighlight } = useHighlight(getDescendants, {
+  // Fired once when the descendants are initialized
+  onInit: () => {
+    setHighlight(0);
+  },
+});
+```
+
 ## `options.onChange`: Responding to Highlight changes
 
 To run side-effects after the highlight has been updated, provide an `onChange` callback to the `options` argument of `useHighlight`.
 
 ```ts
 const { highlight, setHighlight } = useHighlight(getDescendants, {
+  // Fired when the highlight state changes
   onChange: (next: Descendant | undefined) => {
     if (next) {
       // Focus the element when highlight is updated

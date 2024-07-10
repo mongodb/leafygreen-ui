@@ -1,6 +1,6 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
-import { DescendantsList } from '../Descendants';
+import { DescendantsList, isDescendantsSet } from '../Descendants';
 
 import {
   AbsoluteSetterArg,
@@ -33,8 +33,19 @@ export const useHighlight = <T extends HTMLElement>(
   // Create the reducer
   const [highlight, dispatch] = useReducer<HighlightReducerFunction<T>>(
     highlightReducerFunction,
-    options?.initial,
+    undefined,
   );
+
+  // Fire the `onInit` callback once when the descendants are set
+  // Note: we can't use the Reducer's `initializer`
+  // since the descendants will likely not exist when the reducer is established
+  const [isInitialized, setInit] = useState(false);
+  useEffect(() => {
+    if (!isInitialized && isDescendantsSet(getDescendants())) {
+      options?.onInit?.(getDescendants());
+      setInit(true);
+    }
+  }, [getDescendants, isInitialized, options]);
 
   /**
    * Custom dispatch that moves the current highlight

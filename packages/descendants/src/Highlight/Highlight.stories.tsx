@@ -73,7 +73,7 @@ export const Basic = () => {
       filter: d => {
         return !d.props.isDisabled;
       },
-      onChange: () => {
+      onInit: () => {
         setHighlight(0);
       },
     },
