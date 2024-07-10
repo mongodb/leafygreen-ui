@@ -1,5 +1,13 @@
 # @leafygreen-ui/avatar
 
+## 1.0.2
+
+### Patch Changes
+
+- 9fad8d3d3: Prepares Avatar component for mongodb.design
+- Updated dependencies [fd0e5977d]
+  - @leafygreen-ui/palette@4.1.1
+
 ## 1.0.1
 
 ### Patch Changes
