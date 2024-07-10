@@ -41,11 +41,11 @@ export default {
     darkMode: storybookArgTypes.darkMode,
     format: {
       control: 'select',
-      options: Format,
+      options: Object.values(Format),
     },
     size: {
       control: 'select',
-      options: AvatarSize,
+      options: Object.values(AvatarSize),
     },
     sizeOverride: {
       control: 'number',
