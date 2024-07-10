@@ -41,7 +41,10 @@ const items = [
 const TestHighlightContext = createHighlightContext('TestHighlight');
 
 const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
-  const { ref, id } = useDescendant(TestDescendantContext);
+  const isDisabled = children === 'Fred'; // Fred is on sabbatical
+  const { ref, id } = useDescendant(TestDescendantContext, null, {
+    isDisabled,
+  });
   const { highlight } = useHighlightContext(TestHighlightContext);
 
   const isHighlighted = highlight?.id === id;
@@ -54,6 +57,7 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
         color: isHighlighted ? 'red' : 'black',
         outline: `1px solid ${isHighlighted ? 'red' : 'transparent'}`,
         outlineOffset: 2,
+        opacity: isDisabled ? 0.5 : 1,
       }}
     >
       {children}: {id}
@@ -62,9 +66,16 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
 };
 
 export const Basic = () => {
-  const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
-  const { highlight, moveHighlight, setHighlight } =
-    useHighlight<HTMLDivElement>(getDescendants);
+  const { descendants, dispatch } = useInitDescendants<HTMLDivElement>();
+  const { highlight, moveHighlight, setHighlight } = useHighlight(
+    () => descendants,
+    {
+      initial: descendants[0],
+      filter: d => {
+        return !d.props.isDisabled;
+      },
+    },
+  );
 
   const handleKeyDown = e => {
     switch (e.key) {
@@ -90,7 +101,7 @@ export const Basic = () => {
     <div>
       <DescendantsProvider
         context={TestDescendantContext}
-        descendants={getDescendants()}
+        descendants={descendants}
         dispatch={dispatch}
       >
         <HighlightProvider
@@ -111,7 +122,7 @@ export const Grid = {
   render: () => {
     const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
     const { highlight, moveHighlight, setHighlight } =
-      useHighlight<HTMLDivElement>(getDescendants);
+      useHighlight(getDescendants);
 
     const handleKeyDown = e => {
       switch (e.key) {

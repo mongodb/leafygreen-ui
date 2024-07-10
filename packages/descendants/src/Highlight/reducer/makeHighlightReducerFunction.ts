@@ -1,47 +1,81 @@
 import {
+  Descendant,
   DescendantsList,
   getDescendantById,
   getDescendantByIndex,
 } from '../../Descendants';
-import { getNextFromDirection } from '../utils/getNextFromDirection';
+import { getDeltaFromDirection } from '../utils/getDeltaFromDirection';
 import { getRelativeDescendant } from '../utils/getRelativeDescendant';
 
 import { HighlightReducerFunction } from './reducer.types';
+
+interface ReducerFunctionOptions<T extends HTMLElement> {
+  filter?: (d: Descendant<T>) => boolean;
+}
 
 /**
  * Creates a new reducer function for closure for a given `descendants` value
  */
 export const makeHighlightReducerFunction = <T extends HTMLElement>(
   getDescendants: () => DescendantsList<T>,
-): HighlightReducerFunction<T> =>
-  ((currentHighlight, action) => {
+  options?: ReducerFunctionOptions<T>,
+): HighlightReducerFunction<T> => {
+  return (currentHighlight, action) => {
     const descendants = getDescendants();
 
-    // If we've received a direction, move the highlight
-    if (action.direction) {
-      const nextHighlight = getNextFromDirection(
-        action.direction,
-        currentHighlight,
-        descendants,
-      );
-      return nextHighlight || currentHighlight;
-      // if we've received a delta, move the highlight
-    } else if (typeof action.delta === 'number') {
+    if (!currentHighlight) return currentHighlight;
+
+    // Move the highlight relative to the current highlight
+    if (
+      typeof action.direction === 'string' ||
+      typeof action.delta === 'number'
+    ) {
+      const currIndex = currentHighlight?.index;
+      const totalItems = descendants.length;
+      const delta =
+        action.delta ??
+        getDeltaFromDirection(action.direction, currIndex, totalItems);
       const nextHighlight = getRelativeDescendant(
-        action.delta,
+        delta,
         currentHighlight,
         descendants,
+        options?.filter,
       );
-      return nextHighlight;
-      // If we've received an explicit index, set the highlight
+      return nextHighlight; // getRelativeDescendant returns a `filter`ed value
+
+      // if we've received an explicit index, set the highlight
     } else if (typeof action.index === 'number') {
       const nextHighlight = getDescendantByIndex(action.index, descendants);
-      return nextHighlight;
+      return filteredResult(nextHighlight, currentHighlight, options?.filter);
       // If we've received an explicit id, set the highlight
     } else if (typeof action.id === 'string') {
       const nextHighlight = getDescendantById(action.id, descendants);
-      return nextHighlight;
+      return filteredResult(nextHighlight, currentHighlight, options?.filter);
     }
 
     return currentHighlight;
-  }) as HighlightReducerFunction<T>;
+  };
+};
+
+/**
+ * Returns the provided value if it passes the filter function,
+ * otherwise returns the current value
+ */
+function filteredResult<T extends HTMLElement>(
+  descendant?: Descendant<T>,
+  current?: Descendant<T>,
+  filter?: (d: Descendant<T>) => boolean,
+): Descendant<T> | undefined {
+  // If the target descendant is not defined, we return that value
+  // (to unset the highlight)
+  if (!descendant) return descendant;
+
+  if (filter) {
+    const isValid = filter(descendant);
+    // if a filter exists, we return the provided descendant if it's valid,
+    // otherwise we leave the highlight unchanged
+    return isValid ? descendant : current;
+  }
+
+  return descendant;
+}

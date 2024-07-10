@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
 
-import { DescendantsList, isDescendantsSet } from '../Descendants';
+import { Descendant, DescendantsList } from '../Descendants';
 
 import {
   HighlightReducerFunction,
@@ -13,13 +13,16 @@ import type {
 } from './highlight.types';
 import { makeHighlightReducerFunction } from './reducer';
 
-const getInitialHighlight = <T extends HTMLElement>(
-  descendants: DescendantsList<T>,
-) => (isDescendantsSet(descendants) ? descendants[0] : undefined);
-
 interface UseHighlightOptions<T extends HTMLElement> {
   /** A callback fired when the highlight changes */
   onChange?: HighlightChangeHandler<T>;
+
+  /** The initially highlighted descendant */
+  initial?: Descendant<T> | undefined;
+
+  /** Filters descendants that are enabled */
+  // TODO: Better name and/or docs
+  filter?: (d: Descendant<T>) => boolean;
 }
 
 /**
@@ -32,12 +35,15 @@ export const useHighlight = <T extends HTMLElement>(
   options?: UseHighlightOptions<T>,
 ): HighlightHookReturnType<T> => {
   // Create a reducer function
-  const highlightReducerFunction = makeHighlightReducerFunction(getDescendants);
+  const highlightReducerFunction = makeHighlightReducerFunction(
+    getDescendants,
+    options,
+  );
 
   // Create the reducer
   const [highlight, dispatch] = useReducer<HighlightReducerFunction<T>>(
     highlightReducerFunction,
-    getInitialHighlight(getDescendants()),
+    options?.initial,
   );
 
   /**
@@ -49,12 +55,10 @@ export const useHighlight = <T extends HTMLElement>(
   const moveHighlight = (dirOrDelta: Direction | number) => {
     const action: UpdateHighlightAction =
       typeof dirOrDelta === 'number'
-        ? {
-            delta: dirOrDelta,
-          }
+        ? { delta: dirOrDelta }
         : { direction: dirOrDelta };
-    const updatedHighlight = highlightReducerFunction(highlight, action);
 
+    const updatedHighlight = highlightReducerFunction(highlight, action);
     options?.onChange?.(updatedHighlight);
     dispatch(action);
   };
@@ -67,13 +71,7 @@ export const useHighlight = <T extends HTMLElement>(
    */
   const setHighlight = (indexOrId: number | string) => {
     const action: UpdateHighlightAction =
-      typeof indexOrId === 'string'
-        ? {
-            id: indexOrId,
-          }
-        : {
-            index: indexOrId,
-          };
+      typeof indexOrId === 'string' ? { id: indexOrId } : { index: indexOrId };
 
     const updatedHighlight = highlightReducerFunction(highlight, action);
     options?.onChange?.(updatedHighlight);

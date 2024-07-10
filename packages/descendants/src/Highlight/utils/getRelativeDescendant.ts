@@ -16,7 +16,8 @@ export const getRelativeDescendant = <T extends HTMLElement>(
   delta: number,
   current: Descendant<T> | undefined,
   descendants: DescendantsList<T>,
-): Descendant | undefined => {
+  filter?: (d: Descendant<T>) => boolean,
+): Descendant<T> | undefined => {
   // If descendants is not set then we don't mutate the index
   if (!isDescendantsSet(descendants)) {
     return current;
@@ -33,8 +34,7 @@ export const getRelativeDescendant = <T extends HTMLElement>(
   let nextDescendant = getDescendantByIndex(nextIndex, descendants);
 
   // Get the first descendant that matches the rules passed in
-  // TODO: Enable rules
-  while (nextDescendant?.props?.foobar === false) {
+  while (nextDescendant && filter && !filter(nextDescendant)) {
     const dir = delta / Math.abs(delta); // 1 or -1
     nextIndex = getRelativeIndex(dir, nextIndex, descendants.length);
     nextDescendant = getDescendantByIndex(nextIndex, descendants);
