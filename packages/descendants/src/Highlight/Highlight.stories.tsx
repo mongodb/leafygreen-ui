@@ -5,11 +5,7 @@ import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
 
 import { TestDescendantContext } from '../../test/components.testutils';
-import {
-  DescendantsProvider,
-  useDescendant,
-  useInitDescendants,
-} from '../Descendants';
+import { useDescendant, useInitDescendants } from '../Descendants';
 
 import { HighlightProvider } from './HighlightProvider';
 import { useHighlightContext } from './useHighlightContext';
@@ -66,7 +62,9 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
 };
 
 export const Basic = () => {
-  const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
+  const { getDescendants, Provider: MyDescendantsProvider } =
+    useInitDescendants(TestDescendantContext);
+
   const { highlight, moveHighlight, setHighlight } = useHighlight(
     getDescendants,
     {
@@ -118,11 +116,7 @@ export const Basic = () => {
 
   return (
     <div>
-      <DescendantsProvider
-        context={TestDescendantContext}
-        descendants={getDescendants()}
-        dispatch={dispatch}
-      >
+      <MyDescendantsProvider>
         <HighlightProvider
           context={TestHighlightContext}
           highlight={highlight}
@@ -132,7 +126,7 @@ export const Basic = () => {
             <HighlightItem key={item}>{item}</HighlightItem>
           ))}
         </HighlightProvider>
-      </DescendantsProvider>
+      </MyDescendantsProvider>
     </div>
   );
 };
@@ -140,7 +134,8 @@ export const Basic = () => {
 export const Grid = {
   render: () => {
     const COLUMNS = 3;
-    const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
+    const { getDescendants, Provider: MyDescendantsProvider } =
+      useInitDescendants(TestDescendantContext);
     const { highlight, moveHighlight, setHighlight } = useHighlight(
       getDescendants,
       {
@@ -179,11 +174,7 @@ export const Grid = {
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div>
-        <DescendantsProvider
-          context={TestDescendantContext}
-          descendants={getDescendants()}
-          dispatch={dispatch}
-        >
+        <MyDescendantsProvider>
           <HighlightProvider
             context={TestHighlightContext}
             highlight={highlight}
@@ -200,7 +191,7 @@ export const Grid = {
               ))}
             </div>
           </HighlightProvider>
-        </DescendantsProvider>
+        </MyDescendantsProvider>
       </div>
     );
   },
