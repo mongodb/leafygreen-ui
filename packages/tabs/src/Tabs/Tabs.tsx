@@ -2,10 +2,7 @@ import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import {
-  DescendantsProvider,
-  useInitDescendants,
-} from '@leafygreen-ui/descendants';
+import { useInitDescendants } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -75,10 +72,11 @@ const Tabs = (props: AccessibleTabsProps) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const id = useIdAllocator({ prefix: rest.id || 'tabs' });
 
-  const { descendants: tabDescendants, dispatch: tabDispatch } =
-    useInitDescendants<HTMLDivElement>();
-  const { descendants: tabPanelDescendants, dispatch: tabPanelDispatch } =
-    useInitDescendants<HTMLDivElement>();
+  const { descendants: tabDescendants, Provider: TabDescendantsProvider } =
+    useInitDescendants(TabDescendantsContext);
+  const { Provider: TabPanelDescendantProvider } = useInitDescendants(
+    TabPanelDescendantsContext,
+  );
 
   const isControlled = typeof controlledSelected !== 'undefined';
   const [uncontrolledSelected, setUncontrolledSelected] = useState(0);
@@ -161,16 +159,8 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   return (
     <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
-      <DescendantsProvider
-        context={TabDescendantsContext}
-        descendants={tabDescendants}
-        dispatch={tabDispatch}
-      >
-        <DescendantsProvider
-          context={TabPanelDescendantsContext}
-          descendants={tabPanelDescendants}
-          dispatch={tabPanelDispatch}
-        >
+      <TabDescendantsProvider>
+        <TabPanelDescendantProvider>
           <TabsContext.Provider
             value={{
               as,
@@ -207,8 +197,8 @@ const Tabs = (props: AccessibleTabsProps) => {
               </div>
             </div>
           </TabsContext.Provider>
-        </DescendantsProvider>
-      </DescendantsProvider>
+        </TabPanelDescendantProvider>
+      </TabDescendantsProvider>
     </LeafyGreenProvider>
   );
 };
