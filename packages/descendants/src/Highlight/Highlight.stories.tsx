@@ -42,7 +42,7 @@ const TestHighlightContext = createHighlightContext('TestHighlight');
 
 const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
   const isDisabled = children === 'Fred'; // Fred is on sabbatical
-  const { ref, id } = useDescendant(TestDescendantContext, null, {
+  const { ref, id, index } = useDescendant(TestDescendantContext, null, {
     isDisabled,
   });
   const { highlight } = useHighlightContext(TestHighlightContext);
@@ -60,7 +60,7 @@ const HighlightItem = ({ children }: PropsWithChildren<{}>) => {
         opacity: isDisabled ? 0.5 : 1,
       }}
     >
-      {children}: {id}
+      {index}: {children} <code>id: {id}</code>
     </div>
   );
 };
@@ -117,7 +117,6 @@ export const Basic = () => {
   }, []);
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div>
       <DescendantsProvider
         context={TestDescendantContext}
