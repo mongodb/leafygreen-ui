@@ -48,17 +48,16 @@ There are 4 steps required to set up a pair of components as Parent/Descendent.
  * shouldn't track fly-out menu items as its own descendants)
  *
  */
-const MyDescendantsContext = createDescendantsContext('MyDescendantsContext');
+const MyDescendantsContext = createDescendantsContext<HTMLDivElement>(
+  'MyDescendantsContext',
+);
 
 export const MyParent = ({ children, ...rest }: ComponentProps<'div'>) => {
   /**
-   * 2. Initialize an empty descendants list and setter
-   *
-   * We call this _outside_ the Provider
-   * so we can access the `descendants` object
-   * from the Parent level.
+   * 2. Initialize an empty descendants list and provider
    */
-  const { descendants, dispatch } = useInitDescendants<HTMLDivElement>();
+  const { getDescendants, Provider: MyDescendantsProvider } =
+    useInitDescendants(MyDescendantsContext);
 
   /**
    * 3. Pass the context, descendants list and setter into the provider
@@ -69,13 +68,9 @@ export const MyParent = ({ children, ...rest }: ComponentProps<'div'>) => {
    * (see fly-out menu example in step 1.)
    */
   return (
-    <DescendantsProvider
-      context={MyDescendantsContext}
-      descendants={descendants}
-      dispatch={dispatch}
-    >
+    <MyDescendantsProvider>
       <div {...rest}>{children}</div>
-    </DescendantsProvider>
+    </MyDescendantsProvider>
   );
 };
 
@@ -84,15 +79,11 @@ export const TestDescendant = ({
   ...rest
 }: ComponentProps<'div'>) => {
   /**
-   * 4. Establish a child component as a descendant
-   *
-   * Pass the context value into the hook
-   * in order to establish this element
+   * 4. Establish a child component as a descendant of our context
    */
   const { index, ref } = useDescendant(MyDescendantsContext);
 
-  // This component has access to its index within the Parent context
-
+  // This component has access to its relative index within the Parent context
   return (
     <div ref={ref} {...rest}>
       {children}

@@ -3,32 +3,20 @@ import { render } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { DescendantsProvider, useInitDescendants } from '..';
+import { useInitDescendants } from '..';
 
 import { TestDescendantContext } from './components.testutils';
 
-export const renderDescendantsTestContext = (descendants: ReactNode) => {
-  const hook = renderHook(() => useInitDescendants<HTMLDivElement>());
+export const renderDescendantsTestContext = (children: ReactNode) => {
+  const hook = renderHook(() => useInitDescendants(TestDescendantContext));
 
   const renderResult = render(
-    <DescendantsProvider
-      context={TestDescendantContext}
-      descendants={hook.result.current.descendants}
-      dispatch={hook.result.current.dispatch}
-    >
-      {descendants}
-    </DescendantsProvider>,
+    <hook.result.current.Provider>{children}</hook.result.current.Provider>,
   );
 
-  const rerender = (descendants: ReactNode) => {
+  const rerender = (children: ReactNode) => {
     renderResult.rerender(
-      <DescendantsProvider
-        context={TestDescendantContext}
-        descendants={hook.result.current.descendants}
-        dispatch={hook.result.current.dispatch}
-      >
-        {descendants}
-      </DescendantsProvider>,
+      <hook.result.current.Provider>{children}</hook.result.current.Provider>,
     );
   };
 

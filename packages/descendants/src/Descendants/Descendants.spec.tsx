@@ -12,7 +12,7 @@ import {
 } from '../../test/components.testutils';
 import { renderDescendantsTestContext } from '../../test/renderDescendantsTestContext.testutils';
 
-import { DescendantsProvider, useInitDescendants } from '.';
+import { useInitDescendants } from '.';
 
 describe('packages/descendants', () => {
   describe('rendering', () => {
@@ -294,8 +294,9 @@ describe('packages/descendants', () => {
         open,
         ...rest
       }: ComponentProps<'div'> & { open: boolean }) => {
-        const { descendants, dispatch, getDescendants } =
-          useInitDescendants<HTMLDivElement>();
+        const { Provider, getDescendants } = useInitDescendants(
+          TestDescendantContext,
+        );
 
         const handleTransition = () => {
           logDescendants(getDescendants());
@@ -303,17 +304,13 @@ describe('packages/descendants', () => {
 
         return (
           <StrictMode>
-            <DescendantsProvider
-              context={TestDescendantContext}
-              descendants={descendants}
-              dispatch={dispatch}
-            >
+            <Provider>
               <Popover active={open} onEntered={handleTransition}>
                 <div {...rest} data-testid="parent">
                   {children}
                 </div>
               </Popover>
-            </DescendantsProvider>
+            </Provider>
           </StrictMode>
         );
       };

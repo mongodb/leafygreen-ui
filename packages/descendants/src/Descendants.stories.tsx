@@ -18,8 +18,9 @@ import {
   TestParent,
   TestParent2,
 } from '../test/components.testutils';
+import { TestSelectionContext } from '../test/testSelectionContext';
 
-import { DescendantsProvider, useInitDescendants } from '.';
+import { useInitDescendants } from '.';
 
 faker.seed(0);
 
@@ -77,6 +78,12 @@ export const Basic = () => {
     setItems(shuffle(items));
   };
 
+  // 2. Initialize an empty descendants data structure
+  const { Provider: TestDescendantsProvider } = useInitDescendants(
+    TestDescendantContext,
+  );
+  const [selected, setSelected] = useState<number | undefined>(0);
+
   return (
     <LeafyGreenProvider>
       <div>
@@ -90,17 +97,19 @@ export const Basic = () => {
         &nbsp;
         <Button onClick={shuffleItems}>Shuffle Items</Button>
         <br />
-        <TestParent>
-          {items.map((x, i) => (
-            <TestDescendant
-              className={testItemStyle}
-              key={x + i}
-              group="person"
-            >
-              {x}
-            </TestDescendant>
-          ))}
-        </TestParent>
+        <TestDescendantsProvider>
+          <TestSelectionContext.Provider value={{ selected, setSelected }}>
+            {items.map((x, i) => (
+              <TestDescendant
+                className={testItemStyle}
+                key={x + i}
+                group="person"
+              >
+                {x}
+              </TestDescendant>
+            ))}
+          </TestSelectionContext.Provider>
+        </TestDescendantsProvider>
       </div>
     </LeafyGreenProvider>
   );
@@ -150,6 +159,9 @@ export const Nested = () => {
     },
   ]);
 
+  // 2. Initialize an empty descendants data structure
+  const { Provider } = useInitDescendants(TestDescendantContext);
+  const [selected, setSelected] = useState<number | undefined>(0);
   const [isExpanded, setExpanded] = useState(true);
 
   const toggleCollapse = () => {
@@ -162,23 +174,25 @@ export const Nested = () => {
         <Button onClick={toggleCollapse}>
           {isExpanded ? 'Collapse' : 'Expand'} All
         </Button>
-        <TestParent>
-          {people.map((person, i) => (
-            <TestDescendant className={testItemStyle} key={person.name + i}>
-              {person.name}
-              {person.animals?.length && isExpanded
-                ? person.animals.map((animal, j) => (
-                    <TestDescendant
-                      key={person.name + i + animal + j}
-                      className={cx(nestedItemStyle, testItemStyle)}
-                    >
-                      {animal}
-                    </TestDescendant>
-                  ))
-                : ''}
-            </TestDescendant>
-          ))}
-        </TestParent>
+        <Provider>
+          <TestSelectionContext.Provider value={{ selected, setSelected }}>
+            {people.map((person, i) => (
+              <TestDescendant className={testItemStyle} key={person.name + i}>
+                {person.name}
+                {person.animals?.length && isExpanded
+                  ? person.animals.map((animal, j) => (
+                      <TestDescendant
+                        key={person.name + i + animal + j}
+                        className={cx(nestedItemStyle, testItemStyle)}
+                      >
+                        {animal}
+                      </TestDescendant>
+                    ))
+                  : ''}
+              </TestDescendant>
+            ))}
+          </TestSelectionContext.Provider>
+        </Provider>
       </div>
     </LeafyGreenProvider>
   );
@@ -211,8 +225,9 @@ const Parent = ({
 }: ComponentProps<'div'> & { open: boolean }) => {
   const elRef = useRef(null);
   const parentRef = useRef(null);
-  const { descendants, dispatch, getDescendants } =
-    useInitDescendants<HTMLDivElement>();
+  const { getDescendants, Provider } = useInitDescendants(
+    TestDescendantContext,
+  );
 
   const handleTransition = () => {
     console.log(getDescendants().map(d => d.id));
@@ -221,11 +236,7 @@ const Parent = ({
   return (
     <>
       <span ref={elRef} />
-      <DescendantsProvider
-        context={TestDescendantContext}
-        descendants={descendants}
-        dispatch={dispatch}
-      >
+      <Provider>
         <Popover
           refEl={elRef}
           style={{ border: '1px solid red' }}
@@ -236,7 +247,7 @@ const Parent = ({
             {children}
           </div>
         </Popover>
-      </DescendantsProvider>
+      </Provider>
     </>
   );
 };
@@ -251,7 +262,7 @@ export const WithPopover = {
     );
   },
   args: {
-    open: false,
+    open: true,
   },
   argTypes: {
     open: {
