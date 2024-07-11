@@ -31,7 +31,7 @@ const items = [
   'George',
   'Harry',
   'Irena',
-  // 'Jeremy',
+  'Jeremy',
 ];
 
 const TestHighlightContext = createHighlightContext('TestHighlight');
@@ -65,31 +65,29 @@ export const Basic = () => {
   const { getDescendants, Provider: MyDescendantsProvider } =
     useInitDescendants(TestDescendantContext);
 
-  const { highlight, moveHighlight, setHighlight } = useHighlight(
-    getDescendants,
-    {
+  const { highlight, setRelativeHighlight, setAbsoluteHighlight } =
+    useHighlight(TestHighlightContext, getDescendants, {
       filter: d => {
         return !d.props.isDisabled;
       },
       onInit: () => {
-        setHighlight(0);
+        setAbsoluteHighlight(0);
       },
-    },
-  );
+    });
 
   const handleKeyDown = e => {
     switch (e.key) {
       case 'ArrowDown':
-        moveHighlight('next');
+        setRelativeHighlight('next');
         break;
       case 'ArrowUp':
-        moveHighlight('prev');
+        setRelativeHighlight('prev');
         break;
       case ' ':
-        setHighlight('last');
+        setAbsoluteHighlight('last');
         break;
       case 'Escape':
-        setHighlight(0);
+        setAbsoluteHighlight(0);
         break;
       case '0':
       case '1':
@@ -101,7 +99,7 @@ export const Basic = () => {
       case '7':
       case '8':
       case '9':
-        setHighlight(Number(e.key));
+        setAbsoluteHighlight(Number(e.key));
         break;
       default:
         break;
@@ -117,11 +115,7 @@ export const Basic = () => {
   return (
     <div>
       <MyDescendantsProvider>
-        <HighlightProvider
-          context={TestHighlightContext}
-          highlight={highlight}
-          setHighlight={setHighlight}
-        >
+        <HighlightProvider context={TestHighlightContext} highlight={highlight}>
           {items.map(item => (
             <HighlightItem key={item}>{item}</HighlightItem>
           ))}
@@ -136,29 +130,27 @@ export const Grid = {
     const COLUMNS = 3;
     const { getDescendants, Provider: MyDescendantsProvider } =
       useInitDescendants(TestDescendantContext);
-    const { highlight, moveHighlight, setHighlight } = useHighlight(
-      getDescendants,
-      {
+    const { highlight, setRelativeHighlight, setAbsoluteHighlight } =
+      useHighlight(TestHighlightContext, getDescendants, {
         filter: d => {
           return !d.props.isDisabled;
         },
-        onInit: () => setHighlight(0),
-      },
-    );
+        onInit: () => setAbsoluteHighlight(0),
+      });
 
     const handleKeyDown = e => {
       switch (e.key) {
         case 'ArrowDown':
-          moveHighlight(COLUMNS);
+          setRelativeHighlight(COLUMNS);
           break;
         case 'ArrowUp':
-          moveHighlight(-COLUMNS);
+          setRelativeHighlight(-COLUMNS);
           break;
         case 'ArrowRight':
-          moveHighlight(1);
+          setRelativeHighlight(1);
           break;
         case 'ArrowLeft':
-          moveHighlight(-1);
+          setRelativeHighlight(-1);
           break;
         default:
           break;
@@ -178,7 +170,6 @@ export const Grid = {
           <HighlightProvider
             context={TestHighlightContext}
             highlight={highlight}
-            setHighlight={setHighlight}
           >
             <div
               style={{

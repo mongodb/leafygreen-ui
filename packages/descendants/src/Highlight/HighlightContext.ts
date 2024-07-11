@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import noop from 'lodash/noop';
 
 import { HighlightContextProps } from './highlight.types';
 
@@ -9,10 +8,9 @@ export type HighlightContextType<T extends HTMLElement> = React.Context<
 
 export const createHighlightContext = <T extends HTMLElement = HTMLElement>(
   displayName?: string,
-) => {
+): HighlightContextType<T> => {
   const context = createContext<HighlightContextProps<T>>({
     highlight: undefined,
-    setHighlight: noop,
   });
   context.displayName = displayName ?? 'HighlightContext';
 

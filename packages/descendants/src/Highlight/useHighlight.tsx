@@ -8,11 +8,12 @@ import {
   RelativeSetterArg,
   UpdateHighlightAction,
 } from './reducer/reducer.types';
+import { constructAbsoluteReducerAction } from './utils/constructAbsoluteReducerAction';
 import {
   HighlightHookReturnType,
-  Position,
   UseHighlightOptions,
 } from './highlight.types';
+import { HighlightContextType } from './HighlightContext';
 import { makeHighlightReducerFunction } from './reducer';
 
 /**
@@ -20,8 +21,19 @@ import { makeHighlightReducerFunction } from './reducer';
  * and fires any `onChange` side effects
  */
 export const useHighlight = <T extends HTMLElement>(
-  /** An accessor for the updated descendants list */
+  /**
+   * The context used to track highlight
+   */
+  context: HighlightContextType<T>,
+
+  /**
+   * An accessor for the updated descendants list
+   */
   getDescendants: () => DescendantsList<T>,
+
+  /**
+   * Additional options
+   */
   options?: UseHighlightOptions<T>,
 ): HighlightHookReturnType<T> => {
   // Create a reducer function
@@ -53,7 +65,7 @@ export const useHighlight = <T extends HTMLElement>(
    *
    * Fires any side-effects in the `onChange` callback
    */
-  const moveHighlight = (rel: RelativeSetterArg) => {
+  const setRelativeHighlight = (rel: RelativeSetterArg) => {
     const action: UpdateHighlightAction =
       typeof rel === 'number' ? { delta: rel } : { direction: rel };
 
@@ -69,8 +81,8 @@ export const useHighlight = <T extends HTMLElement>(
    *
    * Fires any side-effects in the `onChange` callback
    */
-  const setHighlight = (abs: AbsoluteSetterArg) => {
-    const action = constructAbsoluteAction(abs);
+  const setAbsoluteHighlight = (abs: AbsoluteSetterArg) => {
+    const action = constructAbsoluteReducerAction(abs);
 
     const updatedHighlight = highlightReducerFunction(highlight, action);
     options?.onChange?.(updatedHighlight);
@@ -78,32 +90,9 @@ export const useHighlight = <T extends HTMLElement>(
   };
 
   return {
+    // Provider,
     highlight,
-    moveHighlight,
-    setHighlight,
+    setRelativeHighlight,
+    setAbsoluteHighlight,
   };
 };
-
-function constructAbsoluteAction(
-  arg: AbsoluteSetterArg,
-): UpdateHighlightAction {
-  if (typeof arg === 'number') {
-    return {
-      index: arg,
-    };
-  }
-
-  if (typeof arg === 'string') {
-    return Object.values(Position).includes(arg as Position)
-      ? {
-          position: arg as Position,
-        }
-      : {
-          id: arg,
-        };
-  }
-
-  return {
-    value: arg,
-  };
-}

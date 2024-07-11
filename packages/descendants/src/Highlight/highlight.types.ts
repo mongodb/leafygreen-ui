@@ -19,21 +19,27 @@ export type Position = (typeof Position)[keyof typeof Position];
 export interface HighlightContextProps<T extends HTMLElement> {
   /** The currently highlighted object */
   highlight: Descendant<T> | undefined;
-  /**
-   * An absolute setter function.
-   * Sets the highlight to an explicit `id`, `index`, {@link Position}, or {@link Descendant} value
-   */
-  setHighlight: AbsoluteHighlightSetter;
 }
 
 export interface HighlightHookReturnType<T extends HTMLElement>
   extends HighlightContextProps<T> {
   /**
+   * An absolute setter function.
+   * Sets the highlight to an explicit `id`, `index`, {@link Position}, or {@link Descendant} value
+   */
+  setAbsoluteHighlight: AbsoluteHighlightSetter;
+
+  /**
    * A relative setter function.
    * Provide a {@link Direction} or `delta` number
    * to move the highlight relative to the current value
    */
-  moveHighlight: RelativeHighlightSetter;
+  setRelativeHighlight: RelativeHighlightSetter;
+
+  /**
+   * A unique context provider for the given `HighlightContext`
+   */
+  // Provider: React.ComponentType<PropsWithChildren<{}>>;
 }
 
 export type HighlightChangeHandler<T extends HTMLElement> = (

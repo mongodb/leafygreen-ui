@@ -12,16 +12,14 @@ export const HighlightProvider = <T extends HTMLElement>({
   context,
   children,
   highlight,
-  setHighlight,
 }: PropsWithChildren<HighlightProviderProps<T>>) => {
   const Provider = context.Provider;
 
   const providerValue = useMemo(
     () => ({
       highlight,
-      setHighlight,
     }),
-    [highlight, setHighlight],
+    [highlight],
   );
 
   return <Provider value={providerValue}>{children}</Provider>;
