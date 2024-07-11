@@ -35,7 +35,7 @@ const items = [
   'George',
   'Harry',
   'Irena',
-  'Jeremy',
+  // 'Jeremy',
 ];
 
 const TestHighlightContext = createHighlightContext('TestHighlight');
@@ -139,17 +139,31 @@ export const Basic = () => {
 
 export const Grid = {
   render: () => {
+    const COLUMNS = 3;
     const { getDescendants, dispatch } = useInitDescendants<HTMLDivElement>();
-    const { highlight, moveHighlight, setHighlight } =
-      useHighlight(getDescendants);
+    const { highlight, moveHighlight, setHighlight } = useHighlight(
+      getDescendants,
+      {
+        filter: d => {
+          return !d.props.isDisabled;
+        },
+        onInit: () => setHighlight(0),
+      },
+    );
 
     const handleKeyDown = e => {
       switch (e.key) {
         case 'ArrowDown':
-          moveHighlight('next');
+          moveHighlight(COLUMNS);
           break;
         case 'ArrowUp':
-          moveHighlight('prev');
+          moveHighlight(-COLUMNS);
+          break;
+        case 'ArrowRight':
+          moveHighlight(1);
+          break;
+        case 'ArrowLeft':
+          moveHighlight(-1);
           break;
         default:
           break;
@@ -176,7 +190,10 @@ export const Grid = {
             setHighlight={setHighlight}
           >
             <div
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${COLUMNS}, 1fr)`,
+              }}
             >
               {items.map(item => (
                 <HighlightItem key={item}>{item}</HighlightItem>
