@@ -1,5 +1,19 @@
 # @lg-private/canvas-header
 
+## 2.0.0
+
+### Major Changes
+
+- 0d12b4c: - Adds `badges` prop. This prop allows users to pass in [Badges](https://www.mongodb.design/component/badge/live-example).
+
+  E.g.
+
+  ```js
+  badges={<Badge variant="green">Enabled</Badge>}
+  ```
+
+  - Bump to @leafygreen-ui/leafygreen-provider@3.1.12
+
 ## 1.0.2
 
 ### Patch Changes
