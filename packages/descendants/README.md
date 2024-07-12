@@ -96,9 +96,14 @@ export const TestDescendant = ({
 
 Sometimes you'll need to access descendants from within an event handler or `useEffect` callback, where the descendants may have updated between renders, resulting in a `descendants` object with references to stale/non-existent DOM nodes. In this case, use the `getDescendants()` function to access the most up-to-date descendants object.
 
+In general: **Prefer using `getDescendants()`, since it will guarantee references to the most up-to-date descendants objects.**
+
 ```typescript
-const { descendants, dispatch, getDescendants } =
-  useInitDescendants<HTMLDivElement>();
+const {
+  Provider: MyDescendantsProvider,
+  getDescendants,
+  descendants,
+} = useInitDescendants(MyDescendantsContext);
 
 const handleTransition = () => {
   console.log(descendants); // this list will be empty, or contain references to old DOM nodes
@@ -106,15 +111,11 @@ const handleTransition = () => {
 };
 
 return (
-  <DescendantsProvider
-    context={MyDescendantsContext}
-    descendants={descendants}
-    dispatch={dispatch}
-  >
+  <MyDescendantsProvider>
     <Transition onEntered={handleTransition}>
       <div {...rest}>{children}</div>
     </Transition>
-  </DescendantsProvider>
+  </MyDescendantsProvider>
 );
 ```
 
