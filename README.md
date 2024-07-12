@@ -1,6 +1,6 @@
 # Canvas Header
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/canvas-header.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@lg-private/canvas-header.svg)
 
 #### [View on MongoDB.design](https://www.mongodb.design/component/canvas-header/example/)
 
@@ -9,19 +9,19 @@
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/canvas-header
+yarn add @lg-private/canvas-header
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/canvas-header
+npm install @lg-private/canvas-header
 ```
 
 ## Example
 
 ```js
-import { CanvasHeader } from `@leafygreen-ui/canvas-header`;
+import { CanvasHeader } from `@lg-private/canvas-header`;
 import Button from '@leafygreen-ui/button';
 import Icon from '@leafygreen-ui/icon';
 import { BackLink } from '@leafygreen-ui/typography';
