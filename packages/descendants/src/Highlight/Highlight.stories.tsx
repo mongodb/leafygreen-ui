@@ -7,7 +7,6 @@ import { StoryObj } from '@storybook/react';
 import { TestDescendantContext } from '../../test/components.testutils';
 import { useDescendant, useInitDescendants } from '../Descendants';
 
-import { HighlightProvider } from './HighlightProvider';
 import { useHighlightContext } from './useHighlightContext';
 import { createHighlightContext, useHighlight } from '.';
 
@@ -65,15 +64,18 @@ export const Basic = () => {
   const { getDescendants, Provider: MyDescendantsProvider } =
     useInitDescendants(TestDescendantContext);
 
-  const { highlight, setRelativeHighlight, setAbsoluteHighlight } =
-    useHighlight(TestHighlightContext, getDescendants, {
-      filter: d => {
-        return !d.props.isDisabled;
-      },
-      onInit: () => {
-        setAbsoluteHighlight(0);
-      },
-    });
+  const {
+    Provider: MyHighlightProvider,
+    setRelativeHighlight,
+    setAbsoluteHighlight,
+  } = useHighlight(TestHighlightContext, getDescendants, {
+    filter: d => {
+      return !d.props.isDisabled;
+    },
+    onInit: () => {
+      setAbsoluteHighlight(0);
+    },
+  });
 
   const handleKeyDown = e => {
     switch (e.key) {
@@ -115,11 +117,11 @@ export const Basic = () => {
   return (
     <div>
       <MyDescendantsProvider>
-        <HighlightProvider context={TestHighlightContext} highlight={highlight}>
+        <MyHighlightProvider>
           {items.map(item => (
             <HighlightItem key={item}>{item}</HighlightItem>
           ))}
-        </HighlightProvider>
+        </MyHighlightProvider>
       </MyDescendantsProvider>
     </div>
   );
@@ -130,13 +132,17 @@ export const Grid = {
     const COLUMNS = 3;
     const { getDescendants, Provider: MyDescendantsProvider } =
       useInitDescendants(TestDescendantContext);
-    const { highlight, setRelativeHighlight, setAbsoluteHighlight } =
-      useHighlight(TestHighlightContext, getDescendants, {
-        filter: d => {
-          return !d.props.isDisabled;
-        },
-        onInit: () => setAbsoluteHighlight(0),
-      });
+
+    const {
+      Provider: HighlightProvider,
+      setRelativeHighlight,
+      setAbsoluteHighlight,
+    } = useHighlight(TestHighlightContext, getDescendants, {
+      filter: d => {
+        return !d.props.isDisabled;
+      },
+      onInit: () => setAbsoluteHighlight(0),
+    });
 
     const handleKeyDown = e => {
       switch (e.key) {
@@ -167,10 +173,7 @@ export const Grid = {
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div>
         <MyDescendantsProvider>
-          <HighlightProvider
-            context={TestHighlightContext}
-            highlight={highlight}
-          >
+          <HighlightProvider>
             <div
               style={{
                 display: 'grid',

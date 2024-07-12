@@ -1,4 +1,5 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import React from 'react';
 
 import { DescendantsList, isDescendantsSet } from '../Descendants';
 
@@ -14,6 +15,7 @@ import {
   UseHighlightOptions,
 } from './highlight.types';
 import { HighlightContextType } from './HighlightContext';
+import { HighlightProvider } from './HighlightProvider';
 import { makeHighlightReducerFunction } from './reducer';
 
 /**
@@ -48,9 +50,18 @@ export const useHighlight = <T extends HTMLElement>(
     undefined,
   );
 
+  // Create a ref to track the current value,
+  // and accessor in order to access the latest value
+  // TODO: Consider consolidating the reducer & ref accessor into a single hook
+  const highlightRef = useRef(highlight);
+
+  const getHighlight = () => {
+    return highlightRef.current;
+  };
+
   // Fire the `onInit` callback once when the descendants are set
   // Note: we can't use the Reducer's `initializer`
-  // since the descendants will likely not exist when the reducer is established
+  // since the descendants will not exist when the reducer is first established
   const [isInitialized, setInit] = useState(false);
   useEffect(() => {
     if (!isInitialized && isDescendantsSet(getDescendants())) {
@@ -69,9 +80,9 @@ export const useHighlight = <T extends HTMLElement>(
     const action: UpdateHighlightAction =
       typeof rel === 'number' ? { delta: rel } : { direction: rel };
 
-    const updatedHighlight = highlightReducerFunction(highlight, action);
-
+    const updatedHighlight = highlightReducerFunction(getHighlight(), action);
     options?.onChange?.(updatedHighlight);
+    highlightRef.current = updatedHighlight;
     dispatch(action);
   };
 
@@ -84,13 +95,25 @@ export const useHighlight = <T extends HTMLElement>(
   const setAbsoluteHighlight = (abs: AbsoluteSetterArg) => {
     const action = constructAbsoluteReducerAction(abs);
 
-    const updatedHighlight = highlightReducerFunction(highlight, action);
+    const updatedHighlight = highlightReducerFunction(getHighlight(), action);
     options?.onChange?.(updatedHighlight);
+    highlightRef.current = updatedHighlight;
     dispatch(action);
   };
 
+  const Provider: HighlightHookReturnType<T>['Provider'] = useMemo(() => {
+    // eslint-disable-next-line react/display-name, react/prop-types
+    return ({ children }) => {
+      return (
+        <HighlightProvider context={context} highlight={getHighlight()}>
+          {children}
+        </HighlightProvider>
+      );
+    };
+  }, [context]);
+
   return {
-    // Provider,
+    Provider,
     highlight,
     setRelativeHighlight,
     setAbsoluteHighlight,

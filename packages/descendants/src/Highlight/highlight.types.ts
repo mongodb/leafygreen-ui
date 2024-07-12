@@ -1,3 +1,5 @@
+import { PropsWithChildren } from 'react';
+
 import { Descendant, DescendantsList } from '../Descendants';
 
 import { AbsoluteHighlightSetter, RelativeHighlightSetter } from './reducer';
@@ -39,7 +41,7 @@ export interface HighlightHookReturnType<T extends HTMLElement>
   /**
    * A unique context provider for the given `HighlightContext`
    */
-  // Provider: React.ComponentType<PropsWithChildren<{}>>;
+  Provider: React.ComponentType<PropsWithChildren<{}>>;
 }
 
 export type HighlightChangeHandler<T extends HTMLElement> = (
