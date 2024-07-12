@@ -63,12 +63,13 @@ export const useHighlight = <T extends HTMLElement>(
   // Note: we can't use the Reducer's `initializer`
   // since the descendants will not exist when the reducer is first established
   const [isInitialized, setInit] = useState(false);
+  const currentDescendants = getDescendants();
   useEffect(() => {
-    if (!isInitialized && isDescendantsSet(getDescendants())) {
-      options?.onInit?.(getDescendants());
+    if (!isInitialized && isDescendantsSet(currentDescendants)) {
+      options?.onInit?.(currentDescendants);
       setInit(true);
     }
-  }, [getDescendants, isInitialized, options]);
+  }, [currentDescendants, isInitialized, options]);
 
   /**
    * Custom dispatch that moves the current highlight

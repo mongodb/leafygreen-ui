@@ -30,16 +30,16 @@ export const TestParent = ({ children, ...rest }: ComponentProps<'div'>) => {
 
 interface TestDescendantProps extends ComponentProps<'div'> {
   group?: string;
+  isDisabled?: boolean;
 }
 
 export const TestDescendant = forwardRef<HTMLDivElement, TestDescendantProps>(
-  ({ children, ...props }: TestDescendantProps, fwdRef) => {
+  ({ children, isDisabled, ...props }: TestDescendantProps, fwdRef) => {
     // 4. Establish a child component as a descendant of the established context
-    const { index, id, ref } = useDescendant(
-      TestDescendantContext,
-      fwdRef,
-      props,
-    );
+    const { index, id, ref } = useDescendant(TestDescendantContext, fwdRef, {
+      isDisabled,
+      ...props,
+    });
 
     const { selected, setSelected } = useContext(TestSelectionContext);
     const isSelected = index === selected;
@@ -48,6 +48,7 @@ export const TestDescendant = forwardRef<HTMLDivElement, TestDescendantProps>(
       // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
       <div
         ref={ref}
+        data-disabled={isDisabled}
         data-testid="leafygreen-item"
         data-index={index}
         data-id={id}
