@@ -10,15 +10,15 @@ Keeping track of which element in a list should be focused/highlighted is a comm
 
 ## Highlight
 
-An element that currently shows in a _highlighted_ state. This is distinct from the “checked” state. Technically implemented using either DOM activeElement (focus), or the aria-selected attribute. (see Accessibility)
+An element that currently shows in a _highlighted_ state. This is distinct from the “checked” state. Technically implemented using either DOM `activeElement` (focus), or the `aria-selected` attribute.
 
 ## Focus
 
-The DOM activeElement, one of at least 2 ways to implement “highlight”
+The DOM `activeElement`, one of at least 2 ways to implement “highlight”
 
 ## Checked
 
-A distinct state from “highlighted” — a list element can be either “highlighted”, “checked” or both. “Checked” represents a component’s current value, (i.e. the selected item in a Select menu). When using DOM activeElement to represent “highlight”, the “checked” state should be represented using the aria-current attribute.
+A distinct state from “highlighted” — a list element can be either “highlighted”, “checked” or both. “Checked” represents a component’s current value, (i.e. the selected item in a Select menu). When using DOM `activeElement` to represent “highlight”, the “checked” state should be represented using the `aria-current` attribute.
 
 # Usage
 
