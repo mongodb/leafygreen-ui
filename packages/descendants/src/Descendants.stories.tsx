@@ -48,19 +48,21 @@ const meta: StoryMetaType<ElementType<unknown>> = {
 };
 export default meta;
 
+const baseItems = [
+  'Adam',
+  'Brooke',
+  'Chris',
+  'Dave',
+  'Eliane',
+  'Fred',
+  'George',
+  'Harry',
+  'Irena',
+  'Jeremy',
+];
+
 export const Basic = () => {
-  const [items, setItems] = useState([
-    'Adam',
-    'Brooke',
-    'Chris',
-    'Dave',
-    'Eliane',
-    'Fred',
-    'George',
-    'Harry',
-    'Irena',
-    'Jeremy',
-  ]);
+  const [items, setItems] = useState(baseItems);
 
   const addItem = () => {
     const newItems = [...items];
@@ -78,7 +80,6 @@ export const Basic = () => {
     setItems(shuffle(items));
   };
 
-  // 2. Initialize an empty descendants data structure
   const { Provider: TestDescendantsProvider } = useInitDescendants(
     TestDescendantContext,
   );
@@ -116,50 +117,13 @@ export const Basic = () => {
 };
 
 export const Nested = () => {
-  const [people, _setItems] = useState([
-    {
-      name: 'Adam',
+  const [people, _setItems] = useState(
+    baseItems.map(item => ({
+      name: item,
       animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Brooke',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Chris',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Dave',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Eliane',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Fred',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'George',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Harry',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Irena',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Jeremy',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-  ]);
+    })),
+  );
 
-  // 2. Initialize an empty descendants data structure
   const { Provider } = useInitDescendants(TestDescendantContext);
   const [selected, setSelected] = useState<number | undefined>(0);
   const [isExpanded, setExpanded] = useState(true);
