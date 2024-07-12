@@ -233,14 +233,19 @@ describe('packages/descendants/highlight', () => {
         </>,
       );
 
-      const c = renderHook(() => useHighlightContext(TestHighlightContext), {
-        wrapper: r.highlightHook.result.current.Provider,
-      });
+      const childHook = renderHook(
+        () => useHighlightContext(TestHighlightContext),
+        {
+          wrapper: r.highlightHook.result.current.Provider,
+        },
+      );
 
       act(() => r.highlightHook.result.current.setAbsoluteHighlight(0));
-      c.rerender();
-      expect(c.result.current.highlight).toBeDefined();
-      expect(c.result.current.highlight?.element).toHaveTextContent('Adam');
+      childHook.rerender();
+      expect(childHook.result.current.highlight).toBeDefined();
+      expect(childHook.result.current.highlight?.element).toHaveTextContent(
+        'Adam',
+      );
     });
   });
 });
