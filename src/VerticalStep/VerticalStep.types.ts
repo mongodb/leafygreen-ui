@@ -2,7 +2,7 @@ import { ComponentPropsWithRef } from 'react';
 
 import { ButtonProps } from '@leafygreen-ui/button';
 
-type CustomConfirmButtonProps = Omit<ButtonProps, 'variant'>;
+type CustomConfirmButtonProps = Omit<ButtonProps, 'size' | 'variant'>;
 
 export interface VerticalStepProps extends ComponentPropsWithRef<'li'> {
   /**

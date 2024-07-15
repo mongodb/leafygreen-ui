@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { Variant } from '@leafygreen-ui/button';
+import Button, { Size, Variant } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS_VERTICAL_STEPPER } from '../constants';
@@ -30,6 +30,7 @@ export const VerticalStepButtons = ({
               data-testid={LGIDS_VERTICAL_STEPPER.stepSecondaryButton}
               tabIndex={!isCurrent ? -1 : 0} // Prevent keyboard interaction when the step is not current
               {...secondaryButtonProps}
+              size={Size.Small}
               variant={Variant.Default}
             />
           )}
@@ -39,6 +40,7 @@ export const VerticalStepButtons = ({
               data-testid={LGIDS_VERTICAL_STEPPER.stepPrimaryButton}
               tabIndex={!isCurrent ? -1 : 0} // Prevent keyboard interaction when the step is not current
               {...primaryButtonProps}
+              size={Size.Small}
               variant={secondaryButtonProps ? Variant.Primary : Variant.Default}
             />
           )}
