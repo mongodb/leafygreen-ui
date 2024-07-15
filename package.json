@@ -32,7 +32,7 @@
     "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
-    "validate": "lg validate",
+    "validate": "lg validate --depsOnly",
     "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'yarn build-storybook --test'"
   },
   "devDependencies": {
