@@ -1,5 +1,15 @@
 # @lg-private/vertical-stepper
 
+## 1.1.0
+
+### Minor Changes
+
+- f78419b: [LG-4395](https://jira.mongodb.org/browse/LG-4395): Fixes buttons sizes from default to small
+
+### Patch Changes
+
+- 8f076fb: Fixes naming of lg private packages from `@leafygreen-ui/*` to `@lg-private/*`
+
 ## 1.0.0
 
 ### Major Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lg-private/vertical-stepper",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "LeafyGreen UI Kit Vertical Stepper",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
