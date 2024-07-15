@@ -1,5 +1,11 @@
 # @lg-private/canvas-header
 
+## 2.0.1
+
+### Patch Changes
+
+- 8f076fb: Fixes naming of lg private packages from `@leafygreen-ui/*` to `@lg-private/*`
+
 ## 2.0.0
 
 ### Major Changes
