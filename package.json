@@ -20,6 +20,7 @@
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
     "clean:builds": "rm -rf {packages,tools,chat}/*/{dist,tsconfig.tsbuildinfo,stories.js,.turbo}",
+    "clean:cache": "rm -rf .turbo {cache}",
     "clean:modules": "rm -rf node_modules {packages,tools,chat}/*/node_modules",
     "clean:ts": "rm -rf {packages,tools,chat}/*/{dist/**/*.ts,dist/**/*.ts.map,tsconfig.tsbuildinfo,ts-trace,.turbo}",
     "fix": "lg lint --fix",
