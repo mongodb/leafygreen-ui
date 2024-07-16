@@ -97,6 +97,7 @@ export const Shadow = () => (
         background-color: ${color.light.background.primary.default};
         padding: ${spacing[1600]}px;
         border-radius: ${borderRadius[200]}px;
+        border: 1px solid ${color.light.border.secondary.default};
         color: ${color.light.text.primary.default};
       `}
     >
@@ -115,6 +116,7 @@ export const Shadow = () => (
           background-color: ${color.dark.background.primary.default};
           padding: ${spacing[1600]}px;
           border-radius: ${borderRadius[200]}px;
+          border: 1px solid ${color.dark.border.secondary.default};
           color: ${color.dark.text.primary.default};
         `}
       >
