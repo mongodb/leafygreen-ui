@@ -12,7 +12,6 @@ import {
   Property,
   transitionDuration,
   typeScales,
-  Variant as VariantToken,
 } from '@leafygreen-ui/tokens';
 
 import { Variant } from './Chip.types';
@@ -217,30 +216,14 @@ export const variantColor = {
   false
 >;
 
-const chipTextTruncateDisabled = {
-  [Theme.Dark]: {
-    [VariantToken.Disabled]: {
-      [InteractionState.Focus]: palette.gray.dark1,
-    },
-  },
-  [Theme.Light]: {
-    [VariantToken.Disabled]: {
-      [InteractionState.Focus]: palette.gray.light1,
-    },
-  },
+const truncateDisabledColor = {
+  [Theme.Dark]: palette.gray.dark1,
+  [Theme.Light]: palette.gray.light1,
 };
 
-const chipWrapperDisabled = {
-  [Theme.Dark]: {
-    [VariantToken.Disabled]: {
-      [Property.Text]: palette.gray.dark2,
-    },
-  },
-  [Theme.Light]: {
-    [VariantToken.Disabled]: {
-      [Property.Text]: palette.gray.base,
-    },
-  },
+const wrapperDisabledColor = {
+  [Theme.Dark]: palette.gray.dark2,
+  [Theme.Light]: palette.gray.base,
 };
 
 /**
@@ -270,7 +253,7 @@ export const getChipWrapperStyles = (
       [css`
         cursor: not-allowed;
         background-color: ${color[theme].background.secondary.default};
-        color: ${chipWrapperDisabled[theme].disabled.text};
+        color: ${wrapperDisabledColor[theme]};
       `]: isDisabled,
       [css`
         box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
@@ -320,7 +303,7 @@ export const getChipTextStyles = (
 
         // truncated + disabled + focused styles (a truncated disabled chip is still focusable)
         &:focus-within {
-          background-color: ${chipTextTruncateDisabled[theme].disabled.focus};
+          background-color: ${truncateDisabledColor[theme]};
         }
       `]: isDisabled,
     },
