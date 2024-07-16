@@ -12,15 +12,16 @@ import { getTruncatedName } from '../utils/getTruncatedName';
 import {
   chipInlineDefinitionClassName,
   chipTextClassName,
-  chipTextDisabledStyles,
-  chipTextDismissSizeStyle,
-  chipTextSizeStyle,
-  chipTextStyles,
+  // chipTextDisabledStyles,
+  // chipTextDismissSizeStyle,
+  // chipTextSizeStyle,
+  // chipTextStyles,
   chipWrapperBaseDisabledStyles,
   chipWrapperBaseStyle,
   chipWrapperDisabledStyle,
   chipWrapperSizeStyle,
   chipWrapperThemeStyle,
+  getChipTextStyles,
 } from './Chip.styles';
 import { ChipProps, TruncationLocation, Variant } from './Chip.types';
 
@@ -38,6 +39,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       popoverZIndex,
       className,
       dismissButtonAriaLabel,
+      icon,
       ...rest
     }: ChipProps,
     forwardedRef,
@@ -86,15 +88,23 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         <span
           data-testid="chip-text"
           className={cx(
-            chipTextStyles(variant, theme),
-            chipTextSizeStyle(baseFontSize),
-            {
-              [chipTextDismissSizeStyle]: !!onDismiss,
-              [chipTextDisabledStyles[theme]]: disabled,
-            },
+            // chipTextStyles(variant, theme),
+            // chipTextSizeStyle(baseFontSize),
+            // {
+            //   [chipTextDismissSizeStyle]: !!onDismiss,
+            //   [chipTextDisabledStyles[theme]]: disabled,
+            // },
+            getChipTextStyles(
+              baseFontSize,
+              variant,
+              theme,
+              disabled,
+              !!onDismiss,
+            ),
             chipTextClassName,
           )}
         >
+          {icon ?? icon}
           {isTruncated ? (
             <InlineDefinition
               darkMode={darkMode}

@@ -2,6 +2,7 @@ import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -27,6 +28,7 @@ const meta: StoryMetaType<typeof Chip> = {
           TruncationLocation.Start,
         ],
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
+        icon: [<Icon glyph={'Wizard'} key="1" />, undefined],
       },
       args: {},
       decorator: (Instance, context) => {
