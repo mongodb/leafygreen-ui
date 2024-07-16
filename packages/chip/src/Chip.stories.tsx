@@ -30,7 +30,7 @@ const meta: StoryMetaType<typeof Chip> = {
         disabled: [false, true],
         onDismiss: [() => {}, undefined],
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
-        glyph: [<Icon glyph={'Wizard'} key="1" />, undefined],
+        glyph: [<Icon glyph="Wizard" key="1" />, undefined],
       },
       args: {},
       decorator: (Instance, context) => {

@@ -241,10 +241,10 @@ export const getChipWrapperStyles = (
       align-items: center;
       overflow: hidden;
       white-space: nowrap;
-      box-sizing: border-box;
       border-radius: 4px;
       font-size: ${fontSize[baseFontSize]}px;
       line-height: ${lineHeight[baseFontSize]}px;
+
       color: ${variantColor[variant][theme].text.default};
       background-color: ${variantColor[variant][theme].background.default};
       transition: background-color ${transitionDuration.faster}ms ease-in-out;

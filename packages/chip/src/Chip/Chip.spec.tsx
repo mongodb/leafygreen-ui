@@ -3,6 +3,8 @@ import { act, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import Icon from '@leafygreen-ui/icon';
+
 import { Chip } from '.';
 
 const longLabel = 'crush crush crush';
@@ -245,6 +247,22 @@ describe('packages/chip', () => {
     });
   });
 
+  describe('glyph', () => {
+    test('renders when glyph is passed', () => {
+      const { queryByTestId } = renderChip({
+        glyph: <Icon glyph="Wizard" data-testid="chip-glyph" />,
+      });
+      const icon = queryByTestId('chip-glyph');
+      expect(icon).toBeInTheDocument();
+    });
+
+    test('does not renders when glyph is not passed', () => {
+      const { queryByTestId } = renderChip();
+      const icon = queryByTestId('chip-glyph');
+      expect(icon).not.toBeInTheDocument();
+    });
+  });
+
   describe('dismiss button with truncated text', () => {
     test('renders when onDismiss is passed', () => {
       const onDismiss = jest.fn();
@@ -338,6 +356,7 @@ describe('packages/chip', () => {
         chipCharacterLimit={10}
         chipTruncationLocation="end"
         dismissButtonAriaLabel="deselect"
+        glyph={<Icon glyph="Wizard" />}
         darkMode
       />
     </>;
