@@ -18,8 +18,9 @@ import {
   TestParent,
   TestParent2,
 } from '../test/components.testutils';
+import { TestSelectionContext } from '../test/testSelectionContext';
 
-import { DescendantsProvider, useInitDescendants } from '.';
+import { useInitDescendants } from '.';
 
 faker.seed(0);
 
@@ -47,19 +48,21 @@ const meta: StoryMetaType<ElementType<unknown>> = {
 };
 export default meta;
 
+const baseItems = [
+  'Adam',
+  'Brooke',
+  'Chris',
+  'Dave',
+  'Eliane',
+  'Fred',
+  'George',
+  'Harry',
+  'Irena',
+  'Jeremy',
+];
+
 export const Basic = () => {
-  const [items, setItems] = useState([
-    'Adam',
-    'Brooke',
-    'Chris',
-    'Dave',
-    'Eliane',
-    'Fred',
-    'George',
-    'Harry',
-    'Irena',
-    'Jeremy',
-  ]);
+  const [items, setItems] = useState(baseItems);
 
   const addItem = () => {
     const newItems = [...items];
@@ -77,6 +80,11 @@ export const Basic = () => {
     setItems(shuffle(items));
   };
 
+  const { Provider: TestDescendantsProvider } = useInitDescendants(
+    TestDescendantContext,
+  );
+  const [selected, setSelected] = useState<number | undefined>(0);
+
   return (
     <LeafyGreenProvider>
       <div>
@@ -90,66 +98,34 @@ export const Basic = () => {
         &nbsp;
         <Button onClick={shuffleItems}>Shuffle Items</Button>
         <br />
-        <TestParent>
-          {items.map((x, i) => (
-            <TestDescendant
-              className={testItemStyle}
-              key={x + i}
-              group="person"
-            >
-              {x}
-            </TestDescendant>
-          ))}
-        </TestParent>
+        <TestDescendantsProvider>
+          <TestSelectionContext.Provider value={{ selected, setSelected }}>
+            {items.map((x, i) => (
+              <TestDescendant
+                className={testItemStyle}
+                key={x + i}
+                group="person"
+              >
+                {x}
+              </TestDescendant>
+            ))}
+          </TestSelectionContext.Provider>
+        </TestDescendantsProvider>
       </div>
     </LeafyGreenProvider>
   );
 };
 
 export const Nested = () => {
-  const [people, _setItems] = useState([
-    {
-      name: 'Adam',
+  const [people, _setItems] = useState(
+    baseItems.map(item => ({
+      name: item,
       animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Brooke',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Chris',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Dave',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Eliane',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Fred',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'George',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Harry',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Irena',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Jeremy',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-  ]);
+    })),
+  );
 
+  const { Provider } = useInitDescendants(TestDescendantContext);
+  const [selected, setSelected] = useState<number | undefined>(0);
   const [isExpanded, setExpanded] = useState(true);
 
   const toggleCollapse = () => {
@@ -162,23 +138,25 @@ export const Nested = () => {
         <Button onClick={toggleCollapse}>
           {isExpanded ? 'Collapse' : 'Expand'} All
         </Button>
-        <TestParent>
-          {people.map((person, i) => (
-            <TestDescendant className={testItemStyle} key={person.name + i}>
-              {person.name}
-              {person.animals?.length && isExpanded
-                ? person.animals.map((animal, j) => (
-                    <TestDescendant
-                      key={person.name + i + animal + j}
-                      className={cx(nestedItemStyle, testItemStyle)}
-                    >
-                      {animal}
-                    </TestDescendant>
-                  ))
-                : ''}
-            </TestDescendant>
-          ))}
-        </TestParent>
+        <Provider>
+          <TestSelectionContext.Provider value={{ selected, setSelected }}>
+            {people.map((person, i) => (
+              <TestDescendant className={testItemStyle} key={person.name + i}>
+                {person.name}
+                {person.animals?.length && isExpanded
+                  ? person.animals.map((animal, j) => (
+                      <TestDescendant
+                        key={person.name + i + animal + j}
+                        className={cx(nestedItemStyle, testItemStyle)}
+                      >
+                        {animal}
+                      </TestDescendant>
+                    ))
+                  : ''}
+              </TestDescendant>
+            ))}
+          </TestSelectionContext.Provider>
+        </Provider>
       </div>
     </LeafyGreenProvider>
   );
@@ -211,8 +189,9 @@ const Parent = ({
 }: ComponentProps<'div'> & { open: boolean }) => {
   const elRef = useRef(null);
   const parentRef = useRef(null);
-  const { descendants, dispatch, getDescendants } =
-    useInitDescendants<HTMLDivElement>();
+  const { getDescendants, Provider } = useInitDescendants(
+    TestDescendantContext,
+  );
 
   const handleTransition = () => {
     console.log(getDescendants().map(d => d.id));
@@ -221,11 +200,7 @@ const Parent = ({
   return (
     <>
       <span ref={elRef} />
-      <DescendantsProvider
-        context={TestDescendantContext}
-        descendants={descendants}
-        dispatch={dispatch}
-      >
+      <Provider>
         <Popover
           refEl={elRef}
           style={{ border: '1px solid red' }}
@@ -236,7 +211,7 @@ const Parent = ({
             {children}
           </div>
         </Popover>
-      </DescendantsProvider>
+      </Provider>
     </>
   );
 };
@@ -251,7 +226,7 @@ export const WithPopover = {
     );
   },
   args: {
-    open: false,
+    open: true,
   },
   argTypes: {
     open: {
