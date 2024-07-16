@@ -55,107 +55,6 @@ export const chipWrapperPadding: Record<
   },
 } as const;
 
-/**
- * Chip Variants
- */
-// export const variantColor: Record<
-//   Variant,
-//   Record<
-//     Theme,
-//     {
-//       color: string;
-//       bgColor: string;
-//       focusBgColor: string;
-//       iconColor: string;
-//     }
-//   >
-// > = {
-//   [Variant.Blue]: {
-//     [Theme.Dark]: {
-//       color: palette.blue.light2,
-//       bgColor: palette.blue.dark3,
-//       focusBgColor: palette.blue.dark1,
-//       iconColor: palette.blue.light2,
-//     },
-//     [Theme.Light]: {
-//       color: palette.blue.dark3,
-//       bgColor: palette.blue.light3,
-//       focusBgColor: '#89D2FF',
-//       iconColor: palette.blue.dark2,
-//     },
-//   },
-//   [Variant.Red]: {
-//     [Theme.Dark]: {
-//       color: palette.red.light2,
-//       bgColor: palette.red.dark3,
-//       focusBgColor: '#BB1A1A',
-//       iconColor: palette.red.light2,
-//     },
-//     [Theme.Light]: {
-//       color: palette.red.dark3,
-//       bgColor: palette.red.light3,
-//       focusBgColor: '#FF9789',
-//       iconColor: palette.red.dark2,
-//     },
-//   },
-//   [Variant.Gray]: {
-//     [Theme.Dark]: {
-//       color: palette.gray.light2,
-//       bgColor: palette.gray.dark2,
-//       focusBgColor: palette.gray.base,
-//       iconColor: palette.gray.dark1,
-//     },
-//     [Theme.Light]: {
-//       color: palette.black,
-//       bgColor: palette.gray.light2,
-//       focusBgColor: '#A0A9A8',
-//       iconColor: palette.gray.light1,
-//     },
-//   },
-//   [Variant.Green]: {
-//     [Theme.Dark]: {
-//       color: palette.green.light2,
-//       bgColor: palette.green.dark3,
-//       focusBgColor: palette.green.dark1,
-//       iconColor: palette.green.dark2,
-//     },
-//     [Theme.Light]: {
-//       color: palette.green.dark3,
-//       bgColor: palette.green.light3,
-//       focusBgColor: palette.green.light1,
-//       iconColor: palette.green.light2,
-//     },
-//   },
-//   [Variant.Purple]: {
-//     [Theme.Dark]: {
-//       color: palette.purple.light2,
-//       bgColor: palette.purple.dark3,
-//       focusBgColor: '#892CCA',
-//       iconColor: palette.purple.light2,
-//     },
-//     [Theme.Light]: {
-//       color: palette.purple.dark3,
-//       bgColor: palette.purple.light3,
-//       focusBgColor: '#E19AFF',
-//       iconColor: palette.purple.dark2,
-//     },
-//   },
-//   [Variant.Yellow]: {
-//     [Theme.Dark]: {
-//       color: palette.yellow.light2,
-//       bgColor: palette.yellow.dark3,
-//       focusBgColor: '#C27823',
-//       iconColor: palette.yellow.light2,
-//     },
-//     [Theme.Light]: {
-//       color: palette.yellow.dark3,
-//       bgColor: palette.yellow.light3,
-//       focusBgColor: '#FFD664',
-//       iconColor: palette.yellow.dark2,
-//     },
-//   },
-// };
-
 export const variantColor = {
   [Variant.Blue]: {
     [Theme.Dark]: {
@@ -219,7 +118,7 @@ export const variantColor = {
         [InteractionState.Default]: palette.gray.light2,
       },
       [Property.Icon]: {
-        [InteractionState.Default]: palette.gray.dark1,
+        [InteractionState.Default]: palette.gray.light1,
       },
     },
     [Theme.Light]: {
@@ -231,7 +130,7 @@ export const variantColor = {
         [InteractionState.Default]: palette.black,
       },
       [Property.Icon]: {
-        [InteractionState.Default]: palette.gray.light1,
+        [InteractionState.Default]: palette.gray.dark1,
       },
     },
   },
@@ -331,44 +230,53 @@ const chipTextTruncateDisabled = {
   },
 };
 
+const chipWrapperDisabled = {
+  [Theme.Dark]: {
+    [VariantToken.Disabled]: {
+      [Property.Text]: palette.gray.dark2,
+    },
+  },
+  [Theme.Light]: {
+    [VariantToken.Disabled]: {
+      [Property.Text]: palette.gray.base,
+    },
+  },
+};
+
 /**
  * Chip wrapper
  */
-export const chipWrapperThemeStyle = (variant: Variant, theme: Theme) => css`
-  color: ${variantColor[variant][theme].text.default};
-  background-color: ${variantColor[variant][theme].background.default};
-  transition: background-color ${transitionDuration.faster}ms ease-in-out;
-`;
-
-export const chipWrapperBaseStyle = css`
-  display: inline-flex;
-  align-items: center;
-  overflow: hidden;
-  white-space: nowrap;
-  box-sizing: border-box;
-  border-radius: 4px;
-`;
-
-export const chipWrapperSizeStyle = (baseFontSize: BaseFontSize) => css`
-  font-size: ${fontSize[baseFontSize]}px;
-  line-height: ${lineHeight[baseFontSize]}px;
-`;
-
-export const chipWrapperBaseDisabledStyles = css`
-  cursor: not-allowed;
-`;
-
-export const chipWrapperDisabledStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.base};
-    background-color: ${palette.gray.light3};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.dark2};
-    background-color: ${palette.gray.dark4};
-    box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
-  `,
-};
+export const getChipWrapperStyles = (
+  baseFontSize: BaseFontSize,
+  variant: Variant,
+  theme: Theme,
+  isDisabled = false,
+) =>
+  cx(
+    css`
+      display: inline-flex;
+      align-items: center;
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+      border-radius: 4px;
+      font-size: ${fontSize[baseFontSize]}px;
+      line-height: ${lineHeight[baseFontSize]}px;
+      color: ${variantColor[variant][theme].text.default};
+      background-color: ${variantColor[variant][theme].background.default};
+      transition: background-color ${transitionDuration.faster}ms ease-in-out;
+    `,
+    {
+      [css`
+        cursor: not-allowed;
+        background-color: ${color[theme].background.secondary.default};
+        color: ${chipWrapperDisabled[theme].disabled.text};
+      `]: isDisabled,
+      [css`
+        box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
+      `]: isDisabled && theme === Theme.Dark,
+    },
+  );
 
 /**
  * Chip text
@@ -422,53 +330,3 @@ export const getChipTextStyles = (
       `]: isDismissible,
     },
   );
-
-// export const chipTextSizeStyle = (baseFontSize: BaseFontSize) => css`
-//   padding-inline: ${chipWrapperPadding[baseFontSize].x}px;
-//   padding-block: ${chipWrapperPadding[baseFontSize].y}px;
-// `;
-
-// export const chipTextDismissSizeStyle = css`
-//   padding-inline-end: 2px;
-// `;
-
-// export const chipTextStyles = (variant: Variant, theme: Theme) => css`
-//   display: flex;
-//   gap: 2px;
-
-//   svg {
-//     align-self: center;
-//   }
-
-//   &:focus-within {
-//     background-color: ${variantColor[variant][theme].focusBgColor};
-//   }
-
-//   .${chipInlineDefinitionClassName} {
-//     &:focus-visible,
-//     &:focus {
-//       outline: none;
-//     }
-//   }
-// `;
-
-// export const chipTextDisabledStyles: Record<Theme, string> = {
-//   [Theme.Dark]: css`
-//     svg {
-//       color: ${palette.gray.dark1};
-//     }
-
-//     &:focus-within {
-//       background-color: ${palette.gray.dark1};
-//     }
-//   `,
-//   [Theme.Light]: css`
-//     svg {
-//       color: ${palette.gray.base};
-//     }
-
-//     &:focus-within {
-//       background-color: ${palette.gray.light1};
-//     }
-//   `,
-// };

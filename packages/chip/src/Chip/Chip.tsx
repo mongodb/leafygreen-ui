@@ -12,16 +12,8 @@ import { getTruncatedName } from '../utils/getTruncatedName';
 import {
   chipInlineDefinitionClassName,
   chipTextClassName,
-  // chipTextDisabledStyles,
-  // chipTextDismissSizeStyle,
-  // chipTextSizeStyle,
-  // chipTextStyles,
-  chipWrapperBaseDisabledStyles,
-  chipWrapperBaseStyle,
-  chipWrapperDisabledStyle,
-  chipWrapperSizeStyle,
-  chipWrapperThemeStyle,
   getChipTextStyles,
+  getChipWrapperStyles,
 } from './Chip.styles';
 import { ChipProps, TruncationLocation, Variant } from './Chip.types';
 
@@ -39,7 +31,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       popoverZIndex,
       className,
       dismissButtonAriaLabel,
-      icon,
+      glyph,
       ...rest
     }: ChipProps,
     forwardedRef,
@@ -72,15 +64,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         ref={forwardedRef}
         aria-disabled={disabled}
         className={cx(
-          chipWrapperBaseStyle,
-          chipWrapperThemeStyle(variant, theme),
-          chipWrapperSizeStyle(baseFontSize),
-          {
-            [cx(
-              chipWrapperDisabledStyle[theme],
-              chipWrapperBaseDisabledStyles,
-            )]: disabled,
-          },
+          getChipWrapperStyles(baseFontSize, variant, theme, disabled),
           className,
         )}
         {...rest}
@@ -88,12 +72,6 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         <span
           data-testid="chip-text"
           className={cx(
-            // chipTextStyles(variant, theme),
-            // chipTextSizeStyle(baseFontSize),
-            // {
-            //   [chipTextDismissSizeStyle]: !!onDismiss,
-            //   [chipTextDisabledStyles[theme]]: disabled,
-            // },
             getChipTextStyles(
               baseFontSize,
               variant,
@@ -104,7 +82,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             chipTextClassName,
           )}
         >
-          {icon ?? icon}
+          {glyph ?? glyph}
           {isTruncated ? (
             <InlineDefinition
               darkMode={darkMode}
@@ -135,6 +113,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
 Chip.displayName = 'Chip';
 
 Chip.propTypes = {
+  glyph: PropTypes.node,
   label: PropTypes.string.isRequired,
   chipCharacterLimit: PropTypes.number,
   chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
@@ -143,4 +122,4 @@ Chip.propTypes = {
   variant: PropTypes.oneOf(Object.values(Variant)),
   onDismiss: PropTypes.func,
   dismissButtonAriaLabel: PropTypes.string,
-};
+} as any; // avoid inferred types from interfering;

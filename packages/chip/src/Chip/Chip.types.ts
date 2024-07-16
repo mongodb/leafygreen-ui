@@ -83,5 +83,5 @@ export interface ChipProps
    * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
-  icon?: React.ReactElement;
+  glyph?: React.ReactElement;
 }

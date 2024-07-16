@@ -28,7 +28,7 @@ const meta: StoryMetaType<typeof Chip> = {
           TruncationLocation.Start,
         ],
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
-        icon: [<Icon glyph={'Wizard'} key="1" />, undefined],
+        glyph: [<Icon glyph={'Wizard'} key="1" />, undefined],
       },
       args: {},
       decorator: (Instance, context) => {
