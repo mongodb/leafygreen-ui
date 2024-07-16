@@ -15,18 +15,20 @@ const meta: StoryMetaType<typeof Chip> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['Gray', 'Green', 'Blue', 'Red', 'Purple', 'Yellow'],
+      storyNames: [
+        'Gray',
+        'Green',
+        'Blue',
+        'Red',
+        'Purple',
+        'Yellow',
+        'Truncate',
+      ],
       combineArgs: {
         darkMode: [false, true],
         label: ['Chip', 'meow meow meow miaou miao miau'],
         disabled: [false, true],
         onDismiss: [() => {}, undefined],
-        chipTruncationLocation: [
-          TruncationLocation.End,
-          TruncationLocation.Middle,
-          TruncationLocation.None,
-          TruncationLocation.Start,
-        ],
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
         glyph: [<Icon glyph={'Wizard'} key="1" />, undefined],
       },
@@ -43,7 +45,7 @@ const meta: StoryMetaType<typeof Chip> = {
   args: {
     label: 'Chip',
     onDismiss: () => {},
-    chipTruncationLocation: TruncationLocation.None,
+    chipTruncationLocation: TruncationLocation.End,
     baseFontSize: BaseFontSize.Body1,
     variant: Variant.Gray,
     chipCharacterLimit: 15,
@@ -117,6 +119,24 @@ Yellow.parameters = {
   generate: {
     args: {
       variant: Variant.Yellow,
+    },
+  },
+};
+
+export const Truncate: StoryType<typeof Chip> = () => <></>;
+Truncate.parameters = {
+  generate: {
+    args: {
+      variant: Variant.Blue,
+      label: 'meow meow meow miaou miao miau',
+    },
+    combineArgs: {
+      chipTruncationLocation: [
+        TruncationLocation.End,
+        TruncationLocation.Middle,
+        TruncationLocation.None,
+        TruncationLocation.Start,
+      ],
     },
   },
 };

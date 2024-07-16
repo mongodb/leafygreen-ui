@@ -79,7 +79,7 @@ export interface ChipProps
   dismissButtonAriaLabel?: string;
 
   /**
-   * An icon glyph rendered before the `Chip` text.
+   * An icon glyph rendered before the text.
    * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
