@@ -46,11 +46,11 @@ export const chipWrapperPadding: Record<
 > = {
   [BaseFontSize.Body1]: {
     y: 0,
-    x: 6,
+    x: 4,
   },
   [BaseFontSize.Body2]: {
     y: 2,
-    x: 6,
+    x: 4,
   },
 } as const;
 

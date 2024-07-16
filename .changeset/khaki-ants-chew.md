@@ -2,7 +2,7 @@
 '@leafygreen-ui/chip': minor
 ---
 
-Adds optional `glyph` prop. The glyph will appear to the right of the chip text.
+- Adds optional `glyph` prop. The glyph will appear to the left of the chip text.
 
 ```js
 <Chip
@@ -10,3 +10,4 @@ Adds optional `glyph` prop. The glyph will appear to the right of the chip text.
   glyph={<Icon glyph='Wizard' />}
 />
 ```
+- Decrease left and right padding from `6px` to `4px`.
