@@ -1,5 +1,11 @@
 # @lg-private/vertical-stepper
 
+## 2.0.0
+
+### Major Changes
+
+- a3f1aa9: Replaces `primaryButtonProps` and `secondaryButtonProps` with `actions` prop to enable more flexibility for CTAs in each step
+
 ## 1.1.0
 
 ### Minor Changes
