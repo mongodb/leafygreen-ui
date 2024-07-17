@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
+import { color, fontFamilies } from '@leafygreen-ui/tokens';
 
 import { Variant } from './types';
 
@@ -21,7 +21,7 @@ export const getBaseStyles = (theme: Theme, variant: Variant) =>
         bottom: 0px;
         left: 0;
         border-radius: 2px;
-        background-color: ${colorSets[theme][variant].bar};
+        background-color: ${calloutColor[theme][variant].bar};
       }
     `,
   );
@@ -30,7 +30,7 @@ export const getHeaderStyles = (theme: Theme, variant: Variant) =>
   css`
     margin-block-end: 4px;
     width: 100%;
-    color: ${colorSets[theme][variant].header.text};
+    color: ${calloutColor[theme][variant].headerText};
     letter-spacing: 0.6px;
   `;
 
@@ -49,74 +49,52 @@ export const headerLabels: Record<Variant, string> = {
 } as const;
 
 interface ColorSet {
-  header: {
-    text: string;
-  };
+  headerText: string;
   bar: string;
 }
 
-export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
+export const calloutColor: Record<Theme, Record<Variant, ColorSet>> = {
   [Theme.Dark]: {
     [Variant.Note]: {
-      header: {
-        text: palette.blue.light2,
-      },
+      headerText: palette.blue.light2,
       bar: palette.blue.dark1,
     },
     [Variant.Tip]: {
-      header: {
-        text: palette.purple.light2,
-      },
+      headerText: palette.purple.light2,
       bar: palette.purple.dark2,
     },
     [Variant.Important]: {
-      header: {
-        text: palette.yellow.light2,
-      },
+      headerText: palette.yellow.light2,
       bar: palette.yellow.dark2,
     },
     [Variant.Warning]: {
-      header: {
-        text: palette.red.light2,
-      },
+      headerText: palette.red.light2,
       bar: palette.red.dark2,
     },
     [Variant.Example]: {
-      header: {
-        text: palette.gray.light2,
-      },
+      headerText: palette.gray.light2,
       bar: palette.gray.dark1,
     },
   },
   [Theme.Light]: {
     [Variant.Note]: {
-      header: {
-        text: palette.blue.dark1,
-      },
+      headerText: palette.blue.dark1,
       bar: palette.blue.base,
     },
     [Variant.Tip]: {
-      header: {
-        text: palette.purple.dark2,
-      },
+      headerText: palette.purple.dark2,
       bar: palette.purple.base,
     },
     [Variant.Important]: {
-      header: {
-        text: palette.yellow.dark2,
-      },
+      headerText: palette.yellow.dark2,
       bar: palette.yellow.base,
     },
     [Variant.Warning]: {
-      header: {
-        text: palette.red.dark2,
-      },
+      headerText: palette.red.dark2,
       bar: palette.red.base,
     },
     [Variant.Example]: {
-      header: {
-        text: palette.gray.dark2,
-      },
+      headerText: palette.gray.dark2,
       bar: palette.gray.dark1,
     },
   },
