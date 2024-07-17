@@ -10,9 +10,6 @@ import Callout, { CalloutProps, Variant } from '.';
 
 const loremWithLinks = (
   <div>
-    {/* <span>
-      <strong>Title:</strong>
-    </span>{' '} */}
     <Link href="./">Link component</Link> is simply dummy text of the printing
     and typesetting industry. <a href="./">Anchor tag</a> has been the industry
     standard dummy children ever since the 1500s, when an unknown printer took a

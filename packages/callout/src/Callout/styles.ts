@@ -1,9 +1,17 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color, fontFamilies } from '@leafygreen-ui/tokens';
+import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from './types';
+
+export const headerLabels: Record<Variant, string> = {
+  [Variant.Note]: 'Note',
+  [Variant.Tip]: 'Tip',
+  [Variant.Important]: 'Important',
+  [Variant.Warning]: 'Warning',
+  [Variant.Example]: 'Example',
+} as const;
 
 export const getBaseStyles = (theme: Theme, variant: Variant) =>
   cx(
@@ -28,10 +36,9 @@ export const getBaseStyles = (theme: Theme, variant: Variant) =>
 
 export const getHeaderStyles = (theme: Theme, variant: Variant) =>
   css`
-    margin-block-end: 4px;
+    margin-block-end: ${spacing[100]}px;
     width: 100%;
     color: ${calloutColor[theme][variant].headerText};
-    letter-spacing: 0.6px;
   `;
 
 export const titleStyle = css`
@@ -39,14 +46,6 @@ export const titleStyle = css`
   letter-spacing: inherit;
   color: inherit;
 `;
-
-export const headerLabels: Record<Variant, string> = {
-  [Variant.Note]: 'Note',
-  [Variant.Tip]: 'Tip',
-  [Variant.Important]: 'Important',
-  [Variant.Warning]: 'Warning',
-  [Variant.Example]: 'Example',
-} as const;
 
 interface ColorSet {
   headerText: string;
