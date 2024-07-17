@@ -1,4 +1,4 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
@@ -12,40 +12,6 @@ export const headerLabels: Record<Variant, string> = {
   [Variant.Warning]: 'Warning',
   [Variant.Example]: 'Example',
 } as const;
-
-export const getBaseStyles = (theme: Theme, variant: Variant) =>
-  cx(
-    css`
-      font-family: ${fontFamilies.default};
-      position: relative;
-      color: ${color[theme].text.primary.default};
-      padding-inline-start: 10px; // 3px border + 7px between border and text
-
-      &:after {
-        content: '';
-        position: absolute;
-        width: 3px;
-        top: 0px;
-        bottom: 0px;
-        left: 0;
-        border-radius: 2px;
-        background-color: ${calloutColor[theme][variant].bar};
-      }
-    `,
-  );
-
-export const getHeaderStyles = (theme: Theme, variant: Variant) =>
-  css`
-    margin-block-end: ${spacing[100]}px;
-    width: 100%;
-    color: ${calloutColor[theme][variant].headerText};
-  `;
-
-export const titleStyle = css`
-  font-weight: 600;
-  letter-spacing: inherit;
-  color: inherit;
-`;
 
 interface ColorSet {
   headerText: string;
@@ -98,3 +64,29 @@ export const calloutColor: Record<Theme, Record<Variant, ColorSet>> = {
     },
   },
 };
+
+export const getBaseStyles = (theme: Theme, variant: Variant) =>
+  css`
+    font-family: ${fontFamilies.default};
+    color: ${color[theme].text.primary.default};
+    padding-inline-start: ${spacing[300]}px;
+    position: relative;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 3px;
+      top: 0px;
+      bottom: 0px;
+      left: 0;
+      border-radius: 2px;
+      background-color: ${calloutColor[theme][variant].bar};
+    }
+  `;
+
+export const getHeaderStyles = (theme: Theme, variant: Variant) =>
+  css`
+    width: 100%;
+    margin-block-end: ${spacing[100]}px;
+    color: ${calloutColor[theme][variant].headerText};
+  `;

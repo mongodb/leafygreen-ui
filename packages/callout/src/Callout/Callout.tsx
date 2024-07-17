@@ -11,12 +11,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import {
-  getBaseStyles,
-  getHeaderStyles,
-  headerLabels,
-  titleStyle,
-} from './styles';
+import { getBaseStyles, getHeaderStyles, headerLabels } from './styles';
 import { CalloutProps, Variant } from './types';
 
 /**
@@ -44,10 +39,7 @@ function Callout({
         {headerLabels[variant]}
       </Overline>
       {title && (
-        <Subtitle
-          as="h3"
-          className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}
-        >
+        <Subtitle as="h3" className={bodyTypeScaleStyles[baseFontSize]}>
           {title}{' '}
         </Subtitle>
       )}
