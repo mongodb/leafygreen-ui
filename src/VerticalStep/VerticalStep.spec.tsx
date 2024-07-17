@@ -1,5 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import Button from '@leafygreen-ui/button';
 
 import { LGIDS_VERTICAL_STEPPER } from '../constants';
 
@@ -13,7 +16,7 @@ import {
 const titleText = 'This is the title';
 const descriptionText = 'This is the description';
 
-const renderVerticalStepper = ({
+const renderVerticalStep = ({
   title = titleText,
   description = descriptionText,
   state = State.Current,
@@ -41,13 +44,13 @@ describe('packages/vertical-step', () => {
   describe('step', () => {
     describe('rendering', () => {
       test('title renders', () => {
-        const { getByTestId } = renderVerticalStepper({});
+        const { getByTestId } = renderVerticalStep({});
         const title = getByTestId(LGIDS_VERTICAL_STEPPER.stepTitle);
         expect(title).toBeInTheDocument();
         expect(title).toHaveTextContent(titleText);
       });
       test('description renders', () => {
-        const { getByTestId } = renderVerticalStepper({});
+        const { getByTestId } = renderVerticalStep({});
         const description = getByTestId(LGIDS_VERTICAL_STEPPER.stepDescription);
         expect(description).toBeInTheDocument();
         expect(description).toHaveTextContent(descriptionText);
@@ -55,82 +58,57 @@ describe('packages/vertical-step', () => {
 
       describe('media', () => {
         test('renders', () => {
-          const { getByTestId } = renderVerticalStepper({
+          const { getByTestId } = renderVerticalStep({
             media: <img alt="test" src="https://placehold.co/800x620" />,
           });
           const media = getByTestId(LGIDS_VERTICAL_STEPPER.stepMedia);
           expect(media).toBeInTheDocument();
         });
         test('does not render', () => {
-          const { queryByTestId } = renderVerticalStepper({});
+          const { queryByTestId } = renderVerticalStep({});
           const media = queryByTestId(LGIDS_VERTICAL_STEPPER.stepMedia);
           expect(media).not.toBeInTheDocument();
         });
       });
 
-      describe('ctas', () => {
-        test('primaryButton renders', () => {
-          const { getByTestId } = renderVerticalStepper({
-            primaryButtonProps: {
-              children: 'primary button',
-            },
+      describe('actions', () => {
+        test('render', () => {
+          const { getByTestId } = renderVerticalStep({
+            actions: <Button>primary button</Button>,
           });
-          const primaryButton = getByTestId(
-            LGIDS_VERTICAL_STEPPER.stepPrimaryButton,
-          );
-          expect(primaryButton).toBeInTheDocument();
-          expect(primaryButton).toHaveTextContent('primary button');
+          const actions = getByTestId(LGIDS_VERTICAL_STEPPER.stepActions);
+          expect(actions).toBeInTheDocument();
+          expect(actions).toHaveTextContent('primary button');
         });
-        test('secondaryButton renders', () => {
-          const { getByTestId } = renderVerticalStepper({
-            primaryButtonProps: {
-              children: 'primary button',
-            },
-            secondaryButtonProps: {
-              children: 'secondary button',
-            },
-          });
-          const secondaryButton = getByTestId(
-            LGIDS_VERTICAL_STEPPER.stepSecondaryButton,
-          );
-          expect(secondaryButton).toBeInTheDocument();
-          expect(secondaryButton).toHaveTextContent('secondary button');
-        });
-        test('secondaryButton does not render without a primaryButton', () => {
-          const { queryByTestId } = renderVerticalStepper({
-            secondaryButtonProps: {
-              children: 'secondary button',
-            },
-          });
-          const secondaryButton = queryByTestId(
-            LGIDS_VERTICAL_STEPPER.stepSecondaryButton,
-          );
-          expect(secondaryButton).not.toBeInTheDocument();
+        test('does not render', () => {
+          const { queryByTestId } = renderVerticalStep({});
+          const actions = queryByTestId(LGIDS_VERTICAL_STEPPER.stepActions);
+          expect(actions).not.toBeInTheDocument();
         });
       });
     });
 
     describe('current', () => {
       test('aria-current is "step"', async () => {
-        const { verticalStep } = renderVerticalStepper({});
+        const { verticalStep } = renderVerticalStep({});
         expect(verticalStep).toHaveAttribute('data-state', State.Current);
         expect(verticalStep).toHaveAttribute('aria-current', 'step');
       });
 
       test('buttons are tabbable', async () => {
-        const { verticalStep } = renderVerticalStepper({
-          primaryButtonProps: {
-            children: 'primary button',
-          },
+        const buttonTestId = 'test-button';
+        const { getByTestId } = renderVerticalStep({
+          actions: <Button data-testid={buttonTestId}>primary button</Button>,
         });
-        const tabIndex = verticalStep.querySelectorAll("button[tabindex='-1']");
-        expect(tabIndex).toHaveLength(0);
+        const button = getByTestId(buttonTestId);
+        userEvent.tab();
+        expect(button).toHaveFocus();
       });
     });
 
     describe('completed', () => {
       test('aria-current is false', async () => {
-        const { verticalStep } = renderVerticalStepper({
+        const { verticalStep } = renderVerticalStep({
           state: State.Completed,
         });
         expect(verticalStep).toHaveAttribute('data-state', State.Completed);
@@ -138,20 +116,19 @@ describe('packages/vertical-step', () => {
       });
 
       test('buttons are not tabbable', async () => {
-        const { verticalStep } = renderVerticalStepper({
+        const { getByTestId } = renderVerticalStep({
           state: State.Completed,
-          primaryButtonProps: {
-            children: 'primary button',
-          },
+          actions: <Button>primary button</Button>,
         });
-        const tabIndex = verticalStep.querySelectorAll("button[tabindex='-1']");
-        expect(tabIndex).toHaveLength(1);
+        const actions = getByTestId(LGIDS_VERTICAL_STEPPER.stepActions);
+        // should test with .not.toHaveFocus() but jsdom does not currently support the `inert` attribute: https://github.com/jsdom/jsdom/issues/3605
+        expect(actions).toHaveAttribute('inert');
       });
     });
 
     describe('future', () => {
       test('aria-current is false', async () => {
-        const { verticalStep } = renderVerticalStepper({
+        const { verticalStep } = renderVerticalStep({
           state: State.Future,
         });
         expect(verticalStep).toHaveAttribute('data-state', State.Future);
@@ -159,14 +136,13 @@ describe('packages/vertical-step', () => {
       });
 
       test('buttons are not tabbable', async () => {
-        const { verticalStep } = renderVerticalStepper({
+        const { getByTestId } = renderVerticalStep({
           state: State.Future,
-          primaryButtonProps: {
-            children: 'primary button',
-          },
+          actions: <Button>primary button</Button>,
         });
-        const tabIndex = verticalStep.querySelectorAll("button[tabindex='-1']");
-        expect(tabIndex).toHaveLength(1);
+        const actions = getByTestId(LGIDS_VERTICAL_STEPPER.stepActions);
+        // should test with .not.toHaveFocus() but jsdom does not currently support the `inert` attribute: https://github.com/jsdom/jsdom/issues/3605
+        expect(actions).toHaveAttribute('inert');
       });
     });
   });
@@ -184,11 +160,7 @@ describe('packages/vertical-step', () => {
           title="title"
           description="desc"
           media={<img alt="test" src="https://placehold.co/170x85" />}
-          primaryButtonProps={{ children: 'primary button', onClick: () => {} }}
-          secondaryButtonProps={{
-            children: 'secondary button',
-            onClick: () => {},
-          }}
+          actions={<Button onClick={() => {}}>primary button</Button>}
         />
       </>;
     });

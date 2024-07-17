@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import Button from '@leafygreen-ui/button';
 import { Link } from '@leafygreen-ui/typography';
 
 import { LGIDS_VERTICAL_STEPPER } from '../constants';
@@ -25,31 +26,37 @@ const childrenData = [
         <Link href="https://www.mongodb.design/">Im a link</Link>
       </>
     }
-    primaryButtonProps={{
-      children: 'primary button',
-    }}
+    actions={<Button>primary button</Button>}
   />,
   <VerticalStep
     key={2}
     title="second step"
     description="In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-    primaryButtonProps={{ children: 'primary button' }}
-    secondaryButtonProps={{ children: 'secondary button' }}
+    actions={
+      <>
+        <Button>secondary button</Button>
+        <Button>primary button</Button>
+      </>
+    }
     media={<img alt="test" src="https://placehold.co/170x85" />}
   />,
   <VerticalStep
     key={3}
     title="third step"
     description="In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis."
-    primaryButtonProps={{ children: 'primary button' }}
-    secondaryButtonProps={{ children: 'secondary button' }}
+    actions={
+      <>
+        <Button>secondary button</Button>
+        <Button>primary button</Button>
+      </>
+    }
     media={<img alt="test" src="https://placehold.co/170x100" />}
   />,
   <VerticalStep
     key={4}
     title="fourth step"
     description="Morbi et tellus dapibus, ultrices risus at, vestibulum urna. Vivamus lorem ex, iaculis sit amet bibendum eget, tristique in ante."
-    primaryButtonProps={{ children: 'primary button' }}
+    actions={<Button>primary button</Button>}
   />,
   <VerticalStep
     key={5}
@@ -60,7 +67,7 @@ const childrenData = [
     key={6}
     title="sixth step"
     description="Sed sed arcu mi. Sed sed arcu mi. Sed sed arcu mi."
-    primaryButtonProps={{ children: 'primary button' }}
+    actions={<Button>primary button</Button>}
     media={<img alt="test" src="https://placehold.co/800x620" />}
   />,
 ];
@@ -109,7 +116,7 @@ describe('packages/vertical-stepper', () => {
         <VerticalStep
           title="sixth step"
           description="Sed sed arcu mi. Sed sed arcu mi. Sed sed arcu mi."
-          primaryButtonProps={{ children: 'primary button' }}
+          actions={<Button>primary button</Button>}
           media={<img alt="test" src="https://placehold.co/800x620" />}
         />
       </VerticalStepper>,

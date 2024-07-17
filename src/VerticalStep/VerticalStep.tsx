@@ -50,6 +50,5 @@ VerticalStep.prototype = {
   title: PropTypes.string.isRequired,
   description: PropTypes.node.isRequired,
   media: PropTypes.element,
-  primaryButtonProps: PropTypes.objectOf(PropTypes.any),
-  secondaryButtonProps: PropTypes.objectOf(PropTypes.any),
+  actions: PropTypes.node,
 };

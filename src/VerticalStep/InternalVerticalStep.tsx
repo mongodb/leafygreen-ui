@@ -7,7 +7,7 @@ import { Body, Description } from '@leafygreen-ui/typography';
 
 import { LGIDS_VERTICAL_STEPPER } from '../constants';
 import { StepIcon } from '../StepIcon';
-import { VerticalStepButtons } from '../VerticalStepButtons/VerticalStepButtons';
+import { VerticalStepActions } from '../VerticalStepActions';
 
 import {
   baseStyles,
@@ -33,8 +33,7 @@ export const InternalVerticalStep = React.forwardRef<
       title,
       description,
       media,
-      primaryButtonProps,
-      secondaryButtonProps,
+      actions,
       state,
       index,
       className,
@@ -46,7 +45,7 @@ export const InternalVerticalStep = React.forwardRef<
 
     const isCompleted = state === State.Completed;
     const isCurrent = state === State.Current;
-    const hasButtons = primaryButtonProps;
+    const hasActions = actions !== undefined;
 
     return (
       <li
@@ -62,7 +61,7 @@ export const InternalVerticalStep = React.forwardRef<
         <div
           className={cx(
             contentClassName,
-            getContentStyles(isCurrent, !!hasButtons),
+            getContentStyles(isCurrent, !!hasActions),
           )}
         >
           <Body
@@ -76,7 +75,7 @@ export const InternalVerticalStep = React.forwardRef<
 
           <div
             // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-            inert={isCompleted ? 'true' : null}
+            inert={isCompleted ? '' : undefined}
             className={getWrapperStyles(isCompleted)}
           >
             <div className={getInnerStyles(!!media)}>
@@ -95,12 +94,8 @@ export const InternalVerticalStep = React.forwardRef<
                   {media}
                 </div>
               )}
-              {hasButtons && (
-                <VerticalStepButtons
-                  primaryButtonProps={primaryButtonProps}
-                  secondaryButtonProps={secondaryButtonProps}
-                  state={state}
-                />
+              {hasActions && (
+                <VerticalStepActions actions={actions} state={state} />
               )}
             </div>
           </div>

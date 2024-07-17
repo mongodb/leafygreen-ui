@@ -21,6 +21,7 @@ npm install @lg-private/vertical-stepper
 ## Example
 
 ```js
+import Button, { Size, Variant } from `@leafygreen-ui/button`;
 import { VerticalStepper, VerticalStep } from `@lg-private/vertical-stepper`;
 
 const [currentStep, setCurrentStep] = useState(0);
@@ -36,39 +37,60 @@ const [currentStep, setCurrentStep] = useState(0);
         <Link href="https://www.mongodb.design/">Im a link</Link>
       </>
     }
-    primaryButtonProps={{
-      children: 'primary button',
-      onClick: () => setCurrentStep(step => step + 1)
-    }}
+    actions={
+      <Button
+        onClick={() => setCurrentStep(step => step + 1)}
+        size={Size.Small}
+      >
+        primary button
+      </Button>
+    }
   />
   <VerticalStep
     title="second step"
     description="In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-    primaryButtonProps={{
-      children: 'primary button',
-      onClick: () => setCurrentStep(step => step + 1)
-    }}
-    secondaryButtonProps={{
-      children: 'secondary button',
-      onClick: () => setCurrentStep(step => step - 1),
-    }}
+    actions={
+      <>
+        <Button
+          onClick={() => setCurrentStep(step => step - 1)}
+          size={Size.Small}
+        >
+          secondary button
+        </Button>
+        <Button
+          onClick={() => setCurrentStep(step => step + 1)}
+          size={Size.Small}
+          variant={Variant.Primary}
+        >
+          primary button
+        </Button>
+      </>
+    }
     media={<img alt="test" src="https://placehold.co/170x85" />}
   />
   <VerticalStep
     title="third step"
     description="In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis. Nulla malesuada dui non consectetur placerat. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In eleifend, ante eget rhoncus dignissim, ex ex interdum arcu, quis commodo erat lectus non felis."
-    primaryButtonProps={{
-      children: 'primary button',
-      onClick: () => setCurrentStep(step => step + 1)
-    }}
-    secondaryButtonProps={{
-      children: 'secondary button',
-      onClick: () => setCurrentStep(step => step - 1),
-    }}
+    actions={
+      <>
+        <Button
+          onClick={() => setCurrentStep(step => step - 1)}
+          size={Size.Small}
+        >
+          secondary button
+        </Button>
+        <Button
+          onClick={() => setCurrentStep(step => step + 1)}
+          size={Size.Small}
+          variant={Variant.Primary}
+        >
+          primary button
+        </Button>
+      </>
+    }
     media={<img alt="test" src="https://placehold.co/170x100" />}
   />
-</VerticalStepper>
-
+</VerticalStepper>;
 ```
 
 ## Properties
@@ -83,10 +105,9 @@ const [currentStep, setCurrentStep] = useState(0);
 
 ### `<VerticalStep />`
 
-| Prop                 | Type                           | Description                                                                                                                                                                                                                                                                                                                        | Default |
-| -------------------- | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| title                | `string`                       | The title of the step.                                                                                                                                                                                                                                                                                                             |         |
-| description          | `React.ReactNode`              | The description of the step. This will render below the title.                                                                                                                                                                                                                                                                     |         |
-| media                | `React.ReactNode`              | The image to the right of the text. E.g. `<img />` or `<svg />`                                                                                                                                                                                                                                                                    |         |
-| primaryButtonProps   | `Omit<ButtonProps, 'variant'>` | The right-most button under the description. An object that accepts all [Button props](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#properties) but excludes `variant`. If there is a secondary button, the `variant` is `primary`. If there isn’t a secondary button, the `variant` is `default`. |         |
-| secondaryButtonProps | `Omit<ButtonProps, 'variant'>` | The button to the left of the primary button. An object that accepts all [Button props](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#properties) but excludes `variant`. The `variant` is always `default`.                                                                                        |         |
+| Prop        | Type              | Description                                                     | Default |
+| ----------- | ----------------- | --------------------------------------------------------------- | ------- |
+| title       | `string`          | The title of the step.                                          |         |
+| description | `React.ReactNode` | The description of the step. This will render below the title.  |         |
+| media       | `React.ReactNode` | The image to the right of the text. E.g. `<img />` or `<svg />` |         |
+| actions     | `React.ReactNode` | Optional buttons that will render below the text.               |         |
