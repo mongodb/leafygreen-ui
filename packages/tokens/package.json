@@ -23,7 +23,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "^13.6.0",
-    "@leafygreen-ui/palette": "^4.0.9"
+    "@leafygreen-ui/palette": "^4.0.9",
+    "polished": "^4.2.2"
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
