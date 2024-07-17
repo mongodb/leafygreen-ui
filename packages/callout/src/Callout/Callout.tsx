@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider/src/LeafyGreenContext';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
+  Body,
   bodyTypeScaleStyles,
   Overline,
   Subtitle,
@@ -26,25 +28,27 @@ function Callout({
   darkMode: darkModeProp,
   ...rest
 }: CalloutProps) {
-  const { theme } = useDarkMode(darkModeProp);
-  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const { theme, darkMode } = useDarkMode(darkModeProp);
+  // const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   return (
-    <div
-      role="note"
-      className={cx(getBaseStyles(theme, variant), className)}
-      {...rest}
-    >
-      <Overline as="h2" className={getHeaderStyles(theme, variant)}>
-        {headerLabels[variant]}
-      </Overline>
-      {title && (
-        <Subtitle as="h3" className={bodyTypeScaleStyles[baseFontSize]}>
-          {title}{' '}
-        </Subtitle>
-      )}
-      <div className={bodyTypeScaleStyles[baseFontSize]}>{contents}</div>
-    </div>
+    <LeafyGreenProvider darkMode={darkMode} baseFontSize={16}>
+      <div
+        role="note"
+        className={cx(getBaseStyles(theme, variant), className)}
+        {...rest}
+      >
+        <Overline as="h2" className={getHeaderStyles(theme, variant)}>
+          {headerLabels[variant]}
+        </Overline>
+        {title && (
+          <Body as="h3">
+            <strong>{title}</strong>
+          </Body>
+        )}
+        <Body as="div">{contents}</Body>
+      </div>
+    </LeafyGreenProvider>
   );
 }
 
