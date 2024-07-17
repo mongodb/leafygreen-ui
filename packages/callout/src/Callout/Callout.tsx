@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider/src/LeafyGreenContext';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
   Body,
-  bodyTypeScaleStyles,
   Overline,
-  Subtitle,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
@@ -29,10 +28,13 @@ function Callout({
   ...rest
 }: CalloutProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  // const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   return (
-    <LeafyGreenProvider darkMode={darkMode} baseFontSize={16}>
+    <LeafyGreenProvider
+      darkMode={darkMode}
+      baseFontSize={baseFontSize === 13 ? 14 : 16}
+    >
       <div
         role="note"
         className={cx(getBaseStyles(theme, variant), className)}

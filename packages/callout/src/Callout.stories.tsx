@@ -77,9 +77,7 @@ export const WithRichContent: StoryFn<CalloutProps> = ({
           <li>Bread</li>
           <li>Bananas</li>
         </ul>
-        <Code language="js" darkMode={darkMode}>
-          console.log(&apos;Hello world&apos;)
-        </Code>
+        <Code language="js">console.log(&apos;Hello world&apos;)</Code>
       </>
     </Callout>
   );

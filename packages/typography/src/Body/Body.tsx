@@ -40,8 +40,6 @@ const Body = Polymorphic<BaseBodyProps>(
       }
     `;
 
-    console.log({ baseFontSize });
-
     return (
       <Component
         className={cx(
