@@ -49,7 +49,21 @@ const makeHighlightReducerFunction =
 
 /**
  * Custom hook that handles setting the highlighted descendant index,
- * and fires any `onChange` side effects
+ * and fires any `onChange` side effects.
+ *
+ * @returns {HighlightReducerReturnType}.
+ *
+ * Usage:
+ * ```ts
+ * const { getDescendants } = useDescendantsContext(MyDescendantsContext);
+ * const { highlight, moveHighlight } = useHighlightReducer(getDescendants);
+ *
+ * const handleKeyboardEvent = (e) => {
+ *  if (e.key === 'ArrowDown') moveHighlight('next');
+ *  // ...
+ * }
+ *
+ * ```
  */
 export const useHighlightReducer = (
   /** An accessor for the updated descendants list */
@@ -77,6 +91,8 @@ export const useHighlightReducer = (
     });
 
     onChange?.(updatedHighlight);
+    // TODO: Extend this arg to accept numbers
+    // e.g. moveHighlight(2); moveHighlight(-3)
     dispatch({ direction });
   };
 

@@ -1,6 +1,6 @@
 export {
-  type MenuGroupContext,
-  MenuGroupContextData,
+  MenuGroupContext,
+  type MenuGroupContextData,
   MenuGroupProvider,
   useMenuGroupContext,
 } from './GroupContext';

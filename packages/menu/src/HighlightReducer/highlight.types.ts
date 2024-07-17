@@ -38,7 +38,12 @@ export type HighlightReducerFunction = Reducer<
 >;
 
 export interface HighlightReducerReturnType {
+  /** The currently highlighted {@link Descendant} object */
   highlight: Descendant | undefined;
+
+  /** Moves the current highlight in some {@link Direction} */
   moveHighlight: (direction: Direction) => void;
+
+  /** Sets the current highlight by index or id */
   setHighlight: (indexOrId: number | string) => void;
 }
