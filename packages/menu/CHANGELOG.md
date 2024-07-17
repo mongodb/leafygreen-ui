@@ -1,5 +1,18 @@
 # @leafygreen-ui/menu
 
+## 25.0.1
+
+### Patch Changes
+
+- 4c04aa0ee: Update Menu to use latest Descendants API
+- Updated dependencies [4c04aa0ee]
+- Updated dependencies [66e5665e8]
+- Updated dependencies [4c04aa0ee]
+- Updated dependencies [4c04aa0ee]
+  - @leafygreen-ui/lib@13.7.0
+  - @leafygreen-ui/tokens@2.10.0
+  - @leafygreen-ui/descendants@1.0.0
+
 ## 25.0.0
 
 ### Major Changes
