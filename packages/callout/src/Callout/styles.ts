@@ -1,9 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
-import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import BulbIcon from '@leafygreen-ui/icon/dist/Bulb';
-import ImportantWithCircleIcon from '@leafygreen-ui/icon/dist/ImportantWithCircle';
-import InfoWithCircleIcon from '@leafygreen-ui/icon/dist/InfoWithCircle';
-import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
@@ -11,45 +6,39 @@ import { anchorClassName } from '@leafygreen-ui/typography';
 
 import { Variant } from './types';
 
-export const baseStyle = css`
-  font-family: ${fontFamilies.default};
-  border-radius: 16px;
-  position: relative;
+export const getBaseStyles = (theme: Theme, variant: Variant) =>
+  cx(
+    css`
+      font-family: ${fontFamilies.default};
+      position: relative;
+      color: ${colorSets[theme][variant].text};
+      padding-inline-start: 10px; // 3px border + 7px between border and text
 
-  &:after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    left: -2px;
-    top: -2px;
-    bottom: -2px;
-    border-radius: 16px 0px 0px 16px;
-  }
-`;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 3px;
+        top: 0px;
+        bottom: 0px;
+        left: 0;
+        border-radius: 2px;
+        background-color: ${colorSets[theme][variant].bar};
+      }
+    `,
+  );
 
-export const baseThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.white};
-  `,
-};
+export const getHeaderStyles = (theme: Theme, variant: Variant) =>
+  css`
+    margin-bottom: 4px;
+    position: relative;
+    text-transform: uppercase;
+    width: 100%;
+    color: ${colorSets[theme][variant].header.text};
+  `;
 
-export const headerStyle = css`
-  padding: 12px 24px 12px 52px;
-  position: relative;
-  text-transform: uppercase;
-  width: 100%;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
-`;
-
-export const headerIconStyle = css`
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
+export const overlineStyles = css`
+  color: inherit;
+  letter-spacing: 0.6px;
 `;
 
 export const titleStyle = css`
@@ -61,7 +50,7 @@ export const titleStyle = css`
 export const bodyStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 16px 24px 16px 52px;
+  padding: 0px 24px 4px 0px;
   font-weight: ${fontWeights.regular};
 `;
 
@@ -71,17 +60,6 @@ export const headerLabels: Record<Variant, string> = {
   [Variant.Important]: 'Important',
   [Variant.Warning]: 'Warning',
   [Variant.Example]: 'Example',
-} as const;
-
-export const headerIcons: Record<
-  Variant,
-  React.ComponentType<React.PropsWithChildren<any>>
-> = {
-  [Variant.Note]: InfoWithCircleIcon,
-  [Variant.Tip]: BulbIcon,
-  [Variant.Important]: ImportantWithCircleIcon,
-  [Variant.Warning]: WarningIcon,
-  [Variant.Example]: BeakerIcon,
 } as const;
 
 interface ColorSet {
@@ -209,7 +187,7 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       text: palette.yellow.dark3,
       bar: palette.yellow.base,
       icon: palette.yellow.dark2,
-      border: palette.yellow.light2,
+      border: palette.yellow.base,
       link: {
         color: palette.yellow.dark3,
         hoverColor: palette.yellow.dark2,
@@ -223,7 +201,7 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       text: palette.red.dark3,
       bar: palette.red.base,
       icon: palette.red.base,
-      border: palette.red.light2,
+      border: palette.red.base,
       link: {
         color: palette.red.dark3,
         hoverColor: palette.red.dark2,
@@ -244,52 +222,4 @@ export const colorSets: Record<Theme, Record<Variant, ColorSet>> = {
       },
     },
   },
-};
-
-export const contentStyles = css`
-  .${anchorClassName}, a {
-    font-size: inherit;
-    line-height: inherit;
-    font-weight: ${fontWeights.bold};
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
-    border-radius: 2px;
-
-    &:hover,
-    &:focus,
-    &:focus-visible {
-      outline: none;
-      // duplicate these styles to override text-decoration: none in Link component
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 2px;
-      span {
-        &::after {
-          display: none;
-        }
-      }
-    }
-    &:focus-visible {
-      position: relative;
-    }
-  }
-`;
-
-export const focusThemeStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    .${anchorClassName}, a {
-      &:focus-visible {
-        box-shadow: 0 0 0 3px ${palette.gray.dark4},
-          0 0 0 5px ${palette.blue.light1};
-      }
-    }
-  `,
-  [Theme.Light]: css`
-    .${anchorClassName}, a {
-      &:focus-visible {
-        box-shadow: 0 0 0 3px ${palette.white}, 0 0 0 5px ${palette.blue.light1};
-      }
-    }
-  `,
 };
