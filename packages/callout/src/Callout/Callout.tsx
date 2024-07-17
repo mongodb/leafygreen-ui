@@ -12,11 +12,9 @@ import {
 } from '@leafygreen-ui/typography';
 
 import {
-  bodyStyle,
   getBaseStyles,
   getHeaderStyles,
   headerLabels,
-  overlineStyles,
   titleStyle,
 } from './styles';
 import { CalloutProps, Variant } from './types';
@@ -42,23 +40,18 @@ function Callout({
       className={cx(getBaseStyles(theme, variant), className)}
       {...rest}
     >
-      <div className={cx(getHeaderStyles(theme, variant))}>
-        <Overline as="h2" className={overlineStyles}>
-          {headerLabels[variant]}
-        </Overline>
-      </div>
-      <div className={bodyStyle}>
-        <div className={bodyTypeScaleStyles[baseFontSize]}>
-          {title && (
-            <Subtitle
-              className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}
-            >
-              {title}{' '}
-            </Subtitle>
-          )}
-          {contents}
-        </div>
-      </div>
+      <Overline as="h2" className={getHeaderStyles(theme, variant)}>
+        {headerLabels[variant]}
+      </Overline>
+      {title && (
+        <Subtitle
+          as="h3"
+          className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}
+        >
+          {title}{' '}
+        </Subtitle>
+      )}
+      <div className={bodyTypeScaleStyles[baseFontSize]}>{contents}</div>
     </div>
   );
 }

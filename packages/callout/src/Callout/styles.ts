@@ -29,25 +29,15 @@ export const getBaseStyles = (theme: Theme, variant: Variant) =>
 export const getHeaderStyles = (theme: Theme, variant: Variant) =>
   css`
     margin-block-end: 4px;
-    position: relative;
-    text-transform: uppercase;
     width: 100%;
     color: ${colorSets[theme][variant].header.text};
+    letter-spacing: 0.6px;
   `;
-
-export const overlineStyles = css`
-  color: inherit;
-  letter-spacing: 0.6px;
-`;
 
 export const titleStyle = css`
   font-weight: 600;
   letter-spacing: inherit;
   color: inherit;
-`;
-
-export const bodyStyle = css`
-  font-weight: ${fontWeights.regular};
 `;
 
 export const headerLabels: Record<Variant, string> = {
