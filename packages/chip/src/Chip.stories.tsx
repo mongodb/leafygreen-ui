@@ -1,8 +1,7 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
 
-import Icon from '@leafygreen-ui/icon';
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -50,8 +49,13 @@ const meta: StoryMetaType<typeof Chip> = {
     variant: Variant.Gray,
     chipCharacterLimit: 15,
     disabled: false,
+    glyph: undefined,
   },
   argTypes: {
+    glyph: {
+      options: Object.keys(glyphs),
+      control: { type: 'select' },
+    },
     variant: {
       options: Object.values(Variant),
       control: { type: 'select' },
@@ -141,6 +145,10 @@ Truncate.parameters = {
   },
 };
 
-const Template: StoryFn<typeof Chip> = props => <Chip {...props} />;
-
-export const LiveExample = Template.bind({});
+// eslint-disable-next-line react/prop-types
+export const LiveExample: StoryType<typeof Chip> = ({ glyph, ...rest }) => (
+  <Chip // @ts-expect-error - glyph type error
+    glyph={glyph ? <Icon glyph={glyph} /> : undefined}
+    {...rest}
+  />
+);

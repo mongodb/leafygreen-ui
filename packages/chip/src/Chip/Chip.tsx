@@ -12,8 +12,8 @@ import { getTruncatedName } from '../utils/getTruncatedName';
 import {
   chipInlineDefinitionClassName,
   chipTextClassName,
-  getChipTextStyles,
-  getChipWrapperStyles,
+  getTextStyles,
+  getWrapperStyles,
 } from './Chip.styles';
 import { ChipProps, TruncationLocation, Variant } from './Chip.types';
 
@@ -64,7 +64,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         ref={forwardedRef}
         aria-disabled={disabled}
         className={cx(
-          getChipWrapperStyles(baseFontSize, variant, theme, disabled),
+          getWrapperStyles(baseFontSize, variant, theme, disabled),
           className,
         )}
         {...rest}
@@ -72,13 +72,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
         <span
           data-testid="chip-text"
           className={cx(
-            getChipTextStyles(
-              baseFontSize,
-              variant,
-              theme,
-              disabled,
-              !!onDismiss,
-            ),
+            getTextStyles(baseFontSize, variant, theme, disabled, !!onDismiss),
             chipTextClassName,
           )}
         >

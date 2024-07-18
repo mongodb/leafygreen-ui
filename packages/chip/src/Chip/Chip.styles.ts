@@ -10,6 +10,7 @@ import {
   color,
   InteractionState,
   Property,
+  spacing,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
@@ -46,11 +47,11 @@ export const chipWrapperPadding: Record<
 > = {
   [BaseFontSize.Body1]: {
     y: 0,
-    x: 4,
+    x: spacing[100],
   },
   [BaseFontSize.Body2]: {
     y: 2,
-    x: 4,
+    x: spacing[100],
   },
 } as const;
 
@@ -226,90 +227,105 @@ const wrapperDisabledColor = {
   [Theme.Light]: palette.gray.base,
 };
 
+export const wrapperBaseStyles = (
+  baseFontSize: BaseFontSize,
+  variant: Variant,
+  theme: Theme,
+) => css`
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+  border-radius: 4px;
+  font-size: ${fontSize[baseFontSize]}px;
+  line-height: ${lineHeight[baseFontSize]}px;
+
+  color: ${variantColor[variant][theme].text.default};
+  background-color: ${variantColor[variant][theme].background.default};
+  transition: background-color ${transitionDuration.faster}ms ease-in-out;
+`;
+
+export const wrapperDisabledStyles = (theme: Theme) =>
+  cx(
+    css`
+      cursor: not-allowed;
+      background-color: ${color[theme].background.secondary.default};
+      color: ${wrapperDisabledColor[theme]};
+    `,
+    {
+      [css`
+        box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
+      `]: theme === Theme.Dark,
+    },
+  );
+
 /**
  * Chip wrapper
  */
-export const getChipWrapperStyles = (
+export const getWrapperStyles = (
   baseFontSize: BaseFontSize,
   variant: Variant,
   theme: Theme,
   isDisabled = false,
 ) =>
-  cx(
-    css`
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      white-space: nowrap;
-      border-radius: 4px;
-      font-size: ${fontSize[baseFontSize]}px;
-      line-height: ${lineHeight[baseFontSize]}px;
+  cx(wrapperBaseStyles(baseFontSize, variant, theme), {
+    [wrapperDisabledStyles(theme)]: isDisabled,
+  });
 
-      color: ${variantColor[variant][theme].text.default};
-      background-color: ${variantColor[variant][theme].background.default};
-      transition: background-color ${transitionDuration.faster}ms ease-in-out;
-    `,
-    {
-      [css`
-        cursor: not-allowed;
-        background-color: ${color[theme].background.secondary.default};
-        color: ${wrapperDisabledColor[theme]};
-      `]: isDisabled,
-      [css`
-        box-shadow: inset 0 0 1px 1px ${palette.gray.dark2};
-      `]: isDisabled && theme === Theme.Dark,
-    },
-  );
+export const textBaseStyles = (
+  baseFontSize: BaseFontSize,
+  variant: Variant,
+  theme: Theme,
+) => css`
+  padding-inline: ${chipWrapperPadding[baseFontSize].x}px;
+  padding-block: ${chipWrapperPadding[baseFontSize].y}px;
+
+  display: flex;
+  gap: 2px;
+
+  svg {
+    align-self: center;
+    color: ${variantColor[variant][theme].icon.default};
+  }
+
+  &:focus-within {
+    background-color: ${variantColor[variant][theme].background.focus};
+  }
+
+  .${chipInlineDefinitionClassName} {
+    &:focus-visible,
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
+export const textDisabledStyles = (theme: Theme) => css`
+  svg {
+    color: ${color[theme].icon.disabled.default};
+  }
+
+  // truncated + disabled + focused styles (a truncated disabled chip is still focusable)
+  &:focus-within {
+    background-color: ${truncateDisabledColor[theme]};
+  }
+`;
+
+export const textDismissibleStyles = css`
+  padding-inline-end: 2px;
+`;
 
 /**
  * Chip text
  */
-export const getChipTextStyles = (
+export const getTextStyles = (
   baseFontSize: BaseFontSize,
   variant: Variant,
   theme: Theme,
   isDisabled = false,
   isDismissible = false,
 ) =>
-  cx(
-    css`
-      padding-inline: ${chipWrapperPadding[baseFontSize].x}px;
-      padding-block: ${chipWrapperPadding[baseFontSize].y}px;
-
-      display: flex;
-      gap: 2px;
-
-      svg {
-        align-self: center;
-        color: ${variantColor[variant][theme].icon.default};
-      }
-
-      &:focus-within {
-        background-color: ${variantColor[variant][theme].background.focus};
-      }
-
-      .${chipInlineDefinitionClassName} {
-        &:focus-visible,
-        &:focus {
-          outline: none;
-        }
-      }
-    `,
-    {
-      [css`
-        svg {
-          color: ${color[theme].icon.disabled.default};
-        }
-
-        // truncated + disabled + focused styles (a truncated disabled chip is still focusable)
-        &:focus-within {
-          background-color: ${truncateDisabledColor[theme]};
-        }
-      `]: isDisabled,
-    },
-    {
-      [css`
-        padding-inline-end: 2px;
-      `]: isDismissible,
-    },
-  );
+  cx(textBaseStyles(baseFontSize, variant, theme), {
+    [textDisabledStyles(theme)]: isDisabled,
+    [textDismissibleStyles]: isDismissible,
+  });

@@ -249,10 +249,10 @@ describe('packages/chip', () => {
 
   describe('glyph', () => {
     test('renders when glyph is passed', () => {
-      const { queryByTestId } = renderChip({
+      const { getByTestId } = renderChip({
         glyph: <Icon glyph="Wizard" data-testid="chip-glyph" />,
       });
-      const icon = queryByTestId('chip-glyph');
+      const icon = getByTestId('chip-glyph');
       expect(icon).toBeInTheDocument();
     });
 
