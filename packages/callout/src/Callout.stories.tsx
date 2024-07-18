@@ -11,9 +11,9 @@ import Callout, { CalloutProps, Variant } from '.';
 const loremWithLinks = (
   <div>
     Lorem ipsum dolor sit amet, <Link href="./">Link component</Link>{' '}
-    consectetur adipiscing elit. Integer laoreet non metus ac egestas. Integer
-    rhoncus, urna in cursus elementum, quam massa vestibulum massa, id pretium
-    metus tortor in dolor.
+    consectetur adipiscing elit. <a href="./">Anchor tag</a> Integer laoreet non
+    metus ac egestas. Integer rhoncus, urna in cursus elementum, quam massa
+    vestibulum massa, id pretium metus tortor in dolor.
   </div>
 );
 

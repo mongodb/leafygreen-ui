@@ -12,7 +12,12 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { getBaseStyles, getHeaderStyles, headerLabels } from './Callout.styles';
+import {
+  getBaseStyles,
+  getContentStyles,
+  getHeaderStyles,
+  headerLabels,
+} from './Callout.styles';
 import { CalloutProps, Variant } from './Callout.types';
 
 /**
@@ -50,7 +55,9 @@ function Callout({
             <strong>{title}</strong>
           </Body>
         )}
-        <Body as="div">{contents}</Body>
+        <Body className={getContentStyles(theme)} as="div">
+          {contents}
+        </Body>
       </div>
     </LeafyGreenProvider>
   );
