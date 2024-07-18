@@ -1,5 +1,11 @@
 # @leafygreen-ui/descendants
 
+## 1.0.1
+
+### Patch Changes
+
+- 409377e19: Adds missing `useHighlightContext` export
+
 ## 1.0.0
 
 ### Major Changes
