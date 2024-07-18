@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Callout from './Callout';
-import { headerIcons, headerLabels } from './styles';
+import { headerLabels } from './styles';
 import { Variant } from './types';
 
 const title = 'this is the callout title';
@@ -27,14 +27,11 @@ describe('packages/callout', () => {
 
   for (const key of Object.keys(Variant)) {
     const variant = Variant[key as keyof typeof Variant];
-    const icon = headerIcons[variant];
     const label = headerLabels[variant];
 
     describe(`for variant ${variant}`, () => {
-      test(`renders icon "${icon.displayName}" and label "${label}" in header"`, () => {
+      test(`renders label "${label}" in header"`, () => {
         render(<Callout {...defaultProps} variant={variant} />);
-
-        expect(typeof icon.displayName).toBe('string');
 
         expect(screen.getByText(label)).toBeVisible();
       });
