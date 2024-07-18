@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import Callout from './Callout';
-import { headerLabels } from './styles';
-import { Variant } from './types';
+import { headerLabels } from './Callout.styles';
+import { Variant } from './Callout.types';
 
 const title = 'this is the callout title';
 const children = 'this is the callout content.';
