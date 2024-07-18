@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.7.0
+
+### Minor Changes
+
+- 4c04aa0ee: Creates utility types `Only`, `ExclusiveUnion` and `ValuesOf`
+
 ## 13.6.1
 
 ### Patch Changes

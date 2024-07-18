@@ -1,8 +1,15 @@
-import { Dispatch, useCallback } from 'react';
+import React, {
+  Dispatch,
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+} from 'react';
 
 import { useStateRef } from '@leafygreen-ui/hooks';
 
+import { DescendantsProvider } from './DescendantProvider';
 import { DescendantsList } from './Descendants.types';
+import { DescendantContextType } from './DescendantsContext';
 import {
   descendantsReducer,
   DescendantsReducerAction,
@@ -17,14 +24,17 @@ export interface InitDescendantsReturnObject<T extends HTMLElement> {
 
   /** Accessor function for the most up-to-date descendants list */
   getDescendants: () => DescendantsList<T>;
+
+  /** A unique context provider for the given `DescendantsContext` */
+  Provider: React.ComponentType<PropsWithChildren<{}>>;
 }
 
 /**
  * Initializes a {@link DescendantsList}
  */
-export const useInitDescendants = <
-  T extends HTMLElement,
->(): InitDescendantsReturnObject<T> => {
+export const useInitDescendants = <T extends HTMLElement>(
+  context: DescendantContextType<T>,
+): InitDescendantsReturnObject<T> => {
   // We avoid using `useReducer` here, since we need to internally keep track
   // of the `descendants`, and provide a means to access the updated list
   // to avoid accessing a stale descendants list
@@ -41,9 +51,26 @@ export const useInitDescendants = <
     [getDescendants, setDescendants],
   );
 
+  // Create a new Provider for the given context
+  const Provider = useMemo(() => {
+    // eslint-disable-next-line react/display-name
+    return ({ children }: PropsWithChildren<{}>) => {
+      return (
+        <DescendantsProvider
+          context={context}
+          descendants={getDescendants()}
+          dispatch={dispatch}
+        >
+          {children}
+        </DescendantsProvider>
+      );
+    };
+  }, [context, dispatch, getDescendants]);
+
   return {
     descendants,
     dispatch,
     getDescendants,
+    Provider,
   };
 };

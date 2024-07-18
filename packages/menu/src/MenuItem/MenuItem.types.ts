@@ -1,7 +1,5 @@
 import { ReactElement, ReactNode } from 'react';
 
-import { Size } from '../types';
-
 const Variant = {
   Default: 'default',
   Destructive: 'destructive',
@@ -54,5 +52,5 @@ export interface MenuItemProps {
    * @deprecated - Size no longer has any effect
    */
   // TODO: codemod to remove `size` props from existing implementations
-  size?: Size;
+  size?: 'default' | 'large';
 }

@@ -2,7 +2,6 @@ import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  DescendantsProvider,
   getDescendantById,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
@@ -97,7 +96,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   useBackdropClick(handleClose, [popoverRef, triggerRef], open);
 
-  const { descendants, dispatch, getDescendants } = useInitDescendants();
+  const { getDescendants, Provider: MenuDescendantsProvider } =
+    useInitDescendants(MenuDescendantsContext);
 
   // Tracks the currently highlighted (focused) item index
   // Fires `.focus()` when the index is updated
@@ -169,17 +169,14 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   };
 
   const popoverContent = (
-    <DescendantsProvider
-      context={MenuDescendantsContext}
-      descendants={descendants}
-      dispatch={dispatch}
-    >
+    <MenuDescendantsProvider>
       <MenuContext.Provider
         value={{
           theme,
           darkMode,
           highlight,
           setHighlight,
+          moveHighlight,
           renderDarkMenu,
         }}
       >
@@ -226,7 +223,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           </div>
         </Popover>
       </MenuContext.Provider>
-    </DescendantsProvider>
+    </MenuDescendantsProvider>
   );
 
   if (trigger) {
