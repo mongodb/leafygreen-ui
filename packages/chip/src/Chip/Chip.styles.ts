@@ -46,11 +46,11 @@ export const chipWrapperPadding: Record<
   { x: number; y: number }
 > = {
   [BaseFontSize.Body1]: {
-    y: 0,
+    y: spacing[0],
     x: spacing[100],
   },
   [BaseFontSize.Body2]: {
-    y: 2,
+    y: spacing[50],
     x: spacing[100],
   },
 } as const;
@@ -281,7 +281,7 @@ export const textBaseStyles = (
   padding-block: ${chipWrapperPadding[baseFontSize].y}px;
 
   display: flex;
-  gap: 2px;
+  gap: ${spacing[50]}px;
 
   svg {
     align-self: center;
@@ -312,7 +312,7 @@ export const textDisabledStyles = (theme: Theme) => css`
 `;
 
 export const textDismissibleStyles = css`
-  padding-inline-end: 2px;
+  padding-inline-end: ${spacing[50]}px;
 `;
 
 /**
