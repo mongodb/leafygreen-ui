@@ -12,8 +12,8 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { getBaseStyles, getHeaderStyles, headerLabels } from './styles';
-import { CalloutProps, Variant } from './types';
+import { getBaseStyles, getHeaderStyles, headerLabels } from './Callout.styles';
+import { CalloutProps, Variant } from './Callout.types';
 
 /**
  * Callouts should be used when you want to call out information to the user. Unlike banners, callouts cannot be dismissed. They’re optimized for long form copy (banners are optimized to save space).
@@ -33,7 +33,9 @@ function Callout({
   return (
     <LeafyGreenProvider
       darkMode={darkMode}
-      baseFontSize={baseFontSize === 13 ? 14 : 16}
+      baseFontSize={
+        baseFontSize === BaseFontSize.Body1 ? 14 : BaseFontSize.Body2
+      }
     >
       <div
         role="note"

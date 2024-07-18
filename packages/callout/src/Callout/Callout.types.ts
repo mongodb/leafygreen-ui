@@ -1,4 +1,4 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const Variant = {
@@ -11,7 +11,7 @@ export const Variant = {
 
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
-export interface CalloutProps extends HTMLElementProps<'div'> {
+export interface CalloutProps extends HTMLElementProps<'div'>, DarkModeProps {
   /**
    * The variant of the callout that defines the icon and colors used.
    *
@@ -29,9 +29,4 @@ export interface CalloutProps extends HTMLElementProps<'div'> {
    * The base font size of the title and text rendered in children.
    */
   baseFontSize?: BaseFontSize;
-  /**
-   * Determines whether or not the component will be rendered in dark mode.
-   *
-   */
-  darkMode?: boolean;
 }

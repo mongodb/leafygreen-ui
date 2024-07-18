@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
-import { Variant } from './types';
+import { Variant } from './Callout.types';
 
 export const headerLabels: Record<Variant, string> = {
   [Variant.Note]: 'Note',
@@ -33,11 +33,11 @@ export const calloutColor: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.yellow.dark2,
     },
     [Variant.Warning]: {
-      headerText: palette.red.light2,
+      headerText: palette.red.light1,
       bar: palette.red.dark2,
     },
     [Variant.Example]: {
-      headerText: palette.gray.light2,
+      headerText: palette.gray.light1,
       bar: palette.gray.dark1,
     },
   },
