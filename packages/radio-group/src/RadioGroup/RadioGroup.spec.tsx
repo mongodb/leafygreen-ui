@@ -185,6 +185,14 @@ describe('packages/radio-group', () => {
       expect(radio.getAttribute('disabled')).toBeFalsy();
     });
 
+    test('does not fire onChange events when disabled', () => {
+      const onChange = jest.fn();
+      const { radio } = renderRadio({ disabled: true, onChange });
+      expect(onChange).not.toHaveBeenCalled();
+      expect(radio.getAttribute('aria-disabled')).toBeTruthy();
+      expect(radio.getAttribute('disabled')).toBeFalsy();
+    });
+
     test(`radio is checked when value is set`, () => {
       const { radio } = renderRadio({ checked: true });
       expect(radio.getAttribute('aria-checked')).toBe('true');
