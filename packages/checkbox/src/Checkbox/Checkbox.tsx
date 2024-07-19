@@ -73,6 +73,11 @@ function Checkbox({
   const bold = boldProp ?? !!description;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Don't fire events if disabled
+    if (disabled) {
+      return;
+    }
+
     if (onChangeProp) {
       onChangeProp(e);
     }
@@ -85,6 +90,11 @@ function Checkbox({
   const onClick = (
     e: React.MouseEvent<HTMLInputElement> & { target: HTMLInputElement },
   ) => {
+    // Don't fire events if disabled
+    if (disabled) {
+      return;
+    }
+
     if (onClickProp) {
       onClickProp(e);
     }

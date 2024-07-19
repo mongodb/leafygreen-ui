@@ -21,13 +21,14 @@ export const variantColor: Record<
   [Variant.Blue]: {
     [Theme.Dark]: {
       color: palette.blue.light2,
-      focusBgColor: chipVariantColor[Variant.Blue][Theme.Dark].focusBgColor,
+      focusBgColor: chipVariantColor[Variant.Blue][Theme.Dark].background.focus,
       hoverBgColor: palette.blue.dark2,
       hoverFocusColor: palette.blue.light3,
     },
     [Theme.Light]: {
       color: palette.blue.dark3,
-      focusBgColor: chipVariantColor[Variant.Blue][Theme.Light].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Blue][Theme.Light].background.focus,
       hoverBgColor: palette.blue.light2,
       hoverFocusColor: palette.blue.dark3,
     },
@@ -35,13 +36,13 @@ export const variantColor: Record<
   [Variant.Red]: {
     [Theme.Dark]: {
       color: palette.red.light2,
-      focusBgColor: chipVariantColor[Variant.Red][Theme.Dark].focusBgColor,
+      focusBgColor: chipVariantColor[Variant.Red][Theme.Dark].background.focus,
       hoverBgColor: palette.red.dark2,
       hoverFocusColor: palette.red.light3,
     },
     [Theme.Light]: {
       color: palette.red.dark3,
-      focusBgColor: chipVariantColor[Variant.Red][Theme.Light].focusBgColor,
+      focusBgColor: chipVariantColor[Variant.Red][Theme.Light].background.focus,
       hoverBgColor: palette.red.light2,
       hoverFocusColor: palette.red.dark3,
     },
@@ -49,13 +50,14 @@ export const variantColor: Record<
   [Variant.Gray]: {
     [Theme.Dark]: {
       color: palette.gray.light1,
-      focusBgColor: chipVariantColor[Variant.Gray][Theme.Dark].focusBgColor,
+      focusBgColor: chipVariantColor[Variant.Gray][Theme.Dark].background.focus,
       hoverBgColor: palette.gray.dark1,
       hoverFocusColor: palette.gray.light3,
     },
     [Theme.Light]: {
       color: palette.gray.dark2,
-      focusBgColor: chipVariantColor[Variant.Gray][Theme.Light].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Gray][Theme.Light].background.focus,
       hoverBgColor: palette.gray.light1,
       hoverFocusColor: palette.black,
     },
@@ -63,13 +65,15 @@ export const variantColor: Record<
   [Variant.Green]: {
     [Theme.Dark]: {
       color: palette.green.light2,
-      focusBgColor: chipVariantColor[Variant.Green][Theme.Dark].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Green][Theme.Dark].background.focus,
       hoverBgColor: palette.green.dark2,
       hoverFocusColor: palette.green.light3,
     },
     [Theme.Light]: {
       color: palette.green.dark3,
-      focusBgColor: chipVariantColor[Variant.Green][Theme.Light].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Green][Theme.Light].background.focus,
       hoverBgColor: palette.green.light2,
       hoverFocusColor: palette.green.dark3,
     },
@@ -77,13 +81,15 @@ export const variantColor: Record<
   [Variant.Purple]: {
     [Theme.Dark]: {
       color: palette.purple.light2,
-      focusBgColor: chipVariantColor[Variant.Purple][Theme.Dark].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Purple][Theme.Dark].background.focus,
       hoverBgColor: palette.purple.dark2,
       hoverFocusColor: palette.purple.light3,
     },
     [Theme.Light]: {
       color: palette.purple.dark3,
-      focusBgColor: chipVariantColor[Variant.Purple][Theme.Light].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Purple][Theme.Light].background.focus,
       hoverBgColor: palette.purple.light2,
       hoverFocusColor: palette.purple.dark3,
     },
@@ -91,13 +97,15 @@ export const variantColor: Record<
   [Variant.Yellow]: {
     [Theme.Dark]: {
       color: palette.yellow.light2,
-      focusBgColor: chipVariantColor[Variant.Yellow][Theme.Dark].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Yellow][Theme.Dark].background.focus,
       hoverBgColor: palette.yellow.dark2,
       hoverFocusColor: palette.yellow.light3,
     },
     [Theme.Light]: {
       color: palette.yellow.dark3,
-      focusBgColor: chipVariantColor[Variant.Yellow][Theme.Light].focusBgColor,
+      focusBgColor:
+        chipVariantColor[Variant.Yellow][Theme.Light].background.focus,
       hoverBgColor: palette.yellow.light2,
       hoverFocusColor: palette.yellow.dark3,
     },
