@@ -7,7 +7,6 @@ import Icon, { glyphs } from '@leafygreen-ui/icon';
 
 import { MenuProps } from '../Menu';
 import { withMenuContext } from '../testUtils/withMenuContextDecorator.testutils';
-import { Size } from '../types';
 
 import { MenuItem, Variant } from '.';
 
@@ -51,10 +50,6 @@ export const LiveExample = {
       options: [undefined, ...Object.keys(glyphs)],
     },
     highlighted: { control: 'boolean' },
-    size: {
-      control: 'select',
-      options: Object.values(Size),
-    },
     renderDarkMenu: { control: 'boolean' },
   },
   render: ({ children, glyph, ...args }) => (
@@ -145,7 +140,6 @@ export const DarkInLightMode = {
         darkMode: false,
         description: 'This is a description',
         glyph: <Icon glyph="Cloud" />,
-        size: Size.Default,
         renderDarkMenu: true,
       },
       combineArgs: {

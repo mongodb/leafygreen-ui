@@ -1,5 +1,40 @@
 # @leafygreen-ui/menu
 
+## 25.1.0
+
+### Minor Changes
+
+- 409377e19: Adds additional exports:
+  - `MenuDescendantsContext`
+    - Used to register and consume Menu descendants
+    - This context value allows you to register and track custom menu items
+  - Context hooks `useMenuContext`, `useMenuGroupContext`, & `useSubMenuContext`, along with types types `MenuContextData`, `MenuGroupContextData`, & `SubMenuContextData`,
+    - use these to read context data from custom menu item components
+  - `menuColor`: Custom color tokens used within `Menu` and related components
+  - `MenuInteractionState`: Enumerates interaction states on a menu item
+  - `LGIDs`: Unique ids for menu elements
+  - `menuItemClassName`: The unique class name for menu item components
+  - `subMenuContainerClassName` & `subMenuToggleClassName`
+    - Unique classnames for submenu elements
+
+### Patch Changes
+
+- Updated dependencies [409377e19]
+  - @leafygreen-ui/descendants@1.0.1
+
+## 25.0.1
+
+### Patch Changes
+
+- 4c04aa0ee: Update Menu to use latest Descendants API
+- Updated dependencies [4c04aa0ee]
+- Updated dependencies [66e5665e8]
+- Updated dependencies [4c04aa0ee]
+- Updated dependencies [4c04aa0ee]
+  - @leafygreen-ui/lib@13.7.0
+  - @leafygreen-ui/tokens@2.10.0
+  - @leafygreen-ui/descendants@1.0.0
+
 ## 25.0.0
 
 ### Major Changes

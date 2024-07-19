@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key, react/display-name, react-hooks/rules-of-hooks */
 import React from 'react';
 import { InstanceDecorator } from '@lg-tools/storybook-utils';
+import noop from 'lodash/noop';
 
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
@@ -15,11 +16,20 @@ import { MenuItem } from '../MenuItem';
 export const withMenuContext =
   (): InstanceDecorator<typeof MenuItem & typeof Menu> => (Instance, ctx) => {
     const {
-      args: { darkMode: darkModeProp, renderDarkMenu },
+      args: {
+        darkMode: darkModeProp,
+        renderDarkMenu,
+        highlight,
+        moveHighlight,
+        setHighlight,
+      },
     } = ctx ?? {
       args: {
         darkMode: false,
         renderDarkMenu: false,
+        highlight: undefined,
+        moveHighlight: noop,
+        setHighlight: noop,
       },
     };
 
@@ -37,6 +47,9 @@ export const withMenuContext =
             darkMode,
             theme,
             renderDarkMenu,
+            highlight,
+            moveHighlight,
+            setHighlight,
           }}
         >
           <Instance />

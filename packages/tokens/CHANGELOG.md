@@ -1,5 +1,16 @@
 # @leafygreen-ui/tokens
 
+## 2.10.0
+
+### Minor Changes
+
+- 66e5665e8: Exports shadow tokens from package
+
+### Patch Changes
+
+- Updated dependencies [4c04aa0ee]
+  - @leafygreen-ui/lib@13.7.0
+
 ## 2.9.0
 
 ### Minor Changes

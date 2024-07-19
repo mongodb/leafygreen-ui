@@ -8,3 +8,4 @@ export type {
 export { createHighlightContext } from './HighlightContext';
 export { HighlightProvider } from './HighlightProvider';
 export { useHighlight } from './useHighlight';
+export { useHighlightContext } from './useHighlightContext';

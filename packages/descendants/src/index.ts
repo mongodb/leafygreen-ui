@@ -22,4 +22,5 @@ export {
   HighlightProvider,
   type Index,
   useHighlight,
+  useHighlightContext,
 } from './Highlight';

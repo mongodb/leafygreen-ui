@@ -1,5 +1,18 @@
 # @leafygreen-ui/tabs
 
+## 12.0.3
+
+### Patch Changes
+
+- 4c04aa0ee: Updates Tabs to use latest Descendants API
+- Updated dependencies [4c04aa0ee]
+- Updated dependencies [66e5665e8]
+- Updated dependencies [4c04aa0ee]
+- Updated dependencies [4c04aa0ee]
+  - @leafygreen-ui/lib@13.7.0
+  - @leafygreen-ui/tokens@2.10.0
+  - @leafygreen-ui/descendants@1.0.0
+
 ## 12.0.2
 
 ### Patch Changes

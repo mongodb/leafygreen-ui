@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { ElementType, PropsWithChildren, useEffect } from 'react';
+import { ElementType, PropsWithChildren, useCallback, useEffect } from 'react';
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
+
+import { useEventListener } from '@leafygreen-ui/hooks';
 
 import { TestDescendantContext } from '../../test/components.testutils';
 import { useDescendant, useInitDescendants } from '../Descendants';
@@ -23,7 +25,7 @@ export default {
 const items = [
   'Adam',
   'Brooke',
-  'Chris',
+  'Chi',
   'Dave',
   'Eliane',
   'Fred',
@@ -31,6 +33,7 @@ const items = [
   'Harry',
   'Irena',
   'Jeremy',
+  'Karen',
 ];
 
 const TestHighlightContext = createHighlightContext('TestHighlight');
@@ -135,8 +138,8 @@ export const Grid = {
 
     const {
       Provider: HighlightProvider,
-      setRelativeHighlight,
       setAbsoluteHighlight,
+      highlight,
     } = useHighlight(TestHighlightContext, getDescendants, {
       filter: d => {
         return !d.props.isDisabled;
@@ -144,34 +147,96 @@ export const Grid = {
       onInit: () => setAbsoluteHighlight(0),
     });
 
-    const handleKeyDown = e => {
-      switch (e.key) {
-        case 'ArrowDown':
-          setRelativeHighlight(COLUMNS);
-          break;
-        case 'ArrowUp':
-          setRelativeHighlight(-COLUMNS);
-          break;
-        case 'ArrowRight':
-          setRelativeHighlight(1);
-          break;
-        case 'ArrowLeft':
-          setRelativeHighlight(-1);
-          break;
-        default:
-          break;
-      }
-    };
+    const setRelativeRow = useCallback(
+      (colsDiff: number) => {
+        if (colsDiff === 0) return;
 
-    useEffect(() => {
-      document.body.addEventListener('keydown', handleKeyDown);
-      () => document.body.removeEventListener('keydown', handleKeyDown);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        const totalItems = getDescendants().length;
+        const col = (highlight?.index ?? 0) % COLUMNS;
+        const row = Math.floor((highlight?.index ?? 0) / COLUMNS);
+        // count of items where index % 3 === col
+        const totalItemsInColumn = getDescendants().reduce((sum, d) => {
+          const this_col = d.index % COLUMNS;
+          if (this_col === col) return sum + 1;
+          return sum;
+        }, 0);
+
+        if (colsDiff > 0) {
+          const newRow = (row + colsDiff) % totalItemsInColumn;
+          const index = (newRow * COLUMNS + col) % totalItems;
+          setAbsoluteHighlight(index);
+        } else {
+          const newRow =
+            (row + colsDiff + totalItemsInColumn) % totalItemsInColumn;
+          const index = (newRow * COLUMNS + col) % totalItems;
+          setAbsoluteHighlight(index);
+        }
+      },
+      [getDescendants, highlight, setAbsoluteHighlight],
+    );
+
+    const setRelativeColumn = useCallback(
+      (rowsDiff: number) => {
+        if (rowsDiff === 0) return;
+
+        const col = (highlight?.index ?? 0) % COLUMNS;
+        const row = Math.floor((highlight?.index ?? 0) / COLUMNS);
+
+        const totalItemsInRow = getDescendants().reduce((sum, d) => {
+          const this_row = Math.floor(d.index / COLUMNS);
+          if (this_row === row) return sum + 1;
+          return sum;
+        }, 0);
+
+        if (rowsDiff > 0) {
+          const newCol = (col + 1) % totalItemsInRow;
+          const colDiff = newCol - col;
+          const index = (highlight?.index ?? 0) + colDiff;
+          setAbsoluteHighlight(index);
+        } else {
+          const newCol = (col - 1 + totalItemsInRow) % totalItemsInRow;
+          const colDiff = newCol - col;
+          const index = (highlight?.index ?? 0) + colDiff;
+          setAbsoluteHighlight(index);
+        }
+      },
+      [getDescendants, highlight, setAbsoluteHighlight],
+    );
+
+    const handleKeyDown = useCallback(
+      e => {
+        switch (e.key) {
+          case 'ArrowDown':
+            setRelativeRow(1);
+            break;
+          case 'ArrowUp':
+            setRelativeRow(-1);
+            break;
+          case 'ArrowRight':
+            setRelativeColumn(1);
+            break;
+          case 'ArrowLeft':
+            setRelativeColumn(-1);
+            break;
+          default:
+            break;
+        }
+      },
+      [setRelativeColumn, setRelativeRow],
+    );
+
+    useEventListener('keydown', handleKeyDown);
 
     return (
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div>
+      <div
+        onKeyDown={handleKeyDown}
+        style={{
+          outline: '1px solid black',
+          margin: '-50px',
+          height: '80vh',
+        }}
+      >
         <MyDescendantsProvider>
           <HighlightProvider>
             <div
