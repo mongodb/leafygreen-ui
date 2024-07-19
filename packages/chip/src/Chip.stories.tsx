@@ -1,7 +1,7 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
 
+import Icon, { glyphs } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -14,19 +14,22 @@ const meta: StoryMetaType<typeof Chip> = {
   parameters: {
     default: 'LiveExample',
     generate: {
-      storyNames: ['Gray', 'Green', 'Blue', 'Red', 'Purple', 'Yellow'],
+      storyNames: [
+        'Gray',
+        'Green',
+        'Blue',
+        'Red',
+        'Purple',
+        'Yellow',
+        'Truncate',
+      ],
       combineArgs: {
         darkMode: [false, true],
         label: ['Chip', 'meow meow meow miaou miao miau'],
         disabled: [false, true],
         onDismiss: [() => {}, undefined],
-        chipTruncationLocation: [
-          TruncationLocation.End,
-          TruncationLocation.Middle,
-          TruncationLocation.None,
-          TruncationLocation.Start,
-        ],
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
+        glyph: [<Icon glyph="Wizard" key="1" />, undefined],
       },
       args: {},
       decorator: (Instance, context) => {
@@ -41,13 +44,18 @@ const meta: StoryMetaType<typeof Chip> = {
   args: {
     label: 'Chip',
     onDismiss: () => {},
-    chipTruncationLocation: TruncationLocation.None,
+    chipTruncationLocation: TruncationLocation.End,
     baseFontSize: BaseFontSize.Body1,
     variant: Variant.Gray,
     chipCharacterLimit: 15,
     disabled: false,
+    glyph: undefined,
   },
   argTypes: {
+    glyph: {
+      options: Object.keys(glyphs),
+      control: { type: 'select' },
+    },
     variant: {
       options: Object.values(Variant),
       control: { type: 'select' },
@@ -119,6 +127,28 @@ Yellow.parameters = {
   },
 };
 
-const Template: StoryFn<typeof Chip> = props => <Chip {...props} />;
+export const Truncate: StoryType<typeof Chip> = () => <></>;
+Truncate.parameters = {
+  generate: {
+    args: {
+      variant: Variant.Blue,
+      label: 'meow meow meow miaou miao miau',
+    },
+    combineArgs: {
+      chipTruncationLocation: [
+        TruncationLocation.End,
+        TruncationLocation.Middle,
+        TruncationLocation.None,
+        TruncationLocation.Start,
+      ],
+    },
+  },
+};
 
-export const LiveExample = Template.bind({});
+// eslint-disable-next-line react/prop-types
+export const LiveExample: StoryType<typeof Chip> = ({ glyph, ...rest }) => (
+  <Chip // @ts-expect-error - glyph type error
+    glyph={glyph ? <Icon glyph={glyph} /> : undefined}
+    {...rest}
+  />
+);
