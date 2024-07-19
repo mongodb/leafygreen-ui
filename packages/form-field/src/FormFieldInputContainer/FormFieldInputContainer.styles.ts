@@ -15,11 +15,11 @@ import {
 import { FormFieldState } from '../FormField/FormField.types';
 import { FormFieldContextProps } from '../FormFieldContext';
 
-export const inputElementClassName = createUniqueClassName('form-field-input');
-export const iconClassName = createUniqueClassName('form-field-icon');
+const inputElementClassName = createUniqueClassName('form-field-input');
+const iconClassName = createUniqueClassName('form-field-icon');
 const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
-export const inputWrapperBaseStyles = css`
+const inputWrapperBaseStyles = css`
   display: flex;
   align-items: center;
   gap: ${spacing[1]}px;
@@ -54,7 +54,7 @@ export const inputWrapperBaseStyles = css`
   }
 `;
 
-export const getInputWrapperModeStyles = (theme: Theme) => {
+const getInputWrapperModeStyles = (theme: Theme) => {
   const isDarkMode = theme === Theme.Dark;
   /** token exceptions: background-color value was designated prior to token system */
   const backgroundColor = isDarkMode
@@ -109,7 +109,7 @@ const focusSelector = (styles: string) => css`
   }
 `;
 
-export const inputWrapperFocusStyles: Record<Theme, string> = {
+const inputWrapperFocusStyles: Record<Theme, string> = {
   [Theme.Light]: focusSelector(`
      {
       box-shadow: ${focusRing.light.input};
@@ -127,7 +127,7 @@ export const inputWrapperFocusStyles: Record<Theme, string> = {
 /** Selector that is true if the icon element passed in is a button */
 const iconIsButtonSelector = `&:has(button.${iconClassName})`;
 
-export const inputWrapperSizeStyles: Record<Size, string> = {
+const inputWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
     padding-inline: ${spacing[200]}px;
@@ -162,7 +162,7 @@ export const inputWrapperSizeStyles: Record<Size, string> = {
   `,
 };
 
-export const getInputWrapperStateStyles = ({
+const getInputWrapperStateStyles = ({
   theme,
   state,
 }: {
@@ -205,7 +205,7 @@ export const getInputWrapperStateStyles = ({
   return styleMap[state];
 };
 
-export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
+const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
   return css`
     cursor: not-allowed;
     color: ${color[theme].text.disabled.default};
@@ -249,15 +249,17 @@ export const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
   `;
 };
 
-export function getInputWrapperStyles({
+export const getInputWrapperStyles = ({
   disabled,
   size: sizeProp,
   state,
   theme,
-}: Required<
-  Pick<FormFieldContextProps, 'disabled' | 'size' | 'state'> & { theme: Theme }
->) {
-  return cx(
+  className,
+}: Pick<FormFieldContextProps, 'disabled' | 'size' | 'state'> & {
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
     inputWrapperBaseStyles,
     getInputWrapperModeStyles(theme),
     inputWrapperSizeStyles[sizeProp],
@@ -268,30 +270,21 @@ export function getInputWrapperStyles({
       )]: !disabled,
       [getInputWrapperDisabledThemeStyles(theme)]: disabled,
     },
+    className,
   );
-}
 
 export const childrenWrapperStyles = css`
   width: 100%;
 `;
+
+export const getChildrenStyles = (className?: string) =>
+  cx(inputElementClassName, className);
 
 export const additionalChildrenWrapperStyles = css`
   display: flex;
   align-items: center;
   gap: ${spacing[100]}px;
 `;
-
-export const getIconDisabledThemeStyles = (theme: Theme) => {
-  return css`
-    color: ${color[theme].icon.disabled.default};
-  `;
-};
-
-export const getIconThemeStyles = (theme: Theme) => {
-  return css`
-    color: ${color[theme].icon.secondary.default};
-  `;
-};
 
 export const getOptionalTextStyle = (theme: Theme) => {
   return css`
@@ -308,3 +301,36 @@ export const getOptionalTextStyle = (theme: Theme) => {
     }
   `;
 };
+
+const getIconThemeStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].icon.secondary.default};
+  `;
+};
+
+const getIconDisabledThemeStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].icon.disabled.default};
+
+    &:active,
+    &:hover {
+      color: ${color[theme].icon.disabled.hover};
+    }
+
+    &:focus {
+      color: ${color[theme].icon.disabled.focus};
+    }
+  `;
+};
+
+export const getContentEndStyles = (
+  theme: Theme,
+  disabled: boolean,
+  className?: string,
+) =>
+  cx(
+    iconClassName,
+    getIconThemeStyles(theme),
+    { [getIconDisabledThemeStyles(theme)]: disabled },
+    className,
+  );
