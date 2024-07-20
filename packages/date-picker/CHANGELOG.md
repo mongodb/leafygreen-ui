@@ -1,5 +1,15 @@
 # @leafygreen-ui/date-picker
 
+## 1.2.1
+
+### Patch Changes
+
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.3.0](https://github.com/mongodb/leafygreen-ui/blob/c70072026333fabeec21e00c93d3f1eb48bf4c3b/packages/form-field/CHANGELOG.md#130) of `@leafygreen-ui/form-field`
+- Updated dependencies [c95b81376]
+- Updated dependencies [c95b81376]
+  - @leafygreen-ui/form-field@1.2.4
+  - @leafygreen-ui/select@12.1.4
+
 ## 1.2.0
 
 ### Minor Changes

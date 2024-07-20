@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-field
 
+## 1.2.4
+
+### Patch Changes
+
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): `contentEnd` slot prop now passes the `disabled` prop into the cloned element
+
 ## 1.2.3
 
 ### Patch Changes
