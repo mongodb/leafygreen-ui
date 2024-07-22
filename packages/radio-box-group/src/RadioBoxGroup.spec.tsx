@@ -66,6 +66,31 @@ describe('packages/RadioBox', () => {
   });
 });
 
+test('does not allow selection when box is disabled', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <RadioBoxGroup onChange={onChange} className="test-radio-box-group">
+      <h1>Will Remain As Text</h1>
+      <RadioBox value="option-1">Input 1</RadioBox>
+      <RadioBox disabled value="option-2">
+        Input 2
+      </RadioBox>
+    </RadioBoxGroup>,
+  );
+
+  const radioBoxGroupContainer = container.firstChild;
+
+  if (!typeIs.element(radioBoxGroupContainer)) {
+    throw new Error('Could not find radio box group container element');
+  }
+
+  const option2 = radioBoxGroupContainer?.children[1];
+  expect(option2.getAttribute('aria-checked')).not.toBeTruthy();
+  expect(option2.getAttribute('checked')).not.toBeTruthy();
+  expect(onChange).not.toHaveBeenCalled();
+  fireEvent.click(option2);
+});
+
 describe('packages/RadioBoxGroup', () => {
   function WrappedRadioBox({ text }: { text: string }) {
     return (

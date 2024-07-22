@@ -1,5 +1,17 @@
 # @leafygreen-ui/chip
 
+## 1.2.0
+
+### Minor Changes
+
+- 3f52c844b: - Adds optional `glyph` prop. The glyph will appear to the left of the chip text.
+
+  ```js
+  <Chip label="chip" glyph={<Icon glyph="Wizard" />} />
+  ```
+
+  - Decrease left and right padding from `6px` to `4px`.
+
 ## 1.1.0
 
 ### Minor Changes

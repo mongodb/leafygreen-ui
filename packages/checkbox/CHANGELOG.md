@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 13.1.1
+
+### Patch Changes
+
+- 668cb1183: Ensures that event handlers do not fire when input is disabled
+
 ## 13.1.0
 
 ### Minor Changes

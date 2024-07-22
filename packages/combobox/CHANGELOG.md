@@ -1,5 +1,17 @@
 # @leafygreen-ui/combobox
 
+## 9.1.2
+
+### Patch Changes
+
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.3.0](https://github.com/mongodb/leafygreen-ui/blob/c70072026333fabeec21e00c93d3f1eb48bf4c3b/packages/form-field/CHANGELOG.md#130) of `@leafygreen-ui/form-field`
+- Updated dependencies [668cb1183]
+- Updated dependencies [3f52c844b]
+- Updated dependencies [c95b81376]
+  - @leafygreen-ui/checkbox@13.1.1
+  - @leafygreen-ui/chip@1.2.0
+  - @leafygreen-ui/form-field@1.2.4
+
 ## 9.1.1
 
 ### Patch Changes
