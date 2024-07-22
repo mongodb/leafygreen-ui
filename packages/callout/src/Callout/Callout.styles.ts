@@ -23,23 +23,23 @@ export const calloutColor: Record<Theme, Record<Variant, ColorSet>> = {
   [Theme.Dark]: {
     [Variant.Note]: {
       headerText: palette.blue.light2,
-      bar: palette.blue.dark1,
+      bar: palette.blue.light1,
     },
     [Variant.Tip]: {
       headerText: palette.purple.light2,
-      bar: palette.purple.dark2,
+      bar: palette.purple.base,
     },
     [Variant.Important]: {
       headerText: palette.yellow.light2,
-      bar: palette.yellow.dark2,
+      bar: palette.yellow.base,
     },
     [Variant.Warning]: {
       headerText: palette.red.light1,
-      bar: palette.red.dark2,
+      bar: palette.red.light1,
     },
     [Variant.Example]: {
       headerText: palette.gray.light1,
-      bar: palette.gray.dark1,
+      bar: palette.gray.light1,
     },
   },
   [Theme.Light]: {
@@ -60,7 +60,7 @@ export const calloutColor: Record<Theme, Record<Variant, ColorSet>> = {
       bar: palette.red.base,
     },
     [Variant.Example]: {
-      headerText: palette.gray.dark2,
+      headerText: palette.gray.dark1,
       bar: palette.gray.dark1,
     },
   },
