@@ -14,6 +14,7 @@ import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Tab, Tabs, TabsProps } from './index';
@@ -42,8 +43,13 @@ const meta: StoryMetaType<typeof Tabs> = {
     default: 'LiveExample',
     generate: {
       combineArgs: {
+        baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
         darkMode: [false, true],
+        size: ['small', 'default'],
       },
+      excludeCombinations: [
+        { baseFontSize: BaseFontSize.Body2, size: 'small' },
+      ],
     },
     controls: {
       exclude: defaultExcludedControls,
@@ -92,8 +98,10 @@ const meta: StoryMetaType<typeof Tabs> = {
   },
   argTypes: {
     as: storybookArgTypes.as,
+    baseFontSize: storybookArgTypes.baseFontSize,
     forceRenderAllTabPanels: { control: 'boolean' },
     selected: { control: 'number' },
+    size: { control: 'radio', description: "The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`", options: ['small', 'default'] }
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook
   subcomponents: { tab: Tab },

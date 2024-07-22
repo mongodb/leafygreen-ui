@@ -5,12 +5,14 @@ import {
   BaseFontSize,
   fontFamilies,
   fontWeights,
+  spacing,
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
 
-const TAB_TITLE_BODY_1_HEIGHT = 44;
-const TAB_TITLE_BODY_2_HEIGHT = 52;
+const BODY_1_HEIGHT = 44;
+const BODY_2_HEIGHT = 52;
+const SMALL_HEIGHT = 32;
 
 interface ListTitleMode {
   base: string;
@@ -103,17 +105,32 @@ export const listTitleModeStyles: Record<Theme, ListTitleMode> = {
   },
 };
 
-export const listTitleFontSize: Record<BaseFontSize, string> = {
+export const listTitleSizeStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
-    height: ${TAB_TITLE_BODY_1_HEIGHT}px;
+    height: ${BODY_1_HEIGHT}px;
   `,
   [BaseFontSize.Body2]: css`
     font-size: ${typeScales.body2.fontSize}px;
     line-height: ${typeScales.body2.lineHeight}px;
-    height: ${TAB_TITLE_BODY_2_HEIGHT}px;
+    height: ${BODY_2_HEIGHT}px;
   `,
+};
+
+export const getSmallStyles = (isSmall: boolean) => {
+  if (!isSmall) return '';
+
+  return css`
+    padding: ${spacing[150]}px ${spacing[200]}px;
+    font-size: ${typeScales.body1.fontSize}px;
+    line-height: ${typeScales.body1.lineHeight}px;
+    height: ${SMALL_HEIGHT}px;
+
+    &:after {
+      height: 2px;
+    }
+  `;
 };
 
 export const listTitleStyles = css`

@@ -58,10 +58,11 @@ const Tabs = (props: AccessibleTabsProps) => {
     children,
     className,
     darkMode: darkModeProp,
+    forceRenderAllTabPanels = false,
     inlineChildren,
     selected: controlledSelected,
     setSelected: setControlledSelected,
-    forceRenderAllTabPanels = false,
+    size = 'default',
     'data-lgid': dataLgId = LGIDS_TABS.root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
@@ -158,7 +159,9 @@ const Tabs = (props: AccessibleTabsProps) => {
   });
 
   return (
-    <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+    <LeafyGreenProvider
+      baseFontSize={baseFontSize === 16 && size === 'default' ? 16 : 14}
+    >
       <TabDescendantsProvider>
         <TabPanelDescendantProvider>
           <TabsContext.Provider
@@ -166,7 +169,8 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selectedIndex: selected,
+              selected,
+              size,
             }}
           >
             <div {...rest} className={className} data-lgid={dataLgId}>

@@ -15,15 +15,15 @@ import { TabPanelProps } from './TabPanel.types';
 const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
   const { id, index, ref } = useDescendant(TabPanelDescendantsContext);
   const { tabDescendants } = useTabDescendantsContext();
-  const { forceRenderAllTabPanels, selectedIndex } = useTabsContext();
+  const { forceRenderAllTabPanels, selected } = useTabsContext();
 
   const relatedTab = useMemo(() => {
     return tabDescendants.find(tabDescendant => tabDescendant.index === index);
   }, [tabDescendants, index]);
 
-  const selected = index === selectedIndex;
+  const isSelected = index === selected;
 
-  const shouldRender = !disabled && (forceRenderAllTabPanels || selected);
+  const shouldRender = !disabled && (forceRenderAllTabPanels || isSelected);
 
   return (
     <div ref={ref}>
@@ -31,7 +31,7 @@ const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
         <div
           aria-labelledby={relatedTab?.id}
           className={cx({
-            [hiddenTabPanelStyle]: !selected,
+            [hiddenTabPanelStyle]: !isSelected,
           })}
           id={id}
           role="tabpanel"

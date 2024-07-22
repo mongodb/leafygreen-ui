@@ -62,6 +62,13 @@ export interface TabsProps
    * @type (index: number) => void
    */
   setSelected?: React.Dispatch<number>;
+
+  /**
+   * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
+   *
+   * @default 'default'
+   */
+  size?: 'small' | 'default';
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';

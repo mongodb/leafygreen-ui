@@ -17,9 +17,10 @@ import {
 } from '../context';
 
 import {
+  getSmallStyles,
   listTitleChildrenStyles,
-  listTitleFontSize,
   listTitleModeStyles,
+  listTitleSizeStyles,
   listTitleStyles,
 } from './TabTitle.styles';
 import { BaseTabTitleProps } from './TabTitle.types';
@@ -32,11 +33,11 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
     const { index, ref, id } = useDescendant(TabDescendantsContext, fwdRef);
     const { tabPanelDescendants } = useTabPanelDescendantsContext();
-    const { as, darkMode, selectedIndex } = useTabsContext();
+    const { as, darkMode, selected, size } = useTabsContext();
     const { Component } = useInferredPolymorphic(as, rest, 'button');
 
     const theme = darkMode ? Theme.Dark : Theme.Light;
-    const selected = index === selectedIndex;
+    const isSelected = index === selected;
 
     const relatedTabPanel = useMemo(() => {
       return tabPanelDescendants.find(
@@ -56,14 +57,15 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
     return (
       <Component
         aria-controls={relatedTabPanel?.id}
-        aria-selected={!disabled && selected}
+        aria-selected={!disabled && isSelected}
         className={cx(
-          listTitleFontSize[baseFontSize],
+          listTitleSizeStyles[baseFontSize],
           listTitleStyles,
           listTitleModeStyles[theme].base,
+          getSmallStyles(size === 'small'),
           {
-            [listTitleModeStyles[theme].selected]: !disabled && selected,
-            [listTitleModeStyles[theme].hover]: !disabled && !selected,
+            [listTitleModeStyles[theme].selected]: !disabled && isSelected,
+            [listTitleModeStyles[theme].hover]: !disabled && !isSelected,
             [listTitleModeStyles[theme].disabled]: disabled,
           },
           listTitleModeStyles[theme].focus,
@@ -76,7 +78,7 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
         onClick={handleClick}
         ref={ref}
         role="tab"
-        tabIndex={selected ? 0 : -1}
+        tabIndex={isSelected ? 0 : -1}
         {...rest}
       >
         <div className={listTitleChildrenStyles}>{children}</div>

@@ -1,19 +1,15 @@
 import { createContext, useContext } from 'react';
 
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import { TabsProps } from '../Tabs';
 
-export interface TabsContextProps {
-  as: PolymorphicAs;
-  darkMode: boolean;
-  forceRenderAllTabPanels: boolean;
-  selectedIndex: number;
-}
+export type TabsContextProps = Required<Pick<TabsProps, 'as' | 'darkMode' | 'forceRenderAllTabPanels' | 'selected' | 'size'>>;
 
 export const TabsContext = createContext<TabsContextProps>({
   as: 'button',
   darkMode: false,
   forceRenderAllTabPanels: false,
-  selectedIndex: 0,
+  selected: 0,
+  size: 'default',
 });
 
 export const useTabsContext = () => {
