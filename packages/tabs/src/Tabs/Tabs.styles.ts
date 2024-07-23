@@ -1,17 +1,17 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { color } from '@leafygreen-ui/tokens';
 
 export const tabListElementClassName = createUniqueClassName('tab-list');
 export const tabPanelsElementClassName = createUniqueClassName('tab-panels');
 
-export const tabContainerStyle = css`
+export const tabContainerStyles = css`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
 `;
 
-export const getListThemeStyles = (theme: Theme) => css`
+const getBaseTabListStyles = (theme: Theme) => css`
   list-style: none;
   padding: 0;
   display: flex;
@@ -36,11 +36,10 @@ export const getListThemeStyles = (theme: Theme) => css`
   scrollbar-width: none; /* Firefox */
 `;
 
-export const inlineChildrenContainerStyle = css`
-  display: flex;
-`;
+export const getTabListStyles = (theme: Theme) =>
+  cx(getBaseTabListStyles(theme), tabListElementClassName);
 
-export const inlineChildrenWrapperStyle = css`
+export const inlineChildrenContainerStyles = css`
   display: flex;
   align-items: center;
 `;

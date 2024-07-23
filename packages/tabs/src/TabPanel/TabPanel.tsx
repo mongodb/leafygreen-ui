@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useMemo } from 'react';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import { cx } from '@leafygreen-ui/emotion';
 
 import {
   TabPanelDescendantsContext,
@@ -9,7 +8,7 @@ import {
   useTabsContext,
 } from '../context';
 
-import { hiddenTabPanelStyle } from './TabPanel.styles';
+import { getTabPanelStyles } from './TabPanel.styles';
 import { TabPanelProps } from './TabPanel.types';
 
 const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
@@ -30,9 +29,7 @@ const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
       {shouldRender ? (
         <div
           aria-labelledby={relatedTab?.id}
-          className={cx({
-            [hiddenTabPanelStyle]: !isSelected,
-          })}
+          className={getTabPanelStyles(isSelected)}
           id={id}
           role="tabpanel"
         >

@@ -2,7 +2,12 @@ import { createContext, useContext } from 'react';
 
 import { TabsProps } from '../Tabs';
 
-export type TabsContextProps = Required<Pick<TabsProps, 'as' | 'darkMode' | 'forceRenderAllTabPanels' | 'selected' | 'size'>>;
+export type TabsContextProps = Required<
+  Pick<
+    TabsProps,
+    'as' | 'darkMode' | 'forceRenderAllTabPanels' | 'selected' | 'size'
+  >
+>;
 
 export const TabsContext = createContext<TabsContextProps>({
   as: 'button',

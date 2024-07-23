@@ -101,7 +101,12 @@ const meta: StoryMetaType<typeof Tabs> = {
     baseFontSize: storybookArgTypes.baseFontSize,
     forceRenderAllTabPanels: { control: 'boolean' },
     selected: { control: 'number' },
-    size: { control: 'radio', description: "The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`", options: ['small', 'default'] }
+    size: {
+      control: 'radio',
+      description:
+        "The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`",
+      options: ['small', 'default'],
+    },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook
   subcomponents: { tab: Tab },

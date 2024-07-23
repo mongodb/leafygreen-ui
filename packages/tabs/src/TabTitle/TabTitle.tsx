@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
-import { cx } from '@leafygreen-ui/emotion';
 import { getNodeTextContent, Theme } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphic,
@@ -16,13 +15,7 @@ import {
   useTabsContext,
 } from '../context';
 
-import {
-  getSmallStyles,
-  listTitleChildrenStyles,
-  listTitleModeStyles,
-  listTitleSizeStyles,
-  listTitleStyles,
-} from './TabTitle.styles';
+import { childrenContainerStyles, getStyles } from './TabTitle.styles';
 import { BaseTabTitleProps } from './TabTitle.types';
 
 const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
@@ -58,19 +51,14 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
       <Component
         aria-controls={relatedTabPanel?.id}
         aria-selected={!disabled && isSelected}
-        className={cx(
-          listTitleSizeStyles[baseFontSize],
-          listTitleStyles,
-          listTitleModeStyles[theme].base,
-          getSmallStyles(size === 'small'),
-          {
-            [listTitleModeStyles[theme].selected]: !disabled && isSelected,
-            [listTitleModeStyles[theme].hover]: !disabled && !isSelected,
-            [listTitleModeStyles[theme].disabled]: disabled,
-          },
-          listTitleModeStyles[theme].focus,
+        className={getStyles({
+          baseFontSize,
           className,
-        )}
+          disabled,
+          isSelected,
+          size,
+          theme,
+        })}
         data-text={nodeText}
         disabled={disabled}
         id={id}
@@ -81,7 +69,7 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
         tabIndex={isSelected ? 0 : -1}
         {...rest}
       >
-        <div className={listTitleChildrenStyles}>{children}</div>
+        <div className={childrenContainerStyles}>{children}</div>
       </Component>
     );
   },
