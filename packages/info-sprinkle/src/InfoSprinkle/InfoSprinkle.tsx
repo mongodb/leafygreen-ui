@@ -15,10 +15,10 @@ export const InfoSprinkle = React.forwardRef<
 >(
   (
     {
-      triggerAriaLabel = 'more info',
       darkMode: darkModeProp,
       children,
       baseFontSize,
+      triggerProps = {},
       ...rest
     }: InfoSprinkleProps,
     forwardRef,
@@ -30,13 +30,18 @@ export const InfoSprinkle = React.forwardRef<
         baseFontSize={baseFontSize}
         trigger={
           <span
+            data-testid="info-sprinkle-icon"
+            aria-label="more info"
+            {...triggerProps}
             tabIndex={0}
             role="button"
             aria-disabled
             ref={forwardRef}
-            className={cx(iconBaseStyles, iconThemeStyles(theme))}
-            aria-label={triggerAriaLabel}
-            data-testid="info-sprinkle-icon"
+            className={cx(
+              iconBaseStyles,
+              iconThemeStyles(theme),
+              triggerProps?.className,
+            )}
           >
             <InfoWithCircleIcon size={baseFontSize} aria-hidden />
           </span>
