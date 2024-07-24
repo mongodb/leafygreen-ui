@@ -13,7 +13,6 @@ import {
   baseStyles,
   contentClassName,
   getContentStyles,
-  getInnerStyles,
   getTitleStyles,
   getWrapperStyles,
   mediaStyles,
@@ -72,32 +71,25 @@ export const InternalVerticalStep = React.forwardRef<
           >
             {title}
           </Body>
-
-          <div
-            // @ts-expect-error - react type issue: https://github.com/facebook/react/pull/24730
-            inert={isCompleted ? '' : undefined}
-            className={getWrapperStyles(isCompleted)}
-          >
-            <div className={getInnerStyles(!!media)}>
-              <Description
-                data-lgid={LGIDS_VERTICAL_STEPPER.stepDescription}
-                data-testid={LGIDS_VERTICAL_STEPPER.stepDescription}
+          <div className={getWrapperStyles(!!media)}>
+            <Description
+              data-lgid={LGIDS_VERTICAL_STEPPER.stepDescription}
+              data-testid={LGIDS_VERTICAL_STEPPER.stepDescription}
+            >
+              {description}
+            </Description>
+            {media && (
+              <div
+                className={mediaStyles}
+                data-lgid={LGIDS_VERTICAL_STEPPER.stepMedia}
+                data-testid={LGIDS_VERTICAL_STEPPER.stepMedia}
               >
-                {description}
-              </Description>
-              {media && (
-                <div
-                  className={mediaStyles}
-                  data-lgid={LGIDS_VERTICAL_STEPPER.stepMedia}
-                  data-testid={LGIDS_VERTICAL_STEPPER.stepMedia}
-                >
-                  {media}
-                </div>
-              )}
-              {hasActions && (
-                <VerticalStepActions actions={actions} state={state} />
-              )}
-            </div>
+                {media}
+              </div>
+            )}
+            {hasActions && (
+              <VerticalStepActions actions={actions} state={state} />
+            )}
           </div>
         </div>
       </li>

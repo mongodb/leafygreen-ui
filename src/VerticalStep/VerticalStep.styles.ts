@@ -35,18 +35,7 @@ export const baseStyles = css`
   }
 `;
 
-export const getWrapperStyles = (isCompleted = false) => css`
-  display: grid;
-  transition: grid-template-rows ${transitionDuration.slowest}ms ease-in-out;
-  grid-template-rows: 1fr;
-
-  ${isCompleted &&
-  css`
-    grid-template-rows: 0fr;
-  `}
-`;
-
-export const getInnerStyles = (hasMedia = false) => css`
+export const getWrapperStyles = (hasMedia = false) => css`
   overflow: hidden;
   padding-inline-start: ${spacing[200]}px;
 
