@@ -1,23 +1,31 @@
-
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-   "compilerOptions": {
+  "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ]
     }
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*"
+  ],
   "references": [
     {
       "path": "../card"
     },
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../icon"
     },
     {
       "path": "../lib"
