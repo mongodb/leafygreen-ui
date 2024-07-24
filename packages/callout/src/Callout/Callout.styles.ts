@@ -2,7 +2,11 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
-import { linkModeStyles, linkStyles } from '@leafygreen-ui/typography';
+import {
+  anchorClassName,
+  linkModeStyles,
+  linkStyles,
+} from '@leafygreen-ui/typography';
 
 import { Variant } from './Callout.types';
 
@@ -93,7 +97,7 @@ export const getHeaderStyles = (theme: Theme, variant: Variant) =>
   `;
 
 export const getContentStyles = (theme: Theme) => css`
-  a {
+  a:not(.${anchorClassName}) {
     ${linkStyles}
     ${linkModeStyles[theme]}
   }
