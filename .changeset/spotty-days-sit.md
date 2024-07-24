@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/typography': patch
+'@leafygreen-ui/typography': minor
 ---
 
 Exports `linkStyles` and `linkModeStyles`.

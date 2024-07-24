@@ -30,7 +30,7 @@ describe('packages/callout', () => {
     const label = headerLabels[variant];
 
     describe(`for variant ${variant}`, () => {
-      test(`renders label "${label}" in header"`, () => {
+      test(`renders label "${label}" in header`, () => {
         render(<Callout {...defaultProps} variant={variant} />);
 
         expect(screen.getByText(label)).toBeVisible();
