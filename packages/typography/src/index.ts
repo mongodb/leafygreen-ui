@@ -25,7 +25,9 @@ export {
   BackLink,
   type BackLinkProps,
   Link,
+  linkModeStyles,
   type LinkProps,
+  linkStyles,
 } from './Link';
 export { default as Overline } from './Overline/Overline';
 export type { OverlineProps } from './Overline/Overline.types';
