@@ -17,7 +17,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
-import { Tab, Tabs, TabsProps } from './index';
+import { Size, Tab, Tabs, TabsProps } from './';
 
 const CardWithMargin = (props: any) => (
   <Card
@@ -45,10 +45,10 @@ const meta: StoryMetaType<typeof Tabs> = {
       combineArgs: {
         baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
         darkMode: [false, true],
-        size: ['small', 'default'],
+        size: [Size.Small, Size.Default],
       },
       excludeCombinations: [
-        { baseFontSize: BaseFontSize.Body2, size: 'small' },
+        { baseFontSize: BaseFontSize.Body2, size: Size.Small },
       ],
     },
     controls: {
@@ -105,7 +105,7 @@ const meta: StoryMetaType<typeof Tabs> = {
       control: 'radio',
       description:
         "The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`",
-      options: ['small', 'default'],
+      options: [Size.Small, Size.Default],
     },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook

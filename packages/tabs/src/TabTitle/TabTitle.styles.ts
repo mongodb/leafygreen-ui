@@ -10,6 +10,9 @@ import {
   transitionDuration,
   typeScales,
 } from '@leafygreen-ui/tokens';
+import { bodyTypeScaleStyles } from '@leafygreen-ui/typography';
+
+import { Size } from '../Tabs';
 
 const BODY_1_HEIGHT = 44;
 const BODY_2_HEIGHT = 52;
@@ -73,15 +76,11 @@ const baseStyles = css`
   }
 `;
 
-export const baseFontSizeStyles: Record<BaseFontSize, string> = {
+export const defaultSizeHeightStyles: Record<BaseFontSize, string> = {
   [BaseFontSize.Body1]: css`
-    font-size: ${typeScales.body1.fontSize}px;
-    line-height: ${typeScales.body1.lineHeight}px;
     height: ${BODY_1_HEIGHT}px;
   `,
   [BaseFontSize.Body2]: css`
-    font-size: ${typeScales.body2.fontSize}px;
-    line-height: ${typeScales.body2.lineHeight}px;
     height: ${BODY_2_HEIGHT}px;
   `,
 };
@@ -177,7 +176,7 @@ const modeStyles: Record<Theme, ListTitleMode> = {
   },
 };
 
-const sizeStyles: Record<'small' | 'default', string> = {
+const sizeStyles: Record<Size, string> = {
   small: css`
     padding: ${spacing[150]}px ${spacing[200]}px;
     font-size: ${typeScales.body1.fontSize}px;
@@ -203,12 +202,13 @@ export const getStyles = ({
   className: string;
   disabled: boolean;
   isSelected: boolean;
-  size: 'small' | 'default';
+  size: Size;
   theme: Theme;
 }) =>
   cx(
     baseStyles,
-    baseFontSizeStyles[baseFontSize],
+    bodyTypeScaleStyles[baseFontSize],
+    defaultSizeHeightStyles[baseFontSize],
     modeStyles[theme].base,
     sizeStyles[size],
     {
