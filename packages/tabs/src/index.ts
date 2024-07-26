@@ -1,6 +1,7 @@
 export type { TabProps } from './Tab';
 export { default as Tab } from './Tab';
 export {
+  inlineChildrenContainerClassName,
   Size,
   tabListElementClassName,
   tabPanelsElementClassName,

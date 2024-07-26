@@ -156,7 +156,9 @@ WithInlineChildren.args = {
       <IconButton aria-label="save">
         <SaveIcon />
       </IconButton>
-      <Button variant="primary">Continue</Button>
+      <Button variant="primary" size="small">
+        Continue
+      </Button>
     </>
   ),
 };

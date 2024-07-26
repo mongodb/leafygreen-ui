@@ -1,22 +1,17 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { color } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
 export const tabListElementClassName = createUniqueClassName('tab-list');
+export const inlineChildrenContainerClassName = createUniqueClassName(
+  'tabs-inline_children',
+);
 export const tabPanelsElementClassName = createUniqueClassName('tab-panels');
 
-export const tabContainerStyles = css`
+export const getTabContainerStyles = (theme: Theme) => css`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-`;
-
-const getBaseTabListStyles = (theme: Theme) => css`
-  list-style: none;
-  padding: 0;
-  display: flex;
-  width: 100%;
-  overflow-x: auto;
 
   /* Using a background allows the "border" to appear underneath the individual tab color */
   background: linear-gradient(
@@ -24,6 +19,14 @@ const getBaseTabListStyles = (theme: Theme) => css`
     ${color[theme].border.secondary.default} 1px,
     rgb(255 255 255 / 0%) 1px
   );
+`;
+
+const baseTabListStyles = css`
+  list-style: none;
+  padding: 0;
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
 
   /* Remove scrollbar */
 
@@ -36,10 +39,15 @@ const getBaseTabListStyles = (theme: Theme) => css`
   scrollbar-width: none; /* Firefox */
 `;
 
-export const getTabListStyles = (theme: Theme) =>
-  cx(getBaseTabListStyles(theme), tabListElementClassName);
+export const tabListStyles = cx(baseTabListStyles, tabListElementClassName);
 
-export const inlineChildrenContainerStyles = css`
+const baseInlineChildrenContainerStyles = css`
   display: flex;
   align-items: center;
+  gap: ${spacing[200]}px;
 `;
+
+export const inlineChildrenContainerStyles = cx(
+  baseInlineChildrenContainerStyles,
+  inlineChildrenContainerClassName,
+);

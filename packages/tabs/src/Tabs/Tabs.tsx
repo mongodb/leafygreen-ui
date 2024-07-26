@@ -22,9 +22,9 @@ import TabTitle from '../TabTitle';
 import { getEnabledIndices } from '../utils';
 
 import {
-  getTabListStyles,
+  getTabContainerStyles,
   inlineChildrenContainerStyles,
-  tabContainerStyles,
+  tabListStyles,
   tabPanelsElementClassName,
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
@@ -171,9 +171,9 @@ const Tabs = (props: AccessibleTabsProps) => {
             }}
           >
             <div {...rest} className={className} data-lgid={dataLgId}>
-              <div className={tabContainerStyles} id={id}>
+              <div className={getTabContainerStyles(theme)} id={id}>
                 <div
-                  className={getTabListStyles(theme)}
+                  className={tabListStyles}
                   data-lgid={LGIDS_TABS.tabList}
                   role="tablist"
                   aria-orientation="horizontal"
@@ -181,9 +181,11 @@ const Tabs = (props: AccessibleTabsProps) => {
                 >
                   {renderedTabs}
                 </div>
-                <div className={inlineChildrenContainerStyles}>
-                  {inlineChildren}
-                </div>
+                {inlineChildren && (
+                  <div className={inlineChildrenContainerStyles}>
+                    {inlineChildren}
+                  </div>
+                )}
               </div>
               <div
                 className={tabPanelsElementClassName}
