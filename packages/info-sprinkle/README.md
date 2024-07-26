@@ -23,8 +23,14 @@ npm install @leafygreen-ui/info-sprinkle
 ```js
 import { InfoSprinkle } from `@leafygreen-ui/info-sprinkle`;
 
-<InfoSprinkle>I'm an info sprinkle</InfoSprinkle>
-
+<InfoSprinkle
+  triggerProps={{
+    onMouseDown: () => {},
+    onMouseOver: () => {},
+    'aria-label': 'aria-label',
+  }}>
+  I'm an info sprinkle
+</InfoSprinkle>
 ```
 
 ## Properties
