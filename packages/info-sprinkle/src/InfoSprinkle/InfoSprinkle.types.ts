@@ -18,5 +18,5 @@ export interface InfoSprinkleProps extends ModifiedTooltipProps {
   /**
    * Trigger props, excludes `ref`
    */
-  triggerProps?: Omit<ComponentProps<'span'>, 'ref'>;
+  triggerProps?: Omit<ComponentProps<'button'>, 'ref'>;
 }
