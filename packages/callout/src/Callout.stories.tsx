@@ -10,10 +10,10 @@ import Callout, { CalloutProps, Variant } from '.';
 
 const loremWithLinks = (
   <div>
-    <Link href="./">Link component</Link> is simply dummy text of the printing
-    and typesetting industry. <a href="./">Anchor tag</a> has been the industry
-    standard dummy children ever since the 1500s, when an unknown printer took a
-    galley of type and scrambled it to make a type specimen book.
+    Lorem ipsum dolor sit amet, <Link href="./">Link component</Link>{' '}
+    consectetur adipiscing elit. <a href="./">Anchor tag</a> Integer laoreet non
+    metus ac egestas. Integer rhoncus, urna in cursus elementum, quam massa
+    vestibulum massa, id pretium metus tortor in dolor.
   </div>
 );
 
@@ -77,9 +77,7 @@ export const WithRichContent: StoryFn<CalloutProps> = ({
           <li>Bread</li>
           <li>Bananas</li>
         </ul>
-        <Code language="js" darkMode={darkMode}>
-          console.log(&apos;Hello world&apos;)
-        </Code>
+        <Code language="js">console.log(&apos;Hello world&apos;)</Code>
       </>
     </Callout>
   );
