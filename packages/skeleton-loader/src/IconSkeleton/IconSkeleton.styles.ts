@@ -13,8 +13,7 @@ export const getIconSkeletonBaseStyles = (
     themeStyles[theme],
     css`
       height: ${size}px;
-      aspect-ratio: 1 / 1;
+      width: ${size}px;
       border-radius: 50%;
-      width: unset;
     `,
   );
