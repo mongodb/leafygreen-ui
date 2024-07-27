@@ -1,5 +1,11 @@
 # @lg-private/vertical-stepper
 
+## 2.1.0
+
+### Minor Changes
+
+- dcab77e: [LG-4413](https://jira.mongodb.org/browse/LG-4413): VerticalStepper steps always render description and media regardless of current step
+
 ## 2.0.0
 
 ### Major Changes
