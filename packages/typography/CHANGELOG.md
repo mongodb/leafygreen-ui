@@ -1,5 +1,31 @@
 # @leafygreen-ui/typography
 
+## 19.2.1
+
+### Patch Changes
+
+- db2d1d12c: Updates the background color of InlineCode component in dark mode from transparent to `gray.dark4`
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+
+## 19.2.0
+
+### Minor Changes
+
+- 4fb369df7: Links only display focus state on `focus-visible` not default `focus`
+
+### Patch Changes
+
+- 7a901b954: - Uses updated `useInferredPolymorphicProps` and `hasAnchorProps` from `polymorphic`
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
 ## 19.1.2
 
 ### Patch Changes

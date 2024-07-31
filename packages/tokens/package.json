@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tokens",
-  "version": "2.8.0",
+  "version": "2.10.0",
   "description": "leafyGreen UI Kit Tokens",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,8 +22,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^13.5.0",
-    "@leafygreen-ui/palette": "^4.0.9"
+    "@leafygreen-ui/lib": "^13.7.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "polished": "^4.2.2"
   },
   "devDependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",

@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -11,12 +10,10 @@ import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 import {
   additionalChildrenWrapperStyles,
   childrenWrapperStyles,
-  getIconDisabledThemeStyles,
-  getIconThemeStyles,
+  getChildrenStyles,
+  getContentEndStyles,
   getInputWrapperStyles,
   getOptionalTextStyle,
-  iconClassName,
-  inputElementClassName,
 } from './FormFieldInputContainer.styles';
 import { FormFieldInputContainerProps } from './FormFieldInputContainer.types';
 
@@ -36,16 +33,9 @@ export const FormFieldInputContainer = forwardRef<
     const { disabled, size, state, inputProps, optional } =
       useFormFieldContext();
 
-    const inputWrapperStyles = getInputWrapperStyles({
-      disabled,
-      size: size ?? Size.Default,
-      state,
-      theme,
-    });
-
     const renderedChildren = React.cloneElement(children, {
       ...inputProps,
-      className: cx(inputElementClassName, children.props.className),
+      className: getChildrenStyles(children.props.className),
     });
 
     const showOptionalText =
@@ -53,13 +43,24 @@ export const FormFieldInputContainer = forwardRef<
     const showAdditionalChildren = showOptionalText || contentEnd;
 
     return (
-      <div {...rest} ref={fwdRef} className={cx(inputWrapperStyles, className)}>
+      <div
+        {...rest}
+        ref={fwdRef}
+        className={getInputWrapperStyles({
+          disabled,
+          size: size ?? Size.Default,
+          state,
+          theme,
+          className,
+        })}
+      >
         <div className={childrenWrapperStyles}>{renderedChildren}</div>
         {showAdditionalChildren && (
           <div className={additionalChildrenWrapperStyles}>
             {showOptionalText && (
               <div
                 data-lgid={LGIDS_FORM_FIELD.optional}
+                data-testid={LGIDS_FORM_FIELD.optional}
                 className={getOptionalTextStyle(theme)}
               >
                 <p>Optional</p>
@@ -68,12 +69,14 @@ export const FormFieldInputContainer = forwardRef<
 
             {contentEnd &&
               React.cloneElement(contentEnd, {
-                className: cx(
-                  iconClassName,
-                  getIconThemeStyles(theme),
-                  { [getIconDisabledThemeStyles(theme)]: disabled },
+                className: getContentEndStyles(
+                  theme,
+                  disabled,
                   contentEnd.props.className,
                 ),
+                disabled,
+                ['data-lgid']: LGIDS_FORM_FIELD.contentEnd,
+                ['data-testid']: LGIDS_FORM_FIELD.contentEnd,
               })}
           </div>
         )}

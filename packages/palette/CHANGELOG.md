@@ -1,5 +1,17 @@
 # @leafygreen-ui/palette
 
+## 4.1.1
+
+### Patch Changes
+
+- fd0e5977d: Renames Palette story for Mongodb.design
+
+## 4.1.0
+
+### Minor Changes
+
+- d70758dcf: Adds `transparent` key to `palette`. Ensures a consistent `transparent` color across browsers
+
 ## 4.0.10
 
 ### Patch Changes

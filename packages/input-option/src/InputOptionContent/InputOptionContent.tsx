@@ -1,54 +1,93 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Description } from '@leafygreen-ui/typography';
 
 import {
   descriptionClassName,
-  titleClassName,
-} from '../InputOption/InputOption.style';
-import {
-  contentWrapper,
-  descriptionBaseStyles,
-  glyphContainer,
-  glyphRightStyles,
+  getContentWrapperStyles,
+  getDescriptionStyles,
+  getLeftGlyphStyles,
+  getRightGlyphStyles,
+  getTitleStyles,
+  inputOptionContentClassName,
   leftGlyphClassName,
-  textWrapper,
-  titleBaseStyles,
+  textContainerStyles,
+  titleClassName,
 } from '../InputOptionContent/InputOptionContent.styles';
+import { useInputOptionContext } from '../InputOptionContext';
 
 import { InputOptionContentProps } from './InputOptionContent.types';
 
 /**
  * @internal
  *
- * This is a temp workaround to add consistent option styles. Once all components that use an input option are consistent we can add this directly inside `InputOption`.
+ * This is a temp workaround to add consistent option styles.
+ * Once all components that use an input option are consistent
+ * we can add this directly inside `InputOption`.
  */
 export const InputOptionContent = ({
   children,
   description,
   leftGlyph,
   rightGlyph,
+  preserveIconSpace = true,
+  className,
+  ...rest
 }: InputOptionContentProps) => {
+  const { disabled, highlighted, darkMode } = useInputOptionContext();
+  const { theme } = useDarkMode(darkMode);
   return (
-    <div className={contentWrapper}>
+    <div
+      className={cx(
+        inputOptionContentClassName,
+        getContentWrapperStyles({
+          hasLeftGlyph: !!leftGlyph || preserveIconSpace,
+          hasRightGlyph: !!rightGlyph,
+        }),
+        className,
+      )}
+      {...rest}
+    >
       {leftGlyph && (
-        <div className={cx(leftGlyphClassName, glyphContainer)}>
+        <div
+          className={cx(
+            leftGlyphClassName,
+            getLeftGlyphStyles({ theme, disabled, highlighted }),
+          )}
+        >
           {leftGlyph}
         </div>
       )}
-      <div className={textWrapper}>
-        <div className={cx(titleClassName, titleBaseStyles)}>{children}</div>
+      <div className={textContainerStyles}>
+        <div
+          className={cx(
+            titleClassName,
+            getTitleStyles({ theme, highlighted, disabled }),
+          )}
+        >
+          {children}
+        </div>
         {description && (
           <Description
-            className={cx(descriptionClassName, descriptionBaseStyles)}
+            darkMode={darkMode}
+            disabled={disabled}
+            className={cx(descriptionClassName, getDescriptionStyles())}
           >
             {description}
           </Description>
         )}
       </div>
       {rightGlyph && (
-        <div className={cx(glyphContainer, glyphRightStyles)}>{rightGlyph}</div>
+        <div
+          className={getRightGlyphStyles({
+            theme,
+            disabled,
+          })}
+        >
+          {rightGlyph}
+        </div>
       )}
     </div>
   );

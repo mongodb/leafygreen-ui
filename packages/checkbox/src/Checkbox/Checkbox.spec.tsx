@@ -64,6 +64,20 @@ describe('packages/checkbox', () => {
     expect(checkbox.getAttribute('disabled')).toBeFalsy();
   });
 
+  test('does not fire onClick events when disabled', () => {
+    const onClick = jest.fn();
+    const { getInputValue } = renderCheckbox({ onClick });
+    expect(getInputValue()).toBeFalsy();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  test('does not fire onChange events when disabled', () => {
+    const onChange = jest.fn();
+    const { getInputValue } = renderCheckbox({ onChange });
+    expect(getInputValue()).toBeFalsy();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   test('renders as indeterminate when the prop is set', () => {
     const { checkbox } = renderCheckbox({ indeterminate: true });
     expect(checkbox.getAttribute('aria-checked')).toBe('mixed');

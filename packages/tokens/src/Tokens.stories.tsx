@@ -14,6 +14,7 @@ import {
   focusRing,
   fontFamilies,
   hoverRing,
+  shadow,
   spacing,
   transitionDuration,
   typeScales,
@@ -27,8 +28,6 @@ const Card = ({
   darkMode: boolean;
 }) => {
   const theme = darkMode ? Theme.Dark : Theme.Light;
-  const darkBaseBoxShadow = 'box-shadow: 0 4px 20px -4px #01121A';
-  const lightBaseBoxShadow = '0 4px 10px -4px rgba(0, 30, 43, 0.3)';
 
   return (
     <div
@@ -39,7 +38,7 @@ const Card = ({
         color: ${color[theme].text.primary.default};
         background-color: ${color[theme].background.primary.default};
         border: 1px solid ${color[theme].border.secondary.default};
-        box-shadow: ${darkMode ? darkBaseBoxShadow : lightBaseBoxShadow};
+        box-shadow: ${darkMode ? shadow.dark[100] : shadow.light[100]};
       `}
     >
       {children}
@@ -59,12 +58,12 @@ type TypeScale = keyof typeof typeScales;
 type FontFamily = keyof typeof fontFamilies;
 
 const gutter = css`
-  margin-left: ${spacing[3]}px;
+  margin-left: ${spacing[400]}px;
 `;
 
 const spacingBlockVariants = Object.keys(spacing)
   .filter(num => Number(num) === 0 || Number(num) > 25)
-  .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index, idx) => {
+  .reduce((acc: Partial<Record<keyof typeof spacing, string>>, index) => {
     const key = index as PropertyKey as keyof typeof spacing;
     acc[key] = css`
       background-color: ${palette.purple.light2};
@@ -84,6 +83,48 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
     </div>
   );
 }
+
+export const Shadow = () => (
+  <div
+    className={css`
+      display: flex;
+      gap: ${spacing[400]}px;
+    `}
+  >
+    <div
+      className={css`
+        box-shadow: ${shadow.light[100]};
+        background-color: ${color.light.background.primary.default};
+        padding: ${spacing[1600]}px;
+        border-radius: ${borderRadius[200]}px;
+        border: 1px solid ${color.light.border.secondary.default};
+        color: ${color.light.text.primary.default};
+      `}
+    >
+      shadow.light[100]
+    </div>
+
+    <div
+      className={css`
+        padding: ${spacing[600]}px;
+        background-color: ${color.dark.background.primary.default};
+      `}
+    >
+      <div
+        className={css`
+          box-shadow: ${shadow.dark[100]};
+          background-color: ${color.dark.background.primary.default};
+          padding: ${spacing[1600]}px;
+          border-radius: ${borderRadius[200]}px;
+          border: 1px solid ${color.dark.border.secondary.default};
+          color: ${color.dark.text.primary.default};
+        `}
+      >
+        shadow.dark[100]
+      </div>
+    </div>
+  </div>
+);
 
 export const Spacing = () => (
   <div>
@@ -122,7 +163,7 @@ export const TypeScales = () => {
                 : fontFamilies.default};
               font-size: ${typeScales[scale].fontSize}px;
               line-height: ${typeScales[scale].lineHeight}px;
-              margin: ${spacing[3]}px 0;
+              margin: ${spacing[400]}px 0;
             `}
           >
             <div>{scale}</div>
@@ -143,7 +184,7 @@ export const FontFamilies = () => (
           key={family}
           className={css`
             font-family: ${fontFamilies[family]};
-            margin: ${spacing[3]}px 0;
+            margin: ${spacing[400]}px 0;
           `}
         >
           <div>{family}</div>
@@ -280,14 +321,14 @@ export const InteractionRings = () => {
 
   const modeWrapper = (mode: Mode) => css`
     display: flex;
-    gap: ${spacing[2]}px;
+    gap: ${spacing[200]}px;
     color: ${mode === 'dark' ? palette.white : palette.black};
     background-color: ${mode === 'dark' ? palette.black : palette.white};
     border: 1px solid
       ${mode === 'dark' ? palette.gray.light3 : palette.gray.dark3};
-    border-radius: ${spacing[3]}px;
-    padding: ${spacing[4]}px;
-    margin: ${spacing[3]}px 0;
+    border-radius: ${spacing[400]}px;
+    padding: ${spacing[600]}px;
+    margin: ${spacing[400]}px 0;
   `;
 
   const buttonBase = css`
@@ -296,8 +337,8 @@ export const InteractionRings = () => {
     outline: none;
     background-color: unset;
     border: unset;
-    padding: ${spacing[2]}px;
-    border-radius: ${spacing[1]}px;
+    padding: ${spacing[200]}px;
+    border-radius: ${spacing[100]}px;
     cursor: pointer;
     transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
   `;

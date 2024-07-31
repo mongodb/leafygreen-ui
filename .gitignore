@@ -48,9 +48,10 @@ parsed-docs.json
 
 # Storybook/Chromatic logs
 build-storybook.log
+doctor-storybook.log
 
 .turbo
-scripts/tmp.*.ts
+scripts/tmp.*
 
 # 
 .npmrc
@@ -60,4 +61,3 @@ TODO.md
 
 # PR train config (https://github.com/realyze/pr-train)
 .pr-train.yml
-

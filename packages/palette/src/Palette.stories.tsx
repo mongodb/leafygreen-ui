@@ -1,6 +1,5 @@
 import React, { MouseEventHandler, useState } from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
-import isUndefined from 'lodash/isUndefined';
 import { darken, lighten, readableColor, transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -9,6 +8,11 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 import palette from './palette';
 
 type HueName = keyof typeof palette;
+const baseHues: Array<HueName> = ['white', 'black', 'transparent'];
+
+const isBaseHue = (hue: HueName): hue is 'white' | 'black' | 'transparent' => {
+  return baseHues.includes(hue);
+};
 
 const ShadeNames = [
   'dark4',
@@ -99,9 +103,10 @@ function ColorBlock({ hue, shade, ...rest }: ColorBlockProps) {
 
   let color: string;
 
-  if (isUndefined(shade) || hue === 'white' || hue === 'black') {
-    color = palette[hue as 'white' | 'black'];
+  if (isBaseHue(hue)) {
+    color = palette[hue];
   } else {
+    shade = shade ?? 'base';
     color = (palette[hue] as Record<ShadeName, string>)[shade];
   }
 
@@ -172,10 +177,10 @@ const meta: StoryMetaType<any> = {
 
 export default meta;
 
-export function AllColors() {
+export function LiveExample() {
   const allColors = Object.keys(palette);
   const hues = (allColors as Array<keyof typeof palette>).slice(
-    2,
+    baseHues.length,
     allColors.length,
   ); // remove black and white
 
@@ -184,6 +189,7 @@ export function AllColors() {
       <div className={colorRowStyle}>
         <ColorBlock hue="white" name="white" />
         <ColorBlock hue="black" name="black" />
+        <ColorBlock hue="transparent" name="transparent" />
       </div>
       {hues.map(hue => {
         const hueValues = palette[hue];

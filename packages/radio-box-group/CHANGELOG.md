@@ -1,5 +1,11 @@
 # @leafygreen-ui/radio-box-group
 
+## 13.0.1
+
+### Patch Changes
+
+- 668cb1183: Ensures that event handlers do not fire when input is disabled
+
 ## 13.0.0
 
 ### Major Changes

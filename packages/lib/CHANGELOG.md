@@ -1,5 +1,23 @@
 # @leafygreen-ui/lib
 
+## 13.7.0
+
+### Minor Changes
+
+- 4c04aa0ee: Creates utility types `Only`, `ExclusiveUnion` and `ValuesOf`
+
+## 13.6.1
+
+### Patch Changes
+
+- cfa830701: Fixes `RecursiveRecord` type
+
+## 13.6.0
+
+### Minor Changes
+
+- 7a901b954: Adds `PartialRequired` and `Optional` types
+
 ## 13.5.0
 
 ### Minor Changes

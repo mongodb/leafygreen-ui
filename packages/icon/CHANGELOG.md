@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.5.4
+
+### Patch Changes
+
+- 342ab81b0: Updates Federation icon
+
 ## 12.5.3
 
 ### Patch Changes

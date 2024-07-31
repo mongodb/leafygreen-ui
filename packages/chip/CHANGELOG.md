@@ -1,5 +1,32 @@
 # @leafygreen-ui/chip
 
+## 1.2.0
+
+### Minor Changes
+
+- 3f52c844b: - Adds optional `glyph` prop. The glyph will appear to the left of the chip text.
+
+  ```js
+  <Chip label="chip" glyph={<Icon glyph="Wizard" />} />
+  ```
+
+  - Decrease left and right padding from `6px` to `4px`.
+
+## 1.1.0
+
+### Minor Changes
+
+- 5d03e71a0: Updates dismiss button to include `type="button"` so that component dismissal does not submit forms
+
+### Patch Changes
+
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
 ## 1.0.3
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @leafygreen-ui/modal
 
+## 16.0.9
+
+### Patch Changes
+
+- ccf18a59d: Ensures Modal size property value is always normalized, such that if a value is passed that falls outside of those allowed, we default to `"default"`.
+- Updated dependencies [a94306ab3]
+  - @leafygreen-ui/icon-button@15.0.22
+
 ## 16.0.8
 
 ### Patch Changes

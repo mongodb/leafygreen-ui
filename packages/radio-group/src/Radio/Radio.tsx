@@ -66,6 +66,12 @@ function Radio({
   const { theme } = useDarkMode(darkModeProp);
   const descriptionId = useIdAllocator({});
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!disabled) {
+      onChange?.(e);
+    }
+  };
+
   return (
     <div className={cx(containerStyle, containerSizeStyle[normalizedSize])}>
       <Label
@@ -90,7 +96,7 @@ function Radio({
           id={id}
           name={name}
           type="radio"
-          onChange={onChange}
+          onChange={handleChange}
           value={value}
           aria-checked={checked}
           aria-disabled={disabled}

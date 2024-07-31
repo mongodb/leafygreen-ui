@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/card",
-  "version": "10.0.7",
+  "version": "11.0.0",
   "description": "leafyGreen UI Kit Card",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,10 +22,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.9",
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/palette": "^4.1.0",
+    "@leafygreen-ui/polymorphic": "^2.0.2",
     "@leafygreen-ui/tokens": "^2.5.2",
     "polished": "^4.2.2"
   },

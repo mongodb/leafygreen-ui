@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import Card from '@leafygreen-ui/card';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
@@ -16,8 +16,6 @@ import {
 import { type RichLinkProps } from './RichLink.types';
 import { RichLinkBadge } from './RichLinkBadge';
 import { richLinkVariants } from './richLinkVariants';
-
-type DivProps = HTMLElementProps<'div', never>;
 
 export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
   ({ darkMode: darkModeProp, ...props }, ref) => {
@@ -48,17 +46,24 @@ export const RichLink = forwardRef<HTMLAnchorElement, RichLinkProps>(
 
     const showImageBackground = (imageUrl?.length ?? -1) > 0;
 
+    const conditionalProps = href
+      ? {
+          as: 'a' as PolymorphicAs,
+          href,
+          ref: ref,
+          target: '_blank',
+          ...anchorProps,
+        }
+      : {};
+
     return (
       <Card
         darkMode={darkMode}
-        ref={ref}
         className={cx(baseStyles, themeStyles[theme], {
           [badgeAreaStyles]: showBadge,
           [imageBackgroundStyles(imageUrl ?? '')]: showImageBackground,
         })}
-        as="a"
-        // Cast to div props to get around Card's Box typing https://jira.mongodb.org/browse/LG-4259
-        {...({ target: '_blank', href, ...anchorProps } as unknown as DivProps)}
+        {...conditionalProps}
       >
         <Body className={richLinkTextClassName} darkMode={darkMode}>
           {children}

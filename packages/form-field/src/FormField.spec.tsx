@@ -453,47 +453,109 @@ describe('packages/form-field', () => {
     });
   });
 
-  test('Renders an icon', () => {
-    const { queryByTestId } = render(
-      <FormField label="Label" data-testid="form-field">
-        <FormFieldInputContainer
-          contentEnd={<Icon glyph="Beaker" data-testid="icon" />}
-        >
-          <div data-testid="input" />
-        </FormFieldInputContainer>
-      </FormField>,
-    );
+  describe('additional children', () => {
+    test('does not render if `optional` prop and `contentEnd` prop are undefined', () => {
+      const { queryByTestId } = render(
+        <FormField label="Label">
+          <FormFieldInputContainer>
+            <input />
+          </FormFieldInputContainer>
+        </FormField>,
+      );
+      expect(queryByTestId(LGIDS_FORM_FIELD.optional)).not.toBeInTheDocument();
+      expect(
+        queryByTestId(LGIDS_FORM_FIELD.contentEnd),
+      ).not.toBeInTheDocument();
+    });
 
-    const icon = queryByTestId('icon');
-    expect(icon).toBeInTheDocument();
-    expect(icon?.tagName.toLowerCase()).toEqual('svg');
-  });
+    describe('optional text', () => {
+      test(`renders if form field state is ${FormFieldState.None}, is not disabled, and optional prop is true`, () => {
+        const { getByTestId } = render(
+          <FormField label="Label" state={FormFieldState.None} optional>
+            <FormFieldInputContainer>
+              <input />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        expect(getByTestId(LGIDS_FORM_FIELD.optional)).toBeInTheDocument();
+      });
 
-  test('Renders other content', () => {
-    const { queryByText } = render(
-      <FormField label="Label" data-testid="form-field">
-        <FormFieldInputContainer contentEnd={<em>Optional</em>}>
-          <div data-testid="input" />
-        </FormFieldInputContainer>
-      </FormField>,
-    );
+      test.each([FormFieldState.Error, FormFieldState.Valid])(
+        'does not render if form field state is %s',
+        state => {
+          const { queryByTestId } = render(
+            <FormField label="Label" state={state} optional>
+              <FormFieldInputContainer>
+                <input />
+              </FormFieldInputContainer>
+            </FormField>,
+          );
+          expect(
+            queryByTestId(LGIDS_FORM_FIELD.optional),
+          ).not.toBeInTheDocument();
+        },
+      );
 
-    const em = queryByText('Optional');
-    expect(em).toBeInTheDocument();
-    expect(em?.tagName.toLowerCase()).toEqual('em');
-  });
+      test('does not render if disabled', () => {
+        const { queryByTestId } = render(
+          <FormField
+            label="Label"
+            state={FormFieldState.None}
+            disabled
+            optional
+          >
+            <FormFieldInputContainer>
+              <input />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        expect(
+          queryByTestId(LGIDS_FORM_FIELD.optional),
+        ).not.toBeInTheDocument();
+      });
+    });
 
-  test('renders optional through the "optional" prop', () => {
-    const { queryByText } = render(
-      <FormField label="Label" data-testid="form-field" optional>
-        <FormFieldInputContainer>
-          <div data-testid="input" />
-        </FormFieldInputContainer>
-      </FormField>,
-    );
+    describe('contentEnd', () => {
+      test('renders icon', () => {
+        const { getByTestId } = render(
+          <FormField label="Label">
+            <FormFieldInputContainer contentEnd={<Icon glyph="Beaker" />}>
+              <input />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
 
-    const optional = queryByText('Optional');
-    expect(optional).toBeInTheDocument();
+        const icon = getByTestId(LGIDS_FORM_FIELD.contentEnd);
+        expect(icon).toBeInTheDocument();
+        expect(icon?.tagName.toLowerCase()).toEqual('svg');
+      });
+
+      test('renders other content', () => {
+        const { getByTestId } = render(
+          <FormField label="Label">
+            <FormFieldInputContainer contentEnd={<em>Optional</em>}>
+              <input />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+
+        const em = getByTestId(LGIDS_FORM_FIELD.contentEnd);
+        expect(em).toBeInTheDocument();
+        expect(em?.tagName.toLowerCase()).toEqual('em');
+      });
+
+      test('passes disabled prop if form field input is disabled', () => {
+        const { getByTestId } = render(
+          <FormField label="Label" disabled>
+            <FormFieldInputContainer contentEnd={<Icon glyph="Beaker" />}>
+              <input />
+            </FormFieldInputContainer>
+          </FormField>,
+        );
+        const input = getByTestId(LGIDS_FORM_FIELD.contentEnd);
+        expect(input).toHaveAttribute('disabled');
+      });
+    });
   });
 
   describe('custom children', () => {

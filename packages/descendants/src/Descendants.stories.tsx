@@ -1,4 +1,5 @@
-import React, { ElementType, useState } from 'react';
+/* eslint-disable no-console */
+import React, { ComponentProps, ElementType, useRef, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import random from 'lodash/random';
@@ -8,13 +9,18 @@ import shuffle from 'lodash/shuffle';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import Popover from '@leafygreen-ui/popover';
 
 import {
   TestDescendant,
   TestDescendant2,
+  TestDescendantContext,
   TestParent,
   TestParent2,
-} from './test/components.testutils';
+} from '../test/components.testutils';
+import { TestSelectionContext } from '../test/testSelectionContext';
+
+import { useInitDescendants } from '.';
 
 faker.seed(0);
 
@@ -42,19 +48,21 @@ const meta: StoryMetaType<ElementType<unknown>> = {
 };
 export default meta;
 
+const baseItems = [
+  'Adam',
+  'Brooke',
+  'Chris',
+  'Dave',
+  'Eliane',
+  'Fred',
+  'George',
+  'Harry',
+  'Irena',
+  'Jeremy',
+];
+
 export const Basic = () => {
-  const [items, setItems] = useState([
-    'Adam',
-    'Brooke',
-    'Chris',
-    'Dave',
-    'Eliane',
-    'Fred',
-    'George',
-    'Harry',
-    'Irena',
-    'Jeremy',
-  ]);
+  const [items, setItems] = useState(baseItems);
 
   const addItem = () => {
     const newItems = [...items];
@@ -72,6 +80,11 @@ export const Basic = () => {
     setItems(shuffle(items));
   };
 
+  const { Provider: TestDescendantsProvider } = useInitDescendants(
+    TestDescendantContext,
+  );
+  const [selected, setSelected] = useState<number | undefined>(0);
+
   return (
     <LeafyGreenProvider>
       <div>
@@ -85,62 +98,34 @@ export const Basic = () => {
         &nbsp;
         <Button onClick={shuffleItems}>Shuffle Items</Button>
         <br />
-        <TestParent>
-          {items.map((x, i) => (
-            <TestDescendant className={testItemStyle} key={x + i} type="person">
-              {x}
-            </TestDescendant>
-          ))}
-        </TestParent>
+        <TestDescendantsProvider>
+          <TestSelectionContext.Provider value={{ selected, setSelected }}>
+            {items.map((x, i) => (
+              <TestDescendant
+                className={testItemStyle}
+                key={x + i}
+                group="person"
+              >
+                {x}
+              </TestDescendant>
+            ))}
+          </TestSelectionContext.Provider>
+        </TestDescendantsProvider>
       </div>
     </LeafyGreenProvider>
   );
 };
 
 export const Nested = () => {
-  const [people, _setItems] = useState([
-    {
-      name: 'Adam',
+  const [people, _setItems] = useState(
+    baseItems.map(item => ({
+      name: item,
       animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Brooke',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Chris',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Dave',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Eliane',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Fred',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'George',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Harry',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Irena',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-    {
-      name: 'Jeremy',
-      animals: range(random(0, 10)).map(_ => faker.animal.type()),
-    },
-  ]);
+    })),
+  );
 
+  const { Provider } = useInitDescendants(TestDescendantContext);
+  const [selected, setSelected] = useState<number | undefined>(0);
   const [isExpanded, setExpanded] = useState(true);
 
   const toggleCollapse = () => {
@@ -153,23 +138,25 @@ export const Nested = () => {
         <Button onClick={toggleCollapse}>
           {isExpanded ? 'Collapse' : 'Expand'} All
         </Button>
-        <TestParent>
-          {people.map((person, i) => (
-            <TestDescendant className={testItemStyle} key={person.name + i}>
-              {person.name}
-              {person.animals?.length && isExpanded
-                ? person.animals.map((animal, j) => (
-                    <TestDescendant
-                      key={person.name + i + animal + j}
-                      className={cx(nestedItemStyle, testItemStyle)}
-                    >
-                      {animal}
-                    </TestDescendant>
-                  ))
-                : ''}
-            </TestDescendant>
-          ))}
-        </TestParent>
+        <Provider>
+          <TestSelectionContext.Provider value={{ selected, setSelected }}>
+            {people.map((person, i) => (
+              <TestDescendant className={testItemStyle} key={person.name + i}>
+                {person.name}
+                {person.animals?.length && isExpanded
+                  ? person.animals.map((animal, j) => (
+                      <TestDescendant
+                        key={person.name + i + animal + j}
+                        className={cx(nestedItemStyle, testItemStyle)}
+                      >
+                        {animal}
+                      </TestDescendant>
+                    ))
+                  : ''}
+              </TestDescendant>
+            ))}
+          </TestSelectionContext.Provider>
+        </Provider>
       </div>
     </LeafyGreenProvider>
   );
@@ -193,4 +180,57 @@ export const MultipleContexts = () => {
       </TestDescendant>
     </TestParent>
   );
+};
+
+const Parent = ({
+  children,
+  open,
+  ...rest
+}: ComponentProps<'div'> & { open: boolean }) => {
+  const elRef = useRef(null);
+  const parentRef = useRef(null);
+  const { getDescendants, Provider } = useInitDescendants(
+    TestDescendantContext,
+  );
+
+  const handleTransition = () => {
+    console.log(getDescendants().map(d => d.id));
+  };
+
+  return (
+    <>
+      <span ref={elRef} />
+      <Provider>
+        <Popover
+          refEl={elRef}
+          style={{ border: '1px solid red' }}
+          active={open}
+          onEntered={handleTransition}
+        >
+          <div {...rest} ref={parentRef} data-testid="parent">
+            {children}
+          </div>
+        </Popover>
+      </Provider>
+    </>
+  );
+};
+
+export const WithPopover = {
+  render: ({ open }) => {
+    return (
+      <Parent open={open}>
+        <TestDescendant tabIndex={0}>Apple</TestDescendant>
+        <TestDescendant tabIndex={0}>Banana</TestDescendant>
+      </Parent>
+    );
+  },
+  args: {
+    open: true,
+  },
+  argTypes: {
+    open: {
+      control: 'boolean',
+    },
+  },
 };

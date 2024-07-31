@@ -1,12 +1,26 @@
-export {
-  DescendantsProvider,
-  type DescendantsProviderProps,
-} from './DescendantProvider';
-export { type Descendant, type DescendantsList } from './Descendants.types';
+// Descendants
 export {
   createDescendantsContext,
+  type Descendant,
   type DescendantsContextProps,
-} from './DescendantsContext';
-export { useDescendant } from './useDescendant';
-export { useDescendantsContext } from './useDescendantsContext';
-export { useInitDescendants } from './useInitDescendants';
+  type DescendantsList,
+  DescendantsProvider,
+  type DescendantsProviderProps,
+  getDescendantById,
+  getDescendantByIndex,
+  useDescendant,
+  useDescendantsContext,
+  useInitDescendants,
+} from './Descendants';
+// Highlight
+export {
+  createHighlightContext,
+  type Direction,
+  type HighlightChangeHandler,
+  type HighlightContextProps,
+  type HighlightHookReturnType,
+  HighlightProvider,
+  type Index,
+  useHighlight,
+  useHighlightContext,
+} from './Highlight';

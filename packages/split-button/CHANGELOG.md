@@ -1,5 +1,36 @@
 # @leafygreen-ui/split-button
 
+## 1.1.2
+
+### Patch Changes
+
+- cfa830701: Updates Menu. Resolves failing tests due to Menu update
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/menu@25.0.0
+  - @leafygreen-ui/lib@13.6.1
+
+## 1.1.1
+
+### Patch Changes
+
+- 7a901b954: - Uses updated `useInferredPolymorphic` hook & resolves a previously expected error
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+  - @leafygreen-ui/menu@24.2.1
+
 ## 1.1.0
 
 ### Minor Changes

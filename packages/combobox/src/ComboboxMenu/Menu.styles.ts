@@ -3,7 +3,7 @@ import { transparentize } from 'polished';
 import { css, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, spacing } from '@leafygreen-ui/tokens';
+import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
 import { fontSize, lineHeight } from '../ComboboxChip/ComboboxChip.styles';
 import { ComboboxSize as Size } from '../types';
@@ -63,6 +63,10 @@ export const menuThemeStyle: Record<Theme, string> = {
     background-color: ${palette.gray.dark3};
   `,
 };
+
+export const getMenuThemeStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background.primary.default};
+`;
 
 export const menuList = css`
   position: relative;

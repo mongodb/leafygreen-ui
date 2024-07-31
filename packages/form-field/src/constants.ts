@@ -2,6 +2,7 @@ const LGID_ROOT = 'lg-form_field';
 
 export const LGIDS_FORM_FIELD = {
   root: LGID_ROOT,
+  contentEnd: `${LGID_ROOT}-content_end`,
   description: `${LGID_ROOT}-description`,
   errorMessage: `${LGID_ROOT}-error_message`,
   feedback: `${LGID_ROOT}-feedback`,

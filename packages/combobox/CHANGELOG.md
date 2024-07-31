@@ -1,5 +1,38 @@
 # @leafygreen-ui/combobox
 
+## 9.1.2
+
+### Patch Changes
+
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.3.0](https://github.com/mongodb/leafygreen-ui/blob/c70072026333fabeec21e00c93d3f1eb48bf4c3b/packages/form-field/CHANGELOG.md#130) of `@leafygreen-ui/form-field`
+- Updated dependencies [668cb1183]
+- Updated dependencies [3f52c844b]
+- Updated dependencies [c95b81376]
+  - @leafygreen-ui/checkbox@13.1.1
+  - @leafygreen-ui/chip@1.2.0
+  - @leafygreen-ui/form-field@1.2.4
+
+## 9.1.1
+
+### Patch Changes
+
+- cfa830701: Updates `ComboboxOption`.
+
+  - Removes custom `min-height`, `padding`, and `line-height`. Instead these styles will come from `InputOptionContent`.
+
+  Updates `ComboboxMenu`.
+
+  - Updates the menu `background-color` to match the background from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/typography@19.2.1
+
 ## 9.1.0
 
 ### Minor Changes
