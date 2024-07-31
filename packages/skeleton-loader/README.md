@@ -61,3 +61,10 @@ npm install @leafygreen-ui/skeleton-loader
 #### Card Skeleton
 
 `<CardSkeleton />` only extends HTML `div` props.
+
+#### Icon Skeleton
+
+| Name             | Type                                                        | Default   | Description                           |
+| ---------------- | ----------------------------------------------------------- | --------- | ------------------------------------- |
+| `size`           | `'small'`\| `'default'`\| `'large'`\| `'xlarge'`\| `number` | `default` | Determines the height of the skeleton |
+| HTML `div` props |                                                             |           | Additional HTML div properties        |
