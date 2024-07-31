@@ -1,9 +1,7 @@
 export {
-  createRichLinkVariant,
-  type CreateRichLinkVariantArgs,
+  isRichLinkVariantName,
   RichLink,
   type RichLinkProps,
-  type RichLinkVariantMap,
   type RichLinkVariantName,
   richLinkVariants,
 } from './RichLink';
