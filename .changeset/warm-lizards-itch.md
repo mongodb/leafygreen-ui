@@ -1,5 +1,5 @@
 ---
-'@lg-chat/rich-links': minor
+'@lg-chat/rich-links': patch
 ---
 
 Refactors internal rich link variant processing

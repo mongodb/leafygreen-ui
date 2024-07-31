@@ -69,7 +69,7 @@ describe('@lg-chat/rich-links', () => {
       expect(screen.getByText('Link to Website')).toBeInTheDocument();
     });
 
-    it('ignores unknown variants', () => {
+    it('renders as a basic rich link (no variant) if the variant prop is an invalid value', () => {
       render(
         <div>
           <RichLink
@@ -84,7 +84,7 @@ describe('@lg-chat/rich-links', () => {
       expect(screen.queryByText('Invalid Variant Link')).toBeInTheDocument();
     });
 
-    it('ignores explicitly undefined variants', () => {
+    it('renders as a basic rich link (no variant) if the variant prop is explicitly undefined', () => {
       render(
         <div>
           <RichLink href="javascript:;" variant={undefined}>
