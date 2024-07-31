@@ -1,3 +1,5 @@
+import { ComponentProps } from 'react';
+
 import { Align, Justify, TooltipProps } from '@leafygreen-ui/tooltip';
 
 export { Align, Justify };
@@ -14,9 +16,7 @@ export interface InfoSprinkleProps extends ModifiedTooltipProps {
   children: string;
 
   /**
-   * aria-label for the trigger icon.
-   *
-   * @default 'more info'
+   * Trigger props, excludes `ref`
    */
-  triggerAriaLabel?: string;
+  triggerProps?: Omit<ComponentProps<'button'>, 'ref'>;
 }

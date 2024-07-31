@@ -1,5 +1,11 @@
 import React from 'react';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { InfoSprinkle } from '.';
@@ -62,6 +68,37 @@ describe('packages/info-sprinkle', () => {
       const circleIcon = screen.getByLabelText('Info With Circle Icon');
       expect(circleIcon).toBeInTheDocument();
     });
+
+    describe('trigger', () => {
+      test('accepts events', async () => {
+        const onMouseEnter = jest.fn();
+        const onMouseLeave = jest.fn();
+        const { infoSprinkleIcon } = renderInfoSprinkle({
+          triggerProps: {
+            onMouseEnter,
+            onMouseLeave,
+          },
+        });
+
+        act(() => {
+          fireEvent.mouseEnter(infoSprinkleIcon);
+          fireEvent.mouseLeave(infoSprinkleIcon);
+        });
+        await waitFor(() => {
+          expect(onMouseEnter).toHaveBeenCalled();
+          expect(onMouseLeave).toHaveBeenCalled();
+        });
+      });
+
+      test('updates aria-label', () => {
+        const { infoSprinkleIcon } = renderInfoSprinkle({
+          triggerProps: {
+            'aria-label': 'hey there',
+          },
+        });
+        expect(infoSprinkleIcon).toHaveAttribute('aria-label', 'hey there');
+      });
+    });
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
@@ -71,6 +108,16 @@ describe('packages/info-sprinkle', () => {
       <InfoSprinkle />
 
       <InfoSprinkle>Tooltip</InfoSprinkle>
+
+      <InfoSprinkle
+        triggerProps={{
+          onMouseDown: () => {},
+          onMouseOver: () => {},
+          'aria-label': 'aria-label',
+        }}
+      >
+        Tooltip
+      </InfoSprinkle>
     </>;
   });
 });
