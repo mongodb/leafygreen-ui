@@ -2,6 +2,7 @@ import React, { PropsWithChildren } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { LGIDS } from '../../constants';
 import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 import {
@@ -50,6 +51,7 @@ const HeaderCell = <T extends LGRowData>({
 
   return (
     <th
+      data-lgid={LGIDS.header}
       className={cx(
         baseCellStyles,
         {
@@ -79,6 +81,7 @@ const HeaderCell = <T extends LGRowData>({
             onSortIconClick={onSortIconClick}
             aria-label={`Sort by ${columnName}`}
             data-testid="lg-table-sort-icon-button"
+            data-lgid={LGIDS.sortIcon}
           />
         )}
       </div>

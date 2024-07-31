@@ -177,6 +177,8 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
   const { rows } = table.getRowModel();
 
+  console.log({ lenght: rows.length, columns: table.getAllColumns() });
+
   return (
     <>
       <div>
@@ -407,11 +409,24 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
 
   const { rows } = table.getRowModel();
 
+  console.log({ rows });
+
   return (
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
+      <button
+        onClick={() =>
+          // eslint-disable-next-line no-console
+          console.info(
+            'table.getSelectedFlatRows()',
+            table.getSelectedRowModel().flatRows,
+          )
+        }
+      >
+        Log table.getSelectedFlatRows()
+      </button>
 
       <Table
         {...args}
