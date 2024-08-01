@@ -1,9 +1,10 @@
-import React, { forwardRef, Fragment, useMemo, useState } from 'react';
+import React, { forwardRef, Fragment, useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
+  useForwardedRef,
   useIsomorphicLayoutEffect,
   useMutationObserver,
   useObjectDependency,
@@ -11,7 +12,7 @@ import {
   useViewportSize,
 } from '@leafygreen-ui/hooks';
 import {
-  usePopoverContext,
+  useOverlaysContext,
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, createUniqueClassName } from '@leafygreen-ui/lib';
@@ -20,6 +21,7 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
   Align,
+  DismissMode,
   Justify,
   PopoverComponentProps,
   PopoverProps,
@@ -30,11 +32,14 @@ import {
   getElementViewportPosition,
 } from '../utils/positionUtils';
 
-const rootPopoverStyle = css`
+const rootPopoverStyle = (zIndex?: number | string) => css`
+  pointer-events: none;
   position: absolute;
+  z-index ${zIndex};
   transition: transform ${transitionDuration.default}ms ease-in-out,
     opacity ${transitionDuration.default}ms ease-in-out;
   opacity: 0;
+  background: lightblue;
 `;
 
 const mutationOptions = {
@@ -97,17 +102,33 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       onExit,
       onExiting,
       onExited,
+      dismissMode = DismissMode.Auto,
+      onDismiss,
       ...rest
     }: PopoverProps,
     fwdRef,
   ) => {
+    const popoverRef = useForwardedRef(fwdRef, null);
+
     const [placeholderNode, setPlaceholderNode] = useState<HTMLElement | null>(
       null,
     );
     const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
     const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
-    const { setIsPopoverOpen } = usePopoverContext();
+    const { register, remove, topMostOverlay } = useOverlaysContext();
+
+    const overlayId = useId();
+
+    useEffect(() => {
+      if (!popoverRef.current) return;
+
+      register({ element: popoverRef.current, id: overlayId });
+
+      return () => {
+        remove(overlayId);
+      };
+    }, []);
 
     let { portalContainer, scrollContainer } = usePopoverPortalContainer();
 
@@ -119,6 +140,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     // Note: If no portalContainer is passed the portalContainer will be undefined and this warning will show up.
     // By default if no portalContainer is passed the <Portal> component will create a div and append it to the body.
     if (usePortal && scrollContainer) {
+      // check this behavior
       if (!scrollContainer.contains(portalContainer as HTMLElement)) {
         consoleOnce.warn(
           'To ensure correct positioning make sure that the portalContainer element is inside of the scrollContainer',
@@ -237,9 +259,42 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
 
     useIsomorphicLayoutEffect(() => setShouldRender(true), []);
 
-    if (!shouldRender) {
-      return null;
-    }
+    const isTopMostOverlay = topMostOverlay?.id === overlayId;
+    const shouldAutoDismiss = dismissMode === DismissMode.Auto;
+
+    const dismiss = useCallback(() => {
+      remove(overlayId);
+      onDismiss?.();
+    }, [onDismiss, overlayId, remove]);
+
+    const handleClickOutside = useCallback((e: MouseEvent) => {
+      const isClickOutsidePopoverEl = popoverRef.current && !popoverRef.current.contains(e.target as Node);
+      if (isClickOutsidePopoverEl && isTopMostOverlay) {
+        dismiss();
+      }
+    }, [dismiss, isTopMostOverlay, popoverRef.current]);
+
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+      if (isTopMostOverlay) {
+        dismiss();
+      }
+    }, [dismiss, isTopMostOverlay]);
+
+    useEffect(() => {
+      if (shouldAutoDismiss) {
+        document.addEventListener('click', handleClickOutside);
+        document.addEventListener('keydown', handleKeyDown);
+      }
+
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }, [handleClickOutside, handleKeyDown, shouldAutoDismiss]);
+
+    // if (!shouldRender) {
+    //   return null;
+    // }
 
     const {
       align: windowSafeAlign,
@@ -285,6 +340,10 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       renderedChildren = children;
     }
 
+    if (!shouldRender) {
+      return null;
+    }
+
     return (
       <Transition
         nodeRef={contentNodeRef}
@@ -293,18 +352,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         mountOnEnter
         unmountOnExit
         appear
-        onEntering={onEntering}
         onEnter={onEnter}
-        onEntered={(...args) => {
-          setIsPopoverOpen(true);
-          onEntered?.(...args);
-        }}
-        onExiting={onExiting}
+        onEntering={onEntering}
+        onEntered={onEntered}
         onExit={onExit}
-        onExited={(...args) => {
-          setIsPopoverOpen(false);
-          onExited?.(...args);
-        }}
+        onExiting={onExiting}
+        onExited={onExited}
       >
         {state => (
           <>
@@ -318,17 +371,18 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
             <Root {...rootProps}>
               <div
                 {...rest}
-                ref={fwdRef}
+                ref={popoverRef}
                 className={cx(
-                  rootPopoverStyle,
+                  /* rootPopoverStyle(popoverZIndex || zIndex), */
+                  rootPopoverStyle(),
                   css(positionCSS),
                   {
                     [css({ transform })]:
                       state === 'entering' || state === 'exiting',
                     [activeStyle]: state === 'entered',
-                    [css`
+                    /* [css`
                       z-index: ${popoverZIndex};
-                    `]: typeof popoverZIndex === 'number',
+                    `]: typeof popoverZIndex === 'number', */
                   },
                   className,
                   {

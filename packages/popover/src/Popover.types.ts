@@ -65,6 +65,15 @@ export interface ChildrenFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
+const DismissMode = {
+  Auto: 'auto',
+  Manual: 'manual',
+} as const;
+
+type DismissMode = (typeof DismissMode)[keyof typeof DismissMode];
+
+export { DismissMode };
+
 export type PortalControlProps =
   | {
       /**
@@ -196,6 +205,18 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
+
+  /**
+   * State value that determines how popovers are dismissed
+   * ‘auto’: popover is dismissed by selecting outside the popover area, and only one popover can be displayed at a time
+   * ‘manual’: popover must be explicitly hidden through timer or close action, and multiple popovers can be displayed at a time
+   */
+  dismissMode?: DismissMode;
+
+  /**
+   * Callback invoked when popover is dismissed
+   */
+  onDismiss?: () => void;
 } & PortalControlProps &
   TransitionLifecycleCallbacks;
 

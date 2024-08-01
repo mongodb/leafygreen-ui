@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
+import { OverlaysContextProvider } from './OverlaysContext';
 import PortalContextProvider, {
   PortalContextValues,
   usePopoverPortalContainer,
@@ -50,14 +51,16 @@ function LeafyGreenProvider({
   return (
     <UsingKeyboardProvider>
       <PortalContextProvider popover={popoverPortalContainer}>
+        <OverlaysContextProvider>
         <TypographyProvider baseFontSize={baseFontSize}>
           <DarkModeProvider
             contextDarkMode={darkModeState}
             setDarkMode={setDarkMode}
-          >
+            >
             {children}
           </DarkModeProvider>
         </TypographyProvider>
+        </OverlaysContextProvider>
       </PortalContextProvider>
     </UsingKeyboardProvider>
   );

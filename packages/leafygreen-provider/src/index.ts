@@ -1,5 +1,6 @@
 export { useDarkMode, useDarkModeContext } from './DarkModeContext';
 export { default, type LeafyGreenProviderProps } from './LeafyGreenContext';
+export { useOverlaysContext } from './OverlaysContext';
 export {
   PopoverContext,
   PopoverProvider,

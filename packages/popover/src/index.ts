@@ -3,6 +3,7 @@ import { getAlign, getJustify } from './Popover.testutils';
 export {
   Align,
   type ChildrenFunctionParameters,
+  DismissMode,
   type ElementPosition,
   Justify,
   type PopoverProps,

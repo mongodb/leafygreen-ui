@@ -10,6 +10,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
 import Popover, { Align, Justify, PopoverProps } from '.';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 const popoverStyle = css`
   border: 1px solid ${palette.gray.light1};
@@ -101,24 +102,26 @@ const meta: StoryMetaType<typeof Popover> = {
         children: <div className={popoverStyle}>Popover content</div>,
       },
       // eslint-disable-next-line react/display-name
-      decorator: Instance => {
+      decorator: (Instance, ctx) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const ref = useRef(null);
 
         return (
-          <div
-            className={css`
-              position: relative;
-              width: 50vw;
-              height: 150px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            `}
-          >
-            <Button ref={ref}>refEl</Button>
-            <Instance refEl={ref} />
-          </div>
+          <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
+            <div
+              className={css`
+                position: relative;
+                width: 50vw;
+                height: 150px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              `}
+            >
+              <Button ref={ref}>refEl</Button>
+              <Instance refEl={ref} />
+            </div>
+          </LeafyGreenProvider>
         );
       },
     },
@@ -157,21 +160,53 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
   buttonText,
   ...args
 }: PopoverStoryProps) => {
-  const [active, setActive] = useState<boolean>(false);
+  const button1Ref = useRef<HTMLButtonElement | null>(null);
+  const button2Ref = useRef<HTMLButtonElement | null>(null);
 
-  const position = referenceElPositions[refButtonPosition];
+  const [active, setActive] = useState<boolean>(false);
+  const [active2, setActive2] = useState<boolean>(false);
+
+  const position = referenceElPositions.centered;
+  const position2 = referenceElPositions.centered;
+
+  const handleClick1 = e => {
+    /* e.stopPropagation(); */
+    console.log('CLICK 1');
+    setActive(active => !active);
+  }
+
+  const handleClick2 = e => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('CLICK 2');
+    setActive2(active2 => !active2);
+  }
 
   return (
     <div className={regularStyles}>
       <Button
         className={cx(buttonStyles, position)}
-        onClick={() => setActive(active => !active)}
+        onClick={handleClick1}
+        ref={button1Ref}
       >
         {buttonText}
-        <Popover {...args} active={active}>
-          <div className={popoverStyle}>Popover content</div>
-        </Popover>
       </Button>
+      <Popover {...args} refEl={button1Ref} active={active} dismissMode="manual" onDismiss={() => setActive(false)}>
+        <div className={popoverStyle}>Popover content</div>
+        <Button
+          className={cx(buttonStyles, position2)}
+          onClick={handleClick2}
+          ref={button2Ref}
+          autoFocus
+        >
+          {buttonText}
+        </Button>
+        <Button onClick={() => setActive(false)}>x</Button>
+        <Popover refEl={button2Ref} active={active2} dismissMode="manual" onDismiss={() => setActive2(false)}>
+          <div className={popoverStyle}>Popover 2 content</div>
+          <Button onClick={() => setActive2(false)} autoFocus>x</Button>
+        </Popover>
+      </Popover>
     </div>
   );
 };
