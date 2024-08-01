@@ -12,7 +12,6 @@ import PropTypes from 'prop-types';
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
 import ChevronDownIcon from '@leafygreen-ui/icon/dist/ChevronDown';
-import ChevronUpIcon from '@leafygreen-ui/icon/dist/ChevronUp';
 import IconButton from '@leafygreen-ui/icon-button';
 import { keyMap } from '@leafygreen-ui/lib';
 import {
@@ -34,7 +33,6 @@ import {
   getSubmenuToggleStyles,
   subMenuContainerClassName,
   subMenuContainerStyles,
-  subMenuToggleClassName,
 } from './SubMenu.styles';
 import { InternalSubMenuProps } from './SubMenu.types';
 import { useChildrenHeight } from './useChildrenHeight';
@@ -99,8 +97,6 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const submenuRef = useRef<HTMLUListElement>(null);
     const submenuTriggerRef = useRef<HTMLButtonElement>(null);
     const subMenuHeight = useChildrenHeight(submenuRef, [open]);
-
-    const ChevronIcon = open ? ChevronDownIcon : ChevronUpIcon;
 
     const handleClick: MouseEventHandler = e => {
       if (onClick || rest.href) {
@@ -210,12 +206,9 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
             aria-label={open ? 'Close Sub-menu' : 'Open Sub-menu'}
             onClick={handleToggleClick}
             onMouseDownCapture={handleToggleMouseDown}
-            className={cx(
-              subMenuToggleClassName,
-              getSubmenuToggleStyles(theme),
-            )}
+            className={getSubmenuToggleStyles(theme, open)}
           >
-            <ChevronIcon role="presentation" />
+            <ChevronDownIcon role="presentation" />
           </IconButton>
         </li>
         <SubMenuProvider depth={depth + 1} hasIcon={!!rest.glyph}>
