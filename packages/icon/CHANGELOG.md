@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon
 
+## 12.6.0
+
+### Minor Changes
+
+- 2f05b61ab: Exports `sizeMap`
+- eb80fd3cb: Adds Pending to glyph set
+
 ## 12.5.4
 
 ### Patch Changes

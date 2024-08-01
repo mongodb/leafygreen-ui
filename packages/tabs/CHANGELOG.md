@@ -1,5 +1,22 @@
 # @leafygreen-ui/tabs
 
+## 13.0.0
+
+### Major Changes
+
+- d5cd7f552: [LG-4253](https://jira.mongodb.org/browse/LG-4253): Adds small size variant to tabs
+
+  Additional styling updates:
+
+  - [breaking] `inlineChildren` vertical alignment is centered and no longer requires a container element. Instead, pass in a fragment wrapping the children elements and use `inlineChildrenContainerClassName` to customize styling
+  - Exports `inlineChildrenContainerClassName` for customizing div that contains `inlineChildren`
+  - Extends bottom divider between inline children and visible tab panel
+
+### Patch Changes
+
+- Updated dependencies [94b4e7fa1]
+  - @leafygreen-ui/typography@19.3.0
+
 ## 12.0.3
 
 ### Patch Changes
