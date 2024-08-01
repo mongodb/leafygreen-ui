@@ -10,7 +10,8 @@ import { Person } from './makeData.testutils';
 
 export const getDefaultTestData: (
   rowProps: object,
-) => Array<Person> = rowProps => {
+  additionalData?: Array<Person>,
+) => Array<Person> = (rowProps, additionalData = []) => {
   return [
     {
       id: 1 as unknown as string, // Tests expect this to behave like a number, but TS wants a string
@@ -37,6 +38,7 @@ export const getDefaultTestData: (
       visits: 20,
       status: 'complicated',
     },
+    ...additionalData,
   ];
 };
 
@@ -86,6 +88,7 @@ export interface TestTableWithHookProps {
   columnProps?: TestColumnsProps;
   hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
+  additionalData?: Array<Person>;
 }
 
 /**
@@ -95,10 +98,11 @@ export const useTestHookCall = ({
   rowProps,
   columnProps,
   hookProps,
+  additionalData,
 }: TestTableWithHookProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [data] = useState<Array<Person>>(() =>
-    getDefaultTestData(rowProps ?? {}),
+    getDefaultTestData((rowProps = rowProps ?? {}), additionalData),
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
   const [sorting, setSorting] = useState<SortingState>([]);

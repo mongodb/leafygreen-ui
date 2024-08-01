@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-// import userEvent from '@testing-library/user-event';
 import { Cell, HeaderCell } from '../../Cell';
 import ExpandedContent from '../../ExpandedContent';
 import { HeaderRow, Row } from '../../Row';
@@ -206,6 +206,85 @@ describe('packages/table', () => {
             const { getRowByIndex } = getTestUtils();
             expect(getRowByIndex(1)?.getExpandButton()).not.toBeInTheDocument();
           });
+        });
+
+        describe('isExpanded', () => {
+          test('returns false', () => {
+            render(<TableWithHook />);
+            const { getRowByIndex } = getTestUtils();
+            expect(getRowByIndex(0)?.isExpanded()).toBeFalsy();
+          });
+
+          test('returns true', () => {
+            render(<TableWithHook />);
+            const { getRowByIndex } = getTestUtils();
+            const expandButton = getRowByIndex(0)?.getExpandButton();
+            userEvent.click(expandButton!);
+            expect(getRowByIndex(0)?.isExpanded()).toBeTruthy();
+          });
+        });
+
+        describe('isSelected', () => {
+          test('returns false', () => {
+            render(<TableWithHook hookProps={{ hasSelectableRows: true }} />);
+            const { getRowByIndex } = getTestUtils();
+            expect(getRowByIndex(0)?.isSelected()).toBeFalsy();
+          });
+
+          test('returns true', () => {
+            render(<TableWithHook hookProps={{ hasSelectableRows: true }} />);
+            const { getRowByIndex } = getTestUtils();
+            const checkbox = getRowByIndex(0)?.getCheckbox();
+            fireEvent.click(checkbox!);
+            expect(getRowByIndex(0)?.isSelected()).toBeTruthy();
+          });
+        });
+      });
+
+      describe('getAllVisibleSelectedRows', () => {
+        test('returns the correct number of selected visible cells', () => {
+          render(<TableWithHook hookProps={{ hasSelectableRows: true }} />);
+          const { getSelectAllCheckbox, getAllVisibleSelectedRows } =
+            getTestUtils();
+          const checkbox = getSelectAllCheckbox();
+          fireEvent.click(checkbox!);
+          expect(getAllVisibleSelectedRows().length).toEqual(3);
+        });
+
+        test('returns an empty array', () => {
+          render(<TableWithHook hookProps={{ hasSelectableRows: true }} />);
+          const { getAllVisibleSelectedRows } = getTestUtils();
+          expect(getAllVisibleSelectedRows().length).toEqual(0);
+        });
+      });
+    });
+
+    describe('multiple tables', () => {
+      describe('getAllVisibleRows', () => {
+        test('returns 3 rows', () => {
+          render(<TableWithHook />);
+          const { getAllVisibleRows } = getTestUtils();
+          expect(getAllVisibleRows().length).toEqual(3);
+        });
+
+        test('returns 4 rows', () => {
+          render(
+            <TableWithHook
+              data-lgid="lg-table-2"
+              additionalData={[
+                {
+                  id: 4 as unknown as string,
+                  firstName: 'moe',
+                  lastName: 'Kergevin',
+                  age: 34,
+                  visits: 20,
+                  status: 'single',
+                },
+              ]}
+            />,
+          );
+          const { getAllVisibleRows } = getTestUtils('lg-table-2');
+          expect(getAllVisibleRows().length).toEqual(4);
         });
       });
     });

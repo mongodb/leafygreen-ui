@@ -57,9 +57,6 @@ export const getTestUtils = <T extends LGRowData>(
       `[data-lgid=${LGIDS.row}][aria-hidden="false"]`,
     );
 
-    if (!allRows.length)
-      throw new Error('Unable to find any visible <tr> elements.');
-
     return Array.from(allRows);
   };
 
@@ -99,9 +96,6 @@ export const getTestUtils = <T extends LGRowData>(
     const allRows = element.querySelectorAll<HTMLTableRowElement>(
       `[data-lgid=${LGIDS.row}][aria-hidden="false"][data-selected="true"]`,
     );
-
-    if (!allRows.length)
-      throw new Error('Unable to find any visible selected <tr> elements.');
 
     return Array.from(allRows);
   };
