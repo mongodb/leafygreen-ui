@@ -101,6 +101,7 @@ import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
 import OpenNewTab from './OpenNewTab.svg';
 import Pause from './Pause.svg';
+import Pending from './Pending.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
@@ -261,6 +262,7 @@ const _glyphs = {
   Note,
   OpenNewTab,
   Pause,
+  Pending,
   Person,
   PersonGroup,
   PersonWithLock,
