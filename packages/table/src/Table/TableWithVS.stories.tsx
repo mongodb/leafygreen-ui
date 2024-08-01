@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';

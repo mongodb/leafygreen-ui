@@ -1,11 +1,13 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { LGIDS } from '../../constants';
+import { LeafyGreenTable, LGRowData } from '../../useLeafyGreenTable';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
-export const getTestUtils = (
+export const getTestUtils = <T extends LGRowData>(
   lgId: string = LGIDS.root,
+  table?: LeafyGreenTable<T>,
 ): TestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -44,7 +46,7 @@ export const getTestUtils = (
   const getSelectAllCheckbox = () => {
     const checkbox = queryBySelector<HTMLInputElement>(
       element,
-      `[data-lgid=${LGIDS.selectAllCheckbox} input]`,
+      `[data-lgid=${LGIDS.selectAllCheckbox}] input`,
     );
 
     return checkbox;
@@ -55,10 +57,62 @@ export const getTestUtils = (
       `[data-lgid=${LGIDS.row}][aria-hidden="false"]`,
     );
 
-    if (!allRows.length) throw new Error('Unable to find any <tr> elements.');
+    if (!allRows.length)
+      throw new Error('Unable to find any visible <tr> elements.');
 
     return Array.from(allRows);
   };
+
+  const getRowByIndex = (index: number) => {
+    const allRows = getAllVisibleRows();
+    const row = allRows[index];
+    if (!row) return null;
+
+    const allCells = Array.from(
+      row.querySelectorAll<HTMLTableCellElement>(`[data-lgid=${LGIDS.cell}]`),
+    );
+
+    const checkbox = queryBySelector<HTMLInputElement>(
+      row,
+      `[data-lgid=${LGIDS.checkbox}] input`,
+    );
+
+    const getExpandButton = queryBySelector<HTMLButtonElement>(
+      row,
+      `[data-lgid=${LGIDS.expandButton}]`,
+    );
+
+    const isExpanded = row.matches(`[data-expanded="true"]`);
+    const isSelected = row.matches(`[data-selected="true"]`);
+
+    return {
+      getElement: () => row,
+      getAllCells: () => allCells,
+      getCheckbox: () => checkbox,
+      getExpandButton: () => getExpandButton,
+      isExpanded: () => isExpanded,
+      isSelected: () => isSelected,
+    };
+  };
+
+  const getAllVisibleSelectedRows = () => {
+    const allRows = element.querySelectorAll<HTMLTableRowElement>(
+      `[data-lgid=${LGIDS.row}][aria-hidden="false"][data-selected="true"]`,
+    );
+
+    if (!allRows.length)
+      throw new Error('Unable to find any visible selected <tr> elements.');
+
+    return Array.from(allRows);
+  };
+
+  // const getTotalRowCount = () => {
+  //   return table.getRowModel().rows.length;
+  // };
+
+  // const getTotalSelectedRowCount = () => {
+  //   return table.getSelectedRowModel().flatRows.length;
+  // };
 
   return {
     getTable: () => element,
@@ -66,5 +120,9 @@ export const getTestUtils = (
     getHeaderByIndex: (index: number) => getHeaderByIndex(index),
     getSelectAllCheckbox: () => getSelectAllCheckbox(),
     getAllVisibleRows: () => getAllVisibleRows(),
+    getRowByIndex: (index: number) => getRowByIndex(index),
+    getAllVisibleSelectedRows: () => getAllVisibleSelectedRows(),
+    // getTotalRowCount: () => getTotalRowCount(),
+    // getTotalSelectedRowCount: () => getTotalSelectedRowCount(),
   };
 };

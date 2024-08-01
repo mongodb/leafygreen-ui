@@ -5,12 +5,12 @@ export interface HeaderUtils {
 }
 
 export interface RowUtils {
-  getElement: () => HTMLTableRowElement | null;
-  getAllCells: Array<HTMLTableCellElement>;
-  getCheckbox: HTMLInputElement | null;
-  getExpandButton: HTMLButtonElement | null;
-  isExpanded: boolean;
-  isSelected: boolean;
+  getElement: () => HTMLTableRowElement;
+  getAllCells: () => Array<HTMLTableCellElement>;
+  getCheckbox: () => HTMLInputElement | null;
+  getExpandButton: () => HTMLButtonElement | null;
+  isExpanded: () => boolean;
+  isSelected: () => boolean;
 }
 
 export interface TestUtilsReturnType {
@@ -42,10 +42,17 @@ export interface TestUtilsReturnType {
   /**
    * Returns an individual <tr>.
    */
-  getRowByIndex: () => RowUtils | null;
+  getRowByIndex: (index: number) => RowUtils | null;
 
   /**
    * Returns an array of all visible selected <tr>.
    */
-  getAllSelectedRow: () => Array<HTMLTableRowElement>;
+  getAllVisibleSelectedRows: () => Array<HTMLTableRowElement>;
+
+  /**
+   * Returns the total number of <tr>. Does not include sub rows.
+   */
+  // getTotalRowCount: () => number;
+
+  // getTotalSelectedRowCount: () => number;
 }

@@ -10,6 +10,7 @@ import {
   cellTransitionContainerStyles,
   disableAnimationStyles,
 } from '../Cell/Cell.styles';
+import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
 import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
@@ -43,7 +44,11 @@ const ExpandedContent = <T extends RowData>({
 
   return (
     <InternalRowBase {...rest}>
-      <td colSpan={row.getVisibleCells().length} className={cx(baseStyles)}>
+      <td
+        colSpan={row.getVisibleCells().length}
+        className={cx(baseStyles)}
+        data-lgid={LGIDS.cell}
+      >
         <Transition in={isExpanded} timeout={0} nodeRef={transitionRef}>
           {state => (
             <div
