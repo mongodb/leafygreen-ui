@@ -14,9 +14,10 @@ import ExportIcon from '@leafygreen-ui/icon/dist/Export';
 import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
-import { Tab, Tabs, TabsProps } from './index';
+import { Size, Tab, Tabs, TabsProps } from './';
 
 const CardWithMargin = (props: any) => (
   <Card
@@ -42,8 +43,13 @@ const meta: StoryMetaType<typeof Tabs> = {
     default: 'LiveExample',
     generate: {
       combineArgs: {
+        baseFontSize: [BaseFontSize.Body1, BaseFontSize.Body2],
         darkMode: [false, true],
+        size: [Size.Small, Size.Default],
       },
+      excludeCombinations: [
+        { baseFontSize: BaseFontSize.Body2, size: Size.Small },
+      ],
     },
     controls: {
       exclude: defaultExcludedControls,
@@ -92,8 +98,15 @@ const meta: StoryMetaType<typeof Tabs> = {
   },
   argTypes: {
     as: storybookArgTypes.as,
+    baseFontSize: storybookArgTypes.baseFontSize,
     forceRenderAllTabPanels: { control: 'boolean' },
     selected: { control: 'number' },
+    size: {
+      control: 'radio',
+      description:
+        "The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`",
+      options: [Size.Small, Size.Default],
+    },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook
   subcomponents: { tab: Tab },
@@ -143,7 +156,9 @@ WithInlineChildren.args = {
       <IconButton aria-label="save">
         <SaveIcon />
       </IconButton>
-      <Button variant="primary">Continue</Button>
+      <Button variant="primary" size="small">
+        Continue
+      </Button>
     </>
   ),
 };
