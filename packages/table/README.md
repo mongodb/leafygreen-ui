@@ -325,3 +325,105 @@ To add expandable content to your Table, ensure the `renderExpandedContent` prop
 ### React 18
 
 For cases where you anticipate having more than 20 rows with nested rows, it is advisable to opt for virtual scrolling to improve performance of row transitions.
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Table` in a product test suite. If the `Table` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { Table, getTestUtils } from '@leafygreen-ui/table';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Table`. It defaults to 'lg-table' if left empty.
+```
+
+#### Single Table
+
+```tsx
+import { render } from '@testing-library/react';
+import { Table, getTestUtils } from '@leafygreen-ui/table';
+
+...
+
+test('table', () => {
+  render(<Table>...</Table>);
+  const { getAllVisibleRows } = getTestUtils();
+  expect(getAllVisibleRows().length).toEqual(3);
+});
+```
+
+#### Multiple Tables
+
+```tsx
+import { render } from '@testing-library/react';
+import { Table, getTestUtils } from '@leafygreen-ui/table';
+
+...
+
+test('returns the correct rows', () => {
+  render(
+    <>
+      <Table>...</Table>
+      <Table data-lgid="lg-table-2">...</Table>
+    </>,
+  );
+
+  // First Table
+  const { getAllVisibleRows } = getTestUtils();
+  expect(getAllVisibleRows().length).toEqual(3);
+
+  // Second Table
+  const { getAllVisibleRows: getAllVisibleRowsB } = getTestUtils('lg-table-2');
+  expect(getAllVisibleRowsB().length).toEqual(4);
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  getTable,
+  getAllHeaders,
+  getHeaderByIndex: { getElement, getSortIcon },
+  getSelectAllCheckbox,
+  getAllVisibleRows,
+  getRowByIndex: {
+    getElement,
+    getAllCells,
+    getCheckbox,
+    getExpandButton,
+    isExpanded,
+    isSelected,
+    isDisabled,
+  },
+  getAllVisibleSelectedRows,
+} = getTestUtils();
+```
+
+| Util                              | Description                                                         | Returns                       |
+| --------------------------------- | ------------------------------------------------------------------- | ----------------------------- |
+| `getTable()`                      | Returns the table node or `null` if the table node is not found.    | `HTMLTableElement`            |
+| `getAllHeaders()`                 | Returns an array of `<th>`(`<HeaderCell>`) in the DOM               | `Array<HTMLTableCellElement>` |
+| `getHeaderByIndex(index: number)` | Returns utils for an individual `<th>`(`<HeaderCell>`) in the DOM   | `HeaderUtils` \| `null`       |
+| `getSelectAllCheckbox()`          | Returns the input node for the select all checkbox or `null`        | `HTMLInputElement` \| `null`  |
+| `getAllVisibleRows()`             | Returns an array of all visible `<tr>`(`<Row>`) in the DOM          | `Array<HTMLTableRowElement>`  |
+| `getRowByIndex(index: number)`    | Returns utils for an indivudial `<tr>`(`<Row>`) in the DOM          | `RowUtils` \| `null`          |
+| `getAllVisibleSelectedRows`       | Returns an array of all visible selected `<tr>`(`<Row>`) in the DOM | `Array<HTMLTableRowElement>`  |
+
+| HeaderUtils     | Description                       | Returns                       |
+| --------------- | --------------------------------- | ----------------------------- |
+| `getElement()`  | Returns the `<th>` element        | `HTMLTableCellElement`        |
+| `getSortIcon()` | Returns the sort button or `null` | `HTMLButtonElement` \| `null` |
+
+| RowUtils            | Description                                                        | Returns                       |
+| ------------------- | ------------------------------------------------------------------ | ----------------------------- |
+| `getElement()`      | Returns the `<tr>`(`<HeaderCell>`) element                         | `HTMLTableRowElement`         |
+| `getAllCells()`     | Returns an array with all the `<td>`(`<Cell>`) elements in the row | `Array<HTMLTableCellElement>` |
+| `getCheckbox()`     | Returns the input element or `null`                                | `HTMLInputElement` \| `null`  |
+| `getExpandButton()` | Returns the expand button element or `null`                        | `HTMLButtonElement` \| `null` |
+| `isExpanded()`      | Returns if the `<tr>`(`<Row>`) is expanded                         | `boolean`                     |
+| `isSelected()`      | Returns if the `<tr>`(`<Row>`) is selected                         | `boolean`                     |
+| `isDisabled()`      | Returns if the `<tr>`(`<Row>`) is disabled                         | `boolean`                     |

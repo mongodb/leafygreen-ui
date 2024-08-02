@@ -276,30 +276,30 @@ describe('packages/table', () => {
 
     describe('multiple tables', () => {
       describe('getAllVisibleRows', () => {
-        test('returns 3 rows', () => {
-          render(<TableWithHook />);
+        test('returns the correct rows', () => {
+          render(
+            <>
+              <TableWithHook />
+              <TableWithHook
+                data-lgid="lg-table-2"
+                additionalData={[
+                  {
+                    id: 4 as unknown as string,
+                    firstName: 'moe',
+                    lastName: 'Kergevin',
+                    age: 34,
+                    visits: 20,
+                    status: 'single',
+                  },
+                ]}
+              />
+            </>,
+          );
           const { getAllVisibleRows } = getTestUtils();
           expect(getAllVisibleRows().length).toEqual(3);
-        });
-
-        test('returns 4 rows', () => {
-          render(
-            <TableWithHook
-              data-lgid="lg-table-2"
-              additionalData={[
-                {
-                  id: 4 as unknown as string,
-                  firstName: 'moe',
-                  lastName: 'Kergevin',
-                  age: 34,
-                  visits: 20,
-                  status: 'single',
-                },
-              ]}
-            />,
-          );
-          const { getAllVisibleRows } = getTestUtils('lg-table-2');
-          expect(getAllVisibleRows().length).toEqual(4);
+          const { getAllVisibleRows: getAllVisibleRowsB } =
+            getTestUtils('lg-table-2');
+          expect(getAllVisibleRowsB().length).toEqual(4);
         });
       });
     });

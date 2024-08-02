@@ -17,7 +17,7 @@ export interface RowUtils {
   getElement: () => HTMLTableRowElement;
 
   /**
-   * Returns an array with all <td> elements
+   * Returns an array with all <td> elements in the row
    */
   getAllCells: () => Array<HTMLTableCellElement>;
 
@@ -54,32 +54,32 @@ export interface TestUtilsReturnType {
   getTable: () => HTMLTableElement;
 
   /**
-   * Returns an array of <th> elements
+   * Returns an array of <th> elements in the DOM
    */
   getAllHeaders: () => Array<HTMLTableCellElement>;
 
   /**
-   * Returns an individual <th> element.
+   * Returns utils for an individual <th> in the DOM
    */
   getHeaderByIndex: (index: number) => HeaderUtils | null;
 
   /**
-   * Returns the input node for the select all checkbox or `null` if the input node is not found.
+   * Returns the input node for the select all checkbox or `null`
    */
   getSelectAllCheckbox: () => HTMLInputElement | null;
 
   /**
-   * Returns an array of all visible <tr>.
+   * Returns an array of all visible <tr> in the DOM.
    */
   getAllVisibleRows: () => Array<HTMLTableRowElement>;
 
   /**
-   * Returns an individual <tr>.
+   * Returns an individual <tr> in the DOM.
    */
   getRowByIndex: (index: number) => RowUtils | null;
 
   /**
-   * Returns an array of all visible selected <tr>.
+   * Returns an array of all visible selected <tr> in the DOM.
    */
   getAllVisibleSelectedRows: () => Array<HTMLTableRowElement>;
 }
