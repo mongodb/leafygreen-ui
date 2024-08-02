@@ -1,16 +1,49 @@
-// export interface TableUtils<T extends HTMLElement = HTMLInputElement> {
 export interface HeaderUtils {
+  /**
+   * Returns the <th> element
+   */
   getElement: () => HTMLTableCellElement;
+
+  /**
+   * Returns the sort button or `null`
+   */
   getSortIcon: () => HTMLButtonElement | null;
 }
 
 export interface RowUtils {
+  /**
+   * Returns the <tr> element
+   */
   getElement: () => HTMLTableRowElement;
+
+  /**
+   * Returns an array with all <td> elements
+   */
   getAllCells: () => Array<HTMLTableCellElement>;
+
+  /**
+   * Returns the input element or `null`
+   */
   getCheckbox: () => HTMLInputElement | null;
+
+  /**
+   * Returns the expand button or `null`
+   */
   getExpandButton: () => HTMLButtonElement | null;
+
+  /**
+   * Returns if the <tr>(row) is expanded
+   */
   isExpanded: () => boolean;
+
+  /**
+   * Returns if the <tr>(row) is selected
+   */
   isSelected: () => boolean;
+
+  /**
+   * Returns if the <tr>(row) is disabled
+   */
   isDisabled: () => boolean;
 }
 
@@ -49,11 +82,4 @@ export interface TestUtilsReturnType {
    * Returns an array of all visible selected <tr>.
    */
   getAllVisibleSelectedRows: () => Array<HTMLTableRowElement>;
-
-  /**
-   * Returns the total number of <tr>. Does not include sub rows.
-   */
-  // getTotalRowCount: () => number;
-
-  // getTotalSelectedRowCount: () => number;
 }

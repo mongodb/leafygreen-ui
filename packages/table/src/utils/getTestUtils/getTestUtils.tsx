@@ -1,13 +1,11 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { LGIDS } from '../../constants';
-import { LeafyGreenTable, LGRowData } from '../../useLeafyGreenTable';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
-export const getTestUtils = <T extends LGRowData>(
+export const getTestUtils = (
   lgId: string = LGIDS.root,
-  table?: LeafyGreenTable<T>,
 ): TestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -102,14 +100,6 @@ export const getTestUtils = <T extends LGRowData>(
     return Array.from(allRows);
   };
 
-  // const getTotalRowCount = () => {
-  //   return table.getRowModel().rows.length;
-  // };
-
-  // const getTotalSelectedRowCount = () => {
-  //   return table.getSelectedRowModel().flatRows.length;
-  // };
-
   return {
     getTable: () => element,
     getAllHeaders: () => getAllHeaders(),
@@ -118,7 +108,5 @@ export const getTestUtils = <T extends LGRowData>(
     getAllVisibleRows: () => getAllVisibleRows(),
     getRowByIndex: (index: number) => getRowByIndex(index),
     getAllVisibleSelectedRows: () => getAllVisibleSelectedRows(),
-    // getTotalRowCount: () => getTotalRowCount(),
-    // getTotalSelectedRowCount: () => getTotalSelectedRowCount(),
   };
 };
