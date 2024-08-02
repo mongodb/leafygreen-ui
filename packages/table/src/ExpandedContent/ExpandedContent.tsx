@@ -43,7 +43,7 @@ const ExpandedContent = <T extends RowData>({
   );
 
   return (
-    <InternalRowBase {...rest}>
+    <InternalRowBase {...rest} aria-hidden={!isExpanded}>
       <td
         colSpan={row.getVisibleCells().length}
         className={cx(baseStyles)}

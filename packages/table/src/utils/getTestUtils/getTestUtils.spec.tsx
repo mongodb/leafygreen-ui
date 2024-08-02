@@ -24,7 +24,7 @@ import { getTestUtils } from './getTestUtils';
 
 function TableWithHook(props: TestTableWithHookProps) {
   // @ts-ignore
-  const { ['data-lgid']: dataLgId, ...rest } = props;
+  const { ['data-lgid']: dataLgId, isDisabled = false, ...rest } = props;
   const { containerRef, table, rowSelection } = useTestHookCall({
     rowProps: {
       // eslint-disable-next-line react/display-name
@@ -60,7 +60,7 @@ function TableWithHook(props: TestTableWithHookProps) {
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
             return (
-              <Row key={row.id} row={row}>
+              <Row key={row.id} row={row} disabled={isDisabled}>
                 {row
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
@@ -237,6 +237,21 @@ describe('packages/table', () => {
             const checkbox = getRowByIndex(0)?.getCheckbox();
             fireEvent.click(checkbox!);
             expect(getRowByIndex(0)?.isSelected()).toBeTruthy();
+          });
+        });
+
+        describe('isDisabled', () => {
+          test('returns false', () => {
+            render(<TableWithHook />);
+            const { getRowByIndex } = getTestUtils();
+            expect(getRowByIndex(0)?.isDisabled()).toBeFalsy();
+          });
+
+          test('returns true', () => {
+            // @ts-ignore - isDisabled prop
+            render(<TableWithHook isDisabled />);
+            const { getRowByIndex } = getTestUtils();
+            expect(getRowByIndex(0)?.isDisabled()).toBeTruthy();
           });
         });
       });

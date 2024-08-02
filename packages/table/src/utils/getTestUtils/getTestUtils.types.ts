@@ -11,6 +11,7 @@ export interface RowUtils {
   getExpandButton: () => HTMLButtonElement | null;
   isExpanded: () => boolean;
   isSelected: () => boolean;
+  isDisabled: () => boolean;
 }
 
 export interface TestUtilsReturnType {

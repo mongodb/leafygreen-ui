@@ -54,7 +54,7 @@ export const getTestUtils = <T extends LGRowData>(
 
   const getAllVisibleRows = () => {
     const allRows = element.querySelectorAll<HTMLTableRowElement>(
-      `[data-lgid=${LGIDS.row}][aria-hidden="false"]`,
+      `[data-lgid=${LGIDS.row}][aria-hidden="false"], [data-lgid=${LGIDS.row}]:not([aria-hidden])`,
     );
 
     return Array.from(allRows);
@@ -81,6 +81,7 @@ export const getTestUtils = <T extends LGRowData>(
 
     const isExpanded = row.matches(`[data-expanded="true"]`);
     const isSelected = row.matches(`[data-selected="true"]`);
+    const isDisabled = row.matches(`[aria-disabled="true"]`);
 
     return {
       getElement: () => row,
@@ -89,6 +90,7 @@ export const getTestUtils = <T extends LGRowData>(
       getExpandButton: () => getExpandButton,
       isExpanded: () => isExpanded,
       isSelected: () => isSelected,
+      isDisabled: () => isDisabled,
     };
   };
 
