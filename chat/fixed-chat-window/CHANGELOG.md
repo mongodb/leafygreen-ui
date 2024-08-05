@@ -1,5 +1,16 @@
 # @lg-chat/fixed-chat-window
 
+## 2.0.3
+
+### Patch Changes
+
+- cffc9d9f8: Use a more visible color for the ChatTrigger sparkle icon in dark mode.
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [94b4e7fa1]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+  - @leafygreen-ui/typography@19.3.0
+
 ## 2.0.2
 
 ### Patch Changes

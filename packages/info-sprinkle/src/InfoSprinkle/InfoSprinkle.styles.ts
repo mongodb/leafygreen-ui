@@ -21,6 +21,7 @@ export const themeColor: Record<
 };
 
 export const iconBaseStyles = css`
+  all: unset;
   display: flex;
   cursor: pointer;
   transition: all ${transitionDuration.default}ms ease-in-out;

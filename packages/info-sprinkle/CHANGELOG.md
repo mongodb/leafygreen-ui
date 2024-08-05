@@ -1,5 +1,26 @@
 # @leafygreen-ui/info-sprinkle
 
+## 2.0.0
+
+### Major Changes
+
+- bbd56ee88: - Adds `triggerProps` prop. These props are passed to the trigger element.
+  ```js
+    triggerProps={{
+      onMouseDown: () => {},
+      onMouseOver: () => {},
+      'aria-label': 'aria-label',
+    }}>
+  ```
+  - Removes `triggerAriaLabel` prop. Instead you can pass `aria-label` to `triggerProps`.
+  - Internally changes the trigger from a `span` with `role="button` to a `button`.
+
+### Patch Changes
+
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+
 ## 1.0.5
 
 ### Patch Changes

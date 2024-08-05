@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { useInitDescendants } from '@leafygreen-ui/descendants';
-import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -23,11 +22,9 @@ import TabTitle from '../TabTitle';
 import { getEnabledIndices } from '../utils';
 
 import {
-  getListThemeStyles,
-  inlineChildrenContainerStyle,
-  inlineChildrenWrapperStyle,
-  tabContainerStyle,
-  tabListElementClassName,
+  getTabContainerStyles,
+  inlineChildrenContainerStyles,
+  tabListStyles,
   tabPanelsElementClassName,
 } from './Tabs.styles';
 import { AccessibleTabsProps } from './Tabs.types';
@@ -58,10 +55,11 @@ const Tabs = (props: AccessibleTabsProps) => {
     children,
     className,
     darkMode: darkModeProp,
+    forceRenderAllTabPanels = false,
     inlineChildren,
     selected: controlledSelected,
     setSelected: setControlledSelected,
-    forceRenderAllTabPanels = false,
+    size = 'default',
     'data-lgid': dataLgId = LGIDS_TABS.root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
@@ -158,7 +156,9 @@ const Tabs = (props: AccessibleTabsProps) => {
   });
 
   return (
-    <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+    <LeafyGreenProvider
+      baseFontSize={baseFontSize === 16 && size === 'default' ? 16 : 14}
+    >
       <TabDescendantsProvider>
         <TabPanelDescendantProvider>
           <TabsContext.Provider
@@ -166,16 +166,14 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selectedIndex: selected,
+              selected,
+              size,
             }}
           >
             <div {...rest} className={className} data-lgid={dataLgId}>
-              <div className={tabContainerStyle} id={id}>
+              <div className={getTabContainerStyles(theme)} id={id}>
                 <div
-                  className={cx(
-                    getListThemeStyles(theme),
-                    tabListElementClassName,
-                  )}
+                  className={tabListStyles}
                   data-lgid={LGIDS_TABS.tabList}
                   role="tablist"
                   aria-orientation="horizontal"
@@ -183,11 +181,11 @@ const Tabs = (props: AccessibleTabsProps) => {
                 >
                   {renderedTabs}
                 </div>
-                <div className={inlineChildrenContainerStyle}>
-                  <div className={inlineChildrenWrapperStyle}>
+                {inlineChildren && (
+                  <div className={inlineChildrenContainerStyles}>
                     {inlineChildren}
                   </div>
-                </div>
+                )}
               </div>
               <div
                 className={tabPanelsElementClassName}

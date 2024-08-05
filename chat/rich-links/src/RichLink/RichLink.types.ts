@@ -1,7 +1,7 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { RichLinkBadgeProps } from './RichLinkBadge/RichLinkBadge.types';
-import { RichLinkVariantName } from './RichLinkVariants';
+import { RichLinkVariantName } from './richLinkVariants';
 
 export interface BaseRichLinkProps
   extends DarkModeProps,

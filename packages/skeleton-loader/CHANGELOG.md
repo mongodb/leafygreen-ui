@@ -1,5 +1,19 @@
 # @leafygreen-ui/skeleton-loader
 
+## 1.3.0
+
+### Minor Changes
+
+- 2f05b61ab: - [LG-4391](https://jira.mongodb.org/browse/LG-4391): Adds `IconSkeleton` component.
+
+### Patch Changes
+
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [94b4e7fa1]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+  - @leafygreen-ui/typography@19.3.0
+
 ## 1.2.1
 
 ### Patch Changes

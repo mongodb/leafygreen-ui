@@ -1,5 +1,17 @@
 # @leafygreen-ui/typography
 
+## 19.3.0
+
+### Minor Changes
+
+- 94b4e7fa1: Exports `linkStyles` and `linkModeStyles`.
+
+### Patch Changes
+
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+
 ## 19.2.1
 
 ### Patch Changes

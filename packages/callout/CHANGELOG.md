@@ -1,5 +1,22 @@
 # @leafygreen-ui/callout
 
+## 10.0.0
+
+### Major Changes
+
+- 94b4e7fa1: - Updates styles to match the latest design [LG-4397](https://jira.mongodb.org/browse/LG-4397)
+  - Removes icons
+  - Removes border and background color
+  - Links use default LG `Link` styles
+
+### Patch Changes
+
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [94b4e7fa1]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+  - @leafygreen-ui/typography@19.3.0
+
 ## 9.0.22
 
 ### Patch Changes

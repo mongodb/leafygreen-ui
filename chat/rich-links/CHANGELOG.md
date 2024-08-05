@@ -1,5 +1,16 @@
 # @lg-chat/rich-links
 
+## 1.1.1
+
+### Patch Changes
+
+- 6834540cb: Refactors internal rich link variant processing
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [94b4e7fa1]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+  - @leafygreen-ui/typography@19.3.0
+
 ## 1.1.0
 
 ### Minor Changes

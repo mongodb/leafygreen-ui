@@ -7,6 +7,18 @@ import {
 import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+/**
+ * Size variants
+ *
+ * @default 'default'
+ */
+export const Size = {
+  Small: 'small',
+  Default: 'default',
+} as const;
+
+export type Size = (typeof Size)[keyof typeof Size];
+
 export interface TabsProps
   extends HTMLElementProps<'div'>,
     DarkModeProps,
@@ -62,6 +74,13 @@ export interface TabsProps
    * @type (index: number) => void
    */
   setSelected?: React.Dispatch<number>;
+
+  /**
+   * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
+   *
+   * @default 'default'
+   */
+  size?: Size;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';

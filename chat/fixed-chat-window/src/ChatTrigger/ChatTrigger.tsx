@@ -31,7 +31,7 @@ export const ChatTrigger = forwardRef(
         <div className={contentContainerStyles}>
           <SparkleIcon
             fill={
-              theme === Theme.Light ? palette.green.dark1 : palette.green.dark3
+              theme === Theme.Light ? palette.green.dark1 : palette.green.light1
             }
           />
           {children && (
