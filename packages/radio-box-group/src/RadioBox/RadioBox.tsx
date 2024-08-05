@@ -90,12 +90,9 @@ export function RadioBox({
   const contextOnChange = radioBoxGroupContext?.onChange;
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     e => {
-      console.log('called');
-
       if (!disabled) {
         onChangeProp?.(e);
         contextOnChange?.(e);
-        console.log('called x2');
       }
     },
     [onChangeProp, contextOnChange, disabled],
