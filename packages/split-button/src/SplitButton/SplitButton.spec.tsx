@@ -115,6 +115,17 @@ describe('packages/split-button', () => {
       expect(primaryButton.getAttribute('aria-disabled')).toBe('true');
     });
 
+    test('click handler does not fire when disabled', () => {
+      const onClick = jest.fn();
+      const { primaryButton } = renderSplitButton({
+        onClick,
+        disabled: true,
+      });
+
+      fireEvent.click(primaryButton);
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
     test('fires onClick handler once when clicked', () => {
       const onClick = jest.fn();
       const { primaryButton } = renderSplitButton({
