@@ -63,10 +63,15 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
 
     const buttonProps = {
       // only add these props if not an anchor
-      ...(!isAnchor && { disabled, type }),
+      ...(!isAnchor && { type }),
     };
 
-    const sharedButtonProps = { variant, size, baseFontSize };
+    const sharedButtonProps = {
+      variant,
+      size,
+      baseFontSize,
+      disabled,
+    };
 
     return (
       <div className={cx(buttonContainerStyles, className)} ref={containerRef}>

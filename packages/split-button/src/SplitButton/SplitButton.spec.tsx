@@ -107,23 +107,37 @@ describe('packages/split-button', () => {
       expect(primaryButton.textContent).toBe(defaultProps.label);
     });
 
-    test('is disabled when disabled is true', () => {
-      const { primaryButton } = renderSplitButton({
-        disabled: true,
+    describe('when disabled', () => {
+      test('is aria-disabled when disabled is true', () => {
+        const { primaryButton } = renderSplitButton({
+          disabled: true,
+        });
+
+        expect(primaryButton.getAttribute('aria-disabled')).toBe('true');
       });
 
-      expect(primaryButton.getAttribute('aria-disabled')).toBe('true');
-    });
+      test('click handler does not fire when disabled', () => {
+        const onClick = jest.fn();
+        const { primaryButton } = renderSplitButton({
+          onClick,
+          disabled: true,
+        });
 
-    test('click handler does not fire when disabled', () => {
-      const onClick = jest.fn();
-      const { primaryButton } = renderSplitButton({
-        onClick,
-        disabled: true,
+        fireEvent.click(primaryButton);
+        expect(onClick).not.toHaveBeenCalled();
       });
 
-      fireEvent.click(primaryButton);
-      expect(onClick).not.toHaveBeenCalled();
+      test('click handler does not fire when disabled and rendered as an anchor', () => {
+        const onClick = jest.fn();
+        const { primaryButton } = renderSplitButton({
+          onClick,
+          disabled: true,
+          as: 'a',
+        });
+
+        fireEvent.click(primaryButton);
+        expect(onClick).not.toHaveBeenCalled();
+      });
     });
 
     test('fires onClick handler once when clicked', () => {
