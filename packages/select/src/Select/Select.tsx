@@ -48,6 +48,8 @@ import {
 } from './Select.styles';
 import { DropdownWidthBasis, SelectProps, Size, State } from './Select.types';
 
+let count = 0;
+
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
  *
@@ -399,6 +401,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
      */
 
     const viewportSize = useViewportSize();
+
+    console.log('render', ++count);
+    console.log('innerWidth: ', window.innerWidth);
+    console.log('innerHeight: ', window.innerHeight);
+    console.log('viewportSize: ', viewportSize);
 
     const hasGlyphs = useMemo(() => {
       let hasGlyphs = false;

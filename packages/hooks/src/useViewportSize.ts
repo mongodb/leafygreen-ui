@@ -14,12 +14,16 @@ function getViewportSize(): ViewportSize {
 }
 
 export default function useViewportSize(): ViewportSize | null {
-  const [viewportSize, setViewportUpdateVal] = useState<ViewportSize | null>(
-    null,
+  // const [viewportSize, setViewportUpdateVal] = useState<ViewportSize | null>(
+  //   null,
+  // );
+
+  const [viewportSize, setViewportUpdateVal] = useState<ViewportSize>(
+    getViewportSize(),
   );
 
   useEffect(() => {
-    setViewportUpdateVal(getViewportSize());
+    // setViewportUpdateVal(getViewportSize());
 
     const calcResize = debounce(
       () => setViewportUpdateVal(getViewportSize()),
@@ -31,5 +35,6 @@ export default function useViewportSize(): ViewportSize | null {
     return () => window.removeEventListener('resize', calcResize);
   }, []);
 
+  console.log('INNER');
   return viewportSize;
 }
