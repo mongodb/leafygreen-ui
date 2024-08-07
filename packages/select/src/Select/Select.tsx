@@ -402,11 +402,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const viewportSize = useViewportSize();
 
-    console.log('render', ++count);
-    console.log('innerWidth: ', window.innerWidth);
-    console.log('innerHeight: ', window.innerHeight);
-    console.log('viewportSize: ', viewportSize);
-
     const hasGlyphs = useMemo(() => {
       let hasGlyphs = false;
 
