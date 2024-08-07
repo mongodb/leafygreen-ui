@@ -48,8 +48,6 @@ import {
 } from './Select.styles';
 import { DropdownWidthBasis, SelectProps, Size, State } from './Select.types';
 
-let count = 0;
-
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
  *
