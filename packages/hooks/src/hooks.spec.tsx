@@ -95,33 +95,51 @@ describe('packages/hooks', () => {
   // Difficult to test a hook that measures changes to the DOM without having access to the DOM
   describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
 
-  test('useViewportSize responds to updates in window size', async () => {
-    const { result, rerender } = renderHook(() => useViewportSize());
+  describe('useViewportSize', () => {
+    test('returns correct window dimensions on initial render', () => {
+      const mutableWindow: { -readonly [K in keyof Window]: Window[K] } =
+        window;
+      const initialHeight = 360;
+      const initialWidth = 480;
 
-    const mutableWindow: { -readonly [K in keyof Window]: Window[K] } = window;
-    const initialHeight = 360;
-    const initialWidth = 480;
+      mutableWindow.innerHeight = initialHeight;
+      mutableWindow.innerWidth = initialWidth;
 
-    mutableWindow.innerHeight = initialHeight;
-    mutableWindow.innerWidth = initialWidth;
+      const { result } = renderHook(() => useViewportSize());
 
-    window.dispatchEvent(new Event('resize'));
-    rerender();
-    await waitFor(() => {
       expect(result?.current?.height).toBe(initialHeight);
       expect(result?.current?.width).toBe(initialWidth);
     });
 
-    const updateHeight = 768;
-    const updateWidth = 1024;
+    test('responds to updates in window size', async () => {
+      const { result, rerender } = renderHook(() => useViewportSize());
 
-    mutableWindow.innerHeight = updateHeight;
-    mutableWindow.innerWidth = updateWidth;
+      const mutableWindow: { -readonly [K in keyof Window]: Window[K] } =
+        window;
+      const initialHeight = 360;
+      const initialWidth = 480;
 
-    window.dispatchEvent(new Event('resize'));
-    await waitFor(() => {
-      expect(result?.current?.height).toBe(updateHeight);
-      expect(result?.current?.width).toBe(updateWidth);
+      mutableWindow.innerHeight = initialHeight;
+      mutableWindow.innerWidth = initialWidth;
+
+      window.dispatchEvent(new Event('resize'));
+      rerender();
+      await waitFor(() => {
+        expect(result?.current?.height).toBe(initialHeight);
+        expect(result?.current?.width).toBe(initialWidth);
+      });
+
+      const updateHeight = 768;
+      const updateWidth = 1024;
+
+      mutableWindow.innerHeight = updateHeight;
+      mutableWindow.innerWidth = updateWidth;
+
+      window.dispatchEvent(new Event('resize'));
+      await waitFor(() => {
+        expect(result?.current?.height).toBe(updateHeight);
+        expect(result?.current?.width).toBe(updateWidth);
+      });
     });
   });
 
