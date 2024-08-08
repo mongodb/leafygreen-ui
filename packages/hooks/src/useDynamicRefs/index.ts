@@ -7,7 +7,7 @@ import * as React from 'react';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 export interface UseDynamicRefsArgs {
-  prefix: string;
+  prefix?: string;
 }
 
 /** The Map type for a given ref object  */
@@ -53,12 +53,15 @@ export function useDynamicRefs<T>(
 ): DynamicRefGetter<T> {
   const prefix = args?.prefix;
 
-  const getRef = React.useMemo(() => {
-    const refMap: RefMap<T> = new Map<string, React.RefObject<T>>();
-    const getter = getGetRef<T>(refMap);
-    return getter;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefix]);
+  const getRef = React.useMemo(
+    () => {
+      const refMap: RefMap<T> = new Map<string, React.RefObject<T>>();
+      const getter = getGetRef<T>(refMap);
+      return getter;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    prefix ? [prefix] : [],
+  );
 
   return getRef;
 }
