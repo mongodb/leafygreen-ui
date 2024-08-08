@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "prebuild": "npx ts-node ./scripts/prebuild.ts --files",
+    "prebuild": "ts-node ./scripts/prebuild.ts --files",
     "build": "lg build-package",
     "tsc": "lg build-ts",
     "docs": "lg build-tsdoc"
@@ -23,14 +23,15 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^4.0.10",
     "@leafygreen-ui/lib": "^13.6.0",
+    "@leafygreen-ui/palette": "^4.0.10",
+    "@lg-tools/storybook-utils": "^0.1.0",
     "@svgr/core": "^5.3.1",
     "@types/meow": "^6.0.0",
     "@types/xml2json": "^0.11.0",
     "meow": "^6.1.0",
-    "xml2json": "^0.12.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "ts-node": "^10.9.2",
+    "xml2json": "^0.12.0"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
