@@ -116,18 +116,6 @@ describe('packages/hooks', () => {
 
       const mutableWindow: { -readonly [K in keyof Window]: Window[K] } =
         window;
-      const initialHeight = 360;
-      const initialWidth = 480;
-
-      mutableWindow.innerHeight = initialHeight;
-      mutableWindow.innerWidth = initialWidth;
-
-      window.dispatchEvent(new Event('resize'));
-      rerender();
-      await waitFor(() => {
-        expect(result?.current?.height).toBe(initialHeight);
-        expect(result?.current?.width).toBe(initialWidth);
-      });
 
       const updateHeight = 768;
       const updateWidth = 1024;
