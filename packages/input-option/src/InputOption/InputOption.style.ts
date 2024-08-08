@@ -44,7 +44,7 @@ export const getInputOptionStyles = ({
     font-size: ${typeScales.body1.fontSize}px;
     line-height: ${typeScales.body1.lineHeight}px;
     font-family: ${fontFamilies.default};
-    padding: ${spacing[200]}px ${spacing[300]}px;
+    padding: ${spacing[300]}px ${spacing[300]}px;
 
     transition: ${transitionDuration.default}ms ease-in-out;
     transition-property: background-color, color;
