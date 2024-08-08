@@ -87,8 +87,10 @@ test('does not allow selection when box is disabled', () => {
   const option2 = radioBoxGroupContainer?.children[1];
   expect(option2.getAttribute('aria-checked')).not.toBeTruthy();
   expect(option2.getAttribute('checked')).not.toBeTruthy();
-  expect(onChange).not.toHaveBeenCalled();
   fireEvent.click(option2);
+
+  expect(option2.getAttribute('aria-checked')).not.toBeTruthy();
+  expect(option2.getAttribute('checked')).not.toBeTruthy();
 });
 
 describe('packages/RadioBoxGroup', () => {

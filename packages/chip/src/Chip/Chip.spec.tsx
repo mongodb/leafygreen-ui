@@ -244,6 +244,7 @@ describe('packages/chip', () => {
       const { queryByTestId } = renderChip({ disabled: true, onDismiss });
       const button = queryByTestId('chip-dismiss-button');
       expect(() => userEvent.click(button!)).toThrow();
+      expect(onDismiss).not.toHaveBeenCalled();
     });
   });
 

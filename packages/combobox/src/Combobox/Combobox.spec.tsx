@@ -368,9 +368,13 @@ describe('packages/combobox', () => {
 
       // disabled prop
       test('Combobox is not clickable when `disabled`', () => {
-        const { comboboxEl } = renderCombobox(select, { disabled: true });
+        const { comboboxEl, getMenuElements } = renderCombobox(select, {
+          disabled: true,
+        });
+
         userEvent.click(comboboxEl);
-        expect(document.body).toHaveFocus();
+        const { menuContainerEl } = getMenuElements();
+        expect(menuContainerEl).not.toBeInTheDocument();
       });
 
       // TODO: Fix this test. Combobox SHOULD be focusable
