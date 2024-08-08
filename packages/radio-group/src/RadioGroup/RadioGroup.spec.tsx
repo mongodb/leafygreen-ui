@@ -188,6 +188,7 @@ describe('packages/radio-group', () => {
     test('does not fire onChange events when disabled', () => {
       const onChange = jest.fn();
       const { radio } = renderRadio({ disabled: true, onChange });
+      fireEvent.click(radio);
       expect(onChange).not.toHaveBeenCalled();
       expect(radio.getAttribute('checked')).toBeFalsy();
       expect(radio.getAttribute('aria-checked')).toBeFalsy();

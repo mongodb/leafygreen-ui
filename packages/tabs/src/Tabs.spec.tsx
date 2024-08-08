@@ -219,6 +219,36 @@ describe('packages/tabs', () => {
       expect(selectedPanel).toHaveTextContent('Content 1');
     });
 
+    test('clicking disabled tabs not supported', () => {
+      const onChange = jest.fn();
+
+      render(
+        <Tabs
+          data-testid={tabsTestId}
+          aria-label="Description of our test tabs"
+          onChange={onChange}
+        >
+          <Tab default name="First" data-testid="first-tab">
+            Content 1
+          </Tab>
+          <Tab disabled name="Second" data-testid="second-tab">
+            Content 2
+          </Tab>
+          <Tab name="Third" data-testid="third-tab">
+            {' '}
+            Content 3
+          </Tab>
+        </Tabs>,
+      );
+
+      const { getTabUtilsByName } = getTestUtils();
+
+      const secondTab = getTabUtilsByName('Second')?.getTab();
+
+      fireEvent.click(secondTab!);
+      expect(onChange).not.toHaveBeenCalled();
+    });
+
     test('clicking a tab changes the activeTab', () => {
       const { getSelectedPanel, getTabUtilsByName } = renderTabs(
         {},
