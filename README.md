@@ -164,7 +164,7 @@ import Button from '@leafygreen-ui/button';
 
 ### Setup
 
-1. Node >= 16.20.0 required.
+1. Node >= 18.0.0 required.
 
    via [homebrew](https://brew.sh/) with `brew install node`
 
