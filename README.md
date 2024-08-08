@@ -160,9 +160,11 @@ import Button from '@leafygreen-ui/button';
 | [@lg-tools/update](./tools/update)                                   | [![version](https://img.shields.io/npm/v/@lg-tools/update)](https://www.npmjs.com/package/@lg-tools/update)                                     | ![downloads](https://img.shields.io/npm/dm/@lg-tools/update?color=white)                   | [Docs](http://mongodb.design/component/update/example)                   |
 | [@lg-tools/validate](./tools/validate)                               | [![version](https://img.shields.io/npm/v/@lg-tools/validate)](https://www.npmjs.com/package/@lg-tools/validate)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-tools/validate?color=white)                 | [Docs](http://mongodb.design/component/validate/example)                 |
 
-## Developer Setup
+## Developement
 
-1. Node >= 16.20.0 required.
+### Setup
+
+1. Node >= 18.0.0 required.
 
    via [homebrew](https://brew.sh/) with `brew install node`
 
@@ -184,23 +186,36 @@ import Button from '@leafygreen-ui/button';
    ```
 
 4. Install dependencies and link packages.
+   ```ts
+   yarn run init
+   ```
 
-   `yarn run init`
+### Storybook
 
-Use `yarn build` to rebuild all packages.
-Pass in a specific package name to rebuild select packages:
+Start up storybook to see all UI components that exist:
 
-`yarn build button icon`
+```ts
+yarn start
+```
 
-Additionally, pass in the `--watch` flag to rebuild packages on change.
+Note: Running storybook doesn't trigger changes in dependencies, only the main component's — e.g. If you're looking at `Button`, and make a change to `Lib`, you need to rebuild `Lib` for Storybook to see those changes in `Button`.
 
-## Development
+### Building Packages
 
-1. Start up storybook to see all UI components that exist.
+To rebuild all packages:
 
-   `yarn start`
+```ts
+yarn build
+```
 
-## Development within an Application
+To rebuild select packages, filter using `--filter`:
+
+```ts
+yarn build --filter="[package]"
+// ex. --filter="@leafygreen-ui/hooks"
+```
+
+### Development within an Application
 
 To actively develop `leafygreen-ui` components within an application, the following script will link all `leafygreen-ui` components within your application to the local `leafygreen-ui` repository.
 
