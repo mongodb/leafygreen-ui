@@ -7,6 +7,7 @@ import { Cell } from '../Cell';
 import { Row } from '../Row';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import { useTestHookCall } from '../utils/testHookCalls.testutils';
 import { Table } from '..';
@@ -63,16 +64,17 @@ const RowWithExpandableContent = args => {
 
 describe('packages/table/Row/ExpandableContent', () => {
   test('renders the correct number of cell children', () => {
-    const { getAllByRole: getAllByRoleLocal } = render(
-      <RowWithExpandableContent />,
-    );
-    const firstRow = getAllByRoleLocal('row')[1];
-    expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+    render(<RowWithExpandableContent />);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getAllCells().length).toBe(6);
   });
   test('rows with expandable content render expand icon button', async () => {
-    const { getByLabelText } = render(<RowWithExpandableContent />);
-    const expandIconButton = getByLabelText('Expand row');
-    expect(expandIconButton).toBeInTheDocument();
+    render(<RowWithExpandableContent />);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
+      'aria-label',
+      'Expand row',
+    );
   });
   test('rows with expandable content render rows as tbody elements', async () => {
     const { getAllByRole } = render(<RowWithExpandableContent />);
@@ -93,18 +95,17 @@ describe('packages/table/Row/ExpandableContent', () => {
 
   describe('disabled animations', () => {
     test('renders the correct number of cell children with disabled animations', () => {
-      const { getAllByRole: getAllByRoleLocal } = render(
-        <RowWithExpandableContent disableAnimations />,
-      );
-      const firstRow = getAllByRoleLocal('row')[1];
-      expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+      render(<RowWithExpandableContent disableAnimations />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells().length).toBe(6);
     });
     test('rows with expandable content render expand icon button with disabled animations', async () => {
-      const { getByLabelText } = render(
-        <RowWithExpandableContent disableAnimations />,
+      render(<RowWithExpandableContent disableAnimations />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
+        'aria-label',
+        'Expand row',
       );
-      const expandIconButton = getByLabelText('Expand row');
-      expect(expandIconButton).toBeInTheDocument();
     });
     test('rows with expandable content render rows as tbody elements with disabled animations', async () => {
       const { getAllByRole } = render(

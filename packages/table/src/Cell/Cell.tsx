@@ -2,6 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { LGIDS } from '../constants';
 import { useTableContext } from '../TableContext';
 
 import {
@@ -22,7 +23,11 @@ const Cell = ({
 }: CellProps) => {
   const { disableAnimations } = useTableContext();
   return (
-    <td className={cx(baseCellStyles, basicCellStyles, className)} {...rest}>
+    <td
+      data-lgid={LGIDS.cell}
+      className={cx(baseCellStyles, basicCellStyles, className)}
+      {...rest}
+    >
       <div
         className={cx(
           cellTransitionContainerStyles,

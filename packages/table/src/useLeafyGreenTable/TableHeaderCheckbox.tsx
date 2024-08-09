@@ -5,6 +5,7 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
 
 import { disabledTableRowCheckStyles } from './useLeafyGreenTable.styles';
@@ -27,6 +28,7 @@ export const TableHeaderCheckbox = <T extends LGRowData>({
       indeterminate={table.getIsSomeRowsSelected()}
       onChange={table.getToggleAllRowsSelectedHandler()}
       aria-label="Select all rows"
+      data-lgid={LGIDS.selectAllCheckbox}
     />
   );
 };

@@ -6,6 +6,8 @@ import { axe } from 'jest-axe';
 
 import { palette } from '@leafygreen-ui/palette';
 
+import { LGIDS } from '../constants';
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 
 import { Row, RowProps } from '.';
@@ -15,7 +17,7 @@ const onClick = jest.fn();
 
 function renderRow(props: RowProps<Person>) {
   return render(
-    <table>
+    <table data-lgid={LGIDS.root}>
       <tbody>
         <Row {...props} data-testid="lg-test-row-1">
           <td />
@@ -32,9 +34,10 @@ function renderRow(props: RowProps<Person>) {
 
 describe('packages/table/RowWithoutRT', () => {
   test('renders a table row', () => {
-    const { getByTestId } = renderRow(defaultProps);
-    const row = getByTestId('lg-test-row-1');
-    expect(row.tagName.toLowerCase()).toBe('tr');
+    renderRow(defaultProps);
+    const { getRowByIndex } = getTestUtils();
+    const row = getRowByIndex(0)?.getElement();
+    expect(row?.tagName.toLowerCase()).toBe('tr');
   });
 
   test('renders the correct number of children', () => {

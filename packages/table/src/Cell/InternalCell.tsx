@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { LGIDS } from '../constants';
 import { useTableContext } from '../TableContext';
 
 import {
@@ -47,6 +48,7 @@ const InternalCell = ({
   }, [contentHeight, overflow, scrollHeight]);
   return (
     <td
+      data-lgid={LGIDS.cell}
       className={cx(
         baseCellStyles,
         {
