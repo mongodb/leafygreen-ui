@@ -71,6 +71,7 @@ export const iconStyle = css`
   grid-column: 2;
   grid-row: 1;
   color: ${palette.gray.base};
+  transition: transform ${transitionDuration}ms ease-in-out;
 `;
 
 export const iconThemeStyle: Record<Theme, string> = {
