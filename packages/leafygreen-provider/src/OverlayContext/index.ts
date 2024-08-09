@@ -4,3 +4,4 @@ export {
   default as OverlayProvider,
   useOverlayContext,
 } from './OverlayContext';
+export { useOverlay } from './useOverlay';
