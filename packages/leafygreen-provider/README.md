@@ -111,6 +111,8 @@ function InlineCode({ children, className }: InlineCodeProps) {
 
 This hook is meant for internal use. It allows components to read the value of the dark mode prop from the LeafyGreen provider and overwrite the value locally if necessary.
 
+### Example
+
 ```js
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -118,4 +120,22 @@ function Example({ children, darkMode: darkModeProp, variant }) {
   const { darkMode, theme, setDarkMode } = useDarkMode(darkModeProp);
   return <div className={badgeVariants[theme][variant]}>{children}</div>;
 }
+```
+
+## useOverlay
+
+This hook is used to register/remove a component to the `OverlayContext`.
+
+### Example
+
+```js
+import { useOverlay } from '@leafygreen-ui/leafygreen-provider';
+
+const Popover = forwardRef<HTMLDivElement, PopoverProps>(
+  ({ children }: PopoverProps, fwdRef) => {
+    const { id, isTopMostOverlay, ref } = useOverlay(fwdRef);
+    
+    return <div ref={ref}>{children}</div>
+  },
+);
 ```
