@@ -1,6 +1,6 @@
 import React, {
   createContext,
-  PropsWithChildren,
+  ReactNode,
   RefObject,
   useCallback,
   useContext,
@@ -39,7 +39,7 @@ export const useOverlayContext = (): OverlayContextProps => {
 /**
  * Global provider tracking overlays that stack on z-axis
  */
-const OverlayProvider = ({ children }: PropsWithChildren) => {
+const OverlayProvider = ({ children }: { children: ReactNode }) => {
   const [overlays, setOverlays] = useState<Array<OverlayItem>>([]);
 
   const topMostOverlay = useMemo(

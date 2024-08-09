@@ -134,7 +134,7 @@ import { useOverlay } from '@leafygreen-ui/leafygreen-provider';
 const Popover = forwardRef<HTMLDivElement, PopoverProps>(
   ({ children }: PopoverProps, fwdRef) => {
     const { id, isTopMostOverlay, ref } = useOverlay(fwdRef);
-    
+
     return <div ref={ref}>{children}</div>
   },
 );
