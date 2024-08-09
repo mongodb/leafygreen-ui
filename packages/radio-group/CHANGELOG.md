@@ -1,5 +1,13 @@
 # @leafygreen-ui/radio-group
 
+## 11.0.3
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+- Updated dependencies [c1b8b633b]
+  - @leafygreen-ui/hooks@8.1.4
+
 ## 11.0.2
 
 ### Patch Changes

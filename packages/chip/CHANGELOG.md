@@ -1,5 +1,11 @@
 # @leafygreen-ui/chip
 
+## 1.2.1
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+
 ## 1.2.0
 
 ### Minor Changes
