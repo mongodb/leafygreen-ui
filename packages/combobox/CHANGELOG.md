@@ -1,5 +1,17 @@
 # @leafygreen-ui/combobox
 
+## 9.1.3
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/checkbox@13.1.2
+  - @leafygreen-ui/chip@1.2.1
+  - @leafygreen-ui/hooks@8.1.4
+
 ## 9.1.2
 
 ### Patch Changes
