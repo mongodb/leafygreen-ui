@@ -1,5 +1,6 @@
 import React, { createRef, useState } from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
@@ -50,7 +51,7 @@ describe('OverlayProvider', () => {
 
     expect(getByText('Overlays count: 0')).toBeInTheDocument();
 
-    fireEvent.click(getByText('Register overlay'));
+    userEvent.click(getByText('Register overlay'));
 
     expect(getByText('Overlays count: 1')).toBeInTheDocument();
     expect(getByText('Top most overlay ID: 1')).toBeInTheDocument();
@@ -59,13 +60,13 @@ describe('OverlayProvider', () => {
   test('removes an overlay', () => {
     const { getByText } = renderProviderWithChildren();
 
-    fireEvent.click(getByText('Register overlay'));
-    fireEvent.click(getByText('Register overlay'));
+    userEvent.click(getByText('Register overlay'));
+    userEvent.click(getByText('Register overlay'));
 
     expect(getByText('Overlays count: 2')).toBeInTheDocument();
     expect(getByText('Top most overlay ID: 2')).toBeInTheDocument();
 
-    fireEvent.click(getByText('Remove overlay'));
+    userEvent.click(getByText('Remove overlay'));
 
     expect(getByText('Overlays count: 1')).toBeInTheDocument();
     expect(getByText('Top most overlay ID: 1')).toBeInTheDocument();

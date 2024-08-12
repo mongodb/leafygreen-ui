@@ -9,9 +9,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-interface OverlayItem<E extends HTMLElement = HTMLElement> {
-  element: E;
-  ref: RefObject<E>;
+interface OverlayItem<TOverlayElement extends HTMLElement = HTMLElement> {
+  element: TOverlayElement;
+  ref: RefObject<TOverlayElement>;
   id: string;
 }
 
@@ -48,7 +48,7 @@ const OverlayProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const registerOverlay = useCallback((overlay: OverlayItem) => {
-    if (overlays.findIndex(item => item.id === overlay.id) > -1) return;
+    if (overlays.some(item => item.id === overlay.id)) return;
     setOverlays(prev => [...prev, { ...overlay }]);
   }, []);
 

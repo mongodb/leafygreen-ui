@@ -12,10 +12,10 @@ import { useOverlayContext } from './OverlayContext';
  * Registers a component as an overlay in the {@link OverlayContext} on mount.
  * Removes the overlay component on unmount. Checks if `isTopMostOverlay`
  */
-export const useOverlay = <T extends HTMLElement>(
-  fwdRef: RefObject<T> | ForwardedRef<T>,
+export const useOverlay = <TOverlayElement extends HTMLElement>(
+  fwdRef: RefObject<TOverlayElement> | ForwardedRef<TOverlayElement>,
 ) => {
-  const ref: RefObject<T> = useForwardedRef(fwdRef, null);
+  const ref: RefObject<TOverlayElement> = useForwardedRef(fwdRef, null);
   const { topMostOverlay, registerOverlay, removeOverlay } =
     useOverlayContext();
   const id = useIdAllocator({ prefix: 'overlay' });
