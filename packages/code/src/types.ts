@@ -89,7 +89,7 @@ export type CodeProps = Omit<
   /**
    * Shows window chrome for code block;
    *
-   * default: `false`
+   * @default: `false`
    */
   showWindowChrome?: boolean;
 
@@ -101,9 +101,16 @@ export type CodeProps = Omit<
   /**
    * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
-   * default: `true`
+   * @default: `true`
    */
   copyable?: boolean;
+
+  /**
+   * Makes long code blocks expandable
+   *
+   * @default `false`
+   */
+  expandable?: boolean;
 
   /**
    * Callback fired when Code is copied via the copy button.

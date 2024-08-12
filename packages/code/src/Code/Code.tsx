@@ -9,6 +9,9 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
+import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
@@ -23,6 +26,8 @@ import {
   contentWrapperStyles,
   contentWrapperStylesNoPanel,
   contentWrapperStyleWithPicker,
+  expandButtonStyle,
+  getCodeWrapperHeightStyle,
   getCodeWrapperVariantStyle,
   getScrollShadow,
   panelStyles,
@@ -60,6 +65,7 @@ function Code({
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
+  expandable = true,
   onCopy,
   highlightLines = [],
   languageOptions,
@@ -76,8 +82,11 @@ function Code({
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [showCopyBar, setShowCopyBar] = useState(false);
+  const [expanded, setExpanded] = useState(!expandable);
+  const [numOfLines, setNumOfLines] = useState<number>();
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const baseFontSize = useBaseFontSize();
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
     (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
@@ -115,12 +124,18 @@ function Code({
     }
   }, []);
 
+  useEffect(() => {
+    const codeContent = document.getElementById('code-content');
+    setNumOfLines(codeContent?.querySelectorAll('tr').length);
+  }, []);
+
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
+      id="code-content"
     >
       {children}
     </Syntax>
@@ -142,6 +157,10 @@ function Code({
         setScrollState(ScrollState.Right);
       }
     }
+  }
+
+  function handleExpandButtonClick() {
+    setExpanded(prev => !prev);
   }
 
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
@@ -186,6 +205,7 @@ function Code({
             className={cx(
               codeWrapperStyle,
               getCodeWrapperVariantStyle(theme),
+              getCodeWrapperHeightStyle(expanded, baseFontSize),
               {
                 [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
                 [codeWrapperStyleNoPanel]: !showPanel,
@@ -218,6 +238,16 @@ function Code({
               showCustomActionButtons={showCustomActionsInPanel}
               {...popoverProps}
             />
+          )}
+
+          {expandable && (
+            <button
+              className={cx(expandButtonStyle)}
+              onClick={handleExpandButtonClick}
+            >
+              {expanded ? <ChevronUp /> : <ChevronDown />}
+              Click to {expanded ? 'collapse' : `expand (${numOfLines} lines)`}
+            </button>
           )}
         </div>
       </div>

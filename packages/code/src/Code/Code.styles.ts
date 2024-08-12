@@ -4,7 +4,13 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  fontFamilies,
+  spacing,
+  transitionDuration,
+  typeScales,
+} from '@leafygreen-ui/tokens';
 
 import { variantColors } from '../globalStyles';
 
@@ -18,6 +24,7 @@ const mq = facepaint([
 
 const singleLineComponentHeight = 36;
 const lineHeight = 24;
+const codeWrappingVerticalPadding = spacing[200];
 
 export const wrapperStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -35,20 +42,30 @@ export const wrapperStyle: Record<Theme, string> = {
 export const contentWrapperStyles = css`
   position: relative;
   display: grid;
-  grid-template-areas: 'code panel';
+  grid-template-areas:
+    'code panel'
+    'expandButton expandButton';
   grid-template-columns: auto 38px;
+  grid-template-rows: auto 28px;
   border-radius: inherit;
   z-index: 0; // new stacking context
 `;
 
 export const contentWrapperStylesNoPanel = css`
   // No panel, all code
-  grid-template-areas: 'code code';
+  grid-template-areas:
+    'code code'
+    'expandButton expandButton';
+  grid-template-rows: auto 28px;
 `;
 
 export const contentWrapperStyleWithPicker = css`
-  grid-template-areas: 'panel' 'code';
+  grid-template-areas:
+    'panel'
+    'code'
+    'expandButton'; // New row underneath code
   grid-template-columns: unset;
+  grid-template-rows: auto auto 28px;
 `;
 
 export const codeWrapperStyle = css`
@@ -60,8 +77,8 @@ export const codeWrapperStyle = css`
   border-bottom-right-radius: 0;
   border: 0;
   // We apply left / right padding in Syntax to support line highlighting
-  padding-top: ${spacing[2]}px;
-  padding-bottom: ${spacing[2]}px;
+  padding-top: ${codeWrappingVerticalPadding}px;
+  padding-bottom: ${codeWrappingVerticalPadding}px;
   margin: 0;
   position: relative;
   transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
@@ -74,7 +91,6 @@ export const codeWrapperStyle = css`
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
   }
 `;
 
@@ -98,6 +114,22 @@ export const singleLineCodeWrapperStyle = css`
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
 `;
 
+export function getCodeWrapperHeightStyle(
+  expanded: boolean,
+  baseFontSize: number,
+) {
+  const codeLineHeight = baseFontSize === BaseFontSize.Body2 ? 24 : 20;
+  const numOfLinesWhenCollapsed = 5;
+  const topPadding = codeWrappingVerticalPadding;
+  const height = expanded
+    ? 'auto'
+    : `${codeLineHeight * numOfLinesWhenCollapsed + topPadding}px`;
+
+  return css`
+    height: ${height};
+  `;
+}
+
 export const panelStyles = css`
   z-index: 2; // Above the shadows
   grid-area: panel;
@@ -111,6 +143,30 @@ export function getCodeWrapperVariantStyle(theme: Theme): string {
     color: ${colors[3]};
   `;
 }
+
+export const expandButtonStyle = css`
+  grid-area: expandButton;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 0 0 12px 12px;
+  z-index: 2;
+  background-color: ${palette.gray.light3};
+  border: none;
+  border-top: 1px solid ${palette.gray.light2};
+  color: ${palette.gray.dark2};
+  font-family: ${fontFamilies.default};
+  font-size: ${typeScales.body1.fontSize}px;
+  &:hover {
+    background-color: ${palette.gray.light2};
+    cursor: pointer;
+  }
+  &:focus {
+    color: ${palette.blue.base};
+    background-color: ${palette.blue.light2};
+  }
+`;
 
 export const baseScrollShadowStyles = css`
   &:before,

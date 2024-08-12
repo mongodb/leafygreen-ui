@@ -15,6 +15,18 @@ import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample'
 import Code, { CodeProps, Language } from '.';
 
 const jsSnippet = `
+//Install the Figma Code Highlighter plugin, paste in your code and run the plugin to style the text layer. Use atomOneLight color scheme to generate colors closest to the LeafyGreen Code component. Note: Colors will not map 1:1 with the LeafyGreen React component though will be a close match.
+
+import datetime
+personDocument = {
+  "name": { "first": "Alan", "last": "Turing" },
+  "birth": datetime.datetime(1912, 6, 23),
+}
+
+personDocument2 = {
+  "name": { "first": "Balan", "last": "Uuring" },
+  "birth": datetime.datetime(1913, 7, 24),
+}
 import datetime from './';
 
 const myVar = 42;
