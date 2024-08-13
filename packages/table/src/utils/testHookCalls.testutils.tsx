@@ -89,6 +89,7 @@ export interface TestTableWithHookProps {
   hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
   additionalData?: Array<Person>;
+  hasData?: boolean;
 }
 
 /**
@@ -99,10 +100,13 @@ export const useTestHookCall = ({
   columnProps,
   hookProps,
   additionalData,
+  hasData = true,
 }: TestTableWithHookProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [data] = useState<Array<Person>>(() =>
-    getDefaultTestData((rowProps = rowProps ?? {}), additionalData),
+  const [data] = useState<Array<Person>>(
+    hasData
+      ? () => getDefaultTestData((rowProps = rowProps ?? {}), additionalData)
+      : [],
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
   const [sorting, setSorting] = useState<SortingState>([]);

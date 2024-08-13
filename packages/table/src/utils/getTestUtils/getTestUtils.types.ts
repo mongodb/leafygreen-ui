@@ -54,7 +54,7 @@ export interface TestUtilsReturnType {
   getTable: () => HTMLTableElement;
 
   /**
-   * Returns an array of <th> elements in the DOM
+   * Returns an array of <th> elements in the DOM. Throws if there are no elements.
    */
   getAllHeaders: () => Array<HTMLTableCellElement>;
 
@@ -69,7 +69,7 @@ export interface TestUtilsReturnType {
   getSelectAllCheckbox: () => HTMLInputElement | null;
 
   /**
-   * Returns an array of all visible <tr> in the DOM.
+   * Returns an array of all visible <tr> in the DOM. Throws if there are no elements.
    */
   getAllVisibleRows: () => Array<HTMLTableRowElement>;
 

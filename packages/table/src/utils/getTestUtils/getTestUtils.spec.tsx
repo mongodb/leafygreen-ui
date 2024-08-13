@@ -156,10 +156,16 @@ describe('packages/table', () => {
       });
 
       describe('getAllVisibleRows', () => {
-        test('returns all the visible cells', () => {
+        test('returns all the visible rows', () => {
           render(<TableWithHook />);
           const { getAllVisibleRows } = getTestUtils();
           expect(getAllVisibleRows().length).toEqual(3);
+        });
+
+        test('throws an error if there are no visible rows', async () => {
+          render(<TableWithHook hasData={false} />);
+          const { getAllVisibleRows } = getTestUtils();
+          expect(() => getAllVisibleRows()).toThrow();
         });
       });
 

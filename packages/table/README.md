@@ -403,15 +403,15 @@ const {
 } = getTestUtils();
 ```
 
-| Util                              | Description                                                         | Returns                       |
-| --------------------------------- | ------------------------------------------------------------------- | ----------------------------- |
-| `getTable()`                      | Returns the table node or `null` if the table node is not found.    | `HTMLTableElement`            |
-| `getAllHeaders()`                 | Returns an array of `<th>`(`<HeaderCell>`) in the DOM               | `Array<HTMLTableCellElement>` |
-| `getHeaderByIndex(index: number)` | Returns utils for an individual `<th>`(`<HeaderCell>`) in the DOM   | `HeaderUtils` \| `null`       |
-| `getSelectAllCheckbox()`          | Returns the input node for the select all checkbox or `null`        | `HTMLInputElement` \| `null`  |
-| `getAllVisibleRows()`             | Returns an array of all visible `<tr>`(`<Row>`) in the DOM          | `Array<HTMLTableRowElement>`  |
-| `getRowByIndex(index: number)`    | Returns utils for an indivudial `<tr>`(`<Row>`) in the DOM          | `RowUtils` \| `null`          |
-| `getAllVisibleSelectedRows`       | Returns an array of all visible selected `<tr>`(`<Row>`) in the DOM | `Array<HTMLTableRowElement>`  |
+| Util                              | Description                                                                                  | Returns                       |
+| --------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------- |
+| `getTable()`                      | Returns the table node or `null` if the table node is not found.                             | `HTMLTableElement`            |
+| `getAllHeaders()`                 | Returns an array of `<th>`(`<HeaderCell>`) in the DOM. Throws if there are no elements.      | `Array<HTMLTableCellElement>` |
+| `getHeaderByIndex(index: number)` | Returns utils for an individual `<th>`(`<HeaderCell>`) in the DOM                            | `HeaderUtils` \| `null`       |
+| `getSelectAllCheckbox()`          | Returns the input node for the select all checkbox or `null`                                 | `HTMLInputElement` \| `null`  |
+| `getAllVisibleRows()`             | Returns an array of all visible `<tr>`(`<Row>`) in the DOM. Throws if there are no elements. | `Array<HTMLTableRowElement>`  |
+| `getRowByIndex(index: number)`    | Returns utils for an indivudial `<tr>`(`<Row>`) in the DOM                                   | `RowUtils` \| `null`          |
+| `getAllVisibleSelectedRows`       | Returns an array of all visible selected `<tr>`(`<Row>`) in the DOM                          | `Array<HTMLTableRowElement>`  |
 
 | HeaderUtils     | Description                       | Returns                       |
 | --------------- | --------------------------------- | ----------------------------- |

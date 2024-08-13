@@ -55,6 +55,9 @@ export const getTestUtils = (
       `[data-lgid=${LGIDS.row}][aria-hidden="false"], [data-lgid=${LGIDS.row}]:not([aria-hidden])`,
     );
 
+    if (!allRows.length)
+      throw new Error('Unable to find any visible `tr` elements.');
+
     return Array.from(allRows);
   };
 
@@ -63,12 +66,18 @@ export const getTestUtils = (
     const row = allRows[index];
     if (!row) return null;
 
-    const allCells = () =>
-      Array.from(
-        row.querySelectorAll<HTMLTableCellElement>(`[data-lgid=${LGIDS.cell}]`),
+    const getAllCells = () => {
+      const allCells = row.querySelectorAll<HTMLTableCellElement>(
+        `[data-lgid=${LGIDS.cell}]`,
       );
 
-    const checkbox = () =>
+      if (!allCells.length)
+        throw new Error('Unable to find any visible `td` elements.');
+
+      return Array.from(allCells);
+    };
+
+    const getCheckbox = () =>
       queryBySelector<HTMLInputElement>(
         row,
         `[data-lgid=${LGIDS.checkbox}] input`,
@@ -86,8 +95,8 @@ export const getTestUtils = (
 
     return {
       getElement: () => row,
-      getAllCells: () => allCells(),
-      getCheckbox: () => checkbox(),
+      getAllCells: () => getAllCells(),
+      getCheckbox: () => getCheckbox(),
       getExpandButton: () => getExpandButton(),
       isExpanded: () => isExpanded(),
       isSelected: () => isSelected(),
