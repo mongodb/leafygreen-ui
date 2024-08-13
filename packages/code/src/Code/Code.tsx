@@ -69,7 +69,7 @@ function Code({
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
-  expandable = true,
+  expandable = false,
   onCopy,
   highlightLines = [],
   languageOptions,
