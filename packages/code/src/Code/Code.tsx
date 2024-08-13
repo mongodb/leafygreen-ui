@@ -86,7 +86,7 @@ function Code({
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
-  const [numOfLines, setNumOfLines] = useState<number>();
+  const [linesOfCode, setLinesOfCode] = useState<number>();
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
@@ -127,10 +127,12 @@ function Code({
     }
   }, []);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
+    if (!expandable) return;
+
     const codeContent = document.getElementById('code-content');
-    setNumOfLines(codeContent?.querySelectorAll('tr').length);
-  }, []);
+    setLinesOfCode(codeContent?.querySelectorAll('tr').length);
+  }, [expandable]);
 
   const renderedSyntaxComponent = (
     <Syntax
@@ -185,6 +187,13 @@ function Code({
       : { usePortal }),
   } as const;
 
+  const collapsedLinesOfCode = 5;
+  const showExpandButton = !!(
+    expandable &&
+    linesOfCode &&
+    linesOfCode > collapsedLinesOfCode
+  );
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={wrapperStyle[theme]}>
@@ -200,10 +209,11 @@ function Code({
               [scrollShadowStylesWithPicker]: showLanguagePicker,
               [contentWrapperStylesNoPanel]: !showPanel,
               [scrollShadowStylesNoPanel]: !showPanel,
-              [expandableContentWrapperStyle]: expandable,
+              [expandableContentWrapperStyle]: showExpandButton,
               [expandableContentWrapperStyleWithPicker]:
-                expandable && showLanguagePicker,
-              [expandableContentWrapperStyleNoPanel]: expandable && !showPanel,
+                showExpandButton && showLanguagePicker,
+              [expandableContentWrapperStyleNoPanel]:
+                showExpandButton && !showPanel,
             },
           )}
         >
@@ -217,7 +227,7 @@ function Code({
                 [codeWrapperStyleNoPanel]: !showPanel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
                 [getExpandableCodeWrapperStyle(expanded, baseFontSize)]:
-                  expandable,
+                  showExpandButton,
               },
               className,
             )}
@@ -248,13 +258,13 @@ function Code({
             />
           )}
 
-          {expandable && (
+          {showExpandButton && (
             <button
               className={cx(expandButtonStyle)}
               onClick={handleExpandButtonClick}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
-              Click to {expanded ? 'collapse' : `expand (${numOfLines} lines)`}
+              Click to {expanded ? 'collapse' : `expand (${linesOfCode} lines)`}
             </button>
           )}
         </div>
