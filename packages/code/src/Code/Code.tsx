@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
+import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
+import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
-import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
+import { isComponentType } from '@leafygreen-ui/lib';
 
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
@@ -26,19 +26,19 @@ import {
   contentWrapperStyles,
   contentWrapperStylesNoPanel,
   contentWrapperStyleWithPicker,
+  expandableContentWrapperStyle,
+  expandableContentWrapperStyleNoPanel,
+  expandableContentWrapperStyleWithPicker,
   expandButtonStyle,
-  getExpandableCodeWrapperStyle,
   getCodeWrapperVariantStyle,
+  getExpandableCodeWrapperStyle,
+  getExpandButtonVariantStyle,
   getScrollShadow,
   panelStyles,
   scrollShadowStylesNoPanel,
   scrollShadowStylesWithPicker,
   singleLineCodeWrapperStyle,
   wrapperStyle,
-  expandableContentWrapperStyle,
-  expandableContentWrapperStyleWithPicker,
-  expandableContentWrapperStyleNoPanel,
-  getExpandButtonVariantStyle,
 } from './Code.styles';
 import { DetailedElementProps, ScrollState } from './Code.types';
 
