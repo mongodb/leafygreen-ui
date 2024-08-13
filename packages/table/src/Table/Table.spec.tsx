@@ -1,6 +1,7 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { Cell, HeaderCell } from '../Cell';
@@ -93,7 +94,7 @@ describe('packages/table/Table', () => {
       );
       const { getRowByIndex } = getTestUtils();
       const firstCheckbox = getRowByIndex(0)?.getCheckbox();
-      fireEvent.click(firstCheckbox!);
+      userEvent.click(firstCheckbox!, {}, { skipPointerEventsCheck: true });
       expect(getByTestId('row-selection-value').textContent).toBe('{"0":true}');
     });
 
@@ -104,12 +105,12 @@ describe('packages/table/Table', () => {
       const { getRowByIndex } = getTestUtils();
       let firstCheckbox = getRowByIndex(0)?.getCheckbox();
       expect(getByTestId('row-selection-value').textContent).toBe('{}');
-      fireEvent.click(firstCheckbox!);
+      userEvent.click(firstCheckbox!, {}, { skipPointerEventsCheck: true });
       expect(getByTestId('row-selection-value')).toHaveTextContent(
         '{"0":true}',
       );
       firstCheckbox = getRowByIndex(0)?.getCheckbox();
-      fireEvent.click(firstCheckbox!);
+      userEvent.click(firstCheckbox!, {}, { skipPointerEventsCheck: true });
       expect(getByTestId('row-selection-value')).toHaveTextContent('{}');
     });
 
@@ -120,7 +121,7 @@ describe('packages/table/Table', () => {
 
       const { getSelectAllCheckbox } = getTestUtils();
       const headerCheckbox = getSelectAllCheckbox();
-      fireEvent.click(headerCheckbox!);
+      userEvent.click(headerCheckbox!, {}, { skipPointerEventsCheck: true });
 
       expect(getByTestId('row-selection-value').textContent).toBe(
         '{"0":true,"1":true,"2":true}',
@@ -144,7 +145,7 @@ describe('packages/table/Table', () => {
       const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
       expect(sortIconButton).toBeInTheDocument();
       expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
-      fireEvent.click(sortIconButton!);
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Sort Descending Icon')).toBeInTheDocument();
     });
 
@@ -154,7 +155,7 @@ describe('packages/table/Table', () => {
       );
       const { getHeaderByIndex, getRowByIndex } = getTestUtils();
       const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
-      fireEvent.click(sortIconButton!);
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Sort Descending Icon')).toBeInTheDocument();
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent('3');
@@ -166,8 +167,8 @@ describe('packages/table/Table', () => {
       );
       const { getHeaderByIndex, getRowByIndex } = getTestUtils();
       const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
-      fireEvent.click(sortIconButton!);
-      fireEvent.click(sortIconButton!);
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Sort Ascending Icon')).toBeInTheDocument();
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent('1');
@@ -180,9 +181,9 @@ describe('packages/table/Table', () => {
       const { getHeaderByIndex, getRowByIndex } = getTestUtils();
       const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
       const initialFirstId = getRowByIndex(0)?.getAllCells()[0].textContent;
-      fireEvent.click(sortIconButton!);
-      fireEvent.click(sortIconButton!);
-      fireEvent.click(sortIconButton!);
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent(initialFirstId!);
