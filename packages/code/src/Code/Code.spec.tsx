@@ -237,4 +237,75 @@ describe('packages/Code', () => {
       });
     });
   });
+
+  describe('when expandable', () => {
+    const longCodeSnippet = `
+      const greeting = "Hello, world! 1";
+      const greeting2 = "Hello, world! 2";
+      const greeting3 = "Hello, world! 3";
+      const greeting4 = "Hello, world! 4";
+      const greeting5 = "Hello, world! 5";
+      const greeting6 = "Hello, world! 6";
+    `;
+
+    test('shows no expand button when <= 5 lines of code', () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {codeSnippet}
+        </Code>,
+      );
+
+      expect(screen.queryByRole('button', { name: /expand/i })).toBeNull();
+    });
+
+    test('shows expand button when > 5 lines of code', () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {longCodeSnippet}
+        </Code>,
+      );
+
+      expect(
+        screen.getByRole('button', { name: /expand/i }),
+      ).toBeInTheDocument();
+    });
+
+    test('shows correct number of lines of code on expand button', () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {longCodeSnippet}
+        </Code>,
+      );
+
+      const expandButton = screen.getByRole('button', { name: /expand/i });
+      expect(expandButton).toHaveTextContent('Click to expand (7 lines)'); // 6 lines of code + 1 line of padding
+    });
+
+    test('shows collapse button when expand button is clicked', () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {longCodeSnippet}
+        </Code>,
+      );
+
+      const actionButton = screen.getByRole('button', { name: /expand/i });
+      fireEvent.click(actionButton);
+
+      expect(actionButton).toHaveTextContent('Click to collapse');
+    });
+
+    test('shows expand button again when collapse button is clicked', () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {longCodeSnippet}
+        </Code>,
+      );
+
+      const actionButton = screen.getByRole('button', { name: /expand/i });
+      fireEvent.click(actionButton); // Expand
+      fireEvent.click(actionButton); // Collapse
+
+      expect(actionButton).toHaveTextContent('Click to expand (7 lines)');
+    });
+  });
 });
