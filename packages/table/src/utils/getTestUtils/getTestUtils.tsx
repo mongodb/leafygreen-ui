@@ -63,32 +63,35 @@ export const getTestUtils = (
     const row = allRows[index];
     if (!row) return null;
 
-    const allCells = Array.from(
-      row.querySelectorAll<HTMLTableCellElement>(`[data-lgid=${LGIDS.cell}]`),
-    );
+    const allCells = () =>
+      Array.from(
+        row.querySelectorAll<HTMLTableCellElement>(`[data-lgid=${LGIDS.cell}]`),
+      );
 
-    const checkbox = queryBySelector<HTMLInputElement>(
-      row,
-      `[data-lgid=${LGIDS.checkbox}] input`,
-    );
+    const checkbox = () =>
+      queryBySelector<HTMLInputElement>(
+        row,
+        `[data-lgid=${LGIDS.checkbox}] input`,
+      );
 
-    const getExpandButton = queryBySelector<HTMLButtonElement>(
-      row,
-      `[data-lgid=${LGIDS.expandButton}]`,
-    );
+    const getExpandButton = () =>
+      queryBySelector<HTMLButtonElement>(
+        row,
+        `[data-lgid=${LGIDS.expandButton}]`,
+      );
 
-    const isExpanded = row.matches(`[data-expanded="true"]`);
-    const isSelected = row.matches(`[data-selected="true"]`);
-    const isDisabled = row.matches(`[aria-disabled="true"]`);
+    const isExpanded = () => row.matches(`[data-expanded="true"]`);
+    const isSelected = () => row.matches(`[data-selected="true"]`);
+    const isDisabled = () => row.matches(`[aria-disabled="true"]`);
 
     return {
       getElement: () => row,
-      getAllCells: () => allCells,
-      getCheckbox: () => checkbox,
-      getExpandButton: () => getExpandButton,
-      isExpanded: () => isExpanded,
-      isSelected: () => isSelected,
-      isDisabled: () => isDisabled,
+      getAllCells: () => allCells(),
+      getCheckbox: () => checkbox(),
+      getExpandButton: () => getExpandButton(),
+      isExpanded: () => isExpanded(),
+      isSelected: () => isSelected(),
+      isDisabled: () => isDisabled(),
     };
   };
 

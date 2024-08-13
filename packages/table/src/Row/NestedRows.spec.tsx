@@ -86,7 +86,7 @@ describe('packages/table/Row/NestedRows', () => {
   test('renders the correct number of children', () => {
     render(<RowWithNestedRows />);
     const { getRowByIndex } = getTestUtils();
-    expect(getRowByIndex(0)?.getAllCells().length).toBe(6);
+    expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
   });
   test('rows with nested rows render expand icon button', async () => {
     render(<RowWithNestedRows />);
@@ -117,7 +117,7 @@ describe('packages/table/Row/NestedRows', () => {
     test('renders the correct number of children', () => {
       render(<RowWithNestedRows disableAnimations />);
       const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getAllCells().length).toBe(6);
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
     });
     test('rows with nested rows render expand icon button', async () => {
       render(<RowWithNestedRows disableAnimations />);

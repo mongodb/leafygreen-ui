@@ -328,7 +328,7 @@ For cases where you anticipate having more than 20 rows with nested rows, it is 
 
 # Test Harnesses
 
-## getTestUtils()
+## `getTestUtils()`
 
 `getTestUtils()` is a util that allows consumers to reliably interact with `LG Table` in a product test suite. If the `Table` component cannot be found, an error will be thrown.
 
@@ -387,10 +387,10 @@ test('returns the correct rows', () => {
 const {
   getTable,
   getAllHeaders,
-  getHeaderByIndex: { getElement, getSortIcon },
+  getHeaderByIndex: (index: number) => { getElement, getSortIcon },
   getSelectAllCheckbox,
   getAllVisibleRows,
-  getRowByIndex: {
+  getRowByIndex: (index: number) => {
     getElement,
     getAllCells,
     getCheckbox,

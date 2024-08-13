@@ -66,7 +66,7 @@ describe('packages/table/Row/ExpandableContent', () => {
   test('renders the correct number of cell children', () => {
     render(<RowWithExpandableContent />);
     const { getRowByIndex } = getTestUtils();
-    expect(getRowByIndex(0)?.getAllCells().length).toBe(6);
+    expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
   });
   test('rows with expandable content render expand icon button', async () => {
     render(<RowWithExpandableContent />);
@@ -97,7 +97,7 @@ describe('packages/table/Row/ExpandableContent', () => {
     test('renders the correct number of cell children with disabled animations', () => {
       render(<RowWithExpandableContent disableAnimations />);
       const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getAllCells().length).toBe(6);
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
     });
     test('rows with expandable content render expand icon button with disabled animations', async () => {
       render(<RowWithExpandableContent disableAnimations />);
