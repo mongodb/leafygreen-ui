@@ -157,8 +157,13 @@ export function getCodeWrapperVariantStyle(theme: Theme): string {
 export const expandButtonStyle = css`
   align-items: center;
   border: none;
-  border-radius: 0 0 12px 12px;
-  border-size: 1px;
+  /**
+    Code wrapper's border radius is 12px. Matching that creates a very 
+    slight gap between the button and the code wrapper. Decreasing by
+    1px removes gap without making focused state look off.
+  */
+  border-radius: 0 0 11px 11px;
+  border-width: 1px 0 0 0;
   border-style: solid;
   display: flex;
   font-family: ${fontFamilies.default};
