@@ -155,28 +155,40 @@ export function getCodeWrapperVariantStyle(theme: Theme): string {
 }
 
 export const expandButtonStyle = css`
-  grid-area: expandButton;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
-  border-radius: 0 0 12px 12px;
-  z-index: 2;
-  background-color: ${palette.gray.light3};
   border: none;
-  border-top: 1px solid ${palette.gray.light2};
-  color: ${palette.gray.dark2};
+  border-radius: 0 0 12px 12px;
+  border-size: 1px;
+  border-style: solid;
+  display: flex;
   font-family: ${fontFamilies.default};
   font-size: ${typeScales.body1.fontSize}px;
+  gap: 4px;
+  grid-area: expandButton;
+  justify-content: center;
+  z-index: 2;
   &:hover {
-    background-color: ${palette.gray.light2};
     cursor: pointer;
   }
-  &:focus {
-    color: ${palette.blue.base};
-    background-color: ${palette.blue.light2};
-  }
 `;
+
+export function getExpandButtonVariantStyle(theme: Theme): string {
+  const colors = variantColors[theme];
+
+  return css`
+    background-color: ${colors[0]};
+    border-color: ${colors[1]};
+    color: ${colors[2]};
+    &:hover {
+      background-color: ${colors[1]};
+    }
+    &:focus {
+      background-color: ${
+        theme === Theme.Light ? palette.blue.light3 : palette.blue.dark3
+      };
+      color: ${theme === Theme.Light ? palette.blue.dark1 : colors[2]};
+  `;
+}
 
 export const baseScrollShadowStyles = css`
   &:before,

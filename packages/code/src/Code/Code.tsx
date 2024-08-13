@@ -38,6 +38,7 @@ import {
   expandableContentWrapperStyle,
   expandableContentWrapperStyleWithPicker,
   expandableContentWrapperStyleNoPanel,
+  getExpandButtonVariantStyle,
 } from './Code.styles';
 import { DetailedElementProps, ScrollState } from './Code.types';
 
@@ -260,7 +261,10 @@ function Code({
 
           {showExpandButton && (
             <button
-              className={cx(expandButtonStyle)}
+              className={cx(
+                expandButtonStyle,
+                getExpandButtonVariantStyle(theme),
+              )}
               onClick={handleExpandButtonClick}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
