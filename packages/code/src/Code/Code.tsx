@@ -27,7 +27,7 @@ import {
   contentWrapperStylesNoPanel,
   contentWrapperStyleWithPicker,
   expandButtonStyle,
-  getCodeWrapperHeightStyle,
+  getExpandableCodeWrapperStyle,
   getCodeWrapperVariantStyle,
   getScrollShadow,
   panelStyles,
@@ -35,6 +35,9 @@ import {
   scrollShadowStylesWithPicker,
   singleLineCodeWrapperStyle,
   wrapperStyle,
+  expandableContentWrapperStyle,
+  expandableContentWrapperStyleWithPicker,
+  expandableContentWrapperStyleNoPanel,
 } from './Code.styles';
 import { DetailedElementProps, ScrollState } from './Code.types';
 
@@ -197,6 +200,10 @@ function Code({
               [scrollShadowStylesWithPicker]: showLanguagePicker,
               [contentWrapperStylesNoPanel]: !showPanel,
               [scrollShadowStylesNoPanel]: !showPanel,
+              [expandableContentWrapperStyle]: expandable,
+              [expandableContentWrapperStyleWithPicker]:
+                expandable && showLanguagePicker,
+              [expandableContentWrapperStyleNoPanel]: expandable && !showPanel,
             },
           )}
         >
@@ -205,11 +212,12 @@ function Code({
             className={cx(
               codeWrapperStyle,
               getCodeWrapperVariantStyle(theme),
-              getCodeWrapperHeightStyle(expanded, baseFontSize),
               {
                 [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
                 [codeWrapperStyleNoPanel]: !showPanel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
+                [getExpandableCodeWrapperStyle(expanded, baseFontSize)]:
+                  expandable,
               },
               className,
             )}

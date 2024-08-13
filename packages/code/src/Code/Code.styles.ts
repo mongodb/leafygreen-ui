@@ -42,29 +42,39 @@ export const wrapperStyle: Record<Theme, string> = {
 export const contentWrapperStyles = css`
   position: relative;
   display: grid;
-  grid-template-areas:
-    'code panel'
-    'expandButton expandButton';
+  grid-template-areas: 'code panel';
   grid-template-columns: auto 38px;
-  grid-template-rows: auto 28px;
   border-radius: inherit;
   z-index: 0; // new stacking context
 `;
 
 export const contentWrapperStylesNoPanel = css`
   // No panel, all code
-  grid-template-areas:
-    'code code'
-    'expandButton expandButton';
-  grid-template-rows: auto 28px;
+  grid-template-areas: 'code code';
 `;
 
 export const contentWrapperStyleWithPicker = css`
   grid-template-areas:
     'panel'
+    'code';
+  grid-template-columns: unset;
+`;
+
+export const expandableContentWrapperStyle = css`
+  grid-template-areas: 'code panel' 'expandButton expandButton';
+  grid-template-rows: auto 28px;
+`;
+
+export const expandableContentWrapperStyleNoPanel = css`
+  grid-template-areas: 'code code' 'expandButton expandButton';
+  grid-template-rows: auto 28px;
+`;
+
+export const expandableContentWrapperStyleWithPicker = css`
+  grid-template-areas:
+    'panel'
     'code'
     'expandButton';
-  grid-template-columns: unset;
   grid-template-rows: auto auto 28px;
 `;
 
@@ -114,7 +124,7 @@ export const singleLineCodeWrapperStyle = css`
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
 `;
 
-export function getCodeWrapperHeightStyle(
+export function getExpandableCodeWrapperStyle(
   expanded: boolean,
   baseFontSize: number,
 ) {
