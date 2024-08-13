@@ -29,7 +29,7 @@ export const getTestUtils = (
     const header = allHeader[index];
     if (!header) return null;
 
-    const sortIcon = () =>
+    const getSortIcon = () =>
       queryBySelector<HTMLButtonElement>(
         header,
         `[data-lgid=${LGIDS.sortIcon}]`,
@@ -37,7 +37,7 @@ export const getTestUtils = (
 
     return {
       getElement: () => header,
-      getSortIcon: () => sortIcon(),
+      getSortIcon: () => getSortIcon(),
     };
   };
 

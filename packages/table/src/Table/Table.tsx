@@ -27,7 +27,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       darkMode: darkModeProp,
       table,
       disableAnimations = false,
-      'data-lgid': dataLgId = LGIDS.root,
+      'data-lgid': lgidProp = LGIDS.root,
       ...rest
     }: TableProps<T>,
     containerRef: ForwardedRef<HTMLDivElement>,
@@ -55,7 +55,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               themeStyles[theme],
               bodyTypeScaleStyles[baseFontSize],
             )}
-            data-lgid={dataLgId}
+            data-lgid={lgidProp}
             {...rest}
           >
             {children}
