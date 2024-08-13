@@ -63,7 +63,7 @@ export const contentWrapperStyleWithPicker = css`
   grid-template-areas:
     'panel'
     'code'
-    'expandButton'; // New row underneath code
+    'expandButton';
   grid-template-columns: unset;
   grid-template-rows: auto auto 28px;
 `;
