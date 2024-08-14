@@ -38,9 +38,14 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
+// > 5 lines to trigger expandable code block
 const shortJsSnippet = `
-import {greeting} from './utils/greeting'
-console.log(greeting('World'));
+  function greeting(entity) {
+    return \`Hello, \${entity}\`;
+  }
+
+  console.log(greeting('World'));
+  console.log(greeting('Universe'));
 `;
 
 const meta: StoryMetaType<typeof Code> = {
