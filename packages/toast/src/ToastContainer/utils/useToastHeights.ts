@@ -128,7 +128,6 @@ export function useToastHeights({
   );
 
   useEffect(() => {
-    // Cleanup debounced functions on unmount
     return () => {
       updateToastHeights.cancel();
     };

@@ -61,7 +61,6 @@ export function useToastTransitions({
   );
 
   useEffect(() => {
-    // Cleanup debounced functions on unmount
     return () => {
       handleTransitionEnter.cancel();
       handleTransitionExit.cancel();
