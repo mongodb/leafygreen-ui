@@ -1,5 +1,3 @@
-// import { HTMLElementProps } from '@leafygreen-ui/lib';
-
 import { HTMLAttributes } from 'react';
 import { SupportedLanguages } from './languages';
 
