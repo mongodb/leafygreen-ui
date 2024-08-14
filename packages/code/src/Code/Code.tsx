@@ -88,6 +88,7 @@ function Code({
   const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [linesOfCode, setLinesOfCode] = useState<number>();
+  const [codeHeight, setCodeHeight] = useState<number>();
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
@@ -128,12 +129,14 @@ function Code({
     }
   }, []);
 
+  const contentWrapperRef = useRef<HTMLDivElement | null>(null);
+
   useIsomorphicLayoutEffect(() => {
     if (!expandable) return;
 
-    const codeContent = document.getElementById('code-content');
-    setLinesOfCode(codeContent?.querySelectorAll('tr').length);
-  }, [expandable]);
+    setCodeHeight(contentWrapperRef.current?.offsetHeight);
+    setLinesOfCode(contentWrapperRef.current?.querySelectorAll('tr').length);
+  }, [expandable, contentWrapperRef]);
 
   const renderedSyntaxComponent = (
     <Syntax
@@ -141,7 +144,6 @@ function Code({
       lineNumberStart={lineNumberStart}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
-      id="code-content"
     >
       {children}
     </Syntax>
@@ -191,6 +193,7 @@ function Code({
   const collapsedLinesOfCode = 5;
   const showExpandButton = !!(
     expandable &&
+    codeHeight &&
     linesOfCode &&
     linesOfCode > collapsedLinesOfCode
   );
@@ -217,6 +220,7 @@ function Code({
                 showExpandButton && !showPanel,
             },
           )}
+          ref={contentWrapperRef}
         >
           <pre
             {...(rest as DetailedElementProps<HTMLPreElement>)}
@@ -227,8 +231,11 @@ function Code({
                 [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
                 [codeWrapperStyleNoPanel]: !showPanel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
-                [getExpandableCodeWrapperStyle(expanded, baseFontSize)]:
-                  showExpandButton,
+                [getExpandableCodeWrapperStyle(
+                  expanded,
+                  codeHeight as number,
+                  baseFontSize,
+                )]: showExpandButton,
               },
               className,
             )}

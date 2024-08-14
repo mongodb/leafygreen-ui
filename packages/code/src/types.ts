@@ -1,5 +1,6 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+// import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+import { HTMLAttributes } from 'react';
 import { SupportedLanguages } from './languages';
 
 export const Mode = {
@@ -20,7 +21,11 @@ export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
 
-export interface SyntaxProps extends HTMLElementProps<'code'> {
+interface HTMLElementProps<T extends HTMLElement> extends HTMLAttributes<T> {
+  ref?: React.Ref<T>;
+}
+
+export interface SyntaxProps extends HTMLElementProps<HTMLPreElement> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    * @required
@@ -50,6 +55,11 @@ export interface SyntaxProps extends HTMLElementProps<'code'> {
    * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
    */
   highlightLines?: LineHighlightingDefinition;
+
+  /**
+   * A ref to the underlying `code` element.
+   */
+  ref?: React.Ref<HTMLPreElement>;
 }
 
 export interface PopoverProps {

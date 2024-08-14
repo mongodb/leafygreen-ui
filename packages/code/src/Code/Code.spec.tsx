@@ -255,7 +255,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      expect(screen.queryByRole('button', { name: /expand/i })).toBeNull();
+      expect(screen.queryByTestId('expand-button')).toBeNull();
     });
 
     test('shows expand button when > 5 lines of code', () => {
@@ -265,9 +265,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      expect(
-        screen.getByRole('button', { name: /expand/i }),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId('expand-button')).toBeInTheDocument();
     });
 
     test('shows correct number of lines of code on expand button', () => {
@@ -277,7 +275,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const expandButton = screen.getByRole('button', { name: /expand/i });
+      const expandButton = screen.getByTestId('expand-button');
       expect(expandButton).toHaveTextContent('Click to expand (7 lines)'); // 6 lines of code + 1 line of padding
     });
 
@@ -288,7 +286,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const actionButton = screen.getByRole('button', { name: /expand/i });
+      const actionButton = screen.getByTestId('expand-button');
       fireEvent.click(actionButton);
 
       expect(actionButton).toHaveTextContent('Click to collapse');
@@ -301,7 +299,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const actionButton = screen.getByRole('button', { name: /expand/i });
+      const actionButton = screen.getByTestId('expand-button');
       fireEvent.click(actionButton); // Expand
       fireEvent.click(actionButton); // Collapse
 

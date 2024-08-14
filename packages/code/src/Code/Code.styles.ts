@@ -5,6 +5,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   BaseFontSize,
   fontFamilies,
   spacing,
@@ -92,6 +93,7 @@ export const codeWrapperStyle = css`
   margin: 0;
   position: relative;
   transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
+  transition: height ${transitionDuration.slower}ms ease-in-out;
 
   ${mq({
     // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
@@ -126,17 +128,20 @@ export const singleLineCodeWrapperStyle = css`
 
 export function getExpandableCodeWrapperStyle(
   expanded: boolean,
+  codeHeight: number,
   baseFontSize: number,
 ) {
   const codeLineHeight = baseFontSize === BaseFontSize.Body2 ? 24 : 20;
   const numOfLinesWhenCollapsed = 5;
   const topPadding = codeWrappingVerticalPadding;
   const height = expanded
-    ? 'auto'
-    : `${codeLineHeight * numOfLinesWhenCollapsed + topPadding}px`;
+    ? codeHeight
+    : codeLineHeight * numOfLinesWhenCollapsed + topPadding;
 
   return css`
-    height: ${height};
+    max-height: ${height}px;
+    overflow-y: scroll;
+    transition: max-height ${transitionDuration.slower}ms ease-in-out;
   `;
 }
 
@@ -168,7 +173,7 @@ export const expandButtonStyle = css`
   display: flex;
   font-family: ${fontFamilies.default};
   font-size: ${typeScales.body1.fontSize}px;
-  gap: 4px;
+  gap: ${spacing[100]}px;
   grid-area: expandButton;
   justify-content: center;
   z-index: 2;
@@ -187,11 +192,11 @@ export function getExpandButtonVariantStyle(theme: Theme): string {
     &:hover {
       background-color: ${colors[1]};
     }
-    &:focus {
-      background-color: ${
-        theme === Theme.Light ? palette.blue.light3 : palette.blue.dark3
-      };
+    &:focus-visible {
+      background-color: ${color[theme].background.info.focus};
       color: ${theme === Theme.Light ? palette.blue.dark1 : colors[2]};
+      outline: none;
+    }
   `;
 }
 
