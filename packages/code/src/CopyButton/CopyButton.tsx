@@ -9,7 +9,7 @@ import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import IconButton from '@leafygreen-ui/icon-button';
 import {
   useDarkMode,
-  usePopoverPortalContainer,
+  usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
@@ -27,7 +27,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const { theme } = useDarkMode();
-  const { portalContainer } = usePopoverPortalContainer();
+  const { portalContainer } = usePopoverContext();
 
   /**
    * toggles `open` state of tooltip

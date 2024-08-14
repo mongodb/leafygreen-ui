@@ -8,7 +8,7 @@ import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
-  PortalContextProvider,
+  PopoverProvider,
   useDarkMode,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -141,11 +141,9 @@ const ModalView = React.forwardRef(
                         contentClassName,
                       )}
                     >
-                      <PortalContextProvider
-                        popover={{
-                          portalContainer: scrollContainerRef,
-                          scrollContainer: scrollContainerRef,
-                        }}
+                      <PopoverProvider
+                        portalContainer={scrollContainerRef}
+                        scrollContainer={scrollContainerRef}
                       >
                         {children}
                         <IconButton
@@ -160,7 +158,7 @@ const ModalView = React.forwardRef(
                         >
                           <XIcon />
                         </IconButton>
-                      </PortalContextProvider>
+                      </PopoverProvider>
                     </div>
                   </div>
                 </FocusTrap>

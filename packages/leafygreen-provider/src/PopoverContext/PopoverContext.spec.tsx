@@ -4,11 +4,8 @@ import userEvent from '@testing-library/user-event';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import {
-  PopoverProvider,
-  type PopoverProviderProps,
-  usePopoverContext,
-} from '.';
+import { PopoverProvider, usePopoverContext } from './PopoverContext';
+import { type PopoverProviderProps } from './PopoverContext.types';
 
 const childTestID = 'popover-provider';
 const buttonTestId = 'test-button';
