@@ -25,7 +25,12 @@ export const MenuWrapper = forwardRef<HTMLDivElement, MenuWrapperProps>(
         className={cx(menuStyles[theme], className)}
         {...props}
       >
-        {/* Prevents the opening and closing state of a select dropdown from propagating up to other PopoverProviders in parent components. E.g. Modal */}
+        {/*
+         * Prevents the opening and closing state of a select dropdown from propagating up
+         * to other PopoverProviders in parent components. E.g. Modal
+         *
+         * TODO @steph: replace w/ `<Popover dismissMode="manual">` w/ explicit menu close actions
+         */}
         <PopoverProvider>{children}</PopoverProvider>
       </Popover>
     );

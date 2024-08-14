@@ -27,6 +27,7 @@ import ModalView from './ModalView';
  */
 const Modal = React.forwardRef((props: ModalProps, ref: ForwardedRef) => {
   return (
+    /** TODO @steph: remove `PopoverProvider` once Modal uses `useOverlay` */
     <PopoverProvider>
       <ModalView {...props} ref={ref} />
     </PopoverProvider>

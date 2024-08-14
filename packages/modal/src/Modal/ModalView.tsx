@@ -65,6 +65,10 @@ const ModalView = React.forwardRef(
     const [scrollContainerRef, setScrollContainerRef] =
       useState<null | HTMLDivElement>(null);
 
+    /**
+     * TODO @steph: refactor to use `const { isTopMostOverlay } = useOverlay(forwardedRef);`
+     * `isPopoverOpen === true` ~= `isTopMostOverlay === false`
+     */
     const { isPopoverOpen } = usePopoverContext();
 
     const handleClose = useCallback(() => {

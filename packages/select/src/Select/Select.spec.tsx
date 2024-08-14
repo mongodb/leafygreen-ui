@@ -1,4 +1,4 @@
-import React, { createRef, PropsWithChildren, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import {
   act,
   fireEvent,
@@ -11,7 +11,8 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
+import * as LeafyGreenProviderModule from '@leafygreen-ui/leafygreen-provider';
+import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
@@ -1117,28 +1118,21 @@ describe('packages/select', () => {
   describe('with PopoverContext', () => {
     const mockSetIsPopoverOpen = jest.fn();
 
-    const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
-      return (
-        <PopoverContext.Provider
-          value={{
-            isPopoverOpen: false,
-            setIsPopoverOpen: mockSetIsPopoverOpen,
-          }}
-        >
-          {children}
-        </PopoverContext.Provider>
-      );
-    };
-
-    beforeEach(() => {
-      mockSetIsPopoverOpen.mockClear();
+    afterEach(() => {
+      mockSetIsPopoverOpen.mockReset();
     });
 
     test('calls `setIsPopoverOpen`', async () => {
+      jest
+        .spyOn(LeafyGreenProviderModule, 'usePopoverContext')
+        .mockImplementation(() => ({
+          isPopoverOpen: false,
+          setIsPopoverOpen: mockSetIsPopoverOpen,
+        }));
       render(
-        <MockPopoverProvider>
+        <PopoverProvider>
           <Select {...defaultProps} />
-        </MockPopoverProvider>,
+        </PopoverProvider>,
       );
 
       const { getInput } = getTestUtils();
@@ -1153,11 +1147,17 @@ describe('packages/select', () => {
       );
     });
 
-    test('calls `setIsPopoverOpen` when `usePortal == false`', async () => {
+    test('calls `setIsPopoverOpen` when `usePortal === false`', async () => {
+      jest
+        .spyOn(LeafyGreenProviderModule, 'usePopoverContext')
+        .mockImplementation(() => ({
+          isPopoverOpen: false,
+          setIsPopoverOpen: mockSetIsPopoverOpen,
+        }));
       render(
-        <MockPopoverProvider>
-          <Select usePortal={false} {...defaultProps} />
-        </MockPopoverProvider>,
+        <PopoverProvider>
+          <Select {...defaultProps} usePortal={false} />
+        </PopoverProvider>,
       );
 
       const { getInput } = getTestUtils();

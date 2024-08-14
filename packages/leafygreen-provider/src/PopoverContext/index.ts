@@ -1,6 +1,7 @@
 export {
   PopoverContext,
+  type PopoverContextType,
   PopoverProvider,
-  type PopoverState,
+  type PopoverProviderProps,
   usePopoverContext,
 } from './PopoverContext';
