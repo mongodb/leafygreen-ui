@@ -13,6 +13,7 @@ import LanguageSwitcherExample, {
 } from '../LanguageSwitcher/LanguageSwitcherExample';
 
 import Code, { hasMultipleLines } from './Code';
+import { numOfCollapsedLinesOfCode } from '../constants';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
@@ -239,29 +240,26 @@ describe('packages/Code', () => {
   });
 
   describe('when expandable', () => {
-    const longCodeSnippet = `
-      const greeting = "Hello, world! 1";
-      const greeting2 = "Hello, world! 2";
-      const greeting3 = "Hello, world! 3";
-      const greeting4 = "Hello, world! 4";
-      const greeting5 = "Hello, world! 5";
-      const greeting6 = "Hello, world! 6";
-    `;
+    const getCodeSnippet = (lineCount: number) =>
+      Array.from(
+        { length: lineCount },
+        (_, i) => `const greeting${i} = "Hello, world! ${i}";`,
+      ).join('\n');
 
-    test('shows no expand button when <= 5 lines of code', () => {
+    test(`shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
       render(
         <Code expandable={true} language="javascript">
-          {codeSnippet}
+          {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
         </Code>,
       );
 
       expect(screen.queryByTestId('expand-button')).toBeNull();
     });
 
-    test('shows expand button when > 5 lines of code', () => {
+    test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
       render(
         <Code expandable={true} language="javascript">
-          {longCodeSnippet}
+          {getCodeSnippet(numOfCollapsedLinesOfCode + 1)}
         </Code>,
       );
 
@@ -269,33 +267,38 @@ describe('packages/Code', () => {
     });
 
     test('shows correct number of lines of code on expand button', () => {
+      const lineCount = numOfCollapsedLinesOfCode + 1;
+
       render(
         <Code expandable={true} language="javascript">
-          {longCodeSnippet}
+          {getCodeSnippet(lineCount)}
         </Code>,
       );
 
-      const expandButton = screen.getByTestId('expand-button');
-      expect(expandButton).toHaveTextContent('Click to expand (7 lines)'); // 6 lines of code + 1 line of padding
+      const actionButton = screen.getByTestId('expand-button');
+      expect(actionButton).toHaveTextContent(
+        `Click to expand (${lineCount} lines)`,
+      );
     });
 
     test('shows collapse button when expand button is clicked', () => {
       render(
         <Code expandable={true} language="javascript">
-          {longCodeSnippet}
+          {getCodeSnippet(numOfCollapsedLinesOfCode + 1)}
         </Code>,
       );
 
       const actionButton = screen.getByTestId('expand-button');
       fireEvent.click(actionButton);
-
       expect(actionButton).toHaveTextContent('Click to collapse');
     });
 
     test('shows expand button again when collapse button is clicked', () => {
+      const lineCount = numOfCollapsedLinesOfCode + 1;
+
       render(
         <Code expandable={true} language="javascript">
-          {longCodeSnippet}
+          {getCodeSnippet(lineCount)}
         </Code>,
       );
 
@@ -303,7 +306,9 @@ describe('packages/Code', () => {
       fireEvent.click(actionButton); // Expand
       fireEvent.click(actionButton); // Collapse
 
-      expect(actionButton).toHaveTextContent('Click to expand (7 lines)');
+      expect(actionButton).toHaveTextContent(
+        `Click to expand (${lineCount} lines)`,
+      );
     });
   });
 });

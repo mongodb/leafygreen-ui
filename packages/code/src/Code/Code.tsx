@@ -220,9 +220,8 @@ function Code({
 
   const showExpandButton = !!(
     expandable &&
-    codeHeight &&
-    collapsedCodeHeight &&
-    numOfLinesOfCode
+    numOfLinesOfCode &&
+    numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
   return (
@@ -300,6 +299,7 @@ function Code({
                 getExpandButtonFontSize(baseFontSize),
               )}
               onClick={handleExpandButtonClick}
+              data-testid="expand-button"
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}
