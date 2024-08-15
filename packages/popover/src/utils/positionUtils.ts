@@ -46,7 +46,10 @@ export function calculatePosition({
 }: CalculatePosition): {
   align: Align;
   justify: Justify;
-  positionCSS: any;
+  positionCSS: AbsolutePositionObject & {
+    transform: string;
+    transformOrigin: string;
+  };
 } {
   // Use scrollContainer width and height instead of window width and height when a scrollContainer is set
   // so we can correctly determine if the content element is safely within the "window"
@@ -323,7 +326,7 @@ function getTransform(align: Align, transformAmount: number): string {
   }
 }
 
-interface AbsolutePositionObject {
+export interface AbsolutePositionObject {
   top?: string | 0;
   bottom?: string | 0;
   left?: string | 0;

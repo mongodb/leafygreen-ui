@@ -4,6 +4,8 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { AbsolutePositionObject } from './utils/positionUtils';
+
 export const TRANSITION_DURATION = transitionDuration.default;
 
 export const contentClassName = createUniqueClassName('popover-content');
@@ -12,8 +14,15 @@ export const hiddenPlaceholderStyle = css`
   display: none;
 `;
 
-const basePopoverStyles = css`
+type PositionCSS = AbsolutePositionObject & { transformOrigin: string };
+
+const getBasePopoverStyles = (positionCSS: PositionCSS) => css`
   position: absolute;
+  top: ${positionCSS.top};
+  left: ${positionCSS.left};
+  right: ${positionCSS.right};
+  bottom: ${positionCSS.bottom};
+  transform-origin: ${positionCSS.transformOrigin};
   transition-property: opacity, transform;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
@@ -36,16 +45,17 @@ export const getPopoverStyles = ({
 }: {
   className?: string;
   popoverZIndex?: number;
-  positionCSS: any;
+  positionCSS: PositionCSS;
   state: TransitionStatus;
-  transform: any;
+  transform: string;
   usePortal: boolean;
 }) =>
   cx(
-    basePopoverStyles,
-    css(positionCSS),
+    getBasePopoverStyles(positionCSS),
     {
-      [css({ transform })]: state === 'entering' || state === 'exiting',
+      [css`
+        transform: ${transform};
+      `]: state === 'entering' || state === 'exiting',
       [getActiveStyles(usePortal)]: state === 'entered',
       [css`
         z-index: ${popoverZIndex};
