@@ -13,6 +13,7 @@ import LeafyGreenProvider, {
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
+import { numOfCollapsedLinesOfCode } from '../constants';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { CodeProps, Language } from '../types';
@@ -42,7 +43,6 @@ import {
   wrapperStyle,
 } from './Code.styles';
 import { DetailedElementProps, ScrollState } from './Code.types';
-import { numOfCollapsedLinesOfCode } from '../constants';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');

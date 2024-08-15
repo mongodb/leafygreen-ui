@@ -1,4 +1,5 @@
 import { HTMLAttributes } from 'react';
+
 import { SupportedLanguages } from './languages';
 
 export const Mode = {
