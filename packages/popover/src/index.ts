@@ -1,4 +1,5 @@
-import { contentClassName, Popover } from './Popover';
+import { Popover } from './Popover';
+import { contentClassName } from './Popover.styles';
 import { getAlign, getJustify } from './Popover.testutils';
 export {
   Align,

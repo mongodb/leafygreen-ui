@@ -2,7 +2,6 @@ import React, { forwardRef, Fragment, useMemo, useState } from 'react';
 import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useIsomorphicLayoutEffect,
   useMutationObserver,
@@ -11,10 +10,15 @@ import {
   useViewportSize,
 } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce, createUniqueClassName } from '@leafygreen-ui/lib';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import {
+  contentClassName,
+  getPopoverStyles,
+  hiddenPlaceholderStyle,
+  TRANSITION_DURATION,
+} from '../Popover.styles';
 import {
   Align,
   Justify,
@@ -27,13 +31,6 @@ import {
   getElementViewportPosition,
 } from '../utils/positionUtils';
 
-const rootPopoverStyle = css`
-  position: absolute;
-  transition: transform ${transitionDuration.default}ms ease-in-out,
-    opacity ${transitionDuration.default}ms ease-in-out;
-  opacity: 0;
-`;
-
 const mutationOptions = {
   // If attributes changes, such as className which affects layout
   attributes: true,
@@ -44,8 +41,6 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
-
-export const contentClassName = createUniqueClassName('popover-content');
 
 /**
  *
@@ -256,12 +251,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       scrollContainer,
     });
 
-    const activeStyle = css`
-      opacity: 1;
-      position: ${usePortal ? '' : 'absolute'};
-      pointer-events: initial;
-    `;
-
     const Root = usePortal ? Portal : Fragment;
     const portalProps = {
       className: portalContainer ? undefined : portalClassName,
@@ -288,7 +277,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       <Transition
         nodeRef={contentNodeRef}
         in={active}
-        timeout={transitionDuration.default}
+        timeout={TRANSITION_DURATION}
         mountOnEnter
         unmountOnExit
         appear
@@ -308,34 +297,19 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         {state => (
           <>
             {/* Using <span> to prevent validateDOMNesting warnings. Warnings will still show up if `usePortal` is false */}
-            <span
-              ref={setPlaceholderNode}
-              className={css`
-                display: none;
-              `}
-            />
+            <span ref={setPlaceholderNode} className={hiddenPlaceholderStyle} />
             <Root {...rootProps}>
               <div
                 {...rest}
                 ref={fwdRef}
-                className={cx(
-                  rootPopoverStyle,
-                  css(positionCSS),
-                  {
-                    [css({ transform })]:
-                      state === 'entering' || state === 'exiting',
-                    [activeStyle]: state === 'entered',
-                    [css`
-                      z-index: ${popoverZIndex};
-                    `]: typeof popoverZIndex === 'number',
-                  },
+                className={getPopoverStyles({
                   className,
-                  {
-                    [css`
-                      transition-delay: 0ms;
-                    `]: state === 'exiting',
-                  },
-                )}
+                  popoverZIndex,
+                  positionCSS,
+                  state,
+                  transform,
+                  usePortal,
+                })}
               >
                 {/*
                     We create this inner node with a ref because placing it on its parent

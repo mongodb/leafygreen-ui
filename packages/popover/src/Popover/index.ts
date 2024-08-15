@@ -1,1 +1,1 @@
-export { contentClassName, Popover } from './Popover';
+export { Popover } from './Popover';
