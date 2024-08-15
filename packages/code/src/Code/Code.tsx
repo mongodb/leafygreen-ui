@@ -42,9 +42,14 @@ import {
   wrapperStyle,
 } from './Code.styles';
 import { DetailedElementProps, ScrollState } from './Code.types';
+import { numOfCollapsedLinesOfCode } from '../constants';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
+}
+
+function getHorizontalScrollbarHeight(element: HTMLElement): number {
+  return element.offsetHeight - element.clientHeight;
 }
 
 /**
@@ -89,8 +94,9 @@ function Code({
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
-  const [linesOfCode, setLinesOfCode] = useState<number>();
+  const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
   const [codeHeight, setCodeHeight] = useState<number>();
+  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>();
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
@@ -131,14 +137,34 @@ function Code({
     }
   }, []);
 
-  const contentWrapperRef = useRef<HTMLDivElement | null>(null);
+  function setExpandableState() {
+    if (!expandable || !scrollableElementRef.current) return;
 
-  useIsomorphicLayoutEffect(() => {
-    if (!expandable) return;
+    const scrollableElement = scrollableElementRef.current;
+    const scrollbarHeight = getHorizontalScrollbarHeight(scrollableElement);
+    const codeHeight = scrollableElement.scrollHeight + scrollbarHeight;
+    const linesOfCode = scrollableElement.querySelectorAll('tr');
+    let collapsedCodeHeight = codeHeight;
 
-    setCodeHeight(contentWrapperRef.current?.offsetHeight);
-    setLinesOfCode(contentWrapperRef.current?.querySelectorAll('tr').length);
-  }, [expandable, contentWrapperRef]);
+    if (linesOfCode.length > numOfCollapsedLinesOfCode) {
+      const topOfCode = scrollableElement.getBoundingClientRect().top;
+      const lastVisisbleLineOfCode = linesOfCode[numOfCollapsedLinesOfCode - 1];
+      const bottomOfLastVisibleLineOfCode =
+        lastVisisbleLineOfCode.getBoundingClientRect().bottom;
+      collapsedCodeHeight =
+        bottomOfLastVisibleLineOfCode - topOfCode + scrollbarHeight;
+    }
+
+    setCodeHeight(codeHeight);
+    setCollapsedCodeHeight(collapsedCodeHeight);
+    setNumOfLinesOfCode(linesOfCode.length);
+  }
+
+  useIsomorphicLayoutEffect(setExpandableState, [
+    expandable,
+    scrollableElementRef,
+    baseFontSize, // will cause changes in code height
+  ]);
 
   const renderedSyntaxComponent = (
     <Syntax
@@ -192,12 +218,11 @@ function Code({
       : { usePortal }),
   } as const;
 
-  const collapsedLinesOfCode = 5;
   const showExpandButton = !!(
     expandable &&
     codeHeight &&
-    linesOfCode &&
-    linesOfCode > collapsedLinesOfCode
+    collapsedCodeHeight &&
+    numOfLinesOfCode
   );
 
   return (
@@ -222,7 +247,6 @@ function Code({
                 showExpandButton && !showPanel,
             },
           )}
-          ref={contentWrapperRef}
         >
           <pre
             {...(rest as DetailedElementProps<HTMLPreElement>)}
@@ -236,7 +260,7 @@ function Code({
                 [getExpandableCodeWrapperStyle(
                   expanded,
                   codeHeight as number,
-                  baseFontSize,
+                  collapsedCodeHeight as number,
                 )]: showExpandButton,
               },
               className,
@@ -278,7 +302,8 @@ function Code({
               onClick={handleExpandButtonClick}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
-              Click to {expanded ? 'collapse' : `expand (${linesOfCode} lines)`}
+              Click to{' '}
+              {expanded ? 'collapse' : `expand (${numOfLinesOfCode} lines)`}
             </button>
           )}
         </div>

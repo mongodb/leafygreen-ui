@@ -10,7 +10,6 @@ import {
   fontFamilies,
   spacing,
   transitionDuration,
-  typeScales,
 } from '@leafygreen-ui/tokens';
 
 import { variantColors } from '../globalStyles';
@@ -129,17 +128,10 @@ export const singleLineCodeWrapperStyle = css`
 export function getExpandableCodeWrapperStyle(
   expanded: boolean,
   codeHeight: number,
-  baseFontSize: number,
+  collapsedCodeHeight: number,
 ) {
-  const codeLineHeight = baseFontSize === BaseFontSize.Body2 ? 24 : 20;
-  const numOfLinesWhenCollapsed = 5;
-  const topPadding = codeWrappingVerticalPadding;
-  const height = expanded
-    ? codeHeight
-    : codeLineHeight * numOfLinesWhenCollapsed + topPadding;
-
   return css`
-    max-height: ${height}px;
+    max-height: ${expanded ? codeHeight : collapsedCodeHeight}px;
     overflow-y: scroll;
     transition: max-height ${transitionDuration.slower}ms ease-in-out;
   `;
