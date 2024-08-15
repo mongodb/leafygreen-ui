@@ -32,6 +32,7 @@ import {
   expandButtonStyle,
   getCodeWrapperVariantStyle,
   getExpandableCodeWrapperStyle,
+  getExpandButtonFontSize,
   getExpandButtonVariantStyle,
   getScrollShadow,
   panelStyles,
@@ -272,6 +273,7 @@ function Code({
               className={cx(
                 expandButtonStyle,
                 getExpandButtonVariantStyle(theme),
+                getExpandButtonFontSize(baseFontSize),
               )}
               onClick={handleExpandButtonClick}
             >

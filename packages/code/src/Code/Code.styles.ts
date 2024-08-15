@@ -165,14 +165,13 @@ export const expandButtonStyle = css`
   /**
     Code wrapper's border radius is 12px. Matching that creates a very 
     slight gap between the button and the code wrapper. Decreasing by
-    1px removes gap without making focused state look off.
+    1px removes gap.
   */
   border-radius: 0 0 11px 11px;
   border-width: 1px 0 0 0;
   border-style: solid;
   display: flex;
   font-family: ${fontFamilies.default};
-  font-size: ${typeScales.body1.fontSize}px;
   gap: ${spacing[100]}px;
   grid-area: expandButton;
   justify-content: center;
@@ -197,6 +196,12 @@ export function getExpandButtonVariantStyle(theme: Theme): string {
       color: ${theme === Theme.Light ? palette.blue.dark1 : colors[2]};
       outline: none;
     }
+  `;
+}
+
+export function getExpandButtonFontSize(baseFontSize: number): string {
+  return css`
+    font-size: ${baseFontSize}px;
   `;
 }
 
