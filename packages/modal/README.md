@@ -97,10 +97,10 @@ It is HIGHLY encouraged that any children inside of `Modal` should refrain from 
 
 ## Using `Clipboard.js` inside `Modal`
 
-To directly use the `Clipboard.js` library inside of `Modal`, rather than using the `Copyable` component, the reference value of the `Modal` should be used as the `container` when `Clipboard.js` is instantiated. You can get the reference value by consuming the `usePopoverPortalContainer` hook:
+To directly use the `Clipboard.js` library inside of `Modal`, rather than using the `Copyable` component, the reference value of the `Modal` should be used as the `container` when `Clipboard.js` is instantiated. You can get the reference value by consuming the `usePopoverContext` hook:
 
 ```
-  const { portalContainer } = usePopoverPortalContainer();
+  const { portalContainer } = usePopoverContext();
 
   const clipboard = new ClipboardJS(buttonRef, {
     container: portalContainer,
