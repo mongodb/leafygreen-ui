@@ -10,10 +10,7 @@ import {
   usePrevious,
   useViewportSize,
 } from '@leafygreen-ui/hooks';
-import {
-  usePopoverContext,
-  usePopoverPortalContainer,
-} from '@leafygreen-ui/leafygreen-provider';
+import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, createUniqueClassName } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -107,12 +104,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     const [contentNode, setContentNode] = useState<HTMLElement | null>(null);
     const [forceUpdateCounter, setForceUpdateCounter] = useState(0);
 
-    const { setIsPopoverOpen } = usePopoverContext();
+    const {
+      portalContainer: portalContainerCtxVal,
+      scrollContainer: scrollContainerCtxVal,
+      setIsPopoverOpen,
+    } = usePopoverContext();
 
-    let { portalContainer, scrollContainer } = usePopoverPortalContainer();
-
-    portalContainer = portalContainerProp || portalContainer;
-    scrollContainer = scrollContainerProp || scrollContainer;
+    const portalContainer = portalContainerProp || portalContainerCtxVal;
+    const scrollContainer = scrollContainerProp || scrollContainerCtxVal;
 
     // When usePortal is true and a scrollContainer is passed in
     // show a warning if the portalContainer is not inside of the scrollContainer.
