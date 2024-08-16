@@ -5,21 +5,27 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import { OverlayProvider } from './OverlayContext';
-import PortalContextProvider, {
-  PortalContextValues,
-  usePopoverPortalContainer,
-} from './PortalContext';
+import {
+  PopoverContextType,
+  PopoverProvider,
+  usePopoverContext,
+} from './PopoverContext';
 import TypographyProvider, {
   TypographyProviderProps,
   useBaseFontSize,
 } from './TypographyContext';
 import UsingKeyboardProvider from './UsingKeyboardContext';
 
+type PopoverPortalContainerType = Pick<
+  PopoverContextType,
+  'portalContainer' | 'scrollContainer'
+>;
+
 export type LeafyGreenProviderProps = {
   /**
    * Define a container HTMLElement for components that utilize the `Portal` component
    */
-  popoverPortalContainer?: PortalContextValues['popover'];
+  popoverPortalContainer?: PopoverPortalContainerType;
 } & TypographyProviderProps &
   DarkModeProps;
 
@@ -29,8 +35,9 @@ function LeafyGreenProvider({
   popoverPortalContainer: popoverPortalContainerProp,
   darkMode: darkModeProp,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
-  // if the prop is set, we use that
-  // if the prop is not set, we use outer context
+  /**
+   * If `darkMode` prop is provided, use that. Otherwise, use context value
+   */
   const { contextDarkMode: inheritedDarkMode } = useDarkModeContext();
   const [darkModeState, setDarkMode] = useState(
     darkModeProp ?? inheritedDarkMode,
@@ -40,26 +47,39 @@ function LeafyGreenProvider({
     setDarkMode(darkModeProp ?? inheritedDarkMode);
   }, [darkModeProp, inheritedDarkMode]);
 
-  // Similarly with base font size
+  /**
+   * If `baseFontSize` prop is provided, use that. Otherwise, use context value
+   */
   const inheritedFontSize = useBaseFontSize();
   const baseFontSize = fontSizeProp ?? inheritedFontSize;
-  // and popover portal container
-  const inheritedContainer = usePopoverPortalContainer();
-  const popoverPortalContainer =
-    popoverPortalContainerProp ?? inheritedContainer;
+
+  /**
+   * If `popoverPortalContainer` prop is provided, use that. Otherwise, use context value
+   */
+  const popoverContext = usePopoverContext();
+  const inheritedPopoverContextContainers: PopoverPortalContainerType =
+    Object.fromEntries(
+      Object.entries(popoverContext).filter(([key, _]) =>
+        ['portalContainer', 'scrollContainer'].includes(key),
+      ),
+    );
+  const popoverContextContainerValues =
+    popoverPortalContainerProp ?? inheritedPopoverContextContainers;
 
   return (
     <UsingKeyboardProvider>
-      <PortalContextProvider popover={popoverPortalContainer}>
-        <TypographyProvider baseFontSize={baseFontSize}>
-          <DarkModeProvider
-            contextDarkMode={darkModeState}
-            setDarkMode={setDarkMode}
-          >
-            <OverlayProvider>{children}</OverlayProvider>
-          </DarkModeProvider>
-        </TypographyProvider>
-      </PortalContextProvider>
+      <TypographyProvider baseFontSize={baseFontSize}>
+        <DarkModeProvider
+          contextDarkMode={darkModeState}
+          setDarkMode={setDarkMode}
+        >
+          <OverlayProvider>
+            <PopoverProvider {...popoverContextContainerValues}>
+              {children}
+            </PopoverProvider>
+          </OverlayProvider>
+        </DarkModeProvider>
+      </TypographyProvider>
     </UsingKeyboardProvider>
   );
 }
