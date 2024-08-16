@@ -1,48 +1,46 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
-export interface PopoverState {
-  /**
-   * Whether the most immediate popover ancestor is open
-   */
-  isPopoverOpen: boolean;
-  /**
-   * Sets the internal state
-   * @internal
-   */
-  setIsPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import {
+  PopoverContextType,
+  PopoverProviderProps,
+} from './PopoverContext.types';
 
-export const PopoverContext = createContext<PopoverState>({
+export const PopoverContext = createContext<PopoverContextType>({
   isPopoverOpen: false,
   setIsPopoverOpen: () => {},
 });
 
 /**
- * Access the popover state
- * @returns `isPopoverOpen: boolean`
+ * Access the popover context
  */
-export function usePopoverContext(): PopoverState {
+export const usePopoverContext = (): PopoverContextType => {
   return useContext(PopoverContext);
-}
-
-interface PopoverProviderProps {
-  children?: React.ReactNode;
-}
+};
 
 /**
  * Creates a Popover context.
  * Call `usePopoverContext` to access the popover state
  */
-export function PopoverProvider({ children }: PopoverProviderProps) {
+export const PopoverProvider = ({
+  children,
+  ...props
+}: PropsWithChildren<PopoverProviderProps>) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   const providerValue = useMemo(
     () => ({
       isPopoverOpen,
       setIsPopoverOpen,
+      ...props,
     }),
-    [isPopoverOpen],
+    [isPopoverOpen, props],
   );
 
   return (
@@ -50,7 +48,7 @@ export function PopoverProvider({ children }: PopoverProviderProps) {
       {children}
     </PopoverContext.Provider>
   );
-}
+};
 
 PopoverProvider.displayName = 'PopoverProvider';
 

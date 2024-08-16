@@ -10680,7 +10680,7 @@ istanbul-reports@^3.1.3:
 
 jackspeak@2.1.1, jackspeak@^2.0.3, jackspeak@^2.3.6:
   version "2.1.1"
-  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-2.1.1.tgz#2a42db4cfbb7e55433c28b6f75d8b796af9669cd"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/jackspeak/-/jackspeak-2.1.1.tgz#2a42db4cfbb7e55433c28b6f75d8b796af9669cd"
   integrity sha512-juf9stUEwUaILepraGOWIJTLwg48bUnBmRqd2ln2Os1sW987zeoj/hzhbvRB95oMuS2ZTpjULmdwHNX4rzZIZw==
   dependencies:
     cliui "^8.0.1"
