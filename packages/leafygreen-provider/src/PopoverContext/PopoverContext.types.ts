@@ -90,6 +90,7 @@ export type PopoverProviderProps = TransitionLifecycleCallbacks &
     popoverZIndex?: number;
   };
 
+/** TODO: https://jira.mongodb.org/browse/LG-4475 */
 interface DeprecatedPopoverState {
   /**
    * Whether the most immediate popover ancestor is open

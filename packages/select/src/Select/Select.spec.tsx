@@ -11,6 +11,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
+// TODO: https://jira.mongodb.org/browse/LG-4474
 import * as LeafyGreenProviderModule from '@leafygreen-ui/leafygreen-provider';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
