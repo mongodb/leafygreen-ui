@@ -131,7 +131,7 @@ export function getExpandableCodeWrapperStyle(
 ) {
   return css`
     max-height: ${expanded ? codeHeight : collapsedCodeHeight}px;
-    overflow-y: scroll;
+    overflow-y: hidden;
     transition: max-height ${transitionDuration.slower}ms ease-in-out;
   `;
 }
