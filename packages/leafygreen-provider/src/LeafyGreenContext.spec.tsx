@@ -5,7 +5,7 @@ import { LeafyGreenProviderProps } from './LeafyGreenContext';
 import LeafyGreenProvider, {
   useBaseFontSize,
   useDarkMode,
-  usePopoverPortalContainer,
+  usePopoverContext,
 } from '.';
 
 afterAll(cleanup);
@@ -13,7 +13,7 @@ afterAll(cleanup);
 const ContextChecker = () => {
   const { darkMode } = useDarkMode();
   const baseFontSize = useBaseFontSize();
-  const { portalContainer, scrollContainer } = usePopoverPortalContainer();
+  const { portalContainer, scrollContainer } = usePopoverContext();
 
   return (
     <>

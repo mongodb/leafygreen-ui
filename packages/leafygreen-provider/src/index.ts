@@ -9,12 +9,10 @@ export {
 } from './OverlayContext';
 export {
   PopoverContext,
+  type PopoverContextType,
   PopoverProvider,
+  type PopoverProviderProps,
   usePopoverContext,
 } from './PopoverContext';
-export {
-  default as PortalContextProvider,
-  usePopoverPortalContainer,
-} from './PortalContext';
 export { useBaseFontSize } from './TypographyContext';
 export { useUsingKeyboardContext } from './UsingKeyboardContext';
