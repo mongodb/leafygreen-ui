@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash/debounce';
 
 const transitionDebounceTime = 100;
@@ -59,6 +59,13 @@ export function useToastTransitions({
       }),
     [exitCallback, getShouldExpand],
   );
+
+  useEffect(() => {
+    return () => {
+      handleTransitionEnter.cancel();
+      handleTransitionExit.cancel();
+    };
+  }, [handleTransitionEnter, handleTransitionExit]);
 
   return {
     isExpanded,
