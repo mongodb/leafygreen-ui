@@ -135,7 +135,7 @@ const ExpandableCard = ({
                 aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
                 tabIndex={0}
               >
-                <Icon glyph="ChevronUp" size={24} />
+                <Icon glyph="ChevronDown" size={24} />
               </IconButton>
             )}
           </Transition>

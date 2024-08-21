@@ -38,9 +38,14 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
+// > 5 lines to trigger expandable code block
 const shortJsSnippet = `
-import {greeting} from './utils/greeting'
-console.log(greeting('World'));
+  function greeting(entity) {
+    return \`Hello, \${entity}\`;
+  }
+
+  console.log(greeting('World'));
+  console.log(greeting('Universe'));
 `;
 
 const meta: StoryMetaType<typeof Code> = {
@@ -61,6 +66,7 @@ const meta: StoryMetaType<typeof Code> = {
       combineArgs: {
         darkMode: [false, true],
         copyable: [true, false],
+        expandable: [true, false],
         showWindowChrome: [false, true],
         showLineNumbers: [false, true],
       },
@@ -74,6 +80,7 @@ const meta: StoryMetaType<typeof Code> = {
   },
   argTypes: {
     copyable: { control: 'boolean' },
+    expandable: { control: 'boolean' },
     showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     highlightLines: { control: 'boolean' },

@@ -1,10 +1,12 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 import { LGIDs } from '../constants';
 import { menuItemContainerStyles } from '../MenuItem/MenuItem.styles';
 import { menuColor } from '../styles';
+
+const TRANSITION_DURATION = transitionDuration.default;
 
 export const subMenuContainerClassName = createUniqueClassName(LGIDs.submenu);
 export const subMenuToggleClassName = createUniqueClassName(
@@ -16,13 +18,15 @@ export const subMenuContainerStyles = css`
   position: relative;
 `;
 
-export const getSubmenuToggleStyles = (theme: Theme) => css`
+const getBaseSubmenuToggleStyles = (theme: Theme) => css`
   position: absolute;
   right: ${spacing[300]}px;
   // Ensure the trigger is centered regardless of element height
   top: 50%;
-  transform: translateY(-50%);
+  translate: 0 -50%;
+  rotate: 0deg;
   color: ${menuColor[theme].icon.default};
+  transition: rotate ${TRANSITION_DURATION}ms ease-in-out;
 
   &:hover {
     color: ${menuColor[theme].icon.hover};
@@ -33,6 +37,15 @@ export const getSubmenuToggleStyles = (theme: Theme) => css`
   }
 `;
 
+const submenuToggleExpandedStyle = css`
+  rotate: 180deg;
+`;
+
+export const getSubmenuToggleStyles = (theme: Theme, open: boolean) =>
+  cx(subMenuToggleClassName, getBaseSubmenuToggleStyles(theme), {
+    [submenuToggleExpandedStyle]: open,
+  });
+
 export const getSubmenuListStyles = () => css`
   list-style: none;
   margin: 0;
@@ -40,6 +53,6 @@ export const getSubmenuListStyles = () => css`
   max-height: 0;
   height: max-content;
   overflow: hidden;
-  transition: max-height ${transitionDuration.default}ms ease-in-out;
+  transition: max-height ${TRANSITION_DURATION}ms ease-in-out;
   position: relative;
 `;

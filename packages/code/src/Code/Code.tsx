@@ -5,11 +5,15 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
+import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
+import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
+import { numOfCollapsedLinesOfCode } from '../constants';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { CodeProps, Language } from '../types';
@@ -23,7 +27,13 @@ import {
   contentWrapperStyles,
   contentWrapperStylesNoPanel,
   contentWrapperStyleWithPicker,
+  expandableContentWrapperStyle,
+  expandableContentWrapperStyleNoPanel,
+  expandableContentWrapperStyleWithPicker,
+  expandButtonStyle,
   getCodeWrapperVariantStyle,
+  getExpandableCodeWrapperStyle,
+  getExpandButtonVariantStyle,
   getScrollShadow,
   panelStyles,
   scrollShadowStylesNoPanel,
@@ -35,6 +45,10 @@ import { DetailedElementProps, ScrollState } from './Code.types';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
+}
+
+function getHorizontalScrollbarHeight(element: HTMLElement): number {
+  return element.offsetHeight - element.clientHeight;
 }
 
 /**
@@ -49,6 +63,7 @@ export function hasMultipleLines(string: string): boolean {
  * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
  * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
  * @param props.onCopy Callback fired when Code is copied
+ * @param props.expandable When true, allows the code block to be expanded and collapsed when there are more than 5 lined of code. Default: `false`
  */
 function Code({
   children = '',
@@ -60,6 +75,7 @@ function Code({
   showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
+  expandable = false,
   onCopy,
   highlightLines = [],
   languageOptions,
@@ -76,8 +92,13 @@ function Code({
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
   const [showCopyBar, setShowCopyBar] = useState(false);
+  const [expanded, setExpanded] = useState(!expandable);
+  const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
+  const [codeHeight, setCodeHeight] = useState<number>();
+  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>();
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const baseFontSize = useBaseFontSize();
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
     (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
@@ -115,6 +136,35 @@ function Code({
     }
   }, []);
 
+  function setExpandableState() {
+    if (!expandable || !scrollableElementRef.current) return;
+
+    const scrollableElement = scrollableElementRef.current;
+    const scrollbarHeight = getHorizontalScrollbarHeight(scrollableElement);
+    const codeHeight = scrollableElement.scrollHeight + scrollbarHeight;
+    const linesOfCode = scrollableElement.querySelectorAll('tr');
+    let collapsedCodeHeight = codeHeight;
+
+    if (linesOfCode.length > numOfCollapsedLinesOfCode) {
+      const topOfCode = scrollableElement.getBoundingClientRect().top;
+      const lastVisisbleLineOfCode = linesOfCode[numOfCollapsedLinesOfCode - 1];
+      const bottomOfLastVisibleLineOfCode =
+        lastVisisbleLineOfCode.getBoundingClientRect().bottom;
+      collapsedCodeHeight =
+        bottomOfLastVisibleLineOfCode - topOfCode + scrollbarHeight;
+    }
+
+    setCodeHeight(codeHeight);
+    setCollapsedCodeHeight(collapsedCodeHeight);
+    setNumOfLinesOfCode(linesOfCode.length);
+  }
+
+  useIsomorphicLayoutEffect(setExpandableState, [
+    expandable,
+    scrollableElementRef,
+    baseFontSize, // will cause changes in code height
+  ]);
+
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
@@ -144,6 +194,10 @@ function Code({
     }
   }
 
+  function handleExpandButtonClick() {
+    setExpanded(prev => !prev);
+  }
+
   const debounceScroll = debounce(handleScroll, 50, { leading: true });
 
   const onScroll: React.UIEventHandler<HTMLDivElement | HTMLPreElement> = e => {
@@ -163,6 +217,12 @@ function Code({
       : { usePortal }),
   } as const;
 
+  const showExpandButton = !!(
+    expandable &&
+    numOfLinesOfCode &&
+    numOfLinesOfCode > numOfCollapsedLinesOfCode
+  );
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={wrapperStyle[theme]}>
@@ -178,6 +238,11 @@ function Code({
               [scrollShadowStylesWithPicker]: showLanguagePicker,
               [contentWrapperStylesNoPanel]: !showPanel,
               [scrollShadowStylesNoPanel]: !showPanel,
+              [expandableContentWrapperStyle]: showExpandButton,
+              [expandableContentWrapperStyleWithPicker]:
+                showExpandButton && showLanguagePicker,
+              [expandableContentWrapperStyleNoPanel]:
+                showExpandButton && !showPanel,
             },
           )}
         >
@@ -190,6 +255,11 @@ function Code({
                 [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
                 [codeWrapperStyleNoPanel]: !showPanel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
+                [getExpandableCodeWrapperStyle(
+                  expanded,
+                  codeHeight as number,
+                  collapsedCodeHeight as number,
+                )]: showExpandButton,
               },
               className,
             )}
@@ -218,6 +288,21 @@ function Code({
               showCustomActionButtons={showCustomActionsInPanel}
               {...popoverProps}
             />
+          )}
+
+          {showExpandButton && (
+            <button
+              className={cx(
+                expandButtonStyle,
+                getExpandButtonVariantStyle(theme),
+              )}
+              onClick={handleExpandButtonClick}
+              data-testid="lg-code-expand_button"
+            >
+              {expanded ? <ChevronUp /> : <ChevronDown />}
+              Click to{' '}
+              {expanded ? 'collapse' : `expand (${numOfLinesOfCode} lines)`}
+            </button>
           )}
         </div>
       </div>

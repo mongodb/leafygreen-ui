@@ -66,15 +66,17 @@ describe('packages/checkbox', () => {
 
   test('does not fire onClick events when disabled', () => {
     const onClick = jest.fn();
-    const { getInputValue } = renderCheckbox({ onClick });
-    expect(getInputValue()).toBeFalsy();
+    const { getInput } = renderCheckbox({ onClick, disabled: true });
+    const input = getInput();
+    fireEvent.click(input);
     expect(onClick).not.toHaveBeenCalled();
   });
 
   test('does not fire onChange events when disabled', () => {
     const onChange = jest.fn();
-    const { getInputValue } = renderCheckbox({ onChange });
-    expect(getInputValue()).toBeFalsy();
+    const { getInput } = renderCheckbox({ onChange, disabled: true });
+    const input = getInput();
+    fireEvent.click(input);
     expect(onChange).not.toHaveBeenCalled();
   });
 

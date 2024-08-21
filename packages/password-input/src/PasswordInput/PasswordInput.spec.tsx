@@ -179,6 +179,27 @@ describe('packages/password-input', () => {
         expect(passwordInput.getAttribute('type')).toBe('password');
       });
 
+      describe('when disabled', () => {
+        test('input is "aria-disabled"', () => {
+          const { passwordInput } = renderPasswordInput({
+            label: defaultProps.label,
+            disabled: true,
+          });
+
+          expect(passwordInput.getAttribute('aria-disabled')).toBe('true');
+        });
+
+        test('click events are not fired', () => {
+          const onClick = jest.fn();
+          const { passwordInput } = renderPasswordInput({
+            label: defaultProps.label,
+            disabled: true,
+          });
+          fireEvent.click(passwordInput);
+          expect(onClick).not.toHaveBeenCalled();
+        });
+      });
+
       test('does not submit a form when clicked', () => {
         const submitHandler = jest.fn();
         const { getByRole } = render(

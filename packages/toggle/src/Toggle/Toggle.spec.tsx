@@ -67,6 +67,19 @@ describe('packages/Toggle', () => {
       expect(isDisabled()).toBe(true);
     });
 
+    test('event handlers do not fire when disabled is true', () => {
+      const onChange = jest.fn();
+      const onClick = jest.fn();
+
+      const { getInput } = renderToggle({ disabled: true });
+      const input = getInput();
+
+      userEvent.click(input);
+
+      expect(onChange).not.toHaveBeenCalled();
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
     test('is false', () => {
       const { isDisabled } = renderToggle();
 
