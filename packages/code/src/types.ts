@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { ComponentPropsWithRef, HTMLAttributes } from 'react';
 
 import { SupportedLanguages } from './languages';
 
@@ -20,11 +20,7 @@ export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
 
-interface HTMLElementProps<T extends HTMLElement> extends HTMLAttributes<T> {
-  ref?: React.Ref<T>;
-}
-
-export interface SyntaxProps extends HTMLElementProps<HTMLPreElement> {
+export interface SyntaxProps extends ComponentPropsWithRef<'pre'> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    * @required
@@ -115,7 +111,7 @@ export type CodeProps = Omit<
   copyable?: boolean;
 
   /**
-   * Makes long code blocks expandable
+   * Makes code blocks longer than 5 lines long expandable
    *
    * @default `false`
    */
