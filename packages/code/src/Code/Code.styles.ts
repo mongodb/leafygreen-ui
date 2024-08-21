@@ -5,10 +5,12 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  BaseFontSize,
   color,
   fontFamilies,
   spacing,
   transitionDuration,
+  typeScales,
 } from '@leafygreen-ui/tokens';
 
 import { variantColors } from '../globalStyles';
@@ -163,12 +165,12 @@ export const expandButtonStyle = css`
   border-style: solid;
   display: flex;
   font-family: ${fontFamilies.default};
-  font-size: 13px;
+  font-size: ${BaseFontSize.Body1}px;
   gap: ${spacing[100]}px;
   grid-area: expandButton;
   justify-content: center;
   transition: all ${transitionDuration.default}ms ease-in-out;
-  z-index: 2;
+  z-index: 2; // Moves button above the shadows
   &:hover {
     cursor: pointer;
   }
