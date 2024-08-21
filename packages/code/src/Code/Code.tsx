@@ -33,7 +33,6 @@ import {
   expandButtonStyle,
   getCodeWrapperVariantStyle,
   getExpandableCodeWrapperStyle,
-  getExpandButtonFontSize,
   getExpandButtonVariantStyle,
   getScrollShadow,
   panelStyles,
