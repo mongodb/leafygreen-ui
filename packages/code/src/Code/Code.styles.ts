@@ -10,7 +10,6 @@ import {
   fontFamilies,
   spacing,
   transitionDuration,
-  typeScales,
 } from '@leafygreen-ui/tokens';
 
 import { variantColors } from '../globalStyles';
