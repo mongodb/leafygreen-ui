@@ -163,6 +163,7 @@ export const expandButtonStyle = css`
   border-style: solid;
   display: flex;
   font-family: ${fontFamilies.default};
+  font-size: 13px;
   gap: ${spacing[100]}px;
   grid-area: expandButton;
   justify-content: center;
@@ -188,12 +189,6 @@ export function getExpandButtonVariantStyle(theme: Theme): string {
       color: ${theme === Theme.Light ? palette.blue.dark1 : colors[2]};
       outline: none;
     }
-  `;
-}
-
-export function getExpandButtonFontSize(baseFontSize: number): string {
-  return css`
-    font-size: ${baseFontSize}px;
   `;
 }
 

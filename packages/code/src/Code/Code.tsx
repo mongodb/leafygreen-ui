@@ -296,7 +296,6 @@ function Code({
               className={cx(
                 expandButtonStyle,
                 getExpandButtonVariantStyle(theme),
-                getExpandButtonFontSize(baseFontSize),
               )}
               onClick={handleExpandButtonClick}
               data-testid="expand-button"
