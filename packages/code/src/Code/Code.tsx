@@ -64,7 +64,7 @@ function getHorizontalScrollbarHeight(element: HTMLElement): number {
  * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
  * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
  * @param props.onCopy Callback fired when Code is copied
- * @param props.expandable When true, allows the code block to be expanded and collapsed. Default: `false`
+ * @param props.expandable When true, allows the code block to be expanded and collapsed when there are more than 5 lined of code. Default: `false`
  */
 function Code({
   children = '',

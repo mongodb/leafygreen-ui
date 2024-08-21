@@ -166,6 +166,7 @@ export const expandButtonStyle = css`
   gap: ${spacing[100]}px;
   grid-area: expandButton;
   justify-content: center;
+  transition: all ${transitionDuration.default}ms ease-in-out;
   z-index: 2;
   &:hover {
     cursor: pointer;
