@@ -1,4 +1,4 @@
-import { ComponentPropsWithRef, HTMLAttributes } from 'react';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { SupportedLanguages } from './languages';
 
@@ -20,7 +20,7 @@ export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
 
-export interface SyntaxProps extends ComponentPropsWithRef<'pre'> {
+export interface SyntaxProps extends HTMLElementProps<'code'> {
   /**
    * The children to render inside Code. This is usually going to be a formatted code block or line.
    * @required
@@ -50,11 +50,6 @@ export interface SyntaxProps extends ComponentPropsWithRef<'pre'> {
    * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
    */
   highlightLines?: LineHighlightingDefinition;
-
-  /**
-   * A ref to the underlying `code` element.
-   */
-  ref?: React.Ref<HTMLPreElement>;
 }
 
 export interface PopoverProps {

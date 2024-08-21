@@ -77,7 +77,6 @@ function Syntax({
   lineNumberStart,
   highlightLines = [],
   className,
-  ref,
   ...rest
 }: SyntaxProps) {
   if (!syntaxHighlightingInitialized) {
@@ -134,7 +133,6 @@ function Syntax({
           language,
           className,
         )}
-        ref={ref}
       >
         <table
           className={css`
