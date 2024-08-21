@@ -253,7 +253,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      expect(screen.queryByTestId('expand-button')).toBeNull();
+      expect(screen.queryByTestId('lg-code-expand_button')).toBeNull();
     });
 
     test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
@@ -263,7 +263,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      expect(screen.getByTestId('expand-button')).toBeInTheDocument();
+      expect(screen.getByTestId('lg-code-expand_button')).toBeInTheDocument();
     });
 
     test('shows correct number of lines of code on expand button', () => {
@@ -275,7 +275,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const actionButton = screen.getByTestId('expand-button');
+      const actionButton = screen.getByTestId('lg-code-expand_button');
       expect(actionButton).toHaveTextContent(
         `Click to expand (${lineCount} lines)`,
       );
@@ -288,7 +288,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const actionButton = screen.getByTestId('expand-button');
+      const actionButton = screen.getByTestId('lg-code-expand_button');
       fireEvent.click(actionButton);
       expect(actionButton).toHaveTextContent('Click to collapse');
     });
@@ -302,7 +302,7 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const actionButton = screen.getByTestId('expand-button');
+      const actionButton = screen.getByTestId('lg-code-expand_button');
       fireEvent.click(actionButton); // Expand
       fireEvent.click(actionButton); // Collapse
 

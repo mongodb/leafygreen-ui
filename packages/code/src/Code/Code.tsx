@@ -297,7 +297,7 @@ function Code({
                 getExpandButtonVariantStyle(theme),
               )}
               onClick={handleExpandButtonClick}
-              data-testid="expand-button"
+              data-testid="lg-code-expand_button"
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}
