@@ -8,6 +8,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
+import { numOfCollapsedLinesOfCode } from '../constants';
 import LanguageSwitcherExample, {
   PythonLogo,
 } from '../LanguageSwitcher/LanguageSwitcherExample';
@@ -235,6 +236,79 @@ describe('packages/Code', () => {
         image: <PythonLogo />,
         language: 'python',
       });
+    });
+  });
+
+  describe('when expandable', () => {
+    const getCodeSnippet = (lineCount: number) =>
+      Array.from(
+        { length: lineCount },
+        (_, i) => `const greeting${i} = "Hello, world! ${i}";`,
+      ).join('\n');
+
+    test(`shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
+        </Code>,
+      );
+
+      expect(screen.queryByTestId('lg-code-expand_button')).toBeNull();
+    });
+
+    test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {getCodeSnippet(numOfCollapsedLinesOfCode + 1)}
+        </Code>,
+      );
+
+      expect(screen.getByTestId('lg-code-expand_button')).toBeInTheDocument();
+    });
+
+    test('shows correct number of lines of code on expand button', () => {
+      const lineCount = numOfCollapsedLinesOfCode + 1;
+
+      render(
+        <Code expandable={true} language="javascript">
+          {getCodeSnippet(lineCount)}
+        </Code>,
+      );
+
+      const actionButton = screen.getByTestId('lg-code-expand_button');
+      expect(actionButton).toHaveTextContent(
+        `Click to expand (${lineCount} lines)`,
+      );
+    });
+
+    test('shows collapse button when expand button is clicked', () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {getCodeSnippet(numOfCollapsedLinesOfCode + 1)}
+        </Code>,
+      );
+
+      const actionButton = screen.getByTestId('lg-code-expand_button');
+      fireEvent.click(actionButton);
+      expect(actionButton).toHaveTextContent('Click to collapse');
+    });
+
+    test('shows expand button again when collapse button is clicked', () => {
+      const lineCount = numOfCollapsedLinesOfCode + 1;
+
+      render(
+        <Code expandable={true} language="javascript">
+          {getCodeSnippet(lineCount)}
+        </Code>,
+      );
+
+      const actionButton = screen.getByTestId('lg-code-expand_button');
+      fireEvent.click(actionButton); // Expand
+      fireEvent.click(actionButton); // Collapse
+
+      expect(actionButton).toHaveTextContent(
+        `Click to expand (${lineCount} lines)`,
+      );
     });
   });
 });

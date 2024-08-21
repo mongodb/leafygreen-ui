@@ -4,7 +4,13 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  BaseFontSize,
+  color,
+  fontFamilies,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import { variantColors } from '../globalStyles';
 
@@ -18,6 +24,7 @@ const mq = facepaint([
 
 const singleLineComponentHeight = 36;
 const lineHeight = 24;
+const codeWrappingVerticalPadding = spacing[200];
 
 export const wrapperStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -47,8 +54,28 @@ export const contentWrapperStylesNoPanel = css`
 `;
 
 export const contentWrapperStyleWithPicker = css`
-  grid-template-areas: 'panel' 'code';
+  grid-template-areas:
+    'panel'
+    'code';
   grid-template-columns: unset;
+`;
+
+export const expandableContentWrapperStyle = css`
+  grid-template-areas: 'code panel' 'expandButton expandButton';
+  grid-template-rows: auto 28px;
+`;
+
+export const expandableContentWrapperStyleNoPanel = css`
+  grid-template-areas: 'code code' 'expandButton expandButton';
+  grid-template-rows: auto 28px;
+`;
+
+export const expandableContentWrapperStyleWithPicker = css`
+  grid-template-areas:
+    'panel'
+    'code'
+    'expandButton';
+  grid-template-rows: auto auto 28px;
 `;
 
 export const codeWrapperStyle = css`
@@ -60,11 +87,12 @@ export const codeWrapperStyle = css`
   border-bottom-right-radius: 0;
   border: 0;
   // We apply left / right padding in Syntax to support line highlighting
-  padding-top: ${spacing[2]}px;
-  padding-bottom: ${spacing[2]}px;
+  padding-top: ${codeWrappingVerticalPadding}px;
+  padding-bottom: ${codeWrappingVerticalPadding}px;
   margin: 0;
   position: relative;
   transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
+  transition: height ${transitionDuration.slower}ms ease-in-out;
 
   ${mq({
     // Fixes annoying issue where font size is overridden in mobile Safari to be 20px.
@@ -74,7 +102,6 @@ export const codeWrapperStyle = css`
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px ${palette.blue.light1} inset;
   }
 `;
 
@@ -98,6 +125,18 @@ export const singleLineCodeWrapperStyle = css`
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
 `;
 
+export function getExpandableCodeWrapperStyle(
+  expanded: boolean,
+  codeHeight: number,
+  collapsedCodeHeight: number,
+) {
+  return css`
+    max-height: ${expanded ? codeHeight : collapsedCodeHeight}px;
+    overflow-y: hidden;
+    transition: max-height ${transitionDuration.slower}ms ease-in-out;
+  `;
+}
+
 export const panelStyles = css`
   z-index: 2; // Above the shadows
   grid-area: panel;
@@ -109,6 +148,48 @@ export function getCodeWrapperVariantStyle(theme: Theme): string {
   return css`
     background-color: ${colors[0]};
     color: ${colors[3]};
+  `;
+}
+
+export const expandButtonStyle = css`
+  align-items: center;
+  border: none;
+  /**
+    Code wrapper's border radius is 12px. Matching that creates a very 
+    slight gap between the button and the code wrapper. Decreasing by
+    1px removes gap.
+  */
+  border-radius: 0 0 11px 11px;
+  border-width: 1px 0 0 0;
+  border-style: solid;
+  display: flex;
+  font-family: ${fontFamilies.default};
+  font-size: ${BaseFontSize.Body1}px;
+  gap: ${spacing[100]}px;
+  grid-area: expandButton;
+  justify-content: center;
+  transition: all ${transitionDuration.default}ms ease-in-out;
+  z-index: 2; // Moves button above the shadows
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export function getExpandButtonVariantStyle(theme: Theme): string {
+  const colors = variantColors[theme];
+
+  return css`
+    background-color: ${colors[0]};
+    border-color: ${colors[1]};
+    color: ${colors[2]};
+    &:hover {
+      background-color: ${colors[1]};
+    }
+    &:focus-visible {
+      background-color: ${color[theme].background.info.focus};
+      color: ${theme === Theme.Light ? palette.blue.dark1 : colors[2]};
+      outline: none;
+    }
   `;
 }
 
