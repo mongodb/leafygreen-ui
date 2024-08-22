@@ -1,5 +1,16 @@
 # @leafygreen-ui/split-button
 
+## 1.1.3
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [af96e3967]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/hooks@8.1.4
+  - @leafygreen-ui/menu@25.1.1
+
 ## 1.1.2
 
 ### Patch Changes

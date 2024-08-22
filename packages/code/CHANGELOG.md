@@ -1,5 +1,19 @@
 # @leafygreen-ui/code
 
+## 14.4.0
+
+### Minor Changes
+
+- f827eb412: [LG-4319](https://jira.mongodb.org/browse/LG-4319) Adds `expandable` prop to `Code` component. This makes it so that a codeblock with more than 5 lines of code can be expanded and collapsed via the click of a button.
+
+### Patch Changes
+
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/hooks@8.1.4
+
 ## 14.3.3
 
 ### Patch Changes
