@@ -1,5 +1,14 @@
 # @leafygreen-ui/checkbox
 
+## 13.1.2
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/hooks@8.1.4
+
 ## 13.1.1
 
 ### Patch Changes

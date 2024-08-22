@@ -1,5 +1,11 @@
 # @leafygreen-ui/input-option
 
+## 2.0.2
+
+### Patch Changes
+
+- ecae9acc7: Updates `InputOptionContent` horizontal padding from 8px to 12px
+
 ## 2.0.1
 
 ### Patch Changes

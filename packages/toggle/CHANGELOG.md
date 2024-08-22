@@ -1,5 +1,11 @@
 # @leafygreen-ui/toggle
 
+## 10.1.2
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+
 ## 10.1.1
 
 ### Patch Changes

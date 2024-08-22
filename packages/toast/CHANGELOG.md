@@ -1,5 +1,16 @@
 # @leafygreen-ui/toast
 
+## 6.1.27
+
+### Patch Changes
+
+- 9530dba5b: Cleans up running tasks in `Toast` on unmount
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/hooks@8.1.4
+
 ## 6.1.26
 
 ### Patch Changes

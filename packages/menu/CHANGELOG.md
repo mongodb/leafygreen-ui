@@ -1,5 +1,18 @@
 # @leafygreen-ui/menu
 
+## 25.1.1
+
+### Patch Changes
+
+- af96e3967: [LG-4422](https://jira.mongodb.org/browse/LG-4422) Update chevron icon to properly indicate if interaction will expand or collapse and add animation
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [ecae9acc7]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/hooks@8.1.4
+  - @leafygreen-ui/input-option@2.0.2
+
 ## 25.1.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/hooks
 
+## 8.1.4
+
+### Patch Changes
+
+- c1b8b633b: Fixes re-render after initial render of `useViewportSize` hook
+- fe2483937: Makes prefix argument optional for `useDynamicRefs`
+
 ## 8.1.3
 
 ### Patch Changes

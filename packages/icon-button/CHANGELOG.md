@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon-button
 
+## 15.0.23
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+
 ## 15.0.22
 
 ### Patch Changes

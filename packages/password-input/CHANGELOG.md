@@ -1,5 +1,16 @@
 # @leafygreen-ui/password-input
 
+## 2.0.2
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/hooks@8.1.4
+
 ## 2.0.1
 
 ### Patch Changes
