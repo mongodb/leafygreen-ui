@@ -1,5 +1,4 @@
 import React, { useMemo, useRef } from 'react';
-import { Transition } from 'react-transition-group';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -24,7 +23,6 @@ const ExpandedContent = <T extends RowData>({
 }: ExpandedContentProps<T>) => {
   const { disableAnimations, getParentRow } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
-  const transitionRef = useRef<HTMLElement | null>(null);
   const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
   const isNestedRow = !!getParentRow?.(row.id);
   const isExpanded =
@@ -49,21 +47,16 @@ const ExpandedContent = <T extends RowData>({
         className={cx(baseStyles)}
         data-lgid={LGIDS.cell}
       >
-        <Transition in={isExpanded} timeout={0} nodeRef={transitionRef}>
-          {state => (
-            <div
-              data-state={state}
-              className={cx(
-                cellTransitionContainerStyles,
-                { [disableAnimationStyles]: disableAnimations },
-                expandedContentStyles[theme],
-                cellContentTransitionStateStyles(contentHeight)[state],
-              )}
-            >
-              <div ref={contentRef}>{content}</div>
-            </div>
+        <div
+          className={cx(
+            cellTransitionContainerStyles,
+            { [disableAnimationStyles]: disableAnimations },
+            expandedContentStyles[theme],
+            cellContentTransitionStateStyles(contentHeight, isExpanded), // TODO: remove this
           )}
-        </Transition>
+        >
+          <div ref={contentRef}>{content}</div>
+        </div>
       </td>
     </InternalRowBase>
   );

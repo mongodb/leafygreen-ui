@@ -1,7 +1,5 @@
-import { TransitionStatus } from 'react-transition-group';
-
-import { css } from '@leafygreen-ui/emotion';
-import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { Align } from './Cell.types';
 
@@ -78,9 +76,7 @@ export const cellTransitionContainerStyles = css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
-  transition-property: min-height, max-height, opacity, padding, transform;
-  transition-duration: ${transitionDuration.default}ms;
-  transition-timing-function: ease;
+  overflow: hidden;
 `;
 
 export const truncatedContentStyles = css`
@@ -96,25 +92,21 @@ export const disableAnimationStyles = css`
   transition: none;
 `;
 
+// TODO: remove this
 export const cellContentTransitionStateStyles = (
   height?: number,
-): Record<TransitionStatus, string> => {
-  const _hiddenStyles = css`
-    opacity: 0;
-    min-height: 0;
-    max-height: 0;
-    overflow: hidden;
-  `;
-
-  return {
-    entered: css`
+  isVisible = false,
+) => {
+  return cx({
+    [css`
+      opacity: 0;
+      min-height: 0;
+      max-height: 0;
+    `]: !isVisible,
+    [css`
       opacity: 1;
       min-height: ${standardCellHeight}px;
       max-height: ${height ? height + 'px' : 'unset'};
-    `,
-    entering: _hiddenStyles,
-    exiting: _hiddenStyles,
-    exited: _hiddenStyles,
-    unmounted: _hiddenStyles,
-  };
+    `]: isVisible,
+  });
 };
