@@ -1,6 +1,7 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { Cell, HeaderCell } from '../Cell';
@@ -8,6 +9,7 @@ import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafyGreenTable';
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
   getDefaultTestData,
@@ -87,35 +89,40 @@ describe('packages/table/Table', () => {
     });
 
     test('clicking checkbox adds row index to rowSelection state', async () => {
-      const { getAllByRole, getByTestId } = render(
+      const { getByTestId } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
-      const firstCheckbox = getAllByRole('checkbox')[1];
-      fireEvent.click(firstCheckbox);
+      const { getRowByIndex } = getTestUtils();
+      const firstCheckbox = getRowByIndex(0)?.getCheckbox();
+      userEvent.click(firstCheckbox!, {}, { skipPointerEventsCheck: true });
       expect(getByTestId('row-selection-value').textContent).toBe('{"0":true}');
     });
 
     test('clicking selected checkbox removes row index from rowSelection state', async () => {
-      const { getAllByRole, getByTestId } = render(
+      const { getByTestId } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
-      let firstCheckbox = getAllByRole('checkbox')[1];
+      const { getRowByIndex } = getTestUtils();
+      let firstCheckbox = getRowByIndex(0)?.getCheckbox();
       expect(getByTestId('row-selection-value').textContent).toBe('{}');
-      fireEvent.click(firstCheckbox);
+      userEvent.click(firstCheckbox!, {}, { skipPointerEventsCheck: true });
       expect(getByTestId('row-selection-value')).toHaveTextContent(
         '{"0":true}',
       );
-      firstCheckbox = getAllByRole('checkbox')[1];
-      fireEvent.click(firstCheckbox);
+      firstCheckbox = getRowByIndex(0)?.getCheckbox();
+      userEvent.click(firstCheckbox!, {}, { skipPointerEventsCheck: true });
       expect(getByTestId('row-selection-value')).toHaveTextContent('{}');
     });
 
     test('clicking the header checkbox updates rowSelection state with all rows selected', async () => {
-      const { getAllByRole, getByTestId } = render(
+      const { getByTestId } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
-      const headerCheckbox = getAllByRole('checkbox')[0];
-      fireEvent.click(headerCheckbox);
+
+      const { getSelectAllCheckbox } = getTestUtils();
+      const headerCheckbox = getSelectAllCheckbox();
+      userEvent.click(headerCheckbox!, {}, { skipPointerEventsCheck: true });
+
       expect(getByTestId('row-selection-value').textContent).toBe(
         '{"0":true,"1":true,"2":true}',
       );
@@ -124,65 +131,62 @@ describe('packages/table/Table', () => {
 
   describe('sortable rows', () => {
     test('renders sort icon', async () => {
-      const { getByTestId, getByLabelText } = render(
-        <TableWithHook columnProps={{ enableSorting: true }} />,
-      );
-      expect(getByTestId('lg-table-sort-icon-button')).toBeInTheDocument();
-      expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
+      render(<TableWithHook columnProps={{ enableSorting: true }} />);
+      const { getHeaderByIndex } = getTestUtils();
+      expect(getHeaderByIndex(0)?.getSortIcon()).toBeInTheDocument();
     });
 
     test('clicking sort icon toggles icon', async () => {
-      const { getByTestId, getByLabelText } = render(
+      const { getByLabelText } = render(
         <TableWithHook columnProps={{ enableSorting: true }} />,
       );
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
+
+      const { getHeaderByIndex } = getTestUtils();
+      const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
       expect(sortIconButton).toBeInTheDocument();
       expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
-      fireEvent.click(sortIconButton);
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Sort Descending Icon')).toBeInTheDocument();
     });
 
     test('clicking sort icon renders highest id at the top', async () => {
-      const { getByTestId, getByLabelText } = render(
+      const { getByLabelText } = render(
         <TableWithHook columnProps={{ enableSorting: true }} />,
       );
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      fireEvent.click(sortIconButton);
+      const { getHeaderByIndex, getRowByIndex } = getTestUtils();
+      const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Sort Descending Icon')).toBeInTheDocument();
-      const tableCells = screen.getAllByRole('cell');
-      const firstCell = tableCells[0];
+      const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent('3');
     });
 
     test('clicking sort icon twice renders lowest id at the top', async () => {
-      const { getByTestId, getByLabelText } = render(
+      const { getByLabelText } = render(
         <TableWithHook columnProps={{ enableSorting: true }} />,
       );
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      fireEvent.click(sortIconButton);
-      fireEvent.click(sortIconButton);
+      const { getHeaderByIndex, getRowByIndex } = getTestUtils();
+      const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Sort Ascending Icon')).toBeInTheDocument();
-      const tableCells = screen.getAllByRole('cell');
-      const firstCell = tableCells[0];
+      const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent('1');
     });
 
     test('clicking sort icon thrice renders the initial id at the top', async () => {
-      const { container, getByTestId, getByLabelText } = render(
+      const { getByLabelText } = render(
         <TableWithHook columnProps={{ enableSorting: true }} />,
       );
-      // @ts-ignore querySelector should not return null
-      const initialFirstId = container.querySelector(
-        '[data-cellid="0_id"] > div',
-      ).innerHTML;
-      const sortIconButton = getByTestId('lg-table-sort-icon-button');
-      fireEvent.click(sortIconButton);
-      fireEvent.click(sortIconButton);
-      fireEvent.click(sortIconButton);
+      const { getHeaderByIndex, getRowByIndex } = getTestUtils();
+      const sortIconButton = getHeaderByIndex(0)?.getSortIcon();
+      const initialFirstId = getRowByIndex(0)?.getAllCells()[0].textContent;
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
+      userEvent.click(sortIconButton!, {}, { skipPointerEventsCheck: true });
       expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
-      const tableCells = screen.getAllByRole('cell');
-      const firstCell = tableCells[0];
-      expect(firstCell).toHaveTextContent(initialFirstId);
+      const firstCell = getRowByIndex(0)?.getAllCells()[0];
+      expect(firstCell).toHaveTextContent(initialFirstId!);
     });
   });
 });

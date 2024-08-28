@@ -9,6 +9,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { LGIDS } from '../constants';
 import { TableContextProvider } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -26,6 +27,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       darkMode: darkModeProp,
       table,
       disableAnimations = false,
+      'data-lgid': lgidProp = LGIDS.root,
       ...rest
     }: TableProps<T>,
     containerRef: ForwardedRef<HTMLDivElement>,
@@ -53,6 +55,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               themeStyles[theme],
               bodyTypeScaleStyles[baseFontSize],
             )}
+            data-lgid={lgidProp}
             {...rest}
           >
             {children}

@@ -412,7 +412,6 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
-
       <Table
         {...args}
         table={table}

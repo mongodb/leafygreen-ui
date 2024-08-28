@@ -6,6 +6,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import { useTestHookCall } from '../utils/testHookCalls.testutils';
 import { Table } from '..';
@@ -83,14 +84,17 @@ const RowWithNestedRows = args => {
 
 describe('packages/table/Row/NestedRows', () => {
   test('renders the correct number of children', () => {
-    const { getAllByRole: getAllByRoleLocal } = render(<RowWithNestedRows />);
-    const firstRow = getAllByRoleLocal('row')[1];
-    expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+    render(<RowWithNestedRows />);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
   });
   test('rows with nested rows render expand icon button', async () => {
-    const { getByLabelText } = render(<RowWithNestedRows />);
-    const expandIconButton = getByLabelText('Expand row');
-    expect(expandIconButton).toBeInTheDocument();
+    render(<RowWithNestedRows />);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
+      'aria-label',
+      'Expand row',
+    );
   });
   test('having a row with nested rows render all rows as tbody elements', async () => {
     const { getAllByRole } = render(<RowWithNestedRows />);
@@ -111,18 +115,17 @@ describe('packages/table/Row/NestedRows', () => {
 
   describe('disabled animations', () => {
     test('renders the correct number of children', () => {
-      const { getAllByRole: getAllByRoleLocal } = render(
-        <RowWithNestedRows disableAnimations />,
-      );
-      const firstRow = getAllByRoleLocal('row')[1];
-      expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+      render(<RowWithNestedRows disableAnimations />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
     });
     test('rows with nested rows render expand icon button', async () => {
-      const { getByLabelText } = render(
-        <RowWithNestedRows disableAnimations />,
+      render(<RowWithNestedRows disableAnimations />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
+        'aria-label',
+        'Expand row',
       );
-      const expandIconButton = getByLabelText('Expand row');
-      expect(expandIconButton).toBeInTheDocument();
     });
     test('having a row with nested rows render all rows as tbody elements', async () => {
       const { getAllByRole } = render(<RowWithNestedRows disableAnimations />);
