@@ -1,12 +1,8 @@
-import { TransitionStatus } from 'react-transition-group';
-
 import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { AbsolutePositionObject } from './utils/positionUtils';
-
-export const TRANSITION_DURATION = transitionDuration.default;
+export const TRANSITION_DURATION = transitionDuration.slowest;
 
 export const contentClassName = createUniqueClassName('popover-content');
 
@@ -14,57 +10,118 @@ export const hiddenPlaceholderStyle = css`
   display: none;
 `;
 
-type PositionCSS = AbsolutePositionObject & { transformOrigin: string };
+const getBasePopoverStyles = (
+  floatingStyles: React.CSSProperties,
+  hidePopover: boolean,
+  spacing: number,
+) => css`
+  margin: 0;
+  border: none;
+  padding: 0;
+  overflow: visible;
+  width: max-content;
 
-const getBasePopoverStyles = (positionCSS: PositionCSS) => css`
-  position: absolute;
-  top: ${positionCSS.top};
-  left: ${positionCSS.left};
-  right: ${positionCSS.right};
-  bottom: ${positionCSS.bottom};
-  transform-origin: ${positionCSS.transformOrigin};
-  transition-property: opacity, transform;
+  transition-property: opacity, transform, overlay, display, visibility;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
-  opacity: 0;
-`;
+  transition-behavior: allow-discrete;
 
-const getActiveStyles = (usePortal: boolean) => css`
-  opacity: 1;
-  position: ${usePortal ? '' : 'absolute'};
-  pointer-events: initial;
+  &::backdrop {
+    transition-property: background, overlay, display;
+    transition-duration: ${TRANSITION_DURATION}ms;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+
+  visibility: ${hidePopover ? 'hidden' : 'visible'};
+
+  // placement aware transform origin
+  &[data-placement='top'] {
+    transform-origin: bottom;
+  }
+  &[data-placement='top-start'] {
+    transform-origin: bottom left;
+  }
+  &[data-placement='top-end'] {
+    transform-origin: bottom right;
+  }
+  &[data-placement='bottom'] {
+    transform-origin: top;
+  }
+  &[data-placement='bottom-start'] {
+    transform-origin: top left;
+  }
+  &[data-placement='bottom-end'] {
+    transform-origin: top right;
+  }
+  &[data-placement='left'] {
+    transform-origin: right;
+  }
+  &[data-placement='left-start'] {
+    transform-origin: right top;
+  }
+  &[data-placement='left-end'] {
+    transform-origin: right bottom;
+  }
+  &[data-placement='right'] {
+    transform-origin: left;
+  }
+  &[data-placement='right-start'] {
+    transform-origin: left top;
+  }
+  &[data-placement='right-end'] {
+    transform-origin: left bottom;
+  }
+
+  // placement aware transform
+  &[data-status='unmounted'][data-placement^='top'] {
+    transform: translateY(${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='bottom'] {
+    transform: translateY(-${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='left'] {
+    transform: translateX(${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='right'] {
+    transform: translateX(-${spacing}px) scale(0);
+  }
+
+  // initial state
+  &[data-status='unmounted'] {
+    opacity: 0;
+  }
+
+  // close state
+  &[data-status='open'],
+  &:popover-open {
+    pointer-events: initial;
+    opacity: 1;
+  }
+
+  // need this (add link)
+  @starting-style {
+    &:popover-open {
+      opacity: 0;
+    }
+  }
 `;
 
 export const getPopoverStyles = ({
   className,
-  popoverZIndex,
-  positionCSS,
-  state,
-  transform,
-  usePortal,
+  floatingStyles,
+  hidePopover = false,
+  spacing,
 }: {
   className?: string;
-  popoverZIndex?: number;
-  positionCSS: PositionCSS;
-  state: TransitionStatus;
-  transform: string;
-  usePortal: boolean;
-}) =>
-  cx(
-    getBasePopoverStyles(positionCSS),
-    {
-      [css`
-        transform: ${transform};
-      `]: state === 'entering' || state === 'exiting',
-      [getActiveStyles(usePortal)]: state === 'entered',
-      [css`
-        z-index: ${popoverZIndex};
-      `]: typeof popoverZIndex === 'number',
-    },
+  floatingStyles: React.CSSProperties;
+  hidePopover?: boolean;
+  spacing: number;
+}) => {
+  return cx(
+    // @ts-ignore
+    css(floatingStyles),
+    getBasePopoverStyles(floatingStyles, hidePopover, spacing),
     className,
-    {
-      [css`
-        transition-delay: 0ms;
-      `]: state === 'exiting',
-    },
   );
+};

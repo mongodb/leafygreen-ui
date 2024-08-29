@@ -1,3 +1,5 @@
+import { Placement } from '@floating-ui/react';
+
 import { Align, ElementPosition, Justify } from '../Popover.types';
 
 interface ElementViewportPositions {
@@ -326,7 +328,7 @@ function getTransform(align: Align, transformAmount: number): string {
   }
 }
 
-export interface AbsolutePositionObject {
+interface AbsolutePositionObject {
   top?: string | 0;
   bottom?: string | 0;
   left?: string | 0;
@@ -753,3 +755,23 @@ function getWindowSafeJustify(
       );
   }
 }
+
+// can use offset for other combos
+export const getFloatingPlacement = (
+  align: Align,
+  justify: Justify,
+): Placement => {
+  if (align === Align.CenterHorizontal) {
+    align = Align.Bottom;
+  }
+
+  if (align === Align.CenterVertical) {
+    align = Align.Right;
+  }
+
+  if (justify === Justify.Fit) {
+    justify = Justify.Middle;
+  }
+
+  return justify === Justify.Middle ? align : `${align}-${justify}`;
+};

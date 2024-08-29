@@ -1,24 +1,34 @@
-import React, { forwardRef, Fragment } from 'react';
-import { Transition } from 'react-transition-group';
+import React, { forwardRef, useEffect } from 'react';
+import {
+  autoUpdate,
+  flip,
+  hide,
+  offset,
+  useFloating,
+  useTransitionStatus,
+} from '@floating-ui/react';
 import PropTypes from 'prop-types';
 
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import Portal from '@leafygreen-ui/portal';
 
 import {
   useContentNode,
   usePopoverPositioning,
   useReferenceElement,
 } from '../Popover.hooks';
-import { getPopoverStyles, TRANSITION_DURATION } from '../Popover.styles';
+import { getPopoverStyles } from '../Popover.styles';
 import {
   Align,
   Justify,
   PopoverComponentProps,
   PopoverProps,
 } from '../Popover.types';
-import { calculatePosition } from '../utils/positionUtils';
+import {
+  calculatePosition,
+  getFloatingPlacement,
+} from '../utils/positionUtils';
 
 /**
  *
@@ -61,20 +71,17 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       portalContainer: portalContainerProp,
       portalRef,
       scrollContainer: scrollContainerProp,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExiting,
-      onExited,
+      onToggle,
       ...rest
     }: PopoverProps,
     fwdRef,
   ) => {
+    const popoverRef = useForwardedRef(fwdRef, null);
+
     const {
       portalContainer: portalContainerCtxVal,
       scrollContainer: scrollContainerCtxVal,
-      setIsPopoverOpen,
+      // setIsPopoverOpen,
     } = usePopoverContext();
 
     const portalContainer = portalContainerProp || portalContainerCtxVal;
@@ -98,8 +105,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       referenceElement,
       renderHiddenPlaceholder,
     } = useReferenceElement(refEl);
-    const { contentNode, contentNodeRef, ContentWrapper, setContentNode } =
-      useContentNode();
+    const { contentNode, ContentWrapper, setContentNode } = useContentNode();
 
     const {
       contentElDocumentPos,
@@ -117,33 +123,69 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       scrollContainer,
     });
 
+    const floatingPlacement = getFloatingPlacement(align, justify);
+    const { context, floatingStyles, middlewareData, placement } = useFloating({
+      elements: {
+        reference: referenceElement,
+        floating: popoverRef.current,
+      },
+      middleware: [
+        offset(({ rects }) => {
+          if (align === Align.CenterHorizontal) {
+            return -rects.reference.height / 2 - rects.floating.height / 2;
+          }
+
+          if (align === Align.CenterVertical) {
+            return -rects.reference.width / 2 - rects.floating.width / 2;
+          }
+
+          return spacing;
+        }),
+        flip(),
+        hide(),
+      ],
+      open: active && isReadyToRender,
+      placement: floatingPlacement,
+      strategy: 'absolute',
+      transform: false,
+      whileElementsMounted: autoUpdate,
+    });
+
+    const { status } = useTransitionStatus(context);
+
+    useEffect(() => {
+      // @ts-expect-error
+      popoverRef.current?.addEventListener('toggle', onToggle);
+      // @ts-expect-error
+      return () => popoverRef.current?.removeEventListener('toggle', onToggle);
+    }, []);
+
+    useEffect(() => {
+      if (active) {
+        // @ts-expect-error
+        popoverRef.current?.showPopover();
+      } else {
+        // @ts-expect-error
+        popoverRef.current?.hidePopover();
+      }
+    }, [active]);
+
     if (!isReadyToRender) {
       return null;
     }
 
-    const {
-      align: windowSafeAlign,
-      justify: windowSafeJustify,
-      positionCSS: { transform, ...positionCSS },
-    } = calculatePosition({
-      useRelativePositioning: !usePortal,
-      spacing,
-      align,
-      justify,
-      referenceElViewportPos,
-      referenceElDocumentPos,
-      contentElViewportPos,
-      contentElDocumentPos,
-      scrollContainer,
-    });
-
-    const Root = usePortal ? Portal : Fragment;
-    const portalProps = {
-      className: portalContainer ? undefined : portalClassName,
-      container: portalContainer ?? undefined,
-      portalRef,
-    };
-    const rootProps = usePortal ? portalProps : {};
+    const { align: windowSafeAlign, justify: windowSafeJustify } =
+      calculatePosition({
+        useRelativePositioning: !usePortal,
+        spacing,
+        align,
+        justify,
+        referenceElViewportPos,
+        referenceElDocumentPos,
+        contentElViewportPos,
+        contentElDocumentPos,
+        scrollContainer,
+      });
 
     const renderChildren = () => {
       if (children === null) {
@@ -162,52 +204,27 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     };
 
     return (
-      <Transition
-        nodeRef={contentNodeRef}
-        in={active}
-        timeout={TRANSITION_DURATION}
-        mountOnEnter
-        unmountOnExit
-        appear
-        onEntering={onEntering}
-        onEnter={onEnter}
-        onEntered={(...args) => {
-          setIsPopoverOpen(true);
-          onEntered?.(...args);
-        }}
-        onExiting={onExiting}
-        onExit={onExit}
-        onExited={(...args) => {
-          setIsPopoverOpen(false);
-          onExited?.(...args);
-        }}
-      >
-        {state => (
-          <>
-            {renderHiddenPlaceholder && (
-              <HiddenPlaceholder ref={placeholderRef} />
-            )}
-            <Root {...rootProps}>
-              <div
-                {...rest}
-                ref={fwdRef}
-                className={getPopoverStyles({
-                  className,
-                  popoverZIndex,
-                  positionCSS,
-                  state,
-                  transform,
-                  usePortal,
-                })}
-              >
-                <ContentWrapper ref={setContentNode}>
-                  {renderChildren()}
-                </ContentWrapper>
-              </div>
-            </Root>
-          </>
-        )}
-      </Transition>
+      <>
+        {renderHiddenPlaceholder && <HiddenPlaceholder ref={placeholderRef} />}
+        <div
+          {...rest}
+          ref={popoverRef}
+          // @ts-expect-error
+          popover="auto"
+          className={getPopoverStyles({
+            className,
+            floatingStyles,
+            hidePopover: middlewareData.hide?.referenceHidden,
+            spacing,
+          })}
+          data-placement={placement}
+          data-status={status}
+        >
+          <ContentWrapper ref={setContentNode}>
+            {renderChildren()}
+          </ContentWrapper>
+        </div>
+      </>
     );
   },
 );

@@ -9,6 +9,7 @@ import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
+import { ToggleEvent } from './Popover.types';
 import Popover, { Align, Justify, PopoverProps } from '.';
 
 const popoverStyle = css`
@@ -43,7 +44,7 @@ const scrollableStyle = css`
 
 const scrollableInnerStyle = css`
   position: relative;
-  height: 130vh;
+  height: 200vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,10 +101,16 @@ const meta: StoryMetaType<typeof Popover> = {
         active: true,
         children: <div className={popoverStyle}>Popover content</div>,
       },
-      // eslint-disable-next-line react/display-name
       decorator: Instance => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const ref = useRef(null);
+        const buttonRef = useRef(null);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [active, setActive] = useState<boolean>(false);
+
+        const handleToggle = (e: ToggleEvent) => {
+          const newActive = e.newState === 'open';
+          setActive(newActive);
+        };
 
         return (
           <div
@@ -116,8 +123,17 @@ const meta: StoryMetaType<typeof Popover> = {
               justify-content: center;
             `}
           >
-            <Button ref={ref}>refEl</Button>
-            <Instance refEl={ref} />
+            <Button
+              ref={buttonRef}
+              onClick={() => setActive(active => !active)}
+            >
+              refEl
+            </Button>
+            <Instance
+              active={active}
+              refEl={buttonRef}
+              onToggle={handleToggle}
+            />
           </div>
         );
       },
@@ -157,18 +173,30 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
   buttonText,
   ...args
 }: PopoverStoryProps) => {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState<boolean>(false);
 
   const position = referenceElPositions[refButtonPosition];
 
+  const handlePopoverToggle = (e: ToggleEvent) => {
+    const newActive = e.newState === 'open';
+    setActive(newActive);
+  };
+
   return (
     <div className={regularStyles}>
       <Button
+        ref={buttonRef}
         className={cx(buttonStyles, position)}
         onClick={() => setActive(active => !active)}
       >
         {buttonText}
-        <Popover {...args} active={active}>
+        <Popover
+          {...args}
+          active={active}
+          refEl={buttonRef}
+          onToggle={handlePopoverToggle}
+        >
           <div className={popoverStyle}>Popover content</div>
         </Popover>
       </Button>
@@ -187,10 +215,16 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
   ...args
 }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const portalRef = useRef<HTMLElement | null>(null);
   const portalContainer = useRef<HTMLDivElement | null>(null);
 
   const position = referenceElPositions[refButtonPosition];
+
+  const handlePopoverToggle = (e: ToggleEvent) => {
+    const newActive = e.newState === 'open';
+    setActive(newActive);
+  };
 
   return (
     <div className={scrollableStyle}>
@@ -198,12 +232,15 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
         <Button
           onClick={() => setActive(active => !active)}
           className={position}
+          ref={buttonRef}
         >
           {buttonText}
           {/* @ts-expect-error */}
           <Popover
             {...args}
             active={active}
+            onToggle={handlePopoverToggle}
+            refEl={buttonRef}
             portalContainer={portalContainer.current}
             portalRef={portalRef}
             scrollContainer={portalContainer.current}

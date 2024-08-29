@@ -45,6 +45,7 @@ module.exports = {
         additionalHooks: '(useIsomorphicLayoutEffect)',
       },
     ],
+    'react/no-unknown-property': ['error', { ignore: ['popover'] }],
     'react/sort-comp': 'error',
     'import/no-extraneous-dependencies': 'off',
     'padding-line-between-statements': [

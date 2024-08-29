@@ -71,22 +71,26 @@ export type PortalControlProps =
        * Specifies that the popover content should be rendered at the end of the DOM,
        * rather than in the DOM tree.
        *
-       * default: `true`
+       * @default true
+       * @deprecated
        */
       usePortal?: true;
 
       /**
        * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
+       * @deprecated
        */
       portalClassName?: string;
 
       /**
        * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
+       * @deprecated
        */
       portalContainer?: HTMLElement | null;
 
       /**
        * A ref for the portal element
+       * @deprecated
        */
       portalRef?: React.MutableRefObject<HTMLElement | null>;
 
@@ -100,22 +104,26 @@ export type PortalControlProps =
        * Specifies that the popover content should be rendered at the end of the DOM,
        * rather than in the DOM tree.
        *
-       * default: `true`
+       * @default true
+       * @deprecated
        */
       usePortal: false;
 
       /**
        * When usePortal is `true`, specifies a class name to apply to the root element of the portal.
+       * @deprecated
        */
       portalClassName?: undefined;
 
       /**
        * When usePortal is `true`, specifies an element to portal within. The default behavior is to generate a div at the end of the document to render within.
+       * @deprecated
        */
       portalContainer?: null;
 
       /**
        * A ref for the portal element
+       * @deprecated
        */
       portalRef?: undefined;
 
@@ -191,8 +199,16 @@ export type PopoverProps = {
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
+
+  onToggle?: (e: ToggleEvent) => void;
 } & PortalControlProps &
   TransitionLifecycleCallbacks;
+
+export interface ToggleEvent extends Event {
+  type: 'toggle';
+  newState: 'open' | 'closed';
+  oldState: 'open' | 'closed';
+}
 
 /** Props used by the popover component */
 export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
