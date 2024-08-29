@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactNode, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 
 import {
   useIsomorphicLayoutEffect,
@@ -12,8 +12,15 @@ import {
   getElementDocumentPosition,
   getElementViewportPosition,
 } from './utils/positionUtils';
-import { contentClassName, hiddenPlaceholderStyle } from './Popover.styles';
-import { Align, Justify, PopoverProps } from './Popover.types';
+import { ContentWrapper, HiddenPlaceholder } from './Popover.components';
+import {
+  Align,
+  Justify,
+  PopoverProps,
+  UseContentNodeReturnObj,
+  UsePopoverPositioningProps,
+  UseReferenceElementReturnObj,
+} from './Popover.types';
 
 const mutationOptions = {
   // If attributes changes, such as className which affects layout
@@ -25,31 +32,6 @@ const mutationOptions = {
   // Extend watching to entire sub tree to make sure we catch any modifications
   subtree: true,
 };
-
-interface UseReferenceElementReturnObj {
-  /**
-   * `HiddenPlaceholder` is used if `refEl` is undefined. The placeholder's parent is
-   * used as the element against which the popover component will be positioned
-   */
-  HiddenPlaceholder: React.ForwardRefExoticComponent<
-    React.RefAttributes<HTMLSpanElement>
-  >;
-
-  /**
-   * Ref to access hidden placeholder element
-   */
-  placeholderRef: React.MutableRefObject<HTMLSpanElement | null>;
-
-  /**
-   * Element against which the popover component will be positioned
-   */
-  referenceElement: HTMLElement | null;
-
-  /**
-   * Boolean to determine if a hidden placeholder should be rendered
-   */
-  renderHiddenPlaceholder: boolean;
-}
 
 export function useReferenceElement(
   refEl?: PopoverProps['refEl'],
@@ -79,48 +61,6 @@ export function useReferenceElement(
   };
 }
 
-const HiddenPlaceholder = forwardRef<HTMLSpanElement, {}>((_, fwdRef) => {
-  /**
-   * Using \<span\> as placeholder to prevent validateDOMNesting warnings
-   * Warnings will still show up if `usePortal` is false
-   */
-  return <span ref={fwdRef} className={hiddenPlaceholderStyle} />;
-});
-
-HiddenPlaceholder.displayName = 'HiddenPlaceholder';
-
-interface UseContentNodeReturnObj {
-  /**
-   * `contentNode` is the direct child of the popover element and wraps the children. It
-   * is used to calculate the position of the popover because its parent has a transition.
-   * This prevents getting the width of the popover until the transition completes
-   */
-  contentNode: HTMLDivElement | null;
-
-  /**
-   * We shadow the `contentNode` onto this `contentNodeRef` as <Transition> from
-   * react-transition-group only accepts useRef objects. Without this, StrictMode
-   * warnings are produced by react-transition-group.
-   */
-  contentNodeRef: React.MutableRefObject<HTMLDivElement | null>;
-
-  /**
-   * `ContentWrapper` is used to wrap the children of the popover component. We need
-   * an inner wrapper with a ref because placing the ref on the parent will create an
-   * infinite loop in some cases when dynamic styles are applied.
-   */
-  ContentWrapper: React.ForwardRefExoticComponent<
-    {
-      children: ReactNode;
-    } & React.RefAttributes<HTMLDivElement>
-  >;
-
-  /**
-   * Dispatch method to attach `contentNode` to the `ContentWrapper`
-   */
-  setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
-}
-
 export function useContentNode(): UseContentNodeReturnObj {
   const [contentNode, setContentNode] = React.useState<HTMLDivElement | null>(
     null,
@@ -136,26 +76,6 @@ export function useContentNode(): UseContentNodeReturnObj {
     setContentNode,
   };
 }
-
-const ContentWrapper = forwardRef<HTMLDivElement, { children: ReactNode }>(
-  ({ children }, fwdRef) => {
-    return (
-      <div ref={fwdRef} className={contentClassName}>
-        {children}
-      </div>
-    );
-  },
-);
-
-ContentWrapper.displayName = 'ContentWrapper';
-
-type UsePopoverPositioningProps = Pick<
-  PopoverProps,
-  'active' | 'adjustOnMutation' | 'align' | 'justify' | 'scrollContainer'
-> & {
-  contentNode: HTMLDivElement | null;
-  referenceElement: HTMLElement | null;
-};
 
 export function usePopoverPositioning({
   active,

@@ -197,3 +197,68 @@ export type PopoverProps = {
 /** Props used by the popover component */
 export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
   PopoverProps;
+
+export interface UseReferenceElementReturnObj {
+  /**
+   * `HiddenPlaceholder` is used if `refEl` is undefined. The placeholder's parent is
+   * used as the element against which the popover component will be positioned
+   */
+  HiddenPlaceholder: React.ForwardRefExoticComponent<
+    React.RefAttributes<HTMLSpanElement>
+  >;
+
+  /**
+   * Ref to access hidden placeholder element
+   */
+  placeholderRef: React.MutableRefObject<HTMLSpanElement | null>;
+
+  /**
+   * Element against which the popover component will be positioned
+   */
+  referenceElement: HTMLElement | null;
+
+  /**
+   * Boolean to determine if a hidden placeholder should be rendered
+   */
+  renderHiddenPlaceholder: boolean;
+}
+
+export interface UseContentNodeReturnObj {
+  /**
+   * `contentNode` is the direct child of the popover element and wraps the children. It
+   * is used to calculate the position of the popover because its parent has a transition.
+   * This prevents getting the width of the popover until the transition completes
+   */
+  contentNode: HTMLDivElement | null;
+
+  /**
+   * We shadow the `contentNode` onto this `contentNodeRef` as <Transition> from
+   * react-transition-group only accepts useRef objects. Without this, StrictMode
+   * warnings are produced by react-transition-group.
+   */
+  contentNodeRef: React.MutableRefObject<HTMLDivElement | null>;
+
+  /**
+   * `ContentWrapper` is used to wrap the children of the popover component. We need
+   * an inner wrapper with a ref because placing the ref on the parent will create an
+   * infinite loop in some cases when dynamic styles are applied.
+   */
+  ContentWrapper: React.ForwardRefExoticComponent<
+    {
+      children: React.ReactNode;
+    } & React.RefAttributes<HTMLDivElement>
+  >;
+
+  /**
+   * Dispatch method to attach `contentNode` to the `ContentWrapper`
+   */
+  setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+}
+
+export type UsePopoverPositioningProps = Pick<
+  PopoverProps,
+  'active' | 'adjustOnMutation' | 'align' | 'justify' | 'scrollContainer'
+> & {
+  contentNode: HTMLDivElement | null;
+  referenceElement: HTMLElement | null;
+};
