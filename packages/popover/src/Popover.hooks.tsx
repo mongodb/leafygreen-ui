@@ -37,20 +37,21 @@ export function useReferenceElement(
   refEl?: PopoverProps['refEl'],
 ): UseReferenceElementReturnObj {
   const placeholderRef = useRef<HTMLSpanElement | null>(null);
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
+    null,
+  );
 
-  const referenceElement = useMemo(() => {
+  useIsomorphicLayoutEffect(() => {
     if (refEl && refEl.current) {
-      return refEl.current;
+      setReferenceElement(refEl.current);
     }
 
     const placeholderEl = placeholderRef?.current;
     const maybeParentEl = placeholderEl !== null && placeholderEl?.parentNode;
 
     if (maybeParentEl && maybeParentEl instanceof HTMLElement) {
-      return maybeParentEl;
+      setReferenceElement(maybeParentEl);
     }
-
-    return null;
   }, [placeholderRef.current, refEl?.current]);
 
   return {
