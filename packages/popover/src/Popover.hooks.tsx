@@ -12,7 +12,6 @@ import {
   getElementDocumentPosition,
   getElementViewportPosition,
 } from './utils/positionUtils';
-import { ContentWrapper, HiddenPlaceholder } from './Popover.components';
 import {
   Align,
   Justify,
@@ -55,7 +54,6 @@ export function useReferenceElement(
   }, [placeholderRef.current, refEl?.current]);
 
   return {
-    HiddenPlaceholder,
     placeholderRef,
     referenceElement,
     renderHiddenPlaceholder: !refEl,
@@ -73,7 +71,6 @@ export function useContentNode(): UseContentNodeReturnObj {
   return {
     contentNode,
     contentNodeRef,
-    ContentWrapper,
     setContentNode,
   };
 }

@@ -200,14 +200,6 @@ export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
 
 export interface UseReferenceElementReturnObj {
   /**
-   * `HiddenPlaceholder` is used if `refEl` is undefined. The placeholder's parent is
-   * used as the element against which the popover component will be positioned
-   */
-  HiddenPlaceholder: React.ForwardRefExoticComponent<
-    React.RefAttributes<HTMLSpanElement>
-  >;
-
-  /**
    * Ref to access hidden placeholder element
    */
   placeholderRef: React.MutableRefObject<HTMLSpanElement | null>;
@@ -237,17 +229,6 @@ export interface UseContentNodeReturnObj {
    * warnings are produced by react-transition-group.
    */
   contentNodeRef: React.MutableRefObject<HTMLDivElement | null>;
-
-  /**
-   * `ContentWrapper` is used to wrap the children of the popover component. We need
-   * an inner wrapper with a ref because placing the ref on the parent will create an
-   * infinite loop in some cases when dynamic styles are applied.
-   */
-  ContentWrapper: React.ForwardRefExoticComponent<
-    {
-      children: React.ReactNode;
-    } & React.RefAttributes<HTMLDivElement>
-  >;
 
   /**
    * Dispatch method to attach `contentNode` to the `ContentWrapper`

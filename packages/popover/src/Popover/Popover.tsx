@@ -11,7 +11,12 @@ import {
   usePopoverPositioning,
   useReferenceElement,
 } from '../Popover.hooks';
-import { getPopoverStyles, TRANSITION_DURATION } from '../Popover.styles';
+import {
+  contentClassName,
+  getPopoverStyles,
+  hiddenPlaceholderStyle,
+  TRANSITION_DURATION,
+} from '../Popover.styles';
 import {
   Align,
   Justify,
@@ -92,14 +97,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       }
     }
 
-    const {
-      HiddenPlaceholder,
-      placeholderRef,
-      referenceElement,
-      renderHiddenPlaceholder,
-    } = useReferenceElement(refEl);
-    const { contentNode, contentNodeRef, ContentWrapper, setContentNode } =
-      useContentNode();
+    const { placeholderRef, referenceElement, renderHiddenPlaceholder } =
+      useReferenceElement(refEl);
+    const { contentNode, contentNodeRef, setContentNode } = useContentNode();
 
     const {
       contentElDocumentPos,
@@ -185,7 +185,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         {state => (
           <>
             {renderHiddenPlaceholder && (
-              <HiddenPlaceholder ref={placeholderRef} />
+              /* Using <span> as placeholder to prevent validateDOMNesting warnings
+              Warnings will still show up if `usePortal` is false */
+              <span ref={placeholderRef} className={hiddenPlaceholderStyle} />
             )}
             <Root {...rootProps}>
               <div
@@ -200,9 +202,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                   usePortal,
                 })}
               >
-                <ContentWrapper ref={setContentNode}>
+                {/* We need to put `setContentNode` ref on this inner wrapper because
+                placing the ref on the parent will create an infinite loop in some cases
+                when dynamic styles are applied. */}
+                <div ref={setContentNode} className={contentClassName}>
                   {renderChildren()}
-                </ContentWrapper>
+                </div>
               </div>
             </Root>
           </>
