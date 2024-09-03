@@ -45,7 +45,6 @@ export const modifiedPopoverPropNames: Array<ModifiedPopoverPropkeys> = [
   'onExit',
   'onExiting',
   'onExited',
-  'contentClassName',
 ];
 
 /**
