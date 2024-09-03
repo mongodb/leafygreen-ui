@@ -150,11 +150,6 @@ export type PopoverProps = {
   className?: string;
 
   /**
-   * Class name applied to the popover content container
-   */
-  contentClassName?: string;
-
-  /**
    * Determines the alignment of the popover content relative to the trigger element
    *
    * default: `bottom`
@@ -202,3 +197,49 @@ export type PopoverProps = {
 /** Props used by the popover component */
 export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
   PopoverProps;
+
+export interface UseReferenceElementReturnObj {
+  /**
+   * Ref to access hidden placeholder element
+   */
+  placeholderRef: React.MutableRefObject<HTMLSpanElement | null>;
+
+  /**
+   * Element against which the popover component will be positioned
+   */
+  referenceElement: HTMLElement | null;
+
+  /**
+   * Boolean to determine if a hidden placeholder should be rendered
+   */
+  renderHiddenPlaceholder: boolean;
+}
+
+export interface UseContentNodeReturnObj {
+  /**
+   * `contentNode` is the direct child of the popover element and wraps the children. It
+   * is used to calculate the position of the popover because its parent has a transition.
+   * This prevents getting the width of the popover until the transition completes
+   */
+  contentNode: HTMLDivElement | null;
+
+  /**
+   * We shadow the `contentNode` onto this `contentNodeRef` as <Transition> from
+   * react-transition-group only accepts useRef objects. Without this, StrictMode
+   * warnings are produced by react-transition-group.
+   */
+  contentNodeRef: React.MutableRefObject<HTMLDivElement | null>;
+
+  /**
+   * Dispatch method to attach `contentNode` to the `ContentWrapper`
+   */
+  setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+}
+
+export type UsePopoverPositioningProps = Pick<
+  PopoverProps,
+  'active' | 'adjustOnMutation' | 'align' | 'justify' | 'scrollContainer'
+> & {
+  contentNode: HTMLDivElement | null;
+  referenceElement: HTMLElement | null;
+};

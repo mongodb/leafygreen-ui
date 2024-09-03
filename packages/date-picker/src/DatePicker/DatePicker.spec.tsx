@@ -3708,7 +3708,6 @@ describe('packages/date-picker', () => {
         onExit={() => {}}
         onExiting={() => {}}
         onExited={() => {}}
-        contentClassName=""
       />
     </>;
   });
