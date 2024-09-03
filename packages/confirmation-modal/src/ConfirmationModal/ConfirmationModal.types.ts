@@ -13,7 +13,7 @@ interface CustomButtonOnClick {
 }
 type CustomConfirmButtonProps = Omit<ButtonProps, 'variant' | 'onClick'> &
   CustomButtonOnClick;
-type CustomCancelButtonProps = Omit<ButtonProps, 'onClick'> &
+type CustomCancelButtonProps = Omit<ButtonProps, 'onClick' | 'children'> &
   CustomButtonOnClick;
 
 export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
@@ -67,7 +67,7 @@ export interface ConfirmationModalProps extends Omit<ModalProps, 'size'> {
   confirmButtonProps?: CustomConfirmButtonProps;
 
   /**
-   * An object that accepts all Button props. The `onClick` property will also fire when the `X` button, or backdrop is clicked.
+   * An object that accepts all Button props except for the `children` prop. The text will always render `cancel` and the `onClick` property will also fire when the `X` button, or backdrop is clicked.
    */
   cancelButtonProps?: CustomCancelButtonProps;
 }
