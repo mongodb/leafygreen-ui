@@ -29,6 +29,7 @@ export type ContextPropKeys = keyof SharedDatePickerProviderProps &
 /**
  * Prop names that are extended from popoverProps
  * */
+
 export const modifiedPopoverPropNames: Array<ModifiedPopoverPropkeys> = [
   'scrollContainer',
   'portalContainer',
@@ -39,11 +40,7 @@ export const modifiedPopoverPropNames: Array<ModifiedPopoverPropkeys> = [
   'spacing',
   'adjustOnMutation',
   'popoverZIndex',
-  'onEnter',
-  'onEntering',
   'onEntered',
-  'onExit',
-  'onExiting',
   'onExited',
 ];
 
