@@ -97,6 +97,17 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   const tabTitleElements = tabDescendants.map(descendant => descendant.element);
 
+  /**
+   *  Converts a string selected state into the corresponding number index
+   */
+  const normalizedSelected = (selected: number | string) => {
+    if (typeof selected === 'number') return selected;
+
+    return tabTitleElements.findIndex(
+      element => element.dataset.name === selected,
+    );
+  };
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey) return;
@@ -105,14 +116,15 @@ const Tabs = (props: AccessibleTabsProps) => {
 
       const enabledIndices = getEnabledIndices(tabTitleElements);
       const numberOfEnabledTabs = enabledIndices.length;
-      const activeIndex = enabledIndices.indexOf(selected);
-
+      const activeIndex = enabledIndices.findIndex(
+        i => i.index === selected || i.name === selected,
+      );
       const indexToUpdateTo =
         enabledIndices[
           (e.key === keyMap.ArrowRight
             ? activeIndex + 1
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
-        ];
+        ].index;
       setSelected?.(indexToUpdateTo);
       tabTitleElements[indexToUpdateTo].focus();
     },
@@ -166,7 +178,7 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selected,
+              selected: normalizedSelected(selected),
               size,
             }}
           >

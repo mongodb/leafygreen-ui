@@ -109,7 +109,7 @@ const meta: StoryMetaType<typeof Tabs> = {
     },
   },
   // TODO: Add subcomponent controls for Tab when supported by Storybook
-  subcomponents: { tab: Tab },
+  // subcomponents: { tab: Tab },
 };
 export default meta;
 
@@ -129,7 +129,9 @@ export const LiveExample: StoryFn<TabsProps> = ({
 );
 
 export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState<string | number>(
+    'Tab 2 with a really long name that might overflow and stretch past the width of the Tab',
+  );
 
   return (
     <LiveExample

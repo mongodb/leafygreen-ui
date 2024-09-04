@@ -66,7 +66,7 @@ export interface TabsProps
   /**
    * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
-  selected?: number;
+  selected?: number | string;
 
   /**
    * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
