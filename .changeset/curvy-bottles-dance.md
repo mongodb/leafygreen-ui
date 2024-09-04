@@ -2,7 +2,7 @@
 '@leafygreen-ui/tabs': minor
 ---
 
-Updates the `selected` and `setSelected` props to accept both strings and numbers. The string must match the text content from the `name` prop on the `Tab` component. 
+[LG-4473](https://jira.mongodb.org/browse/LG-4473) Updates the `selected` and `setSelected` props to accept both strings and numbers. The string must match the text content from the `name` prop on the `Tab` component. 
 
 ```js
   const [selectedTab, setSelectedTab] = useState<string | number>('Tab 4');
