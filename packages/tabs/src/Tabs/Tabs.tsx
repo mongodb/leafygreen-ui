@@ -43,7 +43,7 @@ import { AccessibleTabsProps } from './Tabs.types';
  * @param props.as HTML Element that wraps name in Tab List.
  * @param props.children Content to appear inside of Tabs component.
  * @param props.className className applied to Tabs container.
- * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
+ * @param props.selected Index or name of the Tab that should appear active. If value passed, component will be controlled by consumer.
  * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
  */
 const Tabs = (props: AccessibleTabsProps) => {
@@ -100,13 +100,16 @@ const Tabs = (props: AccessibleTabsProps) => {
   /**
    *  Converts a string selected state into the corresponding number index
    */
-  const normalizedSelected = (selected: number | string) => {
-    if (typeof selected === 'number') return selected;
+  const normalizedSelectedState = useCallback(
+    (selected: number | string) => {
+      if (typeof selected === 'number') return selected;
 
-    return tabTitleElements.findIndex(
-      element => element.dataset.name === selected,
-    );
-  };
+      return tabTitleElements.findIndex(
+        element => element.dataset.name === selected,
+      );
+    },
+    [tabTitleElements],
+  );
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -116,19 +119,18 @@ const Tabs = (props: AccessibleTabsProps) => {
 
       const enabledIndices = getEnabledIndices(tabTitleElements);
       const numberOfEnabledTabs = enabledIndices.length;
-      const activeIndex = enabledIndices.findIndex(
-        i => i.index === selected || i.name === selected,
-      );
+      const normalizedSelected = normalizedSelectedState(selected);
+      const activeIndex = enabledIndices.indexOf(normalizedSelected);
       const indexToUpdateTo =
         enabledIndices[
           (e.key === keyMap.ArrowRight
             ? activeIndex + 1
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
-        ].index;
+        ];
       setSelected?.(indexToUpdateTo);
       tabTitleElements[indexToUpdateTo].focus();
     },
-    [selected, setSelected, tabTitleElements],
+    [selected, setSelected, tabTitleElements, normalizedSelectedState],
   );
 
   const renderedTabs = React.Children.map(children, child => {
@@ -178,7 +180,7 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selected: normalizedSelected(selected),
+              selected: normalizedSelectedState(selected),
               size,
             }}
           >
