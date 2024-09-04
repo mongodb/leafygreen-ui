@@ -9,5 +9,9 @@ export {
   MessageContainer,
   type MessageContainerProps,
 } from './MessageContainer';
-export { MessageContent, type MessageContentProps } from './MessageContent';
-export { MessageSourceType } from './MessageContent';
+export {
+  MessageContent,
+  type MessageContentProps,
+  MessageSourceType,
+} from './MessageContent';
+export { MessageLinks, type MessageLinksProps } from './MessageLinks';
