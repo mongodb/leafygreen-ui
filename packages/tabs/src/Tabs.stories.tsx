@@ -130,15 +130,27 @@ export const LiveExample: StoryFn<TabsProps> = ({
 
 export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
   const [selectedTab, setSelectedTab] = useState<string | number>(
-    'Tab 2 with a really long name that might overflow and stretch past the width of the Tab',
+    'Tab 4 with an icon in the name',
   );
 
   return (
-    <LiveExample
-      {...args}
-      selected={selectedTab}
-      setSelected={setSelectedTab}
-    />
+    <div>
+      <Button
+        onClick={() =>
+          setSelectedTab(
+            'Tab 2 with a really long name that might overflow and stretch past the width of the Tab',
+          )
+        }
+      >
+        Set second tab as active
+      </Button>
+      <br></br>
+      <LiveExample
+        {...args}
+        selected={selectedTab}
+        setSelected={setSelectedTab}
+      />
+    </div>
   );
 };
 Controlled.parameters = {

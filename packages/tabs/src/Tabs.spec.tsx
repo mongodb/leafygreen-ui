@@ -163,11 +163,21 @@ describe('packages/tabs', () => {
       expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
     });
 
-    test('selected tab panel is active on first render', () => {
+    test('selected tab panel is active on first render using an index', () => {
       const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
     });
+
+    test('selected tab panel is active on first render using a string', () => {
+      const { getSelectedPanel } = renderTabs({
+        setSelected,
+        selected: 'Second',
+      });
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 2');
+    });
+
     test('clicking a tab fires setSelected callback', () => {
       const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
       const tabUtils = getTabUtilsByName('Second');
@@ -449,6 +459,23 @@ describe.skip('Prop Types behave as expected', () => {
     render(<Tabs aria-label="tabs">Test</Tabs>);
     render(<Tabs aria-labelledby="tabs">Test</Tabs>);
   });
+
+  describe('`selected`', () => {
+    it('accepts a string', () => {
+      render(
+        <Tabs aria-label="tabs" selected="red">
+          Test
+        </Tabs>,
+      );
+    });
+    it('accepts a number', () => {
+      render(
+        <Tabs aria-label="tabs" selected={1}>
+          Test
+        </Tabs>,
+      );
+    });
+  });
   describe('`setSelected`', () => {
     it('accepts a generic function', () => {
       const setSelected = (index: number) => {
@@ -463,6 +490,15 @@ describe.skip('Prop Types behave as expected', () => {
 
     it('accepts a React.Dispatch function', () => {
       const [_, setSelected] = useState<number>(0);
+      render(
+        <Tabs aria-label="tabs" setSelected={setSelected}>
+          Test
+        </Tabs>,
+      );
+    });
+
+    it('accepts a React.Dispatch function with a string', () => {
+      const [_, setSelected] = useState<string>('one');
       render(
         <Tabs aria-label="tabs" setSelected={setSelected}>
           Test

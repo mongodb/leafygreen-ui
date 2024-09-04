@@ -64,16 +64,16 @@ export interface TabsProps
   inlineChildren?: React.ReactNode;
 
   /**
-   * Index of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
+   * Index or name of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
   selected?: number | string;
 
   /**
-   * Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
+   * Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
    *
    * @type (index: number) => void
    */
-  setSelected?: React.Dispatch<number>;
+  setSelected?: React.Dispatch<number | string>;
 
   /**
    * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
