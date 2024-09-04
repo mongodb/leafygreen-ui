@@ -1,4 +1,4 @@
-import React, { createRef, PropsWithChildren } from 'react';
+import React, { createRef, PropsWithChildren, useState } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
@@ -119,45 +119,42 @@ describe('packages/popover', () => {
     expect(container.innerHTML).toBe('');
   });
 
-  test('fires `Transition` lifecycle hooks', async () => {
+  const transitionEndEvent = new Event('transitionend', {
+    bubbles: true,
+    cancelable: true,
+  });
+  Object.defineProperty(transitionEndEvent, 'propertyName', {
+    value: 'opacity',
+  });
+
+  test('fires `onEntered` and `onExited` callbacks', async () => {
     const callbacks = {
-      onEnter: jest.fn(),
-      onEntering: jest.fn(),
       onEntered: jest.fn(),
-      onExit: jest.fn(),
-      onExiting: jest.fn(),
       onExited: jest.fn(),
     };
-    const { rerenderPopover } = renderPopover({
+    const { getByTestId, rerenderPopover } = renderPopover({
       ...callbacks,
     });
+    const popover = getByTestId('popover-test-id');
 
     // Does not call any hooks on initial render
     for (const cb of Object.values(callbacks)) {
       expect(cb).not.toHaveBeenCalled();
     }
 
-    // Calls enter callbacks when active is toggled to true
+    // Calls enter callbacks when active is toggled to true and enter transition completes
     rerenderPopover({ active: true });
+    act(() => fireEvent(popover, transitionEndEvent));
 
-    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(callbacks.onEntered).toHaveBeenCalledTimes(1));
-
-    expect(callbacks.onExit).not.toHaveBeenCalled();
-    expect(callbacks.onExiting).not.toHaveBeenCalled();
     expect(callbacks.onExited).not.toHaveBeenCalled();
 
-    // Calls exit callbacks when active is toggled to false
+    // Calls exit callbacks when active is toggled to false and exit transition completes
     rerenderPopover({ active: false });
+    act(() => fireEvent(popover, transitionEndEvent));
 
-    // Expect the `onEnter*` callbacks to _only_ have been called once (from the previous render)
-    expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
-    expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
+    // Expect the `onEntered` callback to _only_ have been called once (from the previous render)
     expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
-
-    expect(callbacks.onExit).toHaveBeenCalledTimes(1);
-    expect(callbacks.onExiting).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(callbacks.onExited).toHaveBeenCalledTimes(1));
   });
 
@@ -205,16 +202,20 @@ describe('packages/popover', () => {
     });
 
     test('toggling `active` calls setIsPopoverOpen', async () => {
-      const { rerenderPopover } = renderPopoverInContext();
+      const { getByTestId, rerenderPopover } = renderPopoverInContext();
+      const popover = getByTestId('popover-test-id');
+
       expect(setIsPopoverOpenMock).not.toHaveBeenCalled();
 
       rerenderPopover({ active: true });
+      act(() => fireEvent(popover, transitionEndEvent));
       await waitFor(() =>
         expect(setIsPopoverOpenMock).toHaveBeenCalledWith(true),
       );
 
       rerenderPopover({ active: false });
       expect(setIsPopoverOpenMock).not.toHaveBeenCalledWith(false);
+      act(() => fireEvent(popover, transitionEndEvent));
       await waitFor(() =>
         expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false),
       );
@@ -240,11 +241,7 @@ describe('packages/popover', () => {
     });
 
     test('accepts transition lifecycle props', () => {
-      <Popover onEnter={() => {}}>test</Popover>;
-      <Popover onEntering={() => {}}>test</Popover>;
       <Popover onEntered={() => {}}>test</Popover>;
-      <Popover onExit={() => {}}>test</Popover>;
-      <Popover onExiting={() => {}}>test</Popover>;
       <Popover onExited={() => {}}>test</Popover>;
     });
 

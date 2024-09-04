@@ -1,4 +1,6 @@
-import { Align, ElementPosition, Justify } from '../Popover.types';
+import { Placement } from '@floating-ui/react';
+
+import { Align, ElementPosition, ExtendedPlacement, Justify } from '../Popover.types';
 
 interface ElementViewportPositions {
   referenceElViewportPos: ElementPosition;
@@ -326,7 +328,7 @@ function getTransform(align: Align, transformAmount: number): string {
   }
 }
 
-export interface AbsolutePositionObject {
+interface AbsolutePositionObject {
   top?: string | 0;
   bottom?: string | 0;
   left?: string | 0;
@@ -753,3 +755,72 @@ function getWindowSafeJustify(
       );
   }
 }
+
+export const getFloatingPlacement = (
+  align: Align,
+  justify: Justify,
+): Placement => {
+  if (align === Align.CenterHorizontal) {
+    align = Align.Right;
+  }
+
+  if (align === Align.CenterVertical) {
+    align = Align.Bottom;
+  }
+
+  if (justify === Justify.Fit) {
+    justify = Justify.Middle;
+  }
+
+  return justify === Justify.Middle ? align : `${align}-${justify}`;
+};
+
+export const getWindowSafePlacementValues = (placement: Placement) => {
+  const [floatingAlign, floatingJustify] = placement.split('-');
+
+  const newAlign = floatingAlign as Align;
+  const newJustify = !floatingJustify
+    ? Justify.Middle
+    : (floatingJustify as Justify);
+
+  return {
+    align: newAlign,
+    justify: newJustify,
+  };
+};
+
+export const getExtendedPlacementValue = ({
+  placement,
+  align: alignProp,
+  justify: justifyProp
+}: {
+  placement: Placement;
+  align: Align;
+  justify: Justify
+}): ExtendedPlacement => {
+  if (alignProp === Align.CenterHorizontal) {
+    if (justifyProp === Justify.Start) {
+      return 'center-start';
+    }
+
+    if (justifyProp === Justify.End) {
+      return 'center-end';
+    }
+
+    return 'center';
+  }
+
+  if (alignProp === Align.CenterVertical) {
+    if (justifyProp === Justify.Start) {
+      return 'right';
+    }
+
+    if (justifyProp === Justify.End) {
+      return 'left';
+    }
+
+    return 'center';
+  }
+
+  return placement;
+};

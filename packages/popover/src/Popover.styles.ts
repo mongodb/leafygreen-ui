@@ -1,70 +1,135 @@
-import { TransitionStatus } from 'react-transition-group';
-
 import { css, cx } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
-import { AbsolutePositionObject } from './utils/positionUtils';
-
 export const TRANSITION_DURATION = transitionDuration.default;
-
-export const contentClassName = createUniqueClassName('popover-content');
 
 export const hiddenPlaceholderStyle = css`
   display: none;
 `;
 
-type PositionCSS = AbsolutePositionObject & { transformOrigin: string };
+const getBasePopoverStyles = (hidePopover: boolean, spacing: number) => css`
+  margin: 0;
+  border: none;
+  padding: 0;
+  overflow: visible;
+  width: max-content;
 
-const getBasePopoverStyles = (positionCSS: PositionCSS) => css`
-  position: absolute;
-  top: ${positionCSS.top};
-  left: ${positionCSS.left};
-  right: ${positionCSS.right};
-  bottom: ${positionCSS.bottom};
-  transform-origin: ${positionCSS.transformOrigin};
-  transition-property: opacity, transform;
+  transition-property: opacity, transform, display, visibility;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
-  opacity: 0;
-`;
+  transition-behavior: allow-discrete;
 
-const getActiveStyles = (usePortal: boolean) => css`
-  opacity: 1;
-  position: ${usePortal ? '' : 'absolute'};
-  pointer-events: initial;
+  visibility: ${hidePopover ? 'hidden' : 'visible'};
+
+  // placement aware transform origin
+  &[data-placement='top'] {
+    transform-origin: bottom;
+  }
+  &[data-placement='top-start'] {
+    transform-origin: bottom left;
+  }
+  &[data-placement='top-end'] {
+    transform-origin: bottom right;
+  }
+  &[data-placement='bottom'] {
+    transform-origin: top;
+  }
+  &[data-placement='bottom-start'] {
+    transform-origin: top left;
+  }
+  &[data-placement='bottom-end'] {
+    transform-origin: top right;
+  }
+  &[data-placement='left'] {
+    transform-origin: right;
+  }
+  &[data-placement='left-start'] {
+    transform-origin: right top;
+  }
+  &[data-placement='left-end'] {
+    transform-origin: right bottom;
+  }
+  &[data-placement='right'] {
+    transform-origin: left;
+  }
+  &[data-placement='right-start'] {
+    transform-origin: left top;
+  }
+  &[data-placement='right-end'] {
+    transform-origin: left bottom;
+  }
+  &[data-placement='center'] {
+    transform-origin: center;
+  }
+  &[data-placement='center-start'] {
+    transform-origin: top;
+  }
+  &[data-placement='center-end'] {
+    transform-origin: bottom;
+  }
+
+  // placement aware transform
+  &[data-status='unmounted'][data-placement^='top'],
+  &[data-status='initial'][data-placement^='top'],
+  &[data-status='close'][data-placement^='top'] {
+    transform: translateY(${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='bottom'],
+  &[data-status='initial'][data-placement^='bottom'],
+  &[data-status='close'][data-placement^='bottom'] {
+    transform: translateY(-${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='left'],
+  &[data-status='initial'][data-placement^='left'],
+  &[data-status='close'][data-placement^='left'] {
+    transform: translateX(${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='right'],
+  &[data-status='initial'][data-placement^='right'],
+  &[data-status='close'][data-placement^='right'] {
+    transform: translateX(-${spacing}px) scale(0);
+  }
+  &[data-status='unmounted'][data-placement^='center'],
+  &[data-status='initial'][data-placement^='center'],
+  &[data-status='close'][data-placement^='center'] {
+    transform: scale(0);
+  }
+
+  // closed state
+  &[data-status='unmounted'],
+  &[data-status='initial'],
+  &[data-status='close'] {
+    opacity: 0;
+  }
+
+  // open state
+  &[data-status='open'] {
+    pointer-events: initial;
+    opacity: 1;
+  }
 `;
 
 export const getPopoverStyles = ({
   className,
+  floatingStyles,
+  hidePopover = false,
   popoverZIndex,
-  positionCSS,
-  state,
-  transform,
-  usePortal,
+  spacing,
 }: {
   className?: string;
+  floatingStyles: React.CSSProperties;
+  hidePopover?: boolean;
   popoverZIndex?: number;
-  positionCSS: PositionCSS;
-  state: TransitionStatus;
-  transform: string;
-  usePortal: boolean;
+  spacing: number;
 }) =>
   cx(
-    getBasePopoverStyles(positionCSS),
+    // @ts-expect-error
+    css(floatingStyles),
+    getBasePopoverStyles(hidePopover, spacing),
     {
-      [css`
-        transform: ${transform};
-      `]: state === 'entering' || state === 'exiting',
-      [getActiveStyles(usePortal)]: state === 'entered',
       [css`
         z-index: ${popoverZIndex};
       `]: typeof popoverZIndex === 'number',
     },
     className,
-    {
-      [css`
-        transition-delay: 0ms;
-      `]: state === 'exiting',
-    },
   );

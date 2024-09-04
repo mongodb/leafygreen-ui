@@ -1,14 +1,7 @@
 import React from 'react';
-import { Transition } from 'react-transition-group';
+import { Placement } from '@floating-ui/react';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-
-type TransitionProps = React.ComponentProps<typeof Transition<HTMLElement>>;
-
-type TransitionLifecycleCallbacks = Pick<
-  TransitionProps,
-  'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
->;
 
 /**
  * Options to determine the alignment of the popover relative to
@@ -49,6 +42,8 @@ const Justify = {
 type Justify = (typeof Justify)[keyof typeof Justify];
 
 export { Justify };
+
+export type ExtendedPlacement = Placement | 'center' | 'center-start' | 'center-end';
 
 export interface ElementPosition {
   top: number;
@@ -188,11 +183,20 @@ export type PopoverProps = {
   onClick?: React.MouseEventHandler;
 
   /**
+   * Callback that is invoked after the open transition completes.
+   */
+  onEntered?: () => void;
+
+  /**
+   * Callback that is invoked after the close transition completes.
+   */
+  onExited?: () => void;
+
+  /**
    * Number that controls the z-index of the popover element directly.
    */
   popoverZIndex?: number;
-} & PortalControlProps &
-  TransitionLifecycleCallbacks;
+} & PortalControlProps;
 
 /** Props used by the popover component */
 export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
@@ -208,6 +212,11 @@ export interface UseReferenceElementReturnObj {
    * Element against which the popover component will be positioned
    */
   referenceElement: HTMLElement | null;
+
+  /**
+   * Document position details of the reference element
+   */
+  referenceElDocumentPos: ElementPosition;
 
   /**
    * Boolean to determine if a hidden placeholder should be rendered
