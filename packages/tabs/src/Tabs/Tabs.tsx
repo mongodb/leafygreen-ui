@@ -105,7 +105,7 @@ const Tabs = (props: AccessibleTabsProps) => {
       if (typeof selected === 'number') return selected;
 
       return tabTitleElements.findIndex(
-        element => element.dataset.name === selected,
+        element => element.dataset.text === selected,
       );
     },
     [tabTitleElements],

@@ -60,7 +60,6 @@ const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
           theme,
         })}
         data-text={nodeText}
-        data-name={nodeText}
         disabled={disabled}
         id={id}
         name={nodeText}
