@@ -98,9 +98,9 @@ const Tabs = (props: AccessibleTabsProps) => {
   const tabTitleElements = tabDescendants.map(descendant => descendant.element);
 
   /**
-   *  Converts a string selected state into the corresponding number index
+   *  Converts a string state into the corresponding number index
    */
-  const normalizedSelectedState = useCallback(
+  const getNormalizedSelectedState = useCallback(
     (selected: number | string) => {
       if (typeof selected === 'number') return selected;
 
@@ -119,8 +119,8 @@ const Tabs = (props: AccessibleTabsProps) => {
 
       const enabledIndices = getEnabledIndices(tabTitleElements);
       const numberOfEnabledTabs = enabledIndices.length;
-      const normalizedSelected = normalizedSelectedState(selected);
-      const activeIndex = enabledIndices.indexOf(normalizedSelected);
+      const normalizedSelectedState = getNormalizedSelectedState(selected);
+      const activeIndex = enabledIndices.indexOf(normalizedSelectedState);
       const indexToUpdateTo =
         enabledIndices[
           (e.key === keyMap.ArrowRight
@@ -130,7 +130,7 @@ const Tabs = (props: AccessibleTabsProps) => {
       setSelected?.(indexToUpdateTo);
       tabTitleElements[indexToUpdateTo].focus();
     },
-    [selected, setSelected, tabTitleElements, normalizedSelectedState],
+    [selected, setSelected, tabTitleElements, getNormalizedSelectedState],
   );
 
   const renderedTabs = React.Children.map(children, child => {
@@ -180,7 +180,7 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selected: normalizedSelectedState(selected),
+              selected: getNormalizedSelectedState(selected),
               size,
             }}
           >
