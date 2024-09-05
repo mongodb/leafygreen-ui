@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
+
 import useIsSsr from './useIsSsr';
 
 interface ViewportSize {
