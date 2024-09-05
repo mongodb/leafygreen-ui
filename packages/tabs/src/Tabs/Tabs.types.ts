@@ -73,7 +73,7 @@ export interface TabsProps
    *
    * @type (index: number) => void
    */
-  setSelected?: React.Dispatch<number | string>;
+  setSelected?: React.Dispatch<number> | React.Dispatch<string>;
 
   /**
    * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`

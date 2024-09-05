@@ -19,7 +19,7 @@ import {
 } from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
-import { getEnabledIndices } from '../utils';
+import { getEnabledIndices, getSelectedIndex } from '../utils';
 
 import {
   getTabContainerStyles,
@@ -90,26 +90,13 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   const handleClickTab = useCallback(
     (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
-      setSelected?.(index);
+      (setSelected as React.Dispatch<number>)?.(index);
     },
     [setSelected],
   );
 
   const tabTitleElements = tabDescendants.map(descendant => descendant.element);
-
-  /**
-   *  Converts a string state into the corresponding number index
-   */
-  const getNormalizedSelectedState = useCallback(
-    (selected: number | string) => {
-      if (typeof selected === 'number') return selected;
-
-      return tabTitleElements.findIndex(
-        element => element.dataset.text === selected,
-      );
-    },
-    [tabTitleElements],
-  );
+  const selectedIndex = getSelectedIndex(selected, tabTitleElements);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -119,18 +106,17 @@ const Tabs = (props: AccessibleTabsProps) => {
 
       const enabledIndices = getEnabledIndices(tabTitleElements);
       const numberOfEnabledTabs = enabledIndices.length;
-      const normalizedSelectedState = getNormalizedSelectedState(selected);
-      const activeIndex = enabledIndices.indexOf(normalizedSelectedState);
+      const activeIndex = enabledIndices.indexOf(selectedIndex);
       const indexToUpdateTo =
         enabledIndices[
           (e.key === keyMap.ArrowRight
             ? activeIndex + 1
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
         ];
-      setSelected?.(indexToUpdateTo);
+      (setSelected as React.Dispatch<number>)?.(indexToUpdateTo);
       tabTitleElements[indexToUpdateTo].focus();
     },
-    [selected, setSelected, tabTitleElements, getNormalizedSelectedState],
+    [setSelected, tabTitleElements, selectedIndex],
   );
 
   const renderedTabs = React.Children.map(children, child => {
@@ -180,7 +166,7 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selected: getNormalizedSelectedState(selected),
+              selected: selectedIndex,
               size,
             }}
           >
