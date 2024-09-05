@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
+import useIsSsr from './useIsSsr';
 
 interface ViewportSize {
   width: number;
@@ -14,10 +15,10 @@ function getViewportSize(): ViewportSize {
 }
 
 export default function useViewportSize(): ViewportSize | null {
-  const isRenderingServerSide = typeof window === 'undefined';
+  const isSsr = useIsSsr();
 
   const [viewportSize, setViewportUpdateVal] = useState<ViewportSize | null>(
-    isRenderingServerSide ? null : getViewportSize(), // window undefined on server
+    isSsr ? null : getViewportSize(), // window undefined on server
   );
 
   useEffect(() => {
