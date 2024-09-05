@@ -249,10 +249,6 @@ export const Generated = {
         {
           align: [Align.CenterHorizontal, Align.CenterVertical],
         },
-        {
-          justify: Justify.Fit,
-          align: [Align.Left, Align.Right],
-        },
       ],
       decorator: (Instance, ctx) => (
         <LeafyGreenProvider darkMode={ctx?.args?.darkMode}>
