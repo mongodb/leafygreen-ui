@@ -43,7 +43,11 @@ type Justify = (typeof Justify)[keyof typeof Justify];
 
 export { Justify };
 
-export type ExtendedPlacement = Placement | 'center' | 'center-start' | 'center-end';
+export type ExtendedPlacement =
+  | Placement
+  | 'center'
+  | 'center-start'
+  | 'center-end';
 
 export interface ElementPosition {
   top: number;
@@ -223,32 +227,3 @@ export interface UseReferenceElementReturnObj {
    */
   renderHiddenPlaceholder: boolean;
 }
-
-export interface UseContentNodeReturnObj {
-  /**
-   * `contentNode` is the direct child of the popover element and wraps the children. It
-   * is used to calculate the position of the popover because its parent has a transition.
-   * This prevents getting the width of the popover until the transition completes
-   */
-  contentNode: HTMLDivElement | null;
-
-  /**
-   * We shadow the `contentNode` onto this `contentNodeRef` as <Transition> from
-   * react-transition-group only accepts useRef objects. Without this, StrictMode
-   * warnings are produced by react-transition-group.
-   */
-  contentNodeRef: React.MutableRefObject<HTMLDivElement | null>;
-
-  /**
-   * Dispatch method to attach `contentNode` to the `ContentWrapper`
-   */
-  setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
-}
-
-export type UsePopoverPositioningProps = Pick<
-  PopoverProps,
-  'active' | 'adjustOnMutation' | 'align' | 'justify' | 'scrollContainer'
-> & {
-  contentNode: HTMLDivElement | null;
-  referenceElement: HTMLElement | null;
-};
