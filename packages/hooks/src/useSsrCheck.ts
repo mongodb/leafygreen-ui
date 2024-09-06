@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useIsSsr() {
+export default function useSsrCheck() {
   const [isSsr, setIsSsr] = useState(typeof window === 'undefined');
 
   useEffect(() => {

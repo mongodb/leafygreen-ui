@@ -5,10 +5,10 @@ import { act, renderHook, renderHookServer } from '@leafygreen-ui/testing-lib';
 import {
   useEventListener,
   useIdAllocator,
-  useIsSsr,
   useObjectDependency,
   usePoller,
   usePrevious,
+  useSsrCheck,
   useViewportSize,
 } from './index';
 import useValidation from './useValidation';
@@ -370,9 +370,9 @@ describe('packages/hooks', () => {
     });
   });
 
-  describe('useIsSsr', () => {
+  describe('useSsrCheck', () => {
     it('should return true when server-side rendered and false after hydration', () => {
-      const { result, hydrate } = renderHookServer(useIsSsr);
+      const { result, hydrate } = renderHookServer(useSsrCheck);
       expect(result.current).toBe(true);
       hydrate();
       expect(result.current).toBe(false);
