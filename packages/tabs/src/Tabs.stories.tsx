@@ -108,8 +108,6 @@ const meta: StoryMetaType<typeof Tabs> = {
       options: [Size.Small, Size.Default],
     },
   },
-  // TODO: Add subcomponent controls for Tab when supported by Storybook
-  // subcomponents: { tab: Tab },
 };
 export default meta;
 
