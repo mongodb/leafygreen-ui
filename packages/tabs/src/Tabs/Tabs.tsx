@@ -93,8 +93,8 @@ const Tabs = (props: AccessibleTabsProps) => {
     ['aria-labelledby']: ariaLabelledby,
   };
 
-  const handleClickTab = useCallback(
-    (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
+  const setSetSelectedValue = useCallback(
+    (index: number) => {
       if (isTypeofSelectedAString) {
         const indexString = tabTitleElements[index].dataset.text!;
         (setSelected as React.Dispatch<string>)?.(indexString);
@@ -103,6 +103,13 @@ const Tabs = (props: AccessibleTabsProps) => {
       }
     },
     [isTypeofSelectedAString, setSelected, tabTitleElements],
+  );
+
+  const handleClickTab = useCallback(
+    (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
+      setSetSelectedValue(index);
+    },
+    [setSetSelectedValue],
   );
 
   const handleKeyDown = useCallback(
@@ -121,16 +128,11 @@ const Tabs = (props: AccessibleTabsProps) => {
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
         ];
 
-      if (isTypeofSelectedAString) {
-        const indexString = tabTitleElements[indexToUpdateTo].dataset.text!;
-        (setSelected as React.Dispatch<string>)?.(indexString);
-      } else {
-        (setSelected as React.Dispatch<number>)?.(indexToUpdateTo);
-      }
+      setSetSelectedValue(indexToUpdateTo);
 
       tabTitleElements[indexToUpdateTo].focus();
     },
-    [tabTitleElements, selectedIndex, typeofSelected, setSelected],
+    [tabTitleElements, selectedIndex, setSetSelectedValue],
   );
 
   const renderedTabs = React.Children.map(children, child => {
