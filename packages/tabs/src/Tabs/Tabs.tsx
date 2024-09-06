@@ -84,7 +84,6 @@ const Tabs = (props: AccessibleTabsProps) => {
   ];
 
   const typeofSelected = typeof selected;
-  const isTypeofSelectedAString = typeofSelected === 'string';
   const tabTitleElements = tabDescendants.map(descendant => descendant.element);
   const selectedIndex = getSelectedIndex(selected, tabTitleElements);
 
@@ -95,14 +94,14 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   const setSetSelectedValue = useCallback(
     (index: number) => {
-      if (isTypeofSelectedAString) {
+      if (typeofSelected === 'string') {
         const indexString = tabTitleElements[index].dataset.text!;
         (setSelected as React.Dispatch<string>)?.(indexString);
       } else {
         (setSelected as React.Dispatch<number>)?.(index);
       }
     },
-    [isTypeofSelectedAString, setSelected, tabTitleElements],
+    [setSelected, tabTitleElements, typeofSelected],
   );
 
   const handleClickTab = useCallback(
