@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, TransitionEventHandler } from 'react';
+import React, { forwardRef, Fragment, TransitionEventHandler, useMemo } from 'react';
 import {
   autoUpdate,
   flip,
@@ -72,6 +72,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       portalClassName,
       portalContainer: portalContainerProp,
       portalRef,
+      // portalRef: portalRefProp,
       scrollContainer: scrollContainerProp,
       onEntered,
       onExited,
@@ -100,14 +101,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       }
     }
 
-    const Root = usePortal ? Portal : Fragment;
-    const portalProps = {
-      className: portalContainer ? undefined : portalClassName,
-      container: portalContainer ?? undefined,
-      portalRef,
-    };
-    const rootProps = usePortal ? portalProps : {};
-
     const {
       placeholderRef,
       referenceElement,
@@ -115,7 +108,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       renderHiddenPlaceholder,
     } = useReferenceElement(refEl, scrollContainer);
 
-    const { context, floatingStyles, middlewareData, placement, refs } =
+    const { context, floatingStyles, middlewareData, placement,
+      refs,
+    } =
       useFloating({
         elements: {
           reference: referenceElement,
@@ -150,9 +145,18 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         whileElementsMounted: autoUpdate,
       });
 
+    // const portalRef = useMergeRefs([portalRefProp, undefined]);
     const popoverRef = useMergeRefs([fwdRef, refs.setFloating]);
 
-    const { status } = useTransitionStatus(context, {
+    const Root = useMemo(() => usePortal ? Portal : Fragment, [usePortal]);
+    const portalProps = {
+      className: portalContainer ? undefined : portalClassName,
+      container: portalContainer ?? undefined,
+      portalRef,
+    };
+    const rootProps = usePortal ? portalProps : {};
+
+    const { isMounted, status } = useTransitionStatus(context, {
       duration: TRANSITION_DURATION,
     });
 
@@ -174,15 +178,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       onExited?.();
     };
 
-    const handleTransitionEnd: TransitionEventHandler<HTMLDivElement> = e => {
+    const handleTransitionEnd: TransitionEventHandler<HTMLDivElement> = (e) => {
       /**
-       * Only fire transition end events for the `opacity` property to prevent
+       * Only fire transition end events for the `transform` property to prevent
        * it from firing multiple times for each transition property.
        */
-      if (e.propertyName !== 'opacity') {
+      if (e.propertyName !== 'transform') {
         return;
       }
-
       if (active) {
         handleEnteredTransition();
       } else {
@@ -207,6 +210,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     };
 
     return (
+      isMounted ?
       <>
         {renderHiddenPlaceholder && (
           /* Using <span> as placeholder to prevent validateDOMNesting warnings
@@ -230,8 +234,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           >
             {renderChildren()}
           </div>
-        </Root>
-      </>
+          </Root>
+        </>
+        : null
     );
   },
 );

@@ -124,7 +124,7 @@ describe('packages/popover', () => {
     cancelable: true,
   });
   Object.defineProperty(transitionEndEvent, 'propertyName', {
-    value: 'opacity',
+    value: 'transform',
   });
 
   test('fires `onEntered` and `onExited` callbacks', async () => {
@@ -132,10 +132,9 @@ describe('packages/popover', () => {
       onEntered: jest.fn(),
       onExited: jest.fn(),
     };
-    const { getByTestId, rerenderPopover } = renderPopover({
+    const { findByTestId, rerenderPopover } = renderPopover({
       ...callbacks,
     });
-    const popover = getByTestId('popover-test-id');
 
     // Does not call any hooks on initial render
     for (const cb of Object.values(callbacks)) {
@@ -144,16 +143,25 @@ describe('packages/popover', () => {
 
     // Calls enter callbacks when active is toggled to true and enter transition completes
     rerenderPopover({ active: true });
-    act(() => fireEvent(popover, transitionEndEvent));
 
-    await waitFor(() => expect(callbacks.onEntered).toHaveBeenCalledTimes(1));
+    await waitFor(async () => {
+      const popover = await findByTestId('popover-test-id');
+      // expect(popover).toBe(1);
+      act(() => fireEvent(popover, transitionEndEvent));
+      expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
+    });
     expect(callbacks.onExited).not.toHaveBeenCalled();
 
     // Calls exit callbacks when active is toggled to false and exit transition completes
     rerenderPopover({ active: false });
-    act(() => fireEvent(popover, transitionEndEvent));
+    // act(() => fireEvent(popover, transitionEndEvent));
 
     // Expect the `onEntered` callback to _only_ have been called once (from the previous render)
+    await waitFor(async () => {
+      const popover = await findByTestId('popover-test-id');
+      act(() => fireEvent(popover, transitionEndEvent));
+      expect(callbacks.onExited).toHaveBeenCalledTimes(1);
+    });
     expect(callbacks.onEntered).toHaveBeenCalledTimes(1);
     await waitFor(() => expect(callbacks.onExited).toHaveBeenCalledTimes(1));
   });
@@ -202,23 +210,24 @@ describe('packages/popover', () => {
     });
 
     test('toggling `active` calls setIsPopoverOpen', async () => {
-      const { getByTestId, rerenderPopover } = renderPopoverInContext();
-      const popover = getByTestId('popover-test-id');
+      const { findByTestId, rerenderPopover } = renderPopoverInContext();
 
       expect(setIsPopoverOpenMock).not.toHaveBeenCalled();
 
       rerenderPopover({ active: true });
-      act(() => fireEvent(popover, transitionEndEvent));
-      await waitFor(() =>
-        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(true),
-      );
+      await waitFor(async () => {
+        const popover = await findByTestId('popover-test-id');
+        act(() => fireEvent(popover, transitionEndEvent));
+        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(true);
+      });
 
       rerenderPopover({ active: false });
       expect(setIsPopoverOpenMock).not.toHaveBeenCalledWith(false);
-      act(() => fireEvent(popover, transitionEndEvent));
-      await waitFor(() =>
-        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false),
-      );
+      await waitFor(async () => {
+        const popover = await findByTestId('popover-test-id');
+        act(() => fireEvent(popover, transitionEndEvent));
+        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false);
+      });
     });
   });
 

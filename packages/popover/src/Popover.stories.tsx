@@ -156,7 +156,7 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
   buttonText,
   ...args
 }: PopoverStoryProps) => {
-  const [active, setActive] = useState<boolean>(false);
+  const [active, setActive] = useState<boolean>(true);
 
   const position = referenceElPositions[refButtonPosition];
 
@@ -188,7 +188,7 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
   const scrollContainer = useRef<HTMLDivElement | null>(null);
-
+  console.log({portalRef})
   const position = referenceElPositions[refButtonPosition];
 
   return (
