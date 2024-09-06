@@ -12,10 +12,6 @@ import {
 } from './index';
 import useValidation from './useValidation';
 
-// import type { ReactNode } from 'react';
-// import { hydrateRoot } from 'react-dom/client';
-// import { renderToString } from 'react-dom/server';
-
 describe('packages/hooks', () => {
   describe('useEventListener', () => {
     test('event callback should only fire when enabled is true', () => {
@@ -372,64 +368,6 @@ describe('packages/hooks', () => {
       expect(result.current.onChange).toBeDefined();
     });
   });
-
-  // const renderHookServer = <Hook extends () => any>(
-  //   useHook: Hook,
-  //   {
-  //     wrapper: Wrapper,
-  //   }: {
-  //     wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
-  //   } = {},
-  // ): { result: { current: ReturnType<Hook> }; hydrate: () => void } => {
-  //   // Store hook return value
-  //   const results: Array<ReturnType<Hook>> = [];
-  //   const result = {
-  //     get current() {
-  //       return results.slice(-1)[0];
-  //     },
-  //   };
-  //   const setValue = (value: ReturnType<Hook>) => {
-  //     results.push(value);
-  //   };
-  //   const Component = ({ useHook }: { useHook: Hook }) => {
-  //     setValue(useHook());
-  //     return null;
-  //   };
-  //   const component = Wrapper ? (
-  //     <Wrapper>
-  //       <Component useHook={useHook} />
-  //     </Wrapper>
-  //   ) : (
-  //     <Component useHook={useHook} />
-  //   );
-
-  //   // Running tests in an environment that simulates a browser (like Jest with jsdom),
-  //   // the window object will still be available even when server rendered. To ensure
-  //   // that window is not available during SSR we need to explicitly mock or remove the
-  //   // window object.
-  //   const originalWindow = global.window;
-  //   jest.spyOn(global, 'window', 'get').mockImplementation(() => undefined);
-
-  //   // Render hook on server
-  //   const serverOutput = renderToString(component);
-
-  //   // Restore window
-  //   jest.spyOn(global, 'window', 'get').mockRestore();
-
-  //   // Render hook on client
-  //   const hydrate = () => {
-  //     const root = document.createElement('div');
-  //     root.innerHTML = serverOutput;
-  //     act(() => {
-  //       hydrateRoot(root, component);
-  //     });
-  //   };
-
-  //   return {
-  //     result: result,
-  //     hydrate: hydrate,
-  //   };
-  // };
 
   describe('useIsSsr', () => {
     it('should return true when server-side rendered and false after hydration', () => {
