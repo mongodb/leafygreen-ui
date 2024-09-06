@@ -44,7 +44,7 @@ import { AccessibleTabsProps } from './Tabs.types';
  * @param props.children Content to appear inside of Tabs component.
  * @param props.className className applied to Tabs container.
  * @param props.selected Index or name of the Tab that should appear active. If value passed, component will be controlled by consumer.
- * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
+ * @param props.setSelected Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
  */
 const Tabs = (props: AccessibleTabsProps) => {
   validateAriaLabelProps(props, 'Tabs');
@@ -92,6 +92,7 @@ const Tabs = (props: AccessibleTabsProps) => {
     ['aria-labelledby']: ariaLabelledby,
   };
 
+  /** If the controlled state is a string then return a string, else return a number */
   const setSetSelectedValue = useCallback(
     (index: number) => {
       if (typeofSelected === 'string') {
@@ -128,8 +129,7 @@ const Tabs = (props: AccessibleTabsProps) => {
         ];
 
       setSetSelectedValue(indexToUpdateTo);
-
-      tabTitleElements[indexToUpdateTo].focus();
+      tabTitleElements[indexToUpdateTo].focus(); // If multiple tabs have the same name this could potentially focus the wrong element. Ideally tabs should not share the same name.
     },
     [tabTitleElements, selectedIndex, setSetSelectedValue],
   );
