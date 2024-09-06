@@ -85,7 +85,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       scrollContainer,
       portalClassName,
       popoverZIndex,
+      onEntering,
+      onEnter,
       onEntered,
+      onExiting,
+      onExit,
       onExited,
       __INTERNAL__menuButtonSlot__,
       ...rest
@@ -483,7 +487,11 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const popoverProps = {
       popoverZIndex,
+      onEntering,
+      onEnter,
       onEntered,
+      onExiting,
+      onExit,
       onExited,
       ...(usePortal
         ? {

@@ -188,7 +188,7 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
   const scrollContainer = useRef<HTMLDivElement | null>(null);
-  console.log({portalRef})
+
   const position = referenceElPositions[refButtonPosition];
 
   return (

@@ -9,7 +9,10 @@ import { PortalProps } from './Portal.types';
 /**
  * We can't pass a ref to a `createPortal` function, so we attach the ref manually
  */
-function attachPortalRef(container: HTMLElement, portalRef?: MutableRefObject<HTMLElement | null>) {
+function attachPortalRef(
+  container: HTMLElement,
+  portalRef?: MutableRefObject<HTMLElement | null>,
+) {
   if (!portalRef) {
     return;
   }
@@ -24,7 +27,9 @@ export function usePortalContainer(
   // or rendered on initial render. This allows server-side rendering since:
   //  - ReactDOMServer cannot render portals
   //  - A component's initial hydrated render should match the server render
-  const [containerNode, setContainerNode] = React.useState<HTMLElement | null>(null);
+  const [containerNode, setContainerNode] = React.useState<HTMLElement | null>(
+    null,
+  );
   const containerNodeRef = React.useRef<HTMLElement | null>(null);
 
   // remove the container node when the portal is unmounted
@@ -52,7 +57,7 @@ export function usePortalContainer(
     if (containerNodeRef.current) {
       return;
     }
-    
+
     const defaultContainer = document.createElement('div');
     document.body.appendChild(defaultContainer);
 
