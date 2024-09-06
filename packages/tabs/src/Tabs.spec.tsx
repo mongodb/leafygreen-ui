@@ -11,7 +11,6 @@ import { Tab, Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';
 const tabsTestId = 'tabs-component';
-const setSelected = jest.fn();
 
 const renderTabs = (tabsProps = {}, tabProps = {}) => {
   const renderUtils = render(
@@ -25,6 +24,10 @@ const renderTabs = (tabsProps = {}, tabProps = {}) => {
       <Tab name={<div>Third</div>} data-testid="third-tab">
         {' '}
         Content 3
+      </Tab>
+      <Tab name={<div>Third</div>} data-testid="fourth-tab">
+        {' '}
+        Content 4
       </Tab>
     </Tabs>,
   );
@@ -83,7 +86,7 @@ describe('packages/tabs', () => {
           });
         const tabs = getAllTabsInTabList();
         const tabPanels = getAllTabPanelsInDOM();
-        expect(tabs).toHaveLength(3);
+        expect(tabs).toHaveLength(4);
         expect(tabPanels).toHaveLength(1);
 
         const selectedPanel = getSelectedPanel();
@@ -102,8 +105,8 @@ describe('packages/tabs', () => {
           });
         const tabs = getAllTabsInTabList();
         const tabPanels = getAllTabPanelsInDOM();
-        expect(tabs).toHaveLength(3);
-        expect(tabPanels).toHaveLength(3);
+        expect(tabs).toHaveLength(4);
+        expect(tabPanels).toHaveLength(4);
 
         const selectedPanel = getSelectedPanel();
         const hiddenPanels = tabPanels.filter(
@@ -111,7 +114,7 @@ describe('packages/tabs', () => {
         );
 
         expect(selectedPanel).toBeVisible();
-        expect(hiddenPanels).toHaveLength(2);
+        expect(hiddenPanels).toHaveLength(3);
         hiddenPanels.forEach(panel => {
           expect(panel).not.toBeVisible();
           expect(panel).toBeInTheDocument();
@@ -122,6 +125,7 @@ describe('packages/tabs', () => {
 
   describe('when controlled', () => {
     test(`renders "${tabsClassName}" to the tabs classList`, () => {
+      const setSelected = jest.fn();
       renderTabs({
         setSelected,
         selected: 1,
@@ -133,6 +137,7 @@ describe('packages/tabs', () => {
     });
 
     test(`renders component inside of a React Element/HTML tag based on as prop`, () => {
+      const setSelected = jest.fn();
       const { getTabUtilsByName } = renderTabs({
         setSelected,
         selected: 1,
@@ -144,16 +149,18 @@ describe('packages/tabs', () => {
     });
 
     test('renders correct number of elements in the tablist', () => {
+      const setSelected = jest.fn();
       const { getAllTabsInTabList } = renderTabs({
         setSelected,
         selected: 1,
       });
 
       const tabs = getAllTabsInTabList();
-      expect(tabs.length).toBe(3);
+      expect(tabs.length).toBe(4);
     });
 
     test('renders only one tabpanel at a time', () => {
+      const setSelected = jest.fn();
       renderTabs({
         setSelected,
         selected: 1,
@@ -164,12 +171,14 @@ describe('packages/tabs', () => {
     });
 
     test('selected tab panel is active on first render using an index', () => {
+      const setSelected = jest.fn();
       const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 2');
     });
 
     test('selected tab panel is active on first render using a string', () => {
+      const setSelected = jest.fn();
       const { getSelectedPanel } = renderTabs({
         setSelected,
         selected: 'Second',
@@ -178,7 +187,18 @@ describe('packages/tabs', () => {
       expect(selectedPanel).toHaveTextContent('Content 2');
     });
 
+    test('multiple tabs with the same name will resolve the first tab as active', () => {
+      const setSelected = jest.fn();
+      const { getSelectedPanel } = renderTabs({
+        setSelected,
+        selected: 'Third',
+      });
+      const selectedPanel = getSelectedPanel();
+      expect(selectedPanel).toHaveTextContent('Content 3');
+    });
+
     test('clicking a tab fires setSelected callback', () => {
+      const setSelected = jest.fn();
       const { getTabUtilsByName } = renderTabs({ setSelected, selected: 1 });
       const tabUtils = getTabUtilsByName('Second');
 
@@ -188,6 +208,7 @@ describe('packages/tabs', () => {
       expect(setSelected).toHaveBeenCalled();
     });
     test('clicking a tab does not update selected index and calls setSelected callback', () => {
+      const setSelected = jest.fn();
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
         setSelected,
         selected: 1,
@@ -204,6 +225,7 @@ describe('packages/tabs', () => {
     });
 
     test('keying down arrow keys does not update selected index and calls setSelected callback', () => {
+      const setSelected = jest.fn();
       const { getTabUtilsByName, getSelectedPanel } = renderTabs({
         setSelected,
         selected: 1,

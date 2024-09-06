@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -130,6 +130,11 @@ export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
   const [selectedTab, setSelectedTab] = useState<string | number>(
     'Tab 4 with an icon in the name',
   );
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log({ selectedTab });
+  }, [selectedTab]);
 
   return (
     <div>

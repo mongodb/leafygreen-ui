@@ -83,6 +83,11 @@ const Tabs = (props: AccessibleTabsProps) => {
     isControlled ? setControlledSelected : setUncontrolledSelected,
   ];
 
+  const typeofSelected = typeof selected;
+  const isTypeofSelectedAString = typeofSelected === 'string';
+  const tabTitleElements = tabDescendants.map(descendant => descendant.element);
+  const selectedIndex = getSelectedIndex(selected, tabTitleElements);
+
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
@@ -90,13 +95,15 @@ const Tabs = (props: AccessibleTabsProps) => {
 
   const handleClickTab = useCallback(
     (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
-      (setSelected as React.Dispatch<number>)?.(index);
+      if (isTypeofSelectedAString) {
+        const indexString = tabTitleElements[index].dataset.text!;
+        (setSelected as React.Dispatch<string>)?.(indexString);
+      } else {
+        (setSelected as React.Dispatch<number>)?.(index);
+      }
     },
-    [setSelected],
+    [isTypeofSelectedAString, setSelected, tabTitleElements],
   );
-
-  const tabTitleElements = tabDescendants.map(descendant => descendant.element);
-  const selectedIndex = getSelectedIndex(selected, tabTitleElements);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -113,10 +120,17 @@ const Tabs = (props: AccessibleTabsProps) => {
             ? activeIndex + 1
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
         ];
-      (setSelected as React.Dispatch<number>)?.(indexToUpdateTo);
+
+      if (isTypeofSelectedAString) {
+        const indexString = tabTitleElements[indexToUpdateTo].dataset.text!;
+        (setSelected as React.Dispatch<string>)?.(indexString);
+      } else {
+        (setSelected as React.Dispatch<number>)?.(indexToUpdateTo);
+      }
+
       tabTitleElements[indexToUpdateTo].focus();
     },
-    [setSelected, tabTitleElements, selectedIndex],
+    [tabTitleElements, selectedIndex, typeofSelected, setSelected],
   );
 
   const renderedTabs = React.Children.map(children, child => {
