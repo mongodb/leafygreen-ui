@@ -25,10 +25,6 @@ const renderTabs = (tabsProps = {}, tabProps = {}) => {
         {' '}
         Content 3
       </Tab>
-      <Tab name={<div>Third</div>} data-testid="fourth-tab">
-        {' '}
-        Content 4
-      </Tab>
     </Tabs>,
   );
 
@@ -86,7 +82,7 @@ describe('packages/tabs', () => {
           });
         const tabs = getAllTabsInTabList();
         const tabPanels = getAllTabPanelsInDOM();
-        expect(tabs).toHaveLength(4);
+        expect(tabs).toHaveLength(3);
         expect(tabPanels).toHaveLength(1);
 
         const selectedPanel = getSelectedPanel();
@@ -105,8 +101,8 @@ describe('packages/tabs', () => {
           });
         const tabs = getAllTabsInTabList();
         const tabPanels = getAllTabPanelsInDOM();
-        expect(tabs).toHaveLength(4);
-        expect(tabPanels).toHaveLength(4);
+        expect(tabs).toHaveLength(3);
+        expect(tabPanels).toHaveLength(3);
 
         const selectedPanel = getSelectedPanel();
         const hiddenPanels = tabPanels.filter(
@@ -114,7 +110,7 @@ describe('packages/tabs', () => {
         );
 
         expect(selectedPanel).toBeVisible();
-        expect(hiddenPanels).toHaveLength(3);
+        expect(hiddenPanels).toHaveLength(2);
         hiddenPanels.forEach(panel => {
           expect(panel).not.toBeVisible();
           expect(panel).toBeInTheDocument();
@@ -156,7 +152,7 @@ describe('packages/tabs', () => {
       });
 
       const tabs = getAllTabsInTabList();
-      expect(tabs.length).toBe(4);
+      expect(tabs.length).toBe(3);
     });
 
     test('renders only one tabpanel at a time', () => {
@@ -170,29 +166,159 @@ describe('packages/tabs', () => {
       expect(screen.queryByText('Content 1')).not.toBeInTheDocument();
     });
 
-    test('selected tab panel is active on first render using an index', () => {
-      const setSelected = jest.fn();
-      const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
-      const selectedPanel = getSelectedPanel();
-      expect(selectedPanel).toHaveTextContent('Content 2');
+    describe('passing an index', () => {
+      test('selected tab panel is active on first render', () => {
+        const setSelected = jest.fn();
+        const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
+        const selectedPanel = getSelectedPanel();
+        expect(selectedPanel).toHaveTextContent('Content 2');
+      });
+
+      test('returns a number when a tab is clicked', () => {
+        const setSelected = jest.fn();
+        const { getTabUtilsByName } = renderTabs({
+          setSelected,
+          selected: 1,
+        });
+
+        const tabUtils = getTabUtilsByName('First');
+
+        if (tabUtils) {
+          fireEvent.click(tabUtils.getTab());
+        }
+
+        expect(setSelected).toHaveBeenCalledWith(0);
+      });
+
+      test('returns a number and then a string', () => {
+        const setSelected = jest.fn();
+        const { getTabUtilsByName, rerender } = renderTabs({
+          setSelected,
+          selected: 1,
+        });
+
+        const firstTab = getTabUtilsByName('First');
+        fireEvent.click(firstTab!.getTab());
+        expect(setSelected).toHaveBeenCalledWith(0);
+
+        rerender(
+          <Tabs
+            setSelected={setSelected}
+            selected={'First'}
+            data-testid={tabsTestId}
+            aria-label="Testing tabs"
+          >
+            <Tab name="First" data-testid="first-tab">
+              Content 1
+            </Tab>
+            <Tab name="Second" data-testid="second-tab">
+              Content 2
+            </Tab>
+            <Tab name={<div>Third</div>} data-testid="third-tab">
+              {' '}
+              Content 3
+            </Tab>
+          </Tabs>,
+        );
+
+        fireEvent.click(firstTab!.getTab());
+        expect(setSelected).toHaveBeenCalledWith('First');
+      });
     });
 
-    test('selected tab panel is active on first render using a string', () => {
-      const setSelected = jest.fn();
-      const { getSelectedPanel } = renderTabs({
-        setSelected,
-        selected: 'Second',
+    describe('passing a string', () => {
+      test('selected tab panel is active on first render', () => {
+        const setSelected = jest.fn();
+        const { getSelectedPanel } = renderTabs({
+          setSelected,
+          selected: 'Second',
+        });
+        const selectedPanel = getSelectedPanel();
+        expect(selectedPanel).toHaveTextContent('Content 2');
       });
-      const selectedPanel = getSelectedPanel();
-      expect(selectedPanel).toHaveTextContent('Content 2');
+
+      test('returns a string when a tab is clicked', () => {
+        const setSelected = jest.fn();
+        const { getTabUtilsByName } = renderTabs({
+          setSelected,
+          selected: 'Second',
+        });
+
+        const tabUtils = getTabUtilsByName('First');
+
+        if (tabUtils) {
+          fireEvent.click(tabUtils.getTab());
+        }
+
+        expect(setSelected).toHaveBeenCalledWith('First');
+      });
+
+      test('returns a string and then a number', () => {
+        const setSelected = jest.fn();
+        const { getTabUtilsByName, rerender } = renderTabs({
+          setSelected,
+          selected: 'Second',
+        });
+
+        const firstTab = getTabUtilsByName('First');
+        fireEvent.click(firstTab!.getTab());
+        expect(setSelected).toHaveBeenCalledWith('First');
+
+        rerender(
+          <Tabs
+            setSelected={setSelected}
+            selected={2}
+            data-testid={tabsTestId}
+            aria-label="Testing tabs"
+          >
+            <Tab name="First" data-testid="first-tab">
+              Content 1
+            </Tab>
+            <Tab name="Second" data-testid="second-tab">
+              Content 2
+            </Tab>
+            <Tab name={<div>Third</div>} data-testid="third-tab">
+              {' '}
+              Content 3
+            </Tab>
+          </Tabs>,
+        );
+
+        fireEvent.click(firstTab!.getTab());
+        expect(setSelected).toHaveBeenCalledWith(0);
+      });
     });
 
     test('multiple tabs with the same name will resolve the first tab as active', () => {
       const setSelected = jest.fn();
-      const { getSelectedPanel } = renderTabs({
-        setSelected,
-        selected: 'Third',
-      });
+
+      render(
+        <Tabs
+          setSelected={setSelected}
+          selected={'Third'}
+          data-testid={tabsTestId}
+          aria-label="Testing tabs"
+        >
+          <Tab name="First" data-testid="first-tab">
+            Content 1
+          </Tab>
+          <Tab name="Second" data-testid="second-tab">
+            Content 2
+          </Tab>
+          <Tab name={<div>Third</div>} data-testid="third-tab">
+            {' '}
+            Content 3
+          </Tab>
+          <Tab name={<div>Third</div>} data-testid="fourth-tab">
+            {' '}
+            Content 4
+          </Tab>
+        </Tabs>,
+      );
+
+      const testUtils = getTestUtils();
+      const { getSelectedPanel } = testUtils;
+
       const selectedPanel = getSelectedPanel();
       expect(selectedPanel).toHaveTextContent('Content 3');
     });
