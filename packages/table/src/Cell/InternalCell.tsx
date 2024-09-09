@@ -1,5 +1,4 @@
 import React, { useMemo, useRef } from 'react';
-import { Transition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -12,7 +11,6 @@ import {
   baseCellStyles,
   cellContentTransitionStateStyles,
   cellTransitionContainerStyles,
-  disableAnimationStyles,
   getCellPadding,
   standardCellHeight,
   truncatedContentStyles,
@@ -32,9 +30,8 @@ const InternalCell = ({
   ...rest
 }: InternalCellProps) => {
   const isFirstCell = cellIndex === 0;
-  const { table, disableAnimations } = useTableContext();
+  const { table } = useTableContext();
   const isSelectable = !!table && !!table.hasSelectableRows;
-  const transitionRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const contentHeight = standardCellHeight;
@@ -58,26 +55,20 @@ const InternalCell = ({
       )}
       {...rest}
     >
-      <Transition in={isVisible} timeout={0} nodeRef={transitionRef}>
-        {state => (
-          <div
-            data-state={state}
-            ref={contentRef}
-            className={cx(
-              cellTransitionContainerStyles,
-              cellContentTransitionStateStyles(contentHeight)[state],
-              alignmentStyles(align),
-              {
-                [disableAnimationStyles]: disableAnimations,
-                [truncatedContentStyles]: shouldTruncate,
-              },
-              contentClassName,
-            )}
-          >
-            {children}
-          </div>
+      <div
+        ref={contentRef}
+        className={cx(
+          cellTransitionContainerStyles,
+          cellContentTransitionStateStyles(contentHeight, isVisible), // TODO: remove this
+          alignmentStyles(align),
+          {
+            [truncatedContentStyles]: shouldTruncate,
+          },
+          contentClassName,
         )}
-      </Transition>
+      >
+        {children}
+      </div>
     </td>
   );
 };

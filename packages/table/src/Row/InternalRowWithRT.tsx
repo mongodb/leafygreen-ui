@@ -1,10 +1,9 @@
 import React, { Fragment, useMemo } from 'react';
-import flattenChildren from 'react-keyed-flatten-children';
 import { VirtualItem } from 'react-virtual';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext';
@@ -46,20 +45,6 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
 
-  const flattenedChildren = flattenChildren(children);
-
-  const CellChildren = flattenedChildren.filter(child =>
-    isComponentType(child, 'Cell'),
-  );
-
-  /**
-   * OtherChildren is looking for nested Row components or ExpandedContent components.
-   * This filter does not look explicitly for those two components since we may want to allow developers to use their own `td` elements.
-   */
-  const OtherChildren = flattenedChildren.filter(
-    child => !isComponentType(child, 'Cell'),
-  );
-
   /**
    * Render the row within a `tbody` if
    * the table itself has any row that is expandable
@@ -100,9 +85,8 @@ const InternalRowWithRT = <T extends LGRowData>({
         id={`lg-table-row-${row.id}`}
         {...rest}
       >
-        <RowCellChildren row={row}>{CellChildren}</RowCellChildren>
+        <RowCellChildren row={row}>{children}</RowCellChildren>
       </InternalRowBase>
-      {OtherChildren}
     </Polymorph>
   );
 };

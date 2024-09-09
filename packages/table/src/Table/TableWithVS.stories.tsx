@@ -212,32 +212,40 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
               const cells = row.getVisibleCells();
 
               return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
+                <>
+                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                   {row.subRows &&
                     row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
-                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
-                        {subRow
-                          .getVisibleCells()
-                          .map((cell: LeafyGreenTableCell<Person>) => {
-                            return (
-                              <Cell key={cell.id}>
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </Cell>
-                            );
-                          })}
+                      <>
+                        <Row
+                          key={subRow.id}
+                          row={subRow}
+                          virtualRow={virtualRow}
+                        >
+                          {subRow
+                            .getVisibleCells()
+                            .map((cell: LeafyGreenTableCell<Person>) => {
+                              return (
+                                <Cell key={cell.id}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </Cell>
+                              );
+                            })}
+                        </Row>
                         {subRow.subRows &&
                           subRow.subRows.map(subSubRow => (
                             <Row
@@ -259,9 +267,9 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                                 })}
                             </Row>
                           ))}
-                      </Row>
+                      </>
                     ))}
-                </Row>
+                </>
               );
             })}
         </TableBody>
@@ -516,21 +524,23 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
               const cells = row.getVisibleCells();
 
               return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
+                <>
+                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                   {row.original.renderExpandedContent && (
                     <ExpandedContent row={row} />
                   )}
-                </Row>
+                </>
               );
             })}
         </TableBody>
