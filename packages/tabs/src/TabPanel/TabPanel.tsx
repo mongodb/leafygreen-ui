@@ -32,6 +32,7 @@ const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
           className={getTabPanelStyles(isSelected)}
           id={id}
           role="tabpanel"
+          data-selected={isSelected}
         >
           {children}
         </div>
