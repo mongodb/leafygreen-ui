@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement } from 'react';
+import { FormEvent, ReactElement, ReactNode } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
@@ -18,6 +18,10 @@ export type InputBarProps = HTMLElementProps<'form'> &
       messageBody: string,
       e?: FormEvent<HTMLFormElement>,
     ) => void;
+    /**
+     * Toggles the hotkey indicator on the right side of the input
+     */
+    shouldRenderHotkeyIndicator?: boolean;
     /**
      * Toggles the gradient animation around the input
      * @default true

@@ -3,6 +3,8 @@ import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { css, cx } from '@leafygreen-ui/emotion';
+
 import { InputBar, InputBarProps, SuggestedPrompt, SuggestedPrompts } from '.';
 
 export default {
@@ -36,6 +38,11 @@ export const Basic = Template.bind({});
 export const WithBadge = Template.bind({});
 WithBadge.args = {
   badgeText: 'Beta',
+};
+
+export const WithHotkeyIndicator = Template.bind({});
+WithHotkeyIndicator.args = {
+  shouldRenderHotkeyIndicator: true,
 };
 
 export const WithDropdown = Template.bind({});

@@ -39,6 +39,7 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
 import {
+  baseHotkeyIndicatorStyles,
   baseStyles,
   contentWrapperFocusStyles,
   contentWrapperStyles,
@@ -48,11 +49,14 @@ import {
   focusStyles,
   getIconFill,
   gradientAnimationStyles,
+  hotkeyIndicatorFocusedStyles,
+  hotkeyIndicatorNotFocusedStyles,
   inputStyles,
   inputThemeStyles,
   leftContentStyles,
   rightContentStyles,
   sendButtonDisabledStyles,
+  themedHotkeyIndicatorStyles,
 } from './InputBar.styles';
 import { ReturnIcon } from './ReturnIcon';
 import { SparkleIcon } from './SparkleIcon';
@@ -65,6 +69,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       textareaProps,
       onMessageSend,
       onSubmit,
+      shouldRenderHotkeyIndicator,
       shouldRenderGradient: shouldRenderGradientProp = true,
       badgeText,
       darkMode: darkModeProp,
@@ -382,6 +387,20 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                 ref={textareaRef}
               />
               <div className={rightContentStyles}>
+                {shouldRenderHotkeyIndicator && (
+                  <div
+                    className={cx(
+                      baseHotkeyIndicatorStyles,
+                      themedHotkeyIndicatorStyles[theme],
+                      {
+                        [hotkeyIndicatorFocusedStyles]: isFocused,
+                        [hotkeyIndicatorNotFocusedStyles]: !isFocused,
+                      },
+                    )}
+                  >
+                    /
+                  </div>
+                )}
                 <Button
                   size="small"
                   rightGlyph={

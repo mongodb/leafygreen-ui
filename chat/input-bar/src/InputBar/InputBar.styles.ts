@@ -70,6 +70,7 @@ export const rightContentStyles = css`
   background-color: inherit;
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
+  cursor: text;
 `;
 
 export const inputStyles = css`
@@ -220,6 +221,38 @@ export const sendButtonDisabledStyles = css`
     box-shadow: none;
   }
 `;
+
+export const baseHotkeyIndicatorStyles = css`
+  padding: ${spacing[100]}px ${spacing[400]}px;
+  border-radius: calc(infinity * 1px);
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: opacity 0.1s ease-in-out;
+  user-select: none;
+`;
+
+export const themedHotkeyIndicatorStyles = {
+  [Theme.Dark]: css`
+    background-color: #112733;
+    border: 1px solid #3D4F58;
+    color: #E8EDEB;
+  `,
+  [Theme.Light]: css`
+    background-color: #E7EEEC;
+    border: 1px solid #E7EEEC;
+    color: ${palette.green.dark2};
+  `
+}
+export const hotkeyIndicatorNotFocusedStyles = css`
+  opacity: 1;
+`
+
+export const hotkeyIndicatorFocusedStyles = css`
+  opacity: 0;
+`
 
 export const getIconFill = (theme: Theme, disabled?: boolean) => {
   if (theme === Theme.Dark) {
