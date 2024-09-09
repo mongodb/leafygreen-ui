@@ -389,6 +389,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               <div className={rightContentStyles}>
                 {shouldRenderHotkeyIndicator && (
                   <div
+                    data-testid="hotkey-indicator"
                     className={cx(
                       baseHotkeyIndicatorStyles,
                       themedHotkeyIndicatorStyles[theme],

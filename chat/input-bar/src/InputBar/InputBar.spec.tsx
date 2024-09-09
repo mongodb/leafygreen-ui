@@ -90,4 +90,10 @@ describe('packages/input-bar', () => {
 
     expect(screen.getByText('beta')).toBeInTheDocument();
   });
+
+  test('Hotkey Indicator is rendered when the prop is set', () => {
+    render(<InputBar shouldRenderHotkeyIndicator />);
+
+    expect(screen.getByTestId('hotkey-indicator')).toBeInTheDocument();
+  });
 });
