@@ -1,6 +1,11 @@
 import { RichLinkBadgeControlProps } from './RichLink.types';
 
 export const richLinkVariants = {
+  Article: {
+    badgeColor: 'green',
+    badgeLabel: 'Article',
+    badgeGlyph: 'Note',
+  },
   Blog: {
     badgeColor: 'green',
     badgeLabel: 'Blog',
