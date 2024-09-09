@@ -4,7 +4,7 @@ import { TabsProps } from '../Tabs';
 
 export type TabsContextProps = Required<
   Pick<
-    TabsProps,
+    TabsProps<number>,
     'as' | 'darkMode' | 'forceRenderAllTabPanels' | 'selected' | 'size'
   >
 >;
