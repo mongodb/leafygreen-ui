@@ -167,9 +167,16 @@ const Tabs = <SelectedType extends number | string>(
       return child;
     }
 
-    const { children, disabled } = child.props;
+    const { children, disabled, 'data-testid': dataTestId } = child.props;
 
-    return <TabPanel disabled={disabled}>{children}</TabPanel>;
+    return (
+      <TabPanel
+        data-testid={dataTestId ? `${dataTestId}-panel` : ''}
+        disabled={disabled}
+      >
+        {children}
+      </TabPanel>
+    );
   });
 
   return (

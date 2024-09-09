@@ -172,6 +172,7 @@ describe('packages/tabs', () => {
         const { getSelectedPanel } = renderTabs({ setSelected, selected: 1 });
         const selectedPanel = getSelectedPanel();
         expect(selectedPanel).toHaveTextContent('Content 2');
+        expect(selectedPanel?.dataset.testid).toEqual('second-tab-panel');
       });
 
       test('returns a number when a tab is clicked', () => {
@@ -235,6 +236,7 @@ describe('packages/tabs', () => {
         });
         const selectedPanel = getSelectedPanel();
         expect(selectedPanel).toHaveTextContent('Content 2');
+        expect(selectedPanel?.dataset.testid).toEqual('second-tab-panel');
       });
 
       test('returns a string when a tab is clicked', () => {

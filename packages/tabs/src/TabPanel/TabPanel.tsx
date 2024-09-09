@@ -11,7 +11,11 @@ import {
 import { getTabPanelStyles } from './TabPanel.styles';
 import { TabPanelProps } from './TabPanel.types';
 
-const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
+const TabPanel = ({
+  children,
+  disabled,
+  ...rest
+}: PropsWithChildren<TabPanelProps>) => {
   const { id, index, ref } = useDescendant(TabPanelDescendantsContext);
   const { tabDescendants } = useTabDescendantsContext();
   const { forceRenderAllTabPanels, selected } = useTabsContext();
@@ -33,6 +37,7 @@ const TabPanel = ({ children, disabled }: PropsWithChildren<TabPanelProps>) => {
           id={id}
           role="tabpanel"
           data-selected={isSelected}
+          {...rest}
         >
           {children}
         </div>
