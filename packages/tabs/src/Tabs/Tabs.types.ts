@@ -19,7 +19,7 @@ export const Size = {
 
 export type Size = (typeof Size)[keyof typeof Size];
 
-export interface TabsProps<T extends number | string>
+export interface TabsProps<SelectedType extends number | string>
   extends HTMLElementProps<'div'>,
     DarkModeProps,
     LgIdProps {
@@ -66,12 +66,12 @@ export interface TabsProps<T extends number | string>
   /**
    * Index or name of the Tab that should appear active. If value passed to selected prop, component will be controlled by consumer.
    */
-  selected?: T;
+  selected?: SelectedType;
 
   /**
    * Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
    */
-  setSelected?: React.Dispatch<React.SetStateAction<T>>;
+  setSelected?: React.Dispatch<React.SetStateAction<SelectedType>>;
 
   /**
    * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
@@ -83,7 +83,7 @@ export interface TabsProps<T extends number | string>
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-export type AccessibleTabsProps<T extends number | string> = Either<
-  TabsProps<T>,
+export type AccessibleTabsProps<SelectedType extends number | string> = Either<
+  TabsProps<SelectedType>,
   AriaLabels
 >;

@@ -46,9 +46,9 @@ import { AccessibleTabsProps } from './Tabs.types';
  * @param props.selected Index or name of the Tab that should appear active. If value passed, component will be controlled by consumer.
  * @param props.setSelected Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
  */
-const Tabs = <T extends number | string>({
-  ...props
-}: AccessibleTabsProps<T>) => {
+const Tabs = <SelectedType extends number | string>(
+  props: AccessibleTabsProps<SelectedType>,
+) => {
   validateAriaLabelProps(props, 'Tabs');
 
   const {
