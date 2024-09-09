@@ -196,33 +196,40 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
           return (
-            <Row key={row.id} row={row}>
-              {row.getVisibleCells().map(cell => {
-                return (
-                  <Cell key={cell.id} id={cell.id} overflow="truncate">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Cell>
-                );
-              })}
+            <>
+              <Row key={row.id} row={row}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <Cell key={cell.id} id={cell.id} overflow="truncate">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              </Row>
               {row.subRows &&
                 row.subRows.map(subRow => (
-                  <Row key={subRow.id} row={subRow}>
-                    {subRow.getVisibleCells().map(cell => {
-                      return (
-                        <Cell key={cell.id} id={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
+                  <>
+                    <Row key={subRow.id} row={subRow}>
+                      {subRow.getVisibleCells().map(cell => {
+                        return (
+                          <Cell key={cell.id} id={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
                     {subRow.original.renderExpandedContent && (
                       <ExpandedContent row={subRow} />
                     )}
-                  </Row>
+                  </>
                 ))}
-            </Row>
+            </>
           );
         })}
       </TableBody>
@@ -372,50 +379,54 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
           return (
-            <Row key={row.id} row={row}>
-              {row
-                .getVisibleCells()
-                .map((cell: LeafyGreenTableCell<Person>) => {
-                  return (
-                    <Cell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              {row.subRows &&
-                row.subRows.map(subRow => (
-                  <Row key={subRow.id} row={subRow}>
-                    {subRow.getVisibleCells().map(cell => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                    {subRow.subRows &&
-                      subRow.subRows.map(subSubRow => (
-                        <Row key={subSubRow.id} row={subSubRow}>
-                          {subSubRow.getVisibleCells().map(cell => {
-                            return (
-                              <Cell key={cell.id}>
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </Cell>
-                            );
-                          })}
-                        </Row>
-                      ))}
-                  </Row>
-                ))}
-            </Row>
+            <>
+              <Row key={row.id} row={row}>
+                {row
+                  .getVisibleCells()
+                  .map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                {row.subRows &&
+                  row.subRows.map(subRow => (
+                    <>
+                      <Row key={subRow.id} row={subRow}>
+                        {subRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                      </Row>
+                      {subRow.subRows &&
+                        subRow.subRows.map(subSubRow => (
+                          <Row key={subSubRow.id} row={subSubRow}>
+                            {subSubRow.getVisibleCells().map(cell => {
+                              return (
+                                <Cell key={cell.id}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </Cell>
+                              );
+                            })}
+                          </Row>
+                        ))}
+                    </>
+                  ))}
+              </Row>
+            </>
           );
         })}
       </TableBody>
