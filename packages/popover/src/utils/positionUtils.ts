@@ -1,4 +1,11 @@
-import { Align, ElementPosition, Justify } from '../Popover.types';
+import { Placement } from '@floating-ui/react';
+
+import {
+  Align,
+  ElementPosition,
+  ExtendedPlacement,
+  Justify,
+} from '../Popover.types';
 
 interface ElementViewportPositions {
   referenceElViewportPos: ElementPosition;
@@ -326,7 +333,7 @@ function getTransform(align: Align, transformAmount: number): string {
   }
 }
 
-export interface AbsolutePositionObject {
+interface AbsolutePositionObject {
   top?: string | 0;
   bottom?: string | 0;
   left?: string | 0;
@@ -753,3 +760,99 @@ function getWindowSafeJustify(
       );
   }
 }
+
+/**
+ * Floating UI supports 12 placements out-of-the-box. {@see https://floating-ui.com/docs/useFloating#placement}.
+ * In addition to these placements, we override the `align` prop when it is set to 'center-horizontal' or
+ * 'center-vertical' to create custom placements {@see https://floating-ui.com/docs/offset#creating-custom-placements}
+ */
+export const getFloatingPlacement = (
+  align: Align,
+  justify: Justify,
+): Placement => {
+  if (align === Align.CenterHorizontal) {
+    align = Align.Right;
+  }
+
+  if (align === Align.CenterVertical) {
+    align = Align.Bottom;
+  }
+
+  if (justify === Justify.Fit) {
+    justify = Justify.Middle;
+  }
+
+  return justify === Justify.Middle ? align : `${align}-${justify}`;
+};
+
+/**
+ * Helper function to derive window-safe align and justify values that are used when rendering
+ * children. The placement calculated by Floating UI does not explicitly specify the justify
+ * value when it is 'middle'
+ */
+export const getWindowSafePlacementValues = (placement: Placement) => {
+  const [floatingAlign, floatingJustify] = placement.split('-');
+
+  const newAlign = floatingAlign as Align;
+  const newJustify = !floatingJustify
+    ? Justify.Middle
+    : (floatingJustify as Justify);
+
+  return {
+    align: newAlign,
+    justify: newJustify,
+  };
+};
+
+/**
+ * Floating UI supports 12 placements out-of-the-box. {@see https://floating-ui.com/docs/useFloating#placement}.
+ * We extend on these placements when the `align` prop is set to 'center-horizontal' or 'center-vertical'
+ */
+export const getExtendedPlacementValue = ({
+  placement,
+  align: alignProp,
+}: {
+  placement: Placement;
+  align: Align;
+}): ExtendedPlacement => {
+  // Use the default placements if the `align` prop is not 'center-horizontal' or 'center-vertical'
+  if (
+    alignProp !== Align.CenterHorizontal &&
+    alignProp !== Align.CenterVertical
+  ) {
+    return placement;
+  }
+
+  // Otherwise, we need to adjust the placement based on the `align` prop
+  // The `floatingJustify` value should be 'start', 'end', or undefined.
+  const [_, floatingJustify] = placement.split('-');
+
+  // If the calculated justify value is 'start'
+  if (floatingJustify === Justify.Start) {
+    // and the `align` prop is 'center-horizontal',
+    if (alignProp === Align.CenterHorizontal) {
+      // we center the floating element horizontally and place it aligned to the start of the reference point
+      return 'center-start';
+      // and the `align` prop is 'center-vertical',
+    } else if (alignProp === Align.CenterVertical) {
+      // we center the floating element vertically and place it to the right of the reference point
+      return 'right';
+    }
+  }
+
+  // If the calculated justify value is 'end'
+  if (floatingJustify === Justify.End) {
+    // and the `align` prop is 'center-horizontal',
+    if (alignProp === Align.CenterHorizontal) {
+      // we center the floating element horizontally and place it aligned to the end of the reference point
+      return 'center-end';
+      // and the `align` prop is 'center-vertical',
+    } else if (alignProp === Align.CenterVertical) {
+      // we center the floating element vertically and place it to the left of the reference point
+      return 'left';
+    }
+  }
+
+  // If the calculated justify value calculated is not specified, we center the floating element
+  return 'center';
+};

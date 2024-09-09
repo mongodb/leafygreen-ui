@@ -34,6 +34,7 @@ const mutationOptions = {
 
 export function useReferenceElement(
   refEl?: PopoverProps['refEl'],
+  scrollContainer?: PopoverProps['scrollContainer'],
 ): UseReferenceElementReturnObj {
   const placeholderRef = useRef<HTMLSpanElement | null>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
@@ -53,9 +54,17 @@ export function useReferenceElement(
     }
   }, [placeholderRef.current, refEl?.current]);
 
+  const referenceElDocumentPos = useObjectDependency(
+    useMemo(
+      () => getElementDocumentPosition(referenceElement, scrollContainer, true),
+      [referenceElement, scrollContainer],
+    ),
+  );
+
   return {
     placeholderRef,
     referenceElement,
+    referenceElDocumentPos,
     renderHiddenPlaceholder: !refEl,
   };
 }
