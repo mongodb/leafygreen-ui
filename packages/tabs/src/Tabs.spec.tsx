@@ -626,7 +626,7 @@ describe.skip('Prop Types behave as expected', () => {
   });
   describe('`setSelected`', () => {
     it('accepts a generic function', () => {
-      const setSelected = (index: number) => {
+      const setSelected = index => {
         index;
       };
       render(
@@ -637,7 +637,7 @@ describe.skip('Prop Types behave as expected', () => {
     });
 
     it('accepts a React.Dispatch function', () => {
-      const [_, setSelected] = useState<number>(0);
+      const [_, setSelected] = useState(0);
       render(
         <Tabs aria-label="tabs" setSelected={setSelected}>
           Test
@@ -646,7 +646,7 @@ describe.skip('Prop Types behave as expected', () => {
     });
 
     it('accepts a React.Dispatch function with a string', () => {
-      const [_, setSelected] = useState<string>('one');
+      const [_, setSelected] = useState('one');
       render(
         <Tabs aria-label="tabs" setSelected={setSelected}>
           Test
