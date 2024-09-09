@@ -247,11 +247,3 @@ export interface UseContentNodeReturnObj {
    */
   setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 }
-
-export type UsePopoverPositioningProps = Pick<
-  PopoverProps,
-  'active' | 'adjustOnMutation' | 'align' | 'justify' | 'scrollContainer'
-> & {
-  contentNode: HTMLDivElement | null;
-  referenceElement: HTMLElement | null;
-};
