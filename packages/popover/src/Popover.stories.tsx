@@ -102,9 +102,6 @@ const meta: StoryMetaType<typeof Popover> = {
       },
       // eslint-disable-next-line react/display-name
       decorator: Instance => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const ref = useRef(null);
-
         return (
           <div
             className={css`
@@ -116,8 +113,10 @@ const meta: StoryMetaType<typeof Popover> = {
               justify-content: center;
             `}
           >
-            <Button ref={ref}>refEl</Button>
-            <Instance refEl={ref} />
+            <Button>
+              refEl
+              <Instance />
+            </Button>
           </div>
         );
       },
@@ -188,25 +187,25 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
 }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
-  const portalContainer = useRef<HTMLDivElement | null>(null);
+  const scrollContainer = useRef<HTMLDivElement | null>(null);
 
   const position = referenceElPositions[refButtonPosition];
 
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={portalContainer}>
+      <div className={scrollableInnerStyle} ref={scrollContainer}>
         <Button
           onClick={() => setActive(active => !active)}
           className={position}
         >
           {buttonText}
-          {/* @ts-expect-error */}
           <Popover
             {...args}
             active={active}
-            portalContainer={portalContainer.current}
+            usePortal={true}
+            portalContainer={scrollContainer.current}
             portalRef={portalRef}
-            scrollContainer={portalContainer.current}
+            scrollContainer={scrollContainer.current}
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
