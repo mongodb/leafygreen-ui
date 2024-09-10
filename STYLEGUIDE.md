@@ -80,6 +80,33 @@ Maintains organization within files and makes them consistently more readable.
 
 ---
 
+### Prefer typing `children` prop as `ReactNode` (rather than `string`)
+
+#### Why
+
+Ensures a consistent API within the system. Allows consumers to add semantic markup and custom styles to child elements.
+If a component's `children` should be limited to a short string per design guidelines, this should 1. be explicit in the design guidelines, and 2. be restricted via styles rather than with types (e.g. setting a `max-height` on an internal element)
+
+#### Example
+
+```tsx
+interface MyComponentProps {
+  children: React.ReactNode;
+}
+
+const MyComponent = ({ children }: MyComponentProps) => {
+  return (
+    <div
+      className={css`
+        max-height: 3em;
+      `}
+    >
+      {children}
+    </div>
+  );
+};
+```
+
 # JavaScript
 
 ## Functions
