@@ -43,7 +43,8 @@ const scrollableStyle = css`
 
 const scrollableInnerStyle = css`
   position: relative;
-  height: 130vh;
+  height: 160vh;
+  width: 80vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +93,15 @@ const meta: StoryMetaType<typeof Popover> = {
       ],
     },
     generate: {
+      storyNames: [
+        'Top',
+        'Right',
+        'Bottom',
+        'Left',
+        'CenterHorizontal',
+        'CenterVertical',
+      ],
       combineArgs: {
-        align: Object.values(Align),
         justify: Object.values(Justify),
       },
       args: {
@@ -114,7 +122,7 @@ const meta: StoryMetaType<typeof Popover> = {
             `}
           >
             <Button>
-              refEl
+              Button Text
               <Instance />
             </Button>
           </div>
@@ -230,4 +238,32 @@ ScrollableContainer.argTypes = {
   active: { control: 'none' },
 };
 
-export const Generated = () => {};
+export const Top = () => {};
+Top.args = {
+  align: Align.Top,
+};
+
+export const Bottom = () => {};
+Bottom.args = {
+  align: Align.Bottom,
+};
+
+export const Left = () => {};
+Left.args = {
+  align: Align.Left,
+};
+
+export const Right = () => {};
+Right.args = {
+  align: Align.Right,
+};
+
+export const CenterHorizontal = () => {};
+CenterHorizontal.args = {
+  align: Align.CenterHorizontal,
+};
+
+export const CenterVertical = () => {};
+CenterVertical.args = {
+  align: Align.CenterVertical,
+};

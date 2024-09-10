@@ -139,15 +139,13 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           },
           [align, spacing],
         ),
-        flip({
-          flipAlignment: adjustOnMutation,
-        }),
+        flip(),
       ],
       open: active,
       placement: getFloatingPlacement(align, justify),
       strategy: 'absolute',
       transform: false,
-      whileElementsMounted: autoUpdate,
+      whileElementsMounted: adjustOnMutation ? autoUpdate : undefined,
     });
 
     const popoverRef = useMergeRefs<HTMLDivElement>([refs.setFloating, fwdRef]);
