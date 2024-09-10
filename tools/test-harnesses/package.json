@@ -1,0 +1,18 @@
+{
+  "name": "@lg-tools/test-harnesses",
+  "version": "0.1.2",
+  "description": "Test harnesses for LeafyGreen repositories",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
+  "scripts": {
+    "build": "lg-internal-build-package",
+    "tsc": "tsc --build tsconfig.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@testing-library/dom": "9.3.1"
+  }
+}

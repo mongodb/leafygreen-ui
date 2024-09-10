@@ -6,20 +6,20 @@ import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import {
-  ComboboxOptionProps,
-  ComboboxSize,
-  InternalComboboxOptionProps,
-} from '../Combobox.types';
 import { ComboboxContext } from '../ComboboxContext';
+import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
 
 import {
-  comboboxOptionSizeStyle,
   displayNameStyle,
+  largeStyles,
   multiselectIconLargePosition,
   multiselectIconPosition,
 } from './ComboboxOption.styles';
+import {
+  ComboboxOptionProps,
+  InternalComboboxOptionProps,
+} from './ComboboxOption.types';
 import { getGlyphs } from './getGlyphs';
 
 /**
@@ -110,8 +110,8 @@ export const InternalComboboxOption = React.forwardRef<
         aria-label={displayName}
         darkMode={darkMode}
         className={cx(
-          comboboxOptionSizeStyle(size),
           {
+            [largeStyles]: size === ComboboxSize.Large,
             [multiselectIconPosition]: multiSelectWithoutIcons,
             [multiselectIconLargePosition]:
               multiSelectWithoutIcons && size === ComboboxSize.Large,

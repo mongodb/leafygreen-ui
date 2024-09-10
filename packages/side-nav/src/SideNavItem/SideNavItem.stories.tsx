@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 
-import { StoryMetaType, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import SideNavContext from '../SideNav/SideNavContext';

@@ -13,7 +13,6 @@ export interface MenuButtonBaseProps
   readOnly?: boolean;
   onClose: () => void;
   onOpen: () => void;
-  errorMessage?: string;
   state?: State;
   baseFontSize?: BaseFontSize;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<

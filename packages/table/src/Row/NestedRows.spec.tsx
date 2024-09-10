@@ -6,13 +6,14 @@ import { fireEvent, render } from '@testing-library/react';
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
+import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import { useTestHookCall } from '../utils/testHookCalls.testutils';
 import { Table } from '..';
 
 import { Row } from '.';
 
-const RowWithNestedRows = () => {
+const RowWithNestedRows = args => {
   const { containerRef, table } = useTestHookCall({
     rowProps: {
       subRows: [
@@ -32,7 +33,7 @@ const RowWithNestedRows = () => {
 
   return (
     <div ref={containerRef}>
-      <Table table={table}>
+      <Table table={table} {...args}>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -83,14 +84,17 @@ const RowWithNestedRows = () => {
 
 describe('packages/table/Row/NestedRows', () => {
   test('renders the correct number of children', () => {
-    const { getAllByRole: getAllByRoleLocal } = render(<RowWithNestedRows />);
-    const firstRow = getAllByRoleLocal('row')[1];
-    expect(getAllByRole(firstRow, 'cell').length).toBe(6);
+    render(<RowWithNestedRows />);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
   });
   test('rows with nested rows render expand icon button', async () => {
-    const { getByLabelText } = render(<RowWithNestedRows />);
-    const expandIconButton = getByLabelText('Expand row');
-    expect(expandIconButton).toBeInTheDocument();
+    render(<RowWithNestedRows />);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
+      'aria-label',
+      'Expand row',
+    );
   });
   test('having a row with nested rows render all rows as tbody elements', async () => {
     const { getAllByRole } = render(<RowWithNestedRows />);
@@ -107,5 +111,25 @@ describe('packages/table/Row/NestedRows', () => {
     expect(collapseIconButton).toBeInTheDocument();
     // the line below is not reliable as the row is expanded - the height is just 0
     expect(queryByText('nested row name')).toBeVisible();
+  });
+
+  describe('disabled animations', () => {
+    test('renders the correct number of children', () => {
+      render(<RowWithNestedRows disableAnimations />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+    });
+    test('rows with nested rows render expand icon button', async () => {
+      render(<RowWithNestedRows disableAnimations />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
+        'aria-label',
+        'Expand row',
+      );
+    });
+    test('having a row with nested rows render all rows as tbody elements', async () => {
+      const { getAllByRole } = render(<RowWithNestedRows disableAnimations />);
+      expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+    });
   });
 });

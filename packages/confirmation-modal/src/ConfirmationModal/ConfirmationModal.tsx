@@ -10,6 +10,8 @@ import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
+import { LGIDS_CONFIRMATION_MODAL } from '../constants';
+
 import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
   baseModalStyle,
@@ -30,11 +32,13 @@ export const ConfirmationModal = React.forwardRef(
       title,
       requiredInputText,
       buttonText,
-      submitDisabled = false,
+      submitDisabled,
       variant = Variant.Default,
       onConfirm,
       onCancel,
       darkMode: darkModeProp,
+      confirmButtonProps = {},
+      cancelButtonProps = {},
       ...modalProps
     }: ConfirmationModalProps,
     forwardRef: React.ForwardedRef<HTMLDivElement | null>,
@@ -59,6 +63,7 @@ export const ConfirmationModal = React.forwardRef(
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             darkMode={darkMode}
+            data-testid={LGIDS_CONFIRMATION_MODAL.input}
           ></TextInput>
         );
       }
@@ -66,11 +71,35 @@ export const ConfirmationModal = React.forwardRef(
       return textEntryConfirmation;
     }, [requiredInputText, darkMode]);
 
+    // TODO: remove - onConfirm is deprecated
+    const _onConfirm = onConfirm || confirmButtonProps?.onClick;
+    // TODO: remove - onCancel is deprecated
+    const _onCancel = onCancel || cancelButtonProps?.onClick;
+
+    const resetConfirmButton = () => {
+      if (!requiredInputText) return;
+      setConfirmEnabled(false);
+    };
+
+    const handleConfirm = () => {
+      _onConfirm?.();
+      resetConfirmButton();
+    };
+
+    const handleCancel = () => {
+      _onCancel?.();
+      resetConfirmButton();
+    };
+
+    // TODO: remove - submitDisabled is deprecated
+    const isConfirmDisabled =
+      submitDisabled ?? confirmButtonProps?.disabled ?? false;
+
     return (
       <Modal
         {...modalProps}
         contentClassName={baseModalStyle}
-        setOpen={onCancel}
+        setOpen={handleCancel}
         darkMode={darkMode}
         ref={forwardRef}
       >
@@ -87,7 +116,11 @@ export const ConfirmationModal = React.forwardRef(
               />
             </div>
           )}
-          <H3 as="h1" className={cx(titleStyle)}>
+          <H3
+            as="h1"
+            className={cx(titleStyle)}
+            data-testid={LGIDS_CONFIRMATION_MODAL.title}
+          >
             {title}
           </H3>
           {children}
@@ -95,14 +128,22 @@ export const ConfirmationModal = React.forwardRef(
         </div>
         <Footer>
           <Button
+            {...confirmButtonProps}
+            data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
+            disabled={!confirmEnabled || isConfirmDisabled}
+            className={cx(buttonStyle, confirmButtonProps?.className)}
             variant={variant}
-            disabled={!confirmEnabled || submitDisabled}
-            onClick={onConfirm}
-            className={buttonStyle}
+            onClick={handleConfirm}
           >
-            {buttonText}
+            {/* TODO: remove - buttonText is deprecated */}
+            {buttonText || confirmButtonProps?.children || 'Confirm'}
           </Button>
-          <Button onClick={onCancel} className={buttonStyle}>
+          <Button
+            {...cancelButtonProps}
+            onClick={handleCancel}
+            className={cx(buttonStyle, cancelButtonProps?.className)}
+            data-testid={LGIDS_CONFIRMATION_MODAL.cancel}
+          >
             Cancel
           </Button>
         </Footer>
@@ -120,8 +161,10 @@ ConfirmationModal.propTypes = {
   onCancel: PropTypes.func,
   children: PropTypes.node,
   className: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
+  buttonText: PropTypes.string,
   variant: PropTypes.oneOf(Object.values(Variant)),
   requiredInputText: PropTypes.string,
   darkMode: PropTypes.bool,
+  confirmButtonProps: PropTypes.objectOf(PropTypes.any),
+  cancelButtonProps: PropTypes.objectOf(PropTypes.any),
 };

@@ -5,6 +5,7 @@
 // note we still need to declare the path relative to `<rootDir>`
 
 module.exports = {
+  testTimeout: 60_000,
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/', '/index.ts', '.svg'],
@@ -50,7 +51,7 @@ module.exports = {
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
     '.svg':
-      '<rootDir>/node_modules/@lg-tools/test/config/react17/mocks/svgTransformer.js',
+      '<rootDir>/node_modules/@lg-tools/test/config/mocks/svgTransformer.js',
   },
 
   // Ignore transforming node_modules except for:

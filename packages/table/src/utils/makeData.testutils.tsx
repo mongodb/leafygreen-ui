@@ -1,6 +1,6 @@
 import React from 'react';
 import { faker } from '@faker-js/faker';
-import { range } from 'lodash';
+import range from 'lodash/range';
 
 import Code from '@leafygreen-ui/code';
 
@@ -10,18 +10,19 @@ const SEED = 0;
 faker.seed(SEED);
 
 export interface Person {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   age: number;
   visits: number;
   status: 'relationship' | 'complicated' | 'single';
   subRows?: Array<Person>;
+  index?: number;
 }
 
 const newPerson = (): Person => {
   return {
-    id: faker.number.int(4),
+    id: faker.string.alphanumeric({ length: { min: 5, max: 7 } }),
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     age: faker.number.int({ min: 20, max: 100 }),
@@ -59,8 +60,9 @@ export function makeData(
 
   const makeDataLevel = (depth = 0): Array<Person> => {
     const len = lens[depth]!;
-    return range(len).map((_): Person => {
+    return range(len).map((_, i): Person => {
       return {
+        index: i,
         ...newPerson(),
         ...(hasSubRows &&
           lens[depth + 1] &&
@@ -99,7 +101,11 @@ const createKitchenSinkData: (depth?: number) => object = (depth = 0) => {
   return {
     dateCreated: faker.date.past({ refDate: new Date('2023-12-26') }),
     frequency: faker.helpers.arrayElement(['Daily', 'Weekly', 'Monthly']),
-    clusterType: faker.helpers.arrayElement(['Replica set', 'Sharded cluster']),
+    clusterType: faker.helpers.weightedArrayElement([
+      { value: 'Replica set', weight: 0.45 },
+      { value: 'Sharded cluster', weight: 0.45 },
+      { value: faker.lorem.lines(2), weight: 0.1 },
+    ]),
     encryptorEnabled: faker.datatype.boolean(0.75),
     mdbVersion: faker.system.semver(),
     subRows:

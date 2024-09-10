@@ -1,0 +1,42 @@
+{
+  "name": "@lg-chat/message-feed",
+  "version": "3.0.1",
+  "description": "lg-chat Message Feed",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@lg-chat/avatar": "^3.0.1",
+    "@lg-chat/message": "^4.1.1",
+    "@lg-chat/message-rating": "^2.0.2"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/typography": "^19.0.0",
+    "@lg-chat/chat-disclaimer": "^3.0.2",
+    "@lg-chat/message-prompts": "^2.0.2",
+    "@lg-tools/storybook-utils": "^0.1.1"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
+    "@lg-chat/leafygreen-chat-provider": "^2.0.0"
+  }
+}

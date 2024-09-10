@@ -2,11 +2,13 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)
 
-> _Upgrading from pre-v10 to v11? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md)._
+> _Upgrading from pre-v10? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for help on how to migrate to the updated API._
 
 The Table component displays data in rows and columns and optionally supports row selection, sorting, and other features.
 
 ## Supported features
+
+The LeafyGreen Table wraps TanStack's [`react-table`](https://github.com/tanstack/table)'s hooks and types. Although all `react-table` features are supported using LeafyGreen Table, only the following features are styled according to design system guidelines:
 
 - Virtualized scrolling
 - Nested rows
@@ -15,7 +17,7 @@ The Table component displays data in rows and columns and optionally supports ro
 - Sortable rows
 - Sticky headers
 
-While other features from [`react-table`](https://github.com/tanstack/table#quick-features) could be supported, we discourage developers from utilizing them unless they are explicitly supported by Leafygreen, as they would not align with MongoDB design systems guidelines.
+Although other features from [`react-table`](https://github.com/tanstack/table#quick-features) are supported, we discourage developers from utilizing them as they would not align with MongoDB design systems guidelines.
 
 # Installation
 
@@ -186,7 +188,7 @@ Setting this prop will indicate that the Table component is being used with the 
 
 #### `useVirtualScrolling`
 
-`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows` and `totalSize`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
+`react-virtual`'s `useVirtual` hook will be called if this option is set. When this option is set, the object returned by `useLeafygreenTable` will include `virtualRows`, `totalSize` and `scrollToIndex`. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
 
 > Note that the number of virtual rows rendered depends on the height passed to the `Table` component. For a reasonably performant use of virtual scrolling, ensure that there is a height set on the component to reduce the number of virtual rows rendered.
 
@@ -224,11 +226,12 @@ This option determines the alignment of the column. Refer to [Storybook deployme
 
 #### Props
 
-| Name                      | Description                                                    | Type     | Default |
-| ------------------------- | -------------------------------------------------------------- | -------- | ------- |
-| `shouldAlternateRowColor` | Determines whether alternating rows will have dark backgrounds | boolean  | false   |
-| `baseFontSize`            | The base font size of the title and text rendered in children  | 13 \| 16 | 13      |
-| `darkMode`                | Render the component in dark mode.                             | boolean  | false   |
+| Name                      | Description                                                                                 | Type     | Default |
+| ------------------------- | ------------------------------------------------------------------------------------------- | -------- | ------- |
+| `shouldAlternateRowColor` | Determines whether alternating rows will have dark backgrounds                              | boolean  | false   |
+| `disableAnimations`       | Disables all transition animations for smoother rendering of tall content where appropriate | boolean  | false   |
+| `baseFontSize`            | The base font size of the title and text rendered in children                               | 13 \| 16 | 13      |
+| `darkMode`                | Render the component in dark mode.                                                          | boolean  | false   |
 
 \+ other HTML `table` element props
 
@@ -283,7 +286,7 @@ All HTML `tr` element props
 
 `Cell` accepts HTML `td` element props.
 
-> The `Cell` component does not automatically handle overflowing text content, as `text-overflow` depends on the element having `overflow: hidden` and an explicit pixel width value. Refer to the LeafyGreen [Storybook deployment](https://mongodb.github.io/leafygreen-ui/) for an example.
+> All nested row animations are set at the Cell level, with a `max-height` set to 40vh, which should cover most cases with a relatively smooth animation. For taller content, set `disableAnimation={true}` or override the max-height with a `& > div { max-height: ... }` CSS selector on the `Cell` component.
 
 ## Feature Examples
 
@@ -322,3 +325,105 @@ To add expandable content to your Table, ensure the `renderExpandedContent` prop
 ### React 18
 
 For cases where you anticipate having more than 20 rows with nested rows, it is advisable to opt for virtual scrolling to improve performance of row transitions.
+
+# Test Harnesses
+
+## `getTestUtils()`
+
+`getTestUtils()` is a util that allows consumers to reliably interact with `LG Table` in a product test suite. If the `Table` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { Table, getTestUtils } from '@leafygreen-ui/table';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Table`. It defaults to 'lg-table' if left empty.
+```
+
+#### Single Table
+
+```tsx
+import { render } from '@testing-library/react';
+import { Table, getTestUtils } from '@leafygreen-ui/table';
+
+...
+
+test('table', () => {
+  render(<Table>...</Table>);
+  const { getAllVisibleRows } = getTestUtils();
+  expect(getAllVisibleRows().length).toEqual(3);
+});
+```
+
+#### Multiple Tables
+
+```tsx
+import { render } from '@testing-library/react';
+import { Table, getTestUtils } from '@leafygreen-ui/table';
+
+...
+
+test('returns the correct rows', () => {
+  render(
+    <>
+      <Table>...</Table>
+      <Table data-lgid="lg-table-2">...</Table>
+    </>,
+  );
+
+  // First Table
+  const { getAllVisibleRows } = getTestUtils();
+  expect(getAllVisibleRows().length).toEqual(3);
+
+  // Second Table
+  const { getAllVisibleRows: getAllVisibleRowsB } = getTestUtils('lg-table-2');
+  expect(getAllVisibleRowsB().length).toEqual(4);
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  getTable,
+  getAllHeaders,
+  getHeaderByIndex: (index: number) => { getElement, getSortIcon },
+  getSelectAllCheckbox,
+  getAllVisibleRows,
+  getRowByIndex: (index: number) => {
+    getElement,
+    getAllCells,
+    getCheckbox,
+    getExpandButton,
+    isExpanded,
+    isSelected,
+    isDisabled,
+  },
+  getAllVisibleSelectedRows,
+} = getTestUtils();
+```
+
+| Util                              | Description                                                                                  | Returns                       |
+| --------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------- |
+| `getTable()`                      | Returns the table node or `null` if the table node is not found.                             | `HTMLTableElement`            |
+| `getAllHeaders()`                 | Returns an array of `<th>`(`<HeaderCell>`) in the DOM. Throws if there are no elements.      | `Array<HTMLTableCellElement>` |
+| `getHeaderByIndex(index: number)` | Returns utils for an individual `<th>`(`<HeaderCell>`) in the DOM                            | `HeaderUtils` \| `null`       |
+| `getSelectAllCheckbox()`          | Returns the input node for the select all checkbox or `null`                                 | `HTMLInputElement` \| `null`  |
+| `getAllVisibleRows()`             | Returns an array of all visible `<tr>`(`<Row>`) in the DOM. Throws if there are no elements. | `Array<HTMLTableRowElement>`  |
+| `getRowByIndex(index: number)`    | Returns utils for an indivudial `<tr>`(`<Row>`) in the DOM                                   | `RowUtils` \| `null`          |
+| `getAllVisibleSelectedRows`       | Returns an array of all visible selected `<tr>`(`<Row>`) in the DOM                          | `Array<HTMLTableRowElement>`  |
+
+| HeaderUtils     | Description                       | Returns                       |
+| --------------- | --------------------------------- | ----------------------------- |
+| `getElement()`  | Returns the `<th>` element        | `HTMLTableCellElement`        |
+| `getSortIcon()` | Returns the sort button or `null` | `HTMLButtonElement` \| `null` |
+
+| RowUtils            | Description                                                        | Returns                       |
+| ------------------- | ------------------------------------------------------------------ | ----------------------------- |
+| `getElement()`      | Returns the `<tr>`(`<HeaderCell>`) element                         | `HTMLTableRowElement`         |
+| `getAllCells()`     | Returns an array with all the `<td>`(`<Cell>`) elements in the row | `Array<HTMLTableCellElement>` |
+| `getCheckbox()`     | Returns the input element or `null`                                | `HTMLInputElement` \| `null`  |
+| `getExpandButton()` | Returns the expand button element or `null`                        | `HTMLButtonElement` \| `null` |
+| `isExpanded()`      | Returns if the `<tr>`(`<Row>`) is expanded                         | `boolean`                     |
+| `isSelected()`      | Returns if the `<tr>`(`<Row>`) is selected                         | `boolean`                     |
+| `isDisabled()`      | Returns if the `<tr>`(`<Row>`) is disabled                         | `boolean`                     |

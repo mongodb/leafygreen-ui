@@ -1,11 +1,14 @@
-import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
+import {
+  ChangeEventHandler,
+  ComponentPropsWithoutRef,
+  FocusEventHandler,
+} from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
+import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import {
-  PopoverProps as ImportedPopoverProps,
-  PortalControlProps,
-} from '@leafygreen-ui/popover';
+
+import { PopoverProps } from '../UnitSelect/UnitSelect.types';
 
 export const Direction = {
   Increment: 'increment',
@@ -14,10 +17,7 @@ export const Direction = {
 
 export type Direction = (typeof Direction)[keyof typeof Direction];
 
-export const State = {
-  Error: 'error',
-  None: 'none',
-} as const;
+export const State = FormFieldState;
 
 export type State = (typeof State)[keyof typeof State];
 
@@ -25,6 +25,7 @@ export const Size = {
   XSmall: 'xsmall',
   Small: 'small',
   Default: 'default',
+  Large: 'large',
 } as const;
 
 export type Size = (typeof Size)[keyof typeof Size];
@@ -78,13 +79,6 @@ export type ConditionalUnitSelectProps =
   | WithUnitSelectProps
   | WithoutUnitSelectProps;
 
-export type PopoverProps = PortalControlProps & {
-  /**
-   * Number that controls the z-index of the popover element directly.
-   */
-  popoverZIndex?: ImportedPopoverProps['popoverZIndex'];
-};
-
 export interface BaseNumberInputProps
   extends Omit<
       ComponentPropsWithoutRef<'input'>,
@@ -109,6 +103,11 @@ export interface BaseNumberInputProps
   onChange?: ChangeEventHandler<HTMLInputElement>;
 
   /**
+   * Callback fired when the input or arrows lose focus
+   */
+  onBlur?: FocusEventHandler<HTMLDivElement>;
+
+  /**
    * id associated with the PasswordInput component, referenced by `<label>` with the `for` attribute.
    */
   id?: string;
@@ -128,7 +127,12 @@ export interface BaseNumberInputProps
   /**
    * The message shown below the input element if the value is invalid.
    */
-  errorMessage?: string;
+  errorMessage?: React.ReactNode;
+
+  /**
+   * The message shown below the input element if the value is valid.
+   */
+  successMessage?: React.ReactNode;
 
   /**
    * Determines the font size and padding.

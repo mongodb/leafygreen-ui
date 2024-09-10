@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/empty-state",
-  "version": "1.0.14",
+  "version": "1.0.17",
   "description": "leafyGreen UI Kit Empty State",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,15 +30,17 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.0.9",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^13.0.0",
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/tokens": "^2.1.4",
-    "@leafygreen-ui/typography": "^18.0.0"
+    "@leafygreen-ui/button": "^21.2.1",
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@leafygreen-ui/typography": "^19.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.10"
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  }
 }

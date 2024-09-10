@@ -1,4 +1,4 @@
-import { Align, Justify } from './types';
+import { Align, Justify } from './Popover.types';
 
 /**
  * @internal

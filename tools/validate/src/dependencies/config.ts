@@ -18,42 +18,58 @@ export interface DependencyIssues {
   isMissingPeers: boolean;
 }
 
-// We won't check dependencies imported by files matching these patterns
-export const ignoreFilePatterns: Array<RegExp> = [
+/** We treat dependencies imported by files matching these patterns as devDependencies */
+export const devFilePatterns: Array<RegExp> = [
   /.*scripts\/.*/,
   /.*.stories.js/,
   /.*.spec.tsx?/,
   /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
-  /.*.testutils.tsx?/,
+  /.*.testutils((.tsx?)|(\/.*))/,
   /.*\/dist\/.*/,
 ];
 
-// these dependencies will be ignored when listed in a package.json
-export const ignoreMatches = [
-  '@leafygreen-ui/mongo-nav',
+/** If a dependency is flagged as being imported by one of these files, ignore it */
+export const ignoreFilePatterns: Array<RegExp> = [
+  /.*package.json?/,
+  /.*README.md/,
+  /.*CHANGELOG.md/,
+];
+
+/**
+ * These are globally available dev dependencies.
+ *
+ * Packages that omit these dependencies will not be flagged for missing dependencies.
+ *
+ * Packages that list these dependencies will not be flagged for unused dependencies
+ */
+export const externalDependencies = [
   '@babel/*',
   '@emotion/*',
+  '@leafygreen-ui/mongo-nav',
+  '@leafygreen-ui/testing-lib',
   '@rollup/*',
   '@storybook/*',
   '@svgr/*',
   '@testing-library/*',
   '@types/*',
-  '@typescript-*',
+  '@typescript-eslint/*',
   'buffer',
   'eslint*',
-  'jest*',
+  'jest',
+  'jest-*',
   'jest-axe',
   'prettier*',
   'prop-types',
   'react-*',
   'rollup*',
   'storybook-*',
+  'typescript',
   '*-loader',
   '*-lint*',
 ];
 
 export const depcheckOptions: depcheck.Options = {
-  ignoreMatches,
+  ignoreMatches: externalDependencies,
 };

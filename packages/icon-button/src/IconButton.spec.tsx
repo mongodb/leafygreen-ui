@@ -32,6 +32,29 @@ describe('packages/icon-button', () => {
       expect(results).toHaveNoViolations();
     });
   });
+
+  describe('when disabled', () => {
+    test('does not call onClick when disabled', () => {
+      const onClick = jest.fn();
+      const { iconButton } = renderIconButton({
+        disabled: true,
+        onClick,
+        children: iconChild,
+      });
+      fireEvent.click(iconButton);
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    test('renders aria-disabled', () => {
+      const { iconButton } = renderIconButton({
+        disabled: true,
+
+        children: iconChild,
+      });
+      expect(iconButton.getAttribute('aria-disabled')).toBe('true');
+    });
+  });
+
   test(`renders ${className} in the classList`, () => {
     const { iconButton } = renderIconButton({ className, children: iconChild });
     expect(iconButton.classList.contains(className)).toBe(true);

@@ -6,6 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import { lottieRendererSettings } from '../constants';
 import { descriptionThemeColor } from '../LoadingIndicator.styles';
 
 import animationJson from './animation';
@@ -16,6 +17,7 @@ import {
   rootStyles,
   SpinnerBottomMargins,
   SpinnerSizes,
+  verticalDisplayOptionStyles,
 } from './Spinner.styles';
 import { DisplayOption, SpinnerProps } from './Spinner.types';
 
@@ -44,6 +46,8 @@ const Spinner = ({
         {
           [horizontalDisplayOptionStyles]:
             displayOption === DisplayOption.DefaultHorizontal,
+          [verticalDisplayOptionStyles]:
+            displayOption !== DisplayOption.DefaultHorizontal,
         },
         className,
       )}
@@ -63,6 +67,7 @@ const Spinner = ({
           height: size,
           marginBottom: description ? spinnerMarginBottom : undefined,
         }}
+        rendererSettings={lottieRendererSettings}
       />
       {description && (
         <Body

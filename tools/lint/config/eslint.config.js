@@ -151,7 +151,7 @@ module.exports = {
       },
     },
     {
-      files: ['packages/**/*.spec.{ts,tsx}'],
+      files: ['{chat,packages,tools}/**/*.spec.{ts,tsx}'],
       globals: {
         expect: true,
         should: true,

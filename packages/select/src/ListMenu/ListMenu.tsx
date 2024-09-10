@@ -6,10 +6,11 @@ import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
+import { LGIDS_SELECT } from '../constants';
 import { DropdownWidthBasis } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
-import { MobileMediaQuery, useForwardedRef } from '../utils';
+import { MobileMediaQuery, useForwardedRef } from '../utils/utils';
 
 import {
   autoWidthStyles,
@@ -35,9 +36,16 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       dropdownWidthBasis,
       usePortal = true,
       portalContainer,
+      portalRef,
       scrollContainer,
       portalClassName,
       popoverZIndex,
+      onEntering,
+      onEnter,
+      onEntered,
+      onExiting,
+      onExit,
+      onExited,
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -63,8 +71,20 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
 
     const popoverProps = {
       popoverZIndex,
+      onEntering,
+      onEnter,
+      onEntered,
+      onExiting,
+      onExit,
+      onExited,
       ...(usePortal
-        ? { usePortal, portalClassName, portalContainer, scrollContainer }
+        ? {
+            usePortal,
+            portalClassName,
+            portalContainer,
+            portalRef,
+            scrollContainer,
+          }
         : { usePortal }),
     };
 
@@ -84,6 +104,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         {/* Keyboard events handled in Select component through event listener hook */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <ul
+          data-lgid={LGIDS_SELECT.popover}
           aria-labelledby={labelId}
           role="listbox"
           ref={ref}

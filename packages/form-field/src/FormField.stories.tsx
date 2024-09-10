@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
@@ -7,7 +8,6 @@ import { css } from '@leafygreen-ui/emotion';
 import Icon, { glyphs } from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { StoryMetaType, StoryType } from '@leafygreen-ui/lib';
 import { Size } from '@leafygreen-ui/tokens';
 
 import {
@@ -61,6 +61,7 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     label: 'Label',
     description: 'Description',
     errorMessage: 'This is a notification',
+    successMessage: 'Success',
     size: Size.Default,
     state: FormFieldState.None,
     glyph: 'Beaker',
@@ -70,7 +71,8 @@ const meta: StoryMetaType<typeof FormField, FormFieldStoryProps> = {
     label: { control: 'text' },
     description: { control: 'text' },
     errorMessage: { control: 'text' },
-    size: { control: 'select' },
+    successMessage: { control: 'text' },
+    size: { control: 'select', options: Object.values(Size) },
     state: {
       control: 'select',
       options: Object.values(FormFieldState),

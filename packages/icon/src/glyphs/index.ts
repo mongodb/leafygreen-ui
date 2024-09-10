@@ -14,9 +14,12 @@ import ArrowUp from './ArrowUp.svg';
 import Beaker from './Beaker.svg';
 import Bell from './Bell.svg';
 import Biometric from './Biometric.svg';
+import Boolean from './Boolean.svg';
 import Building from './Building.svg';
 import Bulb from './Bulb.svg';
 import Calendar from './Calendar.svg';
+import Camera from './Camera.svg';
+import Cap from './Cap.svg';
 import CaretDown from './CaretDown.svg';
 import CaretLeft from './CaretLeft.svg';
 import CaretRight from './CaretRight.svg';
@@ -52,25 +55,32 @@ import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
+import Eraser from './Eraser.svg';
+import Escalation from './Escalation.svg';
 import Export from './Export.svg';
 import Favorite from './Favorite.svg';
 import Federation from './Federation.svg';
 import File from './File.svg';
 import Filter from './Filter.svg';
 import Folder from './Folder.svg';
+import Format from './Format.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Hash from './Hash.svg';
 import Highlight from './Highlight.svg';
 import Home from './Home.svg';
+import HorizontalDrag from './HorizontalDrag.svg';
 import Import from './Import.svg';
 import ImportantWithCircle from './ImportantWithCircle.svg';
 import InfoWithCircle from './InfoWithCircle.svg';
+import InternalEmployee from './InternalEmployee.svg';
 import InviteUser from './InviteUser.svg';
 import Key from './Key.svg';
 import Laptop from './Laptop.svg';
+import LightningBolt from './LightningBolt.svg';
 import Link from './Link.svg';
 import List from './List.svg';
 import Lock from './Lock.svg';
@@ -81,6 +91,7 @@ import Megaphone from './Megaphone.svg';
 import Menu from './Menu.svg';
 import Minus from './Minus.svg';
 import Mobile from './Mobile.svg';
+import Moon from './Moon.svg';
 import MultiDirectionArrow from './MultiDirectionArrow.svg';
 import MultiLayers from './MultiLayers.svg';
 import NavCollapse from './NavCollapse.svg';
@@ -90,6 +101,7 @@ import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
 import OpenNewTab from './OpenNewTab.svg';
 import Pause from './Pause.svg';
+import Pending from './Pending.svg';
 import Person from './Person.svg';
 import PersonGroup from './PersonGroup.svg';
 import PersonWithLock from './PersonWithLock.svg';
@@ -97,8 +109,11 @@ import Pin from './Pin.svg';
 import Play from './Play.svg';
 import Plus from './Plus.svg';
 import PlusWithCircle from './PlusWithCircle.svg';
+import Primary from './Primary.svg';
+import Project from './Project.svg';
 import QuestionMarkWithCircle from './QuestionMarkWithCircle.svg';
 import Read from './Read.svg';
+import Recommended from './Recommended.svg';
 import Redo from './Redo.svg';
 import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
@@ -106,6 +121,8 @@ import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
 import Return from './Return.svg';
 import Save from './Save.svg';
+import SearchIndex from './SearchIndex.svg';
+import Secondary from './Secondary.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
@@ -117,6 +134,9 @@ import Sparkle from './Sparkle.svg';
 import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
+import Stop from './Stop.svg';
+import String from './String.svg';
+import Sun from './Sun.svg';
 import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
@@ -155,9 +175,12 @@ const _glyphs = {
   Beaker,
   Bell,
   Biometric,
+  Boolean,
   Building,
   Bulb,
   Calendar,
+  Camera,
+  Cap,
   CaretDown,
   CaretLeft,
   CaretRight,
@@ -193,6 +216,8 @@ const _glyphs = {
   Edit,
   Ellipsis,
   Email,
+  Eraser,
+  Escalation,
   Export,
   Favorite,
   Federation,
@@ -201,17 +226,22 @@ const _glyphs = {
   FullScreenEnter,
   FullScreenExit,
   Folder,
+  Format,
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
+  Hash,
   Highlight,
   Home,
+  HorizontalDrag,
   Import,
   ImportantWithCircle,
   InfoWithCircle,
+  InternalEmployee,
   InviteUser,
   Key,
   Laptop,
+  LightningBolt,
   Link,
   List,
   Lock,
@@ -222,6 +252,7 @@ const _glyphs = {
   Menu,
   Minus,
   Mobile,
+  Moon,
   MultiDirectionArrow,
   MultiLayers,
   NavCollapse,
@@ -231,6 +262,7 @@ const _glyphs = {
   Note,
   OpenNewTab,
   Pause,
+  Pending,
   Person,
   PersonGroup,
   PersonWithLock,
@@ -238,8 +270,11 @@ const _glyphs = {
   Play,
   Plus,
   PlusWithCircle,
+  Primary,
+  Project,
   QuestionMarkWithCircle,
   Read,
+  Recommended,
   Redo,
   Refresh,
   Relationship,
@@ -249,6 +284,8 @@ const _glyphs = {
   Save,
   Serverless,
   ShardedCluster,
+  SearchIndex,
+  Secondary,
   Settings,
   Shell,
   SMS,
@@ -258,6 +295,9 @@ const _glyphs = {
   SplitHorizontal,
   SplitVertical,
   Stitch,
+  Stop,
+  String,
+  Sun,
   Support,
   Sweep,
   Table,

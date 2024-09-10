@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
-import { debounce } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import debounce from 'lodash/debounce';
 
 import { spacing } from '@leafygreen-ui/tokens';
 
@@ -126,6 +126,12 @@ export function useToastHeights({
     () => debounce(_updateToastHeights, 100),
     [_updateToastHeights],
   );
+
+  useEffect(() => {
+    return () => {
+      updateToastHeights.cancel();
+    };
+  }, [updateToastHeights]);
 
   return {
     toastHeights,

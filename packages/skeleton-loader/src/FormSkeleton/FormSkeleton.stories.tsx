@@ -1,25 +1,32 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { FormSkeleton } from '.';
 
 export default {
   title: 'Components/SkeletonLoader',
   component: FormSkeleton,
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
+  parameters: {
+    controls: { exclude: ['darkMode', 'ref'] },
+    default: null,
+    generate: {
+      storyNames: ['Form'],
+      combineArgs: {
+        darkMode: [false, true],
+      },
+      decorator: Instance => (
+        <div style={{ width: 500 }}>
+          <Instance />
+        </div>
+      ),
+    },
   },
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 700 }}>
-        <Story />
-      </div>
-    ),
-  ],
-};
+  args: {
+    enableAnimations: false,
+  },
+  argTypes: {
+    enableAnimations: { control: 'boolean' },
+  },
+} satisfies StoryMetaType<typeof FormSkeleton>;
 
-export const Form: StoryFn<typeof FormSkeleton> = props => (
-  <FormSkeleton {...props} />
-);
+export const Form: StoryType<typeof FormSkeleton> = () => <></>;

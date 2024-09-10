@@ -42,7 +42,7 @@ describe('packages/RadioBox', () => {
     expect(radioBox.getAttribute('aria-checked')).toBe('true');
   });
 
-  test('renders as disabled, when the disabled prop is set', () => {
+  test('renders with aria-disabled attribute but not disabled attribute when disabled prop is set', () => {
     const { container } = render(
       <RadioBox value="option-disabled" disabled>
         Input 2
@@ -61,8 +61,36 @@ describe('packages/RadioBox', () => {
       throw new Error('Could not find radio box input element');
     }
 
-    expect(radioBox.getAttribute('aria-disabled')).toBe('true');
+    expect(radioBox.getAttribute('aria-disabled')).toBeTruthy();
+    expect(radioBox.getAttribute('disabled')).toBeFalsy();
   });
+});
+
+test('does not allow selection when box is disabled', () => {
+  const onChange = jest.fn();
+  const { container } = render(
+    <RadioBoxGroup onChange={onChange} className="test-radio-box-group">
+      <h1>Will Remain As Text</h1>
+      <RadioBox value="option-1">Input 1</RadioBox>
+      <RadioBox disabled value="option-2">
+        Input 2
+      </RadioBox>
+    </RadioBoxGroup>,
+  );
+
+  const radioBoxGroupContainer = container.firstChild;
+
+  if (!typeIs.element(radioBoxGroupContainer)) {
+    throw new Error('Could not find radio box group container element');
+  }
+
+  const option2 = radioBoxGroupContainer?.children[1];
+  expect(option2.getAttribute('aria-checked')).not.toBeTruthy();
+  expect(option2.getAttribute('checked')).not.toBeTruthy();
+  fireEvent.click(option2);
+
+  expect(option2.getAttribute('aria-checked')).not.toBeTruthy();
+  expect(option2.getAttribute('checked')).not.toBeTruthy();
 });
 
 describe('packages/RadioBoxGroup', () => {

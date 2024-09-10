@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { createRef, ReactElement } from 'react';
 import {
   act,
   fireEvent,
@@ -508,6 +508,19 @@ describe('packages/tooltip', () => {
     });
   });
 
+  test('accepts a portalRef', () => {
+    const portalContainer = document.createElement('div');
+    document.body.appendChild(portalContainer);
+    const portalRef = createRef<HTMLElement>();
+    renderTooltip({
+      open: true,
+      portalContainer,
+      portalRef,
+    });
+    expect(portalRef.current).toBeDefined();
+    expect(portalRef.current).toBe(portalContainer);
+  });
+
   test('portals popover content to end of DOM, when "usePortal" is not set', () => {
     const { container, getByTestId } = renderTooltip({
       open: true,
@@ -571,12 +584,12 @@ describe('packages/tooltip', () => {
       });
     });
 
-    test('LeafyGreen UI Icon is passed to trigger', () => {
+    test('LeafyGreen UI Icon is passed to trigger', async () => {
       render(
         <Tooltip trigger={<Icon glyph="Cloud" />}>TooltipContent</Tooltip>,
       );
 
-      waitFor(() => {
+      await waitFor(() => {
         expect(warn).toHaveBeenCalledTimes(1);
         expect(warn).toHaveBeenCalledWith(expectedWarnMsg);
       });

@@ -3,11 +3,16 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { rootStyles, sizeStyles, themeStyles } from './Skeleton.styles';
+import {
+  getSkeletonBaseStyles,
+  sizeStyles,
+  themeStyles,
+} from './Skeleton.styles';
 import { Size } from './Skeleton.types';
 import { SkeletonProps } from '.';
 
 export function Skeleton({
+  enableAnimations = true,
   size = Size.Default,
   darkMode,
   className,
@@ -17,7 +22,7 @@ export function Skeleton({
   return (
     <div
       className={cx(
-        rootStyles,
+        getSkeletonBaseStyles({ enableAnimations }),
         sizeStyles[size],
         themeStyles[theme],
         className,

@@ -10,15 +10,15 @@ import { iconBaseStyles, iconThemeStyles } from './InfoSprinkle.styles';
 import { Align, InfoSprinkleProps, Justify } from './InfoSprinkle.types';
 
 export const InfoSprinkle = React.forwardRef<
-  HTMLSpanElement,
+  HTMLButtonElement,
   InfoSprinkleProps
 >(
   (
     {
-      triggerAriaLabel = 'more info',
       darkMode: darkModeProp,
       children,
       baseFontSize,
+      triggerProps = {},
       ...rest
     }: InfoSprinkleProps,
     forwardRef,
@@ -29,17 +29,20 @@ export const InfoSprinkle = React.forwardRef<
         darkMode={darkMode}
         baseFontSize={baseFontSize}
         trigger={
-          <span
-            tabIndex={0}
-            role="button"
+          <button
+            data-testid="info-sprinkle-icon"
+            aria-label="more info"
+            {...triggerProps}
             aria-disabled
             ref={forwardRef}
-            className={cx(iconBaseStyles, iconThemeStyles(theme))}
-            aria-label={triggerAriaLabel}
-            data-testid="info-sprinkle-icon"
+            className={cx(
+              iconBaseStyles,
+              iconThemeStyles(theme),
+              triggerProps?.className,
+            )}
           >
             <InfoWithCircleIcon size={baseFontSize} aria-hidden />
-          </span>
+          </button>
         }
         {...rest}
       >

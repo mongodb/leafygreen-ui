@@ -1,19 +1,33 @@
 import React from 'react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { storybookArgTypes } from '@leafygreen-ui/lib';
 
 import { TableSkeleton } from '..';
 
 export default {
   title: 'Components/SkeletonLoader',
   component: TableSkeleton,
+  parameters: {
+    default: null,
+    controls: { exclude: ['darkMode', 'ref'] },
+    generate: {
+      storyNames: ['Table'],
+      combineArgs: {
+        darkMode: [false, true],
+        columnLabels: [undefined, ['Column 1', 'Column 2', 'Column 3', '']],
+      },
+    },
+  },
+  args: {
+    enableAnimations: false,
+    numCols: 4,
+    numRows: 5,
+  },
   argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    baseFontSize: storybookArgTypes.updatedBaseFontSize,
     columnLabels: { control: 'none' },
     numCols: { control: 'number' },
     numRows: { control: 'number' },
+    enableAnimations: { control: 'boolean' },
   },
   decorators: [
     (Story: StoryFn) => (
@@ -22,17 +36,6 @@ export default {
       </div>
     ),
   ],
-};
+} satisfies StoryMetaType<typeof TableSkeleton>;
 
-const TableTemplate: StoryFn<typeof TableSkeleton> = props => (
-  <TableSkeleton {...props} />
-);
-
-export const TableWithoutLabels: StoryFn<typeof TableSkeleton> =
-  TableTemplate.bind({});
-
-export const TableWithLabels: StoryFn<typeof TableSkeleton> =
-  TableTemplate.bind({});
-TableWithLabels.args = {
-  columnLabels: ['Column 1', 'Column 2', 'Column 3', ''],
-};
+export const Table: StoryType<typeof TableSkeleton> = () => <></>;

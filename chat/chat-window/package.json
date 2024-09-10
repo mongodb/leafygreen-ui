@@ -1,0 +1,44 @@
+{
+  "name": "@lg-chat/chat-window",
+  "version": "2.0.1",
+  "description": "lg-chat Chat Window",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/lib": "^13.6.1",
+    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/tokens": "^2.5.2",
+    "@lg-chat/avatar": "^3.0.1",
+    "@lg-chat/leafygreen-chat-provider": "^2.0.0",
+    "@lg-chat/title-bar": "^2.0.1",
+    "react-keyed-flatten-children": "^2.2.1"
+  },
+  "devDependencies": {
+    "@lg-chat/input-bar": "^5.0.0",
+    "@lg-chat/message": "^4.0.1",
+    "@lg-chat/message-feed": "^3.0.1",
+    "@lg-chat/message-prompts": "^2.0.1",
+    "@lg-chat/message-feedback": "^2.0.1",
+    "@lg-tools/storybook-utils": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+  }
+}

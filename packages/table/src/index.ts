@@ -1,4 +1,5 @@
 export { Cell, type CellProps, HeaderCell, type HeaderCellProps } from './Cell';
+export { LGIDS } from './constants';
 export {
   default as ExpandedContent,
   type ExpandedContentProps,
@@ -25,13 +26,7 @@ export {
   type LGTableDataType,
   default as useLeafyGreenTable,
 } from './useLeafyGreenTable';
+export { getTestUtils } from './utils/getTestUtils';
 export { default as V11Adapter, type V11AdapterProps } from './V11Adapter';
-export {
-  type ColumnDef,
-  type ExpandedState,
-  flexRender,
-  type Header,
-  type HeaderGroup,
-  type SortingState,
-} from '@tanstack/react-table';
+export * from '@tanstack/react-table';
 export { type VirtualItem } from 'react-virtual';

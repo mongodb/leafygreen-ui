@@ -1,5 +1,260 @@
 # @leafygreen-ui/combobox
 
+## 9.1.3
+
+### Patch Changes
+
+- e7bc12814: Adds more thorough test coverage for disabled inputs
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [ecae9acc7]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/checkbox@13.1.2
+  - @leafygreen-ui/chip@1.2.1
+  - @leafygreen-ui/hooks@8.1.4
+  - @leafygreen-ui/input-option@2.0.2
+
+## 9.1.2
+
+### Patch Changes
+
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.3.0](https://github.com/mongodb/leafygreen-ui/blob/c70072026333fabeec21e00c93d3f1eb48bf4c3b/packages/form-field/CHANGELOG.md#130) of `@leafygreen-ui/form-field`
+- Updated dependencies [668cb1183]
+- Updated dependencies [3f52c844b]
+- Updated dependencies [c95b81376]
+  - @leafygreen-ui/checkbox@13.1.1
+  - @leafygreen-ui/chip@1.2.0
+  - @leafygreen-ui/form-field@1.2.4
+
+## 9.1.1
+
+### Patch Changes
+
+- cfa830701: Updates `ComboboxOption`.
+
+  - Removes custom `min-height`, `padding`, and `line-height`. Instead these styles will come from `InputOptionContent`.
+
+  Updates `ComboboxMenu`.
+
+  - Updates the menu `background-color` to match the background from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/typography@19.2.1
+
+## 9.1.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 9.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4133](https://jira.mongodb.org/browse/LG-4133)
+
+  1. Updated styling:
+
+  - updated spacing for `'small'`, `'xsmall'`, and `'large'` size variants
+  - updated placeholder text color
+  - moved error icon from inside the input to underneath the input, alongside the error message
+
+  2. A default `errorMessage` of `'This input needs your attention'` will render below combobox when state is invalid.
+
+  3. Added a `valid` state with success icon and `successMessage` prop. A default `successMessage` of `'Success'` will render when state is valid. `successMessage` prop allows customization.
+
+  4. Disabled `Combobox` component no longer renders the `disabled` attribute and instead relies on `aria-disabled` and `readonly` attributes.
+
+  The last change is made to ensure that disabled components are still focusable to users using keyboard navigation.
+
+  For more on `aria-disabled` see the [documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-disabled)
+
+  #### Migration guide
+
+  Functionally, migration should be seamless, however there may be unit/integration/e2e tests that relied on this behavior.
+
+  ##### Jest/RTL
+
+  Generally, only this repo should need to test that these components have a specific attribute. We recommend updating unit tests to check that some event was or was not called.
+
+  However, there are cases where this may still need to be tested. You can replace any `expect(combobox).toBeDisabled()` with an explicit check for `expect(combobox).toHaveAttribute('aria-disabled', 'true')`.
+
+  ##### Cypress
+
+  Similar to unit tests, you should generally test functionality and not implementation details. However, to test this in Cypress replace any `cy.get(combobox).should('be.disabled');` checks with `cy.get(combobox).invoke('attr', 'aria-disabled').should('eq', 'true');`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 8.1.4
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/checkbox@13.1.0
+  - @leafygreen-ui/input-option@1.1.3
+
+## 8.1.3
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+- Updated dependencies [7a0ff1be]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/checkbox@13.0.0
+  - @leafygreen-ui/popover@11.3.1
+  - @leafygreen-ui/chip@1.0.2
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/input-option@1.1.2
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 8.1.2
+
+### Patch Changes
+
+- Updated dependencies [7c6166f9]
+- Updated dependencies [74057388]
+  - @leafygreen-ui/chip@1.0.1
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 8.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/popover@11.3.0
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/input-option@1.1.1
+  - @leafygreen-ui/checkbox@12.1.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
+## 8.1.0
+
+### Minor Changes
+
+- 36a8ded2: `description` prop can now be a `React.ReactNode` rather than a `string`
+
+### Patch Changes
+
+- Updated dependencies [c2854e9b]
+- Updated dependencies [11d12cc4]
+  - @leafygreen-ui/tokens@2.4.0
+  - @leafygreen-ui/typography@18.2.1
+
+## 8.0.0
+
+### Major Changes
+
+- 371aecac: - Adds optional `inputValue` and `onInputChange` props to Combobox. These props are used to control the value of the inner text input (not the selected combobox value itself).
+
+  - `onChange` callback now fires when the input is blurred and the input contains a valid selection value.
+
+### Patch Changes
+
+- Updated dependencies [58e86c60]
+- Updated dependencies [be92f17c]
+  - @leafygreen-ui/typography@18.2.0
+  - @leafygreen-ui/checkbox@12.1.0
+
+## 7.2.0
+
+### Minor Changes
+
+- 0eba26c5: Combobox `onChange` callback now receives a 2nd argument. Use this argument to determine what value was inserted or deleted from a multiselect value.
+  [JIRA Ticket](https://jira.mongodb.org/browse/LG-3959)
+
+  Example:
+
+  ```tsx
+  <Combobox
+    multiselect
+    value={['apple', 'banana']}
+    onChange={(val, diff) => {
+      console.log(value); // ['apple']
+      console.log(diff); // { diffType: 'delete', value: 'banana' }
+    }}
+  />
+  ```
+
+  ```ts
+  interface DiffObject {
+    diffType: 'insert' | 'delete';
+    value: string | Array<string>;
+  }
+  ```
+
+### Patch Changes
+
+- bfda5392: Fixes bug where Combobox incorrectly makes selection on "Enter" key press.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/hooks@8.1.1
+  - @leafygreen-ui/lib@13.2.1
+  - @leafygreen-ui/tokens@2.3.0
+
+## 7.1.0
+
+### Minor Changes
+
+- e7d206e6: Exports `ComboboxOptionProps` & `ComboboxGroupProps`.
+  Internal refactor of `type` file organization.
+
 ## 7.0.1
 
 ### Patch Changes

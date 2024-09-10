@@ -9,7 +9,8 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import TableContextProvider from '../TableContext/TableContext';
+import { LGIDS } from '../constants';
+import { TableContextProvider } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import { baseStyles, tableContainerStyles, themeStyles } from './Table.styles';
@@ -25,6 +26,8 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
       table,
+      disableAnimations = false,
+      'data-lgid': lgidProp = LGIDS.root,
       ...rest
     }: TableProps<T>,
     containerRef: ForwardedRef<HTMLDivElement>,
@@ -44,6 +47,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           shouldAlternateRowColor={shouldAlternateRowColor}
           darkMode={darkMode}
           table={table}
+          disableAnimations={disableAnimations}
         >
           <table
             className={cx(
@@ -51,6 +55,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               themeStyles[theme],
               bodyTypeScaleStyles[baseFontSize],
             )}
+            data-lgid={lgidProp}
             {...rest}
           >
             {children}

@@ -7,7 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, isComponentType } from '@leafygreen-ui/lib';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
 
-import { useTableContext } from '../TableContext/TableContext';
+import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowBase from './InternalRowBase';
@@ -86,14 +86,17 @@ const InternalRowWithRT = <T extends LGRowData>({
       <InternalRowBase
         className={cx(
           {
-            [grayZebraRowStyles[theme]]: isOddVSRow && shouldAlternateRowColor,
-            [zebraStyles[theme]]: !virtualRow && shouldAlternateRowColor,
+            [grayZebraRowStyles[theme]]:
+              isOddVSRow && shouldAlternateRowColor && !isSelected,
+            [zebraStyles[theme]]:
+              !virtualRow && shouldAlternateRowColor && !isSelected,
             [selectedRowStyles[theme]]: isSelected && !disabled,
           },
           className,
         )}
         data-selected={isSelected}
         aria-hidden={!isRowVisible}
+        data-expanded={isExpanded}
         id={`lg-table-row-${row.id}`}
         {...rest}
       >

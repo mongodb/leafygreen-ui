@@ -2,10 +2,10 @@ import React from 'react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { BlobPosition } from '../MarketingModal/types';
+import { BlobPosition } from '../MarketingModal/MarketingModal.types';
 
-import { baseStyles, themeStyles } from './styles';
-import { BlobSVGProperties, BlobSVGProps } from './types';
+import { baseStyles, themeStyles } from './BlobSVG.styles';
+import { BlobSVGProperties, BlobSVGProps } from './BlobSVG.types';
 
 const blobSVGPaths: Record<BlobPosition, Record<BlobSVGProperties, string>> = {
   [BlobPosition.TopLeft]: {

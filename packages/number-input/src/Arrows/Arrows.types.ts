@@ -1,6 +1,6 @@
-import { Direction } from '../NumberInput/NumberInput.types';
+import { Direction, Size } from '../NumberInput/NumberInput.types';
 
-export interface ArrowsProps {
+interface BaseArrowProps {
   /**
    * Determines if buttons should be disabled
    */
@@ -16,7 +16,16 @@ export interface ArrowsProps {
    */
   onKeyDown: (e: React.KeyboardEvent) => void;
 }
+export interface ArrowsProps extends BaseArrowProps {
+  /**
+   * Determines horizontal positioning of arrows
+   */
+  size: Size;
+}
 
-export interface ArrowProps extends ArrowsProps {
+export interface ArrowProps extends BaseArrowProps {
+  /**
+   * Direction of arrow: increment or decrement
+   */
   direction: Direction;
 }

@@ -10,13 +10,14 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { defaults, range } from 'lodash';
+import defaults from 'lodash/defaults';
+import range from 'lodash/range';
 
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { TOAST_CONSTANTS } from '../constants';
 import { InternalToastProps } from '../InternalToast';
-import Meta, { Basic } from '../Toast.story';
+import Meta, { Basic } from '../Toast.stories';
 import { makeToast, makeToastStack } from '../ToastContext/utils/makeToast';
 import { ToastProvider, ToastProviderProps, ToastStack } from '..';
 

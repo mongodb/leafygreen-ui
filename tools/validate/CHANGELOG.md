@@ -1,5 +1,69 @@
 # @lg-tools/validate
 
+## 0.1.11
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+  - @lg-tools/meta@0.3.4
+
+## 0.1.10
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+  - @lg-tools/build@0.5.0
+  - @lg-tools/meta@0.3.3
+
+## 0.1.9
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+  - @lg-tools/meta@0.3.2
+
+## 0.1.8
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+  - @lg-tools/build@0.4.0
+  - @lg-tools/meta@0.3.1
+
+## 0.1.7
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [90bba7b2]
+  - @lg-tools/build@0.3.2
+  - @lg-tools/meta@0.3.0
+
+## 0.1.6
+
+### Patch Changes
+
+- 7f38e78a: - Adds `'@leafygreen-ui/testing-lib'` to list of external dependencies.
+  - Updates handling of external dependencies with glob patterns
+- ffd11f24: Updates dev file pattern to include entire `testutils/` directories
+- Updated dependencies [ffd11f24]
+  - @lg-tools/meta@0.2.0
+
+## 0.1.5
+
+### Patch Changes
+
+- 3e1a7bc3: Updates the logic to check whether a dependency is used in a development file
+- Updated dependencies [4822f43c]
+- Updated dependencies [8b1d2d3a]
+  - @lg-tools/build@0.3.1
+  - @lg-tools/meta@0.1.5
+
 ## 0.1.4
 
 ### Patch Changes

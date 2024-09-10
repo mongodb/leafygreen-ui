@@ -1,7 +1,6 @@
 import React from 'react';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-
-import { StoryMetaType } from '@leafygreen-ui/lib';
 
 import Spinner from './Spinner';
 import { DisplayOption } from './Spinner.types';
@@ -30,13 +29,13 @@ export const Default = Template.bind({});
 
 export const WithDescription = Template.bind({});
 WithDescription.args = {
-  description: 'Loading...',
+  description: 'Loading dot dot...',
 };
 
 export const Horizontal = Template.bind({});
 Horizontal.args = {
   displayOption: 'default-horizontal',
-  description: 'Loading...',
+  description: 'Loading dot dot...',
 };
 
 export const SizeOverride = Template.bind({});

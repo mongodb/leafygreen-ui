@@ -2,22 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Description, Error, Label, Overline } from '@leafygreen-ui/typography';
+import { Description, Label, Overline } from '@leafygreen-ui/typography';
 
 import { Input } from '../Input';
 import { UnitSelect } from '../UnitSelect';
 
 import {
-  errorMessageStyles,
-  errorMessageWrapperStyles,
+  getUnitDisabledStyles,
+  getUnitThemeStyles,
   labelDescriptionStyles,
   unitBaseStyles,
-  unitDisabledStyles,
-  unitThemeStyles,
   wrapperBaseStyles,
   wrapperGapStyles,
   wrapperSizeStyles,
@@ -44,12 +43,14 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       label,
       value,
       description,
-      errorMessage,
+      errorMessage = DEFAULT_MESSAGES.error,
+      successMessage = DEFAULT_MESSAGES.success,
       onChange,
       popoverZIndex,
-      usePortal,
+      usePortal = true,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       ...rest
     }: NumberInputProps,
@@ -57,7 +58,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
   ) => {
     const prefix = 'lg-number-input';
     const inputId = useIdAllocator({ prefix, id: idProp });
-    const errorMessageId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
+    const feedbackId = useIdAllocator({ prefix, id: ariaDescribedbyProp });
     const descriptionId = useIdAllocator({ prefix });
     const selectId = useIdAllocator({ prefix });
     const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -68,14 +69,27 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const isUnitInOptions = unitOptions.find(u => u.displayName === unit);
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions && !!isUnitInOptions;
-    const renderErrorMessage = state === State.Error && errorMessage;
 
     const popoverProps = {
       popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      scrollContainer,
+      ...(usePortal
+        ? {
+            usePortal,
+            portalClassName,
+            portalContainer,
+            portalRef,
+            scrollContainer,
+          }
+        : { usePortal }),
+    } as const;
+
+    const formFieldFeedbackProps = {
+      disabled,
+      errorMessage,
+      id: feedbackId,
+      size,
+      state,
+      successMessage,
     } as const;
 
     return (
@@ -111,7 +125,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               hasSelectOptions={renderSelectOnly}
               state={state}
               errorMessage={errorMessage}
-              aria-describedby={`${errorMessageId} ${
+              aria-describedby={`${feedbackId} ${
                 description ? descriptionId : ''
               } ${renderSelectOnly ? selectId : ''}`}
               aria-labelledby={
@@ -122,8 +136,8 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
             />
             {renderUnitOnly && (
               <Overline
-                className={cx(unitBaseStyles, unitThemeStyles[theme], {
-                  [unitDisabledStyles[theme]]: disabled,
+                className={cx(unitBaseStyles, getUnitThemeStyles(theme), {
+                  [getUnitDisabledStyles(theme)]: disabled,
                 })}
               >
                 {unit}
@@ -142,16 +156,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               />
             )}
           </div>
-          <div
-            className={errorMessageWrapperStyles}
-            aria-live="polite"
-            aria-relevant="all"
-            id={errorMessageId}
-          >
-            {renderErrorMessage && (
-              <Error className={errorMessageStyles}>{errorMessage}</Error>
-            )}
-          </div>
+          <FormFieldFeedback {...formFieldFeedbackProps} />
         </div>
       </LeafyGreenProvider>
     );
@@ -195,5 +200,11 @@ NumberInput.propTypes = {
     typeof window !== 'undefined'
       ? PropTypes.instanceOf(Element)
       : PropTypes.any,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
   portalClassName: PropTypes.string,
 } as any;

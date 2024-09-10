@@ -12,9 +12,9 @@ import { useSearchInputContext } from '../SearchInputContext';
 import { EmptyOption } from './EmptyOption';
 import { LoadingOption } from './LoadingOption';
 import {
+  getSearchResultsMenuThemeStyles,
   searchResultsListStyles,
   searchResultsMenuStyles,
-  searchResultsMenuThemeStyles,
 } from './SearchResultsMenu.style';
 import { SearchResultsMenuProps } from './SearchResultsMenu.types';
 
@@ -35,6 +35,7 @@ export const SearchResultsMenu = React.forwardRef<
       usePortal,
       portalClassName,
       portalContainer,
+      portalRef,
       scrollContainer,
       footerSlot,
       ...rest
@@ -66,7 +67,7 @@ export const SearchResultsMenu = React.forwardRef<
         justify="start"
         className={cx(
           searchResultsMenuStyles,
-          searchResultsMenuThemeStyles[theme],
+          getSearchResultsMenuThemeStyles(theme),
           css`
             width: ${menuWidth}px;
             min-width: ${menuWidth}px;
@@ -76,6 +77,7 @@ export const SearchResultsMenu = React.forwardRef<
         usePortal={usePortal}
         portalClassName={usePortal ? portalClassName : undefined}
         portalContainer={usePortal ? portalContainer : null}
+        portalRef={portalRef}
         scrollContainer={usePortal ? scrollContainer : null}
       >
         {state === 'loading' ? (

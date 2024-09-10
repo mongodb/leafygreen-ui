@@ -1,5 +1,252 @@
 # @leafygreen-ui/select
 
+## 12.1.4
+
+### Patch Changes
+
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.3.0](https://github.com/mongodb/leafygreen-ui/blob/c70072026333fabeec21e00c93d3f1eb48bf4c3b/packages/form-field/CHANGELOG.md#130) of `@leafygreen-ui/form-field`
+- Updated dependencies [c95b81376]
+  - @leafygreen-ui/form-field@1.2.4
+
+## 12.1.3
+
+### Patch Changes
+
+- 9c40e5335: Exports `getTestUtils` and `LGIDS_SELECT`. These were mistakenly excluded in its [initial release](https://github.com/mongodb/leafygreen-ui/blob/main/packages/select/CHANGELOG.md#1130)
+- Updated dependencies [157146b5c]
+  - @leafygreen-ui/input-option@2.0.1
+
+## 12.1.2
+
+### Patch Changes
+
+- 9c2bcf4e8: Revert changes to disabled options from this [PR](https://github.com/mongodb/leafygreen-ui/pull/2414/files#diff-342ae69a3870124b92896d144a32609a8a4538953f821c30dec1e49024fa6e07L124-L126).
+
+## 12.1.1
+
+### Patch Changes
+
+- cfa830701: Updates `Option`
+
+  - Removes style overrides in favor of consistent option styles from `InputOptionContent`
+
+  Updates `ListMenu`
+
+  - Updates the menu `background-color` and `border-color` to match the background and border from `InputOptionContent`.
+
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/input-option@2.0.0
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/typography@19.2.1
+
+## 12.1.0
+
+### Minor Changes
+
+- 02e1d77e: Expose `portalRef` in components that use `Popover`:
+
+  - `Combobox`
+  - `DatePicker`
+  - `GuideCue`
+  - `Menu`
+  - `NumberInput`
+  - `Select`
+  - `SplitButton`
+  - `Tooltip`
+
+  [LG-3988](https://jira.mongodb.org/browse/LG-3988)
+
+### Patch Changes
+
+- Updated dependencies [02e1d77e]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/popover@11.4.0
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 12.0.0
+
+### Major Changes
+
+- c406ab85: [LG-4138](https://jira.mongodb.org/browse/LG-4138)
+
+  1. Updated styling:
+
+  - updated spacing for `'xsmall'`, `'small'`, and `'large'` size variants
+  - updated placeholder text color
+  - removed validation icon from inside the input
+
+  2. Added default `errorMessage` of `'This input needs your attention'`
+
+  3. Added `valid` state variant and `successMessage` prop
+
+  - `successMessage` will render a default of `'Success'` and can be customized
+  - `successMessage` will only render when `state=valid`
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/form-field@1.2.0
+  - @leafygreen-ui/typography@19.1.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 11.3.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/input-option@1.1.3
+
+## 11.3.1
+
+### Patch Changes
+
+- 8adadc89: Fixes a bug that prevented packages from rendering in a server-side environment
+- Updated dependencies [8adadc89]
+  - @lg-tools/test-harnesses@0.1.2
+
+## 11.3.0
+
+### Minor Changes
+
+- c3906f78: - Exports `getTestUtils`, a util to reliably interact with `LG Select` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/select#test-harnesses) [LG-4129](https://jira.mongodb.org/browse/LG-4129)
+  - Exports the constant, `LGIDS_SELECT` which stores `data-lgid` values.
+  - Removes `role="presentation"` from `WarningIcon`
+
+### Patch Changes
+
+- 8aec541d: Correct `description` propType
+- Updated dependencies [9402ba0e]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/lib@13.4.0
+  - @lg-tools/test-harnesses@0.1.1
+  - @leafygreen-ui/palette@4.0.10
+
+## 11.2.3
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/button@21.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/popover@11.3.1
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/input-option@1.1.2
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 11.2.2
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/typography@18.2.3
+
+## 11.2.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [8ad4fdbc]
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/popover@11.3.0
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/input-option@1.1.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
+## 11.2.0
+
+### Minor Changes
+
+- 36a8ded2: `description` prop can now be a `React.ReactNode` rather than a `string`
+
+### Patch Changes
+
+- Updated dependencies [c2854e9b]
+- Updated dependencies [11d12cc4]
+  - @leafygreen-ui/tokens@2.4.0
+  - @leafygreen-ui/typography@18.2.1
+
+## 11.1.2
+
+### Patch Changes
+
+- ffd11f24: - Passes `onEnter*` and `onExit*` props to internal `Popover` component
+  - Adds tests to test `onEnter*` and `onExit*` callbacks
+  - Adds tests to test `PopoverContext`
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/hooks@8.1.0
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/input-option@1.1.0
+  - @leafygreen-ui/popover@11.2.1
+  - @leafygreen-ui/typography@18.1.0
+
+## 11.1.1
+
+### Patch Changes
+
+- 969b0d45: Adds `stopPropagation` and `preventDefault` to prevent menus from reopening when using `usePortal = false` and selecting an option with `space`/`enter`.
+
+## 11.1.0
+
+### Minor Changes
+
+- ace9cc03: Allows Select to accept a ref
+
+### Patch Changes
+
+- Updated dependencies [e3f4d9ce]
+- Updated dependencies [89f439e8]
+- Updated dependencies [c41752d2]
+- Updated dependencies [f077faf1]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/typography@18.0.1
+  - @leafygreen-ui/hooks@8.0.1
+  - @leafygreen-ui/icon@11.25.0
+  - @leafygreen-ui/button@21.0.10
+
 ## 11.0.1
 
 ### Patch Changes

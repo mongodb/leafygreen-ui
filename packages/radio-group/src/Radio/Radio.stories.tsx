@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { StoryMetaType } from '@leafygreen-ui/lib';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { Size } from '../types';
 

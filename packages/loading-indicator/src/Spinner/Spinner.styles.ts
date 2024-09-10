@@ -21,7 +21,8 @@ export const SpinnerBottomMargins: Record<DisplayOption, number> = {
 
 // Styles
 export const rootStyles = css`
-  text-align: center;
+  display: flex;
+  align-items: center;
 `;
 
 export const darkModeSpinnerStyles = css`
@@ -37,7 +38,9 @@ export const colorOverrideStyles = (color: string) => css`
 `;
 
 export const horizontalDisplayOptionStyles = css`
-  display: flex;
-  align-items: center;
   gap: 6px;
+`;
+
+export const verticalDisplayOptionStyles = css`
+  flex-direction: column;
 `;

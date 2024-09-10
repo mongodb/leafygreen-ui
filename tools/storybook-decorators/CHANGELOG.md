@@ -1,5 +1,87 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.10
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+
+## 0.2.9
+
+### Patch Changes
+
+- Updated dependencies [24ee033c]
+  - @leafygreen-ui/banner@8.0.0
+
+## 0.2.8
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @lg-tools/build@0.5.0
+  - @leafygreen-ui/palette@4.0.10
+
+## 0.2.7
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+  - @lg-tools/storybook-utils@0.1.0
+  - @lg-tools/build@0.4.1
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/banner@7.0.20
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @lg-tools/build@0.4.0
+  - @leafygreen-ui/tokens@2.5.1
+
+## 0.2.5
+
+### Patch Changes
+
+- fbc2b7c8: Upgrades Storybook packages to v7.6.17
+- Updated dependencies [3208b813]
+  - @leafygreen-ui/tokens@2.5.0
+
+## 0.2.4
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+- Updated dependencies [2bceccb1]
+- Updated dependencies [2645cd50]
+  - @leafygreen-ui/lib@13.2.1
+  - @lg-tools/build@0.3.2
+  - @leafygreen-ui/tokens@2.3.0
+
+## 0.2.3
+
+### Patch Changes
+
+- ffd11f24: Adds Null check for args
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/lib@13.2.0
+
 ## 0.2.2
 
 ### Patch Changes

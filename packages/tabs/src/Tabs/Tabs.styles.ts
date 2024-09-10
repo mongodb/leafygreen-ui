@@ -1,42 +1,27 @@
-import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
-// Using a background allows the "border" to appear underneath the individual tab color
-export const modeColors = {
-  [Theme.Light]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.light2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
+export const tabListElementClassName = createUniqueClassName('tab-list');
+export const inlineChildrenContainerClassName = createUniqueClassName(
+  'tabs-inline_children',
+);
+export const tabPanelsElementClassName = createUniqueClassName('tab-panels');
 
-  [Theme.Dark]: {
-    underlineColor: css`
-      background: linear-gradient(
-        0deg,
-        ${palette.gray.dark2} 1px,
-        rgb(255 255 255 / 0%) 1px
-      );
-    `,
-  },
-};
-
-export const tabContainerStyle = css`
+export const getTabContainerStyles = (theme: Theme) => css`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
+
+  /* Using a background allows the "border" to appear underneath the individual tab color */
+  background: linear-gradient(
+    0deg,
+    ${color[theme].border.secondary.default} 1px,
+    rgb(255 255 255 / 0%) 1px
+  );
 `;
 
-export const inlineChildrenWrapperStyle = css`
-  display: flex;
-  align-items: center;
-`;
-
-export const listStyle = css`
+const baseTabListStyles = css`
   list-style: none;
   padding: 0;
   display: flex;
@@ -53,3 +38,16 @@ export const listStyle = css`
   -ms-overflow-style: none; /* IE */
   scrollbar-width: none; /* Firefox */
 `;
+
+export const tabListStyles = cx(baseTabListStyles, tabListElementClassName);
+
+const baseInlineChildrenContainerStyles = css`
+  display: flex;
+  align-items: center;
+  gap: ${spacing[200]}px;
+`;
+
+export const inlineChildrenContainerStyles = cx(
+  baseInlineChildrenContainerStyles,
+  inlineChildrenContainerClassName,
+);

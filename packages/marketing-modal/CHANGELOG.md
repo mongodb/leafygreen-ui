@@ -1,5 +1,57 @@
 # @leafygreen-ui/marketing-modal
 
+## 4.2.3
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+
+## 4.2.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/button@21.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/modal@16.0.7
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 4.2.1
+
+### Patch Changes
+
+- daadacbe: Sets the default `closeIconColor` to correctly be 'default' (`CloseIconColor.Default`)
+- Updated dependencies [daadacbe]
+  - @leafygreen-ui/modal@16.0.4
+
+## 4.2.0
+
+### Minor Changes
+
+- 997e9a99: `title` prop is now typed as ReactNode to allow customizations
+
+### Patch Changes
+
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 4.1.2
 
 ### Patch Changes

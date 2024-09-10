@@ -1,26 +1,33 @@
 import React from 'react';
-import { StoryFn } from '@storybook/react';
+import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
-import { storybookArgTypes } from '@leafygreen-ui/lib';
-
-import { ParagraphSkeleton } from '.';
+import { ParagraphSkeleton } from './ParagraphSkeleton';
 
 export default {
   title: 'Components/SkeletonLoader',
   component: ParagraphSkeleton,
-  argTypes: {
-    darkMode: storybookArgTypes.darkMode,
-    withHeader: { control: 'boolean' },
+  parameters: {
+    controls: { exclude: ['darkMode', 'ref'] },
+    default: null,
+    generate: {
+      storyNames: ['Paragraph'],
+      combineArgs: {
+        darkMode: [false, true],
+        withHeader: [true, false],
+      },
+      decorator: Instance => (
+        <div style={{ width: 500 }}>
+          <Instance />
+        </div>
+      ),
+    },
   },
-  decorators: [
-    (Story: StoryFn) => (
-      <div style={{ width: 700 }}>
-        <Story />
-      </div>
-    ),
-  ],
-};
+  args: {
+    enableAnimations: false,
+  },
+  argTypes: {
+    enableAnimations: { control: 'boolean' },
+  },
+} satisfies StoryMetaType<typeof ParagraphSkeleton>;
 
-export const Paragraph: StoryFn<typeof ParagraphSkeleton> = props => (
-  <ParagraphSkeleton {...props} />
-);
+export const Paragraph: StoryType<typeof ParagraphSkeleton> = () => <></>;

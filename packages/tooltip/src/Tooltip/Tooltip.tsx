@@ -19,7 +19,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, { Justify } from '@leafygreen-ui/popover';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -36,6 +36,7 @@ import {
   transitionDelay,
 } from './Tooltip.styles';
 import {
+  Align,
   PopoverFunctionParameters,
   TooltipProps,
   TriggerEvent,
@@ -73,6 +74,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.id id given to Tooltip content.
  * @param props.usePortal Determines whether or not Tooltip will be Portaled
  * @param props.portalClassName Classname applied to root element of the portal.
+ * @param props.portalRef A ref for the portal element
  * @param props.onClose Callback that is fired when the tooltip is closed.
  */
 function Tooltip({
@@ -92,6 +94,7 @@ function Tooltip({
   shouldClose,
   portalClassName,
   portalContainer,
+  portalRef,
   scrollContainer,
   popoverZIndex,
   refEl,
@@ -137,7 +140,7 @@ function Tooltip({
           return {
             onMouseEnter: debounce((e: MouseEvent) => {
               userTriggerHandler('onMouseEnter', e);
-              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
+              // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
               // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
               flushSync(() => {
                 setOpen(true);
@@ -195,6 +198,7 @@ function Tooltip({
           usePortal,
           portalClassName,
           portalContainer,
+          portalRef,
           scrollContainer,
         }
       : { spacing, usePortal }),
@@ -321,6 +325,12 @@ Tooltip.propTypes = {
   shouldClose: PropTypes.func,
   usePortal: PropTypes.bool,
   portalClassName: PropTypes.string,
+  portalRef: PropTypes.shape({
+    current:
+      typeof window !== 'undefined'
+        ? PropTypes.instanceOf(Element)
+        : PropTypes.any,
+  }),
 };
 
 export default Tooltip;

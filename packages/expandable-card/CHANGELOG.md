@@ -1,5 +1,93 @@
 # @leafygreen-ui/expandable-card
 
+## 3.2.4
+
+### Patch Changes
+
+- af96e3967: [LG-4422](https://jira.mongodb.org/browse/LG-4422) Update chevron icon to properly indicate if interaction will expand or collapse and add animation
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/hooks@8.1.4
+
+## 3.2.3
+
+### Patch Changes
+
+- Updated dependencies [667496f83]
+- Updated dependencies [d70758dcf]
+  - @leafygreen-ui/card@11.0.0
+  - @leafygreen-ui/palette@4.1.0
+
+## 3.2.2
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 3.2.1
+
+### Patch Changes
+
+- ecb7bbc8: Changes description content from being wrapped inside aa `p` tag to be wrapped in a `div`. This makes the nested content more dynamic.
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/card@10.0.7
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 3.2.0
+
+### Minor Changes
+
+- 9e21c595: `title` values can now be type `React.ReactNode` rather than just type `string`
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/typography@18.2.3
+
+## 3.1.0
+
+### Minor Changes
+
+- 7ec22b90: Component now responds to changes in the value of `defaultOpen` prop
+
+## 3.0.24
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
+## 3.0.23
+
+### Patch Changes
+
+- e059943f: Updates live example so that `title` does not look like an optional prop
+- Updated dependencies [e6c70b73]
+  - @leafygreen-ui/icon@11.28.0
+
 ## 3.0.22
 
 ### Patch Changes

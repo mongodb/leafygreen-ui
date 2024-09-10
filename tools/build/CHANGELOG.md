@@ -1,5 +1,47 @@
 # @lg-tools/build
 
+## 0.6.0
+
+### Minor Changes
+
+- fdd63dbe4: Allows passing flags to `tsc` from the `lg build-ts` command
+
+## 0.5.1
+
+### Patch Changes
+
+- 4951369a: Bumps `rollup` and related packages to v4
+
+## 0.5.0
+
+### Minor Changes
+
+- c3906f78: Adds `rollup-plugin-sizes` to show bundles sizes.
+
+## 0.4.1
+
+### Patch Changes
+
+- 356a53fd: Update typescript peer dependency
+
+## 0.4.0
+
+### Minor Changes
+
+- ab762558: Adds `rollup-plugin-sizes` to show bundles sizes.
+
+## 0.3.2
+
+### Patch Changes
+
+- 2bceccb1: Fixes `lodash` imports to use default exports of specific functions to reduce component's bundle size.
+
+## 0.3.1
+
+### Patch Changes
+
+- 4822f43c: Bumps @babel packages that were effected by @babel/traverse security breach
+
 ## 0.3.0
 
 ### Minor Changes

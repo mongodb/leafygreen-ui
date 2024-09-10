@@ -13,8 +13,11 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
+    {
+      "path": "../descendants"
+    },
     {
       "path": "../emotion"
     },
@@ -26,6 +29,9 @@
     },
     {
       "path": "../icon-button"
+    },
+    {
+      "path": "../input-option"
     },
     {
       "path": "../lib"
@@ -41,6 +47,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"

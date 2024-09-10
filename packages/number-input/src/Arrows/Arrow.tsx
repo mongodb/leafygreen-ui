@@ -8,8 +8,8 @@ import { Direction } from '../NumberInput/NumberInput.types';
 
 import {
   arrowBaseStyles,
-  arrowThemeStyles,
   downArrowRotateStyles,
+  getArrowThemeStyles,
 } from './Arrows.styles';
 import { ArrowProps } from './Arrows.types';
 
@@ -30,10 +30,11 @@ export const Arrow = ({
       aria-label={`${direction} number`}
       onClick={() => onClick(direction)}
       onKeyDown={onKeyDown}
-      className={cx(arrowBaseStyles, arrowThemeStyles[theme])}
+      className={cx(arrowBaseStyles, getArrowThemeStyles(theme))}
       type="button"
       tabIndex={-1} // Mimicking native behavior; you cannot focus on an arrow.
       disabled={disabled}
+      data-testid={`lg-number_input-${direction}_button`}
     >
       <Icon
         className={cx({

@@ -1,7 +1,8 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
+  color,
   focusRing,
   fontFamilies,
   fontWeights,
@@ -12,12 +13,13 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { FormFieldState } from '../FormField/FormField.types';
+import { FormFieldContextProps } from '../FormFieldContext';
 
-export const inputElementClassName = createUniqueClassName('form-field-input');
-export const iconClassName = createUniqueClassName('form-field-icon');
+const inputElementClassName = createUniqueClassName('form-field-input');
+const iconClassName = createUniqueClassName('form-field-icon');
 const autofillShadowOverride = (color: string) => `0 0 0 100px ${color} inset`;
 
-export const inputWrapperBaseStyles = css`
+const inputWrapperBaseStyles = css`
   display: flex;
   align-items: center;
   gap: ${spacing[1]}px;
@@ -52,103 +54,62 @@ export const inputWrapperBaseStyles = css`
   }
 `;
 
-export const inputWrapperModeStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.black};
-    background: ${palette.white};
-    border: 1px solid ${palette.gray.base};
+const getInputWrapperModeStyles = (theme: Theme) => {
+  const isDarkMode = theme === Theme.Dark;
+  /** token exceptions: background-color value was designated prior to token system */
+  const backgroundColor = isDarkMode
+    ? palette.gray.dark4
+    : color.light.background.primary.default;
 
-    &:hover,
-    &:active {
-      &:not([aria-disabled='true']):not(:focus) {
-        box-shadow: ${hoverRing.light.gray};
-      }
-    }
+  return css`
+    color: ${color[theme].text.primary.default};
+    background: ${backgroundColor};
+    border: 1px solid;
 
     & .${inputElementClassName} {
       &:-webkit-autofill {
-        color: ${palette.black};
-        background: ${palette.white};
-        border: 1px solid ${palette.gray.base};
-        -webkit-text-fill-color: ${palette.black};
-        box-shadow: ${autofillShadowOverride(palette.white)};
+        color: ${color[theme].text.primary.default};
+        background: ${backgroundColor};
+        border: 1px solid ${color[theme].border.primary.default};
+        -webkit-text-fill-color: ${color[theme].text.primary.default};
+        box-shadow: ${autofillShadowOverride(backgroundColor)};
 
-        &:not([aria-disabled='true']):focus {
-          box-shadow: ${autofillShadowOverride(palette.white)},
-            ${focusRing.light.input};
-          border-color: ${palette.white};
+        &:focus {
+          box-shadow: ${autofillShadowOverride(backgroundColor)},
+            ${focusRing[theme].input};
+          border-color: ${color[theme].border.primary.focus};
         }
 
-        &:not([aria-disabled='true']):hover:not(:focus) {
-          box-shadow: ${autofillShadowOverride(palette.white)},
-            ${hoverRing.light.gray};
+        &:hover:not(:focus) {
+          box-shadow: ${autofillShadowOverride(backgroundColor)},
+            ${hoverRing[theme].gray};
         }
       }
 
       &::placeholder {
-        color: ${palette.gray.light1};
         font-weight: ${fontWeights.regular};
+        color: ${color[theme].text.placeholder.default};
       }
     }
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light3};
-    background-color: ${palette.gray.dark4};
-    border: 1px solid ${palette.gray.base};
-
-    &:hover,
-    &:active {
-      &:not([aria-disabled='true']):not(:focus) {
-        box-shadow: ${hoverRing.dark.gray};
-      }
-    }
-
-    & .${inputElementClassName} {
-      &:-webkit-autofill {
-        border: 1px solid ${palette.gray.base};
-        color: ${palette.gray.light3};
-        background: ${palette.gray.dark4};
-        -webkit-text-fill-color: ${palette.gray.light3};
-        box-shadow: ${autofillShadowOverride(palette.gray.dark4)};
-
-        &:not([aria-disabled='true']):focus {
-          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-            ${focusRing.dark.input};
-          border-color: ${palette.blue.light1};
-        }
-
-        &:not([aria-disabled='true']):hover:not(:focus) {
-          box-shadow: ${autofillShadowOverride(palette.gray.dark4)},
-            ${hoverRing.dark.gray};
-        }
-      }
-
-      &::placeholder {
-        color: ${palette.gray.dark1};
-        font-weight: ${fontWeights.regular};
-      }
-    }
-  `,
+  `;
 };
 
 const focusSelector = (styles: string) => css`
   @supports selector(:has(a, b)) {
-    &:not([aria-disabled='true']):focus-within:not(
-        :has(.${iconClassName}:focus)
-      ) {
+    &:focus-within:not(:has(.${iconClassName}:focus)) {
       ${styles}
     }
   }
 
   /* Fallback for when "has" is unsupported */
   @supports not selector(:has(a, b)) {
-    &:not([aria-disabled='true']):focus-within {
+    &:focus-within {
       ${styles}
     }
   }
 `;
 
-export const inputWrapperFocusStyles: Record<Theme, string> = {
+const inputWrapperFocusStyles: Record<Theme, string> = {
   [Theme.Light]: focusSelector(`
      {
       box-shadow: ${focusRing.light.input};
@@ -166,113 +127,102 @@ export const inputWrapperFocusStyles: Record<Theme, string> = {
 /** Selector that is true if the icon element passed in is a button */
 const iconIsButtonSelector = `&:has(button.${iconClassName})`;
 
-export const inputWrapperSizeStyles: Record<Size, string> = {
+const inputWrapperSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     height: 22px;
-    padding-inline: 6px;
+    padding-inline: ${spacing[200]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 4px;
+      padding-inline-end: ${spacing[100]}px;
     }
   `,
   [Size.Small]: css`
     height: 28px;
-    padding-inline: 6px;
+    padding-inline: ${spacing[200]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 4px;
+      padding-inline-end: ${spacing[100]}px;
     }
   `,
   [Size.Default]: css`
     height: 36px;
-    padding-inline: 12px;
+    padding-inline: ${spacing[300]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 6px;
+      padding-inline-end: ${spacing[150]}px;
     }
   `,
   [Size.Large]: css`
     height: 48px;
-    padding-inline: 16px;
+    padding-inline: ${spacing[300]}px;
 
     ${iconIsButtonSelector} {
-      padding-inline-end: 10px;
+      padding-inline-end: ${spacing[200]}px;
     }
   `,
 };
 
-export const inputWrapperStateStyles: Record<
-  FormFieldState,
-  Record<Theme, string>
-> = {
-  [FormFieldState.Error]: {
-    [Theme.Light]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.red.base};
+const getInputWrapperStateStyles = ({
+  theme,
+  state,
+}: {
+  theme: Theme;
+  state: FormFieldState;
+}) => {
+  const styleMap = {
+    [FormFieldState.Error]: css`
+      border-color: ${color[theme].border.error.default};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.light.red};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing[theme].red};
         }
       }
     `,
-    [Theme.Dark]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.red.light1};
+    [FormFieldState.None]: css`
+      border-color: ${color[theme].border.primary.default};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.dark.red};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing[theme].gray};
         }
       }
     `,
-  },
-  [FormFieldState.None]: {
-    [Theme.Light]: css``,
-    [Theme.Dark]: css``,
-  },
-  [FormFieldState.Valid]: {
-    [Theme.Light]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.green.dark1};
+    [FormFieldState.Valid]: css`
+      border-color: ${color[theme].border.success.default};
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.light.green};
-          }
+      &:hover,
+      &:active {
+        &:not(:focus) {
+          box-shadow: ${hoverRing[theme].green};
         }
       }
     `,
-    [Theme.Dark]: css`
-      &:not([aria-disabled='true']) {
-        border-color: ${palette.green.dark1};
+  };
 
-        &:hover,
-        &:active {
-          &:not([aria-disabled='true']):not(:focus) {
-            box-shadow: ${hoverRing.dark.green};
-          }
-        }
-      }
-    `,
-  },
+  return styleMap[state];
 };
 
-export const inputWrapperDisabledStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
+const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
+  return css`
     cursor: not-allowed;
-    background-color: ${palette.gray.light2};
-    border-color: ${palette.gray.light1};
+    color: ${color[theme].text.disabled.default};
+    background-color: ${color[theme].background.disabled.default};
+    border-color: ${color[theme].border.disabled.default};
 
-    & input {
+    &:hover,
+    &:active {
+      &:not(:focus) {
+        box-shadow: inherit;
+      }
+    }
+
+    & .${inputElementClassName} {
       cursor: not-allowed;
       pointer-events: none;
-      color: ${palette.gray.base};
+      color: ${color[theme].text.disabled.default};
 
       &::placeholder {
         color: inherit;
@@ -283,96 +233,104 @@ export const inputWrapperDisabledStyles: Record<Theme, string> = {
         &:hover,
         &:focus {
           appearance: none;
-          border: 1px solid ${palette.gray.base};
-          -webkit-text-fill-color: ${palette.gray.base};
-          box-shadow: ${autofillShadowOverride(palette.gray.light2)};
+
+          border: 1px solid ${color[theme].border.disabled.hover};
+          -webkit-text-fill-color: ${color[theme].text.disabled.hover};
+          box-shadow: ${autofillShadowOverride(
+            color[theme].background.disabled.hover,
+          )};
+        }
+
+        &:hover:not(:focus) {
+          box-shadow: inherit;
         }
       }
     }
-  `,
-  [Theme.Dark]: css`
-    cursor: not-allowed;
-    color: ${palette.gray.dark2};
-    background-color: ${palette.gray.dark3};
-    border-color: ${palette.gray.dark2};
-
-    & input {
-      cursor: not-allowed;
-      pointer-events: none;
-      color: ${palette.gray.dark2};
-
-      &::placeholder {
-        color: inherit;
-      }
-
-      &:-webkit-autofill {
-        &,
-        &:hover,
-        &:focus {
-          appearance: none;
-          border: 1px solid ${palette.gray.dark1};
-          -webkit-text-fill-color: ${palette.gray.dark1};
-          box-shadow: ${autofillShadowOverride(palette.gray.dark2)};
-        }
-      }
-    }
-  `,
+  `;
 };
+
+export const getInputWrapperStyles = ({
+  disabled,
+  size: sizeProp,
+  state,
+  theme,
+  className,
+}: Pick<FormFieldContextProps, 'disabled' | 'size' | 'state'> & {
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
+    inputWrapperBaseStyles,
+    getInputWrapperModeStyles(theme),
+    inputWrapperSizeStyles[sizeProp],
+    {
+      [cx(
+        getInputWrapperStateStyles({ theme, state }),
+        inputWrapperFocusStyles[theme],
+      )]: !disabled,
+      [getInputWrapperDisabledThemeStyles(theme)]: disabled,
+    },
+    className,
+  );
 
 export const childrenWrapperStyles = css`
   width: 100%;
 `;
 
-export const iconsWrapperStyles = (size: Size) => css`
+export const getChildrenStyles = (className?: string) =>
+  cx(inputElementClassName, className);
+
+export const additionalChildrenWrapperStyles = css`
   display: flex;
   align-items: center;
-  gap: ${size === Size.XSmall ? spacing[1] : spacing[2]}px;
+  gap: ${spacing[100]}px;
 `;
 
-export const iconStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-  `,
+export const getOptionalTextStyle = (theme: Theme) => {
+  return css`
+    color: ${color[theme].text.secondary.default};
+
+    font-size: 12px;
+    line-height: 12px;
+    font-style: italic;
+    font-weight: ${fontWeights.regular};
+    display: flex;
+    align-items: center;
+    > p {
+      margin: 0;
+    }
+  `;
 };
 
-export const validIconStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.green.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.green.base};
-  `,
+const getIconThemeStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].icon.secondary.default};
+  `;
 };
 
-export const errorIconStyles: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.red.base};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.red.light1};
-  `,
+const getIconDisabledThemeStyles = (theme: Theme) => {
+  return css`
+    color: ${color[theme].icon.disabled.default};
+
+    &:active,
+    &:hover {
+      color: ${color[theme].icon.disabled.hover};
+    }
+
+    &:focus {
+      color: ${color[theme].icon.disabled.focus};
+    }
+  `;
 };
 
-export const optionalTextBaseStyle = css`
-  font-size: 12px;
-  line-height: 12px;
-  font-style: italic;
-  font-weight: ${fontWeights.regular};
-  display: flex;
-  align-items: center;
-  > p {
-    margin: 0;
-  }
-`;
-
-export const optionalTextThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.base};
-  `,
-};
+export const getContentEndStyles = (
+  theme: Theme,
+  disabled: boolean,
+  className?: string,
+) =>
+  cx(
+    iconClassName,
+    getIconThemeStyles(theme),
+    { [getIconDisabledThemeStyles(theme)]: disabled },
+    className,
+  );

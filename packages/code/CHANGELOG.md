@@ -1,5 +1,98 @@
 # @leafygreen-ui/code
 
+## 14.4.0
+
+### Minor Changes
+
+- f827eb412: [LG-4319](https://jira.mongodb.org/browse/LG-4319) Adds `expandable` prop to `Code` component. This makes it so that a codeblock with more than 5 lines of code can be expanded and collapsed via the click of a button.
+
+### Patch Changes
+
+- Updated dependencies [e7bc12814]
+- Updated dependencies [c1b8b633b]
+- Updated dependencies [fe2483937]
+  - @leafygreen-ui/icon-button@15.0.23
+  - @leafygreen-ui/hooks@8.1.4
+
+## 14.3.3
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/select@12.0.0
+  - @leafygreen-ui/tokens@2.6.0
+
+## 14.3.2
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/button@21.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon-button@15.0.21
+  - @leafygreen-ui/select@11.2.3
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/a11y@1.4.13
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/hooks@8.1.3
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+  - @leafygreen-ui/tooltip@11.0.3
+
+## 14.3.1
+
+### Patch Changes
+
+- a384a3d4: Fix test mocks for `CopyButton` component
+
+  [LG-3915](https://jira.mongodb.org/browse/LG-3915)
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/icon-button@15.0.20
+  - @leafygreen-ui/select@11.2.2
+  - @leafygreen-ui/tooltip@11.0.2
+
+## 14.3.0
+
+### Minor Changes
+
+- 9afcc3bd: Adds tooltip hover interaction for `Code` component copy button
+  [LG-3915](https://jira.mongodb.org/browse/LG-3915)
+
+## 14.2.19
+
+### Patch Changes
+
+- 12296e6c: Exports `Panel` component
+  [LG-4076](https://jira.mongodb.org/browse/LG-4076)
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/select@11.2.1
+  - @leafygreen-ui/hooks@8.1.2
+  - @leafygreen-ui/icon@11.29.1
+
+## 14.2.18
+
+### Patch Changes
+
+- fa135957: Code LiveExample now correctly works with 'language="none"'
+- Updated dependencies [99848a0f]
+- Updated dependencies [6c89b45b]
+- Updated dependencies [ed0437ce]
+  - @leafygreen-ui/lib@13.1.0
+  - @leafygreen-ui/button@21.0.11
+  - @leafygreen-ui/icon@11.25.1
+
 ## 14.2.17
 
 ### Patch Changes

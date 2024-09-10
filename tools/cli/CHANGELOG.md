@@ -1,5 +1,157 @@
 # @lg-tools/cli
 
+## 0.6.1
+
+### Patch Changes
+
+- @lg-tools/test@0.4.9
+
+## 0.6.0
+
+### Minor Changes
+
+- fdd63dbe4: Allows passing flags to `tsc` from the `lg build-ts` command
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+  - @lg-tools/create@0.2.8
+  - @lg-tools/install@0.1.9
+  - @lg-tools/link@0.2.4
+  - @lg-tools/lint@0.2.3
+  - @lg-tools/slackbot@0.2.7
+  - @lg-tools/test@0.4.8
+  - @lg-tools/update@0.1.9
+  - @lg-tools/validate@0.1.11
+
+## 0.5.13
+
+### Patch Changes
+
+- @lg-tools/test@0.4.7
+
+## 0.5.12
+
+### Patch Changes
+
+- af208260: Adds pre-release of codemods command
+- Updated dependencies [af208260]
+  - @lg-tools/codemods@0.0.2
+
+## 0.5.11
+
+### Patch Changes
+
+- Updated dependencies [4951369a]
+  - @lg-tools/build@0.5.1
+  - @lg-tools/test@0.4.6
+
+## 0.5.10
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+  - @lg-tools/build@0.5.0
+  - @lg-tools/create@0.2.7
+  - @lg-tools/install@0.1.8
+  - @lg-tools/link@0.2.3
+  - @lg-tools/lint@0.2.2
+  - @lg-tools/slackbot@0.2.6
+  - @lg-tools/test@0.4.5
+  - @lg-tools/update@0.1.8
+  - @lg-tools/validate@0.1.10
+
+## 0.5.9
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+  - @lg-tools/lint@0.2.1
+  - @lg-tools/create@0.2.6
+  - @lg-tools/install@0.1.7
+  - @lg-tools/link@0.2.2
+  - @lg-tools/slackbot@0.2.5
+  - @lg-tools/test@0.4.4
+  - @lg-tools/update@0.1.7
+  - @lg-tools/validate@0.1.9
+
+## 0.5.8
+
+### Patch Changes
+
+- Updated dependencies [36070800]
+- Updated dependencies [36070800]
+  - @lg-tools/lint@0.2.0
+
+## 0.5.7
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+  - @lg-tools/build@0.4.0
+  - @lg-tools/create@0.2.5
+  - @lg-tools/install@0.1.6
+  - @lg-tools/link@0.2.1
+  - @lg-tools/lint@0.1.7
+  - @lg-tools/slackbot@0.2.4
+  - @lg-tools/test@0.4.3
+  - @lg-tools/update@0.1.6
+  - @lg-tools/validate@0.1.8
+
+## 0.5.6
+
+### Patch Changes
+
+- Updated dependencies [ee6ad399]
+  - @lg-tools/test@0.4.2
+
+## 0.5.5
+
+### Patch Changes
+
+- Updated dependencies [2bceccb1]
+- Updated dependencies [90bba7b2]
+  - @lg-tools/slackbot@0.2.3
+  - @lg-tools/validate@0.1.7
+  - @lg-tools/create@0.2.4
+  - @lg-tools/build@0.3.2
+  - @lg-tools/link@0.2.0
+  - @lg-tools/test@0.4.1
+  - @lg-tools/install@0.1.5
+  - @lg-tools/update@0.1.5
+
+## 0.5.4
+
+### Patch Changes
+
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [0ece4ea0]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @lg-tools/validate@0.1.6
+  - @lg-tools/test@0.4.0
+  - @lg-tools/slackbot@0.2.2
+  - @lg-tools/create@0.2.3
+  - @lg-tools/install@0.1.4
+  - @lg-tools/link@0.1.4
+  - @lg-tools/update@0.1.4
+
+## 0.5.3
+
+### Patch Changes
+
+- Updated dependencies [4822f43c]
+- Updated dependencies [3e1a7bc3]
+  - @lg-tools/build@0.3.1
+  - @lg-tools/lint@0.1.6
+  - @lg-tools/validate@0.1.5
+  - @lg-tools/test@0.3.2
+
 ## 0.5.2
 
 ### Patch Changes

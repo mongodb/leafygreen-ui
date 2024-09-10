@@ -2,6 +2,7 @@
   "$schema": "tools/meta/lg.schema.json",
   "scopes": {
     "@leafygreen-ui": "packages",
+    "@lg-chat": "chat",
     "@lg-tools": "tools"
   }
 }

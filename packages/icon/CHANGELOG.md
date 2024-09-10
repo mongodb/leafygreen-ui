@@ -1,5 +1,135 @@
 # @leafygreen-ui/icon
 
+## 12.6.0
+
+### Minor Changes
+
+- 2f05b61ab: Exports `sizeMap`
+- eb80fd3cb: Adds Pending to glyph set
+
+## 12.5.4
+
+### Patch Changes
+
+- 342ab81b0: Updates Federation icon
+
+## 12.5.3
+
+### Patch Changes
+
+- 838a95b73: Slight tweaks for .design story
+
+## 12.5.2
+
+### Patch Changes
+
+- df0d6faee: Adds args to Icon meta for .design
+
+## 12.5.1
+
+### Patch Changes
+
+- 95093066c: Rename `AllIcons` to `LiveExample` for .design
+
+## 12.5.0
+
+### Minor Changes
+
+- 961be3f9: Adds Stop to glyph set and updates Pause glyph
+
+## 12.4.0
+
+### Minor Changes
+
+- ae44834e: Exports type `GlyphName`, a union of all default LeafyGreen icon names
+
+## 12.3.0
+
+### Minor Changes
+
+- 684c87f1: Adds `Moon` and `Sun` glyphs.
+
+## 12.2.0
+
+### Minor Changes
+
+- eeea253c: Adds `Format` `Eraser` glyphs, and updates `LogIn` glyph.
+
+## 12.1.0
+
+### Minor Changes
+
+- 9402ba0e: Adds `'Escalation'` to glyph set
+
+## 12.0.1
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+  - @leafygreen-ui/emotion@4.0.8
+
+## 12.0.0
+
+### Major Changes
+
+- 74057388: Renames `'Collections'` glyph to `'Project'`
+
+## 11.29.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+
+## 11.29.0
+
+### Minor Changes
+
+- 8142d306: Adds 'Collections', 'InternalEmployee', 'Primary', 'Recommended', 'SearchIndex', and 'Secondary' glyphs to set. Also updates 'Dashboard' glyph.
+
+## 11.28.0
+
+### Minor Changes
+
+- e6c70b73: Adds `'HorizontalDrag'` glyph to Icon set
+
+## 11.27.1
+
+### Patch Changes
+
+- 9b7a8236: Updates `'Database'`glyph
+
+## 11.27.0
+
+### Minor Changes
+
+- 75b8d963: Adds `'Hash'` to glyph set and updates the `'Home'` glyph
+
+## 11.26.0
+
+### Minor Changes
+
+- 66cfdbca: Adds `'Cap'` icon to glyph set
+- 873448bb: Adds `'Camera'` to glyph set
+
+### Patch Changes
+
+- ad243893: Updating dimensions of Calendar icon to correctly center itself horizontally
+
+## 11.25.1
+
+### Patch Changes
+
+- ed0437ce: Updates `'Key'` icon to match design specs
+
+## 11.25.0
+
+### Minor Changes
+
+- c41752d2: Adds `LightningBolt` icon to glyph set.
+- 89332190: Adds `Boolean` and `String` icons to glyph set
+
 ## 11.24.0
 
 ### Minor Changes

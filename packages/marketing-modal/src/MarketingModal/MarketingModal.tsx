@@ -20,8 +20,12 @@ import {
   linkStyle,
   titleStyle,
   wrapperStyle,
-} from './styles';
-import { BlobPosition, GraphicStyle, MarketingModalProps } from './types';
+} from './MarketingModal.styles';
+import {
+  BlobPosition,
+  GraphicStyle,
+  MarketingModalProps,
+} from './MarketingModal.types';
 
 const MarketingModal = ({
   children,
@@ -34,7 +38,7 @@ const MarketingModal = ({
   linkText,
   darkMode: darkModeProp,
   graphicStyle = GraphicStyle.Center,
-  closeIconColor = CloseIconColor.Dark,
+  closeIconColor = CloseIconColor.Default,
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
   disclaimer,
@@ -91,7 +95,7 @@ const MarketingModal = ({
 MarketingModal.displayName = 'MarketingModal';
 
 MarketingModal.propTypes = {
-  title: PropTypes.string.isRequired,
+  title: PropTypes.element.isRequired,
   graphic: PropTypes.element.isRequired,
   graphicStyle: PropTypes.oneOf(Object.values(GraphicStyle)),
   open: PropTypes.bool,

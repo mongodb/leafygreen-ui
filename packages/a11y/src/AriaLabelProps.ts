@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 /**
  * A union interface requiring _either_ `aria-label` or `aria-labelledby`
  */
@@ -43,7 +45,7 @@ export type AriaLabelPropsWithLabel =
        *
        * Optional if `aria-labelledby` or `aria-label` is provided
        */
-      label?: string;
+      label?: ReactNode;
     } & AriaLabelProps)
   | ({
       /**
@@ -51,5 +53,17 @@ export type AriaLabelPropsWithLabel =
        *
        * Optional if `aria-labelledby` or `aria-label` is provided
        */
-      label: string;
+      label: ReactNode;
     } & Partial<AriaLabelProps>);
+
+/**
+ * Conditionally requires {@link AriaLabelProps}
+ * if `children` is not provided
+ */
+export type AriaLabelPropsWithChildren =
+  | ({
+      children: ReactNode;
+    } & Partial<AriaLabelProps>)
+  | ({
+      children?: ReactNode | undefined;
+    } & AriaLabelProps);

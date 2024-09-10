@@ -19,7 +19,7 @@
   ],
   "exclude": [
     "**/*.spec.*",
-    "**/*.story.*"
+    "**/*.stories.*"
   ],
   "references": [
     {
@@ -30,6 +30,9 @@
     },
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../form-field"
     },
     {
       "path": "../hooks"
@@ -51,6 +54,9 @@
     },
     {
       "path": "../popover"
+    },
+    {
+      "path": "../testing-lib"
     },
     {
       "path": "../tokens"

@@ -1,0 +1,33 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+   "compilerOptions": {
+    "declarationDir": "dist",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@leafygreen-ui/*": ["../*/src"]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../testing-lib"
+    },
+  ]
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import { SideNav, SideNavGroup, SideNavItem } from '..';
@@ -180,6 +180,12 @@ describe('packages/side-nav', () => {
         // it is an empty function so side nav should remain visible in the DOM
         expect(screen.getByText('Clusters')).toBeInTheDocument();
       });
+    });
+
+    test('accepts a ref', () => {
+      const ref = createRef<HTMLDivElement>();
+      render(<SideNav ref={ref}>Sidenav Content</SideNav>);
+      expect(ref.current).toBeDefined();
     });
   });
 });

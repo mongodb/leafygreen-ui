@@ -49,15 +49,16 @@ export const validateBuilds = ({
         return;
       }
 
-      const umdPath = path.resolve(distDir, `index.js`);
-      const esmPath = path.resolve(distDir, `esm/index.js`);
-      const tsPath = path.resolve(distDir, `index.d.ts`);
+      const umdIndex = path.resolve(distDir, `index.js`);
+      const umdExists = fse.existsSync(umdIndex);
+      const isCJSValid = umdExists && getModuleTypes(umdIndex).includes('cjs');
 
-      const umdExists = fse.existsSync(umdPath);
-      const esmExists = fse.existsSync(esmPath);
-      const tsExists = fse.existsSync(tsPath);
-      const isCJSValid = getModuleTypes(umdPath).includes('cjs');
-      const isESMValid = getModuleTypes(esmPath).includes('esm');
+      const esmIndex = path.resolve(distDir, `esm/index.js`);
+      const esmExists = fse.existsSync(esmIndex);
+      const isESMValid = esmExists && getModuleTypes(esmIndex).includes('esm');
+
+      const tsIndex = path.resolve(distDir, `index.d.ts`);
+      const tsExists = fse.existsSync(tsIndex);
 
       verbose &&
         console.log({
@@ -75,7 +76,7 @@ export const validateBuilds = ({
         )
       ) {
         const errorMsg: Array<string> = [
-          chalk.red.bold(`Error in \`${pkgName}\` build:`),
+          chalk.red.bold(`Error in package \`${pkgName}\`:`),
         ];
         if (!umdExists) errorMsg.push(chalk.red('`dist/index.js` not found'));
         if (!esmExists)
@@ -84,16 +85,16 @@ export const validateBuilds = ({
         if (!isCJSValid)
           errorMsg.push(
             chalk.red(`UMD module not valid`),
-            chalk.gray(`(${umdPath})`),
+            chalk.gray(`(${umdIndex})`),
           );
         if (!isESMValid)
           errorMsg.push(
             chalk.red(`ESM module not valid`),
-            chalk.gray(`(${esmPath})`),
+            chalk.gray(`(${esmIndex})`),
           );
 
         if (errorMsg.length > 0) {
-          exit1('Error in builds' + errorMsg.join(' '));
+          exit1(errorMsg.join('\n'));
           return;
         }
       }

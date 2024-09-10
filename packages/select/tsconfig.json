@@ -19,7 +19,7 @@
   ],
   "exclude": [
     "**/*.spec.*",
-    "**/*.story.*"
+    "**/*.stories.*",
   ],
   "references": [
     {
@@ -27,6 +27,9 @@
     },
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../form-field"
     },
     {
       "path": "../hooks"

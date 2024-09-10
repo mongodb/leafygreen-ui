@@ -6,7 +6,7 @@ import {
   SearchState,
   State,
   TruncationLocation,
-} from '../Combobox.types';
+} from '../types';
 
 export interface ComboboxData {
   multiselect: boolean;
@@ -29,8 +29,8 @@ export const defaultContext = {
   withIcons: false,
   disabled: false,
   isOpen: false,
-  state: State.none,
-  searchState: SearchState.unset,
+  state: State.None,
+  searchState: SearchState.Unset,
   overflow: Overflow.expandY,
 };
 

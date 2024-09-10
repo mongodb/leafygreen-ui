@@ -1,5 +1,58 @@
 # @leafygreen-ui/skeleton-loader
 
+## 1.3.0
+
+### Minor Changes
+
+- 2f05b61ab: - [LG-4391](https://jira.mongodb.org/browse/LG-4391): Adds `IconSkeleton` component.
+
+### Patch Changes
+
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [94b4e7fa1]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+  - @leafygreen-ui/typography@19.3.0
+
+## 1.2.1
+
+### Patch Changes
+
+- Updated dependencies [667496f83]
+- Updated dependencies [d70758dcf]
+  - @leafygreen-ui/card@11.0.0
+  - @leafygreen-ui/palette@4.1.0
+
+## 1.2.0
+
+### Minor Changes
+
+- 6131074d: Adds `ListSkeleton` component
+- 355f0b18: Adds `enableAnimations` prop
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 1.1.3
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/card@10.0.7
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
 ## 1.1.2
 
 ### Patch Changes

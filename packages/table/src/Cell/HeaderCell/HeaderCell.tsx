@@ -2,12 +2,13 @@ import React, { PropsWithChildren } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { useTableContext } from '../../TableContext/TableContext';
+import { LGIDS } from '../../constants';
+import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 import {
   alignmentStyles,
   baseCellStyles,
-  cellContentContainerStyles,
+  cellTransitionContainerStyles,
   getCellPadding,
 } from '../Cell.styles';
 
@@ -50,6 +51,7 @@ const HeaderCell = <T extends LGRowData>({
 
   return (
     <th
+      data-lgid={LGIDS.header}
       className={cx(
         baseCellStyles,
         {
@@ -65,7 +67,7 @@ const HeaderCell = <T extends LGRowData>({
     >
       <div
         className={cx(
-          cellContentContainerStyles,
+          cellTransitionContainerStyles,
           headerCellContentStyles,
           // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
           // @ts-ignore Header types need to be extended or declared in the react-table namespace
@@ -79,6 +81,7 @@ const HeaderCell = <T extends LGRowData>({
             onSortIconClick={onSortIconClick}
             aria-label={`Sort by ${columnName}`}
             data-testid="lg-table-sort-icon-button"
+            data-lgid={LGIDS.sortIcon}
           />
         )}
       </div>

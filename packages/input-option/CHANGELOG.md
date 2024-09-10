@@ -1,5 +1,135 @@
 # @leafygreen-ui/input-option
 
+## 2.0.2
+
+### Patch Changes
+
+- ecae9acc7: Updates `InputOptionContent` horizontal padding from 8px to 12px
+
+## 2.0.1
+
+### Patch Changes
+
+- 157146b5c: Adds back `display:block` property, which was removed in style updates.
+
+## 2.0.0
+
+### Major Changes
+
+- cfa830701: ### API changes
+
+  - Renames `selected` prop to `checked` (this is done to avoid confusion with the `aria-selected` attribute, which is conditionally applied via the `highlighted` prop)
+  - `checked` applies the `aria-checked` attribute
+  - Note: `checked` _does not_ apply any styles. Any "checked" styles must be applied by the consuming component (this is consistent with previous behavior)
+  - Adds `preserveIconSpace` prop to `InputOptionContent` to determine whether menu items should preserve space for a left glyph, or left align all text content. Use this prop in menus where some items may or may not have icons/glyphs, in order to keep text across menu items aligned.
+  - Extends `AriaLabelPropsWithChildren` in `InputOptionProps`
+    - [`AriaLabelPropsWithChildren`](../packages/a11y/src/AriaLabelProps.ts) allows a component to accept any of `aria-label`, `aria-labelledby` or `children` as sufficient text for screen-reader accessibility
+
+  ### Styling changes
+
+  - Updates `InputOption` and `InputOptionContent` styles to use updated `color` and `spacing` tokens
+  - Exports `inputOptionClassName`, and `inputOptionContentClassName`.
+
+  #### Spacing overview
+
+  - block padding: 8px
+  - inline padding: 12px
+  - icon/text/chevron gap: 8px
+  - label & description font-size: 13px
+  - label & description line-height: 16px
+
+  #### Colors overview
+
+  - Left & right icon color: `color.[theme].icon.primary` tokens
+  - Label & Description: use default `Label` & `Description` colors from `typography`
+  - Background uses `color[theme].background.primary` tokens (including hover & focus states)
+  - Wedge uses `palette.blue.base` for all modes
+  - The `highlight` prop uses the `.focus` state color for Icon, Text & Background colors
+
+  ### Internal updates
+
+  - Establishes internal `InputOptionContext` to track `disabled`, `highlighted`, & `checked` attributes.
+
+### Patch Changes
+
+- cfa830701: Updates minimum wedge height from 16px to 24px
+- cfa830701: Fixes a bug to prevent a highlighted disabled option title from changing text color.
+- Updated dependencies [cfa830701]
+- Updated dependencies [cfa830701]
+- Updated dependencies [db2d1d12c]
+  - @leafygreen-ui/lib@13.6.1
+  - @leafygreen-ui/a11y@1.5.0
+  - @leafygreen-ui/typography@19.2.1
+
+## 1.1.4
+
+### Patch Changes
+
+- Updated dependencies [4fb369df7]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/typography@19.2.0
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/tokens@2.9.0
+
+## 1.1.3
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+  - @leafygreen-ui/typography@19.0.0
+
+## 1.1.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/a11y@1.4.13
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/polymorphic@1.3.7
+  - @leafygreen-ui/tokens@2.5.2
+
+## 1.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+
+## 1.1.0
+
+### Minor Changes
+
+- ffd11f24: Renders `aria-disabled` attribute when `disabled` is provided
+
+### Patch Changes
+
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/a11y@1.4.12
+  - @leafygreen-ui/lib@13.2.0
+  - @leafygreen-ui/typography@18.1.0
+
 ## 1.0.13
 
 ### Patch Changes

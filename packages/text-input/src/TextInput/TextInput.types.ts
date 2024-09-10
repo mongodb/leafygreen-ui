@@ -1,11 +1,13 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import { FormFieldState } from '@leafygreen-ui/form-field';
+import {
+  DarkModeProps,
+  Either,
+  HTMLElementProps,
+  LgIdProps,
+} from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export const State = {
-  None: 'none',
-  Valid: 'valid',
-  Error: 'error',
-} as const;
+export const State = FormFieldState;
 
 export type State = (typeof State)[keyof typeof State];
 
@@ -71,7 +73,9 @@ interface TextInputTypeProp {
   type?: TextInputType;
 }
 export interface BaseTextInputProps
-  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels> {
+  extends Omit<HTMLElementProps<'input', HTMLInputElement>, AriaLabels>,
+    DarkModeProps,
+    LgIdProps {
   /**
    * id associated with the TextInput component.
    */
@@ -89,7 +93,7 @@ export interface BaseTextInputProps
   optional?: boolean;
 
   /**
-   * Whether or not the field is currently disabled.
+   * Whether or not the field is disabled. This will set the `aria-disabled` and `readonly` attributes on the input, not the `disabled` attribute.
    * Default: false
    */
   disabled?: boolean;
@@ -112,7 +116,12 @@ export interface BaseTextInputProps
   /**
    * The message shown below the input field if the value is invalid.
    */
-  errorMessage?: string;
+  errorMessage?: React.ReactNode;
+
+  /**
+   * The message shown below the input field if the value is valid.
+   */
+  successMessage?: React.ReactNode;
 
   /**
    * The current state of the TextInput. This can be none, valid, or error.
@@ -128,11 +137,6 @@ export interface BaseTextInputProps
    * className supplied to the TextInput container.
    */
   className?: string;
-
-  /**
-   *  determines whether or not the component appears in dark theme.
-   */
-  darkMode?: boolean;
 
   /**
    * Callback called whenever validation should be run.

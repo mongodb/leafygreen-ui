@@ -10,10 +10,11 @@ import { Person } from './makeData.testutils';
 
 export const getDefaultTestData: (
   rowProps: object,
-) => Array<Person> = rowProps => {
+  additionalData?: Array<Person>,
+) => Array<Person> = (rowProps, additionalData = []) => {
   return [
     {
-      id: 1,
+      id: 1 as unknown as string, // Tests expect this to behave like a number, but TS wants a string
       firstName: 'tanner',
       lastName: 'linsley',
       age: 29,
@@ -22,7 +23,7 @@ export const getDefaultTestData: (
       ...rowProps,
     },
     {
-      id: 2,
+      id: 2 as unknown as string,
       firstName: 'derek',
       lastName: 'perkins',
       age: 40,
@@ -30,23 +31,24 @@ export const getDefaultTestData: (
       status: 'single',
     },
     {
-      id: 3,
+      id: 3 as unknown as string,
       firstName: 'joe',
       lastName: 'bergevin',
       age: 45,
       visits: 20,
       status: 'complicated',
     },
+    ...additionalData,
   ];
 };
 
-export type getTestColumnsProps = (
-  | {}
-  | Omit<ColumnDef<Person, any>, 'accessorKey' | 'header'>
-) & {};
+export type TestColumnsProps = Omit<
+  ColumnDef<Person, any>,
+  'accessorKey' | 'header'
+>;
 
 export const getDefaultTestColumns: (
-  props: getTestColumnsProps,
+  props: TestColumnsProps,
 ) => Array<ColumnDef<Person>> = props => [
   {
     accessorKey: 'id',
@@ -62,18 +64,15 @@ export const getDefaultTestColumns: (
     accessorFn: row => row.lastName,
     id: 'lastName',
     cell: info => info.getValue(),
-    // eslint-disable-next-line react/display-name
     header: () => <span>Last Name</span>,
   },
   {
     accessorKey: 'age',
-    // eslint-disable-next-line react/display-name
     header: () => 'Age',
     size: 50,
   },
   {
     accessorKey: 'visits',
-    // eslint-disable-next-line react/display-name
     header: () => <span>Visits</span>,
     size: 50,
   },
@@ -86,9 +85,11 @@ export const getDefaultTestColumns: (
 
 export interface TestTableWithHookProps {
   rowProps?: object;
-  columnProps?: getTestColumnsProps;
+  columnProps?: TestColumnsProps;
   hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
+  additionalData?: Array<Person>;
+  hasData?: boolean;
 }
 
 /**
@@ -98,10 +99,14 @@ export const useTestHookCall = ({
   rowProps,
   columnProps,
   hookProps,
+  additionalData,
+  hasData = true,
 }: TestTableWithHookProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [data] = useState<Array<Person>>(() =>
-    getDefaultTestData(rowProps ?? {}),
+  const [data] = useState<Array<Person>>(
+    hasData
+      ? () => getDefaultTestData((rowProps = rowProps ?? {}), additionalData)
+      : [],
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
   const [sorting, setSorting] = useState<SortingState>([]);

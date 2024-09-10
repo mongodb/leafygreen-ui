@@ -1,5 +1,155 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.2.0
+
+### Minor Changes
+
+- 1e9f2030: - Drops the `isRequired` from the `buttonText` prop type. As of [version 5.1.0](https://github.com/mongodb/leafygreen-ui/blob/main/packages/confirmation-modal/CHANGELOG.md#510), `buttonText` is a deprecated prop that is now optional.
+  - Fixes existing confirm button disabled state logic
+    - Previously, when the modal was closed using the cancel or confirm button and reopened, the confirm button would always reset to a disabled state, disregarding `requiredInputText` prop value.
+    - Now, the confirm button will reset to a disabled state only when `requiredInputText` is provided.
+  - Adds missing confirm button disabled state logic
+    - Previously, when the modal was closed using the modal close button and reopened, the confirm button would never reset to a disabled state.
+    - Now, the confirm button will reset to a disabled state when `requiredInputText` is provided.
+
+### Patch Changes
+
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [1e9f2030]
+- Updated dependencies [7bc4fcde]
+- Updated dependencies [961be3f9]
+  - @leafygreen-ui/lib@13.5.0
+  - @leafygreen-ui/modal@16.0.8
+  - @leafygreen-ui/tokens@2.8.0
+  - @leafygreen-ui/icon@12.5.0
+
+## 5.1.0
+
+### Minor Changes
+
+- 9ef03272: - Adds new prop `confirmButtonProps`. This prop is an object that accepts all `Button` props except for the `variant` prop. The variant is controlled by the `variant` prop.
+  - Adds new prop `cancelButtonProps`. This prop is an object that accepts all `Button` props. The `onClick` property will also fire when the `X` button, or backdrop is clicked.
+  - Prop `onConfirm` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `onClick` property.
+    ```js
+    confirmButtonProps: {
+      {
+        onClick: () => {};
+      }
+    }
+    ```
+  - Prop `buttonText` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `children` property.
+    ```js
+    confirmButtonProps: {
+      {
+        children: 'hi';
+      }
+    }
+    ```
+  - Prop `submitDisabled` is now marked as `deprecated`. Please transition to `confirmButtonProps` and pass the `disabled` property.
+    ```js
+    confirmButtonProps: {
+      {
+        disabled: true;
+      }
+    }
+    ```
+  - Prop `onCancel` is now marked as `deprecated`. Please transition to `cancelButtonProps` and pass the `onClick` property.
+    ```js
+    cancelButtonProps: {
+      {
+        onClick: () => {};
+      }
+    }
+    ```
+
+### Patch Changes
+
+- Updated dependencies [ae44834e]
+- Updated dependencies [3273045c]
+- Updated dependencies [3b86b3bd]
+  - @leafygreen-ui/icon@12.4.0
+  - @leafygreen-ui/text-input@13.1.0
+
+## 5.0.14
+
+### Patch Changes
+
+- Updated dependencies [dfd6972c]
+- Updated dependencies [1ec45a7e]
+  - @leafygreen-ui/typography@19.0.0
+  - @leafygreen-ui/button@21.2.0
+  - @leafygreen-ui/text-input@13.0.2
+
+## 5.0.13
+
+### Patch Changes
+
+- 4fa8281c: - Resets `confirm` button so that it is not enabled in a newly opened modal. [LG-4011](https://jira.mongodb.org/browse/LG-4011)
+  - Updates `data-testid`'s to match [STYLEGUIDE.md](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#variable-naming)
+- Updated dependencies [9402ba0e]
+- Updated dependencies [9b71e34d]
+- Updated dependencies [27ad3121]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/typography@18.4.0
+  - @leafygreen-ui/text-input@13.0.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
+## 5.0.12
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [7a0ff1be]
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/typography@18.3.0
+  - @leafygreen-ui/button@21.1.0
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/modal@16.0.7
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/text-input@12.1.27
+  - @leafygreen-ui/tokens@2.5.2
+
+## 5.0.11
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+  - @leafygreen-ui/text-input@12.1.26
+  - @leafygreen-ui/modal@16.0.6
+  - @leafygreen-ui/typography@18.2.3
+
+## 5.0.10
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [58f4a4c5]
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/typography@18.2.2
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/modal@16.0.5
+  - @leafygreen-ui/icon@11.29.1
+
+## 5.0.9
+
+### Patch Changes
+
+- ae4afdcd: Adds `data-testids` to better support end-to-end testing
+- Updated dependencies [e6c70b73]
+  - @leafygreen-ui/icon@11.28.0
+
 ## 5.0.8
 
 ### Patch Changes

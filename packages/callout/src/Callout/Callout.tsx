@@ -1,31 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { cx } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import {
-  anchorClassName,
-  bodyTypeScaleStyles,
+  Body,
   Overline,
-  Subtitle,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
 import {
-  baseStyle,
-  baseThemeStyles,
-  bodyStyle,
-  colorSets,
-  contentStyles,
-  focusThemeStyles,
-  headerIcons,
-  headerIconStyle,
+  getBaseStyles,
+  getContentStyles,
+  getHeaderStyles,
   headerLabels,
-  headerStyle,
-  titleStyle,
-} from './styles';
-import { CalloutProps, Variant } from './types';
+} from './Callout.styles';
+import { CalloutProps, Variant } from './Callout.types';
 
 /**
  * Callouts should be used when you want to call out information to the user. Unlike banners, callouts cannot be dismissed. They’re optimized for long form copy (banners are optimized to save space).
@@ -39,88 +32,34 @@ function Callout({
   darkMode: darkModeProp,
   ...rest
 }: CalloutProps) {
-  const { theme } = useDarkMode(darkModeProp);
+  const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
-  const colorSet = colorSets[theme][variant];
-  const Icon = headerIcons[variant];
 
   return (
-    <div
-      role="note"
-      className={cx(
-        baseStyle,
-        baseThemeStyles[theme],
-        css`
-          color: ${colorSet.text};
-          border: 2px solid ${colorSet.border};
-          box-shadow: inset 0px 2px 0px 0px ${colorSet.header.background}; // hides gap between the border and the header div when zoomed in.
-
-          &:after {
-            background: linear-gradient(
-              to left,
-              transparent 9px,
-              ${colorSet.bar} 9px
-            );
-          }
-        `,
-        className,
-      )}
-      {...rest}
+    <LeafyGreenProvider
+      darkMode={darkMode}
+      baseFontSize={
+        baseFontSize === BaseFontSize.Body1 ? 14 : BaseFontSize.Body2
+      }
     >
       <div
-        className={cx(
-          headerStyle,
-          css`
-            background-color: ${colorSet.header.background};
-            color: ${colorSet.header.text};
-          `,
-        )}
+        role="note"
+        className={cx(getBaseStyles(theme, variant), className)}
+        {...rest}
       >
-        <Icon
-          fill={colorSet.icon}
-          className={headerIconStyle}
-          role="presentation"
-        />
-        <Overline
-          as="h2"
-          className={cx(
-            css`
-              color: inherit;
-              letter-spacing: 0.6px;
-            `,
-          )}
-        >
+        <Overline as="h2" className={getHeaderStyles(theme, variant)}>
           {headerLabels[variant]}
         </Overline>
-      </div>
-      <div className={bodyStyle}>
         {title && (
-          <Subtitle
-            as="h3"
-            className={cx(titleStyle, bodyTypeScaleStyles[baseFontSize])}
-          >
-            {title}
-          </Subtitle>
+          <Body as="h3">
+            <strong>{title}</strong>
+          </Body>
         )}
-        <div
-          className={cx(
-            bodyTypeScaleStyles[baseFontSize],
-            contentStyles,
-            css`
-              .${anchorClassName}, a {
-                color: ${colorSet.link.color};
-                &:hover {
-                  color: ${colorSet.link.hoverColor};
-                }
-              }
-            `,
-            focusThemeStyles[theme],
-          )}
-        >
+        <Body className={getContentStyles(theme)} as="div">
           {contents}
-        </div>
+        </Body>
       </div>
-    </div>
+    </LeafyGreenProvider>
   );
 }
 

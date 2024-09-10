@@ -1,2 +1,7 @@
 export { default } from './Tabs';
-export type { AccessibleTabsProps, TabsProps } from './Tabs.types';
+export {
+  inlineChildrenContainerClassName,
+  tabListElementClassName,
+  tabPanelsElementClassName,
+} from './Tabs.styles';
+export { type AccessibleTabsProps, Size, type TabsProps } from './Tabs.types';

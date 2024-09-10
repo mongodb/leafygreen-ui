@@ -1,5 +1,182 @@
 # @leafygreen-ui/typography
 
+## 19.3.0
+
+### Minor Changes
+
+- 94b4e7fa1: Exports `linkStyles` and `linkModeStyles`.
+
+### Patch Changes
+
+- Updated dependencies [2f05b61ab]
+- Updated dependencies [eb80fd3cb]
+  - @leafygreen-ui/icon@12.6.0
+
+## 19.2.1
+
+### Patch Changes
+
+- db2d1d12c: Updates the background color of InlineCode component in dark mode from transparent to `gray.dark4`
+- Updated dependencies [cfa830701]
+  - @leafygreen-ui/lib@13.6.1
+
+## 19.2.0
+
+### Minor Changes
+
+- 4fb369df7: Links only display focus state on `focus-visible` not default `focus`
+
+### Patch Changes
+
+- 7a901b954: - Uses updated `useInferredPolymorphicProps` and `hasAnchorProps` from `polymorphic`
+- Updated dependencies [7a901b954]
+- Updated dependencies [7a901b954]
+- Updated dependencies [342ab81b0]
+- Updated dependencies [29d50edaa]
+  - @leafygreen-ui/polymorphic@2.0.0
+  - @leafygreen-ui/lib@13.6.0
+  - @leafygreen-ui/icon@12.5.4
+  - @leafygreen-ui/tokens@2.9.0
+
+## 19.1.2
+
+### Patch Changes
+
+- 5d44c6b16: Updates `line-height` of H1 component from 62 to 64px to align better with our grid
+- Updated dependencies [df0d6faee]
+  - @leafygreen-ui/icon@12.5.2
+
+## 19.1.1
+
+### Patch Changes
+
+- 0864a420: Cleans up style definitions
+- Updated dependencies [3364b542]
+- Updated dependencies [0864a420]
+- Updated dependencies [eeea253c]
+  - @leafygreen-ui/tokens@2.7.0
+  - @leafygreen-ui/icon@12.2.0
+
+## 19.1.0
+
+### Minor Changes
+
+- c406ab85: [LG-2930](https://jira.mongodb.org/browse/LG-2930)
+
+  - Updates typography components to use tokens where possible
+
+### Patch Changes
+
+- Updated dependencies [c406ab85]
+  - @leafygreen-ui/tokens@2.6.0
+
+## 19.0.0
+
+### Major Changes
+
+- dfd6972c: - Fixes the `Link` component so that:
+  - links are inline with the text preceding it
+  - The Arrow Icon is inline with the last line of text. Previously it rendered in a column next to the text because of `display: inline-flex`
+  - Adds generated stories for each `Typography` component
+
+## 18.4.0
+
+### Minor Changes
+
+- c3906f78: - Exports the constant, `LGIDS_TYPOGRAPHY`, which stores `data-lgid` values.
+  - Extends `LgIdProps` on `CommonTypographyProps`.
+  - Adds the `data-lgid` attribute to `Label` and `Description`
+
+### Patch Changes
+
+- 9b71e34d: Removes `button` default browsers styles when `as="button"` [LG-3665](https://jira.mongodb.org/browse/LG-3665)
+- Updated dependencies [9402ba0e]
+- Updated dependencies [c3906f78]
+- Updated dependencies [070736c4]
+  - @leafygreen-ui/icon@12.1.0
+  - @leafygreen-ui/lib@13.4.0
+  - @leafygreen-ui/palette@4.0.10
+
+## 18.3.0
+
+### Minor Changes
+
+- 7a0ff1be: [LG-4126](https://jira.mongodb.org/browse/LG-4126)
+
+  Styling changes are made to ensure consistent implementation of `disabled` state styles.
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/icon@12.0.1
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/polymorphic@1.3.7
+  - @leafygreen-ui/tokens@2.5.2
+
+## 18.2.3
+
+### Patch Changes
+
+- Updated dependencies [74057388]
+  - @leafygreen-ui/icon@12.0.0
+
+## 18.2.2
+
+### Patch Changes
+
+- 58f4a4c5: Updates how link underlines are styled, such that the text-decoration wraps when links break on new lines
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+  - @leafygreen-ui/icon@11.29.1
+
+## 18.2.1
+
+### Patch Changes
+
+- 11d12cc4: Updates dependency `@leafygreen-ui/tokens@2.3.0`
+- Updated dependencies [c2854e9b]
+  - @leafygreen-ui/tokens@2.4.0
+
+## 18.2.0
+
+### Minor Changes
+
+- 58e86c60: - Adds `BackLink` component. This component renders a persistent back arrow and is intended for internal linking only.
+  - Correctly responds to `baseFontSize` prop.
+
+## 18.1.0
+
+### Minor Changes
+
+- ffd11f24: Allows `Link` component to accept a ref
+
+### Patch Changes
+
+- Updated dependencies [9b7a8236]
+- Updated dependencies [7f38e78a]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+- Updated dependencies [ffd11f24]
+  - @leafygreen-ui/icon@11.27.1
+  - @leafygreen-ui/leafygreen-provider@3.1.11
+  - @leafygreen-ui/lib@13.2.0
+
+## 18.0.1
+
+### Patch Changes
+
+- e3f4d9ce: Improves documentation of Label component
+- Updated dependencies [c41752d2]
+- Updated dependencies [89332190]
+  - @leafygreen-ui/icon@11.25.0
+
 ## 18.0.0
 
 ### Major Changes

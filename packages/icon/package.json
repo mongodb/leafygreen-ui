@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/icon",
-  "version": "11.24.0",
+  "version": "12.6.0",
   "description": "LeafyGreen UI Kit Icons",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -13,7 +13,7 @@
     }
   },
   "scripts": {
-    "prebuild": "npx ts-node ./scripts/prebuild.ts --files",
+    "prebuild": "ts-node ./scripts/prebuild.ts --files",
     "build": "lg build-package",
     "tsc": "lg build-ts",
     "docs": "lg build-tsdoc"
@@ -23,16 +23,18 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/palette": "^4.0.7",
-    "@leafygreen-ui/lib": "^13.0.0",
+    "@leafygreen-ui/lib": "^13.6.0",
+    "@leafygreen-ui/palette": "^4.0.10",
+    "@lg-tools/storybook-utils": "^0.1.0",
     "@svgr/core": "^5.3.1",
     "@types/meow": "^6.0.0",
     "@types/xml2json": "^0.11.0",
     "meow": "^6.1.0",
+    "ts-node": "^10.9.2",
     "xml2json": "^0.12.0"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/emotion": "^4.0.8",
     "lodash": "^4.17.21"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",

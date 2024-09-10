@@ -13,6 +13,10 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
-  "references": []
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [{
+    "path": "../lib"
+  }, {
+    "path": "../emotion"
+  }]
 }

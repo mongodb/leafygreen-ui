@@ -1,5 +1,60 @@
 # @lg-tools/meta
 
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [fdd63dbe4]
+  - @lg-tools/build@0.6.0
+
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [c3906f78]
+  - @lg-tools/build@0.5.0
+
+## 0.3.2
+
+### Patch Changes
+
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [356a53fd]
+  - @lg-tools/build@0.4.1
+
+## 0.3.1
+
+### Patch Changes
+
+- Updated dependencies [ab762558]
+  - @lg-tools/build@0.4.0
+
+## 0.3.0
+
+### Minor Changes
+
+- 90bba7b2: Adds `pnpm` as a possible `getPackageManager` return value.
+
+### Patch Changes
+
+- Updated dependencies [2bceccb1]
+  - @lg-tools/build@0.3.2
+
+## 0.2.0
+
+### Minor Changes
+
+- ffd11f24: - Adds `exitWithErrorMessage` util
+  - Fixes recursion in `findPackageJson`
+
+## 0.1.5
+
+### Patch Changes
+
+- 8b1d2d3a: Adds `getPackageJson` utility
+- Updated dependencies [4822f43c]
+  - @lg-tools/build@0.3.1
+
 ## 0.1.4
 
 ### Patch Changes

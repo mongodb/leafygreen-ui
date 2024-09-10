@@ -1,5 +1,41 @@
 # @leafygreen-ui/badge
 
+## 8.1.3
+
+### Patch Changes
+
+- c86227a6: Updates Storybook argTypes for mongodb.design
+
+## 8.1.2
+
+### Patch Changes
+
+- 15185af0: Imports Storybook utilities from `@lg-tools/storybook-utils` (previously imported from `@leafygreen-ui/lib`)
+- 356a53fd: Update TS builds to use `typescript@4.9.5`
+- Updated dependencies [15185af0]
+- Updated dependencies [356a53fd]
+- Updated dependencies [66df9ab8]
+  - @leafygreen-ui/leafygreen-provider@3.1.12
+  - @leafygreen-ui/lib@13.3.0
+  - @leafygreen-ui/emotion@4.0.8
+  - @leafygreen-ui/palette@4.0.9
+  - @leafygreen-ui/tokens@2.5.2
+
+## 8.1.1
+
+### Patch Changes
+
+- e487fb24: Renames story files from `.story.tsx` to `.stories.tsx`
+- Updated dependencies [5ee54143]
+- Updated dependencies [e487fb24]
+  - @leafygreen-ui/tokens@2.5.1
+
+## 8.1.0
+
+### Minor Changes
+
+- cbe92872: Badge components now have a `border-radius` of `24px`, up from `5px` previously.
+
 ## 8.0.15
 
 ### Patch Changes

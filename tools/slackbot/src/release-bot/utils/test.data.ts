@@ -6,3 +6,12 @@ export const TEST_DATA = [
   { name: '@lg-tools/tool-minor', version: '1.2.0' },
   { name: '@lg-tools/tool-patch', version: '1.0.2' },
 ];
+
+export const TEST_CHANGELOG = `
+  # example-major
+
+  ## 2.0.0
+
+  ### Major Changes
+  - Major update
+`;

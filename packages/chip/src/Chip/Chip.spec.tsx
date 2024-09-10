@@ -3,6 +3,8 @@ import { act, fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import Icon from '@leafygreen-ui/icon';
+
 import { Chip } from '.';
 
 const longLabel = 'crush crush crush';
@@ -242,6 +244,23 @@ describe('packages/chip', () => {
       const { queryByTestId } = renderChip({ disabled: true, onDismiss });
       const button = queryByTestId('chip-dismiss-button');
       expect(() => userEvent.click(button!)).toThrow();
+      expect(onDismiss).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('glyph', () => {
+    test('renders when glyph is passed', () => {
+      const { getByTestId } = renderChip({
+        glyph: <Icon glyph="Wizard" data-testid="chip-glyph" />,
+      });
+      const icon = getByTestId('chip-glyph');
+      expect(icon).toBeInTheDocument();
+    });
+
+    test('does not renders when glyph is not passed', () => {
+      const { queryByTestId } = renderChip();
+      const icon = queryByTestId('chip-glyph');
+      expect(icon).not.toBeInTheDocument();
     });
   });
 
@@ -338,6 +357,7 @@ describe('packages/chip', () => {
         chipCharacterLimit={10}
         chipTruncationLocation="end"
         dismissButtonAriaLabel="deselect"
+        glyph={<Icon glyph="Wizard" />}
         darkMode
       />
     </>;

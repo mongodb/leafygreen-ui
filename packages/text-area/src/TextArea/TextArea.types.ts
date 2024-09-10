@@ -1,25 +1,25 @@
-import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
+import React from 'react';
+
+import { FormFieldState } from '@leafygreen-ui/form-field';
+import {
+  DarkModeProps,
+  Either,
+  HTMLElementProps,
+  LgIdProps,
+} from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-export const State = {
-  None: 'none',
-  Error: 'error',
-} as const;
-
+export const State = FormFieldState;
 export type State = (typeof State)[keyof typeof State];
 
 export interface BaseTextAreaProps
-  extends HTMLElementProps<'textarea', HTMLTextAreaElement> {
+  extends HTMLElementProps<'textarea', HTMLTextAreaElement>,
+    DarkModeProps,
+    LgIdProps {
   /**
    * ID associated with the TextArea component.
    */
   id?: string;
-
-  /**
-   * Determines whether or not the component appears in dark theme.
-   * @default false
-   */
-  darkMode?: boolean;
 
   /**
    * Text shown in bold above the input element.
@@ -31,10 +31,10 @@ export interface BaseTextAreaProps
   /**
    * Text that gives more detail about the requirements for the input.
    */
-  description?: string;
+  description?: React.ReactNode;
 
   /**
-   * Whether or not the field is currently disabled.
+   * Whether or not the field is disabled. This will set the `aria-disabled` and `readonly` attributes on the input, not the `disabled` attribute.
    * @default false
    */
   disabled?: boolean;
@@ -58,7 +58,12 @@ export interface BaseTextAreaProps
   /**
    * The message shown below the input element if the value is invalid.
    */
-  errorMessage?: string;
+  errorMessage?: React.ReactNode;
+
+  /**
+   * The message shown below the input element if the value is valid.
+   */
+  successMessage?: React.ReactNode;
 
   /**
    * Callback called whenever validation should be run.

@@ -5,7 +5,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { LGRowData } from '../useLeafyGreenTable';
 import getParentRowId from '../utils/getParentRowId';
 
-import { TableContextValues } from './TableContext.types';
+import { type TableContextValues } from './TableContext.types';
 
 export const TableContext = createContext<
   Partial<TableContextValues<LGRowData>>
@@ -21,6 +21,7 @@ const TableContextProvider = <T extends LGRowData>({
   darkMode,
   table,
   shouldAlternateRowColor,
+  disableAnimations,
 }: PropsWithChildren<Partial<TableContextValues<T>>>) => {
   const getRowById = (id?: string) =>
     id ? table?.getRowModel().rowsById?.[id] : undefined;
@@ -40,6 +41,7 @@ const TableContextProvider = <T extends LGRowData>({
           getRowById,
           getParentRow,
           shouldAlternateRowColor,
+          disableAnimations,
         }}
       >
         {children}

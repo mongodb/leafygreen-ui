@@ -90,10 +90,12 @@ export function RadioBox({
   const contextOnChange = radioBoxGroupContext?.onChange;
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     e => {
-      onChangeProp?.(e);
-      contextOnChange?.(e);
+      if (!disabled) {
+        onChangeProp?.(e);
+        contextOnChange?.(e);
+      }
     },
-    [onChangeProp, contextOnChange],
+    [onChangeProp, contextOnChange, disabled],
   );
 
   const radioDisplayStyle = getRadioDisplayStyles({
@@ -132,7 +134,6 @@ export function RadioBox({
         value={value}
         checked={checked}
         aria-checked={checked}
-        disabled={disabled}
         aria-disabled={disabled}
         className={inputStyles}
       />

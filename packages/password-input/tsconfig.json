@@ -13,13 +13,16 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../a11y"
     },
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../form-field"
     },
     {
       "path": "../hooks"
