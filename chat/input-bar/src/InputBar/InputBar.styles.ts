@@ -240,18 +240,18 @@ export const themedHotkeyIndicatorStyles = {
     color: ${palette.gray.light2};
   `,
   [Theme.Light]: css`
-    background-color: #E7EEEC;
-    border: 1px solid #E7EEEC;
+    background-color: #e7eeec;
+    border: 1px solid #e7eeec;
     color: ${palette.green.dark2};
-  `
-}
+  `,
+};
 export const hotkeyIndicatorUnfocusedStyles = css`
   opacity: 1;
-`
+`;
 
 export const hotkeyIndicatorFocusedStyles = css`
   opacity: 0;
-`
+`;
 
 export const getIconFill = (theme: Theme, disabled?: boolean) => {
   if (theme === Theme.Dark) {
