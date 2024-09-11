@@ -1,4 +1,4 @@
-import { FormEvent, ReactElement, ReactNode } from 'react';
+import { FormEvent, ReactElement } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';

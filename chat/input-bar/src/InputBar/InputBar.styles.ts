@@ -245,7 +245,7 @@ export const themedHotkeyIndicatorStyles = {
     color: ${palette.green.dark2};
   `
 }
-export const hotkeyIndicatorNotFocusedStyles = css`
+export const hotkeyIndicatorUnfocusedStyles = css`
   opacity: 1;
 `
 

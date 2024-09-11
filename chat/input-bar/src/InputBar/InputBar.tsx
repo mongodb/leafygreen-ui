@@ -50,7 +50,7 @@ import {
   getIconFill,
   gradientAnimationStyles,
   hotkeyIndicatorFocusedStyles,
-  hotkeyIndicatorNotFocusedStyles,
+  hotkeyIndicatorUnfocusedStyles,
   inputStyles,
   inputThemeStyles,
   leftContentStyles,
@@ -395,7 +395,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                       themedHotkeyIndicatorStyles[theme],
                       {
                         [hotkeyIndicatorFocusedStyles]: isFocused,
-                        [hotkeyIndicatorNotFocusedStyles]: !isFocused,
+                        [hotkeyIndicatorUnfocusedStyles]: !isFocused,
                       },
                     )}
                   >
