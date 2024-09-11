@@ -70,7 +70,6 @@ export const rightContentStyles = css`
   background-color: inherit;
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
-  cursor: text;
 `;
 
 export const inputStyles = css`
@@ -224,21 +223,21 @@ export const sendButtonDisabledStyles = css`
 
 export const baseHotkeyIndicatorStyles = css`
   padding: ${spacing[100]}px ${spacing[400]}px;
-  border-radius: calc(infinity * 1px);
+  border-radius: 14px;
   height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: default;
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity ${transitionDuration.default}ms ease-in-out;
   user-select: none;
 `;
 
 export const themedHotkeyIndicatorStyles = {
   [Theme.Dark]: css`
-    background-color: #112733;
-    border: 1px solid #3D4F58;
-    color: #E8EDEB;
+    background-color: ${palette.gray.dark4};
+    border: 1px solid ${palette.gray.dark2};
+    color: ${palette.gray.light2};
   `,
   [Theme.Light]: css`
     background-color: #E7EEEC;
