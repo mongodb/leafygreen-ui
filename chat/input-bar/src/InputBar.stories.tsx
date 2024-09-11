@@ -3,8 +3,6 @@ import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
-
 import { InputBar, InputBarProps, SuggestedPrompt, SuggestedPrompts } from '.';
 
 export default {
