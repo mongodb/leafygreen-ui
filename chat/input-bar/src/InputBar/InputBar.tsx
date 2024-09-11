@@ -387,7 +387,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                 ref={textareaRef}
               />
               <div className={rightContentStyles}>
-                {shouldRenderHotkeyIndicator && (
+                {shouldRenderHotkeyIndicator && !disabled && (
                   <div
                     data-testid="hotkey-indicator"
                     className={cx(
