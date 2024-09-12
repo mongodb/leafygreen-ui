@@ -3,6 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  borderRadius,
   focusRing,
   fontFamilies,
   fontWeights,
@@ -223,7 +224,7 @@ export const sendButtonDisabledStyles = css`
 
 export const baseHotkeyIndicatorStyles = css`
   padding: ${spacing[100]}px ${spacing[400]}px;
-  border-radius: 14px;
+  border-radius: ${borderRadius[400]}px;
   height: 28px;
   display: flex;
   align-items: center;
@@ -240,8 +241,8 @@ export const themedHotkeyIndicatorStyles = {
     color: ${palette.gray.light2};
   `,
   [Theme.Light]: css`
-    background-color: #e7eeec;
-    border: 1px solid #e7eeec;
+    background-color: ${palette.gray.light2};
+    border: 1px solid ${palette.gray.light2};
     color: ${palette.green.dark2};
   `,
 };

@@ -94,6 +94,15 @@ describe('packages/input-bar', () => {
   test('Hotkey Indicator is rendered when the prop is set', () => {
     render(<InputBar shouldRenderHotkeyIndicator />);
 
-    expect(screen.getByTestId('hotkey-indicator')).toBeInTheDocument();
+    expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeInTheDocument();
+  });
+
+  test('Hotkey Indicator is hidden when InputBar is focused', async () => {
+    render(<InputBar shouldRenderHotkeyIndicator />);
+    const textarea = screen.getByRole('textbox');
+    textarea.focus();
+    // Wait for CSS transition
+    await new Promise(r => setTimeout(r, 200));
+    expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
   });
 });

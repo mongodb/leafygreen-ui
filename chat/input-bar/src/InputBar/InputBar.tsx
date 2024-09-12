@@ -389,7 +389,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
               <div className={rightContentStyles}>
                 {shouldRenderHotkeyIndicator && !disabled && (
                   <div
-                    data-testid="hotkey-indicator"
+                    data-testid="lg-chat-hotkey-indicator"
                     className={cx(
                       baseHotkeyIndicatorStyles,
                       themedHotkeyIndicatorStyles[theme],

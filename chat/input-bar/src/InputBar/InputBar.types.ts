@@ -20,6 +20,7 @@ export type InputBarProps = HTMLElementProps<'form'> &
     ) => void;
     /**
      * Toggles the hotkey indicator on the right side of the input
+     * @default false
      */
     shouldRenderHotkeyIndicator?: boolean;
     /**

@@ -2,4 +2,4 @@
 '@lg-chat/input-bar': minor
 ---
 
-Add option to render hotkey indicator to InputBar component
+Add `shouldRenderHotkeyIndicator` prop to InputBar component which determines if hotkey indicator is rendered
