@@ -27,6 +27,7 @@ import {
   useAutoScroll,
   useBackdropClick,
   useDynamicRefs,
+  useEventListener,
   useForwardedRef,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -341,6 +342,19 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       isOpen && withTypeAhead,
     );
 
+    useEventListener('keydown', (e: KeyboardEvent) => {
+      if (
+        !e.repeat &&
+        e.key === '/' &&
+        shouldRenderHotkeyIndicator &&
+        !isFocused
+      ) {
+        e.preventDefault();
+        textareaRef.current?.focus();
+        setIsFocused(true);
+      }
+    });
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <form
@@ -371,6 +385,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                 {badgeText && <Badge variant="blue">{badgeText}</Badge>}
               </div>
               <TextareaAutosize
+                aria-keyshortcuts="/"
                 placeholder={'Type your message here'}
                 value={messageBody}
                 disabled={disabled}

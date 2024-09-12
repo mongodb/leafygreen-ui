@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -230,7 +230,6 @@ export const baseHotkeyIndicatorStyles = css`
   align-items: center;
   justify-content: center;
   cursor: default;
-  transition: opacity ${transitionDuration.default}ms ease-in-out;
   user-select: none;
 `;
 
@@ -246,12 +245,37 @@ export const themedHotkeyIndicatorStyles = {
     color: ${palette.green.dark2};
   `,
 };
+
+const appearAnimation = keyframes`
+  from {
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 1;
+    display: flex;
+  }
+`;
+
 export const hotkeyIndicatorUnfocusedStyles = css`
   opacity: 1;
+  animation: ${appearAnimation} ${transitionDuration.default}ms forwards;
+`;
+
+const vanishAnimation = keyframes`
+  from {
+    display: flex;
+    opacity: 1;
+  }
+  to {
+    display: none;
+    opacity: 0;
+  }
 `;
 
 export const hotkeyIndicatorFocusedStyles = css`
   opacity: 0;
+  animation: ${vanishAnimation} ${transitionDuration.default}ms forwards;
 `;
 
 export const getIconFill = (theme: Theme, disabled?: boolean) => {
