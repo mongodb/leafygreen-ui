@@ -69,7 +69,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       textareaProps,
       onMessageSend,
       onSubmit,
-      shouldRenderHotkeyIndicator,
+      shouldRenderHotkeyIndicator = false,
       shouldRenderGradient: shouldRenderGradientProp = true,
       badgeText,
       darkMode: darkModeProp,
