@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { InputBar } from '.';
 
@@ -97,12 +98,20 @@ describe('packages/input-bar', () => {
     expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeInTheDocument();
   });
 
-  test('Hotkey Indicator is hidden when InputBar is focused', async () => {
+  test('Hotkey Indicator is hidden when InputBar is focused and visible when unfocused', async () => {
     render(<InputBar shouldRenderHotkeyIndicator />);
     const textarea = screen.getByRole('textbox');
     textarea.focus();
     // Wait for CSS transition
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise(resolve =>
+      setTimeout(resolve, transitionDuration.default),
+    );
     expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
+    textarea.blur();
+    // Wait for CSS transition
+    await new Promise(resolve =>
+      setTimeout(resolve, transitionDuration.default),
+    );
+    expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
   });
 });
