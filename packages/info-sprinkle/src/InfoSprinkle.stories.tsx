@@ -79,4 +79,15 @@ LiveExample.argTypes = {
   },
 };
 
+export const WithNodeChildren: StoryFn<typeof InfoSprinkle> = props => (
+  <InfoSprinkle {...props}>
+    <div>Elemental Children</div>
+  </InfoSprinkle>
+);
+WithNodeChildren.argTypes = {
+  open: {
+    control: 'none',
+  },
+};
+
 export const Generated = () => {};
