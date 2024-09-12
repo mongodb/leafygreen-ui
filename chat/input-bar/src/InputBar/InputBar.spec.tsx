@@ -108,7 +108,7 @@ describe('packages/input-bar', () => {
     });
     // Wait for CSS animation
     await new Promise(resolve =>
-      setTimeout(resolve, transitionDuration.default + 500),
+      setTimeout(resolve, transitionDuration.default),
     );
 
     expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
@@ -118,7 +118,7 @@ describe('packages/input-bar', () => {
     });
     // Wait for CSS animation
     await new Promise(resolve =>
-      setTimeout(resolve, transitionDuration.default + 50),
+      setTimeout(resolve, transitionDuration.default),
     );
     expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
   });
