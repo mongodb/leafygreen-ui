@@ -1,5 +1,5 @@
 /**
- * If selected is a `string`, return the corresponding index, else return the index.s
+ * If selected is a `string`, return the corresponding index, else return the index.
  *
  * @param selected
  * @param tabTitleElements
