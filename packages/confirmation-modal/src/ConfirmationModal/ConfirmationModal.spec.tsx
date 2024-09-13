@@ -504,7 +504,7 @@ describe('packages/confirmation-modal', () => {
       <ConfirmationModal
         title="Title text"
         confirmButtonProps={{
-          // @ts-expect-error - variant does exist in  confirmButtonProps
+          // @ts-expect-error - variant does exist in confirmButtonProps
           variant: 'primary',
         }}
       >
@@ -514,7 +514,19 @@ describe('packages/confirmation-modal', () => {
       <ConfirmationModal
         title="Title text"
         cancelButtonProps={{
-          children: 'confirm',
+          variant: 'primary',
+          disabled: true,
+          isLoading: true,
+        }}
+      >
+        Hey
+      </ConfirmationModal>
+
+      <ConfirmationModal
+        title="Title text"
+        cancelButtonProps={{
+          // @ts-expect-error - children does exist in cancelButtonProps
+          children: 'new cancel text',
           variant: 'primary',
           disabled: true,
           isLoading: true,

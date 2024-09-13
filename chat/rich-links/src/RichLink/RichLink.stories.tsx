@@ -30,6 +30,13 @@ LongText.args = {
     'Introduction to MongoDB - a full course that covers everything you need to know about MongoDB',
 };
 
+export const ArticleVariant = Template.bind({});
+ArticleVariant.args = {
+  href: 'https://www.mongodb.com/developer/products/atlas/haystack-ai-mongodb-atlas-vector-demo/',
+  children: 'Building RAG Pipelines With Haystack and MongoDB Atlas',
+  variant: 'Article',
+};
+
 export const DocsVariant = Template.bind({});
 DocsVariant.args = {
   href: 'https://www.mongodb.com/docs/atlas/create-connect-deployments/',
