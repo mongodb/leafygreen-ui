@@ -345,15 +345,14 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     useEventListener(
       'keydown',
       (e: KeyboardEvent) => {
-        if (!e.repeat && e.key === '/') {
+        if (!e.repeat && e.key === '/' && textareaRef.current) {
           e.preventDefault();
           e.stopPropagation();
-          textareaRef.current?.focus();
+          textareaRef.current.focus();
         }
       },
       {
-        enabled:
-          shouldRenderHotkeyIndicator && !isFocused && !!textareaRef.current,
+        enabled: shouldRenderHotkeyIndicator && !isFocused,
       },
     );
 
