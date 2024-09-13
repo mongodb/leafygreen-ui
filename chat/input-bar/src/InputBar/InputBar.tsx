@@ -353,7 +353,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       },
       {
         enabled:
-          shouldRenderHotkeyIndicator && !isFocused && textareaRef.current,
+          shouldRenderHotkeyIndicator && !isFocused && !!textareaRef.current,
       },
     );
 
