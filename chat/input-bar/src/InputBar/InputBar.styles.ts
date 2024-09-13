@@ -1,8 +1,9 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  borderRadius,
   focusRing,
   fontFamilies,
   fontWeights,
@@ -219,6 +220,62 @@ export const sendButtonDisabledStyles = css`
   &:hover {
     box-shadow: none;
   }
+`;
+
+export const baseHotkeyIndicatorStyles = css`
+  padding: ${spacing[100]}px ${spacing[400]}px;
+  border-radius: ${borderRadius[400]}px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  user-select: none;
+`;
+
+export const themedHotkeyIndicatorStyles = {
+  [Theme.Dark]: css`
+    background-color: ${palette.gray.dark4};
+    border: 1px solid ${palette.gray.dark2};
+    color: ${palette.gray.light2};
+  `,
+  [Theme.Light]: css`
+    background-color: ${palette.gray.light2};
+    border: 1px solid ${palette.gray.light2};
+    color: ${palette.green.dark2};
+  `,
+};
+
+const appearAnimation = keyframes`
+  from {
+    opacity: 0;
+    display: none;
+  }
+  to {
+    opacity: 1;
+    display: flex;
+  }
+`;
+
+export const hotkeyIndicatorUnfocusedStyles = css`
+  opacity: 1;
+  animation: ${appearAnimation} ${transitionDuration.default}ms forwards;
+`;
+
+const vanishAnimation = keyframes`
+  from {
+    display: flex;
+    opacity: 1;
+  }
+  to {
+    display: none;
+    opacity: 0;
+  }
+`;
+
+export const hotkeyIndicatorFocusedStyles = css`
+  opacity: 0;
+  animation: ${vanishAnimation} ${transitionDuration.default}ms forwards;
 `;
 
 export const getIconFill = (theme: Theme, disabled?: boolean) => {
