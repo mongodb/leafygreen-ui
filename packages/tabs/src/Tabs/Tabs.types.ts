@@ -72,6 +72,7 @@ export interface TabsProps<SelectedType extends number | string>
    * Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
    */
   setSelected?: React.Dispatch<React.SetStateAction<SelectedType>>;
+  setSelectedd?: React.Dispatch<SelectedType>;
 
   /**
    * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
@@ -83,7 +84,5 @@ export interface TabsProps<SelectedType extends number | string>
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';
 
-export type AccessibleTabsProps<SelectedType extends number | string> = Either<
-  TabsProps<SelectedType>,
-  AriaLabels
->;
+export type AccessibleTabsProps<SelectedType extends number | string = number> =
+  Either<TabsProps<SelectedType>, AriaLabels>;

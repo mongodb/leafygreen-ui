@@ -111,10 +111,10 @@ const meta: StoryMetaType<typeof Tabs> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<TabsProps> = ({
+export const LiveExample: StoryFn<TabsProps<string>> = ({
   baseFontSize,
   ...props
-}: TabsProps) => (
+}: TabsProps<string>) => (
   <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
     <Tabs
       className={css`
@@ -126,8 +126,10 @@ export const LiveExample: StoryFn<TabsProps> = ({
   </LeafyGreenProvider>
 );
 
-export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
-  const [selectedTab, setSelectedTab] = useState<string | number>(
+export const Controlled: StoryFn<TabsProps<string>> = (
+  args: TabsProps<string>,
+) => {
+  const [selectedTab, setSelectedTab] = useState(
     'Tab 4 with an icon in the name',
   );
 

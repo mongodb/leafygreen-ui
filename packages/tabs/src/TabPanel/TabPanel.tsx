@@ -36,7 +36,6 @@ const TabPanel = ({
           className={getTabPanelStyles(isSelected)}
           id={id}
           role="tabpanel"
-          data-selected={isSelected}
           {...rest}
         >
           {children}

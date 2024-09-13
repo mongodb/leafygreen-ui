@@ -87,7 +87,14 @@ const Tabs = <SelectedType extends number | string>(
 
   const typeofSelected = typeof selected;
   const tabTitleElements = tabDescendants.map(descendant => descendant.element);
+  const tabTitles = tabTitleElements.map(element => element.dataset.text);
+  const tabTitlesWithoutDups = new Set(tabTitles);
+  const hasTabTitleDups = tabTitles.length !== tabTitlesWithoutDups.size;
   const selectedIndex = getSelectedIndex(selected, tabTitleElements);
+
+  if (hasTabTitleDups) {
+    console.error('Multiple tabs should not share the same name text.');
+  }
 
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
@@ -95,11 +102,11 @@ const Tabs = <SelectedType extends number | string>(
   };
 
   /** If the controlled state is a string then return a string, else return a number */
-  const setSetSelectedValue = useCallback(
+  const setSelectedByIndex = useCallback(
     (index: number) => {
       if (typeofSelected === 'string') {
-        const indexString = tabTitleElements[index].dataset.text!;
-        (setSelected as React.Dispatch<string>)?.(indexString);
+        const text = tabTitleElements[index].dataset.text!;
+        (setSelected as React.Dispatch<string>)?.(text);
       } else {
         (setSelected as React.Dispatch<number>)?.(index);
       }
@@ -109,9 +116,9 @@ const Tabs = <SelectedType extends number | string>(
 
   const handleClickTab = useCallback(
     (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
-      setSetSelectedValue(index);
+      setSelectedByIndex(index);
     },
-    [setSetSelectedValue],
+    [setSelectedByIndex],
   );
 
   const handleKeyDown = useCallback(
@@ -130,10 +137,10 @@ const Tabs = <SelectedType extends number | string>(
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
         ];
 
-      setSetSelectedValue(indexToUpdateTo);
+      setSelectedByIndex(indexToUpdateTo);
       tabTitleElements[indexToUpdateTo].focus(); // If multiple tabs have the same name this could potentially focus the wrong element. Ideally tabs should not share the same name.
     },
-    [tabTitleElements, selectedIndex, setSetSelectedValue],
+    [tabTitleElements, selectedIndex, setSelectedByIndex],
   );
 
   const renderedTabs = React.Children.map(children, child => {
