@@ -23,7 +23,7 @@ import {
   TableBody,
   TableHead,
   type TableProps,
-  useLeafyGreenTable,
+  useLeafyGreenVirtualTable,
   type VirtualItem,
 } from '..';
 
@@ -98,7 +98,7 @@ export const Basic: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -168,7 +168,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -326,7 +326,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     [],
   );
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -401,7 +401,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -476,7 +476,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -561,7 +561,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   const columns = useMemo(() => basicColumnDefs, []);
   const estimateSize = useCallback(() => 100, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
