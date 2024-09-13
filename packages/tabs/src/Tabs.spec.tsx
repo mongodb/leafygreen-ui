@@ -209,7 +209,7 @@ describe('packages/tabs', () => {
         const tabUtils = getTabUtilsByName('First');
 
         if (tabUtils) {
-          fireEvent.click(tabUtils.getTab());
+          userEvent.click(tabUtils.getTab());
         }
 
         expect(setSelected).toHaveBeenCalledWith(0);
@@ -223,7 +223,7 @@ describe('packages/tabs', () => {
         });
 
         const firstTab = getTabUtilsByName('First');
-        fireEvent.click(firstTab!.getTab());
+        userEvent.click(firstTab!.getTab());
         expect(setSelected).toHaveBeenCalledWith(0);
 
         rerender(
@@ -246,7 +246,7 @@ describe('packages/tabs', () => {
           </Tabs>,
         );
 
-        fireEvent.click(firstTab!.getTab());
+        userEvent.click(firstTab!.getTab());
         expect(setSelected).toHaveBeenCalledWith('First');
       });
     });
@@ -273,7 +273,7 @@ describe('packages/tabs', () => {
         const tabUtils = getTabUtilsByName('First');
 
         if (tabUtils) {
-          fireEvent.click(tabUtils.getTab());
+          userEvent.click(tabUtils.getTab());
         }
 
         expect(setSelected).toHaveBeenCalledWith('First');
@@ -287,7 +287,7 @@ describe('packages/tabs', () => {
         });
 
         const firstTab = getTabUtilsByName('First');
-        fireEvent.click(firstTab!.getTab());
+        userEvent.click(firstTab!.getTab());
         expect(setSelected).toHaveBeenCalledWith('First');
 
         rerender(
@@ -310,7 +310,7 @@ describe('packages/tabs', () => {
           </Tabs>,
         );
 
-        fireEvent.click(firstTab!.getTab());
+        userEvent.click(firstTab!.getTab());
         expect(setSelected).toHaveBeenCalledWith(0);
       });
     });
@@ -355,7 +355,7 @@ describe('packages/tabs', () => {
       const tabUtils = getTabUtilsByName('Second');
 
       if (tabUtils) {
-        fireEvent.click(tabUtils.getTab());
+        userEvent.click(tabUtils.getTab());
       }
       expect(setSelected).toHaveBeenCalled();
     });
@@ -368,7 +368,7 @@ describe('packages/tabs', () => {
       const tabUtils = getTabUtilsByName('First');
 
       if (tabUtils) {
-        fireEvent.click(tabUtils.getTab());
+        userEvent.click(tabUtils.getTab());
       }
 
       const selectedPanel = getSelectedPanel();
@@ -386,9 +386,7 @@ describe('packages/tabs', () => {
       const activeTab = getSelectedPanel();
 
       if (tabUtils) {
-        fireEvent.keyDown(tabUtils.getTab(), {
-          key: keyMap.ArrowLeft,
-        });
+        userEvent.type(tabUtils.getTab(), keyMap.ArrowLeft);
       }
 
       expect(activeTab).toBeVisible();
@@ -429,7 +427,7 @@ describe('packages/tabs', () => {
 
       const secondTab = getTabUtilsByName('Second')?.getTab();
 
-      fireEvent.click(secondTab!);
+      userEvent.click(secondTab!);
       expect(onChange).not.toHaveBeenCalled();
     });
 
@@ -444,7 +442,7 @@ describe('packages/tabs', () => {
       const newTabUtils = getTabUtilsByName('Second');
 
       if (newTabUtils) {
-        fireEvent.click(newTabUtils.getTab());
+        userEvent.click(newTabUtils.getTab());
       }
 
       const newSelectedPanel = getSelectedPanel();
