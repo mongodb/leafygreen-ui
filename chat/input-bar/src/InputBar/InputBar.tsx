@@ -342,19 +342,20 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       isOpen && withTypeAhead,
     );
 
-    useEventListener('keydown', (e: KeyboardEvent) => {
-      if (
-        !e.repeat &&
-        e.key === '/' &&
-        shouldRenderHotkeyIndicator &&
-        !isFocused &&
-        textareaRef.current
-      ) {
-        e.preventDefault();
-        textareaRef.current.focus();
-        setIsFocused(true);
-      }
-    });
+    useEventListener(
+      'keydown',
+      (e: KeyboardEvent) => {
+        if (!e.repeat && e.key === '/') {
+          e.preventDefault();
+          e.stopPropagation();
+          textareaRef.current?.focus();
+        }
+      },
+      {
+        enabled:
+          shouldRenderHotkeyIndicator && !isFocused && textareaRef.current,
+      },
+    );
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
