@@ -1,14 +1,9 @@
 import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
-import {
-  autoUpdate,
-  flip,
-  offset,
-  useFloating,
-  useMergeRefs,
-} from '@floating-ui/react';
+import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
 
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
@@ -29,6 +24,7 @@ import {
 import {
   getExtendedPlacementValue,
   getFloatingPlacement,
+  getOffsetValue,
   getWindowSafePlacementValues,
 } from '../utils/positionUtils';
 
@@ -126,17 +122,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       },
       middleware: [
         offset(
-          ({ rects }) => {
-            if (align === Align.CenterHorizontal) {
-              return -rects.reference.width / 2 - rects.floating.width / 2;
-            }
-
-            if (align === Align.CenterVertical) {
-              return -rects.reference.height / 2 - rects.floating.height / 2;
-            }
-
-            return spacing;
-          },
+          ({ rects }) => getOffsetValue(align, spacing, rects),
           [align, spacing],
         ),
         flip(),

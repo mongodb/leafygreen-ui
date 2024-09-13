@@ -6,6 +6,7 @@ import {
   getElementDocumentPosition,
   getExtendedPlacementValue,
   getFloatingPlacement,
+  getOffsetValue,
   getWindowSafePlacementValues,
 } from './positionUtils';
 
@@ -183,6 +184,43 @@ describe('positionUtils', () => {
           }),
         ).toBe('left');
       });
+    });
+  });
+
+  describe('getOffsetValue', () => {
+    const mockRects = {
+      reference: {
+        x: 100,
+        y: 100,
+        width: 50,
+        height: 20,
+      },
+      floating: {
+        x: 100,
+        y: 100,
+        width: 100,
+        height: 200,
+      },
+    } as const;
+    test('returns the spacing value when standard `align` value is used', () => {
+      const mockSpacing = 10;
+      expect(getOffsetValue(Align.Top, mockSpacing, mockRects)).toBe(
+        mockSpacing,
+      );
+      expect(getOffsetValue(Align.Bottom, mockSpacing, mockRects)).toBe(
+        mockSpacing,
+      );
+      expect(getOffsetValue(Align.Left, mockSpacing, mockRects)).toBe(
+        mockSpacing,
+      );
+      expect(getOffsetValue(Align.Right, mockSpacing, mockRects)).toBe(
+        mockSpacing,
+      );
+    });
+
+    test('returns the correct offset value when `align` is `center-horizontal`', () => {
+      expect(getOffsetValue(Align.CenterHorizontal, 10, mockRects)).toBe(-75);
+      expect(getOffsetValue(Align.CenterVertical, 10, mockRects)).toBe(-110);
     });
   });
 });

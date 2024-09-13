@@ -8,6 +8,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { color } from '@leafygreen-ui/tokens';
 
 import Popover, { Align, Justify, PopoverProps } from '.';
 
@@ -123,7 +124,11 @@ const meta: StoryMetaType<typeof Popover> = {
           >
             <Button>
               Button Text
-              <Instance />
+              <Instance
+                className={css`
+                  background-color: ${color.light.background.primary.default};
+                `}
+              />
             </Button>
           </div>
         );
@@ -138,6 +143,14 @@ const meta: StoryMetaType<typeof Popover> = {
     buttonText: 'Button Text',
   },
   argTypes: {
+    align: {
+      options: Object.values(Align),
+      control: { type: 'radio' },
+    },
+    justify: {
+      options: Object.values(Justify),
+      control: { type: 'radio' },
+    },
     buttonText: {
       type: 'string',
       description:
@@ -238,32 +251,44 @@ ScrollableContainer.argTypes = {
   active: { control: 'none' },
 };
 
-export const Top = () => {};
-Top.args = {
-  align: Align.Top,
+export const Top = {
+  render: () => {},
+  args: {
+    align: Align.Top,
+  },
 };
 
-export const Bottom = () => {};
-Bottom.args = {
-  align: Align.Bottom,
+export const Bottom = {
+  render: () => {},
+  args: {
+    align: Align.Bottom,
+  },
 };
 
-export const Left = () => {};
-Left.args = {
-  align: Align.Left,
+export const Left = {
+  render: () => {},
+  args: {
+    align: Align.Left,
+  },
 };
 
-export const Right = () => {};
-Right.args = {
-  align: Align.Right,
+export const Right = {
+  render: () => {},
+  args: {
+    align: Align.Right,
+  },
 };
 
-export const CenterHorizontal = () => {};
-CenterHorizontal.args = {
-  align: Align.CenterHorizontal,
+export const CenterHorizontal = {
+  render: () => {},
+  args: {
+    align: Align.CenterHorizontal,
+  },
 };
 
-export const CenterVertical = () => {};
-CenterVertical.args = {
-  align: Align.CenterVertical,
+export const CenterVertical = {
+  render: () => {},
+  args: {
+    align: Align.CenterVertical,
+  },
 };

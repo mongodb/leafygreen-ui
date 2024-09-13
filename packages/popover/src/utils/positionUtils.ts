@@ -1,4 +1,4 @@
-import { Placement } from '@floating-ui/react';
+import { ElementRects, Placement } from '@floating-ui/react';
 
 import {
   Align,
@@ -45,6 +45,11 @@ const getElementPosition = (element: HTMLElement, isReference?: boolean) => {
   };
 };
 
+/**
+ * Returns the width and height as well as the top, bottom, left, and right positions of an element
+ * within a given container. If `scrollContainer` is undefined, the position is relative to the
+ * document.
+ */
 export function getElementDocumentPosition(
   element: HTMLElement | null,
   scrollContainer?: HTMLElement | null,
@@ -91,9 +96,12 @@ export function getElementDocumentPosition(
 }
 
 /**
- * Floating UI supports 12 placements out-of-the-box. {@see https://floating-ui.com/docs/useFloating#placement}.
- * In addition to these placements, we override the `align` prop when it is set to 'center-horizontal' or
- * 'center-vertical' to create custom placements {@see https://floating-ui.com/docs/offset#creating-custom-placements}
+ * Function to convert `align` and `justify` props to a desired Floating UI
+ * {@link https://floating-ui.com/docs/useFloating#placement placement}
+ * value to provide in {@link https://floating-ui.com/docs/useFloating#placement useFloating hook}.
+ * Floating UI supports 12 placements out-of-the-box. In addition to these placements, we override
+ * the `align` prop when it is set to 'center-horizontal' or 'center-vertical' to
+ * {@link https://floating-ui.com/docs/offset#creating-custom-placements create custom placements}
  */
 export const getFloatingPlacement = (
   align: Align,
@@ -115,7 +123,7 @@ export const getFloatingPlacement = (
 };
 
 /**
- * Helper function to derive window-safe align and justify values that are used when rendering
+ * Function to derive window-safe align and justify values that are used when rendering
  * children. The placement calculated by Floating UI does not explicitly specify the justify
  * value when it is 'middle'
  */
@@ -134,8 +142,9 @@ export const getWindowSafePlacementValues = (placement: Placement) => {
 };
 
 /**
- * Floating UI supports 12 placements out-of-the-box. {@see https://floating-ui.com/docs/useFloating#placement}.
- * We extend on these placements when the `align` prop is set to 'center-horizontal' or 'center-vertical'
+ * Function to extend the {@link https://floating-ui.com/docs/usefloating#placement-1 final placement}
+ * calculated by the `useFloating` hook. Floating UI supports 12 placements out-of-the-box. We
+ * extend these placements when the `align` prop is set to 'center-horizontal' or 'center-vertical'
  */
 export const getExtendedPlacementValue = ({
   placement,
@@ -184,4 +193,26 @@ export const getExtendedPlacementValue = ({
 
   // If the calculated justify value calculated is not specified, we center the floating element
   return 'center';
+};
+
+/**
+ * This function calculates the offset value of the popover element based on the `align` prop
+ * If the `align` prop is 'center-horizontal' or 'center-vertical', an offset value is calculated
+ * to position the popover element on top of the reference element. Otherwise, the `spacing` prop
+ * is used to calculate the offset value
+ */
+export const getOffsetValue = (
+  align: Align,
+  spacing: number,
+  rects: ElementRects,
+) => {
+  if (align === Align.CenterHorizontal) {
+    return -rects.reference.width / 2 - rects.floating.width / 2;
+  }
+
+  if (align === Align.CenterVertical) {
+    return -rects.reference.height / 2 - rects.floating.height / 2;
+  }
+
+  return spacing;
 };

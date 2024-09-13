@@ -12,6 +12,14 @@ import {
   UseReferenceElementReturnObj,
 } from './Popover.types';
 
+/**
+ * This hook handles logic for determining the reference element for the popover element.
+ * 1. If a `refEl` is provided, the ref value will be used as the reference element.
+ * 2. If not, a hidden placeholder element will be rendered, and the parent element of the
+ *    placeholder will used as the reference element.
+ *
+ * Additionally, this hook calculates the document position of the reference element.
+ */
 export function useReferenceElement(
   refEl?: PopoverProps['refEl'],
   scrollContainer?: PopoverProps['scrollContainer'],
@@ -32,7 +40,7 @@ export function useReferenceElement(
     if (maybeParentEl && maybeParentEl instanceof HTMLElement) {
       setReferenceElement(maybeParentEl);
     }
-  }, [placeholderRef.current, refEl?.current]);
+  }, [placeholderRef.current, refEl]);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
