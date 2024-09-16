@@ -80,6 +80,30 @@ describe('packages/tabs', () => {
       );
     });
 
+    test('consoles errors if multiple tabs have the same name with diff HTML', () => {
+      const consoleSpy = jest
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      render(
+        <Tabs data-testid={tabsTestId} aria-label="Testing tabs">
+          <Tab name="{<span>First</span>}" data-testid="first-tab">
+            Content 1
+          </Tab>
+          <Tab name="{<div>First</div>}" data-testid="second-tab">
+            Content 2
+          </Tab>
+          <Tab name={<div>Third</div>} data-testid="third-tab">
+            {' '}
+            Content 3
+          </Tab>
+        </Tabs>,
+      );
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        `Multiple tabs should not share the same name text.`,
+      );
+    });
+
     test('accepts inlineChildren', () => {
       const { getByTestId } = render(
         <Tabs
