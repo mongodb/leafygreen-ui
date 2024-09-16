@@ -17,7 +17,6 @@ export const getJustify = (a: Align, j: Justify): string => {
     default:
       switch (j) {
         case 'middle':
-        case 'fit':
           return 'center';
 
         default:
@@ -38,7 +37,6 @@ export const getAlign = (a: Align, j: Justify) => {
     default:
       switch (j) {
         case 'middle':
-        case 'fit':
           return 'center';
 
         default:

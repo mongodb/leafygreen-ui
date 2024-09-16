@@ -41,7 +41,7 @@ import {
  * @param props.active Boolean to describe whether or not Popover is active.
  * @param props.spacing The spacing (in pixels) between the reference element, and the popover.
  * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
- * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`, `fit`.
+ * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
  * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  * @param props.children Content to appear inside of Popover container.
  * @param props.className Classname applied to Popover container.

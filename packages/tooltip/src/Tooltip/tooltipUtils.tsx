@@ -112,17 +112,6 @@ export function notchPositionStyles({
 
           break;
 
-        case Justify.Fit:
-          containerStyleObj.left = `${notchOffset}px`;
-
-          if (shouldTransformPosition) {
-            tooltipOffsetTransform = `translateX(-${
-              notchOffsetLowerBound - notchOffsetActual
-            }px)`;
-          }
-
-          break;
-
         case Justify.End:
           containerStyleObj.right = `${notchOffset}px`;
 
@@ -176,16 +165,6 @@ export function notchPositionStyles({
         case Justify.Middle:
           containerStyleObj.top = '0px';
           containerStyleObj.bottom = '0px';
-          break;
-
-        case Justify.Fit:
-          containerStyleObj.top = `${notchOffset}px`;
-
-          if (shouldTransformPosition) {
-            tooltipOffsetTransform = `translateY(-${
-              notchOffsetLowerBound - notchOffsetActual
-            }px)`;
-          }
           break;
 
         case Justify.End:
