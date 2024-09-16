@@ -70,20 +70,8 @@ const getInputWrapperModeStyles = (theme: Theme) => {
       &:-webkit-autofill {
         color: ${color[theme].text.primary.default};
         background: ${backgroundColor};
-        border: 1px solid ${color[theme].border.primary.default};
         -webkit-text-fill-color: ${color[theme].text.primary.default};
         box-shadow: ${autofillShadowOverride(backgroundColor)};
-
-        &:focus {
-          box-shadow: ${autofillShadowOverride(backgroundColor)},
-            ${focusRing[theme].input};
-          border-color: ${color[theme].border.primary.focus};
-        }
-
-        &:hover:not(:focus) {
-          box-shadow: ${autofillShadowOverride(backgroundColor)},
-            ${hoverRing[theme].gray};
-        }
       }
 
       &::placeholder {
@@ -234,7 +222,6 @@ const getInputWrapperDisabledThemeStyles = (theme: Theme) => {
         &:focus {
           appearance: none;
 
-          border: 1px solid ${color[theme].border.disabled.hover};
           -webkit-text-fill-color: ${color[theme].text.disabled.hover};
           box-shadow: ${autofillShadowOverride(
             color[theme].background.disabled.hover,
