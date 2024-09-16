@@ -7,6 +7,7 @@ import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
+import { spacing as spacingToken } from '@leafygreen-ui/tokens';
 
 import { useContentNode, useReferenceElement } from '../Popover.hooks';
 import {
@@ -56,7 +57,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
-      spacing = 10,
+      spacing = spacingToken[100],
       align = Align.Bottom,
       justify = Justify.Start,
       adjustOnMutation = false,
