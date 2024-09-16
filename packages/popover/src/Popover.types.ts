@@ -1,5 +1,6 @@
 import React from 'react';
 import { Transition } from 'react-transition-group';
+import { Placement } from '@floating-ui/react';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
@@ -49,6 +50,12 @@ const Justify = {
 type Justify = (typeof Justify)[keyof typeof Justify];
 
 export { Justify };
+
+export type ExtendedPlacement =
+  | Placement
+  | 'center'
+  | 'center-start'
+  | 'center-end';
 
 export interface ElementPosition {
   top: number;
@@ -210,6 +217,11 @@ export interface UseReferenceElementReturnObj {
   referenceElement: HTMLElement | null;
 
   /**
+   * Document position details of the reference element
+   */
+  referenceElDocumentPos: ElementPosition;
+
+  /**
    * Boolean to determine if a hidden placeholder should be rendered
    */
   renderHiddenPlaceholder: boolean;
@@ -224,8 +236,8 @@ export interface UseContentNodeReturnObj {
   contentNode: HTMLDivElement | null;
 
   /**
-   * We shadow the `contentNode` onto this `contentNodeRef` as <Transition> from
-   * react-transition-group only accepts useRef objects. Without this, StrictMode
+   * We shadow the `contentNode` onto this `contentNodeRef` as `<Transition>` from
+   * react-transition-group only accepts a `MutableRefObject` type. Without this, StrictMode
    * warnings are produced by react-transition-group.
    */
   contentNodeRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -235,11 +247,3 @@ export interface UseContentNodeReturnObj {
    */
   setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 }
-
-export type UsePopoverPositioningProps = Pick<
-  PopoverProps,
-  'active' | 'adjustOnMutation' | 'align' | 'justify' | 'scrollContainer'
-> & {
-  contentNode: HTMLDivElement | null;
-  referenceElement: HTMLElement | null;
-};

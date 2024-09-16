@@ -22,6 +22,19 @@ const meta: StoryMetaType<typeof FixedChatWindow> = {
   parameters: {
     default: 'Uncontrolled',
   },
+  decorators: [
+    StoryFn => (
+      <div
+        className={css`
+          width: 100vw;
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
 };
 
 export default meta;
