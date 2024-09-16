@@ -33,7 +33,7 @@ import Popover from '@leafygreen-ui/popover';
     justify="start"
     active={this.state.active}
     usePortal={true}
-    spacing={10}
+    spacing={4}
   >
     <div className={popoverStyle}>Popover content</div>
   </Popover>
@@ -65,7 +65,7 @@ The popover component will be automatically positioned relative to its nearest p
 | `align`            | `'top'` \| `'bottom'` \| `'left'` \| `'right'` \| `'center-horizontal'` \| `'center-vertical'` | A string that determines the alignment of the popover relative to the `refEl`.                                                                                                                                                                   | `'bottom'` |
 | `justify`          | `'start'` \| `'middle'` \| `'end'` \| `'fit'`                                                  | A string that determines the justification of the popover relative to the `refEl`. Justification will be defined relative to the `align` prop                                                                                                    | `'start'`  |
 | `children`         | `node`                                                                                         | Content that will appear inside of the `<Popover />` component                                                                                                                                                                                   |            |
-| `spacing`          | `number`                                                                                       | Specifies the amount of spacing (in pixels) between the trigger element and the content element.                                                                                                                                                 | `10`       |
+| `spacing`          | `number`                                                                                       | Specifies the amount of spacing (in pixels) between the trigger element and the content element.                                                                                                                                                 | `4`        |
 | `className`        | `string`                                                                                       | Classname to apply to popover-content container                                                                                                                                                                                                  |            |
 | `adjustOnMutation` | `boolean`                                                                                      | Should the Popover auto adjust its content when the DOM changes (using MutationObserver).                                                                                                                                                        | `false`    |
 | `onClick`          | `function`                                                                                     | Function that will be called when popover content is clicked.                                                                                                                                                                                    |            |
