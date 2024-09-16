@@ -1,5 +1,11 @@
 # @leafygreen-ui/info-sprinkle
 
+## 2.1.0
+
+### Minor Changes
+
+- 6b8ad3d42: Updates `children` type to accept `React.ReactNode` rather than just `string`
+
 ## 2.0.0
 
 ### Major Changes
