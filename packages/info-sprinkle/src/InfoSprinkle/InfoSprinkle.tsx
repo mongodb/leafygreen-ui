@@ -55,7 +55,7 @@ export const InfoSprinkle = React.forwardRef<
 InfoSprinkle.displayName = 'InfoSprinkle';
 
 InfoSprinkle.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
