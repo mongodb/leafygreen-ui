@@ -38,13 +38,11 @@ export { Align };
  * @param Start will justify content against the start of other element
  * @param Middle will justify content against the middle of other element
  * @param End will justify content against the end of other element
- * @param Fit will justify content against both the start and the end of the other element
  */
 const Justify = {
   Start: 'start',
   Middle: 'middle',
   End: 'end',
-  Fit: 'fit',
 } as const;
 
 type Justify = (typeof Justify)[keyof typeof Justify];
