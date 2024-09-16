@@ -178,7 +178,7 @@ export type PopoverProps = {
   /**
    * Specifies the amount of spacing (in pixels) between the trigger element and the Popover content.
    *
-   * default: `10`
+   * default: `4`
    */
   spacing?: number;
 
