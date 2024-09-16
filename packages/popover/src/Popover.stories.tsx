@@ -8,6 +8,7 @@ import { StoryFn } from '@storybook/react';
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { color } from '@leafygreen-ui/tokens';
 
 import Popover, { Align, Justify, PopoverProps } from '.';
 
@@ -43,7 +44,8 @@ const scrollableStyle = css`
 
 const scrollableInnerStyle = css`
   position: relative;
-  height: 130vh;
+  height: 160vh;
+  width: 80vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,8 +94,15 @@ const meta: StoryMetaType<typeof Popover> = {
       ],
     },
     generate: {
+      storyNames: [
+        'Top',
+        'Right',
+        'Bottom',
+        'Left',
+        'CenterHorizontal',
+        'CenterVertical',
+      ],
       combineArgs: {
-        align: Object.values(Align),
         justify: Object.values(Justify),
       },
       args: {
@@ -102,9 +111,6 @@ const meta: StoryMetaType<typeof Popover> = {
       },
       // eslint-disable-next-line react/display-name
       decorator: Instance => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const ref = useRef(null);
-
         return (
           <div
             className={css`
@@ -116,8 +122,14 @@ const meta: StoryMetaType<typeof Popover> = {
               justify-content: center;
             `}
           >
-            <Button ref={ref}>refEl</Button>
-            <Instance refEl={ref} />
+            <Button>
+              Button Text
+              <Instance
+                className={css`
+                  background-color: ${color.light.background.primary.default};
+                `}
+              />
+            </Button>
           </div>
         );
       },
@@ -131,6 +143,14 @@ const meta: StoryMetaType<typeof Popover> = {
     buttonText: 'Button Text',
   },
   argTypes: {
+    align: {
+      options: Object.values(Align),
+      control: { type: 'radio' },
+    },
+    justify: {
+      options: Object.values(Justify),
+      control: { type: 'radio' },
+    },
     buttonText: {
       type: 'string',
       description:
@@ -188,25 +208,25 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
 }: PopoverStoryProps) => {
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
-  const portalContainer = useRef<HTMLDivElement | null>(null);
+  const scrollContainer = useRef<HTMLDivElement | null>(null);
 
   const position = referenceElPositions[refButtonPosition];
 
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={portalContainer}>
+      <div className={scrollableInnerStyle} ref={scrollContainer}>
         <Button
           onClick={() => setActive(active => !active)}
           className={position}
         >
           {buttonText}
-          {/* @ts-expect-error */}
           <Popover
             {...args}
             active={active}
-            portalContainer={portalContainer.current}
+            usePortal={true}
+            portalContainer={scrollContainer.current}
             portalRef={portalRef}
-            scrollContainer={portalContainer.current}
+            scrollContainer={scrollContainer.current}
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
@@ -231,4 +251,44 @@ ScrollableContainer.argTypes = {
   active: { control: 'none' },
 };
 
-export const Generated = () => {};
+export const Top = {
+  render: () => {},
+  args: {
+    align: Align.Top,
+  },
+};
+
+export const Bottom = {
+  render: () => {},
+  args: {
+    align: Align.Bottom,
+  },
+};
+
+export const Left = {
+  render: () => {},
+  args: {
+    align: Align.Left,
+  },
+};
+
+export const Right = {
+  render: () => {},
+  args: {
+    align: Align.Right,
+  },
+};
+
+export const CenterHorizontal = {
+  render: () => {},
+  args: {
+    align: Align.CenterHorizontal,
+  },
+};
+
+export const CenterVertical = {
+  render: () => {},
+  args: {
+    align: Align.CenterVertical,
+  },
+};
