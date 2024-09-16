@@ -5,6 +5,7 @@ import { act, renderHook } from '@leafygreen-ui/testing-lib';
 import {
   useEventListener,
   useIdAllocator,
+  useMergeRefs,
   useObjectDependency,
   usePoller,
   usePrevious,
@@ -89,6 +90,41 @@ describe('packages/hooks', () => {
       });
 
       expect(eventCallback).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('useMergeRefs', () => {
+    test('should merge refs', () => {
+      const callbackRefMockFunc = jest.fn();
+      const callbackRef: React.SetStateAction<HTMLElement | null> = element =>
+        callbackRefMockFunc(element);
+      const mutableRef: React.MutableRefObject<HTMLElement | null> = {
+        current: null,
+      };
+
+      const {
+        result: { current: mergedCallbackRef },
+      } = renderHook(() => useMergeRefs([callbackRef, mutableRef]));
+
+      expect(mergedCallbackRef).toBeInstanceOf(Function);
+      expect(callbackRefMockFunc).not.toHaveBeenCalled();
+      expect(mutableRef.current).toBe(null);
+
+      const element = document.createElement('div');
+      mergedCallbackRef?.(element);
+
+      expect(callbackRefMockFunc).toHaveBeenCalledTimes(1);
+      expect(callbackRefMockFunc).toHaveBeenCalledWith(element);
+      expect(mutableRef.current).toBe(element);
+    });
+
+    test('should return null when all refs are null or undefined', () => {
+      const ref1 = null;
+      const ref2 = undefined;
+
+      const { result } = renderHook(() => useMergeRefs([ref1, ref2]));
+
+      expect(result.current).toBe(null);
     });
   });
 
