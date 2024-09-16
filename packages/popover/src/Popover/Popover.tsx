@@ -1,16 +1,14 @@
 import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
+import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
 
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 
-import {
-  useContentNode,
-  usePopoverPositioning,
-  useReferenceElement,
-} from '../Popover.hooks';
+import { useContentNode, useReferenceElement } from '../Popover.hooks';
 import {
   contentClassName,
   getPopoverStyles,
@@ -23,7 +21,12 @@ import {
   PopoverComponentProps,
   PopoverProps,
 } from '../Popover.types';
-import { calculatePosition } from '../utils/positionUtils';
+import {
+  getExtendedPlacementValue,
+  getFloatingPlacement,
+  getOffsetValue,
+  getWindowSafePlacementValues,
+} from '../utils/positionUtils';
 
 /**
  *
@@ -97,46 +100,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       }
     }
 
-    const { placeholderRef, referenceElement, renderHiddenPlaceholder } =
-      useReferenceElement(refEl);
-    const { contentNode, contentNodeRef, setContentNode } = useContentNode();
-
-    const {
-      contentElDocumentPos,
-      contentElViewportPos,
-      isReadyToRender,
-      referenceElDocumentPos,
-      referenceElViewportPos,
-    } = usePopoverPositioning({
-      active,
-      adjustOnMutation,
-      align,
-      contentNode,
-      justify,
-      referenceElement,
-      scrollContainer,
-    });
-
-    if (!isReadyToRender) {
-      return null;
-    }
-
-    const {
-      align: windowSafeAlign,
-      justify: windowSafeJustify,
-      positionCSS: { transform, ...positionCSS },
-    } = calculatePosition({
-      useRelativePositioning: !usePortal,
-      spacing,
-      align,
-      justify,
-      referenceElViewportPos,
-      referenceElDocumentPos,
-      contentElViewportPos,
-      contentElDocumentPos,
-      scrollContainer,
-    });
-
     const Root = usePortal ? Portal : Fragment;
     const portalProps = {
       className: portalContainer ? undefined : portalClassName,
@@ -144,6 +107,41 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       portalRef,
     };
     const rootProps = usePortal ? portalProps : {};
+
+    const {
+      placeholderRef,
+      referenceElement,
+      referenceElDocumentPos,
+      renderHiddenPlaceholder,
+    } = useReferenceElement(refEl);
+    const { contentNodeRef, setContentNode } = useContentNode();
+
+    const { context, floatingStyles, placement, refs } = useFloating({
+      elements: {
+        reference: referenceElement,
+      },
+      middleware: [
+        offset(
+          ({ rects }) => getOffsetValue(align, spacing, rects),
+          [align, spacing],
+        ),
+        flip(),
+      ],
+      open: active,
+      placement: getFloatingPlacement(align, justify),
+      strategy: 'absolute',
+      transform: false,
+      whileElementsMounted: adjustOnMutation ? autoUpdate : undefined,
+    });
+
+    const popoverRef = useMergeRefs<HTMLDivElement>([refs.setFloating, fwdRef]);
+
+    const { align: windowSafeAlign, justify: windowSafeJustify } =
+      getWindowSafePlacementValues(placement);
+    const extendedPlacement = getExtendedPlacementValue({
+      placement,
+      align,
+    });
 
     const renderChildren = () => {
       if (children === null) {
@@ -164,7 +162,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     return (
       <Transition
         nodeRef={contentNodeRef}
-        in={active}
+        in={context.open}
         timeout={TRANSITION_DURATION}
         mountOnEnter
         unmountOnExit
@@ -192,14 +190,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
             <Root {...rootProps}>
               <div
                 {...rest}
-                ref={fwdRef}
+                ref={popoverRef}
                 className={getPopoverStyles({
                   className,
+                  floatingStyles,
+                  placement: extendedPlacement,
                   popoverZIndex,
-                  positionCSS,
+                  spacing,
                   state,
-                  transform,
-                  usePortal,
                 })}
               >
                 {/* We need to put `setContentNode` ref on this inner wrapper because
