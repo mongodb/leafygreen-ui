@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/info-sprinkle",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "LeafyGreen UI Kit Info Sprinkle",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
