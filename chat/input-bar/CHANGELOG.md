@@ -1,5 +1,11 @@
 # @lg-chat/input-bar
 
+## 5.1.0
+
+### Minor Changes
+
+- 79f0e7696: Add `shouldRenderHotkeyIndicator` prop to InputBar component which determines if hotkey indicator is rendered
+
 ## 5.0.0
 
 ### Major Changes
