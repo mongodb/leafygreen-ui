@@ -55,3 +55,9 @@ Next, run your tests with the `--react17` flag. This ensures that the tests are 
 ```bash
 > yarn test --react17
 ```
+
+To go back to the default version of React you'll need to clear your packages and re-build:
+
+```
+> yarn clean:modules && yarn run init
+```
