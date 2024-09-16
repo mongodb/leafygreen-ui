@@ -1,5 +1,11 @@
 # @leafygreen-ui/form-field
 
+## 1.2.5
+
+### Patch Changes
+
+- 07bab6308: [LG-4507](https://jira.mongodb.org/browse/LG-4507): fix `FormFieldInputContainer` autocomplete styling used in `DateInputSegment`, `TextArea` and `TextInput`. A double-border issue occurs when the auto-completed input has focus or hover state applied
+
 ## 1.2.4
 
 ### Patch Changes
