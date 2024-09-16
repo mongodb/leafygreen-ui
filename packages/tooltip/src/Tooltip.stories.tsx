@@ -41,16 +41,6 @@ const meta: StoryMetaType<typeof Tooltip> = {
         justify: Object.values(Justify),
         baseFontSize: Object.values(BaseFontSize),
       },
-      excludeCombinations: [
-        {
-          justify: Justify.Fit,
-          children: longText,
-        },
-        {
-          justify: Justify.Fit,
-          align: [Align.Left, Align.Right],
-        },
-      ],
       args: {
         open: true,
       },
@@ -323,15 +313,6 @@ ShortString.args = { children: 'I am a tooltip!' };
 
 export const LongString: StoryFn<typeof Tooltip> = () => <></>;
 LongString.args = { children: longText };
-LongString.parameters = {
-  generate: {
-    excludeCombinations: [
-      {
-        justify: Justify.Fit,
-      },
-    ],
-  },
-};
 
 export const JSXChildren: StoryFn<typeof Tooltip> = () => <></>;
 JSXChildren.args = {
