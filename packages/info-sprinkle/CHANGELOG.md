@@ -4,7 +4,7 @@
 
 ### Minor Changes
 
-- 6b8ad3d42: Upadtes `children` type to accept `React.ReactNode` rather than just `string`
+- 6b8ad3d42: Updates `children` type to accept `React.ReactNode` rather than just `string`
 
 ## 2.0.0
 
