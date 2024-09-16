@@ -138,7 +138,7 @@ const meta: StoryMetaType<typeof Popover> = {
   args: {
     align: Align.Top,
     justify: Justify.Start,
-    spacing: 10,
+    spacing: 4,
     adjustOnMutation: false,
     buttonText: 'Button Text',
   },
