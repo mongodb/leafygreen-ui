@@ -115,10 +115,6 @@ export const getFloatingPlacement = (
     align = Align.Bottom;
   }
 
-  if (justify === Justify.Fit) {
-    justify = Justify.Middle;
-  }
-
   return justify === Justify.Middle ? align : `${align}-${justify}`;
 };
 
