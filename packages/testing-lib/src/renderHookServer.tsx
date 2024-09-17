@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import React from 'react';
+//@ts-ignore Cannot find module 'react-dom/client' or its corresponding type declarations
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { act } from 'react-dom/test-utils';
