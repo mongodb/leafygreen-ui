@@ -28,6 +28,8 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   transition-behavior: allow-discrete;
+  opacity: 0;
+  transform: scale(0);
 `;
 
 const transformOriginStyles: Record<ExtendedPlacement, string> = {
@@ -78,33 +80,91 @@ const transformOriginStyles: Record<ExtendedPlacement, string> = {
   `,
 };
 
-const getTransformStyles = (placement: ExtendedPlacement, spacing: number) =>
-  cx({
-    [css`
+const getClosedStyles = (placement: ExtendedPlacement, spacing: number) => {
+  if (placement.startsWith('top')) {
+    return css`
+      opacity: 0;
       transform: translateY(${spacing}px) scale(0);
-    `]: placement.startsWith('top'),
-    [css`
+    `;
+  }
+
+  if (placement.startsWith('bottom')) {
+    return css`
+      opacity: 0;
       transform: translateY(-${spacing}px) scale(0);
-    `]: placement.startsWith('bottom'),
-    [css`
+    `;
+  }
+
+  if (placement.startsWith('left')) {
+    return css`
+      opacity: 0;
       transform: translateX(${spacing}px) scale(0);
-    `]: placement.startsWith('left'),
-    [css`
+    `;
+  }
+
+  if (placement.startsWith('right')) {
+    return css`
+      opacity: 0;
       transform: translateX(-${spacing}px) scale(0);
-    `]: placement.startsWith('right'),
-    [css`
-      transform: scale(0);
-    `]: placement.startsWith('center'),
-  });
+    `;
+  }
 
-const closedStyles = css`
-  opacity: 0;
-`;
+  return css`
+    opacity: 0;
+    transform: scale(0);
+  `;
+};
 
-const openStyles = css`
-  opacity: 1;
-  pointer-events: initial;
-`;
+const getOpenStyles = (placement: ExtendedPlacement) => {
+  if (placement.startsWith('top')) {
+    return css`
+      opacity: 1;
+      pointer-events: initial;
+      transform: translateY(0) scale(1);
+    `;
+  }
+
+  if (placement.startsWith('bottom')) {
+    return css`
+      opacity: 1;
+      pointer-events: initial;
+      transform: translateY(0) scale(1);
+    `;
+  }
+
+  if (placement.startsWith('left')) {
+    return css`
+      opacity: 1;
+      pointer-events: initial;
+      transform: translateX(0) scale(1);
+    `;
+  }
+
+  if (placement.startsWith('right')) {
+    return css`
+      opacity: 1;
+      pointer-events: initial;
+      transform: translateX(0) scale(1);
+    `;
+  }
+
+  return css`
+    opacity: 1;
+    pointer-events: initial;
+    transform: scale(1);
+  `;
+};
+
+const getTransitionStyles = (
+  placement: ExtendedPlacement,
+  spacing: number,
+) => ({
+  exited: getClosedStyles(placement, spacing),
+  entering: getClosedStyles(placement, spacing),
+  entered: getOpenStyles(placement),
+  exiting: getClosedStyles(placement, spacing),
+  unmounted: getClosedStyles(placement, spacing),
+});
 
 export const getPopoverStyles = ({
   className,
@@ -122,16 +182,14 @@ export const getPopoverStyles = ({
   state: TransitionStatus;
 }) =>
   cx(
-    className,
     getBasePopoverStyles(floatingStyles),
     transformOriginStyles[placement],
+    getTransitionStyles(placement, spacing)[state],
+
     {
-      [getTransformStyles(placement, spacing)]:
-        state === 'exiting' || state === 'entering',
-      [closedStyles]: state === 'exiting' || state === 'exited',
-      [openStyles]: state === 'entering' || state === 'entered',
       [css`
         z-index: ${popoverZIndex};
       `]: typeof popoverZIndex === 'number',
     },
+    className,
   );

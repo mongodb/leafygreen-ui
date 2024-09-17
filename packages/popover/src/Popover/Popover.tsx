@@ -114,7 +114,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       referenceElement,
       referenceElDocumentPos,
       renderHiddenPlaceholder,
-    } = useReferenceElement(refEl);
+    } = useReferenceElement(refEl, scrollContainer);
     const { contentNodeRef, setContentNode } = useContentNode();
 
     const { context, floatingStyles, placement, refs } = useFloating({
@@ -165,9 +165,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         nodeRef={contentNodeRef}
         in={context.open}
         timeout={TRANSITION_DURATION}
-        mountOnEnter
-        unmountOnExit
-        appear
         onEntering={onEntering}
         onEnter={onEnter}
         onEntered={(...args) => {
@@ -180,6 +177,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           setIsPopoverOpen(false);
           onExited?.(...args);
         }}
+        mountOnEnter
+        unmountOnExit
+        appear
       >
         {state => (
           <>
