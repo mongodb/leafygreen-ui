@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-field",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "LeafyGreen UI Kit Form Field",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

@@ -38,6 +38,11 @@ WithBadge.args = {
   badgeText: 'Beta',
 };
 
+export const WithHotkeyIndicator = Template.bind({});
+WithHotkeyIndicator.args = {
+  shouldRenderHotkeyIndicator: true,
+};
+
 export const WithDropdown = Template.bind({});
 WithDropdown.args = {
   children: (
