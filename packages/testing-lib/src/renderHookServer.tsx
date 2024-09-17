@@ -5,6 +5,15 @@ import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { act } from 'react-dom/test-utils';
 
+export interface renderHookServerOptions {
+  wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
+}
+
+export interface renderHookServerResult<Hook extends () => any> {
+  result: { current: ReturnType<Hook> };
+  hydrate: () => void;
+}
+
 /**
  * Allows you to mock the server side rendering of a hook.
  *
@@ -31,12 +40,8 @@ import { act } from 'react-dom/test-utils';
  */
 export function renderHookServer<Hook extends () => any>(
   useHook: Hook,
-  {
-    wrapper: Wrapper,
-  }: {
-    wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
-  } = {},
-): { result: { current: ReturnType<Hook> }; hydrate: () => void } {
+  { wrapper: Wrapper }: renderHookServerOptions = {},
+): renderHookServerResult<Hook> {
   // Store hook return value
   const results: Array<ReturnType<Hook>> = [];
   const result = {

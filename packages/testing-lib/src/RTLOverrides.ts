@@ -1,6 +1,10 @@
 import * as React from 'react';
 import * as RTL from '@testing-library/react';
 import path from 'path';
+import {
+  renderHookServerOptions,
+  renderHookServerResult,
+} from './renderHookServer';
 
 /**
  * Utility type that returns `X.Y` if it exists, otherwise defaults to fallback type `Z`, or `any`
@@ -38,9 +42,12 @@ export const act: Exists<typeof RTL, 'act'> =
   })();
 
 /**
- * Exports correct `renderHookServer` method based on React version.
+ * Correct `renderHookServer` method based on React version.
  */
-export const renderHookServer = (() => {
+export const renderHookServer: <Hook extends () => any>(
+  useHook: Hook,
+  options?: renderHookServerOptions,
+) => renderHookServerResult<Hook> = (() => {
   const isReact18 = parseInt(React.version.split('.')[0], 10) >= 18;
   const filename = isReact18 ? 'renderHookServer.js' : 'renderHookServerV17.js';
   const RHS = require(path.resolve(__dirname, filename));

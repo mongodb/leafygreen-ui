@@ -1,5 +1,8 @@
-import type { ReactNode } from 'react';
 import { renderHook } from '@testing-library/react-hooks/server';
+import {
+  renderHookServerOptions,
+  renderHookServerResult,
+} from './renderHookServer';
 
 /**
  * Allows you to mock the server side rendering of a hook in pre React 18 versions.
@@ -18,15 +21,11 @@ import { renderHook } from '@testing-library/react-hooks/server';
  */
 export function renderHookServer<Hook extends () => any>(
   useHook: Hook,
-  {
-    wrapper: Wrapper,
-  }: {
-    wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
-  } = {},
-): { result: { current: ReturnType<Hook> }; hydrate: () => void } {
+  { wrapper }: renderHookServerOptions = {},
+): renderHookServerResult<Hook> {
   // @ts-ignore Type 'undefined' is not assignable to type 'Window'.
   jest.spyOn(global, 'window', 'get').mockImplementation(() => undefined);
-  const response = renderHook(useHook);
+  const response = renderHook(useHook, { wrapper });
   jest.spyOn(global, 'window', 'get').mockRestore();
   return response;
 }

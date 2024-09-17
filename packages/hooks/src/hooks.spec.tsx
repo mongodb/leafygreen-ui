@@ -354,7 +354,7 @@ describe('packages/hooks', () => {
   });
 
   describe('useValidation', () => {
-    it('Returns validation functions when callback is defined', () => {
+    test('Returns validation functions when callback is defined', () => {
       const { result } = renderHook(() =>
         // eslint-disable-next-line no-console
         useValidation(value => console.log(value)),
@@ -363,7 +363,7 @@ describe('packages/hooks', () => {
       expect(result.current.onChange).toBeDefined();
     });
 
-    it('Returns validation functions when callback is undefined', () => {
+    test('Returns validation functions when callback is undefined', () => {
       const { result } = renderHook(() => useValidation());
       expect(result.current.onBlur).toBeDefined();
       expect(result.current.onChange).toBeDefined();
@@ -371,7 +371,7 @@ describe('packages/hooks', () => {
   });
 
   describe('useSsrCheck', () => {
-    it('should return true when server-side rendered and false after hydration', () => {
+    test('should return true when server-side rendered and false after hydration', () => {
       const { result, hydrate } = renderHookServer(useSsrCheck);
       expect(result.current).toBe(true);
       hydrate();
