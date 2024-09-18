@@ -1,7 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks/server';
+
 import {
-  renderHookServerOptions,
-  renderHookServerResult,
+  RenderHookServerOptions,
+  RenderHookServerResult,
 } from './renderHookServer';
 
 /**
@@ -21,8 +22,8 @@ import {
  */
 export function renderHookServer<Hook extends () => any>(
   useHook: Hook,
-  { wrapper }: renderHookServerOptions = {},
-): renderHookServerResult<Hook> {
+  { wrapper }: RenderHookServerOptions = {},
+): RenderHookServerResult<Hook> {
   // @ts-ignore Type 'undefined' is not assignable to type 'Window'.
   jest.spyOn(global, 'window', 'get').mockImplementation(() => undefined);
   const response = renderHook(useHook, { wrapper });

@@ -5,11 +5,11 @@ import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { act } from 'react-dom/test-utils';
 
-export interface renderHookServerOptions {
+export interface RenderHookServerOptions {
   wrapper?: ({ children }: { children: ReactNode }) => JSX.Element;
 }
 
-export interface renderHookServerResult<Hook extends () => any> {
+export interface RenderHookServerResult<Hook extends () => any> {
   result: { current: ReturnType<Hook> };
   hydrate: () => void;
 }
@@ -40,8 +40,8 @@ export interface renderHookServerResult<Hook extends () => any> {
  */
 export function renderHookServer<Hook extends () => any>(
   useHook: Hook,
-  { wrapper: Wrapper }: renderHookServerOptions = {},
-): renderHookServerResult<Hook> {
+  { wrapper: Wrapper }: RenderHookServerOptions = {},
+): RenderHookServerResult<Hook> {
   // Store hook return value
   const results: Array<ReturnType<Hook>> = [];
   const result = {
