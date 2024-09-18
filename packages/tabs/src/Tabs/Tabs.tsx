@@ -19,7 +19,7 @@ import {
 } from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
-import { getEnabledIndices } from '../utils';
+import { getEnabledIndices, getSelectedIndex } from '../utils';
 
 import {
   getTabContainerStyles,
@@ -43,10 +43,12 @@ import { AccessibleTabsProps } from './Tabs.types';
  * @param props.as HTML Element that wraps name in Tab List.
  * @param props.children Content to appear inside of Tabs component.
  * @param props.className className applied to Tabs container.
- * @param props.selected Index of the Tab that should appear active. If value passed, component will be controlled by consumer.
- * @param props.setSelected Callback to be executed when Tab is selected. Receives index of activated Tab as the first argument.
+ * @param props.selected Index or name of the Tab that should appear active. If value passed, component will be controlled by consumer.
+ * @param props.setSelected Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
  */
-const Tabs = (props: AccessibleTabsProps) => {
+const Tabs = <SelectedType extends number | string>(
+  props: AccessibleTabsProps<SelectedType>,
+) => {
   validateAriaLabelProps(props, 'Tabs');
 
   const {
@@ -83,19 +85,41 @@ const Tabs = (props: AccessibleTabsProps) => {
     isControlled ? setControlledSelected : setUncontrolledSelected,
   ];
 
+  const typeofSelected = typeof selected;
+  const tabTitleElements = tabDescendants.map(descendant => descendant.element);
+  const tabTitles = tabTitleElements.map(element => element.dataset.text);
+  const tabTitlesWithoutDups = new Set(tabTitles);
+  const hasTabTitleDups = tabTitles.length !== tabTitlesWithoutDups.size;
+  const selectedIndex = getSelectedIndex(selected, tabTitleElements);
+
+  if (hasTabTitleDups) {
+    console.error('Multiple tabs should not share the same name text.');
+  }
+
   const accessibilityProps = {
     ['aria-label']: ariaLabel,
     ['aria-labelledby']: ariaLabelledby,
   };
 
-  const handleClickTab = useCallback(
-    (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
-      setSelected?.(index);
+  /** If the controlled state is a string then return a string, else return a number */
+  const setSelectedByIndex = useCallback(
+    (index: number) => {
+      if (typeofSelected === 'string') {
+        const text = tabTitleElements[index].dataset.text!;
+        (setSelected as React.Dispatch<string>)?.(text);
+      } else {
+        (setSelected as React.Dispatch<number>)?.(index);
+      }
     },
-    [setSelected],
+    [setSelected, tabTitleElements, typeofSelected],
   );
 
-  const tabTitleElements = tabDescendants.map(descendant => descendant.element);
+  const handleClickTab = useCallback(
+    (e: React.SyntheticEvent<Element, MouseEvent>, index: number) => {
+      setSelectedByIndex(index);
+    },
+    [setSelectedByIndex],
+  );
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -105,18 +129,18 @@ const Tabs = (props: AccessibleTabsProps) => {
 
       const enabledIndices = getEnabledIndices(tabTitleElements);
       const numberOfEnabledTabs = enabledIndices.length;
-      const activeIndex = enabledIndices.indexOf(selected);
-
+      const activeIndex = enabledIndices.indexOf(selectedIndex);
       const indexToUpdateTo =
         enabledIndices[
           (e.key === keyMap.ArrowRight
             ? activeIndex + 1
             : activeIndex - 1 + numberOfEnabledTabs) % numberOfEnabledTabs
         ];
-      setSelected?.(indexToUpdateTo);
-      tabTitleElements[indexToUpdateTo].focus();
+
+      setSelectedByIndex(indexToUpdateTo);
+      tabTitleElements[indexToUpdateTo].focus(); // If multiple tabs have the same name this could potentially focus the wrong element. Ideally tabs should not share the same name.
     },
-    [selected, setSelected, tabTitleElements],
+    [tabTitleElements, selectedIndex, setSelectedByIndex],
   );
 
   const renderedTabs = React.Children.map(children, child => {
@@ -150,9 +174,16 @@ const Tabs = (props: AccessibleTabsProps) => {
       return child;
     }
 
-    const { children, disabled } = child.props;
+    const { children, disabled, 'data-testid': dataTestId } = child.props;
 
-    return <TabPanel disabled={disabled}>{children}</TabPanel>;
+    return (
+      <TabPanel
+        data-testid={dataTestId ? `${dataTestId}-panel` : ''}
+        disabled={disabled}
+      >
+        {children}
+      </TabPanel>
+    );
   });
 
   return (
@@ -166,7 +197,7 @@ const Tabs = (props: AccessibleTabsProps) => {
               as,
               darkMode,
               forceRenderAllTabPanels,
-              selected,
+              selected: selectedIndex,
               size,
             }}
           >
@@ -205,8 +236,7 @@ Tabs.displayName = 'Tabs';
 
 Tabs.propTypes = {
   children: PropTypes.node,
-  setSelected: PropTypes.func,
-  selected: PropTypes.number,
+  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
 };
 
