@@ -209,7 +209,7 @@ Each package was tested using Jest with JSDOM and React Testing Library. Each pa
 
 ### Test Tooling
 
-Test tooling can be viewed in commit [`525bcdc223a82ee4b2963c499dd458f1bd6051d6`](https://github.com/mongodb/leafygreen-ui/commit/525bcdc223a82ee4b2963c499dd458f1bd6051d6)
+Test tooling can be viewed in commit [`525bcdc223a82ee4b2963c499dd458f1bd6051d6`](https://github.com/mongodb/leafygreen-ui/blob/525bcdc223a82ee4b2963c499dd458f1bd6051d6/packages/descendants/src/test/benchmark.spec.tsx)
 
 ### Results
 
