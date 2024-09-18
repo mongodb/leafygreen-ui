@@ -4,21 +4,59 @@ import { axe } from 'jest-axe';
 
 import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
-import { PopoverProps } from '../Popover.types';
+import { PopoverProps, RenderMode } from '../Popover.types';
 
 import { Popover } from './Popover';
 
-function renderPopover(props?: Partial<PopoverProps>) {
+type RTLInlinePopoverProps = Partial<
+  Omit<
+    PopoverProps,
+    | 'dismissMode'
+    | 'onToggle'
+    | 'portalClassName'
+    | 'portalContainer'
+    | 'portalRef'
+    | 'renderMode'
+    | 'scrollContainer'
+    | 'usePortal'
+  >
+>;
+
+type RTLPortalPopoverProps = Partial<
+  Omit<PopoverProps, 'dismissMode' | 'onToggle' | 'renderMode' | 'usePortal'>
+>;
+
+type RTLTopLayerPopoverProps = Partial<
+  Omit<
+    PopoverProps,
+    | 'portalClassName'
+    | 'portalContainer'
+    | 'portalRef'
+    | 'renderMode'
+    | 'scrollContainer'
+    | 'usePortal'
+  >
+>;
+
+function renderTopLayerPopover(props?: RTLTopLayerPopoverProps) {
   const result = render(
-    <Popover {...props} data-testid="popover-test-id">
+    <Popover
+      {...props}
+      data-testid="popover-test-id"
+      renderMode={RenderMode.TopLayer}
+    >
       Popover Content
     </Popover>,
   );
 
-  const rerenderPopover = (newProps?: Partial<PopoverProps>) => {
+  const rerenderPopover = (newProps?: RTLTopLayerPopoverProps) => {
     const allProps = { ...props, ...newProps };
     result.rerender(
-      <Popover {...allProps} data-testid="popover-test-id">
+      <Popover
+        {...allProps}
+        data-testid="popover-test-id"
+        renderMode={RenderMode.TopLayer}
+      >
         Popover Content
       </Popover>,
     );
@@ -28,19 +66,173 @@ function renderPopover(props?: Partial<PopoverProps>) {
 }
 
 describe('packages/popover', () => {
-  describe('a11y', () => {
-    test('does not have basic accessibility issues', async () => {
-      const { container, rerenderPopover } = renderPopover();
-      const results = await axe(container);
-      expect(results).toHaveNoViolations();
+  describe(`renderMode=${RenderMode.Inline}`, () => {
+    function renderInlinePopover(props?: RTLInlinePopoverProps) {
+      const result = render(
+        <Popover
+          {...props}
+          data-testid="popover-test-id"
+          renderMode={RenderMode.Inline}
+          usePortal={false}
+        >
+          Popover Content
+        </Popover>,
+      );
 
-      type AxeResult = Awaited<ReturnType<typeof axe>>;
-      let newResults: AxeResult = {} as AxeResult;
-      rerenderPopover({ active: true });
-      await act(async () => {
-        newResults = await axe(container);
+      const rerenderPopover = (newProps?: RTLInlinePopoverProps) => {
+        const allProps = { ...props, ...newProps };
+        result.rerender(
+          <Popover
+            {...allProps}
+            data-testid="popover-test-id"
+            renderMode={RenderMode.Inline}
+            usePortal={false}
+          >
+            Popover Content
+          </Popover>,
+        );
+      };
+
+      return { ...result, rerenderPopover };
+    }
+
+    describe('a11y', () => {
+      test('does not have basic accessibility issues', async () => {
+        const { container, rerenderPopover } = renderInlinePopover();
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+
+        type AxeResult = Awaited<ReturnType<typeof axe>>;
+        let newResults: AxeResult = {} as AxeResult;
+        rerenderPopover({ active: true });
+        await act(async () => {
+          newResults = await axe(container);
+        });
+        expect(newResults).toHaveNoViolations();
       });
-      expect(newResults).toHaveNoViolations();
+    });
+
+    test('displays popover inline when the `active` prop is `true`', () => {
+      const { container, getByTestId } = renderInlinePopover({ active: true });
+      expect(getByTestId('popover-test-id')).toBeInTheDocument();
+      expect(container.innerHTML.includes('popover-test-id')).toBeTruthy();
+    });
+
+    test('does NOT display popover when the `active` prop is `false`', () => {
+      const { queryByTestId } = renderInlinePopover({ active: false });
+      expect(queryByTestId('popover-test-id')).toBeNull();
+    });
+  });
+
+  describe(`renderMode=${RenderMode.Portal}`, () => {
+    function renderPortalPopover(props?: RTLPortalPopoverProps) {
+      const result = render(
+        <Popover
+          {...props}
+          data-testid="popover-test-id"
+          renderMode={RenderMode.Portal}
+          usePortal={true}
+        >
+          Popover Content
+        </Popover>,
+      );
+
+      const rerenderPopover = (newProps?: RTLPortalPopoverProps) => {
+        const allProps = { ...props, ...newProps };
+        result.rerender(
+          <Popover
+            {...allProps}
+            data-testid="popover-test-id"
+            renderMode={RenderMode.Portal}
+            usePortal={true}
+          >
+            Popover Content
+          </Popover>,
+        );
+      };
+
+      return { ...result, rerenderPopover };
+    }
+
+    describe('a11y', () => {
+      test('does not have basic accessibility issues', async () => {
+        const { container, rerenderPopover } = renderPortalPopover();
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+
+        type AxeResult = Awaited<ReturnType<typeof axe>>;
+        let newResults: AxeResult = {} as AxeResult;
+        rerenderPopover({ active: true });
+        await act(async () => {
+          newResults = await axe(container);
+        });
+        expect(newResults).toHaveNoViolations();
+      });
+    });
+
+    test('displays popover when the `active` prop is `true`', () => {
+      const { container, getByTestId } = renderPortalPopover({ active: true });
+      expect(getByTestId('popover-test-id')).toBeInTheDocument();
+    });
+
+    test('portals popover content to end of DOM by default', () => {
+      const { container, getByTestId } = renderPortalPopover({ active: true });
+      expect(container).not.toContain(getByTestId('popover-test-id'));
+    });
+
+    test('does NOT display popover when the `active` prop is `false`', () => {
+      const { queryByTestId } = renderPortalPopover({ active: false });
+      expect(queryByTestId('popover-test-id')).toBeNull();
+    });
+
+    test('accepts a `portalRef`', async () => {
+      const portalRef = createRef<HTMLElement>();
+      waitFor(() => {
+        renderPortalPopover({ portalRef });
+
+        expect(portalRef.current).toBeDefined();
+        expect(portalRef.current).toBeInTheDocument();
+      });
+    });
+
+    test('applies `portalClassName` to portal element', () => {
+      const { getByTestId } = renderPortalPopover({
+        active: true,
+        portalClassName: 'test-classname',
+      });
+      expect(getByTestId('popover-test-id').parentElement?.className).toBe(
+        'test-classname',
+      );
+    });
+  });
+
+  describe(`renderMode=${RenderMode.TopLayer}`, () => {
+    describe('a11y', () => {
+      test('does not have basic accessibility issues', async () => {
+        const { container, rerenderPopover } = renderTopLayerPopover();
+        const results = await axe(container);
+        expect(results).toHaveNoViolations();
+
+        type AxeResult = Awaited<ReturnType<typeof axe>>;
+        let newResults: AxeResult = {} as AxeResult;
+        rerenderPopover({ active: true });
+        await act(async () => {
+          newResults = await axe(container);
+        });
+        expect(newResults).toHaveNoViolations();
+      });
+    });
+
+    test('displays popover in top layer when the `active` prop is `true`', () => {
+      const { container, getByTestId } = renderTopLayerPopover({
+        active: true,
+      });
+      expect(getByTestId('popover-test-id')).toBeInTheDocument();
+    });
+
+    test('does NOT display popover when the `active` prop is `false`', () => {
+      const { queryByTestId } = renderTopLayerPopover({ active: false });
+      expect(queryByTestId('popover-test-id')).toBeNull();
     });
   });
 
@@ -55,66 +247,20 @@ describe('packages/popover', () => {
     expect(ref.current).toBeDefined();
   });
 
-  test('accepts a portalRef', async () => {
-    const portalRef = createRef<HTMLElement>();
-    waitFor(() => {
-      render(
-        <Popover portalRef={portalRef} data-testid="popover-test-id">
-          Popover Content
-        </Popover>,
-      );
-
-      expect(portalRef.current).toBeDefined();
-      expect(portalRef.current).toBeInTheDocument();
-    });
-  });
-
-  test('displays popover when the "active" prop is set', () => {
-    const { getByTestId } = renderPopover({ active: true });
-    expect(getByTestId('popover-test-id')).toBeInTheDocument();
-  });
-
-  test('does not display popover when "active" prop is not set', () => {
-    const { container } = renderPopover();
-    expect(container.innerHTML.includes('popover-test-id')).toBe(false);
-  });
-
   test('onClick handler is called when popover contents is clicked', () => {
     const clickSpy = jest.fn();
-    const { getByText } = renderPopover({ active: true, onClick: clickSpy });
+    const { getByText } = renderTopLayerPopover({
+      active: true,
+      onClick: clickSpy,
+    });
 
     expect(clickSpy).not.toHaveBeenCalled();
     fireEvent.click(getByText('Popover Content'));
     expect(clickSpy).toHaveBeenCalledTimes(1);
   });
 
-  test('portals popover content to end of DOM by default', () => {
-    const { container, getByTestId } = renderPopover({ active: true });
-    expect(container).not.toContain(getByTestId('popover-test-id'));
-  });
-
-  test('does not portal popover content to end of DOM when "usePortal" is false', () => {
-    const { container } = renderPopover({
-      active: true,
-      usePortal: false,
-    });
-
-    expect(container.innerHTML.includes('popover-test-id')).toBe(true);
-  });
-
-  test('applies "portalClassName" to root of portal', () => {
-    const { getByTestId } = renderPopover({
-      active: true,
-      portalClassName: 'test-classname',
-    });
-
-    expect(getByTestId('popover-test-id').parentElement?.className).toBe(
-      'test-classname',
-    );
-  });
-
   test('removes Popover instance on unmount', () => {
-    const { container, unmount } = renderPopover();
+    const { container, unmount } = renderTopLayerPopover();
     unmount();
     expect(container.innerHTML).toBe('');
   });
@@ -128,7 +274,7 @@ describe('packages/popover', () => {
       onExiting: jest.fn(),
       onExited: jest.fn(),
     };
-    const { rerenderPopover } = renderPopover({
+    const { rerenderPopover } = renderTopLayerPopover({
       ...callbacks,
     });
 
@@ -164,7 +310,7 @@ describe('packages/popover', () => {
   describe('within context', () => {
     const setIsPopoverOpenMock = jest.fn();
 
-    function renderPopoverInContext(props?: Partial<PopoverProps>) {
+    function renderPopoverInContext(props?: RTLTopLayerPopoverProps) {
       const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
         return (
           <PopoverContext.Provider
@@ -180,17 +326,25 @@ describe('packages/popover', () => {
 
       const result = render(
         <MockPopoverProvider>
-          <Popover {...props} data-testid="popover-test-id">
+          <Popover
+            {...props}
+            data-testid="popover-test-id"
+            renderMode={RenderMode.TopLayer}
+          >
             Popover Content
           </Popover>
         </MockPopoverProvider>,
       );
 
-      const rerenderPopover = (newProps?: Partial<PopoverProps>) => {
+      const rerenderPopover = (newProps?: RTLTopLayerPopoverProps) => {
         const allProps = { ...props, ...newProps };
         result.rerender(
           <MockPopoverProvider>
-            <Popover {...allProps} data-testid="popover-test-id">
+            <Popover
+              {...allProps}
+              data-testid="popover-test-id"
+              renderMode={RenderMode.TopLayer}
+            >
               Popover Content
             </Popover>
           </MockPopoverProvider>,
@@ -228,13 +382,72 @@ describe('packages/popover', () => {
       <Popover></Popover>;
     });
 
-    test('Requires only children', () => {
+    test('only requires children', () => {
       <Popover>Popover Content</Popover>;
     });
 
-    test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
+    test(`does not allow specifying portal props, when renderMode is not ${RenderMode.Portal}`, () => {
+      const scrollContainer = document.createElement('div');
+
       // @ts-expect-error
-      <Popover active usePortal={false} portalClassName="test-classname">
+      <Popover
+        active
+        renderMode={RenderMode.Inline}
+        portalClassName="test-classname"
+        portalRef={{ current: null }}
+      >
+        Popover Content
+      </Popover>;
+
+      //@ts-expect-error
+      <Popover
+        active
+        renderMode={RenderMode.Inline}
+        portalContainer={scrollContainer}
+        scrollContainer={scrollContainer}
+      >
+        Popover Content
+      </Popover>;
+
+      // @ts-expect-error
+      <Popover
+        active
+        renderMode={RenderMode.TopLayer}
+        portalClassName="test-classname"
+        portalRef={{ current: null }}
+      >
+        Popover Content
+      </Popover>;
+
+      //@ts-expect-error
+      <Popover
+        active
+        renderMode={RenderMode.TopLayer}
+        portalContainer={scrollContainer}
+        scrollContainer={scrollContainer}
+      >
+        Popover Content
+      </Popover>;
+    });
+
+    test(`does not allow specifying dismissMode or onToggle, when renderMode is not ${RenderMode.TopLayer}`, () => {
+      // @ts-expect-error
+      <Popover
+        active
+        renderMode={RenderMode.Inline}
+        dismissMode="auto"
+        onToggle={() => {}}
+      >
+        Popover Content
+      </Popover>;
+
+      // @ts-expect-error
+      <Popover
+        active
+        renderMode={RenderMode.Portal}
+        dismissMode="manual"
+        onToggle={() => {}}
+      >
         Popover Content
       </Popover>;
     });

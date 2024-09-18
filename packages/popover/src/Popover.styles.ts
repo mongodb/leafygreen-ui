@@ -24,12 +24,27 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   top: ${floatingStyles.top}px;
   left: ${floatingStyles.left}px;
 
-  transition-property: opacity, transform;
+  transition-property: opacity, transform, overlay, display;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   transition-behavior: allow-discrete;
+
   opacity: 0;
   transform: scale(0);
+
+  &::backdrop {
+    transition-property: background, overlay, display;
+    transition-duration: ${TRANSITION_DURATION}ms;
+    transition-timing-function: ease-in-out;
+    transition-behavior: allow-discrete;
+  }
+
+  @starting-style {
+    &:popover-open {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
 `;
 
 const transformOriginStyles: Record<ExtendedPlacement, string> = {

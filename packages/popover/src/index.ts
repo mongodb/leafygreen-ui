@@ -4,10 +4,13 @@ import { getAlign, getJustify } from './Popover.testutils';
 export {
   Align,
   type ChildrenFunctionParameters,
+  DismissMode,
   type ElementPosition,
   Justify,
   type PopoverProps,
-  type PortalControlProps,
+  type PopoverRenderModeProps,
+  RenderMode,
+  type ToggleEvent,
 } from './Popover.types';
 
 export { contentClassName, Popover };

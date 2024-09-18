@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment } from 'react';
+import React, { forwardRef, Fragment, useEffect } from 'react';
 import { Transition } from 'react-transition-group';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
@@ -9,7 +9,11 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { spacing as spacingToken } from '@leafygreen-ui/tokens';
 
-import { useContentNode, useReferenceElement } from '../Popover.hooks';
+import {
+  useContentNode,
+  usePopoverContextProps,
+  useReferenceElement,
+} from '../Popover.hooks';
 import {
   contentClassName,
   getPopoverStyles,
@@ -18,9 +22,11 @@ import {
 } from '../Popover.styles';
 import {
   Align,
+  DismissMode,
   Justify,
   PopoverComponentProps,
   PopoverProps,
+  RenderMode,
 } from '../Popover.types';
 import {
   getExtendedPlacementValue,
@@ -57,42 +63,51 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
-      spacing = spacingToken[100],
-      align = Align.Bottom,
-      justify = Justify.Start,
       adjustOnMutation = false,
+      align = Align.Bottom,
       children,
       className,
-      popoverZIndex,
+      justify = Justify.Start,
       refEl,
-      usePortal = true,
+      ...rest
+    }: PopoverProps,
+    fwdRef,
+  ) => {
+    const popoverContext = usePopoverContext();
+    const {
+      renderMode,
+      /** top layer props */
+      dismissMode = DismissMode.Auto,
+      onToggle,
+      /** portal props */
+      usePortal,
       portalClassName,
-      portalContainer: portalContainerProp,
+      portalContainer,
       portalRef,
-      scrollContainer: scrollContainerProp,
+      scrollContainer,
+      /** react-transition-group props */
       onEnter,
       onEntering,
       onEntered,
       onExit,
       onExiting,
       onExited,
-      ...rest
-    }: PopoverProps,
-    fwdRef,
-  ) => {
-    const {
-      portalContainer: portalContainerCtxVal,
-      scrollContainer: scrollContainerCtxVal,
+      /** style props */
+      popoverZIndex,
+      spacing = spacingToken[100],
+      /** deprecated props */
+      isPopoverOpen: _,
       setIsPopoverOpen,
-    } = usePopoverContext();
+      ...restProps
+    } = usePopoverContextProps(rest, popoverContext);
 
-    const portalContainer = portalContainerProp || portalContainerCtxVal;
-    const scrollContainer = scrollContainerProp || scrollContainerCtxVal;
-
-    // When usePortal is true and a scrollContainer is passed in
-    // show a warning if the portalContainer is not inside of the scrollContainer.
-    // Note: If no portalContainer is passed the portalContainer will be undefined and this warning will show up.
-    // By default if no portalContainer is passed the <Portal> component will create a div and append it to the body.
+    /**
+     * When usePortal is true and a scrollContainer is defined, log a warning if the
+     * portalContainer is not inside of the scrollContainer.
+     * Note: If no portalContainer is passed the portalContainer will be undefined, and
+     * this warning will show up. By default if no portalContainer is passed the <Portal>
+     * component will create a div and append it to the body.
+     */
     if (usePortal && scrollContainer) {
       if (!scrollContainer.contains(portalContainer as HTMLElement)) {
         consoleOnce.warn(
@@ -160,6 +175,32 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       return children;
     };
 
+    useEffect(() => {
+      if (renderMode !== RenderMode.TopLayer || !onToggle) {
+        return;
+      }
+
+      // @ts-expect-error - `toggle` event not supported pre-typescript v5
+      refs.floating.current?.addEventListener('toggle', onToggle);
+      return () =>
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        refs.floating.current?.removeEventListener('toggle', onToggle);
+    }, [onToggle, renderMode]);
+
+    useEffect(() => {
+      if (renderMode !== RenderMode.TopLayer) {
+        return;
+      }
+
+      if (context.open) {
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        refs.floating.current?.showPopover?.();
+      } else {
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        refs.floating.current?.hidePopover?.();
+      }
+    }, [context.open, renderMode]);
+
     return (
       <Transition
         nodeRef={contentNodeRef}
@@ -190,16 +231,24 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
             )}
             <Root {...rootProps}>
               <div
-                {...rest}
                 ref={popoverRef}
                 className={getPopoverStyles({
                   className,
                   floatingStyles,
                   placement: extendedPlacement,
-                  popoverZIndex,
+                  popoverZIndex:
+                    renderMode === RenderMode.TopLayer
+                      ? undefined
+                      : popoverZIndex,
                   spacing,
                   state,
                 })}
+                // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
+                // eslint-disable-next-line react/no-unknown-property
+                popover={
+                  renderMode === RenderMode.TopLayer ? dismissMode : undefined
+                }
+                {...restProps}
               >
                 {/* We need to put `setContentNode` ref on this inner wrapper because
                 placing the ref on the parent will create an infinite loop in some cases
