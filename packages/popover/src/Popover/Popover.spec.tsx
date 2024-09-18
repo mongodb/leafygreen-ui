@@ -57,7 +57,7 @@ describe('packages/popover', () => {
 
   test('accepts a portalRef', async () => {
     const portalRef = createRef<HTMLElement>();
-    await waitFor(() => {
+    waitFor(() => {
       render(
         <Popover portalRef={portalRef} data-testid="popover-test-id">
           Popover Content
