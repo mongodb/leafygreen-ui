@@ -50,7 +50,7 @@ export const renderHookServer: <Hook extends () => any>(
   options?: RenderHookServerOptions,
 ) => RenderHookServerResult<Hook> = (() => {
   const isReact18 = parseInt(React.version.split('.')[0], 10) >= 18;
-  const filename = isReact18 ? 'renderHookServer.js' : 'renderHookServerV17.js';
+  const filename = isReact18 ? 'renderHookServer' : 'renderHookServerV17';
   const RHS = require(path.resolve(__dirname, filename));
   return RHS.renderHookServer;
 })();
