@@ -10,7 +10,11 @@ import Popover, { PopoverProps } from '@leafygreen-ui/popover';
 
 import { menuStyles } from './MenuWrapper.styles';
 
-export type MenuWrapperProps = PopoverProps & HTMLElementProps<'div'>;
+export type MenuWrapperProps = Omit<
+  PopoverProps,
+  'dismissMode' | 'onToggle' | 'renderMode'
+> &
+  HTMLElementProps<'div'>;
 
 /**
  * A simple styled popover component
@@ -24,6 +28,7 @@ export const MenuWrapper = forwardRef<HTMLDivElement, MenuWrapperProps>(
         ref={fwdRef}
         className={cx(menuStyles[theme], className)}
         {...props}
+        usePortal
       >
         {/*
          * Prevents the opening and closing state of a select dropdown from propagating up
