@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/hooks': patch
+'@leafygreen-ui/hooks': minor
 ---
 
 Adds `useSsrCheck` and adds it to viewport check in `useViewportSize`.

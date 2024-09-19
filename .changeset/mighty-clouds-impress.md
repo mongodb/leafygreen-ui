@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/testing-lib': patch
+'@leafygreen-ui/testing-lib': minor
 ---
 
 Adds `renderHookServer` method
