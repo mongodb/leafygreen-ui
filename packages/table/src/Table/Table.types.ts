@@ -2,6 +2,7 @@ import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
+import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGreenVirtualTable.types';
 
 export interface TableProps<T extends LGRowData>
   extends HTMLElementProps<'table'>,
@@ -21,7 +22,7 @@ export interface TableProps<T extends LGRowData>
   /**
    * The `useLeafyGreenTable` return value
    */
-  table?: LeafyGreenTable<T>;
+  table?: LeafyGreenTable<T> | LeafyGreenVirtualTable<T>;
 
   /**
    * Disables all transition animations for smoother rendering of tall content where appropriate

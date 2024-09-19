@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
 import { useTableContext } from '../TableContext';
@@ -65,6 +65,12 @@ const InternalCell = ({
             [truncatedContentStyles]: shouldTruncate,
           },
           contentClassName,
+          // css`
+          //   ${!!table.virtual &&
+          //   css`
+          //     transform: translateY(${virtualRow.start}px);
+          //   `}
+          // `,
         )}
       >
         {children}

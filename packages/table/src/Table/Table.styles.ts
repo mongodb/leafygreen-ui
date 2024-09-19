@@ -6,6 +6,12 @@ export const baseStyles = css`
   border-spacing: 0;
   border-collapse: collapse;
   width: 100%;
+
+  &:after {
+    content: '';
+    display: block;
+    height: var(--pseudo-height);
+  }
 `;
 
 export const themeStyles: Record<Theme, string> = {
@@ -22,3 +28,53 @@ export const tableContainerStyles = css`
   width: 100%;
   position: relative;
 `;
+
+// export const getTableContainerStyles = (
+//   isVirtual = false,
+//   virtualizer: {},
+// ) => css`
+//   ${isVirtual &&
+//   css`
+//     table {
+//       display: grid;
+//     }
+
+//     thead {
+//       display: grid;
+//       top: 0;
+//       z-index: 1;
+
+//       tr {
+//         display: flex;
+//         width: 100%;
+//       }
+
+//       th {
+//         display: flex;
+//         /* width: 100%; */
+//         box-sizing: content-box;
+//       }
+//     }
+
+//     th {
+//       display: flex;
+//     }
+
+//     tbody {
+//       display: grid;
+//       position: relative;
+//       height: ${virtualizer.getTotalSize()}px;
+
+//       tr {
+//         display: flex;
+//         position: absolute;
+//         width: 100%;
+//       }
+
+//       td {
+//         display: flex;
+//         box-sizing: content-box;
+//       }
+//     }
+//   `}
+// `;

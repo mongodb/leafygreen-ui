@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from 'react';
-import { VirtualItem } from 'react-virtual';
+import { VirtualItem } from '@tanstack/react-virtual';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import { Polymorph } from '@leafygreen-ui/polymorphic';
@@ -34,7 +34,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   const { disabled } = useRowContext();
   const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
   const parentRow = getParentRow?.(row.id);
-  const rowRef = virtualRow?.measureRef;
+  // const rowRef = virtualRow?.measureRef;
 
   const isTableExpandable = table?.getCanSomeRowsExpand();
   const isNested = !!parentRow;
@@ -44,6 +44,10 @@ const InternalRowWithRT = <T extends LGRowData>({
 
   const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
+
+  // const isVirtualRow = !!virtualRow;
+
+  // console.log({ isVirtualRow });
 
   /**
    * Render the row within a `tbody` if
@@ -56,14 +60,12 @@ const InternalRowWithRT = <T extends LGRowData>({
     [shouldRenderAsTBody],
   );
 
-  const tBodyProps: HTMLElementProps<'tbody'> &
-    Pick<VirtualItem, 'measureRef'> = {
+  const tBodyProps: HTMLElementProps<'tbody'> & VirtualItem = {
     className: cx({
       [expandedContentParentStyles[theme]]: isExpanded,
     }),
+    // @ts-ignore - TODO: ?
     'data-expanded': isExpanded,
-    // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
-    ref: rowRef,
   };
 
   return (
@@ -78,11 +80,22 @@ const InternalRowWithRT = <T extends LGRowData>({
             [selectedRowStyles[theme]]: isSelected && !disabled,
           },
           className,
+          css`
+            ${!!virtualRow &&
+            css`
+              /* transform: translateY(${virtualRow.start}px); */
+              /* transform: translateY(
+                ${virtualRow.start - virtualRow.index * virtualRow.size}px
+              ); */
+            `}
+          `,
         )}
         data-selected={isSelected}
         aria-hidden={!isRowVisible}
         data-expanded={isExpanded}
         id={`lg-table-row-${row.id}`}
+        // ref={table.virtual.measureElement}
+        // data-index={virtualRow!.index ?? ''}
         {...rest}
       >
         <RowCellChildren row={row}>{children}</RowCellChildren>

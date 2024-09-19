@@ -51,18 +51,19 @@ export default meta;
 
 const virtualScrollingContainerHeight = css`
   max-height: calc(100vh - 200px);
+  /* height: calc(100vh - 200px); */
 `;
 
 const basicColumnDefs: Array<ColumnDef<Person>> = [
   {
     accessorKey: 'index',
     header: 'index',
-    size: 10,
+    size: 40,
   },
   {
     accessorKey: 'id',
     header: 'ID',
-    size: 45,
+    size: 60,
   },
   {
     accessorKey: 'firstName',
@@ -95,6 +96,7 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
 export const Basic: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useMemo(() => makeData(false, 10_000), []);
+  // const data = React.useMemo(() => makeData(false, 100), []);
 
   const columns = useMemo(() => basicColumnDefs, []);
 
@@ -102,16 +104,18 @@ export const Basic: StoryFn<StoryTableProps> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    useVirtualScrolling: true,
   });
+
+  // const virtualItems = table.virtual.getVirtualItems();
 
   const { rows } = table.getRowModel();
 
   return (
     <>
       <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table?.virtualRows?.length} virtual rows</p>
+        <p>{table.getRowModel().rows.length} total rowsjsfjsh</p>
+        <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
+        <p>{table?.virtual.getTotalSize()} virtual rows</p>
       </div>
 
       <Table
@@ -137,15 +141,20 @@ export const Basic: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual.getVirtualItems().map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               const cells = row.getVisibleCells();
               return (
-                <Row key={row.id}>
+                <Row key={row.id} virtualRow={virtualRow} row={row}>
                   {cells.map((cell: LeafyGreenTableCell<Person>) => {
                     return (
-                      <Cell key={cell.id}>
+                      <Cell
+                        key={cell.id}
+                        // style={{
+                        //   width: cell.column.getSize(),
+                        // }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -172,10 +181,10 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
+  const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
@@ -206,8 +215,8 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
+          {virtualItems &&
+            virtualItems.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               const cells = row.getVisibleCells();
 
@@ -334,10 +343,10 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
       sorting,
     },
     onSortingChange: setSorting,
-    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
+  const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
@@ -368,8 +377,8 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
+          {virtualItems &&
+            virtualItems.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               const cells = row.getVisibleCells();
 
@@ -410,10 +419,10 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     },
     onRowSelectionChange: setRowSelection,
     hasSelectableRows: true,
-    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
+  const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
@@ -443,8 +452,8 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
+          {virtualItems &&
+            virtualItems.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               const cells = row.getVisibleCells();
 
@@ -484,10 +493,10 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       expanded,
     },
     onExpandedChange: setExpanded,
-    useVirtualScrolling: true,
   });
 
   const { rows } = table.getRowModel();
+  const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
@@ -518,8 +527,8 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
+          {virtualItems &&
+            virtualItems.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               const cells = row.getVisibleCells();
 
@@ -559,25 +568,25 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   }, []);
 
   const columns = useMemo(() => basicColumnDefs, []);
-  const estimateSize = useCallback(() => 100, []);
+  const estimateSize = useCallback(() => 68, []);
 
   const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
-    useVirtualScrolling: true,
     virtualizerOptions: {
       estimateSize,
     },
   });
 
   const { rows } = table.getRowModel();
+  const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table?.virtualRows?.length} virtual rows</p>
+        <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
       </div>
 
       <Table
@@ -603,8 +612,8 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
+          {virtualItems &&
+            virtualItems.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
               const cells = row.getVisibleCells();
               return (

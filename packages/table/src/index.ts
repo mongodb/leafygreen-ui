@@ -30,4 +30,5 @@ export { default as useLeafyGreenVirtualTable } from './useLeafyGreenVirtualTabl
 export { getTestUtils } from './utils/getTestUtils';
 export { default as V11Adapter, type V11AdapterProps } from './V11Adapter';
 export * from '@tanstack/react-table';
-export { type VirtualItem } from 'react-virtual';
+// export { type VirtualItem } from 'react-virtual';
+export { type VirtualItem } from '@tanstack/react-virtual';

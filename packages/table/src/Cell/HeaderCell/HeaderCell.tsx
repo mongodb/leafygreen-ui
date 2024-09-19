@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../../constants';
 import { useTableContext } from '../../TableContext';
@@ -61,6 +61,9 @@ const HeaderCell = <T extends LGRowData>({
             !!header?.getSize(),
         },
         className,
+        // css`
+        //   width: ${header.getSize()}px;
+        // `,
       )}
       scope="col"
       {...rest}

@@ -1,10 +1,11 @@
-import { useVirtual } from 'react-virtual';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
-import useLeafyGreenTable, {
-  LeafyGreenTable,
-  LeafyGreenTableOptions,
-  LGRowData,
-} from '../useLeafyGreenTable';
+import useLeafyGreenTable, { LGRowData } from '../useLeafyGreenTable';
+
+import {
+  LeafyGreenVirtualTable,
+  LeafyGreenVirtualTableOptions,
+} from './useLeafyGreenVirtualTable.types';
 
 function useLeafyGreenVirtualTable<
   T extends LGRowData,
@@ -18,9 +19,8 @@ function useLeafyGreenVirtualTable<
   allowSelectAll = true,
   virtualizerOptions,
   ...rest
-}: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
+}: LeafyGreenVirtualTableOptions<T, V>): LeafyGreenVirtualTable<T> {
   const table = useLeafyGreenTable({
-    containerRef,
     data,
     columns,
     withPagination,
@@ -29,20 +29,24 @@ function useLeafyGreenVirtualTable<
   });
 
   const { rows } = table.getRowModel();
-  const _rowVirtualizer = useVirtual({
-    parentRef: containerRef,
-    size: rows.length,
-    overscan: 30,
+
+  const _virtualizer = useVirtualizer({
+    count: rows.length,
+    getScrollElement: () => containerRef.current,
+    estimateSize: () => 40,
+    overscan: 20,
+    measureElement:
+      typeof window !== 'undefined' &&
+      navigator.userAgent.indexOf('Firefox') === -1
+        ? element => element?.getBoundingClientRect().height
+        : undefined,
     ...virtualizerOptions,
   });
 
   return {
     ...table,
-    virtualRows: _rowVirtualizer.virtualItems,
-    totalSize: _rowVirtualizer.totalSize,
-    scrollToIndex: _rowVirtualizer.scrollToIndex,
-    hasSelectableRows,
-  } as LeafyGreenTable<T>;
+    virtual: { ..._virtualizer },
+  } as LeafyGreenVirtualTable<T>;
 }
 
 export default useLeafyGreenVirtualTable;

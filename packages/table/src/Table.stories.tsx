@@ -161,7 +161,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<any>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -346,7 +345,6 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -479,7 +477,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -582,7 +579,6 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -676,7 +672,6 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
@@ -803,7 +798,6 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
@@ -934,7 +928,6 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     withPagination: true,

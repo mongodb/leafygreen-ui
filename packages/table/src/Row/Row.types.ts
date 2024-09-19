@@ -1,4 +1,4 @@
-import { VirtualItem } from 'react-virtual';
+import { VirtualItem } from '@tanstack/react-virtual';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
