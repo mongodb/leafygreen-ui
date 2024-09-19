@@ -24,7 +24,7 @@
   "dependencies": {
     "@leafygreen-ui/descendants": "^1.0.1",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.1.4",
+    "@leafygreen-ui/hooks": "^8.2.0",
     "@leafygreen-ui/icon": "^12.5.4",
     "@leafygreen-ui/icon-button": "^15.0.23",
     "@leafygreen-ui/input-option": "^2.0.2",
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/testing-lib": "^0.6.1",
+    "@leafygreen-ui/testing-lib": "^0.7.0",
     "@leafygreen-ui/text-input": "^13.1.0",
     "@lg-tools/storybook-utils": "^0.1.1",
     "@storybook/react": "^7.6.17"

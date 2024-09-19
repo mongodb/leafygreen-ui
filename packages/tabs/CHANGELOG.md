@@ -1,5 +1,45 @@
 # @leafygreen-ui/tabs
 
+## 13.1.0
+
+### Minor Changes
+
+- 30f111498: [LG-4473](https://jira.mongodb.org/browse/LG-4473) Updates the `selected` and `setSelected` props to accept both strings and numbers. The string must match the text content from the `name` prop on the `Tab` component.
+
+  ```js
+    const [selectedTab, setSelectedTab] = useState<string | number>('Tab 4');
+
+    return (
+      <div>
+        <Button onClick={() => setSelectedTab('Tab 2')}>
+          Set second tab as active
+        </Button>
+        <Tabs
+          selected={selectedTab}
+          setSelected={setSelectedTab}
+        >
+          <Tab name="Tab 1">
+            Content 1
+          </Tab>
+          <Tab name="Tab 2">
+            Content 2
+          </Tab>
+          <Tab name="Tab 3">
+            Content 3
+          </Tab>
+          <Tab name="Tab 4">
+            Content 4
+          </Tab>
+        <Tabs>
+      </div>
+    );
+  ```
+
+### Patch Changes
+
+- Updated dependencies [9776f5f42]
+  - @leafygreen-ui/hooks@8.2.0
+
 ## 13.0.1
 
 ### Patch Changes
