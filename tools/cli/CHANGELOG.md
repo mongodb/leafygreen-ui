@@ -1,5 +1,11 @@
 # @lg-tools/cli
 
+## 0.6.2
+
+### Patch Changes
+
+- @lg-tools/test@0.4.10
+
 ## 0.6.1
 
 ### Patch Changes
