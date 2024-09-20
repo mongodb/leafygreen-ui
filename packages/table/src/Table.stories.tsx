@@ -165,7 +165,11 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+
+  const { rows } = table;
+
+  // console.log({ rows });
 
   return (
     <Table
@@ -194,40 +198,24 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.original.isExpandedContent ?? false;
           return (
             <>
-              <Row key={row.id} row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell key={cell.id} id={cell.id} overflow="truncate">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              </Row>
-              {row.subRows &&
-                row.subRows.map(subRow => (
-                  <>
-                    <Row key={subRow.id} row={subRow}>
-                      {subRow.getVisibleCells().map(cell => {
-                        return (
-                          <Cell key={cell.id} id={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                    {subRow.original.renderExpandedContent && (
-                      <ExpandedContent row={subRow} />
-                    )}
-                  </>
-                ))}
+              {!isExpandedContent && (
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id} id={cell.id} overflow="truncate">
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              )}
+              {isExpandedContent && <ExpandedContent row={row} />}
             </>
           );
         })}
@@ -240,14 +228,6 @@ LiveExample.argTypes = {
   shouldAlternateRowColor: {
     control: 'none',
   },
-};
-
-export const AnimationsDisabled: StoryFn<StoryTableProps> = args => {
-  return <LiveExample {...args} />;
-};
-
-AnimationsDisabled.args = {
-  disableAnimations: true,
 };
 
 export const Basic = Template.bind({});
@@ -349,14 +329,15 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.getRowModel().rows.length}
+      data-total-rows={table.rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -391,38 +372,6 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                       </Cell>
                     );
                   })}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <>
-                      <Row key={subRow.id} row={subRow}>
-                        {subRow.getVisibleCells().map(cell => {
-                          return (
-                            <Cell key={cell.id}>
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </Cell>
-                          );
-                        })}
-                      </Row>
-                      {subRow.subRows &&
-                        subRow.subRows.map(subSubRow => (
-                          <Row key={subSubRow.id} row={subSubRow}>
-                            {subSubRow.getVisibleCells().map(cell => {
-                              return (
-                                <Cell key={cell.id}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            })}
-                          </Row>
-                        ))}
-                    </>
-                  ))}
               </Row>
             </>
           );
@@ -481,14 +430,15 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.getRowModel().rows.length}
+      data-total-rows={table.rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -508,24 +458,25 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.original.isExpandedContent ?? false;
           return (
-            <Row key={row.id} row={row}>
-              {row
-                .getVisibleCells()
-                .map((cell: LeafyGreenTableCell<Person>) => {
-                  return (
-                    <Cell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              {row.original.renderExpandedContent && (
-                <ExpandedContent row={row} />
+            <>
+              {!isExpandedContent && (
+                <Row key={row.id} row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id} id={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
               )}
-            </Row>
+              {isExpandedContent && <ExpandedContent row={row} />}
+            </>
           );
         })}
       </TableBody>

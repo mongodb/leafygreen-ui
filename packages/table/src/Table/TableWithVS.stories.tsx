@@ -16,7 +16,6 @@ import {
   type HeaderGroup,
   HeaderRow,
   type LeafyGreenTableCell,
-  type LeafyGreenTableRow,
   Row,
   type SortingState,
   Table,
@@ -108,12 +107,14 @@ export const Basic: StoryFn<StoryTableProps> = args => {
 
   // const virtualItems = table.virtual.getVirtualItems();
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+
+  const { rows } = table;
 
   return (
     <>
       <div>
-        <p>{table.getRowModel().rows.length} total rowsjsfjsh</p>
+        <p>{table.rows.length} total rowsjsfjsh</p>
         <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
         <p>{table?.virtual.getTotalSize()} virtual rows</p>
       </div>
@@ -183,13 +184,14 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+  const { rows } = table;
   const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
       <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.rows.length} total rows</p>
       </div>
 
       <Table
@@ -234,50 +236,6 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                       );
                     })}
                   </Row>
-                  {row.subRows &&
-                    row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
-                      <>
-                        <Row
-                          key={subRow.id}
-                          row={subRow}
-                          virtualRow={virtualRow}
-                        >
-                          {subRow
-                            .getVisibleCells()
-                            .map((cell: LeafyGreenTableCell<Person>) => {
-                              return (
-                                <Cell key={cell.id}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            })}
-                        </Row>
-                        {subRow.subRows &&
-                          subRow.subRows.map(subSubRow => (
-                            <Row
-                              key={subSubRow.id}
-                              row={subSubRow}
-                              virtualRow={virtualRow}
-                            >
-                              {subSubRow
-                                .getVisibleCells()
-                                .map((cell: LeafyGreenTableCell<Person>) => {
-                                  return (
-                                    <Cell key={cell.id}>
-                                      {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                      )}
-                                    </Cell>
-                                  );
-                                })}
-                            </Row>
-                          ))}
-                      </>
-                    ))}
                 </>
               );
             })}
@@ -495,13 +453,14 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
     onExpandedChange: setExpanded,
   });
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+  const { rows } = table;
   const virtualItems = table.virtual.getVirtualItems();
 
   return (
     <>
       <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.rows.length} total rows</p>
       </div>
 
       <Table
@@ -530,25 +489,27 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
           {virtualItems &&
             virtualItems.map((virtualRow: VirtualItem) => {
               const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+              const isExpandedContent = row.original.isExpandedContent ?? false;
 
               return (
                 <>
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                  {row.original.renderExpandedContent && (
-                    <ExpandedContent row={row} />
+                  {!isExpandedContent && (
+                    <Row key={row.id} row={row} virtualRow={virtualRow}>
+                      {row
+                        .getVisibleCells()
+                        .map((cell: LeafyGreenTableCell<Person>) => {
+                          return (
+                            <Cell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                    </Row>
                   )}
+                  {isExpandedContent && <ExpandedContent row={row} />}
                 </>
               );
             })}

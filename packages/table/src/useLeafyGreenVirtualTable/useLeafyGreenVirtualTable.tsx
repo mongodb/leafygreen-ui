@@ -28,7 +28,9 @@ function useLeafyGreenVirtualTable<
     ...rest,
   });
 
-  const { rows } = table.getRowModel();
+  // const { rows } = table.getRowModel();
+
+  const { rows } = table;
 
   const _virtualizer = useVirtualizer({
     count: rows.length,

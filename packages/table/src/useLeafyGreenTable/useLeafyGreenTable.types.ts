@@ -1,4 +1,4 @@
-import { RefObject } from 'react';
+// import { RefObject } from 'react';
 // import {
 //   type Options as VirtualizerOptions,
 //   type VirtualItem,
@@ -22,6 +22,7 @@ export type LGRowData = RowData;
 export type LGTableDataType<T extends LGRowData> = T & {
   renderExpandedContent?: (row: LeafyGreenTableRow<T>) => JSX.Element;
   subRows?: Array<LGTableDataType<T>>;
+  isExpandedContent?: boolean;
 };
 
 /** LeafyGreen extension of `useReactTable` {@link Cell}*/
@@ -64,7 +65,6 @@ export type LeafyGreenTableOptions<
  */
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>> {
-  // Omit<VirtualizerValues, 'virtualItems'> {
-  // virtualRows?: Array<VirtualItem>;
   hasSelectableRows: boolean;
+  rows: Array<any>;
 }

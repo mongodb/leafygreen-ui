@@ -1,5 +1,9 @@
 import React from 'react';
-import { useReactTable } from '@tanstack/react-table';
+import {
+  ExpandedState,
+  getExpandedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -15,15 +19,17 @@ import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 const CHECKBOX_WIDTH = 14;
 
 function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
-  containerRef,
+  // containerRef,
   data,
   columns: columnsProp,
   hasSelectableRows,
   withPagination = false,
   allowSelectAll = true,
-  virtualizerOptions,
+  // virtualizerOptions,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
    */
@@ -56,6 +62,10 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   );
 
   const table = useReactTable<LGTableDataType<T>>({
+    state: {
+      expanded,
+      ...rest.state,
+    },
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -64,15 +74,41 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     },
     enableExpanding: true,
     enableSortingRemoval: hasSortableColumns ? true : undefined,
+    onExpandedChange: setExpanded,
     getSubRows: row => row.subRows,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
+    getExpandedRowModel: getExpandedRowModel(),
     ...rest,
   });
+
+  const { rows } = table.getRowModel();
+
+  // A way to include expandableContent inside of the rows object.
+  // If a row has expandedContent and its expanded then add a new row below the row
+  const rowsCopy = [...rows];
+
+  for (let i = 0; i < rowsCopy.length; i++) {
+    if (
+      rowsCopy[i].original.renderExpandedContent &&
+      rowsCopy[i].getIsExpanded()
+    ) {
+      rowsCopy.splice(i + 1, 0, {
+        ...rowsCopy[i],
+        id: `${rowsCopy[i].id}-expandedContent`,
+        original: {
+          ...rowsCopy[i].original,
+          isExpandedContent: true,
+        },
+      });
+      i++; // Increment index to skip the newly added item
+    }
+  }
 
   return {
     ...table,
     hasSelectableRows,
+    rows: rowsCopy,
   } as LeafyGreenTable<T>;
 }
 
