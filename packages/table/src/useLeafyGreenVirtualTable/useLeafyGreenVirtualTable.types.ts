@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import {
-  // VirtualItem,
+  VirtualItem as TSVirtualItem,
   Virtualizer,
   VirtualizerOptions,
 } from '@tanstack/react-virtual';
@@ -8,6 +8,7 @@ import {
 import {
   LeafyGreenTable,
   LeafyGreenTableOptions,
+  LeafyGreenTableRow,
   LGRowData,
 } from '../useLeafyGreenTable';
 
@@ -30,5 +31,11 @@ export interface LeafyGreenVirtualTableOptions<
 export interface LeafyGreenVirtualTable<T extends LGRowData>
   extends LeafyGreenTable<T> {
   // virtualRows?: Array<VirtualItem>;
-  virtual: Omit<Virtualizer<HTMLElement, Element>, 'virtualItems'>;
+  virtual: Virtualizer<HTMLElement, Element> & {
+    virtualItems: Array<LeafyGreenVirtualItem<T>>;
+  };
 }
+
+export type LeafyGreenVirtualItem<T extends LGRowData> = TSVirtualItem & {
+  row: LeafyGreenTableRow<T>;
+};

@@ -1,8 +1,9 @@
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 
 import useLeafyGreenTable, { LGRowData } from '../useLeafyGreenTable';
 
 import {
+  LeafyGreenVirtualItem,
   LeafyGreenVirtualTable,
   LeafyGreenVirtualTableOptions,
 } from './useLeafyGreenVirtualTable.types';
@@ -45,9 +46,16 @@ function useLeafyGreenVirtualTable<
     ...virtualizerOptions,
   });
 
+  const _virtualItems: Array<LeafyGreenVirtualItem<T>> = _virtualizer
+    .getVirtualItems()
+    .map((virtualRow: VirtualItem) => ({
+      ...virtualRow,
+      row: rows[virtualRow.index],
+    }));
+
   return {
     ...table,
-    virtual: { ..._virtualizer },
+    virtual: { ..._virtualizer, virtualItems: _virtualItems },
   } as LeafyGreenVirtualTable<T>;
 }
 
