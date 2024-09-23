@@ -153,11 +153,10 @@ export const CommunityEditionLockup = (args: BaseLogoProps) =>
   Template(CommunityEditionLogoLockup, args);
 export const UniversityLockup = (args: BaseLogoProps) =>
   Template(UniversityLogoLockup, args);
+export const AtlasMark = (args: BaseLogoProps) => Template(AtlasLogoMark, args);
+AtlasMark.storyName = 'Atlas Mark';
 
 // Deprecated
-// @ts-ignore deprecated component
-export const AtlasMark = (args: BaseLogoProps) => Template(AtlasLogoMark, args);
-AtlasMark.storyName = '[DEPRECATED] Atlas Mark';
 // @ts-ignore deprecated component
 export const RealmMark = (args: BaseLogoProps) => Template(RealmLogoMark, args);
 RealmMark.storyName = '[DEPRECATED] Realm Mark';

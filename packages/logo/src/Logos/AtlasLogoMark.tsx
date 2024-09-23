@@ -27,11 +27,9 @@ export const AtlasLogoMark = React.forwardRef(
     return (
       <svg
         {...getAccessibleProps({ role, 'aria-label': ariaLabel })}
-        x="0px"
-        y="0px"
-        viewBox="0 0 18 18"
-        width={size}
-        height={size}
+        width="179"
+        height="33"
+        viewBox="0 0 179 33"
         className={cx(
           css`
             flex-shrink: 0;
