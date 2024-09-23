@@ -85,6 +85,17 @@ return <MongoDBLogo />;
 | `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.              | `'green-dark-2'` |
 | `className` | `string`                                               | Adds a className to the root `<svg>` element. |                  |
 
+# AtlasLogoMark
+
+## Properties
+
+| Prop        | Type                                                   | Description                                                   | Default |
+| ----------- | ------------------------------------------------------ | ------------------------------------------------------------- | ------- |
+| `height`    | `number`                                               | Sets the height of the component.                             | `33`    |
+| `color`     | `'white'`, `'black'`, `'green-dark-2'`, `'green-base'` | Sets the color of the component.                              |         |
+| `darkMode`  | boolean                                                | Determines if the component is rendered in dark or light mode | `false` |
+| `className` | `string`                                               | Adds a className to the root `<svg>` element.                 |         |
+
 # AtlasForGovernmentLogoLockup
 
 ## Properties
