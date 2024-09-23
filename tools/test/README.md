@@ -39,3 +39,25 @@ You can also pass a `--config` option to the test command:
 ```bash
 > lg test --config ./path/to/config
 ```
+
+### Testing in React 17
+
+In CI we test our components using React 17.
+
+To do this manually, first run the [init script](./scripts/install-react17.ts) in order to install the specific testing dependencies needed for React 17. (`yarn init17` from the repo root)
+
+```bash
+> yarn init17
+```
+
+Next, run your tests with the `--react17` flag. This ensures that the tests are run with specific Jest config for React 17.
+
+```bash
+> yarn test --react17
+```
+
+To go back to the default version of React you'll need to clear your packages and re-build:
+
+```
+> yarn clean:modules && yarn run init
+```

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   storybookArgTypes,
   storybookExcludedControlParams,
@@ -108,15 +108,13 @@ const meta: StoryMetaType<typeof Tabs> = {
       options: [Size.Small, Size.Default],
     },
   },
-  // TODO: Add subcomponent controls for Tab when supported by Storybook
-  subcomponents: { tab: Tab },
 };
 export default meta;
 
-export const LiveExample: StoryFn<TabsProps> = ({
+export const LiveExample: StoryFn<TabsProps<string>> = ({
   baseFontSize,
   ...props
-}: TabsProps) => (
+}: TabsProps<string>) => (
   <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
     <Tabs
       className={css`
@@ -128,15 +126,36 @@ export const LiveExample: StoryFn<TabsProps> = ({
   </LeafyGreenProvider>
 );
 
-export const Controlled: StoryFn<TabsProps> = (args: TabsProps) => {
-  const [selectedTab, setSelectedTab] = useState(0);
+export const Controlled: StoryFn<TabsProps<string>> = (
+  args: TabsProps<string>,
+) => {
+  const [selectedTab, setSelectedTab] = useState(
+    'Tab 4 with an icon in the name',
+  );
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log({ selectedTab });
+  }, [selectedTab]);
 
   return (
-    <LiveExample
-      {...args}
-      selected={selectedTab}
-      setSelected={setSelectedTab}
-    />
+    <div>
+      <Button
+        onClick={() =>
+          setSelectedTab(
+            'Tab 2 with a really long name that might overflow and stretch past the width of the Tab',
+          )
+        }
+      >
+        Set second tab as active
+      </Button>
+      <br></br>
+      <LiveExample
+        {...args}
+        selected={selectedTab}
+        setSelected={setSelectedTab}
+      />
+    </div>
   );
 };
 Controlled.parameters = {

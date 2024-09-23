@@ -6,15 +6,10 @@ export { Align, Justify };
 
 type ModifiedTooltipProps = Omit<
   TooltipProps,
-  'onClick' | 'trigger' | 'triggerEvent' | 'refEl' | 'children' | 'spacing'
+  'onClick' | 'trigger' | 'triggerEvent' | 'refEl' | 'spacing'
 >;
 
 export interface InfoSprinkleProps extends ModifiedTooltipProps {
-  /**
-   * String rendered inside the tooltip
-   */
-  children: string;
-
   /**
    * Trigger props, excludes `ref`
    */
