@@ -3,7 +3,7 @@ import React from 'react';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 
-import { ProductLogoProps } from '../Logo.types';
+import { ProductLogoProps, SupportedColorsMap } from '../Logo.types';
 import { getAccessibleProps } from '../utils';
 
 /**
@@ -12,17 +12,21 @@ import { getAccessibleProps } from '../utils';
 export const AtlasLogoMark = React.forwardRef(
   (
     {
-      size = 18,
-      knockout = false,
+      height = 33,
       darkMode = false,
       role = 'img',
       'aria-label': ariaLabel = 'Atlas LogoMark',
       className,
+      color,
       ...rest
     }: ProductLogoProps,
     ref: React.LegacyRef<SVGSVGElement> | undefined,
   ) => {
-    const fill = darkMode ? palette.green.base : palette.green.dark2;
+    const fill = color
+      ? SupportedColorsMap[color]
+      : darkMode
+      ? palette.green.base
+      : palette.green.dark2;
 
     return (
       <svg
@@ -32,7 +36,8 @@ export const AtlasLogoMark = React.forwardRef(
         viewBox="0 0 179 33"
         className={cx(
           css`
-            flex-shrink: 0;
+            width: auto;
+            height: ${height}px;
           `,
           className,
         )}

@@ -43,6 +43,7 @@ export type ProductLogoProps = HTMLElementProps<'svg', never> & {
   size?: number;
   darkMode?: boolean;
   height?: number;
+  color?: SupportedColors;
 };
 
 export const LogoNames = [
