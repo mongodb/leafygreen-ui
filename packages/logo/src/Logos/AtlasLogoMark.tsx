@@ -6,9 +6,6 @@ import { palette } from '@leafygreen-ui/palette';
 import { ProductLogoProps, SupportedColorsMap } from '../Logo.types';
 import { getAccessibleProps } from '../utils';
 
-/**
- * @deprecated
- */
 export const AtlasLogoMark = React.forwardRef(
   (
     {
@@ -31,8 +28,7 @@ export const AtlasLogoMark = React.forwardRef(
     return (
       <svg
         {...getAccessibleProps({ role, 'aria-label': ariaLabel })}
-        width="179"
-        height="33"
+        height={height}
         viewBox="0 0 179 33"
         className={cx(
           css`
