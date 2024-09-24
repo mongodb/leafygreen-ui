@@ -77,6 +77,7 @@ export const cellTransitionContainerStyles = css`
   align-items: center;
   min-height: ${standardCellHeight}px;
   overflow: hidden;
+  max-height: ${standardCellHeight}px;
 `;
 
 export const truncatedContentStyles = css`
@@ -91,22 +92,3 @@ export const disableAnimationStyles = css`
   transition-duration: 0;
   transition: none;
 `;
-
-// TODO: remove this
-export const cellContentTransitionStateStyles = (
-  height?: number,
-  isVisible = false,
-) => {
-  return cx({
-    [css`
-      opacity: 0;
-      min-height: 0;
-      max-height: 0;
-    `]: !isVisible,
-    [css`
-      opacity: 1;
-      min-height: ${standardCellHeight}px;
-      max-height: ${height ? height + 'px' : 'unset'};
-    `]: isVisible,
-  });
-};

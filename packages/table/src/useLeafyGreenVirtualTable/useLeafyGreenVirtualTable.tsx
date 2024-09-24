@@ -26,6 +26,7 @@ function useLeafyGreenVirtualTable<
     columns,
     withPagination,
     allowSelectAll,
+    hasSelectableRows,
     ...rest,
   });
 

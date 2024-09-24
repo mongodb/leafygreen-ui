@@ -9,7 +9,6 @@ import { useTableContext } from '../TableContext';
 import {
   alignmentStyles,
   baseCellStyles,
-  cellContentTransitionStateStyles,
   cellTransitionContainerStyles,
   getCellPadding,
   standardCellHeight,
@@ -59,18 +58,11 @@ const InternalCell = ({
         ref={contentRef}
         className={cx(
           cellTransitionContainerStyles,
-          cellContentTransitionStateStyles(contentHeight, isVisible), // TODO: remove this
           alignmentStyles(align),
           {
             [truncatedContentStyles]: shouldTruncate,
           },
           contentClassName,
-          // css`
-          //   ${!!table.virtual &&
-          //   css`
-          //     transform: translateY(${virtualRow.start}px);
-          //   `}
-          // `,
         )}
       >
         {children}

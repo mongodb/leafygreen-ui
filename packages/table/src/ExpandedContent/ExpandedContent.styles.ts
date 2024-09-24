@@ -7,6 +7,11 @@ export const baseStyles = css`
   padding: 0;
   overflow: hidden;
   transition: ${transitionDuration.default}ms ease;
+
+  //TODO: this is temp
+  > div {
+    max-height: inherit;
+  }
 `;
 
 export const expandedContentStyles: Record<Theme, string> = {

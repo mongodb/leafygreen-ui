@@ -4,11 +4,7 @@ import { RowData } from '@tanstack/react-table';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import {
-  cellContentTransitionStateStyles,
-  cellTransitionContainerStyles,
-  disableAnimationStyles,
-} from '../Cell/Cell.styles';
+import { cellTransitionContainerStyles } from '../Cell/Cell.styles';
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
@@ -21,7 +17,8 @@ const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { disableAnimations, getParentRow } = useTableContext();
+  const { disableAnimations, getParentRow, table, isVirtual } =
+    useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
   const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
   const isNestedRow = !!getParentRow?.(row.id);
@@ -41,7 +38,15 @@ const ExpandedContent = <T extends RowData>({
   );
 
   return (
-    <InternalRowBase {...rest} aria-hidden={!isExpanded}>
+    <InternalRowBase
+      {...rest}
+      aria-hidden={!isExpanded}
+      ref={node => {
+        // TODO: fix me
+        // This gets the dynamic size of the element
+        if (isVirtual && table) table.virtual.measureElement(node);
+      }}
+    >
       <td
         colSpan={row.getVisibleCells().length}
         className={cx(baseStyles)}
@@ -50,9 +55,7 @@ const ExpandedContent = <T extends RowData>({
         <div
           className={cx(
             cellTransitionContainerStyles,
-            { [disableAnimationStyles]: disableAnimations },
             expandedContentStyles[theme],
-            cellContentTransitionStateStyles(contentHeight, isExpanded), // TODO: remove this
           )}
         >
           <div ref={contentRef}>{content}</div>

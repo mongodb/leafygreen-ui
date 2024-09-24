@@ -479,7 +479,12 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                 return (
                   <>
                     {!isExpandedContent && (
-                      <Row key={row.id} row={row} virtualRow={virtualRow}>
+                      <Row
+                        data-index={virtualRow.index} //TODO: make internal;
+                        key={row.id}
+                        row={row}
+                        virtualRow={virtualRow}
+                      >
                         {row
                           .getVisibleCells()
                           .map((cell: LeafyGreenTableCell<Person>) => {
@@ -494,7 +499,12 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                           })}
                       </Row>
                     )}
-                    {isExpandedContent && <ExpandedContent row={row} />}
+                    {isExpandedContent && (
+                      <ExpandedContent
+                        data-index={virtualRow.index} //TODO: make internal;
+                        row={row}
+                      />
+                    )}
                   </>
                 );
               },
