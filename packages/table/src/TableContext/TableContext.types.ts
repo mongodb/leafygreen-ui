@@ -23,4 +23,9 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
      * The `useLeafyGreenTable` return value
      */
     table?: LeafyGreenTable<T>;
+
+    /**
+     * Whether the table is using virtual scrolling
+     */
+    isVirtual?: boolean;
   };

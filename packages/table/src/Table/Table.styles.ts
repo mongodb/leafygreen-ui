@@ -29,52 +29,28 @@ export const tableContainerStyles = css`
   position: relative;
 `;
 
-// export const getTableContainerStyles = (
-//   isVirtual = false,
-//   virtualizer: {},
-// ) => css`
-//   ${isVirtual &&
-//   css`
-//     table {
-//       display: grid;
-//     }
+export const getVirtualStyles = (isVirtual = false, totalSize: number) => css`
+  ${isVirtual &&
+  css`
+    position: relative;
+    height: ${totalSize}px;
+  `}
+`;
 
-//     thead {
-//       display: grid;
-//       top: 0;
-//       z-index: 1;
+export const getVirtualDynamicStyles = (
+  isVirtual = false,
+  startPosition: number,
+) => css`
+  ${isVirtual &&
+  css`
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate3d(0, ${startPosition}px, 0);
+    width: 100%;
 
-//       tr {
-//         display: flex;
-//         width: 100%;
-//       }
-
-//       th {
-//         display: flex;
-//         /* width: 100%; */
-//         box-sizing: content-box;
-//       }
-//     }
-
-//     th {
-//       display: flex;
-//     }
-
-//     tbody {
-//       display: grid;
-//       position: relative;
-//       height: ${virtualizer.getTotalSize()}px;
-
-//       tr {
-//         display: flex;
-//         position: absolute;
-//         width: 100%;
-//       }
-
-//       td {
-//         display: flex;
-//         box-sizing: content-box;
-//       }
-//     }
-//   `}
-// `;
+    thead {
+      top: -${startPosition}px;
+    }
+  `}
+`;
