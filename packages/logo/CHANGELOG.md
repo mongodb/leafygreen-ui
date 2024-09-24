@@ -1,5 +1,11 @@
 # @leafygreen-ui/logo
 
+## 9.2.0
+
+### Minor Changes
+
+- e56c58339: Updates AtlasLogoLockup component to latest.
+
 ## 9.1.1
 
 ### Patch Changes
