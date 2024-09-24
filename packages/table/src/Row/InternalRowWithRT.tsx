@@ -1,17 +1,14 @@
-import React, { Fragment, useMemo } from 'react';
-import { VirtualItem } from '@tanstack/react-virtual';
+import React from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowBase from './InternalRowBase';
 import {
-  // expandedContentParentStyles,
+  expandedContentParentStyles,
   grayZebraRowStyles,
   selectedRowStyles,
   zebraStyles,
@@ -32,44 +29,16 @@ const InternalRowWithRT = <T extends LGRowData>({
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
   const { disabled } = useRowContext();
-  const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
-  const parentRow = getParentRow?.(row.id);
-  // const rowRef = virtualRow?.measureRef;
-
-  // const isTableExpandable = table?.getCanSomeRowsExpand();
-  const isNested = !!parentRow;
-  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
-  const isRowVisible = isParentExpanded || !isNested;
+  const { table, shouldAlternateRowColor } = useTableContext();
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
-
-  // const isVirtualRow = !!virtualRow;
-
-  // console.log({ isVirtualRow });
-
-  /**
-   * Render the row within a `tbody` if
-   * the table itself has any row that is expandable
-   * but not if this row is nested
-   */
-  // const shouldRenderAsTBody = isTableExpandable && !isNested;
-  // const containerAs = useMemo(
-  //   () => (shouldRenderAsTBody ? 'tbody' : Fragment),
-  //   [shouldRenderAsTBody],
-  // );
-
-  // const tBodyProps: HTMLElementProps<'tbody'> & VirtualItem = {
-  //   className: cx({
-  //     [expandedContentParentStyles[theme]]: isExpanded,
-  //   }),
-  //   // @ts-ignore - TODO: ?
-  //   'data-expanded': isExpanded,
-  // };
+  const isParentExpanded = row.getParentRow()
+    ? row.getParentRow()?.getIsExpanded()
+    : false;
 
   return (
-    // <Polymorph as={containerAs} {...(shouldRenderAsTBody && tBodyProps)}>
     <InternalRowBase
       className={cx(
         {
@@ -78,14 +47,13 @@ const InternalRowWithRT = <T extends LGRowData>({
           [zebraStyles[theme]]:
             !virtualRow && shouldAlternateRowColor && !isSelected,
           [selectedRowStyles[theme]]: isSelected && !disabled,
+          [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
         },
         className,
       )}
       data-selected={isSelected}
-      aria-hidden={!isRowVisible}
       data-expanded={isExpanded}
       id={`lg-table-row-${row.id}`}
-      // ref={table.virtual.measureElement}
       ref={node => {
         if (virtualRow && table) table.virtual.measureElement(node);
       }}
@@ -94,7 +62,6 @@ const InternalRowWithRT = <T extends LGRowData>({
     >
       <RowCellChildren row={row}>{children}</RowCellChildren>
     </InternalRowBase>
-    // </Polymorph>
   );
 };
 

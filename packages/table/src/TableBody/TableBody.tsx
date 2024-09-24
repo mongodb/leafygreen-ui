@@ -26,7 +26,7 @@ const TableBody = ({ children, ...rest }: TableBodyProps) => {
   // }
 
   return (
-    <tbody>{children}</tbody>
+    <tbody {...rest}>{children}</tbody>
     // <Polymorph as={bodyAs} {...rest}>
     //   {/* As the user scrolls down, the paddingTop grows bigger, creating the effect of virtual scrolling */}
     //   {/* {paddingTop > 0 && (

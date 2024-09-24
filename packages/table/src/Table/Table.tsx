@@ -41,7 +41,8 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    const isVirtual = !!(table as LeafyGreenVirtualTable<T>)!.virtual ?? false;
+    const isVirtual =
+      table && (table as LeafyGreenVirtualTable<T>).virtual ? true : false;
     const virtualTable =
       isVirtual && (table as LeafyGreenVirtualTable<T>)!.virtual;
     const virtualTableTotalSize = virtualTable && virtualTable.getTotalSize();
@@ -56,9 +57,17 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <div className={getVirtualStyles(isVirtual, virtualTableTotalSize)}>
+        <div
+          className={getVirtualStyles(
+            isVirtual,
+            virtualTableTotalSize as number,
+          )}
+        >
           <div
-            className={getVirtualDynamicStyles(isVirtual, virtualTableStart)}
+            className={getVirtualDynamicStyles(
+              isVirtual,
+              virtualTableStart as number,
+            )}
           >
             <TableContextProvider
               shouldAlternateRowColor={shouldAlternateRowColor}
