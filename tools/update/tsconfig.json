@@ -16,5 +16,7 @@
     {
       "path": "../meta"
     }
-  ]
+  ],
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
 }

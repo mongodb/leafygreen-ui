@@ -1,5 +1,6 @@
 import type { ASTPath } from 'jscodeshift';
 import type core from 'jscodeshift';
+import type { Collection } from 'jscodeshift';
 
 import { getJSXAttributes } from '../../jsx';
 
@@ -63,7 +64,7 @@ export function replaceJSXAttributes({
   propName,
   newPropName,
   newPropValue,
-}: ReplaceJSXAttributesType) {
+}: ReplaceJSXAttributesType): Collection<core.JSXAttribute> {
   // returns a Collection(Array) of NodePaths that we loop through.
   // Each attribute is a NodePath
   return getJSXAttributes(j, element, propName).forEach(attribute => {

@@ -14,8 +14,8 @@
   },
   "scripts": {
     "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "docs": "lg build-tsdoc",
+    "tsc": "lg build-ts"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -27,10 +27,13 @@
   },
   "dependencies": {
     "@storybook/csf": "^0.1.0",
+    "@lg-tools/build": "workspace:^",
     "lodash": "^4.17.21",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.8.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/prop-types": "^15.7.12"
+  },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/lib",
   "repository": {

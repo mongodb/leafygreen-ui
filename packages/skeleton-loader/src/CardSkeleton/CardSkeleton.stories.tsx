@@ -3,7 +3,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { CardSkeleton } from '..';
 
-export default {
+const meta: StoryMetaType<typeof CardSkeleton> = {
   title: 'Components/SkeletonLoader',
   component: CardSkeleton,
   parameters: {
@@ -27,6 +27,8 @@ export default {
   argTypes: {
     enableAnimations: { control: 'boolean' },
   },
-} satisfies StoryMetaType<typeof CardSkeleton>;
+};
+
+export default meta;
 
 export const Card: StoryType<typeof CardSkeleton> = () => <></>;

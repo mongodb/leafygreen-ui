@@ -23,9 +23,17 @@ module.exports = {
   },
   settings: {
     react: {
-      version: '17.0.2',
+      version: '18.2.0',
     },
   },
+  ignorePatterns: [
+    'node_modules',
+    'dist',
+    'packages/icon/src/glyphs/*.svg',
+    'packages/icon/src/generated/*.tsx',
+    'storybook-static',
+    'packages/**/stories.js',
+  ],
   rules: {
     '@emotion/jsx-import': 'error',
     '@emotion/pkg-renaming': 'error',

@@ -26,6 +26,7 @@ export function renderHookServer<Hook extends () => any>(
 ): RenderHookServerResult<Hook> {
   // @ts-ignore Type 'undefined' is not assignable to type 'Window'.
   jest.spyOn(global, 'window', 'get').mockImplementation(() => undefined);
+  // @ts-ignore Type 'undefined' is not assignable to type 'Document'.
   const response = renderHook(useHook, { wrapper });
   jest.spyOn(global, 'window', 'get').mockRestore();
   return response;

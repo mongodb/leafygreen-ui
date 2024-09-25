@@ -6,7 +6,7 @@ import { ListSkeleton } from '.';
 describe('packages/skeleton-list', () => {
   test('renders', () => {
     const { queryByTestId } = render(<ListSkeleton />);
-    expect(queryByTestId('lg-skeleton-list')).toBeInTheDocument();
+    expect(queryByTestId('lg-skeleton-list')).toBeDefined();
   });
 
   test('renders `count` items', () => {

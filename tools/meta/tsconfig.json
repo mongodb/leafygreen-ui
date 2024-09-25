@@ -13,5 +13,7 @@
     {
       "path": "../build"
     }
-  ]
+  ], 
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
 }

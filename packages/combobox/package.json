@@ -22,30 +22,32 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/checkbox": "^13.1.2",
-    "@leafygreen-ui/chip": "^1.2.1",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/form-field": "^1.2.4",
-    "@leafygreen-ui/hooks": "^8.2.0",
-    "@leafygreen-ui/icon": "^12.5.4",
-    "@leafygreen-ui/icon-button": "^15.0.23",
-    "@leafygreen-ui/input-option": "^2.0.2",
-    "@leafygreen-ui/lib": "^13.6.1",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/popover": "^11.4.0",
-    "@leafygreen-ui/tokens": "^2.9.0",
-    "@leafygreen-ui/typography": "^19.2.1",
+    "@leafygreen-ui/checkbox": "workspace:^",
+    "@leafygreen-ui/chip": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/form-field": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/input-option": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "chalk": "^4.1.2",
     "lodash": "^4.17.21",
-    "polished": "^4.2.2"
+    "polished": "^4.2.2",
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/testing-lib": "^0.7.0",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/testing-lib": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

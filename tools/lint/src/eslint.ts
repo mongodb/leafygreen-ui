@@ -1,34 +1,47 @@
-/* eslint-disable no-console */
-import chalk from 'chalk';
-import { spawn } from 'cross-spawn';
+import { ESLint } from 'eslint';
 import path from 'path';
+import { BaseLintRunnerOptions } from './lint.types';
 
-import { LintFn } from './lint.types';
-
-const rootDir = process.cwd();
-const eslintConfigPath = path.resolve(__dirname, '../config/eslint.config.js');
+export const eslintConfigPath: string = path.resolve(
+  __dirname,
+  '../config/eslint.config.js',
+);
+export const rootDir = process.cwd();
 export const esLintExtensions = ['ts', 'tsx'];
+export const allFilePaths = `${rootDir}/**/*.{${esLintExtensions.join(',')}}`;
 
-/** Spawns an eslint job */
-export const eslint: LintFn = ({ fix, verbose }) => {
-  return new Promise<boolean>((resolve, reject) => {
-    console.log(chalk.blue('Running ESLint...'));
-    spawn(
-      'eslint',
-      [
-        '--config',
-        eslintConfigPath,
-        `${rootDir}/**/*.{${esLintExtensions.join(',')}}`,
-        fix ? '--fix' : '--no-fix',
-        verbose ? '' : '--quiet',
-      ],
-      {
-        stdio: 'inherit',
-      },
-    )
-      .on('exit', code => {
-        resolve(!code);
-      })
-      .on('error', reject);
+// Create an instance of ESLint with the configuration passed to the function
+function createESLintInstance(fix: boolean): ESLint {
+  return new ESLint({
+    overrideConfigFile: eslintConfigPath,
+    fix,
   });
-};
+}
+
+interface ESLintRunnerOptions extends BaseLintRunnerOptions {
+  /** Optional glob string identifying the files to lint  */
+  filePaths?: string;
+}
+
+/**
+ * Creates and runs an ESLint instance
+ */
+export async function eslint(
+  options?: ESLintRunnerOptions,
+): Promise<Array<ESLint.LintResult>> {
+  const filePaths = options?.filePaths || allFilePaths;
+  const fix = options?.fix || false;
+
+  const eslint = createESLintInstance(fix);
+  const results = await eslint.lintFiles(filePaths);
+
+  if (fix) {
+    await ESLint.outputFixes(results);
+  }
+
+  const formatter = await eslint.loadFormatter('stylish');
+  const resultText = formatter.format(results, {cwd: '', rulesMeta: {}});
+  console.log(resultText);
+
+  return results;
+}

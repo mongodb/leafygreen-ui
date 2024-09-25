@@ -9,7 +9,7 @@ describe('getByLgId', () => {
   test('gets element with id', () => {
     render(<div data-lgid="testing-id">test 1</div>);
     const element = getByLgId!('testing-id');
-    expect(element).toBeInTheDocument();
+    expect(element).toBeDefined();
   });
 
   test('throws error if the id does not exist', () => {

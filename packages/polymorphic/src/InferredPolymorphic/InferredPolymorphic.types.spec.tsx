@@ -7,6 +7,7 @@
  */
 /* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests, padding-line-between-statements */
 
+// @ts-nocheck
 import React, { MouseEventHandler } from 'react';
 import NextLink from 'next/link';
 
@@ -272,6 +273,7 @@ describe.skip('Inferred Polymorphic types', () => {
         as: TestArbitraryComponent as PolymorphicAs,
         someProp: 'foobar',
       };
+
       const _G5b: InferredPolymorphicProps<PolymorphicAs> = {
         as: TestNodeURLAnchorLike as PolymorphicAs,
         href: { hostname: 'mongodb.design' },

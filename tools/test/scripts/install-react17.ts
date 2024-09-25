@@ -36,6 +36,6 @@ const packagesToInstall = Object.entries(r17packages.dependencies).map(
   ([pkg, version]) => `${pkg}@${version}`,
 );
 
-spawnSync('yarn', ['add', '-WD', ...packagesToInstall], {
+spawnSync('pnpm', ['install', '-WD', ...packagesToInstall], {
   stdio: 'inherit',
 });

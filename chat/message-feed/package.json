@@ -21,19 +21,23 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@lg-chat/avatar": "^3.0.1",
-    "@lg-chat/message": "^4.1.1",
-    "@lg-chat/message-rating": "^2.0.2"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-chat/avatar": "workspace:^",
+    "@lg-chat/message": "workspace:^",
+    "@lg-chat/message-rating": "workspace:^",
+    "prop-types": "^15.8.1",
+    "react-keyed-flatten-children": "^3.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "^19.0.0",
-    "@lg-chat/chat-disclaimer": "^3.0.2",
-    "@lg-chat/message-prompts": "^2.0.2",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-chat/chat-disclaimer": "workspace:^",
+    "@lg-chat/message-feedback": "workspace:^",
+    "@lg-chat/message-prompts": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12",

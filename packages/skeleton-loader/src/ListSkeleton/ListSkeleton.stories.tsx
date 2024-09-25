@@ -1,9 +1,10 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
 
 import { ListSkeleton } from '.';
 
-export default {
+const meta: StoryMetaType<typeof ListSkeleton> = {
   title: 'Components/SkeletonLoader',
   component: ListSkeleton,
   parameters: {
@@ -15,7 +16,7 @@ export default {
         darkMode: [false, true],
         bulletsOnly: [false, true],
       },
-      decorator: Instance => (
+      decorator: (Instance: StoryFn) => (
         <div style={{ width: 256 }}>
           <Instance />
         </div>
@@ -30,6 +31,8 @@ export default {
     enableAnimations: { control: 'boolean' },
     count: { control: 'number' },
   },
-} satisfies StoryMetaType<typeof ListSkeleton>;
+};
+
+export default meta;
 
 export const List: StoryType<typeof ListSkeleton> = () => <></>;

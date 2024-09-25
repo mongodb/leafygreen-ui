@@ -5,7 +5,7 @@ import { Size } from '@leafygreen-ui/icon';
 
 import { IconSkeleton } from '.';
 
-export default {
+const meta: StoryMetaType<typeof IconSkeleton> = {
   title: 'Components/SkeletonLoader',
   component: IconSkeleton,
   parameters: {
@@ -32,7 +32,9 @@ export default {
   argTypes: {
     enableAnimations: { control: 'boolean' },
   },
-} satisfies StoryMetaType<typeof IconSkeleton>;
+};
+
+export default meta;
 
 const Template: StoryType<typeof IconSkeleton> = props => (
   <IconSkeleton {...props} />

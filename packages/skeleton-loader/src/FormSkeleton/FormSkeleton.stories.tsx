@@ -1,5 +1,6 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
 
 import { FormSkeleton } from '.';
 
@@ -14,7 +15,7 @@ export default {
       combineArgs: {
         darkMode: [false, true],
       },
-      decorator: Instance => (
+      decorator: (Instance: StoryFn) => (
         <div style={{ width: 500 }}>
           <Instance />
         </div>
