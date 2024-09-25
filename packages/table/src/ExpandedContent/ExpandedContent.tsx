@@ -17,8 +17,7 @@ const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { disableAnimations, getParentRow, table, isVirtual } =
-    useTableContext();
+  const { getParentRow, table, isVirtual } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
   const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
   const isNestedRow = !!getParentRow?.(row.id);

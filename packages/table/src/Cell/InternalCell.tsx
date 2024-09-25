@@ -22,7 +22,6 @@ const InternalCell = ({
   contentClassName,
   cellIndex,
   depth,
-  isVisible = true,
   isExpandable = false,
   overflow,
   align,

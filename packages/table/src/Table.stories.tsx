@@ -204,6 +204,9 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
               {!isExpandedContent && (
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
+                    console.log({
+                      cellIsFirst: cell.column.getIsFirstColumn(),
+                    });
                     return (
                       <Cell key={cell.id} id={cell.id} overflow="truncate">
                         {flexRender(
