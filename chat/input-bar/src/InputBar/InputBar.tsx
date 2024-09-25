@@ -172,7 +172,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         resultsCount,
         updatedChildren,
       };
-    }, [children, highlightIndex, textareaRef, promptRefs, setMessageBody]);
+    }, [children, highlightIndex, promptRefs, setMessageBody, formRef]);
 
     const { updatedChildren, resultsCount } = useMemo(
       () => processChildren(),
@@ -186,7 +186,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       if (newState !== shouldRenderButtonText) {
         setShouldRenderButtonText(newState);
       }
-    }, [containerWidth]);
+    }, [containerWidth, shouldRenderButtonText]);
 
     const handleChange: ChangeEventHandler<HTMLTextAreaElement> = e => {
       setMessageBody(e.target.value);

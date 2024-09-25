@@ -1,5 +1,6 @@
 import { ESLint } from 'eslint';
 import path from 'path';
+
 import { BaseLintRunnerOptions } from './lint.types';
 
 export const eslintConfigPath: string = path.resolve(
@@ -40,7 +41,8 @@ export async function eslint(
   }
 
   const formatter = await eslint.loadFormatter('stylish');
-  const resultText = formatter.format(results, {cwd: '', rulesMeta: {}});
+  const resultText = formatter.format(results, { cwd: '', rulesMeta: {} });
+  // eslint-disable-next-line no-console
   console.log(resultText);
 
   return results;

@@ -68,6 +68,7 @@ describe('packages/skeleton-loader/TableSkeleton', () => {
       expect(queryByText('col4')).toBe(null);
     });
 
+    // eslint-disable-next-line jest/no-disabled-tests
     test.skip('empty strings render skeletons', async () => {
       const { getAllByRole } = render(
         <TableSkeleton columnLabels={['col1', '', 'col3', 'col4']} />,
@@ -78,6 +79,7 @@ describe('packages/skeleton-loader/TableSkeleton', () => {
       expect(secondTh).toContain(''); // this check feels wrong anyway
     });
 
+    // eslint-disable-next-line jest/no-disabled-tests
     test.skip('undefined renders skeletons', async () => {
       const { getAllByRole } = render(
         <TableSkeleton columnLabels={['col1', undefined, 'col3', 'col4']} />,

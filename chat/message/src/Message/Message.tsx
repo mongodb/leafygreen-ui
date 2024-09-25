@@ -92,7 +92,7 @@ export const Message = forwardRef(
           setIsRenderingAvatar(true);
         }
       }
-    }, [ref.current]);
+    }, [isSender, ref]);
 
     const isVerified = verified !== undefined;
 

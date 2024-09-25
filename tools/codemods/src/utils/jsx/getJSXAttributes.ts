@@ -1,6 +1,5 @@
 import type { ASTPath } from 'jscodeshift';
 import type core from 'jscodeshift';
-
 // https://astexplorer.net/#/gist/0735cadf00b74e764defef5f75c6d044/219778bcf6c39ff47dbe4483c4ae619fb8caab45
 /**
  *  Loops through each prop on the element and returns the specified prop

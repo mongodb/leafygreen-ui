@@ -12,7 +12,6 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { GuideCue, GuideCueProps, TooltipAlign, TooltipJustify } from '.';

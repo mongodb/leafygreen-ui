@@ -12,7 +12,7 @@ const npmPkgLintConfigPath = path.resolve(
 );
 
 /** Spawns a npmPkgJsonLint job */
-export const npmPkgJsonLint: LintFn = ({ fix, verbose }) => {
+export const npmPkgJsonLint: LintFn = ({ verbose }) => {
   return new Promise<boolean>((resolve, reject) => {
     console.log(chalk.yellow('Running npmPkgJsonLint...'));
 
