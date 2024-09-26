@@ -33,6 +33,7 @@
     "@emotion/styled": "^11.10.5",
     "@lg-tools/build": "workspace:*",
     "@lg-tools/storybook-utils": "workspace:*",
+    "@lg-tools/test": "workspace:*",
     "next": "^13.1.6"
   },
   "dependencies": {
