@@ -22,7 +22,7 @@ export interface TableProps<T extends LGRowData>
   /**
    * The `useLeafyGreenTable` return value
    */
-  table?: LeafyGreenTable<T> | LeafyGreenVirtualTable<T>;
+  table?: LeafyGreenTable<T> | LeafyGreenVirtualTable<T>; //TODO: is there a better way to type this?
 
   /**
    * Disables all transition animations for smoother rendering of tall content where appropriate

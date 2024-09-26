@@ -48,6 +48,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const virtualTableTotalSize = virtualTable && virtualTable.getTotalSize();
     const virtualTableStart =
       (virtualTable && virtualTable.getVirtualItems()[0]?.start) ?? 0;
+    const isSelectable = !!table && !!table.hasSelectableRows; //TODO: move to context
 
     return (
       <div
@@ -69,12 +70,14 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               virtualTableStart as number,
             )}
           >
+            {/* TODO: memoize values */}
             <TableContextProvider
               shouldAlternateRowColor={shouldAlternateRowColor}
               darkMode={darkMode}
               table={table}
               disableAnimations={disableAnimations}
               isVirtual={isVirtual}
+              isSelectable={isSelectable}
             >
               <table
                 className={cx(

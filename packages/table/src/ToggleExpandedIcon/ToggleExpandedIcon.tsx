@@ -7,8 +7,8 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
-import { useTableContext } from '../TableContext';
 
+// import { useTableContext } from '../TableContext';
 import {
   iconButtonTransitionStyles,
   iconFills,
@@ -26,17 +26,20 @@ const ToggleExpandedIcon = ({
   ...rest
 }: ToggleExpandedIconProps) => {
   const { theme } = useDarkMode();
-  const { disableAnimations } = useTableContext();
+  // const { disableAnimations } = useTableContext();
 
   return (
     <IconButton
       aria-label={`${isExpanded ? 'Collapse' : 'Expand'} row`}
       disabled={disabled}
       onClick={toggleExpanded}
-      className={cx({
-        [rotatedStyles]: isExpanded,
-        [iconButtonTransitionStyles]: !disableAnimations,
-      })}
+      className={cx(
+        {
+          [rotatedStyles]: isExpanded,
+          // [iconButtonTransitionStyles]: !disableAnimations,
+        },
+        iconButtonTransitionStyles,
+      )}
       data-lgid={LGIDS.expandButton}
       {...rest}
     >

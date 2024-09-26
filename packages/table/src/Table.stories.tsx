@@ -96,7 +96,7 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(100));
+  const [data] = useState(() => makeKitchenSinkData(500));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -204,11 +204,13 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
               {!isExpandedContent && (
                 <Row key={row.id} row={row}>
                   {row.getVisibleCells().map(cell => {
-                    console.log({
-                      cellIsFirst: cell.column.getIsFirstColumn(),
-                    });
                     return (
-                      <Cell key={cell.id} id={cell.id} overflow="truncate">
+                      <Cell
+                        key={cell.id}
+                        id={cell.id}
+                        overflow="truncate"
+                        cell={cell}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

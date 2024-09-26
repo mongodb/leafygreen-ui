@@ -28,4 +28,6 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
      * Whether the table is using virtual scrolling
      */
     isVirtual?: boolean;
+
+    isSelectable?: boolean;
   };

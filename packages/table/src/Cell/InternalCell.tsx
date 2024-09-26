@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
+import { useRowContext } from '../Row/RowContext';
 import { useTableContext } from '../TableContext';
+import ToggleExpandedIcon from '../ToggleExpandedIcon';
 
 import {
   alignmentStyles,
@@ -20,16 +22,21 @@ const InternalCell = ({
   children,
   className,
   contentClassName,
-  cellIndex,
-  depth,
-  isExpandable = false,
   overflow,
   align,
+  cell,
   ...rest
 }: InternalCellProps) => {
-  const isFirstCell = cellIndex === 0;
-  const { table } = useTableContext();
-  const isSelectable = !!table && !!table.hasSelectableRows;
+  const {
+    depth,
+    isExpandable = false,
+    toggleExpanded,
+    isExpanded = false,
+    disabled,
+  } = useRowContext();
+  const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
+  const { isSelectable } = useTableContext();
+  // const isSelectable = !!table && !!table.hasSelectableRows; //TODO: move to context
   const contentRef = useRef<HTMLDivElement>(null);
 
   const contentHeight = standardCellHeight;
@@ -59,11 +66,19 @@ const InternalCell = ({
           cellTransitionContainerStyles,
           alignmentStyles(align),
           {
+            // [truncatedContentStyles]: true,
             [truncatedContentStyles]: shouldTruncate,
           },
           contentClassName,
         )}
       >
+        {isFirstCell && isExpandable && (
+          <ToggleExpandedIcon
+            isExpanded={isExpanded}
+            toggleExpanded={toggleExpanded}
+            disabled={disabled}
+          />
+        )}
         {children}
       </div>
     </td>

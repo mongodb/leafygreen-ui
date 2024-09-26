@@ -39,6 +39,8 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
    * @default CellOverflowBehavior.Default
    */
   overflow?: CellOverflowBehavior;
+
+  cell?: any; //FIXME:
 }
 
 export type CellProps = BaseCellProps;
@@ -47,12 +49,12 @@ export interface InternalCellProps extends BaseCellProps {
   /**
    * Index of the cell in its parent row.
    */
-  cellIndex: number;
+  cellIndex?: number;
 
   /**
    * Depth of nesting its parent row has.
    */
-  depth: number;
+  depth?: number;
 
   /**
    * Defines whether the cell's row is visible (i.e. expanded)

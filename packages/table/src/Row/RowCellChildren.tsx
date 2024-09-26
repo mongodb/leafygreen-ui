@@ -6,7 +6,7 @@ import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
 
 // import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
-import { useRowContext } from './RowContext';
+// import { useRowContext } from './RowContext';
 import { RowProps } from '.';
 
 type RowCellChildrenProps<T extends LGRowData> = Required<
@@ -22,7 +22,7 @@ const RowCellChildren = <T extends LGRowData>({
   children: CellChildren,
 }: RowCellChildrenProps<T>) => {
   // const { getParentRow } = useTableContext();
-  const { disabled } = useRowContext();
+  // const { disabled } = useRowContext();
   // const parentRow = getParentRow?.(row.id);
   // const isNested = !!parentRow;
   // const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
@@ -50,7 +50,7 @@ const RowCellChildren = <T extends LGRowData>({
               cellIndex={colIndex}
               // isVisible={isRowVisible}
               isExpandable={isExpandable}
-              disabled={disabled}
+              // disabled={disabled}
               depth={row.depth}
               // @ts-expect-error Cell is not deeply extended
               align={cell.column.columnDef.align}
@@ -59,7 +59,7 @@ const RowCellChildren = <T extends LGRowData>({
                 <ToggleExpandedIcon
                   isExpanded={isExpanded}
                   toggleExpanded={toggleExpanded}
-                  disabled={disabled}
+                  // disabled={disabled}
                 />
               )}
               {children}

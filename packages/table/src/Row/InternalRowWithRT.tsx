@@ -14,8 +14,8 @@ import {
   zebraStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
-import RowCellChildren from './RowCellChildren';
-import { useRowContext } from './RowContext';
+import { RowContextProvider } from './RowContext';
+// import { useRowContext } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
@@ -25,10 +25,10 @@ const InternalRowWithRT = <T extends LGRowData>({
   className,
   row,
   virtualRow,
+  disabled = false,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const { disabled } = useRowContext();
   const { table, shouldAlternateRowColor } = useTableContext();
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
@@ -37,6 +37,16 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isParentExpanded = row.getParentRow()
     ? row.getParentRow()?.getIsExpanded()
     : false;
+
+  //TODO: memoize
+  const contextValues = {
+    disabled,
+    depth: row.depth,
+    isExpanded: isExpanded,
+    isExpandable: row.getCanExpand(),
+    toggleExpanded: () => row.toggleExpanded(),
+    isReactTable: true,
+  };
 
   return (
     <InternalRowBase
@@ -55,12 +65,13 @@ const InternalRowWithRT = <T extends LGRowData>({
       data-expanded={isExpanded}
       id={`lg-table-row-${row.id}`}
       ref={node => {
-        if (virtualRow && table) table.virtual.measureElement(node);
+        if (virtualRow && table) table.virtual.measureElement(node); // can this be added to table context?
       }}
       data-index={virtualRow ? virtualRow!.index : ''}
       {...rest}
     >
-      <RowCellChildren row={row}>{children}</RowCellChildren>
+      <RowContextProvider {...contextValues}>{children}</RowContextProvider>
+      {/* <RowCellChildren row={row}>{children}</RowCellChildren> */}
     </InternalRowBase>
   );
 };

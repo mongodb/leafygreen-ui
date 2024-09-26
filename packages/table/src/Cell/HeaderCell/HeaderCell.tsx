@@ -35,10 +35,10 @@ const HeaderCell = <T extends LGRowData>({
   header,
   ...rest
 }: PropsWithChildren<HeaderCellProps<T>>) => {
-  const { table } = useTableContext();
+  const { isSelectable } = useTableContext();
 
   const isFirstCell = cellIndex === 0;
-  const isSelectable = !!table && !!table.hasSelectableRows;
+  // const isSelectable = !!table && !!table.hasSelectableRows;
 
   let columnName, sortState, onSortIconClick;
 
