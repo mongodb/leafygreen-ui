@@ -3,7 +3,7 @@ import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { ParagraphSkeleton } from './ParagraphSkeleton';
 
-export default {
+const meta: StoryMetaType<typeof ParagraphSkeleton> = {
   title: 'Components/SkeletonLoader',
   component: ParagraphSkeleton,
   parameters: {
@@ -28,6 +28,8 @@ export default {
   argTypes: {
     enableAnimations: { control: 'boolean' },
   },
-} satisfies StoryMetaType<typeof ParagraphSkeleton>;
+};
+
+export default meta;
 
 export const Paragraph: StoryType<typeof ParagraphSkeleton> = () => <></>;

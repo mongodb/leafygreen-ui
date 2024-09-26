@@ -22,15 +22,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^11.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.1.4",
-    "@leafygreen-ui/icon": "^12.0.1",
-    "@leafygreen-ui/icon-button": "^15.0.23",
-    "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/palette": "^4.1.0",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^19.0.0",
+    "@leafygreen-ui/card": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "prop-types": "^15.8.1",
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
@@ -45,6 +46,8 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/prop-types": "^15.7.12",
+    "@types/react-transition-group": "^4.4.10"
   }
 }

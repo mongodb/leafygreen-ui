@@ -1,6 +1,5 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
 import { Cell } from '../Cell';

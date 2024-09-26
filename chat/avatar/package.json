@@ -14,6 +14,7 @@
   },
   "scripts": {
     "build": "lg build-package",
+    "docs": "lg build-tsdoc",
     "tsc": "lg build-ts"
   },
   "license": "Apache-2.0",
@@ -21,17 +22,22 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/logo": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/avatar": "^1.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.7.0"
+    "@lg-tools/build": "workspace:^",
+    "prop-types": "^15.8.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12",
     "@lg-chat/leafygreen-chat-provider": "^2.0.0"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   }
 }

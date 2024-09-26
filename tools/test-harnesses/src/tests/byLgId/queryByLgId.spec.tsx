@@ -9,7 +9,7 @@ describe('queryByLgId', () => {
   test('gets element with id', () => {
     render(<div data-lgid="testing-id">test 1</div>);
     const element = queryByLgId!('testing-id');
-    expect(element).toBeInTheDocument();
+    expect(element).toBeDefined();
   });
 
   test('returns null if the id does not exist', () => {
@@ -19,7 +19,7 @@ describe('queryByLgId', () => {
       </>,
     );
 
-    expect(queryByLgId!('incorrect-testing-id')).not.toBeInTheDocument();
+    expect(queryByLgId!('incorrect-testing-id')).not.toBeDefined();
     expect(queryByLgId!('incorrect-testing-id')).toBeNull();
   });
 

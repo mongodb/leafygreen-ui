@@ -103,7 +103,7 @@ export default function Copyable({
     }
 
     return () => clipboard.destroy();
-  }, [buttonRef, children, copied, portalContainer]);
+  }, [buttonRef, children, copied, onCopy, portalContainer]);
 
   return (
     <>

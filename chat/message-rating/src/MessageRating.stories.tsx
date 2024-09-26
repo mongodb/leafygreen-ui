@@ -42,7 +42,7 @@ export const Controlled: StoryFn<typeof MessageRating> = ({
   const [value, setValue] = useState<MessageRatingProps['value']>(valueProp);
   useEffect(() => {
     setValue(value);
-  }, [valueProp]);
+  }, [valueProp, value]);
   const handleRatingChange: ChangeEventHandler<HTMLInputElement> = e => {
     setValue(e.target.value as MessageRatingProps['value']);
   };

@@ -103,7 +103,10 @@ FormFooter.propTypes = {
   contentClassName: PropTypes.string,
   errorMessage: PropTypes.string,
   darkMode: PropTypes.bool,
+  // eslint-disable-next-line react/forbid-prop-types
   primaryButtonProps: PropTypes.objectOf(PropTypes.any),
+  // eslint-disable-next-line react/forbid-prop-types
   cancelButtonProps: PropTypes.objectOf(PropTypes.any),
+  // eslint-disable-next-line react/forbid-prop-types
   backButtonProps: PropTypes.objectOf(PropTypes.any),
 };

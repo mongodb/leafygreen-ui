@@ -29,7 +29,9 @@ const Row = <T extends LGRowData>({
 };
 
 Row.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
   virtualRow: PropTypes.any,
+  // eslint-disable-next-line react/forbid-prop-types
   row: PropTypes.any,
   disabled: PropTypes.bool,
 };

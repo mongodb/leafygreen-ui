@@ -31,7 +31,9 @@
     },
     {
       "path": "../../packages/leafygreen-provider"
+    }, 
+    {
+      "path": "../../tools/storybook-utils"
     }
-    
   ]
 }

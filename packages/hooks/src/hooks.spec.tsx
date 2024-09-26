@@ -113,7 +113,7 @@ describe('packages/hooks', () => {
     });
 
     test('responds to updates in window size', async () => {
-      const { result, rerender } = renderHook(() => useViewportSize());
+      const { result } = renderHook(() => useViewportSize());
 
       const mutableWindow: { -readonly [K in keyof Window]: Window[K] } =
         window;

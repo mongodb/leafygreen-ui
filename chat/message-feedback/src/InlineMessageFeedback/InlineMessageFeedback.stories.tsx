@@ -8,7 +8,6 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
 
 import { InlineMessageFeedback } from '.';
 

@@ -21,7 +21,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/box",
   "repository": {
     "type": "git",
@@ -31,6 +30,11 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:*",
+    "@types/prop-types": "^15.7.12"
+  },
+  "dependencies": {
+    "prop-types": "^15.8.1"
   }
 }

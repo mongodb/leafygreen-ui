@@ -14,7 +14,7 @@ export { previewHead } from './preview-head';
 
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,chat,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
+  '../{packages,tools,chat}/**/*.stor@(y|ies).@(js|ts)?(x)',
   '../{packages,tools,chat}/*/node_modules',
 );
 
@@ -93,7 +93,6 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   };
 
   config.plugins.push(
-    // @ts-expect-error - webpack TS can of worms
     new ProvidePlugin({
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer'],

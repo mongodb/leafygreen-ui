@@ -22,9 +22,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.4.0",
-    "@leafygreen-ui/palette": "^4.0.10"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo",
   "repository": {
@@ -35,6 +35,8 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/node": "^20.12.3",
+    "@types/prop-types": "^15.7.12"
   }
 }

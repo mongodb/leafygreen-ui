@@ -14,7 +14,7 @@ import {
 export const BasePolymorph = <T extends PolymorphicAs = 'div'>(
   { as, children, ...rest }: PolymorphicPropsWithRef<T>,
   ref: PolymorphicRef<T>,
-) => {
+): JSX.Element => {
   const { Component } = usePolymorphic(as);
 
   return (
@@ -36,6 +36,7 @@ export const BasePolymorph = <T extends PolymorphicAs = 'div'>(
  * However: If you want to expose `as` as a prop of your component,
  * prefer the `{@link Polymorphic}` factory function and related hooks.
  */
-export const Polymorph: PolymorphicComponentType =
-  React.forwardRef(BasePolymorph);
+export const Polymorph = React.forwardRef(
+  BasePolymorph,
+) as PolymorphicComponentType;
 Polymorph.displayName = 'Polymorph';

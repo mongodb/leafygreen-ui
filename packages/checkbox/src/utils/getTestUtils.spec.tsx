@@ -196,7 +196,7 @@ describe('packages/checkbox', () => {
         // After awaiting asyncComponent, look for checkbox
         const { getInput, getInputValue } = getTestUtils();
         const input = getInput();
-        fireEvent.click(getInput());
+        fireEvent.click(input);
         expect(getInputValue()).toBe(true);
       });
     });

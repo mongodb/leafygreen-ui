@@ -54,7 +54,6 @@ doctor-storybook.log
 scripts/tmp.*
 
 # 
-.npmrc
 .changeset/pre.json
 
 TODO.md

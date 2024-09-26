@@ -20,7 +20,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
+ "dependencies": {
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "prop-types": "^15.8.1",
     "use-resize-observer": "^9.1.0"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/testing-lib": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@types/prop-types": "^15.7.12"
   }
 }
