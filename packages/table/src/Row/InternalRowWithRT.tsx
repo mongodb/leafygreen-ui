@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -29,7 +29,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const { table, shouldAlternateRowColor } = useTableContext();
+  const { measureElement, shouldAlternateRowColor } = useTableContext();
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpanded = row.getIsExpanded();
@@ -37,16 +37,23 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isParentExpanded = row.getParentRow()
     ? row.getParentRow()?.getIsExpanded()
     : false;
+  const isExpandable = row.getCanExpand();
+  const depth = row.depth;
 
-  //TODO: memoize
-  const contextValues = {
-    disabled,
-    depth: row.depth,
-    isExpanded: isExpanded,
-    isExpandable: row.getCanExpand(),
-    toggleExpanded: () => row.toggleExpanded(),
-    isReactTable: true,
-  };
+  const toggleExpanded = useCallback(() => row.toggleExpanded(), []); // Empty dependency array, so the function is only created once
+
+  const contextValues = useMemo(() => {
+    return {
+      disabled,
+      depth,
+      isExpanded,
+      isExpandable,
+      toggleExpanded,
+      isReactTable: true,
+    };
+  }, [depth, disabled, isExpandable, isExpanded, toggleExpanded]);
+
+  // console.log(`🪼rerender: ${row.id} ${depth}`);
 
   return (
     <InternalRowBase
@@ -65,7 +72,7 @@ const InternalRowWithRT = <T extends LGRowData>({
       data-expanded={isExpanded}
       id={`lg-table-row-${row.id}`}
       ref={node => {
-        if (virtualRow && table) table.virtual.measureElement(node); // can this be added to table context?
+        if (measureElement) measureElement(node); // can this be added to table context?
       }}
       data-index={virtualRow ? virtualRow!.index : ''}
       {...rest}

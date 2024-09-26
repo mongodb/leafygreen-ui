@@ -1,9 +1,13 @@
-import React, { createContext, PropsWithChildren, useContext } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from 'react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
-import getParentRowId from '../utils/getParentRowId';
 
 import { type TableContextValues } from './TableContext.types';
 
@@ -19,34 +23,44 @@ export const useTableContext = <T extends LGRowData>() =>
 const TableContextProvider = <T extends LGRowData>({
   children,
   darkMode,
-  table,
   shouldAlternateRowColor,
-  disableAnimations,
   isVirtual,
   isSelectable,
+  measureElement,
 }: PropsWithChildren<Partial<TableContextValues<T>>>) => {
-  const getRowById = (id?: string) =>
-    id ? table?.getRowModel().rowsById?.[id] : undefined;
-
-  const getParentRow = (childId?: string) =>
-    getRowById(getParentRowId(childId));
-
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableContextValues<T>>)
     .Provider;
 
+  const providerData = useMemo(() => {
+    return {
+      shouldAlternateRowColor,
+      darkMode,
+      isVirtual,
+      isSelectable,
+      measureElement,
+    };
+  }, [
+    shouldAlternateRowColor,
+    darkMode,
+    isVirtual,
+    isSelectable,
+    measureElement,
+  ]);
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <TableProvider
-        value={{
-          table,
-          getRowById,
-          getParentRow,
-          shouldAlternateRowColor,
-          disableAnimations,
-          isVirtual,
-          isSelectable,
-        }}
+        // value={{
+        //   table,
+        //   getRowById,
+        //   getParentRow,
+        //   shouldAlternateRowColor,
+        //   disableAnimations,
+        //   isVirtual,
+        //   isSelectable,
+        // }}
+        value={providerData}
       >
         {children}
       </TableProvider>

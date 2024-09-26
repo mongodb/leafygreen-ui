@@ -165,9 +165,8 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  // const { rows } = table.getRowModel();
-
-  const { rows } = table;
+  // const { rows } = table;
+  const { rows } = table.getRowModel();
 
   // console.log({ rows });
 
@@ -220,7 +219,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
                   })}
                 </Row>
               )}
-              {isExpandedContent && <ExpandedContent row={row} />}
+              {isExpandedContent && <ExpandedContent key={row.id} row={row} />}
             </>
           );
         })}
@@ -242,6 +241,7 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
+// TODO: i don't think we need this story
 export const OverflowingCell: StoryFn<StoryTableProps> = args => {
   const data = makeData(false, 100);
   const columns = Object.keys(data[0]).filter(

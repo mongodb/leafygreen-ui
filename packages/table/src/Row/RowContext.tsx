@@ -1,4 +1,9 @@
-import React, { createContext, PropsWithChildren, useContext } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from 'react';
 
 type RowContextProps = PropsWithChildren<{
   disabled: boolean;
@@ -30,18 +35,18 @@ export const RowContextProvider = ({
   isReactTable,
   toggleExpanded,
 }: RowContextProps) => {
+  const providerData = useMemo(() => {
+    return {
+      disabled,
+      depth,
+      isExpanded,
+      isExpandable,
+      isReactTable,
+      toggleExpanded,
+    };
+  }, [disabled, depth, isExpanded, isExpandable, isReactTable, toggleExpanded]);
+
   return (
-    <RowContext.Provider
-      value={{
-        disabled,
-        depth,
-        isExpanded,
-        isExpandable,
-        isReactTable,
-        toggleExpanded,
-      }}
-    >
-      {children}
-    </RowContext.Provider>
+    <RowContext.Provider value={providerData}>{children}</RowContext.Provider>
   );
 };

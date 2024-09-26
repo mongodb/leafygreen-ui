@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import { Virtualizer } from '@tanstack/react-virtual';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
@@ -30,4 +31,6 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
     isVirtual?: boolean;
 
     isSelectable?: boolean;
+
+    measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
   };

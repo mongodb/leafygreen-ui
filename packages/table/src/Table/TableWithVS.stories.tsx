@@ -215,7 +215,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                     <Row key={row.id} row={row} virtualRow={virtualRow}>
                       {cells.map((cell: LeafyGreenTableCell<Person>) => {
                         return (
-                          <Cell key={cell.id}>
+                          <Cell key={cell.id} cell={cell}>
                             {flexRender(
                               cell.column.columnDef.cell,
                               cell.getContext(),
