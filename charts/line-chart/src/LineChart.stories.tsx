@@ -12,10 +12,6 @@ export default {
   },
 };
 
-const Template: StoryFn<typeof LineChart> = props => (
-  <div style={{ height: '360px', width: '100%' }}>
-    <LineChart {...props} />
-  </div>
-);
+const Template: StoryFn<typeof LineChart> = props => <LineChart {...props} />;
 
 export const Basic: StoryFn<typeof LineChart> = Template.bind({});
