@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.7.0
+
+### Minor Changes
+
+- 43c895142: Adds `'EmptyFolder'` and `'EmptyDatabase'` glyphs
+
 ## 12.6.0
 
 ### Minor Changes
