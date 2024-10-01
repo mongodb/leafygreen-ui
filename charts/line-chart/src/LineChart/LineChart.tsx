@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import * as echarts from 'echarts/core';
 import {
   LineChart as EchartsLineChart,
   LineSeriesOption,
 } from 'echarts/charts';
 import {
-  TitleComponent,
-  TooltipComponent,
   GridComponent,
   LegendComponent,
+  TitleComponent,
+  TooltipComponent,
 } from 'echarts/components';
+import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 
 import { LineChartProps } from './LineChart.types';
