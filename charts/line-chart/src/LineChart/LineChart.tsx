@@ -1,8 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import {
-  LineChart as EchartsLineChart,
-  LineSeriesOption,
-} from 'echarts/charts';
+import React from 'react';
+import { LineChart as EchartsLineChart } from 'echarts/charts';
 import {
   GridComponent,
   LegendComponent,
