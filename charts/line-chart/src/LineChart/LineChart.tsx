@@ -9,8 +9,6 @@ import {
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 
-import { LineChartProps } from './LineChart.types';
-
 // Register the required components. By using separate imports, we can avoid
 // importing the entire echarts library which will reduce the bundle size.
 echarts.use([
@@ -23,7 +21,7 @@ echarts.use([
 ]);
 
 // TODO: forwardRef
-export function LineChart({}: LineChartProps) {
+export function LineChart() {
   return <>LineChart</>;
 }
 
