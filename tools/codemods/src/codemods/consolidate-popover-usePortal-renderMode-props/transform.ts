@@ -7,11 +7,13 @@ import {
 import { addJSXAttributes } from '../../utils/transformations/addJSXAttributes';
 
 type TransformerOptions = ConsolidateJSXAttributesOptions & {
-  componentName: string;
+  componentNames: Array<string>;
 };
 
 /**
- * Example transformer function to consolidate props
+ * Transformer function that:
+ * 1. adds an explicit `usePortal` prop if left undefined
+ * 2. consolidates the `usePortal` and `renderMode` props into a single `renderMode` prop
  *
  * @param file the file to transform
  * @param jscodeshiftOptions an object containing at least a reference to the jscodeshift library
@@ -34,29 +36,44 @@ export default function transformer(
       true: 'portal',
     },
     propToRemoveType = 'boolean',
-    componentName = 'Popover',
+    componentNames = [
+      'Code',
+      'Combobox',
+      'DatePicker',
+      'InfoSprinkle',
+      'InlineDefinition',
+      'Menu',
+      'NumberInput',
+      'Popover',
+      'SearchInput',
+      'Select',
+      'SplitButton',
+      'Tooltip',
+    ],
   } = options;
 
-  // Check if the element is on the page
-  const elements = source.findJSXElements(componentName);
+  componentNames.forEach(componentName => {
+    // Check if the element is on the page
+    const elements = source.findJSXElements(componentName);
 
-  // If there are no elements then return the original file
-  if (elements.length === 0) return file.source;
+    // If there are no elements then return the original file
+    if (elements.length === 0) return;
 
-  elements.forEach(element => {
-    addJSXAttributes({
-      j,
-      element,
-      propName: propToRemove,
-      propValue: true,
-    });
-    consolidateJSXAttributes({
-      j,
-      element,
-      propToRemove,
-      propToUpdate,
-      propMapping,
-      propToRemoveType,
+    elements.forEach(element => {
+      addJSXAttributes({
+        j,
+        element,
+        propName: propToRemove,
+        propValue: true,
+      });
+      consolidateJSXAttributes({
+        j,
+        element,
+        propToRemove,
+        propToUpdate,
+        propMapping,
+        propToRemoveType,
+      });
     });
   });
 

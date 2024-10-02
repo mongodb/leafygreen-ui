@@ -74,75 +74,26 @@ yarn lg codemod <codemode> <path> --force
 
 **_NOTE:_ These codemods are for testing purposes only**
 
-### `consolidate-props`
+### `consolidate-popover-usePortal-renderMode-props`
 
-This codemod consolidates two props into one.
+This codemod adds an explicit `usePortal` prop if left undefined and consolidates the `usePortal` and `renderMode` props into a single `renderMode` prop.
 
 ```jsx
-yarn lg codemod codemode-props <path>
+yarn lg codemod consolidate-popover-usePortal-renderMode-props <path>
 ```
-
-E.g.
-In this example, the `disabled` props is merged into the `state` prop.
 
 **Before**:
 
 ```jsx
-<MyComponent disabled={true} state="valid" />
+<Popover />
+<Popover usePortal={true} />
+<Popover usePortal={false} />
 ```
 
 **After**:
 
 ```jsx
-<MyComponent state="disabled" />
-```
-
-<hr>
-
-### `rename-component-prop`
-
-This codemod renames a component prop
-
-```jsx
-yarn lg codemod codemode-component-prop <path>
-```
-
-E.g.
-In this example, `prop` is renamed to `newProp`.
-
-**Before**:
-
-```jsx
-<MyComponent prop="hey" />
-```
-
-**After**:
-
-```jsx
-<MyComponent newProp="hey" />
-```
-
-<hr>
-
-### `update-component-prop-value`
-
-This codemod updates a prop value
-
-```jsx
-yarn lg codemod codemode-component-prop-value <path>
-```
-
-E.g.
-In this example, `value` is updated to `new prop value`.
-
-**Before**:
-
-```jsx
-<MyComponent prop="value" />
-```
-
-**After**:
-
-```jsx
-<MyComponent prop="new prop value" />
+<Popover renderMode="portal" />
+<Popover renderMode="portal" />
+<Popover renderMode="inline" />
 ```
