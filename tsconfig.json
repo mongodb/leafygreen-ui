@@ -6,10 +6,11 @@
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"],
+      "@lg-charts/*": ["charts/*/src"],
       "@lg-chat/*": ["chat/*/src"],
-      "@lg-tools/*": ["tools/*/src"]
+      "@lg-tools/*": ["tools/*/src"],
     }
   },
-  "include": ["./chat", "./packages", "./tools", "./scripts"],
+  "include": ["./charts", "./chat", "./packages", "./tools", "./scripts" ],
   "exclude": ["node_modules", "**/dist"]
 }
