@@ -1,6 +1,6 @@
 import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 
-interface SeriesOptions {
+export type SeriesOptions = Array<{
   /**
    * Series name used for displaying in tooltip and filtering with the legend.
    */
@@ -24,7 +24,7 @@ interface SeriesOptions {
    * ```
    */
   data: Array<[string | number | Date, string | number | Date]>;
-}
+}>;
 
 interface AxisOptions {
   /**
@@ -141,22 +141,22 @@ interface ShowControls {
  */
 export interface LineChartProps extends HTMLElementProps<'div'>, DarkModeProps {
   /**
-   * Array of series to be displayed on the chart
+   * Array of series to be displayed on the chart.
    */
-  series: Array<SeriesOptions>;
+  series: SeriesOptions;
 
   /**
-   * Title of the chart
+   * Title of the chart.
    */
-  label: string;
+  label?: string;
 
   /**
-   * Options for the x-axis
+   * Options for the x-axis.
    */
   xAxis?: AxisOptions;
 
   /**
-   * Options for the y-axis
+   * Options for the y-axis.
    */
   yAxis?: AxisOptions;
 
@@ -198,7 +198,7 @@ export interface LineChartProps extends HTMLElementProps<'div'>, DarkModeProps {
   onDragEnd?: (event: React.DragEvent<HTMLDivElement>) => void;
 
   /**
-   * Callback for when chart is being dragged over a valid drop target
+   * Callback for when chart is being dragged over a valid drop target.
    */
   onDragOver?: (event: React.DragEvent<HTMLDivElement>) => void;
 
