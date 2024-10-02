@@ -26,6 +26,25 @@ import {
 import { LineChartProps } from './LineChart.types';
 import { baseStyles } from './LineChart.styles';
 
+//TODO: move this to a separate file
+const colors = [
+  '#016BF8',
+  '#00A35C',
+  '#FFC010',
+  '#DB3030',
+  '#5E0C9E',
+  '#1254B7',
+  '#00684A',
+  '#944F01',
+  '#970606',
+  '#2D0B59',
+  '#0498EC',
+  '#00ED64',
+  '#FFEC9E',
+  '#FF6960',
+  '#B45AF2',
+];
+
 // Register the required components. By using separate imports, we can avoid
 // importing the entire echarts library which will reduce the bundle size.
 echarts.use([
@@ -36,26 +55,6 @@ echarts.use([
   EchartsLineChart,
   CanvasRenderer,
 ]);
-
-// TODO: This will be passed as a prop
-const testSeries = [
-  {
-    name: 'Dataset 1',
-    data: [
-      [new Date('2021-01-01T00:00:00'), 50],
-      [new Date('2021-01-01T01:00:00'), 60],
-      [new Date('2021-01-01T02:00:00'), 70],
-    ],
-  },
-  {
-    name: 'Dataset 2',
-    data: [
-      [new Date('2021-01-01T00:00:00'), 100],
-      [new Date('2021-01-01T01:00:00'), 40],
-      [new Date('2021-01-01T02:00:00'), 80],
-    ],
-  },
-];
 
 export function LineChart({
   series,
@@ -82,24 +81,26 @@ export function LineChart({
     const chartInstance = echarts.init(chartRef.current);
 
     const option = {
-      series: testSeries.map(
-        (seriesOption: LineSeriesOption): LineSeriesOption => ({
+      series: series.map(
+        (seriesOption: LineSeriesOption, index): LineSeriesOption => ({
           type: 'line',
           showSymbol: false,
           clip: false,
+          z: index,
           ...seriesOption,
         }),
       ),
       animation: false, // Disabled to optimize performance
       title: {
         show: true,
-        text: 'Chart Title', // TODO: This will be passed as a prop
+        text: label,
         padding: 20,
         textStyle: {
           color: palette.black,
           fontFamily: fontFamilies.default,
         },
       },
+      color: colors,
       toolbox: {
         orient: 'vertical',
         // sizes set so that the toolbox is out of view
@@ -138,6 +139,7 @@ export function LineChart({
         axisTick: {
           show: false,
         },
+        ...xAxis,
       },
       yAxis: {
         type: 'value',
@@ -155,6 +157,7 @@ export function LineChart({
         axisTick: {
           show: false,
         },
+        ...yAxis,
       },
       grid: {
         left: spacing[1000],
@@ -185,7 +188,7 @@ export function LineChart({
       window.removeEventListener('resize', handleResize);
       chartInstance.dispose();
     };
-  }, []);
+  }, [series, label, xAxis, yAxis, darkMode]);
 
   return (
     <div className={baseStyles} {...rest}>
