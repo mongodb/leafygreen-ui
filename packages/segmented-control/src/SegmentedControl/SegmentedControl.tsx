@@ -23,18 +23,13 @@ import { SegmentedControlContext } from '../SegmentedControlContext';
 import { useEffectOnceOnMount } from '../useEffectOnceOnMount';
 
 import {
+  getLabelStyles,
   hoverIndicatorStyle,
-  labelBaseStyles,
-  labelThemeStyle,
   optionsWrapperStyle,
   selectionIndicatorStyle,
   wrapperStyle,
 } from './SegmentedControl.styles';
-import {
-  DeprecatedSize,
-  SegmentedControlProps,
-  Size,
-} from './SegmentedControl.types';
+import { SegmentedControlProps, Size } from './SegmentedControl.types';
 
 /**
  * Segmented controls act as a toggle between a current state and related states, often changing the view of information within a single page.
@@ -46,7 +41,7 @@ export const SegmentedControl = forwardRef<
   {
     children,
     name: nameProp,
-    size: sizeProp = Size.Default,
+    size = Size.Default,
     darkMode: darkModeProp,
     defaultValue,
     value: controlledValue,
@@ -312,9 +307,6 @@ export const SegmentedControl = forwardRef<
     [renderedChildren],
   );
 
-  // deprecated size "small" no longer supported, but we want to gracefully degrade the prop value
-  const size = sizeProp === DeprecatedSize.Small ? Size.XSmall : sizeProp;
-
   /**
    * Return
    */
@@ -328,9 +320,7 @@ export const SegmentedControl = forwardRef<
         {...rest}
       >
         {label && (
-          <Overline className={cx(labelBaseStyles, labelThemeStyle[theme])}>
-            {label}
-          </Overline>
+          <Overline className={getLabelStyles(theme)}>{label}</Overline>
         )}
 
         <div
