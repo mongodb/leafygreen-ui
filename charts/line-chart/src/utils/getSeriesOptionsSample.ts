@@ -1,7 +1,7 @@
 import { SeriesOptions } from '../LineChart/LineChart.types';
 
-function getRandomNumber(max: number): number {
-  return Math.floor(Math.random() * (max + 1));
+function getRandomNumber(min: number, max: number): number {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generateDataset(
@@ -10,11 +10,12 @@ function generateDataset(
 ): Array<[string | number | Date, string | number | Date]> {
   const startDate = new Date('2021-01-15T01:00:00');
   const options: Array<[string | number | Date, string | number | Date]> = [];
+  const baseValue = getRandomNumber(0, maxValue);
 
   for (let i = 0; i < numOfDates; i++) {
     const newDate = new Date(startDate);
     newDate.setMinutes(startDate.getMinutes() + i);
-    options.push([newDate, getRandomNumber(maxValue)]);
+    options.push([newDate, getRandomNumber(baseValue - 25, baseValue + 25)]);
   }
 
   return options;

@@ -15,9 +15,7 @@ export default {
 
 const Template: StoryFn<typeof LineChart> = props => <LineChart {...props} />;
 
-console.log(getSeriesOptionsSample(2));
-
 export const Basic: StoryFn<typeof LineChart> = Template.bind({});
 Basic.args = {
-  series: getSeriesOptionsSample(7),
+  series: getSeriesOptionsSample(5),
 };

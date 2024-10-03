@@ -87,6 +87,10 @@ export function LineChart({
           showSymbol: false,
           clip: false,
           z: index,
+          symbol: 'circle',
+          emphasis: {
+            disabled: true,
+          },
           ...seriesOption,
         }),
       ),
