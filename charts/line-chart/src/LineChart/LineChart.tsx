@@ -9,6 +9,7 @@ import {
   TooltipComponent,
   GridComponent,
   LegendComponent,
+  ToolboxComponent,
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { palette } from '@leafygreen-ui/palette';
@@ -26,7 +27,7 @@ import {
 import { LineChartProps } from './LineChart.types';
 import { baseStyles } from './LineChart.styles';
 
-//TODO: move this to a separate file
+//TODO: move this to a separate file and add dark mode support
 const colors = [
   '#016BF8',
   '#00A35C',
@@ -54,6 +55,7 @@ echarts.use([
   LegendComponent,
   EchartsLineChart,
   CanvasRenderer,
+  ToolboxComponent,
 ]);
 
 export function LineChart({
@@ -107,15 +109,14 @@ export function LineChart({
       color: colors,
       toolbox: {
         orient: 'vertical',
-        // sizes set so that the toolbox is out of view
         itemSize: 13,
         top: 15,
         right: -6,
         feature: {
           dataZoom: {
             icon: {
-              zoom: 'path://', // hack to remove zoom button which renders by default when zoom is enabled
-              back: 'path://', // hack to remove restore button which renders by default when zoom is enabled
+              zoom: 'path://', // hack to remove zoom button
+              back: 'path://', // hack to remove restore button
             },
           },
         },
@@ -166,7 +167,7 @@ export function LineChart({
       grid: {
         left: spacing[1000],
         right: spacing[500],
-        top: spacing[1600],
+        top: spacing[500],
         bottom: spacing[500],
         containLabel: true,
         show: true,
