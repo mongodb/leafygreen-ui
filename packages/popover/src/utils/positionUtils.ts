@@ -5,7 +5,8 @@ import {
   ElementPosition,
   ExtendedPlacement,
   Justify,
-} from '../Popover.types';
+  TransformAlign,
+} from '../Popover/Popover.types';
 
 const defaultElementPosition = {
   top: 0,
@@ -139,38 +140,53 @@ export const getWindowSafePlacementValues = (placement: Placement) => {
 
 /**
  * Function to extend the {@link https://floating-ui.com/docs/usefloating#placement-1 final placement}
- * calculated by the `useFloating` hook. Floating UI supports 12 placements out-of-the-box. We
- * extend these placements when the `align` prop is set to 'center-horizontal' or 'center-vertical'
+ * calculated by the `useFloating` hook and provide the align value used for transform styling.
+ *
+ * Floating UI supports 12 placements out-of-the-box. We extend these placements when the `align` prop is
+ * set to 'center-horizontal' or 'center-vertical'
  */
-export const getExtendedPlacementValue = ({
+export const getExtendedPlacementValues = ({
   placement,
   align: alignProp,
 }: {
   placement: Placement;
   align: Align;
-}): ExtendedPlacement => {
-  // Use the default placements if the `align` prop is not 'center-horizontal' or 'center-vertical'
-  if (
-    alignProp !== Align.CenterHorizontal &&
-    alignProp !== Align.CenterVertical
-  ) {
-    return placement;
-  }
+}): {
+  placement: ExtendedPlacement;
+  transformAlign: TransformAlign;
+} => {
+  // The `floatingAlign` value is 'top', 'right', 'bottom', or 'left'.
+  // The `floatingJustify` value is 'start', 'end', or undefined.
+  const [floatingAlign, floatingJustify] = placement.split('-');
 
-  // Otherwise, we need to adjust the placement based on the `align` prop
-  // The `floatingJustify` value should be 'start', 'end', or undefined.
-  const [_, floatingJustify] = placement.split('-');
+  const isAlignCenterHorizontal = alignProp === Align.CenterHorizontal;
+  const isAlignCenterVertical = alignProp === Align.CenterVertical;
+
+  // If the `align` prop is not 'center-horizontal' or 'center-vertical', use the placement and
+  // align values calculated by the `useFloating` hook
+  if (!isAlignCenterHorizontal && !isAlignCenterVertical) {
+    return {
+      placement,
+      transformAlign: floatingAlign as TransformAlign,
+    };
+  }
 
   // If the calculated justify value is 'start'
   if (floatingJustify === Justify.Start) {
     // and the `align` prop is 'center-horizontal',
     if (alignProp === Align.CenterHorizontal) {
       // we center the floating element horizontally and place it aligned to the start of the reference point
-      return 'center-start';
+      return {
+        placement: 'center-start',
+        transformAlign: TransformAlign.Center,
+      };
       // and the `align` prop is 'center-vertical',
     } else if (alignProp === Align.CenterVertical) {
       // we center the floating element vertically and place it to the right of the reference point
-      return 'right';
+      return {
+        placement: 'right',
+        transformAlign: TransformAlign.Right,
+      };
     }
   }
 
@@ -179,16 +195,25 @@ export const getExtendedPlacementValue = ({
     // and the `align` prop is 'center-horizontal',
     if (alignProp === Align.CenterHorizontal) {
       // we center the floating element horizontally and place it aligned to the end of the reference point
-      return 'center-end';
+      return {
+        placement: 'center-end',
+        transformAlign: TransformAlign.Center,
+      };
       // and the `align` prop is 'center-vertical',
     } else if (alignProp === Align.CenterVertical) {
       // we center the floating element vertically and place it to the left of the reference point
-      return 'left';
+      return {
+        placement: 'left',
+        transformAlign: TransformAlign.Left,
+      };
     }
   }
 
   // If the calculated justify value calculated is not specified, we center the floating element
-  return 'center';
+  return {
+    placement: 'center',
+    transformAlign: TransformAlign.Center,
+  };
 };
 
 /**

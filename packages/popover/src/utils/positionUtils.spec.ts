@@ -1,10 +1,10 @@
 import { Placement } from '@floating-ui/react';
 
-import { Align, Justify } from '../Popover.types';
+import { Align, Justify } from '../Popover/Popover.types';
 
 import {
   getElementDocumentPosition,
-  getExtendedPlacementValue,
+  getExtendedPlacementValues,
   getFloatingPlacement,
   getOffsetValue,
   getWindowSafePlacementValues,
@@ -124,65 +124,65 @@ describe('positionUtils', () => {
     );
   });
 
-  describe('getExtendedPlacementValue', () => {
+  describe('getExtendedPlacementValues', () => {
     test(`returns standard placement values if align prop is not ${Align.CenterHorizontal} or ${Align.CenterVertical}`, () => {
       expect(
-        getExtendedPlacementValue({ placement: 'top-start', align: 'top' }),
-      ).toBe('top-start');
+        getExtendedPlacementValues({ placement: 'top-start', align: 'top' }),
+      ).toEqual({ placement: 'top-start', transformAlign: 'top' });
       expect(
-        getExtendedPlacementValue({ placement: 'bottom', align: 'bottom' }),
-      ).toBe('bottom');
+        getExtendedPlacementValues({ placement: 'bottom', align: 'bottom' }),
+      ).toEqual({ placement: 'bottom', transformAlign: 'bottom' });
       expect(
-        getExtendedPlacementValue({ placement: 'left-end', align: 'left' }),
-      ).toBe('left-end');
+        getExtendedPlacementValues({ placement: 'left-end', align: 'left' }),
+      ).toEqual({ placement: 'left-end', transformAlign: 'left' });
       expect(
-        getExtendedPlacementValue({ placement: 'right', align: 'right' }),
-      ).toBe('right');
+        getExtendedPlacementValues({ placement: 'right', align: 'right' }),
+      ).toEqual({ placement: 'right', transformAlign: 'right' });
     });
 
     describe(`when align prop is ${Align.CenterHorizontal}`, () => {
       test('returns right* placement values for right, right-start, and right-end placements', () => {
         expect(
-          getExtendedPlacementValue({
+          getExtendedPlacementValues({
             placement: 'right',
             align: Align.CenterHorizontal,
           }),
-        ).toBe('center');
+        ).toEqual({ placement: 'center', transformAlign: 'center' });
         expect(
-          getExtendedPlacementValue({
+          getExtendedPlacementValues({
             placement: 'right-start',
             align: Align.CenterHorizontal,
           }),
-        ).toBe('center-start');
+        ).toEqual({ placement: 'center-start', transformAlign: 'center' });
         expect(
-          getExtendedPlacementValue({
+          getExtendedPlacementValues({
             placement: 'right-end',
             align: Align.CenterHorizontal,
           }),
-        ).toBe('center-end');
+        ).toEqual({ placement: 'center-end', transformAlign: 'center' });
       });
     });
 
     describe(`when align prop is ${Align.CenterVertical}`, () => {
       test('returns bottom* placement values for bottom, bottom-start, and bottom-end placements', () => {
         expect(
-          getExtendedPlacementValue({
+          getExtendedPlacementValues({
             placement: 'bottom',
             align: Align.CenterVertical,
           }),
-        ).toBe('center');
+        ).toEqual({ placement: 'center', transformAlign: 'center' });
         expect(
-          getExtendedPlacementValue({
+          getExtendedPlacementValues({
             placement: 'bottom-start',
             align: Align.CenterVertical,
           }),
-        ).toBe('right');
+        ).toEqual({ placement: 'right', transformAlign: 'right' });
         expect(
-          getExtendedPlacementValue({
+          getExtendedPlacementValues({
             placement: 'bottom-end',
             align: Align.CenterVertical,
           }),
-        ).toBe('left');
+        ).toEqual({ placement: 'left', transformAlign: 'left' });
       });
     });
   });

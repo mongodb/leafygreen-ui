@@ -63,7 +63,7 @@ function LeafyGreenProvider({
         ['portalContainer', 'scrollContainer'].includes(key),
       ),
     );
-  const popoverContextContainerValues =
+  const { portalContainer, scrollContainer } =
     popoverPortalContainerProp ?? inheritedPopoverContextContainers;
 
   return (
@@ -74,7 +74,10 @@ function LeafyGreenProvider({
           setDarkMode={setDarkMode}
         >
           <OverlayProvider>
-            <PopoverProvider {...popoverContextContainerValues}>
+            <PopoverProvider
+              portalContainer={portalContainer}
+              scrollContainer={scrollContainer}
+            >
               {children}
             </PopoverProvider>
           </OverlayProvider>

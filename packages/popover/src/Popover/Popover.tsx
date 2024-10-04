@@ -1,33 +1,39 @@
-import React, { forwardRef, Fragment } from 'react';
+import React, { forwardRef, Fragment, useEffect } from 'react';
 import { Transition } from 'react-transition-group';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
-import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { spacing as spacingToken } from '@leafygreen-ui/tokens';
 
-import { useContentNode, useReferenceElement } from '../Popover.hooks';
+import {
+  getExtendedPlacementValues,
+  getFloatingPlacement,
+  getOffsetValue,
+  getWindowSafePlacementValues,
+} from '../utils/positionUtils';
+
+import {
+  useContentNode,
+  usePopoverContextProps,
+  useReferenceElement,
+} from './Popover.hooks';
 import {
   contentClassName,
   getPopoverStyles,
   hiddenPlaceholderStyle,
   TRANSITION_DURATION,
-} from '../Popover.styles';
+} from './Popover.styles';
 import {
   Align,
+  DismissMode,
   Justify,
   PopoverComponentProps,
   PopoverProps,
-} from '../Popover.types';
-import {
-  getExtendedPlacementValue,
-  getFloatingPlacement,
-  getOffsetValue,
-  getWindowSafePlacementValues,
-} from '../utils/positionUtils';
+  RenderMode,
+} from './Popover.types';
 
 /**
  *
@@ -57,42 +63,50 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
-      spacing = spacingToken[100],
-      align = Align.Bottom,
-      justify = Justify.Start,
       adjustOnMutation = false,
+      align = Align.Bottom,
       children,
       className,
-      popoverZIndex,
+      justify = Justify.Start,
       refEl,
-      usePortal = true,
+      ...rest
+    }: PopoverProps,
+    fwdRef,
+  ) => {
+    const {
+      renderMode,
+      /** top layer props */
+      dismissMode = DismissMode.Auto,
+      onToggle,
+      /** portal props */
+      usePortal,
       portalClassName,
-      portalContainer: portalContainerProp,
+      portalContainer,
       portalRef,
-      scrollContainer: scrollContainerProp,
+      scrollContainer,
+      /** react-transition-group props */
       onEnter,
       onEntering,
       onEntered,
       onExit,
       onExiting,
       onExited,
-      ...rest
-    }: PopoverProps,
-    fwdRef,
-  ) => {
-    const {
-      portalContainer: portalContainerCtxVal,
-      scrollContainer: scrollContainerCtxVal,
+      /** style props */
+      popoverZIndex,
+      spacing = spacingToken[100],
+      /** deprecated props */
+      isPopoverOpen: _,
       setIsPopoverOpen,
-    } = usePopoverContext();
+      ...restProps
+    } = usePopoverContextProps(rest);
 
-    const portalContainer = portalContainerProp || portalContainerCtxVal;
-    const scrollContainer = scrollContainerProp || scrollContainerCtxVal;
-
-    // When usePortal is true and a scrollContainer is passed in
-    // show a warning if the portalContainer is not inside of the scrollContainer.
-    // Note: If no portalContainer is passed the portalContainer will be undefined and this warning will show up.
-    // By default if no portalContainer is passed the <Portal> component will create a div and append it to the body.
+    /**
+     * When `usePortal` is true and a `scrollContainer` is defined,
+     * log a warning if the `portalContainer` is not inside of the `scrollContainer`.
+     *
+     * Note: If no `portalContainer` is provided,
+     * the `Portal` component will create a `div` and append it to the body.
+     */
     if (usePortal && scrollContainer) {
       if (!scrollContainer.contains(portalContainer as HTMLElement)) {
         consoleOnce.warn(
@@ -109,12 +123,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     };
     const rootProps = usePortal ? portalProps : {};
 
-    const {
-      placeholderRef,
-      referenceElement,
-      referenceElDocumentPos,
-      renderHiddenPlaceholder,
-    } = useReferenceElement(refEl);
+    const { placeholderRef, referenceElement, referenceElDocumentPos } =
+      useReferenceElement(refEl, scrollContainer);
     const { contentNodeRef, setContentNode } = useContentNode();
 
     const { context, floatingStyles, placement, refs } = useFloating({
@@ -126,23 +136,27 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           ({ rects }) => getOffsetValue(align, spacing, rects),
           [align, spacing],
         ),
-        flip(),
+        flip({
+          mainAxis: adjustOnMutation,
+          crossAxis: adjustOnMutation,
+        }),
       ],
       open: active,
       placement: getFloatingPlacement(align, justify),
       strategy: 'absolute',
       transform: false,
-      whileElementsMounted: adjustOnMutation ? autoUpdate : undefined,
+      whileElementsMounted: autoUpdate,
     });
 
     const popoverRef = useMergeRefs<HTMLDivElement>([refs.setFloating, fwdRef]);
 
     const { align: windowSafeAlign, justify: windowSafeJustify } =
       getWindowSafePlacementValues(placement);
-    const extendedPlacement = getExtendedPlacementValue({
-      placement,
-      align,
-    });
+    const { placement: extendedPlacement, transformAlign } =
+      getExtendedPlacementValues({
+        placement,
+        align,
+      });
 
     const renderChildren = () => {
       if (children === null) {
@@ -160,37 +174,74 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       return children;
     };
 
+    const handleEntering = (isAppearing: boolean) => {
+      if (renderMode === RenderMode.TopLayer) {
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        refs.floating.current?.addEventListener('toggle', onToggle);
+      }
+
+      onEntering?.(isAppearing);
+    };
+
+    const handleEntered = (isAppearing: boolean) => {
+      setIsPopoverOpen(true);
+      onEntered?.(isAppearing);
+    };
+
+    const handleExiting = () => {
+      if (renderMode === RenderMode.TopLayer) {
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        refs.floating.current?.removeEventListener('toggle', onToggle);
+      }
+
+      onExiting?.();
+    };
+
+    const handleExited = () => {
+      setIsPopoverOpen(false);
+      onExited?.();
+    };
+
+    useEffect(() => {
+      if (!refs.floating.current || renderMode !== RenderMode.TopLayer) {
+        return;
+      }
+
+      if (context.open) {
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        refs.floating.current?.showPopover?.();
+      } else {
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        refs.floating.current?.hidePopover?.();
+      }
+    }, [context.open, renderMode]);
+
     return (
       <Transition
         nodeRef={contentNodeRef}
         in={context.open}
-        timeout={TRANSITION_DURATION}
+        timeout={{
+          appear: TRANSITION_DURATION - 100,
+          enter: TRANSITION_DURATION - 50,
+          exit: TRANSITION_DURATION,
+        }}
+        onEnter={onEnter}
+        onEntering={handleEntering}
+        onEntered={handleEntered}
+        onExit={onExit}
+        onExiting={handleExiting}
+        onExited={handleExited}
         mountOnEnter
         unmountOnExit
         appear
-        onEntering={onEntering}
-        onEnter={onEnter}
-        onEntered={(...args) => {
-          setIsPopoverOpen(true);
-          onEntered?.(...args);
-        }}
-        onExiting={onExiting}
-        onExit={onExit}
-        onExited={(...args) => {
-          setIsPopoverOpen(false);
-          onExited?.(...args);
-        }}
       >
         {state => (
           <>
-            {renderHiddenPlaceholder && (
-              /* Using <span> as placeholder to prevent validateDOMNesting warnings
-              Warnings will still show up if `usePortal` is false */
-              <span ref={placeholderRef} className={hiddenPlaceholderStyle} />
-            )}
+            {/* Using <span> as placeholder to prevent validateDOMNesting warnings
+            Warnings will still show up if `usePortal` is false */}
+            <span ref={placeholderRef} className={hiddenPlaceholderStyle} />
             <Root {...rootProps}>
               <div
-                {...rest}
                 ref={popoverRef}
                 className={getPopoverStyles({
                   className,
@@ -199,7 +250,14 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                   popoverZIndex,
                   spacing,
                   state,
+                  transformAlign,
                 })}
+                // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
+                // eslint-disable-next-line react/no-unknown-property
+                popover={
+                  renderMode === RenderMode.TopLayer ? dismissMode : undefined
+                }
+                {...restProps}
               >
                 {/* We need to put `setContentNode` ref on this inner wrapper because
                 placing the ref on the parent will create an infinite loop in some cases

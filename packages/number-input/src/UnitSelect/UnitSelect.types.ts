@@ -1,11 +1,11 @@
 import {
   PopoverProps as ImportedPopoverProps,
-  PortalControlProps,
+  PopoverRenderModeProps,
 } from '@leafygreen-ui/popover';
 
 import { Size, UnitOption } from '../NumberInput/NumberInput.types';
 
-export type PopoverProps = PortalControlProps &
+export type PopoverProps = PopoverRenderModeProps &
   Pick<ImportedPopoverProps, 'popoverZIndex'>;
 
 export type UnitSelectProps = {

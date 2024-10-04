@@ -32,7 +32,7 @@ export const SearchResultsMenu = React.forwardRef<
       children,
       open = false,
       refEl,
-      usePortal,
+      usePortal = true,
       portalClassName,
       portalContainer,
       portalRef,
