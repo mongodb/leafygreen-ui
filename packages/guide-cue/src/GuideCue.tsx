@@ -160,6 +160,7 @@ function GuideCue({
           adjustOnMutation={true}
           popoverZIndex={popoverZIndex}
           {...sharedProps}
+          usePortal={true}
         >
           {/* The beacon is using the popover component to position itself */}
           <div
