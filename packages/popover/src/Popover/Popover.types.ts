@@ -13,9 +13,8 @@ type TransitionLifecycleCallbacks = Pick<
 
 /**
  * Options to render the popover element
- * @param Inline will render the popover element inline with the reference element
- * @param Portal will render the popover element in a provided `portalContainer` or
- * in a new div appended to the body
+ * @param Inline will render the popover element inline in the DOM where it's written
+ * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`
  * @param TopLayer will render the popover element in the top layer
  */
 export const RenderMode = {
@@ -26,7 +25,7 @@ export const RenderMode = {
 export type RenderMode = (typeof RenderMode)[keyof typeof RenderMode];
 
 /**
- * Options to control how the popover element is dismissed. This should not be extended
+ * Options to control how the popover element is dismissed. This should not be altered
  * because it is intended to have parity with the web-native {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover popover attribute}
  * @param Auto will automatically handle dismissal on backdrop click or esc key press, ensuring only one popover is visible at a time
  * @param Manual will require that the consumer handle dismissal manually
@@ -82,6 +81,20 @@ type Justify = (typeof Justify)[keyof typeof Justify];
 
 export { Justify };
 
+/**
+ * This value is derived from the placement value returned by the `useFloating` hook and
+ * used to determine the `transform` styling of the popover element
+ */
+export const TransformAlign = {
+  Top: 'top',
+  Bottom: 'bottom',
+  Left: 'left',
+  Right: 'right',
+  Center: 'center',
+} as const;
+export type TransformAlign =
+  (typeof TransformAlign)[keyof typeof TransformAlign];
+
 export type ExtendedPlacement =
   | Placement
   | 'center'
@@ -103,67 +116,100 @@ export interface ChildrenFunctionParameters {
   referenceElPos: ElementPosition;
 }
 
-/** @deprecated - use {@link RenderTopLayerProps} */
 export interface RenderInlineProps {
   /**
-   * Popover element will render inline with the reference element
-   * @deprecated use 'top-layer'
+   * Options to render the popover element
+   * @param Inline will render the popover element inline in the DOM where it's written. This option is deprecated and will be removed in the future.
+   * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`. This option is deprecated and will be removed in the future.
+   * @param TopLayer will render the popover element in the top layer
    */
   renderMode?: 'inline';
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="top-layer"`, these options can control how a popover element is dismissed
+   * - `'auto'` will automatically handle dismissal on backdrop click or key press, ensuring only one popover is visible at a time
+   * - `'manual'` will require that the consumer handle dismissal manually
+   */
   dismissMode?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * A callback function that is called when the visibility of a popover element rendered in the top layer is toggled
+   */
   onToggle?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it specifies a class name to apply to the portal element
+   * @deprecated
+   */
   portalClassName?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it specifies an element to portal within. If not provided, a div is generated at the end of the body
+   * @deprecated
+   */
   portalContainer?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it passes a ref to forward to the portal element
+   * @deprecated
+   */
   portalRef?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it specifies the scrollable element to position relative to
+   * @deprecated
+   */
   scrollContainer?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * Duplicated by `renderMode='portal'`
+   * @deprecated TODO: https://jira.mongodb.org/browse/LG-4526
+   */
   usePortal: false;
 }
 
-/** @deprecated - use {@link RenderTopLayerProps} */
 export interface RenderPortalProps {
   /**
-   * Popover element will render in a provided `portalContainer` or in a new div appended to the body
-   * @deprecated
+   * Options to render the popover element
+   * @param Inline will render the popover element inline in the DOM where it's written. This option is deprecated and will be removed in the future.
+   * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`. This option is deprecated and will be removed in the future.
+   * @param TopLayer will render the popover element in the top layer
    */
   renderMode?: 'portal';
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="top-layer"`, these options can control how a popover element is dismissed
+   * - `'auto'` will automatically handle dismissal on backdrop click or key press, ensuring only one popover is visible at a time
+   * - `'manual'` will require that the consumer handle dismissal manually
+   */
   dismissMode?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="top-layer"`, this callback function is called when the visibility of a popover element is toggled
+   */
   onToggle?: never;
 
   /**
-   * Specifies a class name to apply to the portal element
+   * When `renderMode="portal"`, it specifies a class name to apply to the portal element
+   * @deprecated
    */
   portalClassName?: string;
 
   /**
-   * Specifies an element to portal within. If not provided, a div is generated at the end of the body
+   * When `renderMode="portal"`, it specifies an element to portal within. If not provided, a div is generated at the end of the body
+   * @deprecated
    */
   portalContainer?: HTMLElement | null;
 
   /**
-   * Passes a ref to forward to the portal element
+   * When `renderMode="portal"`, it passes a ref to forward to the portal element
+   * @deprecated
    */
   portalRef?: React.MutableRefObject<HTMLElement | null>;
 
   /**
-   * Specifies the scrollable element to position relative to
+   * When `renderMode="portal"`, it specifies the scrollable element to position relative to
+   * @deprecated
    */
   scrollContainer?: HTMLElement | null;
 
@@ -176,35 +222,53 @@ export interface RenderPortalProps {
 
 export interface RenderTopLayerProps {
   /**
-   * Popover element will render in the top layer
+   * Options to render the popover element
+   * @param Inline will render the popover element inline in the DOM where it's written. This option is deprecated and will be removed in the future.
+   * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`. This option is deprecated and will be removed in the future.
+   * @param TopLayer will render the popover element in the top layer
    */
   renderMode?: 'top-layer';
 
   /**
-   * Options to control how the popover element is dismissed
+   * When `renderMode="top-layer"`, these options can control how a popover element is dismissed
    * - `'auto'` will automatically handle dismissal on backdrop click or key press, ensuring only one popover is visible at a time
    * - `'manual'` will require that the consumer handle dismissal manually
    */
   dismissMode?: DismissMode;
 
   /**
-   * A callback function that is called when the popover is toggled
+   * A callback function that is called when the visibility of a popover element rendered in the top layer is toggled
    */
   onToggle?: (e: ToggleEvent) => void;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it specifies a class name to apply to the portal element
+   * @deprecated
+   */
   portalClassName?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it specifies an element to portal within. If not provided, a div is generated at the end of the body
+   * @deprecated
+   */
   portalContainer?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it passes a ref to forward to the portal element
+   * @deprecated
+   */
   portalRef?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * When `renderMode="portal"`, it specifies the scrollable element to position relative to
+   * @deprecated
+   */
   scrollContainer?: never;
 
-  /** Not used in this `renderMode` */
+  /**
+   * Duplicated by `renderMode='portal'`
+   * @deprecated TODO: https://jira.mongodb.org/browse/LG-4526
+   */
   usePortal?: never;
 }
 
@@ -233,9 +297,11 @@ export type PopoverProps = {
   active?: boolean;
 
   /**
-   * Class name applied to popover container.
+   * Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+   *
+   * default: false
    */
-  className?: string;
+  adjustOnMutation?: boolean;
 
   /**
    * Determines the alignment of the popover content relative to the trigger element
@@ -245,11 +311,26 @@ export type PopoverProps = {
   align?: Align;
 
   /**
+   * Class name applied to popover container.
+   */
+  className?: string;
+
+  /**
    * Determines the justification of the popover content relative to the trigger element
    *
    * default: `start`
    */
   justify?: Justify;
+
+  /**
+   * Click event handler passed to the root div element within the portal container.
+   */
+  onClick?: React.MouseEventHandler;
+
+  /**
+   * Number that controls the z-index of the popover element directly.
+   */
+  popoverZIndex?: number;
 
   /**
    * A reference to the element against which the popover component will be positioned.
@@ -262,23 +343,6 @@ export type PopoverProps = {
    * default: `4`
    */
   spacing?: number;
-
-  /**
-   * Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
-   *
-   * default: false
-   */
-  adjustOnMutation?: boolean;
-
-  /**
-   * Click event handler passed to the root div element within the portal container.
-   */
-  onClick?: React.MouseEventHandler;
-
-  /**
-   * Number that controls the z-index of the popover element directly.
-   */
-  popoverZIndex?: number;
 } & PopoverRenderModeProps &
   TransitionLifecycleCallbacks;
 
@@ -301,11 +365,6 @@ export interface UseReferenceElementReturnObj {
    * Document position details of the reference element
    */
   referenceElDocumentPos: ElementPosition;
-
-  /**
-   * Boolean to determine if a hidden placeholder should be rendered
-   */
-  renderHiddenPlaceholder: boolean;
 }
 
 export interface UseContentNodeReturnObj {

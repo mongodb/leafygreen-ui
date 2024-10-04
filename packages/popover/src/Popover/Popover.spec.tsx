@@ -1,12 +1,13 @@
-import React, { createRef, PropsWithChildren } from 'react';
+import React, { createRef, PropsWithChildren, useRef, useState } from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import Button from '@leafygreen-ui/button';
 import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
-import { PopoverProps, RenderMode } from '../Popover.types';
-
 import { Popover } from './Popover';
+import { DismissMode, PopoverProps, RenderMode } from './Popover.types';
 
 type RTLInlinePopoverProps = Partial<
   Omit<
@@ -38,16 +39,40 @@ type RTLTopLayerPopoverProps = Partial<
   >
 >;
 
+function TopLayerPopoverWithReference(props?: RTLTopLayerPopoverProps) {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [active, setActive] = useState(props?.active ?? false);
+
+  return (
+    <>
+      <Button
+        data-testid="popover-reference-element"
+        onClick={() => setActive(active => !active)}
+        ref={buttonRef}
+      >
+        Open Popover
+      </Button>
+      <Popover
+        {...props}
+        active={active}
+        data-testid="popover-test-id"
+        refEl={buttonRef}
+        renderMode={RenderMode.TopLayer}
+      >
+        Popover Content
+      </Popover>
+    </>
+  );
+}
+
 function renderTopLayerPopover(props?: RTLTopLayerPopoverProps) {
   const result = render(
-    <Popover
-      {...props}
-      data-testid="popover-test-id"
-      renderMode={RenderMode.TopLayer}
-    >
-      Popover Content
-    </Popover>,
+    <>
+      <TopLayerPopoverWithReference {...props} />
+    </>,
   );
+
+  const button = result.getByTestId('popover-reference-element');
 
   const rerenderPopover = (newProps?: RTLTopLayerPopoverProps) => {
     const allProps = { ...props, ...newProps };
@@ -62,7 +87,7 @@ function renderTopLayerPopover(props?: RTLTopLayerPopoverProps) {
     );
   };
 
-  return { ...result, rerenderPopover };
+  return { button, ...result, rerenderPopover };
 }
 
 describe('packages/popover', () => {
@@ -171,7 +196,7 @@ describe('packages/popover', () => {
     });
 
     test('displays popover when the `active` prop is `true`', () => {
-      const { container, getByTestId } = renderPortalPopover({ active: true });
+      const { getByTestId } = renderPortalPopover({ active: true });
       expect(getByTestId('popover-test-id')).toBeInTheDocument();
     });
 
@@ -187,9 +212,9 @@ describe('packages/popover', () => {
 
     test('accepts a `portalRef`', async () => {
       const portalRef = createRef<HTMLElement>();
-      waitFor(() => {
-        renderPortalPopover({ portalRef });
+      renderPortalPopover({ active: true, portalRef });
 
+      waitFor(() => {
         expect(portalRef.current).toBeDefined();
         expect(portalRef.current).toBeInTheDocument();
       });
@@ -223,16 +248,122 @@ describe('packages/popover', () => {
       });
     });
 
-    test('displays popover in top layer when the `active` prop is `true`', () => {
-      const { container, getByTestId } = renderTopLayerPopover({
+    describe(`when dismissMode=${DismissMode.Auto}`, () => {
+      // skip until JSDOM supports Popover API
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('dismisses popover when outside of popover is clicked', async () => {
+        const { getByTestId } = renderTopLayerPopover({
+          active: true,
+          dismissMode: DismissMode.Auto,
+        });
+        const popover = getByTestId('popover-test-id');
+
+        await waitFor(() => expect(popover).toBeVisible());
+
+        userEvent.click(document.body);
+
+        await waitFor(() => expect(popover).not.toBeVisible());
+      });
+
+      // skip until JSDOM supports Popover API
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('dismisses popover when `Escape` key is pressed', async () => {
+        const { getByTestId } = renderTopLayerPopover({
+          active: true,
+          dismissMode: DismissMode.Auto,
+        });
+        const popover = getByTestId('popover-test-id');
+
+        await waitFor(() => expect(popover).toBeVisible());
+
+        userEvent.keyboard('{escape}');
+
+        await waitFor(() => expect(popover).not.toBeVisible());
+      });
+    });
+
+    describe(`when dismissMode=${DismissMode.Manual}`, () => {
+      // skip until JSDOM supports Popover API
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('does not dismiss popover when outside of popover is clicked', async () => {
+        const { getByTestId } = renderTopLayerPopover({
+          active: true,
+          dismissMode: DismissMode.Manual,
+        });
+        const popover = getByTestId('popover-test-id');
+
+        await waitFor(() => expect(popover).toBeVisible());
+
+        userEvent.click(document.body);
+
+        await waitFor(() => expect(popover).toBeVisible());
+      });
+
+      // skip until JSDOM supports Popover API
+      // eslint-disable-next-line jest/no-disabled-tests
+      test.skip('does not dismiss popover when `Escape` key is pressed', async () => {
+        const { getByTestId } = renderTopLayerPopover({
+          active: true,
+          dismissMode: DismissMode.Manual,
+        });
+        const popover = getByTestId('popover-test-id');
+
+        await waitFor(() => expect(popover).toBeVisible());
+
+        userEvent.keyboard('{escape}');
+
+        await waitFor(() => expect(popover).toBeVisible());
+      });
+    });
+
+    test('displays popover in top layer when the `active` prop is `true`', async () => {
+      const { getByTestId } = renderTopLayerPopover({
         active: true,
       });
-      expect(getByTestId('popover-test-id')).toBeInTheDocument();
+      const popover = getByTestId('popover-test-id');
+
+      expect(popover).toBeInTheDocument();
+      await waitFor(() => expect(popover).toBeVisible());
     });
 
     test('does NOT display popover when the `active` prop is `false`', () => {
       const { queryByTestId } = renderTopLayerPopover({ active: false });
       expect(queryByTestId('popover-test-id')).toBeNull();
+    });
+
+    describe('onToggle', () => {
+      const toggleEvent = new Event('toggle');
+      test('is called when popover is opened', () => {
+        const onToggleSpy = jest.fn();
+        const { button, getByTestId } = renderTopLayerPopover({
+          active: false,
+          dismissMode: DismissMode.Auto,
+          onToggle: onToggleSpy,
+        });
+
+        userEvent.click(button);
+
+        const popover = getByTestId('popover-test-id');
+        popover.dispatchEvent(toggleEvent);
+
+        expect(onToggleSpy).toHaveBeenCalledTimes(1);
+      });
+
+      test('is called when popover is closed', () => {
+        const onToggleSpy = jest.fn();
+        const { button, getByTestId } = renderTopLayerPopover({
+          active: true,
+          onToggle: onToggleSpy,
+        });
+
+        expect(onToggleSpy).not.toHaveBeenCalled();
+
+        const popover = getByTestId('popover-test-id');
+        popover.dispatchEvent(toggleEvent);
+        userEvent.click(button);
+
+        expect(onToggleSpy).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -274,7 +405,7 @@ describe('packages/popover', () => {
       onExiting: jest.fn(),
       onExited: jest.fn(),
     };
-    const { rerenderPopover } = renderTopLayerPopover({
+    const { button } = renderTopLayerPopover({
       ...callbacks,
     });
 
@@ -284,7 +415,7 @@ describe('packages/popover', () => {
     }
 
     // Calls enter callbacks when active is toggled to true
-    rerenderPopover({ active: true });
+    userEvent.click(button);
 
     expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
     expect(callbacks.onEntering).toHaveBeenCalledTimes(1);
@@ -295,7 +426,7 @@ describe('packages/popover', () => {
     expect(callbacks.onExited).not.toHaveBeenCalled();
 
     // Calls exit callbacks when active is toggled to false
-    rerenderPopover({ active: false });
+    userEvent.click(button);
 
     // Expect the `onEnter*` callbacks to _only_ have been called once (from the previous render)
     expect(callbacks.onEnter).toHaveBeenCalledTimes(1);
@@ -326,32 +457,13 @@ describe('packages/popover', () => {
 
       const result = render(
         <MockPopoverProvider>
-          <Popover
-            {...props}
-            data-testid="popover-test-id"
-            renderMode={RenderMode.TopLayer}
-          >
-            Popover Content
-          </Popover>
+          <TopLayerPopoverWithReference {...props} />
         </MockPopoverProvider>,
       );
 
-      const rerenderPopover = (newProps?: RTLTopLayerPopoverProps) => {
-        const allProps = { ...props, ...newProps };
-        result.rerender(
-          <MockPopoverProvider>
-            <Popover
-              {...allProps}
-              data-testid="popover-test-id"
-              renderMode={RenderMode.TopLayer}
-            >
-              Popover Content
-            </Popover>
-          </MockPopoverProvider>,
-        );
-      };
+      const button = result.getByTestId('popover-reference-element');
 
-      return { ...result, rerenderPopover };
+      return { button, ...result };
     }
 
     afterEach(() => {
@@ -359,19 +471,20 @@ describe('packages/popover', () => {
     });
 
     test('toggling `active` calls setIsPopoverOpen', async () => {
-      const { rerenderPopover } = renderPopoverInContext();
+      const { button } = renderPopoverInContext();
       expect(setIsPopoverOpenMock).not.toHaveBeenCalled();
 
-      rerenderPopover({ active: true });
-      await waitFor(() =>
-        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(true),
-      );
+      userEvent.click(button);
+      await waitFor(() => {
+        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(true);
+        expect(setIsPopoverOpenMock).toHaveBeenCalledTimes(1);
+      });
 
-      rerenderPopover({ active: false });
-      expect(setIsPopoverOpenMock).not.toHaveBeenCalledWith(false);
-      await waitFor(() =>
-        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false),
-      );
+      userEvent.click(button);
+      await waitFor(() => {
+        expect(setIsPopoverOpenMock).toHaveBeenCalledWith(false);
+        expect(setIsPopoverOpenMock).toHaveBeenCalledTimes(2);
+      });
     });
   });
 

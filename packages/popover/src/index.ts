@@ -1,22 +1,21 @@
-import { Popover } from './Popover';
-import { contentClassName } from './Popover.styles';
-import { getAlign, getJustify } from './Popover.testutils';
-export {
-  Align,
-  type ChildrenFunctionParameters,
-  DismissMode,
-  type ElementPosition,
-  Justify,
-  type PopoverProps,
-  type PopoverRenderModeProps,
-  RenderMode,
-  type ToggleEvent,
-} from './Popover.types';
+import { getAlign, getJustify, Popover } from './Popover';
 
-export { contentClassName, Popover };
 export const TestUtils = {
   getAlign,
   getJustify,
 };
+export {
+  Align,
+  type ChildrenFunctionParameters,
+  contentClassName,
+  DismissMode,
+  type ElementPosition,
+  Justify,
+  Popover,
+  type PopoverProps,
+  type PopoverRenderModeProps,
+  RenderMode,
+  type ToggleEvent,
+} from './Popover';
 
 export default Popover;

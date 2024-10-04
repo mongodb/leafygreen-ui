@@ -8,12 +8,10 @@ export {
   useOverlayContext,
 } from './OverlayContext';
 export {
-  DismissMode,
   PopoverContext,
   type PopoverContextType,
   PopoverProvider,
   type PopoverProviderProps,
-  type ToggleEvent,
   usePopoverContext,
 } from './PopoverContext';
 export { useBaseFontSize } from './TypographyContext';

@@ -15,14 +15,20 @@ type TransitionLifecycleCallbacks = Pick<
   'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited'
 >;
 
-export const DismissMode = {
+/**
+ * Options to control how the popover element is dismissed. This should not be altered
+ * because it is intended to have parity with the web-native {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover popover attribute}
+ * @param Auto will automatically handle dismissal on backdrop click or esc key press, ensuring only one popover is visible at a time
+ * @param Manual will require that the consumer handle dismissal manually
+ */
+const DismissMode = {
   Auto: 'auto',
   Manual: 'manual',
 } as const;
-export type DismissMode = (typeof DismissMode)[keyof typeof DismissMode];
+type DismissMode = (typeof DismissMode)[keyof typeof DismissMode];
 
 /** Local implementation of web-native `ToggleEvent` until we use typescript v5 */
-export interface ToggleEvent extends Event {
+interface ToggleEvent extends Event {
   type: 'toggle';
   newState: 'open' | 'closed';
   oldState: 'open' | 'closed';
@@ -119,7 +125,7 @@ interface RenderTopLayerProps {
   scrollContainer?: never;
 }
 
-export type PopoverRenderModeProps =
+type PopoverRenderModeProps =
   | RenderInlineProps
   | RenderPortalProps
   | RenderTopLayerProps;

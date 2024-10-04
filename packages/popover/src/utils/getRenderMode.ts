@@ -1,4 +1,4 @@
-import { RenderMode } from '../Popover.types';
+import { RenderMode } from '../Popover/Popover.types';
 
 export function getRenderMode(
   renderMode?: RenderMode,
