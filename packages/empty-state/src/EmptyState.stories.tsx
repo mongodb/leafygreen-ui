@@ -5,7 +5,7 @@ import { StoryFn } from '@storybook/react';
 import { css } from '@leafygreen-ui/emotion';
 
 import BasicEmptyStateStoryMeta, {
-  WithActionsAndLink,
+  WithBadgeAndActionsAndLink,
   WithSmallGraphic,
 } from './BasicEmptyState/BasicEmptyState.stories';
 import FeaturesEmptyStateStoryMeta, {
@@ -56,15 +56,15 @@ export const LiveExample: StoryFn<StoryProps> = ({
   ...rest
 }: StoryProps) => {
   let StoryComponent: StoryFn<BasicEmptyStateProps | FeaturesEmptyStateProps> =
-    WithActionsAndLink;
+    WithBadgeAndActionsAndLink;
   let storyComponentProps: BasicEmptyStateProps | FeaturesEmptyStateProps =
     {} as BasicEmptyStateProps | FeaturesEmptyStateProps;
 
   if (variant === StoryVariant.Basic) {
-    StoryComponent = WithActionsAndLink;
+    StoryComponent = WithBadgeAndActionsAndLink;
     storyComponentProps = {
       ...BasicEmptyStateStoryMeta.args,
-      ...WithActionsAndLink.args,
+      ...WithBadgeAndActionsAndLink.args,
     } as BasicEmptyStateProps;
   } else if (variant === StoryVariant.BasicWithSmallAsset) {
     StoryComponent = WithSmallGraphic;
