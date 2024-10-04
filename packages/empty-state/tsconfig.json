@@ -17,6 +17,9 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../badge"
+    },
+    {
       "path": "../button"
     },
     {
