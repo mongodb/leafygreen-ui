@@ -5,12 +5,37 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Option, OptionGroup, Select, type SelectProps, Size, State } from '.';
+
+const childrenArray = [
+  <Option key="long" value="long" description="I know a little lorem ipsum">
+    Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
+    risus varius blandit sit amet non magna.
+  </Option>,
+  <OptionGroup key="Common" label="Common">
+    <Option value="dog">Dog</Option>
+    <Option value="cat">Cat</Option>
+  </OptionGroup>,
+  <OptionGroup key="Less common" label="Less common">
+    <Option value="hamster">Hamster</Option>
+    <Option value="parrot">Parrot</Option>
+  </OptionGroup>,
+  <Option key="iguana" value="iguana">
+    Mexican spiny-tailed iguana
+  </Option>,
+  <Option key="spider" value="spider" description="I'm chill, I swear">
+    Spider
+  </Option>,
+  <Option key="aardvark" value="aardvark" disabled description="Call me Arthur">
+    Aardvark
+  </Option>,
+];
 
 const meta: StoryMetaType<typeof Select> = {
   title: 'Components/Select',
@@ -46,34 +71,7 @@ const meta: StoryMetaType<typeof Select> = {
     disabled: false,
     allowDeselect: false,
     darkMode: false,
-    children: [
-      <Option key="long" value="long" description="I know a little lorem ipsum">
-        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
-        risus varius blandit sit amet non magna.
-      </Option>,
-      <OptionGroup key="Common" label="Common">
-        <Option value="dog">Dog</Option>
-        <Option value="cat">Cat</Option>
-      </OptionGroup>,
-      <OptionGroup key="Less common" label="Less common">
-        <Option value="hamster">Hamster</Option>
-        <Option value="parrot">Parrot</Option>
-      </OptionGroup>,
-      <Option key="iguana" value="iguana">
-        Mexican spiny-tailed iguana
-      </Option>,
-      <Option key="spider" value="spider" description="I'm chill, I swear">
-        Spider
-      </Option>,
-      <Option
-        key="aardvark"
-        value="aardvark"
-        disabled
-        description="Call me Arthur"
-      >
-        Aardvark
-      </Option>,
-    ],
+    children: childrenArray,
     usePortal: true,
   },
   argTypes: {
@@ -164,3 +162,26 @@ NoPortal.parameters = {
 };
 
 export const Generated = () => {};
+
+export const InitialLongSelectOpen = {
+  render: () => {
+    return (
+      <Select
+        className={cx(
+          css`
+            min-width: 200px;
+            max-width: 400px;
+          `,
+        )}
+        aria-label="hey"
+        // eslint-disable-next-line react/no-children-prop
+        children={[...childrenArray, ...childrenArray]}
+      />
+    );
+  },
+  play: async ctx => {
+    const { findByRole } = within(ctx.canvasElement.parentElement!);
+    const trigger = await findByRole('button');
+    userEvent.click(trigger);
+  },
+};

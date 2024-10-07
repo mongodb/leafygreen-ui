@@ -6,6 +6,7 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -276,5 +277,25 @@ DisabledInput.parameters = {
     combineArgs: {
       darkMode: [true, false],
     },
+  },
+};
+
+export const InitialLongComboboxOpen = {
+  render: () => {
+    return (
+      <Combobox
+        multiselect={false}
+        label="Choose a fruit"
+        description="Please pick one"
+        placeholder="Select fruit"
+      >
+        {getComboboxOptions()}
+      </Combobox>
+    );
+  },
+  play: async ctx => {
+    const { findByRole } = within(ctx.canvasElement.parentElement!);
+    const trigger = await findByRole('combobox');
+    userEvent.click(trigger);
   },
 };

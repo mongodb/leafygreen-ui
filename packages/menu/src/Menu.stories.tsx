@@ -273,7 +273,7 @@ export const Generated = {
   },
 } satisfies StoryObj<typeof Menu>;
 
-export const InitialLongMenuOpen = {
+export const InitialLongMenuOpen: StoryObj<typeof Menu> = {
   ...LiveExample,
   play: async ctx => {
     const { findByRole } = within(ctx.canvasElement.parentElement!);
