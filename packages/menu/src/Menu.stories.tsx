@@ -141,13 +141,6 @@ export const LiveExample = {
           <MenuItem>Sit</MenuItem>
           <MenuItem>Amet</MenuItem>
         </MenuGroup>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
-        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
       </Menu>
     );
   },
@@ -274,10 +267,78 @@ export const Generated = {
 } satisfies StoryObj<typeof Menu>;
 
 export const InitialLongMenuOpen: StoryObj<typeof Menu> = {
-  ...LiveExample,
+  render: () => {
+    return (
+      <Menu
+        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        open={true}
+      >
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem description="I am also a description" glyph={<CloudIcon />}>
+          Menu Item
+        </MenuItem>
+        <MenuItem disabled description="I am a description">
+          Disabled Menu Item
+        </MenuItem>
+        <MenuItem
+          disabled
+          description="I am a description"
+          glyph={<CloudIcon />}
+        >
+          Disabled Menu Item
+        </MenuItem>
+        <MenuSeparator />
+        <MenuItem href="http://mongodb.design">I am a link!</MenuItem>
+        <SubMenu
+          title="Menu Item 1"
+          description=".design"
+          glyph={<CloudIcon />}
+          href="http://mongodb.design"
+        >
+          <MenuItem>SubMenu Item 1</MenuItem>
+          <MenuItem active>SubMenu Item 2</MenuItem>
+          <MenuItem>SubMenu Item 3</MenuItem>
+        </SubMenu>
+        <SubMenu title="Menu Item 2" description="Sed posuere">
+          <MenuItem>Support 1</MenuItem>
+          <MenuItem>Support 2</MenuItem>
+        </SubMenu>
+        <MenuItem variant="destructive" glyph={<Icon glyph="Trash" />}>
+          Delete
+        </MenuItem>
+        <MenuSeparator />
+        <MenuGroup title="Lorem Ipsum">
+          <MenuItem>Lorem</MenuItem>
+          <MenuItem>Ipsum</MenuItem>
+          <MenuItem>Dolor</MenuItem>
+          <MenuItem>Sit</MenuItem>
+          <MenuItem>Amet</MenuItem>
+        </MenuGroup>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+      </Menu>
+    );
+  },
   play: async ctx => {
     const { findByRole } = within(ctx.canvasElement.parentElement!);
     const trigger = await findByRole('button');
     userEvent.click(trigger);
   },
+  decorators: [
+    (StoryFn, _ctx) => (
+      <div
+        className={css`
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
 };

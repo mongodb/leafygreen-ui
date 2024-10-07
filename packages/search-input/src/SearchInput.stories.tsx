@@ -340,4 +340,16 @@ export const InitialLongSearchOpen = {
     console.log({ trigger });
     userEvent.click(trigger);
   },
+  decorators: [
+    (StoryFn, _ctx) => (
+      <div
+        className={css`
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
 };

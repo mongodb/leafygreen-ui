@@ -184,4 +184,16 @@ export const InitialLongSelectOpen = {
     const trigger = await findByRole('button');
     userEvent.click(trigger);
   },
+  decorators: [
+    (StoryFn, _ctx) => (
+      <div
+        className={css`
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
 };
