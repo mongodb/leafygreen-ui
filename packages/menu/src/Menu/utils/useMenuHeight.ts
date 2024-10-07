@@ -23,6 +23,5 @@ export const useMenuHeight = ({
   const maxMenuHeightValue = !isUndefined(memoizedAvailableSpace)
     ? `${Math.min(memoizedAvailableSpace, maxHeight)}px`
     : 'unset';
-
   return maxMenuHeightValue;
 };
