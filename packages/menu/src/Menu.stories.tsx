@@ -7,6 +7,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -140,6 +141,13 @@ export const LiveExample = {
           <MenuItem>Sit</MenuItem>
           <MenuItem>Amet</MenuItem>
         </MenuGroup>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
+        <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
       </Menu>
     );
   },
@@ -264,3 +272,12 @@ export const Generated = {
     },
   },
 } satisfies StoryObj<typeof Menu>;
+
+export const InitialLongMenuOpen = {
+  ...LiveExample,
+  play: async ctx => {
+    const { findByRole } = within(ctx.canvasElement.parentElement!);
+    const trigger = await findByRole('button');
+    userEvent.click(trigger);
+  },
+};

@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/hooks': major
+'@leafygreen-ui/hooks': patch
 ---
 
 Removes `useMemo` from `useAvailableSpace`, which was preventing the hook from returning the correct value.
