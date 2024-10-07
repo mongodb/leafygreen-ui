@@ -18,4 +18,5 @@ const Template: StoryFn<typeof LineChart> = props => <LineChart {...props} />;
 export const Basic: StoryFn<typeof LineChart> = Template.bind({});
 Basic.args = {
   series: getSeriesOptionsSample(5),
+  label: 'Basic Line Chart',
 };

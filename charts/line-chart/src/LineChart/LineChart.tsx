@@ -13,19 +13,20 @@ import {
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 import { palette } from '@leafygreen-ui/palette';
-
 import { Theme } from '@leafygreen-ui/lib';
+import { Body } from '@leafygreen-ui/typography';
 import {
   borderRadius,
   spacing,
   fontFamilies,
+  fontWeights,
   color,
   Variant,
-  State,
+  InteractionState,
 } from '@leafygreen-ui/tokens';
 
 import { LineChartProps } from './LineChart.types';
-import { baseStyles } from './LineChart.styles';
+import { baseStyles, chartStyles, headerStyles } from './LineChart.styles';
 
 //TODO: move this to a separate file and add dark mode support
 const colors = [
@@ -98,13 +99,7 @@ export function LineChart({
       ),
       animation: false, // Disabled to optimize performance
       title: {
-        show: true,
-        text: label,
-        padding: 20,
-        textStyle: {
-          color: palette.black,
-          fontFamily: fontFamilies.default,
-        },
+        show: false,
       },
       color: colors,
       toolbox: {
@@ -125,21 +120,37 @@ export function LineChart({
         trigger: 'axis',
         // TODO: Will set darkMode via prop in later PR
         backgroundColor:
-          color[Theme.Light].background[Variant.InversePrimary][State.Default],
+          color[Theme.Light].background[Variant.InversePrimary][
+            InteractionState.Default
+          ],
         borderRadius: borderRadius[150],
       },
       xAxis: {
         type: 'time',
-        splitLine: { show: true },
+        splitLine: {
+          show: false,
+        },
         axisLine: {
+          show: true,
           lineStyle: {
-            color: palette.gray.light2,
+            color:
+              color[Theme.Light].border[Variant.Secondary][
+                InteractionState.Default
+              ],
+            width: 1,
           },
         },
         axisLabel: {
-          textStyle: {
-            color: palette.gray.dark1,
-          },
+          align: 'center',
+          margin: spacing[300],
+          fontFamily: fontFamilies.default,
+          fontWeight: fontWeights.medium,
+          fontSize: 11,
+          lineHeight: spacing[400],
+          color:
+            color[Theme.Light].text[Variant.Secondary][
+              InteractionState.Default
+            ],
         },
         axisTick: {
           show: false,
@@ -148,16 +159,36 @@ export function LineChart({
       },
       yAxis: {
         type: 'value',
-        splitLine: { show: true },
-        axisLine: {
+        splitLine: {
+          show: true,
           lineStyle: {
-            color: palette.gray.light2,
+            color:
+              color[Theme.Light].border[Variant.Secondary][
+                InteractionState.Default
+              ],
+            width: 1,
+          },
+        },
+        axisLine: {
+          show: true,
+          lineStyle: {
+            color:
+              color[Theme.Light].border[Variant.Secondary][
+                InteractionState.Default
+              ],
+            width: 1,
           },
         },
         axisLabel: {
-          textStyle: {
-            color: palette.gray.dark1,
-          },
+          align: 'right',
+          margin: spacing[150],
+          fontFamily: fontFamilies.default,
+          fontWeight: fontWeights.medium,
+          fontSize: 11,
+          color:
+            color[Theme.Light].text[Variant.Secondary][
+              InteractionState.Default
+            ],
         },
         axisTick: {
           show: false,
@@ -165,10 +196,15 @@ export function LineChart({
         ...yAxis,
       },
       grid: {
-        left: spacing[1000],
-        right: spacing[500],
-        top: spacing[500],
-        bottom: spacing[500],
+        left: 0,
+        right: spacing[25],
+        top: spacing[150], // Accounts for y-axis label height
+        bottom: 0,
+        borderColor:
+          color[Theme.Light].border[Variant.Secondary][
+            InteractionState.Default
+          ],
+        borderWidth: 1,
         containLabel: true,
         show: true,
       },
@@ -197,20 +233,12 @@ export function LineChart({
 
   return (
     <div className={baseStyles} {...rest}>
-      {/* Chart will fill 100% of width of the container on render */}
-      <div
-        ref={chartRef}
-        className="echart"
-        style={{
-          width: '100%',
-          height: '100%',
-          // TODO: Will set darkMode via prop in later PR
-          border: `1px solid ${
-            color[Theme.Light].border[Variant.Disabled][State.Default]
-          }`,
-          borderRadius: borderRadius[200],
-        }}
-      />
+      <header className={headerStyles}>
+        <Body weight="regular" baseFontSize={16}>
+          {label}
+        </Body>
+      </header>
+      <div ref={chartRef} className={`echart ${chartStyles}`} />
     </div>
   );
 }
