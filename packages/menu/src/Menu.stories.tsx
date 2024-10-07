@@ -263,7 +263,7 @@ export const Generated = {
   },
 } satisfies StoryObj<typeof Menu>;
 
-export const InitialLongMenuOpen: StoryObj<typeof Menu> = {
+export const InitialLongMenuOpen = {
   render: () => {
     return (
       <Menu
