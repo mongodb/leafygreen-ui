@@ -45,7 +45,10 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
 
 export type CellProps = BaseCellProps;
 
-export interface InternalCellProps extends BaseCellProps {
+export type InternalCellRequiredProps = Omit<BaseCellProps, 'cell'> &
+  Required<Pick<BaseCellProps, 'cell'>>;
+
+export interface InternalCellProps extends InternalCellRequiredProps {
   /**
    * Index of the cell in its parent row.
    */

@@ -37,21 +37,18 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isParentExpanded = row.getParentRow()
     ? row.getParentRow()?.getIsExpanded()
     : false;
-  const isExpandable = row.getCanExpand();
-  const depth = row.depth;
+  // const isExpandable = row.getCanExpand();
+  // const depth = row.depth;
 
-  const toggleExpanded = useCallback(() => row.toggleExpanded(), []); // Empty dependency array, so the function is only created once
+  // const toggleExpanded = useCallback(() => row.toggleExpanded(), []); // Empty dependency array, so the function is only created once
 
   const contextValues = useMemo(() => {
     return {
       disabled,
-      depth,
-      isExpanded,
-      isExpandable,
-      toggleExpanded,
+
       isReactTable: true,
     };
-  }, [depth, disabled, isExpandable, isExpanded, toggleExpanded]);
+  }, [disabled]);
 
   // console.log(`🪼rerender: ${row.id} ${depth}`);
 

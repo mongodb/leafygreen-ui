@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
@@ -28,15 +27,20 @@ const InternalCell = ({
   ...rest
 }: InternalCellProps) => {
   const {
-    depth,
-    isExpandable = false,
-    toggleExpanded,
-    isExpanded = false,
+    // depth,
+    // isExpandable = false,
+    // toggleExpanded,
+    // isExpanded = false,
     disabled,
   } = useRowContext();
-  const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
+  // TODO: log warning if cell is not passed to Cell
   const { isSelectable } = useTableContext();
-  // const isSelectable = !!table && !!table.hasSelectableRows; //TODO: move to context
+  const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
+  const row = cell.row;
+  const isExpandable = row.getCanExpand();
+  const isExpanded = row.getIsExpanded();
+  const depth = row.depth;
+  const toggleExpanded = () => row.toggleExpanded();
   const contentRef = useRef<HTMLDivElement>(null);
 
   const contentHeight = standardCellHeight;
@@ -48,6 +52,7 @@ const InternalCell = ({
       overflow === CellOverflowBehavior.Truncate && scrollHeight > contentHeight
     );
   }, [contentHeight, overflow, scrollHeight]);
+
   return (
     <td
       data-lgid={LGIDS.cell}
@@ -86,11 +91,5 @@ const InternalCell = ({
 };
 
 InternalCell.displayName = 'Cell';
-InternalCell.propTypes = {
-  cellIndex: PropTypes.number,
-  depth: PropTypes.number,
-  isVisible: PropTypes.bool,
-  isExpandable: PropTypes.bool,
-};
 
 export default InternalCell;

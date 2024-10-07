@@ -16,7 +16,7 @@ const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { measureElement, isVirtual } = useTableContext();
+  const { measureElement } = useTableContext();
   const contentRef = useRef<HTMLDivElement>(null);
 
   const content =
@@ -38,7 +38,7 @@ const ExpandedContent = <T extends RowData>({
       ref={node => {
         // TODO: fix me
         // This gets the dynamic size of the element
-        if (isVirtual) measureElement(node);
+        if (measureElement) measureElement(node);
       }}
     >
       <td

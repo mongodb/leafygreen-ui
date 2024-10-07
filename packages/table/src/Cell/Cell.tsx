@@ -19,6 +19,7 @@ const Cell = ({
   contentClassName,
   align,
   children,
+  cell,
   ...rest
 }: CellProps) => {
   const { isReactTable } = useRowContext();
@@ -45,6 +46,7 @@ const Cell = ({
       {isReactTable && (
         <InternalCell
           {...rest}
+          cell={cell}
           className={className}
           contentClassName={contentClassName}
         >

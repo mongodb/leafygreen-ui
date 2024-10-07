@@ -165,10 +165,8 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  // const { rows } = table;
-  const { rows } = table.getRowModel();
-
-  // console.log({ rows });
+  const { rows } = table;
+  // const { rows } = table.getRowModel();
 
   return (
     <Table

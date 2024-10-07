@@ -145,7 +145,7 @@ export const Basic: StoryFn<StoryTableProps> = args => {
                   <Row key={row.id} virtualRow={virtualRow} row={row}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id}>
+                        <Cell key={cell.id} cell={cell}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -331,7 +331,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
                   <Row key={row.id} row={row} virtualRow={virtualRow}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id}>
+                        <Cell key={cell.id} cell={cell}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -405,7 +405,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
                   <Row key={row.id} row={row} virtualRow={virtualRow}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
-                        <Cell key={cell.id}>
+                        <Cell key={cell.id} cell={cell}>
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext(),
@@ -484,7 +484,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                           .getVisibleCells()
                           .map((cell: LeafyGreenTableCell<Person>) => {
                             return (
-                              <Cell key={cell.id}>
+                              <Cell key={cell.id} cell={cell}>
                                 {flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext(),
@@ -579,6 +579,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
                               max-height: unset;
                             }
                           `}
+                          cell={cell}
                         >
                           {flexRender(
                             cell.column.columnDef.cell,
