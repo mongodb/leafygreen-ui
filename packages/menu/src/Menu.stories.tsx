@@ -66,9 +66,6 @@ export default {
         'usePortal',
       ],
     },
-    chromatic: {
-      disableSnapshot: true,
-    },
   },
   args: {
     align: 'bottom',
