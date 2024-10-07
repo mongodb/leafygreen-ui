@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+// import { useMemo } from 'react';
 
 import useViewportSize from './useViewportSize';
 
@@ -13,22 +13,17 @@ const useAvailableSpace = (
 ) => {
   const viewportSize = useViewportSize();
 
-  return useMemo(() => {
-    if (viewportSize && triggerRef && triggerRef.current) {
-      // Get the top & bottom coordinates of the trigger
-      const { top: triggerTop, bottom: triggerBottom } =
-        triggerRef.current.getBoundingClientRect();
+  if (viewportSize && triggerRef && triggerRef.current) {
+    // Get the top & bottom coordinates of the trigger
+    const { top: triggerTop, bottom: triggerBottom } =
+      triggerRef.current.getBoundingClientRect();
 
-      // Find out how much space is available above or below the trigger
-      const safeSpace = Math.max(
-        viewportSize.height - triggerBottom,
-        triggerTop,
-      );
+    // Find out how much space is available above or below the trigger
+    const safeSpace = Math.max(viewportSize.height - triggerBottom, triggerTop);
 
-      // Return to fill the space available
-      return safeSpace - margin;
-    }
-  }, [viewportSize, triggerRef, margin]);
+    // Return to fill the space available
+    return safeSpace - margin;
+  }
 };
 
 export default useAvailableSpace;
