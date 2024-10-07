@@ -6,11 +6,12 @@ function getRandomNumber(min: number, max: number): number {
 
 function generateDataset(
   numOfDates: number,
+  minValue: number,
   maxValue: number,
 ): Array<[string | number | Date, string | number | Date]> {
   const startDate = new Date('2021-01-15T01:00:00');
   const options: Array<[string | number | Date, string | number | Date]> = [];
-  const baseValue = getRandomNumber(0, maxValue);
+  const baseValue = getRandomNumber(minValue, maxValue);
 
   for (let i = 0; i < numOfDates; i++) {
     const newDate = new Date(startDate);
@@ -26,5 +27,5 @@ export const getSeriesOptionsSample = (
 ): SeriesOptions =>
   Array.from({ length: numOfSeries }, (_, i) => ({
     name: `Dataset ${i + 1}`,
-    data: generateDataset(60, 500),
+    data: generateDataset(60, 0, 500),
   }));
