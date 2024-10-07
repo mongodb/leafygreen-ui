@@ -12,7 +12,6 @@ import {
   ToolboxComponent,
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import { palette } from '@leafygreen-ui/palette';
 import { Theme } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 import {
