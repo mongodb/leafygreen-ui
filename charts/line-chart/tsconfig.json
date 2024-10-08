@@ -19,6 +19,9 @@
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/leafygreen-provider"
+    }, 
+    {
       "path": "../../packages/lib"
     },
     {

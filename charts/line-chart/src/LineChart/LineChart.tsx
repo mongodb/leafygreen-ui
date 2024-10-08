@@ -1,44 +1,10 @@
-import React, { useEffect, useRef } from 'react';
-import * as echarts from 'echarts/core';
-import {
-  LineChart as EchartsLineChart,
-  LineSeriesOption,
-} from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  LegendComponent,
-  ToolboxComponent,
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import { Theme } from '@leafygreen-ui/lib';
+import React from 'react';
 import { Body } from '@leafygreen-ui/typography';
-import {
-  borderRadius,
-  spacing,
-  fontFamilies,
-  fontWeights,
-  color,
-  Variant,
-  InteractionState,
-} from '@leafygreen-ui/tokens';
 
 import { LineChartProps } from './LineChart.types';
-import { baseStyles, chartStyles, headerStyles } from './LineChart.styles';
-import { colors } from '../colors';
-
-// Register the required components. By using separate imports, we can avoid
-// importing the entire echarts library which will reduce the bundle size.
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  LegendComponent,
-  EchartsLineChart,
-  CanvasRenderer,
-  ToolboxComponent,
-]);
+import { baseStyles, headerStyles } from './LineChart.styles';
+import { Chart } from '../Chart';
+// import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export function LineChart({
   series,
@@ -56,163 +22,10 @@ export function LineChart({
   onDragEnter,
   onDragLeave,
   onDrop,
-  darkMode,
+  darkMode: darkModeProp,
   ...rest
 }: LineChartProps) {
-  const chartRef = useRef(null);
-
-  useEffect(() => {
-    const chartInstance = echarts.init(chartRef.current);
-
-    const option = {
-      series: series.map(
-        (seriesOption: LineSeriesOption, index): LineSeriesOption => ({
-          type: 'line',
-          showSymbol: false,
-          clip: false,
-          z: index,
-          symbol: 'circle',
-          emphasis: {
-            disabled: true,
-          },
-          ...seriesOption,
-        }),
-      ),
-      animation: false, // Disabled to optimize performance
-      title: {
-        show: false,
-      },
-      color: colors[Theme.Light],
-      toolbox: {
-        orient: 'vertical',
-        itemSize: 13,
-        top: 15,
-        right: -6,
-        feature: {
-          dataZoom: {
-            icon: {
-              zoom: 'path://', // hack to remove zoom button
-              back: 'path://', // hack to remove restore button
-            },
-          },
-        },
-      },
-      tooltip: {
-        trigger: 'axis',
-        // TODO: Will set darkMode via prop in later PR
-        backgroundColor:
-          color[Theme.Light].background[Variant.InversePrimary][
-            InteractionState.Default
-          ],
-        borderRadius: borderRadius[150],
-      },
-      xAxis: {
-        type: 'time',
-        splitLine: {
-          show: false,
-        },
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color:
-              color[Theme.Light].border[Variant.Secondary][
-                InteractionState.Default
-              ],
-            width: 1,
-          },
-        },
-        axisLabel: {
-          align: 'center',
-          margin: spacing[400],
-          fontFamily: fontFamilies.default,
-          fontWeight: fontWeights.medium,
-          fontSize: 11,
-          lineHeight: spacing[400],
-          color:
-            color[Theme.Light].text[Variant.Secondary][
-              InteractionState.Default
-            ],
-        },
-        axisTick: {
-          show: false,
-        },
-        ...xAxis,
-      },
-      yAxis: {
-        type: 'value',
-        splitLine: {
-          show: true,
-          lineStyle: {
-            color:
-              color[Theme.Light].border[Variant.Secondary][
-                InteractionState.Default
-              ],
-            width: 1,
-          },
-        },
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color:
-              color[Theme.Light].border[Variant.Secondary][
-                InteractionState.Default
-              ],
-            width: 1,
-          },
-        },
-        axisLabel: {
-          align: 'right',
-          margin: spacing[200],
-          fontFamily: fontFamilies.default,
-          fontWeight: fontWeights.medium,
-          fontSize: 11,
-          lineHeight: spacing[400],
-          color:
-            color[Theme.Light].text[Variant.Secondary][
-              InteractionState.Default
-            ],
-        },
-        axisTick: {
-          show: false,
-        },
-        ...yAxis,
-      },
-      grid: {
-        left: spacing[500],
-        right: spacing[25], // Added to prevent weird border cutoff
-        top: spacing[200], // Accounts for y-axis topmost label line height
-        bottom: 0,
-        borderColor:
-          color[Theme.Light].border[Variant.Secondary][
-            InteractionState.Default
-          ],
-        borderWidth: 1,
-        containLabel: true,
-        show: true,
-      },
-    };
-
-    chartInstance.setOption(option);
-
-    // This enables zooming by default without the need to click a zoom button in the toolbox.
-    chartInstance.dispatchAction({
-      type: 'takeGlobalCursor',
-      key: 'dataZoomSelect',
-      dataZoomSelectActive: true,
-    });
-
-    // ECharts does not automatically resize when the window resizes so we need to handle it manually.
-    const handleResize = () => {
-      chartInstance.resize();
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      chartInstance.dispose();
-    };
-  }, [series, label, xAxis, yAxis, darkMode]);
+  //const { theme } = useDarkMode(darkModeProp);
 
   return (
     <div className={baseStyles} {...rest}>
@@ -221,7 +34,12 @@ export function LineChart({
           {label}
         </Body>
       </header>
-      <div ref={chartRef} className={`echart ${chartStyles}`} />
+      <Chart
+        series={series}
+        xAxis={xAxis}
+        yAxis={yAxis}
+        darkMode={darkModeProp}
+      />
     </div>
   );
 }
