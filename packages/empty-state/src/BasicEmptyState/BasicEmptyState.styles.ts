@@ -3,9 +3,9 @@ import { Theme } from '@leafygreen-ui/lib';
 import { color, spacing } from '@leafygreen-ui/tokens';
 
 export const rootStyles = css`
-  padding: 40px;
+  padding: ${spacing[1000]}px;
   display: flex;
-  gap: ${spacing[3]}px;
+  gap: ${spacing[400]}px;
   align-items: center;
   justify-content: center;
 `;
