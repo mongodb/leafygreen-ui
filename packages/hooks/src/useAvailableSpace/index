@@ -1,4 +1,4 @@
-import useViewportSize from './useViewportSize';
+import useViewportSize from '../useViewportSize';
 
 /**
  * Returns the maximum space available above or below the source trigger
