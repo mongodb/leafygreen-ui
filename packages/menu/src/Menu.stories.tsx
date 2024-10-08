@@ -267,7 +267,11 @@ export const InitialLongMenuOpen = {
   render: () => {
     return (
       <Menu
-        trigger={<Button rightGlyph={<CaretDown />}>Menu</Button>}
+        trigger={
+          <Button data-testid="menu-test-trigger" rightGlyph={<CaretDown />}>
+            Menu
+          </Button>
+        }
         open={true}
       >
         <MenuItem glyph={<CloudIcon />}>Menu Item</MenuItem>
@@ -322,8 +326,8 @@ export const InitialLongMenuOpen = {
     );
   },
   play: async ctx => {
-    const { findByRole } = within(ctx.canvasElement.parentElement!);
-    const trigger = await findByRole('button');
+    const { findByTestId } = within(ctx.canvasElement.parentElement!);
+    const trigger = await findByTestId('menu-test-trigger');
     userEvent.click(trigger);
   },
   decorators: [
