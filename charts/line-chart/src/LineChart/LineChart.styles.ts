@@ -9,7 +9,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
-  height: 316px;
+  height: 280px;
   width: 100%;
   border: 1px solid
     ${color[Theme.Light].border[Variant.Disabled][InteractionState.Default]};

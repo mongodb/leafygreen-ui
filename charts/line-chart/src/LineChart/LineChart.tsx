@@ -141,7 +141,7 @@ export function LineChart({
         },
         axisLabel: {
           align: 'center',
-          margin: spacing[300],
+          margin: spacing[400],
           fontFamily: fontFamilies.default,
           fontWeight: fontWeights.medium,
           fontSize: 11,
@@ -180,10 +180,11 @@ export function LineChart({
         },
         axisLabel: {
           align: 'right',
-          margin: spacing[150],
+          margin: spacing[200],
           fontFamily: fontFamilies.default,
           fontWeight: fontWeights.medium,
           fontSize: 11,
+          lineHeight: spacing[400],
           color:
             color[Theme.Light].text[Variant.Secondary][
               InteractionState.Default
@@ -195,9 +196,9 @@ export function LineChart({
         ...yAxis,
       },
       grid: {
-        left: 0,
-        right: spacing[25],
-        top: spacing[150], // Accounts for y-axis label height
+        left: spacing[500],
+        right: spacing[25], // Added to prevent weird border cutoff
+        top: spacing[200], // Accounts for y-axis topmost label line height
         bottom: 0,
         borderColor:
           color[Theme.Light].border[Variant.Secondary][
