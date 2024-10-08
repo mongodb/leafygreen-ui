@@ -26,25 +26,7 @@ import {
 
 import { LineChartProps } from './LineChart.types';
 import { baseStyles, chartStyles, headerStyles } from './LineChart.styles';
-
-//TODO: move this to a separate file and add dark mode support
-const colors = [
-  '#016BF8',
-  '#00A35C',
-  '#FFC010',
-  '#DB3030',
-  '#5E0C9E',
-  '#1254B7',
-  '#00684A',
-  '#944F01',
-  '#970606',
-  '#2D0B59',
-  '#0498EC',
-  '#00ED64',
-  '#FFEC9E',
-  '#FF6960',
-  '#B45AF2',
-];
+import { colors } from '../colors';
 
 // Register the required components. By using separate imports, we can avoid
 // importing the entire echarts library which will reduce the bundle size.
@@ -100,7 +82,7 @@ export function LineChart({
       title: {
         show: false,
       },
-      color: colors,
+      color: colors[Theme.Light],
       toolbox: {
         orient: 'vertical',
         itemSize: 13,
@@ -223,6 +205,7 @@ export function LineChart({
     const handleResize = () => {
       chartInstance.resize();
     };
+
     window.addEventListener('resize', handleResize);
 
     return () => {
