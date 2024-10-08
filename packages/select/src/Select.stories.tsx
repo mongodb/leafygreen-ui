@@ -35,6 +35,30 @@ const childrenArray = [
   <Option key="aardvark" value="aardvark" disabled description="Call me Arthur">
     Aardvark
   </Option>,
+  <Option
+    key="Spider Monkey"
+    value="Spider Monkey"
+    description="Hold on tight Spider Monkey"
+  >
+    Spider Monkey
+  </Option>,
+  <Option
+    key="orange"
+    value="orange"
+    description="Orange you glad I didn't say banana"
+  >
+    Orange
+  </Option>,
+  <Option key="Donkey Kong" value="Donkey Kong" description="OH ba na na">
+    Donkey Kong
+  </Option>,
+  <Option
+    key="Wee-snaw"
+    value="Wee-snaw"
+    description="I was just doing my impression of Mystery"
+  >
+    Wee-snaw
+  </Option>,
 ];
 
 const meta: StoryMetaType<typeof Select> = {
@@ -175,7 +199,7 @@ export const InitialLongSelectOpen = {
         )}
         aria-label="hey"
         // eslint-disable-next-line react/no-children-prop
-        children={[...childrenArray, ...childrenArray]}
+        children={childrenArray}
       />
     );
   },
