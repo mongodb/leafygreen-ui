@@ -9,11 +9,11 @@ import {
   alignmentStyles,
   baseCellStyles,
   cellTransitionContainerStyles,
-  getCellPadding,
 } from '../Cell.styles';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
+  getCellPaddingStyles,
   getHeaderCellWidthStyles,
   headerCellContentStyles,
 } from './HeaderCell.styles';
@@ -37,9 +37,6 @@ const HeaderCell = <T extends LGRowData>({
 }: PropsWithChildren<HeaderCellProps<T>>) => {
   const { isSelectable } = useTableContext();
 
-  const isFirstCell = cellIndex === 0;
-  // const isSelectable = !!table && !!table.hasSelectableRows;
-
   let columnName, sortState, onSortIconClick;
 
   if (header && header.column.getCanSort()) {
@@ -54,9 +51,8 @@ const HeaderCell = <T extends LGRowData>({
       data-lgid={LGIDS.header}
       className={cx(
         baseCellStyles,
+        getCellPaddingStyles(isSelectable),
         {
-          [getCellPadding({ depth: 0, isExpandable: false, isSelectable })]:
-            isFirstCell,
           [getHeaderCellWidthStyles(header?.getSize() ?? 0)]:
             !!header?.getSize(),
         },

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { PropsWithChildren } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';

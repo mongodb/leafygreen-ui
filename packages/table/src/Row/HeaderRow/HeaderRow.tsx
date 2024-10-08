@@ -1,7 +1,6 @@
-import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
+import React, { PropsWithChildren } from 'react';
 
-import { HeaderCell } from '../../Cell';
-
+// import { HeaderCell } from '../../Cell';
 import { HeaderRowProps } from './HeaderRow.types';
 
 const HeaderRow = ({
@@ -10,11 +9,12 @@ const HeaderRow = ({
 }: PropsWithChildren<HeaderRowProps>) => {
   return (
     <tr {...rest}>
-      {React.Children.map(children, (child: ReactNode, index: number) => {
+      {/* {React.Children.map(children, (child: ReactNode, index: number) => {
         return (
           <HeaderCell {...(child as ReactElement).props} cellIndex={index} />
         );
-      })}
+      })} */}
+      {children}
     </tr>
   );
 };

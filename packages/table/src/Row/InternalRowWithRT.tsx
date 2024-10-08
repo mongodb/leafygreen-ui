@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -45,7 +45,6 @@ const InternalRowWithRT = <T extends LGRowData>({
   const contextValues = useMemo(() => {
     return {
       disabled,
-
       isReactTable: true,
     };
   }, [disabled]);

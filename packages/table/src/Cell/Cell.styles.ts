@@ -1,4 +1,4 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { Align } from './Cell.types';

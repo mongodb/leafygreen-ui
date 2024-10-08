@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef, useMemo } from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
