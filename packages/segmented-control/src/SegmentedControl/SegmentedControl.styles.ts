@@ -3,52 +3,57 @@ import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { fontFamilies, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  borderRadius,
+  color,
+  fontFamilies,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import { Size } from './SegmentedControl.types';
 
 export const wrapperStyle = css`
   display: flex;
-  gap: 8px;
+  gap: ${spacing[200]}px;
   align-items: center;
   z-index: 0;
   font-family: ${fontFamilies.default};
 `;
 
-export const labelBaseStyles = css`
+export const getLabelStyles = (theme: Theme) => css`
   white-space: nowrap;
+  color: ${color[theme].text.secondary.default};
 `;
-
-export const labelThemeStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    color: ${palette.gray.dark1};
-  `,
-  [Theme.Dark]: css`
-    color: ${palette.gray.light1};
-  `,
-};
 
 export const optionsWrapperStyleSize: Record<Size, string> = {
   [Size.XSmall]: css`
-    --segment-gap: 1px; // space between segments
-    --wrapper-padding: 0px;
     --indicator-height: 100%;
-    --outer-radius: 6px;
-    --indicator-radius: 6px;
+    --indicator-radius: ${borderRadius[150]}px;
+    --outer-radius: ${borderRadius[150]}px;
+    --segment-gap: ${spacing[25]}px; // space between segments
+    --wrapper-padding: ${spacing[0]}px;
+  `,
+  [Size.Small]: css`
+    --indicator-height: calc(100% - 2 * var(--wrapper-padding));
+    --indicator-radius: ${borderRadius[150]}px;
+    --outer-radius: ${borderRadius[150]}px;
+    --segment-gap: ${spacing[25]}px; // space between segments
+    --wrapper-padding: ${spacing[50]}px;
   `,
   [Size.Default]: css`
-    --segment-gap: 5px; // space between segments
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
+    --indicator-radius: ${borderRadius[150]}px;
+    --outer-radius: ${borderRadius[200]}px;
+    --segment-gap: ${spacing[25]}px; // space between segments
     --wrapper-padding: 3px;
-    --outer-radius: 8px;
-    --indicator-radius: 6px;
   `,
   [Size.Large]: css`
-    --segment-gap: 5px; // space between segments
     --indicator-height: calc(100% - 2 * var(--wrapper-padding));
-    --outer-radius: 8px;
+    --indicator-radius: ${borderRadius[150]}px;
+    --outer-radius: ${borderRadius[200]}px;
+    --segment-gap: ${spacing[25]}px; // space between segments
     --wrapper-padding: 3px;
-    --indicator-radius: 6px;
   `,
 };
 
@@ -74,7 +79,7 @@ export const optionsWrapperStyleTheme: Record<Theme, string> = {
 
 export const optionsWrapperStyle = ({
   theme,
-  size = 'default',
+  size,
 }: {
   theme: Theme;
   size: Size;
