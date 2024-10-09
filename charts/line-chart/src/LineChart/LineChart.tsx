@@ -1,19 +1,18 @@
 import React from 'react';
-import { Body } from '@leafygreen-ui/typography';
 import { LineChartProps } from './LineChart.types';
-import { getHeaderStyles, getWrapperStyles } from './LineChart.styles';
+import { getWrapperStyles } from './LineChart.styles';
 import { Chart } from '../Chart';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { ChartHeader } from '../ChartHeader';
 
 export function LineChart({
   series,
   label,
   xAxis,
   yAxis,
-  showControls,
-  onInfoClick,
-  onClose,
-  onExpand,
+  closeButtonProps,
+  expandButtonProps,
+  draggable,
   onDrag,
   onDragStart,
   onDragEnd,
@@ -28,11 +27,7 @@ export function LineChart({
 
   return (
     <div className={getWrapperStyles(theme)} {...rest}>
-      <header className={getHeaderStyles(theme)}>
-        <Body weight="regular" baseFontSize={16}>
-          {label}
-        </Body>
-      </header>
+      <ChartHeader darkMode={darkModeProp} label={label} />
       <Chart
         options={{
           series: series.map(({ name, data }) => ({
