@@ -8,25 +8,21 @@ import {
   spacing,
 } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
+export const getWrapperStyles = (theme: Theme) => css`
   height: 280px;
   width: 100%;
   border: 1px solid
-    ${color[Theme.Light].border[Variant.Disabled][InteractionState.Default]};
+    ${color[theme].border[Variant.Disabled][InteractionState.Default]};
   border-radius: ${borderRadius[200]}px;
   display: grid;
   grid-template-rows: 40px 1fr;
 `;
 
-export const headerStyles = css`
+export const getHeaderStyles = (theme: Theme) => css`
   border-bottom: 1px solid
-    ${color[Theme.Light].border[Variant.Disabled][InteractionState.Default]};
+    ${color[theme].border[Variant.Disabled][InteractionState.Default]};
   display: flex;
   align-items: center;
   padding-left: ${spacing[300]}px;
   padding-right: ${spacing[400]}px;
-`;
-
-export const chartStyles = css`
-  padding: ${spacing[150]}px ${spacing[300]}px ${spacing[400]}px;
 `;
