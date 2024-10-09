@@ -26,13 +26,7 @@ const InternalCell = ({
   cell,
   ...rest
 }: InternalCellProps) => {
-  const {
-    // depth,
-    // isExpandable = false,
-    // toggleExpanded,
-    // isExpanded = false,
-    disabled,
-  } = useRowContext();
+  const { disabled } = useRowContext();
   // TODO: log warning if cell is not passed to Cell
   const { isSelectable } = useTableContext();
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
@@ -71,7 +65,6 @@ const InternalCell = ({
           cellTransitionContainerStyles,
           alignmentStyles(align),
           {
-            // [truncatedContentStyles]: true,
             [truncatedContentStyles]: shouldTruncate,
           },
           contentClassName,

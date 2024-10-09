@@ -15,7 +15,6 @@ import {
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
-// import { useRowContext } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
@@ -37,10 +36,6 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isParentExpanded = row.getParentRow()
     ? row.getParentRow()?.getIsExpanded()
     : false;
-  // const isExpandable = row.getCanExpand();
-  // const depth = row.depth;
-
-  // const toggleExpanded = useCallback(() => row.toggleExpanded(), []); // Empty dependency array, so the function is only created once
 
   const contextValues = useMemo(() => {
     return {
@@ -74,7 +69,6 @@ const InternalRowWithRT = <T extends LGRowData>({
       {...rest}
     >
       <RowContextProvider {...contextValues}>{children}</RowContextProvider>
-      {/* <RowCellChildren row={row}>{children}</RowCellChildren> */}
     </InternalRowBase>
   );
 };

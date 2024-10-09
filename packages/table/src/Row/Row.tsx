@@ -6,7 +6,6 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import InternalRowWithRT from './InternalRowWithRT';
 import { RowProps } from './Row.types';
-// import { RowContextProvider } from './RowContext';
 
 /**
  * Renders the provided cells
@@ -14,11 +13,9 @@ import { RowProps } from './Row.types';
 const Row = <T extends LGRowData>({
   row,
   virtualRow,
-  // disabled,
   ...rest
 }: RowProps<T>) => {
   return (
-    // <RowContextProvider disabled={disabled}>
     <>
       {row ? (
         <InternalRowWithRT row={row} virtualRow={virtualRow} {...rest} />
@@ -26,7 +23,6 @@ const Row = <T extends LGRowData>({
         <InternalRowWithoutRT {...rest} />
       )}
     </>
-    // </RowContextProvider>
   );
 };
 
