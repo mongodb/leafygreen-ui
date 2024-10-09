@@ -116,8 +116,8 @@ const getDefaultOptions = (theme: Theme) => ({
    * Adds styling to grid of chart.
    */
   grid: {
-    left: spacing[500], // Adds default space to the left of the chart
-    right: spacing[25], // Added to prevent weird border cutoff occurring in canvas
+    left: spacing[50], // Added to prevent label cutoff occurring in canvas
+    right: spacing[25], // Added to prevent border cutoff occurring in canvas
     top: spacing[200], // Accounts for y-axis topmost label line height
     bottom: 0,
     borderColor:
