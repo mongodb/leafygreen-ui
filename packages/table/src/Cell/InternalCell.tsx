@@ -1,15 +1,15 @@
 import React, { useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
+import { useRowContext } from '../Row/RowContext';
 import { useTableContext } from '../TableContext';
+import ToggleExpandedIcon from '../ToggleExpandedIcon';
 
 import {
   alignmentStyles,
   baseCellStyles,
-  cellContentTransitionStateStyles,
   cellTransitionContainerStyles,
   getCellPadding,
   standardCellHeight,
@@ -21,17 +21,20 @@ const InternalCell = ({
   children,
   className,
   contentClassName,
-  cellIndex,
-  depth,
-  isVisible = true,
-  isExpandable = false,
   overflow,
   align,
+  cell,
   ...rest
 }: InternalCellProps) => {
-  const isFirstCell = cellIndex === 0;
-  const { table } = useTableContext();
-  const isSelectable = !!table && !!table.hasSelectableRows;
+  const { disabled } = useRowContext();
+  // TODO: log warning if cell is not passed to Cell
+  const { isSelectable } = useTableContext();
+  const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
+  const row = cell.row;
+  const isExpandable = row.getCanExpand();
+  const isExpanded = row.getIsExpanded();
+  const depth = row.depth;
+  const toggleExpanded = () => row.toggleExpanded();
   const contentRef = useRef<HTMLDivElement>(null);
 
   const contentHeight = standardCellHeight;
@@ -43,6 +46,7 @@ const InternalCell = ({
       overflow === CellOverflowBehavior.Truncate && scrollHeight > contentHeight
     );
   }, [contentHeight, overflow, scrollHeight]);
+
   return (
     <td
       data-lgid={LGIDS.cell}
@@ -59,7 +63,6 @@ const InternalCell = ({
         ref={contentRef}
         className={cx(
           cellTransitionContainerStyles,
-          cellContentTransitionStateStyles(contentHeight, isVisible), // TODO: remove this
           alignmentStyles(align),
           {
             [truncatedContentStyles]: shouldTruncate,
@@ -67,6 +70,13 @@ const InternalCell = ({
           contentClassName,
         )}
       >
+        {isFirstCell && isExpandable && (
+          <ToggleExpandedIcon
+            isExpanded={isExpanded}
+            toggleExpanded={toggleExpanded}
+            disabled={disabled}
+          />
+        )}
         {children}
       </div>
     </td>
@@ -74,11 +84,5 @@ const InternalCell = ({
 };
 
 InternalCell.displayName = 'Cell';
-InternalCell.propTypes = {
-  cellIndex: PropTypes.number,
-  depth: PropTypes.number,
-  isVisible: PropTypes.bool,
-  isExpandable: PropTypes.bool,
-};
 
 export default InternalCell;

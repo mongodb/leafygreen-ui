@@ -1,12 +1,12 @@
 import React, { ReactElement, ReactNode } from 'react';
 
 import InternalCell from '../Cell/InternalCell';
-import { useTableContext } from '../TableContext';
+// import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
-import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
 
-import { useRowContext } from './RowContext';
+// import { getAreAncestorsExpanded } from '../utils/areAncestorsExpanded';
+// import { useRowContext } from './RowContext';
 import { RowProps } from '.';
 
 type RowCellChildrenProps<T extends LGRowData> = Required<
@@ -21,13 +21,13 @@ const RowCellChildren = <T extends LGRowData>({
   row,
   children: CellChildren,
 }: RowCellChildrenProps<T>) => {
-  const { getParentRow } = useTableContext();
-  const { disabled } = useRowContext();
-  const parentRow = getParentRow?.(row.id);
-  const isNested = !!parentRow;
-  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
-  const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
-  const isRowVisible = (areAncestorsExpanded && isParentExpanded) || !isNested;
+  // const { getParentRow } = useTableContext();
+  // const { disabled } = useRowContext();
+  // const parentRow = getParentRow?.(row.id);
+  // const isNested = !!parentRow;
+  // const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
+  // const areAncestorsExpanded = getAreAncestorsExpanded(row.id, getParentRow);
+  // const isRowVisible = (areAncestorsExpanded && isParentExpanded) || !isNested;
 
   const isExpandable = row.getCanExpand();
   const isExpanded = row.getIsExpanded();
@@ -48,9 +48,9 @@ const RowCellChildren = <T extends LGRowData>({
             <InternalCell
               {...props}
               cellIndex={colIndex}
-              isVisible={isRowVisible}
+              // isVisible={isRowVisible}
               isExpandable={isExpandable}
-              disabled={disabled}
+              // disabled={disabled}
               depth={row.depth}
               // @ts-expect-error Cell is not deeply extended
               align={cell.column.columnDef.align}
@@ -59,9 +59,7 @@ const RowCellChildren = <T extends LGRowData>({
                 <ToggleExpandedIcon
                   isExpanded={isExpanded}
                   toggleExpanded={toggleExpanded}
-                  aria-hidden={!isRowVisible}
-                  disabled={disabled}
-                  tabIndex={isRowVisible ? 0 : -1}
+                  // disabled={disabled}
                 />
               )}
               {children}

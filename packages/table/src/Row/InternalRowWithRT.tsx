@@ -1,10 +1,7 @@
-import React, { Fragment, useMemo } from 'react';
-import { VirtualItem } from 'react-virtual';
+import React, { useMemo } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { Polymorph } from '@leafygreen-ui/polymorphic';
 
 import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
@@ -17,8 +14,7 @@ import {
   zebraStyles,
 } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
-import RowCellChildren from './RowCellChildren';
-import { useRowContext } from './RowContext';
+import { RowContextProvider } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
@@ -28,66 +24,52 @@ const InternalRowWithRT = <T extends LGRowData>({
   className,
   row,
   virtualRow,
+  disabled = false,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   const { theme } = useDarkMode();
-  const { disabled } = useRowContext();
-  const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
-  const parentRow = getParentRow?.(row.id);
-  const rowRef = virtualRow?.measureRef;
-
-  const isTableExpandable = table?.getCanSomeRowsExpand();
-  const isNested = !!parentRow;
-  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
-  const isRowVisible = isParentExpanded || !isNested;
+  const { measureElement, shouldAlternateRowColor } = useTableContext();
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
+  const isParentExpanded = row.getParentRow()
+    ? row.getParentRow()?.getIsExpanded()
+    : false;
 
-  /**
-   * Render the row within a `tbody` if
-   * the table itself has any row that is expandable
-   * but not if this row is nested
-   */
-  const shouldRenderAsTBody = isTableExpandable && !isNested;
-  const containerAs = useMemo(
-    () => (shouldRenderAsTBody ? 'tbody' : Fragment),
-    [shouldRenderAsTBody],
-  );
+  const contextValues = useMemo(() => {
+    return {
+      disabled,
+      isReactTable: true,
+    };
+  }, [disabled]);
 
-  const tBodyProps: HTMLElementProps<'tbody'> &
-    Pick<VirtualItem, 'measureRef'> = {
-    className: cx({
-      [expandedContentParentStyles[theme]]: isExpanded,
-    }),
-    'data-expanded': isExpanded,
-    // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
-    ref: rowRef,
-  };
+  // console.log(`🪼rerender: ${row.id} ${depth}`);
 
   return (
-    <Polymorph as={containerAs} {...(shouldRenderAsTBody && tBodyProps)}>
-      <InternalRowBase
-        className={cx(
-          {
-            [grayZebraRowStyles[theme]]:
-              isOddVSRow && shouldAlternateRowColor && !isSelected,
-            [zebraStyles[theme]]:
-              !virtualRow && shouldAlternateRowColor && !isSelected,
-            [selectedRowStyles[theme]]: isSelected && !disabled,
-          },
-          className,
-        )}
-        data-selected={isSelected}
-        aria-hidden={!isRowVisible}
-        data-expanded={isExpanded}
-        id={`lg-table-row-${row.id}`}
-        {...rest}
-      >
-        <RowCellChildren row={row}>{children}</RowCellChildren>
-      </InternalRowBase>
-    </Polymorph>
+    <InternalRowBase
+      className={cx(
+        {
+          [grayZebraRowStyles[theme]]:
+            isOddVSRow && shouldAlternateRowColor && !isSelected,
+          [zebraStyles[theme]]:
+            !virtualRow && shouldAlternateRowColor && !isSelected,
+          [selectedRowStyles[theme]]: isSelected && !disabled,
+          [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
+        },
+        className,
+      )}
+      data-selected={isSelected}
+      data-expanded={isExpanded}
+      id={`lg-table-row-${row.id}`}
+      ref={node => {
+        if (measureElement) measureElement(node); // can this be added to table context?
+      }}
+      data-index={virtualRow ? virtualRow!.index : ''}
+      {...rest}
+    >
+      <RowContextProvider {...contextValues}>{children}</RowContextProvider>
+    </InternalRowBase>
   );
 };
 
