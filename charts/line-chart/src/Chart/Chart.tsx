@@ -1,9 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts/core';
-import {
-  LineChart as EchartsLineChart,
-  LineSeriesOption,
-} from 'echarts/charts';
+import { LineChart as EchartsLineChart } from 'echarts/charts';
 import {
   TitleComponent,
   TooltipComponent,
@@ -12,23 +9,16 @@ import {
   ToolboxComponent,
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import {
-  borderRadius,
-  spacing,
-  fontFamilies,
-  fontWeights,
-  color,
-  Variant,
-  InteractionState,
-} from '@leafygreen-ui/tokens';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ChartProps } from './Chart.types';
 import { chartStyles } from './Chart.styles';
-import { colors } from './colors';
+import { useChartOptions } from './hooks/useChartOptions';
 
-// Register the required components. By using separate imports, we can avoid
-// importing the entire echarts library which will reduce the bundle size.
+/**
+ * Register the required components. By using separate imports, we can avoid
+ * importing the entire echarts library which will reduce the bundle size.
+ * Must bee added to if additional functionality is supported.
+ */
 echarts.use([
   TitleComponent,
   TooltipComponent,
@@ -39,135 +29,19 @@ echarts.use([
   ToolboxComponent,
 ]);
 
-export function Chart({
-  series,
-  label,
-  xAxis,
-  yAxis,
-  darkMode: darkModeProp,
-}: ChartProps) {
-  const { theme } = useDarkMode(darkModeProp);
+/**
+ * React wrapper for Apache Echarts.
+ *
+ * Wraps the Echarts library and provides a React-friendly API. It adds default options
+ * and styling according to our design system's specs.
+ */
+export function Chart({ options, darkMode: darkModeProp }: ChartProps) {
+  const chartOptions = useChartOptions({ options, darkMode: darkModeProp });
   const chartRef = useRef(null);
 
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
-
-    const option = {
-      animation: false, // Disabled to optimize performance
-      title: {
-        show: false,
-      },
-      series: series.map(
-        (seriesOption: LineSeriesOption, index): LineSeriesOption => ({
-          type: 'line',
-          showSymbol: false,
-          clip: false,
-          z: index,
-          symbol: 'circle',
-          emphasis: {
-            disabled: true,
-          },
-          ...seriesOption,
-        }),
-      ),
-
-      color: colors[theme],
-      toolbox: {
-        orient: 'vertical',
-        itemSize: 13,
-        top: 15,
-        right: -6,
-        feature: {
-          dataZoom: {
-            icon: {
-              zoom: 'path://', // hack to remove zoom button
-              back: 'path://', // hack to remove restore button
-            },
-          },
-        },
-      },
-      tooltip: {
-        trigger: 'axis',
-        // TODO: Will set darkMode via prop in later PR
-        backgroundColor:
-          color[theme].background[Variant.InversePrimary][
-            InteractionState.Default
-          ],
-        borderRadius: borderRadius[150],
-      },
-      xAxis: {
-        type: 'time',
-        splitLine: {
-          show: false,
-        },
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color:
-              color[theme].border[Variant.Secondary][InteractionState.Default],
-            width: 1,
-          },
-        },
-        axisLabel: {
-          align: 'center',
-          margin: spacing[400],
-          fontFamily: fontFamilies.default,
-          fontWeight: fontWeights.medium,
-          fontSize: 11,
-          lineHeight: spacing[400],
-          color: color[theme].text[Variant.Secondary][InteractionState.Default],
-        },
-        axisTick: {
-          show: false,
-        },
-        ...xAxis,
-      },
-      yAxis: {
-        type: 'value',
-        splitLine: {
-          show: true,
-          lineStyle: {
-            color:
-              color[theme].border[Variant.Secondary][InteractionState.Default],
-            width: 1,
-          },
-        },
-        axisLine: {
-          show: true,
-          lineStyle: {
-            color:
-              color[theme].border[Variant.Secondary][InteractionState.Default],
-            width: 1,
-          },
-        },
-        axisLabel: {
-          align: 'right',
-          margin: spacing[200],
-          fontFamily: fontFamilies.default,
-          fontWeight: fontWeights.medium,
-          fontSize: 11,
-          lineHeight: spacing[400],
-          color: color[theme].text[Variant.Secondary][InteractionState.Default],
-        },
-        axisTick: {
-          show: false,
-        },
-        ...yAxis,
-      },
-      grid: {
-        left: spacing[500],
-        right: spacing[25], // Added to prevent weird border cutoff
-        top: spacing[200], // Accounts for y-axis topmost label line height
-        bottom: 0,
-        borderColor:
-          color[theme].border[Variant.Secondary][InteractionState.Default],
-        borderWidth: 1,
-        containLabel: true,
-        show: true,
-      },
-    };
-
-    chartInstance.setOption(option);
+    chartInstance.setOption(chartOptions);
 
     // This enables zooming by default without the need to click a zoom button in the toolbox.
     chartInstance.dispatchAction({
@@ -180,14 +54,13 @@ export function Chart({
     const handleResize = () => {
       chartInstance.resize();
     };
-
     window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
       chartInstance.dispose();
     };
-  }, [series, label, xAxis, yAxis, theme]);
+  }, [chartOptions]);
 
   return <div ref={chartRef} className={`echart ${chartStyles}`} />;
 }
