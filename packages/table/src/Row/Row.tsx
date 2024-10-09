@@ -18,7 +18,7 @@ const RowForwardRef = <T extends LGRowData>(
     <>
       {row ? (
         <InternalRowWithRT
-          //@ts-expect-error - FIXME: types are weird
+          //@ts-expect-error - FIXME: types are weird 😭
           ref={ref}
           row={row}
           virtualRow={virtualRow}
