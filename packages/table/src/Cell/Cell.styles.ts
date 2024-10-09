@@ -72,6 +72,7 @@ export const basicCellStyles = css`
   }
 `;
 
+//TODO: update this
 export const cellTransitionContainerStyles = css`
   display: flex;
   align-items: center;
