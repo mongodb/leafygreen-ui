@@ -1,3 +1,10 @@
+/**
+ * React wrapper for Apache Echarts.
+ *
+ * Wraps the Echarts library and provides a React-friendly API. It adds default options
+ * and styling according to our design system's specs.
+ */
+
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts/core';
 import { LineChart as EchartsLineChart } from 'echarts/charts';
@@ -17,7 +24,7 @@ import { useChartOptions } from './hooks/useChartOptions';
 /**
  * Register the required components. By using separate imports, we can avoid
  * importing the entire echarts library which will reduce the bundle size.
- * Must bee added to if additional functionality is supported.
+ * Must be added to if additional functionality is supported.
  */
 echarts.use([
   TitleComponent,
@@ -29,12 +36,27 @@ echarts.use([
   ToolboxComponent,
 ]);
 
-/**
- * React wrapper for Apache Echarts.
- *
- * Wraps the Echarts library and provides a React-friendly API. It adds default options
- * and styling according to our design system's specs.
- */
+function enableZooming(chartInstance: echarts.ECharts) {
+  /**
+   * By default a button click is needed to enable drag zooming.
+   * Dispatching this event enables it instead.
+   */
+  chartInstance.dispatchAction({
+    type: 'takeGlobalCursor',
+    key: 'dataZoomSelect',
+    dataZoomSelectActive: true,
+  });
+}
+
+function enableResize(chartInstance: echarts.ECharts) {
+  // ECharts does not automatically resize when the window resizes.
+  const resizeHandler = () => {
+    chartInstance.resize();
+  };
+  window.addEventListener('resize', resizeHandler);
+  return resizeHandler;
+}
+
 export function Chart({ options, darkMode: darkModeProp }: ChartProps) {
   const chartOptions = useChartOptions({ options, darkMode: darkModeProp });
   const chartRef = useRef(null);
@@ -42,22 +64,11 @@ export function Chart({ options, darkMode: darkModeProp }: ChartProps) {
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
     chartInstance.setOption(chartOptions);
-
-    // This enables zooming by default without the need to click a zoom button in the toolbox.
-    chartInstance.dispatchAction({
-      type: 'takeGlobalCursor',
-      key: 'dataZoomSelect',
-      dataZoomSelectActive: true,
-    });
-
-    // ECharts does not automatically resize when the window resizes so we need to handle it manually.
-    const handleResize = () => {
-      chartInstance.resize();
-    };
-    window.addEventListener('resize', handleResize);
+    enableZooming(chartInstance);
+    const resizeHandler = enableResize(chartInstance);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', resizeHandler);
       chartInstance.dispose();
     };
   }, [chartOptions]);
