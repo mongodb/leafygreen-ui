@@ -8,7 +8,6 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
 
-// import { useTableContext } from '../TableContext';
 import {
   iconButtonTransitionStyles,
   iconFills,
@@ -26,7 +25,6 @@ const ToggleExpandedIcon = ({
   ...rest
 }: ToggleExpandedIconProps) => {
   const { theme } = useDarkMode();
-  // const { disableAnimations } = useTableContext();
 
   return (
     <IconButton
@@ -36,7 +34,6 @@ const ToggleExpandedIcon = ({
       className={cx(
         {
           [rotatedStyles]: isExpanded,
-          // [iconButtonTransitionStyles]: !disableAnimations,
         },
         iconButtonTransitionStyles,
       )}

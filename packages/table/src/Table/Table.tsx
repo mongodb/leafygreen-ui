@@ -52,10 +52,9 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       ? virtualTable.getVirtualItems()[0]?.start
       : 0;
     const isSelectable = table && table.hasSelectableRows;
-    const measureElement =
-      isVirtual && table
-        ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
-        : undefined;
+    const measureElement = isVirtual
+      ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
+      : undefined;
 
     return (
       <div

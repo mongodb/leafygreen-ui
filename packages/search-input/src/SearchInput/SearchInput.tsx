@@ -91,6 +91,8 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     }: SearchInputProps,
     forwardRef: React.Ref<HTMLInputElement>,
   ) {
+    console.log('hjhjhjjhj');
+
     const { theme, darkMode } = useDarkMode(darkModeProp);
     const [isOpen, setOpen] = useState(false);
     // The index of the currently highlighted result option

@@ -20,7 +20,7 @@ export const useTableContext = <T extends LGRowData>() =>
     TableContext as React.Context<TableContextValues<T>>,
   );
 
-//TODO: a seperate context for virtual scrolling
+//TODO: a seperate context for virtual scrolling?
 const TableContextProvider = <T extends LGRowData>({
   children,
   darkMode,
@@ -51,20 +51,7 @@ const TableContextProvider = <T extends LGRowData>({
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <TableProvider
-        // value={{
-        //   table,
-        //   getRowById,
-        //   getParentRow,
-        //   shouldAlternateRowColor,
-        //   disableAnimations,
-        //   isVirtual,
-        //   isSelectable,
-        // }}
-        value={providerData}
-      >
-        {children}
-      </TableProvider>
+      <TableProvider value={providerData}>{children}</TableProvider>
     </LeafyGreenProvider>
   );
 };
