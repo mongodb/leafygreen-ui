@@ -1,8 +1,9 @@
 import React from 'react';
 import { Body } from '@leafygreen-ui/typography';
 import { LineChartProps } from './LineChart.types';
-import { baseStyles, headerStyles } from './LineChart.styles';
+import { getHeaderStyles, getWrapperStyles } from './LineChart.styles';
 import { Chart } from '../Chart';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 export function LineChart({
   series,
@@ -23,9 +24,11 @@ export function LineChart({
   darkMode: darkModeProp,
   ...rest
 }: LineChartProps) {
+  const { theme } = useDarkMode(darkModeProp);
+
   return (
-    <div className={baseStyles} {...rest}>
-      <header className={headerStyles}>
+    <div className={getWrapperStyles(theme)} {...rest}>
+      <header className={getHeaderStyles(theme)}>
         <Body weight="regular" baseFontSize={16}>
           {label}
         </Body>
@@ -33,9 +36,9 @@ export function LineChart({
       <Chart
         options={{
           series: series.map(({ name, data }) => ({
+            type: 'line', // This makes sure that each series passed in is a line series
             name,
             data,
-            type: 'line',
           })),
           xAxis: {
             // Defaults to 'time' type in order to default time-series line chart
