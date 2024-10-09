@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { LGRowData } from '../useLeafyGreenTable';
@@ -10,21 +10,28 @@ import { RowProps } from './Row.types';
 /**
  * Renders the provided cells
  */
-const Row = <T extends LGRowData>({
-  row,
-  virtualRow,
-  ...rest
-}: RowProps<T>) => {
-  return (
-    <>
-      {row ? (
-        <InternalRowWithRT row={row} virtualRow={virtualRow} {...rest} />
-      ) : (
-        <InternalRowWithoutRT {...rest} />
-      )}
-    </>
-  );
-};
+const Row = forwardRef(
+  <T extends LGRowData>(
+    { row, virtualRow, ...rest }: RowProps<T>,
+    fwdRef: ForwardedRef<HTMLTableRowElement>,
+  ) => {
+    return (
+      <>
+        {row ? (
+          <InternalRowWithRT
+            ref={fwdRef}
+            //@ts-ignore - FIXME: incompatible type 😭
+            row={row}
+            virtualRow={virtualRow}
+            {...rest}
+          />
+        ) : (
+          <InternalRowWithoutRT {...rest} />
+        )}
+      </>
+    );
+  },
+);
 
 Row.propTypes = {
   virtualRow: PropTypes.any,

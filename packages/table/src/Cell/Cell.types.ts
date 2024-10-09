@@ -14,7 +14,7 @@ export const CellOverflowBehavior = {
 export type CellOverflowBehavior =
   (typeof CellOverflowBehavior)[keyof typeof CellOverflowBehavior];
 
-interface BaseCellProps extends HTMLElementProps<'td'> {
+export interface BaseCellProps extends HTMLElementProps<'td'> {
   /**
    * Alignment of the cell's contents
    *

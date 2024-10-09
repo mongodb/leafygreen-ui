@@ -9,6 +9,7 @@ export { useForceRerender } from './useForceRerender';
 export { useForwardedRef, useObservedRef } from './useForwardedRef';
 export { default as useIdAllocator } from './useIdAllocator';
 export { default as useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect';
+export { default as useMergeRefs } from './useMergeRefs';
 export { default as useMutationObserver } from './useMutationObserver';
 export { default as useObjectDependency } from './useObjectDependency';
 export { default as usePoller } from './usePoller';

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { forwardRef, useMemo, useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -17,71 +17,79 @@ import {
 } from './Cell.styles';
 import { CellOverflowBehavior, InternalCellProps } from './Cell.types';
 
-const InternalCell = ({
-  children,
-  className,
-  contentClassName,
-  overflow,
-  align,
-  cell,
-  ...rest
-}: InternalCellProps) => {
-  const { disabled } = useRowContext();
-  // TODO: log warning if cell is not passed to Cell
-  const { isSelectable } = useTableContext();
-  const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
-  const row = cell.row;
-  const isExpandable = row.getCanExpand();
-  const isExpanded = row.getIsExpanded();
-  const depth = row.depth;
-  const toggleExpanded = () => row.toggleExpanded();
-  const contentRef = useRef<HTMLDivElement>(null);
+const InternalCell = forwardRef<HTMLTableCellElement, InternalCellProps>(
+  (
+    {
+      children,
+      className,
+      contentClassName,
+      overflow,
+      align,
+      cell,
+      ...rest
+    }: InternalCellProps,
+    fwdRef,
+  ) => {
+    const { disabled } = useRowContext();
+    // TODO: log warning if cell is not passed to Cell
+    const { isSelectable } = useTableContext();
+    const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
+    const row = cell.row;
+    const isExpandable = row.getCanExpand();
+    const isExpanded = row.getIsExpanded();
+    const depth = row.depth;
+    const toggleExpanded = () => row.toggleExpanded();
+    const contentRef = useRef<HTMLDivElement>(null);
 
-  const contentHeight = standardCellHeight;
-  const scrollHeight = contentRef.current
-    ? contentRef.current?.scrollHeight
-    : 0;
-  const shouldTruncate = useMemo(() => {
+    const contentHeight = standardCellHeight;
+    const scrollHeight = contentRef.current
+      ? contentRef.current?.scrollHeight
+      : 0;
+    const shouldTruncate = useMemo(() => {
+      return (
+        overflow === CellOverflowBehavior.Truncate &&
+        scrollHeight > contentHeight
+      );
+    }, [contentHeight, overflow, scrollHeight]);
+
     return (
-      overflow === CellOverflowBehavior.Truncate && scrollHeight > contentHeight
-    );
-  }, [contentHeight, overflow, scrollHeight]);
-
-  return (
-    <td
-      data-lgid={LGIDS.cell}
-      className={cx(
-        baseCellStyles,
-        {
-          [getCellPadding({ depth, isExpandable, isSelectable })]: isFirstCell,
-        },
-        className,
-      )}
-      {...rest}
-    >
-      <div
-        ref={contentRef}
+      <td
+        data-lgid={LGIDS.cell}
         className={cx(
-          cellTransitionContainerStyles,
-          alignmentStyles(align),
+          baseCellStyles,
           {
-            [truncatedContentStyles]: shouldTruncate,
+            [getCellPadding({ depth, isExpandable, isSelectable })]:
+              isFirstCell,
           },
-          contentClassName,
+          className,
         )}
+        ref={fwdRef}
+        {...rest}
       >
-        {isFirstCell && isExpandable && (
-          <ToggleExpandedIcon
-            isExpanded={isExpanded}
-            toggleExpanded={toggleExpanded}
-            disabled={disabled}
-          />
-        )}
-        {children}
-      </div>
-    </td>
-  );
-};
+        <div
+          ref={contentRef}
+          className={cx(
+            cellTransitionContainerStyles,
+            alignmentStyles(align),
+            {
+              [truncatedContentStyles]: shouldTruncate,
+            },
+            contentClassName,
+          )}
+        >
+          {isFirstCell && isExpandable && (
+            <ToggleExpandedIcon
+              isExpanded={isExpanded}
+              toggleExpanded={toggleExpanded}
+              disabled={disabled}
+            />
+          )}
+          {children}
+        </div>
+      </td>
+    );
+  },
+);
 
 InternalCell.displayName = 'Cell';
 
