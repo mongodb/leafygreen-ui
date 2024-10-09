@@ -130,8 +130,7 @@ const getDefaultOptions = (theme: Theme) => ({
   /**
    * Adds options specifically to the x-axis.
    */
-  xAxis: {
-    ...getDefaultAxisOptions(theme),
+  xAxis: _.merge(getDefaultAxisOptions(theme), {
     /**
      * Hides the grid lines that run perpendicular to the y-axis within the chart.
      */
@@ -145,13 +144,12 @@ const getDefaultOptions = (theme: Theme) => ({
       align: 'center',
       margin: spacing[400],
     },
-  },
+  }),
 
   /**
    * Adds options specifically to the y-axis.
    */
-  yAxis: {
-    ...getDefaultAxisOptions(theme),
+  yAxis: _.merge(getDefaultAxisOptions(theme), {
     /**
      * Adds styling specific to the y-axis labels.
      */
@@ -159,7 +157,7 @@ const getDefaultOptions = (theme: Theme) => ({
       align: 'right',
       margin: spacing[200],
     },
-  },
+  }),
 });
 
 /**
@@ -175,8 +173,8 @@ const defaultSeriesOption = {
 };
 
 /**
- * Creates a generic options object with reasonable default values that can be added to
- * and used when creating any chart type.
+ * Creates a generic Apache ECharts options object with default values for those not set
+ * that are in line with the designs and needs of the design system.
  */
 export function useChartOptions({
   options,
@@ -187,7 +185,7 @@ export function useChartOptions({
   const optionsWithDefaultSeriesProps = {
     ...options,
     series: options.series.map((seriesOption: SeriesOption) =>
-      _.merge(defaultSeriesOption, seriesOption),
+      _.merge({ ...defaultSeriesOption }, seriesOption),
     ),
   };
 
