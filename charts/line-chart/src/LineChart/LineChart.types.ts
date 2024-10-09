@@ -161,26 +161,37 @@ export interface LineChartProps extends HTMLElementProps<'div'>, DarkModeProps {
   yAxis?: AxisOptions;
 
   /**
-   * Sets which controls are shown on the chart.
+   * Close button options.
    */
-  showControls?: ShowControls;
+  closeButtonProps?: {
+    /**
+     * Controls whether the close button is shown.
+     */
+    show?: boolean;
+    /**
+     * Callback for when the close button is clicked.
+     */
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  };
 
   /**
-   * Callback for when the info button is clicked.
+   * Expand button options.
    */
-  onInfoClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => void;
+  expandButtonProps?: {
+    /**
+     * Controls whether the expand button is shown.
+     */
+    show: boolean;
+    /**
+     * Callback for when the expand button is clicked.
+     */
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  };
 
   /**
-   * Callback for when the close button is clicked.
+   * Determine if chart is draggable.
    */
-  onClose?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-
-  /**
-   * Callback for when the expand button is clicked.
-   */
-  onExpand?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  draggable?: boolean;
 
   /**
    * Callback for when the chart is dragged.
