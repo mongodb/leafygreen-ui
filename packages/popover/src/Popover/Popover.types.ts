@@ -119,11 +119,12 @@ export interface ChildrenFunctionParameters {
 export interface RenderInlineProps {
   /**
    * Options to render the popover element
+   * @defaultValue 'top-layer'
    * @param Inline will render the popover element inline in the DOM where it's written. This option is deprecated and will be removed in the future.
    * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`. This option is deprecated and will be removed in the future.
    * @param TopLayer will render the popover element in the top layer
    */
-  renderMode?: 'inline';
+  renderMode: 'inline';
 
   /**
    * When `renderMode="top-layer"`, these options can control how a popover element is dismissed
@@ -160,22 +161,17 @@ export interface RenderInlineProps {
    * @deprecated
    */
   scrollContainer?: never;
-
-  /**
-   * Duplicated by `renderMode='portal'`
-   * @deprecated TODO: https://jira.mongodb.org/browse/LG-4526
-   */
-  usePortal: false;
 }
 
 export interface RenderPortalProps {
   /**
    * Options to render the popover element
+   * @defaultValue 'top-layer'
    * @param Inline will render the popover element inline in the DOM where it's written. This option is deprecated and will be removed in the future.
    * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`. This option is deprecated and will be removed in the future.
    * @param TopLayer will render the popover element in the top layer
    */
-  renderMode?: 'portal';
+  renderMode: 'portal';
 
   /**
    * When `renderMode="top-layer"`, these options can control how a popover element is dismissed
@@ -212,17 +208,12 @@ export interface RenderPortalProps {
    * @deprecated
    */
   scrollContainer?: HTMLElement | null;
-
-  /**
-   * Duplicated by `renderMode='portal'`
-   * @deprecated TODO: https://jira.mongodb.org/browse/LG-4526
-   */
-  usePortal?: true;
 }
 
 export interface RenderTopLayerProps {
   /**
    * Options to render the popover element
+   * @defaultValue 'top-layer'
    * @param Inline will render the popover element inline in the DOM where it's written. This option is deprecated and will be removed in the future.
    * @param Portal will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer`. This option is deprecated and will be removed in the future.
    * @param TopLayer will render the popover element in the top layer
@@ -264,12 +255,6 @@ export interface RenderTopLayerProps {
    * @deprecated
    */
   scrollContainer?: never;
-
-  /**
-   * Duplicated by `renderMode='portal'`
-   * @deprecated TODO: https://jira.mongodb.org/browse/LG-4526
-   */
-  usePortal?: never;
 }
 
 export type PopoverRenderModeProps =
@@ -329,6 +314,7 @@ export type PopoverProps = {
 
   /**
    * Number that controls the z-index of the popover element directly.
+   * @deprecated
    */
   popoverZIndex?: number;
 

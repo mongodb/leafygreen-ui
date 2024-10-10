@@ -10,7 +10,7 @@ import {
   popoverClassName,
 } from '@leafygreen-ui/select';
 import { Size } from '@leafygreen-ui/tokens';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
 import {
   baseStyles,
@@ -34,12 +34,6 @@ export const UnitSelectButton = React.forwardRef(
       children,
       disabled,
       displayName,
-      popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      portalRef,
-      scrollContainer,
       ...props
     }: UnitSelectButtonProps,
     forwardedRef,
@@ -51,14 +45,6 @@ export const UnitSelectButton = React.forwardRef(
         null,
       ) as React.MutableRefObject<HTMLElement | null>;
     const { theme } = useDarkMode();
-    const popoverProps = {
-      popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      portalRef,
-      scrollContainer,
-    } as const;
 
     /**
      * Gets the text node for the selected option.
@@ -99,12 +85,13 @@ export const UnitSelectButton = React.forwardRef(
     return (
       <div className={wrapperStyles}>
         <Tooltip
+          align={Align.Top}
           enabled={isEnabled}
-          justify="middle"
+          justify={Justify.Middle}
           // Using refEl instead of a trigger element because triggerProps by default, such as onMouseEnter, are added to the trigger element inside the tooltip component. OnMouseEnter is triggered by hovering over the trigger or any of its children. In the case of this custom menu button we don't want the tooltip to open when children are hovered so we add our own open logic with onMouseEnter.
-          refEl={buttonRef}
           open={open}
-          {...popoverProps}
+          refEl={buttonRef}
+          renderMode={RenderMode.TopLayer}
         >
           {displayName}
         </Tooltip>

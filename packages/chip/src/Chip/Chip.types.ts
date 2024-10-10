@@ -44,11 +44,6 @@ export interface ChipProps
   chipCharacterLimit?: number;
 
   /**
-   * Number that controls the z-index of the tooltip containing the full label text.
-   */
-  popoverZIndex?: number;
-
-  /**
    * Determines the base font-size of the component
    *
    * @default 13

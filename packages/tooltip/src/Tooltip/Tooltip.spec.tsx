@@ -13,6 +13,7 @@ import { axe } from 'jest-axe';
 import Icon from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
+import { RenderMode } from '@leafygreen-ui/popover';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import Tooltip from './Tooltip';
@@ -63,8 +64,8 @@ const triggerTypes = [
 function renderTooltip(
   props: Omit<TooltipProps, 'children' | 'trigger'> &
     OneOf<
-      { usePortal?: true; portalClassName?: string },
-      { usePortal: false }
+      { renderMode?: 'portal'; portalClassName?: string },
+      { renderMode: 'inline' | 'top-layer' }
     > = {},
 ) {
   const utils = render(
@@ -145,15 +146,13 @@ describe('packages/tooltip', () => {
 
       fireEvent.mouseEnter(button);
 
-      await waitFor(() => getByTestId(tooltipTestId), { timeout: 500 });
+      await waitFor(() => getByTestId(tooltipTestId));
 
       expect(getByTestId(tooltipTestId)).toBeInTheDocument();
 
       fireEvent.mouseLeave(button);
 
-      await waitForElementToBeRemoved(getByTestId(tooltipTestId), {
-        timeout: 500,
-      });
+      await waitForElementToBeRemoved(getByTestId(tooltipTestId));
 
       expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
     });
@@ -320,12 +319,12 @@ describe('packages/tooltip', () => {
     });
 
     describe('clicking content inside of tooltip does not force tooltip to close', () => {
-      function testCase(name: string, usePortal: boolean): void {
+      function testCase(name: string, renderMode: RenderMode): void {
         test(`${name}`, async () => {
           const { button, getByTestId } = renderTooltip({
             open: true,
             setOpen,
-            usePortal,
+            renderMode,
           });
 
           fireEvent.click(button);
@@ -348,8 +347,9 @@ describe('packages/tooltip', () => {
         });
       }
 
-      testCase('with portal', true);
-      testCase('without portal', false);
+      testCase('render inline', RenderMode.Inline);
+      testCase('render portal', RenderMode.Portal);
+      testCase('render top layer', RenderMode.TopLayer);
     });
   });
 
@@ -516,22 +516,32 @@ describe('packages/tooltip', () => {
       open: true,
       portalContainer,
       portalRef,
+      renderMode: RenderMode.Portal,
     });
     expect(portalRef.current).toBeDefined();
     expect(portalRef.current).toBe(portalContainer);
   });
 
-  test('portals popover content to end of DOM, when "usePortal" is not set', () => {
+  test(`does not portal popover content to end of DOM when renderMode=${RenderMode.Inline}`, () => {
+    const { container } = renderTooltip({
+      open: true,
+      renderMode: RenderMode.Inline,
+    });
+    expect(container.innerHTML.includes(tooltipTestId)).toBeTruthy();
+  });
+
+  test(`portals popover content to end of DOM when renderMode=${RenderMode.Portal}`, () => {
     const { container, getByTestId } = renderTooltip({
       open: true,
+      renderMode: RenderMode.Portal,
     });
     expect(container).not.toContain(getByTestId(tooltipTestId));
   });
 
-  test('does not portal popover content to end of DOM when "usePortal" is false', () => {
+  test(`does not portal popover content to end of DOM when renderMode=${RenderMode.TopLayer}`, () => {
     const { container } = renderTooltip({
       open: true,
-      usePortal: false,
+      renderMode: RenderMode.TopLayer,
     });
 
     expect(container.innerHTML.includes(tooltipTestId)).toBe(true);
@@ -541,6 +551,7 @@ describe('packages/tooltip', () => {
     const { getByTestId } = renderTooltip({
       open: true,
       portalClassName: 'test-classname',
+      renderMode: RenderMode.Portal,
     });
 
     const matchedElements = document.querySelectorAll('body > .test-classname');
@@ -548,16 +559,6 @@ describe('packages/tooltip', () => {
 
     const portalRoot = matchedElements.item(0);
     expect(portalRoot).toContainElement(getByTestId(tooltipTestId));
-  });
-
-  // eslint-disable-next-line jest/expect-expect
-  test('does not allow specifying "portalClassName", when "usePortal" is false', () => {
-    renderTooltip({
-      open: true,
-      usePortal: false,
-      // @ts-expect-error
-      portalClassName: 'test-classname',
-    });
   });
 
   describe('Renders warning when', () => {

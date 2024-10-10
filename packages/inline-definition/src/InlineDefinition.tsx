@@ -5,7 +5,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import Tooltip, { TooltipProps } from '@leafygreen-ui/tooltip';
+import Tooltip, { RenderMode, TooltipProps } from '@leafygreen-ui/tooltip';
 
 const triggerElementStyles = css`
   border-radius: 2px;
@@ -51,7 +51,19 @@ const triggerElementModeStyles: Record<Theme, string> = {
   `,
 };
 
-export interface InlineDefinitionProps extends Partial<TooltipProps> {
+export interface InlineDefinitionProps
+  extends Partial<
+    Omit<
+      TooltipProps,
+      | 'dismissMode'
+      | 'popoverZIndex'
+      | 'portalClassName'
+      | 'portalContainer'
+      | 'portalRef'
+      | 'renderMode'
+      | 'scrollContainer'
+    >
+  > {
   /**
    * Trigger element for the definition tooltip
    * @required
@@ -89,10 +101,11 @@ function InlineDefinition({
 
   return (
     <Tooltip
-      justify="middle"
-      spacing={9}
       className={tooltipClassName}
       darkMode={darkMode}
+      justify="middle"
+      renderMode={RenderMode.TopLayer}
+      spacing={9}
       {...tooltipProps}
       trigger={
         <span

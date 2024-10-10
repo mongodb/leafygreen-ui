@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
 import { InternalStep } from '../InternalStep';
 
@@ -20,8 +20,9 @@ export const EllipsesStep = ({
   return (
     <Tooltip
       align={Align.Top}
-      justify={Justify.Middle}
       darkMode={darkMode}
+      justify={Justify.Middle}
+      renderMode={RenderMode.TopLayer}
       trigger={
         // The <li> needs to be defined here and not in <Stepper> because the Tooltip doesn't trigger without a wrapping HTML element.
         <li>

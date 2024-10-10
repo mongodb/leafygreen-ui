@@ -19,6 +19,7 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   border: none;
   padding: 0;
   overflow: visible;
+  background-color: transparent;
 
   position: ${floatingStyles.position};
   top: ${floatingStyles.top}px;

@@ -53,7 +53,7 @@ import {
  * @param props.className Classname applied to Popover container.
  * @param props.popoverZIndex Number that controls the z-index of the popover element directly.
  * @param props.refEl Reference element that Popover component should be positioned against.
- * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
+ * @param props.renderMode Options to render the popover element: `inline`, `portal`, `top-layer`.
  * @param props.portalClassName Classname applied to root element of the portal.
  * @param props.portalContainer HTML element that the popover is portaled within.
  * @param props.portalRef A ref for the Portal element.
@@ -221,8 +221,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         nodeRef={contentNodeRef}
         in={context.open}
         timeout={{
-          appear: TRANSITION_DURATION - 100,
-          enter: TRANSITION_DURATION - 50,
+          appear: 0,
+          enter: TRANSITION_DURATION,
           exit: TRANSITION_DURATION,
         }}
         onEnter={onEnter}
@@ -290,7 +290,7 @@ Popover.propTypes = {
         : PropTypes.any,
   }),
   /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
-  usePortal: PropTypes.bool,
+  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
   /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
   portalClassName: PropTypes.string,
   spacing: PropTypes.number,

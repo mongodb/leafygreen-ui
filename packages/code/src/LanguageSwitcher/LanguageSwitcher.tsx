@@ -7,10 +7,10 @@ import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { Option, Select } from '@leafygreen-ui/select';
+import { Option, RenderMode, Select } from '@leafygreen-ui/select';
 
 import { CustomSelectMenuButton } from '../CustomSelectMenuButton';
-import { LanguageOption, PopoverProps } from '../types';
+import { LanguageOption } from '../types';
 
 import {
   buttonModeStyle,
@@ -28,22 +28,13 @@ function isLeafyGreenIcon(element: React.ReactNode) {
   return false;
 }
 
-interface Props extends PopoverProps {
+interface Props {
   language: LanguageOption;
   languageOptions: Array<LanguageOption>;
   onChange: (arg0: LanguageOption) => void;
 }
 
-function LanguageSwitcher({
-  language,
-  languageOptions,
-  onChange,
-  usePortal,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
-}: Props) {
+function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
   const { theme, darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
@@ -83,14 +74,6 @@ function LanguageSwitcher({
     }
   }
 
-  const popoverProps = {
-    popoverZIndex,
-    usePortal,
-    portalClassName,
-    portalContainer,
-    scrollContainer,
-  } as const;
-
   return (
     <div className={containerStyle}>
       <Select
@@ -100,7 +83,7 @@ function LanguageSwitcher({
         value={language?.displayName}
         className={selectStyle}
         allowDeselect={false}
-        {...popoverProps}
+        renderMode={RenderMode.TopLayer}
         __INTERNAL__menuButtonSlot__={CustomSelectMenuButton}
         __INTERNAL__menuButtonSlotProps__={{
           className: cx(menuButtonStyle, buttonModeStyle[theme]),

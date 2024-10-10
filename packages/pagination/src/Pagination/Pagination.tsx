@@ -9,7 +9,12 @@ import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
+import {
+  DropdownWidthBasis,
+  Option,
+  RenderMode,
+  Select,
+} from '@leafygreen-ui/select';
 import { Body } from '@leafygreen-ui/typography';
 
 import { baseStyles, flexSectionStyles } from './Pagination.styles';
@@ -92,6 +97,7 @@ function Pagination<T extends number>({
                 allowDeselect={false}
                 size="xsmall"
                 dropdownWidthBasis={DropdownWidthBasis.Option}
+                renderMode={RenderMode.TopLayer}
               >
                 {itemsPerPageOptions.map((option: number) => (
                   <Option key={option} value={String(option)}>
@@ -119,6 +125,7 @@ function Pagination<T extends number>({
                 size="xsmall"
                 data-testid="lg-pagination-page-select"
                 dropdownWidthBasis={DropdownWidthBasis.Option}
+                renderMode={RenderMode.TopLayer}
               >
                 {range(
                   1,

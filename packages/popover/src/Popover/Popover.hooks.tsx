@@ -6,7 +6,6 @@ import {
 } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
-import { getRenderMode } from '../utils/getRenderMode';
 import { getElementDocumentPosition } from '../utils/positionUtils';
 
 import {
@@ -28,7 +27,6 @@ export function usePopoverContextProps({
   portalContainer,
   portalRef,
   scrollContainer,
-  usePortal: usePortalProp,
   onEnter,
   onEntering,
   onEntered,
@@ -51,10 +49,8 @@ export function usePopoverContextProps({
   >
 >) {
   const context = usePopoverContext();
-  const renderMode = getRenderMode(
-    renderModeProp || context.renderMode,
-    usePortalProp,
-  );
+  const renderMode =
+    renderModeProp || context.renderMode || RenderMode.TopLayer;
   const usePortal = renderMode === RenderMode.Portal;
   const popoverZIndex =
     renderMode === RenderMode.TopLayer

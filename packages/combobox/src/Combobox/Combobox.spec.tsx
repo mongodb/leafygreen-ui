@@ -16,6 +16,7 @@ import isUndefined from 'lodash/isUndefined';
 
 import Button from '@leafygreen-ui/button';
 import { keyMap } from '@leafygreen-ui/lib';
+import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
 import { OptionObject } from '../ComboboxOption/ComboboxOption.types';
@@ -35,9 +36,12 @@ import {
 describe('packages/combobox', () => {
   describe('A11y', () => {
     test('does not have basic accessibility violations', async () => {
-      const { container, openMenu } = renderCombobox();
-      openMenu();
+      const { container, openMenu } = renderCombobox('single', {
+        renderMode: 'portal',
+      });
+      const { menuContainerEl } = openMenu();
       await waitFor(async () => {
+        expect(menuContainerEl).toBeVisible();
         const results = await axe(container);
         expect(results).toHaveNoViolations();
       });
@@ -74,6 +78,7 @@ describe('packages/combobox', () => {
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
       const { openMenu } = renderCombobox(select, {
+        renderMode: RenderMode.Portal,
         portalContainer,
         portalRef,
       });

@@ -18,6 +18,7 @@ import {
   useViewportSize,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
+  PopoverProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -46,7 +47,14 @@ import {
   largeLabelStyles,
   wrapperStyle,
 } from './Select.styles';
-import { DropdownWidthBasis, SelectProps, Size, State } from './Select.types';
+import {
+  DismissMode,
+  DropdownWidthBasis,
+  RenderMode,
+  SelectProps,
+  Size,
+  State,
+} from './Select.types';
 
 /**
  * Select inputs are typically used alongside other form elements like toggles, radio boxes, or text inputs when a user needs to make a selection from a list of items.
@@ -61,7 +69,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       size = Size.Default,
       disabled = false,
       allowDeselect = true,
-      usePortal = true,
+      renderMode = RenderMode.TopLayer,
       placeholder = 'Select',
       errorMessage = DEFAULT_MESSAGES.error,
       successMessage = DEFAULT_MESSAGES.success,
@@ -493,16 +501,21 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       onExiting,
       onExit,
       onExited,
-      ...(usePortal
+      ...(renderMode === RenderMode.Portal
         ? {
-            usePortal,
+            renderMode,
             portalClassName,
             portalContainer,
             portalRef,
             scrollContainer,
           }
-        : { usePortal }),
-    };
+        : renderMode === RenderMode.Inline
+        ? { renderMode }
+        : {
+            dismissMode: DismissMode.Manual,
+            renderMode,
+          }),
+    } as const;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -597,22 +610,24 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               baseFontSize={baseFontSize}
               __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
             >
-              <ListMenu
-                labelId={labelId}
-                id={menuId}
-                referenceElement={menuButtonRef}
-                ref={listMenuRef}
-                className={cx({
-                  [css`
-                    width: ${menuButtonRef.current?.clientWidth}px;
-                  `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
-                })}
-                dropdownWidthBasis={dropdownWidthBasis}
-                {...popoverProps}
-              >
-                {allowDeselect && deselectionOption}
-                {renderedChildren}
-              </ListMenu>
+              <PopoverProvider {...popoverProps}>
+                <ListMenu
+                  labelId={labelId}
+                  id={menuId}
+                  referenceElement={menuButtonRef}
+                  ref={listMenuRef}
+                  className={cx({
+                    [css`
+                      width: ${menuButtonRef.current?.clientWidth}px;
+                    `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
+                  })}
+                  dropdownWidthBasis={dropdownWidthBasis}
+                  {...popoverProps}
+                >
+                  {allowDeselect && deselectionOption}
+                  {renderedChildren}
+                </ListMenu>
+              </PopoverProvider>
             </MenuButton>
           </SelectContext.Provider>
           <FormFieldFeedback
@@ -652,6 +667,7 @@ Select.propTypes = {
   allowDeselect: PropTypes.bool,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   dropdownWidthBasis: PropTypes.oneOf(Object.values(DropdownWidthBasis)),
+  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
   portalRef: PropTypes.shape({
     current:
       typeof window !== 'undefined'

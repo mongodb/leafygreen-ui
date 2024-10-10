@@ -3,6 +3,7 @@ import {
   fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
+  waitFor,
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react';
@@ -10,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { MenuItem } from '@leafygreen-ui/menu';
+import { RenderMode } from '@leafygreen-ui/popover';
 
 import { MenuItemsType } from './SplitButton.types';
 import { SplitButton } from '.';
@@ -200,6 +202,7 @@ describe('packages/split-button', () => {
         open,
         portalContainer,
         portalRef,
+        renderMode: RenderMode.Portal,
       });
       expect(portalRef.current).toBeDefined();
       expect(portalRef.current).toBe(portalContainer);
@@ -292,7 +295,7 @@ describe('packages/split-button', () => {
           menuItems,
         });
         const { menuItemElements } = await openMenu();
-        expect(menuItemElements[0]).toHaveFocus();
+        await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
         userEvent.type(menuItemElements?.[0]!, `{${key}}`);
         expect(onClick).toHaveBeenCalled();

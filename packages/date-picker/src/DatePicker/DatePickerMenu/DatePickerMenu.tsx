@@ -301,7 +301,6 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
         spacing={spacing[1]}
         data-today={today.toISOString()}
         className={menuWrapperStyles}
-        usePortal
         onKeyDown={handleMenuKeyPress}
         onTransitionEnd={handleMenuTransitionEntered}
         onExited={handleMenuTransitionExited}
