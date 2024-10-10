@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import ChevronLeft from '@leafygreen-ui/icon/dist/ChevronLeft';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 import { InlineKeyCode } from '@leafygreen-ui/typography';
 
 import { useSideNavContext } from '../SideNav/SideNavContext';
@@ -33,10 +33,10 @@ export function CollapseToggle({
 
   return (
     <Tooltip
-      usePortal={false}
-      align="right"
-      justify="middle"
+      align={Align.Right}
+      justify={Justify.Middle}
       open={typeof hideTooltip === 'boolean' ? !hideTooltip : undefined}
+      renderMode={RenderMode.TopLayer}
       trigger={
         <button
           data-testid="side-nav-collapse-toggle"

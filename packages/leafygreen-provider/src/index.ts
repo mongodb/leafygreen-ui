@@ -12,6 +12,7 @@ export {
   type PopoverContextType,
   PopoverProvider,
   type PopoverProviderProps,
+  RenderMode,
   usePopoverContext,
 } from './PopoverContext';
 export { useBaseFontSize } from './TypographyContext';

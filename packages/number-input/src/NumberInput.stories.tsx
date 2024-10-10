@@ -33,6 +33,17 @@ const unitOptions = [
 const meta: StoryMetaType<typeof NumberInput> = {
   title: 'Components/NumberInput',
   component: NumberInput,
+  decorators: [
+    StoryFn => (
+      <div
+        className={css`
+          height: 100vh;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
   parameters: {
     default: 'LiveExample',
     controls: {

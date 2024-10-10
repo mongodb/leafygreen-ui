@@ -1,9 +1,18 @@
 import Tooltip, {
   Align,
+  DismissMode,
   Justify,
+  RenderMode,
   type TooltipProps,
   TriggerEvent,
 } from './Tooltip';
 
-export { Align, Justify, type TooltipProps, TriggerEvent };
+export {
+  Align,
+  DismissMode,
+  Justify,
+  RenderMode,
+  type TooltipProps,
+  TriggerEvent,
+};
 export default Tooltip;

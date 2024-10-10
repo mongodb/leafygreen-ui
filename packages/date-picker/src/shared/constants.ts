@@ -1,4 +1,5 @@
 import { Month } from '@leafygreen-ui/date-utils';
+import { DismissMode, RenderMode } from '@leafygreen-ui/popover';
 import { DropdownWidthBasis } from '@leafygreen-ui/select';
 
 /**
@@ -78,7 +79,6 @@ export const selectElementProps = {
   size: 'xsmall',
   allowDeselect: false,
   dropdownWidthBasis: DropdownWidthBasis.Option,
-  // using no portal so the select menus are included in the backdrop "foreground"
-  // there is currently no way to pass a ref into the Select portal to use in backdrop "foreground"
-  usePortal: false,
+  dismissMode: DismissMode.Auto,
+  renderMode: RenderMode.TopLayer,
 } as const;

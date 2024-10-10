@@ -2,6 +2,13 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
+export const tooltipStyles = css`
+  svg {
+    width: 26px;
+    height: 26px;
+  }
+`;
+
 export const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.white};

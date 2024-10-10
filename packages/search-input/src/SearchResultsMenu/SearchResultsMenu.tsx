@@ -4,7 +4,7 @@ import isUndefined from 'lodash/isUndefined';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover from '@leafygreen-ui/popover';
+import Popover, { DismissMode, RenderMode } from '@leafygreen-ui/popover';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import { useSearchInputContext } from '../SearchInputContext';
@@ -32,11 +32,6 @@ export const SearchResultsMenu = React.forwardRef<
       children,
       open = false,
       refEl,
-      usePortal = true,
-      portalClassName,
-      portalContainer,
-      portalRef,
-      scrollContainer,
       footerSlot,
       ...rest
     }: SearchResultsMenuProps,
@@ -58,10 +53,9 @@ export const SearchResultsMenu = React.forwardRef<
       : 'unset';
 
     return (
-      // @ts-ignore `portalClassName`, `portalContainer` and `scrollContainer` are only passed in when `usePortal` is true.
       <Popover
         data-testid="lg-search-input-popover"
-        spacing={spacing[2]}
+        spacing={spacing[200]}
         active={open}
         align="bottom"
         justify="start"
@@ -74,11 +68,8 @@ export const SearchResultsMenu = React.forwardRef<
           `,
         )}
         refEl={refEl}
-        usePortal={usePortal}
-        portalClassName={usePortal ? portalClassName : undefined}
-        portalContainer={usePortal ? portalContainer : null}
-        portalRef={portalRef}
-        scrollContainer={usePortal ? scrollContainer : null}
+        dismissMode={DismissMode.Manual}
+        renderMode={RenderMode.TopLayer}
       >
         {state === 'loading' ? (
           <LoadingOption />

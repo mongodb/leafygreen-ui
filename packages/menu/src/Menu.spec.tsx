@@ -10,6 +10,7 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import { Optional } from '@leafygreen-ui/lib';
+import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
 import { LGIDs } from './constants';
@@ -234,9 +235,9 @@ describe('packages/menu', () => {
         expect(menuEl).not.toBeInTheDocument();
       });
 
-      test('Returns focus to trigger {usePortal: true}', async () => {
+      test(`Returns focus to trigger when renderMode=${RenderMode.TopLayer}`, async () => {
         const { openMenu, triggerEl } = renderMenu({
-          usePortal: true,
+          renderMode: RenderMode.TopLayer,
         });
         const { menuEl } = await openMenu();
 
@@ -245,9 +246,20 @@ describe('packages/menu', () => {
         expect(triggerEl).toHaveFocus();
       });
 
-      test('Returns focus to trigger {usePortal: false}', async () => {
+      test(`Returns focus to trigger when renderMode=${RenderMode.Portal}`, async () => {
         const { openMenu, triggerEl } = renderMenu({
-          usePortal: false,
+          renderMode: RenderMode.Portal,
+        });
+        const { menuEl } = await openMenu();
+
+        userEventInteraction(menuEl!, key);
+        await waitForElementToBeRemoved(menuEl);
+        expect(triggerEl).toHaveFocus();
+      });
+
+      test(`Returns focus to trigger when renderMode=${RenderMode.Inline}`, async () => {
+        const { openMenu, triggerEl } = renderMenu({
+          renderMode: RenderMode.Inline,
         });
         const { menuEl } = await openMenu();
 
@@ -265,6 +277,7 @@ describe('packages/menu', () => {
           userEvent.keyboard('{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
+
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();
@@ -291,7 +304,7 @@ describe('packages/menu', () => {
 
             const { menuItemElements } = await openMenu();
             expect(menuItemElements).toHaveLength(3);
-            expect(queryByTestId('submenu')).toHaveFocus();
+            await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
             userEvent.keyboard('{arrowdown}');
             expect(queryByTestId('item-a')).toHaveFocus();
           });
@@ -311,7 +324,7 @@ describe('packages/menu', () => {
 
             const { menuItemElements } = await openMenu();
             expect(menuItemElements).toHaveLength(2);
-            expect(queryByTestId('submenu')).toHaveFocus();
+            await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
             userEvent.keyboard('{arrowdown}');
             expect(queryByTestId('item-c')).toHaveFocus();
           });
@@ -346,7 +359,7 @@ describe('packages/menu', () => {
 
       const firstItem = menuItemElements[0];
 
-      expect(firstItem).toHaveFocus();
+      await waitFor(() => expect(firstItem).toHaveFocus());
 
       userEvent.keyboard('[Enter]');
 
@@ -362,7 +375,7 @@ describe('packages/menu', () => {
 
       const firstItem = menuItemElements[0];
 
-      expect(firstItem).toHaveFocus();
+      await waitFor(() => expect(firstItem).toHaveFocus());
 
       userEvent.keyboard('[Space]');
 
@@ -393,7 +406,7 @@ describe('packages/menu', () => {
       });
 
       await openMenu();
-      expect(queryByTestId('submenu')).toHaveFocus();
+      await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
       userEvent.click(getByTestId(LGIDs.submenuToggle)!);
       await waitForTransition();
       await waitFor(() => {
@@ -417,7 +430,7 @@ describe('packages/menu', () => {
       });
 
       await openMenu();
-      expect(queryByTestId('submenu')).toHaveFocus();
+      await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
       userEvent.keyboard('{arrowright}');
       userEvent.keyboard('{arrowdown}');
       expect(queryByTestId('item-a')).toHaveFocus();
@@ -450,7 +463,7 @@ describe('packages/menu', () => {
         ),
       });
       await openMenu();
-      expect(queryByTestId('submenu')).toHaveFocus();
+      await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
       userEvent.keyboard('{arrowup}');
       expect(queryByTestId('item-c')).toHaveFocus();
 
@@ -479,7 +492,7 @@ describe('packages/menu', () => {
         ),
       });
       await openMenu();
-      expect(queryByTestId('submenu')).toHaveFocus();
+      await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
       userEvent.keyboard('{arrowright}'); // open the submenu
       userEvent.keyboard('{arrowup}');
       expect(queryByTestId('item-c')).toHaveFocus();
