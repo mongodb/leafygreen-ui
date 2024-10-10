@@ -17,8 +17,7 @@ export const getHeaderStyles = (theme: Theme) => css`
   padding-right: ${spacing[400]}px;
 `;
 
-export const getButtonStyles = (theme: Theme) => css`
-  margin-left: ${spacing[300]}px;
-  display: inline-flex;
+export const buttonContainerStyles = css`
+  display: flex;
   align-items: center;
 `;

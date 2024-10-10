@@ -3,7 +3,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 import Icon from '@leafygreen-ui/icon';
-import { getButtonStyles, getHeaderStyles } from './ChartHeader.styles';
+import IconButton from '@leafygreen-ui/icon-button';
+import { buttonContainerStyles, getHeaderStyles } from './ChartHeader.styles';
 
 interface ChartHeaderProps extends DarkModeProps {
   label?: string;
@@ -51,36 +52,27 @@ interface ChartHeaderProps extends DarkModeProps {
   };
 }
 
-export function ChartHeader({ darkMode, label }: ChartHeaderProps) {
-  const { theme } = useDarkMode(darkMode);
+export function ChartHeader({
+  darkMode: darkModeProp,
+  label,
+}: ChartHeaderProps) {
+  const { theme } = useDarkMode(darkModeProp);
 
   return (
     <header className={getHeaderStyles(theme)}>
       <Body weight="regular" baseFontSize={16}>
         {label}
       </Body>
-      <div>
-        <button
-          type="button"
-          aria-label="Reset Zoom"
-          className={getButtonStyles(theme)}
-        >
+      <div className={buttonContainerStyles}>
+        <IconButton aria-label="Reset Zoom" darkMode={darkModeProp}>
           <Icon glyph="Return" aria-hidden />
-        </button>
-        <button
-          type="button"
-          aria-label="Expand Chart"
-          className={getButtonStyles(theme)}
-        >
+        </IconButton>
+        <IconButton aria-label="Expand Chart" darkMode={darkModeProp}>
           <Icon glyph="FullScreenEnter" aria-hidden />
-        </button>
-        <button
-          type="button"
-          aria-label="Close Chart"
-          className={getButtonStyles(theme)}
-        >
+        </IconButton>
+        <IconButton aria-label="Close Chart" darkMode={darkModeProp}>
           <Icon glyph="X" aria-hidden />
-        </button>
+        </IconButton>
       </div>
     </header>
   );
