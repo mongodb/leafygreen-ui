@@ -97,7 +97,7 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(500));
+  const [data] = useState(() => makeKitchenSinkData(200));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
