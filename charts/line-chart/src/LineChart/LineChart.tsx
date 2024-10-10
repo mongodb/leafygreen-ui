@@ -36,14 +36,14 @@ export function LineChart({
             data,
           })),
           xAxis: {
-            // Defaults to 'time' type in order to default time-series line chart
+            // Defaults to 'time' type in order to default to time-series line chart
             type: xAxis?.type || 'time',
             min: xAxis?.min,
             max: xAxis?.max,
             unit: xAxis?.unit,
           },
           yAxis: {
-            // Defaults to 'value' type in order to default time-series line chart
+            // Defaults to 'value' type in order to default to time-series line chart
             type: yAxis?.type || 'value',
             min: yAxis?.min,
             max: yAxis?.max,
