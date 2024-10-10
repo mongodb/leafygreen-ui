@@ -1,7 +1,7 @@
 {
-  "name": "@lg-charts/line-chart",
+  "name": "@lg-charts/core",
   "version": "0.1.0",
-  "description": "lg-charts Line Chart",
+  "description": "lg-charts Core Components",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -26,7 +26,6 @@
     "@lg-tools/storybook-utils": "^0.1.1",
     "echarts": "^5.5.1"
   },
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/line-chart",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"
