@@ -22,6 +22,9 @@
       "path": "../../packages/icon"
     }, 
     {
+      "path": "../../packages/icon-button"
+    }, 
+    {
       "path": "../../packages/leafygreen-provider"
     }, 
     {
