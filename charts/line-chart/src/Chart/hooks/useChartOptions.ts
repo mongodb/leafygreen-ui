@@ -10,9 +10,10 @@ import {
   InteractionState,
 } from '@leafygreen-ui/tokens';
 // import { LineSeriesOption } from 'echarts/charts';
-import { ChartProps, SeriesOption } from '../Chart.types';
+import { ChartOptions, ChartProps, SeriesOption } from '../Chart.types';
 import { colors } from '../colors';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useState } from 'react';
 
 /**
  * Returns default options that are shared by both the x and y axis.
@@ -189,5 +190,17 @@ export function useChartOptions({
     ),
   };
 
-  return _.merge(getDefaultOptions(theme), optionsWithDefaultSeriesProps);
+  const updatedDefaultOptions = _.merge(
+    { ...getDefaultOptions(theme) },
+    optionsWithDefaultSeriesProps,
+  );
+
+  const [chartOptions, setChartOptions] = useState(updatedDefaultOptions);
+
+  function updateChartOptions(newOptions: Partial<ChartOptions>) {
+    const updatedOptions = _.merge({ ...chartOptions }, newOptions);
+    setChartOptions(updatedOptions);
+  }
+
+  return { chartOptions, updateChartOptions };
 }

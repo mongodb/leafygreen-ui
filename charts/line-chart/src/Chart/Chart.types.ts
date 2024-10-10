@@ -5,9 +5,11 @@ type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
   Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
 
+export interface ChartOptions {
+  series: Array<SeriesOption>;
+  [key: string]: any;
+}
+
 export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
-  options: {
-    series: Array<SeriesOption>;
-    [key: string]: any;
-  };
+  options: ChartOptions;
 }

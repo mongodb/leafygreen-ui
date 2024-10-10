@@ -36,17 +36,18 @@ echarts.use([
   ToolboxComponent,
 ]);
 
-function enableZooming(chartInstance: echarts.ECharts) {
-  /**
-   * By default a button click is needed to enable drag zooming.
-   * Dispatching this event enables it instead.
-   */
-  chartInstance.dispatchAction({
-    type: 'takeGlobalCursor',
-    key: 'dataZoomSelect',
-    dataZoomSelectActive: true,
-  });
-}
+// TODO: Use when enabling zooming
+// function enableZooming(chartInstance: echarts.ECharts) {
+//   /**
+//    * By default a button click is needed to enable drag zooming.
+//    * Dispatching this event enables it instead.
+//    */
+//   chartInstance.dispatchAction({
+//     type: 'takeGlobalCursor',
+//     key: 'dataZoomSelect',
+//     dataZoomSelectActive: true,
+//   });
+// }
 
 function enableResize(chartInstance: echarts.ECharts) {
   // ECharts does not automatically resize when the window resizes.
@@ -58,13 +59,15 @@ function enableResize(chartInstance: echarts.ECharts) {
 }
 
 export function Chart({ options, darkMode: darkModeProp }: ChartProps) {
-  const chartOptions = useChartOptions({ options, darkMode: darkModeProp });
+  const { chartOptions } = useChartOptions({
+    options,
+    darkMode: darkModeProp,
+  });
   const chartRef = useRef(null);
 
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
     chartInstance.setOption(chartOptions);
-    enableZooming(chartInstance);
     const resizeHandler = enableResize(chartInstance);
 
     return () => {
