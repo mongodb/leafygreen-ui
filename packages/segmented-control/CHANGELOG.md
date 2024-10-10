@@ -1,5 +1,16 @@
 # @leafygreen-ui/segmented-control
 
+## 9.0.0
+
+### Major Changes
+
+- 1cfe7d0ce: [LG-4045](https://jira.mongodb.org/browse/LG-4045): Adds `'small'` size styles. Previously, `'small'` size would fall back on the `'xsmall'` size styles
+
+### Patch Changes
+
+- Updated dependencies [84028dc5d]
+  - @leafygreen-ui/hooks@8.2.1
+
 ## 8.2.13
 
 ### Patch Changes

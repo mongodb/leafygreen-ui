@@ -1,5 +1,11 @@
 # @leafygreen-ui/empty-state
 
+## 1.1.0
+
+### Minor Changes
+
+- fa1ba0c19: [LG-4511](https://jira.mongodb.org/browse/LG-4511): Add optional `badgeProps` to `BasicEmptyState` component
+
 ## 1.0.17
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 25.1.2
+
+### Patch Changes
+
+- Updates `useAvailableSpace` hook which fixes a dropdown height bug. [LG-4601](https://jira.mongodb.org/browse/LG-4601)
+
 ## 25.1.1
 
 ### Patch Changes
