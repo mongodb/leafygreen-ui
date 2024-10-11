@@ -5,6 +5,7 @@ import { Chart } from '../Chart';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { ChartHeader } from '../ChartHeader';
 import { Axis } from '../Axis';
+import { Grid } from '../Grid/Grid';
 
 export function LineChart({
   series,
@@ -31,6 +32,7 @@ export function LineChart({
       <ChartHeader darkMode={darkModeProp} label={label} />
       <Chart darkMode={darkModeProp}>
         <Axis x={{ type: 'value' }} y={{ type: 'value' }} />
+        <Grid vertical horizontal />
       </Chart>
     </div>
   );

@@ -10,9 +10,6 @@ import {
 
 export const getDefaultYAxisConfig = (theme: Theme) => ({
   type: 'value',
-  splitLine: {
-    show: false,
-  },
   axisLine: {
     show: true,
     lineStyle: {

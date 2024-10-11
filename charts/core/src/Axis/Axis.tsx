@@ -1,4 +1,4 @@
-import { useChartContext } from '../ChartOptionsContext';
+import { useChartContext } from '../ChartContext';
 import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { ChartOptions } from '../Chart/Chart.types';

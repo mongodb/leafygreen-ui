@@ -14,8 +14,9 @@ export function useChartOptions({ darkMode: darkModeProp }: DarkModeProps) {
   const [chartOptions, setChartOptions] = useState(getDefaultOptions(theme));
 
   function updateChartOptions(newOptions: Partial<ChartOptions>) {
-    const updatedOptions = _.merge({ ...chartOptions }, newOptions);
-    setChartOptions(updatedOptions);
+    setChartOptions(currentOptions =>
+      _.merge({ ...currentOptions }, newOptions),
+    );
   }
 
   return { chartOptions, updateChartOptions };

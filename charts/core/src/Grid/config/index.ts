@@ -1,0 +1,1 @@
+export { getDefaultGridConfig } from './getDefaultGridConfig';

@@ -1,10 +1,10 @@
 import _ from 'lodash';
 import { Theme } from '@leafygreen-ui/lib';
 import {
-  borderRadius,
+  //   borderRadius,
   spacing,
-  fontFamilies,
-  fontWeights,
+  //   fontFamilies,
+  //   fontWeights,
   color,
   Variant,
   InteractionState,
@@ -109,20 +109,19 @@ export const getDefaultOptions = (theme: Theme) => ({
   //   borderRadius: borderRadius[150],
   // },
 
-  // /**
-  //  * Adds styling to grid of chart.
-  //  */
-  // grid: {
-  //   left: spacing[50], // Added to prevent label cutoff occurring in canvas
-  //   right: spacing[25], // Added to prevent border cutoff occurring in canvas
-  //   top: spacing[200], // Accounts for y-axis topmost label line height
-  //   bottom: 0,
-  //   borderColor:
-  //     color[theme].border[Variant.Secondary][InteractionState.Default],
-  //   borderWidth: 1,
-  //   containLabel: true,
-  //   show: true,
-  // },
+  /**
+   * Adds styling to grid of chart.
+   */
+  grid: {
+    left: spacing[50], // Added to prevent label cutoff occurring in canvas
+    right: spacing[25], // Added to prevent border cutoff occurring in canvas
+    top: spacing[200], // Accounts for y-axis topmost label line height
+    bottom: 0,
+    borderColor:
+      color[theme].border[Variant.Secondary][InteractionState.Default],
+    borderWidth: 1,
+    containLabel: true,
+  },
 
   // /**
   //  * Adds options specifically to the x-axis.

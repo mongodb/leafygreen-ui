@@ -19,7 +19,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 
 import { ChartProps } from './Chart.types';
 import { chartStyles } from './Chart.styles';
-import { ChartProvider } from '../ChartOptionsContext';
+import { ChartProvider } from '../ChartContext';
 import { useChartOptions } from './hooks/useChartOptions';
 
 /**
