@@ -4,7 +4,7 @@ import { getWrapperStyles } from './LineChart.styles';
 import { Chart } from '../Chart';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { ChartHeader } from '../ChartHeader';
-import { XAxis } from '../XAxis';
+import { Axis } from '../Axis';
 
 export function LineChart({
   series,
@@ -25,16 +25,13 @@ export function LineChart({
   ...rest
 }: LineChartProps) {
   const { theme } = useDarkMode(darkModeProp);
-  const [updateChartOptions, setShowXAxis] = React.useState(false);
-
-  setTimeout(() => {
-    setShowXAxis(true);
-  }, 4000);
 
   return (
     <div className={getWrapperStyles(theme)} {...rest}>
       <ChartHeader darkMode={darkModeProp} label={label} />
-      <Chart darkMode={darkModeProp}>{updateChartOptions && <XAxis />}</Chart>
+      <Chart darkMode={darkModeProp}>
+        <Axis x={{ type: 'value' }} y={{ type: 'value' }} />
+      </Chart>
     </div>
   );
 }
