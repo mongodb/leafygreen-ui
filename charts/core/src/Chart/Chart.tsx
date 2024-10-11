@@ -19,6 +19,7 @@ import { CanvasRenderer } from 'echarts/renderers';
 
 import { ChartProps } from './Chart.types';
 import { chartStyles } from './Chart.styles';
+import { ChartProvider } from '../ChartOptionsContext';
 import { useChartOptions } from './hooks/useChartOptions';
 
 /**
@@ -58,15 +59,16 @@ function enableResize(chartInstance: echarts.ECharts) {
   return resizeHandler;
 }
 
-export function Chart({ options, darkMode: darkModeProp }: ChartProps) {
-  const { chartOptions } = useChartOptions({
-    options,
+export function Chart({ children, darkMode: darkModeProp }: ChartProps) {
+  const { chartOptions, updateChartOptions } = useChartOptions({
     darkMode: darkModeProp,
   });
   const chartRef = useRef(null);
+  const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
 
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
+    chartInstanceRef.current = chartInstance;
     chartInstance.setOption(chartOptions);
     const resizeHandler = enableResize(chartInstance);
 
@@ -74,9 +76,23 @@ export function Chart({ options, darkMode: darkModeProp }: ChartProps) {
       window.removeEventListener('resize', resizeHandler);
       chartInstance.dispose();
     };
+  }, []);
+
+  useEffect(() => {
+    chartInstanceRef.current?.setOption(chartOptions);
   }, [chartOptions]);
 
-  return <div ref={chartRef} className={`echart ${chartStyles}`} />;
+  return (
+    <ChartProvider
+      chartOptions={chartOptions}
+      updateChartOptions={updateChartOptions}
+      darkMode={darkModeProp}
+    >
+      <div ref={chartRef} className={`echart ${chartStyles}`}>
+        {children}
+      </div>
+    </ChartProvider>
+  );
 }
 
 Chart.displayName = 'Chart';

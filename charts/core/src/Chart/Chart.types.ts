@@ -11,5 +11,5 @@ export interface ChartOptions {
 }
 
 export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
-  options: ChartOptions;
+  children?: React.ReactNode;
 }
