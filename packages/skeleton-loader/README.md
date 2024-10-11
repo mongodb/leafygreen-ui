@@ -46,13 +46,13 @@ npm install @leafygreen-ui/skeleton-loader
 
 #### Table Skeleton
 
-| Name             | Type            | Default | Description                                                                           |
-| ---------------- | --------------- | ------- | ------------------------------------------------------------------------------------- |
-| `columnLabels`   | `Array<string>` |         | Column labels. Empty strings will be treated as unknown and render a simple skeleton. |
-| `numRows`        | `number`        | `5`     | Number of rows                                                                        |
-| `numCols`        | `number`        | `4`     | Number of columns                                                                     |
-| `baseFontSize`   | `13 \| 16`      | `13`    | Base font size                                                                        |
-| HTML `div` props |                 |         | Additional HTML div properties                                                        |
+| Name             | Type                     | Default | Description                                                                           |
+| ---------------- | ------------------------ | ------- | ------------------------------------------------------------------------------------- |
+| `columnLabels`   | `Array<React.ReactNode>` |         | Column labels. Empty strings will be treated as unknown and render a simple skeleton. |
+| `numRows`        | `number`                 | `5`     | Number of rows                                                                        |
+| `numCols`        | `number`                 | `4`     | Number of columns                                                                     |
+| `baseFontSize`   | `13 \| 16`               | `13`    | Base font size                                                                        |
+| HTML `div` props |                          |         | Additional HTML div properties                                                        |
 
 #### Form Skeleton
 
