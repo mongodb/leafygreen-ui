@@ -15,6 +15,8 @@ export const getHeaderStyles = (theme: Theme) => css`
   justify-content: space-between;
   padding-left: ${spacing[300]}px;
   padding-right: ${spacing[400]}px;
+  height: 40px;
+  grid-row: 1;
 `;
 
 export const buttonContainerStyles = css`

@@ -114,28 +114,6 @@ interface AxisOptions {
   unit?: string;
 }
 
-interface ShowControls {
-  /**
-   * Controls whether the info button is shown.
-   */
-  info: boolean;
-
-  /**
-   * Controls whether the drag button is shown.
-   */
-  drag: boolean;
-
-  /**
-   * Controls whether the close button is shown.
-   */
-  close: boolean;
-
-  /**
-   * Controls whether the expand button is shown.
-   */
-  expand: boolean;
-}
-
 /**
  * LineChart Props
  */

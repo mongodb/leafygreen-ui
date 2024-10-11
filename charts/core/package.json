@@ -24,7 +24,9 @@
     "@leafygreen-ui/tokens": "^2.11.0",
     "@leafygreen-ui/typography": "^19.3.0",
     "@lg-tools/storybook-utils": "^0.1.1",
-    "echarts": "^5.5.1"
+    "@types/lodash.merge": "^4.6.9",
+    "echarts": "^5.5.1",
+    "lodash.merge": "^4.6.2"
   },
   "repository": {
     "type": "git",

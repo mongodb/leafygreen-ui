@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import merge from 'lodash.merge';
 import { ChartOptions } from '../../Chart/Chart.types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useState } from 'react';
@@ -14,9 +14,7 @@ export function useChartOptions({ darkMode: darkModeProp }: DarkModeProps) {
   const [chartOptions, setChartOptions] = useState(getDefaultOptions(theme));
 
   function updateChartOptions(newOptions: Partial<ChartOptions>) {
-    setChartOptions(currentOptions =>
-      _.merge({ ...currentOptions }, newOptions),
-    );
+    setChartOptions(currentOptions => merge({ ...currentOptions }, newOptions));
   }
 
   return { chartOptions, updateChartOptions };

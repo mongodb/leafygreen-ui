@@ -18,9 +18,11 @@ import {
 import { CanvasRenderer } from 'echarts/renderers';
 
 import { ChartProps } from './Chart.types';
-import { chartStyles } from './Chart.styles';
+import { chartStyles, getWrapperStyles } from './Chart.styles';
 import { ChartProvider } from '../ChartContext';
 import { useChartOptions } from './hooks/useChartOptions';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { ChartHeader } from '../ChartHeader';
 
 /**
  * Register the required components. By using separate imports, we can avoid
@@ -65,6 +67,9 @@ export function Chart({ children, darkMode: darkModeProp }: ChartProps) {
   });
   const chartRef = useRef(null);
   const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
+  const { theme } = useDarkMode(darkModeProp);
+
+  console.log('hit');
 
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
@@ -88,8 +93,9 @@ export function Chart({ children, darkMode: darkModeProp }: ChartProps) {
       updateChartOptions={updateChartOptions}
       darkMode={darkModeProp}
     >
-      <div ref={chartRef} className={`echart ${chartStyles}`}>
+      <div className={getWrapperStyles(theme)}>
         {children}
+        <div ref={chartRef} className={`echart ${chartStyles}`} />
       </div>
     </ChartProvider>
   );
