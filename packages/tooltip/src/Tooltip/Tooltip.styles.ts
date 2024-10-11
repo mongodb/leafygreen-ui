@@ -3,11 +3,7 @@ import { transparentize } from 'polished';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import {
-  fontFamilies,
-  fontWeights,
-  transitionDuration,
-} from '@leafygreen-ui/tokens';
+import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 
 import { borderRadius, notchWidth } from './tooltipConstants';
 
@@ -64,8 +60,4 @@ export const colorSet = {
 export const minSize = notchWidth + 2 * borderRadius;
 export const minHeightStyle = css`
   min-height: ${minSize}px;
-`;
-
-export const transitionDelay = css`
-  transition-delay: ${transitionDuration.slowest}ms;
 `;

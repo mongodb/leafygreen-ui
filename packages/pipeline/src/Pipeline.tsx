@@ -12,7 +12,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useMutationObserver } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
 import Counter from './Counter';
 import { PipelineContext } from './PipelineContext';
@@ -147,8 +147,11 @@ const Pipeline = forwardRef(
 
           {/* Removing the component was causing an unmounted error so instead we're hiding it with css */}
           <Tooltip
-            align="top"
-            justify="middle"
+            align={Align.Top}
+            className={tooltipStyles}
+            darkMode={darkMode}
+            justify={Justify.Middle}
+            renderMode={RenderMode.TopLayer}
             trigger={
               <Counter
                 className={cx({
@@ -157,8 +160,6 @@ const Pipeline = forwardRef(
               />
             }
             triggerEvent="hover"
-            darkMode={darkMode}
-            className={tooltipStyles}
           >
             <TooltipText hiddenStages={hiddenStages} />
           </Tooltip>

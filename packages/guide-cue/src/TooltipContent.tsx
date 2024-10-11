@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Options } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
 
@@ -8,7 +8,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { RenderMode } from '@leafygreen-ui/tooltip';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
 
 import {
@@ -36,7 +36,6 @@ type TooltipContentProps = Partial<GuideCueProps> & {
   onEscClose: () => void;
   handleButtonClick: () => void;
   handleCloseClick: () => void;
-  usePortal?: boolean;
 };
 
 function TooltipContent({
@@ -46,10 +45,6 @@ function TooltipContent({
   tooltipJustify,
   tooltipAlign,
   refEl,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
   theme,
   title,
   isStandalone,
@@ -61,9 +56,9 @@ function TooltipContent({
   onEscClose,
   handleButtonClick,
   handleCloseClick,
-  usePortal = true,
   ...tooltipProps
 }: TooltipContentProps) {
+  const [focusable, setFocusable] = useState(false);
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
 
   const focusTrapOptions: Options = {
@@ -84,17 +79,14 @@ function TooltipContent({
           tooltipStyles,
           tooltipClassName,
         )}
-        portalClassName={portalClassName}
-        portalContainer={portalContainer}
-        scrollContainer={scrollContainer}
-        popoverZIndex={popoverZIndex}
         onClose={onEscClose}
+        onEntered={() => setFocusable(true)}
         role="dialog"
         aria-labelledby={ariaLabelledby}
-        usePortal={usePortal}
+        renderMode={RenderMode.TopLayer}
         {...tooltipProps}
       >
-        <FocusTrap focusTrapOptions={focusTrapOptions}>
+        <FocusTrap active={focusable} focusTrapOptions={focusTrapOptions}>
           <div>
             {!isStandalone && (
               <IconButton

@@ -12,10 +12,14 @@ import {
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { copiedThemeStyle, copyButtonThemeStyles } from './CopyButton.styles';
+import {
+  copiedThemeStyle,
+  copyButtonThemeStyles,
+  tooltipStyles,
+} from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
@@ -109,11 +113,13 @@ function CopyButton({ onCopy, contents }: CopyProps) {
 
   return (
     <Tooltip
-      data-testid="code_copy-button_tooltip"
-      open={open}
-      setOpen={setOpen}
       align={Align.Top}
+      className={tooltipStyles}
+      data-testid="code_copy-button_tooltip"
       justify={Justify.Middle}
+      open={open}
+      renderMode={RenderMode.TopLayer}
+      setOpen={setOpen}
       trigger={
         <IconButton
           data-testid="code_copy-button"

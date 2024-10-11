@@ -7,6 +7,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import { css } from '@leafygreen-ui/emotion';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body, H3, Link } from '@leafygreen-ui/typography';
 
 import InlineDefinition, { InlineDefinitionProps } from '.';
@@ -81,7 +82,11 @@ export const LiveExample: StoryFn<InlineDefinitionProps> = ({
     `}
   >
     <H3 darkMode={darkMode}>
-      <InlineDefinition darkMode={darkMode} {...args}>
+      <InlineDefinition
+        darkMode={darkMode}
+        baseFontSize={BaseFontSize.Body1}
+        {...args}
+      >
         Shard
       </InlineDefinition>{' '}
       your cluster

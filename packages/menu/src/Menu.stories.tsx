@@ -15,7 +15,7 @@ import Icon from '@leafygreen-ui/icon';
 import CaretDown from '@leafygreen-ui/icon/dist/CaretDown';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { Align, Justify } from '@leafygreen-ui/popover';
+import { Align, Justify, RenderMode } from '@leafygreen-ui/popover';
 import { TestUtils } from '@leafygreen-ui/popover';
 
 const { getAlign, getJustify } = TestUtils;
@@ -63,13 +63,13 @@ export default {
         'setOpen',
         'size',
         'trigger',
-        'usePortal',
+        'renderMode',
       ],
     },
   },
   args: {
-    align: 'bottom',
-    usePortal: true,
+    align: Align.Bottom,
+    renderMode: RenderMode.TopLayer,
     darkMode: false,
     renderDarkMenu: false,
   },
@@ -196,7 +196,7 @@ export const Controlled = {
         'setOpen',
         'as',
         'portalRef',
-        'usePortal',
+        'renderMode',
         'align',
         'darkMode',
         'justify',

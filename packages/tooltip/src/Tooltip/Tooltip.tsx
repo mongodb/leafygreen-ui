@@ -19,7 +19,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Justify } from '@leafygreen-ui/popover';
+import Popover, { getPopoverRenderModeProps } from '@leafygreen-ui/popover';
 import {
   bodyTypeScaleStyles,
   useUpdatedBaseFontSize,
@@ -33,11 +33,13 @@ import {
   colorSet,
   minHeightStyle,
   positionRelative,
-  transitionDelay,
 } from './Tooltip.styles';
 import {
   Align,
+  DismissMode,
+  Justify,
   PopoverFunctionParameters,
+  RenderMode,
   TooltipProps,
   TriggerEvent,
 } from './Tooltip.types';
@@ -72,7 +74,7 @@ const stopClickPropagation = (evt: React.MouseEvent) => {
  * @param props.trigger Trigger element can be ReactNode or function.
  * @param props.triggerEvent Whether the Tooltip should be triggered by a `click` or `hover`.
  * @param props.id id given to Tooltip content.
- * @param props.usePortal Determines whether or not Tooltip will be Portaled
+ * @param props.renderMode Options to render the popover element: `inline`, `portal`, `top-layer`.
  * @param props.portalClassName Classname applied to root element of the portal.
  * @param props.portalRef A ref for the portal element
  * @param props.onClose Callback that is fired when the tooltip is closed.
@@ -88,7 +90,7 @@ function Tooltip({
   align = 'top',
   justify = 'start',
   spacing = 12,
-  usePortal = true,
+  renderMode = RenderMode.TopLayer,
   onClose = () => {},
   id,
   shouldClose,
@@ -111,6 +113,7 @@ function Tooltip({
   const setOpen =
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const existingId = id ?? tooltipRef.current?.id;
@@ -143,11 +146,17 @@ function Tooltip({
               // Without this the tooltip sometimes opens without a transition. flushSync prevents this state update from automatically batching. Instead updates are made synchronously.
               // https://react.dev/reference/react-dom/flushSync#flushing-updates-for-third-party-integrations
               flushSync(() => {
-                setOpen(true);
+                timeoutRef.current = setTimeout(() => {
+                  setOpen(true);
+                }, 500);
               });
             }, 35),
             onMouseLeave: debounce((e: MouseEvent) => {
               userTriggerHandler('onMouseLeave', e);
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+              }
               handleClose();
             }, 35),
             onFocus: (e: MouseEvent) => {
@@ -190,19 +199,18 @@ function Tooltip({
   useBackdropClick(handleClose, [tooltipRef], open && triggerEvent === 'click');
 
   const popoverProps = {
-    refEl,
     popoverZIndex,
-    ...(usePortal
-      ? {
-          spacing,
-          usePortal,
-          portalClassName,
-          portalContainer,
-          portalRef,
-          scrollContainer,
-        }
-      : { spacing, usePortal }),
-  };
+    refEl,
+    spacing,
+    ...getPopoverRenderModeProps({
+      dismissMode: DismissMode.Manual,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      renderMode,
+      scrollContainer,
+    }),
+  } as const;
 
   const active = enabled && open;
   const isLeftOrRightAligned = ['left', 'right'].includes(align);
@@ -215,14 +223,11 @@ function Tooltip({
       justify={justify}
       adjustOnMutation={true}
       onClick={stopClickPropagation}
-      className={cx(
-        transitionDelay,
-        css`
-          // Try to fit all the content on one line (until it hits max-width)
-          // Overrides default behavior, which is to set width to size of the trigger.
-          width: max-content;
-        `,
-      )}
+      className={css`
+        // Try to fit all the content on one line (until it hits max-width)
+        // Overrides default behavior, which is to set width to size of the trigger.
+        width: max-content;
+      `}
       {...popoverProps}
     >
       {({ align, justify, referenceElPos }: PopoverFunctionParameters) => {
@@ -319,7 +324,7 @@ Tooltip.propTypes = {
   setOpen: PropTypes.func,
   id: PropTypes.string,
   shouldClose: PropTypes.func,
-  usePortal: PropTypes.bool,
+  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
   portalClassName: PropTypes.string,
   portalRef: PropTypes.shape({
     current:

@@ -9,6 +9,7 @@ import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
   PopoverProvider,
+  RenderMode,
   useDarkMode,
   usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -139,6 +140,7 @@ const ModalView = React.forwardRef(
                       )}
                     >
                       <PopoverProvider
+                        renderMode={RenderMode.Portal}
                         portalContainer={scrollContainerRef}
                         scrollContainer={scrollContainerRef}
                       >
