@@ -1,7 +1,5 @@
 import { Transition } from 'react-transition-group';
 
-import { OverlayContext } from '@leafygreen-ui/leafygreen-provider';
-
 /**
  * These types are duplicated in `@leafygreen-ui/popover`: https://github.com/mongodb/leafygreen-ui/blob/02e1d77e5ed7d55f9b8402299eae0c6d540c53f8/packages/popover/src/Popover.types.ts
  *
@@ -149,16 +147,12 @@ export type PopoverProviderProps = TransitionLifecycleCallbacks &
 interface DeprecatedPopoverState {
   /**
    * Whether the most immediate popover ancestor is open
-   *
-   * @deprecated Use {@link OverlayContext} instead
    */
   isPopoverOpen: boolean;
 
   /**
    * Sets the internal state
    * @internal
-   *
-   * @deprecated Use {@link OverlayContext} instead
    */
   setIsPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
