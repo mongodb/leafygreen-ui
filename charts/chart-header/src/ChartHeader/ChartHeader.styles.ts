@@ -16,6 +16,7 @@ export const getHeaderStyles = (theme: Theme) => css`
   padding-left: ${spacing[300]}px;
   padding-right: ${spacing[400]}px;
   height: 40px;
+  width: 100%;
   grid-row: 1;
 `;
 

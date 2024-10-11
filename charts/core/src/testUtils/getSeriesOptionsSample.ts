@@ -1,4 +1,4 @@
-import { SeriesOptions } from '../LineChart/LineChart.types';
+import { SeriesOption } from '../Chart/src/Chart.types';
 
 function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -24,7 +24,7 @@ function generateDataset(
 
 export const getSeriesOptionsSample = (
   numOfSeries: number = 5,
-): SeriesOptions =>
+): Array<SeriesOption> =>
   Array.from({ length: numOfSeries }, (_, i) => ({
     name: `Dataset ${i + 1}`,
     data: generateDataset(60, 0, 500),

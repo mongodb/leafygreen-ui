@@ -1,7 +1,7 @@
 import { useChartContext } from '../ChartContext';
 import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { ChartOptions } from '../Chart/Chart.types';
+import { ChartOptions } from '../Chart/src/Chart.types';
 import { getDefaultXAxisConfig, getDefaultYAxisConfig } from './config';
 
 interface AxisProps {

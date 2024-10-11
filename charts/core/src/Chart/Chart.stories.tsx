@@ -3,9 +3,7 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { Chart } from '.';
-import { getSeriesOptionsSample } from '../testUtils/getSeriesOptionsSample';
 import { Axis } from '../Axis';
-import { ChartHeader } from '../ChartHeader';
 
 export default {
   title: 'Charts/Core/Chart',

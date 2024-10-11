@@ -15,6 +15,8 @@ export function ChartHeader({
 }: ChartHeaderProps) {
   const { theme } = useDarkMode(darkModeProp);
 
+  console.log(label);
+
   return (
     <header className={getHeaderStyles(theme)}>
       <Body weight="regular" baseFontSize={16}>

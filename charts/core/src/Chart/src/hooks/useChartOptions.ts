@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { ChartOptions } from '../../Chart/Chart.types';
+import { ChartOptions } from '../Chart.types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useState } from 'react';
 import { getDefaultOptions } from '../utils/defaultChartOptions';

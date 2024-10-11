@@ -1,2 +1,1 @@
-export { Chart } from './Chart';
-export { ChartProps } from './Chart.types';
+export { Chart, ChartProps } from './src';
