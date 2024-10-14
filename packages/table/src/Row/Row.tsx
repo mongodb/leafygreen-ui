@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
-import InternalRowWithRT from './InternalRowWithRT';
+import InternalRowWithRT, {
+  MemoizedInternalRowWithRT,
+} from './InternalRowWithRT';
 import { RowProps } from './Row.types';
 
 /**
@@ -15,10 +20,23 @@ const Row = <T extends LGRowData>({
   virtualRow,
   ...rest
 }: RowProps<T>) => {
+  const { theme } = useDarkMode();
+  const { measureElement, shouldAlternateRowColor } = useTableContext();
   return (
     <>
       {row ? (
-        <InternalRowWithRT row={row} virtualRow={virtualRow} {...rest} />
+        <MemoizedInternalRowWithRT
+          row={row}
+          virtualRow={virtualRow}
+          theme={theme}
+          measureElement={measureElement}
+          shouldAlternateRowColor={shouldAlternateRowColor}
+          isExpanded={row.getIsExpanded()}
+          isParentExpanded={
+            row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
+          }
+          {...rest}
+        />
       ) : (
         <InternalRowWithoutRT {...rest} />
       )}

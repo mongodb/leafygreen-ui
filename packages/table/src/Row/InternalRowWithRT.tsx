@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useTableContext } from '../TableContext';
@@ -25,17 +25,29 @@ const InternalRowWithRT = <T extends LGRowData>({
   row,
   virtualRow,
   disabled = false,
+  shouldAlternateRowColor,
+  theme,
+  measureElement,
+  isExpanded,
+  isParentExpanded,
   ...rest
 }: InternalRowWithRTProps<T>) => {
-  const { theme } = useDarkMode();
-  const { measureElement, shouldAlternateRowColor } = useTableContext();
+  // const { theme } = useDarkMode();
+  // const { measureElement, shouldAlternateRowColor } = useTableContext();
+
+  const renderCount = useRef(0);
+
+  useEffect(() => {
+    renderCount.current++;
+  });
+
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
-  const isExpanded = row.getIsExpanded();
+  // const isExpanded = row.getIsExpanded();
   const isSelected = row.getIsSelected();
-  const isParentExpanded = row.getParentRow()
-    ? row.getParentRow()?.getIsExpanded()
-    : false;
+  // const isParentExpanded = row.getParentRow()
+  //   ? row.getParentRow()?.getIsExpanded()
+  //   : false;
 
   const contextValues = useMemo(() => {
     return {
@@ -44,7 +56,12 @@ const InternalRowWithRT = <T extends LGRowData>({
     };
   }, [disabled]);
 
-  // console.log(`🪼rerender: ${row.id} ${depth}`);
+  const depth = row.depth;
+
+  console.log(`🪼rerender: ${row.id}, depth: ${depth}`, {
+    isExpanded: isExpanded,
+    renderCount: renderCount.current,
+  });
 
   return (
     <InternalRowBase
@@ -56,11 +73,21 @@ const InternalRowWithRT = <T extends LGRowData>({
             !virtualRow && shouldAlternateRowColor && !isSelected,
           [selectedRowStyles[theme]]: isSelected && !disabled,
           [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
+          [css`
+            /* display: none; */
+
+            > td div {
+              height: 0;
+              overflow: hidden;
+              min-height: 0;
+            }
+          `]: row.depth !== 0 && isParentExpanded === false,
         },
         className,
       )}
       data-selected={isSelected}
       data-expanded={isExpanded}
+      data-depth={row.depth}
       id={`lg-table-row-${row.id}`}
       ref={node => {
         if (measureElement) measureElement(node); // can this be added to table context?
@@ -74,3 +101,32 @@ const InternalRowWithRT = <T extends LGRowData>({
 };
 
 export default InternalRowWithRT;
+
+const arePropsEqual = (prevProps, nextProps) => {
+  const prevIsExpanded = prevProps.isExpanded;
+  const nextIsExpanded = nextProps.isExpanded;
+
+  const prevIsParentExpanded = prevProps.isParentExpanded;
+  const nextIsParentExpanded = nextProps.isParentExpanded;
+
+  const equal =
+    prevIsExpanded === nextIsExpanded &&
+    prevIsParentExpanded === nextIsParentExpanded;
+
+  // console.log('🐞 memo check', {
+  //   prevIsExpanded,
+  //   nextIsExpanded,
+  //   prevIsParentExpanded,
+  //   nextIsParentExpanded,
+  //   equal,
+  // });
+
+  // return prevIsExpanded === nextIsExpanded;
+  // return false;
+  return equal;
+};
+
+export const MemoizedInternalRowWithRT = React.memo(
+  InternalRowWithRT,
+  arePropsEqual,
+);

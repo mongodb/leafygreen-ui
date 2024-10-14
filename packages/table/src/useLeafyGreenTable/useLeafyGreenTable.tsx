@@ -63,7 +63,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
 
   const table = useReactTable<LGTableDataType<T>>({
     state: {
-      expanded,
+      // expanded,
       ...rest.state,
     },
     data,
@@ -74,15 +74,15 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     },
     enableExpanding: true,
     enableSortingRemoval: hasSortableColumns ? true : undefined,
-    onExpandedChange: setExpanded,
+    // onExpandedChange: setExpanded,
     getSubRows: row => row.subRows,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
-    getExpandedRowModel: getExpandedRowModel(),
+    // getExpandedRowModel: getExpandedRowModel(),
     ...rest,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows, flatRows } = table.getRowModel();
 
   // A way to include expandableContent inside of the rows object.
   // If a row has expandedContent and its expanded then add a new row below the row
