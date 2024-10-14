@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { ChartOptions } from '../Chart/src/Chart.types';
+import { ChartOptions, SeriesOption } from '../Chart/src/Chart.types';
 
 export interface ChartContextType extends DarkModeProps {
   chartOptions: any;
   updateChartOptions: (newOptions: Partial<ChartOptions>) => void;
-  addSeries: (series: Pick<ChartOptions, 'series'>) => void;
+  addSeries: (series: SeriesOption) => void;
 }
 
 export const ChartContext = createContext<ChartContextType | undefined>(

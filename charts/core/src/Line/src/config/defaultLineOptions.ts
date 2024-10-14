@@ -1,12 +1,6 @@
-export const defaultSeriesOption: {
-  type: 'line';
-  showSymbol: boolean;
-  symbol: string;
-  clip: boolean;
-  emphasis: {
-    disabled: boolean;
-  };
-} = {
+import { SeriesOption } from '../../../Chart/src/Chart.types';
+
+export const defaultSeriesOption: Omit<SeriesOption, 'name' | 'data'> = {
   type: 'line',
   showSymbol: false,
   symbol: 'circle',

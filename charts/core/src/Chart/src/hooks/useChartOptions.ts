@@ -1,5 +1,5 @@
 import merge from 'lodash.merge';
-import { ChartOptions } from '../Chart.types';
+import { ChartOptions, SeriesOption } from '../Chart.types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useState } from 'react';
 import { getDefaultOptions } from '../utils/defaultChartOptions';
@@ -15,7 +15,7 @@ export function useChartOptions({ darkMode: darkModeProp }: DarkModeProps) {
     getDefaultOptions(theme),
   );
 
-  function addSeries(series: Pick<ChartOptions, 'series'>) {
+  function addSeries(series: SeriesOption) {
     setChartOptions(currentOptions => {
       if (currentOptions?.series && currentOptions?.series.length > 0) {
         return {
