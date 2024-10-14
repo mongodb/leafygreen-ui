@@ -29,6 +29,4 @@ export const getDefaultYAxisConfig = (theme: Theme) => ({
   axisTick: {
     show: false,
   },
-  min: 0,
-  max: 100,
 });

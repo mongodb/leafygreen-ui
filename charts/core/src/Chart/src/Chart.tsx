@@ -61,7 +61,7 @@ function enableResize(chartInstance: echarts.ECharts) {
 }
 
 export function Chart({ children, darkMode: darkModeProp }: ChartProps) {
-  const { chartOptions, updateChartOptions } = useChartOptions({
+  const { chartOptions, updateChartOptions, addSeries } = useChartOptions({
     darkMode: darkModeProp,
   });
   const chartRef = useRef(null);
@@ -88,6 +88,7 @@ export function Chart({ children, darkMode: darkModeProp }: ChartProps) {
     <ChartProvider
       chartOptions={chartOptions}
       updateChartOptions={updateChartOptions}
+      addSeries={addSeries}
       darkMode={darkModeProp}
     >
       <div className={getWrapperStyles(theme)}>

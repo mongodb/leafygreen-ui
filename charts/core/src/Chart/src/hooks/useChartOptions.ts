@@ -11,11 +11,34 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
  */
 export function useChartOptions({ darkMode: darkModeProp }: DarkModeProps) {
   const { theme } = useDarkMode(darkModeProp);
-  const [chartOptions, setChartOptions] = useState(getDefaultOptions(theme));
+  const [chartOptions, setChartOptions] = useState<Partial<ChartOptions>>(
+    getDefaultOptions(theme),
+  );
 
-  function updateChartOptions(newOptions: Partial<ChartOptions>) {
-    setChartOptions(currentOptions => merge({ ...currentOptions }, newOptions));
+  function addSeries(series: Pick<ChartOptions, 'series'>) {
+    setChartOptions(currentOptions => {
+      if (currentOptions?.series && currentOptions?.series.length > 0) {
+        return {
+          ...currentOptions,
+          series: [...currentOptions?.series, series],
+        };
+      }
+      return {
+        ...currentOptions,
+        series: [series],
+      };
+    });
   }
 
-  return { chartOptions, updateChartOptions };
+  function updateChartOptions(
+    newOptions: Omit<Partial<ChartOptions>, 'series'>,
+  ) {
+    setChartOptions(currentOptions => {
+      console.log('currentOptions:', currentOptions);
+      console.log('newOptions:', newOptions);
+      return merge({ ...currentOptions }, newOptions);
+    });
+  }
+
+  return { chartOptions, updateChartOptions, addSeries };
 }

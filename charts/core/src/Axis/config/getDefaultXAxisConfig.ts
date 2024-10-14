@@ -32,6 +32,4 @@ export const getDefaultXAxisConfig = (theme: Theme) => ({
   axisTick: {
     show: false,
   },
-  min: 0,
-  max: 100,
 });
