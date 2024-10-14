@@ -1,2 +1,4 @@
-export { getDefaultXAxisConfig } from './getDefaultXAxisConfig';
-export { getDefaultYAxisConfig } from './getDefaultYAxisConfig';
+export {
+  getDefaultXAxisOptions,
+  getDefaultYAxisOptions,
+} from './getDefaultAxisOptions';

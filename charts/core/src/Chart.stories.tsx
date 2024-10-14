@@ -2,9 +2,10 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Chart } from '.';
-import { Axis } from '../Axis';
-import { Line } from '../Line';
+import { Chart } from './Chart';
+import { Axis } from './Axis';
+import { Line } from './Line';
+import { Grid } from './Grid';
 
 export default {
   title: 'Charts/Core/Chart',
@@ -17,6 +18,7 @@ export default {
 const Template: StoryFn<typeof Chart> = props => (
   <Chart>
     <Axis x={{ type: 'value' }} y={{ type: 'value' }} />
+    <Grid horizontal />
     <Line
       name="some series"
       data={[

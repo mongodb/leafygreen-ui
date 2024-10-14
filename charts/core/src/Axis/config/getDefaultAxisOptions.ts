@@ -8,11 +8,8 @@ import {
   InteractionState,
 } from '@leafygreen-ui/tokens';
 
-export const getDefaultXAxisConfig = (theme: Theme) => ({
+const getCommonAxisOptions = (theme: Theme) => ({
   type: 'value',
-  splitLine: {
-    show: false,
-  },
   axisLine: {
     show: true,
     lineStyle: {
@@ -21,8 +18,7 @@ export const getDefaultXAxisConfig = (theme: Theme) => ({
     },
   },
   axisLabel: {
-    align: 'center',
-    margin: spacing[400],
+    show: true,
     fontFamily: fontFamilies.default,
     fontWeight: fontWeights.medium,
     fontSize: 11,
@@ -33,3 +29,27 @@ export const getDefaultXAxisConfig = (theme: Theme) => ({
     show: false,
   },
 });
+
+export const getDefaultXAxisOptions = (theme: Theme) => {
+  const commonOptions = getCommonAxisOptions(theme);
+  return {
+    ...commonOptions,
+    axisLabel: {
+      ...commonOptions.axisLabel,
+      align: 'center',
+      margin: spacing[400],
+    },
+  };
+};
+
+export const getDefaultYAxisOptions = (theme: Theme) => {
+  const commonOptions = getCommonAxisOptions(theme);
+  return {
+    ...commonOptions,
+    axisLabel: {
+      ...commonOptions.axisLabel,
+      align: 'right',
+      margin: spacing[200],
+    },
+  };
+};

@@ -2,7 +2,7 @@ import { useChartContext } from '../ChartContext';
 import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { ChartOptions } from '../Chart/src/Chart.types';
-import { getDefaultXAxisConfig, getDefaultYAxisConfig } from './config';
+import { getDefaultXAxisOptions, getDefaultYAxisOptions } from './config';
 
 interface AxisProps {
   type: string;
@@ -22,18 +22,15 @@ export function Axis({
     const updatedOptions: Partial<ChartOptions> = {};
 
     if (x && y) {
-      updatedOptions.xAxis = getDefaultXAxisConfig(theme);
-      updatedOptions.yAxis = getDefaultYAxisConfig(theme);
-      updateChartOptions(updatedOptions);
+      updatedOptions.xAxis = getDefaultXAxisOptions(theme);
+      updatedOptions.yAxis = getDefaultYAxisOptions(theme);
     } else if (x) {
-      updatedOptions.xAxis = getDefaultXAxisConfig(theme);
-      updatedOptions.yAxis = { show: false };
-      updateChartOptions(updatedOptions);
+      updatedOptions.xAxis = getDefaultXAxisOptions(theme);
     } else if (y) {
-      updatedOptions.yAxis = getDefaultYAxisConfig(theme);
-      updatedOptions.xAxis = { show: false };
-      updateChartOptions(updatedOptions);
+      updatedOptions.yAxis = getDefaultYAxisOptions(theme);
     }
+
+    updateChartOptions(updatedOptions);
   }, [theme]);
 
   return null;

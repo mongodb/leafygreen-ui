@@ -1,1 +1,1 @@
-export { getDefaultGridConfig } from './getDefaultGridConfig';
+export { getDefaultGridConfig } from './getDefaultGridOptions';

@@ -2,7 +2,7 @@ import merge from 'lodash.merge';
 import { ChartOptions, SeriesOption } from '../Chart.types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useState } from 'react';
-import { getDefaultOptions } from '../utils/defaultChartOptions';
+import { getDefaultOptions } from '../config/defaultChartOptions';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 /**
