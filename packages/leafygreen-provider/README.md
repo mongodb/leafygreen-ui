@@ -121,21 +121,3 @@ function Example({ children, darkMode: darkModeProp, variant }) {
   return <div className={badgeVariants[theme][variant]}>{children}</div>;
 }
 ```
-
-## useOverlay
-
-This hook is used to register/remove a component to the `OverlayContext`.
-
-### Example
-
-```js
-import { useOverlay } from '@leafygreen-ui/leafygreen-provider';
-
-const Popover = forwardRef<HTMLDivElement, PopoverProps>(
-  ({ children }: PopoverProps, fwdRef) => {
-    const { id, isTopMostOverlay, ref } = useOverlay(fwdRef);
-
-    return <div ref={ref}>{children}</div>
-  },
-);
-```
