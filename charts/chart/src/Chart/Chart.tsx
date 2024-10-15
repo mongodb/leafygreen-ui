@@ -5,7 +5,7 @@
  * and styling according to our design system's specs.
  */
 import React from 'react';
-import { ChartProps } from '../Chart.types';
+import { ChartProps } from './Chart.types';
 import { chartStyles, getWrapperStyles } from './Chart.styles';
 import { ChartProvider } from '../ChartContext';
 import { useChart } from './hooks/useChart';

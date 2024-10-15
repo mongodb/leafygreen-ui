@@ -1,6 +1,10 @@
 import { Reducer } from 'react';
 import merge from 'lodash.merge';
-import { ChartAction, ChartActionType, ChartOptions } from '../../Chart.types';
+import {
+  ChartAction,
+  ChartActionType,
+  ChartOptions,
+} from '../../Chart/Chart.types';
 
 export const chartReducer: Reducer<Partial<ChartOptions>, ChartAction> = (
   state,

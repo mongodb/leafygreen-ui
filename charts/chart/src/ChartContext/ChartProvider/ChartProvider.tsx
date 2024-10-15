@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChartContext } from '../ChartContext';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { ChartOptions, SeriesOption } from '../../Chart.types';
+import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
 
 interface ChartProviderProps extends DarkModeProps {
   children: React.ReactNode;

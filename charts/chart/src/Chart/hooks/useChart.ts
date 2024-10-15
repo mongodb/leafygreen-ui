@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { ChartActionType, ChartOptions, SeriesOption } from '../../Chart.types';
+import {
+  ChartActionType,
+  ChartOptions,
+  SeriesOption,
+} from '../../Chart/Chart.types';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { chartReducer, getDefaultChartOptions } from '../config';
 import { DarkModeProps } from '@leafygreen-ui/lib';
