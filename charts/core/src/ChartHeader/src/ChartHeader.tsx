@@ -4,7 +4,7 @@ import { Body } from '@leafygreen-ui/typography';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { buttonContainerStyles, getHeaderStyles } from './ChartHeader.styles';
-import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
+import { ChartHeaderProps } from './ChartHeader.types';
 
 export function ChartHeader({
   darkMode: darkModeProp,
