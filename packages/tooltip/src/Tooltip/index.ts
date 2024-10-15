@@ -7,10 +7,12 @@ import {
   type TooltipProps,
   TriggerEvent,
 } from './Tooltip.types';
+import { hoverDelay } from './tooltipConstants';
 
 export {
   Align,
   DismissMode,
+  hoverDelay,
   Justify,
   RenderMode,
   type TooltipProps,

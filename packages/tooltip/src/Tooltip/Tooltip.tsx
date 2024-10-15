@@ -43,6 +43,7 @@ import {
   TooltipProps,
   TriggerEvent,
 } from './Tooltip.types';
+import { hoverDelay } from './tooltipConstants';
 import { notchPositionStyles } from './tooltipUtils';
 
 const stopClickPropagation = (evt: React.MouseEvent) => {
@@ -148,7 +149,7 @@ function Tooltip({
               flushSync(() => {
                 timeoutRef.current = setTimeout(() => {
                   setOpen(true);
-                }, 500);
+                }, hoverDelay);
               });
             }, 35),
             onMouseLeave: debounce((e: MouseEvent) => {

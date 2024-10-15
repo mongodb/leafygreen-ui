@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -98,13 +98,20 @@ function InlineDefinition({
   ...tooltipProps
 }: InlineDefinitionProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const handleMouseEnter = () => {
+    setTooltipOpen(true);
+  };
 
   return (
     <Tooltip
       className={tooltipClassName}
       darkMode={darkMode}
       justify="middle"
+      open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
+      setOpen={setTooltipOpen}
       spacing={9}
       {...tooltipProps}
       trigger={
@@ -116,6 +123,7 @@ function InlineDefinition({
             triggerElementModeStyles[theme],
             className,
           )}
+          onMouseEnter={handleMouseEnter}
         >
           {children}
         </span>

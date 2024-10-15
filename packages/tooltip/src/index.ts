@@ -1,6 +1,7 @@
 import Tooltip, {
   Align,
   DismissMode,
+  hoverDelay,
   Justify,
   RenderMode,
   type TooltipProps,
@@ -10,6 +11,7 @@ import Tooltip, {
 export {
   Align,
   DismissMode,
+  hoverDelay,
   Justify,
   RenderMode,
   type TooltipProps,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
@@ -16,16 +16,23 @@ export const EllipsesStep = ({
   ...rest
 }: React.PropsWithChildren<EllipsesStepProps>) => {
   const { darkMode, theme } = useDarkMode();
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const handleMouseEnter = () => {
+    setTooltipOpen(true);
+  };
 
   return (
     <Tooltip
       align={Align.Top}
       darkMode={darkMode}
       justify={Justify.Middle}
+      open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
+      setOpen={setTooltipOpen}
       trigger={
         // The <li> needs to be defined here and not in <Stepper> because the Tooltip doesn't trigger without a wrapping HTML element.
-        <li>
+        <li onMouseEnter={handleMouseEnter}>
           <InternalStep
             className={getMultipleStyles(theme, state)}
             state={state}

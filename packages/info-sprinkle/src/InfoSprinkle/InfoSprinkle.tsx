@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -24,11 +24,19 @@ export const InfoSprinkle = React.forwardRef<
     forwardRef,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+
+    const handleMouseEnter = () => {
+      setTooltipOpen(true);
+    };
+
     return (
       <Tooltip
         baseFontSize={baseFontSize}
         darkMode={darkMode}
+        open={tooltipOpen}
         renderMode={RenderMode.TopLayer}
+        setOpen={setTooltipOpen}
         trigger={
           <button
             data-testid="info-sprinkle-icon"
@@ -41,6 +49,7 @@ export const InfoSprinkle = React.forwardRef<
               iconThemeStyles(theme),
               triggerProps?.className,
             )}
+            onMouseEnter={handleMouseEnter}
           >
             <InfoWithCircleIcon size={baseFontSize} aria-hidden />
           </button>
