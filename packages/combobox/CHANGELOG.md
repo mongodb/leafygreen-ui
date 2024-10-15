@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-_Note_: This patch update was a mistake because the `@leafygreen-ui/hooks` package was never updated to version `8.2.1`. Please use the next patch version, `v9.1.5`.
+_Note_: This version has no updates. Pleas use version `9.1.5`.
 
 - Updates `useAvailableSpace` hook which fixes a dropdown height bug. [LG-4601](https://jira.mongodb.org/browse/LG-4601)
 
