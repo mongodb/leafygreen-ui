@@ -1,11 +1,12 @@
 import { useChartContext } from '../ChartContext';
 import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { ChartOptions } from '../Chart/src/Chart.types';
+import { ChartOptions } from '../Chart.types';
 import { getDefaultXAxisOptions, getDefaultYAxisOptions } from './config';
 
 interface AxisProps {
   type: string;
+  label?: string;
   min?: number;
   max?: number;
   unit?: string;

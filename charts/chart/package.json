@@ -1,7 +1,7 @@
 {
-  "name": "@lg-charts/core",
+  "name": "@lg-charts/chart",
   "version": "0.1.0",
-  "description": "lg-charts Core Components",
+  "description": "lg-charts Chart Components",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -26,6 +26,7 @@
     "@lg-tools/storybook-utils": "^0.1.1",
     "@types/lodash.merge": "^4.6.9",
     "echarts": "^5.5.1",
+    "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2"
   },
   "repository": {

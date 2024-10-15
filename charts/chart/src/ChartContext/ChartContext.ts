@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { ChartOptions, SeriesOption } from '../Chart/src/Chart.types';
+import { ChartOptions, SeriesOption } from '../Chart.types';
 
 export interface ChartContextType extends DarkModeProps {
   chartOptions: any;
