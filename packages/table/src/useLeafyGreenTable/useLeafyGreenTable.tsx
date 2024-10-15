@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ExpandedState,
-  getExpandedRowModel,
+  // getExpandedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
 import {
@@ -25,10 +25,11 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   hasSelectableRows,
   withPagination = false,
   allowSelectAll = true,
+  isVirtual = false,
   // virtualizerOptions,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+  // const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
@@ -86,7 +87,8 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
 
   // A way to include expandableContent inside of the rows object.
   // If a row has expandedContent and its expanded then add a new row below the row
-  const rowsCopy = [...rows];
+  const whichRows = isVirtual ? rows : flatRows;
+  const rowsCopy = [...whichRows];
 
   for (let i = 0; i < rowsCopy.length; i++) {
     if (

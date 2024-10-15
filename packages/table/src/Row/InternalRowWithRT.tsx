@@ -58,10 +58,10 @@ const InternalRowWithRT = <T extends LGRowData>({
 
   const depth = row.depth;
 
-  console.log(`🪼rerender: ${row.id}, depth: ${depth}`, {
-    isExpanded: isExpanded,
-    renderCount: renderCount.current,
-  });
+  // console.log(`🪼rerender: ${row.id}, depth: ${depth}`, {
+  //   isExpanded: isExpanded,
+  //   renderCount: renderCount.current,
+  // });
 
   return (
     <InternalRowBase

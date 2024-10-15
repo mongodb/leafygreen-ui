@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { ExpandedState, getExpandedRowModel } from '@tanstack/react-table';
 import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 
 import useLeafyGreenTable, { LGRowData } from '../useLeafyGreenTable';
@@ -21,12 +23,19 @@ function useLeafyGreenVirtualTable<
   virtualizerOptions,
   ...rest
 }: LeafyGreenVirtualTableOptions<T, V>): LeafyGreenVirtualTable<T> {
+  const [expanded, setExpanded] = useState<ExpandedState>({});
   const table = useLeafyGreenTable({
     data,
     columns,
     withPagination,
     allowSelectAll,
     hasSelectableRows,
+    onExpandedChange: setExpanded,
+    getExpandedRowModel: getExpandedRowModel(),
+    isVirtual: true,
+    state: {
+      expanded,
+    },
     ...rest,
   });
 
