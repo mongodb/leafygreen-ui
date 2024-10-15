@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   storybookExcludedControlParams,
@@ -196,30 +196,55 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          const isExpandedContent = row.original.isExpandedContent ?? false;
+          // const isExpandedContent = row.original.isExpandedContent ?? false;
+
           return (
-            <>
-              {!isExpandedContent && (
-                <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <Cell
-                        key={cell.id}
-                        id={cell.id}
-                        overflow="truncate"
-                        cell={cell}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              )}
-              {isExpandedContent && <ExpandedContent key={row.id} row={row} />}
-            </>
+            <Fragment key={row.id}>
+              {/* {!isExpandedContent && ( */}
+              <Row row={row}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <Cell
+                      key={cell.id}
+                      id={cell.id}
+                      overflow="truncate"
+                      cell={cell}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              </Row>
+              {row.getIsExpanded() &&
+                row.subRows &&
+                row.subRows.map(subRow => (
+                  <Fragment key={subRow.id}>
+                    <Row row={subRow}>
+                      {subRow.getVisibleCells().map(cell => {
+                        return (
+                          <Cell key={cell.id} id={cell.id} cell={cell}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
+                    {subRow.original.renderExpandedContent &&
+                      subRow.getIsExpanded() && (
+                        <ExpandedContent row={subRow} />
+                      )}
+                  </Fragment>
+                ))}
+              {/* )} */}
+              {/* {row.original.renderExpandedContent && row.getIsExpanded() && (
+                <ExpandedContent row={row} />
+              )} */}
+            </Fragment>
           );
         })}
       </TableBody>

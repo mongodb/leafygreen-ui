@@ -32,7 +32,7 @@ function useLeafyGreenVirtualTable<
     hasSelectableRows,
     onExpandedChange: setExpanded,
     getExpandedRowModel: getExpandedRowModel(),
-    isVirtual: true,
+    // isVirtual: true,
     state: {
       expanded,
     },
@@ -42,6 +42,25 @@ function useLeafyGreenVirtualTable<
   // const { rows } = table.getRowModel();
 
   const { rows } = table;
+
+  const rowsCopy = [...rows];
+
+  for (let i = 0; i < rowsCopy.length; i++) {
+    if (
+      rowsCopy[i].original.renderExpandedContent &&
+      rowsCopy[i].getIsExpanded()
+    ) {
+      rowsCopy.splice(i + 1, 0, {
+        ...rowsCopy[i],
+        id: `${rowsCopy[i].id}-expandedContent`,
+        original: {
+          ...rowsCopy[i].original,
+          isExpandedContent: true,
+        },
+      });
+      i++; // Increment index to skip the newly added item
+    }
+  }
 
   const _virtualizer = useVirtualizer({
     count: rows.length,
@@ -65,6 +84,7 @@ function useLeafyGreenVirtualTable<
 
   return {
     ...table,
+    rows: rowsCopy,
     virtual: { ..._virtualizer, virtualItems: _virtualItems },
   } as LeafyGreenVirtualTable<T>;
 }

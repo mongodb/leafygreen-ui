@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ExpandedState,
+  // ExpandedState,
   // getExpandedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
@@ -25,7 +25,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   hasSelectableRows,
   withPagination = false,
   allowSelectAll = true,
-  isVirtual = false,
+  // isVirtual = false,
   // virtualizerOptions,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
@@ -87,30 +87,33 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
 
   // A way to include expandableContent inside of the rows object.
   // If a row has expandedContent and its expanded then add a new row below the row
-  const whichRows = isVirtual ? rows : flatRows;
-  const rowsCopy = [...whichRows];
+  // const whichRows = isVirtual ? rows : flatRows;
+  // const rowsCopy = [...whichRows];
 
-  for (let i = 0; i < rowsCopy.length; i++) {
-    if (
-      rowsCopy[i].original.renderExpandedContent &&
-      rowsCopy[i].getIsExpanded()
-    ) {
-      rowsCopy.splice(i + 1, 0, {
-        ...rowsCopy[i],
-        id: `${rowsCopy[i].id}-expandedContent`,
-        original: {
-          ...rowsCopy[i].original,
-          isExpandedContent: true,
-        },
-      });
-      i++; // Increment index to skip the newly added item
-    }
-  }
+  // for (let i = 0; i < rowsCopy.length; i++) {
+  //   if (
+  //     rowsCopy[i].original.renderExpandedContent &&
+  //     rowsCopy[i].getIsExpanded()
+  //   ) {
+  //     rowsCopy.splice(i + 1, 0, {
+  //       ...rowsCopy[i],
+  //       id: `${rowsCopy[i].id}-expandedContent`,
+  //       original: {
+  //         ...rowsCopy[i].original,
+  //         isExpandedContent: true,
+  //       },
+  //     });
+  //     i++; // Increment index to skip the newly added item
+  //   }
+  // }
+
+  // console.log({ rowsCopy });
 
   return {
     ...table,
     hasSelectableRows,
-    rows: rowsCopy,
+    // rows: rowsCopy,
+    rows: rows,
   } as LeafyGreenTable<T>;
 }
 

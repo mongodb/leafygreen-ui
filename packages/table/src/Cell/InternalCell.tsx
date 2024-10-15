@@ -47,6 +47,8 @@ const InternalCell = ({
     );
   }, [contentHeight, overflow, scrollHeight]);
 
+  console.log('💚');
+
   return (
     <td
       data-lgid={LGIDS.cell}
