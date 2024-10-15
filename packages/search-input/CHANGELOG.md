@@ -4,6 +4,8 @@
 
 ### Patch Changes
 
+_Note_: This version has no updates. Pleas use version `3.1.4`.
+
 - Updates `useAvailableSpace` hook which fixes a dropdown height bug. [LG-4601](https://jira.mongodb.org/browse/LG-4601)
 
 ## 3.1.2
