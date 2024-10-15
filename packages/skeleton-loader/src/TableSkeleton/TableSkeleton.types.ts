@@ -21,7 +21,7 @@ export interface TableSkeletonProps
   /**
    * Column labels. Empty strings or undefined values will be treated as unknown and render a simple skeleton.
    */
-  columnLabels?: Array<string | undefined>;
+  columnLabels?: Array<React.ReactNode>;
 
   /**
    * Number of rows
