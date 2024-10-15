@@ -47,7 +47,7 @@ const InternalCell = ({
     );
   }, [contentHeight, overflow, scrollHeight]);
 
-  console.log('💚');
+  // console.log('💚');
 
   return (
     <td

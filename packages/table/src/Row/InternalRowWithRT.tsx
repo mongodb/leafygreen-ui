@@ -73,15 +73,15 @@ const InternalRowWithRT = <T extends LGRowData>({
             !virtualRow && shouldAlternateRowColor && !isSelected,
           [selectedRowStyles[theme]]: isSelected && !disabled,
           [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
-          [css`
-            /* display: none; */
+          // [css`
+          //   /* display: none; */
 
-            > td div {
-              height: 0;
-              overflow: hidden;
-              min-height: 0;
-            }
-          `]: row.depth !== 0 && isParentExpanded === false,
+          //   > td div {
+          //     height: 0;
+          //     overflow: hidden;
+          //     min-height: 0;
+          //   }
+          // `]: row.depth !== 0 && isParentExpanded === false,
         },
         className,
       )}

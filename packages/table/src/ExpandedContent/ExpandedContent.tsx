@@ -11,14 +11,13 @@ import { useTableContext } from '../TableContext';
 
 import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
-import { MemoizedExpandedContent } from './MemoizedExpandedContent';
 
 const ExpandedContent = <T extends RowData>({
   row,
   ...rest
 }: ExpandedContentProps<T>) => {
   const { measureElement } = useTableContext();
-  // const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const content =
     row.original.renderExpandedContent &&
@@ -33,41 +32,32 @@ const ExpandedContent = <T extends RowData>({
   //   [content],
   // );
 
+  console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
+
   return (
-    // <InternalRowBase
-    //   {...rest}
-    //   ref={node => {
-    //     // TODO: fix me
-    //     // This gets the dynamic size of the element
-    //     if (measureElement) measureElement(node);
-    //   }}
-    // >
-    //   <td
-    //     colSpan={row.getVisibleCells().length}
-    //     className={cx(baseStyles)}
-    //     data-lgid={LGIDS.cell}
-    //   >
-    //     <div
-    //       className={cx(
-    //         cellTransitionContainerStyles,
-    //         expandedContentStyles[theme],
-    //       )}
-    //     >
-    //       <div ref={contentRef}>{content}</div>
-    //     </div>
-    //   </td>
-    // </InternalRowBase>
-    <MemoizedExpandedContent
-      row={row}
-      content={content}
-      measureElement={measureElement}
-      theme={theme}
-      isExpanded={row.getIsExpanded()}
-      // isParentExpanded={
-      //   row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
-      // }
+    <InternalRowBase
       {...rest}
-    />
+      ref={node => {
+        // TODO: fix me
+        // This gets the dynamic size of the element
+        if (measureElement) measureElement(node);
+      }}
+    >
+      <td
+        colSpan={row.getVisibleCells().length}
+        className={cx(baseStyles)}
+        data-lgid={LGIDS.cell}
+      >
+        <div
+          className={cx(
+            cellTransitionContainerStyles,
+            expandedContentStyles[theme],
+          )}
+        >
+          <div ref={contentRef}>{content}</div>
+        </div>
+      </td>
+    </InternalRowBase>
   );
 };
 
