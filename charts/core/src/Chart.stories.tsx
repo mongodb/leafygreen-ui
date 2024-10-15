@@ -32,7 +32,7 @@ const Template: StoryFn<typeof Chart> = props => (
       ]}
     />
     <Line
-      name="another series"
+      name="another 0"
       data={[
         [0, 7],
         [1, 6],
@@ -41,6 +41,66 @@ const Template: StoryFn<typeof Chart> = props => (
         [4, 3],
         [5, 2],
         [6, 1],
+      ]}
+    />
+    <Line
+      name="another 1"
+      data={[
+        [0, 7],
+        [1, 6],
+        [2, 5],
+        [3, 4],
+        [4, 3],
+        [5, 2],
+        [6, 1],
+      ]}
+    />
+    <Line
+      name="another 2"
+      data={[
+        [0, 7],
+        [1, 6],
+        [2, 5],
+        [3, 4],
+        [4, 3],
+        [5, 2],
+        [6, 1],
+      ]}
+    />
+    <Line
+      name="another 3"
+      data={[
+        [0, 14],
+        [1, 15],
+        [2, 16],
+        [3, 17],
+        [4, 18],
+        [5, 19],
+        [6, 20],
+      ]}
+    />
+    <Line
+      name="another 4"
+      data={[
+        [0, 2],
+        [1, 2],
+        [2, 2],
+        [3, 2],
+        [4, 2],
+        [5, 2],
+        [6, 2],
+      ]}
+    />
+    <Line
+      name="another 5"
+      data={[
+        [0, 12],
+        [1, 13],
+        [2, 14],
+        [3, 15],
+        [4, 16],
+        [5, 17],
+        [6, 18],
       ]}
     />
   </Chart>
