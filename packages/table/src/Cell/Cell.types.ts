@@ -5,15 +5,6 @@ export type Align = Extract<
   'left' | 'right' | 'center'
 >;
 
-export const CellOverflowBehavior = {
-  Default: 'default',
-  Truncate: 'truncate',
-  // TODO: `Expand`: The cell will expand to the height of its content
-  // Expand: 'expand',
-} as const;
-export type CellOverflowBehavior =
-  (typeof CellOverflowBehavior)[keyof typeof CellOverflowBehavior];
-
 interface BaseCellProps extends HTMLElementProps<'td'> {
   /**
    * Alignment of the cell's contents
@@ -24,21 +15,6 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
 
   /** A `className` applied to the inner `div` of the Cell  */
   contentClassName?: string;
-
-  /**
-   * Defines how a cell should behave when its content is larger than the standard cell height.
-   *
-   * `Default`: The cell height will be fixed to the standard cell height (40px by default).
-   * Any overflowing content will be clipped.
-   *
-   * `Truncate`: The cell height will be fixed to the standard cell height (40px by default),
-   * and include an ellipsis before the content is clipped.
-   *
-   * Note: It's recommended to provide the same value for all cells in a given row.
-   *
-   * @default CellOverflowBehavior.Default
-   */
-  overflow?: CellOverflowBehavior;
 
   cell?: any; //FIXME:
 }

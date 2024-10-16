@@ -7,8 +7,8 @@ import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 import {
   alignmentStyles,
-  baseCellStyles,
-  cellTransitionContainerStyles,
+  cellContainerStyles,
+  getBaseStyles,
 } from '../Cell.styles';
 
 import SortIcon from './SortIcon/SortIcon';
@@ -50,7 +50,7 @@ const HeaderCell = <T extends LGRowData>({
     <th
       data-lgid={LGIDS.header}
       className={cx(
-        baseCellStyles,
+        getBaseStyles(),
         getCellPaddingStyles(isSelectable),
         {
           [getHeaderCellWidthStyles(header?.getSize() ?? 0)]:
@@ -63,7 +63,7 @@ const HeaderCell = <T extends LGRowData>({
     >
       <div
         className={cx(
-          cellTransitionContainerStyles,
+          cellContainerStyles(),
           headerCellContentStyles,
           // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
           // @ts-ignore Header types need to be extended or declared in the react-table namespace

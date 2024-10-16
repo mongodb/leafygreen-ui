@@ -8,7 +8,6 @@ export const baseStyles = css`
   overflow: hidden;
   transition: ${transitionDuration.default}ms ease;
 
-  //TODO: this is temp
   > div {
     max-height: inherit;
   }

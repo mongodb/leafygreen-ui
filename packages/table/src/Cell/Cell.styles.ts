@@ -12,19 +12,6 @@ const iconSize = 28;
 /** the default height of a cell */
 export const standardCellHeight = spacing[5] + spacing[2];
 
-export const baseCellStyles = css`
-  padding: 0 8px;
-  overflow: hidden;
-
-  &:focus-visible {
-    box-shadow: inset;
-  }
-
-  &:last-child {
-    padding-right: ${baseTableSidePadding}px;
-  }
-`;
-
 export const alignmentStyles = (align: Align = 'left') => css`
   justify-content: ${align};
   text-align: ${align};
@@ -72,13 +59,16 @@ export const basicCellStyles = css`
   }
 `;
 
-//TODO: update this when working on multi line content
-export const cellTransitionContainerStyles = css`
+export const cellContainerStyles = (shouldTruncate = true) => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
   overflow: hidden;
-  max-height: ${standardCellHeight}px;
+
+  ${shouldTruncate &&
+  css`
+    max-height: ${standardCellHeight}px;
+  `}
 `;
 
 export const truncatedContentStyles = css`
@@ -89,7 +79,34 @@ export const truncatedContentStyles = css`
   -webkit-box-align: start;
 `;
 
-export const disableAnimationStyles = css`
-  transition-duration: 0;
-  transition: none;
+export const getBaseStyles = (size = 0, shouldTruncate = true) => css`
+  padding: 0 8px;
+  overflow: hidden;
+
+  &:focus-visible {
+    box-shadow: inset;
+  }
+
+  &:last-child {
+    padding-right: ${baseTableSidePadding}px;
+  }
+
+  ${shouldTruncate &&
+  css`
+    width: ${size}px;
+  `}
+`;
+
+export const getCellInnerStyles = () => css`
+  width: inherit;
+`;
+
+export const getCellEllipsisStyles = (shouldTruncate: boolean) => css`
+  ${shouldTruncate &&
+  css`
+    flex: 1; /* Allow the element to grow */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  `}
 `;

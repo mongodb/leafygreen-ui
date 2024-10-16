@@ -30,6 +30,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       children,
       className,
       shouldAlternateRowColor = false,
+      shouldTruncate = true,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
       table,
@@ -74,6 +75,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               isVirtual={isVirtual}
               isSelectable={isSelectable}
               measureElement={measureElement}
+              shouldTruncate={shouldTruncate}
             >
               <table
                 className={cx(

@@ -4,12 +4,13 @@ import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
+import { useTableContext } from '../TableContext';
 
 import {
   alignmentStyles,
-  baseCellStyles,
   basicCellStyles,
-  cellTransitionContainerStyles,
+  cellContainerStyles,
+  getBaseStyles,
 } from './Cell.styles';
 import InternalCell from './InternalCell';
 import { CellProps } from '.';
@@ -23,17 +24,19 @@ const Cell = ({
   ...rest
 }: CellProps) => {
   const { isReactTable } = useRowContext();
+  const { shouldTruncate } = useTableContext();
+
   return (
     <>
       {!isReactTable && (
         <td
           data-lgid={LGIDS.cell}
-          className={cx(baseCellStyles, basicCellStyles, className)}
+          className={cx(getBaseStyles(), basicCellStyles, className)}
           {...rest}
         >
           <div
             className={cx(
-              cellTransitionContainerStyles,
+              cellContainerStyles(shouldTruncate),
               alignmentStyles(align),
               contentClassName,
             )}

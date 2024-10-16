@@ -11,7 +11,7 @@ import {
 } from '../useLeafyGreenTable';
 
 export type TableContextValues<T extends LGRowData> = PropsWithChildren<
-  Pick<TableProps<T>, 'table' | 'shouldAlternateRowColor' | 'disableAnimations'>
+  Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
 > &
   DarkModeProps & {
     /** returns the table row object with the provided `id` */

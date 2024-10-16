@@ -263,47 +263,6 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-// TODO: i don't think we need this story
-export const OverflowingCell: StoryFn<StoryTableProps> = args => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]).filter(
-    x => x !== 'renderExpandedContent' && x !== 'subRows',
-  );
-  return (
-    <Table {...args}>
-      <TableHead>
-        <HeaderRow>
-          {columns.map((columnName: string) => (
-            <HeaderCell key={columnName}>{columnName}</HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {data.map((row: AnyDict) => (
-          <Row key={row.id}>
-            {Object.keys(row).map((cellKey: string, index: number) => {
-              return (
-                <Cell key={`${cellKey}-${index}`}>
-                  <div
-                    style={{
-                      width: '80px',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {row[cellKey]}
-                  </div>
-                </Cell>
-              );
-            })}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
-
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = React.useState(() => makeData(false, 500, 5, 3));

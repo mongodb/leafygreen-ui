@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -9,26 +9,25 @@ import ToggleExpandedIcon from '../ToggleExpandedIcon';
 
 import {
   alignmentStyles,
-  baseCellStyles,
-  cellTransitionContainerStyles,
+  cellContainerStyles,
+  getBaseStyles,
+  getCellEllipsisStyles,
+  getCellInnerStyles,
   getCellPadding,
-  standardCellHeight,
-  truncatedContentStyles,
 } from './Cell.styles';
-import { CellOverflowBehavior, InternalCellProps } from './Cell.types';
+import { InternalCellProps } from './Cell.types';
 
 const InternalCell = ({
   children,
   className,
   contentClassName,
-  overflow,
   align,
   cell,
   ...rest
 }: InternalCellProps) => {
   const { disabled } = useRowContext();
   // TODO: log warning if cell is not passed to Cell
-  const { isSelectable } = useTableContext();
+  const { isSelectable, shouldTruncate = true } = useTableContext();
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
   const row = cell.row;
   const isExpandable = row.getCanExpand();
@@ -36,16 +35,7 @@ const InternalCell = ({
   const depth = row.depth;
   const toggleExpanded = () => row.toggleExpanded();
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const contentHeight = standardCellHeight;
-  const scrollHeight = contentRef.current
-    ? contentRef.current?.scrollHeight
-    : 0;
-  const shouldTruncate = useMemo(() => {
-    return (
-      overflow === CellOverflowBehavior.Truncate && scrollHeight > contentHeight
-    );
-  }, [contentHeight, overflow, scrollHeight]);
+  const cellSize = cell.column.getSize();
 
   // TODO: memoize me
 
@@ -53,7 +43,7 @@ const InternalCell = ({
     <td
       data-lgid={LGIDS.cell}
       className={cx(
-        baseCellStyles,
+        getBaseStyles(cellSize, shouldTruncate),
         {
           [getCellPadding({ depth, isExpandable, isSelectable })]: isFirstCell,
         },
@@ -64,11 +54,9 @@ const InternalCell = ({
       <div
         ref={contentRef}
         className={cx(
-          cellTransitionContainerStyles,
+          getCellInnerStyles(),
+          cellContainerStyles(shouldTruncate),
           alignmentStyles(align),
-          {
-            [truncatedContentStyles]: shouldTruncate,
-          },
           contentClassName,
         )}
       >
@@ -79,7 +67,7 @@ const InternalCell = ({
             disabled={disabled}
           />
         )}
-        {children}
+        <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
       </div>
     </td>
   );
