@@ -1,4 +1,8 @@
-import { PopoverRenderModeProps, RenderMode } from '../Popover';
+import {
+  GetPopoverRenderModeProps,
+  PopoverRenderModeProps,
+  RenderMode,
+} from '../Popover';
 
 /**
  * Util function that returns relevant properties based on the `renderMode` prop
@@ -12,15 +16,7 @@ export const getPopoverRenderModeProps = ({
   portalRef,
   renderMode,
   scrollContainer,
-}: {
-  dismissMode?: PopoverRenderModeProps['dismissMode'];
-  onToggle?: PopoverRenderModeProps['onToggle'];
-  portalClassName?: PopoverRenderModeProps['portalClassName'];
-  portalContainer?: PopoverRenderModeProps['portalContainer'];
-  portalRef?: PopoverRenderModeProps['portalRef'];
-  renderMode: RenderMode;
-  scrollContainer?: PopoverRenderModeProps['scrollContainer'];
-}): PopoverRenderModeProps => {
+}: GetPopoverRenderModeProps): PopoverRenderModeProps => {
   if (renderMode === RenderMode.Inline) {
     return { renderMode };
   }

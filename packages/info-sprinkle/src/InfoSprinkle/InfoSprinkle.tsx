@@ -26,8 +26,9 @@ export const InfoSprinkle = React.forwardRef<
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const [tooltipOpen, setTooltipOpen] = useState(false);
 
-    const handleMouseEnter = () => {
+    const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
       setTooltipOpen(true);
+      triggerProps?.onMouseEnter?.(e);
     };
 
     return (

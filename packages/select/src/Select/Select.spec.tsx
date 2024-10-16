@@ -699,6 +699,7 @@ describe('packages/select', () => {
 
           expect(button).toBeVisible();
           expect(button).toHaveFocus();
+          expect(button).toHaveTextContent(optionText);
           expect(button).toHaveValue(optionValue);
         });
 
@@ -727,6 +728,7 @@ describe('packages/select', () => {
 
           expect(button).toBeVisible();
           expect(button).toHaveFocus();
+          expect(button).toHaveTextContent(optionText);
           expect(button).toHaveValue(optionValue);
         });
 
@@ -751,6 +753,7 @@ describe('packages/select', () => {
 
           expect(button).toBeVisible();
           expect(button).toHaveFocus();
+          expect(button).toHaveTextContent(optionText);
           expect(button).toHaveValue(optionValue);
         });
       });
@@ -781,7 +784,7 @@ describe('packages/select', () => {
 
           expect(button).toBeVisible();
           expect(targetOption).toHaveFocus();
-
+          expect(button).toHaveTextContent('Select');
           expect(button).toHaveValue('');
         });
 
@@ -801,6 +804,7 @@ describe('packages/select', () => {
           expect(listbox).toBeInTheDocument();
 
           expect(button).toBeVisible();
+          expect(button).toHaveTextContent('Select');
           expect(button).toHaveValue('');
         });
       });
@@ -970,20 +974,6 @@ describe('packages/select', () => {
 
         userEvent.click(getInput());
         await waitFor(() => expect(getPopover()).toBeVisible());
-      });
-
-      test('menu renders as a child of button', async () => {
-        const { getPopover, getInput } = renderSelect({
-          renderMode,
-        });
-
-        userEvent.click(getInput());
-
-        await waitFor(() => {
-          const popover = getPopover();
-          expect(popover).toBeInTheDocument();
-          expect(getInput()).toContainElement(popover);
-        });
       });
 
       describe('fires onChange when selecting an option', () => {

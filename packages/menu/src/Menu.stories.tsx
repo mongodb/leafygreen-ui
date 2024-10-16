@@ -63,7 +63,6 @@ export default {
         'setOpen',
         'size',
         'trigger',
-        'renderMode',
       ],
     },
   },

@@ -79,11 +79,9 @@ function LeafyGreenProvider({
           contextDarkMode={darkModeState}
           setDarkMode={setDarkMode}
         >
-          <OverlayProvider>
-            <PopoverProvider {...popoverProviderProps}>
-              {children}
-            </PopoverProvider>
-          </OverlayProvider>
+          <PopoverProvider {...popoverProviderProps}>
+            {children}
+          </PopoverProvider>
         </DarkModeProvider>
       </TypographyProvider>
     </UsingKeyboardProvider>

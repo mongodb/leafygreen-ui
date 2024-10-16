@@ -604,26 +604,25 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               state={state}
               baseFontSize={baseFontSize}
               __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
-            >
-              <PopoverProvider {...popoverProps}>
-                <ListMenu
-                  labelId={labelId}
-                  id={menuId}
-                  referenceElement={menuButtonRef}
-                  ref={listMenuRef}
-                  className={cx({
-                    [css`
-                      width: ${menuButtonRef.current?.clientWidth}px;
-                    `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
-                  })}
-                  dropdownWidthBasis={dropdownWidthBasis}
-                  {...popoverProps}
-                >
-                  {allowDeselect && deselectionOption}
-                  {renderedChildren}
-                </ListMenu>
-              </PopoverProvider>
-            </MenuButton>
+            />
+            <PopoverProvider {...popoverProps}>
+              <ListMenu
+                labelId={labelId}
+                id={menuId}
+                referenceElement={menuButtonRef}
+                ref={listMenuRef}
+                className={cx({
+                  [css`
+                    width: ${menuButtonRef.current?.clientWidth}px;
+                  `]: dropdownWidthBasis === DropdownWidthBasis.Trigger,
+                })}
+                dropdownWidthBasis={dropdownWidthBasis}
+                {...popoverProps}
+              >
+                {allowDeselect && deselectionOption}
+                {renderedChildren}
+              </ListMenu>
+            </PopoverProvider>
           </SelectContext.Provider>
           <FormFieldFeedback
             disabled={disabled}

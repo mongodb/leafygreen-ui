@@ -373,3 +373,13 @@ export interface UseContentNodeReturnObj {
    */
   setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
 }
+
+export interface GetPopoverRenderModeProps {
+  dismissMode?: DismissMode;
+  onToggle?: (e: ToggleEvent) => void;
+  portalClassName?: string;
+  portalContainer?: HTMLElement | null;
+  portalRef?: React.MutableRefObject<HTMLElement | null>;
+  renderMode: RenderMode;
+  scrollContainer?: HTMLElement | null;
+}
