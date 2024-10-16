@@ -95,7 +95,6 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
 export const Basic: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useMemo(() => makeData(false, 10_000), []);
-  // const data = React.useMemo(() => makeData(false, 100), []);
 
   const columns = useMemo(() => basicColumnDefs, []);
 
@@ -142,7 +141,7 @@ export const Basic: StoryFn<StoryTableProps> = args => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
                 return (
-                  <Row key={row.id} virtualRow={virtualRow} row={row}>
+                  <Row key={virtualRow.key} virtualRow={virtualRow} row={row}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell key={cell.id} cell={cell}>
@@ -212,7 +211,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
                 return (
                   <>
-                    <Row key={row.id} row={row} virtualRow={virtualRow}>
+                    <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
                       {cells.map((cell: LeafyGreenTableCell<Person>) => {
                         return (
                           <Cell key={cell.id} cell={cell}>
@@ -328,7 +327,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
                 const cells = row.getVisibleCells();
 
                 return (
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell key={cell.id} cell={cell}>
@@ -402,7 +401,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
                 const cells = row.getVisibleCells();
 
                 return (
-                  <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell key={cell.id} cell={cell}>
@@ -479,7 +478,11 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                 return (
                   <>
                     {!isExpandedContent && (
-                      <Row key={row.id} row={row} virtualRow={virtualRow}>
+                      <Row
+                        key={virtualRow.key}
+                        row={row}
+                        virtualRow={virtualRow}
+                      >
                         {row
                           .getVisibleCells()
                           .map((cell: LeafyGreenTableCell<Person>) => {
@@ -498,6 +501,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                       <ExpandedContent
                         data-index={virtualRow.index} //TODO: make internal;
                         row={row}
+                        key={virtualRow.key}
                       />
                     )}
                   </>
