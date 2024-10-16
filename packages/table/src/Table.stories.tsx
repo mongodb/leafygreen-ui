@@ -97,8 +97,7 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data, setData] = useState(() => makeKitchenSinkData(500));
-  const refreshData = () => setData(() => makeKitchenSinkData(10));
+  const [data] = useState(() => makeKitchenSinkData(500));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -171,9 +170,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
 
   return (
     <>
-      <div>
-        <button onClick={() => refreshData()}>Refresh Data</button>
-      </div>
       <Table
         {...args}
         table={table}

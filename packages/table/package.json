@@ -38,7 +38,8 @@
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
     "react-virtual": "^2.10.4",
-    "react-fast-compare": "3.2.2"
+    "react-fast-compare": "3.2.2",
+    "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
