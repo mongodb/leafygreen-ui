@@ -32,19 +32,18 @@ function useLeafyGreenVirtualTable<
     hasSelectableRows,
     onExpandedChange: setExpanded,
     getExpandedRowModel: getExpandedRowModel(),
-    // isVirtual: true,
     state: {
       expanded,
     },
     ...rest,
   });
 
-  // const { rows } = table.getRowModel();
-
   const { rows } = table;
 
   const rowsCopy = [...rows];
 
+  // A way to include expandableContent inside of the rows object.
+  // If a row has expandedContent and its expanded then add a new row below the row
   for (let i = 0; i < rowsCopy.length; i++) {
     if (
       rowsCopy[i].original.renderExpandedContent &&

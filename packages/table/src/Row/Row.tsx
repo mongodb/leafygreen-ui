@@ -8,9 +8,7 @@ import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
-import InternalRowWithRT, {
-  MemoizedInternalRowWithRT,
-} from './InternalRowWithRT';
+import { MemoizedInternalRowWithRT } from './InternalRowWithRT';
 import { RowProps } from './Row.types';
 
 /**

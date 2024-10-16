@@ -245,10 +245,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
                         )}
                     </Fragment>
                   ))}
-                {/* )} */}
-                {/* {row.original.renderExpandedContent && row.getIsExpanded() && (
-                <ExpandedContent row={row} />
-              )} */}
               </Fragment>
             );
           })}
@@ -314,7 +310,7 @@ export const OverflowingCell: StoryFn<StoryTableProps> = args => {
 
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = React.useState(() => makeData(false, 20, 5, 3));
+  const [data] = React.useState(() => makeData(false, 500, 5, 3));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -529,7 +525,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>
               <Row row={row}>
@@ -1125,67 +1120,78 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
     }
   `;
 
-  console.log({ rows });
-
   return (
-    // <Table
-    //   {...args}
-    //   table={table}
-    //   ref={tableContainerRef}
-    //   className={css`
-    //     width: 1100px;
-    //   `}
-    // >
-    //   <TableHead>
-    //     {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-    //       <StyledHeaderRow key={headerGroup.id}>
-    //         {headerGroup.headers.map(header => {
-    //           return (
-    //             <StyledHeaderCell key={header.id} header={header}>
-    //               {flexRender(
-    //                 header.column.columnDef.header,
-    //                 header.getContext(),
-    //               )}
-    //             </StyledHeaderCell>
-    //           );
-    //         })}
-    //       </StyledHeaderRow>
-    //     ))}
-    //   </TableHead>
-    //   <TableBody>
-    //     {rows.map((row: LeafyGreenTableRow<Person>) => {
-    //       // const isExpandedContent = row.original.isExpandedContent ?? false;
-    //       console.log(
-    //         'shouldRender',
-    //         row.original.renderExpandedContent && row.getIsExpanded(),
-    //       );
-    //       return (
-    //         <Fragment key={row.id}>
-    //           <Row row={row}>
-    //             {row.getVisibleCells().map(cell => {
-    //               return (
-    //                 <StyledCell
-    //                   key={cell.id}
-    //                   id={cell.id}
-    //                   overflow="truncate"
-    //                   cell={cell}
-    //                 >
-    //                   {flexRender(
-    //                     cell.column.columnDef.cell,
-    //                     cell.getContext(),
-    //                   )}
-    //                 </StyledCell>
-    //               );
-    //             })}
-    //           </Row>
-    //           {row.original.renderExpandedContent && row.getIsExpanded() && (
-    //             <ExpandedContent row={row} />
-    //           )}
-    //         </Fragment>
-    //       );
-    //     })}
-    //   </TableBody>
-    // </Table>
-    <p>hey</p>
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <StyledHeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <StyledHeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </StyledHeaderCell>
+              );
+            })}
+          </StyledHeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Fragment key={row.id}>
+              <StyledRow row={row}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <StyledCell
+                      key={cell.id}
+                      id={cell.id}
+                      overflow="truncate"
+                      cell={cell}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </StyledCell>
+                  );
+                })}
+              </StyledRow>
+              {row.getIsExpanded() &&
+                row.subRows &&
+                row.subRows.map(subRow => (
+                  <Fragment key={subRow.id}>
+                    <StyledRow row={subRow}>
+                      {subRow.getVisibleCells().map(cell => {
+                        return (
+                          <StyledCell key={cell.id} id={cell.id} cell={cell}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </StyledCell>
+                        );
+                      })}
+                    </StyledRow>
+                    {subRow.original.renderExpandedContent &&
+                      subRow.getIsExpanded() && (
+                        <StyledExpandedContent row={subRow} />
+                      )}
+                  </Fragment>
+                ))}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
