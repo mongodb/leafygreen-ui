@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, { useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
@@ -44,6 +43,7 @@ const InternalRowWithRT = <T extends LGRowData>({
 
   const depth = row.depth;
 
+  // eslint-disable-next-line no-console
   console.log(`🪼rerender🪼 row: ${row.id}, depth: ${depth}`, {
     isExpanded: isExpanded,
   });
@@ -58,15 +58,6 @@ const InternalRowWithRT = <T extends LGRowData>({
             !virtualRow && shouldAlternateRowColor && !isSelected,
           [selectedRowStyles[theme]]: isSelected && !disabled,
           [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
-          // [css`
-          //   /* display: none; */
-
-          //   > td div {
-          //     height: 0;
-          //     overflow: hidden;
-          //     min-height: 0;
-          //   }
-          // `]: row.depth !== 0 && isParentExpanded === false,
         },
         className,
       )}
@@ -87,6 +78,7 @@ const InternalRowWithRT = <T extends LGRowData>({
 
 export default InternalRowWithRT;
 
+// @ts-expect-error FIXME: the types are generic
 const arePropsEqual = (prevProps, nextProps) => {
   // Children will never be the same
   const { children: prevChildren, ...restPrevProps } = prevProps;
