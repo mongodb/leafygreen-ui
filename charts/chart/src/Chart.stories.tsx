@@ -17,8 +17,7 @@ export default {
 
 const Template: StoryFn<typeof Chart> = props => (
   <Chart>
-    {/* <Axis x={{ type: 'value' }} y={{ type: 'value' }} />
-    <Grid horizontal /> */}
+    <Axis x={{ type: 'value' }} y={{ type: 'value' }} />
     <Line
       name="some series"
       data={[

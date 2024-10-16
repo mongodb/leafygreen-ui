@@ -8,6 +8,14 @@ import {
   InteractionState,
 } from '@leafygreen-ui/tokens';
 
+const getFontStyles = (theme: Theme) => ({
+  fontFamily: fontFamilies.default,
+  fontWeight: fontWeights.medium,
+  fontSize: 11,
+  lineHeight: spacing[400],
+  color: color[theme].text[Variant.Secondary][InteractionState.Default],
+});
+
 const getCommonAxisOptions = (theme: Theme) => ({
   type: 'value',
   axisLine: {
@@ -19,25 +27,28 @@ const getCommonAxisOptions = (theme: Theme) => ({
   },
   axisLabel: {
     show: true,
-    fontFamily: fontFamilies.default,
-    fontWeight: fontWeights.medium,
-    fontSize: 11,
-    lineHeight: spacing[400],
-    color: color[theme].text[Variant.Secondary][InteractionState.Default],
+    ...getFontStyles(theme),
   },
   axisTick: {
     show: false,
+  },
+  nameLocation: 'middle',
+  nameTextStyle: {
+    ...getFontStyles(theme),
   },
 });
 
 export const getDefaultXAxisOptions = (theme: Theme) => {
   const commonOptions = getCommonAxisOptions(theme);
   return {
-    ...commonOptions,
-    axisLabel: {
-      ...commonOptions.axisLabel,
-      align: 'center',
-      margin: spacing[400],
+    xAxis: {
+      ...commonOptions,
+      axisLabel: {
+        ...commonOptions.axisLabel,
+        align: 'center',
+        margin: spacing[400],
+      },
+      nameGap: spacing[1000],
     },
   };
 };
@@ -45,11 +56,14 @@ export const getDefaultXAxisOptions = (theme: Theme) => {
 export const getDefaultYAxisOptions = (theme: Theme) => {
   const commonOptions = getCommonAxisOptions(theme);
   return {
-    ...commonOptions,
-    axisLabel: {
-      ...commonOptions.axisLabel,
-      align: 'right',
-      margin: spacing[200],
+    yAxis: {
+      ...commonOptions,
+      axisLabel: {
+        ...commonOptions.axisLabel,
+        align: 'right',
+        margin: spacing[200],
+      },
+      nameGap: spacing[900],
     },
   };
 };
