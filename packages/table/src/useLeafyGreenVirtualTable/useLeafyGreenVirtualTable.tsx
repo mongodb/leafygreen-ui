@@ -63,7 +63,7 @@ function useLeafyGreenVirtualTable<
   }
 
   const _virtualizer = useVirtualizer({
-    count: rows.length,
+    count: rows.length, //TODO: should be rowscopy
     getScrollElement: () => containerRef.current,
     estimateSize: () => 40,
     overscan: 20,
@@ -79,7 +79,7 @@ function useLeafyGreenVirtualTable<
     .getVirtualItems()
     .map((virtualRow: VirtualItem) => ({
       ...virtualRow,
-      row: rows[virtualRow.index],
+      row: rows[virtualRow.index], //TODO: should be rowscopy
     }));
 
   return {

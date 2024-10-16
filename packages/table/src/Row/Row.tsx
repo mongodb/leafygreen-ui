@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -35,6 +36,7 @@ const Row = <T extends LGRowData>({
           isParentExpanded={
             row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
           }
+          isSelected={row.getIsSelected()}
           {...rest}
         />
       ) : (

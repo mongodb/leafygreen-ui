@@ -83,7 +83,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     ...rest,
   });
 
-  const { rows, flatRows } = table.getRowModel();
+  const { rows } = table.getRowModel();
 
   // A way to include expandableContent inside of the rows object.
   // If a row has expandedContent and its expanded then add a new row below the row

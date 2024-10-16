@@ -1,4 +1,6 @@
+// @ts-nocheck
 import React, { useEffect, useMemo, useRef } from 'react';
+import isEqual from 'react-fast-compare';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -30,6 +32,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   measureElement,
   isExpanded,
   isParentExpanded,
+  isSelected,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   // const { theme } = useDarkMode();
@@ -44,7 +47,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   // const isExpanded = row.getIsExpanded();
-  const isSelected = row.getIsSelected();
+  // const isSelected = row.getIsSelected();
   // const isParentExpanded = row.getParentRow()
   //   ? row.getParentRow()?.getIsExpanded()
   //   : false;
@@ -103,27 +106,18 @@ const InternalRowWithRT = <T extends LGRowData>({
 export default InternalRowWithRT;
 
 const arePropsEqual = (prevProps, nextProps) => {
-  const prevIsExpanded = prevProps.isExpanded;
-  const nextIsExpanded = nextProps.isExpanded;
+  // Children will never be the same
+  const { children: prevChildren, ...restPrevProps } = prevProps;
+  const { children: nextChildren, ...restnextProps } = nextProps;
 
-  const prevIsParentExpanded = prevProps.isParentExpanded;
-  const nextIsParentExpanded = nextProps.isParentExpanded;
+  const propsAreEqual = isEqual(restPrevProps, restnextProps);
 
-  const equal =
-    prevIsExpanded === nextIsExpanded &&
-    prevIsParentExpanded === nextIsParentExpanded;
-
-  // console.log('🐞 memo check', {
-  //   prevIsExpanded,
-  //   nextIsExpanded,
-  //   prevIsParentExpanded,
-  //   nextIsParentExpanded,
-  //   equal,
+  // console.log('🧤', {
+  //   children: prevProps.children === nextProps.children,
+  //   propsWithoutChildren: isEqual(restPrevProps, restnextProps),
   // });
 
-  // return prevIsExpanded === nextIsExpanded;
-  // return false;
-  return equal;
+  return propsAreEqual;
 };
 
 export const MemoizedInternalRowWithRT = React.memo(

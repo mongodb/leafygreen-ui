@@ -97,7 +97,8 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(500));
+  const [data, setData] = useState(() => makeKitchenSinkData(500));
+  const refreshData = () => setData(() => makeKitchenSinkData(10));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -167,88 +168,93 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   });
 
   const { rows } = table;
-  // const { flatRows: rows } = table.getRowModel();
 
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-          <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
-              return (
-                <HeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </HeaderCell>
-              );
-            })}
-          </HeaderRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
+    <>
+      <div>
+        <button onClick={() => refreshData()}>Refresh Data</button>
+      </div>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={css`
+          width: 1100px;
+        `}
+      >
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            // const isExpandedContent = row.original.isExpandedContent ?? false;
 
-          return (
-            <Fragment key={row.id}>
-              {/* {!isExpandedContent && ( */}
-              <Row row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell
-                      key={cell.id}
-                      id={cell.id}
-                      overflow="truncate"
-                      cell={cell}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              </Row>
-              {row.getIsExpanded() &&
-                row.subRows &&
-                row.subRows.map(subRow => (
-                  <Fragment key={subRow.id}>
-                    <Row row={subRow}>
-                      {subRow.getVisibleCells().map(cell => {
-                        return (
-                          <Cell key={cell.id} id={cell.id} cell={cell}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                    {subRow.original.renderExpandedContent &&
-                      subRow.getIsExpanded() && (
-                        <ExpandedContent row={subRow} />
-                      )}
-                  </Fragment>
-                ))}
-              {/* )} */}
-              {/* {row.original.renderExpandedContent && row.getIsExpanded() && (
+            // TODO: the diff in this approach is that the keys are not chaning when a sub row opens
+            return (
+              <Fragment key={row.id}>
+                {/* {!isExpandedContent && ( */}
+                <Row row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell
+                        key={cell.id}
+                        id={cell.id}
+                        overflow="truncate"
+                        cell={cell}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+                {row.getIsExpanded() &&
+                  row.subRows &&
+                  row.subRows.map(subRow => (
+                    <Fragment key={subRow.id}>
+                      <Row row={subRow}>
+                        {subRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id} id={cell.id} cell={cell}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                      </Row>
+                      {subRow.original.renderExpandedContent &&
+                        subRow.getIsExpanded() && (
+                          <ExpandedContent row={subRow} />
+                        )}
+                    </Fragment>
+                  ))}
+                {/* )} */}
+                {/* {row.original.renderExpandedContent && row.getIsExpanded() && (
                 <ExpandedContent row={row} />
               )} */}
-            </Fragment>
-          );
-        })}
-      </TableBody>
-    </Table>
+              </Fragment>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 
@@ -387,8 +393,8 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
           return (
-            <>
-              <Row key={row.id} row={row}>
+            <Fragment key={row.id}>
+              <Row row={row}>
                 {row
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
@@ -402,7 +408,43 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                     );
                   })}
               </Row>
-            </>
+              {row.getIsExpanded() &&
+                row.subRows &&
+                row.subRows.map(subRow => (
+                  <Fragment key={subRow.id}>
+                    <Row row={subRow}>
+                      {subRow.getVisibleCells().map(cell => {
+                        return (
+                          <Cell key={cell.id} id={cell.id} cell={cell}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </Cell>
+                        );
+                      })}
+                    </Row>
+                    {subRow.getIsExpanded() &&
+                      subRow.subRows &&
+                      subRow.subRows.map(subSubRow => (
+                        <Fragment key={subSubRow.id}>
+                          <Row row={subSubRow}>
+                            {subSubRow.getVisibleCells().map(cell => {
+                              return (
+                                <Cell key={cell.id} id={cell.id} cell={cell}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </Cell>
+                              );
+                            })}
+                          </Row>
+                        </Fragment>
+                      ))}
+                  </Fragment>
+                ))}
+            </Fragment>
           );
         })}
       </TableBody>
@@ -487,25 +529,25 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          const isExpandedContent = row.original.isExpandedContent ?? false;
+          // const isExpandedContent = row.original.isExpandedContent ?? false;
           return (
-            <>
-              {!isExpandedContent && (
-                <Row key={row.id} row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <Cell key={cell.id} id={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
+            <Fragment key={row.id}>
+              <Row row={row}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <Cell key={cell.id} id={cell.id} cell={cell}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              </Row>
+              {row.original.renderExpandedContent && row.getIsExpanded() && (
+                <ExpandedContent row={row} />
               )}
-              {isExpandedContent && <ExpandedContent row={row} />}
-            </>
+            </Fragment>
           );
         })}
       </TableBody>
@@ -1083,62 +1125,67 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
     }
   `;
 
+  console.log({ rows });
+
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-          <StyledHeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
-              return (
-                <StyledHeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </StyledHeaderCell>
-              );
-            })}
-          </StyledHeaderRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-          const isExpandedContent = row.original.isExpandedContent ?? false;
-          return (
-            <>
-              {!isExpandedContent && (
-                <StyledRow key={row.id} row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <StyledCell
-                        key={cell.id}
-                        id={cell.id}
-                        overflow="truncate"
-                        cell={cell}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </StyledCell>
-                    );
-                  })}
-                </StyledRow>
-              )}
-              {isExpandedContent && (
-                <StyledExpandedContent key={row.id} row={row} />
-              )}
-            </>
-          );
-        })}
-      </TableBody>
-    </Table>
+    // <Table
+    //   {...args}
+    //   table={table}
+    //   ref={tableContainerRef}
+    //   className={css`
+    //     width: 1100px;
+    //   `}
+    // >
+    //   <TableHead>
+    //     {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+    //       <StyledHeaderRow key={headerGroup.id}>
+    //         {headerGroup.headers.map(header => {
+    //           return (
+    //             <StyledHeaderCell key={header.id} header={header}>
+    //               {flexRender(
+    //                 header.column.columnDef.header,
+    //                 header.getContext(),
+    //               )}
+    //             </StyledHeaderCell>
+    //           );
+    //         })}
+    //       </StyledHeaderRow>
+    //     ))}
+    //   </TableHead>
+    //   <TableBody>
+    //     {rows.map((row: LeafyGreenTableRow<Person>) => {
+    //       // const isExpandedContent = row.original.isExpandedContent ?? false;
+    //       console.log(
+    //         'shouldRender',
+    //         row.original.renderExpandedContent && row.getIsExpanded(),
+    //       );
+    //       return (
+    //         <Fragment key={row.id}>
+    //           <Row row={row}>
+    //             {row.getVisibleCells().map(cell => {
+    //               return (
+    //                 <StyledCell
+    //                   key={cell.id}
+    //                   id={cell.id}
+    //                   overflow="truncate"
+    //                   cell={cell}
+    //                 >
+    //                   {flexRender(
+    //                     cell.column.columnDef.cell,
+    //                     cell.getContext(),
+    //                   )}
+    //                 </StyledCell>
+    //               );
+    //             })}
+    //           </Row>
+    //           {row.original.renderExpandedContent && row.getIsExpanded() && (
+    //             <ExpandedContent row={row} />
+    //           )}
+    //         </Fragment>
+    //       );
+    //     })}
+    //   </TableBody>
+    // </Table>
+    <p>hey</p>
   );
 };

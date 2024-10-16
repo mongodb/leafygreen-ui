@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useRef } from 'react';
 import { RowData } from '@tanstack/react-table';
 
