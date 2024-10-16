@@ -27,7 +27,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@lg-tools/build": "0.3.0",
+    "@lg-tools/build": "0.6.0",
     "@types/eslint": "^8.44.6",
     "@typescript-eslint/rule-tester": "6.9.0",
     "commander": "^11.0.0",
