@@ -17,6 +17,7 @@ export const baseTypeStyle = css`
   font-weight: ${fontWeights.regular};
   width: 100%;
   overflow-wrap: anywhere;
+  text-transform: none;
 `;
 
 export const baseStyles = css`

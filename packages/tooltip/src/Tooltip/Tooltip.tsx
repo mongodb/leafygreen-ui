@@ -130,6 +130,14 @@ function Tooltip({
     }
   }, [trigger]);
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [timeoutRef]);
+
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
       onClose();

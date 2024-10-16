@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Options } from 'focus-trap';
 import FocusTrap from 'focus-trap-react';
 
@@ -27,6 +27,24 @@ import { GuideCueProps } from './types';
 
 const ariaLabelledby = 'guide-cue-label';
 const ariaDescribedby = 'guide-cue-desc';
+
+const focusTrapOptions: Options = {
+  clickOutsideDeactivates: true,
+  checkCanFocusTrap: async trapContainers => {
+    const results = trapContainers.map(trapContainer => {
+      return new Promise<void>(resolve => {
+        const interval = setInterval(() => {
+          if (getComputedStyle(trapContainer).opacity !== '0') {
+            resolve();
+            clearInterval(interval);
+          }
+        }, 5);
+      });
+    });
+    // Return a promise that resolves when all the trap containers are able to receive focus
+    return Promise.all(results).then(() => undefined);
+  },
+};
 
 type TooltipContentProps = Partial<GuideCueProps> & {
   theme: Theme;
@@ -58,12 +76,7 @@ function TooltipContent({
   handleCloseClick,
   ...tooltipProps
 }: TooltipContentProps) {
-  const [focusable, setFocusable] = useState(false);
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
-
-  const focusTrapOptions: Options = {
-    clickOutsideDeactivates: true,
-  };
 
   return (
     <>
@@ -80,13 +93,12 @@ function TooltipContent({
           tooltipClassName,
         )}
         onClose={onEscClose}
-        onEntered={() => setFocusable(true)}
         role="dialog"
         aria-labelledby={ariaLabelledby}
         renderMode={RenderMode.TopLayer}
         {...tooltipProps}
       >
-        <FocusTrap active={focusable} focusTrapOptions={focusTrapOptions}>
+        <FocusTrap focusTrapOptions={focusTrapOptions}>
           <div>
             {!isStandalone && (
               <IconButton

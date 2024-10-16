@@ -80,7 +80,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
-  const triggerRef = useRef<HTMLElement>(null);
+  const defaultTriggerRef = useRef<HTMLElement>(null);
+  const triggerRef = refEl ?? defaultTriggerRef;
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
 
@@ -95,7 +96,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   }, [setOpen, shouldClose]);
 
   const maxMenuHeightValue = useMenuHeight({
-    refEl: refEl || triggerRef,
+    refEl: triggerRef,
     spacing,
     maxHeight,
   });
@@ -141,12 +142,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       case keyMap.Tab:
         e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `renderMode="portal"`
         handleClose();
-        (refEl || triggerRef)?.current?.focus(); // Focus the trigger on close
+        triggerRef?.current?.focus(); // Focus the trigger on close
         break;
 
       case keyMap.Escape:
         handleClose();
-        (refEl || triggerRef)?.current?.focus(); // Focus the trigger on close
+        triggerRef?.current?.focus(); // Focus the trigger on close
         break;
 
       case keyMap.Space:
@@ -190,7 +191,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           active={open}
           align={align}
           justify={justify}
-          refEl={refEl}
+          refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
           data-testid={LGIDs.root}
@@ -247,29 +248,32 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     };
 
     if (typeof trigger === 'function') {
-      return trigger({
-        onClick: triggerClickHandler,
-        ref: triggerRef,
-        children: popoverContent,
-        ['aria-expanded']: open,
-        ['aria-haspopup']: true,
-      });
+      return (
+        <>
+          {trigger({
+            onClick: triggerClickHandler,
+            ref: triggerRef,
+            ['aria-expanded']: open,
+            ['aria-haspopup']: true,
+          })}
+          {popoverContent}
+        </>
+      );
     }
 
     const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: triggerClickHandler,
-      children: (
-        <>
-          {trigger.props.children}
-          {popoverContent}
-        </>
-      ),
       ['aria-expanded']: open,
       ['aria-haspopup']: true,
     });
 
-    return renderedTrigger;
+    return (
+      <>
+        {renderedTrigger}
+        {popoverContent}
+      </>
+    );
   }
 
   return popoverContent;
