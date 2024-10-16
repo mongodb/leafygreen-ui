@@ -1,8 +1,3 @@
-// import { RefObject } from 'react';
-// import {
-//   type Options as VirtualizerOptions,
-//   type VirtualItem,
-// } from 'react-virtual';
 import {
   Cell,
   ColumnDef,
@@ -13,8 +8,6 @@ import {
 } from '@tanstack/react-table';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
-
-// import { VirtualizerValues } from './ReactVirtual.types';
 
 /** LeafyGreen extension of `useReactTable` {@link RowData}*/
 export type LGRowData = RowData;
@@ -51,13 +44,10 @@ export type LeafyGreenTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
 > = Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel' | 'columns'> & {
-  // containerRef: RefObject<HTMLElement>;
   hasSelectableRows?: boolean;
   columns: Array<LGColumnDef<T, V>>;
   withPagination?: boolean;
   allowSelectAll?: boolean;
-  // useVirtualScrolling?: boolean;
-  // virtualizerOptions?: Partial<VirtualizerOptions<HTMLElement>>;
 };
 
 /**

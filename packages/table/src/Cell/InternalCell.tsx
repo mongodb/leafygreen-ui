@@ -47,7 +47,7 @@ const InternalCell = ({
     );
   }, [contentHeight, overflow, scrollHeight]);
 
-  // console.log('💚');
+  // TODO: memoize me
 
   return (
     <td

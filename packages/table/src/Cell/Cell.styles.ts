@@ -72,7 +72,7 @@ export const basicCellStyles = css`
   }
 `;
 
-//TODO: update this
+//TODO: update this when working on multi line content
 export const cellTransitionContainerStyles = css`
   display: flex;
   align-items: center;
