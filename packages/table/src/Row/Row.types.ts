@@ -26,7 +26,7 @@ export interface InternalRowWithRTProps<T extends LGRowData>
 
   shouldAlternateRowColor: boolean;
   theme: Theme;
-  measureElement: Virtualizer<HTMLElement, Element>['measureElement'];
+  measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
   isExpanded: boolean;
   isParentExpanded: boolean;
   isSelected: boolean;

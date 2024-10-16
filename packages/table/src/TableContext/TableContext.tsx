@@ -20,7 +20,6 @@ export const useTableContext = <T extends LGRowData>() =>
     TableContext as React.Context<TableContextValues<T>>,
   );
 
-//TODO: a seperate context for virtual scrolling?
 const TableContextProvider = <T extends LGRowData>({
   children,
   darkMode,
