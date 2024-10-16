@@ -7,6 +7,7 @@ import {
   Variant,
   InteractionState,
 } from '@leafygreen-ui/tokens';
+import { ChartOptions } from '../../Chart/Chart.types';
 
 const getFontStyles = (theme: Theme) => ({
   fontFamily: fontFamilies.default,
@@ -38,7 +39,7 @@ const getCommonAxisOptions = (theme: Theme) => ({
   },
 });
 
-export const getDefaultXAxisOptions = (theme: Theme) => {
+export const getDefaultXAxisOptions = (theme: Theme): Partial<ChartOptions> => {
   const commonOptions = getCommonAxisOptions(theme);
   return {
     xAxis: {
@@ -53,7 +54,7 @@ export const getDefaultXAxisOptions = (theme: Theme) => {
   };
 };
 
-export const getDefaultYAxisOptions = (theme: Theme) => {
+export const getDefaultYAxisOptions = (theme: Theme): Partial<ChartOptions> => {
   const commonOptions = getCommonAxisOptions(theme);
   return {
     yAxis: {

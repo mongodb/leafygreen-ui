@@ -1,14 +1,15 @@
-import { SeriesOption } from '../../Chart/Chart.types';
+import { ChartOptions } from '../../Chart/Chart.types';
 
-export const defaultLineOptions: Omit<SeriesOption, 'name' | 'data'> = {
-  type: 'line',
-  showSymbol: false,
-  symbol: 'circle',
-  clip: false,
-  emphasis: {
-    disabled: true,
-  },
-  lineStyle: {
-    width: 1,
-  },
-};
+export const defaultLineOptions: Omit<ChartOptions['series'], 'name' | 'data'> =
+  {
+    type: 'line',
+    showSymbol: false,
+    symbol: 'circle',
+    clip: false,
+    emphasis: {
+      disabled: true,
+    },
+    lineStyle: {
+      width: 1,
+    },
+  };

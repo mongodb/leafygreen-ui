@@ -1,5 +1,5 @@
 export interface AxisProps {
-  type: string;
+  type: 'category' | 'value' | 'time' | 'log';
   label?: string;
   unit?: string;
 }

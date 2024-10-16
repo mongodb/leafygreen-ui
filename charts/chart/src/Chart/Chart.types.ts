@@ -1,14 +1,31 @@
 import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
-import { LineSeriesOption } from 'echarts';
+import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
+import type { LineSeriesOption } from 'echarts/charts';
+import type {
+  TooltipComponentOption,
+  GridComponentOption,
+  DatasetComponentOption,
+  TitleComponentOption,
+  LegendComponentOption,
+  ToolboxComponentOption,
+} from 'echarts/components';
+import type { ComposeOption } from 'echarts/core';
 
-type RequiredSeriesProps = 'type' | 'name' | 'data';
-export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
-  Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
+// export type SeriesOption = LineSeriesOption;
 
-export interface ChartOptions {
-  series: Array<SeriesOption>;
-  [key: string]: any;
-}
+export type ChartOptions = ComposeOption<
+  | LineSeriesOption
+  | TooltipComponentOption
+  | GridComponentOption
+  | DatasetComponentOption
+  | TitleComponentOption
+  | LegendComponentOption
+  | ToolboxComponentOption
+  | XAXisComponentOption
+  | YAXisComponentOption
+>;
+
+// export type ChartOptions = EChartsOption;
 
 export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
   children?: React.ReactNode;
@@ -23,7 +40,7 @@ export const ChartActionType = {
 
 interface AddSeriesAction {
   type: typeof ChartActionType.addSeries;
-  data: SeriesOption;
+  data: ChartOptions['series'];
 }
 
 interface RemoveSeriesAction {

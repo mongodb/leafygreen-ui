@@ -6,6 +6,24 @@ import { getDefaultXAxisOptions, getDefaultYAxisOptions } from './config';
 import { AxisProps } from './Axis.types';
 import { spacing } from '@leafygreen-ui/tokens';
 
+/**
+ * React component that can render axes on a parent chart.
+ *
+ * This is done by updating the parent chart's canvas configuration received via context.
+ *
+ * ```
+ * <Chart>
+ *   <Axis
+ *     x={{
+ *       type: 'category',
+ *       label: 'X Axis'
+ *     }}
+ *     y={{
+ *       type: 'value',
+ *       label: 'Y Axis'
+ *     }} />
+ * </Chart>
+ */
 export function Axis({
   x,
   y,
