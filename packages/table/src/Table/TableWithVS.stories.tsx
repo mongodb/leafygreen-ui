@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
@@ -476,13 +476,9 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                   row.original.isExpandedContent ?? false;
 
                 return (
-                  <>
+                  <Fragment key={virtualRow.key}>
                     {!isExpandedContent && (
-                      <Row
-                        key={virtualRow.key}
-                        row={row}
-                        virtualRow={virtualRow}
-                      >
+                      <Row row={row} virtualRow={virtualRow}>
                         {row
                           .getVisibleCells()
                           .map((cell: LeafyGreenTableCell<Person>) => {
@@ -498,13 +494,9 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                       </Row>
                     )}
                     {isExpandedContent && (
-                      <ExpandedContent
-                        data-index={virtualRow.index} //TODO: make internal;
-                        row={row}
-                        key={virtualRow.key}
-                      />
+                      <ExpandedContent row={row} virtualRow={virtualRow} />
                     )}
-                  </>
+                  </Fragment>
                 );
               },
             )}

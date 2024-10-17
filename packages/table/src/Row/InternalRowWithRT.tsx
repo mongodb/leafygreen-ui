@@ -41,12 +41,8 @@ const InternalRowWithRT = <T extends LGRowData>({
     };
   }, [disabled]);
 
-  const depth = row.depth;
-
   // eslint-disable-next-line no-console
-  console.log(`🪼rerender🪼 row: ${row.id}, depth: ${depth}`, {
-    isExpanded: isExpanded,
-  });
+  console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
 
   return (
     <InternalRowBase

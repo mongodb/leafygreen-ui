@@ -14,6 +14,7 @@ import { ExpandedContentProps } from './ExpandedContent.types';
 
 const ExpandedContent = <T extends RowData>({
   row,
+  virtualRow,
   ...rest
 }: ExpandedContentProps<T>) => {
   const { measureElement } = useTableContext();
@@ -35,6 +36,7 @@ const ExpandedContent = <T extends RowData>({
         // This gets the dynamic size of the element
         if (measureElement) measureElement(node);
       }}
+      data-index={virtualRow ? virtualRow!.index : ''}
     >
       <td
         colSpan={row.getVisibleCells().length}
