@@ -222,7 +222,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
         in={context.open}
         timeout={{
           appear: 0,
-          enter: usePortal ? TRANSITION_DURATION : TRANSITION_DURATION - 50,
+          // enter: usePortal ? TRANSITION_DURATION : TRANSITION_DURATION - 50,
+          enter: TRANSITION_DURATION,
           exit: TRANSITION_DURATION,
         }}
         onEnter={onEnter}
