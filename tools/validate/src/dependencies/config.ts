@@ -18,7 +18,9 @@ export interface DependencyIssues {
   isMissingPeers: boolean;
 }
 
-/** We treat dependencies imported by files matching these patterns as devDependencies */
+/**
+ * Treat packages imported by these files as `devDependencies`
+ */
 export const devFilePatterns: Array<RegExp> = [
   /.*scripts\/.*/,
   /.*.stories.js/,
@@ -26,7 +28,8 @@ export const devFilePatterns: Array<RegExp> = [
   /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
-  /.*.testutils((.tsx?)|(\/.*))/,
+  /.*.test(-?[uU])til(itie)?s((.tsx?)|(\/.*))/,
+  /.*\/test(ing|-?[uU]til(itie)?s)?\//g,
   /.*\/dist\/.*/,
 ];
 
