@@ -1,21 +1,4 @@
-import { getPackageJson } from '@lg-tools/meta';
 import depcheck from 'depcheck';
-
-export interface DepCheckFunctionProps {
-  pkgName: string;
-  pkgJson: ReturnType<typeof getPackageJson>;
-  importedPackages: depcheck.Results['using'];
-}
-
-export interface DependencyIssues {
-  missingDependencies: Array<string>;
-  missingDevDependencies: Array<string>;
-  unusedDependencies: Array<string>;
-  unusedDevDependencies: Array<string>;
-  listedDevButUsedAsDependency: Array<string>;
-  listedButOnlyUsedAsDev: Array<string>;
-  isMissingPeers: boolean;
-}
 
 /*
  * Skip build and dependency checks for these packages

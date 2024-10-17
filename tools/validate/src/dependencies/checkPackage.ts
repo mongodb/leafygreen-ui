@@ -2,8 +2,8 @@
 import { getPackageName } from '@lg-tools/meta';
 import depcheck from 'depcheck';
 
-import { depcheckOptions, DependencyIssues } from '../config';
-import { ValidateCommandOptions } from '../validate.types';
+import { depcheckOptions } from '../config';
+import { DependencyIssues, ValidateCommandOptions } from '../validate.types';
 
 import { fixDependencies } from './fixDependencyIssues';
 import { logDependencyIssues } from './logDependencyIssues';

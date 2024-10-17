@@ -3,8 +3,11 @@ import chalk from 'chalk';
 import pick from 'lodash/pick';
 import path from 'path';
 
-import { DepCheckFunctionProps, externalDependencies } from '../config';
-import { ValidateCommandOptions } from '../validate.types';
+import { externalDependencies } from '../config';
+import {
+  DepCheckFunctionProps,
+  ValidateCommandOptions,
+} from '../validate.types';
 
 import { globToRegex } from './utils/globToRegex';
 import {
