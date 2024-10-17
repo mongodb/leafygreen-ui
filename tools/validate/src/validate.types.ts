@@ -16,11 +16,38 @@ export interface DepCheckFunctionProps {
 }
 
 export interface DependencyIssues {
-  missingDependencies: Array<string>;
-  missingDevDependencies: Array<string>;
+  /**
+   * A record of missing dependencies, and the files they're imported from
+   */
+  missingDependencies: Record<string, Array<string>>;
+
+  /**
+   * A record of missing devDependencies, and the files they're imported from
+   */
+  missingDevDependencies: Record<string, Array<string>>;
+
+  /**
+   * An array of package names that are listed as dependencies,
+   * but not imported
+   */
   unusedDependencies: Array<string>;
+
+  /**
+   * An array of package names that are listed as devDependencies,
+   * but not imported
+   */
   unusedDevDependencies: Array<string>;
+
+  /**
+   * An array of package names that are listed as devDependencies,
+   * but are imported from production files
+   */
   listedDevButUsedAsDependency: Array<string>;
+
+  /**
+   * An array of package names that are listed as dependencies,
+   * but are only imported from test files
+   */
   listedButOnlyUsedAsDev: Array<string>;
   isMissingPeers: boolean;
 }

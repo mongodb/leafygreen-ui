@@ -11,8 +11,8 @@ import {
 
 import { globToRegex } from './utils/globToRegex';
 import {
+  groupMissingDependenciesByUsage,
   isDependencyOnlyUsedInTestFile,
-  sortDependenciesByUsage,
 } from './utils';
 
 /**
@@ -28,8 +28,12 @@ export function validateListedDependencies(
 ): Array<string> {
   const { verbose } = options ?? { verbose: false };
 
-  const { dependencies: importedPackagesInSourceFile } =
-    sortDependenciesByUsage(importedPackages, pkgName);
+  const { missingDependencies } = groupMissingDependenciesByUsage(
+    importedPackages,
+    pkgName,
+  );
+
+  const importedPackagesInSourceFile = Object.keys(missingDependencies);
 
   const { dependencies: _listedDepObj } = pick(pkgJson, ['dependencies']);
   const listedDependencies = _listedDepObj ? Object.keys(_listedDepObj) : [];

@@ -8,7 +8,7 @@ import {
   ValidateCommandOptions,
 } from '../validate.types';
 
-import { sortDependenciesByUsage } from './utils';
+import { groupMissingDependenciesByUsage } from './utils';
 
 /**
  * Ensure every package listed as a `devDependency`
@@ -23,8 +23,11 @@ export function validateListedDevDependencies(
   options?: Partial<ValidateCommandOptions>,
 ): Array<string> {
   const { verbose } = options ?? { verbose: false };
-  const { dependencies: importedPackagesInSourceFile } =
-    sortDependenciesByUsage(importedPackages, pkgName);
+  const { missingDependencies } = groupMissingDependenciesByUsage(
+    importedPackages,
+    pkgName,
+  );
+  const importedPackagesInSourceFile = Object.keys(missingDependencies);
 
   const { devDependencies: _listedDevObj } = pick(pkgJson, ['devDependencies']);
   const listedDevDependencies = _listedDevObj ? Object.keys(_listedDevObj) : [];

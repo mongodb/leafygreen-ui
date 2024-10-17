@@ -7,7 +7,11 @@ import { DependencyIssues, ValidateCommandOptions } from '../validate.types';
 
 import { fixDependencies } from './fixDependencyIssues';
 import { logDependencyIssues } from './logDependencyIssues';
-import { fixTSconfig, readPackageJson, sortDependenciesByUsage } from './utils';
+import {
+  fixTSconfig,
+  groupMissingDependenciesByUsage,
+  readPackageJson,
+} from './utils';
 import { validateListedDependencies } from './validateListedDependencies';
 import { validateListedDevDependencies } from './validateListedDevDependencies';
 import { isMissingProviderPeer } from './validatePeerDependencies';
@@ -23,6 +27,8 @@ export async function checkPackage(
     console.error('Could not get package name for ', pkgPath);
     return false;
   }
+
+  console.dir(check, { depth: Infinity });
 
   /**
    * Packages listed in package.json as a devDependency,
@@ -46,16 +52,9 @@ export async function checkPackage(
    */
   const allMissingPackages = check.missing;
 
-  // Sort these based on the file it's used in
-  const sortedMissingDeps = sortDependenciesByUsage(
-    allMissingPackages,
-    pkgName,
-  );
-
-  const missingDependencies = Object.values(sortedMissingDeps.dependencies);
-  const missingDevDependencies = Object.values(
-    sortedMissingDeps.devDependencies,
-  );
+  // Group these based on the file it's used in
+  const { missingDependencies, missingDevDependencies } =
+    groupMissingDependenciesByUsage(allMissingPackages, pkgName);
 
   const pkgJson = readPackageJson(pkgPath);
 

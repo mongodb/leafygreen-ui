@@ -10,6 +10,7 @@ import {
   externalDependencies,
   ignoreFilePatterns,
 } from '../../config';
+import { DependencyIssues } from '../../validate.types';
 
 import { getPackageLGDependencies } from './getPackageDependencies';
 
@@ -42,15 +43,12 @@ export function fixTSconfig(pkg: string) {
 }
 
 /**
- * Sorts DepsRecord into dependencies & devDependencies based on what files it's used in
+ * Groups DepsRecord into dependencies & devDependencies based on what files it's used in
  */
-export function sortDependenciesByUsage(
+export function groupMissingDependenciesByUsage(
   depsRecord: { [dependencyName: string]: Array<string> },
   pkgName: string,
-): {
-  dependencies: Array<string>;
-  devDependencies: Array<string>;
-} {
+): Pick<DependencyIssues, 'missingDependencies' | 'missingDevDependencies'> {
   const globalPackageJson = JSON.parse(
     readFileSync(path.join(rootDir, 'package.json'), 'utf-8'),
   );
@@ -75,17 +73,17 @@ export function sortDependenciesByUsage(
           if (isDepOnlyUsedInDevFiles) {
             // Ignore when we import the package itself in a test file
             if (!name.includes(pkgName)) {
-              _missing.devDependencies.push(name);
+              _missing.missingDevDependencies[name] = filesUsedIn;
             }
           } else if (!isDepOnlyInIgnoredFiles) {
-            _missing.dependencies.push(name);
+            _missing.missingDependencies[name] = filesUsedIn;
           }
 
           return _missing;
         },
         {
-          dependencies: [] as Array<string>,
-          devDependencies: [] as Array<string>,
+          missingDependencies: {} as Record<string, Array<string>>,
+          missingDevDependencies: {} as Record<string, Array<string>>,
         },
       )
   );
