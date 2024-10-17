@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import { ExpandedState, getExpandedRowModel } from '@tanstack/react-table';
 import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 
@@ -40,7 +40,9 @@ function useLeafyGreenVirtualTable<
 
   const { rows } = table;
 
-  const rowsCopy = useMemo(() => [...rows], [rows]);
+  //TODO: this memo breaks the for loop below 😭
+  // const rowsCopy = useMemo(() => [...rows], [rows]);
+  const rowsCopy = [...rows];
 
   // A way to include expandableContent inside of the rows object.
   // If a row has expandedContent and its expanded then add a new row below the row
@@ -66,10 +68,10 @@ function useLeafyGreenVirtualTable<
     getScrollElement: () => containerRef.current,
     estimateSize: () => 40,
     overscan: 20,
-    getItemKey: useCallback(
-      (index: number) => rowsCopy[index]?.id ?? index,
-      [rowsCopy],
-    ),
+    // getItemKey: useCallback(
+    //   (index: number) => rowsCopy[index]?.id ?? index,
+    //   [rowsCopy],
+    // ),
     measureElement:
       typeof window !== 'undefined' &&
       navigator.userAgent.indexOf('Firefox') === -1
