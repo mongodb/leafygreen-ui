@@ -10,7 +10,7 @@ import { StoryFn } from '@storybook/react';
 import Button, { Size } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
-import { TestUtils } from '@leafygreen-ui/popover';
+import { DismissMode, RenderMode, TestUtils } from '@leafygreen-ui/popover';
 import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
 import { Body, InlineCode, Subtitle } from '@leafygreen-ui/typography';
 
@@ -67,7 +67,7 @@ const meta: StoryMetaType<typeof Tooltip> = {
   },
   args: {
     enabled: true,
-    usePortal: true,
+    renderMode: RenderMode.TopLayer,
     trigger: <Button size={Size.XSmall}>Trigger</Button>,
   },
   argTypes: {
@@ -131,7 +131,7 @@ export const InitialOpen = (args: TooltipProps) => {
 };
 InitialOpen.args = {
   enabled: true,
-  usePortal: true,
+  renderMode: RenderMode.TopLayer,
   trigger: <Button size={Size.XSmall}>Trigger</Button>,
   children: 'I am a tooltip!',
 };
@@ -246,14 +246,11 @@ export const ScrollableContainer = ({
   align,
   ...args
 }: TooltipScrollableProps) => {
-  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(
-    null,
-  );
   const position = referenceElPositions[refButtonPosition];
 
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={el => setPortalContainer(el)}>
+      <div className={scrollableInnerStyle}>
         <div className={position}>
           <Tooltip
             trigger={
@@ -261,8 +258,6 @@ export const ScrollableContainer = ({
                 <Icon glyph="Cloud" />
               </span>
             }
-            portalContainer={portalContainer}
-            scrollContainer={portalContainer}
             triggerEvent="click"
             justify={justify}
             align={align}
@@ -282,10 +277,6 @@ ScrollableContainer.parameters = {
   },
 };
 
-ScrollableContainer.args = {
-  usePortal: true,
-};
-
 ScrollableContainer.argTypes = {
   refButtonPosition: {
     options: ['centered', 'top', 'right', 'bottom', 'left'],
@@ -294,7 +285,7 @@ ScrollableContainer.argTypes = {
       'Storybook only prop. Used to change position of the reference button',
     defaultValue: 'centered',
   },
-  usePortal: { control: 'none' },
+  renderMode: { control: 'none' },
   portalClassName: { control: 'none' },
   refEl: { control: 'none' },
   className: { control: 'none' },
@@ -309,12 +300,22 @@ ScrollableContainer.argTypes = {
 };
 
 export const ShortString: StoryFn<typeof Tooltip> = () => <></>;
-ShortString.args = { children: 'I am a tooltip!' };
+ShortString.args = {
+  children: 'I am a tooltip!',
+  dismissMode: DismissMode.Manual,
+  renderMode: RenderMode.TopLayer,
+};
 
 export const LongString: StoryFn<typeof Tooltip> = () => <></>;
-LongString.args = { children: longText };
+LongString.args = {
+  children: longText,
+  dismissMode: DismissMode.Manual,
+  renderMode: RenderMode.TopLayer,
+};
 
 export const JSXChildren: StoryFn<typeof Tooltip> = () => <></>;
 JSXChildren.args = {
   children: <InlineCode>@leafygreen-ui/tooltip</InlineCode>,
+  dismissMode: DismissMode.Manual,
+  renderMode: RenderMode.TopLayer,
 };

@@ -11,6 +11,7 @@ import {
   InferredPolymorphic,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
+import { RenderMode } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Menu } from '../Menu';
@@ -40,7 +41,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       maxHeight,
       adjustOnMutation,
       popoverZIndex,
-      usePortal,
+      renderMode = RenderMode.TopLayer,
       portalClassName,
       portalContainer,
       portalRef,
@@ -64,14 +65,14 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
     const buttonProps = {
       // only add these props if not an anchor
       ...(!isAnchor && { type }),
-    };
+    } as const;
 
     const sharedButtonProps = {
       variant,
       size,
       baseFontSize,
       disabled,
-    };
+    } as const;
 
     return (
       <div className={cx(buttonContainerStyles, className)} ref={containerRef}>
@@ -92,7 +93,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
             maxHeight={maxHeight}
             adjustOnMutation={adjustOnMutation}
             popoverZIndex={popoverZIndex}
-            usePortal={usePortal}
+            renderMode={renderMode}
             portalClassName={portalClassName}
             portalContainer={portalContainer}
             portalRef={portalRef}
@@ -149,4 +150,5 @@ SplitButton.propTypes = {
         ? PropTypes.instanceOf(Element)
         : PropTypes.any,
   }),
+  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
 } as any;

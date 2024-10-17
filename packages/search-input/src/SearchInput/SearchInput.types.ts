@@ -6,7 +6,6 @@ import {
 
 import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
-import { PopoverProps } from '@leafygreen-ui/popover';
 import { Size } from '@leafygreen-ui/tokens';
 
 export const State = {
@@ -20,15 +19,7 @@ export { Size };
 
 interface BaseSearchInputProps
   extends DarkModeProps,
-    Omit<ComponentPropsWithoutRef<'form'>, 'onChange'>,
-    Pick<
-      PopoverProps,
-      | 'usePortal'
-      | 'portalClassName'
-      | 'portalContainer'
-      | 'portalRef'
-      | 'scrollContainer'
-    > {
+    Omit<ComponentPropsWithoutRef<'form'>, 'onChange'> {
   /**
    * The current state of the SearchInput. This can be none, or loading.
    */

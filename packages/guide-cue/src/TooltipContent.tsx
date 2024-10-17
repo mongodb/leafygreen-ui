@@ -8,7 +8,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Theme } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { RenderMode } from '@leafygreen-ui/tooltip';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
 
 import {
@@ -28,6 +28,24 @@ import { GuideCueProps } from './types';
 const ariaLabelledby = 'guide-cue-label';
 const ariaDescribedby = 'guide-cue-desc';
 
+const focusTrapOptions: Options = {
+  clickOutsideDeactivates: true,
+  checkCanFocusTrap: async trapContainers => {
+    const results = trapContainers.map(trapContainer => {
+      return new Promise<void>(resolve => {
+        const interval = setInterval(() => {
+          if (getComputedStyle(trapContainer).opacity !== '0') {
+            resolve();
+            clearInterval(interval);
+          }
+        }, 5);
+      });
+    });
+    // Return a promise that resolves when all the trap containers are able to receive focus
+    return Promise.all(results).then(() => undefined);
+  },
+};
+
 type TooltipContentProps = Partial<GuideCueProps> & {
   theme: Theme;
   title: string;
@@ -36,7 +54,6 @@ type TooltipContentProps = Partial<GuideCueProps> & {
   onEscClose: () => void;
   handleButtonClick: () => void;
   handleCloseClick: () => void;
-  usePortal?: boolean;
 };
 
 function TooltipContent({
@@ -46,10 +63,6 @@ function TooltipContent({
   tooltipJustify,
   tooltipAlign,
   refEl,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
   theme,
   title,
   isStandalone,
@@ -61,14 +74,9 @@ function TooltipContent({
   onEscClose,
   handleButtonClick,
   handleCloseClick,
-  usePortal = true,
   ...tooltipProps
 }: TooltipContentProps) {
   const focusId = useIdAllocator({ prefix: 'guide-cue' });
-
-  const focusTrapOptions: Options = {
-    clickOutsideDeactivates: true,
-  };
 
   return (
     <>
@@ -84,14 +92,10 @@ function TooltipContent({
           tooltipStyles,
           tooltipClassName,
         )}
-        portalClassName={portalClassName}
-        portalContainer={portalContainer}
-        scrollContainer={scrollContainer}
-        popoverZIndex={popoverZIndex}
         onClose={onEscClose}
         role="dialog"
         aria-labelledby={ariaLabelledby}
-        usePortal={usePortal}
+        renderMode={RenderMode.TopLayer}
         {...tooltipProps}
       >
         <FocusTrap focusTrapOptions={focusTrapOptions}>

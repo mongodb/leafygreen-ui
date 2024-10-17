@@ -10,7 +10,7 @@ import {
   popoverClassName,
 } from '@leafygreen-ui/select';
 import { Size } from '@leafygreen-ui/tokens';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
 import {
   baseStyles,
@@ -34,31 +34,17 @@ export const UnitSelectButton = React.forwardRef(
       children,
       disabled,
       displayName,
-      popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      portalRef,
-      scrollContainer,
       ...props
     }: UnitSelectButtonProps,
     forwardedRef,
   ) => {
-    const [open, setOpen] = useState<boolean>(false);
+    const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
     const buttonRef: React.MutableRefObject<HTMLElement | null> =
       useForwardedRef(
         forwardedRef,
         null,
       ) as React.MutableRefObject<HTMLElement | null>;
     const { theme } = useDarkMode();
-    const popoverProps = {
-      popoverZIndex,
-      usePortal,
-      portalClassName,
-      portalContainer,
-      portalRef,
-      scrollContainer,
-    } as const;
 
     /**
      * Gets the text node for the selected option.
@@ -86,25 +72,26 @@ export const UnitSelectButton = React.forwardRef(
         if (!popoverParent) {
           // React 18 automatically batches all updates which appears to break the opening transition. flushSync prevents this state update from automically batching. Instead updates are made synchronously.
           flushSync(() => {
-            setOpen(true);
+            setTooltipOpen(true);
           });
         }
       }
     };
 
-    const handleMouseLeave = () => setOpen(false);
-    const handleOnFocus = () => setOpen(true);
-    const handleOnBlur = () => setOpen(false);
+    const handleMouseLeave = () => setTooltipOpen(false);
+    const handleOnFocus = () => setTooltipOpen(true);
+    const handleOnBlur = () => setTooltipOpen(false);
 
     return (
       <div className={wrapperStyles}>
         <Tooltip
+          align={Align.Top}
           enabled={isEnabled}
-          justify="middle"
+          justify={Justify.Middle}
           // Using refEl instead of a trigger element because triggerProps by default, such as onMouseEnter, are added to the trigger element inside the tooltip component. OnMouseEnter is triggered by hovering over the trigger or any of its children. In the case of this custom menu button we don't want the tooltip to open when children are hovered so we add our own open logic with onMouseEnter.
+          open={tooltipOpen}
           refEl={buttonRef}
-          open={open}
-          {...popoverProps}
+          renderMode={RenderMode.TopLayer}
         >
           {displayName}
         </Tooltip>

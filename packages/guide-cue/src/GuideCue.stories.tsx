@@ -12,7 +12,6 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { Align } from '@leafygreen-ui/popover';
-import { transitionDuration } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { GuideCue, GuideCueProps, TooltipAlign, TooltipJustify } from '.';
@@ -80,11 +79,11 @@ const meta: StoryMetaType<any> = {
             <div
               className={css`
                 height: ${refElHeight}px;
-                width: ${refElWidth}px
+                width: ${refElWidth}px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                outline: 1px solid ${palette.gray.base}80;
+                outline: 1px solid ${palette.gray.base};
               `}
               ref={refEl}
             >
@@ -191,12 +190,11 @@ export const ScrollableContainer: StoryFn<GuideCueProps> = (
 ) => {
   const [open, setOpen] = useState<boolean>(false);
   const triggerRef = useRef<null | HTMLDivElement>(null);
-  const portalContainer = useRef<HTMLDivElement | null>(null);
 
   const { children, darkMode } = args;
   return (
     <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={portalContainer}>
+      <div className={scrollableInnerStyle}>
         <>
           <Button
             onClick={() => setOpen(o => !o)}
@@ -216,8 +214,6 @@ export const ScrollableContainer: StoryFn<GuideCueProps> = (
             open={open}
             setOpen={setOpen}
             refEl={triggerRef}
-            portalContainer={portalContainer.current}
-            scrollContainer={portalContainer.current}
           >
             {children}
           </GuideCue>

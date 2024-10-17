@@ -2,7 +2,12 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { DropdownWidthBasis, Option, Select } from '@leafygreen-ui/select';
+import {
+  DropdownWidthBasis,
+  Option,
+  RenderMode,
+  Select,
+} from '@leafygreen-ui/select';
 
 import { UnitOption } from '../NumberInput/NumberInput.types';
 import { UnitSelectButton } from '../UnitSelectButton';
@@ -24,25 +29,10 @@ export function UnitSelect({
   unitOptions,
   onChange,
   disabled,
-  usePortal,
   size,
   className,
-  portalClassName,
-  portalContainer,
-  portalRef,
-  scrollContainer,
-  popoverZIndex,
 }: UnitSelectProps) {
   const { theme } = useDarkMode();
-
-  const popoverProps = {
-    popoverZIndex,
-    usePortal,
-    portalClassName,
-    portalContainer,
-    portalRef,
-    scrollContainer,
-  } as const;
 
   /**
    * Gets the current unit option using the unit string
@@ -78,7 +68,7 @@ export function UnitSelect({
         disabled={disabled}
         size={size}
         data-testid={dataTestId}
-        {...popoverProps}
+        renderMode={RenderMode.TopLayer}
         __INTERNAL__menuButtonSlot__={UnitSelectButton}
         __INTERNAL__menuButtonSlotProps__={{
           disabled,

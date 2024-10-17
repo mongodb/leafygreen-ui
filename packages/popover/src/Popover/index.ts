@@ -6,6 +6,7 @@ export {
   type ChildrenFunctionParameters,
   DismissMode,
   type ElementPosition,
+  type GetPopoverRenderModeProps,
   Justify,
   type PopoverProps,
   type PopoverRenderModeProps,

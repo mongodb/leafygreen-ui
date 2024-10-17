@@ -32,9 +32,15 @@ import {
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
+  PopoverProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import {
+  DismissMode,
+  getPopoverRenderModeProps,
+  RenderMode,
+} from '@leafygreen-ui/popover';
 import { Description, Label } from '@leafygreen-ui/typography';
 
 import { ComboboxChip } from '../ComboboxChip';
@@ -128,7 +134,7 @@ export function Combobox<M extends boolean>({
   chipTruncationLocation,
   chipCharacterLimit = 12,
   className,
-  usePortal = true,
+  renderMode = RenderMode.TopLayer,
   portalClassName,
   portalContainer,
   portalRef,
@@ -1156,15 +1162,14 @@ export function Combobox<M extends boolean>({
 
   const popoverProps = {
     popoverZIndex,
-    ...(usePortal
-      ? {
-          usePortal,
-          portalClassName,
-          portalContainer,
-          portalRef,
-          scrollContainer,
-        }
-      : { usePortal }),
+    ...getPopoverRenderModeProps({
+      dismissMode: DismissMode.Manual,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      renderMode,
+      scrollContainer,
+    }),
   } as const;
 
   const formFieldFeedbackProps = {
@@ -1321,19 +1326,20 @@ export function Combobox<M extends boolean>({
           *  Menu  *
           / *******/}
 
-          <ComboboxMenu
-            id={menuId}
-            labelId={labelId}
-            refEl={comboboxRef}
-            ref={menuRef}
-            menuWidth={menuWidth}
-            searchLoadingMessage={searchLoadingMessage}
-            searchErrorMessage={searchErrorMessage}
-            searchEmptyMessage={searchEmptyMessage}
-            {...popoverProps}
-          >
-            {renderedOptionsJSX}
-          </ComboboxMenu>
+          <PopoverProvider {...popoverProps}>
+            <ComboboxMenu
+              id={menuId}
+              labelId={labelId}
+              refEl={comboboxRef}
+              ref={menuRef}
+              menuWidth={menuWidth}
+              searchLoadingMessage={searchLoadingMessage}
+              searchErrorMessage={searchErrorMessage}
+              searchEmptyMessage={searchEmptyMessage}
+            >
+              {renderedOptionsJSX}
+            </ComboboxMenu>
+          </PopoverProvider>
         </div>
       </ComboboxContext.Provider>
     </LeafyGreenProvider>
@@ -1426,7 +1432,7 @@ Combobox.propTypes = {
   filteredOptions: PropTypes.arrayOf(PropTypes.string),
   // Popover Props
   popoverZIndex: PropTypes.number,
-  usePortal: PropTypes.bool,
+  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
   scrollContainer: PropTypes.elementType,
   portalContainer: PropTypes.elementType,
   portalRef: PropTypes.shape({

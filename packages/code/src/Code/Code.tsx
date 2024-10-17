@@ -82,11 +82,6 @@ function Code({
   onChange,
   customActionButtons = [],
   showCustomActionButtons = false,
-  usePortal = true,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -205,18 +200,6 @@ function Code({
     debounceScroll(e);
   };
 
-  const popoverProps = {
-    popoverZIndex,
-    ...(usePortal
-      ? {
-          usePortal,
-          portalClassName,
-          portalContainer,
-          scrollContainer,
-        }
-      : { usePortal }),
-  } as const;
-
   const showExpandButton = !!(
     expandable &&
     numOfLinesOfCode &&
@@ -286,7 +269,6 @@ function Code({
               isMultiline={isMultiline}
               customActionButtons={filteredCustomActionIconButtons}
               showCustomActionButtons={showCustomActionsInPanel}
-              {...popoverProps}
             />
           )}
 

@@ -6,6 +6,7 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { ExtendedPlacement, TransformAlign } from './Popover.types';
 
+const TRANSFORM_INITIAL_SCALE = 0.8;
 export const TRANSITION_DURATION = transitionDuration.default;
 
 export const contentClassName = createUniqueClassName('popover-content');
@@ -19,6 +20,7 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   border: none;
   padding: 0;
   overflow: visible;
+  background-color: transparent;
 
   position: ${floatingStyles.position};
   top: ${floatingStyles.top}px;
@@ -30,7 +32,7 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   transition-behavior: allow-discrete;
 
   opacity: 0;
-  transform: scale(0);
+  transform: scale(${TRANSFORM_INITIAL_SCALE});
 
   &::backdrop {
     transition-property: background, overlay, display;
@@ -42,7 +44,7 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   @starting-style {
     :popover-open {
       opacity: 0;
-      transform: scale(0);
+      transform: scale(${TRANSFORM_INITIAL_SCALE});
     }
   }
 `;
@@ -105,28 +107,28 @@ const getClosedStyles = (spacing: number, transformAlign: TransformAlign) => {
       return cx(
         baseClosedStyles,
         css`
-          transform: translateY(${spacing}px) scale(0);
+          transform: translateY(${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Bottom:
       return cx(
         baseClosedStyles,
         css`
-          transform: translateY(-${spacing}px) scale(0);
+          transform: translateY(-${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Left:
       return cx(
         baseClosedStyles,
         css`
-          transform: translateX(${spacing}px) scale(0);
+          transform: translateX(${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Right:
       return cx(
         baseClosedStyles,
         css`
-          transform: translateX(-${spacing}px) scale(0);
+          transform: translateX(-${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Center:
@@ -134,7 +136,7 @@ const getClosedStyles = (spacing: number, transformAlign: TransformAlign) => {
       return cx(
         baseClosedStyles,
         css`
-          transform: scale(0);
+          transform: scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
   }
