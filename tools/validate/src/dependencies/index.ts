@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-import { getAllPackages } from '@lg-tools/meta';
+import { getAllPackages, getPackageName } from '@lg-tools/meta';
 
+import { ignorePackages } from '../config';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { checkPackage } from './checkPackage';
@@ -12,9 +13,9 @@ export function validateDependencies(
 
   const allPackages = getAllPackages();
 
-  const checkPromises = allPackages.map(pkgPath =>
-    checkPackage(pkgPath, options),
-  );
+  const checkPromises = allPackages
+    .filter(pkgPath => !ignorePackages.includes(getPackageName(pkgPath)!))
+    .map(pkgPath => checkPackage(pkgPath, options));
 
   return new Promise<void>((resolve, reject) => {
     Promise.all(checkPromises).then(results => {

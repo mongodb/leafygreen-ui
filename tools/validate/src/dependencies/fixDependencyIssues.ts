@@ -2,7 +2,7 @@
 import type { SpawnOptions } from 'child_process';
 import { sync as spawnSync } from 'cross-spawn';
 
-import { DependencyIssues } from './config';
+import { DependencyIssues } from '../config';
 
 export async function fixDependencies(
   pkg: string,

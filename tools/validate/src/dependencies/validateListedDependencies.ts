@@ -6,7 +6,7 @@ import path from 'path';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { globToRegex } from './utils/globToRegex';
-import { DepCheckFunctionProps, externalDependencies } from './config';
+import { DepCheckFunctionProps, externalDependencies } from '../config';
 import {
   isDependencyOnlyUsedInTestFile,
   sortDependenciesByUsage,

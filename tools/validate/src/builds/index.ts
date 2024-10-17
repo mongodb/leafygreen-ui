@@ -9,12 +9,10 @@ import fse from 'fs-extra';
 import path from 'path';
 import vm from 'vm';
 
+import { ignorePackages } from '../config';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { ModuleType } from './modules.types';
-
-// A list of
-const ignorePackages = ['@lg-tools/storybook'];
 
 /**
  * Validates `umd`, `esm` and TS build integrity for all packages in the repository.
@@ -22,7 +20,9 @@ const ignorePackages = ['@lg-tools/storybook'];
 export const validateBuilds = ({
   verbose,
 }: Partial<ValidateCommandOptions>) => {
-  const packagePaths = getAllPackages();
+  const packagePaths = getAllPackages().filter(
+    pkgPath => !ignorePackages.includes(getPackageName(pkgPath)!),
+  );
 
   return new Promise<void>((resolve, reject) => {
     console.log(`Validating builds for ${packagePaths.length} packages...`);
@@ -34,11 +34,6 @@ export const validateBuilds = ({
       if (!pkgName) {
         exit1('Invalid package path: ' + pkgPath);
         return;
-      }
-
-      // Skip packages
-      if (ignorePackages.includes(pkgName)) {
-        continue;
       }
 
       const distDir = path.resolve(pkgPath, 'dist');

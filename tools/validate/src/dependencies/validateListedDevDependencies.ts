@@ -5,7 +5,7 @@ import path from 'path';
 
 import { ValidateCommandOptions } from '../validate.types';
 
-import { DepCheckFunctionProps } from './config';
+import { DepCheckFunctionProps } from '../config';
 import { sortDependenciesByUsage } from './utils';
 
 /**

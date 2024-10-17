@@ -1,4 +1,4 @@
-import { DepCheckFunctionProps } from './config';
+import { DepCheckFunctionProps } from '../config';
 
 export const lgProvider = '@leafygreen-ui/leafygreen-provider';
 

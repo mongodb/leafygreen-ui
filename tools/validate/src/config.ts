@@ -1,10 +1,9 @@
+import { getPackageJson } from '@lg-tools/meta';
 import depcheck from 'depcheck';
-
-import { readPackageJson } from './utils';
 
 export interface DepCheckFunctionProps {
   pkgName: string;
-  pkgJson: ReturnType<typeof readPackageJson>;
+  pkgJson: ReturnType<typeof getPackageJson>;
   importedPackages: depcheck.Results['using'];
 }
 
@@ -18,6 +17,11 @@ export interface DependencyIssues {
   isMissingPeers: boolean;
 }
 
+export const ignorePackages = [
+  '@lg-tools/storybook',
+  '@lg-tools/eslint-plugin',
+];
+
 /** We treat dependencies imported by files matching these patterns as devDependencies */
 export const devFilePatterns: Array<RegExp> = [
   /.*scripts\/.*/,
@@ -27,6 +31,7 @@ export const devFilePatterns: Array<RegExp> = [
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
   /.*.testutils((.tsx?)|(\/.*))/,
+  /.*\/test(ing|utils)?\/.*/,
   /.*\/dist\/.*/,
 ];
 

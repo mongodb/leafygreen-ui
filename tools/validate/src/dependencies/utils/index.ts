@@ -9,7 +9,7 @@ import {
   devFilePatterns,
   externalDependencies,
   ignoreFilePatterns,
-} from '../config';
+} from '../../config';
 
 import { getPackageLGDependencies } from './getPackageDependencies';
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 
-import { DependencyIssues } from './config';
+import { DependencyIssues } from '../config';
 import { lgProvider } from './validatePeerDependencies';
 
 export function logDependencyIssues(
