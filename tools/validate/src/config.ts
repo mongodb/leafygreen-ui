@@ -1,24 +1,16 @@
 import depcheck from 'depcheck';
 
-import { readPackageJson } from './utils';
+/*
+ * Skip build and dependency checks for these packages
+ */
+export const ignorePackages = [
+  '@lg-tools/storybook',
+  '@lg-tools/eslint-plugin',
+];
 
-export interface DepCheckFunctionProps {
-  pkgName: string;
-  pkgJson: ReturnType<typeof readPackageJson>;
-  importedPackages: depcheck.Results['using'];
-}
-
-export interface DependencyIssues {
-  missingDependencies: Array<string>;
-  missingDevDependencies: Array<string>;
-  unusedDependencies: Array<string>;
-  unusedDevDependencies: Array<string>;
-  listedDevButUsedAsDependency: Array<string>;
-  listedButOnlyUsedAsDev: Array<string>;
-  isMissingPeers: boolean;
-}
-
-/** We treat dependencies imported by files matching these patterns as devDependencies */
+/**
+ * Treat packages imported by these files as `devDependencies`
+ */
 export const devFilePatterns: Array<RegExp> = [
   /.*scripts\/.*/,
   /.*.stories.js/,
@@ -26,11 +18,14 @@ export const devFilePatterns: Array<RegExp> = [
   /.*.?stor(y|ies).(t|j)sx?/,
   /.*.stories.tsx?/,
   /.*.example.tsx?/,
-  /.*.testutils((.tsx?)|(\/.*))/,
+  /.*.test(-?[uU])til(itie)?s((.tsx?)|(\/.*))/,
+  /.*\/test(ing|-?[uU]til(itie)?s)?\//g,
   /.*\/dist\/.*/,
 ];
 
-/** If a dependency is flagged as being imported by one of these files, ignore it */
+/**
+ * Ignore dependency errors in these files
+ */
 export const ignoreFilePatterns: Array<RegExp> = [
   /.*package.json?/,
   /.*README.md/,

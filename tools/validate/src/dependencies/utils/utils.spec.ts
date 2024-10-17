@@ -1,7 +1,7 @@
 import {
+  groupMissingDependenciesByUsage,
   isDependencyOnlyUsedInTestFile,
   isDependencyUsedInSourceFile,
-  sortDependenciesByUsage,
 } from '.';
 
 /** */
@@ -55,19 +55,17 @@ describe('tools/validate/utils', () => {
     const pkgName = 'test-package';
 
     test('', () => {
-      const { dependencies, devDependencies } = sortDependenciesByUsage(
-        depsRecord,
-        pkgName,
-      );
+      const { missingDependencies, missingDevDependencies } =
+        groupMissingDependenciesByUsage(depsRecord, pkgName);
 
-      expect(dependencies).toEqual(
+      expect(Object.keys(missingDependencies)).toEqual(
         expect.arrayContaining([
           '@leafygreen-ui/lib',
           '@leafygreen-ui/palette',
         ]),
       );
 
-      expect(devDependencies).toEqual(
+      expect(Object.keys(missingDevDependencies)).toEqual(
         expect.arrayContaining([
           '@leafygreen-ui/typography',
           '@leafygreen-ui/tokens',

@@ -2,7 +2,7 @@
 import type { SpawnOptions } from 'child_process';
 import { sync as spawnSync } from 'cross-spawn';
 
-import { DependencyIssues } from './config';
+import { DependencyIssues } from '../validate.types';
 
 export async function fixDependencies(
   pkg: string,
@@ -25,29 +25,32 @@ export async function fixDependencies(
   // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
 
   // Install any missing dependencies
-  if (missingDependencies.length > 0) {
+  if (Object.keys(missingDependencies).length > 0) {
     verbose &&
-      console.log('Installing missing dependencies...', missingDependencies);
+      console.log(
+        'Installing missing dependencies...',
+        Object.keys(missingDependencies).join(', '),
+      );
     spawnSync(
       'npx',
-      ['yarn@1.19.0', 'add', ...missingDependencies],
+      ['yarn@1.19.0', 'add', ...Object.keys(missingDependencies)],
       spawnContext,
     );
   }
 
   // Install any missing devDependencies
-  if (missingDevDependencies.length > 0) {
+  if (Object.keys(missingDevDependencies).length > 0) {
     // const pkgJson = readPackageJson(pkg);
 
     verbose &&
       console.log(
         `Fixing devDependency issues with ${pkg}.`,
-        missingDevDependencies,
+        Object.keys(missingDevDependencies).join(', '),
       );
 
     spawnSync(
       'npx',
-      ['yarn@1.19.0', 'add', '--dev', ...missingDevDependencies],
+      ['yarn@1.19.0', 'add', '--dev', ...Object.keys(missingDevDependencies)],
       spawnContext,
     );
   }
@@ -62,8 +65,8 @@ export async function fixDependencies(
 
   // TODO: Autofix these
   if (
-    listedDevButUsedAsDependency.length > 0 ||
-    listedButOnlyUsedAsDev.length > 0 ||
+    Object.keys(listedDevButUsedAsDependency).length > 0 ||
+    Object.keys(listedButOnlyUsedAsDev).length > 0 ||
     isMissingPeers
   ) {
     console.log(

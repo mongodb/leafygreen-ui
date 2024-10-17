@@ -1,0 +1,10 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "prebuild": {
+      "dependsOn": ["^prebuild"],
+      "inputs": ["$TURBO_DEFAULT$", "src/glyphs/*.svg"],
+      "outputs": ["src/generated/*.tsx"]
+    }
+  }
+}

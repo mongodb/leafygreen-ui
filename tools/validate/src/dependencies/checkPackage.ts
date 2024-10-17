@@ -1,15 +1,20 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable no-console */
 import { getPackageName } from '@lg-tools/meta';
 import depcheck from 'depcheck';
 
-import { ValidateCommandOptions } from '../validate.types';
+import { depcheckOptions } from '../config';
+import { DependencyIssues, ValidateCommandOptions } from '../validate.types';
 
-import { depcheckOptions, DependencyIssues } from './config';
 import { fixDependencies } from './fixDependencyIssues';
+import { getIncorrectlyListedDependencies } from './getIncorrectlyListedDependencies';
+import { getIncorrectlyListedDevDependencies } from './getIncorrectlyListedDevDependencies';
 import { logDependencyIssues } from './logDependencyIssues';
-import { fixTSconfig, readPackageJson, sortDependenciesByUsage } from './utils';
-import { validateListedDependencies } from './validateListedDependencies';
-import { validateListedDevDependencies } from './validateListedDevDependencies';
+import {
+  fixTSconfig,
+  groupMissingDependenciesByUsage,
+  readPackageJson,
+} from './utils';
 import { isMissingProviderPeer } from './validatePeerDependencies';
 
 export async function checkPackage(
@@ -46,30 +51,25 @@ export async function checkPackage(
    */
   const allMissingPackages = check.missing;
 
-  // Sort these based on the file it's used in
-  const sortedMissingDeps = sortDependenciesByUsage(
-    allMissingPackages,
-    pkgName,
-  );
-
-  const missingDependencies = Object.values(sortedMissingDeps.dependencies);
-  const missingDevDependencies = Object.values(
-    sortedMissingDeps.devDependencies,
-  );
+  // Group these based on the file it's used in
+  const { missingDependencies, missingDevDependencies } =
+    groupMissingDependenciesByUsage(allMissingPackages, pkgName);
 
   const pkgJson = readPackageJson(pkgPath);
 
   // Every listed devDependency must _only_ be used in test files
-  const listedDevButUsedAsDependency = validateListedDevDependencies(
-    { pkgName, pkgJson, importedPackages },
-    { verbose },
-  );
+  const listedDevButUsedAsDependency = getIncorrectlyListedDevDependencies({
+    pkgName,
+    pkgJson,
+    importedPackages,
+  });
 
   // Every listed dependency must be used in _at least one_ non-test file
-  const listedButOnlyUsedAsDev = validateListedDependencies(
-    { pkgName, pkgJson, importedPackages },
-    { verbose },
-  );
+  const listedButOnlyUsedAsDev = getIncorrectlyListedDependencies({
+    pkgName,
+    pkgJson,
+    importedPackages,
+  });
 
   // Whether the package is missing required peer dependencies
   const isMissingPeers = isMissingProviderPeer({
@@ -95,7 +95,7 @@ export async function checkPackage(
     missingDependencies,
     missingDevDependencies,
     listedDevButUsedAsDependency,
-  ].some(prob => prob.length > 0);
+  ].some(prob => Object.entries(prob).length > 0);
 
   if (issuesExist && fix) {
     fixDependencies(pkgName, allDependencyIssues, verbose);

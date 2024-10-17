@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 
-import { DependencyIssues } from './config';
+import { DependencyIssues } from '../validate.types';
+
 import { lgProvider } from './validatePeerDependencies';
 
 export function logDependencyIssues(
@@ -31,37 +32,45 @@ export function logDependencyIssues(
       )} as devDependencies`,
     );
 
-  missingDependencies.length > 0 &&
+  if (Object.entries(missingDependencies).length > 0) {
     console.log(
       `${chalk.green(pkg)} is missing dependencies: ${chalk.redBright(
-        missingDependencies.join(', '),
+        Object.keys(missingDependencies).join(', '),
       )}`,
     );
+    verbose && console.dir(missingDependencies);
+  }
 
-  missingDevDependencies.length > 0 &&
+  if (Object.entries(missingDevDependencies).length > 0) {
     console.log(
       `${chalk.green(pkg)} is missing devDependencies: ${chalk.yellowBright(
-        missingDevDependencies.join(', '),
+        Object.keys(missingDevDependencies).join(', '),
       )}`,
     );
+    verbose && console.dir(missingDevDependencies);
+  }
 
-  listedDevButUsedAsDependency.length > 0 &&
+  if (Object.entries(listedDevButUsedAsDependency).length > 0) {
     console.log(
       `${chalk.green(
         pkg,
       )} lists these as devDependencies, but are used in source files: ${chalk.yellowBright(
-        listedDevButUsedAsDependency.join(', '),
+        Object.keys(listedDevButUsedAsDependency).join(', '),
       )}`,
     );
+    verbose && console.dir(listedDevButUsedAsDependency);
+  }
 
-  listedButOnlyUsedAsDev.length > 0 &&
+  if (Object.entries(listedButOnlyUsedAsDev).length > 0) {
     console.log(
       `${chalk.green(
         pkg,
       )} lists these as dependencies, but are only used in test files: ${chalk.yellowBright(
-        listedButOnlyUsedAsDev.join(', '),
+        Object.keys(listedButOnlyUsedAsDev).join(', '),
       )}`,
     );
+    verbose && console.dir(listedButOnlyUsedAsDev);
+  }
 
   isMissingPeers &&
     console.log(
