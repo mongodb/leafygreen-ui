@@ -5,7 +5,7 @@
       "dependsOn": ["^prebuild"]
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["prebuild", "^build"],
       "inputs": ["$TURBO_DEFAULT$", "!**/*.stories.{tsx,jsx,mdx}"],
       "outputs": ["dist/**", "stories.js"]
     },
