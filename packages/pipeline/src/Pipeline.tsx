@@ -12,7 +12,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useMutationObserver } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
 import Counter from './Counter';
 import { PipelineContext } from './PipelineContext';
@@ -60,6 +60,7 @@ const Pipeline = forwardRef(
     // State
     const [pipelineNode, setPipelineNode] = useState<HTMLElement | null>(null);
     const [hiddenStages, setHiddenStages] = useState<Array<string | null>>([]);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const providerData = useMemo(() => {
       return {
@@ -99,6 +100,13 @@ const Pipeline = forwardRef(
       if (attrs.includes('data-stage-visible') || types.includes('childList')) {
         setAllHiddenStagesText();
       }
+    };
+
+    /**
+     * Callback to handle mouse enter event on the Counter component to immediately open tooltip on hover.
+     */
+    const handleMouseEnter = () => {
+      setTooltipOpen(true);
     };
 
     // Effects
@@ -147,18 +155,22 @@ const Pipeline = forwardRef(
 
           {/* Removing the component was causing an unmounted error so instead we're hiding it with css */}
           <Tooltip
-            align="top"
-            justify="middle"
+            align={Align.Top}
+            className={tooltipStyles}
+            darkMode={darkMode}
+            justify={Justify.Middle}
+            open={tooltipOpen}
+            renderMode={RenderMode.TopLayer}
+            setOpen={setTooltipOpen}
             trigger={
               <Counter
                 className={cx({
                   [counterVisibleStyles]: !!hiddenStages.length,
                 })}
+                onMouseEnter={handleMouseEnter}
               />
             }
             triggerEvent="hover"
-            darkMode={darkMode}
-            className={tooltipStyles}
           >
             <TooltipText hiddenStages={hiddenStages} />
           </Tooltip>

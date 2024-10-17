@@ -10,6 +10,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { color } from '@leafygreen-ui/tokens';
 
+import { getPopoverRenderModeProps } from './utils/getPopoverRenderModeProps';
 import {
   Align,
   DismissMode,
@@ -153,6 +154,7 @@ const meta: StoryMetaType<typeof Popover> = {
     buttonText: 'Button Text',
     dismissMode: DismissMode.Auto,
     justify: Justify.Start,
+    renderMode: RenderMode.TopLayer,
     spacing: 4,
   },
   argTypes: {
@@ -180,6 +182,10 @@ const meta: StoryMetaType<typeof Popover> = {
         'Storybook only prop. Used to change position of the reference button',
       defaultValue: 'centered',
     },
+    renderMode: {
+      options: Object.values(RenderMode),
+      control: { type: 'radio' },
+    },
   },
 };
 export default meta;
@@ -191,17 +197,18 @@ type PopoverStoryProps = PopoverProps & {
 export const LiveExample: StoryFn<PopoverStoryProps> = ({
   refButtonPosition,
   buttonText,
-  ...args
+  ...props
 }: PopoverStoryProps) => {
   const {
     portalClassName,
     portalContainer,
     portalRef,
     scrollContainer,
-    usePortal,
+    dismissMode,
+    renderMode,
     onToggle,
     ...rest
-  } = args;
+  } = props;
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState<boolean>(false);
 
@@ -217,6 +224,21 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
     setActive(newActive);
   };
 
+  const popoverProps = {
+    active,
+    refEl: buttonRef,
+    ...getPopoverRenderModeProps({
+      dismissMode,
+      onToggle: handleToggle,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      renderMode,
+      scrollContainer,
+    }),
+    ...rest,
+  };
+
   return (
     <div className={containerStyles}>
       <Button
@@ -226,13 +248,7 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
       >
         {buttonText}
       </Button>
-      <Popover
-        {...rest}
-        active={active}
-        renderMode={RenderMode.TopLayer}
-        onToggle={handleToggle}
-        refEl={buttonRef}
-      >
+      <Popover {...popoverProps}>
         <div className={popoverStyle}>Popover content</div>
       </Popover>
     </div>
@@ -247,9 +263,9 @@ LiveExample.parameters = {
 const PortalPopoverInScrollableContainer = ({
   refButtonPosition,
   buttonText,
-  ...args
+  ...props
 }: PopoverStoryProps) => {
-  const { dismissMode, onToggle, renderMode, ...rest } = args;
+  const { dismissMode, onToggle, renderMode, ...rest } = props;
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
   const scrollContainer = useRef<HTMLDivElement | null>(null);
@@ -267,7 +283,7 @@ const PortalPopoverInScrollableContainer = ({
           <Popover
             {...rest}
             active={active}
-            usePortal={true}
+            renderMode={RenderMode.Portal}
             portalContainer={scrollContainer.current}
             portalRef={portalRef}
             scrollContainer={scrollContainer.current}
@@ -301,7 +317,7 @@ export const RenderModePortalInScrollableContainer = {
 const InlinePopover = ({
   refButtonPosition,
   buttonText,
-  ...args
+  ...props
 }: PopoverStoryProps) => {
   const {
     dismissMode,
@@ -312,7 +328,7 @@ const InlinePopover = ({
     portalRef,
     scrollContainer,
     ...rest
-  } = args;
+  } = props;
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState<boolean>(false);
 
@@ -327,7 +343,12 @@ const InlinePopover = ({
       >
         {buttonText}
       </Button>
-      <Popover {...rest} active={active} refEl={buttonRef} usePortal={false}>
+      <Popover
+        {...rest}
+        active={active}
+        refEl={buttonRef}
+        renderMode={RenderMode.Inline}
+      >
         <div className={popoverStyle}>Popover content</div>
       </Popover>
     </div>

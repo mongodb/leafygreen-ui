@@ -1,6 +1,6 @@
 import { ButtonProps } from '@leafygreen-ui/button';
 
-import { PopoverProps, UnitSelectProps } from '../UnitSelect/UnitSelect.types';
+import { UnitSelectProps } from '../UnitSelect/UnitSelect.types';
 
 export type UnitSelectButtonProps = {
   /**
@@ -12,5 +12,4 @@ export type UnitSelectButtonProps = {
    * The select option that is shown in the select menu button.
    */
   displayName?: string;
-} & ButtonProps &
-  PopoverProps;
+} & ButtonProps;

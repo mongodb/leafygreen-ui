@@ -10,6 +10,7 @@ import { userEvent, within } from '@storybook/testing-library';
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { RenderMode } from '@leafygreen-ui/popover';
 
 import { Option, OptionGroup, Select, type SelectProps, Size, State } from '.';
 
@@ -96,7 +97,7 @@ const meta: StoryMetaType<typeof Select> = {
     allowDeselect: false,
     darkMode: false,
     children: childrenArray,
-    usePortal: true,
+    renderMode: RenderMode.TopLayer,
   },
   argTypes: {
     placeholder: { control: 'text' },
@@ -170,16 +171,6 @@ WithIcons.args = {
   ],
 };
 WithIcons.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-};
-
-export const NoPortal = LiveExample.bind({});
-NoPortal.args = {
-  usePortal: false,
-};
-NoPortal.parameters = {
   chromatic: {
     disableSnapshot: true,
   },

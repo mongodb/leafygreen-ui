@@ -6,4 +6,5 @@ export {
 export {
   type PopoverContextType,
   type PopoverProviderProps,
+  RenderMode,
 } from './PopoverContext.types';

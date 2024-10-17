@@ -6,7 +6,7 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { ExtendedPlacement, TransformAlign } from './Popover.types';
 
-export const TRANSITION_DURATION = transitionDuration.default;
+export const TRANSITION_DURATION = transitionDuration.faster;
 
 export const contentClassName = createUniqueClassName('popover-content');
 
@@ -19,6 +19,7 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
   border: none;
   padding: 0;
   overflow: visible;
+  background-color: transparent;
 
   position: ${floatingStyles.position};
   top: ${floatingStyles.top}px;

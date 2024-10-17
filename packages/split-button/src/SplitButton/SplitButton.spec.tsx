@@ -3,6 +3,7 @@ import {
   fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
+  waitFor,
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react';
@@ -10,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { MenuItem } from '@leafygreen-ui/menu';
+import { RenderMode } from '@leafygreen-ui/popover';
 
 import { MenuItemsType } from './SplitButton.types';
 import { SplitButton } from '.';
@@ -200,6 +202,7 @@ describe('packages/split-button', () => {
         open,
         portalContainer,
         portalRef,
+        renderMode: RenderMode.Portal,
       });
       expect(portalRef.current).toBeDefined();
       expect(portalRef.current).toBe(portalContainer);
@@ -292,7 +295,7 @@ describe('packages/split-button', () => {
           menuItems,
         });
         const { menuItemElements } = await openMenu();
-        expect(menuItemElements[0]).toHaveFocus();
+        await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
         userEvent.type(menuItemElements?.[0]!, `{${key}}`);
         expect(onClick).toHaveBeenCalled();
@@ -325,12 +328,16 @@ describe('packages/split-button', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
+
           userEvent.type(menuEl!, '{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
+
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           for (let i = 0; i < menuItemElements.length; i++) {
             userEvent.type(menuEl!, '{arrowdown}');
@@ -344,14 +351,17 @@ describe('packages/split-button', () => {
         test('highlights the previous option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           userEvent.type(menuEl!, '{arrowdown}');
           userEvent.type(menuEl!, '{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
+
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           const lastOption = menuItemElements[menuItemElements.length - 1];
           userEvent.type(menuEl!, '{arrowup}');
