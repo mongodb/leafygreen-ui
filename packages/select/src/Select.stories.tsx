@@ -65,6 +65,19 @@ const childrenArray = [
 const meta: StoryMetaType<typeof Select> = {
   title: 'Components/Select',
   component: Select,
+  decorators: [
+    (StoryFn, _ctx) => (
+      <LeafyGreenProvider darkMode={_ctx?.args?.darkMode}>
+        <div
+          className={css`
+            height: 100vh;
+          `}
+        >
+          <StoryFn />
+        </div>
+      </LeafyGreenProvider>
+    ),
+  ],
   parameters: {
     default: 'LiveExample',
     controls: {

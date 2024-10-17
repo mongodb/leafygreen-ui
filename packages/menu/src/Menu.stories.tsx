@@ -47,7 +47,13 @@ export default {
   decorators: [
     (StoryFn, _ctx) => (
       <LeafyGreenProvider darkMode={_ctx?.args?.darkMode}>
-        <StoryFn />
+        <div
+          className={css`
+            height: 100vh;
+          `}
+        >
+          <StoryFn />
+        </div>
       </LeafyGreenProvider>
     ),
   ],
