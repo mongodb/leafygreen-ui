@@ -1,13 +1,8 @@
 /* eslint-disable no-console */
-import chalk from 'chalk';
 import pick from 'lodash/pick';
-import path from 'path';
 
 import { externalDependencies } from '../config';
-import {
-  DepCheckFunctionProps,
-  ValidateCommandOptions,
-} from '../validate.types';
+import { DepCheckFunctionProps } from '../validate.types';
 
 import { globToRegex } from './utils/globToRegex';
 import {
@@ -22,12 +17,11 @@ import {
  * @returns An array of packages that are listed as `dependencies`,
  * but are only used in test files
  */
-export function validateListedDependencies(
-  { pkgName, pkgJson, importedPackages }: DepCheckFunctionProps,
-  options?: Partial<ValidateCommandOptions>,
-): Array<string> {
-  const { verbose } = options ?? { verbose: false };
-
+export function getIncorrectlyListedDependencies({
+  pkgName,
+  pkgJson,
+  importedPackages,
+}: DepCheckFunctionProps): Array<string> {
   const { missingDependencies } = groupMissingDependenciesByUsage(
     importedPackages,
     pkgName,
@@ -51,26 +45,6 @@ export function validateListedDependencies(
           return regEx.test(listedDepName);
         }),
     );
-
-    if (listedButOnlyUsedAsDev.length && verbose) {
-      console.log(
-        `${chalk.blue(
-          pkgName,
-        )}: lists packages as dependency, but only uses them in test files`,
-      );
-      console.log(
-        listedButOnlyUsedAsDev
-          .map(
-            depName =>
-              `\t${depName}: \n\t\t${importedPackages?.[depName]
-                ?.map((file: string) =>
-                  file.replace(path.join(__dirname, '..'), ''),
-                )
-                .join('\n\t\t')}`,
-          )
-          .join('\n'),
-      );
-    }
 
     return listedButOnlyUsedAsDev;
   }

@@ -32,21 +32,23 @@ export function logDependencyIssues(
       )} as devDependencies`,
     );
 
-  Object.entries(missingDependencies).length > 0 &&
+  if (Object.entries(missingDependencies).length > 0) {
     console.log(
       `${chalk.green(pkg)} is missing dependencies: ${chalk.redBright(
         Object.keys(missingDependencies).join(', '),
       )}`,
-      verbose && console.dir(missingDependencies),
     );
+    verbose && console.dir(missingDependencies);
+  }
 
-  Object.entries(missingDevDependencies).length > 0 &&
+  if (Object.entries(missingDevDependencies).length > 0) {
     console.log(
       `${chalk.green(pkg)} is missing devDependencies: ${chalk.yellowBright(
         Object.keys(missingDevDependencies).join(', '),
       )}`,
-      verbose && console.dir(missingDevDependencies),
     );
+    verbose && console.dir(missingDevDependencies);
+  }
 
   listedDevButUsedAsDependency.length > 0 &&
     console.log(

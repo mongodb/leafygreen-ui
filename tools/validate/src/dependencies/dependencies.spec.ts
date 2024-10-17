@@ -1,12 +1,12 @@
-import { validateListedDependencies } from './validateListedDependencies';
-import { validateListedDevDependencies } from './validateListedDevDependencies';
+import { getIncorrectlyListedDependencies } from './getIncorrectlyListedDependencies';
+import { getIncorrectlyListedDevDependencies } from './getIncorrectlyListedDevDependencies';
 import { isMissingProviderPeer } from './validatePeerDependencies';
 
 describe('tools/validate:dependencies', () => {
   const pkgName = 'test-package';
 
   /** */
-  describe('validateListedDependencies', () => {
+  describe('getIncorrectlyListedDependencies', () => {
     test('Returns empty array when all dependencies are OK', () => {
       const pkgJson = {
         dependencies: {
@@ -17,7 +17,7 @@ describe('tools/validate:dependencies', () => {
         '@leafygreen-ui/lib': ['someFile.tsx'],
       };
 
-      const result = validateListedDependencies({
+      const result = getIncorrectlyListedDependencies({
         pkgName,
         pkgJson,
         importedPackages,
@@ -38,7 +38,7 @@ describe('tools/validate:dependencies', () => {
         '@leafygreen-ui/lib': ['test.spec.tsx'],
       };
 
-      const result = validateListedDependencies({
+      const result = getIncorrectlyListedDependencies({
         pkgName,
         pkgJson,
         importedPackages,
@@ -49,7 +49,7 @@ describe('tools/validate:dependencies', () => {
   });
 
   /** */
-  describe('validateListedDevDependencies', () => {
+  describe('getIncorrectlyListedDevDependencies', () => {
     test('Returns an empty array when devDependencies are OK', () => {
       const pkgJson = {
         devDependencies: {
@@ -60,7 +60,7 @@ describe('tools/validate:dependencies', () => {
         '@leafygreen-ui/lib': ['test.spec.tsx'],
       };
 
-      const result = validateListedDevDependencies({
+      const result = getIncorrectlyListedDevDependencies({
         pkgName,
         pkgJson,
         importedPackages,
@@ -81,7 +81,7 @@ describe('tools/validate:dependencies', () => {
         '@leafygreen-ui/lib': ['sourceFile.tsx'],
       };
 
-      const result = validateListedDevDependencies({
+      const result = getIncorrectlyListedDevDependencies({
         pkgName,
         pkgJson,
         importedPackages,

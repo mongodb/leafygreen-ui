@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable no-console */
 import { getPackageName } from '@lg-tools/meta';
 import depcheck from 'depcheck';
@@ -6,14 +7,14 @@ import { depcheckOptions } from '../config';
 import { DependencyIssues, ValidateCommandOptions } from '../validate.types';
 
 import { fixDependencies } from './fixDependencyIssues';
+import { getIncorrectlyListedDependencies } from './getIncorrectlyListedDependencies';
+import { getIncorrectlyListedDevDependencies } from './getIncorrectlyListedDevDependencies';
 import { logDependencyIssues } from './logDependencyIssues';
 import {
   fixTSconfig,
   groupMissingDependenciesByUsage,
   readPackageJson,
 } from './utils';
-import { validateListedDependencies } from './validateListedDependencies';
-import { validateListedDevDependencies } from './validateListedDevDependencies';
 import { isMissingProviderPeer } from './validatePeerDependencies';
 
 export async function checkPackage(
@@ -27,8 +28,6 @@ export async function checkPackage(
     console.error('Could not get package name for ', pkgPath);
     return false;
   }
-
-  console.dir(check, { depth: Infinity });
 
   /**
    * Packages listed in package.json as a devDependency,
@@ -59,16 +58,18 @@ export async function checkPackage(
   const pkgJson = readPackageJson(pkgPath);
 
   // Every listed devDependency must _only_ be used in test files
-  const listedDevButUsedAsDependency = validateListedDevDependencies(
-    { pkgName, pkgJson, importedPackages },
-    { verbose },
-  );
+  const listedDevButUsedAsDependency = getIncorrectlyListedDevDependencies({
+    pkgName,
+    pkgJson,
+    importedPackages,
+  });
 
   // Every listed dependency must be used in _at least one_ non-test file
-  const listedButOnlyUsedAsDev = validateListedDependencies(
-    { pkgName, pkgJson, importedPackages },
-    { verbose },
-  );
+  const listedButOnlyUsedAsDev = getIncorrectlyListedDependencies({
+    pkgName,
+    pkgJson,
+    importedPackages,
+  });
 
   // Whether the package is missing required peer dependencies
   const isMissingPeers = isMissingProviderPeer({
