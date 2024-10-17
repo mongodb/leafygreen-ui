@@ -205,12 +205,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
                 <Row row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell
-                        key={cell.id}
-                        id={cell.id}
-                        overflow="truncate"
-                        cell={cell}
-                      >
+                      <Cell key={cell.id} id={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
