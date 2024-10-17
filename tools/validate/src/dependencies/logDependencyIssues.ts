@@ -2,6 +2,7 @@
 import chalk from 'chalk';
 
 import { DependencyIssues } from '../config';
+
 import { lgProvider } from './validatePeerDependencies';
 
 export function logDependencyIssues(

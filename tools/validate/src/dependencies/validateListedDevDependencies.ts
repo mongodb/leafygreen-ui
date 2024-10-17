@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import pick from 'lodash/pick';
 import path from 'path';
 
+import { DepCheckFunctionProps } from '../config';
 import { ValidateCommandOptions } from '../validate.types';
 
-import { DepCheckFunctionProps } from '../config';
 import { sortDependenciesByUsage } from './utils';
 
 /**

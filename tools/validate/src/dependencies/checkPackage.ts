@@ -2,9 +2,9 @@
 import { getPackageName } from '@lg-tools/meta';
 import depcheck from 'depcheck';
 
+import { depcheckOptions, DependencyIssues } from '../config';
 import { ValidateCommandOptions } from '../validate.types';
 
-import { depcheckOptions, DependencyIssues } from '../config';
 import { fixDependencies } from './fixDependencyIssues';
 import { logDependencyIssues } from './logDependencyIssues';
 import { fixTSconfig, readPackageJson, sortDependenciesByUsage } from './utils';
