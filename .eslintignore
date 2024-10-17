@@ -1,6 +1,7 @@
 node_modules
 dist
 lib
+coverage/
 packages/icon/src/glyphs/*.svg
 packages/icon/src/generated/*.tsx
 storybook-static
