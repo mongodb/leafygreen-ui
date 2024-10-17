@@ -1,0 +1,1 @@
+export { generateData } from './generateData';
