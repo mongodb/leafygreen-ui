@@ -1,5 +1,11 @@
 # @leafygreen-ui/skeleton-loader
 
+## 1.3.1
+
+### Patch Changes
+
+- 4058d6d3d: [LG-4604](https://jira.mongodb.org/browse/LG-4604): Extends `TableSkeleton` component's `columnLabels` prop type from `Array<string | undefined>` to `Array<React.ReactNode>`
+
 ## 1.3.0
 
 ### Minor Changes
