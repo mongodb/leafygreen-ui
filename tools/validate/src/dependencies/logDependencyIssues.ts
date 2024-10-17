@@ -50,23 +50,27 @@ export function logDependencyIssues(
     verbose && console.dir(missingDevDependencies);
   }
 
-  listedDevButUsedAsDependency.length > 0 &&
+  if (Object.entries(listedDevButUsedAsDependency).length > 0) {
     console.log(
       `${chalk.green(
         pkg,
       )} lists these as devDependencies, but are used in source files: ${chalk.yellowBright(
-        listedDevButUsedAsDependency.join(', '),
+        Object.keys(listedDevButUsedAsDependency).join(', '),
       )}`,
     );
+    verbose && console.dir(listedDevButUsedAsDependency);
+  }
 
-  listedButOnlyUsedAsDev.length > 0 &&
+  if (Object.entries(listedButOnlyUsedAsDev).length > 0) {
     console.log(
       `${chalk.green(
         pkg,
       )} lists these as dependencies, but are only used in test files: ${chalk.yellowBright(
-        listedButOnlyUsedAsDev.join(', '),
+        Object.keys(listedButOnlyUsedAsDev).join(', '),
       )}`,
     );
+    verbose && console.dir(listedButOnlyUsedAsDev);
+  }
 
   isMissingPeers &&
     console.log(

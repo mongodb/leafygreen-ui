@@ -2,7 +2,7 @@
 import pick from 'lodash/pick';
 
 import { externalDependencies } from '../config';
-import { DepCheckFunctionProps } from '../validate.types';
+import { DepCheckFunctionProps, DependencyIssues } from '../validate.types';
 
 import { globToRegex } from './utils/globToRegex';
 import {
@@ -21,7 +21,7 @@ export function getIncorrectlyListedDependencies({
   pkgName,
   pkgJson,
   importedPackages,
-}: DepCheckFunctionProps): Array<string> {
+}: DepCheckFunctionProps): DependencyIssues['listedButOnlyUsedAsDev'] {
   const { missingDependencies } = groupMissingDependenciesByUsage(
     importedPackages,
     pkgName,
@@ -37,17 +37,22 @@ export function getIncorrectlyListedDependencies({
   );
 
   if (listedDependencies.length && anyListedDependencyUsedInTestFile) {
-    const listedButOnlyUsedAsDev = listedDependencies.filter(
-      listedDepName =>
-        !importedPackagesInSourceFile.includes(listedDepName) &&
-        !externalDependencies.some(glob => {
-          const regEx = globToRegex(glob);
-          return regEx.test(listedDepName);
-        }),
-    );
+    const listedButOnlyUsedAsDev = listedDependencies
+      .filter(
+        listedDepName =>
+          !importedPackagesInSourceFile.includes(listedDepName) &&
+          !externalDependencies.some(glob => {
+            const regEx = globToRegex(glob);
+            return regEx.test(listedDepName);
+          }),
+      )
+      .reduce((listedDeps, depName) => {
+        listedDeps[depName] = missingDependencies[depName];
+        return listedDeps;
+      }, {} as Record<string, Array<string>>);
 
     return listedButOnlyUsedAsDev;
   }
 
-  return [];
+  return {};
 }

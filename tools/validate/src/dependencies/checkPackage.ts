@@ -95,7 +95,7 @@ export async function checkPackage(
     missingDependencies,
     missingDevDependencies,
     listedDevButUsedAsDependency,
-  ].some(prob => prob.length > 0);
+  ].some(prob => Object.entries(prob).length > 0);
 
   if (issuesExist && fix) {
     fixDependencies(pkgName, allDependencyIssues, verbose);

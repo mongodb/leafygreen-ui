@@ -39,15 +39,15 @@ export interface DependencyIssues {
   unusedDevDependencies: Array<string>;
 
   /**
-   * An array of package names that are listed as devDependencies,
+   * A record of packages that are listed as devDependencies,
    * but are imported from production files
    */
-  listedDevButUsedAsDependency: Array<string>;
+  listedDevButUsedAsDependency: Record<string, Array<string>>;
 
   /**
-   * An array of package names that are listed as dependencies,
+   * A record of packages that are listed as dependencies,
    * but are only imported from test files
    */
-  listedButOnlyUsedAsDev: Array<string>;
+  listedButOnlyUsedAsDev: Record<string, Array<string>>;
   isMissingPeers: boolean;
 }

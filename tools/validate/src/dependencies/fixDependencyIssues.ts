@@ -65,8 +65,8 @@ export async function fixDependencies(
 
   // TODO: Autofix these
   if (
-    listedDevButUsedAsDependency.length > 0 ||
-    listedButOnlyUsedAsDev.length > 0 ||
+    Object.keys(listedDevButUsedAsDependency).length > 0 ||
+    Object.keys(listedButOnlyUsedAsDev).length > 0 ||
     isMissingPeers
   ) {
     console.log(
