@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
@@ -37,8 +37,6 @@ const InternalCell = ({
   const contentRef = useRef<HTMLDivElement>(null);
   const cellSize = cell.column.getSize();
 
-  // TODO: memoize me
-
   return (
     <td
       data-lgid={LGIDS.cell}
@@ -60,14 +58,24 @@ const InternalCell = ({
           contentClassName,
         )}
       >
-        {isFirstCell && isExpandable && (
-          <ToggleExpandedIcon
-            isExpanded={isExpanded}
-            toggleExpanded={toggleExpanded}
-            disabled={disabled}
-          />
-        )}
-        <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
+        <div
+          className={css`
+            display: flex;
+            align-items: center;
+            width: inherit;
+          `}
+        >
+          {isFirstCell && isExpandable && (
+            <ToggleExpandedIcon
+              isExpanded={isExpanded}
+              toggleExpanded={toggleExpanded}
+              disabled={disabled}
+            />
+          )}
+          <div className={getCellEllipsisStyles(shouldTruncate)}>
+            {children}
+          </div>
+        </div>
       </div>
     </td>
   );

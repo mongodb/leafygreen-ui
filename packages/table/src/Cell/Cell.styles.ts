@@ -82,6 +82,7 @@ export const truncatedContentStyles = css`
 export const getBaseStyles = (size = 0, shouldTruncate = true) => css`
   padding: 0 8px;
   overflow: hidden;
+  vertical-align: top;
 
   &:focus-visible {
     box-shadow: inset;
