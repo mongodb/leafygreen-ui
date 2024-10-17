@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
@@ -10,9 +10,9 @@ import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import {
   alignmentStyles,
   cellContainerStyles,
+  cellInnerStyles,
   getBaseStyles,
   getCellEllipsisStyles,
-  getCellInnerStyles,
   getCellPadding,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
@@ -34,14 +34,12 @@ const InternalCell = ({
   const isExpanded = row.getIsExpanded();
   const depth = row.depth;
   const toggleExpanded = () => row.toggleExpanded();
-  const contentRef = useRef<HTMLDivElement>(null);
-  const cellSize = cell.column.getSize();
 
   return (
     <td
       data-lgid={LGIDS.cell}
       className={cx(
-        getBaseStyles(cellSize, shouldTruncate),
+        getBaseStyles(),
         {
           [getCellPadding({ depth, isExpandable, isSelectable })]: isFirstCell,
         },
@@ -50,21 +48,13 @@ const InternalCell = ({
       {...rest}
     >
       <div
-        ref={contentRef}
         className={cx(
-          getCellInnerStyles(),
-          cellContainerStyles(shouldTruncate),
+          cellContainerStyles(),
           alignmentStyles(align),
           contentClassName,
         )}
       >
-        <div
-          className={css`
-            display: flex;
-            align-items: center;
-            width: inherit;
-          `}
-        >
+        <div className={cellInnerStyles()}>
           {isFirstCell && isExpandable && (
             <ToggleExpandedIcon
               isExpanded={isExpanded}
@@ -81,6 +71,6 @@ const InternalCell = ({
   );
 };
 
-InternalCell.displayName = 'Cell';
+InternalCell.displayName = 'InternalCell';
 
 export default InternalCell;

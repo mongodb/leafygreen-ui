@@ -1102,12 +1102,7 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
               <StyledRow row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <StyledCell
-                      key={cell.id}
-                      id={cell.id}
-                      overflow="truncate"
-                      cell={cell}
-                    >
+                    <StyledCell key={cell.id} id={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

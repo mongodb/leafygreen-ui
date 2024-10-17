@@ -1,58 +1,30 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
-
-import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
-import { useTableContext } from '../TableContext';
 
-import {
-  alignmentStyles,
-  basicCellStyles,
-  cellContainerStyles,
-  getBaseStyles,
-} from './Cell.styles';
 import InternalCell from './InternalCell';
+import InternalCellWithoutRT from './InternalCellWithoutRT';
 import { CellProps } from '.';
 
-const Cell = ({
-  className,
-  contentClassName,
-  align,
-  children,
-  cell,
-  ...rest
-}: CellProps) => {
+const Cell = ({ align, children, cell, ...rest }: CellProps) => {
   const { isReactTable } = useRowContext();
-  const { shouldTruncate } = useTableContext();
+
+  // const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
+  // const row = cell && cell.row;
+  // const isExpandable = cell && row ? row.getCanExpand() : false;
+  // const isExpanded = cell && row ? row.getIsExpanded() : false;
+  // const depth = cell && row ? row.depth : 0;
+  // const toggleExpanded = () => (row ? row.toggleExpanded() : {});
+  // const cellSize = cell ? cell.column.getSize() : 0;
 
   return (
     <>
       {!isReactTable && (
-        <td
-          data-lgid={LGIDS.cell}
-          className={cx(getBaseStyles(), basicCellStyles, className)}
-          {...rest}
-        >
-          <div
-            className={cx(
-              cellContainerStyles(shouldTruncate),
-              alignmentStyles(align),
-              contentClassName,
-            )}
-          >
-            {children}
-          </div>
-        </td>
+        <InternalCellWithoutRT {...rest}>{children}</InternalCellWithoutRT>
       )}
 
       {isReactTable && (
-        <InternalCell
-          {...rest}
-          cell={cell}
-          className={className}
-          contentClassName={contentClassName}
-        >
+        <InternalCell {...rest} cell={cell}>
           {children}
         </InternalCell>
       )}

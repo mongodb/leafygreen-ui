@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { spacing, typeScales } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Align } from './Cell.types';
 
@@ -59,27 +59,13 @@ export const basicCellStyles = css`
   }
 `;
 
-export const cellContainerStyles = (shouldTruncate = true) => css`
+export const cellContainerStyles = () => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
   overflow: hidden;
-
-  ${shouldTruncate &&
-  css`
-    max-height: ${standardCellHeight}px;
-  `}
 `;
-
-export const truncatedContentStyles = css`
-  /* See https://css-tricks.com/line-clampin/#aa-the-standardized-way */
-  display: -webkit-box;
-  -webkit-line-clamp: ${standardCellHeight / typeScales.body1.lineHeight};
-  -webkit-box-orient: vertical;
-  -webkit-box-align: start;
-`;
-
-export const getBaseStyles = (size = 0, shouldTruncate = true) => css`
+export const getBaseStyles = () => css`
   padding: 0 8px;
   overflow: hidden;
   vertical-align: top;
@@ -91,23 +77,21 @@ export const getBaseStyles = (size = 0, shouldTruncate = true) => css`
   &:last-child {
     padding-right: ${baseTableSidePadding}px;
   }
-
-  ${shouldTruncate &&
-  css`
-    width: ${size}px;
-  `}
 `;
 
-export const getCellInnerStyles = () => css`
-  width: inherit;
+export const cellInnerStyles = () => css`
+  display: flex;
+  align-items: center;
+  min-width: 100%;
 `;
 
 export const getCellEllipsisStyles = (shouldTruncate: boolean) => css`
   ${shouldTruncate &&
   css`
-    flex: 1; /* Allow the element to grow */
+    flex: 1;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    contain: inline-size; // 🤯
   `}
 `;
