@@ -17,6 +17,8 @@ const Cell = ({ align, children, cell, ...rest }: CellProps) => {
   // const toggleExpanded = () => (row ? row.toggleExpanded() : {});
   // const cellSize = cell ? cell.column.getSize() : 0;
 
+  // TODO: can i combine these two?
+
   return (
     <>
       {!isReactTable && (
