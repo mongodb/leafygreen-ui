@@ -35,13 +35,15 @@ const yAxis: ChartOptions['yAxis'] = {
   type: 'value',
   ...commonAxisOptions,
 };
-
 /**
  * Returns default chart options that are shared by all charts.
  */
 export const getDefaultChartOptions = (
   theme: Theme,
 ): Partial<ChartOptions> => ({
+  aria: {
+    show: true,
+  },
   animation: false, // Disabled by default to optimize performance
 
   title: {
