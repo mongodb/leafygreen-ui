@@ -8,7 +8,7 @@ const Child = (props: any) => {
   return <p>Testing {props.children}</p>;
 };
 
-export const App = () => {
+export const App = (disabled?: boolean) => {
   const props = {
     randomProp: 'value',
   };
@@ -38,6 +38,8 @@ export const App = () => {
       {/* Please update manually */}
       <MyComponent disabled={true} {...props} />
       <MyComponent state="disabled" {...props} />
+      {/* Please update manually */}
+      <MyComponent disabled={disabled} />
     </>
   );
 };

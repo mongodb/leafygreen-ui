@@ -8,7 +8,7 @@ const Child = (props: any) => {
   return <p>Testing {props.children}</p>;
 };
 
-export const App = () => {
+export const App = (propToRemove?: string) => {
   const props = {
     randomProp: 'value',
   };
@@ -43,6 +43,8 @@ export const App = () => {
       <MyComponent propToRemove="value2" {...props} />
       <MyComponent propToUpdate="value3" {...props} />
       <MyComponent />
+      {/* Please update manually */}
+      <MyComponent propToRemove={propToRemove} />
       <Test />
       <TestTwo />
     </>
