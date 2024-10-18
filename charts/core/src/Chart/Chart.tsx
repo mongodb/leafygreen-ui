@@ -26,6 +26,7 @@ export function Chart({
     darkMode: darkModeProp,
     onChartReady,
   });
+  console.log(darkModeProp);
   const { theme } = useDarkMode(darkModeProp);
 
   return (

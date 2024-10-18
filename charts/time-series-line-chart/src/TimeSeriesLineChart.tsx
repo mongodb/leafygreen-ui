@@ -3,7 +3,6 @@ import { Chart, Line } from '@lg-charts/core';
 import { TimeSeriesLineChartProps } from './TimeSeriesLineChart.types';
 
 export function TimeSeriesLineChart({ data }: TimeSeriesLineChartProps) {
-  console.log('data', data);
   return (
     <Chart>
       {data.map(({ name, data }) => (
