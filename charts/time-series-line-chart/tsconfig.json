@@ -16,16 +16,7 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../../packages/emotion"
+      "path": "../core"
     },
-    {
-      "path": "../../packages/lib"
-    },
-    {
-      "path": "../../packages/palette"
-    },
-    {
-      "path": "../../packages/tokens"
-    }
   ]
 }
