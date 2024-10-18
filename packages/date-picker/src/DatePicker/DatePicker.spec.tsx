@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import {
   fireEvent,
   render,
@@ -406,27 +406,6 @@ describe('packages/date-picker', () => {
         const { findMenuElements } = renderDatePicker({ initialOpen: true });
         const { menuContainerEl } = await findMenuElements();
         expect(menuContainerEl).toBeInTheDocument();
-      });
-
-      test('appends to the end of the DOM', async () => {
-        const { findMenuElements, container } = renderDatePicker({
-          initialOpen: true,
-        });
-        const { menuContainerEl } = await findMenuElements();
-        expect(container).not.toContain(menuContainerEl);
-      });
-
-      test('accepts a portalRef', () => {
-        const portalContainer = document.createElement('div');
-        document.body.appendChild(portalContainer);
-        const portalRef = createRef<HTMLElement>();
-        renderDatePicker({
-          initialOpen: true,
-          portalContainer,
-          portalRef,
-        });
-        expect(portalRef.current).toBeDefined();
-        expect(portalRef.current).toBe(portalContainer);
       });
 
       test('menu is initially closed when rendered with `initialOpen` and `disabled`', async () => {
@@ -3669,9 +3648,6 @@ describe('packages/date-picker', () => {
       {/* @ts-expect-error - needs label/aria-label/aria-labelledby */}
       <DatePicker />
 
-      {/* @ts-expect-error - does not accept usePortal prop */}
-      <DatePicker usePortal />
-
       <DatePicker label="Pick a date" />
       <DatePicker aria-label="Pick a date" />
       <DatePicker aria-labelledby="Pick a date" />
@@ -3694,14 +3670,10 @@ describe('packages/date-picker', () => {
         initialOpen={false}
         autoComplete="off"
         darkMode={false}
-        portalClassName=""
-        scrollContainer={{} as HTMLElement}
-        portalContainer={{} as HTMLElement}
         align="bottom"
         justify="start"
         spacing={10}
         adjustOnMutation={true}
-        popoverZIndex={1}
         onEnter={() => {}}
         onEntering={() => {}}
         onEntered={() => {}}

@@ -5,7 +5,11 @@ import PropTypes from 'prop-types';
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import Popover, { Align } from '@leafygreen-ui/popover';
+import Popover, {
+  Align,
+  DismissMode,
+  RenderMode,
+} from '@leafygreen-ui/popover';
 
 import { beaconStyles, timeout1, timeout2 } from './styles';
 import TooltipContent from './TooltipContent';
@@ -23,15 +27,10 @@ function GuideCue({
   onDismiss = () => {},
   onPrimaryButtonClick = () => {},
   tooltipClassName,
-  portalClassName,
   buttonText: buttonTextProp,
   tooltipAlign = TooltipAlign.Top,
   tooltipJustify = TooltipJustify.Middle,
   beaconAlign = Align.CenterHorizontal,
-  portalContainer,
-  portalRef,
-  scrollContainer,
-  popoverZIndex,
   ...tooltipProps
 }: GuideCueProps) {
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -105,13 +104,6 @@ function GuideCue({
    */
   const onEscClose = isStandalone ? onPrimaryButtonClick : onDismiss;
 
-  const sharedProps = {
-    portalClassName,
-    portalContainer,
-    portalRef,
-    scrollContainer,
-  };
-
   const tooltipContentProps = {
     darkMode,
     open,
@@ -119,7 +111,6 @@ function GuideCue({
     tooltipJustify,
     tooltipAlign,
     refEl,
-    popoverZIndex,
     numberOfSteps,
     currentStep,
     theme,
@@ -146,9 +137,7 @@ function GuideCue({
       {isStandalone ? (
         // Standalone tooltip
         // this is using the reference from the `refEl` prop to position itself against
-        <TooltipContent {...tooltipContentProps} {...sharedProps}>
-          {children}
-        </TooltipContent>
+        <TooltipContent {...tooltipContentProps}>{children}</TooltipContent>
       ) : (
         // Multistep tooltip
         <Popover
@@ -158,9 +147,8 @@ function GuideCue({
           justify={TooltipJustify.Middle}
           spacing={-12} // width of beacon is 24px, 24/2 = 12
           adjustOnMutation={true}
-          popoverZIndex={popoverZIndex}
-          {...sharedProps}
-          usePortal={true}
+          dismissMode={DismissMode.Manual}
+          renderMode={RenderMode.TopLayer}
         >
           {/* The beacon is using the popover component to position itself */}
           <div
@@ -176,7 +164,6 @@ function GuideCue({
             {...tooltipContentProps}
             refEl={beaconRef}
             open={tooltipOpen}
-            usePortal={false}
           >
             {children}
           </TooltipContent>
@@ -228,23 +215,6 @@ GuideCue.propTypes = {
   tooltipAlign: PropTypes.oneOf(Object.values(TooltipAlign)),
   tooltipJustify: PropTypes.oneOf(Object.values(TooltipJustify)),
   beaconAlign: PropTypes.oneOf(Object.values(Align)),
-  // Popover Props
-  popoverZIndex: PropTypes.number,
-  scrollContainer:
-    typeof window !== 'undefined'
-      ? PropTypes.instanceOf(Element)
-      : PropTypes.any,
-  portalContainer:
-    typeof window !== 'undefined'
-      ? PropTypes.instanceOf(Element)
-      : PropTypes.any,
-  portalClassName: PropTypes.string,
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
 };
 
 export default GuideCue;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
+import { RenderMode } from './PopoverContext/PopoverContext.types';
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import {
   PopoverContextType,
@@ -64,6 +65,12 @@ function LeafyGreenProvider({
     );
   const { portalContainer, scrollContainer } =
     popoverPortalContainerProp ?? inheritedPopoverContextContainers;
+  const popoverProviderProps =
+    portalContainer || scrollContainer
+      ? { renderMode: RenderMode.Portal, portalContainer, scrollContainer }
+      : ({
+          renderMode: RenderMode.TopLayer,
+        } as const);
 
   return (
     <UsingKeyboardProvider>
@@ -72,10 +79,7 @@ function LeafyGreenProvider({
           contextDarkMode={darkModeState}
           setDarkMode={setDarkMode}
         >
-          <PopoverProvider
-            portalContainer={portalContainer}
-            scrollContainer={scrollContainer}
-          >
+          <PopoverProvider {...popoverProviderProps}>
             {children}
           </PopoverProvider>
         </DarkModeProvider>

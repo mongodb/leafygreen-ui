@@ -3,9 +3,11 @@ import React from 'react';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 import {
   Align as PopoverAlign,
+  DismissMode,
   ElementPosition,
   Justify,
   PopoverProps,
+  RenderMode,
 } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
@@ -28,7 +30,7 @@ export type Align = Exclude<
   'center-vertical' | 'center-horizontal'
 >;
 
-export { Justify };
+export { DismissMode, Justify, RenderMode };
 
 export interface PopoverFunctionParameters {
   align: PopoverAlign;
@@ -38,7 +40,12 @@ export interface PopoverFunctionParameters {
 
 type ModifiedPopoverProps = Omit<
   PopoverProps,
-  'active' | 'adjustOnMutation' | 'children' | 'align'
+  | 'active'
+  | 'adjustOnMutation'
+  | 'align'
+  | 'children'
+  | 'dismissMode'
+  | 'onToggle'
 >;
 
 export type TooltipProps = Omit<

@@ -8,13 +8,19 @@ import { AutoComplete, DatePickerState } from './types';
 
 export type ModifiedPopoverProps = Omit<
   PopoverProps,
-  | 'usePortal'
-  | 'refEl'
+  | 'active'
   | 'children'
   | 'className'
-  | 'active'
+  | 'dismissMode'
   | 'onClick'
+  | 'onToggle'
+  | 'popoverZIndex'
+  | 'portalClassName'
+  | 'portalContainer'
+  | 'portalRef'
+  | 'refEl'
   | 'renderMode'
+  | 'scrollContainer'
 >;
 
 export type BaseDatePickerProps = {
