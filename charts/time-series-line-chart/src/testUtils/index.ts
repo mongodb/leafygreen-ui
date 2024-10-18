@@ -1,1 +1,0 @@
-export { generateData } from './generateData';

@@ -8,7 +8,7 @@ function getRandomNumber(min: number, max: number) {
   return faker.number.int({ min, max });
 }
 
-export function generateData(numOfSets: number): Array<Series> {
+export function makeData(numOfSets: number): Array<Series> {
   const data = [];
 
   for (let i = 0; i < numOfSets; i++) {
