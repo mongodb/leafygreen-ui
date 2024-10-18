@@ -25,7 +25,6 @@ export const ComboboxChip = React.forwardRef<
       overflow,
       chipTruncationLocation = TruncationLocation.End,
       chipCharacterLimit = 12,
-      popoverZIndex,
     } = useContext(ComboboxContext);
 
     const updatedChipTruncationLocation =
@@ -80,7 +79,6 @@ export const ComboboxChip = React.forwardRef<
         baseFontSize={BaseFontSize.Body1}
         chipCharacterLimit={chipCharacterLimit}
         chipTruncationLocation={updatedChipTruncationLocation}
-        popoverZIndex={popoverZIndex}
         variant={Variant.Gray}
         ref={chipRef}
         disabled={disabled}

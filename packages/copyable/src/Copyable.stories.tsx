@@ -29,7 +29,6 @@ const meta: StoryMetaType<typeof Copyable> = {
   },
   args: {
     copyable: true,
-    shouldTooltipUsePortal: true,
     darkMode: false,
     label: 'Label',
     description: 'Description',
@@ -39,7 +38,6 @@ const meta: StoryMetaType<typeof Copyable> = {
     copyable: { control: 'boolean' },
     label: { control: 'text' },
     description: { control: 'text' },
-    shouldTooltipUsePortal: { control: 'boolean' },
     children: storybookArgTypes.children,
     darkMode: storybookArgTypes.darkMode,
   },

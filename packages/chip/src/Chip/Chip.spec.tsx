@@ -353,7 +353,6 @@ describe('packages/chip', () => {
         baseFontSize={13}
         disabled
         onDismiss={() => {}}
-        popoverZIndex={1}
         chipCharacterLimit={10}
         chipTruncationLocation="end"
         dismissButtonAriaLabel="deselect"
