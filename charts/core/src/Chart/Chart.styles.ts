@@ -3,8 +3,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
   color,
-  Variant,
   InteractionState,
+  Variant,
 } from '@leafygreen-ui/tokens';
 
 export const chartStyles = css`

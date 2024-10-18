@@ -1,10 +1,11 @@
 import { Theme } from '@leafygreen-ui/lib';
 import {
-  spacing,
   color,
-  Variant,
   InteractionState,
+  spacing,
+  Variant,
 } from '@leafygreen-ui/tokens';
+
 import { ChartOptions } from '../Chart.types';
 import { colors } from '../colors';
 
