@@ -20,7 +20,6 @@ const InternalCellWithRT = <T extends LGRowData>({
   ...rest
 }: InternalCellWithRTProps<T>) => {
   const { disabled } = useRowContext();
-  // TODO: log warning if cell is not passed to Cell
   const { isSelectable, shouldTruncate = true } = useTableContext();
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
   const row = cell.row;

@@ -37,7 +37,6 @@ const InternalRowWithRT = <T extends LGRowData>({
   const contextValues = useMemo(() => {
     return {
       disabled,
-      isReactTable: true,
     };
   }, [disabled]);
 

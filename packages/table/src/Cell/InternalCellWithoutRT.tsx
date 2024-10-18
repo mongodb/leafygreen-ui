@@ -6,9 +6,13 @@ import { useTableContext } from '../TableContext';
 
 import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
 import InternalCell from './InternalCell';
-import { CellProps } from '.';
+import { InternalCellProps } from '.';
 
-const InternalCellWithoutRT = ({ children, className, ...rest }: CellProps) => {
+const InternalCellWithoutRT = ({
+  children,
+  className,
+  ...rest
+}: InternalCellProps) => {
   const { shouldTruncate = true } = useTableContext();
 
   return (

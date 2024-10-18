@@ -21,9 +21,9 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
   contentClassName?: string;
 }
 
-interface CellProps<T extends LGRowData> extends BaseCellProps {
+export interface CellProps<T extends LGRowData> extends BaseCellProps {
   /**
-   * TODO:
+   * The cell object that is returned when mapping through a row passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook.
    */
   cell?: LeafyGreenTableCell<T>;
 }
