@@ -18,6 +18,7 @@
     "@lg-charts/core": "^0.1.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.0.3",
     "@lg-tools/storybook-utils": "^0.1.1"
   },
   "repository": {

@@ -1,7 +1,11 @@
 import { Series } from '../TimeSeriesLineChart.types';
+import { faker } from '@faker-js/faker';
+
+// Seed the faker random number generator for consistent results
+faker.seed(123);
 
 function getRandomNumber(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+  return faker.number.int({ min, max });
 }
 
 export function generateData(numOfSets: number): Array<Series> {
@@ -15,12 +19,12 @@ export function generateData(numOfSets: number): Array<Series> {
 
     let currentDate = new Date(2020, 5, 9); // June 9th, 2020 (Month is 0-indexed)
 
-    for (let j = 0; j < 24; j++) {
+    for (let j = 0; j < 24 * 60; j++) {
       series.data?.push([
         new Date(currentDate),
-        getRandomNumber(i * 100, i * 100 + 100),
+        getRandomNumber(i * 150, i * 150 + 100),
       ]);
-      currentDate.setHours(currentDate.getHours() + 1); // Increment by one hour
+      currentDate.setMinutes(currentDate.getMinutes() + 1); // Increment by one hour
     }
 
     data.push(series);
