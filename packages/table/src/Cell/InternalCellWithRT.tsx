@@ -5,19 +5,20 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useRowContext } from '../Row/RowContext';
 import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
+import { LGRowData } from '../useLeafyGreenTable';
 
-import { basicCellStyles, getCellEllipsisStyles } from './Cell.styles';
+import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
 import { InternalCellWithRTProps } from './Cell.types';
 import InternalCell from './InternalCell';
 
-const InternalCellWithRT = ({
+const InternalCellWithRT = <T extends LGRowData>({
   children,
   className,
   contentClassName,
   align,
   cell,
   ...rest
-}: InternalCellWithRTProps) => {
+}: InternalCellWithRTProps<T>) => {
   const { disabled } = useRowContext();
   // TODO: log warning if cell is not passed to Cell
   const { isSelectable, shouldTruncate = true } = useTableContext();
@@ -31,7 +32,7 @@ const InternalCellWithRT = ({
   return (
     <InternalCell
       className={cx(
-        basicCellStyles(depth, isExpandable, isSelectable),
+        getCellStyles(depth, isExpandable, isSelectable),
         className,
       )}
       {...rest}

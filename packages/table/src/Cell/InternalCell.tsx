@@ -5,10 +5,9 @@ import { cx } from '@leafygreen-ui/emotion';
 import { LGIDS } from '../constants';
 
 import {
-  alignmentStyles,
-  cellContainerStyles,
   cellInnerStyles,
   getBaseStyles,
+  getCellContainerStyles,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
 
@@ -17,7 +16,6 @@ const InternalCell = ({
   className,
   contentClassName,
   align,
-  cell,
   ...rest
 }: InternalCellProps) => {
   return (
@@ -26,13 +24,7 @@ const InternalCell = ({
       className={cx(getBaseStyles(), className)}
       {...rest}
     >
-      <div
-        className={cx(
-          cellContainerStyles(),
-          alignmentStyles(align),
-          contentClassName,
-        )}
-      >
+      <div className={cx(getCellContainerStyles(align), contentClassName)}>
         <div className={cellInnerStyles()}>{children}</div>
       </div>
     </td>

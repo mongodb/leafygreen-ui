@@ -12,11 +12,6 @@ const iconSize = 28;
 /** the default height of a cell */
 export const standardCellHeight = spacing[5] + spacing[2];
 
-export const alignmentStyles = (align: Align = 'left') => css`
-  justify-content: ${align};
-  text-align: ${align};
-`;
-
 export const getCellPadding = ({
   depth = 0,
   isExpandable,
@@ -49,7 +44,7 @@ export const getCellPadding = ({
   `;
 };
 
-export const basicCellStyles = (
+export const getCellStyles = (
   depth = 0,
   isExpandable = false,
   isSelectable = false,
@@ -63,11 +58,13 @@ export const basicCellStyles = (
   }
 `;
 
-export const cellContainerStyles = () => css`
+export const getCellContainerStyles = (align: Align = 'left') => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
   overflow: hidden;
+  justify-content: ${align};
+  text-align: ${align};
 `;
 
 export const getBaseStyles = () => css`

@@ -4,7 +4,7 @@ import { RowData } from '@tanstack/react-table';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { cellContainerStyles } from '../Cell/Cell.styles';
+import { getCellContainerStyles } from '../Cell/Cell.styles';
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
@@ -44,7 +44,7 @@ const ExpandedContent = <T extends RowData>({
         data-lgid={LGIDS.cell}
       >
         <div
-          className={cx(cellContainerStyles(), expandedContentStyles[theme])}
+          className={cx(getCellContainerStyles(), expandedContentStyles[theme])}
         >
           <div>{content}</div>
         </div>

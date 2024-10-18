@@ -1,12 +1,17 @@
 import React from 'react';
 
 import { useRowContext } from '../Row/RowContext';
+import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalCellWithoutRT from './InternalCellWithoutRT';
 import InternalCellWithRT from './InternalCellWithRT';
 import { CellProps } from '.';
 
-const Cell = ({ children, cell, ...rest }: CellProps) => {
+const Cell = <T extends LGRowData>({
+  children,
+  cell,
+  ...rest
+}: CellProps<T>) => {
   const { isReactTable } = useRowContext();
 
   return (

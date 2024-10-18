@@ -33,6 +33,8 @@ import {
   RowProps,
 } from '..';
 
+// TODO: UPDATE ME
+
 const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
@@ -158,7 +160,6 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
@@ -286,7 +287,6 @@ export const DisabledSelectableRows: StoryFn<
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {

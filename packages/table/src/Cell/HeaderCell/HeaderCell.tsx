@@ -5,11 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { LGIDS } from '../../constants';
 import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
-import {
-  alignmentStyles,
-  cellContainerStyles,
-  getBaseStyles,
-} from '../Cell.styles';
+import { getBaseStyles, getCellContainerStyles } from '../Cell.styles';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
@@ -63,11 +59,10 @@ const HeaderCell = <T extends LGRowData>({
     >
       <div
         className={cx(
-          cellContainerStyles(),
-          headerCellContentStyles,
           // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
           // @ts-ignore Header types need to be extended or declared in the react-table namespace
-          alignmentStyles(header?.column.columnDef?.align),
+          getCellContainerStyles(header?.column.columnDef?.align),
+          headerCellContentStyles,
         )}
       >
         {children}

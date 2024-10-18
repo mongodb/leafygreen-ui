@@ -1,5 +1,7 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+import { LeafyGreenTableCell, LGRowData } from '../useLeafyGreenTable';
+
 export type Align = Extract<
   HTMLElementProps<'td'>['align'],
   'left' | 'right' | 'center'
@@ -13,17 +15,26 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
    */
   align?: Align;
 
-  /** A `className` applied to the inner `div` of the Cell  */
+  /**
+   * A `className` applied to the inner `div` of the Cell
+   */
   contentClassName?: string;
-
-  cell?: any; //FIXME:
 }
 
-export type CellProps = BaseCellProps;
+interface CellProps<T extends LGRowData> extends BaseCellProps {
+  /**
+   * TODO:
+   */
+  cell?: LeafyGreenTableCell<T>;
+}
 
-export type InternalCellRequiredProps = Omit<BaseCellProps, 'cell'> &
-  Required<Pick<BaseCellProps, 'cell'>>;
+export type InternalCellWithRTRequiredProps<T extends LGRowData> = Omit<
+  CellProps<T>,
+  'cell'
+> &
+  Required<Pick<CellProps<T>, 'cell'>>;
 
 export interface InternalCellProps extends BaseCellProps {}
 
-export interface InternalCellWithRTProps extends InternalCellRequiredProps {}
+export interface InternalCellWithRTProps<T extends LGRowData>
+  extends InternalCellWithRTRequiredProps<T> {}

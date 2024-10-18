@@ -4,7 +4,7 @@ import { cx } from '@leafygreen-ui/emotion';
 
 import { useTableContext } from '../TableContext';
 
-import { basicCellStyles, getCellEllipsisStyles } from './Cell.styles';
+import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
 import InternalCell from './InternalCell';
 import { CellProps } from '.';
 
@@ -12,7 +12,7 @@ const InternalCellWithoutRT = ({ children, className, ...rest }: CellProps) => {
   const { shouldTruncate = true } = useTableContext();
 
   return (
-    <InternalCell className={cx(basicCellStyles(), className)} {...rest}>
+    <InternalCell className={cx(getCellStyles(), className)} {...rest}>
       <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
     </InternalCell>
   );
