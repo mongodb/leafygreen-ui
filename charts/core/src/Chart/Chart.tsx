@@ -5,11 +5,14 @@
  * and styling according to our design system's specs.
  */
 import React from 'react';
-import { ChartProps } from './Chart.types';
-import { chartStyles, getWrapperStyles } from './Chart.styles';
-import { ChartProvider } from '../ChartContext';
-import { useChart } from './hooks/useChart';
+
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { ChartProvider } from '../ChartContext';
+
+import { useChart } from './hooks/useChart';
+import { chartStyles, getWrapperStyles } from './Chart.styles';
+import { ChartProps } from './Chart.types';
 
 export function Chart({
   children,

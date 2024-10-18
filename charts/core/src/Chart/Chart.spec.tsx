@@ -1,8 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+
 import '@testing-library/jest-dom/extend-expect';
-import { Chart } from './Chart';
+
 import { ChartProvider } from '../ChartContext';
+
+import { Chart } from './Chart';
 
 jest.mock('../ChartContext', () => ({
   ChartProvider: jest.fn(({ children }) => <div>{children}</div>),

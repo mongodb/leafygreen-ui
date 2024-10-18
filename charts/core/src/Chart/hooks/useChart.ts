@@ -1,24 +1,25 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { LineChart as EchartsLineChart } from 'echarts/charts';
+import {
+  GridComponent,
+  LegendComponent,
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+} from 'echarts/components';
+import * as echarts from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import debounce from 'lodash.debounce';
+
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
 import {
   ChartActionType,
   ChartOptions,
   SeriesOption,
 } from '../../Chart/Chart.types';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { chartReducer, getDefaultChartOptions } from '../config';
-import { DarkModeProps } from '@leafygreen-ui/lib';
-
-import * as echarts from 'echarts/core';
-import { LineChart as EchartsLineChart } from 'echarts/charts';
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  LegendComponent,
-  ToolboxComponent,
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import debounce from 'lodash.debounce';
 
 /**
  * Register the required components. By using separate imports, we can avoid

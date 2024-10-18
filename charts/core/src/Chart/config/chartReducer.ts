@@ -1,5 +1,6 @@
 import { Reducer } from 'react';
 import merge from 'lodash.merge';
+
 import {
   ChartAction,
   ChartActionType,
@@ -15,17 +16,21 @@ export const chartReducer: Reducer<Partial<ChartOptions>, ChartAction> = (
       if (!state.series) {
         return { ...state, series: [action.data] };
       }
+
       const seriesExists = state.series.some(
         series => series.name === action.data.name,
       );
+
       if (seriesExists) {
         return state;
       }
+
       return { ...state, series: [...state.series, action.data] };
     case ChartActionType.removeSeries:
       if (!state.series) {
         return state;
       }
+
       return {
         ...state,
         series: state.series.filter(series => series.name !== action.name),
