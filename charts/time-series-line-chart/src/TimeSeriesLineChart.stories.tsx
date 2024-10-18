@@ -14,8 +14,19 @@ export default {
 };
 
 const Template: StoryFn<typeof TimeSeriesLineChart> = props => (
-  <TimeSeriesLineChart data={makeData(5)} />
+  <TimeSeriesLineChart {...props} />
 );
 
-export const Basic: StoryFn<typeof TimeSeriesLineChart> = Template.bind({});
-Basic.args = {};
+export const LiveExample: StoryFn<typeof TimeSeriesLineChart> = Template.bind(
+  {},
+);
+LiveExample.args = {
+  data: makeData(5),
+};
+
+export const AllLineColors: StoryFn<typeof TimeSeriesLineChart> = Template.bind(
+  {},
+);
+AllLineColors.args = {
+  data: makeData(15),
+};

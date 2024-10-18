@@ -6,8 +6,6 @@ import { LineProps } from './Line.types';
 export function Line({ name, data }: LineProps) {
   const { addSeries } = useChartContext();
 
-  console.log('Line', name, data);
-
   useEffect(() => {
     addSeries({
       ...defaultLineOptions,
