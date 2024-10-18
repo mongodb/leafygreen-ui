@@ -196,12 +196,8 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
-
-            // TODO: the diff in this approach is that the keys are not chaning when a sub row opens
             return (
               <Fragment key={row.id}>
-                {/* {!isExpandedContent && ( */}
                 <Row row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (

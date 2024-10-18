@@ -49,12 +49,16 @@ export const getCellPadding = ({
   `;
 };
 
-export const basicCellStyles = css`
+export const basicCellStyles = (
+  depth = 0,
+  isExpandable = false,
+  isSelectable = false,
+) => css`
   &:first-child {
     ${getCellPadding({
-      depth: 0,
-      isExpandable: false,
-      isSelectable: false,
+      depth,
+      isExpandable,
+      isSelectable,
     })}
   }
 `;
@@ -65,6 +69,7 @@ export const cellContainerStyles = () => css`
   min-height: ${standardCellHeight}px;
   overflow: hidden;
 `;
+
 export const getBaseStyles = () => css`
   padding: 0 8px;
   overflow: hidden;

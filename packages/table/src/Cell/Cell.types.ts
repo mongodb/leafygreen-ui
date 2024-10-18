@@ -24,28 +24,6 @@ export type CellProps = BaseCellProps;
 export type InternalCellRequiredProps = Omit<BaseCellProps, 'cell'> &
   Required<Pick<BaseCellProps, 'cell'>>;
 
-export interface InternalCellProps extends InternalCellRequiredProps {
-  /**
-   * Index of the cell in its parent row.
-   */
-  cellIndex?: number;
+export interface InternalCellProps extends BaseCellProps {}
 
-  /**
-   * Depth of nesting its parent row has.
-   */
-  depth?: number;
-
-  /**
-   * Defines whether the cell's row is visible (i.e. expanded)
-   *
-   * @default true
-   */
-  isVisible?: boolean;
-
-  /**
-   * Defines whether the cell's row is expandable
-   *
-   * @default false
-   */
-  isExpandable?: boolean;
-}
+export interface InternalCellWithRTProps extends InternalCellRequiredProps {}

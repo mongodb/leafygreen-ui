@@ -3,17 +3,12 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
-import { useRowContext } from '../Row/RowContext';
-import { useTableContext } from '../TableContext';
-import ToggleExpandedIcon from '../ToggleExpandedIcon';
 
 import {
   alignmentStyles,
   cellContainerStyles,
   cellInnerStyles,
   getBaseStyles,
-  getCellEllipsisStyles,
-  getCellPadding,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
 
@@ -25,26 +20,10 @@ const InternalCell = ({
   cell,
   ...rest
 }: InternalCellProps) => {
-  const { disabled } = useRowContext();
-  // TODO: log warning if cell is not passed to Cell
-  const { isSelectable, shouldTruncate = true } = useTableContext();
-  const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
-  const row = cell.row;
-  const isExpandable = row.getCanExpand();
-  const isExpanded = row.getIsExpanded();
-  const depth = row.depth;
-  const toggleExpanded = () => row.toggleExpanded();
-
   return (
     <td
       data-lgid={LGIDS.cell}
-      className={cx(
-        getBaseStyles(),
-        {
-          [getCellPadding({ depth, isExpandable, isSelectable })]: isFirstCell,
-        },
-        className,
-      )}
+      className={cx(getBaseStyles(), className)}
       {...rest}
     >
       <div
@@ -54,18 +33,7 @@ const InternalCell = ({
           contentClassName,
         )}
       >
-        <div className={cellInnerStyles()}>
-          {isFirstCell && isExpandable && (
-            <ToggleExpandedIcon
-              isExpanded={isExpanded}
-              toggleExpanded={toggleExpanded}
-              disabled={disabled}
-            />
-          )}
-          <div className={getCellEllipsisStyles(shouldTruncate)}>
-            {children}
-          </div>
-        </div>
+        <div className={cellInnerStyles()}>{children}</div>
       </div>
     </td>
   );

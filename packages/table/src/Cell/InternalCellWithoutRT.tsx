@@ -2,44 +2,19 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { LGIDS } from '../constants';
 import { useTableContext } from '../TableContext';
 
-import {
-  alignmentStyles,
-  basicCellStyles,
-  cellContainerStyles,
-  getBaseStyles,
-  getCellEllipsisStyles,
-} from './Cell.styles';
+import { basicCellStyles, getCellEllipsisStyles } from './Cell.styles';
+import InternalCell from './InternalCell';
 import { CellProps } from '.';
 
-const InternalCellWithoutRT = ({
-  className,
-  contentClassName,
-  align,
-  children,
-  cell,
-  ...rest
-}: CellProps) => {
+const InternalCellWithoutRT = ({ children, className, ...rest }: CellProps) => {
   const { shouldTruncate = true } = useTableContext();
 
   return (
-    <td
-      data-lgid={LGIDS.cell}
-      className={cx(getBaseStyles(), basicCellStyles, className)}
-      {...rest}
-    >
-      <div
-        className={cx(
-          cellContainerStyles(),
-          alignmentStyles(align), // TODO: do we need this?
-          contentClassName,
-        )}
-      >
-        <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
-      </div>
-    </td>
+    <InternalCell className={cx(basicCellStyles(), className)} {...rest}>
+      <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
+    </InternalCell>
   );
 };
 
