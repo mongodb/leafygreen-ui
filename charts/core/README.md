@@ -2,8 +2,6 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@lg-charts/core.svg)
 
-Core components that can be used to visually represent data in charts.
-
 ## Installation
 
 ### Yarn
@@ -47,9 +45,9 @@ import { Chart, Line } from '@lg-charts/core';
 
 #### Props
 
-| Name           | Description                                             | Type       | Default  |
-| -------------- | ------------------------------------------------------- | ---------- | -------- |
-| `onChartReady` | Callback to be called when chart is finished rendering. | () => void | () => {} |
+| Name           | Description                                             | Type       | Default |
+| -------------- | ------------------------------------------------------- | ---------- | ------- |
+| `onChartReady` | Callback to be called when chart is finished rendering. | () => void |         |
 
 ### `Line`
 
@@ -57,5 +55,5 @@ import { Chart, Line } from '@lg-charts/core';
 
 | Name   | Description                                                            | Type                                                        | Default |
 | ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
-| `name` | Name used to identify the series.                                      | string                                                      | ""      |
-| `data` | Data array of tuples that represent x and y coordinates in the series. | Array<[string \| number \| Date, string \| number \| Date]> | []      |
+| `name` | Name used to identify the series.                                      | string                                                      |         |
+| `data` | Data array of tuples that represent x and y coordinates in the series. | Array<[string \| number \| Date, string \| number \| Date]> |         |
