@@ -1,57 +1,26 @@
 import React from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { LGRowData } from '../useLeafyGreenTable';
 
-import { LGIDS } from '../constants';
-import { useRowContext } from '../Row/RowContext';
-
-import {
-  alignmentStyles,
-  baseCellStyles,
-  basicCellStyles,
-  cellTransitionContainerStyles,
-} from './Cell.styles';
-import InternalCell from './InternalCell';
+import InternalCellWithoutRT from './InternalCellWithoutRT';
+import InternalCellWithRT from './InternalCellWithRT';
 import { CellProps } from '.';
 
-const Cell = ({
-  className,
-  contentClassName,
-  align,
+const Cell = <T extends LGRowData>({
   children,
   cell,
   ...rest
-}: CellProps) => {
-  const { isReactTable } = useRowContext();
+}: CellProps<T>) => {
   return (
     <>
-      {!isReactTable && (
-        <td
-          data-lgid={LGIDS.cell}
-          className={cx(baseCellStyles, basicCellStyles, className)}
-          {...rest}
-        >
-          <div
-            className={cx(
-              cellTransitionContainerStyles,
-              alignmentStyles(align),
-              contentClassName,
-            )}
-          >
-            {children}
-          </div>
-        </td>
+      {!cell && (
+        <InternalCellWithoutRT {...rest}>{children}</InternalCellWithoutRT>
       )}
 
-      {isReactTable && (
-        <InternalCell
-          {...rest}
-          cell={cell}
-          className={className}
-          contentClassName={contentClassName}
-        >
+      {cell && (
+        <InternalCellWithRT {...rest} cell={cell}>
           {children}
-        </InternalCell>
+        </InternalCellWithRT>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
-import { spacing, typeScales } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Align } from './Cell.types';
 
@@ -11,24 +11,6 @@ const iconSize = 28;
 
 /** the default height of a cell */
 export const standardCellHeight = spacing[5] + spacing[2];
-
-export const baseCellStyles = css`
-  padding: 0 8px;
-  overflow: hidden;
-
-  &:focus-visible {
-    box-shadow: inset;
-  }
-
-  &:last-child {
-    padding-right: ${baseTableSidePadding}px;
-  }
-`;
-
-export const alignmentStyles = (align: Align = 'left') => css`
-  justify-content: ${align};
-  text-align: ${align};
-`;
 
 export const getCellPadding = ({
   depth = 0,
@@ -62,34 +44,56 @@ export const getCellPadding = ({
   `;
 };
 
-export const basicCellStyles = css`
+export const getCellStyles = (
+  depth = 0,
+  isExpandable = false,
+  isSelectable = false,
+) => css`
   &:first-child {
     ${getCellPadding({
-      depth: 0,
-      isExpandable: false,
-      isSelectable: false,
+      depth,
+      isExpandable,
+      isSelectable,
     })}
   }
 `;
 
-//TODO: update this when working on multi line content
-export const cellTransitionContainerStyles = css`
+export const getCellContainerStyles = (align: Align = 'left') => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
   overflow: hidden;
-  max-height: ${standardCellHeight}px;
+  justify-content: ${align};
+  text-align: ${align};
 `;
 
-export const truncatedContentStyles = css`
-  /* See https://css-tricks.com/line-clampin/#aa-the-standardized-way */
-  display: -webkit-box;
-  -webkit-line-clamp: ${standardCellHeight / typeScales.body1.lineHeight};
-  -webkit-box-orient: vertical;
-  -webkit-box-align: start;
+export const getBaseStyles = () => css`
+  padding: 0 8px;
+  overflow: hidden;
+  vertical-align: top;
+
+  &:focus-visible {
+    box-shadow: inset;
+  }
+
+  &:last-child {
+    padding-right: ${baseTableSidePadding}px;
+  }
 `;
 
-export const disableAnimationStyles = css`
-  transition-duration: 0;
-  transition: none;
+export const cellInnerStyles = () => css`
+  display: flex;
+  align-items: center;
+  min-width: 100%;
+`;
+
+export const getCellEllipsisStyles = (shouldTruncate: boolean) => css`
+  ${shouldTruncate &&
+  css`
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    contain: inline-size; // 🤯
+  `}
 `;
