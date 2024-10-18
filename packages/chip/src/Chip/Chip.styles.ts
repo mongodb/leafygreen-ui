@@ -329,3 +329,7 @@ export const getTextStyles = (
     [textDisabledStyles(theme)]: isDisabled,
     [textDismissibleStyles]: isDismissible,
   });
+
+export const inlineDefinitionStyles = css`
+  white-space: normal;
+`;

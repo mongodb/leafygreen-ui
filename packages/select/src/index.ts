@@ -4,7 +4,9 @@ export { menuButtonTextClassName } from './MenuButton';
 export { Option } from './Option';
 export { OptionGroup } from './OptionGroup';
 export {
+  DismissMode,
   DropdownWidthBasis,
+  RenderMode,
   Select,
   type SelectProps,
   Size,

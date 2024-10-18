@@ -17,5 +17,6 @@ export {
   RenderMode,
   type ToggleEvent,
 } from './Popover';
+export { getPopoverRenderModeProps } from './utils/getPopoverRenderModeProps';
 
 export default Popover;
