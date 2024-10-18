@@ -29,6 +29,7 @@ const HeaderCell = <T extends LGRowData>({
   className,
   cellIndex,
   header,
+  align,
   ...rest
 }: PropsWithChildren<HeaderCellProps<T>>) => {
   const { isSelectable } = useTableContext();
@@ -61,7 +62,7 @@ const HeaderCell = <T extends LGRowData>({
         className={cx(
           // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
           // @ts-ignore Header types need to be extended or declared in the react-table namespace
-          getCellContainerStyles(header?.column.columnDef?.align),
+          getCellContainerStyles(align || header?.column.columnDef?.align),
           headerCellContentStyles,
         )}
       >

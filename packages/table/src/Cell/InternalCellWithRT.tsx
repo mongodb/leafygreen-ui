@@ -34,6 +34,9 @@ const InternalCellWithRT = <T extends LGRowData>({
         getCellStyles(depth, isExpandable, isSelectable),
         className,
       )}
+      // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
+      // @ts-ignore Cell types need to be extended or declared in the react-table namespace
+      align={align || cell?.column.columnDef?.align}
       {...rest}
     >
       {isFirstCell && isExpandable && (
