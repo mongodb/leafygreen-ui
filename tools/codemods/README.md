@@ -72,77 +72,63 @@ yarn lg codemod <codemode> <path> --force
 
 ## Codemods
 
-**_NOTE:_ These codemods are for testing purposes only**
+### `popover-v12`
 
-### `consolidate-props`
+This codemod does the following:
 
-This codemod consolidates two props into one.
+1. Adds an explicit `usePortal={true}` declaration if left undefined and consolidates the `usePortal` and `renderMode` props into a single `renderMode` prop for the following components:
+
+- `Combobox`
+- `Menu`
+- `Popover`
+- `Select`
+- `SplitButton`
+- `Tooltip`
+
+2. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `portalRef`, `scrollContainer`, and `usePortal` props from the following components:
+
+- `Code`
+- `DatePicker`
+- `GuideCue`
+- `InfoSprinkle`
+- `InlineDefinition`
+- `NumberInput`
+- `SearchInput`
+
+3. Removes `shouldTooltipUsePortal` prop from `Copyable` component
 
 ```jsx
-yarn lg codemod codemode-props <path>
+yarn lg codemod popover-v12 <path>
 ```
-
-E.g.
-In this example, the `disabled` props is merged into the `state` prop.
 
 **Before**:
 
 ```jsx
-<MyComponent disabled={true} state="valid" />
+<Combobox />
+<Combobox usePortal={true} />
+<Combobox usePortal={false} />
+
+<Code portalClassName="portal-class" portalRef={ref} usePortal />
+<DatePicker portalContainer={containerRef} scrollContainer={containerRef} />
+<InfoSprinkle popoverZIndex={9999} usePortal={false} />
+
+<Copyable shouldTooltipUsePortal />
+<Copyable shouldTooltipUsePortal={true} />
+<Copyable shouldTooltipUsePortal={false} />
 ```
 
 **After**:
 
 ```jsx
-<MyComponent state="disabled" />
-```
+<Combobox renderMode="portal" />
+<Combobox renderMode="portal" />
+<Combobox renderMode="inline" />
 
-<hr>
+<Code />
+<DatePicker />
+<InfoSprinkle />
 
-### `rename-component-prop`
-
-This codemod renames a component prop
-
-```jsx
-yarn lg codemod codemode-component-prop <path>
-```
-
-E.g.
-In this example, `prop` is renamed to `newProp`.
-
-**Before**:
-
-```jsx
-<MyComponent prop="hey" />
-```
-
-**After**:
-
-```jsx
-<MyComponent newProp="hey" />
-```
-
-<hr>
-
-### `update-component-prop-value`
-
-This codemod updates a prop value
-
-```jsx
-yarn lg codemod codemode-component-prop-value <path>
-```
-
-E.g.
-In this example, `value` is updated to `new prop value`.
-
-**Before**:
-
-```jsx
-<MyComponent prop="value" />
-```
-
-**After**:
-
-```jsx
-<MyComponent prop="new prop value" />
+<Copyable />
+<Copyable />
+<Copyable />
 ```
