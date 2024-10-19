@@ -1,4 +1,4 @@
-import type { ASTNode, ASTPath, JSXAttribute, JSXElement } from 'jscodeshift';
+import type { ASTNode, ASTPath, JSXAttribute } from 'jscodeshift';
 import type core from 'jscodeshift';
 
 import { MIGRATOR_ERROR } from '../../../constants';
@@ -13,7 +13,7 @@ export interface AddJSXAttributesType {
   /**
    *  The element(component) to transform
    */
-  element: ASTPath<JSXElement>;
+  element: ASTPath<any>;
 
   /**
    *  The name of the prop that will be added to the element
