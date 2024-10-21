@@ -6,8 +6,8 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import { RenderMode } from './PopoverContext/PopoverContext.types';
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import {
-  PopoverContextType,
   PopoverProvider,
+  PopoverProviderProps,
   usePopoverContext,
 } from './PopoverContext';
 import TypographyProvider, {
@@ -17,7 +17,7 @@ import TypographyProvider, {
 import UsingKeyboardProvider from './UsingKeyboardContext';
 
 type PopoverPortalContainerType = Pick<
-  PopoverContextType,
+  PopoverProviderProps,
   'portalContainer' | 'scrollContainer'
 >;
 

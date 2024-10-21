@@ -1,8 +1,12 @@
 export { useDarkMode, useDarkModeContext } from './DarkModeContext';
 export { default, type LeafyGreenProviderProps } from './LeafyGreenContext';
 export {
+  ModalPopoverContext,
+  ModalPopoverProvider,
+  useModalPopoverContext,
+} from './ModalPopoverContext';
+export {
   PopoverContext,
-  type PopoverContextType,
   PopoverProvider,
   type PopoverProviderProps,
   RenderMode,
