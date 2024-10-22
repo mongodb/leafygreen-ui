@@ -28,7 +28,7 @@ async function buildTable() {
       const pkgMd = `[${pkg}](./${scopePath}/${pkgName})`;
       const versionMd = `[![version](https://img.shields.io/npm/v/${pkg})](https://www.npmjs.com/package/${pkg})`;
       const downloadsMd = `![downloads](https://img.shields.io/npm/dm/${pkg}?color=white)`;
-      const docsMd = `[Docs](http://mongodb.design/component/${pkgName}/example)`;
+      const docsMd = `[Docs](http://mongodb.design/component/${pkgName}/live-example)`;
       md += '\n' + `| ${pkgMd} | ${versionMd} | ${downloadsMd} | ${docsMd} |`;
       return md;
     },
