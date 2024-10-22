@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { waitFor } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
@@ -34,8 +35,10 @@ describe('lg-chart/core/ChartContext/useChartContext', () => {
   });
 
   test('throws error when not within provider', async () => {
-    expect(() => renderHook(useChartContext)).toThrow(
-      'useChartContext must be used within a ChartProvider',
-    );
+    await waitFor(() => {
+      expect(() => renderHook(useChartContext)).toThrow(
+        'useChartContext must be used within a ChartProvider',
+      );
+    });
   });
 });
