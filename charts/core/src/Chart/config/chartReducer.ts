@@ -12,7 +12,7 @@ export const chartReducer: Reducer<Partial<ChartOptions>, ChartAction> = (
   action,
 ) => {
   switch (action.type) {
-    case ChartActionType.addSeries:
+    case ChartActionType.addSeries: {
       if (!state.series) {
         return { ...state, series: [action.data] };
       }
@@ -26,7 +26,8 @@ export const chartReducer: Reducer<Partial<ChartOptions>, ChartAction> = (
       }
 
       return { ...state, series: [...state.series, action.data] };
-    case ChartActionType.removeSeries:
+    }
+    case ChartActionType.removeSeries: {
       if (!state.series) {
         return state;
       }
@@ -35,9 +36,12 @@ export const chartReducer: Reducer<Partial<ChartOptions>, ChartAction> = (
         ...state,
         series: state.series.filter(series => series.name !== action.name),
       };
-    case ChartActionType.updateOptions:
+    }
+    case ChartActionType.updateOptions: {
       return merge({ ...state }, action.options);
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };

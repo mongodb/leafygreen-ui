@@ -2,9 +2,10 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+
 import { LineChart } from './LineChart';
 import { makeData } from './utils';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 export default {
   title: 'Charts/LineChart',

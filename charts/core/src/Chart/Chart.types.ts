@@ -10,7 +10,7 @@ import type {
 } from 'echarts/components';
 import type { ComposeOption } from 'echarts/core';
 
-import { type DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &

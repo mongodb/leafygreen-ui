@@ -7,7 +7,7 @@ export function LineChart({ data }: LineChartProps) {
   return (
     <Chart>
       {data.map(({ name, data }) => (
-        <Line name={name} data={data} />
+        <Line name={name} data={data} key={name} />
       ))}
     </Chart>
   );
