@@ -15,6 +15,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/lib": "^13.7.0",
     "@lg-charts/core": "^0.1.0"
   },
   "peerDependencies": {
