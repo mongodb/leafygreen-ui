@@ -9,12 +9,12 @@ import { useChartContext } from '.';
 
 const chartOptions = {};
 const updateChartOptions = jest.fn();
-const addSeries = jest.fn();
+const addChartSeries = jest.fn();
 
 const ChartProviderMock = ({ children }: PropsWithChildren<{}>) => {
   return (
     <ChartContext.Provider
-      value={{ chartOptions, updateChartOptions, addSeries }}
+      value={{ chartOptions, updateChartOptions, addChartSeries }}
     >
       {children}
     </ChartContext.Provider>
@@ -26,12 +26,10 @@ describe('lg-chart/core/ChartContext/useChartContext', () => {
     const { result } = renderHook(useChartContext, {
       wrapper: ChartProviderMock,
     });
-
-    const { chartOptions, updateChartOptions, addSeries } = result.current;
-
+    const { chartOptions, updateChartOptions, addChartSeries } = result.current;
     expect(chartOptions).toBe(chartOptions);
     expect(updateChartOptions).toBe(updateChartOptions);
-    expect(addSeries).toBe(addSeries);
+    expect(addChartSeries).toBe(addChartSeries);
   });
 
   test('throws error when not within provider', async () => {

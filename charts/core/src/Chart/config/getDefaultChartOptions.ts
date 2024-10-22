@@ -9,10 +9,10 @@ import {
 import { ChartOptions } from '../Chart.types';
 import { colors } from '../colors';
 
-/**
- * Axis need to be hidden explicitly to prevent error when rendering chart without Axis
- */
 const commonAxisOptions = {
+  /**
+   * Axis need to be hidden explicitly to prevent error when rendering chart without Axis
+   */
   splitLine: {
     show: false,
   },
@@ -27,15 +27,6 @@ const commonAxisOptions = {
   },
 };
 
-const xAxis: ChartOptions['xAxis'] = {
-  type: 'time',
-  ...commonAxisOptions,
-};
-
-const yAxis: ChartOptions['yAxis'] = {
-  type: 'value',
-  ...commonAxisOptions,
-};
 /**
  * Returns default chart options that are shared by all charts.
  */
@@ -72,6 +63,13 @@ export const getDefaultChartOptions = (
     containLabel: true,
   },
 
-  xAxis,
-  yAxis,
+  xAxis: {
+    type: 'time',
+    ...commonAxisOptions,
+  },
+
+  yAxis: {
+    type: 'value',
+    ...commonAxisOptions,
+  },
 });

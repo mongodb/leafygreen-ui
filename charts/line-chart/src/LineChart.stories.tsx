@@ -26,5 +26,5 @@ const Template: StoryFn<typeof LineChart> = props => <LineChart {...props} />;
 
 export const LiveExample: StoryFn<typeof LineChart> = Template.bind({});
 LiveExample.args = {
-  data: makeData(1),
+  data: makeData(10),
 };

@@ -10,7 +10,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ChartProvider } from '../ChartContext';
 
-import { useChart } from './hooks/useChart';
+import { useChart } from './hooks';
 import { chartStyles, getWrapperStyles } from './Chart.styles';
 import { ChartProps } from './Chart.types';
 
@@ -22,8 +22,8 @@ export function Chart({
   const {
     chartOptions,
     updateChartOptions,
-    addSeries,
-    removeSeries,
+    addChartSeries,
+    removeChartSeries,
     chartRef,
   } = useChart({
     darkMode: darkModeProp,
@@ -35,8 +35,8 @@ export function Chart({
     <ChartProvider
       chartOptions={chartOptions}
       updateChartOptions={updateChartOptions}
-      addSeries={addSeries}
-      removeSeries={removeSeries}
+      addChartSeries={addChartSeries}
+      removeChartSeries={removeChartSeries}
       darkMode={darkModeProp}
     >
       <div className={getWrapperStyles(theme)}>

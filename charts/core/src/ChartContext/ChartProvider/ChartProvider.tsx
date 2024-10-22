@@ -8,20 +8,20 @@ import { ChartContext } from '../ChartContext';
 interface ChartProviderProps extends DarkModeProps {
   chartOptions: any;
   updateChartOptions: (newOptions: Partial<ChartOptions>) => void;
-  addSeries: (series: SeriesOption) => void;
-  removeSeries: (name: string) => void;
+  addChartSeries: (series: SeriesOption) => void;
+  removeChartSeries: (name: string) => void;
 }
 
 export const ChartProvider = ({
   children,
   chartOptions,
   updateChartOptions,
-  addSeries,
+  addChartSeries,
   darkMode,
 }: PropsWithChildren<ChartProviderProps>) => {
   return (
     <ChartContext.Provider
-      value={{ chartOptions, updateChartOptions, darkMode, addSeries }}
+      value={{ chartOptions, updateChartOptions, darkMode, addChartSeries }}
     >
       {children}
     </ChartContext.Provider>

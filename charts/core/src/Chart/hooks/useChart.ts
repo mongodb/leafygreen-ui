@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LineChart as EchartsLineChart } from 'echarts/charts';
 import {
   GridComponent,
@@ -14,12 +14,10 @@ import debounce from 'lodash.debounce';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import {
-  ChartActionType,
-  ChartOptions,
-  SeriesOption,
-} from '../../Chart/Chart.types';
-import { chartReducer, getDefaultChartOptions } from '../config';
+import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
+import { getDefaultChartOptions } from '../config';
+import { colors } from '../colors';
+import { addSeries, removeSeries, updateOptions } from './updateUtils';
 
 /**
  * Register the required components. By using separate imports, we can avoid
@@ -51,24 +49,8 @@ export function useChart({
   const chartRef = useRef(null);
   const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
   const { theme } = useDarkMode(darkModeProp);
-  const [chartOptions, dispatch] = useReducer(
-    chartReducer,
+  const [chartOptions, setChartOptions] = useState(
     getDefaultChartOptions(theme),
-  );
-
-  const addSeries = useCallback((data: SeriesOption) => {
-    dispatch({ type: ChartActionType.addSeries, data });
-  }, []);
-
-  const removeSeries = useCallback((name: string) => {
-    dispatch({ type: ChartActionType.removeSeries, name });
-  }, []);
-
-  const updateChartOptions = useCallback(
-    (options: Omit<Partial<ChartOptions>, 'series'>) => {
-      dispatch({ type: ChartActionType.updateOptions, options });
-    },
-    [],
   );
 
   useEffect(() => {
@@ -92,18 +74,50 @@ export function useChart({
     };
   }, []);
 
-  useEffect(
-    debounce(() => {
-      chartInstanceRef.current?.setOption(chartOptions);
-    }, 50),
-    [chartOptions],
-  );
+  const updateChartRef = debounce((chartOptions: Partial<ChartOptions>) => {
+    chartInstanceRef.current?.setOption(chartOptions);
+  }, 50);
+
+  const addChartSeries = (data: SeriesOption) => {
+    setChartOptions(currentOptions => {
+      const updatedOptions = addSeries(currentOptions, data);
+      updateChartRef(updatedOptions);
+      return updatedOptions;
+    });
+  };
+
+  const removeChartSeries = (name: string) => {
+    setChartOptions(currentOptions => {
+      const updatedOptions = removeSeries(currentOptions, name);
+      updateChartRef(updatedOptions);
+      return updatedOptions;
+    });
+  };
+
+  const updateChartOptions = (
+    options: Omit<Partial<ChartOptions>, 'series'>,
+  ) => {
+    setChartOptions(currentOptions => {
+      const updatedOptions = updateOptions(currentOptions, options);
+      updateChartRef(updatedOptions);
+      return updatedOptions;
+    });
+  };
+
+  useEffect(() => {
+    setChartOptions(currentOptions => {
+      const updatedOptions = { ...currentOptions, color: colors[theme] };
+      updateChartRef(updatedOptions);
+      return updatedOptions;
+    });
+  }, [theme]);
 
   return {
     chartOptions,
     updateChartOptions,
-    addSeries,
-    removeSeries,
+    addChartSeries,
+    removeChartSeries,
     chartRef,
+    chartInstanceRef,
   };
 }

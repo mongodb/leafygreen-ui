@@ -20,7 +20,7 @@ export function makeData(numOfSets: number): Array<Series> {
 
     let currentDate = new Date(2020, 5, 9); // June 9th, 2020 (Month is 0-indexed)
 
-    for (let j = 0; j < 24 * 60; j++) {
+    for (let j = 0; j < 60; j++) {
       series.data?.push([
         new Date(currentDate),
         getRandomNumber(i * 150, i * 150 + 100),

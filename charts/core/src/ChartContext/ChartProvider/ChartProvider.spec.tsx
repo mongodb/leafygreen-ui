@@ -12,8 +12,8 @@ describe('lg-chart/core/ChartContext/ChartProvider', () => {
       <ChartProvider
         chartOptions={{}}
         updateChartOptions={() => {}}
-        addSeries={() => {}}
-        removeSeries={() => {}}
+        addChartSeries={() => {}}
+        removeChartSeries={() => {}}
         darkMode={false}
       >
         <div data-testid="div" />

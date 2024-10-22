@@ -16,6 +16,12 @@ type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
   Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
 
+/**
+ * TODO: This might need to be improved. `ComposeOption` appears to make most base option
+ * keys "Arrayable". This is making it difficult to properly test partial options on
+ * methods like updateUtils > updateOptions(), since something like `options.grid` could be
+ * an array even if an object.
+ */
 export type ChartOptions = ComposeOption<
   | TooltipComponentOption
   | GridComponentOption
@@ -33,18 +39,18 @@ export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
 }
 
 export const ChartActionType = {
-  addSeries: 'addSeries',
-  removeSeries: 'removeSeries',
+  addChartSeries: 'addChartSeries',
+  removeChartSeries: 'removeChartSeries',
   updateOptions: 'updateOptions',
 } as const;
 
 interface AddSeriesAction {
-  type: typeof ChartActionType.addSeries;
+  type: typeof ChartActionType.addChartSeries;
   data: SeriesOption;
 }
 
 interface RemoveSeriesAction {
-  type: typeof ChartActionType.removeSeries;
+  type: typeof ChartActionType.removeChartSeries;
   name: string;
 }
 

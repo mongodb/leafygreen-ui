@@ -11,12 +11,12 @@ jest.mock('../ChartContext', () => ({
   ChartProvider: jest.fn(({ children }) => <div>{children}</div>),
 }));
 
-jest.mock('./hooks/useChart', () => ({
+jest.mock('./hooks', () => ({
   useChart: jest.fn(() => ({
     chartOptions: {},
     updateChartOptions: jest.fn(),
-    addSeries: jest.fn(),
-    removeSeries: jest.fn(),
+    addChartSeries: jest.fn(),
+    removeChartSeries: jest.fn(),
   })),
 }));
 
@@ -24,6 +24,11 @@ jest.mock('@leafygreen-ui/leafygreen-provider', () => ({
   useDarkMode: jest.fn(() => ({ theme: 'light' })),
 }));
 
+/**
+ * Tests Echarts wrapper component is rendered with the correct props. Visual changes
+ * occur on the canvas element, so we can't test those with Jest. Will instead rely on
+ * Chromatic visual tests and tests verifying correct config updates on the useChart hook.
+ */
 describe('lg-charts/core/Chart', () => {
   it('renders the echart container', () => {
     render(<Chart />);
@@ -36,8 +41,8 @@ describe('lg-charts/core/Chart', () => {
       expect.objectContaining({
         chartOptions: {},
         updateChartOptions: expect.any(Function),
-        addSeries: expect.any(Function),
-        removeSeries: expect.any(Function),
+        addChartSeries: expect.any(Function),
+        removeChartSeries: expect.any(Function),
       }),
       expect.anything(),
     );

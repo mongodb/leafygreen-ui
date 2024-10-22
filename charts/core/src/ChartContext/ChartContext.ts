@@ -7,7 +7,7 @@ import { ChartOptions, SeriesOption } from '../Chart/Chart.types';
 export interface ChartContextType extends DarkModeProps {
   chartOptions: any;
   updateChartOptions: (newOptions: Partial<ChartOptions>) => void;
-  addSeries: (series: SeriesOption) => void;
+  addChartSeries: (series: SeriesOption) => void;
 }
 
 export const ChartContext = createContext<ChartContextType | undefined>(
