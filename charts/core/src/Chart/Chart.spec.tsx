@@ -24,7 +24,7 @@ jest.mock('@leafygreen-ui/leafygreen-provider', () => ({
   useDarkMode: jest.fn(() => ({ theme: 'light' })),
 }));
 
-describe('charts/core/Chart', () => {
+describe('lg-charts/core/Chart', () => {
   it('renders the echart container', () => {
     render(<Chart />);
     expect(screen.getByTestId('echart')).toBeInTheDocument();

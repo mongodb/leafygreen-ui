@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
@@ -6,7 +6,6 @@ import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
 import { ChartContext } from '../ChartContext';
 
 interface ChartProviderProps extends DarkModeProps {
-  children: React.ReactNode;
   chartOptions: any;
   updateChartOptions: (newOptions: Partial<ChartOptions>) => void;
   addSeries: (series: SeriesOption) => void;
@@ -19,7 +18,7 @@ export const ChartProvider = ({
   updateChartOptions,
   addSeries,
   darkMode,
-}: ChartProviderProps) => {
+}: PropsWithChildren<ChartProviderProps>) => {
   return (
     <ChartContext.Provider
       value={{ chartOptions, updateChartOptions, darkMode, addSeries }}
