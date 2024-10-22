@@ -10,9 +10,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ChartProvider } from '../ChartContext';
 
-import { useChart } from './hooks';
 import { chartStyles, getWrapperStyles } from './Chart.styles';
 import { ChartProps } from './Chart.types';
+import { useChart } from './hooks';
 
 export function Chart({
   children,

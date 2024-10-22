@@ -1,4 +1,5 @@
 import { ChartOptions } from '../Chart.types';
+
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 
 describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
@@ -38,7 +39,6 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
         show: true,
       },
     });
-    console.log(updatedOptions);
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<AriaOption>'.
     expect(updatedOptions?.aria?.show).toBe(true);
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<GridOption>'.

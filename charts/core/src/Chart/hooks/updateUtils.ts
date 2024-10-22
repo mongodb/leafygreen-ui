@@ -1,4 +1,5 @@
 import merge from 'lodash.merge';
+
 import { ChartOptions, SeriesOption } from '../Chart.types';
 
 export function addSeries(

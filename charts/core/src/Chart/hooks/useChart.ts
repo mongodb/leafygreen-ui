@@ -15,8 +15,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
-import { getDefaultChartOptions } from '../config';
 import { colors } from '../colors';
+import { getDefaultChartOptions } from '../config';
+
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 
 /**
