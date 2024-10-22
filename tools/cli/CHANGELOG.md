@@ -1,5 +1,18 @@
 # @lg-tools/cli
 
+## 0.6.3
+
+### Patch Changes
+
+- Updated dependencies [f101504c0]
+  - @lg-tools/validate@0.2.0
+
+## 0.6.2
+
+### Patch Changes
+
+- @lg-tools/test@0.4.10
+
 ## 0.6.1
 
 ### Patch Changes

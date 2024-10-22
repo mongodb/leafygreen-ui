@@ -5,6 +5,7 @@ import {
   focusRing,
   fontFamilies,
   fontWeights,
+  spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
 
@@ -13,7 +14,7 @@ import { Size } from '../SegmentedControl/SegmentedControl.types';
 /**
  * Styles
  */
-export const optionThemeStyle: Record<Theme, string> = {
+const optionThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     --base-text-color: ${palette.gray.dark1};
     --base-background-color: rgba(255, 255, 255, 0);
@@ -42,20 +43,29 @@ export const optionThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const optionSizeStyle: Record<Size, string> = {
+const optionSizeStyles: Record<Size, string> = {
   [Size.XSmall]: css`
     --font-size: 12px;
     --line-height: 16px;
-    --padding-inline: 12px;
+    --padding-inline: ${spacing[300]}px;
     --text-transform: uppercase;
     --font-weight: ${fontWeights.bold};
     --divider-height: 12px;
     --padding-block: 3px;
   `,
+  [Size.Small]: css`
+    --font-size: 13px;
+    --line-height: 20px;
+    --padding-inline: ${spacing[300]}px;
+    --text-transform: none;
+    --font-weight: ${fontWeights.medium};
+    --divider-height: 18px;
+    --padding-block: 3px;
+  `,
   [Size.Default]: css`
     --font-size: 13px;
     --line-height: 24px;
-    --padding-inline: 12px; // left/right
+    --padding-inline: ${spacing[300]}px; // left/right
     --text-transform: none;
     --font-weight: ${fontWeights.medium};
     --divider-height: 18px;
@@ -64,15 +74,15 @@ export const optionSizeStyle: Record<Size, string> = {
   [Size.Large]: css`
     --font-size: 16px;
     --line-height: 28px;
-    --padding-inline: 12px;
+    --padding-inline: ${spacing[300]}px;
     --text-transform: none;
     --font-weight: ${fontWeights.medium};
     --divider-height: 20px;
-    --padding-block: 4px;
+    --padding-block: ${spacing[100]}px;
   `,
 };
 
-export const optionStyle = ({
+export const getContainerStyles = ({
   theme,
   size = 'default',
   baseFontSize = 14,
@@ -82,8 +92,8 @@ export const optionStyle = ({
   baseFontSize: 14 | 16;
 }) =>
   cx(
-    optionThemeStyle[theme],
-    optionSizeStyle[size],
+    optionThemeStyles[theme],
+    optionSizeStyles[size],
     css`
       position: relative;
       display: flex;
@@ -103,7 +113,7 @@ export const optionStyle = ({
       * Adds the divider line to unselected segments 
       */
       &:before {
-        --divider-width: 1px;
+        --divider-width: ${spacing[25]}px;
         content: '';
         position: absolute;
         height: var(--divider-height);
@@ -127,13 +137,13 @@ export const optionStyle = ({
     },
   );
 
-export const boxStyle = css`
+export const boxStyles = css`
   width: 100%;
   height: 100%;
   text-decoration: none;
 `;
 
-export const buttonStyle = css`
+export const buttonStyles = css`
   font-family: ${fontFamilies.default};
   display: flex;
   position: relative;
@@ -190,20 +200,13 @@ export const iconOnlyThemeStyles = css`
   }
 `;
 
-export const buttonFocusStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    &:focus {
-      box-shadow: ${focusRing.light.default};
-    }
-  `,
-  [Theme.Dark]: css`
-    &:focus {
-      box-shadow: ${focusRing.dark.default};
-    }
-  `,
-};
+export const getButtonFocusStyles = (theme: Theme) => css`
+  &:focus {
+    box-shadow: ${focusRing[theme].default};
+  }
+`;
 
-export const labelStyle = css`
+export const labelStyles = css`
   min-height: var(--line-height);
   gap: calc(var(--font-size) / 2);
   display: flex;

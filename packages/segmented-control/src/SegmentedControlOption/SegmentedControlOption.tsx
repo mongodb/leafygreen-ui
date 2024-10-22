@@ -12,13 +12,13 @@ import {
 import { SegmentedControlContext } from '../SegmentedControlContext';
 
 import {
-  boxStyle,
-  buttonFocusStyle,
-  buttonStyle,
+  boxStyles,
+  buttonStyles,
+  getButtonFocusStyles,
+  getContainerStyles,
   iconOnlyThemeStyles,
-  labelStyle,
+  labelStyles,
   labelTextStyles,
-  optionStyle,
 } from './SegmentedControlOption.styles';
 import { SegmentedControlOptionProps } from './SegmentedControlOption.types';
 
@@ -97,11 +97,14 @@ export const SegmentedControlOption = forwardRef<
 
     return (
       <div
-        className={cx(optionStyle({ theme, size, baseFontSize }), className)}
+        className={cx(
+          getContainerStyles({ theme, size, baseFontSize }),
+          className,
+        )}
         ref={forwardedRef}
         data-lg-checked={checked}
       >
-        <Box as={as} tabIndex={-1} className={boxStyle} {...rest}>
+        <Box as={as} tabIndex={-1} className={boxStyles} {...rest}>
           <button
             role="tab"
             id={id}
@@ -109,8 +112,8 @@ export const SegmentedControlOption = forwardRef<
             aria-selected={checked}
             aria-controls={ariaControls}
             disabled={disabled}
-            className={cx(buttonStyle, {
-              [buttonFocusStyle[theme]]: usingKeyboard,
+            className={cx(buttonStyles, {
+              [getButtonFocusStyles(theme)]: usingKeyboard,
               [iconOnlyThemeStyles]: isIconOnly,
             })}
             ref={buttonRef}
@@ -119,7 +122,7 @@ export const SegmentedControlOption = forwardRef<
             onMouseLeave={onMouseLeave}
             type="button"
           >
-            <div className={labelStyle}>
+            <div className={labelStyles}>
               {glyph && isComponentGlyph(glyph) && glyph}
               {!isIconOnly && (
                 <span className={labelTextStyles}>{children}</span>

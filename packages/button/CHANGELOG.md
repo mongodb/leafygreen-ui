@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 21.3.0
+
+### Minor Changes
+
+- f38cdc3dc: Exports `getTestUtils` from Button package
+
 ## 21.2.1
 
 ### Patch Changes

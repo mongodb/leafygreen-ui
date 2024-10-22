@@ -27,6 +27,7 @@ import {
   useAutoScroll,
   useBackdropClick,
   useDynamicRefs,
+  useEventListener,
   useForwardedRef,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
@@ -39,6 +40,7 @@ import { breakpoints } from '@leafygreen-ui/tokens';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
 import {
+  baseHotkeyIndicatorStyles,
   baseStyles,
   contentWrapperFocusStyles,
   contentWrapperStyles,
@@ -48,11 +50,14 @@ import {
   focusStyles,
   getIconFill,
   gradientAnimationStyles,
+  hotkeyIndicatorFocusedStyles,
+  hotkeyIndicatorUnfocusedStyles,
   inputStyles,
   inputThemeStyles,
   leftContentStyles,
   rightContentStyles,
   sendButtonDisabledStyles,
+  themedHotkeyIndicatorStyles,
 } from './InputBar.styles';
 import { ReturnIcon } from './ReturnIcon';
 import { SparkleIcon } from './SparkleIcon';
@@ -65,6 +70,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       textareaProps,
       onMessageSend,
       onSubmit,
+      shouldRenderHotkeyIndicator = false,
       shouldRenderGradient: shouldRenderGradientProp = true,
       badgeText,
       darkMode: darkModeProp,
@@ -336,6 +342,20 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       isOpen && withTypeAhead,
     );
 
+    useEventListener(
+      'keydown',
+      (e: KeyboardEvent) => {
+        if (!e.repeat && e.key === '/' && textareaRef.current) {
+          e.preventDefault();
+          e.stopPropagation();
+          textareaRef.current.focus();
+        }
+      },
+      {
+        enabled: shouldRenderHotkeyIndicator && !isFocused,
+      },
+    );
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <form
@@ -366,6 +386,7 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                 {badgeText && <Badge variant="blue">{badgeText}</Badge>}
               </div>
               <TextareaAutosize
+                aria-keyshortcuts="/"
                 placeholder={'Type your message here'}
                 value={messageBody}
                 disabled={disabled}
@@ -382,6 +403,21 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
                 ref={textareaRef}
               />
               <div className={rightContentStyles}>
+                {shouldRenderHotkeyIndicator && !disabled && (
+                  <div
+                    data-testid="lg-chat-hotkey-indicator"
+                    className={cx(
+                      baseHotkeyIndicatorStyles,
+                      themedHotkeyIndicatorStyles[theme],
+                      {
+                        [hotkeyIndicatorFocusedStyles]: isFocused,
+                        [hotkeyIndicatorUnfocusedStyles]: !isFocused,
+                      },
+                    )}
+                  >
+                    /
+                  </div>
+                )}
                 <Button
                   size="small"
                   rightGlyph={

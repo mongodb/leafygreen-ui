@@ -1,5 +1,19 @@
 # @leafygreen-ui/combobox
 
+## 9.1.5
+
+### Patch Changes
+
+- 5f10976d5: - Updates `useAvailableSpace` hook which fixes a dropdown height bug. [LG-4601](https://jira.mongodb.org/browse/LG-4601).
+
+## 9.1.4
+
+### Patch Changes
+
+_Note_: This version has no updates. Pleas use version `9.1.5`.
+
+- Updates `useAvailableSpace` hook which fixes a dropdown height bug. [LG-4601](https://jira.mongodb.org/browse/LG-4601)
+
 ## 9.1.3
 
 ### Patch Changes
