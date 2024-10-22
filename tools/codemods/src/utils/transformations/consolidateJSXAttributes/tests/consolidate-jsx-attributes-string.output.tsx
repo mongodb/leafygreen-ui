@@ -15,7 +15,7 @@ export const App = (propToRemove?: string) => {
 
   const Test = () => {
     return (
-      /* Please update manually */
+      /* Please manually update from prop: propToRemove to prop: propToUpdate */
       <MyComponent propToRemove="value2" {...props} />
     );
   };
@@ -23,7 +23,7 @@ export const App = (propToRemove?: string) => {
   const TestTwo = () => {
     return (
       <>
-        {/* Please update manually */}
+        {/* Please manually update from prop: propToRemove to prop: propToUpdate */}
         <MyComponent propToRemove="value2" {...props} />
       </>
     );
@@ -39,11 +39,11 @@ export const App = (propToRemove?: string) => {
       </MyComponent>
       <MyComponent propToUpdate="value3" />
       <MyComponent propToUpdate="value3" />
-      {/* Please update manually */}
+      {/* Please manually update from prop: propToRemove to prop: propToUpdate */}
       <MyComponent propToRemove="value2" {...props} />
       <MyComponent propToUpdate="value3" {...props} />
       <MyComponent />
-      {/* Please update manually */}
+      {/* Please manually update from prop: propToRemove to prop: propToUpdate */}
       <MyComponent propToRemove={propToRemove} />
       <Test />
       <TestTwo />

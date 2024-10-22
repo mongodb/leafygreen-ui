@@ -39,7 +39,12 @@ export const App = () => {
 
   const WrappedInfoSprinkle = (props: any) => {
     return (
-      /* Please remove manually */
+      /* Please manually remove prop: popoverZIndex */
+      /* Please manually remove prop: portalClassName */
+      /* Please manually remove prop: portalContainer */
+      /* Please manually remove prop: portalRef */
+      /* Please manually remove prop: scrollContainer */
+      /* Please manually remove prop: usePortal */
       <InfoSprinkle usePortal={false} {...props} />
     );
   };
@@ -59,13 +64,12 @@ export const App = () => {
       <InfoSprinkle>
         <Child usePortal={false} />
       </InfoSprinkle>
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
+      {/* Please manually remove prop: popoverZIndex */}
+      {/* Please manually remove prop: portalClassName */}
+      {/* Please manually remove prop: portalContainer */}
+      {/* Please manually remove prop: portalRef */}
+      {/* Please manually remove prop: scrollContainer */}
+      {/* Please manually remove prop: usePortal */}
       <InfoSprinkle usePortal={true} {...spreadProps} />
       <WrappedInfoSprinkle />
     </>

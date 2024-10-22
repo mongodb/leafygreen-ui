@@ -35,14 +35,14 @@ export const App = () => {
 
   const WrappedPopover = () => {
     return (
-      /* Please update manually */
+      /* Please manually update from prop: usePortal to prop: renderMode */
       <Popover usePortal={false} {...spreadProps} />
     );
   };
 
   const DefaultWrappedPopover = () => {
     return (
-      /* Please add manually */
+      /* Please manually add prop: usePortal */
       <Popover {...spreadProps} />
     );
   };
@@ -62,7 +62,7 @@ export const App = () => {
         <Child usePortal={false} />
       </Popover>
       <Popover renderMode="inline" />
-      {/* Please update manually */}
+      {/* Please manually update from prop: usePortal to prop: renderMode */}
       <Popover usePortal={true} {...spreadProps} />
       <WrappedPopover />
       <DefaultWrappedPopover />

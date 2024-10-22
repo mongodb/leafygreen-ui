@@ -116,7 +116,11 @@ export function consolidateJSXAttributes({
 
   // if fromProp value is variable of the same name then return early since we don't know the value
   if (oldValue === propToRemove) {
-    insertJSXComment(j, element, MIGRATOR_ERROR.manualUpdate);
+    insertJSXComment(
+      j,
+      element,
+      `${MIGRATOR_ERROR.manualUpdate} from prop: ${propToRemove} to prop: ${propToUpdate}`,
+    );
     return;
   }
 
@@ -128,7 +132,11 @@ export function consolidateJSXAttributes({
 
   // if the propToUpdate does not exist and there is a spread operator then return early since we don't know if the propToUpdate could be inside the spread
   if (!_propToUpdate && hasSpreadOperator) {
-    insertJSXComment(j, element, MIGRATOR_ERROR.manualUpdate);
+    insertJSXComment(
+      j,
+      element,
+      `${MIGRATOR_ERROR.manualUpdate} from prop: ${propToRemove} to prop: ${propToUpdate}`,
+    );
     return;
   }
 

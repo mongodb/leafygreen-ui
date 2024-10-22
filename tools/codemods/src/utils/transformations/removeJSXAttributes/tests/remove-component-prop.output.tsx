@@ -19,7 +19,7 @@ export const App = () => {
         Hello
         <Child />
       </MyComponent>
-      {/* Please remove manually */}
+      {/* Please manually remove prop: prop */}
       <MyComponent {...spreadProps} />
       <MyComponent />
       <MyComponent />

@@ -35,10 +35,10 @@ export const App = (disabled?: boolean) => {
         <Child state="value" disabled={true} />
         <MyComponent state="disabled" />
       </MyComponent>
-      {/* Please update manually */}
+      {/* Please manually update from prop: disabled to prop: state */}
       <MyComponent disabled={true} {...props} />
       <MyComponent state="disabled" {...props} />
-      {/* Please update manually */}
+      {/* Please manually update from prop: disabled to prop: state */}
       <MyComponent disabled={disabled} />
     </>
   );

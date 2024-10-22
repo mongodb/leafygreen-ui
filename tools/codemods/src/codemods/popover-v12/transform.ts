@@ -13,18 +13,7 @@ const componentNamesForConsolidation = [
   'Select',
   'SplitButton',
   'Tooltip',
-] as const;
-
-const componentNamesForRemoval = [
-  'Code',
-  'Copyable',
-  'DatePicker',
-  'GuideCue',
-  'InfoSprinkle',
-  'InlineDefinition',
-  'NumberInput',
-  'SearchInput',
-] as const;
+];
 
 const propNamesToRemove = [
   'popoverZIndex',
@@ -32,9 +21,21 @@ const propNamesToRemove = [
   'portalContainer',
   'portalRef',
   'scrollContainer',
-  'shouldTooltipUsePortal',
   'usePortal',
-] as const;
+];
+
+const componentNamesWithPropsToRemoveMap: Record<string, Array<string>> = {
+  Code: propNamesToRemove.filter(propName => propName !== 'portalRef'),
+  Copyable: ['shouldTooltipUsePortal'],
+  DatePicker: propNamesToRemove.filter(propName => propName !== 'usePortal'),
+  GuideCue: propNamesToRemove.filter(propName => propName !== 'usePortal'),
+  InfoSprinkle: propNamesToRemove,
+  InlineDefinition: propNamesToRemove,
+  NumberInput: propNamesToRemove,
+  SearchInput: propNamesToRemove.filter(
+    propName => propName !== 'popoverZIndex',
+  ),
+};
 
 /**
  * Transformer function that:
@@ -89,13 +90,13 @@ export default function transformer(file: FileInfo, { jscodeshift: j }: API) {
     });
   });
 
-  componentNamesForRemoval.forEach(componentName => {
+  Object.keys(componentNamesWithPropsToRemoveMap).forEach(componentName => {
     const elements = source.findJSXElements(componentName);
 
     if (elements.length === 0) return;
 
     elements.forEach(element => {
-      propNamesToRemove.forEach(propName => {
+      componentNamesWithPropsToRemoveMap[componentName].forEach(propName => {
         removeJSXAttributes({
           j,
           element,

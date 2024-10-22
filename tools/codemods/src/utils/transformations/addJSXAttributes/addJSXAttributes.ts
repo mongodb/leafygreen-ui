@@ -73,7 +73,11 @@ export function addJSXAttributes({
   }
 
   if (hasSpreadOperator) {
-    insertJSXComment(j, element, MIGRATOR_ERROR.manualAdd);
+    insertJSXComment(
+      j,
+      element,
+      `${MIGRATOR_ERROR.manualAdd} prop: ${propName}`,
+    );
     return;
   }
 

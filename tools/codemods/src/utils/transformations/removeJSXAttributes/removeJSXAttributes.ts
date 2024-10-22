@@ -46,7 +46,11 @@ export function removeJSXAttributes({
   );
 
   if (hasSpreadOperator) {
-    insertJSXComment(j, element, MIGRATOR_ERROR.manualRemove);
+    insertJSXComment(
+      j,
+      element,
+      `${MIGRATOR_ERROR.manualRemove} prop: ${propName}`,
+    );
     return;
   }
 

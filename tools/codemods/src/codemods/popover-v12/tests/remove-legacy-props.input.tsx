@@ -44,8 +44,8 @@ export const App = () => {
   return (
     <>
       <Code usePortal />
-      <DatePicker usePortal={false} />
-      <GuideCue usePortal={true} />
+      <DatePicker />
+      <GuideCue />
       <InfoSprinkle usePortal />
       <InlineDefinition usePortal={false} />
       <NumberInput usePortal={true} />

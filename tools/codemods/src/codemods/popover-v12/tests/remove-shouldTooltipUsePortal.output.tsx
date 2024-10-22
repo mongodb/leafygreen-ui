@@ -15,7 +15,7 @@ export const App = () => {
 
   const WrappedCopyable = (props: any) => {
     return (
-      /* Please remove manually */
+      /* Please manually remove prop: shouldTooltipUsePortal */
       <Copyable shouldTooltipUsePortal={false} {...props} />
     );
   };
@@ -28,13 +28,7 @@ export const App = () => {
       <Copyable>
         <Child shouldTooltipUsePortal={false} />
       </Copyable>
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
-      {/* Please remove manually */}
+      {/* Please manually remove prop: shouldTooltipUsePortal */}
       <Copyable shouldTooltipUsePortal={true} {...spreadProps} />
       <WrappedCopyable />
     </>
