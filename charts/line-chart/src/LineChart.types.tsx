@@ -7,6 +7,6 @@ export interface Series extends SeriesOption {
   data: Array<[Date, number]>;
 }
 
-export interface TimeSeriesLineChartProps extends DarkModeProps {
+export interface LineChartProps extends DarkModeProps {
   data: Array<Series>;
 }

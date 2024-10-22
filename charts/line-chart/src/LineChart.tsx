@@ -1,9 +1,9 @@
 import React from 'react';
 import { Chart, Line } from '@lg-charts/core';
 
-import { TimeSeriesLineChartProps } from './TimeSeriesLineChart.types';
+import { LineChartProps } from './LineChart.types';
 
-export function TimeSeriesLineChart({ data }: TimeSeriesLineChartProps) {
+export function LineChart({ data }: LineChartProps) {
   return (
     <Chart>
       {data.map(({ name, data }) => (
@@ -13,4 +13,4 @@ export function TimeSeriesLineChart({ data }: TimeSeriesLineChartProps) {
   );
 }
 
-TimeSeriesLineChart.displayName = 'TimeSeriesLineChart';
+LineChart.displayName = 'LineChart';

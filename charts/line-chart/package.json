@@ -1,7 +1,7 @@
 {
-  "name": "@lg-charts/time-series-line-chart",
+  "name": "@lg-charts/line-chart",
   "version": "0.1.0",
-  "description": "lg-charts TimeSeriesLineChart Component",
+  "description": "lg-charts LineChart Component",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",

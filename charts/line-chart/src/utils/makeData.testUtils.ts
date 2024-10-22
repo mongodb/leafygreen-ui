@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { Series } from '../TimeSeriesLineChart.types';
+import { Series } from '../LineChart.types';
 
 // Seed the faker random number generator for consistent results
 faker.seed(123);

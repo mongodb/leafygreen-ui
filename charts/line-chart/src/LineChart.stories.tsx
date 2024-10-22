@@ -2,30 +2,25 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { TimeSeriesLineChart } from './TimeSeriesLineChart';
+import { LineChart } from './LineChart';
 import { makeData } from './utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 export default {
-  title: 'Charts/TimeSeriesLineChart',
-  component: TimeSeriesLineChart,
+  title: 'Charts/LineChart',
+  component: LineChart,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
   },
 };
 
-const Template: StoryFn<typeof TimeSeriesLineChart> = ({
-  darkMode,
-  ...rest
-}) => (
+const Template: StoryFn<typeof LineChart> = ({ darkMode, ...rest }) => (
   <LeafyGreenProvider darkMode={darkMode}>
-    <TimeSeriesLineChart darkMode={darkMode} {...rest} />
+    <LineChart darkMode={darkMode} {...rest} />
   </LeafyGreenProvider>
 );
 
-export const LiveExample: StoryFn<typeof TimeSeriesLineChart> = Template.bind(
-  {},
-);
+export const LiveExample: StoryFn<typeof LineChart> = Template.bind({});
 LiveExample.args = {
   data: makeData(1),
 };

@@ -1,19 +1,19 @@
-# TimeSeriesLineChart
+# LineChart
 
-![npm (scoped)](https://img.shields.io/npm/v/@lg-charts/time-series-line-chart.svg)
+![npm (scoped)](https://img.shields.io/npm/v/@lg-charts/line-chart.svg)
 
 ## Installation
 
 ### Yarn
 
 ```shell
-yarn add @lg-charts/time-series-line-chart
+yarn add @lg-charts/line-chart
 ```
 
 ### NPM
 
 ```shell
-npm install @lg-charts/time-series-line-chart
+npm install @lg-charts/line-chart
 ```
 
 ## Basic Example
@@ -21,7 +21,7 @@ npm install @lg-charts/time-series-line-chart
 ---
 
 ```js
-import { TimeSeriesLineChart } from '@lg-charts/time-series-line-chart';
+import { LineChart } from '@lg-charts/line-chart';
 
 const seriesData = [
   {
@@ -46,14 +46,14 @@ const seriesData = [
   }
 ]
 
-<TimeSeriesLineChart series={seriesData}/>
+<LineChart series={seriesData}/>
 ```
 
 # Exports
 
 ---
 
-## `TimeSeriesLineChart`
+## `LineChart`
 
 #### Props
 
