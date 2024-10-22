@@ -4,6 +4,7 @@ import { StoryFn } from '@storybook/react';
 
 import { TimeSeriesLineChart } from './TimeSeriesLineChart';
 import { makeData } from './utils';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 export default {
   title: 'Charts/TimeSeriesLineChart',
@@ -13,20 +14,18 @@ export default {
   },
 };
 
-const Template: StoryFn<typeof TimeSeriesLineChart> = props => (
-  <TimeSeriesLineChart {...props} />
+const Template: StoryFn<typeof TimeSeriesLineChart> = ({
+  darkMode,
+  ...rest
+}) => (
+  <LeafyGreenProvider darkMode={darkMode}>
+    <TimeSeriesLineChart darkMode={darkMode} {...rest} />
+  </LeafyGreenProvider>
 );
 
 export const LiveExample: StoryFn<typeof TimeSeriesLineChart> = Template.bind(
   {},
 );
 LiveExample.args = {
-  data: makeData(5),
-};
-
-export const AllLineColors: StoryFn<typeof TimeSeriesLineChart> = Template.bind(
-  {},
-);
-AllLineColors.args = {
-  data: makeData(15),
+  data: makeData(1),
 };
