@@ -10,7 +10,7 @@ function getRandomNumber(min: number, max: number) {
 }
 
 export function makeData(numOfSets: number): Array<Series> {
-  const data = [];
+  const data: Array<Series> = [];
 
   for (let i = 0; i < numOfSets; i++) {
     const series: Series = {
