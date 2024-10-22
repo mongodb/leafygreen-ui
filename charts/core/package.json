@@ -16,12 +16,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/icon": "^12.7.0",
-    "@leafygreen-ui/icon-button": "^15.0.23",
     "@leafygreen-ui/lib": "^12.0.0",
-    "@leafygreen-ui/palette": "^4.1.1",
     "@leafygreen-ui/tokens": "^2.11.0",
-    "@leafygreen-ui/typography": "^19.3.0",
     "echarts": "^5.5.1",
     "lodash.debounce": "^4.0.8",
     "lodash.merge": "^4.6.2"
@@ -30,7 +26,6 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1",
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.merge": "^4.6.9"
   },
