@@ -3,15 +3,15 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
-import { useTableContext } from '../TableContext';
+import { useRowContext } from '../Row/RowContext';
 
 import {
   alignmentStyles,
   baseCellStyles,
   basicCellStyles,
   cellTransitionContainerStyles,
-  disableAnimationStyles,
 } from './Cell.styles';
+import InternalCell from './InternalCell';
 import { CellProps } from '.';
 
 const Cell = ({
@@ -19,26 +19,41 @@ const Cell = ({
   contentClassName,
   align,
   children,
+  cell,
   ...rest
 }: CellProps) => {
-  const { disableAnimations } = useTableContext();
+  const { isReactTable } = useRowContext();
   return (
-    <td
-      data-lgid={LGIDS.cell}
-      className={cx(baseCellStyles, basicCellStyles, className)}
-      {...rest}
-    >
-      <div
-        className={cx(
-          cellTransitionContainerStyles,
-          alignmentStyles(align),
-          { [disableAnimationStyles]: disableAnimations },
-          contentClassName,
-        )}
-      >
-        {children}
-      </div>
-    </td>
+    <>
+      {!isReactTable && (
+        <td
+          data-lgid={LGIDS.cell}
+          className={cx(baseCellStyles, basicCellStyles, className)}
+          {...rest}
+        >
+          <div
+            className={cx(
+              cellTransitionContainerStyles,
+              alignmentStyles(align),
+              contentClassName,
+            )}
+          >
+            {children}
+          </div>
+        </td>
+      )}
+
+      {isReactTable && (
+        <InternalCell
+          {...rest}
+          cell={cell}
+          className={className}
+          contentClassName={contentClassName}
+        >
+          {children}
+        </InternalCell>
+      )}
+    </>
   );
 };
 

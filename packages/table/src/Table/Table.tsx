@@ -12,8 +12,15 @@ import {
 import { LGIDS } from '../constants';
 import { TableContextProvider } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
+import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGreenVirtualTable.types';
 
-import { baseStyles, tableContainerStyles, themeStyles } from './Table.styles';
+import {
+  baseStyles,
+  getVirtualDynamicStyles,
+  getVirtualStyles,
+  tableContainerStyles,
+  themeStyles,
+} from './Table.styles';
 import { TableProps } from './Table.types';
 
 // Inferred generic type from component gets used in place of `any`
@@ -26,7 +33,6 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
       table,
-      disableAnimations = false,
       'data-lgid': lgidProp = LGIDS.root,
       ...rest
     }: TableProps<T>,
@@ -34,6 +40,21 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme, darkMode } = useDarkMode(darkModeProp);
+    //TODO: find a better way to do all these checks
+    const isVirtual =
+      table && (table as LeafyGreenVirtualTable<T>).virtual ? true : false;
+    const virtualTable =
+      isVirtual && (table as LeafyGreenVirtualTable<T>)!.virtual;
+    const virtualTableTotalSize = virtualTable
+      ? virtualTable.getTotalSize()
+      : 0;
+    const virtualTableStart = virtualTable
+      ? virtualTable.getVirtualItems()[0]?.start
+      : 0;
+    const isSelectable = table && table.hasSelectableRows;
+    const measureElement = isVirtual
+      ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
+      : undefined;
 
     return (
       <div
@@ -43,24 +64,31 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <TableContextProvider
-          shouldAlternateRowColor={shouldAlternateRowColor}
-          darkMode={darkMode}
-          table={table}
-          disableAnimations={disableAnimations}
-        >
-          <table
-            className={cx(
-              baseStyles,
-              themeStyles[theme],
-              bodyTypeScaleStyles[baseFontSize],
-            )}
-            data-lgid={lgidProp}
-            {...rest}
+        <div className={getVirtualStyles(isVirtual, virtualTableTotalSize)}>
+          <div
+            className={getVirtualDynamicStyles(isVirtual, virtualTableStart)}
           >
-            {children}
-          </table>
-        </TableContextProvider>
+            <TableContextProvider
+              shouldAlternateRowColor={shouldAlternateRowColor}
+              darkMode={darkMode}
+              isVirtual={isVirtual}
+              isSelectable={isSelectable}
+              measureElement={measureElement}
+            >
+              <table
+                className={cx(
+                  baseStyles,
+                  themeStyles[theme],
+                  bodyTypeScaleStyles[baseFontSize],
+                )}
+                data-lgid={lgidProp}
+                {...rest}
+              >
+                {children}
+              </table>
+            </TableContextProvider>
+          </div>
+        </div>
       </div>
     );
   },

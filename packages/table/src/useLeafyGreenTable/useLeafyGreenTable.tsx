@@ -1,5 +1,4 @@
 import React from 'react';
-import { useVirtual } from 'react-virtual';
 import { useReactTable } from '@tanstack/react-table';
 import {
   getCoreRowModel,
@@ -16,14 +15,11 @@ import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 const CHECKBOX_WIDTH = 14;
 
 function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
-  containerRef,
   data,
   columns: columnsProp,
   hasSelectableRows,
   withPagination = false,
-  useVirtualScrolling = false,
   allowSelectAll = true,
-  virtualizerOptions,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
   /**
@@ -58,6 +54,9 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   );
 
   const table = useReactTable<LGTableDataType<T>>({
+    state: {
+      ...rest.state,
+    },
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -73,21 +72,11 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   });
 
   const { rows } = table.getRowModel();
-  const _rowVirtualizer = useVirtual({
-    parentRef: containerRef,
-    size: rows.length,
-    overscan: 30,
-    ...virtualizerOptions,
-  });
 
   return {
     ...table,
-    ...(useVirtualScrolling && {
-      virtualRows: _rowVirtualizer.virtualItems,
-      totalSize: _rowVirtualizer.totalSize,
-      scrollToIndex: _rowVirtualizer.scrollToIndex,
-    }),
     hasSelectableRows,
+    rows: rows,
   } as LeafyGreenTable<T>;
 }
 

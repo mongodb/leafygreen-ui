@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react';
+import { Virtualizer } from '@tanstack/react-virtual';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
@@ -23,4 +24,13 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
      * The `useLeafyGreenTable` return value
      */
     table?: LeafyGreenTable<T>;
+
+    /**
+     * Whether the table is using virtual scrolling
+     */
+    isVirtual?: boolean;
+
+    isSelectable?: boolean;
+
+    measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
   };
