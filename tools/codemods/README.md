@@ -87,15 +87,18 @@ This codemod does the following:
 
 2. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `portalRef`, `scrollContainer`, and `usePortal` props from the following components:
 
-- `Code`
-- `DatePicker`
-- `GuideCue`
 - `InfoSprinkle`
 - `InlineDefinition`
 - `NumberInput`
-- `SearchInput`
 
-3. Removes `shouldTooltipUsePortal` prop from `Copyable` component
+3. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `portalRef`, and `scrollContainer` props from the following components:
+
+- `DatePicker`
+- `GuideCue`
+
+4. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `scrollContainer`, and `usePortal` props from `Code` component
+5. Removes `portalClassName`, `portalContainer`, `portalRef`, `scrollContainer`, and `usePortal` props from `SearchInput` component
+6. Removes `shouldTooltipUsePortal` prop from `Copyable` component
 
 ```jsx
 yarn lg codemod popover-v12 <path>
