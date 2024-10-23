@@ -27,7 +27,7 @@ jest.mock('@leafygreen-ui/leafygreen-provider', () => ({
 /**
  * Tests Echarts wrapper component is rendered with the correct props. Visual changes
  * occur on the canvas element, so we can't test those with Jest. Will instead rely on
- * Chromatic visual tests and tests verifying correct config updates on the useChart hook.
+ * Chromatic tests for rendering logic.
  */
 describe('lg-charts/core/Chart', () => {
   it('renders the echart container', () => {
