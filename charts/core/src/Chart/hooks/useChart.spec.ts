@@ -1,5 +1,7 @@
-import { renderHook, waitForState } from '@leafygreen-ui/testing-lib';
 import { act } from 'react-dom/test-utils';
+
+import { renderHook, waitForState } from '@leafygreen-ui/testing-lib';
+
 import { SeriesOption } from '../Chart.types';
 
 import { useChart } from './useChart';
