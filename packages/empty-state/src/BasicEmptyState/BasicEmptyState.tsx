@@ -1,6 +1,7 @@
 import React, { forwardRef, Ref } from 'react';
 import PropTypes from 'prop-types';
 
+import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -9,8 +10,9 @@ import { Body, H3, Link } from '@leafygreen-ui/typography';
 
 import {
   buttonContainerStyles,
-  descriptionStyles,
   externalLinkStyles,
+  getBadgeStyles,
+  getDescriptionStyles,
   rootStyles,
   textContainerStyles,
   titleStyles,
@@ -21,6 +23,7 @@ export const BasicEmptyState = forwardRef(
   (
     {
       graphic,
+      badgeProps,
       title,
       description,
       primaryButton,
@@ -55,8 +58,14 @@ export const BasicEmptyState = forwardRef(
         <div className={rootStyles} ref={ref}>
           {!!graphic && <div>{graphic}</div>}
           <div className={textContainerStyles}>
+            {badgeProps && (
+              <Badge
+                {...badgeProps}
+                className={getBadgeStyles(badgeProps.className)}
+              />
+            )}
             <H3 className={titleStyles}>{title}</H3>
-            <Body className={descriptionStyles[theme]}>{description}</Body>
+            <Body className={getDescriptionStyles(theme)}>{description}</Body>
             {!!primaryButton && (
               <div className={buttonContainerStyles}>
                 <Button {...primaryButton.props} variant="primary" />

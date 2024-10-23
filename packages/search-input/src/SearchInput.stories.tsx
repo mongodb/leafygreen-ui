@@ -6,6 +6,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 import kebabCase from 'lodash/kebabCase';
 import startCase from 'lodash/startCase';
 
@@ -310,3 +311,45 @@ WithResults.parameters = {
 };
 
 export const Generated = () => {};
+
+export const InitialLongSearchOpen = {
+  render: () => {
+    return (
+      <div
+        className={css`
+          width: 256px;
+        `}
+      >
+        <SearchInput aria-label="Item">
+          {data.map(item => (
+            <SearchResult
+              key={item.name}
+              description={item.description}
+              onClick={() => console.log('Storybook: Clicked', item.name)}
+            >
+              {startCase(item.name)}
+            </SearchResult>
+          ))}
+        </SearchInput>
+      </div>
+    );
+  },
+  play: async ctx => {
+    const { getAllByRole } = within(ctx.canvasElement.parentElement!);
+    const trigger = await getAllByRole('searchbox')[0];
+    console.log({ trigger });
+    userEvent.click(trigger);
+  },
+  decorators: [
+    (StoryFn, _ctx) => (
+      <div
+        className={css`
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
+};

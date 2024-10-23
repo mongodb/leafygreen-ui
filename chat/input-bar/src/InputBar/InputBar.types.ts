@@ -19,6 +19,11 @@ export type InputBarProps = HTMLElementProps<'form'> &
       e?: FormEvent<HTMLFormElement>,
     ) => void;
     /**
+     * Toggles the hotkey indicator on the right side of the input
+     * @default false
+     */
+    shouldRenderHotkeyIndicator?: boolean;
+    /**
      * Toggles the gradient animation around the input
      * @default true
      */

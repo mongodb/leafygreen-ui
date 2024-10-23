@@ -14,7 +14,6 @@ export const useMenuHeight = ({
   spacing,
   maxHeight,
 }: MenuHeightArgs) => {
-  // This hook causes a second re-render on initial load. `useAvailableSpace` uses `useViewportSize` internally, which has internal state that causes re-renders.
   const availableSpace = useAvailableSpace(refEl, spacing);
 
   const memoizedAvailableSpace = useMemo(

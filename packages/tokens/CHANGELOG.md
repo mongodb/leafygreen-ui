@@ -1,5 +1,11 @@
 # @leafygreen-ui/tokens
 
+## 2.11.0
+
+### Minor Changes
+
+- f91e1ce97: Unsets lowest level shadow for darkMode. (sets `shadow.dark[100]` to `"unset"`)
+
 ## 2.10.0
 
 ### Minor Changes

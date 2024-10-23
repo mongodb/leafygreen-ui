@@ -1,5 +1,13 @@
 # @leafygreen-ui/confirmation-modal
 
+## 5.2.1
+
+### Patch Changes
+
+- 330616d55: Omits `children` from `cancelButtonProps`. The text will always render `cancel`.
+- Updated dependencies [f91e1ce97]
+  - @leafygreen-ui/tokens@2.11.0
+
 ## 5.2.0
 
 ### Minor Changes

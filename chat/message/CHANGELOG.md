@@ -1,5 +1,18 @@
 # @lg-chat/message
 
+## 4.3.0
+
+### Minor Changes
+
+- f6f49c65e: Adds exports for the MessageLinks component & types
+
+### Patch Changes
+
+- Updated dependencies [82bcd310a]
+- Updated dependencies [f91e1ce97]
+  - @lg-chat/rich-links@1.2.0
+  - @leafygreen-ui/tokens@2.11.0
+
 ## 4.2.2
 
 ### Patch Changes

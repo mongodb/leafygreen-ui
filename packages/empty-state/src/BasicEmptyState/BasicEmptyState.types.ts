@@ -1,5 +1,6 @@
 import { ReactChild, ReactElement } from 'react';
 
+import { BadgeProps } from '@leafygreen-ui/badge';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 interface EmptyStateWithCTAProps {
@@ -30,6 +31,11 @@ type BasicEmptyStateBaseProps = DarkModeProps & {
    * Graphic shown left of text content. The component is designed to be used with MongoDB marketing-approved graphics.
    */
   graphic?: ReactElement;
+
+  /**
+   * Optional badge props to render a badge component
+   */
+  badgeProps?: BadgeProps;
 
   /**
    * Heading text

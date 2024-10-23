@@ -1,5 +1,16 @@
 # @lg-chat/rich-links
 
+## 1.2.0
+
+### Minor Changes
+
+- 82bcd310a: Adds a new "Article" rich link variant
+
+### Patch Changes
+
+- Updated dependencies [f91e1ce97]
+  - @leafygreen-ui/tokens@2.11.0
+
 ## 1.1.1
 
 ### Patch Changes
