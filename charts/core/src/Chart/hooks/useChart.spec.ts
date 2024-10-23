@@ -1,4 +1,6 @@
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { renderHook, waitForState } from '@leafygreen-ui/testing-lib';
+import { act } from 'react-dom/test-utils';
+import { SeriesOption } from '../Chart.types';
 
 import { useChart } from './useChart';
 
@@ -42,19 +44,49 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     );
   });
 
-  test.todo('should properly update state on addChartSeries call');
+  test('should properly update state on addChartSeries call', async () => {
+    const { result } = renderHook(() => useChart({}));
+    const series: SeriesOption = {
+      name: 'test',
+      data: [1, 2, 3],
+    };
+    act(() => {
+      result.current.addChartSeries(series);
+    });
+    await waitForState(() => {
+      expect(result.current.chartOptions.series).toEqual([series]);
+    });
+  });
 
-  test.todo('should properly update chartInstanceRef on addChartSeries call');
+  test('should properly update state on removeChartSeries call', async () => {
+    const { result } = renderHook(() => useChart({}));
+    const series: SeriesOption = {
+      name: 'test',
+      data: [1, 2, 3],
+    };
+    act(() => {
+      result.current.addChartSeries(series);
+    });
+    act(() => {
+      result.current.removeChartSeries('test');
+    });
+    await waitForState(() => {
+      expect(result.current.chartOptions.series).toEqual([]);
+    });
+  });
 
-  test.todo('should properly update state on removeChartSeries call');
-
-  test.todo(
-    'should properly update chartInstanceRef on removeChartSeries call',
-  );
-
-  test.todo('should properly update state on updateChartOptions call');
-
-  test.todo(
-    'should properly update chartInstanceRef on updateChartOptions call',
-  );
+  test('should properly update state on updateChartOptions call', async () => {
+    const { result } = renderHook(() => useChart({}));
+    const options = {
+      title: {
+        text: 'test',
+      },
+    };
+    act(() => {
+      result.current.updateChartOptions(options);
+    });
+    await waitForState(() => {
+      expect(result.current.chartOptions.title).toEqual(options.title);
+    });
+  });
 });
