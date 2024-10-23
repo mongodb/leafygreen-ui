@@ -51,6 +51,9 @@ export const getVirtualDynamicStyles = (
 
     thead {
       top: -${startPosition}px;
+      /* transform: translate3d(0, ${startPosition / 2}px, 0); */
+      /* top: 0; */
+      /* position: absolute; */
     }
   `}
 `;
