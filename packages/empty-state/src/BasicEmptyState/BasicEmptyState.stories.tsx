@@ -6,6 +6,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { Variant } from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import { Theme } from '@leafygreen-ui/lib';
 import { Link } from '@leafygreen-ui/typography';
@@ -27,6 +28,7 @@ const meta: StoryMetaType<typeof BasicEmptyState> = {
   },
   argTypes: {
     graphic: { control: 'none' },
+    badgeProps: { control: 'none' },
     description: { control: 'text' },
     externalLink: { control: 'none' },
     primaryButton: { control: 'none' },
@@ -51,6 +53,10 @@ const meta: StoryMetaType<typeof BasicEmptyState> = {
             key="generated-graphic"
             viewBox="0 0 198 131"
           />,
+        ],
+        badgeProps: [
+          undefined,
+          { variant: Variant.Blue, children: 'Optional' },
         ],
         primaryButton: [
           undefined,
@@ -123,9 +129,10 @@ WithSmallGraphic.args = {
   graphicSize: 'small',
 };
 
-export const WithActionsAndLink = Template.bind({});
-WithActionsAndLink.args = {
+export const WithBadgeAndActionsAndLink = Template.bind({});
+WithBadgeAndActionsAndLink.args = {
   graphic: <LightModeGraphic viewBox="0 0 298 198" />,
+  badgeProps: { variant: Variant.Blue, children: 'Optional' },
   primaryButton: <Button>Add Dependency</Button>,
   secondaryButton: <Button>Upload Module</Button>,
   externalLink: <Link href="https://www.mongodb.com">Test external link</Link>,

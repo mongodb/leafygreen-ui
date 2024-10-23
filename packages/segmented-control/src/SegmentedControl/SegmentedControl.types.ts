@@ -2,16 +2,9 @@ import React from 'react';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export const DeprecatedSize = {
-  /** @deprecated */
-  Small: 'small',
-} as const;
-
-export type DeprecatedSize =
-  (typeof DeprecatedSize)[keyof typeof DeprecatedSize];
-
 export const Size = {
   XSmall: 'xsmall',
+  Small: 'small',
   Default: 'default',
   Large: 'large',
 } as const;
@@ -30,7 +23,7 @@ export interface SegmentedControlProps
   /**
    * Defines the size of the segmented control. Can be either `xsmall`, `default`, or `large`
    */
-  size?: Size | DeprecatedSize;
+  size?: Size;
 
   /**
    * Toggles dark mode

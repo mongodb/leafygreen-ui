@@ -61,6 +61,7 @@
     "jackspeak": "2.1.1"
   },
   "workspaces": [
+    "charts/*",
     "chat/*",
     "packages/*",
     "tools/*"

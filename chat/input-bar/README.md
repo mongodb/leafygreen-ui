@@ -85,16 +85,17 @@ return <InputBar badgeText="Beta" />;
 
 ## Properties
 
-| Prop                   | Type                                          | Description                                                    | Default |
-| ---------------------- | --------------------------------------------- | -------------------------------------------------------------- | ------- |
-| `badgeText`            | `string`                                      | If provided, renders a badge with text next to the wizard icon |         |
-| `darkMode`             | `boolean`                                     | Determines if the component will render in dark mode           | `false` |
-| `onMessageSend`        | `(messageBody: string, e: FormEvent) => void` | Callback fired when message is sent                            |         |
-| `shouldRenderGradient` | `boolean`                                     | Determines if component renders with gradient box-shadow       | `true`  |
-| `textAreaProps`        | `TextareaAutosizeProps`                       | `TextareaAutosize` props spread on textarea component          |         |
-| `disabled`             | `boolean`                                     | Determines whether the user can interact with the InputBar     |         |
-| `disableSend`          | `boolean`                                     | When defined as `true`, disables the send action and button    |         |
-| `...`                  | `HTMLElementProps<'form'>`                    | Props spread on the root element                               |         |
+| Prop                          | Type                                          | Description                                                    | Default |
+| ----------------------------- | --------------------------------------------- | -------------------------------------------------------------- | ------- |
+| `badgeText`                   | `string`                                      | If provided, renders a badge with text next to the wizard icon |         |
+| `darkMode`                    | `boolean`                                     | Determines if the component will render in dark mode           | `false` |
+| `onMessageSend`               | `(messageBody: string, e: FormEvent) => void` | Callback fired when message is sent                            |         |
+| `shouldRenderGradient`        | `boolean`                                     | Determines if component renders with gradient box-shadow       | `true`  |
+| `shouldRenderHotkeyIndicator` | `boolean`                                     | Determines if component renders with hotkey indicator          | `false` |
+| `textAreaProps`               | `TextareaAutosizeProps`                       | `TextareaAutosize` props spread on textarea component          |         |
+| `disabled`                    | `boolean`                                     | Determines whether the user can interact with the InputBar     |         |
+| `disableSend`                 | `boolean`                                     | When defined as `true`, disables the send action and button    |         |
+| `...`                         | `HTMLElementProps<'form'>`                    | Props spread on the root element                               |         |
 
 ## TextareaAutosizeProps
 

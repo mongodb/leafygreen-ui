@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "12.6.4",
+  "version": "12.7.0",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +30,7 @@
     "@leafygreen-ui/lib": "^13.6.0",
     "@leafygreen-ui/palette": "^4.0.9",
     "@leafygreen-ui/polymorphic": "^2.0.0",
-    "@leafygreen-ui/tokens": "^2.9.0",
+    "@leafygreen-ui/tokens": "^2.11.0",
     "@leafygreen-ui/typography": "^19.2.0",
     "@lg-tools/test-harnesses": "^0.1.2",
     "@tanstack/react-table": "^8.20.5",

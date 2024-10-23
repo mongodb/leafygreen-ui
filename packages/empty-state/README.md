@@ -33,6 +33,7 @@ import { BasicEmptyState } from '@leafygreen-ui/empty-state';
   title="No Results Found"
   description="Try adjusting your filters or search terms"
   graphic={<SvgOrImgComponent />}
+  badgeProps={{ variant: 'blue', children: 'Optional' }}
   primaryButton={<Button />}
   secondaryButton={<Button />}
   externalLink={<Link />}
@@ -45,6 +46,7 @@ A basic empty state component to be used with MongoDB marketing-approved graphic
 | Prop              | Type           | Description                                                                                                        | Default     |
 | ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------ | ----------- |
 | `graphic`         | `ReactElement` | Graphic shown left of text content. The component is designed to be used with MongoDB marketing-approved graphics. | `undefined` |
+| `badgeProps`      | `BadgeProps`   | Optional props to conditionally render a badge.                                                                    | `undefined` |
 | `title`\*         | `string`       | Heading text.                                                                                                      |             |
 | `description`\*   | `ReactChild`   | Secondary text.                                                                                                    |             |
 | `primaryButton`   | `ReactElement` | Optional primary call-to-action button.                                                                            | `undefined` |

@@ -5,12 +5,61 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
+import { userEvent, within } from '@storybook/testing-library';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Option, OptionGroup, Select, type SelectProps, Size, State } from '.';
+
+const childrenArray = [
+  <Option key="long" value="long" description="I know a little lorem ipsum">
+    Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
+    risus varius blandit sit amet non magna.
+  </Option>,
+  <OptionGroup key="Common" label="Common">
+    <Option value="dog">Dog</Option>
+    <Option value="cat">Cat</Option>
+  </OptionGroup>,
+  <OptionGroup key="Less common" label="Less common">
+    <Option value="hamster">Hamster</Option>
+    <Option value="parrot">Parrot</Option>
+  </OptionGroup>,
+  <Option key="iguana" value="iguana">
+    Mexican spiny-tailed iguana
+  </Option>,
+  <Option key="spider" value="spider" description="I'm chill, I swear">
+    Spider
+  </Option>,
+  <Option key="aardvark" value="aardvark" disabled description="Call me Arthur">
+    Aardvark
+  </Option>,
+  <Option
+    key="Spider Monkey"
+    value="Spider Monkey"
+    description="Hold on tight Spider Monkey"
+  >
+    Spider Monkey
+  </Option>,
+  <Option
+    key="orange"
+    value="orange"
+    description="Orange you glad I didn't say banana"
+  >
+    Orange
+  </Option>,
+  <Option key="Donkey Kong" value="Donkey Kong" description="OH ba na na">
+    Donkey Kong
+  </Option>,
+  <Option
+    key="Wee-snaw"
+    value="Wee-snaw"
+    description="I was just doing my impression of Mystery"
+  >
+    Wee-snaw
+  </Option>,
+];
 
 const meta: StoryMetaType<typeof Select> = {
   title: 'Components/Select',
@@ -46,34 +95,7 @@ const meta: StoryMetaType<typeof Select> = {
     disabled: false,
     allowDeselect: false,
     darkMode: false,
-    children: [
-      <Option key="long" value="long" description="I know a little lorem ipsum">
-        Cras mattis consectetur purus sit amet fermentum. Maecenas sed diam eget
-        risus varius blandit sit amet non magna.
-      </Option>,
-      <OptionGroup key="Common" label="Common">
-        <Option value="dog">Dog</Option>
-        <Option value="cat">Cat</Option>
-      </OptionGroup>,
-      <OptionGroup key="Less common" label="Less common">
-        <Option value="hamster">Hamster</Option>
-        <Option value="parrot">Parrot</Option>
-      </OptionGroup>,
-      <Option key="iguana" value="iguana">
-        Mexican spiny-tailed iguana
-      </Option>,
-      <Option key="spider" value="spider" description="I'm chill, I swear">
-        Spider
-      </Option>,
-      <Option
-        key="aardvark"
-        value="aardvark"
-        disabled
-        description="Call me Arthur"
-      >
-        Aardvark
-      </Option>,
-    ],
+    children: childrenArray,
     usePortal: true,
   },
   argTypes: {
@@ -164,3 +186,38 @@ NoPortal.parameters = {
 };
 
 export const Generated = () => {};
+
+export const InitialLongSelectOpen = {
+  render: () => {
+    return (
+      <Select
+        className={cx(
+          css`
+            min-width: 200px;
+            max-width: 400px;
+          `,
+        )}
+        aria-label="hey"
+        // eslint-disable-next-line react/no-children-prop
+        children={childrenArray}
+      />
+    );
+  },
+  play: async ctx => {
+    const { findByRole } = within(ctx.canvasElement.parentElement!);
+    const trigger = await findByRole('button');
+    userEvent.click(trigger);
+  },
+  decorators: [
+    (StoryFn, _ctx) => (
+      <div
+        className={css`
+          height: 100vh;
+          padding: 0;
+        `}
+      >
+        <StoryFn />
+      </div>
+    ),
+  ],
+};

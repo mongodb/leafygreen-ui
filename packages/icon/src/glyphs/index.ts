@@ -55,6 +55,8 @@ import Drag from './Drag.svg';
 import Edit from './Edit.svg';
 import Ellipsis from './Ellipsis.svg';
 import Email from './Email.svg';
+import EmptyDatabase from './EmptyDatabase.svg';
+import EmptyFolder from './EmptyFolder.svg';
 import Eraser from './Eraser.svg';
 import Escalation from './Escalation.svg';
 import Export from './Export.svg';
@@ -216,6 +218,8 @@ const _glyphs = {
   Edit,
   Ellipsis,
   Email,
+  EmptyDatabase,
+  EmptyFolder,
   Eraser,
   Escalation,
   Export,

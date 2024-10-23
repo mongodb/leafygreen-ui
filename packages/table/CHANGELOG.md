@@ -1,5 +1,17 @@
 # @leafygreen-ui/table
 
+## 12.7.0
+
+### Minor Changes
+
+- 24786ff3d: - c3906f78: - Exports `getTestUtils`, a util to reliably interact with `LG Table` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/table#test-harnesses) [LG-4171](https://jira.mongodb.org/browse/LG-4171)
+  - Exports the constant, `LGIDS` which stores `data-lgid` values.
+
+### Patch Changes
+
+- Updated dependencies [f91e1ce97]
+  - @leafygreen-ui/tokens@2.11.0
+
 ## 12.6.4
 
 ### Patch Changes

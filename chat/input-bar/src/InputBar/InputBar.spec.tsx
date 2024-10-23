@@ -1,6 +1,8 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import { InputBar } from '.';
 
@@ -89,5 +91,43 @@ describe('packages/input-bar', () => {
     render(<InputBar badgeText="beta" />);
 
     expect(screen.getByText('beta')).toBeInTheDocument();
+  });
+
+  test('Hotkey Indicator is rendered when the prop is set', () => {
+    render(<InputBar shouldRenderHotkeyIndicator />);
+
+    expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeInTheDocument();
+  });
+
+  test('Hotkey Indicator is hidden when InputBar is focused and visible when unfocused', async () => {
+    render(<InputBar shouldRenderHotkeyIndicator />);
+    const textarea = screen.getByRole('textbox');
+
+    act(() => {
+      textarea.focus();
+    });
+    // Wait for CSS animation
+    await new Promise(resolve =>
+      setTimeout(resolve, transitionDuration.default),
+    );
+
+    expect(screen.getByTestId('lg-chat-hotkey-indicator')).not.toBeVisible();
+
+    act(() => {
+      textarea.blur();
+    });
+    // Wait for CSS animation
+    await new Promise(resolve =>
+      setTimeout(resolve, transitionDuration.default),
+    );
+    expect(screen.getByTestId('lg-chat-hotkey-indicator')).toBeVisible();
+  });
+
+  test('When the hotkey indicator is enabled, pressing the hotkey focuses the input', async () => {
+    render(<InputBar shouldRenderHotkeyIndicator />);
+
+    userEvent.keyboard('/');
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toHaveFocus();
   });
 });
