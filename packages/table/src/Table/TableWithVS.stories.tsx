@@ -1,11 +1,18 @@
-import React, { Fragment, useCallback, useMemo } from 'react';
+import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 
-import { makeData, Person } from '../utils/makeData.testutils';
+import {
+  makeData,
+  makeKitchenSinkData,
+  Person,
+} from '../utils/makeData.testutils';
 import {
   Cell,
   type ColumnDef,
@@ -17,6 +24,7 @@ import {
   HeaderRow,
   type LeafyGreenTableCell,
   type LeafyGreenVirtualItem,
+  LGColumnDef,
   Row,
   type SortingState,
   Table,
@@ -585,6 +593,148 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
                       );
                     })}
                   </Row>
+                );
+              },
+            )}
+        </TableBody>
+      </Table>
+    </>
+  );
+};
+
+export const DifferentHeights: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(5000));
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  // FIXME: this table becomes SUPER flickery scrolling up when a lot of rows are expanded
+  //TODO: fix type
+  const table = useLeafyGreenVirtualTable<any>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+  });
+
+  return (
+    <>
+      <div>
+        <p>{table.rows.length} total rows</p>
+      </div>
+
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+        shouldTruncate={false}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtual.virtualItems &&
+            table.virtual.virtualItems.map(
+              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const isExpandedContent =
+                  row.original.isExpandedContent ?? false;
+
+                return (
+                  <Fragment key={virtualRow.key}>
+                    {!isExpandedContent && (
+                      <Row row={row} virtualRow={virtualRow}>
+                        {row
+                          .getVisibleCells()
+                          .map((cell: LeafyGreenTableCell<Person>) => {
+                            return (
+                              <Cell key={cell.id} cell={cell}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                      </Row>
+                    )}
+                    {isExpandedContent && (
+                      <ExpandedContent row={row} virtualRow={virtualRow} />
+                    )}
+                  </Fragment>
                 );
               },
             )}

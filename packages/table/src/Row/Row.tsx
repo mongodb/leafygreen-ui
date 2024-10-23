@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -25,12 +24,15 @@ const Row = <T extends LGRowData>({
     <>
       {row ? (
         <MemoizedInternalRowWithRT
+          // @ts-ignore FIXME:
           row={row}
           virtualRow={virtualRow}
           theme={theme}
           measureElement={measureElement}
+          // @ts-ignore FIXME:
           shouldAlternateRowColor={shouldAlternateRowColor}
           isExpanded={row.getIsExpanded()}
+          // @ts-ignore FIXME:
           isParentExpanded={
             row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
           }

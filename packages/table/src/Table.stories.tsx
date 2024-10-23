@@ -196,21 +196,12 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
-
-            // TODO: the diff in this approach is that the keys are not chaning when a sub row opens
             return (
               <Fragment key={row.id}>
-                {/* {!isExpandedContent && ( */}
                 <Row row={row}>
                   {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell
-                        key={cell.id}
-                        id={cell.id}
-                        overflow="truncate"
-                        cell={cell}
-                      >
+                      <Cell key={cell.id} id={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -261,47 +252,6 @@ export const Basic = Template.bind({});
 export const ZebraStripes = Template.bind({});
 ZebraStripes.args = {
   shouldAlternateRowColor: true,
-};
-
-// TODO: i don't think we need this story
-export const OverflowingCell: StoryFn<StoryTableProps> = args => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]).filter(
-    x => x !== 'renderExpandedContent' && x !== 'subRows',
-  );
-  return (
-    <Table {...args}>
-      <TableHead>
-        <HeaderRow>
-          {columns.map((columnName: string) => (
-            <HeaderCell key={columnName}>{columnName}</HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {data.map((row: AnyDict) => (
-          <Row key={row.id}>
-            {Object.keys(row).map((cellKey: string, index: number) => {
-              return (
-                <Cell key={`${cellKey}-${index}`}>
-                  <div
-                    style={{
-                      width: '80px',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {row[cellKey]}
-                  </div>
-                </Cell>
-              );
-            })}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
 };
 
 export const NestedRows: StoryFn<StoryTableProps> = args => {
@@ -1148,12 +1098,7 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
               <StyledRow row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <StyledCell
-                      key={cell.id}
-                      id={cell.id}
-                      overflow="truncate"
-                      cell={cell}
-                    >
+                    <StyledCell key={cell.id} id={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

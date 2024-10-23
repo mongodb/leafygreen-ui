@@ -7,27 +7,20 @@ import React, {
 
 type RowContextProps = PropsWithChildren<{
   disabled: boolean;
-  isReactTable: boolean;
 }>;
 
 const RowContext = createContext<RowContextProps>({
-  isReactTable: false,
   disabled: false,
 });
 
 export const useRowContext = () => useContext(RowContext);
 
-export const RowContextProvider = ({
-  children,
-  disabled,
-  isReactTable,
-}: RowContextProps) => {
+export const RowContextProvider = ({ children, disabled }: RowContextProps) => {
   const providerData = useMemo(() => {
     return {
       disabled,
-      isReactTable,
     };
-  }, [disabled, isReactTable]);
+  }, [disabled]);
 
   return (
     <RowContext.Provider value={providerData}>{children}</RowContext.Provider>

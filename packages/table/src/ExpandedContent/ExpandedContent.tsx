@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { cellTransitionContainerStyles } from '../Cell/Cell.styles';
+import { getCellContainerStyles } from '../Cell/Cell.styles';
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
@@ -18,20 +18,12 @@ const ExpandedContent = <T extends RowData>({
   ...rest
 }: ExpandedContentProps<T>) => {
   const { measureElement } = useTableContext();
-  const contentRef = useRef<HTMLDivElement>(null);
 
   const content =
     row.original.renderExpandedContent &&
     row.original.renderExpandedContent(row);
 
   const { theme } = useDarkMode();
-
-  // const contentHeight = useMemo(
-  //   () => (contentRef.current ? contentRef.current.clientHeight : 0),
-  //   // Lint flags `content` as an unnecessary dependency, but we want to update `contentHeight` when the value of `content` changes
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [content],
-  // );
 
   // eslint-disable-next-line no-console
   console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
@@ -52,12 +44,9 @@ const ExpandedContent = <T extends RowData>({
         data-lgid={LGIDS.cell}
       >
         <div
-          className={cx(
-            cellTransitionContainerStyles,
-            expandedContentStyles[theme],
-          )}
+          className={cx(getCellContainerStyles(), expandedContentStyles[theme])}
         >
-          <div ref={contentRef}>{content}</div>
+          <div>{content}</div>
         </div>
       </td>
     </InternalRowBase>

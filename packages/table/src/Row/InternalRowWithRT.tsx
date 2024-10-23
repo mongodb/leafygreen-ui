@@ -37,7 +37,6 @@ const InternalRowWithRT = <T extends LGRowData>({
   const contextValues = useMemo(() => {
     return {
       disabled,
-      isReactTable: true,
     };
   }, [disabled]);
 
@@ -62,7 +61,7 @@ const InternalRowWithRT = <T extends LGRowData>({
       data-depth={row.depth}
       id={`lg-table-row-${row.id}`}
       ref={node => {
-        if (measureElement) measureElement(node); // can this be added to table context?
+        if (measureElement) measureElement(node);
       }}
       data-index={virtualRow ? virtualRow!.index : ''}
       {...rest}

@@ -30,6 +30,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       children,
       className,
       shouldAlternateRowColor = false,
+      shouldTruncate = true,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
       table,
@@ -48,6 +49,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const virtualTableTotalSize = virtualTable
       ? virtualTable.getTotalSize()
       : 0;
+    // TODO: look into scroll position instead of start position
     const virtualTableStart = virtualTable
       ? virtualTable.getVirtualItems()[0]?.start
       : 0;
@@ -74,6 +76,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               isVirtual={isVirtual}
               isSelectable={isSelectable}
               measureElement={measureElement}
+              shouldTruncate={shouldTruncate}
             >
               <table
                 className={cx(
