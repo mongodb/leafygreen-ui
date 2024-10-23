@@ -48,6 +48,8 @@ export const getCellStyles = (
   depth = 0,
   isExpandable = false,
   isSelectable = false,
+  isVirtual = false,
+  width = 0,
 ) => css`
   &:first-child {
     ${getCellPadding({
@@ -56,6 +58,11 @@ export const getCellStyles = (
       isSelectable,
     })}
   }
+  ${isVirtual &&
+  css`
+    display: flex;
+    width: ${width}px;
+  `}
 `;
 
 export const getCellContainerStyles = (align: Align = 'left') => css`
@@ -87,13 +94,20 @@ export const cellInnerStyles = () => css`
   min-width: 100%;
 `;
 
-export const getCellEllipsisStyles = (shouldTruncate: boolean) => css`
+export const getCellEllipsisStyles = (
+  shouldTruncate: boolean,
+  isVirtual = false,
+) => css`
   ${shouldTruncate &&
   css`
     flex: 1;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  `}
+
+  ${!isVirtual &&
+  css`
     contain: inline-size; // 🤯
   `}
 `;

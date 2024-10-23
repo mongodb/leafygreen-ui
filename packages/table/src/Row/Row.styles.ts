@@ -88,3 +88,13 @@ export const disabledStyles: Record<Theme, string> = {
     color: ${palette.gray.base};
   `,
 };
+
+export const getBaseRowStyles = (isVirtual = false, startPosition = 0) => css`
+  ${isVirtual &&
+  css`
+    display: flex;
+    position: absolute;
+    transform: translate3d(0, ${startPosition}px, 0);
+    width: 100%;
+  `}
+`;

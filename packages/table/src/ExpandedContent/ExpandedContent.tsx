@@ -6,6 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getCellContainerStyles } from '../Cell/Cell.styles';
 import { LGIDS } from '../constants';
+import { getBaseRowStyles } from '../Row';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
 
@@ -15,6 +16,7 @@ import { ExpandedContentProps } from './ExpandedContent.types';
 const ExpandedContent = <T extends RowData>({
   row,
   virtualRow,
+  className,
   ...rest
 }: ExpandedContentProps<T>) => {
   const { measureElement } = useTableContext();
@@ -26,7 +28,7 @@ const ExpandedContent = <T extends RowData>({
   const { theme } = useDarkMode();
 
   // eslint-disable-next-line no-console
-  console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
+  // console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
 
   return (
     <InternalRowBase
@@ -37,6 +39,10 @@ const ExpandedContent = <T extends RowData>({
         if (measureElement) measureElement(node);
       }}
       data-index={virtualRow ? virtualRow!.index : ''}
+      className={cx(
+        getBaseRowStyles(!!virtualRow, virtualRow ? virtualRow.start : 0),
+        className,
+      )}
     >
       <td
         colSpan={row.getVisibleCells().length}
