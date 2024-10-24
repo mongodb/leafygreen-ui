@@ -1,1 +1,1 @@
-export { LineChart, type LineChartProps } from './LineChart';
+export { LineChart } from './LineChart';
