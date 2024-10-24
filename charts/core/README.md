@@ -71,3 +71,12 @@ Component that takes in data points and renders a single line on the chart.
 | ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
 | `name` | Name used to identify the series.                                      | string                                                      |         |
 | `data` | Data array of tuples that represent x and y coordinates in the series. | Array<[string \| number \| Date, string \| number \| Date]> |         |
+
+## `Grid`
+
+### Props
+
+| Name         | Description                 | Type    | Default |
+| ------------ | --------------------------- | ------- | ------- |
+| `horizontal` | Show horizontal grid lines. | boolean | true    |
+| `vertical`   | Show vertical grid lines.   | boolean | true    |
