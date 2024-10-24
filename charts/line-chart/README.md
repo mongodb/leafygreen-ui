@@ -18,8 +18,6 @@ npm install @lg-charts/line-chart
 
 ## Basic Example
 
----
-
 ```js
 import { LineChart } from '@lg-charts/line-chart';
 
@@ -49,11 +47,9 @@ const seriesData = [
 <LineChart series={seriesData}/>
 ```
 
-# Exports
+## Exports
 
----
-
-## `LineChart`
+### `LineChart`
 
 #### Props
 

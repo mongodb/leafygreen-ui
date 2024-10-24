@@ -18,8 +18,6 @@ npm install @lg-charts/core
 
 ## Basic Example
 
----
-
 ```js
 import { Chart, Line } from '@lg-charts/core';
 
@@ -37,11 +35,9 @@ import { Chart, Line } from '@lg-charts/core';
 </Chart>;
 ```
 
-# Exports
+## Exports
 
----
-
-## `Chart`
+### `Chart`
 
 #### Props
 
