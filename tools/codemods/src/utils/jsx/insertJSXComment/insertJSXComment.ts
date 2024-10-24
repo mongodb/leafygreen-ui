@@ -19,15 +19,14 @@ export function insertJSXComment(
 ) {
   // https://github.com/facebook/jscodeshift/issues/354
   const commentContent = j.jsxEmptyExpression();
-  const commentConcat = ` ${comment} `;
-  commentContent.comments = [j.commentBlock(commentConcat, false, true)];
+  commentContent.comments = [j.commentBlock(` ${comment} `, false, true)];
   const jsxComment = j.jsxExpressionContainer(commentContent);
   const lineBreak = j.jsxText('\n');
 
   if (position === 'before') {
     // If the component is the first direct child after a return statement, this means it is not nested in another component so comments should look like /* comment */, without the brackets
     if (element.parentPath.value.type === 'ReturnStatement') {
-      insertCommentBefore(j, element, commentConcat);
+      insertCommentBefore(j, element, comment);
     } else {
       // The element is nested inside another component so comments should look like {/* comment */}, with the brackets
       element.insertBefore(jsxComment);
@@ -51,14 +50,15 @@ export function insertCommentBefore(
   path: ASTPath<any>,
   commentString: string,
 ) {
+  const content = ` ${commentString} `;
   path.value.comments = path.value.comments || [];
 
   const duplicateComment = path.value.comments.find(
-    (comment: Comment) => comment.value === commentString,
+    (comment: Comment) => comment.value === content,
   );
 
   // Avoiding duplicates of the same comment
   if (duplicateComment) return;
 
-  path.value.comments.push(j.commentBlock(commentString));
+  path.value.comments.push(j.commentBlock(content));
 }

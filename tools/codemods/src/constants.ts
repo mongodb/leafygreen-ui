@@ -1,3 +1,5 @@
 export const MIGRATOR_ERROR = {
-  manual: 'Please update manually',
+  manualAdd: 'Please manually add',
+  manualRemove: 'Please manually remove',
+  manualUpdate: 'Please manually update',
 };
