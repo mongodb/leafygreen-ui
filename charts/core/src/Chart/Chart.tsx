@@ -6,6 +6,7 @@
  */
 import React from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ChartProvider } from '../ChartContext';
@@ -18,6 +19,8 @@ export function Chart({
   children,
   darkMode: darkModeProp,
   onChartReady,
+  className,
+  ...rest
 }: ChartProps) {
   const {
     chartOptions,
@@ -39,7 +42,7 @@ export function Chart({
       removeChartSeries={removeChartSeries}
       darkMode={darkModeProp}
     >
-      <div className={getWrapperStyles(theme)}>
+      <div className={cx(getWrapperStyles(theme), className)} {...rest}>
         {children}
         <div
           ref={chartRef}

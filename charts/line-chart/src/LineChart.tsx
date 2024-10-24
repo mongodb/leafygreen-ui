@@ -3,9 +3,9 @@ import { Chart, Line } from '@lg-charts/core';
 
 import { LineChartProps } from './LineChart.types';
 
-export function LineChart({ data }: LineChartProps) {
+export function LineChart({ data, ...rest }: LineChartProps) {
   return (
-    <Chart>
+    <Chart {...rest}>
       {data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
