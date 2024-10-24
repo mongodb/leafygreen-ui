@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, waitFor } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
@@ -8,7 +8,6 @@ import {
   ModalPopoverProvider,
   useModalPopoverContext,
 } from './ModalPopoverContext';
-import { type ModalPopoverProviderProps } from './ModalPopoverContext.types';
 
 const childTestID = 'modal-popover-provider';
 const buttonTestId = 'test-button';
@@ -29,9 +28,9 @@ function TestContextComponent() {
   );
 }
 
-function renderProvider(props?: ModalPopoverProviderProps) {
+function renderProvider() {
   const utils = render(
-    <ModalPopoverProvider {...props}>
+    <ModalPopoverProvider>
       <TestContextComponent />
     </ModalPopoverProvider>,
   );
@@ -43,20 +42,6 @@ describe('packages/leafygreen-provider/ModalPopoverContext', () => {
   test('only renders children in the DOM', () => {
     const { container, testChild } = renderProvider();
     expect(container.firstChild).toBe(testChild);
-  });
-
-  test('`isPopoverOpen` is initialized as false', () => {
-    const { testChild } = renderProvider();
-    expect(testChild.textContent).toBe('false');
-  });
-
-  test('when passed true, `setIsPopoverOpen` sets `isPopoverOpen` to true', () => {
-    const { testChild, getByTestId } = renderProvider();
-
-    // The button's click handler fires setIsPopoverOpen(true)
-    userEvent.click(getByTestId(buttonTestId));
-
-    expect(testChild.textContent).toBe('true');
   });
 });
 
@@ -75,9 +60,8 @@ describe('useModalPopoverContext', () => {
 
     act(() => result.current.setIsPopoverOpen(true));
     rerender();
-    await waitFor(() => {
-      expect(result.current.isPopoverOpen).toBe(true);
-    });
+
+    expect(result.current.isPopoverOpen).toBe(true);
   });
 
   describe('with test component', () => {

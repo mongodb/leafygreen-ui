@@ -1,10 +1,13 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  ModalPopoverContextType,
-  ModalPopoverProviderProps,
-} from './ModalPopoverContext.types';
+import { ModalPopoverContextType } from './ModalPopoverContext.types';
 
 export const ModalPopoverContext = createContext<ModalPopoverContextType>({
   isPopoverOpen: false,
@@ -22,9 +25,7 @@ export const useModalPopoverContext = (): ModalPopoverContextType => {
  * Creates a Modal Popover context.
  * Call `useModalPopoverContext` to access the popover state
  */
-export const ModalPopoverProvider = ({
-  children,
-}: ModalPopoverProviderProps) => {
+export const ModalPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   const providerValue = useMemo(

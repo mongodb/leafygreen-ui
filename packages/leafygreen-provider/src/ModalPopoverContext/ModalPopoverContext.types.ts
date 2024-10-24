@@ -10,7 +10,3 @@ export interface ModalPopoverContextType {
    */
   setIsPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-export interface ModalPopoverProviderProps {
-  children?: React.ReactNode;
-}
