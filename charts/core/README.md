@@ -21,9 +21,10 @@ npm install @lg-charts/core
 ## Basic Example
 
 ```js
-import { Chart, Line } from '@lg-charts/core';
+import { Chart, Line, Grid } from '@lg-charts/core';
 
 <Chart>
+  <Grid vertical={false}>
   <Line
     name="Series 1"
     data={[
