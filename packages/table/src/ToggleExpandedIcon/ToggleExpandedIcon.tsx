@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
 
@@ -22,10 +21,9 @@ const ToggleExpandedIcon = ({
   isExpanded,
   toggleExpanded,
   disabled,
+  theme,
   ...rest
 }: ToggleExpandedIconProps) => {
-  const { theme } = useDarkMode();
-
   return (
     <IconButton
       aria-label={`${isExpanded ? 'Collapse' : 'Expand'} row`}
@@ -56,3 +54,5 @@ ToggleExpandedIcon.propTypes = {
 };
 
 export default ToggleExpandedIcon;
+
+export const MemoizedToggleExpandedIcon = React.memo(ToggleExpandedIcon);

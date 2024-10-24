@@ -65,12 +65,12 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
   {
     accessorKey: 'index',
     header: 'index',
-    size: 40,
+    size: 140,
   },
   {
     accessorKey: 'id',
     header: 'ID',
-    size: 60,
+    size: 90,
   },
   {
     accessorKey: 'firstName',
@@ -96,7 +96,7 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
   {
     accessorKey: 'status',
     header: 'Status',
-    size: 90,
+    size: 120,
   },
 ];
 
@@ -218,20 +218,18 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                 const cells = row.getVisibleCells();
 
                 return (
-                  <>
-                    <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
-                      {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                        return (
-                          <Cell key={cell.id} cell={cell}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                  </>
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                 );
               },
             )}
@@ -433,7 +431,6 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(true, 5000))[0];
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
   const columns = useMemo(() => basicColumnDefs, []);
 
@@ -441,10 +438,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
     containerRef: tableContainerRef,
     data,
     columns,
-    state: {
-      expanded,
-    },
-    onExpandedChange: setExpanded,
   });
 
   return (
@@ -618,6 +611,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
             month: 'short',
             day: 'numeric',
           }),
+        size: 210,
       },
       {
         accessorKey: 'frequency',
@@ -641,12 +635,12 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         accessorKey: 'mdbVersion',
         header: 'MongoDB Version',
         enableSorting: true,
-        size: 90,
+        size: 140,
       },
       {
         id: 'actions',
         header: '',
-        size: 90,
+        size: 120,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
@@ -689,12 +683,20 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         className={virtualScrollingContainerHeight}
         shouldTruncate={false}
       >
-        <TableHead isSticky>
+        <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
                 return (
-                  <HeaderCell key={header.id} header={header}>
+                  <HeaderCell
+                    key={header.id}
+                    header={header}
+                    className={css`
+                      &:nth-child(3) {
+                        flex-grow: 1;
+                      }
+                    `}
+                  >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
@@ -721,7 +723,15 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
                           .getVisibleCells()
                           .map((cell: LeafyGreenTableCell<Person>) => {
                             return (
-                              <Cell key={cell.id} cell={cell}>
+                              <Cell
+                                key={cell.id}
+                                cell={cell}
+                                className={css`
+                                  &:nth-child(3) {
+                                    flex-grow: 1;
+                                  }
+                                `}
+                              >
                                 {flexRender(
                                   cell.column.columnDef.cell,
                                   cell.getContext(),

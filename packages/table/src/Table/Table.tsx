@@ -16,7 +16,6 @@ import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGre
 
 import {
   baseStyles,
-  getVirtualDynamicStyles,
   getVirtualStyles,
   tableContainerStyles,
   themeStyles,
@@ -41,7 +40,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    //TODO: find a better way to do all these checks
+    //TODO: find a better way to do all these checks - maybe a hook?
     const isVirtual =
       table && (table as LeafyGreenVirtualTable<T>).virtual ? true : false;
     const virtualTable =
@@ -50,11 +49,8 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       ? virtualTable.getTotalSize()
       : 0;
     // TODO: look into scroll position instead of start position
-    const virtualTableStart = virtualTable
-      ? virtualTable.getVirtualItems()[0]?.start
-      : 0;
     const isSelectable = table && table.hasSelectableRows;
-    const measureElement = isVirtual
+    const measureElement = virtualTable
       ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
       : undefined;
 
@@ -66,32 +62,28 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <div className={getVirtualStyles(isVirtual, virtualTableTotalSize)}>
-          <div
-            className={getVirtualDynamicStyles(isVirtual, virtualTableStart)}
+        {/* <div className={getVirtualDynamicStyles(isVirtual, virtualTableStart)}> */}
+        <TableContextProvider
+          shouldAlternateRowColor={shouldAlternateRowColor}
+          darkMode={darkMode}
+          isVirtual={isVirtual}
+          isSelectable={isSelectable}
+          measureElement={measureElement}
+          shouldTruncate={shouldTruncate}
+        >
+          <table
+            className={cx(
+              baseStyles,
+              themeStyles[theme],
+              bodyTypeScaleStyles[baseFontSize],
+              getVirtualStyles(isVirtual, virtualTableTotalSize),
+            )}
+            data-lgid={lgidProp}
+            {...rest}
           >
-            <TableContextProvider
-              shouldAlternateRowColor={shouldAlternateRowColor}
-              darkMode={darkMode}
-              isVirtual={isVirtual}
-              isSelectable={isSelectable}
-              measureElement={measureElement}
-              shouldTruncate={shouldTruncate}
-            >
-              <table
-                className={cx(
-                  baseStyles,
-                  themeStyles[theme],
-                  bodyTypeScaleStyles[baseFontSize],
-                )}
-                data-lgid={lgidProp}
-                {...rest}
-              >
-                {children}
-              </table>
-            </TableContextProvider>
-          </div>
-        </div>
+            {children}
+          </table>
+        </TableContextProvider>
       </div>
     );
   },

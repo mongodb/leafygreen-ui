@@ -8,6 +8,7 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowBase from './InternalRowBase';
 import {
   expandedContentParentStyles,
+  getBaseRowStyles,
   grayZebraRowStyles,
   selectedRowStyles,
   zebraStyles,
@@ -41,7 +42,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   }, [disabled]);
 
   // eslint-disable-next-line no-console
-  console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
+  // console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
 
   return (
     <InternalRowBase
@@ -54,6 +55,7 @@ const InternalRowWithRT = <T extends LGRowData>({
           [selectedRowStyles[theme]]: isSelected && !disabled,
           [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
         },
+        getBaseRowStyles(!!virtualRow, virtualRow ? virtualRow.start : 0),
         className,
       )}
       data-selected={isSelected}
@@ -80,11 +82,6 @@ const arePropsEqual = (prevProps, nextProps) => {
   const { children: nextChildren, ...restnextProps } = nextProps;
 
   const propsAreEqual = isEqual(restPrevProps, restnextProps);
-
-  // console.log('🧤', {
-  //   children: prevProps.children === nextProps.children,
-  //   propsWithoutChildren: isEqual(restPrevProps, restnextProps),
-  // });
 
   return propsAreEqual;
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useRowContext } from '../Row/RowContext';
 import { useTableContext } from '../TableContext';
@@ -20,7 +21,8 @@ const InternalCellWithRT = <T extends LGRowData>({
   ...rest
 }: InternalCellWithRTProps<T>) => {
   const { disabled } = useRowContext();
-  const { isSelectable, shouldTruncate = true } = useTableContext();
+  const { isSelectable, shouldTruncate = true, isVirtual } = useTableContext();
+  const { theme } = useDarkMode();
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
   const row = cell.row;
   const isExpandable = row.getCanExpand();
@@ -31,7 +33,14 @@ const InternalCellWithRT = <T extends LGRowData>({
   return (
     <InternalCell
       className={cx(
-        getCellStyles(depth, isExpandable, isSelectable),
+        getCellStyles(
+          depth,
+          isExpandable,
+          isSelectable,
+          isVirtual,
+          cell.column.getSize(),
+        ),
+
         className,
       )}
       // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
@@ -44,9 +53,12 @@ const InternalCellWithRT = <T extends LGRowData>({
           isExpanded={isExpanded}
           toggleExpanded={toggleExpanded}
           disabled={disabled}
+          theme={theme}
         />
       )}
-      <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
+      <div className={getCellEllipsisStyles(shouldTruncate, isVirtual)}>
+        {children}
+      </div>
     </InternalCell>
   );
 };
