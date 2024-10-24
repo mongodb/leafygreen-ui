@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { ForwardedRef, useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -12,26 +13,29 @@ import {
   selectedRowStyles,
   zebraStyles,
 } from './Row.styles';
-import { InternalRowWithRTProps } from './Row.types';
+import { InternalRowWithRTProps, RowComponentType } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
  */
-const InternalRowWithRT = <T extends LGRowData>({
-  children,
-  className,
-  row,
-  virtualRow,
-  disabled = false,
-  shouldAlternateRowColor,
-  theme,
-  measureElement,
-  isExpanded,
-  isParentExpanded,
-  isSelected,
-  ...rest
-}: InternalRowWithRTProps<T>) => {
+const InternalRowWithRTForwardRef = <T extends LGRowData>(
+  {
+    children,
+    className,
+    row,
+    virtualRow,
+    disabled = false,
+    shouldAlternateRowColor,
+    theme,
+    measureElement,
+    isExpanded,
+    isParentExpanded,
+    isSelected,
+    ...rest
+  }: InternalRowWithRTProps<T>,
+  ref: ForwardedRef<HTMLTableRowElement>,
+) => {
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const contextValues = useMemo(() => {
@@ -41,7 +45,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   }, [disabled]);
 
   // eslint-disable-next-line no-console
-  console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
+  // console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
 
   return (
     <InternalRowBase
@@ -60,9 +64,7 @@ const InternalRowWithRT = <T extends LGRowData>({
       data-expanded={isExpanded}
       data-depth={row.depth}
       id={`lg-table-row-${row.id}`}
-      ref={node => {
-        if (measureElement) measureElement(node);
-      }}
+      ref={useMergeRefs([ref, measureElement])}
       data-index={virtualRow ? virtualRow!.index : ''}
       {...rest}
     >
@@ -71,25 +73,42 @@ const InternalRowWithRT = <T extends LGRowData>({
   );
 };
 
+export const InternalRowWithRT = React.forwardRef(
+  InternalRowWithRTForwardRef,
+) as RowComponentType;
+
 export default InternalRowWithRT;
 
-// @ts-expect-error FIXME: the types are generic
-const arePropsEqual = (prevProps, nextProps) => {
-  // Children will never be the same
-  const { children: prevChildren, ...restPrevProps } = prevProps;
-  const { children: nextChildren, ...restnextProps } = nextProps;
+// TODO: where can i move this?
+const genericMemo: <
+  T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
+>(
+  component: T,
+  propsAreEqual?: (
+    prevProps: React.ComponentPropsWithRef<T>,
+    nextProps: React.ComponentPropsWithRef<T>,
+  ) => boolean,
+) => T & { displayName?: string } = React.memo;
 
-  const propsAreEqual = isEqual(restPrevProps, restnextProps);
-
-  // console.log('🧤', {
-  //   children: prevProps.children === nextProps.children,
-  //   propsWithoutChildren: isEqual(restPrevProps, restnextProps),
-  // });
-
-  return propsAreEqual;
-};
-
-export const MemoizedInternalRowWithRT = React.memo(
+export const MemoizedInternalRowWithRT = genericMemo(
   InternalRowWithRT,
-  arePropsEqual,
+  (prevProps, nextProps) => {
+    const { children: prevChildren, ...restPrevProps } = prevProps;
+    const { children: nextChildren, ...restnextProps } = nextProps;
+
+    const propsAreEqual = isEqual(restPrevProps, restnextProps);
+
+    return propsAreEqual;
+  },
 );
+
+// TODO: how can i type this so that i can pass it as the second argument to MemoizedInternalRowWithRT
+// const arePropsEqual = (prevProps, nextProps) => {
+//   // Children will never be the same
+//   const { children: prevChildren, ...restPrevProps } = prevProps;
+//   const { children: nextChildren, ...restnextProps } = nextProps;
+
+//   const propsAreEqual = isEqual(restPrevProps, restnextProps);
+
+//   return propsAreEqual;
+// };

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ForwardedRef } from 'react';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getCellContainerStyles } from '../Cell/Cell.styles';
@@ -10,13 +11,15 @@ import InternalRowBase from '../Row/InternalRowBase';
 import { useTableContext } from '../TableContext';
 
 import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
-import { ExpandedContentProps } from './ExpandedContent.types';
+import {
+  ExpandedContentComponentType,
+  ExpandedContentProps,
+} from './ExpandedContent.types';
 
-const ExpandedContent = <T extends RowData>({
-  row,
-  virtualRow,
-  ...rest
-}: ExpandedContentProps<T>) => {
+const ExpandedContentWithRef = <T extends RowData>(
+  { row, virtualRow, ...rest }: ExpandedContentProps<T>,
+  ref: ForwardedRef<HTMLTableRowElement>,
+) => {
   const { measureElement } = useTableContext();
 
   const content =
@@ -26,16 +29,12 @@ const ExpandedContent = <T extends RowData>({
   const { theme } = useDarkMode();
 
   // eslint-disable-next-line no-console
-  console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
+  // console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
 
   return (
     <InternalRowBase
       {...rest}
-      ref={node => {
-        // TODO: fix me
-        // This gets the dynamic size of the element
-        if (measureElement) measureElement(node);
-      }}
+      ref={useMergeRefs([ref, measureElement])}
       data-index={virtualRow ? virtualRow!.index : ''}
     >
       <td
@@ -52,6 +51,11 @@ const ExpandedContent = <T extends RowData>({
     </InternalRowBase>
   );
 };
+
+// FIXME: Try to avoid asserting
+export const ExpandedContent = React.forwardRef(
+  ExpandedContentWithRef,
+) as ExpandedContentComponentType;
 
 ExpandedContent.displayName = 'ExpandedContent';
 

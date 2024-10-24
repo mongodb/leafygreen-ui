@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -8,19 +8,22 @@ import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
 import InternalCell from './InternalCell';
 import { InternalCellProps } from '.';
 
-const InternalCellWithoutRT = ({
-  children,
-  className,
-  ...rest
-}: InternalCellProps) => {
+const InternalCellWithoutRT = forwardRef<
+  HTMLTableCellElement,
+  InternalCellProps
+>(({ children, className, ...rest }: InternalCellProps, fwdRef) => {
   const { shouldTruncate = true } = useTableContext();
 
   return (
-    <InternalCell className={cx(getCellStyles(), className)} {...rest}>
+    <InternalCell
+      ref={fwdRef}
+      className={cx(getCellStyles(), className)}
+      {...rest}
+    >
       <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
     </InternalCell>
   );
-};
+});
 
 InternalCellWithoutRT.displayName = 'InternalCellWithoutRT';
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef } from 'react';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -6,15 +6,16 @@ import InternalCellWithoutRT from './InternalCellWithoutRT';
 import InternalCellWithRT from './InternalCellWithRT';
 import { CellProps } from '.';
 
-const Cell = <T extends LGRowData>({
-  children,
-  cell,
-  ...rest
-}: CellProps<T>) => {
+const Cell = <T extends LGRowData>(
+  { children, cell, ...rest }: CellProps<T>,
+  ref: ForwardedRef<HTMLTableCellElement>,
+) => {
   return (
     <>
       {!cell && (
-        <InternalCellWithoutRT {...rest}>{children}</InternalCellWithoutRT>
+        <InternalCellWithoutRT ref={ref} {...rest}>
+          {children}
+        </InternalCellWithoutRT>
       )}
 
       {cell && (
