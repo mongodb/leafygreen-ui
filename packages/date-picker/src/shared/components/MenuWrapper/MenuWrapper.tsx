@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import {
-  PopoverProvider,
+  ModalPopoverProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -44,11 +44,9 @@ export const MenuWrapper = forwardRef<HTMLDivElement, MenuWrapperProps>(
       >
         {/*
          * Prevents the opening and closing state of a select dropdown from propagating up
-         * to other PopoverProviders in parent components. E.g. Modal
-         *
-         * TODO: https://jira.mongodb.org/browse/LG-4474
+         * to other ModalPopoverProviders in parent components. E.g. Modal
          */}
-        <PopoverProvider>{children}</PopoverProvider>
+        <ModalPopoverProvider>{children}</ModalPopoverProvider>
       </Popover>
     );
   },

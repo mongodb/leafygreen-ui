@@ -4,6 +4,7 @@ import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
+import { useModalPopoverContext } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import Portal from '@leafygreen-ui/portal';
 import { spacing as spacingToken } from '@leafygreen-ui/tokens';
@@ -94,11 +95,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       /** style props */
       popoverZIndex,
       spacing = spacingToken[100],
-      /** deprecated props */
-      isPopoverOpen: _,
-      setIsPopoverOpen,
       ...restProps
     } = usePopoverContextProps(rest);
+    const { setIsPopoverOpen } = useModalPopoverContext();
 
     /**
      * When `usePortal` is true and a `scrollContainer` is defined,

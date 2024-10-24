@@ -11,7 +11,7 @@ import LeafyGreenProvider, {
   PopoverProvider,
   RenderMode,
   useDarkMode,
-  usePopoverContext,
+  useModalPopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
 
@@ -66,8 +66,7 @@ const ModalView = React.forwardRef(
     const [scrollContainerRef, setScrollContainerRef] =
       useState<null | HTMLDivElement>(null);
 
-    /** TODO: https://jira.mongodb.org/browse/LG-4474 */
-    const { isPopoverOpen } = usePopoverContext();
+    const { isPopoverOpen } = useModalPopoverContext();
 
     const handleClose = useCallback(() => {
       if (setOpen && shouldClose()) {

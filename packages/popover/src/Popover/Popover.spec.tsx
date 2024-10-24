@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import Button from '@leafygreen-ui/button';
-import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
+import { ModalPopoverContext } from '@leafygreen-ui/leafygreen-provider';
 
 import { Popover } from './Popover';
 import { DismissMode, PopoverProps, RenderMode } from './Popover.types';
@@ -442,23 +442,25 @@ describe('packages/popover', () => {
     const setIsPopoverOpenMock = jest.fn();
 
     function renderPopoverInContext(props?: RTLTopLayerPopoverProps) {
-      const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
+      const MockModalPopoverProvider = ({
+        children,
+      }: PropsWithChildren<{}>) => {
         return (
-          <PopoverContext.Provider
+          <ModalPopoverContext.Provider
             value={{
               isPopoverOpen: false,
               setIsPopoverOpen: setIsPopoverOpenMock,
             }}
           >
             {children}
-          </PopoverContext.Provider>
+          </ModalPopoverContext.Provider>
         );
       };
 
       const result = render(
-        <MockPopoverProvider>
+        <MockModalPopoverProvider>
           <TopLayerPopoverWithReference {...props} />
-        </MockPopoverProvider>,
+        </MockModalPopoverProvider>,
       );
 
       const button = result.getByTestId('popover-reference-element');

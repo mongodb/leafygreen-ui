@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
+import { ModalPopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
 import {
   CloseIconColor,
@@ -27,10 +27,9 @@ import ModalView from './ModalView';
  */
 const Modal = React.forwardRef((props: ModalProps, ref: ForwardedRef) => {
   return (
-    /** TODO: https://jira.mongodb.org/browse/LG-4474 */
-    <PopoverProvider>
+    <ModalPopoverProvider>
       <ModalView {...props} ref={ref} />
-    </PopoverProvider>
+    </ModalPopoverProvider>
   );
 });
 

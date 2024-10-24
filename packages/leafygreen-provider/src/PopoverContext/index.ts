@@ -3,8 +3,4 @@ export {
   PopoverProvider,
   usePopoverContext,
 } from './PopoverContext';
-export {
-  type PopoverContextType,
-  type PopoverProviderProps,
-  RenderMode,
-} from './PopoverContext.types';
+export { type PopoverProviderProps, RenderMode } from './PopoverContext.types';

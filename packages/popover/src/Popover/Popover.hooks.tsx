@@ -74,8 +74,6 @@ export function usePopoverContextProps({
     onExited: onExited || context.onExited,
     popoverZIndex,
     spacing: spacing || context.spacing,
-    isPopoverOpen: context.isPopoverOpen,
-    setIsPopoverOpen: context.setIsPopoverOpen,
     ...rest,
   };
 }
