@@ -57,6 +57,7 @@ export const App = () => {
       </Popover>
       <Popover usePortal={false} />
       <Popover usePortal={true} {...spreadProps} />
+      <Popover {...spreadProps} />
       <WrappedPopover />
       <DefaultWrappedPopover />
     </>

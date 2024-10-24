@@ -1,5 +1,6 @@
 import type { API, FileInfo } from 'jscodeshift';
 
+import { MIGRATOR_ERROR } from '../../constants';
 import {
   addJSXAttributes,
   consolidateJSXAttributes,
@@ -76,6 +77,7 @@ export default function transformer(file: FileInfo, { jscodeshift: j }: API) {
         element,
         propName: 'usePortal',
         propValue: true,
+        commentOverride: `${MIGRATOR_ERROR.manualAdd} prop: renderMode`,
       });
       consolidateJSXAttributes({
         j,

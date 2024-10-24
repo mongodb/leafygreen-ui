@@ -19,7 +19,7 @@ export const App = () => {
         Hello
         <Child prop="child-value" />
       </MyComponent>
-      {/* Please manually add prop: prop */}
+      {/* Please manually add prop: newStringProp */}
       <MyComponent {...spreadProps} />
       <MyComponent prop="existing-value">Hello</MyComponent>
     </>

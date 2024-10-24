@@ -24,6 +24,11 @@ export interface AddJSXAttributesType {
    *  The new value of the prop. This can either be a string, number, boolean, or null.
    */
   propValue: string | number | boolean | null;
+
+  /**
+   * Optional comment for cases where adding prop did not work as expected
+   */
+  commentOverride?: string;
 }
 
 /**
@@ -53,6 +58,7 @@ export function addJSXAttributes({
   element,
   propName,
   propValue,
+  commentOverride,
 }: AddJSXAttributesType) {
   const allAttributes = element.node.openingElement.attributes;
 
@@ -76,7 +82,7 @@ export function addJSXAttributes({
     insertJSXComment(
       j,
       element,
-      `${MIGRATOR_ERROR.manualAdd} prop: ${propName}`,
+      commentOverride ?? `${MIGRATOR_ERROR.manualAdd} prop: ${propName}`,
     );
     return;
   }

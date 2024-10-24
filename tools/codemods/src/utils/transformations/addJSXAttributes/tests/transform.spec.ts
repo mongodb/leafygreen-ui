@@ -1,3 +1,4 @@
+import { MIGRATOR_ERROR } from '../../../../constants';
 import { transformTest } from '../../../tests/transformTest';
 
 const transform = 'add-jsx-attributes';
@@ -25,6 +26,7 @@ const tests = [
       componentName: 'MyComponent',
       propName: 'prop',
       propValue: 'new-value',
+      commentOverride: `${MIGRATOR_ERROR.manualAdd} prop: newStringProp`,
     },
   },
   {

@@ -17,7 +17,7 @@ export default function transformer(
   { jscodeshift: j }: API,
   options: TransformerOptions,
 ) {
-  const { propName, propValue, componentName } = options;
+  const { propName, propValue, componentName, commentOverride } = options;
 
   const source = j(file.source);
 
@@ -33,6 +33,7 @@ export default function transformer(
       element,
       propName,
       propValue,
+      commentOverride,
     });
   });
 
