@@ -1,16 +1,11 @@
 import React from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
 
 import { Context, jest as localJest } from '@leafygreen-ui/testing-lib';
 
+import { TOOLTIP_VISIBLE_DURATION } from './constants';
 import Copyable from '.';
 
 describe('packages/copyable', () => {
@@ -113,14 +108,13 @@ describe('packages/copyable', () => {
             },
           );
 
-          await waitFor(() => expect(getByText('Copied!')).toBeVisible());
+          const tooltip = getByText('Copied!');
 
-          // Tooltip should remain visible for a while
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          expect(getByText('Copied!')).toBeVisible();
-
-          // Tooltip should eventually disappear
-          await waitForElementToBeRemoved(() => queryByText('Copied!'));
+          await waitFor(() => expect(tooltip).toBeVisible());
+          await new Promise(resolve =>
+            setTimeout(resolve, TOOLTIP_VISIBLE_DURATION),
+          );
+          await waitFor(() => expect(tooltip).not.toBeVisible());
         },
       );
     });
