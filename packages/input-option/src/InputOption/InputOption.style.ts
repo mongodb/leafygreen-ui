@@ -113,8 +113,10 @@ export const getInputOptionWedge = ({
 
     ${highlighted &&
     css`
-      transform: scaleY(1) translateY(-50%);
-      background-color: ${palette.blue.base};
+      &:focus-visible {
+        transform: scaleY(1) translateY(-50%);
+        background-color: ${palette.blue.base};
+      }
     `}
 
     ${disabled &&
