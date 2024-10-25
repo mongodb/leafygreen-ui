@@ -2,9 +2,9 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { makeLineData } from './utils';
 import { Chart } from './Chart';
 import { Line } from './Line';
+import { makeLineData } from './utils';
 
 export default {
   title: 'Charts/Core',
@@ -22,10 +22,10 @@ export default {
   },
 };
 
-const Template: StoryFn = props => {
+const Template: StoryFn<typeof Chart> = props => {
   return (
     <Chart {...props}>
-      {props.data.map(({ name, data }) => (
+      {makeLineData(10).map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
     </Chart>
@@ -33,6 +33,4 @@ const Template: StoryFn = props => {
 };
 
 export const LiveExample: StoryFn = Template.bind({});
-LiveExample.args = {
-  data: makeLineData(10),
-};
+LiveExample.args = {};

@@ -63,7 +63,7 @@ Chart container component.
 
 ### `Line`
 
-Component that takes in data points and renders a single line the chart.
+Component that takes in data points and renders a single line on the chart.
 
 #### Props
 
