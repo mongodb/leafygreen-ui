@@ -205,19 +205,3 @@ export type PopoverProviderProps = {
   popoverZIndex?: number;
 } & PopoverRenderModeProps &
   TransitionLifecycleCallbacks;
-
-/** TODO: https://jira.mongodb.org/browse/LG-4475 */
-interface DeprecatedPopoverState {
-  /**
-   * Whether the most immediate popover ancestor is open
-   */
-  isPopoverOpen: boolean;
-
-  /**
-   * Sets the internal state
-   * @internal
-   */
-  setIsPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export type PopoverContextType = PopoverProviderProps & DeprecatedPopoverState;
