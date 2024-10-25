@@ -8,14 +8,14 @@ const Child = (props: any) => {
   return <p>Testing {props.children}</p>;
 };
 
-export const App = () => {
+export const App = (propToRemove?: string) => {
   const props = {
     randomProp: 'value',
   };
 
   const Test = () => {
     return (
-      /* Please update manually */
+      /* Please manually update from prop: propToRemove to prop: propToUpdate */
       <MyComponent propToRemove="value2" {...props} />
     );
   };
@@ -23,7 +23,7 @@ export const App = () => {
   const TestTwo = () => {
     return (
       <>
-        {/* Please update manually */}
+        {/* Please manually update from prop: propToRemove to prop: propToUpdate */}
         <MyComponent propToRemove="value2" {...props} />
       </>
     );
@@ -39,10 +39,12 @@ export const App = () => {
       </MyComponent>
       <MyComponent propToUpdate="value3" />
       <MyComponent propToUpdate="value3" />
-      {/* Please update manually */}
+      {/* Please manually update from prop: propToRemove to prop: propToUpdate */}
       <MyComponent propToRemove="value2" {...props} />
       <MyComponent propToUpdate="value3" {...props} />
       <MyComponent />
+      {/* Please manually update from prop: propToRemove to prop: propToUpdate */}
+      <MyComponent propToRemove={propToRemove} />
       <Test />
       <TestTwo />
     </>
