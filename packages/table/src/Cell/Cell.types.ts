@@ -58,3 +58,16 @@ export interface CellComponentType {
       >
     | undefined;
 }
+
+export interface InternalCellComponentType {
+  <T extends LGRowData>(
+    props: InternalCellWithRTProps<T>,
+    ref: ForwardedRef<HTMLTableCellElement>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?:
+    | WeakValidationMap<
+        PropsWithoutRef<InternalCellWithRTProps<LGRowData> & RefAttributes<any>>
+      >
+    | undefined;
+}

@@ -1,13 +1,16 @@
-import React, { PropsWithChildren } from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 
 import { HeaderRowProps } from './HeaderRow.types';
 
-const HeaderRow = ({
-  children,
-  ...rest
-}: PropsWithChildren<HeaderRowProps>) => {
-  return <tr {...rest}>{children}</tr>;
-};
+const HeaderRow = forwardRef<HTMLTableRowElement, HeaderRowProps>(
+  ({ children, ...rest }: PropsWithChildren<HeaderRowProps>, fwdRef) => {
+    return (
+      <tr ref={fwdRef} {...rest}>
+        {children}
+      </tr>
+    );
+  },
+);
 
 HeaderRow.displayName = 'HeaderRow';
 

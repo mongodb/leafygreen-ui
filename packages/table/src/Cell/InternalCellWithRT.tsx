@@ -8,7 +8,10 @@ import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
-import { CellComponentType, InternalCellWithRTProps } from './Cell.types';
+import {
+  InternalCellComponentType,
+  InternalCellWithRTProps,
+} from './Cell.types';
 import InternalCell from './InternalCell';
 
 const InternalCellWithRTForwardRef = <T extends LGRowData>(
@@ -55,10 +58,9 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
   );
 };
 
-// FIXME: Try to avoid asserting
 export const InternalCellWithRT = React.forwardRef(
   InternalCellWithRTForwardRef,
-) as CellComponentType;
+) as InternalCellComponentType;
 
 InternalCellWithRT.displayName = 'InternalCellWithRT';
 

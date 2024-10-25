@@ -1,10 +1,10 @@
 /**
- *
+ * Copied from https://github.com/gregberge/react-merge-refs
  * @param refs
  * @returns
  */
 
-export default function mergeRefs<T = any>(
+export default function useMergeRefs<T = any>(
   refs: Array<
     React.MutableRefObject<T> | React.LegacyRef<T> | undefined | null
   >,

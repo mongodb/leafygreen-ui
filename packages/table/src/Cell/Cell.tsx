@@ -2,11 +2,12 @@ import React, { ForwardedRef } from 'react';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
+import { CellComponentType } from './Cell.types';
 import InternalCellWithoutRT from './InternalCellWithoutRT';
 import InternalCellWithRT from './InternalCellWithRT';
 import { CellProps } from '.';
 
-const Cell = <T extends LGRowData>(
+const CellWithForwardRef = <T extends LGRowData>(
   { children, cell, ...rest }: CellProps<T>,
   ref: ForwardedRef<HTMLTableCellElement>,
 ) => {
@@ -26,6 +27,8 @@ const Cell = <T extends LGRowData>(
     </>
   );
 };
+
+export const Cell = React.forwardRef(CellWithForwardRef) as CellComponentType;
 
 Cell.displayName = 'Cell';
 

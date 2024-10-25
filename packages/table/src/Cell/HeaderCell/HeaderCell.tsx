@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ForwardedRef, PropsWithChildren } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -13,7 +13,12 @@ import {
   getHeaderCellWidthStyles,
   headerCellContentStyles,
 } from './HeaderCell.styles';
-import { HeaderCellProps, SortState, SortStates } from './HeaderCell.types';
+import {
+  HeaderCellComponentType,
+  HeaderCellProps,
+  SortState,
+  SortStates,
+} from './HeaderCell.types';
 
 const HeaderSortState: SortStates = {
   false: SortState.Off,
@@ -24,14 +29,17 @@ const HeaderSortState: SortStates = {
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.
  */
-const HeaderCell = <T extends LGRowData>({
-  children,
-  className,
-  cellIndex,
-  header,
-  align,
-  ...rest
-}: PropsWithChildren<HeaderCellProps<T>>) => {
+const HeaderCellWithRef = <T extends LGRowData>(
+  {
+    children,
+    className,
+    cellIndex,
+    header,
+    align,
+    ...rest
+  }: PropsWithChildren<HeaderCellProps<T>>,
+  ref: ForwardedRef<HTMLTableCellElement>,
+) => {
   const { isSelectable } = useTableContext();
 
   let columnName, sortState, onSortIconClick;
@@ -56,6 +64,7 @@ const HeaderCell = <T extends LGRowData>({
         className,
       )}
       scope="col"
+      ref={ref}
       {...rest}
     >
       <div
@@ -80,5 +89,9 @@ const HeaderCell = <T extends LGRowData>({
     </th>
   );
 };
+
+export const HeaderCell = React.forwardRef(
+  HeaderCellWithRef,
+) as HeaderCellComponentType;
 
 export default HeaderCell;
