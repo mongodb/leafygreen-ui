@@ -5,7 +5,6 @@ import { axe } from 'jest-axe';
 
 import { Context, jest as localJest } from '@leafygreen-ui/testing-lib';
 
-import { TOOLTIP_VISIBLE_DURATION } from './constants';
 import Copyable from '.';
 
 describe('packages/copyable', () => {
@@ -111,10 +110,9 @@ describe('packages/copyable', () => {
           const tooltip = getByText('Copied!');
 
           await waitFor(() => expect(tooltip).toBeVisible());
-          await new Promise(resolve =>
-            setTimeout(resolve, TOOLTIP_VISIBLE_DURATION),
-          );
-          await waitFor(() => expect(tooltip).not.toBeVisible());
+          await waitFor(() => expect(tooltip).not.toBeVisible(), {
+            timeout: 2000,
+          });
         },
       );
     });
