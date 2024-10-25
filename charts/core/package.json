@@ -27,7 +27,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.0.3",
+    "@faker-js/faker": "8.0.2",
     "@types/lodash.debounce": "^4.0.9",
     "@types/lodash.merge": "^4.6.9"
   },
