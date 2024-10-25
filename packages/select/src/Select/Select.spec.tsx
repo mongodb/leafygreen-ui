@@ -10,9 +10,8 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-// TODO: https://jira.mongodb.org/browse/LG-4474
 import * as LeafyGreenProviderModule from '@leafygreen-ui/leafygreen-provider';
-import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
+import { ModalPopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
@@ -1119,15 +1118,15 @@ describe('packages/select', () => {
 
     test('calls `setIsPopoverOpen`', async () => {
       jest
-        .spyOn(LeafyGreenProviderModule, 'usePopoverContext')
+        .spyOn(LeafyGreenProviderModule, 'useModalPopoverContext')
         .mockImplementation(() => ({
           isPopoverOpen: false,
           setIsPopoverOpen: mockSetIsPopoverOpen,
         }));
       render(
-        <PopoverProvider>
+        <ModalPopoverProvider>
           <Select {...defaultProps} />
-        </PopoverProvider>,
+        </ModalPopoverProvider>,
       );
 
       const { getInput } = getTestUtils();
@@ -1144,15 +1143,15 @@ describe('packages/select', () => {
 
     test(`calls setIsPopoverOpen when renderMode="${RenderMode.Inline}"`, async () => {
       jest
-        .spyOn(LeafyGreenProviderModule, 'usePopoverContext')
+        .spyOn(LeafyGreenProviderModule, 'useModalPopoverContext')
         .mockImplementation(() => ({
           isPopoverOpen: false,
           setIsPopoverOpen: mockSetIsPopoverOpen,
         }));
       render(
-        <PopoverProvider>
+        <ModalPopoverProvider>
           <Select {...defaultProps} renderMode={RenderMode.Inline} />
-        </PopoverProvider>,
+        </ModalPopoverProvider>,
       );
 
       const { getInput } = getTestUtils();
