@@ -22,16 +22,17 @@ export default {
   },
 };
 
-const Template: StoryFn<typeof Chart> = props => {
-  const data = makeLineData(10);
+const Template: StoryFn = props => {
   return (
     <Chart {...props}>
-      {data.map(({ name, data }) => (
+      {props.data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
     </Chart>
   );
 };
 
-export const LiveExample: StoryFn<typeof Chart> = Template.bind({});
-LiveExample.args = {};
+export const LiveExample: StoryFn = Template.bind({});
+LiveExample.args = {
+  data: makeLineData(10),
+};
