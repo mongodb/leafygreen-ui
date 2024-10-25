@@ -15,14 +15,14 @@ export const ModalPopoverContext = createContext<ModalPopoverContextType>({
 });
 
 /**
- * Access the modal popover context
+ * Access the modal popover context to read or write if a popover element is open in a modal
  */
 export const useModalPopoverContext = (): ModalPopoverContextType => {
   return useContext(ModalPopoverContext);
 };
 
 /**
- * Creates a Modal Popover context.
+ * Creates a Modal Popover context
  * Call `useModalPopoverContext` to access the popover state
  */
 export const ModalPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
