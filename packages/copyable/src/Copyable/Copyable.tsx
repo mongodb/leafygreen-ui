@@ -23,6 +23,7 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { TOOLTIP_VISIBLE_DURATION } from './constants';
 import {
   buttonContainerStyle,
   buttonStyle,
@@ -101,7 +102,7 @@ export default function Copyable({
     if (copied) {
       const timeoutId = setTimeout(() => {
         setCopied(false);
-      }, 1500);
+      }, TOOLTIP_VISIBLE_DURATION);
 
       return () => clearTimeout(timeoutId);
     }
