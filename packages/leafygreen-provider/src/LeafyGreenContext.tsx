@@ -6,6 +6,11 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import { RenderMode } from './PopoverContext/PopoverContext.types';
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import {
+  MigrationContextType,
+  MigrationProvider,
+  useMigrationContext,
+} from './MigrationContext';
+import {
   PopoverProvider,
   PopoverProviderProps,
   usePopoverContext,
@@ -27,13 +32,15 @@ export type LeafyGreenProviderProps = {
    */
   popoverPortalContainer?: PopoverPortalContainerType;
 } & TypographyProviderProps &
-  DarkModeProps;
+  DarkModeProps &
+  MigrationContextType;
 
 function LeafyGreenProvider({
   children,
   baseFontSize: fontSizeProp,
   popoverPortalContainer: popoverPortalContainerProp,
   darkMode: darkModeProp,
+  forceUseTopLayer: forceUseTopLayerProp = false,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
   /**
    * If `darkMode` prop is provided, use that. Otherwise, use context value
@@ -52,6 +59,13 @@ function LeafyGreenProvider({
    */
   const inheritedFontSize = useBaseFontSize();
   const baseFontSize = fontSizeProp ?? inheritedFontSize;
+
+  /**
+   * If `forceUseTopLayerProp` is true, it will globally apply to all children
+   */
+  const migrationContext = useMigrationContext();
+  const forceUseTopLayer =
+    forceUseTopLayerProp || migrationContext.forceUseTopLayer;
 
   /**
    * If `popoverPortalContainer` prop is provided, use that. Otherwise, use context value
@@ -79,9 +93,11 @@ function LeafyGreenProvider({
           contextDarkMode={darkModeState}
           setDarkMode={setDarkMode}
         >
-          <PopoverProvider {...popoverProviderProps}>
-            {children}
-          </PopoverProvider>
+          <MigrationProvider forceUseTopLayer={forceUseTopLayer}>
+            <PopoverProvider {...popoverProviderProps}>
+              {children}
+            </PopoverProvider>
+          </MigrationProvider>
         </DarkModeProvider>
       </TypographyProvider>
     </UsingKeyboardProvider>
