@@ -1,5 +1,7 @@
 # Core Chart Components
 
+Library of composable charting components that provides a way to create interactive charts rendered on canvas.
+
 ![npm (scoped)](https://img.shields.io/npm/v/@lg-charts/core.svg)
 
 ## Installation
@@ -23,7 +25,7 @@ import { Chart, Line } from '@lg-charts/core';
 
 <Chart>
   <Line
-    name="My Series"
+    name="Series 1"
     data={[
       [new Date(2020, 01, 01), 0],
       [new Date(2020, 01, 02), 1],
@@ -32,12 +34,24 @@ import { Chart, Line } from '@lg-charts/core';
       [new Date(2020, 01, 05), 4],
     ]}
   />
+  <Line
+    name="Series 2"
+    data={[
+      [new Date(2020, 01, 01), 4],
+      [new Date(2020, 01, 02), 3],
+      [new Date(2020, 01, 03), 2],
+      [new Date(2020, 01, 04), 1],
+      [new Date(2020, 01, 05), 0],
+    ]}
+  />
 </Chart>;
 ```
 
-## Exports
+## Parent Components
 
 ### `Chart`
+
+Chart container component.
 
 #### Props
 
@@ -45,7 +59,11 @@ import { Chart, Line } from '@lg-charts/core';
 | -------------- | ------------------------------------------------------- | ---------- | ------- |
 | `onChartReady` | Callback to be called when chart is finished rendering. | () => void |         |
 
+## Child Components
+
 ### `Line`
+
+Component that takes in data points and renders a single line the chart.
 
 #### Props
 
