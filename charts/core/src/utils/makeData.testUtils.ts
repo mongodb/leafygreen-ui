@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
-
-import { Series } from '../LineChart.types';
+import { SeriesOption } from '../Chart';
 
 // Seed the faker random number generator for consistent results
 faker.seed(123);
@@ -9,11 +8,11 @@ function getRandomNumber(min: number, max: number) {
   return faker.number.int({ min, max });
 }
 
-export function makeData(numOfSets: number): Array<Series> {
-  const data: Array<Series> = [];
+export function makeData(numOfSets: number): Array<SeriesOption> {
+  const data: Array<SeriesOption> = [];
 
   for (let i = 0; i < numOfSets; i++) {
-    const series: Series = {
+    const series: SeriesOption = {
       name: `Series ${i}`,
       data: [],
     };
