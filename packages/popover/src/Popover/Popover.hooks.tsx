@@ -4,7 +4,10 @@ import {
   useIsomorphicLayoutEffect,
   useObjectDependency,
 } from '@leafygreen-ui/hooks';
-import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
+import {
+  useMigrationContext,
+  usePopoverContext,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import { getElementDocumentPosition } from '../utils/positionUtils';
 
@@ -48,9 +51,11 @@ export function usePopoverContextProps({
     | 'refEl'
   >
 >) {
+  const { forceUseTopLayer } = useMigrationContext();
   const context = usePopoverContext();
-  const renderMode =
-    renderModeProp || context.renderMode || RenderMode.TopLayer;
+  const renderMode = forceUseTopLayer
+    ? RenderMode.TopLayer
+    : renderModeProp || context.renderMode || RenderMode.TopLayer;
   const usePortal = renderMode === RenderMode.Portal;
   const popoverZIndex =
     renderMode === RenderMode.TopLayer
@@ -74,8 +79,6 @@ export function usePopoverContextProps({
     onExited: onExited || context.onExited,
     popoverZIndex,
     spacing: spacing || context.spacing,
-    isPopoverOpen: context.isPopoverOpen,
-    setIsPopoverOpen: context.setIsPopoverOpen,
     ...rest,
   };
 }
