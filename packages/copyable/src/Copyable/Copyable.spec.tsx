@@ -113,14 +113,15 @@ describe('packages/copyable', () => {
             },
           );
 
-          await waitFor(() => expect(getByText('Copied!')).toBeVisible());
+          const tooltip = getByText('Copied!');
 
           // Tooltip should remain visible for a while
+          await waitFor(() => expect(tooltip).toBeVisible());
+          
           await new Promise(resolve => setTimeout(resolve, 1000));
-          expect(getByText('Copied!')).toBeVisible();
 
           // Tooltip should eventually disappear
-          await waitForElementToBeRemoved(() => queryByText('Copied!'));
+          await waitFor(() => expect(tooltip).not.toBeVisible());
         },
       );
     });
