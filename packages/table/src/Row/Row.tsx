@@ -14,7 +14,7 @@ import { RowComponentType, RowProps } from './Row.types';
  * Renders the provided cells
  */
 
-const Row = <T extends LGRowData>(
+const RowWithRef = <T extends LGRowData>(
   { row, virtualRow, ...rest }: RowProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
 ) => {
@@ -44,20 +44,20 @@ const Row = <T extends LGRowData>(
   );
 };
 
-// export const RowWithRef: RowComponentType = React.forwardRef(Row);
+// export const Row: RowComponentType = React.forwardRef(Row);
 
 // // https://oida.dev/typescript-react-generic-forward-refs/#option-1%3A-type-assertion
 // // We can’t assign a generic type variable for RowForwardRef. It becomes unknown by default.
 // // This is a type assertion that restores the original function signature.
 // FIXME: Try to avoid asserting
-export const RowWithRef = React.forwardRef(Row) as RowComponentType;
+export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
-RowWithRef.propTypes = {
+Row.propTypes = {
   virtualRow: PropTypes.any,
   row: PropTypes.any,
   disabled: PropTypes.bool,
 };
 
-RowWithRef.displayName = 'Row';
+Row.displayName = 'Row';
 
-export default RowWithRef;
+export default Row;
