@@ -2,8 +2,9 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Chart, Line, Grid } from '.';
 import { makeLineData } from './utils';
+import { Chart, Grid, Line } from '.';
+import { LineProps } from './Line';
 
 export default {
   title: 'Charts/Core',
@@ -32,10 +33,7 @@ export default {
 };
 
 interface StoryChartProps {
-  data: Array<{
-    name: string;
-    data: Array<[Date, number]>;
-  }>;
+  data: Array<LineProps>;
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
 }
@@ -45,14 +43,14 @@ const Template: StoryFn<StoryChartProps> = props => {
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-      {props.data.map(({ name, data }) => (
+      {data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
     </Chart>
   );
 };
 
-export const LiveExample: StoryFn = Template.bind({});
+export const LiveExample: StoryFn<StoryChartProps> = Template.bind({});
 LiveExample.args = {
   data: makeLineData(10),
   horizontalGridLines: true,

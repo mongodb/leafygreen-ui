@@ -8,13 +8,13 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider/src/LeafyGreenContext';
 
 import { ChartProvider } from '../ChartContext';
 
 import { chartStyles, getWrapperStyles } from './Chart.styles';
 import { ChartProps } from './Chart.types';
 import { useChart } from './hooks';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider/src/LeafyGreenContext';
 
 export function Chart({
   children,
