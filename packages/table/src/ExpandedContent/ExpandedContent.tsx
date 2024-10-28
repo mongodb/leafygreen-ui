@@ -38,6 +38,7 @@ const ExpandedContentWithRef = <T extends RowData>(
       data-index={virtualRow ? virtualRow!.index : ''}
     >
       <td
+        //TODO: does not work with grid
         colSpan={row.getVisibleCells().length}
         className={cx(baseStyles)}
         data-lgid={LGIDS.cell}
