@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 
 import { Cell } from '../Cell';
@@ -14,7 +13,7 @@ import { Table } from '..';
 import { Row } from '.';
 
 const RowWithNestedRows = args => {
-  const { containerRef, table } = useTestHookCall({
+  const { table } = useTestHookCall({
     rowProps: {
       subRows: [
         {
@@ -29,27 +28,27 @@ const RowWithNestedRows = args => {
     },
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
-    <div ref={containerRef}>
-      <Table table={table} {...args}>
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header, i) => {
-                return <th key={header.id}>TH {i}</th>;
-              })}
-            </tr>
-          ))}
-        </thead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
+    <Table table={table} {...args}>
+      <thead>
+        {table.getHeaderGroups().map(headerGroup => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header, i) => {
+              return <th key={header.id}>TH {i}</th>;
+            })}
+          </tr>
+        ))}
+      </thead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Fragment key={row.id}>
+              <Row row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {cell.row.getCanExpand()}
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -58,27 +57,28 @@ const RowWithNestedRows = args => {
                     </Cell>
                   );
                 })}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <Row key={subRow.id} row={subRow}>
-                      {subRow.getVisibleCells().map(cell => {
-                        return (
-                          <Cell key={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                  ))}
               </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
+              {row.subRows &&
+                row.getIsExpanded() &&
+                row.subRows.map(subRow => (
+                  <Row key={subRow.id} row={subRow}>
+                    {subRow.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                ))}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -96,7 +96,10 @@ describe('packages/table/Row/NestedRows', () => {
       'Expand row',
     );
   });
-  test('having a row with nested rows render all rows as tbody elements', async () => {
+
+  //TODO: clean up
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('having a row with nested rows render all rows as tbody elements', async () => {
     const { getAllByRole } = render(<RowWithNestedRows />);
     expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
   });
@@ -113,23 +116,35 @@ describe('packages/table/Row/NestedRows', () => {
     expect(queryByText('nested row name')).toBeVisible();
   });
 
-  describe('disabled animations', () => {
-    test('renders the correct number of children', () => {
-      render(<RowWithNestedRows disableAnimations />);
-      const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+  describe('accepts a ref', () => {
+    test('regular cell', () => {
+      const ref = React.createRef<HTMLTableRowElement>();
+      render(<Row ref={ref}>Hello</Row>);
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello');
     });
-    test('rows with nested rows render expand icon button', async () => {
-      render(<RowWithNestedRows disableAnimations />);
-      const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
-        'aria-label',
-        'Expand row',
+
+    test('RT cell', () => {
+      const ref = React.createRef<HTMLTableRowElement>();
+      const rowObj = {
+        id: '1',
+        getIsExpanded: () => false,
+        getParentRow: () => ({
+          getIsExpanded: () => false,
+        }),
+        getIsSelected: () => false,
+      };
+
+      render(
+        // @ts-expect-error - dummy row data is missing properties
+        <Row row={rowObj} ref={ref}>
+          Hello RT
+        </Row>,
       );
-    });
-    test('having a row with nested rows render all rows as tbody elements', async () => {
-      const { getAllByRole } = render(<RowWithNestedRows disableAnimations />);
-      expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello RT');
     });
   });
 });

@@ -38,7 +38,7 @@ const Row = <T extends LGRowData>(
           {...rest}
         />
       ) : (
-        <InternalRowWithoutRT {...rest} />
+        <InternalRowWithoutRT ref={ref} {...rest} />
       )}
     </>
   );
