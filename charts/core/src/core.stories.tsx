@@ -2,8 +2,7 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Chart } from './Chart';
-import { Line } from './Line';
+import { Chart, Line, Grid } from '.';
 import { makeLineData } from './utils';
 
 export default {
@@ -25,6 +24,7 @@ export default {
 const Template: StoryFn<typeof Chart> = props => {
   return (
     <Chart {...props}>
+      <Grid vertical={false} />
       {makeLineData(10).map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
