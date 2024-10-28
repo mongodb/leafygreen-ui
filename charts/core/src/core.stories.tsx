@@ -15,17 +15,37 @@ export default {
         type: 'object',
       },
     },
+    verticalGridLines: {
+      control: {
+        type: 'boolean',
+      },
+    },
+    horizontalGridLines: {
+      control: {
+        type: 'boolean',
+      },
+    },
   },
   decorator: (Instance, context) => {
     return <Instance darkMode={context?.args.darkMode} />;
   },
 };
 
-const Template: StoryFn<typeof Chart> = props => {
+interface StoryChartProps {
+  data: Array<{
+    name: string;
+    data: Array<[Date, number]>;
+  }>;
+  verticalGridLines: boolean;
+  horizontalGridLines: boolean;
+}
+
+const Template: StoryFn<StoryChartProps> = props => {
+  const { data, verticalGridLines, horizontalGridLines } = props;
   return (
     <Chart {...props}>
-      <Grid vertical={false} />
-      {makeLineData(10).map(({ name, data }) => (
+      <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+      {props.data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
     </Chart>
@@ -33,4 +53,8 @@ const Template: StoryFn<typeof Chart> = props => {
 };
 
 export const LiveExample: StoryFn = Template.bind({});
-LiveExample.args = {};
+LiveExample.args = {
+  data: makeLineData(10),
+  horizontalGridLines: true,
+  verticalGridLines: false,
+};

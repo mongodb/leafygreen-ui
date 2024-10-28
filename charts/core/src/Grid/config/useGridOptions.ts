@@ -13,24 +13,17 @@ export const useGridOptions = ({ horizontal, vertical }: GridProps) => {
   useEffect(() => {
     setOptions(prevOptions => {
       const updatedOptions = { ...prevOptions };
-      const updatedLineOptions = {
+      const getUpdatedLineOptions = (show: boolean) => ({
         splitLine: {
-          show: true,
+          show: show,
           lineStyle: {
             color:
               color[theme].border[Variant.Secondary][InteractionState.Default],
           },
         },
-      };
-
-      if (vertical) {
-        updatedOptions.xAxis = updatedLineOptions;
-      }
-
-      if (horizontal) {
-        updatedOptions.yAxis = updatedLineOptions;
-      }
-
+      });
+      updatedOptions.xAxis = getUpdatedLineOptions(!!vertical);
+      updatedOptions.yAxis = getUpdatedLineOptions(!!horizontal);
       return updatedOptions;
     });
   }, [horizontal, vertical, theme]);
