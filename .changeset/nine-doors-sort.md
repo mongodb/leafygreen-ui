@@ -1,6 +1,6 @@
 ---
-'@leafygreen-ui/input-option': minor
-'@leafygreen-ui/menu': minor
+'@leafygreen-ui/menu': major
+'@leafygreen-ui/split-button': major
 ---
 
-[LG-4630](https://jira.mongodb.org/browse/LG-4630): Apply focus styles on highlighted menu items when `:focus-visible`4
+[LG-4630](https://jira.mongodb.org/browse/LG-4630): Apply highlight to first menu item only when opened with keyboard
