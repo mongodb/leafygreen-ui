@@ -20,7 +20,7 @@ const CellWithForwardRef = <T extends LGRowData>(
       )}
 
       {cell && (
-        <InternalCellWithRT {...rest} cell={cell}>
+        <InternalCellWithRT ref={ref} {...rest} cell={cell}>
           {children}
         </InternalCellWithRT>
       )}
