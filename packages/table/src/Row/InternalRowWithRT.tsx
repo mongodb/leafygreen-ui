@@ -38,6 +38,7 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
 ) => {
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
+  //TODO: move this to Row
   const contextValues = useMemo(() => {
     return {
       disabled,
