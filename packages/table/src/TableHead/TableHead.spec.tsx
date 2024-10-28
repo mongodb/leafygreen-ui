@@ -36,8 +36,17 @@ describe('packages/table/TableHead', () => {
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
+
+    test('accepts a ref', () => {
+      const ref = React.createRef<HTMLTableSectionElement>();
+      render(<TableHead ref={ref}>Hello</TableHead>);
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello');
+    });
   });
 
+  // TODO: chromatic test
   describe('isSticky prop', () => {
     // this is not supported by jsdom. need cypress or puppeteer
     // eslint-disable-next-line jest/no-disabled-tests
