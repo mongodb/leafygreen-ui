@@ -60,16 +60,13 @@ const headerCellTestData: Array<Partial<Person>> = [
 ];
 
 const TestSortableHeaderCell = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const table = useLeafyGreenTable({
-    containerRef,
     columns: headerCellTestColumns,
     data: headerCellTestData,
   });
 
   return (
-    <div ref={containerRef}>
+    <div>
       <table>
         <thead>
           <tr>
@@ -95,7 +92,6 @@ const useMockTestHeaderData = (
 ): Header<LGTableDataType<any>, unknown> => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const table = useLeafyGreenTable({
-    containerRef: React.createRef<HTMLDivElement>(),
     data: [],
     columns: [columnDef],
   });
@@ -193,5 +189,13 @@ describe('packages/table/HeaderCell', () => {
     );
     const headerCell = getByTestId('lg-header-cell-test');
     expect(getComputedStyle(headerCell).width).toBe('700px');
+  });
+
+  test('Accepts a ref', () => {
+    const ref = React.createRef<HTMLTableCellElement>();
+    render(<HeaderCell ref={ref}>Hello</HeaderCell>);
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
   });
 });
