@@ -2,9 +2,9 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { LineProps } from './Line';
 import { makeLineData } from './utils';
 import { Chart, Grid, Line } from '.';
-import { LineProps } from './Line';
 
 export default {
   title: 'Charts/Core',
