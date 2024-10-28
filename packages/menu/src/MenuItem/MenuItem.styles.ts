@@ -77,6 +77,8 @@ export const getMenuItemStyles = ({
 
       // Highlighted
       [css`
+        &,
+        &:hover,
         &:focus-visible {
           background-color: ${menuColor[theme].background.focus};
 
@@ -246,6 +248,8 @@ export const getDarkInLightModeMenuItemStyles = ({
 
       // Highlighted
       [css`
+        &,
+        &:hover,
         &:focus-visible {
           background-color: ${color.dark.background.primary.focus};
 
