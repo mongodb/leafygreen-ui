@@ -75,6 +75,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);
+  const keyboardUsedRef = useRef<boolean>(false);
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
 
@@ -84,6 +85,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const open = controlledOpen ?? uncontrolledOpen;
   const handleClose = useCallback(() => {
     if (shouldClose()) {
+      keyboardUsedRef.current = false;
       setOpen(false);
     }
   }, [setOpen, shouldClose]);
@@ -116,7 +118,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
-    moveHighlight('first');
+    if (keyboardUsedRef.current) {
+      moveHighlight('first');
+    }
   };
 
   // Fired on global keyDown event
@@ -241,9 +245,16 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       event?.nativeEvent?.stopPropagation?.();
     };
 
+    const triggerKeyDownHandler = (event?: React.KeyboardEvent) => {
+      if (event?.key === keyMap.Enter || event?.key === keyMap.Space) {
+        keyboardUsedRef.current = true;
+      }
+    };
+
     if (typeof trigger === 'function') {
       return trigger({
         onClick: triggerClickHandler,
+        onKeyDown: triggerKeyDownHandler,
         ref: triggerRef,
         children: popoverContent,
         ['aria-expanded']: open,
@@ -254,6 +265,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: triggerClickHandler,
+      onKeyDown: triggerKeyDownHandler,
       children: (
         <>
           {trigger.props.children}

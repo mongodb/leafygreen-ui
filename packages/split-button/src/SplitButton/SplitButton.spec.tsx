@@ -64,8 +64,14 @@ function renderSplitButton(props = {}) {
   /**
    * Opens the menu, and manually fires transition events
    */
-  async function openMenu() {
-    userEvent.click(menuTrigger);
+  async function openMenu(options?: { withKeyboard: boolean }) {
+    if (options?.withKeyboard) {
+      menuTrigger.focus();
+      userEvent.keyboard('{enter}');
+    } else {
+      userEvent.click(menuTrigger);
+    }
+
     const menuElements = await findMenuElements();
     fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
     return menuElements;
@@ -291,7 +297,9 @@ describe('packages/split-button', () => {
         const { openMenu } = renderSplitButton({
           menuItems,
         });
-        const { menuItemElements } = await openMenu();
+        const { menuItemElements } = await openMenu({
+          withKeyboard: true,
+        });
         expect(menuItemElements[0]).toHaveFocus();
 
         userEvent.type(menuItemElements?.[0]!, `{${key}}`);
