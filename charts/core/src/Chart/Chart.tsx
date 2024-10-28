@@ -14,6 +14,7 @@ import { ChartProvider } from '../ChartContext';
 import { chartStyles, getWrapperStyles } from './Chart.styles';
 import { ChartProps } from './Chart.types';
 import { useChart } from './hooks';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider/src/LeafyGreenContext';
 
 export function Chart({
   children,
@@ -35,22 +36,23 @@ export function Chart({
   const { theme } = useDarkMode(darkModeProp);
 
   return (
-    <ChartProvider
-      chartOptions={chartOptions}
-      updateChartOptions={updateChartOptions}
-      addChartSeries={addChartSeries}
-      removeChartSeries={removeChartSeries}
-      darkMode={darkModeProp}
-    >
-      <div className={cx(getWrapperStyles(theme), className)} {...rest}>
-        {children}
-        <div
-          ref={chartRef}
-          className={`echart ${chartStyles}`}
-          data-testid="echart"
-        />
-      </div>
-    </ChartProvider>
+    <LeafyGreenProvider darkMode={darkModeProp}>
+      <ChartProvider
+        chartOptions={chartOptions}
+        updateChartOptions={updateChartOptions}
+        addChartSeries={addChartSeries}
+        removeChartSeries={removeChartSeries}
+      >
+        <div className={cx(getWrapperStyles(theme), className)} {...rest}>
+          {children}
+          <div
+            ref={chartRef}
+            className={`echart ${chartStyles}`}
+            data-testid="echart"
+          />
+        </div>
+      </ChartProvider>
+    </LeafyGreenProvider>
   );
 }
 

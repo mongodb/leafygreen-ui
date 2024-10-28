@@ -1,2 +1,1 @@
-export { ChartProvider } from './ChartProvider';
-export { useChartContext } from './useChartContext';
+export { useChartContext, ChartProvider } from './ChartContext';
