@@ -98,17 +98,15 @@ describe('packages/table/Row/ExpandableContent', () => {
   test('Accepts a ref', () => {
     const ref = React.createRef<HTMLTableRowElement>();
 
-    const ExpandedContentComponent = () => {
-      return <div>Hello</div>;
-    };
-
     const rowObj = {
       id: '1',
       getVisibleCells: () => ({
         length: 1,
       }),
       original: {
-        renderExpandedContent: ExpandedContentComponent,
+        renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
+          return <>Hello</>;
+        },
       },
     };
     render(
