@@ -72,7 +72,6 @@ export function useChart({ theme, onChartReady }: ChartHookProps) {
   }, []);
 
   const updateChartRef = debounce((chartOptions: Partial<ChartOptions>) => {
-    console.log('Option Set');
     chartInstanceRef.current?.setOption(chartOptions);
   }, 50);
 
