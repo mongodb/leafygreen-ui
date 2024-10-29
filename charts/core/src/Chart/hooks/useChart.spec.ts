@@ -81,12 +81,14 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     const { result } = renderHook(() => useChart({ theme: 'dark' }));
     const options = {
       title: {
+        show: true,
         text: 'test',
       },
     };
     act(() => {
       result.current.updateChartOptions(options);
     });
+
     await waitForState(() => {
       expect(result.current.chartOptions.title).toEqual(options.title);
     });
