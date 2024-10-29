@@ -1,35 +1,7 @@
 ---
-'@leafygreen-ui/leafygreen-provider': major
+'@leafygreen-ui/leafygreen-provider': minor
 ---
 
-[LG-4446](https://jira.mongodb.org/browse/LG-4446): Consolidates popover-related contexts
+[LG-4446](https://jira.mongodb.org/browse/LG-4446): Adds `PopoverPropsContext` to pass props to a deeply nested popover element
 
-| Old | New |
-| - | - |
-| `PortalContext` | `PopoverContext` |
-| `PortalContextProvider` | `PopoverProvider` |
-| `usePopoverPortalContainer` (internal) | `usePopoverContext` (internal) |
-
-Additional changes include:
-- Adds `forceUseTopLayer` prop to forcibly set all LG popover elements to `renderMode="top-layer"`
-- [Internal] `PopoverContext` values for `isPopoverOpen` and `setIsPopoverOpen` have been migrated to the `ModalPopoverContext`
-
-#### Migration guide
-
-##### Old
-```js
-<PortalContextProvider
-  popover={{
-    portalContainer: yourPortalContainer,
-    scrollContainer: yourScrollContainer,
-  }}
->
-```
-
-##### New
-```js
-<PopoverProvider
-  portalContainer={yourPortalContainer}
-  scrollContainer={yourScrollContainer}
->
-```
+Additionally exposes a `forceUseTopLayer` prop in the `LeafyGreenProvider` which can be used to test interactions with all LG popover elements forcibly set to `renderMode="top-layer"`. This can help pressure test for any regressions to more confidently and safely migrate. However, this should only be used when all LG dependencies are relying on v12+ of `@leafygreen-ui/popover`.

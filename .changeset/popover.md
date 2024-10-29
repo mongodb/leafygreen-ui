@@ -9,7 +9,7 @@
   - When `renderMode="inline"`, the popover element will render inline in the DOM where it's written
   - When `renderMode="portal"`, the popover element will portal into a new div appended to the body. Alternatively, it can be portaled into a provided `portalContainer` element
 
-[LG-4446](https://jira.mongodb.org/browse/LG-4446): The `PopoverProvider` from the `@leafygreen-ui/leafygreen-provider` package can be used to pass props to a deeply nested popover element. It will read `PopoverContext` values if an explicit prop is not defined in the popover component instance. This applies for the following props:
+[LG-4446](https://jira.mongodb.org/browse/LG-4446): The `PopoverPropsProvider` from the `@leafygreen-ui/leafygreen-provider` package can be used to pass props to a deeply nested popover element. It will read `PopoverPropsContext` values if an explicit prop is not defined in the popover component instance. This applies for the following props:
   - `dismissMode`
   - `onEnter`
   - `onEntering`
@@ -52,7 +52,7 @@ Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/too
 ```
 
 ##### Globally render popover elements in top layer
-After running the codemod and addressing manual updates, the new `forceUseTopLayer` prop in the `LeafyGreenProvider` can be used in a consumer app to test interactions with all LG popover elements forcibly set to `renderMode="top-layer"`. This can help pressure test for any regressions to more confidently and safely migrate.
+After running the codemod and addressing manual updates, the new `forceUseTopLayer` prop in the `LeafyGreenProvider` can be used to test interactions with all LG popover elements forcibly set to `renderMode="top-layer"`. This can help pressure test for any regressions to more confidently and safely migrate.
 
 ```js
 import Combobox from '@leafygreen-ui/combobox';
