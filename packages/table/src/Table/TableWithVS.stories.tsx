@@ -683,7 +683,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         className={virtualScrollingContainerHeight}
         shouldTruncate={false}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {
