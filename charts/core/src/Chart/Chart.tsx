@@ -8,8 +8,9 @@
 import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider/src/LeafyGreenContext';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 
 import { ChartProvider } from '../ChartContext';
 
