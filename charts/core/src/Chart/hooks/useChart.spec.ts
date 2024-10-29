@@ -33,7 +33,7 @@ jest.mock('echarts/renderers', () => ({
 
 describe('@lg-echarts/core/hooks/useChart', () => {
   test('should return an object with the correct properties', () => {
-    const { result } = renderHook(() => useChart({}));
+    const { result } = renderHook(() => useChart({ theme: 'dark' }));
     expect(result.current).toEqual(
       expect.objectContaining({
         chartRef: expect.any(Object),
@@ -47,7 +47,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   });
 
   test('should properly update state on addChartSeries call', async () => {
-    const { result } = renderHook(() => useChart({}));
+    const { result } = renderHook(() => useChart({ theme: 'dark' }));
     const series: SeriesOption = {
       name: 'test',
       data: [1, 2, 3],
@@ -61,7 +61,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   });
 
   test('should properly update state on removeChartSeries call', async () => {
-    const { result } = renderHook(() => useChart({}));
+    const { result } = renderHook(() => useChart({ theme: 'dark' }));
     const series: SeriesOption = {
       name: 'test',
       data: [1, 2, 3],
@@ -78,7 +78,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   });
 
   test('should properly update state on updateChartOptions call', async () => {
-    const { result } = renderHook(() => useChart({}));
+    const { result } = renderHook(() => useChart({ theme: 'dark' }));
     const options = {
       title: {
         text: 'test',
