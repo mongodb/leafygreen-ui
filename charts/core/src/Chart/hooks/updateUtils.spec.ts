@@ -25,22 +25,30 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     expect(updatedOptions.series?.[0].name).toBe(seriesName2);
   });
 
-  test('should update the chart options', () => {
+  /**
+   * Tests that option updates don't overwrite the entire chart options object.
+   */
+  test('should merge chart options non-destructively', () => {
     const currentOptions: Partial<ChartOptions> = {
-      aria: {
+      xAxis: {
         show: true,
-      },
-      grid: {
-        show: false,
+        splitLine: {
+          show: true,
+        },
       },
     };
     const updatedOptions = updateOptions(currentOptions, {
+      xAxis: {
+        show: false, // This should only update the show property and not other properties
+      },
       grid: {
         show: true,
       },
     });
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<AriaOption>'.
-    expect(updatedOptions?.aria?.show).toBe(true);
+    expect(updatedOptions?.xAxis?.show).toBe(false);
+    // @ts-ignore: Property 'show' does not exist on type 'Arrayable<AriaOption>'.
+    expect(updatedOptions?.xAxis?.splitLine?.show).toBe(true);
     // @ts-ignore: Property 'show' does not exist on type 'Arrayable<GridOption>'.
     expect(updatedOptions?.grid?.show).toBe(true);
   });

@@ -1,1 +1,0 @@
-export { useXAxisOptions } from './useXAxisOption';

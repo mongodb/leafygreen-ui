@@ -4,8 +4,8 @@ export const XAxisType = {
   Time: 'time',
   Log: 'log',
 } as const;
-
 type XAxisType = (typeof XAxisType)[keyof typeof XAxisType];
+
 export interface XAxisProps {
   /**
    * Type of axis.

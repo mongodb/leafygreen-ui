@@ -1,9 +1,81 @@
 import { useEffect } from 'react';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
+import {
+  color,
+  fontFamilies,
+  fontWeights,
+  InteractionState,
+  spacing,
+  Variant,
+} from '@leafygreen-ui/tokens';
+
+import { ChartOptions } from '../Chart/Chart.types';
 import { useChartContext } from '../ChartContext';
 
-import { useXAxisOptions } from './config';
-import { XAxisProps } from './XAxis.types';
+import { XAxisProps, XAxisType } from './XAxis.types';
+
+const getOptions = ({
+  theme,
+  type,
+  label,
+  unit,
+}: XAxisProps & { theme: Theme }): Partial<ChartOptions> => {
+  const options: Partial<ChartOptions> = {
+    xAxis: {
+      type: type,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color:
+            color[theme].border[Variant.Secondary][InteractionState.Default],
+          width: 1,
+        },
+      },
+      axisLabel: {
+        show: true,
+        fontFamily: fontFamilies.default,
+        fontWeight: fontWeights.medium,
+        fontSize: 11,
+        lineHeight: spacing[400],
+        color: color[theme].text[Variant.Secondary][InteractionState.Default],
+        align: 'center',
+        margin: spacing[400],
+        formatter:
+          unit && type === XAxisType.Value
+            ? (value: string) => `${value}${unit}`
+            : undefined,
+      },
+      axisTick: {
+        show: false,
+      },
+      name: label,
+      nameLocation: 'middle',
+      nameTextStyle: {
+        fontFamily: fontFamilies.default,
+        fontWeight: fontWeights.medium,
+        fontSize: 11,
+        lineHeight: spacing[400],
+        padding: [spacing[200], 0, 0, 0],
+        color: color[theme].text[Variant.Secondary][InteractionState.Default],
+      },
+      nameGap: spacing[1000],
+    },
+  };
+
+  if (label) {
+    options.grid = {
+      bottom: spacing[1200], // Pushes out to make room for the label
+    };
+  } else {
+    options.grid = {
+      bottom: spacing[400], // Default bottom spacing
+    };
+  }
+
+  return options;
+};
 
 /**
  * React component that can render an x-axis on a parent chart.
@@ -19,13 +91,13 @@ import { XAxisProps } from './XAxis.types';
  *   />
  * </Chart>
  */
-export function XAxis(xAxisProps: XAxisProps) {
+export function XAxis({ type, label, unit }: XAxisProps) {
   const { updateChartOptions } = useChartContext();
-  const xAxisOptions = useXAxisOptions(xAxisProps);
+  const { theme } = useDarkMode();
 
   useEffect(() => {
-    updateChartOptions(xAxisOptions);
-  }, [xAxisOptions]);
+    updateChartOptions(getOptions({ type, label, unit, theme }));
+  }, [type, label, unit, theme, updateChartOptions]);
 
   return null;
 }

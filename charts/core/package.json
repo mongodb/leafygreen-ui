@@ -20,16 +20,14 @@
     "@leafygreen-ui/tokens": "^2.11.0",
     "@lg-tools/storybook-utils": "^0.1.1",
     "echarts": "^5.5.1",
-    "lodash.debounce": "^4.0.8",
-    "lodash.merge": "^4.6.2"
+    "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@types/lodash.debounce": "^4.0.9",
-    "@types/lodash.merge": "^4.6.9"
+    "@types/lodash.debounce": "^4.0.9"
   },
   "repository": {
     "type": "git",

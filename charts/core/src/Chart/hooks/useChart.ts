@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LineChart as EchartsLineChart } from 'echarts/charts';
 import {
   GridComponent,
@@ -71,35 +71,46 @@ export function useChart({ theme, onChartReady }: ChartHookProps) {
     };
   }, []);
 
-  const updateChartRef = debounce((chartOptions: Partial<ChartOptions>) => {
-    chartInstanceRef.current?.setOption(chartOptions);
-  }, 50);
+  const updateChartRef = useMemo(
+    () =>
+      debounce((chartOptions: Partial<ChartOptions>) => {
+        chartInstanceRef.current?.setOption(chartOptions);
+      }, 50),
+    [],
+  );
 
-  const addChartSeries = (data: SeriesOption) => {
-    setChartOptions(currentOptions => {
-      const updatedOptions = addSeries(currentOptions, data);
-      updateChartRef(updatedOptions);
-      return updatedOptions;
-    });
-  };
+  const addChartSeries = useCallback(
+    (data: SeriesOption) => {
+      setChartOptions(currentOptions => {
+        const updatedOptions = addSeries(currentOptions, data);
+        updateChartRef(updatedOptions);
+        return updatedOptions;
+      });
+    },
+    [updateChartRef],
+  );
 
-  const removeChartSeries = (name: string) => {
-    setChartOptions(currentOptions => {
-      const updatedOptions = removeSeries(currentOptions, name);
-      updateChartRef(updatedOptions);
-      return updatedOptions;
-    });
-  };
+  const removeChartSeries = useCallback(
+    (name: string) => {
+      setChartOptions(currentOptions => {
+        const updatedOptions = removeSeries(currentOptions, name);
+        updateChartRef(updatedOptions);
+        return updatedOptions;
+      });
+    },
+    [updateChartRef],
+  );
 
-  const updateChartOptions = (
-    options: Omit<Partial<ChartOptions>, 'series'>,
-  ) => {
-    setChartOptions(currentOptions => {
-      const updatedOptions = updateOptions(currentOptions, options);
-      updateChartRef(updatedOptions);
-      return updatedOptions;
-    });
-  };
+  const updateChartOptions = useCallback(
+    (options: Omit<Partial<ChartOptions>, 'series'>) => {
+      setChartOptions(currentOptions => {
+        const updatedOptions = updateOptions(currentOptions, options);
+        updateChartRef(updatedOptions);
+        return updatedOptions;
+      });
+    },
+    [updateChartRef],
+  );
 
   useEffect(() => {
     setChartOptions(currentOptions => {
