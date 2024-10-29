@@ -1,6 +1,6 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
-import { ChartContextType, ChartProviderProps } from './ChartContext.types';
+import { ChartContextType } from './ChartContext.types';
 
 export const ChartContext = createContext<ChartContextType | undefined>(
   undefined,
@@ -11,10 +11,16 @@ export const ChartProvider = ({
   chartOptions,
   updateChartOptions,
   addChartSeries,
-}: PropsWithChildren<ChartProviderProps>) => {
+  removeChartSeries,
+}: PropsWithChildren<ChartContextType>) => {
   return (
     <ChartContext.Provider
-      value={{ chartOptions, updateChartOptions, addChartSeries }}
+      value={{
+        chartOptions,
+        updateChartOptions,
+        addChartSeries,
+        removeChartSeries,
+      }}
     >
       {children}
     </ChartContext.Provider>

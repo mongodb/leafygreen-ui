@@ -7,11 +7,11 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ChartOptions } from '../Chart.types';
-import { colors } from '../colors';
+import { chartSeriesColors } from '../chartSeriesColors';
 
 const commonAxisOptions = {
   /**
-   * Axis need to be hidden explicitly to prevent error when rendering chart without Axis
+   * Axes need to be hidden explicitly to prevent error when rendering chart without Axis
    */
   splitLine: {
     show: false,
@@ -42,7 +42,7 @@ export const getDefaultChartOptions = (
     show: false, // Title is rendered in custom header instead
   },
 
-  color: colors[theme],
+  color: chartSeriesColors[theme],
 
   /**
    * Though there's a Grid component that will render the grid lines, this allows the box

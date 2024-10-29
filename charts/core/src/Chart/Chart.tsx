@@ -1,5 +1,6 @@
 /**
  * React wrapper for Apache Echarts.
+ * https://echarts.apache.org/en/option.html#title
  *
  * Wraps the Echarts library and provides a React-friendly API. It adds default options
  * and styling according to our design system's specs.
@@ -23,6 +24,7 @@ export function Chart({
   className,
   ...rest
 }: ChartProps) {
+  const { theme } = useDarkMode(darkModeProp);
   const {
     chartOptions,
     updateChartOptions,
@@ -30,10 +32,9 @@ export function Chart({
     removeChartSeries,
     chartRef,
   } = useChart({
-    darkMode: darkModeProp,
+    theme,
     onChartReady,
   });
-  const { theme } = useDarkMode(darkModeProp);
 
   return (
     <LeafyGreenProvider darkMode={darkModeProp}>

@@ -43,23 +43,3 @@ export const ChartActionType = {
   removeChartSeries: 'removeChartSeries',
   updateOptions: 'updateOptions',
 } as const;
-
-interface AddSeriesAction {
-  type: typeof ChartActionType.addChartSeries;
-  data: SeriesOption;
-}
-
-interface RemoveSeriesAction {
-  type: typeof ChartActionType.removeChartSeries;
-  name: string;
-}
-
-interface UpdateOptionsAction {
-  type: typeof ChartActionType.updateOptions;
-  options: Partial<Omit<ChartOptions, 'series'>>;
-}
-
-export type ChartAction =
-  | AddSeriesAction
-  | RemoveSeriesAction
-  | UpdateOptionsAction;

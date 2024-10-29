@@ -3,7 +3,7 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import { LineProps } from './Line';
-import { makeLineData } from './utils';
+import { makeLineData } from './testUtils';
 import { Chart, Grid, Line } from '.';
 
 export default {

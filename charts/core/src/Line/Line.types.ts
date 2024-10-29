@@ -1,3 +1,6 @@
+type XValue = string | number | Date;
+type YValue = string | number | Date;
+
 export interface LineProps {
   /**
    * Series name used for displaying in tooltip and filtering with the legend.
@@ -21,5 +24,5 @@ export interface LineProps {
    * }]
    * ```
    */
-  data: Array<[string | number | Date, string | number | Date]>;
+  data: Array<[XValue, YValue]>;
 }
