@@ -1,5 +1,9 @@
-import React from 'react';
-import { useReactTable } from '@tanstack/react-table';
+import React, { useState } from 'react';
+import {
+  ExpandedState,
+  getExpandedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -22,6 +26,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   allowSelectAll = true,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
+  const [expanded, setExpanded] = useState<ExpandedState>({});
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
    */
@@ -55,6 +60,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
 
   const table = useReactTable<LGTableDataType<T>>({
     state: {
+      expanded,
       ...rest.state,
     },
     data,
@@ -68,15 +74,39 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     getSubRows: row => row.subRows,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
+    onExpandedChange: setExpanded,
+    getExpandedRowModel: getExpandedRowModel(),
     ...rest,
   });
 
   const { rows } = table.getRowModel();
 
+  const rowsCopy = [...rows];
+
+  // A way to include expandableContent inside of the rows object.
+  // If a row has expandedContent and its expanded then add a new row below the row
+  for (let i = 0; i < rowsCopy.length; i++) {
+    if (
+      rowsCopy[i].original.renderExpandedContent &&
+      rowsCopy[i].getIsExpanded()
+    ) {
+      rowsCopy.splice(i + 1, 0, {
+        ...rowsCopy[i],
+        id: `${rowsCopy[i].id}-expandedContent`,
+        original: {
+          // TODO: move outside of original
+          ...rowsCopy[i].original,
+          isExpandedContent: true,
+        },
+      });
+      i++; // Increment index to skip the newly added item
+    }
+  }
+
   return {
     ...table,
     hasSelectableRows,
-    rows: rows,
+    rows: rowsCopy,
   } as LeafyGreenTable<T>;
 }
 
