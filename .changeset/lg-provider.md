@@ -12,7 +12,7 @@
 
 Additional changes include:
 - Adds `forceUseTopLayer` prop to forcibly set all LG popover elements to `renderMode="top-layer"`
-- [Internal] `PopoverContext` values for `isPopoverOpen` and `setIsPopoverOpen` have been migrated to the `ModalPopoverContext` in the `@leafygreen-ui/modal` package
+- [Internal] `PopoverContext` values for `isPopoverOpen` and `setIsPopoverOpen` have been migrated to the `ModalPopoverContext`
 
 #### Migration guide
 

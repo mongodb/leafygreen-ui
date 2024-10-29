@@ -2,14 +2,14 @@
 '@leafygreen-ui/popover': major
 ---
 
-[LG-4445](https://jira.mongodb.org/browse/LG-4445): Replaces `usePortal` prop with `renderMode` prop with values of `'inline'`, `'portal'`, and `'top-layer'`. `renderMode="inline"` and `renderMode="portal"` are deprecated, and all popover elements should migrate to using the top layer. The old default was `usePortal = true`, and the new default is `renderMode = 'top-layer'`.
+[LG-4445](https://jira.mongodb.org/browse/LG-4445): Replaces `usePortal` prop with `renderMode` prop with values of `'inline'`, `'portal'`, and `'top-layer'`. `renderMode="inline"` and `renderMode="portal"` are deprecated, and all popover elements should migrate to using the top layer. The old default was `usePortal=true`, and the new default is `renderMode="top-layer"`.
   - When `renderMode="top-layer"` or `renderMode` is `undefined`, the popover element will render in the top layer using the [popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
     - Adds `dismissMode` prop to control dismissal behavior of the popover element. [Read more about the popover attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/popover)
     - Adds `onToggle` prop to run a callback function when the visibility of a popover element rendered in the top layer is toggled
   - When `renderMode="inline"`, the popover element will render inline in the DOM where it's written
   - When `renderMode="portal"`, the popover element will portal into a new div appended to the body. Alternatively, it can be portaled into a provided `portalContainer` element
 
-[LG-4446](https://jira.mongodb.org/browse/LG-4446): The `PopoverProvider` from the `@leafygreen-ui/leafygreen-provider` package can be used to pass props to a deeply nested popover element. It will read `PopoverContext` values if an explicit prop is not defined. This applies for the following props:
+[LG-4446](https://jira.mongodb.org/browse/LG-4446): The `PopoverProvider` from the `@leafygreen-ui/leafygreen-provider` package can be used to pass props to a deeply nested popover element. It will read `PopoverContext` values if an explicit prop is not defined in the popover component instance. This applies for the following props:
   - `dismissMode`
   - `onEnter`
   - `onEntering`
@@ -27,7 +27,7 @@
   - `spacing`
 
 Additional changes include:
-- Adds and exports `getPopoverRenderModeProps` util
+- Adds and exports `getPopoverRenderModeProps` util to pick popover props based on given `renderMode` value
 - Deprecates and removes `justify="fit"`. Instead, use `justify="middle"`
 - Removes unused `contentClassName` prop
 - Updates default value of `spacing` prop from 10px to 4px
