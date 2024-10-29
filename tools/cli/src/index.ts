@@ -195,6 +195,10 @@ cli
     'Bypass Git safety checks and forcibly run codemods',
     false,
   )
+  .option(
+    '--components <components...>',
+    'Specific component names to transform',
+  )
   .action(migrator);
 
 /** Build steps */

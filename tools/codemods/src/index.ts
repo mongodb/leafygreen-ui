@@ -12,6 +12,7 @@ export interface MigrateOptions {
   print?: boolean;
   force?: boolean;
   ignore?: Array<string>;
+  components?: Array<string>;
 }
 
 export const migrator = async (

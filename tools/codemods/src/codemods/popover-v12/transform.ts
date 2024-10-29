@@ -1,5 +1,7 @@
-import type { API, FileInfo } from 'jscodeshift';
+import type { API, FileInfo, Options } from 'jscodeshift';
+import kebabCase from 'lodash.kebabcase';
 
+import { MigrateOptions } from '../..';
 import { MIGRATOR_ERROR } from '../../constants';
 import {
   addJSXAttributes,
@@ -63,10 +65,21 @@ const componentNamesWithPropsToRemoveMap: Record<string, Array<string>> = {
  * @param options an object containing options to pass to the transform function
  * @returns Either the modified file or the original file
  */
-export default function transformer(file: FileInfo, { jscodeshift: j }: API) {
+export default function transformer(
+  file: FileInfo,
+  { jscodeshift: j }: API,
+  options: MigrateOptions & Options,
+) {
   const source = j(file.source);
 
   componentNamesForConsolidation.forEach(componentName => {
+    if (
+      options.components &&
+      !options.components.includes(kebabCase(componentName))
+    ) {
+      return;
+    }
+
     const elements = source.findJSXElements(componentName);
 
     if (elements.length === 0) return;
@@ -94,6 +107,13 @@ export default function transformer(file: FileInfo, { jscodeshift: j }: API) {
   });
 
   Object.keys(componentNamesWithPropsToRemoveMap).forEach(componentName => {
+    if (
+      options.components &&
+      !options.components.includes(kebabCase(componentName))
+    ) {
+      return;
+    }
+
     const elements = source.findJSXElements(componentName);
 
     if (elements.length === 0) return;
