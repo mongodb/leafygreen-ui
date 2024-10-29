@@ -283,14 +283,19 @@ describe('packages/menu', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();
+
+          userEvent.keyboard('{arrowdown}');
+          expect(menuItemElements[0]).toHaveFocus();
+
           userEvent.keyboard('{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
+
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();
 
-          for (let i = 0; i < menuItemElements.length; i++) {
+          for (let i = 0; i <= menuItemElements.length; i++) {
             userEvent.keyboard('{arrowdown}');
           }
 
@@ -345,9 +350,13 @@ describe('packages/menu', () => {
           const { menuItemElements } = await openMenu();
 
           userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{arrowdown}');
+          expect(menuItemElements[1]).toHaveFocus();
+
           userEvent.keyboard('{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
+
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();

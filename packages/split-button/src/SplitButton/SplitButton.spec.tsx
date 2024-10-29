@@ -329,18 +329,24 @@ describe('packages/split-button', () => {
         <MenuItem key="2">Item 2</MenuItem>,
         <MenuItem key="3">Item 3</MenuItem>,
       ];
+
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
+
+          userEvent.type(menuEl!, '{arrowdown}');
+          expect(menuItemElements[0]).toHaveFocus();
+
           userEvent.type(menuEl!, '{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
+
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
 
-          for (let i = 0; i < menuItemElements.length; i++) {
+          for (let i = 0; i <= menuItemElements.length; i++) {
             userEvent.type(menuEl!, '{arrowdown}');
           }
 
@@ -354,9 +360,13 @@ describe('packages/split-button', () => {
           const { menuEl, menuItemElements } = await openMenu();
 
           userEvent.type(menuEl!, '{arrowdown}');
+          userEvent.type(menuEl!, '{arrowdown}');
+          expect(menuItemElements[1]).toHaveFocus();
+
           userEvent.type(menuEl!, '{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
+
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
           const { menuEl, menuItemElements } = await openMenu();
