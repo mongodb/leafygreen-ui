@@ -1,1 +1,0 @@
-export { useYAxisOptions } from './useYAxisOption';
