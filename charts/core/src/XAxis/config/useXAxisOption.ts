@@ -55,11 +55,22 @@ const getOptions = ({
         fontWeight: fontWeights.medium,
         fontSize: 11,
         lineHeight: spacing[400],
+        padding: [spacing[200], 0, 0, 0],
         color: color[theme].text[Variant.Secondary][InteractionState.Default],
       },
       nameGap: spacing[1000],
     },
   };
+
+  if (label) {
+    options.grid = {
+      bottom: spacing[1200],
+    };
+  } else {
+    options.grid = {
+      bottom: spacing[400], // Default bottom spacing
+    };
+  }
 
   return options;
 };

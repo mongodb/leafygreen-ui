@@ -54,12 +54,22 @@ const getOptions = ({
         fontFamily: fontFamilies.default,
         fontWeight: fontWeights.medium,
         fontSize: 11,
-        lineHeight: spacing[400],
+        padding: [0, 0, spacing[800], 0],
         color: color[theme].text[Variant.Secondary][InteractionState.Default],
       },
       nameGap: spacing[900],
     },
   };
+
+  if (label) {
+    options.grid = {
+      left: spacing[1200],
+    };
+  } else {
+    options.grid = {
+      left: spacing[300], // Default left spacing
+    };
+  }
 
   return options;
 };

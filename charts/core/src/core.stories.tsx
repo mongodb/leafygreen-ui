@@ -51,6 +51,14 @@ export default {
         category: 'XAxis',
       },
     },
+    xAxisLabel: {
+      control: 'text',
+      description: 'X-axis label',
+      name: 'Label',
+      table: {
+        category: 'XAxis',
+      },
+    },
     yAxisType: {
       control: 'select',
       options: ['time', 'value', 'category', 'log'],
@@ -64,6 +72,14 @@ export default {
       control: 'text',
       description: 'Y-axis units',
       name: 'Unit',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisLabel: {
+      control: 'text',
+      description: 'Y-axis label',
+      name: 'Label',
       table: {
         category: 'YAxis',
       },
@@ -89,6 +105,8 @@ interface StoryChartProps {
   yAxisType: YAxisProps['type'];
   xAxisUnit: string;
   yAxisUnit: string;
+  xAxisLabel: string;
+  yAxisLabel: string;
 }
 
 const Template: React.FC<StoryChartProps> = props => {
@@ -100,13 +118,15 @@ const Template: React.FC<StoryChartProps> = props => {
     xAxisUnit,
     yAxisType,
     yAxisUnit,
+    xAxisLabel,
+    yAxisLabel,
   } = props;
 
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-      <XAxis type={xAxisType} unit={xAxisUnit} />
-      <YAxis type={yAxisType} unit={yAxisUnit} />
+      <XAxis type={xAxisType} unit={xAxisUnit} label={xAxisLabel} />
+      <YAxis type={yAxisType} unit={yAxisUnit} label={yAxisLabel} />
       {data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
