@@ -38,7 +38,7 @@ interface StoryChartProps {
   horizontalGridLines: boolean;
 }
 
-const Template: StoryFn<StoryChartProps> = props => {
+const Template: React.FC<StoryChartProps> = props => {
   const { data, verticalGridLines, horizontalGridLines } = props;
   return (
     <Chart {...props}>
