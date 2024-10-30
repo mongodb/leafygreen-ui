@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
-import { Chart, Grid, Line } from '.';
+import { Chart, Grid, Line, XAxis, XAxisProps, YAxis, YAxisProps } from '.';
 
 export default {
   title: 'Charts/Core',
@@ -12,18 +12,83 @@ export default {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     data: {
-      control: {
-        type: 'object',
+      control: 'object',
+      description: 'Data to plot in chart',
+      table: {
+        category: 'Chart',
       },
     },
     verticalGridLines: {
-      control: {
-        type: 'boolean',
+      control: 'boolean',
+      description: 'Show vertical grid lines',
+      name: 'Vertical',
+      table: {
+        category: 'Grid',
       },
     },
     horizontalGridLines: {
-      control: {
-        type: 'boolean',
+      control: 'boolean',
+      description: 'Show horizontal grid lines',
+      name: 'Horizontal',
+      table: {
+        category: 'Grid',
+      },
+    },
+    xAxisType: {
+      control: 'select',
+      options: ['time', 'value', 'category', 'log'],
+      description: 'Type of x-axis',
+      name: 'Type',
+      table: {
+        category: 'XAxis',
+      },
+    },
+    xAxisUnit: {
+      control: 'text',
+      description: 'X-axis units',
+      name: 'Unit',
+      table: {
+        category: 'XAxis',
+      },
+    },
+    xAxisLabel: {
+      control: 'text',
+      description: 'X-axis label',
+      name: 'Label',
+      table: {
+        category: 'XAxis',
+      },
+    },
+    yAxisType: {
+      control: 'select',
+      options: ['time', 'value', 'category', 'log'],
+      description: 'Type of y-axis',
+      name: 'Type',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisUnit: {
+      control: 'text',
+      description: 'Y-axis units',
+      name: 'Unit',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisLabel: {
+      control: 'text',
+      description: 'Y-axis label',
+      name: 'Label',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    onChartReady: {
+      action: 'onChartReady',
+      description: 'Callback when chart is ready',
+      table: {
+        disable: true,
       },
     },
   },
@@ -36,13 +101,32 @@ interface StoryChartProps {
   data: Array<LineProps>;
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
+  xAxisType: XAxisProps['type'];
+  yAxisType: YAxisProps['type'];
+  xAxisUnit: string;
+  yAxisUnit: string;
+  xAxisLabel: string;
+  yAxisLabel: string;
 }
 
 const Template: React.FC<StoryChartProps> = props => {
-  const { data, verticalGridLines, horizontalGridLines } = props;
+  const {
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    xAxisType,
+    xAxisUnit,
+    yAxisType,
+    yAxisUnit,
+    xAxisLabel,
+    yAxisLabel,
+  } = props;
+
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+      <XAxis type={xAxisType} unit={xAxisUnit} label={xAxisLabel} />
+      <YAxis type={yAxisType} unit={yAxisUnit} label={yAxisLabel} />
       {data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
@@ -55,4 +139,8 @@ LiveExample.args = {
   data: makeLineData(10),
   horizontalGridLines: true,
   verticalGridLines: false,
+  xAxisType: 'time',
+  yAxisType: 'value',
+  xAxisUnit: '',
+  yAxisUnit: 'GB',
 };

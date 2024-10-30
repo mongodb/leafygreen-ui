@@ -18,7 +18,7 @@ export function makeLineData(numOfSets: number): Array<LineProps> {
       data: [],
     };
 
-    let currentDate = new Date(2020, 5, 9); // June 9th, 2020 (Month is 0-indexed)
+    const currentDate = new Date(2020, 5, 9); // June 9th, 2020 (Month is 0-indexed)
 
     for (let j = 0; j < 60; j++) {
       line.data?.push([
