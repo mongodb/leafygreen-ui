@@ -70,10 +70,10 @@ Component that takes in data points and renders a single line on the chart.
 
 #### Props
 
-| Name   | Description                                                            | Type                                                        | Default |
-| ------ | ---------------------------------------------------------------------- | ----------------------------------------------------------- | ------- |
-| `name` | Name used to identify the series.                                      | string                                                      |         |
-| `data` | Data array of tuples that represent x and y coordinates in the series. | Array<[string \| number \| Date, string \| number \| Date]> |         |
+| Name   | Description                                                                                                              | Type                                                        | Default |
+| ------ | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------- | ------- |
+| `name` | Unique name used to identify the series. **Important note:** If two lines have the same name, only one will be rendered. | string                                                      |         |
+| `data` | Data array of tuples that represent x and y coordinates in the series.                                                   | Array<[string \| number \| Date, string \| number \| Date]> |         |
 
 ### `Grid`
 

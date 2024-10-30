@@ -9,7 +9,9 @@ export function addSeries(
   if (!updatedOptions.series) {
     updatedOptions.series = [data];
   } else {
-    updatedOptions.series.push(data);
+    if (!updatedOptions.series.some(series => series.name === data.name)) {
+      updatedOptions.series.push(data);
+    }
   }
 
   return updatedOptions;
