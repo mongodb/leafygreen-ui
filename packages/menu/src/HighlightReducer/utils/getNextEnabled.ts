@@ -23,7 +23,7 @@ export function getNextEnabledIndex(
 
   let updatedIndex = getNextIndex(
     direction,
-    current?.index ?? 0,
+    current?.index ?? (direction === 'next' ? -1 : 0),
     descendants.length,
   );
   let item = getDescendantByIndex(updatedIndex, descendants);

@@ -71,8 +71,14 @@ function renderMenu(
   }
 
   /** Opens the menu, and manually fires transition events */
-  async function openMenu() {
-    userEvent.click(triggerEl);
+  async function openMenu(options?: { withKeyboard: boolean }) {
+    if (options?.withKeyboard) {
+      triggerEl.focus();
+      userEvent.keyboard('{enter}');
+    } else {
+      userEvent.click(triggerEl);
+    }
+
     const menuElements = await findMenuElements();
     fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
     return menuElements;
@@ -109,18 +115,6 @@ describe('packages/menu', () => {
         const menuItem = getByText('Item A');
         expect(menuItem).toBeInTheDocument();
       });
-
-      test('first item is focused', async () => {
-        const { findMenuElements } = renderMenu({ open: true, setOpen });
-        const { menuEl, menuItemElements } = await findMenuElements();
-
-        await waitForTransition(menuEl);
-
-        await waitFor(() => {
-          const firstItem = menuItemElements[0];
-          expect(firstItem).toHaveFocus();
-        });
-      });
     });
 
     test('`open` prop is not set, but `setOpen` callback is provided', async () => {
@@ -155,14 +149,14 @@ describe('packages/menu', () => {
       });
     });
 
-    test('First item is focused when menu is opened', async () => {
+    test('First item is not focused when menu is opened', async () => {
       const { triggerEl, findMenuElements } = renderMenu({});
       userEvent.click(triggerEl);
       const { menuEl, menuItemElements } = await findMenuElements();
       await waitFor(() => {
         // JSDOM does not automatically fire these events
         fireEvent.transitionEnd(menuEl as Element);
-        expect(menuItemElements[0]).toHaveFocus();
+        expect(menuItemElements[0]).not.toHaveFocus();
       });
     });
 
@@ -213,18 +207,45 @@ describe('packages/menu', () => {
   });
 
   describe('Keyboard Interaction', () => {
-    type Keys = 'esc' | 'tab';
-    const closeKeys: Array<Array<Keys>> = [['esc'], ['tab']];
+    type CloseKeys = 'esc' | 'tab';
+    type OpenKeys = 'enter' | 'space';
+    type Keys = CloseKeys | OpenKeys;
+    const closeKeys: Array<Array<CloseKeys>> = [['esc'], ['tab']];
+    const openKeys: Array<Array<OpenKeys>> = [['enter'], ['space']];
 
-    const userEventInteraction = (menu: HTMLElement, key: Keys) => {
+    const userEventInteraction = (element: HTMLElement, key: Keys) => {
       if (key === 'tab') {
         userEvent.tab();
+      } else if (key === 'esc') {
+        userEvent.type(element, `{${key}}`);
       } else {
-        userEvent.type(menu, `{${key}}`);
+        userEvent.keyboard(`{${key}}`);
       }
     };
 
-    describe.each(closeKeys)('%s key', key => {
+    describe.each(openKeys)('when keying %s on trigger element', key => {
+      test('Opens menu', async () => {
+        const { triggerEl, findMenuElements } = renderMenu({});
+        triggerEl.focus();
+        userEventInteraction(triggerEl, key);
+        const { menuEl } = await findMenuElements();
+        await waitFor(() => {
+          expect(menuEl).toBeInTheDocument();
+        });
+      });
+
+      test('First item is focused when menu is opened', async () => {
+        const { triggerEl, findMenuElements } = renderMenu({});
+        triggerEl.focus();
+        userEventInteraction(triggerEl, key);
+        const { menuEl, menuItemElements } = await findMenuElements();
+        await waitFor(() => {
+          expect(menuItemElements[0]).toHaveFocus();
+        });
+      });
+    });
+
+    describe.each(closeKeys)('when keying %s on menu element', key => {
       test('Closes menu', async () => {
         const { openMenu } = renderMenu({});
         const { menuEl } = await openMenu();
@@ -262,14 +283,19 @@ describe('packages/menu', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();
+
+          userEvent.keyboard('{arrowdown}');
+          expect(menuItemElements[0]).toHaveFocus();
+
           userEvent.keyboard('{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
+
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();
 
-          for (let i = 0; i < menuItemElements.length; i++) {
+          for (let i = 0; i <= menuItemElements.length; i++) {
             userEvent.keyboard('{arrowdown}');
           }
 
@@ -289,7 +315,7 @@ describe('packages/menu', () => {
               ),
             });
 
-            const { menuItemElements } = await openMenu();
+            const { menuItemElements } = await openMenu({ withKeyboard: true });
             expect(menuItemElements).toHaveLength(3);
             expect(queryByTestId('submenu')).toHaveFocus();
             userEvent.keyboard('{arrowdown}');
@@ -309,7 +335,7 @@ describe('packages/menu', () => {
               ),
             });
 
-            const { menuItemElements } = await openMenu();
+            const { menuItemElements } = await openMenu({ withKeyboard: true });
             expect(menuItemElements).toHaveLength(2);
             expect(queryByTestId('submenu')).toHaveFocus();
             userEvent.keyboard('{arrowdown}');
@@ -324,9 +350,13 @@ describe('packages/menu', () => {
           const { menuItemElements } = await openMenu();
 
           userEvent.keyboard('{arrowdown}');
+          userEvent.keyboard('{arrowdown}');
+          expect(menuItemElements[1]).toHaveFocus();
+
           userEvent.keyboard('{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
+
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderMenu({});
           const { menuItemElements } = await openMenu();
@@ -340,7 +370,9 @@ describe('packages/menu', () => {
 
     test('Enter key on a menuitem does not close the menu', async () => {
       const { openMenu } = renderMenu({});
-      const { menuEl, menuItemElements } = await openMenu();
+      const { menuEl, menuItemElements } = await openMenu({
+        withKeyboard: true,
+      });
 
       expect(menuEl).toBeInTheDocument();
 
@@ -356,7 +388,9 @@ describe('packages/menu', () => {
 
     test('Space key on a menuitem does not close the menu', async () => {
       const { openMenu } = renderMenu({});
-      const { menuEl, menuItemElements } = await openMenu();
+      const { menuEl, menuItemElements } = await openMenu({
+        withKeyboard: true,
+      });
 
       expect(menuEl).toBeInTheDocument();
 
@@ -392,7 +426,7 @@ describe('packages/menu', () => {
         ),
       });
 
-      await openMenu();
+      await openMenu({ withKeyboard: true });
       expect(queryByTestId('submenu')).toHaveFocus();
       userEvent.click(getByTestId(LGIDs.submenuToggle)!);
       await waitForTransition();
@@ -416,7 +450,7 @@ describe('packages/menu', () => {
         ),
       });
 
-      await openMenu();
+      await openMenu({ withKeyboard: true });
       expect(queryByTestId('submenu')).toHaveFocus();
       userEvent.keyboard('{arrowright}');
       userEvent.keyboard('{arrowdown}');
@@ -449,7 +483,7 @@ describe('packages/menu', () => {
           </>
         ),
       });
-      await openMenu();
+      await openMenu({ withKeyboard: true });
       expect(queryByTestId('submenu')).toHaveFocus();
       userEvent.keyboard('{arrowup}');
       expect(queryByTestId('item-c')).toHaveFocus();
@@ -478,7 +512,7 @@ describe('packages/menu', () => {
           </>
         ),
       });
-      await openMenu();
+      await openMenu({ withKeyboard: true });
       expect(queryByTestId('submenu')).toHaveFocus();
       userEvent.keyboard('{arrowright}'); // open the submenu
       userEvent.keyboard('{arrowup}');

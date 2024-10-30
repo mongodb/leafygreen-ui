@@ -75,6 +75,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const triggerRef = useRef<HTMLElement>(null);
+  const keyboardUsedRef = useRef<boolean>(false);
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
 
@@ -84,6 +85,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const open = controlledOpen ?? uncontrolledOpen;
   const handleClose = useCallback(() => {
     if (shouldClose()) {
+      keyboardUsedRef.current = false;
       setOpen(false);
     }
   }, [setOpen, shouldClose]);
@@ -116,7 +118,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
-    moveHighlight('first');
+    if (keyboardUsedRef.current) {
+      moveHighlight('first');
+    }
   };
 
   // Fired on global keyDown event
@@ -229,6 +233,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   if (trigger) {
     const triggerClickHandler = (event?: React.MouseEvent) => {
       event?.preventDefault();
+
+      // If enter or space key is pressed, event detail is 0 https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event#usage_notes
+      if (event?.detail === 0) {
+        keyboardUsedRef.current = true;
+      }
+
       setOpen((curr: boolean) => !curr);
 
       if (trigger && typeof trigger !== 'function') {
