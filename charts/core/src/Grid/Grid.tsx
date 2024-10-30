@@ -8,6 +8,12 @@ import { useChartContext } from '../ChartContext';
 
 import { GridProps } from './Grid.types';
 
+const unsetGridOptions = {
+  splitLine: {
+    show: false,
+  },
+};
+
 export function Grid({ horizontal = true, vertical = true }: GridProps) {
   const { updateChartOptions } = useChartContext();
   const { theme } = useDarkMode();
@@ -32,16 +38,8 @@ export function Grid({ horizontal = true, vertical = true }: GridProps) {
        * Hides the grid lines when the component is unmounted.
        */
       updateChartOptions({
-        xAxis: {
-          splitLine: {
-            show: false,
-          },
-        },
-        yAxis: {
-          splitLine: {
-            show: false,
-          },
-        },
+        xAxis: unsetGridOptions,
+        yAxis: unsetGridOptions,
       });
     };
   }, [horizontal, vertical, theme]);
