@@ -14,6 +14,17 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     expect(updatedOptions.series?.[1].name).toBe(newSeriesName);
   });
 
+  test('should not a series to the chart options if a chart with the same name exists', () => {
+    const currentOptions: Partial<ChartOptions> = {
+      series: [{ name: 'series1' }],
+    };
+    const newSeriesName = 'series1';
+    const data = { name: newSeriesName };
+    const updatedOptions = addSeries(currentOptions, data);
+    expect(updatedOptions.series).toHaveLength(1);
+    expect(updatedOptions.series?.[0].name).toBe(newSeriesName);
+  });
+
   test('should remove a series from the chart options', () => {
     const currentOptions: Partial<ChartOptions> = {
       series: [{ name: 'series1' }, { name: 'series2' }],
