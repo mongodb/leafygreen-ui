@@ -14,7 +14,7 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     expect(updatedOptions.series?.[1].name).toBe(newSeriesName);
   });
 
-  test('should not a series to the chart options if a chart with the same name exists', () => {
+  test('should not add a series if a chart with the same name exists', () => {
     const currentOptions: Partial<ChartOptions> = {
       series: [{ name: 'series1' }],
     };
