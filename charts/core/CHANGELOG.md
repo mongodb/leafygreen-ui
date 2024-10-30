@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.2.1
+
+### Patch Changes
+
+- 685e15323: Fixes bad import in Chart component
+
 ## 0.2.0
 
 ### Minor Changes
