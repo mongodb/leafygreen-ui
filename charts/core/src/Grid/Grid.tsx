@@ -26,6 +26,24 @@ export function Grid({ horizontal = true, vertical = true }: GridProps) {
     updatedOptions.xAxis = getUpdatedLineOptions(!!vertical);
     updatedOptions.yAxis = getUpdatedLineOptions(!!horizontal);
     updateChartOptions(updatedOptions);
+
+    return () => {
+      /**
+       * Hides the grid lines when the component is unmounted.
+       */
+      updateChartOptions({
+        xAxis: {
+          splitLine: {
+            show: false,
+          },
+        },
+        yAxis: {
+          splitLine: {
+            show: false,
+          },
+        },
+      });
+    };
   }, [horizontal, vertical, theme]);
 
   return null;
