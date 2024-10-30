@@ -22,9 +22,9 @@ export function removeSeries(
   const updatedOptions = { ...currentOptions };
 
   if (updatedOptions.series) {
-    updatedOptions.series = updatedOptions.series.filter(
-      series => series.name !== name,
-    );
+    updatedOptions.series = [
+      ...updatedOptions.series.filter(series => series.name !== name),
+    ];
   }
 
   return updatedOptions;
