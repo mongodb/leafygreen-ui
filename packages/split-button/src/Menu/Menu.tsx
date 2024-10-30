@@ -116,37 +116,37 @@ export const Menu = ({
   }, [handleClose, menuItems, onChange]);
 
   return (
-    <>
-      <Button
-        type="button"
-        disabled={disabled}
-        leftGlyph={<Icon glyph="CaretDown" />}
-        variant={variant}
-        size={size}
-        baseFontSize={baseFontSize}
-        className={cx(triggerBaseStyles, triggerSizeStyles[size], {
-          [triggerThemeStyles(theme, variant)]: !disabled,
-        })}
-        aria-label={triggerAriaLabel || 'More options'}
-        aria-controls={open ? id : ''}
-        onClick={handleTriggerClick}
-        ref={buttonRef}
-        aria-expanded={open}
-        aria-haspopup={true}
-      />
-      <LGMenu
-        data-testid="lg-split-button-menu"
-        align={align}
-        justify={justify}
-        id={id}
-        open={open}
-        ref={menuRef}
-        portalRef={portalRef}
-        {...rest}
-      >
-        {renderMenuItems}
-      </LGMenu>
-    </>
+    <LGMenu
+      data-testid="lg-split-button-menu"
+      align={align}
+      justify={justify}
+      id={id}
+      open={open}
+      ref={menuRef}
+      portalRef={portalRef}
+      {...rest}
+      trigger={
+        <Button
+          type="button"
+          disabled={disabled}
+          leftGlyph={<Icon glyph="CaretDown" />}
+          variant={variant}
+          size={size}
+          baseFontSize={baseFontSize}
+          className={cx(triggerBaseStyles, triggerSizeStyles[size], {
+            [triggerThemeStyles(theme, variant)]: !disabled,
+          })}
+          aria-label={triggerAriaLabel || 'More options'}
+          aria-controls={open ? id : ''}
+          onClick={handleTriggerClick}
+          ref={buttonRef}
+          aria-expanded={open}
+          aria-haspopup={true}
+        />
+      }
+    >
+      {renderMenuItems}
+    </LGMenu>
   );
 };
 
