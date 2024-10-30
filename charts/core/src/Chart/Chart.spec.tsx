@@ -1,8 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import '@testing-library/jest-dom/extend-expect';
-
 import { ChartProvider } from '../ChartContext';
 
 import { Chart } from './Chart';
@@ -18,10 +16,6 @@ jest.mock('./hooks', () => ({
     addChartSeries: jest.fn(),
     removeChartSeries: jest.fn(),
   })),
-}));
-
-jest.mock('@leafygreen-ui/leafygreen-provider', () => ({
-  useDarkMode: jest.fn(() => ({ theme: 'light' })),
 }));
 
 /**
