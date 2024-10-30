@@ -233,6 +233,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   if (trigger) {
     const triggerClickHandler = (event?: React.MouseEvent) => {
       event?.preventDefault();
+
+      // If enter or space key is pressed, event detail is 0 https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event#usage_notes
+      if (event?.detail === 0) {
+        keyboardUsedRef.current = true;
+      }
+
       setOpen((curr: boolean) => !curr);
 
       if (trigger && typeof trigger !== 'function') {
@@ -245,16 +251,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
       event?.nativeEvent?.stopPropagation?.();
     };
 
-    const triggerKeyDownHandler = (event?: React.KeyboardEvent) => {
-      if (event?.key === keyMap.Enter || event?.key === keyMap.Space) {
-        keyboardUsedRef.current = true;
-      }
-    };
-
     if (typeof trigger === 'function') {
       return trigger({
         onClick: triggerClickHandler,
-        onKeyDown: triggerKeyDownHandler,
         ref: triggerRef,
         children: popoverContent,
         ['aria-expanded']: open,
@@ -265,7 +264,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: triggerClickHandler,
-      onKeyDown: triggerKeyDownHandler,
       children: (
         <>
           {trigger.props.children}
