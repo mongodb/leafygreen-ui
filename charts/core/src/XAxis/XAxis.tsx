@@ -97,6 +97,22 @@ export function XAxis({ type, label, unit }: XAxisProps) {
 
   useEffect(() => {
     updateChartOptions(getOptions({ type, label, unit, theme }));
+
+    return () => {
+      /**
+       * Hides the axis when the component is unmounted.
+       */
+      updateChartOptions({
+        xAxis: {
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+        },
+      });
+    };
   }, [type, label, unit, theme, updateChartOptions]);
 
   return null;

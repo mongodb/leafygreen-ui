@@ -96,6 +96,22 @@ export function YAxis({ type, label, unit }: YAxisProps) {
 
   useEffect(() => {
     updateChartOptions(getOptions({ type, label, unit, theme }));
+
+    return () => {
+      /**
+       * Hides the axis when the component is unmounted.
+       */
+      updateChartOptions({
+        yAxis: {
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            show: false,
+          },
+        },
+      });
+    };
   }, [type, label, unit, theme, updateChartOptions]);
 
   return null;
