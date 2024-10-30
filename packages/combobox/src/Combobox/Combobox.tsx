@@ -32,7 +32,7 @@ import {
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
-  PopoverProvider,
+  PopoverPropsProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
@@ -1326,7 +1326,7 @@ export function Combobox<M extends boolean>({
           *  Menu  *
           / *******/}
 
-          <PopoverProvider {...popoverProps}>
+          <PopoverPropsProvider {...popoverProps}>
             <ComboboxMenu
               id={menuId}
               labelId={labelId}
@@ -1339,7 +1339,7 @@ export function Combobox<M extends boolean>({
             >
               {renderedOptionsJSX}
             </ComboboxMenu>
-          </PopoverProvider>
+          </PopoverPropsProvider>
         </div>
       </ComboboxContext.Provider>
     </LeafyGreenProvider>
