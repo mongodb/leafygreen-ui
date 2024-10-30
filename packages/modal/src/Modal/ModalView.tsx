@@ -82,9 +82,11 @@ const ModalView = React.forwardRef(
       ? {
           initialFocus: `#${id} ${initialFocus}`,
           fallbackFocus: `#${closeId}`,
+          escapeDeactivates: false,
         }
       : {
           fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
+          escapeDeactivates: false,
         };
 
     const allowedSize = Object.values(ModalSize).includes(sizeProp);
