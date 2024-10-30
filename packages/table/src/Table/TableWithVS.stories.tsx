@@ -218,20 +218,18 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                 const cells = row.getVisibleCells();
 
                 return (
-                  <>
-                    <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
-                      {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                        return (
-                          <Cell key={cell.id} cell={cell}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                  </>
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                 );
               },
             )}
