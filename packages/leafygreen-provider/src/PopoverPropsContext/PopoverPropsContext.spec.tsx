@@ -1,6 +1,5 @@
 import React from 'react';
-import { act, render, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
@@ -8,7 +7,6 @@ import {
   PopoverPropsProvider,
   usePopoverPropsContext,
 } from './PopoverPropsContext';
-import { type PopoverPropsProviderProps } from './PopoverPropsContext.types';
 
 const childTestId = 'test-child';
 
