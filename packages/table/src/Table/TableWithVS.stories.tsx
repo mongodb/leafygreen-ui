@@ -604,7 +604,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
 
 export const DifferentHeights: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(5000));
+  const [data] = useState(() => makeKitchenSinkData(10_000));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
