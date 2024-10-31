@@ -6,6 +6,9 @@
 
 See [@leafygreen-ui/popover package 12.0.0 changelog](https://github.com/mongodb/leafygreen-ui/blob/main/packages/popover/CHANGELOG.md#1200) for more info.
 
+Additional changes include:
+- Deprecates and removes `justify="fit"`. Instead, use `justify="middle"`
+
 #### Migration guide
 
 Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
