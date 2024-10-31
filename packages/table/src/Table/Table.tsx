@@ -44,8 +44,9 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     //TODO: find a better way to do all these checks
     const isVirtual =
       table && (table as LeafyGreenVirtualTable<T>).virtual ? true : false;
-    const virtualTable =
-      isVirtual && (table as LeafyGreenVirtualTable<T>)!.virtual;
+    const virtualTable = isVirtual
+      ? (table as LeafyGreenVirtualTable<T>)!.virtual
+      : undefined;
     const virtualTableTotalSize = virtualTable
       ? virtualTable.getTotalSize()
       : 0;
