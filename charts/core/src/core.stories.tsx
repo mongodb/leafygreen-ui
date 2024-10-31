@@ -4,7 +4,16 @@ import { StoryFn } from '@storybook/react';
 
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
-import { Chart, Grid, Line, XAxis, XAxisProps, YAxis, YAxisProps } from '.';
+import {
+  Chart,
+  Grid,
+  Line,
+  Tooltip,
+  XAxis,
+  XAxisProps,
+  YAxis,
+  YAxisProps,
+} from '.';
 
 export default {
   title: 'Charts/Core',
@@ -123,6 +132,7 @@ const Template: React.FC<StoryChartProps> = props => {
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+      <Tooltip />
       <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
       <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
       {data.map(({ name, data }) => (
