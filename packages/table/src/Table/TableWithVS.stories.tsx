@@ -622,6 +622,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'frequency',
         header: 'Frequency',
+        align: 'right',
       },
       {
         accessorKey: 'clusterType',

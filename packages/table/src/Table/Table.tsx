@@ -50,11 +50,11 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const virtualTableTotalSize = virtualTable
       ? virtualTable.getTotalSize()
       : 0;
-    // TODO: look into scroll position instead of start position
+    // TODO: look into scroll position instead of start position - diff PR
     const virtualTableStart = virtualTable
       ? virtualTable.getVirtualItems()[0]?.start
       : 0;
-    const isSelectable = table && table.hasSelectableRows;
+    const isSelectable = table ? table.hasSelectableRows : false;
     const measureElement = isVirtual
       ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
       : undefined;

@@ -36,7 +36,9 @@ const HeaderCell = <T extends LGRowData>({
 
   let columnName, sortState, onSortIconClick;
 
-  if (header && header.column.getCanSort()) {
+  // console.log({ cansort: header?.column.columnDef.enableSorting });
+
+  if (header && header?.column.columnDef.enableSorting) {
     columnName = header.column.columnDef.header as string;
     const headerSortDirection = header.column.getIsSorted().toString();
     sortState = HeaderSortState[headerSortDirection];
