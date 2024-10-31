@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 26.0.0
+
+### Major Changes
+
+- 08112c810: [LG-4630](https://jira.mongodb.org/browse/LG-4630): Apply highlight to first menu item only when opened with keyboard
+
 ## 25.1.3
 
 ### Patch Changes
