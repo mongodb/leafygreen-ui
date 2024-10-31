@@ -28,6 +28,11 @@ const TableContextProvider = <T extends LGRowData>({
   isSelectable,
   measureElement,
   shouldTruncate,
+  length,
+  start,
+  size,
+  end,
+  totalSize,
 }: PropsWithChildren<Partial<TableContextValues<T>>>) => {
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableContextValues<T>>)
@@ -41,6 +46,11 @@ const TableContextProvider = <T extends LGRowData>({
       isSelectable,
       measureElement,
       shouldTruncate,
+      length,
+      start,
+      size,
+      end,
+      totalSize,
     };
   }, [
     shouldAlternateRowColor,
@@ -49,6 +59,11 @@ const TableContextProvider = <T extends LGRowData>({
     isSelectable,
     measureElement,
     shouldTruncate,
+    length,
+    start,
+    size,
+    end,
+    totalSize,
   ]);
 
   return (

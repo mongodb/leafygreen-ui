@@ -218,20 +218,18 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                 const cells = row.getVisibleCells();
 
                 return (
-                  <>
-                    <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
-                      {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                        return (
-                          <Cell key={cell.id} cell={cell}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                  </>
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                 );
               },
             )}
@@ -622,7 +620,6 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'frequency',
         header: 'Frequency',
-        align: 'right',
       },
       {
         accessorKey: 'clusterType',
@@ -709,7 +706,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         <TableBody>
           {table.virtual.virtualItems &&
             table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+              (virtualRow: LeafyGreenVirtualItem<Person>, index: number) => {
                 const row = virtualRow.row;
                 const isExpandedContent =
                   row.original.isExpandedContent ?? false;
@@ -717,7 +714,11 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
                 return (
                   <Fragment key={virtualRow.key}>
                     {!isExpandedContent && (
-                      <Row row={row} virtualRow={virtualRow}>
+                      <Row
+                        row={row}
+                        virtualRow={virtualRow}
+                        data-row-index={index}
+                      >
                         {row
                           .getVisibleCells()
                           .map((cell: LeafyGreenTableCell<Person>) => {
