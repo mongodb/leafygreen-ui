@@ -1,11 +1,18 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 
-import { makeData, Person } from '../utils/makeData.testutils';
+import {
+  makeData,
+  makeKitchenSinkData,
+  Person,
+} from '../utils/makeData.testutils';
 import {
   Cell,
   type ColumnDef,
@@ -618,6 +625,171 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
                       </Cell>
                     );
                   })}
+                </Row>
+              );
+            })}
+        </TableBody>
+      </Table>
+    </>
+  );
+};
+
+export const DifferentHeights: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(10_000));
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <div
+            // style={{
+            //   height: '40px',
+            //   display: 'flex',
+            //   width: '125px',
+            //   objectFit: 'contain',
+            // }}
+            >
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </div>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  // FIXME: this table becomes SUPER flickery scrolling up when a lot of rows are expanded
+  //TODO: fix type
+  const table = useLeafyGreenTable<any>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    useVirtualScrolling: true,
+    // state: {
+    //   expanded,
+    // },
+    // onExpandedChange: setExpanded,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <div>
+        <p>{rows.length} total rows</p>
+      </div>
+
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+        // shouldTruncate={false}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {table.virtualRows &&
+            table.virtualRows.map((virtualRow: VirtualItem) => {
+              const row = rows[virtualRow.index];
+              const cells = row.getVisibleCells();
+
+              return (
+                <Row key={row.id} row={row} virtualRow={virtualRow}>
+                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                  {row.subRows &&
+                    row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
+                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
+                        {subRow
+                          .getVisibleCells()
+                          .map((cell: LeafyGreenTableCell<Person>) => {
+                            return (
+                              <Cell key={cell.id}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                        {subRow.original.renderExpandedContent && (
+                          <ExpandedContent row={subRow} />
+                        )}
+                      </Row>
+                    ))}
                 </Row>
               );
             })}
