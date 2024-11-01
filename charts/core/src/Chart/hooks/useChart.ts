@@ -74,7 +74,12 @@ export function useChart({ theme, onChartReady }: ChartHookProps) {
   const updateChartRef = useMemo(
     () =>
       debounce((chartOptions: Partial<ChartOptions>) => {
-        chartInstanceRef.current?.setOption(chartOptions);
+        /**
+         * The second argument is `true` to merge the new options with the existing ones.
+         * This is needed to ensure that series get removed properly.
+         * See issue: https://github.com/apache/echarts/issues/6202
+         * */
+        chartInstanceRef.current?.setOption(chartOptions, true);
       }, 50),
     [],
   );

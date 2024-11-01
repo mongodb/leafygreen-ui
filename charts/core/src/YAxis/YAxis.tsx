@@ -76,6 +76,15 @@ const getOptions = ({
   return options;
 };
 
+const unsetAxisOptions = {
+  axisLine: {
+    show: false,
+  },
+  axisLabel: {
+    show: false,
+  },
+};
+
 /**
  * React component that can render an y-axis on a parent chart.
  *
@@ -96,6 +105,15 @@ export function YAxis({ type, label, unit }: YAxisProps) {
 
   useEffect(() => {
     updateChartOptions(getOptions({ type, label, unit, theme }));
+
+    return () => {
+      /**
+       * Hides the axis when the component is unmounted.
+       */
+      updateChartOptions({
+        yAxis: unsetAxisOptions,
+      });
+    };
   }, [type, label, unit, theme, updateChartOptions]);
 
   return null;
