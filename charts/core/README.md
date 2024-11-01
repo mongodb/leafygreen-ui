@@ -92,11 +92,11 @@ Renders an x-axis.
 
 #### Props
 
-| Name                     | Description                                                                                                                                                                                                         | Type                                                                              | Default |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
-| `type`                   | Type of axis.                                                                                                                                                                                                       | 'category' \| 'value' \| 'time' \| 'log'                                          |         |
-| `label` _(optional)_     | Label name to be rendered on the axis.                                                                                                                                                                              | string                                                                            |         |
-| `formatter` _(optional)_ | Formatter of axis label, which supports string template and callback function. (See [ECharts xAxis.axisLabel.formatter docs](https://echarts.apache.org/en/option.html#xAxis.axisLabel.formatter) for more details) | string \| ((value: string, index: number) => string) \| { [key: string]: string } |         |
+| Name                     | Description                                   | Type                                     | Default |
+| ------------------------ | --------------------------------------------- | ---------------------------------------- | ------- |
+| `type`                   | Type of axis.                                 | 'category' \| 'value' \| 'time' \| 'log' |         |
+| `label` _(optional)_     | Label name to be rendered on the axis.        | string                                   |         |
+| `formatter` _(optional)_ | Callback function for formatting tick values. | (value: string, index: number) => string |         |
 
 ### `YAxis`
 
@@ -104,8 +104,8 @@ Renders a y-axis.
 
 #### Props
 
-| Name                     | Description                                                                                                                                                                                                         | Type                                                                              | Default |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
-| `type`                   | Type of axis.                                                                                                                                                                                                       | 'category' \| 'value' \| 'time' \| 'log'                                          |         |
-| `label` _(optional)_     | Label name to be rendered on the axis.                                                                                                                                                                              | string                                                                            |         |
-| `formatter` _(optional)_ | Formatter of axis label, which supports string template and callback function. (See [ECharts yAxis.axisLabel.formatter docs](https://echarts.apache.org/en/option.html#yAxis.axisLabel.formatter) for more details) | string \| ((value: string, index: number) => string) \| { [key: string]: string } |         |
+| Name                     | Description                                   | Type                                     | Default |
+| ------------------------ | --------------------------------------------- | ---------------------------------------- | ------- |
+| `type`                   | Type of axis.                                 | 'category' \| 'value' \| 'time' \| 'log' |         |
+| `label` _(optional)_     | Label name to be rendered on the axis.        | string                                   |         |
+| `formatter` _(optional)_ | Callback function for formatting tick values. | (value: string, index: number) => string |         |

@@ -44,11 +44,10 @@ export default {
       },
     },
     xAxisFormatter: {
-      control: 'text',
       description: 'X-axis formatter',
       name: 'Formatter',
       table: {
-        category: 'XAxis',
+        disable: true,
       },
     },
     xAxisLabel: {
@@ -69,11 +68,10 @@ export default {
       },
     },
     yAxisFormatter: {
-      control: 'text',
       description: 'Y-axis formatter',
       name: 'Formatter',
       table: {
-        category: 'YAxis',
+        disable: true,
       },
     },
     yAxisLabel: {
@@ -103,10 +101,10 @@ interface StoryChartProps {
   horizontalGridLines: boolean;
   xAxisType: XAxisProps['type'];
   yAxisType: YAxisProps['type'];
-  xAxisFormatter: string;
-  yAxisFormatter: string;
-  xAxisLabel: string;
-  yAxisLabel: string;
+  xAxisFormatter: XAxisProps['formatter'];
+  yAxisFormatter: XAxisProps['formatter'];
+  xAxisLabel: XAxisProps['label'];
+  yAxisLabel: YAxisProps['label'];
 }
 
 const Template: React.FC<StoryChartProps> = props => {
@@ -141,6 +139,5 @@ LiveExample.args = {
   verticalGridLines: false,
   xAxisType: 'time',
   yAxisType: 'value',
-  xAxisFormatter: '{hh}:{mm}',
-  yAxisFormatter: '{value}GB',
+  yAxisFormatter: value => `${value}GB`,
 };
