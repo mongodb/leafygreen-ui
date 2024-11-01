@@ -74,7 +74,7 @@ We use @testing-library/react for writing tests locally. This library helps mock
 
 We also have a link script, such that you can test components that are in development in environments beyond Storybook. To do so, run `yarn run link -- [path-to-application]`.
 
-Note: There are some known issues using `yarn link` from yarn workspaces. Using Verdaccio
+Note: There are some known issues using `yarn link` from yarn workspaces. Using Verdaccio, while more involved, is the more reliable and recommended approach for testing in an external project.
 
 ### Using a local registry (Verdaccio)
 
