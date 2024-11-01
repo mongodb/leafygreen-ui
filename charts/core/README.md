@@ -26,7 +26,7 @@ import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
 <Chart>
   <Grid vertical={false}>
   <XAxis type="time" />
-  <YAxis type="value" formatter="{value}GB" />
+  <YAxis type="value" formatter={(value) => `${value}GB`} />
   <Line
     name="Series 1"
     data={[
