@@ -648,7 +648,14 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
-            <>
+            <div
+            // style={{
+            //   height: '40px',
+            //   display: 'flex',
+            //   width: '125px',
+            //   objectFit: 'contain',
+            // }}
+            >
               <IconButton aria-label="Download">
                 <Icon glyph="Download" />
               </IconButton>
@@ -658,7 +665,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
               <IconButton aria-label="More Options">
                 <Icon glyph="Ellipsis" />
               </IconButton>
-            </>
+            </div>
           );
         },
       },
@@ -685,7 +692,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         table={table}
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
-        shouldTruncate={false}
+        // shouldTruncate={false}
       >
         <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (

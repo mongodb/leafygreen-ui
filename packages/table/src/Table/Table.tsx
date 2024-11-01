@@ -16,7 +16,7 @@ import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGre
 
 import {
   baseStyles,
-  getVirtualDynamicStyles,
+  // getVirtualDynamicStyles,
   getVirtualStyles,
   tableContainerStyles,
   themeStyles,
@@ -82,9 +82,11 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <div className={getVirtualStyles(isVirtual, virtualTableTotalSize)}>
+        <div
+        // className={cx(getVirtualStyles(isVirtual, virtualTableTotalSize))}
+        >
           <div
-            className={getVirtualDynamicStyles(isVirtual, virtualTableStart)}
+          // className={getVirtualDynamicStyles(isVirtual, virtualTableStart)}
           >
             <TableContextProvider
               shouldAlternateRowColor={shouldAlternateRowColor}

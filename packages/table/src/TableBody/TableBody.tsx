@@ -19,13 +19,13 @@ const TableBody = ({ children, ...rest }: TableBodyProps) => {
     <>
       {paddingTop > 0 && (
         <tr aria-hidden>
-          <td style={{ height: `${paddingTop}px` }} />
+          <td style={{ paddingTop: `${paddingTop}px` }} />
         </tr>
       )}
       <tbody {...rest}>{children}</tbody>
       {paddingBottom > 0 && (
         <tr aria-hidden>
-          <td style={{ height: `${paddingBottom}px` }} />
+          <td style={{ paddingTop: `${paddingBottom}px` }} />
         </tr>
       )}
     </>

@@ -42,13 +42,30 @@ function useLeafyGreenVirtualTable<
       (index: number) => rows[index]?.id ?? index,
       [rows],
     ),
-    measureElement:
-      typeof window !== 'undefined' &&
-      navigator.userAgent.indexOf('Firefox') === -1
-        ? element => element?.getBoundingClientRect().height
-        : undefined,
+    // measureElement: (element, entry, instance) => {
+    //   const direction = instance.scrollDirection
+    //   if (direction === "forward" || direction === null) {
+    //     return element.scrollHeight
+    //   } else {
+    //     // don't remeasure if we are scrolling up
+    //     const indexKey = Number(element.getAttribute("data-index"))
+    //     let cacheMeasurement = instance.itemSizeCache.get(indexKey)
+    //     return cacheMeasurement
+    //   }
+    // }
+    // measureElement:
+    //   typeof window !== 'undefined' &&
+    //   navigator.userAgent.indexOf('Firefox') === -1
+    //     ? element => element?.getBoundingClientRect().height
+    //     : undefined,
+    // onChange: (i, s) => console.log('🪼', { s, i }),
+    // isScrollingResetDelay: 1000,
+    // debug: true,
     ...virtualizerOptions,
   });
+
+  // Kill the cache entirely to prevent weird scrolling issues. This is a hack
+  // _virtualizer.measurementsCache = [];
 
   const _virtualItems: Array<LeafyGreenVirtualItem<T>> = _virtualizer
     .getVirtualItems()

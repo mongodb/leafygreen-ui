@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -29,31 +29,37 @@ export const tableContainerStyles = css`
   position: relative;
 `;
 
-export const getVirtualStyles = (isVirtual = false, totalSize: number) => css`
-  ${isVirtual &&
-  css`
-    position: relative;
-    /* height: ${totalSize}px; */
-  `}
-`;
+export const getVirtualStyles = (isVirtual = false, totalSize: number) =>
+  cx({
+    [css`
+      position: relative;
+      /* height: ${totalSize}px; */
+    `]: isVirtual,
+  });
 
-export const getVirtualDynamicStyles = (
-  isVirtual = false,
-  startPosition: number,
-) => css`
-  ${isVirtual &&
-  css`
-    /* position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate3d(0, ${startPosition}px, 0);
-    width: 100%; */
+// export const getVirtualDynamicStyles = (
+//   isVirtual = false,
+//   startPosition: number,
+// ) =>
+//   cx(
+//     {
+//       [
+//         css`
+//         /* position: absolute;
+//     top: 0;
+//     left: 0;
+//     transform: translate3d(0, ${startPosition}px, 0);
+//     width: 100%; */
 
-    thead {
-      /* top: -${startPosition}px; */
-      /* transform: translate3d(0, ${startPosition / 2}px, 0); */
-      /* top: 0; */
-      /* position: absolute; */
-    }
-  `}
-`;
+//     thead {
+//       /* top: -${startPosition}px; */
+//       /* transform: translate3d(0, ${startPosition / 2}px, 0); */
+//       /* top: 0; */
+//       /* position: absolute; */
+//     }
+//         `
+
+//       ]:isVirtual
+//     }
+//   )
+// `;
