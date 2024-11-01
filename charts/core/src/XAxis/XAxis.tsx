@@ -74,6 +74,15 @@ const getOptions = ({
   return options;
 };
 
+const unsetAxisOptions = {
+  axisLine: {
+    show: false,
+  },
+  axisLabel: {
+    show: false,
+  },
+};
+
 /**
  * React component that can render an x-axis on a parent chart.
  *
@@ -94,6 +103,15 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
 
   useEffect(() => {
     updateChartOptions(getOptions({ type, label, formatter, theme }));
+
+    return () => {
+      /**
+       * Hides the axis when the component is unmounted.
+       */
+      updateChartOptions({
+        xAxis: unsetAxisOptions,
+      });
+    };
   }, [type, label, formatter, theme, updateChartOptions]);
 
   return null;

@@ -9,7 +9,9 @@ export function addSeries(
   if (!updatedOptions.series) {
     updatedOptions.series = [data];
   } else {
-    updatedOptions.series.push(data);
+    if (!updatedOptions.series.some(series => series.name === data.name)) {
+      updatedOptions.series.push(data);
+    }
   }
 
   return updatedOptions;
@@ -22,9 +24,9 @@ export function removeSeries(
   const updatedOptions = { ...currentOptions };
 
   if (updatedOptions.series) {
-    updatedOptions.series = updatedOptions.series.filter(
-      series => series.name !== name,
-    );
+    updatedOptions.series = [
+      ...updatedOptions.series.filter(series => series.name !== name),
+    ];
   }
 
   return updatedOptions;
