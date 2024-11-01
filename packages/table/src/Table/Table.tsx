@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { ForwardedRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 

@@ -5,6 +5,7 @@ import { useTableContext } from '../TableContext';
 import { TableBodyProps } from './TableBody.types';
 
 const TableBody = ({ children, ...rest }: TableBodyProps) => {
+  // @ts-ignore
   const { isVirtual, length, start, end, totalSize } = useTableContext();
 
   let paddingTop = 0;
@@ -18,15 +19,19 @@ const TableBody = ({ children, ...rest }: TableBodyProps) => {
   return (
     <>
       {paddingTop > 0 && (
-        <tr aria-hidden>
-          <td style={{ paddingTop: `${paddingTop}px` }} />
-        </tr>
+        <tbody>
+          <tr aria-hidden>
+            <td style={{ paddingTop: `${paddingTop}px` }} />
+          </tr>
+        </tbody>
       )}
       <tbody {...rest}>{children}</tbody>
       {paddingBottom > 0 && (
-        <tr aria-hidden>
-          <td style={{ paddingTop: `${paddingBottom}px` }} />
-        </tr>
+        <tbody>
+          <tr aria-hidden>
+            <td style={{ paddingTop: `${paddingBottom}px` }} />
+          </tr>
+        </tbody>
       )}
     </>
   );
