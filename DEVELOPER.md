@@ -64,15 +64,85 @@ To note: The addon is not able to detect information on the DOM that is portaled
 
 When you run the scaffold script, a `README` file will appear, which is a template for how we document our components. Beyond just `README` documentation, we use `@ts-docs` to self-document each component. Please follow this pattern when creating new components or adding props to existing components.
 
-### Testing
+## Testing
 
-#### Locally
+### Locally
 
 We use @testing-library/react for writing tests locally. This library helps mock out user interactions with components. You can run all tests by running `yarn test` or turn on watch mode with `yarn test --watch`.
 
-#### Linking
+### Linking
 
 We also have a link script, such that you can test components that are in development in environments beyond Storybook. To do so, run `yarn run link -- [path-to-application]`.
+
+Note: There are some known issues using `yarn link` from yarn workspaces. Using Verdaccio
+
+### Using a local registry (Verdaccio)
+
+Publishing test versions to a local registry can be helpful when you need to make changes and test in an external app (or other library). Do do this, you can install and use [Verdaccio](https://verdaccio.org/)
+
+#### 1. Install `verdaccio`
+
+```bash
+yarn install --global verdaccio
+```
+
+#### 2. Start `verdaccio`, and make note on the localhost port (should be `http://localhost:4873/` by default)
+
+```bash
+verdaccio
+```
+
+#### 3. In another terminal, set the npm registry for this library:
+
+```bash
+npm config set @leafygreen-ui:registry http://localhost:4873
+```
+
+This will update your `~/.npmrc` file. Double check this by running:
+
+```bash
+cat ~/.npmrc
+```
+
+You should expect to see the following line in that file. (if not you can add it manually)
+
+```yml
+@leafygreen-ui:registry=http://localhost:4873
+```
+
+#### 4. Publish a version of a package to your local registry
+
+Ensure all packages are built, then navigate to some package and manually publish:
+
+```bash
+yarn build;
+cd packages/<package-name>;
+npm publish;
+```
+
+To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `npm publish` command. This command should echo:
+
+```
+npm notice Publishing to http://localhost:4873
+```
+
+#### 5. Install in an external project
+
+With your local version published, open up some external app. If the app uses a local `.npmrc` or `.yarnrc`, follow the instructions in the [Verdaccio Docs](https://verdaccio.org/docs/setup-npm) to ensure the project references your local registry. Otherwise, the project should first look to the registry defined in your global `~/.npmrc` for the given scope.
+
+Next, install the newly published version of your package in the external project.
+
+```bash
+yarn install @leafygreen-ui/<package-name>
+```
+
+#### 6. Publishing additional versions
+
+To publish additional versions, manually the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `yarn install @leafygreen-ui/<package-name>`.
+
+#### 7. Publishing to NPM
+
+If you want to stop publishing to and/or reading from your local Verdaccio server, remove the reference to the server URL in `~/.npmrc` (and the external project's local `.npmrc`/`.yarnrc`)
 
 ## Creating a new component
 
