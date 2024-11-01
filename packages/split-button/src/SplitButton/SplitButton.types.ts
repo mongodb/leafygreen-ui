@@ -117,7 +117,7 @@ export interface MenuProps extends SelectedMenuProps {
 
 export interface SplitButtonProps
   extends DarkModeProps,
-    ButtonProps,
+    Omit<ButtonProps, 'compact'>,
     MenuProps {
   /**
    * Sets the variant for both Buttons.

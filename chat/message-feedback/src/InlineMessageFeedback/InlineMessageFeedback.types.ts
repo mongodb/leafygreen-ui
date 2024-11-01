@@ -23,7 +23,7 @@ export type InlineMessageFeedbackProps = Required<
     /**
      * Override props for the cancel Button
      */
-    cancelButtonProps?: ButtonProps;
+    cancelButtonProps?: Omit<ButtonProps, 'compact'>;
 
     /**
      * Text displayed inside the submit Button
@@ -35,7 +35,7 @@ export type InlineMessageFeedbackProps = Required<
     /**
      * Override props for the submit Button
      */
-    submitButtonProps?: ButtonProps;
+    submitButtonProps?: Omit<ButtonProps, 'compact'>;
 
     /**
      * Event handler called when the form is submitted

@@ -12,5 +12,5 @@ export type UnitSelectButtonProps = {
    * The select option that is shown in the select menu button.
    */
   displayName?: string;
-} & ButtonProps &
+} & Omit<ButtonProps, 'compact'> &
   PopoverProps;

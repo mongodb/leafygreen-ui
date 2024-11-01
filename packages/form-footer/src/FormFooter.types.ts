@@ -3,14 +3,14 @@ import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { PrimaryButtonProps } from './PrimaryButton';
 
-type ButtonPropsOmittingVariant = Omit<ButtonProps, 'variant'>;
+type ButtonPropsOmittingVariantAndCompact = Omit<ButtonProps, 'variant' | 'compact'>;
 type ButtonPropsWithRequiredChildren = Required<Pick<ButtonProps, 'children'>>;
 
-export type CustomCancelButtonProps = ButtonPropsOmittingVariant;
-export type CustomBackButtonProps = ButtonPropsOmittingVariant & {
+export type CustomCancelButtonProps = ButtonPropsOmittingVariantAndCompact;
+export type CustomBackButtonProps = ButtonPropsOmittingVariantAndCompact & {
   variant?: Extract<Variant, 'default' | 'dangerOutline'>;
 };
-export type CustomPrimaryButtonProps = ButtonPropsOmittingVariant &
+export type CustomPrimaryButtonProps = ButtonPropsOmittingVariantAndCompact &
   ButtonPropsWithRequiredChildren & {
     variant?: Extract<Variant, 'primary' | 'danger'>;
   };

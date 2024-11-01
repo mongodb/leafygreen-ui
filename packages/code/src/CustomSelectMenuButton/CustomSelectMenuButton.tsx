@@ -9,10 +9,8 @@ import Button, { ButtonProps } from '@leafygreen-ui/button';
  * @internal
  */
 export const CustomSelectMenuButton = React.forwardRef(
-  ({ children, ...props }: ButtonProps, ref) => (
-    <Button {...props} ref={ref}>
-      {children}
-    </Button>
+  (props: ButtonProps, ref) => (
+    <Button {...props} ref={ref} />
   ),
 );
 
