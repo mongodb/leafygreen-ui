@@ -32,5 +32,8 @@ export interface YAxisProps {
    *}
    * ```
    */
-  formatter?: string | ((value: string, index: number) => string);
+  formatter?:
+    | string
+    | ((value: string, index: number) => string)
+    | { [key: string]: string };
 }
