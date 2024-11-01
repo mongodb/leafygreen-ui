@@ -13,7 +13,15 @@ const TableBody = ({ children, ...rest }: TableBodyProps) => {
 
   if (isVirtual) {
     paddingTop = length > 0 ? start || 0 : 0;
+    document.documentElement.style.setProperty(
+      '--virtual-padding-top',
+      `${paddingTop}px`,
+    );
     paddingBottom = length > 0 ? totalSize - (end || 0) : 0;
+    document.documentElement.style.setProperty(
+      '--virtual-padding-bottom',
+      `${paddingBottom}px`,
+    );
   }
 
   return (
@@ -21,7 +29,7 @@ const TableBody = ({ children, ...rest }: TableBodyProps) => {
       {paddingTop > 0 && (
         <tbody>
           <tr aria-hidden>
-            <td style={{ paddingTop: `${paddingTop}px` }} />
+            <td style={{ paddingTop: 'var(--virtual-padding-top)' }} />
           </tr>
         </tbody>
       )}
@@ -29,7 +37,7 @@ const TableBody = ({ children, ...rest }: TableBodyProps) => {
       {paddingBottom > 0 && (
         <tbody>
           <tr aria-hidden>
-            <td style={{ paddingTop: `${paddingBottom}px` }} />
+            <td style={{ paddingTop: 'var(--virtual-padding-bottom)' }} />
           </tr>
         </tbody>
       )}
