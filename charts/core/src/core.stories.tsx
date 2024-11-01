@@ -141,5 +141,6 @@ LiveExample.args = {
   verticalGridLines: false,
   xAxisType: 'time',
   yAxisType: 'value',
+  xAxisFormatter: '{hh}:{mm}',
   yAxisFormatter: '{value}GB',
 };
