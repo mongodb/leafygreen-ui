@@ -36,7 +36,7 @@ export const FontSize = {
 
 export type FontSize = (typeof FontSize)[keyof typeof FontSize];
 
-export interface ButtonProps extends LgIdProps {
+export interface BaseButtonProps extends LgIdProps {
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
   // https://github.com/storybookjs/storybook/issues/14798
 
@@ -95,11 +95,6 @@ export interface ButtonProps extends LgIdProps {
   size?: Size;
 
   /**
-   * The content that will appear inside of the `<Button />` component.
-   */
-  children?: React.ReactNode;
-
-  /**
    * An icon glyph rendered before the button text.
    * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
@@ -149,4 +144,42 @@ export interface ButtonProps extends LgIdProps {
    * @default button
    */
   as?: React.ElementType<any>;
+
+  /**
+   * Show the button with less horizontal padding.
+   * Note: Cannot be used with `children`.
+   *
+   * @default false
+   */
+  compact?: boolean;
 }
+
+type ConstrainedButtonProps = {
+  /**
+   * Show the button with less horizontal padding.
+   * Note: Cannot be used with `children`.
+   *
+   * @default false
+   */
+  compact: true;
+
+  /**
+   * Cannot pass `children` when `compact`.
+   */
+  children?: never;
+} | {
+  /**
+   * Show the button with less horizontal padding.
+   * Note: Cannot be used with `children`.
+   *
+   * @default false
+   */
+  compact?: false;
+
+  /**
+   * The content that will appear inside of the `<Button />` component.
+   */
+  children?: React.ReactNode;
+};
+
+export type ButtonProps = BaseButtonProps & ConstrainedButtonProps;

@@ -316,5 +316,10 @@ describe('packages/button', () => {
     test('accepts a component as `as`', () => {
       <Button as={() => <>JSX</>} />;
     });
+
+    test('rejects children when compact', () => {
+      // @ts-expect-error - Cannot use compact with children
+      <Button compact>MongoDB</Button>;
+    });
   });
 });

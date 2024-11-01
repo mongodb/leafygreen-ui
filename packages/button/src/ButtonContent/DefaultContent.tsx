@@ -5,6 +5,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import ButtonIcon from '../ButtonIcon/ButtonIcon';
 
 import {
+  buttonContentCompactSizeStyle,
   buttonContentSizeStyle,
   buttonContentStyle,
   darkModeRightGlyphStyles,
@@ -24,6 +25,7 @@ const DefaultContent = ({
   children,
   variant,
   size,
+  compact,
   darkMode,
   disabled,
 }: DefaultContentProps) => {
@@ -33,7 +35,7 @@ const DefaultContent = ({
     <div
       className={cx(
         buttonContentStyle,
-        buttonContentSizeStyle[size],
+        compact ? buttonContentCompactSizeStyle[size] : buttonContentSizeStyle[size],
         {
           [darkModeRightGlyphStyles]: !!rightGlyph && darkMode,
         },

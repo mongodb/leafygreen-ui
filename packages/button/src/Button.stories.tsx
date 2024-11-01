@@ -35,6 +35,7 @@ const meta: StoryMetaType<typeof Button> = {
         leftGlyph: [undefined, <Icon glyph={'Cloud'} />],
         children: ['MongoDB', undefined],
         variant: Object.values(Variant),
+        compact: [undefined, true],
       },
       excludeCombinations: [
         {
@@ -47,6 +48,10 @@ const meta: StoryMetaType<typeof Button> = {
           leftGlyph: <Icon glyph={'Cloud'} />,
           children: undefined,
         },
+        {
+          children: 'MongoDB',
+          compact: true,
+        },
       ],
     },
   },
@@ -56,6 +61,7 @@ const meta: StoryMetaType<typeof Button> = {
     leftGlyph: undefined,
     rightGlyph: undefined,
     baseFontSize: BaseFontSize.Body1,
+    compact: false,
   },
   argTypes: {
     ...filteredStorybookArgTypes,
@@ -81,6 +87,11 @@ const meta: StoryMetaType<typeof Button> = {
       control: 'select',
       options: Object.values(Size),
       defaultValue: Size.Default,
+    },
+    compact: {
+      description: 'Show the button with less horizontal padding. Note: Cannot be used with `children`',
+      control: { type: 'boolean' },
+      defaultValue: false,
     },
     href: {
       control: 'text',

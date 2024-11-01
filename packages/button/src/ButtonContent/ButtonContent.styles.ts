@@ -77,6 +77,28 @@ export const buttonContentSizeStyle: Record<Size, string> = {
   `,
 };
 
+export const buttonContentCompactSizeStyle: Partial<Record<Size, string>> = {
+  [Size.XSmall]: css`
+    padding: 0 3px; // 4px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Small]: css`
+    padding: 0 5px; // 6px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Default]: css`
+    padding: 0 9px; // 10px - 1px border
+    gap: 6px;
+  `,
+
+  [Size.Large]: css`
+    padding: 0 13px; // 14px - 1px border
+    gap: 8px;
+  `,
+};
+
 export const centeredSpinnerContainerStyles = css`
   position: absolute;
 `;

@@ -5,6 +5,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { registerRipple } from '@leafygreen-ui/ripple';
 
 import {
+  buttonContentCompactSizeStyle,
   buttonContentSizeStyle,
   buttonContentStyle,
   buttonSpinnerSize,
@@ -28,6 +29,7 @@ export const ButtonContent = (props: ButtonContentProps) => {
     disabled,
     variant,
     size,
+    compact,
     isLoading,
     loadingText,
     loadingIndicator,
@@ -69,7 +71,7 @@ export const ButtonContent = (props: ButtonContentProps) => {
     return (
       <>
         <div
-          className={cx(buttonContentStyle, buttonContentSizeStyle[size], {
+          className={cx(buttonContentStyle, compact ? buttonContentCompactSizeStyle[size] : buttonContentSizeStyle[size], {
             [centeredSpinnerContainerStyles]: !loadingText,
           })}
         >

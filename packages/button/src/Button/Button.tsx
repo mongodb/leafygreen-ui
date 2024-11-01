@@ -20,6 +20,7 @@ export const Button = React.forwardRef(function Button(
   {
     variant = Variant.Default,
     size = Size.Default,
+    compact = false,
     darkMode: darkModeProp,
     'data-lgid': dataLgId = LGIDS_BUTTON.root,
     baseFontSize = BaseFontSize.Body1,
@@ -77,11 +78,18 @@ export const Button = React.forwardRef(function Button(
     isLoading,
     loadingIndicator,
     loadingText,
+    // Never pass children when compact
+    ...compact ? {
+      compact: true
+    } : {
+      compact: false,
+      children,
+    } as const
   } as const;
 
   return (
     <Box {...buttonProps}>
-      <ButtonContent {...contentProps}>{children}</ButtonContent>
+      <ButtonContent {...contentProps} />
     </Box>
   );
 });
