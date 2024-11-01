@@ -78,7 +78,7 @@ Note: There are some known issues using `yarn link` from yarn workspaces. Using 
 
 ### Using a local registry (Verdaccio)
 
-Publishing test versions to a local registry can be helpful when you need to make changes and test in an external app (or other library). Do do this, you can install and use [Verdaccio](https://verdaccio.org/)
+Publishing test versions to a local registry can be helpful when you need to make changes and test in an external app (or other library). To do this, you can install and use [Verdaccio](https://verdaccio.org/)
 
 #### 1. Install `verdaccio`
 
