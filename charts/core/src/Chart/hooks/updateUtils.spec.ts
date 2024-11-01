@@ -3,7 +3,7 @@ import { ChartOptions } from '../Chart.types';
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 
 describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
-  test('should add a series to the chart options', () => {
+  test('addSeries should add a series to the chart options', () => {
     const currentOptions: Partial<ChartOptions> = {
       series: [{ name: 'series1' }],
     };
@@ -14,7 +14,7 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     expect(updatedOptions.series?.[1].name).toBe(newSeriesName);
   });
 
-  test('should not add a series if a chart with the same name exists', () => {
+  test('addSeries should not add a series if a chart with the same name exists', () => {
     const currentOptions: Partial<ChartOptions> = {
       series: [{ name: 'series1' }],
     };
@@ -25,7 +25,7 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
     expect(updatedOptions.series?.[0].name).toBe(newSeriesName);
   });
 
-  test('should remove a series from the chart options', () => {
+  test('removeSeries should remove a series from the chart options', () => {
     const currentOptions: Partial<ChartOptions> = {
       series: [{ name: 'series1' }, { name: 'series2' }],
     };
@@ -39,7 +39,7 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
   /**
    * Tests that option updates don't overwrite the entire chart options object.
    */
-  test('should merge chart options non-destructively', () => {
+  test('updateOptions should merge chart options non-destructively', () => {
     const currentOptions: Partial<ChartOptions> = {
       xAxis: {
         show: true,
