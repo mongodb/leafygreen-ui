@@ -18,7 +18,18 @@ export interface XAxisProps {
   label?: string;
 
   /**
-   * Unit of the axis to be rendered with value.
+   *
+   * Formatter of axis label, which supports string template and callback function.
+   *
+   * ```ts
+   * // Use string template; template variable is the default label of axis {value}
+   * formatter: '{value} kg'
+   *
+   * // Use callback.
+   * formatter: function (value, index) {
+   *   return value + 'kg';
+   *}
+   * ```
    */
-  unit?: string;
+  formatter?: string | ((value: string, index: number) => string);
 }

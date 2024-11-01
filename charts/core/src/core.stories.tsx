@@ -43,10 +43,10 @@ export default {
         category: 'XAxis',
       },
     },
-    xAxisUnit: {
+    xAxisFormatter: {
       control: 'text',
-      description: 'X-axis units',
-      name: 'Unit',
+      description: 'X-axis formatter',
+      name: 'Formatter',
       table: {
         category: 'XAxis',
       },
@@ -68,10 +68,10 @@ export default {
         category: 'YAxis',
       },
     },
-    yAxisUnit: {
+    yAxisFormatter: {
       control: 'text',
-      description: 'Y-axis units',
-      name: 'Unit',
+      description: 'Y-axis formatter',
+      name: 'Formatter',
       table: {
         category: 'YAxis',
       },
@@ -103,8 +103,8 @@ interface StoryChartProps {
   horizontalGridLines: boolean;
   xAxisType: XAxisProps['type'];
   yAxisType: YAxisProps['type'];
-  xAxisUnit: string;
-  yAxisUnit: string;
+  xAxisFormatter: string;
+  yAxisFormatter: string;
   xAxisLabel: string;
   yAxisLabel: string;
 }
@@ -115,9 +115,9 @@ const Template: React.FC<StoryChartProps> = props => {
     verticalGridLines,
     horizontalGridLines,
     xAxisType,
-    xAxisUnit,
+    xAxisFormatter,
     yAxisType,
-    yAxisUnit,
+    yAxisFormatter,
     xAxisLabel,
     yAxisLabel,
   } = props;
@@ -125,8 +125,8 @@ const Template: React.FC<StoryChartProps> = props => {
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-      <XAxis type={xAxisType} unit={xAxisUnit} label={xAxisLabel} />
-      <YAxis type={yAxisType} unit={yAxisUnit} label={yAxisLabel} />
+      <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
+      <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
       {data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
@@ -141,6 +141,5 @@ LiveExample.args = {
   verticalGridLines: false,
   xAxisType: 'time',
   yAxisType: 'value',
-  xAxisUnit: '',
-  yAxisUnit: 'GB',
+  yAxisFormatter: '{value}GB',
 };
