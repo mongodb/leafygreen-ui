@@ -18,7 +18,7 @@ import {
   useViewportSize,
 } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
-  PopoverProvider,
+  PopoverPropsProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
@@ -605,7 +605,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
               baseFontSize={baseFontSize}
               __INTERNAL__menuButtonSlot__={__INTERNAL__menuButtonSlot__}
             />
-            <PopoverProvider {...popoverProps}>
+            <PopoverPropsProvider {...popoverProps}>
               <ListMenu
                 labelId={labelId}
                 id={menuId}
@@ -622,7 +622,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
                 {allowDeselect && deselectionOption}
                 {renderedChildren}
               </ListMenu>
-            </PopoverProvider>
+            </PopoverPropsProvider>
           </SelectContext.Provider>
           <FormFieldFeedback
             disabled={disabled}
