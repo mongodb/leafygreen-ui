@@ -673,7 +673,6 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
     [],
   );
 
-  // FIXME: this table becomes SUPER flickery scrolling up when a lot of rows are expanded
   //TODO: fix type
   const table = useLeafyGreenVirtualTable<any>({
     containerRef: tableContainerRef,
