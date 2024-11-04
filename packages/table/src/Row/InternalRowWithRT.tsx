@@ -3,6 +3,7 @@ import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
+import { GenericMemo } from '@leafygreen-ui/lib';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -87,16 +88,7 @@ export const InternalRowWithRT = React.forwardRef(
 
 export default InternalRowWithRT;
 
-// TODO: where can i move this?
-const genericMemo: <
-  T extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>,
->(
-  component: T,
-  propsAreEqual?: (
-    prevProps: React.ComponentPropsWithRef<T>,
-    nextProps: React.ComponentPropsWithRef<T>,
-  ) => boolean,
-) => T & { displayName?: string } = React.memo;
+const genericMemo: GenericMemo = React.memo;
 
 export const MemoizedInternalRowWithRT = genericMemo(
   InternalRowWithRT,
@@ -109,14 +101,3 @@ export const MemoizedInternalRowWithRT = genericMemo(
     return propsAreEqual;
   },
 );
-
-// TODO: how can i type this so that i can pass it as the second argument to MemoizedInternalRowWithRT
-// const arePropsEqual = (prevProps, nextProps) => {
-//   // Children will never be the same
-//   const { children: prevChildren, ...restPrevProps } = prevProps;
-//   const { children: nextChildren, ...restnextProps } = nextProps;
-
-//   const propsAreEqual = isEqual(restPrevProps, restnextProps);
-
-//   return propsAreEqual;
-// };
