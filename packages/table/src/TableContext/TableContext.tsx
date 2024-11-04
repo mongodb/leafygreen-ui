@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {
   createContext,
   PropsWithChildren,
@@ -10,7 +9,11 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
-import { type TableContextValues } from './TableContext.types';
+import {
+  type TableContextValues,
+  type TableProviderValues,
+} from './TableContext.types';
+import VirtualTableContextProvider from './VirtualTableContext';
 
 export const TableContext = createContext<
   Partial<TableContextValues<LGRowData>>
@@ -29,47 +32,44 @@ const TableContextProvider = <T extends LGRowData>({
   isSelectable,
   measureElement,
   shouldTruncate,
-  length,
-  start,
-  size,
-  end,
-  totalSize,
-}: PropsWithChildren<Partial<TableContextValues<T>>>) => {
+  numOfVirtualItems,
+  startOfFirstVirtualItem,
+  endOfLastVirtualItem,
+  totalSizOfVirtualTable,
+}: PropsWithChildren<Partial<TableProviderValues<T>>>) => {
   /** The appropriately typed context provider */
-  const TableProvider = (TableContext as React.Context<TableContextValues<T>>)
+  const TableProvider = (TableContext as React.Context<TableProviderValues<T>>)
     .Provider;
 
-  const providerData = useMemo(() => {
+  const tableProviderData = useMemo(() => {
     return {
       shouldAlternateRowColor,
       darkMode,
       isVirtual,
       isSelectable,
-      measureElement,
       shouldTruncate,
-      length,
-      start,
-      size,
-      end,
-      totalSize,
     };
   }, [
     shouldAlternateRowColor,
     darkMode,
     isVirtual,
     isSelectable,
-    measureElement,
     shouldTruncate,
-    length,
-    start,
-    size,
-    end,
-    totalSize,
   ]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <TableProvider value={providerData}>{children}</TableProvider>
+      <TableProvider value={tableProviderData}>
+        <VirtualTableContextProvider
+          measureElement={measureElement}
+          numOfVirtualItems={numOfVirtualItems}
+          startOfFirstVirtualItem={startOfFirstVirtualItem}
+          endOfLastVirtualItem={endOfLastVirtualItem}
+          totalSizOfVirtualTable={totalSizOfVirtualTable}
+        >
+          {children}
+        </VirtualTableContextProvider>
+      </TableProvider>
     </LeafyGreenProvider>
   );
 };

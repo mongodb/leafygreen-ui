@@ -60,6 +60,12 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
       : undefined;
 
+    const numOfVirtualItems = virtualTable?.virtualItems.length;
+    const startOfFirstVirtualItem = virtualTable?.virtualItems[0]?.start;
+    const endOfLastVirtualItem =
+      virtualTable?.virtualItems[virtualTable?.virtualItems.length - 1]?.end;
+    const totalSizOfVirtualTable = virtualTable?.getTotalSize();
+
     const length = virtualTable?.virtualItems.length;
     const start = virtualTable?.virtualItems[0]?.start;
     const size = virtualTable?.virtualItems[0]?.size;
@@ -101,6 +107,10 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               size={size}
               end={end}
               totalSize={totalSize}
+              numOfVirtualItems={numOfVirtualItems}
+              startOfFirstVirtualItem={startOfFirstVirtualItem}
+              endOfLastVirtualItem={endOfLastVirtualItem}
+              totalSizOfVirtualTable={totalSizOfVirtualTable}
             >
               <table
                 className={cx(
