@@ -14,11 +14,13 @@ import {
   selectedRowStyles,
   zebraStyles,
 } from './Row.styles';
-import { InternalRowWithRTProps, RowComponentType } from './Row.types';
+import { InternalRowWithRTProps, RowComponentWithRTType } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
+ *
+ * @internal
  */
 const InternalRowWithRTForwardRef = <T extends LGRowData>(
   {
@@ -84,7 +86,7 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
 
 export const InternalRowWithRT = React.forwardRef(
   InternalRowWithRTForwardRef,
-) as RowComponentType;
+) as RowComponentWithRTType;
 
 export default InternalRowWithRT;
 

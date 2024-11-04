@@ -9,11 +9,14 @@ import { LGRowData } from '../useLeafyGreenTable';
 
 import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
 import {
-  InternalCellComponentType,
+  InternalCellWithRTComponentType,
   InternalCellWithRTProps,
 } from './Cell.types';
-import InternalCell from './InternalCell';
+import InternalCellBase from './InternalCellBase';
 
+/**
+ * @internal
+ */
 const InternalCellWithRTForwardRef = <T extends LGRowData>(
   {
     children,
@@ -31,7 +34,7 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
 
   return (
-    <InternalCell
+    <InternalCellBase
       className={cx(
         getCellStyles(depth, isExpandable, isSelectable),
         className,
@@ -50,13 +53,13 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
         />
       )}
       <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
-    </InternalCell>
+    </InternalCellBase>
   );
 };
 
 export const InternalCellWithRT = React.forwardRef(
   InternalCellWithRTForwardRef,
-) as InternalCellComponentType;
+) as InternalCellWithRTComponentType;
 
 InternalCellWithRT.displayName = 'InternalCellWithRT';
 

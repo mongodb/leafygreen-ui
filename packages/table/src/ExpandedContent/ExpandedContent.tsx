@@ -38,7 +38,6 @@ const ExpandedContentWithRef = <T extends RowData>(
       data-index={virtualRow ? virtualRow!.index : ''}
     >
       <td
-        //TODO: does not work with grid
         colSpan={row.getVisibleCells().length}
         className={cx(baseStyles)}
         data-lgid={LGIDS.cell}
@@ -53,7 +52,7 @@ const ExpandedContentWithRef = <T extends RowData>(
   );
 };
 
-// FIXME: Try to avoid asserting
+// TODO: Can I avoid asserting
 export const ExpandedContent = React.forwardRef(
   ExpandedContentWithRef,
 ) as ExpandedContentComponentType;

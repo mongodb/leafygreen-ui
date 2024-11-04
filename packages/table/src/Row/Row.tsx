@@ -20,7 +20,7 @@ const RowWithRef = <T extends LGRowData>(
   ref: ForwardedRef<HTMLTableRowElement>,
 ) => {
   const { theme } = useDarkMode();
-  const { shouldAlternateRowColor } = useTableContext();
+  const { shouldAlternateRowColor = false } = useTableContext();
   const { measureElement } = useVirtualTableContext();
   return (
     <>
@@ -33,7 +33,7 @@ const RowWithRef = <T extends LGRowData>(
           shouldAlternateRowColor={shouldAlternateRowColor}
           isExpanded={row.getIsExpanded()}
           isParentExpanded={
-            row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
+            (row.getParentRow() && row.getParentRow()?.getIsExpanded()) ?? false
           }
           isSelected={row.getIsSelected()}
           ref={ref}
@@ -48,12 +48,7 @@ const RowWithRef = <T extends LGRowData>(
   );
 };
 
-// export const Row: RowComponentType = React.forwardRef(Row);
-
-// // https://oida.dev/typescript-react-generic-forward-refs/#option-1%3A-type-assertion
-// // We can’t assign a generic type variable for RowForwardRef. It becomes unknown by default.
-// // This is a type assertion that restores the original function signature.
-// FIXME: Try to avoid asserting
+// TODO: Can i avoid asserting?
 export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
 Row.propTypes = {

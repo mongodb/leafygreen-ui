@@ -11,6 +11,8 @@ import { InternalRowBaseProps } from './Row.types';
 
 /**
  * Renders basic array row data
+ *
+ * @internal
  */
 const InternalRowWithoutRT = forwardRef<
   HTMLTableRowElement,

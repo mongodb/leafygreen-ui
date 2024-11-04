@@ -11,7 +11,10 @@ import {
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
 
-const InternalCell = forwardRef<HTMLTableCellElement, InternalCellProps>(
+/**
+ * @internal
+ */
+const InternalCellBase = forwardRef<HTMLTableCellElement, InternalCellProps>(
   (
     {
       children,
@@ -37,6 +40,6 @@ const InternalCell = forwardRef<HTMLTableCellElement, InternalCellProps>(
   },
 );
 
-InternalCell.displayName = 'InternalCell';
+InternalCellBase.displayName = 'InternalCellBase';
 
-export default InternalCell;
+export default InternalCellBase;

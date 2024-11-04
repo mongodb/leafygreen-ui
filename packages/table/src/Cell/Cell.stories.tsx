@@ -10,7 +10,7 @@ import InternalRowBase from '../Row/InternalRowBase';
 import Table from '../Table';
 import TableBody from '../TableBody';
 
-import InternalCell from './InternalCell';
+import InternalCell from './InternalCellBase';
 
 const meta: StoryMetaType<typeof InternalCell> = {
   title: 'Components/Table/Cell',

@@ -5,9 +5,12 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useTableContext } from '../TableContext';
 
 import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
-import InternalCell from './InternalCell';
+import InternalCellBase from './InternalCellBase';
 import { InternalCellProps } from '.';
 
+/**
+ * @internal
+ */
 const InternalCellWithoutRT = forwardRef<
   HTMLTableCellElement,
   InternalCellProps
@@ -15,13 +18,13 @@ const InternalCellWithoutRT = forwardRef<
   const { shouldTruncate = true } = useTableContext();
 
   return (
-    <InternalCell
+    <InternalCellBase
       ref={fwdRef}
       className={cx(getCellStyles(), className)}
       {...rest}
     >
       <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
-    </InternalCell>
+    </InternalCellBase>
   );
 });
 
