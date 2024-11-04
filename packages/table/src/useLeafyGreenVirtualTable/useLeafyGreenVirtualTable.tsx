@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useVirtualizer, VirtualItem } from '@tanstack/react-virtual';
 
 import useLeafyGreenTable, { LGRowData } from '../useLeafyGreenTable';
@@ -37,15 +38,10 @@ function useLeafyGreenVirtualTable<
     getScrollElement: () => containerRef.current,
     estimateSize: () => 40,
     overscan: 20,
-    // getItemKey: useCallback(
-    //   (index: number) => rows[index]?.id ?? index,
-    //   [rows],
-    // ),
-    measureElement:
-      typeof window !== 'undefined' &&
-      navigator.userAgent.indexOf('Firefox') === -1
-        ? element => element?.getBoundingClientRect().height
-        : undefined,
+    getItemKey: useCallback(
+      (index: number) => rows[index]?.id ?? index,
+      [rows],
+    ),
     ...virtualizerOptions,
   });
 

@@ -4,33 +4,45 @@ import { Virtualizer } from '@tanstack/react-virtual';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { TableProps } from '../Table/Table.types';
-import {
-  LeafyGreenTable,
-  LeafyGreenTableRow,
-  LGRowData,
-} from '../useLeafyGreenTable';
+import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
+
+export interface SharedVirtualContextValue {
+  measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
+  numOfVirtualItems?: number;
+  startOfFirstVirtualItem?: number;
+  endOfLastVirtualItem?: number;
+  totalSizOfVirtualTable?: number;
+}
+
+export interface BaseTableContextValue<T extends LGRowData> {
+  /**
+   * The `useLeafyGreenTable` return value
+   */
+  table?: LeafyGreenTable<T>;
+
+  /**
+   * Whether the table is using virtual scrolling
+   */
+  isVirtual?: boolean;
+
+  /**
+   * Whether rows in the table are selectable
+   */
+  isSelectable?: boolean;
+}
+
+export type TableProviderValues<T extends LGRowData> = PropsWithChildren<
+  Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
+> &
+  DarkModeProps &
+  SharedVirtualContextValue &
+  BaseTableContextValue<T>;
 
 export type TableContextValues<T extends LGRowData> = PropsWithChildren<
   Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
 > &
-  DarkModeProps & {
-    /** returns the table row object with the provided `id` */
-    getRowById?: (id?: string) => LeafyGreenTableRow<T> | undefined;
+  DarkModeProps &
+  BaseTableContextValue<T>;
 
-    /** returns the parent table row object for the provided `id` if it is nested */
-    getParentRow?: (id?: string) => LeafyGreenTableRow<T> | undefined;
-
-    /**
-     * The `useLeafyGreenTable` return value
-     */
-    table?: LeafyGreenTable<T>;
-
-    /**
-     * Whether the table is using virtual scrolling
-     */
-    isVirtual?: boolean;
-
-    isSelectable?: boolean;
-
-    measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
-  };
+export type VirtualTableContextValues = PropsWithChildren &
+  SharedVirtualContextValue;

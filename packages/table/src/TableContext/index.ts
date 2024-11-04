@@ -1,4 +1,17 @@
 import TableContextProvider, { useTableContext } from './TableContext';
-import { type TableContextValues } from './TableContext.types';
+import type {
+  TableContextValues,
+  VirtualTableContextValues,
+} from './TableContext.types';
+import VirtualTableContextProvider, {
+  useVirtualTableContext,
+} from './VirtualTableContext';
 
-export { TableContextProvider, type TableContextValues, useTableContext };
+export {
+  TableContextProvider,
+  type TableContextValues,
+  useTableContext,
+  useVirtualTableContext,
+  VirtualTableContextProvider,
+  type VirtualTableContextValues,
+};
