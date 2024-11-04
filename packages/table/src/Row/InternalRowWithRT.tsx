@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -34,11 +34,19 @@ const InternalRowWithRT = <T extends LGRowData>({
 }: InternalRowWithRTProps<T>) => {
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
+  const isExpandable = row.getCanExpand();
+  const depth = row.depth;
+  const toggleExpanded = useCallback(() => row.toggleExpanded(), [row]);
+
   const contextValues = useMemo(() => {
     return {
       disabled,
+      isExpanded,
+      isExpandable,
+      depth,
+      toggleExpanded,
     };
-  }, [disabled]);
+  }, [depth, disabled, isExpandable, isExpanded, toggleExpanded]);
 
   // eslint-disable-next-line no-console
   // console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);

@@ -19,14 +19,10 @@ const InternalCellWithRT = <T extends LGRowData>({
   cell,
   ...rest
 }: InternalCellWithRTProps<T>) => {
-  const { disabled } = useRowContext();
+  const { disabled, isExpanded, isExpandable, depth, toggleExpanded } =
+    useRowContext();
   const { isSelectable, shouldTruncate = true } = useTableContext();
   const isFirstCell = (cell && cell.column.getIsFirstColumn()) || false;
-  const row = cell.row;
-  const isExpandable = row.getCanExpand();
-  const isExpanded = row.getIsExpanded();
-  const depth = row.depth;
-  const toggleExpanded = () => row.toggleExpanded();
 
   return (
     <InternalCell
@@ -41,8 +37,8 @@ const InternalCellWithRT = <T extends LGRowData>({
     >
       {isFirstCell && isExpandable && (
         <ToggleExpandedIcon
-          isExpanded={isExpanded}
-          toggleExpanded={toggleExpanded}
+          isExpanded={isExpanded!}
+          toggleExpanded={toggleExpanded!}
           disabled={disabled}
         />
       )}

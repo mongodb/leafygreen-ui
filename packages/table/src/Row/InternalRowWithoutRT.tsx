@@ -21,13 +21,6 @@ const InternalRowWithoutRT = ({
   const { shouldAlternateRowColor } = useTableContext();
   const { theme } = useDarkMode();
 
-  React.Children.forEach(children, child => {
-    if (!isComponentType(child, 'Cell'))
-      consoleOnce.warn(
-        'LG Row is rendering a custom cell element. Utilize the `Cell` component for standardized styles, correct HTML properties and additional functionalities when using `useLeafyGreenTable`.',
-      );
-  });
-
   return (
     <InternalRowBase
       className={cx(

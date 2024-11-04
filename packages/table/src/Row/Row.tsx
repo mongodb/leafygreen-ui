@@ -9,6 +9,7 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import { MemoizedInternalRowWithRT } from './InternalRowWithRT';
 import { RowProps } from './Row.types';
+import { RowContextProvider } from './RowContext';
 
 /**
  * Renders the provided cells
@@ -16,6 +17,7 @@ import { RowProps } from './Row.types';
 const Row = <T extends LGRowData>({
   row,
   virtualRow,
+  disabled = false,
   ...rest
 }: RowProps<T>) => {
   const { theme } = useDarkMode();
@@ -38,10 +40,13 @@ const Row = <T extends LGRowData>({
             row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
           }
           isSelected={row.getIsSelected()}
+          disabled={disabled}
           {...rest}
         />
       ) : (
-        <InternalRowWithoutRT {...rest} />
+        <RowContextProvider disabled={disabled}>
+          <InternalRowWithoutRT {...rest} />
+        </RowContextProvider>
       )}
     </>
   );
