@@ -13,7 +13,6 @@ const rootStyle = css`
   align-content: center;
   padding: 100px;
   height: 100%;
-  overflow: auto;
 `;
 
 const darkModeStyle = css`

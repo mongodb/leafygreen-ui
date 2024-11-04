@@ -55,7 +55,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     return (
       <div
         ref={containerRef}
-        className={cx(tableContainerStyles, className)}
+        className={cx(tableContainerStyles(isVirtual), className)}
         // allow select by keyboard to allow scroll by keyboard
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}

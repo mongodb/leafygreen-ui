@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 
@@ -17,8 +17,15 @@ export const themeStyles: Record<Theme, string> = {
   `,
 };
 
-export const tableContainerStyles = css`
-  overflow: auto;
-  width: 100%;
-  position: relative;
-`;
+export const tableContainerStyles = (isVirtual = false) =>
+  cx(
+    css`
+      width: 100%;
+      position: relative;
+    `,
+    {
+      [css`
+        overflow: auto;
+      `]: isVirtual,
+    },
+  );

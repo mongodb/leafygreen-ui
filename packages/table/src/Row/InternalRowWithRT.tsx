@@ -89,11 +89,6 @@ const arePropsEqual = (prevProps, nextProps) => {
 
   const propsAreEqual = isEqual(restPrevProps, restnextProps);
 
-  // console.log('🧤', {
-  //   children: prevProps.children === nextProps.children,
-  //   propsWithoutChildren: isEqual(restPrevProps, restnextProps),
-  // });
-
   return propsAreEqual;
 };
 
