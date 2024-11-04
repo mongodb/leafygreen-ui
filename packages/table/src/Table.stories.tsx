@@ -178,7 +178,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
           width: 1100px;
         `}
       >
-        <TableHead>
+        <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
               {headerGroup.headers.map(header => {

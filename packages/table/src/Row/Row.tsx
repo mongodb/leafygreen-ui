@@ -9,13 +9,14 @@ import { LGRowData } from '../useLeafyGreenTable';
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import { MemoizedInternalRowWithRT } from './InternalRowWithRT';
 import { RowComponentType, RowProps } from './Row.types';
+import { RowContextProvider } from './RowContext';
 
 /**
  * Renders the provided cells
  */
 
 const RowWithRef = <T extends LGRowData>(
-  { row, virtualRow, ...rest }: RowProps<T>,
+  { row, virtualRow, disabled = false, ...rest }: RowProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
 ) => {
   const { theme } = useDarkMode();
@@ -39,7 +40,9 @@ const RowWithRef = <T extends LGRowData>(
           {...rest}
         />
       ) : (
-        <InternalRowWithoutRT ref={ref} {...rest} />
+        <RowContextProvider disabled={disabled}>
+          <InternalRowWithoutRT ref={ref} {...rest} />
+        </RowContextProvider>
       )}
     </>
   );
