@@ -6,7 +6,8 @@ import {
 } from '@leafygreen-ui/hooks';
 import {
   useMigrationContext,
-  usePopoverContext,
+  usePopoverPortalContainer,
+  usePopoverPropsContext,
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { getElementDocumentPosition } from '../utils/positionUtils';
@@ -22,7 +23,7 @@ import {
  * This hook handles logic for determining what prop values are used for the `Popover`
  * component. If a prop is not provided, the value from the `PopoverContext` will be used.
  */
-export function usePopoverContextProps({
+export function usePopoverProps({
   renderMode: renderModeProp,
   dismissMode,
   onToggle,
@@ -52,33 +53,60 @@ export function usePopoverContextProps({
   >
 >) {
   const { forceUseTopLayer } = useMigrationContext();
-  const context = usePopoverContext();
+  const context = usePopoverPropsContext();
+  const popoverPortalContext = usePopoverPortalContainer();
+
   const renderMode = forceUseTopLayer
     ? RenderMode.TopLayer
     : renderModeProp || context.renderMode || RenderMode.TopLayer;
   const usePortal = renderMode === RenderMode.Portal;
-  const popoverZIndex =
-    renderMode === RenderMode.TopLayer
-      ? undefined
-      : popoverZIndexProp || context.popoverZIndex;
+  const useTopLayer = renderMode === RenderMode.TopLayer;
 
-  return {
-    renderMode,
-    usePortal,
-    dismissMode: dismissMode || context.dismissMode,
-    onToggle: onToggle || context.onToggle,
-    portalClassName: portalClassName || context.portalClassName,
-    portalContainer: portalContainer || context.portalContainer,
-    portalRef: portalRef || context.portalRef,
-    scrollContainer: scrollContainer || context.scrollContainer,
+  const topLayerProps = useTopLayer
+    ? {
+        dismissMode: dismissMode || context.dismissMode,
+        onToggle: onToggle || context.onToggle,
+      }
+    : {};
+
+  const portalProps = usePortal
+    ? {
+        portalClassName: portalClassName || context.portalClassName,
+        portalContainer:
+          portalContainer ||
+          context.portalContainer ||
+          popoverPortalContext.portalContainer,
+        portalRef: portalRef || context.portalRef,
+        scrollContainer:
+          scrollContainer ||
+          context.scrollContainer ||
+          popoverPortalContext.scrollContainer,
+      }
+    : {};
+
+  const reactTransitionGroupProps = {
     onEnter: onEnter || context.onEnter,
     onEntering: onEntering || context.onEntering,
     onEntered: onEntered || context.onEntered,
     onExit: onExit || context.onExit,
     onExiting: onExiting || context.onExiting,
     onExited: onExited || context.onExited,
-    popoverZIndex,
+  };
+
+  const styleProps = {
+    popoverZIndex: useTopLayer
+      ? undefined
+      : popoverZIndexProp || context.popoverZIndex,
     spacing: spacing || context.spacing,
+  };
+
+  return {
+    renderMode,
+    usePortal,
+    ...topLayerProps,
+    ...portalProps,
+    ...reactTransitionGroupProps,
+    ...styleProps,
     ...rest,
   };
 }

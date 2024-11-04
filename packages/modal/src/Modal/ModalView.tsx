@@ -8,10 +8,9 @@ import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
-  PopoverProvider,
-  RenderMode,
+  PortalContextProvider,
   useDarkMode,
-  useModalPopoverContext,
+  usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
 
@@ -66,7 +65,7 @@ const ModalView = React.forwardRef(
     const [scrollContainerRef, setScrollContainerRef] =
       useState<null | HTMLDivElement>(null);
 
-    const { isPopoverOpen } = useModalPopoverContext();
+    const { isPopoverOpen } = usePopoverContext();
 
     const handleClose = useCallback(() => {
       if (setOpen && shouldClose()) {
@@ -140,10 +139,11 @@ const ModalView = React.forwardRef(
                         contentClassName,
                       )}
                     >
-                      <PopoverProvider
-                        renderMode={RenderMode.Portal}
-                        portalContainer={scrollContainerRef}
-                        scrollContainer={scrollContainerRef}
+                      <PortalContextProvider
+                        popover={{
+                          portalContainer: scrollContainerRef,
+                          scrollContainer: scrollContainerRef,
+                        }}
                       >
                         {children}
                         <IconButton
@@ -158,7 +158,7 @@ const ModalView = React.forwardRef(
                         >
                           <XIcon />
                         </IconButton>
-                      </PopoverProvider>
+                      </PortalContextProvider>
                     </div>
                   </div>
                 </FocusTrap>

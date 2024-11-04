@@ -8,7 +8,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
 import {
   useDarkMode,
-  usePopoverContext,
+  usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import Tooltip, {
@@ -59,7 +59,7 @@ export default function Copyable({
   const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
   const codeRef = useRef<HTMLElement>(null);
 
-  const { portalContainer } = usePopoverContext();
+  const { portalContainer } = usePopoverPortalContainer();
 
   const baseFontSize = useUpdatedBaseFontSize();
 

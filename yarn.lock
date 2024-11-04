@@ -7605,7 +7605,7 @@ camelcase@^7.0.0:
 
 caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001517, caniuse-lite@^1.0.30001585, caniuse-lite@^1.0.30001587:
   version "1.0.30001674"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001674.tgz#eb200a716c3e796d33d30b9c8890517a72f862c8"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/caniuse-lite/-/caniuse-lite-1.0.30001674.tgz#eb200a716c3e796d33d30b9c8890517a72f862c8"
   integrity sha512-jOsKlZVRnzfhLojb+Ykb+gyUSp9Xb57So+fAiFlLzzTKpqg8xxSav0e40c8/4F/v9N8QSvrRRaLeVzQbLqomYw==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:

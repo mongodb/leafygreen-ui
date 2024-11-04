@@ -1,39 +1,15 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
-
-import { RenderMode } from './PopoverContext/PopoverContext.types';
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
+import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
+import { MigrationProvider, useMigrationContext } from './MigrationContext';
 import {
-  MigrationContextType,
-  MigrationProvider,
-  useMigrationContext,
-} from './MigrationContext';
-import {
-  PopoverProvider,
-  PopoverProviderProps,
-  usePopoverContext,
-} from './PopoverContext';
-import TypographyProvider, {
-  TypographyProviderProps,
-  useBaseFontSize,
-} from './TypographyContext';
+  PortalContextProvider,
+  usePopoverPortalContainer,
+} from './PortalContext';
+import TypographyProvider, { useBaseFontSize } from './TypographyContext';
 import UsingKeyboardProvider from './UsingKeyboardContext';
-
-type PopoverPortalContainerType = Pick<
-  PopoverProviderProps,
-  'portalContainer' | 'scrollContainer'
->;
-
-export type LeafyGreenProviderProps = {
-  /**
-   * Define a container HTMLElement for components that utilize the `Portal` component
-   */
-  popoverPortalContainer?: PopoverPortalContainerType;
-} & TypographyProviderProps &
-  DarkModeProps &
-  MigrationContextType;
 
 function LeafyGreenProvider({
   children,
@@ -61,45 +37,33 @@ function LeafyGreenProvider({
   const baseFontSize = fontSizeProp ?? inheritedFontSize;
 
   /**
+   * If `popoverPortalContainer` prop is provided, use that. Otherwise, use context value
+   */
+  const inheritedContainer = usePopoverPortalContainer();
+  const popoverPortalContainer =
+    popoverPortalContainerProp ?? inheritedContainer;
+
+  /**
    * If `forceUseTopLayerProp` is true, it will globally apply to all children
    */
   const migrationContext = useMigrationContext();
   const forceUseTopLayer =
     forceUseTopLayerProp || migrationContext.forceUseTopLayer;
 
-  /**
-   * If `popoverPortalContainer` prop is provided, use that. Otherwise, use context value
-   */
-  const popoverContext = usePopoverContext();
-  const inheritedPopoverContextContainers: PopoverPortalContainerType =
-    Object.fromEntries(
-      Object.entries(popoverContext).filter(([key, _]) =>
-        ['portalContainer', 'scrollContainer'].includes(key),
-      ),
-    );
-  const { portalContainer, scrollContainer } =
-    popoverPortalContainerProp ?? inheritedPopoverContextContainers;
-  const popoverProviderProps =
-    portalContainer || scrollContainer
-      ? { renderMode: RenderMode.Portal, portalContainer, scrollContainer }
-      : ({
-          renderMode: RenderMode.TopLayer,
-        } as const);
-
   return (
     <UsingKeyboardProvider>
-      <TypographyProvider baseFontSize={baseFontSize}>
-        <DarkModeProvider
-          contextDarkMode={darkModeState}
-          setDarkMode={setDarkMode}
-        >
-          <MigrationProvider forceUseTopLayer={forceUseTopLayer}>
-            <PopoverProvider {...popoverProviderProps}>
+      <PortalContextProvider popover={popoverPortalContainer}>
+        <TypographyProvider baseFontSize={baseFontSize}>
+          <DarkModeProvider
+            contextDarkMode={darkModeState}
+            setDarkMode={setDarkMode}
+          >
+            <MigrationProvider forceUseTopLayer={forceUseTopLayer}>
               {children}
-            </PopoverProvider>
-          </MigrationProvider>
-        </DarkModeProvider>
-      </TypographyProvider>
+            </MigrationProvider>
+          </DarkModeProvider>
+        </TypographyProvider>
+      </PortalContextProvider>
     </UsingKeyboardProvider>
   );
 }
