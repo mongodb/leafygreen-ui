@@ -26,7 +26,7 @@ import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
 <Chart>
   <Grid vertical={false}>
   <XAxis type="time" />
-  <YAxis type="value" unit="GB" />
+  <YAxis type="value" formatter={(value) => `${value}GB`} />
   <Line
     name="Series 1"
     data={[
@@ -92,11 +92,11 @@ Renders an x-axis.
 
 #### Props
 
-| Name                 | Description                                                                                                                                                                                                                                                                           | Type                                     | Default |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------- |
-| `type`               | Type of axis.                                                                                                                                                                                                                                                                         | 'category' \| 'value' \| 'time' \| 'log' |         |
-| `label` _(optional)_ | Label name to be rendered on the axis.                                                                                                                                                                                                                                                | string                                   |         |
-| `unit` _(optional)_  | String that will be appended to the values of the axis. Only applies if `type` of `value`. _Note: this unit will not impact the data. E.g. if data is given in MB and the units are set to "GB", the component won’t convert these values. Conversion of data is up to the consumer._ | string                                   |         |
+| Name                     | Description                                   | Type                                     | Default |
+| ------------------------ | --------------------------------------------- | ---------------------------------------- | ------- |
+| `type`                   | Type of axis.                                 | 'category' \| 'value' \| 'time' \| 'log' |         |
+| `label` _(optional)_     | Label name to be rendered on the axis.        | string                                   |         |
+| `formatter` _(optional)_ | Callback function for formatting tick values. | (value: string, index: number) => string |         |
 
 ### `YAxis`
 
@@ -104,8 +104,8 @@ Renders a y-axis.
 
 #### Props
 
-| Name                 | Description                                                                                                                                                                                                                                                                           | Type                                     | Default |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------- |
-| `type`               | Type of axis.                                                                                                                                                                                                                                                                         | 'category' \| 'value' \| 'time' \| 'log' |         |
-| `label` _(optional)_ | Label name to be rendered on the axis.                                                                                                                                                                                                                                                | string                                   |         |
-| `unit` _(optional)_  | String that will be appended to the values of the axis. Only applies if `type` of `value`. _Note: this unit will not impact the data. E.g. if data is given in MB and the units are set to "GB", the component won’t convert these values. Conversion of data is up to the consumer._ | string                                   |         |
+| Name                     | Description                                   | Type                                     | Default |
+| ------------------------ | --------------------------------------------- | ---------------------------------------- | ------- |
+| `type`                   | Type of axis.                                 | 'category' \| 'value' \| 'time' \| 'log' |         |
+| `label` _(optional)_     | Label name to be rendered on the axis.        | string                                   |         |
+| `formatter` _(optional)_ | Callback function for formatting tick values. | (value: string, index: number) => string |         |

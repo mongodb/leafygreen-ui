@@ -43,12 +43,11 @@ export default {
         category: 'XAxis',
       },
     },
-    xAxisUnit: {
-      control: 'text',
-      description: 'X-axis units',
-      name: 'Unit',
+    xAxisFormatter: {
+      description: 'X-axis formatter',
+      name: 'Formatter',
       table: {
-        category: 'XAxis',
+        disable: true,
       },
     },
     xAxisLabel: {
@@ -68,12 +67,11 @@ export default {
         category: 'YAxis',
       },
     },
-    yAxisUnit: {
-      control: 'text',
-      description: 'Y-axis units',
-      name: 'Unit',
+    yAxisFormatter: {
+      description: 'Y-axis formatter',
+      name: 'Formatter',
       table: {
-        category: 'YAxis',
+        disable: true,
       },
     },
     yAxisLabel: {
@@ -103,10 +101,10 @@ interface StoryChartProps {
   horizontalGridLines: boolean;
   xAxisType: XAxisProps['type'];
   yAxisType: YAxisProps['type'];
-  xAxisUnit: string;
-  yAxisUnit: string;
-  xAxisLabel: string;
-  yAxisLabel: string;
+  xAxisFormatter: XAxisProps['formatter'];
+  yAxisFormatter: XAxisProps['formatter'];
+  xAxisLabel: XAxisProps['label'];
+  yAxisLabel: YAxisProps['label'];
 }
 
 const Template: React.FC<StoryChartProps> = props => {
@@ -115,9 +113,9 @@ const Template: React.FC<StoryChartProps> = props => {
     verticalGridLines,
     horizontalGridLines,
     xAxisType,
-    xAxisUnit,
+    xAxisFormatter,
     yAxisType,
-    yAxisUnit,
+    yAxisFormatter,
     xAxisLabel,
     yAxisLabel,
   } = props;
@@ -125,8 +123,8 @@ const Template: React.FC<StoryChartProps> = props => {
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-      <XAxis type={xAxisType} unit={xAxisUnit} label={xAxisLabel} />
-      <YAxis type={yAxisType} unit={yAxisUnit} label={yAxisLabel} />
+      <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
+      <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
       {data.map(({ name, data }) => (
         <Line name={name} data={data} key={name} />
       ))}
@@ -141,6 +139,5 @@ LiveExample.args = {
   verticalGridLines: false,
   xAxisType: 'time',
   yAxisType: 'value',
-  xAxisUnit: '',
-  yAxisUnit: 'GB',
+  yAxisFormatter: value => `${value}GB`,
 };

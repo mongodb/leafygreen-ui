@@ -19,7 +19,15 @@ export interface YAxisProps {
   label?: string;
 
   /**
-   * Unit of the axis to be rendered with value. Only applies if `type` of `value`.
+   *
+   * Formatter of axis label, which supports string template and callback function.
+   *
+   * ```ts
+   * // Use callback.
+   * formatter: function (value, index) {
+   *   return value + 'kg';
+   *}
+   * ```
    */
-  unit?: string;
+  formatter?: (value: string, index: number) => string;
 }

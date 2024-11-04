@@ -14,13 +14,13 @@ import {
 import { ChartOptions } from '../Chart/Chart.types';
 import { useChartContext } from '../ChartContext';
 
-import { XAxisProps, XAxisType } from './XAxis.types';
+import { XAxisProps } from './XAxis.types';
 
 const getOptions = ({
   theme,
   type,
   label,
-  unit,
+  formatter,
 }: XAxisProps & { theme: Theme }): Partial<ChartOptions> => {
   const options: Partial<ChartOptions> = {
     xAxis: {
@@ -42,10 +42,7 @@ const getOptions = ({
         color: color[theme].text[Variant.Secondary][InteractionState.Default],
         align: 'center',
         margin: spacing[400],
-        formatter:
-          unit && type === XAxisType.Value
-            ? (value: string) => `${value}${unit}`
-            : undefined,
+        formatter,
       },
       axisTick: {
         show: false,
@@ -96,16 +93,16 @@ const unsetAxisOptions = {
  *   <XAxis
  *     type="time",
  *     label="My X-Axis Data",
- *     unit="GB"
+ *     formatter="{value}GB"
  *   />
  * </Chart>
  */
-export function XAxis({ type, label, unit }: XAxisProps) {
+export function XAxis({ type, label, formatter }: XAxisProps) {
   const { updateChartOptions } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    updateChartOptions(getOptions({ type, label, unit, theme }));
+    updateChartOptions(getOptions({ type, label, formatter, theme }));
 
     return () => {
       /**
@@ -115,7 +112,7 @@ export function XAxis({ type, label, unit }: XAxisProps) {
         xAxis: unsetAxisOptions,
       });
     };
-  }, [type, label, unit, theme, updateChartOptions]);
+  }, [type, label, formatter, theme, updateChartOptions]);
 
   return null;
 }

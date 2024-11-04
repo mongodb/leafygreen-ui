@@ -14,13 +14,13 @@ import {
 import { ChartOptions } from '../Chart/Chart.types';
 import { useChartContext } from '../ChartContext';
 
-import { YAxisProps, YAxisType } from './YAxis.types';
+import { YAxisProps } from './YAxis.types';
 
 const getOptions = ({
   theme,
   type,
   label,
-  unit,
+  formatter,
 }: YAxisProps & { theme: Theme }): Partial<ChartOptions> => {
   const options: Partial<ChartOptions> = {
     yAxis: {
@@ -42,10 +42,7 @@ const getOptions = ({
         color: color[theme].text[Variant.Secondary][InteractionState.Default],
         align: 'right',
         margin: spacing[200],
-        formatter:
-          unit && type === YAxisType.Value
-            ? (value: string) => `${value}${unit}`
-            : undefined,
+        formatter,
       },
       axisTick: {
         show: false,
@@ -95,16 +92,16 @@ const unsetAxisOptions = {
  *   <YAxis
  *     type="value",
  *     label="My Y-Axis Data",
- *     unit="GB"
+ *     formatter="{value}GB"
  *   />
  * </Chart>
  */
-export function YAxis({ type, label, unit }: YAxisProps) {
+export function YAxis({ type, label, formatter }: YAxisProps) {
   const { updateChartOptions } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    updateChartOptions(getOptions({ type, label, unit, theme }));
+    updateChartOptions(getOptions({ type, label, formatter, theme }));
 
     return () => {
       /**
@@ -114,7 +111,7 @@ export function YAxis({ type, label, unit }: YAxisProps) {
         yAxis: unsetAxisOptions,
       });
     };
-  }, [type, label, unit, theme, updateChartOptions]);
+  }, [type, label, formatter, theme, updateChartOptions]);
 
   return null;
 }
