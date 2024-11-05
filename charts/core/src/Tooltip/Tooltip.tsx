@@ -29,22 +29,22 @@ export function Tooltip({
         confine: true,
         showDelay: 0,
         hideDelay: 0,
-        formatter: (params: TopLevelFormatterParams) => {
-          /**
-           * Since the formatter trigger is set to 'axis', the params will be an array of objects.
-           * Additionally, it should contain axis related data.
-           * See https://echarts.apache.org/en/option.html#tooltip.formatter for more info.
-           */
-          const paramsArr = params as AxisFormatterCallbackParams;
+        // formatter: (params: TopLevelFormatterParams) => {
+        //   /**
+        //    * Since the formatter trigger is set to 'axis', the params will be an array of objects.
+        //    * Additionally, it should contain axis related data.
+        //    * See https://echarts.apache.org/en/option.html#tooltip.formatter for more info.
+        //    */
+        //   const paramsArr = params as AxisFormatterCallbackParams;
 
-          return renderToString(
-            <TooltipContent
-              params={paramsArr}
-              sortDirection={sortDirection}
-              sortValue={sortValue}
-            />,
-          );
-        },
+        //   return renderToString(
+        //     <TooltipContent
+        //       params={paramsArr}
+        //       sortDirection={sortDirection}
+        //       sortValue={sortValue}
+        //     />,
+        //   );
+        // },
       },
     });
   }, []);
