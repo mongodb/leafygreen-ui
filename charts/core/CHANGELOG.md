@@ -1,5 +1,16 @@
 # @lg-charts/core
 
+## 0.4.0
+
+### Minor Changes
+
+- 728fa7ae6: Replaces `unit` prop of `XAxis` and `YAxis` with `formatter` prop
+
+### Patch Changes
+
+- 50a7c49b2: - Fixes hiding chart elements when components are removed.
+  - Fixes adding of duplicate series.
+
 ## 0.3.0
 
 ### Minor Changes
