@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { RowContextProvider } from '../Row/RowContext';
+
 import { Cell, CellProps } from '.';
 
 const onScroll = jest.fn();
@@ -44,22 +46,26 @@ describe('packages/table/Cell', () => {
       const ref = React.createRef<HTMLTableCellElement>();
       const cellObj = {
         id: '1',
-        row: {
-          getIsExpanded: () => false,
-          getCanExpand: () => false,
-          toggleExpanded: () => {},
-          depth: 1,
-        },
         column: {
           getIsFirstColumn: () => false,
         },
       };
 
+      const providerValue = {
+        getIsExpanded: () => false,
+        getCanExpand: () => false,
+        toggleExpanded: () => {},
+        depth: 1,
+        disabled: false,
+      };
+
       render(
-        // @ts-expect-error - dummy cell data is missing properties
-        <Cell cell={cellObj} ref={ref}>
-          Hello RT
-        </Cell>,
+        <RowContextProvider {...providerValue}>
+          {/* @ts-expect-error - dummy cell data is missing properties */}
+          <Cell cell={cellObj} ref={ref}>
+            Hello RT
+          </Cell>
+        </RowContextProvider>,
       );
 
       expect(ref.current).toBeInTheDocument();
