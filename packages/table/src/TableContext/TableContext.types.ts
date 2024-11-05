@@ -7,6 +7,9 @@ import { TableProps } from '../Table/Table.types';
 import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
 
 export interface SharedVirtualContextValue {
+  /**
+   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
+   */
   virtualTable?: Virtualizer<HTMLElement, Element>;
 }
 
