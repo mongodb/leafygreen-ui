@@ -38,6 +38,7 @@ export function Tooltip({
 
     updateChartOptions({
       tooltip: {
+        show: true,
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
             InteractionState.Default
