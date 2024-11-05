@@ -2,6 +2,7 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
@@ -98,6 +99,31 @@ export default {
         disable: true,
       },
     },
+    tooltipSortDirection: {
+      control: 'select',
+      options: ['asc', 'desc'],
+      description: 'Direction to sort tooltip values',
+      name: 'SortDirection',
+      table: {
+        category: 'Tooltip',
+      },
+    },
+    tooltipSortKey: {
+      control: 'select',
+      options: ['name', 'value'],
+      description: 'Which key to sort tooltip values by',
+      name: 'SortKey',
+      table: {
+        category: 'Tooltip',
+      },
+    },
+    tooltipValueFormatter: {
+      description: 'Tooltip value formatter',
+      name: 'ValueFormatter',
+      table: {
+        disable: true,
+      },
+    },
   },
   decorator: (Instance, context) => {
     return <Instance darkMode={context?.args.darkMode} />;
@@ -114,6 +140,9 @@ interface StoryChartProps {
   yAxisFormatter: XAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
   yAxisLabel: YAxisProps['label'];
+  tooltipSortDirection: TooltipProps['sortDirection'];
+  tooltipSortKey: TooltipProps['sortKey'];
+  tooltipValueFormatter: TooltipProps['valueFormatter'];
 }
 
 const Template: React.FC<StoryChartProps> = props => {
@@ -127,12 +156,19 @@ const Template: React.FC<StoryChartProps> = props => {
     yAxisFormatter,
     xAxisLabel,
     yAxisLabel,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
   } = props;
 
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-      <Tooltip />
+      <Tooltip
+        sortDirection={tooltipSortDirection}
+        sortKey={tooltipSortKey}
+        valueFormatter={tooltipValueFormatter}
+      />
       <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
       <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
       {data.map(({ name, data }) => (
@@ -150,4 +186,7 @@ LiveExample.args = {
   xAxisType: 'time',
   yAxisType: 'value',
   yAxisFormatter: value => `${value}GB`,
+  tooltipSortDirection: 'desc',
+  tooltipSortKey: 'value',
+  tooltipValueFormatter: value => `${value} GB`,
 };

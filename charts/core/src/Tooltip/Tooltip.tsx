@@ -1,52 +1,75 @@
-import React, { useEffect } from 'react';
-import { renderToString } from 'react-dom/server';
-import { TopLevelFormatterParams } from 'echarts/types/dist/shared';
+import { useEffect } from 'react';
 
-import { borderRadius, spacing } from '@leafygreen-ui/tokens';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import {
+  borderRadius,
+  color,
+  InteractionState,
+  spacing,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
 import { useChartContext } from '../ChartContext';
 
-import { AxisFormatterCallbackParams } from './Tooltip.types';
-import { TooltipContent } from './TooltipContent';
+import { TooltipProps } from './Tooltip.types';
 
 export function Tooltip({
   sortDirection = 'desc',
-  sortValue = 'value',
-}: {
-  sortDirection?: 'asc' | 'desc';
-  sortValue?: 'name' | 'value';
-}) {
+  sortKey = 'value',
+  valueFormatter = value => `${value} GB`,
+}: TooltipProps) {
   const { updateChartOptions } = useChartContext();
+  const { theme } = useDarkMode();
 
   useEffect(() => {
+    let sortOrder: 'valueDesc' | 'valueAsc' | 'seriesDesc' | 'seriesAsc' =
+      'valueDesc';
+
+    if (sortDirection === 'asc') {
+      if (sortKey === 'name') {
+        sortOrder = 'seriesAsc';
+      }
+      sortOrder = 'valueAsc';
+    } else {
+      if (sortKey === 'name') {
+        sortOrder = 'seriesDesc';
+      }
+    }
+
     updateChartOptions({
       tooltip: {
-        trigger: 'axis',
-        backgroundColor: '#001E2B',
+        backgroundColor:
+          color[theme].background[Variant.InversePrimary][
+            InteractionState.Default
+          ],
         borderRadius: borderRadius[200],
-        padding: spacing[150],
-        enterable: false,
+        borderWidth: 0,
         confine: true,
-        showDelay: 0,
+        enterable: false,
         hideDelay: 0,
-        // formatter: (params: TopLevelFormatterParams) => {
-        //   /**
-        //    * Since the formatter trigger is set to 'axis', the params will be an array of objects.
-        //    * Additionally, it should contain axis related data.
-        //    * See https://echarts.apache.org/en/option.html#tooltip.formatter for more info.
-        //    */
-        //   const paramsArr = params as AxisFormatterCallbackParams;
+        valueFormatter: valueFormatter
+          ? value => {
+              if (typeof value === 'number' || typeof value === 'string') {
+                return valueFormatter(value);
+              }
 
-        //   return renderToString(
-        //     <TooltipContent
-        //       params={paramsArr}
-        //       sortDirection={sortDirection}
-        //       sortValue={sortValue}
-        //     />,
-        //   );
-        // },
+              return '';
+            }
+          : undefined,
+        order: sortOrder,
+        padding: spacing[200],
+        showDelay: 0,
+        textStyle: {
+          fontFamily: 'Euclid Circular A Light, sans-serif',
+          fontSize: 12,
+          fontWeight: 'lighter',
+          color:
+            color[theme].text[Variant.InversePrimary][InteractionState.Default],
+        },
+        trigger: 'axis',
       },
     });
-  }, []);
+  }, [theme, sortDirection, sortKey, valueFormatter, updateChartOptions]);
+
   return null;
 }
