@@ -45,7 +45,7 @@ export interface HeaderCellProps<T extends LGRowData>
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
-// This is a type assertion that restores the original function signature to work with generics.
+// This is an interface that restores the original function signature to work with generics.
 /**
  * The HeaderCellComponentType that restores the original function signature to work with generics.
  *

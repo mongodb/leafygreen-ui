@@ -45,7 +45,7 @@ export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
-// This is a type assertion that restores the original function signature to work with generics.
+// This is an interface that restores the original function signature to work with generics.
 /**
  * The RowComponentType that restores the original function signature to work with generics.
  *
