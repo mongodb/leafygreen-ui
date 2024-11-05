@@ -21,7 +21,14 @@ export interface LeafyGreenVirtualTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
 > extends LeafyGreenTableOptions<T, V> {
+  /**
+   * A ref to the <div> wrapping <table>
+   */
   containerRef: RefObject<HTMLElement>;
+
+  /**
+   * A list of [options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance
+   */
   virtualizerOptions?: Partial<VirtualizerOptions<HTMLElement, Element>>;
 }
 
@@ -30,12 +37,17 @@ export interface LeafyGreenVirtualTableOptions<
  */
 export interface LeafyGreenVirtualTable<T extends LGRowData>
   extends LeafyGreenTable<T> {
-  // virtualRows?: Array<VirtualItem>;
+  /**
+   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the virtulizer instance.
+   */
   virtual: Virtualizer<HTMLElement, Element> & {
-    virtualItems: Array<LeafyGreenVirtualItem<T>>;
+    getVirtualItems: () => Array<LeafyGreenVirtualItem<T>>;
   };
 }
 
 export type LeafyGreenVirtualItem<T extends LGRowData> = TSVirtualItem & {
+  /**
+   * The row associated with the virtualItem
+   */
   row: LeafyGreenTableRow<T>;
 };

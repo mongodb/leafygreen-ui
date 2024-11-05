@@ -2,7 +2,6 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce, isComponentType } from '@leafygreen-ui/lib';
 
 import { useTableContext } from '../TableContext';
 

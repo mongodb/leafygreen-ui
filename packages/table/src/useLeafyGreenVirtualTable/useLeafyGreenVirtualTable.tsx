@@ -54,7 +54,7 @@ function useLeafyGreenVirtualTable<
 
   return {
     ...table,
-    virtual: { ..._virtualizer, virtualItems: _virtualItems },
+    virtual: { ..._virtualizer, getVirtualItems: () => _virtualItems },
   } as LeafyGreenVirtualTable<T>;
 }
 

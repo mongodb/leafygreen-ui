@@ -17,7 +17,7 @@ const ExpandedContent = <T extends RowData>({
   virtualRow,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { measureElement } = useVirtualTableContext();
+  const { virtualTable } = useVirtualTableContext();
 
   const content =
     row.original.renderExpandedContent &&
@@ -34,7 +34,7 @@ const ExpandedContent = <T extends RowData>({
       ref={node => {
         // TODO: fix me
         // This gets the dynamic size of the element
-        if (measureElement) measureElement(node);
+        if (virtualTable) virtualTable.measureElement(node);
       }}
       data-index={virtualRow ? virtualRow!.index : ''}
     >

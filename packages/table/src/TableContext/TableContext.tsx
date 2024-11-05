@@ -30,12 +30,8 @@ const TableContextProvider = <T extends LGRowData>({
   shouldAlternateRowColor,
   isVirtual,
   isSelectable,
-  measureElement,
   shouldTruncate,
-  numOfVirtualItems,
-  startOfFirstVirtualItem,
-  endOfLastVirtualItem,
-  totalSizOfVirtualTable,
+  virtualTable,
 }: PropsWithChildren<Partial<TableProviderValues<T>>>) => {
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableProviderValues<T>>)
@@ -60,13 +56,7 @@ const TableContextProvider = <T extends LGRowData>({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <TableProvider value={tableProviderData}>
-        <VirtualTableContextProvider
-          measureElement={measureElement}
-          numOfVirtualItems={numOfVirtualItems}
-          startOfFirstVirtualItem={startOfFirstVirtualItem}
-          endOfLastVirtualItem={endOfLastVirtualItem}
-          totalSizOfVirtualTable={totalSizOfVirtualTable}
-        >
+        <VirtualTableContextProvider virtualTable={virtualTable}>
           {children}
         </VirtualTableContextProvider>
       </TableProvider>

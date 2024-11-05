@@ -7,11 +7,7 @@ import { TableProps } from '../Table/Table.types';
 import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
 
 export interface SharedVirtualContextValue {
-  measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
-  numOfVirtualItems?: number;
-  startOfFirstVirtualItem?: number;
-  endOfLastVirtualItem?: number;
-  totalSizOfVirtualTable?: number;
+  virtualTable?: Virtualizer<HTMLElement, Element>;
 }
 
 export interface BaseTableContextValue<T extends LGRowData> {

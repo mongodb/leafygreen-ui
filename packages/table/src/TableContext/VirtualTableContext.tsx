@@ -18,11 +18,7 @@ export const useVirtualTableContext = () =>
 
 const VirtualTableContextProvider = ({
   children,
-  measureElement,
-  numOfVirtualItems,
-  startOfFirstVirtualItem,
-  endOfLastVirtualItem,
-  totalSizOfVirtualTable,
+  virtualTable,
 }: PropsWithChildren<Partial<VirtualTableContextValues>>) => {
   const VirtualTableProvider = (
     VirtualTableContext as React.Context<VirtualTableContextValues>
@@ -30,19 +26,9 @@ const VirtualTableContextProvider = ({
 
   const providerData = useMemo(() => {
     return {
-      measureElement,
-      numOfVirtualItems,
-      startOfFirstVirtualItem,
-      endOfLastVirtualItem,
-      totalSizOfVirtualTable,
+      virtualTable,
     };
-  }, [
-    measureElement,
-    numOfVirtualItems,
-    startOfFirstVirtualItem,
-    endOfLastVirtualItem,
-    totalSizOfVirtualTable,
-  ]);
+  }, [virtualTable]);
 
   return (
     <VirtualTableProvider value={providerData}>{children}</VirtualTableProvider>
