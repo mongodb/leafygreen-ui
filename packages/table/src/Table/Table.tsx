@@ -1,4 +1,5 @@
 import React, { ForwardedRef, forwardRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -43,6 +44,11 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       : undefined;
     const isSelectable = table ? table.hasSelectableRows : false;
 
+    // Helps to determine if the header is sticky
+    const { ref, inView } = useInView({
+      threshold: 0,
+    });
+
     return (
       <div
         ref={containerRef}
@@ -51,6 +57,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
+        <div ref={ref} />
         <TableContextProvider
           shouldAlternateRowColor={shouldAlternateRowColor}
           darkMode={darkMode}
@@ -66,6 +73,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
               bodyTypeScaleStyles[baseFontSize],
             )}
             data-lgid={lgidProp}
+            data-is-sticky={!inView}
             {...rest}
           >
             {children}

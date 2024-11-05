@@ -169,7 +169,8 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   const { rows } = table;
 
   return (
-    <>
+    <div>
+      <div style={{ height: '200px' }} />
       <Table
         {...args}
         table={table}
@@ -221,7 +222,8 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
           })}
         </TableBody>
       </Table>
-    </>
+      <div style={{ height: '2000px' }} />
+    </div>
   );
 };
 
