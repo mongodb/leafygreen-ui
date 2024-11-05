@@ -69,6 +69,14 @@ export function Tooltip({
         trigger: 'axis',
       },
     });
+
+    return () => {
+      updateChartOptions({
+        tooltip: {
+          show: false,
+        },
+      });
+    };
   }, [theme, sortDirection, sortKey, valueFormatter, updateChartOptions]);
 
   return null;
