@@ -20,7 +20,7 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    */
   row: LeafyGreenTableRow<T>;
   /**
-   * Virtual row object passed from the `useLeafyGreenTable` hook
+   * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
 

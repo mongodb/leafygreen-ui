@@ -25,7 +25,7 @@ export interface TableProps<T extends LGRowData>
   table?: LeafyGreenTable<T> | LeafyGreenVirtualTable<T>; //TODO: is there a better way to type this?
 
   /**
-   * Whether all rows will truncate. If true then the cell will truncate at one line. If false then there will be no height limit and cells will not truncate.
+   * Whether all rows will truncate. If true, cells will truncate at one line. If false then there will be no height limit and cells will not truncate.
    * @default true
    */
   shouldTruncate?: boolean;
