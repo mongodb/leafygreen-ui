@@ -89,7 +89,7 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
       rowsCopy.splice(i + 1, 0, {
         ...rowsCopy[i],
         id: `${rowsCopy[i].id}-expandedContent`,
-        // @ts-expect-error - unsure how to add this to Row. Row is typed as Row<LGTableDataType<T>> which comes directly from .
+        // @ts-expect-error - unsure how to add this to the Row type. Row is typed as Row<LGTableDataType<T>> which comes directly from useReactTable.
         isExpandedContent: true,
         original: {
           ...rowsCopy[i].original,
