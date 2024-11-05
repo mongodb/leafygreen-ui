@@ -52,6 +52,8 @@ function useLeafyGreenVirtualTable<
       row: rows[virtualRow.index],
     }));
 
+  // const { getVirtualItems, ...virtualizerRest } = _virtualizer;
+
   return {
     ...table,
     virtual: { ..._virtualizer, getVirtualItems: () => _virtualItems },

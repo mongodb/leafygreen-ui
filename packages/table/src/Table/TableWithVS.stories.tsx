@@ -479,8 +479,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
               .getVirtualItems()
               .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
-                const isExpandedContent =
-                  row.original.isExpandedContent ?? false;
+                const isExpandedContent = row.isExpandedContent ?? false;
 
                 return (
                   <Fragment key={virtualRow.key}>
@@ -716,8 +715,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
               .map(
                 (virtualRow: LeafyGreenVirtualItem<Person>, index: number) => {
                   const row = virtualRow.row;
-                  const isExpandedContent =
-                    row.original.isExpandedContent ?? false;
+                  const isExpandedContent = row.isExpandedContent ?? false;
 
                   return (
                     <Fragment key={virtualRow.key}>

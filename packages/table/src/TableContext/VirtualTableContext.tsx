@@ -5,23 +5,25 @@ import React, {
   useMemo,
 } from 'react';
 
+import { LGRowData } from '../useLeafyGreenTable';
+
 import { type VirtualTableContextValues } from './TableContext.types';
 
 export const VirtualTableContext = createContext<
-  Partial<VirtualTableContextValues>
+  Partial<VirtualTableContextValues<LGRowData>>
 >({});
 
-export const useVirtualTableContext = () =>
-  useContext<VirtualTableContextValues>(
-    VirtualTableContext as React.Context<VirtualTableContextValues>,
+export const useVirtualTableContext = <T extends LGRowData>() =>
+  useContext<VirtualTableContextValues<T>>(
+    VirtualTableContext as React.Context<VirtualTableContextValues<T>>,
   );
 
-const VirtualTableContextProvider = ({
+const VirtualTableContextProvider = <T extends LGRowData>({
   children,
   virtualTable,
-}: PropsWithChildren<Partial<VirtualTableContextValues>>) => {
+}: PropsWithChildren<Partial<VirtualTableContextValues<T>>>) => {
   const VirtualTableProvider = (
-    VirtualTableContext as React.Context<VirtualTableContextValues>
+    VirtualTableContext as React.Context<VirtualTableContextValues<T>>
   ).Provider;
 
   const providerData = useMemo(() => {

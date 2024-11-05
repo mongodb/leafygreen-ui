@@ -15,6 +15,9 @@ export type LGRowData = RowData;
 export type LGTableDataType<T extends LGRowData> = T & {
   renderExpandedContent?: (row: LeafyGreenTableRow<T>) => JSX.Element;
   subRows?: Array<LGTableDataType<T>>;
+};
+
+export type LGRow<T extends LGRowData> = Row<LGTableDataType<T>> & {
   isExpandedContent?: boolean;
 };
 
@@ -26,7 +29,7 @@ export type LeafyGreenTableCell<T extends LGRowData> = Cell<
 
 /** LeafyGreen extension of `useReactTable` {@link Row}*/
 export interface LeafyGreenTableRow<T extends LGRowData>
-  extends Row<LGTableDataType<T>> {}
+  extends LGRow<LGTableDataType<T>> {}
 
 export type LGColumnDef<
   T extends LGRowData,

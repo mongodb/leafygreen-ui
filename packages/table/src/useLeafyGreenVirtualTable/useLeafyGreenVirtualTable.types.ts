@@ -40,7 +40,7 @@ export interface LeafyGreenVirtualTable<T extends LGRowData>
   /**
    * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
    */
-  virtual: Virtualizer<HTMLElement, Element> & {
+  virtual: Omit<Virtualizer<HTMLElement, Element>, 'getVirtualItems'> & {
     getVirtualItems: () => Array<LeafyGreenVirtualItem<T>>;
   };
 }

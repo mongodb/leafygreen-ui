@@ -5,12 +5,15 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { TableProps } from '../Table/Table.types';
 import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
+import { LeafyGreenVirtualItem } from '../useLeafyGreenVirtualTable';
 
-export interface SharedVirtualContextValue {
+export interface SharedVirtualContextValue<T extends LGRowData> {
   /**
    * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
    */
-  virtualTable?: Virtualizer<HTMLElement, Element>;
+  virtualTable?: Omit<Virtualizer<HTMLElement, Element>, 'getVirtualItems'> & {
+    getVirtualItems: () => Array<LeafyGreenVirtualItem<T>>;
+  };
 }
 
 export interface BaseTableContextValue<T extends LGRowData> {
@@ -34,7 +37,7 @@ export type TableProviderValues<T extends LGRowData> = PropsWithChildren<
   Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
 > &
   DarkModeProps &
-  SharedVirtualContextValue &
+  SharedVirtualContextValue<T> &
   BaseTableContextValue<T>;
 
 export type TableContextValues<T extends LGRowData> = PropsWithChildren<
@@ -43,5 +46,5 @@ export type TableContextValues<T extends LGRowData> = PropsWithChildren<
   DarkModeProps &
   BaseTableContextValue<T>;
 
-export type VirtualTableContextValues = PropsWithChildren &
-  SharedVirtualContextValue;
+export type VirtualTableContextValues<T extends LGRowData> = PropsWithChildren &
+  SharedVirtualContextValue<T>;
