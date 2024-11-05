@@ -5,44 +5,32 @@ import React, {
   useMemo,
 } from 'react';
 
+import { LGRowData } from '../useLeafyGreenTable';
+
 import { type VirtualTableContextValues } from './TableContext.types';
 
 export const VirtualTableContext = createContext<
-  Partial<VirtualTableContextValues>
+  Partial<VirtualTableContextValues<LGRowData>>
 >({});
 
-export const useVirtualTableContext = () =>
-  useContext<VirtualTableContextValues>(
-    VirtualTableContext as React.Context<VirtualTableContextValues>,
+export const useVirtualTableContext = <T extends LGRowData>() =>
+  useContext<VirtualTableContextValues<T>>(
+    VirtualTableContext as React.Context<VirtualTableContextValues<T>>,
   );
 
-const VirtualTableContextProvider = ({
+const VirtualTableContextProvider = <T extends LGRowData>({
   children,
-  measureElement,
-  numOfVirtualItems,
-  startOfFirstVirtualItem,
-  endOfLastVirtualItem,
-  totalSizOfVirtualTable,
-}: PropsWithChildren<Partial<VirtualTableContextValues>>) => {
+  virtualTable,
+}: PropsWithChildren<Partial<VirtualTableContextValues<T>>>) => {
   const VirtualTableProvider = (
-    VirtualTableContext as React.Context<VirtualTableContextValues>
+    VirtualTableContext as React.Context<VirtualTableContextValues<T>>
   ).Provider;
 
   const providerData = useMemo(() => {
     return {
-      measureElement,
-      numOfVirtualItems,
-      startOfFirstVirtualItem,
-      endOfLastVirtualItem,
-      totalSizOfVirtualTable,
+      virtualTable,
     };
-  }, [
-    measureElement,
-    numOfVirtualItems,
-    startOfFirstVirtualItem,
-    endOfLastVirtualItem,
-    totalSizOfVirtualTable,
-  ]);
+  }, [virtualTable]);
 
   return (
     <VirtualTableProvider value={providerData}>{children}</VirtualTableProvider>

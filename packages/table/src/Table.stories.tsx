@@ -196,7 +196,8 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            const isExpandedContent = row.original.isExpandedContent ?? false;
+            // const isExpandedContent = row.original.isExpandedContent ?? false;
+            const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
               <Fragment key={row.id}>
@@ -415,7 +416,8 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          const isExpandedContent = row.original.isExpandedContent ?? false;
+          // const isExpandedContent = row.original.isExpandedContent ?? false;
+          const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>
               {!isExpandedContent && (
@@ -1038,7 +1040,8 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          const isExpandedContent = row.original.isExpandedContent ?? false;
+          // const isExpandedContent = row.original.isExpandedContent ?? false;
+          const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>
               {!isExpandedContent && (

@@ -20,7 +20,7 @@ const ExpandedContentWithRef = <T extends RowData>(
   { row, virtualRow, ...rest }: ExpandedContentProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
 ) => {
-  const { measureElement } = useVirtualTableContext();
+  const { virtualTable } = useVirtualTableContext();
 
   const content =
     row.original.renderExpandedContent &&
@@ -34,7 +34,7 @@ const ExpandedContentWithRef = <T extends RowData>(
   return (
     <InternalRowBase
       {...rest}
-      ref={useMergeRefs([ref, measureElement])}
+      ref={useMergeRefs([ref, virtualTable?.measureElement])}
       data-index={virtualRow ? virtualRow!.index : ''}
     >
       <td

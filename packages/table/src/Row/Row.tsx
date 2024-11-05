@@ -21,7 +21,7 @@ const RowWithRef = <T extends LGRowData>(
 ) => {
   const { theme } = useDarkMode();
   const { shouldAlternateRowColor = false } = useTableContext();
-  const { measureElement } = useVirtualTableContext();
+  const { virtualTable } = useVirtualTableContext();
   return (
     <>
       {row ? (
@@ -29,7 +29,7 @@ const RowWithRef = <T extends LGRowData>(
           row={row}
           virtualRow={virtualRow}
           theme={theme}
-          measureElement={measureElement}
+          measureElement={virtualTable?.measureElement}
           shouldAlternateRowColor={shouldAlternateRowColor}
           isExpanded={row.getIsExpanded()}
           isParentExpanded={

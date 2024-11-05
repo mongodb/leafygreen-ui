@@ -50,13 +50,6 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     () => [
       ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T, V>] : []),
       ...columnsProp,
-      // ...columnsProp.map(propColumn => {
-      // return {
-      //   ...propColumn,
-      // align: propColumn.align ?? 'left',
-      // enableSorting: propColumn.enableSorting ?? false,
-      // } as LGColumnDef<T, V>;
-      // }),
     ],
     [columnsProp, hasSelectableRows, selectColumnConfig],
   );
@@ -96,10 +89,10 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
       rowsCopy.splice(i + 1, 0, {
         ...rowsCopy[i],
         id: `${rowsCopy[i].id}-expandedContent`,
+        // @ts-expect-error - unsure how to add this to Row. Row is typed as Row<LGTableDataType<T>> which comes directly from .
+        isExpandedContent: true,
         original: {
-          // TODO: move outside of original
           ...rowsCopy[i].original,
-          isExpandedContent: true,
         },
       });
       i++; // Increment index to skip the newly added item

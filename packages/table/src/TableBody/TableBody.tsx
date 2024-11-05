@@ -9,12 +9,16 @@ import { TableBodyProps } from './TableBody.types';
 const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
   ({ children, ...rest }: TableBodyProps, fwdRef) => {
     const { isVirtual } = useTableContext();
-    const {
-      numOfVirtualItems = 0,
-      startOfFirstVirtualItem = 0,
-      endOfLastVirtualItem = 0,
-      totalSizOfVirtualTable = 0,
-    } = useVirtualTableContext();
+    const { virtualTable } = useVirtualTableContext();
+
+    const numOfVirtualItems = virtualTable?.getVirtualItems().length || 0;
+    const startOfFirstVirtualItem =
+      virtualTable?.getVirtualItems()[0]?.start || 0;
+    const endOfLastVirtualItem =
+      virtualTable?.getVirtualItems()[
+        virtualTable?.getVirtualItems().length - 1
+      ]?.end || 0;
+    const totalSizOfVirtualTable = virtualTable?.getTotalSize() || 0;
 
     const topRef = useRef<HTMLTableCellElement | null>(null);
     const bottomRef = useRef<HTMLTableCellElement | null>(null);
@@ -23,7 +27,7 @@ const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
     let paddingBottom = 0;
 
     if (isVirtual) {
-      paddingTop = numOfVirtualItems > 0 ? startOfFirstVirtualItem || 0 : 0;
+      paddingTop = numOfVirtualItems > 0 ? startOfFirstVirtualItem : 0;
       topRef.current &&
         topRef.current.style.setProperty(
           '--virtual-padding-top',
@@ -31,7 +35,7 @@ const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
         );
       paddingBottom =
         numOfVirtualItems > 0
-          ? totalSizOfVirtualTable - (endOfLastVirtualItem || 0)
+          ? totalSizOfVirtualTable - endOfLastVirtualItem
           : 0;
       bottomRef.current &&
         bottomRef.current.style.setProperty(

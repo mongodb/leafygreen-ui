@@ -43,15 +43,6 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       : undefined;
     const isSelectable = table ? table.hasSelectableRows : false;
 
-    const measureElement = isVirtual
-      ? (table as LeafyGreenVirtualTable<T>).virtual.measureElement
-      : undefined;
-    const numOfVirtualItems = virtualTable?.virtualItems.length;
-    const startOfFirstVirtualItem = virtualTable?.virtualItems[0]?.start;
-    const endOfLastVirtualItem =
-      virtualTable?.virtualItems[virtualTable?.virtualItems.length - 1]?.end;
-    const totalSizOfVirtualTable = virtualTable?.getTotalSize();
-
     return (
       <div
         ref={containerRef}
@@ -65,12 +56,8 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           darkMode={darkMode}
           isVirtual={isVirtual}
           isSelectable={isSelectable}
-          measureElement={measureElement}
           shouldTruncate={shouldTruncate}
-          numOfVirtualItems={numOfVirtualItems}
-          startOfFirstVirtualItem={startOfFirstVirtualItem}
-          endOfLastVirtualItem={endOfLastVirtualItem}
-          totalSizOfVirtualTable={totalSizOfVirtualTable}
+          virtualTable={virtualTable}
         >
           <table
             className={cx(

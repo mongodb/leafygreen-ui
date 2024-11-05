@@ -143,9 +143,10 @@ export const Basic: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
                 return (
@@ -162,8 +163,7 @@ export const Basic: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 );
-              },
-            )}
+              })}
         </TableBody>
       </Table>
     </>
@@ -211,9 +211,10 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
 
@@ -231,8 +232,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 );
-              },
-            )}
+              })}
         </TableBody>
       </Table>
     </>
@@ -326,9 +326,10 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
 
@@ -346,8 +347,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 );
-              },
-            )}
+              })}
         </TableBody>
       </Table>
     </>
@@ -400,9 +400,10 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
 
@@ -420,8 +421,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 );
-              },
-            )}
+              })}
         </TableBody>
       </Table>
     </>
@@ -474,12 +474,12 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
-                const isExpandedContent =
-                  row.original.isExpandedContent ?? false;
+                const isExpandedContent = row.isExpandedContent ?? false;
 
                 return (
                   <Fragment key={virtualRow.key}>
@@ -504,8 +504,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
                     )}
                   </Fragment>
                 );
-              },
-            )}
+              })}
         </TableBody>
       </Table>
     </>
@@ -563,9 +562,10 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>) => {
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
                 return (
@@ -592,8 +592,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
                     })}
                   </Row>
                 );
-              },
-            )}
+              })}
         </TableBody>
       </Table>
     </>
@@ -691,7 +690,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         table={table}
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
-        // shouldTruncate={false}
+        shouldTruncate={false}
       >
         <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -710,42 +709,43 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtual.virtualItems &&
-            table.virtual.virtualItems.map(
-              (virtualRow: LeafyGreenVirtualItem<Person>, index: number) => {
-                const row = virtualRow.row;
-                const isExpandedContent =
-                  row.original.isExpandedContent ?? false;
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map(
+                (virtualRow: LeafyGreenVirtualItem<Person>, index: number) => {
+                  const row = virtualRow.row;
+                  const isExpandedContent = row.isExpandedContent ?? false;
 
-                return (
-                  <Fragment key={virtualRow.key}>
-                    {!isExpandedContent && (
-                      <Row
-                        row={row}
-                        virtualRow={virtualRow}
-                        data-row-index={index}
-                      >
-                        {row
-                          .getVisibleCells()
-                          .map((cell: LeafyGreenTableCell<Person>) => {
-                            return (
-                              <Cell key={cell.id} cell={cell}>
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </Cell>
-                            );
-                          })}
-                      </Row>
-                    )}
-                    {isExpandedContent && (
-                      <ExpandedContent row={row} virtualRow={virtualRow} />
-                    )}
-                  </Fragment>
-                );
-              },
-            )}
+                  return (
+                    <Fragment key={virtualRow.key}>
+                      {!isExpandedContent && (
+                        <Row
+                          row={row}
+                          virtualRow={virtualRow}
+                          data-row-index={index}
+                        >
+                          {row
+                            .getVisibleCells()
+                            .map((cell: LeafyGreenTableCell<Person>) => {
+                              return (
+                                <Cell key={cell.id} cell={cell}>
+                                  {flexRender(
+                                    cell.column.columnDef.cell,
+                                    cell.getContext(),
+                                  )}
+                                </Cell>
+                              );
+                            })}
+                        </Row>
+                      )}
+                      {isExpandedContent && (
+                        <ExpandedContent row={row} virtualRow={virtualRow} />
+                      )}
+                    </Fragment>
+                  );
+                },
+              )}
         </TableBody>
       </Table>
     </>

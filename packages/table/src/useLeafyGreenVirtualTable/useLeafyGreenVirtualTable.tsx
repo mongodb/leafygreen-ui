@@ -52,9 +52,11 @@ function useLeafyGreenVirtualTable<
       row: rows[virtualRow.index],
     }));
 
+  // const { getVirtualItems, ...virtualizerRest } = _virtualizer;
+
   return {
     ...table,
-    virtual: { ..._virtualizer, virtualItems: _virtualItems },
+    virtual: { ..._virtualizer, getVirtualItems: () => _virtualItems },
   } as LeafyGreenVirtualTable<T>;
 }
 
