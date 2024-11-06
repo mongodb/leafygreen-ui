@@ -97,7 +97,7 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(900));
+  const [data] = useState(() => makeKitchenSinkData(500));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -341,7 +341,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(true, 2000))[0];
+  const data = React.useState(() => makeData(true, 500))[0];
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -415,7 +415,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
           const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>

@@ -6,12 +6,7 @@ import { cx } from '@leafygreen-ui/emotion';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowBase from './InternalRowBase';
-import {
-  expandedContentParentStyles,
-  grayZebraRowStyles,
-  selectedRowStyles,
-  zebraStyles,
-} from './Row.styles';
+import { getRowWithRTStyles } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
@@ -55,15 +50,15 @@ const InternalRowWithRT = <T extends LGRowData>({
     <RowContextProvider {...contextValues}>
       <InternalRowBase
         className={cx(
-          {
-            [grayZebraRowStyles[theme]]:
-              isOddVSRow && shouldAlternateRowColor && !isSelected,
-            [zebraStyles[theme]]:
-              !virtualRow && shouldAlternateRowColor && !isSelected,
-            [selectedRowStyles[theme]]: isSelected && !disabled,
-            [expandedContentParentStyles[theme]]:
-              isExpanded || isParentExpanded,
-          },
+          getRowWithRTStyles(
+            isOddVSRow,
+            shouldAlternateRowColor,
+            isSelected,
+            !!virtualRow,
+            disabled,
+            isExpanded || isParentExpanded,
+            theme,
+          ),
           className,
         )}
         data-selected={isSelected}

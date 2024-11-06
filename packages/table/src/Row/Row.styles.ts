@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
@@ -88,3 +88,21 @@ export const disabledStyles: Record<Theme, string> = {
     color: ${palette.gray.base};
   `,
 };
+
+export const getRowWithRTStyles = (
+  isOddVSRow: boolean,
+  shouldAlternateRowColor: boolean,
+  isSelected: boolean,
+  isVirtualRow: boolean,
+  isDisabled: boolean,
+  isExpanded: boolean,
+  theme: Theme,
+) =>
+  cx({
+    [grayZebraRowStyles[theme]]:
+      isOddVSRow && shouldAlternateRowColor && !isSelected,
+    [zebraStyles[theme]]:
+      !isVirtualRow && shouldAlternateRowColor && !isSelected,
+    [selectedRowStyles[theme]]: isSelected && !isDisabled,
+    [expandedContentParentStyles[theme]]: isExpanded,
+  });
