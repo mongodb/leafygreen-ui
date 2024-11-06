@@ -16,6 +16,7 @@ const InternalRowBase = forwardRef<HTMLTableRowElement, InternalRowBaseProps>(
   ({ className, onClick, ...rest }: InternalRowBaseProps, forwardedRef) => {
     const { theme } = useDarkMode();
     const { disabled } = useRowContext();
+
     return (
       <tr
         ref={forwardedRef}

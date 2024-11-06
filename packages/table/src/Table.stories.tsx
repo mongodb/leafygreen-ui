@@ -290,7 +290,6 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  // const { rows } = table.getRowModel();
   const { rows } = table;
 
   return (
@@ -493,13 +492,13 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <Table
       {...args}
       ref={tableContainerRef}
-      data-total-rows={table.getRowModel().rows.length}
+      data-total-rows={table.rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -546,7 +545,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -575,7 +574,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
@@ -591,7 +590,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     hasSelectableRows: true,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>
@@ -621,7 +620,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         {...args}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.getRowModel().rows.length}
+        data-total-rows={table.rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -672,7 +671,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -701,7 +700,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
@@ -718,7 +717,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
     allowSelectAll: false,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>
@@ -802,7 +801,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -831,7 +830,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
@@ -843,7 +842,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
     withPagination: true,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>

@@ -63,7 +63,6 @@ const TestSortableHeaderCell = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const table = useLeafyGreenTable({
-    containerRef,
     columns: headerCellTestColumns,
     data: headerCellTestData,
   });
@@ -95,7 +94,6 @@ const useMockTestHeaderData = (
 ): Header<LGTableDataType<any>, unknown> => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const table = useLeafyGreenTable({
-    containerRef: React.createRef<HTMLDivElement>(),
     data: [],
     columns: [columnDef],
   });

@@ -52,30 +52,33 @@ const InternalRowWithRT = <T extends LGRowData>({
   // console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
 
   return (
-    <InternalRowBase
-      className={cx(
-        {
-          [grayZebraRowStyles[theme]]:
-            isOddVSRow && shouldAlternateRowColor && !isSelected,
-          [zebraStyles[theme]]:
-            !virtualRow && shouldAlternateRowColor && !isSelected,
-          [selectedRowStyles[theme]]: isSelected && !disabled,
-          [expandedContentParentStyles[theme]]: isExpanded || isParentExpanded,
-        },
-        className,
-      )}
-      data-selected={isSelected}
-      data-expanded={isExpanded}
-      data-depth={row.depth}
-      id={`lg-table-row-${row.id}`}
-      ref={node => {
-        if (measureElement) measureElement(node);
-      }}
-      data-index={virtualRow ? virtualRow!.index : ''}
-      {...rest}
-    >
-      <RowContextProvider {...contextValues}>{children}</RowContextProvider>
-    </InternalRowBase>
+    <RowContextProvider {...contextValues}>
+      <InternalRowBase
+        className={cx(
+          {
+            [grayZebraRowStyles[theme]]:
+              isOddVSRow && shouldAlternateRowColor && !isSelected,
+            [zebraStyles[theme]]:
+              !virtualRow && shouldAlternateRowColor && !isSelected,
+            [selectedRowStyles[theme]]: isSelected && !disabled,
+            [expandedContentParentStyles[theme]]:
+              isExpanded || isParentExpanded,
+          },
+          className,
+        )}
+        data-selected={isSelected}
+        data-expanded={isExpanded}
+        data-depth={row.depth}
+        id={`lg-table-row-${row.id}`}
+        ref={node => {
+          if (measureElement) measureElement(node);
+        }}
+        data-index={virtualRow ? virtualRow!.index : ''}
+        {...rest}
+      >
+        {children}
+      </InternalRowBase>
+    </RowContextProvider>
   );
 };
 

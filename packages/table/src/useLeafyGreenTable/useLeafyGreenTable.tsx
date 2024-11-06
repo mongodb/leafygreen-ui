@@ -16,7 +16,7 @@ import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
-const CHECKBOX_WIDTH = 14;
+const CHECKBOX_WIDTH = 40;
 
 function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   data,
