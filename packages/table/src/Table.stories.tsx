@@ -415,7 +415,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
           const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>

@@ -36,24 +36,25 @@ const RowWithExpandableContent = args => {
           ))}
         </thead>
         <TableBody>
-          {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
+          {table.rows.map((row: LeafyGreenTableRow<Person>) => {
+            const isExpandedContent = row.isExpandedContent ?? false;
             return (
               <Fragment key={row.id}>
-                <Row row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-                {row.original.renderExpandedContent && row.getIsExpanded() && (
-                  <ExpandedContent row={row} />
+                {!isExpandedContent && (
+                  <Row row={row}>
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                 )}
+                {isExpandedContent && <ExpandedContent row={row} />}
               </Fragment>
             );
           })}
