@@ -9,14 +9,6 @@ export { default as Table, type TableProps } from './Table';
 export { default as TableBody, type TableBodyProps } from './TableBody';
 export { default as TableHead } from './TableHead/TableHead';
 export {
-  Cell as V10Cell,
-  DataType as V10DataType,
-  HeaderRow as V10HeaderRow,
-  Row as V10Row,
-  Table as V10Table,
-  TableHeader as V10TableHeader,
-} from './TableV10';
-export {
   type LeafyGreenTable,
   type LeafyGreenTableCell,
   type LeafyGreenTableOptions,
@@ -33,7 +25,6 @@ export {
   default as useLeafyGreenVirtualTable,
 } from './useLeafyGreenVirtualTable';
 export { getTestUtils } from './utils/getTestUtils';
-export { default as V11Adapter, type V11AdapterProps } from './V11Adapter';
+// TODO: Check if some exports might clash with our exports
 export * from '@tanstack/react-table';
-// export { type VirtualItem } from 'react-virtual';
 export { type VirtualItem } from '@tanstack/react-virtual';

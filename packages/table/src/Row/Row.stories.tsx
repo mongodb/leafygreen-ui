@@ -168,12 +168,12 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
     onExpandedChange: setExpanded,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <>
       <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
+        <p>{table.rows.length} total rows</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
@@ -202,7 +202,7 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
                     return (
-                      <Cell key={cell.id}>
+                      <Cell key={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -293,10 +293,11 @@ export const DisabledSelectableRows: StoryFn<
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
+    enableRowSelection: !args.disabled,
     hasSelectableRows: true,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>
@@ -326,7 +327,7 @@ export const DisabledSelectableRows: StoryFn<
         darkMode={darkMode}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.getRowModel().rows.length}
+        data-total-rows={table.rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -350,7 +351,7 @@ export const DisabledSelectableRows: StoryFn<
               <Row key={row.id} row={row} {...args}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

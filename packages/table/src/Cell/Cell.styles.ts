@@ -4,7 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Align } from './Cell.types';
 
 /** The base left & right padding in the table */
-export const baseTableSidePadding = spacing[4];
+export const baseTableSidePadding = spacing[600];
 
 /** the default width of the expand icon */
 const iconSize = 28;
@@ -24,19 +24,19 @@ export const getCellPadding = ({
   if (depth === 0) {
     if (isSelectable) {
       return css`
-        padding-left: ${spacing[2]}px;
-        padding-right: ${spacing[2]}px;
+        padding-left: ${spacing[200]}px;
+        padding-right: ${spacing[200]}px;
       `;
     } else {
       return css`
         padding-left: ${baseTableSidePadding +
-        (isExpandable ? 0 : spacing[2])}px;
+        (isExpandable ? 0 : spacing[200])}px;
       `;
     }
   }
 
   const parentIconsPadding = 8 * (depth - 1); // how much space do parent icons take up
-  const thisIconPadding = isExpandable ? spacing[2] : 0;
+  const thisIconPadding = isExpandable ? spacing[200] : 0;
   const depthPadding =
     iconSize * depth - (parentIconsPadding + thisIconPadding);
   return css`
@@ -67,8 +67,8 @@ export const getCellContainerStyles = (align: Align = 'left') => css`
   text-align: ${align};
 `;
 
-export const getBaseStyles = () => css`
-  padding: 0 8px;
+export const baseCellStyles = css`
+  padding: 0 ${spacing[200]}px;
   overflow: hidden;
   vertical-align: top;
 
@@ -81,7 +81,7 @@ export const getBaseStyles = () => css`
   }
 `;
 
-export const cellInnerStyles = () => css`
+export const cellInnerStyles = css`
   display: flex;
   align-items: center;
   min-width: 100%;

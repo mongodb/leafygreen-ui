@@ -64,6 +64,13 @@ const meta: StoryMetaType<typeof Table> = {
     docs: {
       source: { type: 'code' },
     },
+    // docs: {
+    //   source: {
+    //     // any non-empty string here will skip jsx rendering, see:
+    //     // https://github.com/storybookjs/storybook/blob/next/code/renderers/react/src/docs/jsxDecorator.tsx#L165
+    //     code: 'hello world',
+    //   },
+    // },
   },
 };
 export default meta;
@@ -95,9 +102,10 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
+// FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(900));
+  const [data] = useState(() => makeKitchenSinkData(500));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -292,7 +300,6 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  // const { rows } = table.getRowModel();
   const { rows } = table;
 
   return (
@@ -344,7 +351,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(true, 2000))[0];
+  const data = React.useState(() => makeData(true, 500))[0];
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -418,7 +425,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
           const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>
@@ -495,13 +501,13 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <Table
       {...args}
       ref={tableContainerRef}
-      data-total-rows={table.getRowModel().rows.length}
+      data-total-rows={table.rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -548,7 +554,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -577,7 +583,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
@@ -593,7 +599,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     hasSelectableRows: true,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>
@@ -623,7 +629,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         {...args}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.getRowModel().rows.length}
+        data-total-rows={table.rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -674,7 +680,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -703,7 +709,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
@@ -720,7 +726,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
     allowSelectAll: false,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>
@@ -804,7 +810,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -833,7 +839,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
@@ -845,7 +851,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
     withPagination: true,
   });
 
-  const { rows } = table.getRowModel();
+  const { rows } = table;
 
   return (
     <div>

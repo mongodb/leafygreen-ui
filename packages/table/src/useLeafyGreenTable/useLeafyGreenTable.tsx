@@ -16,7 +16,7 @@ import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
-const CHECKBOX_WIDTH = 14;
+const CHECKBOX_WIDTH = 40;
 
 function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   data,
@@ -91,9 +91,6 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
         id: `${rowsCopy[i].id}-expandedContent`,
         // @ts-expect-error - unsure how to add this to the Row type. Row is typed as Row<LGTableDataType<T>> which comes directly from useReactTable.
         isExpandedContent: true,
-        // original: {
-        //   ...rowsCopy[i].original,
-        // },
       });
       i++; // Increment index to skip the newly added item
     }
