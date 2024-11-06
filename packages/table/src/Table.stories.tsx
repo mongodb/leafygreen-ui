@@ -64,6 +64,13 @@ const meta: StoryMetaType<typeof Table> = {
     docs: {
       source: { type: 'code' },
     },
+    // docs: {
+    //   source: {
+    //     // any non-empty string here will skip jsx rendering, see:
+    //     // https://github.com/storybookjs/storybook/blob/next/code/renderers/react/src/docs/jsxDecorator.tsx#L165
+    //     code: 'hello world',
+    //   },
+    // },
   },
 };
 export default meta;
@@ -95,9 +102,10 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
+// FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(900));
+  const [data] = useState(() => makeKitchenSinkData(500));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -341,7 +349,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(true, 2000))[0];
+  const data = React.useState(() => makeData(true, 500))[0];
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [

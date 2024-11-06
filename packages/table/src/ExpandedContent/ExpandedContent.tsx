@@ -5,12 +5,11 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { getCellContainerStyles } from '../Cell/Cell.styles';
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
 import { useVirtualTableContext } from '../TableContext';
 
-import { baseStyles, expandedContentStyles } from './ExpandedContent.styles';
+import { baseStyles, getContainerStyles } from './ExpandedContent.styles';
 import {
   ExpandedContentComponentType,
   ExpandedContentProps,
@@ -28,9 +27,6 @@ const ExpandedContentWithRef = <T extends RowData>(
 
   const { theme } = useDarkMode();
 
-  // eslint-disable-next-line no-console
-  // console.log(`🍉rerender🍉 ExpandedContent: ${row.id}`);
-
   return (
     <InternalRowBase
       {...rest}
@@ -42,9 +38,7 @@ const ExpandedContentWithRef = <T extends RowData>(
         className={cx(baseStyles)}
         data-lgid={LGIDS.cell}
       >
-        <div
-          className={cx(getCellContainerStyles(), expandedContentStyles[theme])}
-        >
+        <div className={getContainerStyles(theme)}>
           <div>{content}</div>
         </div>
       </td>

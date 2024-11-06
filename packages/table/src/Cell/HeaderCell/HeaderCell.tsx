@@ -5,13 +5,11 @@ import { cx } from '@leafygreen-ui/emotion';
 import { LGIDS } from '../../constants';
 import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
-import { getBaseStyles, getCellContainerStyles } from '../Cell.styles';
 
 import SortIcon from './SortIcon/SortIcon';
 import {
-  getCellPaddingStyles,
-  getHeaderCellWidthStyles,
-  headerCellContentStyles,
+  getBaseHeaderCellStyles,
+  getHeaderCellContentStyles,
 } from './HeaderCell.styles';
 import {
   HeaderCellComponentType,
@@ -44,8 +42,6 @@ const HeaderCellWithRef = <T extends LGRowData>(
 
   let columnName, sortState, onSortIconClick;
 
-  // console.log({ cansort: header?.column.columnDef.enableSorting });
-
   if (header && header?.column.columnDef.enableSorting) {
     columnName = header.column.columnDef.header as string;
     const headerSortDirection = header.column.getIsSorted().toString();
@@ -57,12 +53,7 @@ const HeaderCellWithRef = <T extends LGRowData>(
     <th
       data-lgid={LGIDS.header}
       className={cx(
-        getBaseStyles(),
-        getCellPaddingStyles(isSelectable),
-        {
-          [getHeaderCellWidthStyles(header?.getSize() ?? 0)]:
-            !!header?.getSize(),
-        },
+        getBaseHeaderCellStyles(header?.getSize() ?? 0, isSelectable),
         className,
       )}
       scope="col"
@@ -73,8 +64,7 @@ const HeaderCellWithRef = <T extends LGRowData>(
         className={cx(
           // TS error is ignored (and not expected) as it doesn't show up locally but interrupts build
           // @ts-ignore Header types need to be extended or declared in the react-table namespace
-          getCellContainerStyles(align || header?.column.columnDef?.align),
-          headerCellContentStyles,
+          getHeaderCellContentStyles(align || header?.column.columnDef?.align),
         )}
       >
         {children}

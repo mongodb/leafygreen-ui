@@ -5,8 +5,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { LGIDS } from '../constants';
 
 import {
+  baseCellStyles,
   cellInnerStyles,
-  getBaseStyles,
   getCellContainerStyles,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
@@ -28,12 +28,12 @@ const InternalCellBase = forwardRef<HTMLTableCellElement, InternalCellProps>(
     return (
       <td
         data-lgid={LGIDS.cell}
-        className={cx(getBaseStyles(), className)}
+        className={cx(baseCellStyles, className)}
         ref={fwdRref}
         {...rest}
       >
         <div className={cx(getCellContainerStyles(align), contentClassName)}>
-          <div className={cellInnerStyles()}>{children}</div>
+          <div className={cellInnerStyles}>{children}</div>
         </div>
       </td>
     );

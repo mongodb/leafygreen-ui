@@ -1,19 +1,14 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { transitionDuration } from '@leafygreen-ui/tokens';
+
+import { getCellContainerStyles } from '../Cell/Cell.styles';
 
 export const baseStyles = css`
   padding: 0;
-  overflow: hidden;
-  transition: ${transitionDuration.default}ms ease;
-
-  > div {
-    max-height: inherit;
-  }
 `;
 
-export const expandedContentStyles: Record<Theme, string> = {
+export const expandedContentThemeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.gray.dark4};
   `,
@@ -21,3 +16,6 @@ export const expandedContentStyles: Record<Theme, string> = {
     background-color: ${palette.gray.light3};
   `,
 };
+
+export const getContainerStyles = (theme: Theme) =>
+  cx(expandedContentThemeStyles[theme], getCellContainerStyles());
