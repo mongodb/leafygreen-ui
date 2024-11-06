@@ -23,6 +23,15 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
 
         table[data-is-sticky='true'] & {
           color: red;
+
+          :after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.25);
+          }
         }
       `]: isSticky,
     },
