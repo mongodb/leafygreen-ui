@@ -102,6 +102,7 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
+// FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(500));
