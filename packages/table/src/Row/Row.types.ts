@@ -28,15 +28,39 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    */
   row: LeafyGreenTableRow<T>;
   /**
-   * Virtual row object passed from the `useLeafyGreenTable` hook
+   * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
 
+  /**
+   * Determines whether alternating rows will have dark backgrounds.
+   * @default false
+   */
   shouldAlternateRowColor: boolean;
+
+  /**
+   * Whether the theme is dark or light
+   */
   theme: Theme;
+
+  /**
+   * Function from TanStack Virtual that is called to dynamically measure the size of an item
+   */
   measureElement?: Virtualizer<HTMLElement, Element>['measureElement'];
+
+  /**
+   * Whether the row is expanded
+   */
   isExpanded: boolean;
+
+  /**
+   * Whether the parent row is expanded
+   */
   isParentExpanded: boolean;
+
+  /**
+   * Whether the row is selected
+   */
   isSelected: boolean;
 }
 

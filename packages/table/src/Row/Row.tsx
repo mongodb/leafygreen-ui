@@ -22,6 +22,7 @@ const RowWithRef = <T extends LGRowData>(
   const { theme } = useDarkMode();
   const { shouldAlternateRowColor = false } = useTableContext();
   const { virtualTable } = useVirtualTableContext();
+
   return (
     <>
       {row ? (

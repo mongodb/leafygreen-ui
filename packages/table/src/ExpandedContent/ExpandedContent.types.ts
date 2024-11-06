@@ -14,7 +14,7 @@ export interface ExpandedContentProps<T extends RowData>
   extends ComponentPropsWithRef<'tr'> {
   row: LeafyGreenTableRow<T>;
   /**
-   * Virtual row object passed from the `useLeafyGreenTable` hook
+   * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
 }

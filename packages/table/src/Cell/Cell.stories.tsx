@@ -20,11 +20,9 @@ const meta: StoryMetaType<typeof InternalCell> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        depth: [0, 1],
         align: ['left', 'center', 'right'],
       },
       args: {
-        cellIndex: 0,
         children: 'Cell content',
       },
       decorator: (Instance, ctx) => {
