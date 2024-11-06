@@ -64,6 +64,13 @@ const meta: StoryMetaType<typeof Table> = {
     docs: {
       source: { type: 'code' },
     },
+    // docs: {
+    //   source: {
+    //     // any non-empty string here will skip jsx rendering, see:
+    //     // https://github.com/storybookjs/storybook/blob/next/code/renderers/react/src/docs/jsxDecorator.tsx#L165
+    //     code: 'hello world',
+    //   },
+    // },
   },
 };
 export default meta;
