@@ -2,9 +2,19 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
-import { Chart, Grid, Line, XAxis, XAxisProps, YAxis, YAxisProps } from '.';
+import {
+  Chart,
+  Grid,
+  Line,
+  Tooltip,
+  XAxis,
+  XAxisProps,
+  YAxis,
+  YAxisProps,
+} from '.';
 
 export default {
   title: 'Charts/Core',
@@ -89,6 +99,31 @@ export default {
         disable: true,
       },
     },
+    tooltipSortDirection: {
+      control: 'select',
+      options: SortDirection,
+      description: 'Direction to sort tooltip values',
+      name: 'SortDirection',
+      table: {
+        category: 'Tooltip',
+      },
+    },
+    tooltipSortKey: {
+      control: 'select',
+      options: SortKey,
+      description: 'Which key to sort tooltip values by',
+      name: 'SortKey',
+      table: {
+        category: 'Tooltip',
+      },
+    },
+    tooltipValueFormatter: {
+      description: 'Tooltip value formatter',
+      name: 'ValueFormatter',
+      table: {
+        disable: true,
+      },
+    },
   },
   decorator: (Instance, context) => {
     return <Instance darkMode={context?.args.darkMode} />;
@@ -105,6 +140,9 @@ interface StoryChartProps {
   yAxisFormatter: XAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
   yAxisLabel: YAxisProps['label'];
+  tooltipSortDirection: TooltipProps['sortDirection'];
+  tooltipSortKey: TooltipProps['sortKey'];
+  tooltipValueFormatter: TooltipProps['valueFormatter'];
 }
 
 const Template: React.FC<StoryChartProps> = props => {
@@ -118,11 +156,18 @@ const Template: React.FC<StoryChartProps> = props => {
     yAxisFormatter,
     xAxisLabel,
     yAxisLabel,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
   } = props;
-
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+      <Tooltip
+        sortDirection={tooltipSortDirection}
+        sortKey={tooltipSortKey}
+        valueFormatter={tooltipValueFormatter}
+      />
       <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
       <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
       {data.map(({ name, data }) => (
@@ -139,5 +184,6 @@ LiveExample.args = {
   verticalGridLines: false,
   xAxisType: 'time',
   yAxisType: 'value',
-  yAxisFormatter: value => `${value}GB`,
+  tooltipSortDirection: SortDirection.Desc,
+  tooltipSortKey: SortKey.Value,
 };

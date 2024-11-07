@@ -109,3 +109,15 @@ Renders a y-axis.
 | `type`                   | Type of axis.                                 | 'category' \| 'value' \| 'time' \| 'log' |         |
 | `label` _(optional)_     | Label name to be rendered on the axis.        | string                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | (value: string, index: number) => string |         |
+
+### `Tooltip`
+
+Renders a tooltip onto the chart.
+
+#### Props
+
+| Name                          | Description                                         | Type                                | Default |
+| ----------------------------- | --------------------------------------------------- | ----------------------------------- | ------- |
+| `sortDirection` _(optional)_  | What direction to sort tooltip values in.           | 'asc' \| 'desc'                     | 'desc'  |
+| `sortKey` _(optional)_        | Whether to sort by name or value.                   | 'name' \| 'value'                   | 'value' |
+| `valueFormatter` _(optional)_ | Callback function for formatting each value string. | (value: number \| string) => string |         |
