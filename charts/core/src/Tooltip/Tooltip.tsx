@@ -11,7 +11,7 @@ import {
 
 import { useChartContext } from '../ChartContext';
 
-import { TooltipProps } from './Tooltip.types';
+import { SortDirection, SortOrder, TooltipProps } from './Tooltip.types';
 
 export function Tooltip({
   sortDirection = 'desc',
@@ -22,17 +22,16 @@ export function Tooltip({
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    let sortOrder: 'valueDesc' | 'valueAsc' | 'seriesDesc' | 'seriesAsc' =
-      'valueDesc';
+    let sortOrder: SortOrder = SortOrder.ValueDesc;
 
-    if (sortDirection === 'asc') {
+    if (sortDirection === SortDirection.Asc) {
       if (sortKey === 'name') {
-        sortOrder = 'seriesAsc';
+        sortOrder = SortOrder.SeriesAsc;
       }
-      sortOrder = 'valueAsc';
+      sortOrder = SortOrder.ValueAsc;
     } else {
       if (sortKey === 'name') {
-        sortOrder = 'seriesDesc';
+        sortOrder = SortOrder.SeriesDesc;
       }
     }
 

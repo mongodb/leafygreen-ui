@@ -1,5 +1,25 @@
+export const SortDirection = {
+  Asc: 'asc',
+  Desc: 'desc',
+} as const;
+export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
+
+export const SortKey = {
+  Name: 'name',
+  Value: 'value',
+} as const;
+export type SortKey = (typeof SortKey)[keyof typeof SortKey];
+
+export const SortOrder = {
+  ValueDesc: 'valueDesc',
+  ValueAsc: 'valueAsc',
+  SeriesDesc: 'seriesDesc',
+  SeriesAsc: 'seriesAsc',
+} as const;
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+
 export interface TooltipProps {
-  sortDirection?: 'asc' | 'desc';
-  sortKey?: 'name' | 'value';
+  sortDirection?: SortDirection;
+  sortKey?: SortKey;
   valueFormatter?: (value: number | string) => string;
 }
