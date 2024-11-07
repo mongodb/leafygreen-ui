@@ -44,7 +44,6 @@ const meta: StoryMetaType<typeof Table> = {
   component: Table,
   argTypes: {
     shouldAlternateRowColor: { control: 'boolean' },
-    disableAnimations: { control: 'boolean' },
   },
   parameters: {
     default: 'LiveExample',
@@ -104,6 +103,142 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 // FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(100));
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<any>({
+    data,
+    columns,
+  });
+
+  const { rows } = table;
+
+  return (
+    <>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={css`
+          width: 1100px;
+        `}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            // const isExpandedContent = row.original.isExpandedContent ?? false;
+            const isExpandedContent = row.isExpandedContent ?? false;
+
+            return (
+              <Fragment key={row.id}>
+                {!isExpandedContent && (
+                  <Row row={row}>
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id} id={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                )}
+                {isExpandedContent && <ExpandedContent row={row} />}
+              </Fragment>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
+  );
+};
+
+LiveExample.argTypes = {
+  shouldAlternateRowColor: {
+    control: 'none',
+  },
+};
+
+export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(500));
 
