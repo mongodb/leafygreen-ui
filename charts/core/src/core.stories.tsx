@@ -184,8 +184,6 @@ LiveExample.args = {
   verticalGridLines: false,
   xAxisType: 'time',
   yAxisType: 'value',
-  yAxisFormatter: value => `${value}GB`,
   tooltipSortDirection: SortDirection.Desc,
   tooltipSortKey: SortKey.Value,
-  tooltipValueFormatter: value => `${value} GB`,
 };

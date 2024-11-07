@@ -4,6 +4,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
   color,
+  fontFamilies,
+  fontWeights,
   InteractionState,
   spacing,
   Variant,
@@ -17,7 +19,7 @@ import { getSortOrder } from './utils';
 export function Tooltip({
   sortDirection = SortDirection.Desc,
   sortKey = SortKey.Value,
-  valueFormatter = value => `${value} GB`,
+  valueFormatter,
 }: TooltipProps) {
   const { updateChartOptions } = useChartContext();
   const { theme } = useDarkMode();
@@ -48,9 +50,10 @@ export function Tooltip({
         padding: spacing[200],
         showDelay: 0,
         textStyle: {
-          fontFamily: 'Euclid Circular A Light, sans-serif',
+          fontFamily: fontFamilies.default,
+          fontWeight: 300,
           fontSize: 12,
-          fontWeight: 'lighter',
+          lineHeight: 20,
           color:
             color[theme].text[Variant.InversePrimary][InteractionState.Default],
         },
