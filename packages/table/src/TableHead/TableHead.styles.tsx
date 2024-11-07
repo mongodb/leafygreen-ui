@@ -1,6 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 export const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
@@ -21,16 +22,32 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         z-index: 1;
         top: 0;
 
-        table[data-is-sticky='true'] & {
-          color: red;
+        tr {
+          background-color: inherit;
+        }
 
+        table & {
           :after {
             content: '';
             position: absolute;
+            z-index: -1;
             bottom: 0;
-            width: 100%;
-            height: 100%;
-            box-shadow: -1px 0px 10px rgba(0, 0, 0, 0.25);
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 96%;
+            height: 50%;
+            box-shadow: 0px 9px 20px 9px rgba(0, 30, 43, 0.2);
+            /* box-shadow: 0px 6px 30px 17px rgba(0, 0, 0, 0.3); */
+            border-radius: 40%;
+            opacity: 0;
+            transition: opacity ${transitionDuration.default}ms ease-in-out;
+          }
+        }
+
+        table[data-is-sticky='true'] & {
+          :after {
+            opacity: 1;
           }
         }
       `]: isSticky,

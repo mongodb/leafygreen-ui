@@ -178,7 +178,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
 
   return (
     <div>
-      <div style={{ height: '200px' }} />
+      <div style={{ height: '50px' }} />
       <Table
         {...args}
         table={table}

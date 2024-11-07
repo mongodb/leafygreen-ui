@@ -44,6 +44,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     // Helps to determine if the header is sticky
     const { ref, inView } = useInView({
       threshold: 0,
+      initialInView: true,
     });
 
     return (
@@ -54,6 +55,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
+        {/* Empty div used to track if the header is sticky */}
         <div ref={ref} />
         <TableContextProvider
           shouldAlternateRowColor={shouldAlternateRowColor}
