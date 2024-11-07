@@ -160,14 +160,6 @@ const Template: React.FC<StoryChartProps> = props => {
     tooltipSortKey,
     tooltipValueFormatter,
   } = props;
-  const [showTooltip, setShowTooltip] = React.useState(true);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setShowTooltip(false);
-    }, 2000);
-  }, [showTooltip]);
-
   return (
     <Chart {...props}>
       <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
