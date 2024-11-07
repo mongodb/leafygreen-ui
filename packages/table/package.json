@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "12.7.0-test.2",
+  "version": "12.7.0-test.5",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -38,7 +38,8 @@
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
     "react-fast-compare": "3.2.2",
-    "react-intersection-observer":"9.13.1"
+    "react-intersection-observer":"9.13.1",
+    "@emotion/styled": "^11.10.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",

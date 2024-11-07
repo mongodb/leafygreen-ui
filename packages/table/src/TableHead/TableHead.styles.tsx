@@ -41,7 +41,7 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
             height: 50%;
             box-shadow: ${theme === Theme.Light
               ? `0px 9px 20px 9px ${transparentize(0.8, palette.black)}`
-              : '0px 6px 30px 17px rgba(0, 0, 0, 0.3)'};
+              : '0px 6px 30px 17px rgba(0, 0, 0, 0.5)'};
             border-radius: 40%;
             opacity: 0;
             transition: opacity ${transitionDuration.default}ms ease-in-out;
