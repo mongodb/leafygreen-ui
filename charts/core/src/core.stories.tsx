@@ -2,7 +2,7 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { TooltipProps } from './Tooltip/Tooltip.types';
+import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
@@ -101,7 +101,7 @@ export default {
     },
     tooltipSortDirection: {
       control: 'select',
-      options: ['asc', 'desc'],
+      options: SortDirection,
       description: 'Direction to sort tooltip values',
       name: 'SortDirection',
       table: {
@@ -110,7 +110,7 @@ export default {
     },
     tooltipSortKey: {
       control: 'select',
-      options: ['name', 'value'],
+      options: SortKey,
       description: 'Which key to sort tooltip values by',
       name: 'SortKey',
       table: {
