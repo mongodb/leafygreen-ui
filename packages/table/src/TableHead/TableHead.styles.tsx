@@ -8,11 +8,9 @@ import { transitionDuration } from '@leafygreen-ui/tokens';
 export const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.black};
-    /* box-shadow: 0 4px ${palette.gray.dark2}; */
   `,
   [Theme.Light]: css`
     background-color: ${palette.white};
-    /* box-shadow: 0 4px ${palette.gray.light2}; */
   `,
 };
 
@@ -23,10 +21,6 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         position: sticky;
         z-index: 1;
         top: 0;
-
-        tr {
-          background-color: inherit;
-        }
 
         table & {
           :after {
