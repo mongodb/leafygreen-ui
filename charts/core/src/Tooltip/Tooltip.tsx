@@ -5,6 +5,7 @@ import {
   borderRadius,
   color,
   fontFamilies,
+  fontWeights,
   InteractionState,
   spacing,
   Variant,
@@ -50,7 +51,7 @@ export function Tooltip({
         showDelay: 0,
         textStyle: {
           fontFamily: fontFamilies.default,
-          fontWeight: 300,
+          fontWeight: fontWeights.regular,
           fontSize: 12,
           lineHeight: 20,
           color:
