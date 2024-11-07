@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.5.0
+
+### Minor Changes
+
+- 7cb786c39: Adds `Tooltip` component
+
 ## 0.4.0
 
 ### Minor Changes
