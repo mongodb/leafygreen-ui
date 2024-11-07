@@ -5,7 +5,6 @@ import {
   borderRadius,
   color,
   fontFamilies,
-  fontWeights,
   InteractionState,
   spacing,
   Variant,
