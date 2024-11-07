@@ -11,11 +11,16 @@ import {
 
 import { useChartContext } from '../ChartContext';
 
-import { SortDirection, SortOrder, TooltipProps } from './Tooltip.types';
+import {
+  SortDirection,
+  SortKey,
+  SortOrder,
+  TooltipProps,
+} from './Tooltip.types';
 
 export function Tooltip({
-  sortDirection = 'desc',
-  sortKey = 'value',
+  sortDirection = SortDirection.Desc,
+  sortKey = SortKey.Value,
   valueFormatter = value => `${value} GB`,
 }: TooltipProps) {
   const { updateChartOptions } = useChartContext();
@@ -25,12 +30,12 @@ export function Tooltip({
     let sortOrder: SortOrder = SortOrder.ValueDesc;
 
     if (sortDirection === SortDirection.Asc) {
-      if (sortKey === 'name') {
+      if (sortKey === SortKey.Name) {
         sortOrder = SortOrder.SeriesAsc;
       }
       sortOrder = SortOrder.ValueAsc;
     } else {
-      if (sortKey === 'name') {
+      if (sortKey === SortKey.Name) {
         sortOrder = SortOrder.SeriesDesc;
       }
     }

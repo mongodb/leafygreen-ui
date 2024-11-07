@@ -193,7 +193,7 @@ LiveExample.args = {
   xAxisType: 'time',
   yAxisType: 'value',
   yAxisFormatter: value => `${value}GB`,
-  tooltipSortDirection: 'desc',
-  tooltipSortKey: 'value',
+  tooltipSortDirection: SortDirection.Desc,
+  tooltipSortKey: SortKey.Value,
   tooltipValueFormatter: value => `${value} GB`,
 };
