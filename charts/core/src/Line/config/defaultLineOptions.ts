@@ -5,7 +5,7 @@ export const defaultLineOptions: Omit<SeriesOption, 'name' | 'data'> = {
   showSymbol: false,
   symbol: 'circle',
   clip: false,
-  symbolSize: 8,
+  symbolSize: 7,
   emphasis: {
     disabled: true,
   },
