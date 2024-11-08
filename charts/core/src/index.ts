@@ -1,6 +1,5 @@
 export { Chart, type ChartOptions, type SeriesOption } from './Chart';
 export { ChartCard } from './ChartCard';
-export { ChartHeader } from './ChartHeader';
 export { Grid } from './Grid';
 export { Line } from './Line';
 export { Tooltip } from './Tooltip';
