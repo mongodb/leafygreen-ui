@@ -65,13 +65,6 @@ const meta: StoryMetaType<typeof Table> = {
     docs: {
       source: { type: 'code' },
     },
-    // docs: {
-    //   source: {
-    //     // any non-empty string here will skip jsx rendering, see:
-    //     // https://github.com/storybookjs/storybook/blob/next/code/renderers/react/src/docs/jsxDecorator.tsx#L165
-    //     code: 'hello world',
-    //   },
-    // },
   },
 };
 export default meta;
@@ -206,7 +199,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
             const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
@@ -343,7 +335,6 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
             const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
@@ -1186,7 +1177,6 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
           const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>
