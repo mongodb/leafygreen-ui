@@ -11,7 +11,7 @@ export const LabelVariants = {
 } as const;
 type LabelVariants = (typeof LabelVariants)[keyof typeof LabelVariants];
 
-export interface HeaderProps extends HTMLElementProps<'div'> {
+export interface BaseHeaderProps extends HTMLElementProps<'div'> {
   labelProps: {
     value: string;
     variant?: LabelVariants;

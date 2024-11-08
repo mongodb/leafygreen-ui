@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -13,12 +13,12 @@ import {
   getContainerStyles,
   inputContentStyles,
 } from './BaseHeader.styles';
-import { HeaderProps, LabelVariants } from './BaseHeader.types';
+import { BaseHeaderProps, LabelVariants } from './BaseHeader.types';
 
 /**
  * Generic header component that will be used by both `Chart` and `ChartCard`.
  */
-export function Header({
+export function BaseHeader({
   labelProps,
   moreInfoButtonProps,
   closeButtonProps,
@@ -29,7 +29,7 @@ export function Header({
   messageText,
   className,
   ...rest
-}: HeaderProps) {
+}: BaseHeaderProps) {
   const [collapsed, setCollapsed] = useState(
     collapseButtonProps?.collapsed || false,
   );
