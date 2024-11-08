@@ -4,7 +4,9 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
+import { expect } from '@storybook/jest';
 import { StoryFn } from '@storybook/react';
+import { within } from '@storybook/testing-library';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
@@ -184,6 +186,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         className={css`
           width: 1100px;
         `}
+        data-testid="lg-table"
       >
         <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -1208,4 +1211,15 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
       </TableBody>
     </Table>
   );
+};
+
+export const StickyHeader = {
+  render: () => <LiveExample />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const table = await canvas.findByTestId('lg-table');
+    window.scrollTo(0, 500);
+    await new Promise(r => setTimeout(r, 500));
+    expect(table).toHaveAttribute('data-is-sticky', 'true');
+  },
 };
