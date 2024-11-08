@@ -34,14 +34,21 @@ export interface BaseTableContextValue<T extends LGRowData> {
 }
 
 export type TableProviderValues<T extends LGRowData> = PropsWithChildren<
-  Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
+  Pick<
+    TableProps<T>,
+    'shouldAlternateRowColor' | 'shouldTruncate' | 'verticalAlignment'
+  >
 > &
   DarkModeProps &
   SharedVirtualContextValue<T> &
   BaseTableContextValue<T>;
 
 export type TableContextValues<T extends LGRowData> = PropsWithChildren<
-  Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
+  // TODO: this is repeated above
+  Pick<
+    TableProps<T>,
+    'shouldAlternateRowColor' | 'shouldTruncate' | 'verticalAlignment'
+  >
 > &
   DarkModeProps &
   BaseTableContextValue<T>;

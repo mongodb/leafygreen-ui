@@ -3,10 +3,11 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../constants';
+import { useTableContext } from '../TableContext';
 
 import {
-  baseCellStyles,
   cellInnerStyles,
+  getBaseCellStyles,
   getCellContainerStyles,
 } from './Cell.styles';
 import { InternalCellProps } from './Cell.types';
@@ -18,10 +19,11 @@ const InternalCell = ({
   align,
   ...rest
 }: InternalCellProps) => {
+  const { verticalAlignment } = useTableContext();
   return (
     <td
       data-lgid={LGIDS.cell}
-      className={cx(baseCellStyles, className)}
+      className={cx(getBaseCellStyles(verticalAlignment), className)}
       {...rest}
     >
       <div className={cx(getCellContainerStyles(align), contentClassName)}>

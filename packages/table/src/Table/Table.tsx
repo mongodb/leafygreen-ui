@@ -18,13 +18,14 @@ import { TableProps } from './Table.types';
 const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   <T extends LGRowData>(
     {
+      table,
       children,
       className,
+      verticalAlignment = 'top',
       shouldAlternateRowColor = false,
       shouldTruncate = true,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
-      table,
       'data-lgid': lgidProp = LGIDS.root,
       ...rest
     }: TableProps<T>,
@@ -55,6 +56,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           isSelectable={isSelectable}
           shouldTruncate={shouldTruncate}
           virtualTable={virtualTable}
+          verticalAlignment={verticalAlignment}
         >
           <table
             className={getTableStyles(theme, baseFontSize)}
