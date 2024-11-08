@@ -2,11 +2,17 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+import { css } from '@leafygreen-ui/emotion';
+
+import { LabelVariants } from './ChartHeader/BaseHeader.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
+import { Header } from './ChartHeader';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
+  ChartCard,
   Grid,
   Line,
   Tooltip,
@@ -125,9 +131,6 @@ export default {
       },
     },
   },
-  decorator: (Instance, context) => {
-    return <Instance darkMode={context?.args.darkMode} />;
-  },
 };
 
 interface StoryChartProps {
@@ -145,6 +148,33 @@ interface StoryChartProps {
   tooltipValueFormatter: TooltipProps['valueFormatter'];
 }
 
+const HeaderInputComponent = function () {
+  return (
+    <div
+      className={css`
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+      `}
+    >
+      <Combobox
+        aria-label="Pick charts to display"
+        placeholder="Chart Options"
+        initialValue={['User', 'Kernal']}
+        multiselect
+        size="xsmall"
+        className={css`
+          width: 300px;
+        `}
+      >
+        <ComboboxOption value="User" />
+        <ComboboxOption value="Kernal" />
+        <ComboboxOption value="Other" />
+      </Combobox>
+    </div>
+  );
+};
+
 const Template: React.FC<StoryChartProps> = props => {
   const {
     data,
@@ -161,19 +191,31 @@ const Template: React.FC<StoryChartProps> = props => {
     tooltipValueFormatter,
   } = props;
   return (
-    <Chart {...props}>
-      <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-      <Tooltip
-        sortDirection={tooltipSortDirection}
-        sortKey={tooltipSortKey}
-        valueFormatter={tooltipValueFormatter}
+    <ChartCard>
+      <Header
+        labelProps={{ value: 'Primary Label', variant: LabelVariants.Primary }}
+        moreInfoButtonProps={{ show: true }}
+        closeButtonProps={{ show: true }}
+        fullScreenButtonProps={{ show: true }}
+        resetButtonProps={{ show: true }}
+        collapseButtonProps={{ show: true }}
+        inputContent={<HeaderInputComponent />}
+        messageText="This is a message"
       />
-      <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
-      <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
-      {data.map(({ name, data }) => (
-        <Line name={name} data={data} key={name} />
-      ))}
-    </Chart>
+      <Chart>
+        <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+        <Tooltip
+          sortDirection={tooltipSortDirection}
+          sortKey={tooltipSortKey}
+          valueFormatter={tooltipValueFormatter}
+        />
+        <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
+        <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
+        {data.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    </ChartCard>
   );
 };
 

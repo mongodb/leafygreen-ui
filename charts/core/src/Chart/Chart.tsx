@@ -14,7 +14,7 @@ import LeafyGreenProvider, {
 
 import { ChartProvider } from '../ChartContext';
 
-import { chartStyles, getWrapperStyles } from './Chart.styles';
+import { chartStyles } from './Chart.styles';
 import { ChartProps } from './Chart.types';
 import { useChart } from './hooks';
 
@@ -45,14 +45,19 @@ export function Chart({
         addChartSeries={addChartSeries}
         removeChartSeries={removeChartSeries}
       >
-        <div className={cx(getWrapperStyles(theme), className)} {...rest}>
-          {children}
-          <div
-            ref={chartRef}
-            className={`echart ${chartStyles}`}
-            data-testid="echart"
-          />
-        </div>
+        <div
+          ref={chartRef}
+          className={cx('echart', chartStyles, className)}
+          data-testid="echart"
+          {...rest}
+        />
+        {/**
+         * Children are not expected to be rendered to the DOM, but are used to
+         * provide a more declarative API for adding functionality to the chart
+         * canvas. They have access to the ChartContext and can be used to add
+         * components like Line, Grid, etc.
+         */}
+        {children}
       </ChartProvider>
     </LeafyGreenProvider>
   );
