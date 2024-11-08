@@ -74,7 +74,6 @@ export const getBaseCellStyles = (
 ) => css`
   padding: 0 ${spacing[200]}px;
   overflow: hidden;
-  // TODO: this should be a prop
   vertical-align: ${verticalAlignment};
 
   &:focus-visible {
