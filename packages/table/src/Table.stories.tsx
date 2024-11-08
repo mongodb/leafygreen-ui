@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-// import styled from '@emotion/styled';
+import styled from '@emotion/styled';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -1055,153 +1055,153 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
   );
 };
 
-// export const StyledComponents: StoryFn<StoryTableProps> = args => {
-//   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-//   const [data] = useState(() => makeKitchenSinkData(5));
+export const StyledComponents: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(5));
 
-//   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
-//     () => [
-//       {
-//         accessorKey: 'dateCreated',
-//         header: 'Date Created',
-//         enableSorting: true,
-//         cell: info =>
-//           (info.getValue() as Date).toLocaleDateString('en-us', {
-//             year: 'numeric',
-//             month: 'short',
-//             day: 'numeric',
-//           }),
-//       },
-//       {
-//         accessorKey: 'frequency',
-//         header: 'Frequency',
-//       },
-//       {
-//         accessorKey: 'clusterType',
-//         header: 'Cluster Type',
-//       },
-//       {
-//         accessorKey: 'encryptorEnabled',
-//         header: 'Encryptor',
-//         // eslint-disable-next-line react/display-name
-//         cell: info => (
-//           <Badge variant={info.getValue() ? 'green' : 'red'}>
-//             {info.getValue() ? 'Enabled' : 'Not enabled'}
-//           </Badge>
-//         ),
-//       },
-//       {
-//         accessorKey: 'mdbVersion',
-//         header: 'MongoDB Version',
-//         enableSorting: true,
-//         size: 90,
-//       },
-//       {
-//         id: 'actions',
-//         header: '',
-//         size: 90,
-//         // eslint-disable-next-line react/display-name
-//         cell: _ => {
-//           return (
-//             <>
-//               <IconButton aria-label="Download">
-//                 <Icon glyph="Download" />
-//               </IconButton>
-//               <IconButton aria-label="Export">
-//                 <Icon glyph="Export" />
-//               </IconButton>
-//               <IconButton aria-label="More Options">
-//                 <Icon glyph="Ellipsis" />
-//               </IconButton>
-//             </>
-//           );
-//         },
-//       },
-//     ],
-//     [],
-//   );
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
 
-//   const table = useLeafyGreenTable<any>({
-//     data,
-//     columns,
-//   });
+  const table = useLeafyGreenTable<any>({
+    data,
+    columns,
+  });
 
-//   const { rows } = table;
+  const { rows } = table;
 
-//   const StyledCell = styled(Cell)`
-//     color: grey;
-//   `;
+  const StyledCell = styled(Cell)`
+    color: grey;
+  `;
 
-//   const StyledRow = styled(Row)`
-//     background: snow;
-//   `;
+  const StyledRow = styled(Row)`
+    background: snow;
+  `;
 
-//   const StyledHeaderRow = styled(HeaderRow)`
-//     background: whitesmoke;
-//   `;
+  const StyledHeaderRow = styled(HeaderRow)`
+    background: whitesmoke;
+  `;
 
-//   const StyledHeaderCell = styled(HeaderCell)`
-//     color: black;
-//   `;
+  const StyledHeaderCell = styled(HeaderCell)`
+    color: black;
+  `;
 
-//   const StyledExpandedContent = styled(ExpandedContent)`
-//     td > div {
-//       background: whitesmoke;
-//     }
-//   `;
+  const StyledExpandedContent = styled(ExpandedContent)`
+    td > div {
+      background: whitesmoke;
+    }
+  `;
 
-//   return (
-//     <Table
-//       {...args}
-//       table={table}
-//       ref={tableContainerRef}
-//       className={css`
-//         width: 1100px;
-//       `}
-//     >
-//       <TableHead>
-//         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-//           <StyledHeaderRow key={headerGroup.id}>
-//             {headerGroup.headers.map(header => {
-//               return (
-//                 <StyledHeaderCell key={header.id} header={header}>
-//                   {flexRender(
-//                     header.column.columnDef.header,
-//                     header.getContext(),
-//                   )}
-//                 </StyledHeaderCell>
-//               );
-//             })}
-//           </StyledHeaderRow>
-//         ))}
-//       </TableHead>
-//       <TableBody>
-//         {rows.map((row: LeafyGreenTableRow<Person>) => {
-//           const isExpandedContent = row.isExpandedContent ?? false;
-//           return (
-//             <Fragment key={row.id}>
-//               {!isExpandedContent && (
-//                 <StyledRow row={row}>
-//                   {row.getVisibleCells().map(cell => {
-//                     return (
-//                       <StyledCell key={cell.id} id={cell.id} cell={cell}>
-//                         {flexRender(
-//                           cell.column.columnDef.cell,
-//                           cell.getContext(),
-//                         )}
-//                       </StyledCell>
-//                     );
-//                   })}
-//                 </StyledRow>
-//               )}
-//               {isExpandedContent && <StyledExpandedContent row={row} />}
-//             </Fragment>
-//           );
-//         })}
-//       </TableBody>
-//     </Table>
-//   );
-// };
+  return (
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
+      <TableHead>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <StyledHeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <StyledHeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </StyledHeaderCell>
+              );
+            })}
+          </StyledHeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.isExpandedContent ?? false;
+          return (
+            <Fragment key={row.id}>
+              {!isExpandedContent && (
+                <StyledRow row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <StyledCell key={cell.id} id={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </StyledCell>
+                    );
+                  })}
+                </StyledRow>
+              )}
+              {isExpandedContent && <StyledExpandedContent row={row} />}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+};
 
 export const StickyHeader = {
   render: () => <LiveExample />,

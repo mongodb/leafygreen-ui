@@ -46,7 +46,8 @@
     "@leafygreen-ui/button": "^21.2.0",
     "@leafygreen-ui/badge": "^8.1.2",
     "@leafygreen-ui/pagination": "^1.0.23",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@lg-tools/storybook-utils": "^0.1.1",
+    "@emotion/styled": "^11.10.5"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
