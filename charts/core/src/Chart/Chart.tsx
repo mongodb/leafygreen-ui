@@ -14,7 +14,7 @@ import LeafyGreenProvider, {
 
 import { ChartProvider } from '../ChartContext';
 
-import { chartStyles } from './Chart.styles';
+import { chartContainerStyles, chartStyles } from './Chart.styles';
 import { ChartProps } from './Chart.types';
 import { useChart } from './hooks';
 
@@ -45,19 +45,23 @@ export function Chart({
         addChartSeries={addChartSeries}
         removeChartSeries={removeChartSeries}
       >
-        <div
-          ref={chartRef}
-          className={cx('echart', chartStyles, className)}
-          data-testid="echart"
-          {...rest}
-        />
-        {/**
-         * Children are not expected to be rendered to the DOM, but are used to
-         * provide a more declarative API for adding functionality to the chart
-         * canvas. They have access to the ChartContext and can be used to add
-         * components like Line, Grid, etc.
-         */}
-        {children}
+        <div className={cx(chartContainerStyles, className)}>
+          <div>
+            {/**
+             * Children other than Header are not expected to be rendered to the DOM,
+             * but are used to provide a more declarative API for adding functionality
+             * to the chart canvas. They have access to the ChartContext and can be
+             * used to add components like Line, Grid, etc.
+             */}
+            {children}
+          </div>
+          <div
+            ref={chartRef}
+            className={cx('echart', chartStyles)}
+            data-testid="echart"
+            {...rest}
+          />
+        </div>
       </ChartProvider>
     </LeafyGreenProvider>
   );

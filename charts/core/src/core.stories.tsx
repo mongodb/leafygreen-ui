@@ -7,13 +7,13 @@ import { css } from '@leafygreen-ui/emotion';
 
 import { LabelVariants } from './BaseHeader/BaseHeader.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
-import { Header } from './BaseHeader';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
   ChartCard,
   Grid,
+  Header,
   Line,
   Tooltip,
   XAxis,
@@ -21,6 +21,7 @@ import {
   YAxis,
   YAxisProps,
 } from '.';
+import { HeaderProps } from './Header/Header.types';
 
 export default {
   title: 'Charts/Core',
@@ -130,6 +131,38 @@ export default {
         disable: true,
       },
     },
+    headerLabel: {
+      control: 'text',
+      description: 'Header label',
+      name: 'Label',
+      table: {
+        category: 'Header',
+      },
+    },
+    headerCloseButtonShow: {
+      control: 'boolean',
+      description: 'Show close button',
+      name: 'CloseButtonShow',
+      table: {
+        category: 'Header',
+      },
+    },
+    headerFullScreenButtonShow: {
+      control: 'boolean',
+      description: 'Show fullscreen button',
+      name: 'FullScreenButtonShow',
+      table: {
+        category: 'Header',
+      },
+    },
+    headerReseButtonShow: {
+      control: 'boolean',
+      description: 'Show reset button',
+      name: 'ResetButtonShow',
+      table: {
+        category: 'Header',
+      },
+    },
   },
 };
 
@@ -146,34 +179,39 @@ interface StoryChartProps {
   tooltipSortDirection: TooltipProps['sortDirection'];
   tooltipSortKey: TooltipProps['sortKey'];
   tooltipValueFormatter: TooltipProps['valueFormatter'];
+  headerLabel: HeaderProps['label'];
+  headerCloseButtonShow: boolean;
+  headerFullScreenButtonShow: boolean;
+  headerResetButtonShow: boolean;
 }
 
-const HeaderInputComponent = function () {
-  return (
-    <div
-      className={css`
-        display: flex;
-        width: 100%;
-        justify-content: flex-end;
-      `}
-    >
-      <Combobox
-        aria-label="Pick charts to display"
-        placeholder="Chart Options"
-        initialValue={['User', 'Kernal']}
-        multiselect
-        size="xsmall"
-        className={css`
-          width: 300px;
-        `}
-      >
-        <ComboboxOption value="User" />
-        <ComboboxOption value="Kernal" />
-        <ComboboxOption value="Other" />
-      </Combobox>
-    </div>
-  );
-};
+// TODO: For use with ChartCard
+// const HeaderInputComponent = function () {
+//   return (
+//     <div
+//       className={css`
+//         display: flex;
+//         width: 100%;
+//         justify-content: flex-end;
+//       `}
+//     >
+//       <Combobox
+//         aria-label="Pick charts to display"
+//         placeholder="Chart Options"
+//         initialValue={['User', 'Kernal']}
+//         multiselect
+//         size="xsmall"
+//         className={css`
+//           width: 300px;
+//         `}
+//       >
+//         <ComboboxOption value="User" />
+//         <ComboboxOption value="Kernal" />
+//         <ComboboxOption value="Other" />
+//       </Combobox>
+//     </div>
+//   );
+// };
 
 const Template: React.FC<StoryChartProps> = props => {
   const {
@@ -189,20 +227,20 @@ const Template: React.FC<StoryChartProps> = props => {
     tooltipSortDirection,
     tooltipSortKey,
     tooltipValueFormatter,
+    headerLabel,
+    headerCloseButtonShow,
+    headerFullScreenButtonShow,
+    headerResetButtonShow,
   } = props;
   return (
     <ChartCard>
-      <Header
-        labelProps={{ value: 'Primary Label', variant: LabelVariants.Primary }}
-        moreInfoButtonProps={{ show: true }}
-        closeButtonProps={{ show: true }}
-        fullScreenButtonProps={{ show: true }}
-        resetButtonProps={{ show: true }}
-        collapseButtonProps={{ show: true }}
-        inputContent={<HeaderInputComponent />}
-        messageText="This is a message"
-      />
       <Chart>
+        <Header
+          label={headerLabel}
+          closeButtonProps={{ show: headerCloseButtonShow }}
+          fullScreenButtonProps={{ show: headerFullScreenButtonShow }}
+          resetButtonProps={{ show: headerResetButtonShow }}
+        />
         <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
         <Tooltip
           sortDirection={tooltipSortDirection}
@@ -228,4 +266,8 @@ LiveExample.args = {
   yAxisType: 'value',
   tooltipSortDirection: SortDirection.Desc,
   tooltipSortKey: SortKey.Value,
+  headerLabel: 'LeafyGreen Chart',
+  headerCloseButtonShow: true,
+  headerFullScreenButtonShow: true,
+  headerResetButtonShow: true,
 };

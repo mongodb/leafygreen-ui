@@ -95,6 +95,7 @@ export function BaseHeader({
       <div className={alignCenterStyles}>
         {/* Reset button */}
         {resetButtonProps?.show && (
+          // TODO: LG-4664 - Swap with actual icon
           <IconButton
             aria-label="Reset button"
             onClick={resetButtonProps?.onClick}
