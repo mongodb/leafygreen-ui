@@ -252,6 +252,25 @@ const Template: React.FC<StoryChartProps> = props => {
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
+      <Chart>
+        <Header
+          label={headerLabel}
+          closeButtonProps={{ show: headerCloseButtonShow }}
+          fullScreenButtonProps={{ show: headerFullScreenButtonShow }}
+          resetButtonProps={{ show: headerResetButtonShow }}
+        />
+        <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+        <Tooltip
+          sortDirection={tooltipSortDirection}
+          sortKey={tooltipSortKey}
+          valueFormatter={tooltipValueFormatter}
+        />
+        <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
+        <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
+        {data.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
     </ChartCard>
   );
 };
@@ -265,7 +284,7 @@ LiveExample.args = {
   yAxisType: 'value',
   tooltipSortDirection: SortDirection.Desc,
   tooltipSortKey: SortKey.Value,
-  headerLabel: 'LeafyGreen Chart',
+  headerLabel: 'LeafyGreen Chart Header',
   headerCloseButtonShow: true,
   headerFullScreenButtonShow: true,
   headerResetButtonShow: true,

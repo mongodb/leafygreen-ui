@@ -28,7 +28,7 @@ export const inputContentStyles = css`
 
 export const collapseIconStyles = css`
   transform: rotate(0deg);
-  transition: transform ${transitionDuration.default}ms ease-in-out;
+  transition: transform ${transitionDuration.slower}ms ease-in-out;
 
   &.collapsed {
     transform: rotate(-90deg);
