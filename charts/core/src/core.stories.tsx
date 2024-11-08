@@ -2,10 +2,10 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
-import { css } from '@leafygreen-ui/emotion';
-
-import { LabelVariants } from './BaseHeader/BaseHeader.types';
+// import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+// import { css } from '@leafygreen-ui/emotion';
+// import { LabelVariants } from './BaseHeader/BaseHeader.types';
+import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
@@ -21,7 +21,6 @@ import {
   YAxis,
   YAxisProps,
 } from '.';
-import { HeaderProps } from './Header/Header.types';
 
 export default {
   title: 'Charts/Core',
