@@ -195,6 +195,10 @@ cli
     'Bypass Git safety checks and forcibly run codemods',
     false,
   )
+  .option(
+    '--pkg, --packages <packages...>',
+    'Specific package names to transform',
+  )
   .action(migrator);
 
 /** Build steps */
