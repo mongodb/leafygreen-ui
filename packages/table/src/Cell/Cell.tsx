@@ -8,19 +8,17 @@ import { CellProps } from '.';
 
 const Cell = <T extends LGRowData>({
   children,
-  cell,
+  cell: reactTableCell,
   ...rest
 }: CellProps<T>) => {
   return (
     <>
-      {!cell && (
-        <InternalCellWithoutRT {...rest}>{children}</InternalCellWithoutRT>
-      )}
-
-      {cell && (
-        <InternalCellWithRT {...rest} cell={cell}>
+      {reactTableCell ? (
+        <InternalCellWithRT {...rest} cell={reactTableCell}>
           {children}
         </InternalCellWithRT>
+      ) : (
+        <InternalCellWithoutRT {...rest}>{children}</InternalCellWithoutRT>
       )}
     </>
   );
