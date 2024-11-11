@@ -36,7 +36,7 @@ export interface LeafyGreenVirtualTableOptions<
  * LeafyGreen extension of `useReactTable` {@link Table}
  */
 export interface LeafyGreenVirtualTable<T extends LGRowData>
-  extends LeafyGreenTable<T> {
+  extends Omit<LeafyGreenTable<T>, 'virtual'> {
   /**
    * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
    */

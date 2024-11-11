@@ -33,8 +33,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
-    const isVirtual =
-      table && (table as LeafyGreenVirtualTable<T>).virtual ? true : false;
+    const isVirtual = Boolean((table as LeafyGreenVirtualTable<T>)?.virtual);
     const virtualTable = isVirtual
       ? (table as LeafyGreenVirtualTable<T>)!.virtual
       : undefined;
