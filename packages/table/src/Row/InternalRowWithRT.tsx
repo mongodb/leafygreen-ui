@@ -31,7 +31,6 @@ const InternalRowWithRT = <T extends LGRowData>({
 
   const isExpandable = row.getCanExpand();
   const depth = row.depth;
-  // const toggleExpanded = useCallback(() => row.toggleExpanded(), [row]);
 
   const contextValues = useMemo(() => {
     return {

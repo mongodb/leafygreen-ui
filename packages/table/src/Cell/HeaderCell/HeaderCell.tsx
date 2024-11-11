@@ -7,12 +7,12 @@ import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 
 import SortIcon from './SortIcon/SortIcon';
+import { getHeaderCellState } from './utils/getHeaderCellState';
 import {
   getBaseHeaderCellStyles,
   getHeaderCellContentStyles,
 } from './HeaderCell.styles';
 import { HeaderCellProps } from './HeaderCell.types';
-import { getHeaderCellState } from './utils';
 
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.

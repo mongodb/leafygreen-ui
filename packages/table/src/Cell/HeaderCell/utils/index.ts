@@ -1,1 +1,0 @@
-export { getHeaderCellState } from './getHeaderCellState';
