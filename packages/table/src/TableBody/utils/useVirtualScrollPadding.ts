@@ -19,11 +19,6 @@ export const useVirtualScrollPadding = <T extends LGRowData>(
     paddingTop = numOfVirtualItems > 0 ? startOfFirstVirtualItem : 0;
     paddingBottom =
       numOfVirtualItems > 0 ? totalSizOfVirtualTable - endOfLastVirtualItem : 0;
-
-    return {
-      paddingTop,
-      paddingBottom,
-    };
   }
 
   return {

@@ -14,10 +14,11 @@ export const getHeaderCellState = <T extends LGRowData>(
   let columnName, sortState, onSortIconClick;
 
   if (header && header?.column.columnDef.enableSorting) {
-    columnName = header.column.columnDef.header as string;
-    const headerSortDirection = header.column.getIsSorted().toString();
+    const column = header.column;
+    columnName = column.columnDef.header as string;
+    const headerSortDirection = column.getIsSorted().toString();
     sortState = HeaderSortState[headerSortDirection];
-    onSortIconClick = header.column.getToggleSortingHandler();
+    onSortIconClick = column.getToggleSortingHandler();
   }
 
   return { columnName, sortState, onSortIconClick };

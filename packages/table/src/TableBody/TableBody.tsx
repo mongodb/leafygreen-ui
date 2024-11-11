@@ -1,15 +1,13 @@
 import React, { useRef } from 'react';
 
 import { useTableContext } from '../TableContext';
-import { useVirtualTableContext } from '../TableContext/VirtualTableContext';
 
 import { useVirtualScrollPadding } from './utils/useVirtualScrollPadding';
 import { paddingBottomStyles, paddingTopStyles } from './TableBody.styles';
 import { TableBodyProps } from './TableBody.types';
 
 const TableBody = ({ children, ...rest }: TableBodyProps) => {
-  const { isVirtual } = useTableContext();
-  const { virtualTable } = useVirtualTableContext();
+  const { isVirtual, virtualTable } = useTableContext();
 
   const { paddingTop, paddingBottom } = useVirtualScrollPadding(
     isVirtual,

@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
-import { useVirtualTableContext } from '../TableContext';
+import { useTableContext } from '../TableContext';
 
 import {
   baseStyles,
@@ -19,7 +19,7 @@ const ExpandedContent = <T extends RowData>({
   virtualRow,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { virtualTable } = useVirtualTableContext();
+  const { virtualTable } = useTableContext();
 
   const content =
     row.original.renderExpandedContent &&
