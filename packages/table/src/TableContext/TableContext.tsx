@@ -11,7 +11,7 @@ import { LGRowData } from '../useLeafyGreenTable';
 
 import {
   type TableContextValues,
-  type TableProviderValues,
+  type TableProviderProps,
 } from './TableContext.types';
 import VirtualTableContextProvider from './VirtualTableContext';
 
@@ -32,9 +32,9 @@ const TableContextProvider = <T extends LGRowData>({
   isSelectable,
   shouldTruncate,
   virtualTable,
-}: PropsWithChildren<Partial<TableProviderValues<T>>>) => {
+}: PropsWithChildren<Partial<TableProviderProps<T>>>) => {
   /** The appropriately typed context provider */
-  const TableProvider = (TableContext as React.Context<TableProviderValues<T>>)
+  const TableProvider = (TableContext as React.Context<TableProviderProps<T>>)
     .Provider;
 
   const tableProviderData = useMemo(() => {

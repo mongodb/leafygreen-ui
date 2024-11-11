@@ -33,7 +33,7 @@ export interface BaseTableContextValue<T extends LGRowData> {
   isSelectable?: boolean;
 }
 
-export type TableProviderValues<T extends LGRowData> = PropsWithChildren<
+export type TableProviderProps<T extends LGRowData> = PropsWithChildren<
   Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
 > &
   DarkModeProps &
