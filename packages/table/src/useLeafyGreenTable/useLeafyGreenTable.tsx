@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   ExpandedState,
   getExpandedRowModel,
-  // RowData,
   RowModel,
   Table,
   useReactTable,
@@ -16,11 +15,7 @@ import omit from 'lodash/omit';
 
 import { TableHeaderCheckbox } from './TableHeaderCheckbox';
 import { TableRowCheckbox } from './TableRowCheckbox';
-import {
-  LeafyGreenTableOptions,
-  // LGRow,
-  LGRowData,
-} from './useLeafyGreenTable.types';
+import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
 const CHECKBOX_WIDTH = 40;

@@ -14,20 +14,10 @@ function useLeafyGreenVirtualTable<
   V extends unknown = unknown,
 >({
   containerRef,
-  data,
-  columns,
-  hasSelectableRows,
-  withPagination = false,
-  allowSelectAll = true,
   virtualizerOptions,
   ...rest
 }: LeafyGreenVirtualTableOptions<T, V>): LeafyGreenVirtualTable<T> {
   const table = useLeafyGreenTable({
-    data,
-    columns,
-    withPagination,
-    allowSelectAll,
-    hasSelectableRows,
     ...rest,
   });
 

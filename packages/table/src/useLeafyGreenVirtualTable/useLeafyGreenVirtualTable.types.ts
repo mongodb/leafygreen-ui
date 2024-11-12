@@ -13,9 +13,7 @@ import {
 } from '../useLeafyGreenTable';
 
 /**
- * Options argument for the LeafyGreen extension of `useReactTable`
- *
- * See: {@link TableOptions}
+ * Available [options](https://tanstack.com/table/latest/docs/guide/tables#creating-a-table-instance) to pass to the LeafyGreen extension of `useReactTable`.
  */
 export interface LeafyGreenVirtualTableOptions<
   T extends LGRowData,
@@ -27,7 +25,7 @@ export interface LeafyGreenVirtualTableOptions<
   containerRef: RefObject<HTMLElement>;
 
   /**
-   * A list of [options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance
+   * Available [options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance
    */
   virtualizerOptions?: Partial<VirtualizerOptions<HTMLElement, Element>>;
 }
