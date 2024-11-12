@@ -308,7 +308,11 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
 
   return (
     <div>
-      <div style={{ height: '50px' }} />
+      <div
+        className={css`
+          height: 50px;
+        `}
+      />
       <Table
         {...args}
         table={table}
@@ -359,7 +363,11 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
           })}
         </TableBody>
       </Table>
-      <div style={{ height: '2000px' }} />
+      <div
+        className={css`
+          height: 2000px;
+        `}
+      />
     </div>
   );
 };
