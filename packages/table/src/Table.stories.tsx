@@ -1183,7 +1183,6 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
           const isExpandedContent = row.isExpandedContent ?? false;
           return (
             <Fragment key={row.id}>

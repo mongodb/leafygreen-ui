@@ -45,16 +45,15 @@ function useLeafyGreenVirtualTable<
     ...virtualizerOptions,
   });
 
-  const _virtualItems: Array<LeafyGreenVirtualItem<T>> = _virtualizer
-    .getVirtualItems()
-    .map((virtualRow: VirtualItem) => ({
+  const _getVirtualItems = (): Array<LeafyGreenVirtualItem<T>> =>
+    _virtualizer.getVirtualItems().map((virtualRow: VirtualItem) => ({
       ...virtualRow,
       row: rows[virtualRow.index],
     }));
 
   return {
     ...table,
-    virtual: { ..._virtualizer, getVirtualItems: () => _virtualItems },
+    virtual: { ..._virtualizer, getVirtualItems: () => _getVirtualItems() },
   } as LeafyGreenVirtualTable<T>;
 }
 

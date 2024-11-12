@@ -173,7 +173,7 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
   return (
     <>
       <div>
-        <p>{table.rows.length} total rows</p>
+        <p>{table.getRowModel().rows.length} total rows</p>
         <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
       </div>
 
@@ -327,7 +327,7 @@ export const DisabledSelectableRows: StoryFn<
         darkMode={darkMode}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.rows.length}
+        data-total-rows={table.getRowModel().rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
