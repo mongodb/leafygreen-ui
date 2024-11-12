@@ -49,7 +49,8 @@ const RowWithRef = <T extends LGRowData>(
   );
 };
 
-// TODO: Can i avoid asserting?
+// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
+// This assertion has an interface that restores the original function signature to work with generics.
 export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
 Row.propTypes = {

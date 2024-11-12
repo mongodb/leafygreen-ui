@@ -46,7 +46,8 @@ const ExpandedContentWithRef = <T extends RowData>(
   );
 };
 
-// TODO: Can I avoid asserting
+// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
+// This assertion has an interface that restores the original function signature to work with generics.
 export const ExpandedContent = React.forwardRef(
   ExpandedContentWithRef,
 ) as ExpandedContentComponentType;
