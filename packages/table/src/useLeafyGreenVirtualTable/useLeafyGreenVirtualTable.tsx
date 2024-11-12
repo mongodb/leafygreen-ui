@@ -31,7 +31,7 @@ function useLeafyGreenVirtualTable<
     ...rest,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   const _virtualizer = useVirtualizer({
     count: rows.length,
@@ -51,8 +51,6 @@ function useLeafyGreenVirtualTable<
       ...virtualRow,
       row: rows[virtualRow.index],
     }));
-
-  // const { getVirtualItems, ...virtualizerRest } = _virtualizer;
 
   return {
     ...table,

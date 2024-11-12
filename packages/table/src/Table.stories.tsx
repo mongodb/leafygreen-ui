@@ -63,13 +63,6 @@ const meta: StoryMetaType<typeof Table> = {
     docs: {
       source: { type: 'code' },
     },
-    // docs: {
-    //   source: {
-    //     // any non-empty string here will skip jsx rendering, see:
-    //     // https://github.com/storybookjs/storybook/blob/next/code/renderers/react/src/docs/jsxDecorator.tsx#L165
-    //     code: 'hello world',
-    //   },
-    // },
   },
 };
 export default meta;
@@ -101,7 +94,6 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
-// FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(100));
@@ -173,7 +165,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -203,7 +195,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
             const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
@@ -309,7 +300,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -339,7 +330,6 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
             const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
@@ -368,9 +358,15 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
-LiveExample.argTypes = {
+HundredsOfRows.argTypes = {
   shouldAlternateRowColor: {
     control: 'none',
+  },
+};
+
+HundredsOfRows.parameters = {
+  chromatic: {
+    disableSnapshots: true,
   },
 };
 
@@ -433,14 +429,14 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -531,14 +527,14 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -634,13 +630,13 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -732,7 +728,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     hasSelectableRows: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -762,7 +758,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         {...args}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.rows.length}
+        data-total-rows={table.getRowModel().rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -859,7 +855,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
     allowSelectAll: false,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -984,7 +980,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
     withPagination: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -1130,7 +1126,7 @@ export const StyledComponents: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   const StyledCell = styled(Cell)`
     color: grey;

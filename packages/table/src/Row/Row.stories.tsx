@@ -168,7 +168,7 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
     onExpandedChange: setExpanded,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -297,7 +297,7 @@ export const DisabledSelectableRows: StoryFn<
     hasSelectableRows: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>

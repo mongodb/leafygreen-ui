@@ -17,10 +17,6 @@ export type LGTableDataType<T extends LGRowData> = T & {
   subRows?: Array<LGTableDataType<T>>;
 };
 
-export type LGRow<T extends LGRowData> = Row<LGTableDataType<T>> & {
-  isExpandedContent?: boolean;
-};
-
 /** LeafyGreen extension of `useReactTable` {@link Cell}*/
 export type LeafyGreenTableCell<T extends LGRowData> = Cell<
   LGTableDataType<T>,
@@ -29,7 +25,9 @@ export type LeafyGreenTableCell<T extends LGRowData> = Cell<
 
 /** LeafyGreen extension of `useReactTable` {@link Row}*/
 export interface LeafyGreenTableRow<T extends LGRowData>
-  extends LGRow<LGTableDataType<T>> {}
+  extends Row<LGTableDataType<T>> {
+  isExpandedContent?: boolean;
+}
 
 export type LGColumnDef<
   T extends LGRowData,
@@ -77,10 +75,5 @@ export interface LeafyGreenTable<T extends LGRowData>
    * Whether the table will have selectable rows.
    */
   hasSelectableRows: boolean;
-
-  /**
-   * The rows that are returned from calling useLeafyGreenTable or useLeafyGreenVirtualTable
-   */
-  rows: Array<any>;
   virtual: never;
 }

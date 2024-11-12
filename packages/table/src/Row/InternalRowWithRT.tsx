@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
