@@ -53,9 +53,9 @@ const Row = <T extends LGRowData>({
 };
 
 Row.propTypes = {
-  virtualRow: PropTypes.any,
-  row: PropTypes.any,
-  disabled: PropTypes.bool,
+  // virtualRow: PropTypes.any,
+  // row: PropTypes.any,
+  // disabled: PropTypes.bool,
 };
 
 Row.displayName = 'Row';
