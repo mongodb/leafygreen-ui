@@ -13,12 +13,14 @@ import {
 } from '@tanstack/react-table';
 import omit from 'lodash/omit';
 
+import { spacing } from '@leafygreen-ui/tokens';
+
 import { TableHeaderCheckbox } from './TableHeaderCheckbox';
 import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
-const CHECKBOX_WIDTH = 40;
+const CHECKBOX_WIDTH = spacing[1000];
 
 function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   data,
