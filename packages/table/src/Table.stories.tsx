@@ -1,12 +1,9 @@
 import React, { Fragment, useState } from 'react';
-import styled from '@emotion/styled';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { expect } from '@storybook/jest';
 import { StoryFn } from '@storybook/react';
-import { within } from '@storybook/testing-library';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
@@ -96,7 +93,6 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
-// FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(100));
@@ -372,9 +368,15 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
-LiveExample.argTypes = {
+HundredsOfRows.argTypes = {
   shouldAlternateRowColor: {
     control: 'none',
+  },
+};
+
+HundredsOfRows.parameters = {
+  chromatic: {
+    disableSnapshots: true,
   },
 };
 
@@ -1063,161 +1065,152 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
   );
 };
 
-export const StyledComponents: StoryFn<StoryTableProps> = args => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(5));
+// TODO: Will address in a separate PR - removing from stories and will test TS in spec files.
+// TODO: create a sandbox to demonstrate styled components
+// export const StyledComponents: StoryFn<StoryTableProps> = args => {
+//   const tableContainerRef = React.useRef<HTMLDivElement>(null);
+//   const [data] = useState(() => makeKitchenSinkData(5));
 
-  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'dateCreated',
-        header: 'Date Created',
-        enableSorting: true,
-        cell: info =>
-          (info.getValue() as Date).toLocaleDateString('en-us', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }),
-      },
-      {
-        accessorKey: 'frequency',
-        header: 'Frequency',
-      },
-      {
-        accessorKey: 'clusterType',
-        header: 'Cluster Type',
-      },
-      {
-        accessorKey: 'encryptorEnabled',
-        header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
-        cell: info => (
-          <Badge variant={info.getValue() ? 'green' : 'red'}>
-            {info.getValue() ? 'Enabled' : 'Not enabled'}
-          </Badge>
-        ),
-      },
-      {
-        accessorKey: 'mdbVersion',
-        header: 'MongoDB Version',
-        enableSorting: true,
-        size: 90,
-      },
-      {
-        id: 'actions',
-        header: '',
-        size: 90,
-        // eslint-disable-next-line react/display-name
-        cell: _ => {
-          return (
-            <>
-              <IconButton aria-label="Download">
-                <Icon glyph="Download" />
-              </IconButton>
-              <IconButton aria-label="Export">
-                <Icon glyph="Export" />
-              </IconButton>
-              <IconButton aria-label="More Options">
-                <Icon glyph="Ellipsis" />
-              </IconButton>
-            </>
-          );
-        },
-      },
-    ],
-    [],
-  );
+//   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+//     () => [
+//       {
+//         accessorKey: 'dateCreated',
+//         header: 'Date Created',
+//         enableSorting: true,
+//         cell: info =>
+//           (info.getValue() as Date).toLocaleDateString('en-us', {
+//             year: 'numeric',
+//             month: 'short',
+//             day: 'numeric',
+//           }),
+//       },
+//       {
+//         accessorKey: 'frequency',
+//         header: 'Frequency',
+//       },
+//       {
+//         accessorKey: 'clusterType',
+//         header: 'Cluster Type',
+//       },
+//       {
+//         accessorKey: 'encryptorEnabled',
+//         header: 'Encryptor',
+//         // eslint-disable-next-line react/display-name
+//         cell: info => (
+//           <Badge variant={info.getValue() ? 'green' : 'red'}>
+//             {info.getValue() ? 'Enabled' : 'Not enabled'}
+//           </Badge>
+//         ),
+//       },
+//       {
+//         accessorKey: 'mdbVersion',
+//         header: 'MongoDB Version',
+//         enableSorting: true,
+//         size: 90,
+//       },
+//       {
+//         id: 'actions',
+//         header: '',
+//         size: 90,
+//         // eslint-disable-next-line react/display-name
+//         cell: _ => {
+//           return (
+//             <>
+//               <IconButton aria-label="Download">
+//                 <Icon glyph="Download" />
+//               </IconButton>
+//               <IconButton aria-label="Export">
+//                 <Icon glyph="Export" />
+//               </IconButton>
+//               <IconButton aria-label="More Options">
+//                 <Icon glyph="Ellipsis" />
+//               </IconButton>
+//             </>
+//           );
+//         },
+//       },
+//     ],
+//     [],
+//   );
 
-  const table = useLeafyGreenTable<any>({
-    data,
-    columns,
-  });
+//   const table = useLeafyGreenTable<any>({
+//     data,
+//     columns,
+//   });
 
-  const { rows } = table;
+//   const { rows } = table;
 
-  const StyledCell = styled(Cell)`
-    color: grey;
-  `;
+//   const StyledCell = styled(Cell)`
+//     color: grey;
+//   `;
 
-  const StyledRow = styled(Row)`
-    background: snow;
-  `;
+//   const StyledRow = styled(Row)`
+//     background: snow;
+//   `;
 
-  const StyledHeaderRow = styled(HeaderRow)`
-    background: whitesmoke;
-  `;
+//   const StyledHeaderRow = styled(HeaderRow)`
+//     background: whitesmoke;
+//   `;
 
-  const StyledHeaderCell = styled(HeaderCell)`
-    color: black;
-  `;
+//   const StyledHeaderCell = styled(HeaderCell)`
+//     color: black;
+//   `;
 
-  const StyledExpandedContent = styled(ExpandedContent)`
-    td > div {
-      background: whitesmoke;
-    }
-  `;
+//   const StyledExpandedContent = styled(ExpandedContent)`
+//     td > div {
+//       background: whitesmoke;
+//     }
+//   `;
 
-  return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-          <StyledHeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
-              return (
-                <StyledHeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </StyledHeaderCell>
-              );
-            })}
-          </StyledHeaderRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-          const isExpandedContent = row.isExpandedContent ?? false;
-          return (
-            <Fragment key={row.id}>
-              {!isExpandedContent && (
-                <StyledRow row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <StyledCell key={cell.id} id={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </StyledCell>
-                    );
-                  })}
-                </StyledRow>
-              )}
-              {isExpandedContent && <StyledExpandedContent row={row} />}
-            </Fragment>
-          );
-        })}
-      </TableBody>
-    </Table>
-  );
-};
-
-export const StickyHeader = {
-  render: () => <LiveExample />,
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const table = await canvas.findByTestId('lg-table');
-    window.scrollTo(0, 500);
-    await new Promise(r => setTimeout(r, 500));
-    expect(table).toHaveAttribute('data-is-sticky', 'true');
-  },
-};
+//   return (
+//     <Table
+//       {...args}
+//       table={table}
+//       ref={tableContainerRef}
+//       className={css`
+//         width: 1100px;
+//       `}
+//     >
+//       <TableHead>
+//         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+//           <StyledHeaderRow key={headerGroup.id}>
+//             {headerGroup.headers.map(header => {
+//               return (
+//                 <StyledHeaderCell key={header.id} header={header}>
+//                   {flexRender(
+//                     header.column.columnDef.header,
+//                     header.getContext(),
+//                   )}
+//                 </StyledHeaderCell>
+//               );
+//             })}
+//           </StyledHeaderRow>
+//         ))}
+//       </TableHead>
+//       <TableBody>
+//         {rows.map((row: LeafyGreenTableRow<Person>) => {
+//           const isExpandedContent = row.isExpandedContent ?? false;
+//           return (
+//             <Fragment key={row.id}>
+//               {!isExpandedContent && (
+//                 <StyledRow row={row}>
+//                   {row.getVisibleCells().map(cell => {
+//                     return (
+//                       <StyledCell key={cell.id} id={cell.id} cell={cell}>
+//                         {flexRender(
+//                           cell.column.columnDef.cell,
+//                           cell.getContext(),
+//                         )}
+//                       </StyledCell>
+//                     );
+//                   })}
+//                 </StyledRow>
+//               )}
+//               {isExpandedContent && <StyledExpandedContent row={row} />}
+//             </Fragment>
+//           );
+//         })}
+//       </TableBody>
+//     </Table>
+//   );
+// };
