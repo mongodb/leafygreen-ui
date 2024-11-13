@@ -13,6 +13,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
+  KitchenSink,
   makeData,
   makeKitchenSinkData,
   Person,
@@ -22,6 +23,7 @@ import {
   Cell,
   ExpandedContent,
   flexRender,
+  Header,
   HeaderCell,
   type HeaderGroup,
   HeaderRow,
@@ -164,7 +166,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -300,7 +302,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -439,14 +441,14 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -537,14 +539,14 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -640,13 +642,13 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -738,7 +740,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     hasSelectableRows: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -768,7 +770,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         {...args}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.rows.length}
+        data-total-rows={table.getRowModel().rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -865,7 +867,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
     allowSelectAll: false,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -990,7 +992,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
     withPagination: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -1138,29 +1140,27 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
 //     columns,
 //   });
 
-//   const { rows } = table;
+//   const { rows } = table.getRowModel();
 
-//   const StyledCell = styled(Cell)`
-//     color: grey;
-//   `;
+// FIXME:
+// proptypes error. The other components don't have proptypes but should have them
+// const StyledRow = styled(Row)`
+//   background: snow;
+// ` as typeof Row;
 
-//   const StyledRow = styled(Row)`
-//     background: snow;
-//   `;
+// const StyledHeaderRow = styled(HeaderRow)`
+//   background: whitesmoke;
+// ` as typeof HeaderRow;
 
-//   const StyledHeaderRow = styled(HeaderRow)`
+// const StyledHeaderCell = styled(HeaderCell)`
+//   color: black;
+// ` as typeof HeaderCell;
+
+// const StyledExpandedContent = styled(ExpandedContent)`
+//   td > div {
 //     background: whitesmoke;
-//   `;
-
-//   const StyledHeaderCell = styled(HeaderCell)`
-//     color: black;
-//   `;
-
-//   const StyledExpandedContent = styled(ExpandedContent)`
-//     td > div {
-//       background: whitesmoke;
-//     }
-//   `;
+//   }
+// ` as typeof ExpandedContent;
 
 //   return (
 //     <Table

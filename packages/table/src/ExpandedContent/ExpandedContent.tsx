@@ -6,9 +6,12 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
-import { useVirtualTableContext } from '../TableContext';
+import { useTableContext } from '../TableContext';
 
-import { baseStyles, getContainerStyles } from './ExpandedContent.styles';
+import {
+  baseStyles,
+  expandedContentThemeStyles,
+} from './ExpandedContent.styles';
 import { ExpandedContentProps } from './ExpandedContent.types';
 
 const ExpandedContent = <T extends RowData>({
@@ -16,7 +19,7 @@ const ExpandedContent = <T extends RowData>({
   virtualRow,
   ...rest
 }: ExpandedContentProps<T>) => {
-  const { virtualTable } = useVirtualTableContext();
+  const { virtualTable } = useTableContext();
 
   const content =
     row.original.renderExpandedContent &&
@@ -39,7 +42,7 @@ const ExpandedContent = <T extends RowData>({
         className={cx(baseStyles)}
         data-lgid={LGIDS.cell}
       >
-        <div className={getContainerStyles(theme)}>
+        <div className={expandedContentThemeStyles[theme]}>
           <div>{content}</div>
         </div>
       </td>

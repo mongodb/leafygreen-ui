@@ -115,7 +115,7 @@ export const Basic: StoryFn<StoryTableProps> = args => {
   return (
     <>
       <div>
-        <p>{table.rows.length} total rowsjsfjsh</p>
+        <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
         <p>{table?.virtual.getTotalSize()} virtual rows</p>
       </div>
@@ -185,7 +185,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
   return (
     <>
       <div>
-        <p>{table.rows.length} total rows</p>
+        <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
       <Table
@@ -448,7 +448,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   return (
     <>
       <div>
-        <p>{table.rows.length} total rows</p>
+        <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
       <Table
@@ -682,7 +682,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
   return (
     <>
       <div>
-        <p>{table.rows.length} total rows</p>
+        <p>{table.getRowModel().rows.length} total rows</p>
       </div>
 
       <Table

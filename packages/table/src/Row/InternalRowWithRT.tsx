@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -31,7 +31,6 @@ const InternalRowWithRT = <T extends LGRowData>({
 
   const isExpandable = row.getCanExpand();
   const depth = row.depth;
-  const toggleExpanded = useCallback(() => row.toggleExpanded(), [row]);
 
   const contextValues = useMemo(() => {
     return {
@@ -39,12 +38,9 @@ const InternalRowWithRT = <T extends LGRowData>({
       isExpanded,
       isExpandable,
       depth,
-      toggleExpanded,
+      toggleExpanded: () => row.toggleExpanded(),
     };
-  }, [depth, disabled, isExpandable, isExpanded, toggleExpanded]);
-
-  // eslint-disable-next-line no-console
-  // console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
+  }, [depth, disabled, isExpandable, isExpanded, row]);
 
   return (
     <RowContextProvider {...contextValues}>
@@ -83,9 +79,9 @@ export default InternalRowWithRT;
 const arePropsEqual = (prevProps, nextProps) => {
   // Children will never be the same
   const { children: prevChildren, ...restPrevProps } = prevProps;
-  const { children: nextChildren, ...restnextProps } = nextProps;
+  const { children: nextChildren, ...restNextProps } = nextProps;
 
-  const propsAreEqual = isEqual(restPrevProps, restnextProps);
+  const propsAreEqual = isEqual(restPrevProps, restNextProps);
 
   return propsAreEqual;
 };

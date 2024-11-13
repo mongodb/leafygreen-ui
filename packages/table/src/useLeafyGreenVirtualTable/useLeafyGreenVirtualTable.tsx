@@ -14,24 +14,14 @@ function useLeafyGreenVirtualTable<
   V extends unknown = unknown,
 >({
   containerRef,
-  data,
-  columns,
-  hasSelectableRows,
-  withPagination = false,
-  allowSelectAll = true,
   virtualizerOptions,
   ...rest
 }: LeafyGreenVirtualTableOptions<T, V>): LeafyGreenVirtualTable<T> {
   const table = useLeafyGreenTable({
-    data,
-    columns,
-    withPagination,
-    allowSelectAll,
-    hasSelectableRows,
     ...rest,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   const _virtualizer = useVirtualizer({
     count: rows.length,
@@ -45,18 +35,15 @@ function useLeafyGreenVirtualTable<
     ...virtualizerOptions,
   });
 
-  const _virtualItems: Array<LeafyGreenVirtualItem<T>> = _virtualizer
-    .getVirtualItems()
-    .map((virtualRow: VirtualItem) => ({
+  const _getVirtualItems = (): Array<LeafyGreenVirtualItem<T>> =>
+    _virtualizer.getVirtualItems().map((virtualRow: VirtualItem) => ({
       ...virtualRow,
       row: rows[virtualRow.index],
     }));
 
-  // const { getVirtualItems, ...virtualizerRest } = _virtualizer;
-
   return {
     ...table,
-    virtual: { ..._virtualizer, getVirtualItems: () => _virtualItems },
+    virtual: { ..._virtualizer, getVirtualItems: () => _getVirtualItems() },
   } as LeafyGreenVirtualTable<T>;
 }
 

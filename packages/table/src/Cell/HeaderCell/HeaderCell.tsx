@@ -7,17 +7,12 @@ import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 
 import SortIcon from './SortIcon/SortIcon';
+import { getHeaderCellState } from './utils/getHeaderCellState';
 import {
   getBaseHeaderCellStyles,
   getHeaderCellContentStyles,
 } from './HeaderCell.styles';
-import { HeaderCellProps, SortState, SortStates } from './HeaderCell.types';
-
-const HeaderSortState: SortStates = {
-  false: SortState.Off,
-  asc: SortState.Asc,
-  desc: SortState.Desc,
-};
+import { HeaderCellProps } from './HeaderCell.types';
 
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.
@@ -32,14 +27,7 @@ const HeaderCell = <T extends LGRowData>({
 }: PropsWithChildren<HeaderCellProps<T>>) => {
   const { isSelectable } = useTableContext();
 
-  let columnName, sortState, onSortIconClick;
-
-  if (header && header?.column.columnDef.enableSorting) {
-    columnName = header.column.columnDef.header as string;
-    const headerSortDirection = header.column.getIsSorted().toString();
-    sortState = HeaderSortState[headerSortDirection];
-    onSortIconClick = header.column.getToggleSortingHandler();
-  }
+  const { columnName, sortState, onSortIconClick } = getHeaderCellState(header);
 
   return (
     <th

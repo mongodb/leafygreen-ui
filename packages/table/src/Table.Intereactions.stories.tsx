@@ -126,7 +126,7 @@ const Template = () => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <>
