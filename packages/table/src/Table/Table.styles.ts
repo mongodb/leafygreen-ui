@@ -1,8 +1,10 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { bodyTypeScaleStyles } from '@leafygreen-ui/typography';
+
+export const tableClassName = createUniqueClassName('lg-table');
 
 export const baseStyles = css`
   border-spacing: 0;

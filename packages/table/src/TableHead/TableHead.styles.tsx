@@ -5,6 +5,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 
+import { tableClassName } from '../Table/Table.styles';
+
 export const themeStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background-color: ${palette.black};
@@ -22,7 +24,7 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
         z-index: 1;
         top: 0;
 
-        table & {
+        .${tableClassName} & {
           :after {
             content: '';
             position: absolute;
@@ -42,7 +44,7 @@ export const getBaseStyles = (isSticky = false, theme: Theme) =>
           }
         }
 
-        table[data-is-sticky='true'] & {
+        .${tableClassName}[data-is-sticky='true'] & {
           :after {
             opacity: 1;
           }

@@ -12,7 +12,11 @@ import { TableContextProvider } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGreenVirtualTable.types';
 
-import { getTableContainerStyles, getTableStyles } from './Table.styles';
+import {
+  getTableContainerStyles,
+  getTableStyles,
+  tableClassName,
+} from './Table.styles';
 import { TableProps } from './Table.types';
 
 // Inferred generic type from component gets used in place of `any`
@@ -63,7 +67,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           virtualTable={virtualTable}
         >
           <table
-            className={getTableStyles(theme, baseFontSize)}
+            className={cx(tableClassName, getTableStyles(theme, baseFontSize))}
             data-lgid={lgidProp}
             data-is-sticky={!inView}
             {...rest}
