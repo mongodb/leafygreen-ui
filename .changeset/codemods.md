@@ -27,5 +27,16 @@ This codemod does the following:
 - `@leafygreen-ui/guide-cue`
 
 4. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `scrollContainer`, and `usePortal` props from `Code` component in the `@leafygreen-ui/code` package
+
 5. Removes `portalClassName`, `portalContainer`, `portalRef`, `scrollContainer`, and `usePortal` props from `SearchInput` component in the `@leafygreen-ui/search-input` package
+
 6. Removes `shouldTooltipUsePortal` prop from `Copyable` component in the `@leafygreen-ui/copyable` package
+
+7. Replaces `justify="fit"` prop value with `justify="middle"` for components in the following packages:
+
+- `@leafygreen-ui/date-picker`
+- `@leafygreen-ui/info-sprinkle`
+- `@leafygreen-ui/inline-definition`
+- `@leafygreen-ui/menu`
+- `@leafygreen-ui/popover`
+- `@leafygreen-ui/tooltip`

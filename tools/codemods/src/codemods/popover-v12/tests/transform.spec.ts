@@ -7,16 +7,19 @@ const tests = [
     name: 'add-usePortal-consolidate-renderMode',
   },
   {
+    name: 'filter-packages',
+    options: {
+      packages: ['@leafygreen-ui/popover', '@leafygreen-ui/select'],
+    },
+  },
+  {
     name: 'remove-legacy-props',
   },
   {
     name: 'remove-shouldTooltipUsePortal',
   },
   {
-    name: 'filter-packages',
-    options: {
-      packages: ['@leafygreen-ui/popover', '@leafygreen-ui/select'],
-    },
+    name: 'replace-justify-fit',
   },
 ];
 

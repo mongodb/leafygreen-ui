@@ -3,10 +3,12 @@ import type { API, FileInfo, Options } from 'jscodeshift';
 import { MigrateOptions } from '../..';
 import { MIGRATOR_ERROR } from '../../constants';
 import { LGPackage } from '../../types';
+import { getJSXAttributes } from '../../utils/jsx';
 import {
   addJSXAttributes,
   consolidateJSXAttributes,
   removeJSXAttributes,
+  replaceJSXAttributes,
 } from '../../utils/transformations';
 
 const lgPackageComponentForPropConsolidationMap: Partial<
@@ -32,11 +34,23 @@ const lgPackageComponentForPropRemovalMap: Partial<Record<LGPackage, string>> =
     [LGPackage.SearchInput]: 'SearchInput',
   };
 
+const lgPackageComponentForPropReplacementMap: Partial<
+  Record<LGPackage, string>
+> = {
+  [LGPackage.DatePicker]: 'DatePicker',
+  [LGPackage.InfoSprinkle]: 'InfoSprinkle',
+  [LGPackage.InlineDefinition]: 'InlineDefinition',
+  [LGPackage.Menu]: 'Menu',
+  [LGPackage.Popover]: 'Popover',
+  [LGPackage.Tooltip]: 'Tooltip',
+};
+
 const defaultPackages: Array<LGPackage> = [
-  ...(Object.keys(
-    lgPackageComponentForPropConsolidationMap,
-  ) as Array<LGPackage>),
-  ...(Object.keys(lgPackageComponentForPropRemovalMap) as Array<LGPackage>),
+  ...(Object.keys({
+    ...lgPackageComponentForPropConsolidationMap,
+    ...lgPackageComponentForPropRemovalMap,
+    ...lgPackageComponentForPropReplacementMap,
+  }) as Array<LGPackage>),
 ];
 
 const propNamesToRemove = [
@@ -100,6 +114,14 @@ const componentPropsToRemoveMap: Record<string, Array<string>> = {
  *    `usePortal` props from `SearchInput` component in the `@leafygreen-ui/search-input` package
  *
  * 6. Removes `shouldTooltipUsePortal` prop from the `Copyable` component in the `@leafygreen-ui/copyable` package
+ *
+ * 7. Replaces `justify="fit"` prop value with `justify="middle"` for components in the following packages:
+ * - `@leafygreen-ui/date-picker`
+ * - `@leafygreen-ui/info-sprinkle`
+ * - `@leafygreen-ui/inline-definition`
+ * - `@leafygreen-ui/menu`
+ * - `@leafygreen-ui/popover`
+ * - `@leafygreen-ui/tooltip`
  *
  * @param file the file to transform
  * @param jscodeshiftOptions an object containing at least a reference to the jscodeshift library
@@ -205,6 +227,9 @@ export default function transformer(
   const packagesForPropRemoval = packagesToCheck.filter(
     packageName => lgPackageComponentForPropRemovalMap[packageName],
   );
+  const packagesForPropReplacement = packagesToCheck.filter(
+    packageName => lgPackageComponentForPropReplacementMap[packageName],
+  );
 
   /**
    * This block handles transforming components that require prop consolidation.
@@ -221,13 +246,18 @@ export default function transformer(
       if (elements.length === 0) return;
 
       elements.forEach(element => {
-        addJSXAttributes({
-          j,
-          element,
-          propName: 'usePortal',
-          propValue: true,
-          commentOverride: `${MIGRATOR_ERROR.manualAdd} prop: renderMode`,
-        });
+        const attributes = getJSXAttributes(j, element, 'renderMode');
+
+        if (attributes.length === 0) {
+          addJSXAttributes({
+            j,
+            element,
+            propName: 'usePortal',
+            propValue: true,
+            commentOverride: `${MIGRATOR_ERROR.manualAdd} prop: renderMode`,
+          });
+        }
+
         consolidateJSXAttributes({
           j,
           element,
@@ -264,6 +294,34 @@ export default function transformer(
             element,
             propName,
           });
+        });
+      });
+    });
+  });
+
+  /**
+   * This block handles transforming components that require prop replacement.
+   */
+  packagesForPropReplacement.forEach(packageName => {
+    const componentsForPropReplacement = getAllComponentsToTransform({
+      packageName,
+      lgPackageComponentsMap: lgPackageComponentForPropReplacementMap,
+    });
+
+    componentsForPropReplacement.forEach(componentName => {
+      const elements = source.findJSXElements(componentName);
+
+      if (elements.length === 0) return;
+
+      elements.forEach(element => {
+        replaceJSXAttributes({
+          j,
+          element,
+          propName: 'justify',
+          newPropName: 'justify',
+          newPropValue: {
+            fit: 'middle',
+          },
         });
       });
     });
