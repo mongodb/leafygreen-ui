@@ -15,8 +15,8 @@ Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/too
 
 ##### Old
 ```js
-<GuideCue popoverZIndex={9999} usePortal={false} />
-<GuideCue portalContainer={containerRef} scrollContainer={containerRef} usePortal />
+<GuideCue popoverZIndex={9999} />
+<GuideCue portalContainer={containerRef} scrollContainer={containerRef} />
 ```
 
 ##### New
