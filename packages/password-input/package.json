@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/password-input",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "leafyGreen UI Kit Password Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
