@@ -1,27 +1,12 @@
 import { PropsWithChildren } from 'react';
-import { Virtualizer } from '@tanstack/react-virtual';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { TableProps } from '../Table/Table.types';
-import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
-import { LeafyGreenVirtualItem } from '../useLeafyGreenVirtualTable';
+import { LGRowData } from '../useLeafyGreenTable';
+import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable';
 
-export interface SharedVirtualContextValue<T extends LGRowData> {
-  /**
-   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) return from the Virtualizer instance.
-   */
-  virtualTable?: Omit<Virtualizer<HTMLElement, Element>, 'getVirtualItems'> & {
-    getVirtualItems: () => Array<LeafyGreenVirtualItem<T>>;
-  };
-}
-
-export interface BaseTableContextValue<T extends LGRowData> {
-  /**
-   * The `useLeafyGreenTable` return value
-   */
-  table?: LeafyGreenTable<T>;
-
+interface BaseTableContextValue<T extends LGRowData> {
   /**
    * Whether the table is using virtual scrolling
    */
@@ -31,20 +16,20 @@ export interface BaseTableContextValue<T extends LGRowData> {
    * Whether rows in the table are selectable
    */
   isSelectable?: boolean;
+
+  /**
+   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) returned from the Virtualizer instance.
+   */
+  virtualTable?: LeafyGreenVirtualTable<T>['virtual'];
 }
 
-export type TableProviderValues<T extends LGRowData> = PropsWithChildren<
-  Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
-> &
-  DarkModeProps &
-  SharedVirtualContextValue<T> &
-  BaseTableContextValue<T>;
+type PartialTableProps<T extends LGRowData> = Pick<
+  TableProps<T>,
+  'shouldAlternateRowColor' | 'shouldTruncate'
+>;
 
-export type TableContextValues<T extends LGRowData> = PropsWithChildren<
-  Pick<TableProps<T>, 'shouldAlternateRowColor' | 'shouldTruncate'>
+export type TableProviderProps<T extends LGRowData> = PropsWithChildren<
+  PartialTableProps<T>
 > &
   DarkModeProps &
   BaseTableContextValue<T>;
-
-export type VirtualTableContextValues<T extends LGRowData> = PropsWithChildren &
-  SharedVirtualContextValue<T>;

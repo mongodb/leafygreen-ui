@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { fireEvent, render } from '@testing-library/react';
 
@@ -28,7 +28,7 @@ const RowWithNestedRows = args => {
     },
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table table={table} {...args}>
@@ -44,37 +44,16 @@ const RowWithNestedRows = args => {
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
           return (
-            <Fragment key={row.id}>
-              <Row row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell key={cell.id} cell={cell}>
-                      {cell.row.getCanExpand()}
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              </Row>
-              {row.subRows &&
-                row.getIsExpanded() &&
-                row.subRows.map(subRow => (
-                  <Row key={subRow.id} row={subRow}>
-                    {subRow.getVisibleCells().map(cell => {
-                      return (
-                        <Cell key={cell.id} cell={cell}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                ))}
-            </Fragment>
+            <Row row={row} key={row.id}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <Cell key={cell.id} cell={cell}>
+                    {cell.row.getCanExpand()}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                );
+              })}
+            </Row>
           );
         })}
       </TableBody>
@@ -82,6 +61,7 @@ const RowWithNestedRows = args => {
   );
 };
 
+// TODO: this should not be called NestedRows
 describe('packages/table/Row/NestedRows', () => {
   test('renders the correct number of children', () => {
     render(<RowWithNestedRows />);
@@ -134,6 +114,7 @@ describe('packages/table/Row/NestedRows', () => {
           getIsExpanded: () => false,
         }),
         getIsSelected: () => false,
+        getCanExpand: () => true,
       };
 
       render(

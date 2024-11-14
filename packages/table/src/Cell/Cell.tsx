@@ -8,21 +8,19 @@ import InternalCellWithRT from './InternalCellWithRT';
 import { CellProps } from '.';
 
 const CellWithForwardRef = <T extends LGRowData>(
-  { children, cell, ...rest }: CellProps<T>,
+  { children, cell: reactTableCell, ...rest }: CellProps<T>,
   ref: ForwardedRef<HTMLTableCellElement>,
 ) => {
   return (
     <>
-      {!cell && (
+      {reactTableCell ? (
+        <InternalCellWithRT ref={ref} {...rest} cell={reactTableCell}>
+          {children}
+        </InternalCellWithRT>
+      ) : (
         <InternalCellWithoutRT ref={ref} {...rest}>
           {children}
         </InternalCellWithoutRT>
-      )}
-
-      {cell && (
-        <InternalCellWithRT ref={ref} {...rest} cell={cell}>
-          {children}
-        </InternalCellWithRT>
       )}
     </>
   );

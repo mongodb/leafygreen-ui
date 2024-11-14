@@ -1,4 +1,4 @@
-import React, { ForwardedRef, useCallback, useMemo } from 'react';
+import React, { ForwardedRef, useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -38,7 +38,6 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
 
   const isExpandable = row.getCanExpand();
   const depth = row.depth;
-  const toggleExpanded = useCallback(() => row.toggleExpanded(), [row]);
 
   const contextValues = useMemo(() => {
     return {
@@ -46,12 +45,9 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
       isExpanded,
       isExpandable,
       depth,
-      toggleExpanded,
+      toggleExpanded: () => row.toggleExpanded(),
     };
-  }, [depth, disabled, isExpandable, isExpanded, toggleExpanded]);
-
-  // eslint-disable-next-line no-console
-  // console.log(`🪼rerender🪼 row: ${row.id}, depth: ${row.depth}`);
+  }, [depth, disabled, isExpandable, isExpanded, row]);
 
   return (
     <RowContextProvider {...contextValues}>

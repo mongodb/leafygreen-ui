@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { useTableContext, useVirtualTableContext } from '../TableContext';
+import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
@@ -20,8 +20,7 @@ const RowWithRef = <T extends LGRowData>(
   ref: ForwardedRef<HTMLTableRowElement>,
 ) => {
   const { theme } = useDarkMode();
-  const { shouldAlternateRowColor = false } = useTableContext();
-  const { virtualTable } = useVirtualTableContext();
+  const { shouldAlternateRowColor = false, virtualTable } = useTableContext();
 
   return (
     <>
