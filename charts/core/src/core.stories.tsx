@@ -1,6 +1,6 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import type { StoryFn, StoryObj } from '@storybook/react';
 
 // import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
 // import { css } from '@leafygreen-ui/emotion';
@@ -25,6 +25,25 @@ import {
 export default {
   title: 'Charts/Core',
   component: Chart,
+  args: {
+    data: makeLineData(10),
+    groupInChartCard: true,
+    horizontalGridLines: true,
+    verticalGridLines: false,
+    renderGrid: true,
+    renderXAxis: true,
+    xAxisType: 'time',
+    renderYAxis: true,
+    yAxisType: 'value',
+    renderTooltip: true,
+    tooltipSortDirection: SortDirection.Desc,
+    tooltipSortKey: SortKey.Value,
+    renderHeader: true,
+    headerLabel: 'LeafyGreen Chart Header',
+    headerCloseButtonShow: true,
+    headerFullScreenButtonShow: true,
+    headerResetButtonShow: true,
+  },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     data: {
@@ -32,6 +51,14 @@ export default {
       description: 'Data to plot in chart',
       table: {
         category: 'Chart',
+      },
+    },
+    groupInChartCard: {
+      control: 'boolean',
+      description: 'Group in ChartCard',
+      name: 'GroupInChartCard',
+      table: {
+        category: 'ChartCard',
       },
     },
     verticalGridLines: {
@@ -48,6 +75,22 @@ export default {
       name: 'Horizontal',
       table: {
         category: 'Grid',
+      },
+    },
+    renderGrid: {
+      control: 'boolean',
+      description: 'Render Grid',
+      name: 'RenderGrid',
+      table: {
+        category: 'Grid',
+      },
+    },
+    renderXAxis: {
+      control: 'boolean',
+      description: 'Render X-axis',
+      name: 'RenderXAxis',
+      table: {
+        category: 'XAxis',
       },
     },
     xAxisType: {
@@ -72,6 +115,14 @@ export default {
       name: 'Label',
       table: {
         category: 'XAxis',
+      },
+    },
+    renderYAxis: {
+      control: 'boolean',
+      description: 'Render Y-axis',
+      name: 'RenderYAxis',
+      table: {
+        category: 'YAxis',
       },
     },
     yAxisType: {
@@ -105,6 +156,14 @@ export default {
         disable: true,
       },
     },
+    renderTooltip: {
+      control: 'boolean',
+      description: 'Render Tooltip',
+      name: 'RenderTooltip',
+      table: {
+        category: 'Tooltip',
+      },
+    },
     tooltipSortDirection: {
       control: 'select',
       options: SortDirection,
@@ -128,6 +187,14 @@ export default {
       name: 'ValueFormatter',
       table: {
         disable: true,
+      },
+    },
+    renderHeader: {
+      control: 'boolean',
+      description: 'Render header',
+      name: 'RenderHeader',
+      table: {
+        category: 'Header',
       },
     },
     headerLabel: {
@@ -154,7 +221,7 @@ export default {
         category: 'Header',
       },
     },
-    headerReseButtonShow: {
+    headerResetButtonShow: {
       control: 'boolean',
       description: 'Show reset button',
       name: 'ResetButtonShow',
@@ -165,127 +232,141 @@ export default {
   },
 };
 
-interface StoryChartProps {
+export const LiveExample: StoryObj<{
   data: Array<LineProps>;
+  groupInChartCard: boolean;
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
+  renderGrid: boolean;
+  renderXAxis: boolean;
+  renderYAxis: boolean;
   xAxisType: XAxisProps['type'];
   yAxisType: YAxisProps['type'];
   xAxisFormatter: XAxisProps['formatter'];
   yAxisFormatter: XAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
   yAxisLabel: YAxisProps['label'];
+  renderTooltip: boolean;
   tooltipSortDirection: TooltipProps['sortDirection'];
   tooltipSortKey: TooltipProps['sortKey'];
   tooltipValueFormatter: TooltipProps['valueFormatter'];
+  renderHeader: boolean;
   headerLabel: HeaderProps['label'];
   headerCloseButtonShow: boolean;
   headerFullScreenButtonShow: boolean;
   headerResetButtonShow: boolean;
-}
+}> = {
+  render: props => {
+    const {
+      data,
+      groupInChartCard,
+      verticalGridLines,
+      horizontalGridLines,
+      renderGrid,
+      renderXAxis,
+      renderYAxis,
+      xAxisType,
+      xAxisFormatter,
+      yAxisType,
+      yAxisFormatter,
+      xAxisLabel,
+      yAxisLabel,
+      renderTooltip,
+      tooltipSortDirection,
+      tooltipSortKey,
+      tooltipValueFormatter,
+      renderHeader,
+      headerLabel,
+      headerCloseButtonShow,
+      headerFullScreenButtonShow,
+      headerResetButtonShow,
+    } = props;
 
-// TODO: For use with ChartCard
-// const HeaderInputComponent = function () {
-//   return (
-//     <div
-//       className={css`
-//         display: flex;
-//         width: 100%;
-//         justify-content: flex-end;
-//       `}
-//     >
-//       <Combobox
-//         aria-label="Pick charts to display"
-//         placeholder="Chart Options"
-//         initialValue={['User', 'Kernal']}
-//         multiselect
-//         size="xsmall"
-//         className={css`
-//           width: 300px;
-//         `}
-//       >
-//         <ComboboxOption value="User" />
-//         <ComboboxOption value="Kernal" />
-//         <ComboboxOption value="Other" />
-//       </Combobox>
-//     </div>
-//   );
-// };
+    const charts = (
+      <>
+        <Chart>
+          {renderHeader && (
+            <Header
+              label={headerLabel}
+              closeButtonProps={{ show: headerCloseButtonShow }}
+              fullScreenButtonProps={{ show: headerFullScreenButtonShow }}
+              resetButtonProps={{ show: headerResetButtonShow }}
+            />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart>
+          {renderHeader && (
+            <Header
+              label={headerLabel}
+              closeButtonProps={{ show: headerCloseButtonShow }}
+              fullScreenButtonProps={{ show: headerFullScreenButtonShow }}
+              resetButtonProps={{ show: headerResetButtonShow }}
+            />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+      </>
+    );
 
-const Template: React.FC<StoryChartProps> = props => {
-  const {
-    data,
-    verticalGridLines,
-    horizontalGridLines,
-    xAxisType,
-    xAxisFormatter,
-    yAxisType,
-    yAxisFormatter,
-    xAxisLabel,
-    yAxisLabel,
-    tooltipSortDirection,
-    tooltipSortKey,
-    tooltipValueFormatter,
-    headerLabel,
-    headerCloseButtonShow,
-    headerFullScreenButtonShow,
-    headerResetButtonShow,
-  } = props;
-  return (
-    <ChartCard>
-      <Chart>
-        <Header
-          label={headerLabel}
-          closeButtonProps={{ show: headerCloseButtonShow }}
-          fullScreenButtonProps={{ show: headerFullScreenButtonShow }}
-          resetButtonProps={{ show: headerResetButtonShow }}
-        />
-        <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-        <Tooltip
-          sortDirection={tooltipSortDirection}
-          sortKey={tooltipSortKey}
-          valueFormatter={tooltipValueFormatter}
-        />
-        <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
-        <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
-        {data.map(({ name, data }) => (
-          <Line name={name} data={data} key={name} />
-        ))}
-      </Chart>
-      <Chart>
-        <Header
-          label={headerLabel}
-          closeButtonProps={{ show: headerCloseButtonShow }}
-          fullScreenButtonProps={{ show: headerFullScreenButtonShow }}
-          resetButtonProps={{ show: headerResetButtonShow }}
-        />
-        <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-        <Tooltip
-          sortDirection={tooltipSortDirection}
-          sortKey={tooltipSortKey}
-          valueFormatter={tooltipValueFormatter}
-        />
-        <XAxis type={xAxisType} formatter={xAxisFormatter} label={xAxisLabel} />
-        <YAxis type={yAxisType} formatter={yAxisFormatter} label={yAxisLabel} />
-        {data.map(({ name, data }) => (
-          <Line name={name} data={data} key={name} />
-        ))}
-      </Chart>
-    </ChartCard>
-  );
-};
-
-export const LiveExample: StoryFn<StoryChartProps> = Template.bind({});
-LiveExample.args = {
-  data: makeLineData(10),
-  horizontalGridLines: true,
-  verticalGridLines: false,
-  xAxisType: 'time',
-  yAxisType: 'value',
-  tooltipSortDirection: SortDirection.Desc,
-  tooltipSortKey: SortKey.Value,
-  headerLabel: 'LeafyGreen Chart Header',
-  headerCloseButtonShow: true,
-  headerFullScreenButtonShow: true,
-  headerResetButtonShow: true,
+    return groupInChartCard ? <ChartCard>{charts}</ChartCard> : <>{charts}</>;
+  },
 };

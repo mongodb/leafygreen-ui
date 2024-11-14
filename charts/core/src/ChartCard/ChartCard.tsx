@@ -6,7 +6,7 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { BaseHeader, LabelVariants } from '../BaseHeader';
 
-import { getWrapperStyles } from './ChartCard.styles';
+import { getHeaderStyles, getWrapperStyles } from './ChartCard.styles';
 
 interface ChartCardProps extends HTMLElementProps<'div'>, PropsWithChildren {}
 
@@ -22,11 +22,12 @@ export function ChartCard({ children, className, ...rest }: ChartCardProps) {
 
   useEffect(() => {
     if (containerRef.current) {
-      setHeight(containerRef.current.clientHeight);
+      setHeight(containerRef.current.offsetHeight);
     }
 
     if (headerRef.current) {
-      setHeaderHeight(headerRef.current.clientHeight);
+      // Account for 1px border
+      setHeaderHeight(headerRef.current.offsetHeight + 1);
     }
   }, []);
 
@@ -42,7 +43,7 @@ export function ChartCard({ children, className, ...rest }: ChartCardProps) {
     >
       <BaseHeader
         labelProps={{
-          value: 'LeafyGreen ChartGroup',
+          value: 'LeafyGreen ChartCard',
           variant: LabelVariants.Primary,
         }}
         collapseButtonProps={{
@@ -50,6 +51,7 @@ export function ChartCard({ children, className, ...rest }: ChartCardProps) {
           collapsed,
           onClick: setCollapsed,
         }}
+        className={getHeaderStyles(theme)}
         ref={headerRef}
       />
       {children}

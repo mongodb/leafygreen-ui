@@ -24,3 +24,9 @@ export const getWrapperStyles = (
     max-height: ${headerHeight ? headerHeight + 'px' : 'auto'};
   }
 `;
+
+export const getHeaderStyles = (theme: Theme) => css`
+  border-top: none;
+  /* border-bottom: 1px solid
+    ${color[theme].border[Variant.Disabled][InteractionState.Default]}; */
+`;
