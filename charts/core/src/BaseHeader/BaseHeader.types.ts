@@ -38,5 +38,4 @@ export interface BaseHeaderProps extends HTMLElementProps<'div'> {
     collapsed?: boolean;
   };
   inputContent?: React.ReactNode;
-  messageText?: string;
 }

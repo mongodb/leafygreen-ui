@@ -24,10 +24,6 @@ export const alignCenterStyles = css`
   align-items: center;
 `;
 
-export const inputContentStyles = css`
-  margin-right: ${spacing[300]}px;
-`;
-
 export const collapseIconStyles = css`
   transform: rotate(0deg);
   transition: transform ${transitionDuration.slower}ms ease-in-out;

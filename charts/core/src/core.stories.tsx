@@ -2,7 +2,8 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryFn, StoryObj } from '@storybook/react';
 
-// import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+
 // import { css } from '@leafygreen-ui/emotion';
 // import { LabelVariants } from './BaseHeader/BaseHeader.types';
 import { HeaderProps } from './Header/Header.types';
@@ -43,6 +44,12 @@ export default {
     headerCloseButtonShow: true,
     headerFullScreenButtonShow: true,
     headerResetButtonShow: true,
+    chartCardLabel: 'LeafyGreen ChartCard',
+    chartCardCloseButtonShow: true,
+    chartCardFullScreenButtonShow: true,
+    chartCardResetButtonShow: true,
+    chartCardMoreInfoButtonShow: true,
+    chartCardMessageText: 'This is a message',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -229,6 +236,54 @@ export default {
         category: 'Header',
       },
     },
+    chartCardLabel: {
+      control: 'text',
+      description: 'ChartCard label',
+      name: 'Label',
+      table: {
+        category: 'ChartCard',
+      },
+    },
+    chartCardCloseButtonShow: {
+      control: 'boolean',
+      description: 'Show close button',
+      name: 'CloseButtonShow',
+      table: {
+        category: 'ChartCard',
+      },
+    },
+    chartCardFullScreenButtonShow: {
+      control: 'boolean',
+      description: 'Show fullscreen button',
+      name: 'FullScreenButtonShow',
+      table: {
+        category: 'ChartCard',
+      },
+    },
+    chartCardResetButtonShow: {
+      control: 'boolean',
+      description: 'Show reset button',
+      name: 'ResetButtonShow',
+      table: {
+        category: 'ChartCard',
+      },
+    },
+    chartCardMoreInfoButtonShow: {
+      control: 'boolean',
+      description: 'Show reset button',
+      name: 'ResetButtonShow',
+      table: {
+        category: 'ChartCard',
+      },
+    },
+    chartCardMessageText: {
+      control: 'text',
+      description: 'ChartCard message text',
+      name: 'MessageText',
+      table: {
+        category: 'ChartCard',
+      },
+    },
   },
 };
 
@@ -255,6 +310,11 @@ export const LiveExample: StoryObj<{
   headerCloseButtonShow: boolean;
   headerFullScreenButtonShow: boolean;
   headerResetButtonShow: boolean;
+  chartCardLabel: HeaderProps['label'];
+  chartCardCloseButtonShow: boolean;
+  chartCardFullScreenButtonShow: boolean;
+  chartCardResetButtonShow: boolean;
+  chartCardMoreInfoButtonShow: boolean;
 }> = {
   render: props => {
     const {
@@ -280,6 +340,11 @@ export const LiveExample: StoryObj<{
       headerCloseButtonShow,
       headerFullScreenButtonShow,
       headerResetButtonShow,
+      chartCardLabel,
+      chartCardCloseButtonShow,
+      chartCardFullScreenButtonShow,
+      chartCardResetButtonShow,
+      chartCardMoreInfoButtonShow,
     } = props;
 
     const charts = (
@@ -367,6 +432,32 @@ export const LiveExample: StoryObj<{
       </>
     );
 
-    return groupInChartCard ? <ChartCard>{charts}</ChartCard> : <>{charts}</>;
+    return groupInChartCard ? (
+      <ChartCard
+        label={chartCardLabel}
+        numOfCharts={2}
+        closeButtonProps={{ show: chartCardCloseButtonShow }}
+        fullScreenButtonProps={{ show: chartCardFullScreenButtonShow }}
+        resetButtonProps={{ show: chartCardResetButtonShow }}
+        moreInfoButtonProps={{ show: chartCardMoreInfoButtonShow }}
+        inputContent={
+          <Combobox
+            multiselect={true}
+            label=""
+            placeholder=""
+            size="small"
+            initialValue={['Label 1', 'Label 2']}
+          >
+            <ComboboxOption value="Label 1" />
+            <ComboboxOption value="Label 2" />
+            <ComboboxOption value="Label 3" />
+          </Combobox>
+        }
+      >
+        {charts}
+      </ChartCard>
+    ) : (
+      <>{charts}</>
+    );
   },
 };

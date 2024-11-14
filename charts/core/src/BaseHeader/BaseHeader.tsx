@@ -11,7 +11,6 @@ import {
   alignCenterStyles,
   collapseIconStyles,
   getContainerStyles,
-  inputContentStyles,
 } from './BaseHeader.styles';
 import { BaseHeaderProps, LabelVariants } from './BaseHeader.types';
 
@@ -28,7 +27,6 @@ export const BaseHeader = forwardRef(
       resetButtonProps,
       collapseButtonProps,
       inputContent,
-      messageText,
       className,
       ...rest
     }: BaseHeaderProps,
@@ -85,19 +83,10 @@ export const BaseHeader = forwardRef(
               <Icon glyph="QuestionMarkWithCircle" />
             </IconButton>
           )}
-
-          {/* Message text */}
-          {messageText && (
-            <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
-              {messageText}
-            </Body>
-          )}
         </div>
 
         {/* Slotted component */}
-        <div className={cx(alignCenterStyles, inputContentStyles)}>
-          {inputContent}
-        </div>
+        <div className={alignCenterStyles}>{inputContent}</div>
 
         {/* Elements right of slotted component */}
         <div className={alignCenterStyles}>
