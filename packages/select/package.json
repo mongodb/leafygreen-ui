@@ -24,7 +24,7 @@
   "dependencies": {
     "@leafygreen-ui/button": "^21.2.0",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/form-field": "^1.2.4",
+    "@leafygreen-ui/form-field": "^1.2.5",
     "@leafygreen-ui/hooks": "^8.2.1",
     "@leafygreen-ui/icon": "^12.5.4",
     "@leafygreen-ui/input-option": "^2.0.1",
