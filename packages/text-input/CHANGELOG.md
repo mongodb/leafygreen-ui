@@ -1,5 +1,11 @@
 # @leafygreen-ui/text-input
 
+## 13.1.2
+
+### Patch Changes
+
+- 65c6f321d: [LG-4507](https://jira.mongodb.org/browse/LG-4507): bumps to [v1.2.5](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#125) of `@leafygreen-ui/form-field`
+
 ## 13.1.1
 
 ### Patch Changes
