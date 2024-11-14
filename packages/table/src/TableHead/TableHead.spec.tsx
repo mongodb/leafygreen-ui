@@ -46,7 +46,6 @@ describe('packages/table/TableHead', () => {
     });
   });
 
-  // TODO: chromatic test
   describe('isSticky prop', () => {
     // this is not supported by jsdom. need cypress or puppeteer
     // eslint-disable-next-line jest/no-disabled-tests

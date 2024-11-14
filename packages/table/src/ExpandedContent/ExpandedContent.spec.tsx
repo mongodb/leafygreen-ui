@@ -36,7 +36,7 @@ const RowWithExpandableContent = args => {
           ))}
         </thead>
         <TableBody>
-          {table.rows.map((row: LeafyGreenTableRow<Person>) => {
+          {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
             const isExpandedContent = row.isExpandedContent ?? false;
             return (
               <Fragment key={row.id}>
