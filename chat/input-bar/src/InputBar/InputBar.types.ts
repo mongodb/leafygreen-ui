@@ -46,9 +46,18 @@ export type InputBarProps = HTMLElementProps<'form'> &
     dropdownFooterSlot?: ReactElement;
 
     /**
-     * Props passed to the Popover that renders the suggested promps.
+     * Props passed to the Popover that renders the suggested prompts.
      */
-    dropdownProps?: Omit<PopoverRenderModeProps, 'renderMode'>;
+    dropdownProps?: Omit<
+      PopoverRenderModeProps,
+      | 'dismissMode'
+      | 'onToggle'
+      | 'portalClassName'
+      | 'portalContainer'
+      | 'portalRef'
+      | 'renderMode'
+      | 'scrollContainer'
+    >;
   };
 
 export type { TextareaAutosizeProps };
