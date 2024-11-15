@@ -5,10 +5,10 @@ import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
 
 export const expandedContentParentStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
+    background: ${palette.gray.dark4};
   `,
   [Theme.Light]: css`
-    background-color: ${palette.gray.light3};
+    background: ${palette.gray.light3};
   `,
 };
 

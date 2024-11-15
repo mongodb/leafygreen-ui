@@ -4,6 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 
 export const getBaseStyles = (theme: Theme) => css`
   background-color: inherit;
+  position: relative;
 
   &:last-of-type {
     box-shadow: 0 4px

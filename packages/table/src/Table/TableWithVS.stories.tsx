@@ -62,7 +62,7 @@ const virtualScrollingContainerHeight = css`
   /* height: calc(100vh - 200px); */
 `;
 
-const basicColumnDefs: Array<ColumnDef<Person>> = [
+const basicColumnDefs: Array<LGColumnDef<Person>> = [
   {
     accessorKey: 'index',
     header: 'index',
@@ -88,6 +88,7 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
     accessorKey: 'age',
     header: () => 'Age',
     size: 50,
+    align: 'center',
   },
   {
     accessorKey: 'visits',
@@ -621,6 +622,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'frequency',
         header: 'Frequency',
+        align: 'center',
       },
       {
         accessorKey: 'clusterType',
@@ -641,7 +643,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         accessorKey: 'mdbVersion',
         header: 'MongoDB Version',
         enableSorting: true,
-        size: 90,
+        size: 120,
       },
       {
         id: 'actions',
