@@ -3,6 +3,7 @@ import type { API, FileInfo, Options } from 'jscodeshift';
 import { MigrateOptions } from '../..';
 import { MIGRATOR_ERROR } from '../../constants';
 import { LGPackage } from '../../types';
+import { getImportSpecifiersForDeclaration } from '../../utils/imports';
 import { getJSXAttributes } from '../../utils/jsx';
 import {
   addJSXAttributes,
@@ -150,73 +151,6 @@ export default function transformer(
   }
 
   /**
-   * Gets all components to transform for a given package name, including if aliased.
-   * @param packageName - The package name to check for components to transform
-   * @param lgPackageComponentsMap - The map of LGPackage to component names to look for
-   * @returns all component names to transform for the given package name
-   */
-  const getAllComponentsToTransform = ({
-    packageName,
-    lgPackageComponentsMap,
-  }: {
-    packageName: LGPackage;
-    lgPackageComponentsMap: Partial<Record<LGPackage, string>>;
-  }) => {
-    const componentsToTransform: Array<string> = [];
-
-    /**
-     * Look for the import declaration for the given package name.
-     */
-    const matchingImportDeclaration = source
-      .find(j.ImportDeclaration)
-      .filter(path => path.node.source.value === packageName);
-
-    /**
-     * If no matching import declaration is found, return empty array.
-     */
-    if (matchingImportDeclaration.length === 0) {
-      return componentsToTransform;
-    }
-
-    /**
-     * Look for default import declarations for the given package name.
-     * This will also apply if the default import is aliased.
-     */
-    matchingImportDeclaration.find(j.ImportDefaultSpecifier).forEach(path => {
-      if (!path.node.local) {
-        return;
-      }
-
-      componentsToTransform.push(path.node.local.name);
-    });
-
-    /**
-     * Look for named import declarations for the given package name.
-     */
-    const namedExportToLookFor = lgPackageComponentsMap[packageName];
-    matchingImportDeclaration.find(j.ImportSpecifier).forEach(path => {
-      /**
-       * If the named import does not match the component to look for, keep checking the next import.
-       */
-      const matchesComponentImport =
-        path.node.imported.name === namedExportToLookFor;
-
-      if (!matchesComponentImport) {
-        return;
-      }
-
-      /**
-       * If the named import is aliased, use the alias name.
-       */
-      componentsToTransform.push(
-        path.node.local ? path.node.local.name : namedExportToLookFor,
-      );
-    });
-
-    return componentsToTransform;
-  };
-
-  /**
    * By default, transform all components in the default packages. If the `packages` option is provided,
    * only transform the provided packages.
    */
@@ -235,9 +169,11 @@ export default function transformer(
    * This block handles transforming components that require prop consolidation.
    */
   packagesForPropConsolidation.forEach(packageName => {
-    const componentsForPropConsolidation = getAllComponentsToTransform({
+    const componentsForPropConsolidation = getImportSpecifiersForDeclaration({
+      j,
+      source,
       packageName,
-      lgPackageComponentsMap: lgPackageComponentForPropConsolidationMap,
+      packageSpecifiersMap: lgPackageComponentForPropConsolidationMap,
     });
 
     componentsForPropConsolidation.forEach(componentName => {
@@ -277,9 +213,11 @@ export default function transformer(
    * This block handles transforming components that require prop removal.
    */
   packagesForPropRemoval.forEach(packageName => {
-    const componentsForPropRemoval = getAllComponentsToTransform({
+    const componentsForPropRemoval = getImportSpecifiersForDeclaration({
+      j,
+      source,
       packageName,
-      lgPackageComponentsMap: lgPackageComponentForPropRemovalMap,
+      packageSpecifiersMap: lgPackageComponentForPropRemovalMap,
     });
 
     componentsForPropRemoval.forEach(componentName => {
@@ -303,9 +241,11 @@ export default function transformer(
    * This block handles transforming components that require prop replacement.
    */
   packagesForPropReplacement.forEach(packageName => {
-    const componentsForPropReplacement = getAllComponentsToTransform({
+    const componentsForPropReplacement = getImportSpecifiersForDeclaration({
+      j,
+      source,
       packageName,
-      lgPackageComponentsMap: lgPackageComponentForPropReplacementMap,
+      packageSpecifiersMap: lgPackageComponentForPropReplacementMap,
     });
 
     componentsForPropReplacement.forEach(componentName => {

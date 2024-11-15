@@ -1,3 +1,7 @@
+/**
+ * All `@leafygreen-ui/*` packages as of November 2024 that can be identified in
+ * import declarations to determine if a codemod should be run on them.
+ */
 export const LGPackage = {
   A11y: '@leafygreen-ui/a11y',
   Avatar: '@leafygreen-ui/avatar',
