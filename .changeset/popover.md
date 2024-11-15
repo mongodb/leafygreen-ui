@@ -55,10 +55,10 @@ Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/too
 After running the codemod and addressing manual updates, the new `forceUseTopLayer` prop in the `LeafyGreenProvider` can be used to test interactions with all LG popover elements forcibly set to `renderMode="top-layer"`. This can help pressure test for any regressions to more confidently and safely migrate.
 
 ```js
-import Combobox from '@leafygreen-ui/combobox';
+import { Combobox } from '@leafygreen-ui/combobox';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Popover from '@leafygreen-ui/popover';
-import Select from '@leafygreen-ui/select';
+import { Select } from '@leafygreen-ui/select';
 
 {/* all LG popover elements will render in top layer */}
 <LeafyGreenProvider forceUseTopLayer={true}>

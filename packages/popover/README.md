@@ -22,7 +22,9 @@ npm install @leafygreen-ui/popover
 
 ```js
 import Popover, {
+  Align,
   DismissMode,
+  Justify,
   RenderMode,
   ToggleEvent,
 } from '@leafygreen-ui/popover';
@@ -42,9 +44,9 @@ const handleToggle = (e: ToggleEvent) => {
   Open Popover
   <Popover
     active={open}
-    align="bottom"
+    align={Align.Bottom}
     dismissMode={DismissMode.Auto}
-    justify="start"
+    justify={Justify.Start}
     onToggle={handleToggle}
     renderMode={RenderMode.TopLayer}
     spacing={4}
