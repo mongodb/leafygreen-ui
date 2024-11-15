@@ -21,19 +21,36 @@ npm install @leafygreen-ui/popover
 ## Example
 
 ```js
-import Popover from '@leafygreen-ui/popover';
+import Popover, {
+  Align,
+  DismissMode,
+  Justify,
+  RenderMode,
+  ToggleEvent,
+} from '@leafygreen-ui/popover';
 
-<button
-  className={containerStyle}
-  onClick={() => this.setState({ active: !this.state.active })}
->
+const [open, setOpen] = useState(false);
+
+const handleClick = () => {
+  setOpen(open => !open);
+};
+
+const handleToggle = (e: ToggleEvent) => {
+  const newOpen = e.newState === 'open';
+  setOpen(newOpen);
+};
+
+<button className={containerStyle} onClick={handleClick}>
   Open Popover
   <Popover
-    align="bottom"
-    justify="start"
-    active={this.state.active}
-    usePortal={true}
-    spacing={10}
+    active={open}
+    align={Align.Bottom}
+    dismissMode={DismissMode.Auto}
+    justify={Justify.Start}
+    onToggle={handleToggle}
+    renderMode={RenderMode.TopLayer}
+    spacing={4}
+    adjustOnMutation
   >
     <div>Popover content</div>
   </Popover>
@@ -47,7 +64,7 @@ import Popover from '@leafygreen-ui/popover';
   <body>
     <button class="leafygreen-ui-79elbk">
       Open Popover
-      <span class="leafygreen-ui-1hyfx7x"></div>
+      <span class="leafygreen-ui-1hyfx7x"></span>
       <div align="bottom" justify="start" class="leafygreen-ui-1t5dnko">
         <div>Popover content</div>
         ::backdrop
@@ -55,9 +72,7 @@ import Popover from '@leafygreen-ui/popover';
     </button>
   </body>
 </html>
-#top-layer
-  > div
-    > ::backdrop
+#top-layer > div > ::backdrop
 ```
 
 ## Render mode

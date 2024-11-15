@@ -205,7 +205,7 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
     portalRef,
     scrollContainer,
     dismissMode,
-    renderMode,
+    renderMode = RenderMode.TopLayer,
     onToggle,
     ...rest
   } = props;
