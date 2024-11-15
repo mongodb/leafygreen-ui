@@ -1,37 +1,24 @@
 import React from 'react';
 
-const Combobox = ({ children, ...props }: any) => {
+import { Combobox as LGCombobox } from '@leafygreen-ui/combobox';
+import { Menu } from '@leafygreen-ui/menu';
+import Popover from '@leafygreen-ui/popover';
+import { Select } from '@leafygreen-ui/select';
+import { SplitButton } from '@leafygreen-ui/split-button';
+import LeafyGreenTooltip from '@leafygreen-ui/tooltip';
+
+const Combobox = ({ children, ...props }) => {
   return <div {...props}>{children}</div>;
 };
 
-const Menu = ({ children, ...props }: any) => {
-  return <div {...props}>{children}</div>;
-};
-
-const Popover = ({ children, ...props }: any) => {
-  return <div {...props}>{children}</div>;
-};
-
-const Select = ({ children, ...props }: any) => {
-  return <div {...props}>{children}</div>;
-};
-
-const SplitButton = ({ children, ...props }: any) => {
-  return <div {...props}>{children}</div>;
-};
-
-const Tooltip = ({ children, ...props }: any) => {
-  return <div {...props}>{children}</div>;
-};
-
-const Child = (props: any) => {
+const Child = (props) => {
   return <div>{props.children}</div>;
 };
 
 export const App = () => {
   const spreadProps = {
     prop: true,
-  } as const;
+  };
 
   const WrappedPopover = () => {
     return (
@@ -49,12 +36,13 @@ export const App = () => {
 
   return (
     <>
-      <Combobox renderMode="portal" />
+      <Combobox />
+      <LGCombobox renderMode="portal" />
       <Menu renderMode="portal" />
       <Popover renderMode="inline" />
       <Select renderMode="portal" />
       <SplitButton renderMode="portal" />
-      <Tooltip renderMode="inline" />
+      <LeafyGreenTooltip renderMode="inline" />
       <Popover renderMode="portal" />
       <Popover renderMode="inline" />
       <Popover renderMode="portal" />

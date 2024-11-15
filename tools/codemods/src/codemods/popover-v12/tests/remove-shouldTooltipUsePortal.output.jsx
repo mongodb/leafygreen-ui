@@ -1,19 +1,17 @@
 import React from 'react';
 
-const Copyable = ({ children, ...props }: any) => {
-  return <div {...props}>{children}</div>;
-};
+import Copyable from '@leafygreen-ui/copyable';
 
-const Child = (props: any) => {
+const Child = (props) => {
   return <div>{props.children}</div>;
 };
 
 export const App = () => {
   const spreadProps = {
     prop: true,
-  } as const;
+  };
 
-  const WrappedCopyable = (props: any) => {
+  const WrappedCopyable = (props) => {
     return (
       /* Please manually remove prop: shouldTooltipUsePortal */
       <Copyable shouldTooltipUsePortal={false} {...props} />
