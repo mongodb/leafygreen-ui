@@ -67,7 +67,10 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           virtualTable={virtualTable}
         >
           <table
-            className={cx(tableClassName, getTableStyles(theme, baseFontSize))}
+            className={cx(
+              tableClassName,
+              getTableStyles(theme, baseFontSize, isVirtual, shouldTruncate),
+            )}
             data-lgid={lgidProp}
             data-is-sticky={!inView}
             {...rest}

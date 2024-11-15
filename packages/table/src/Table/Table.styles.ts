@@ -34,5 +34,18 @@ export const getTableContainerStyles = (isVirtual = false) =>
     },
   );
 
-export const getTableStyles = (theme: Theme, baseFontSize: BaseFontSize) =>
-  cx(baseStyles, themeStyles[theme], bodyTypeScaleStyles[baseFontSize]);
+export const getTableStyles = (
+  theme: Theme,
+  baseFontSize: BaseFontSize,
+  isVirtual = false,
+  shouldTruncate = false,
+) =>
+  cx(baseStyles, themeStyles[theme], bodyTypeScaleStyles[baseFontSize], {
+    [css`
+      //TODO: add to documentation
+      // If this is a virtual table that does not truncate the table needs to have a fixed layout.
+      // Without a fixed layout, column widths may change during scrolling, which can cause row heights to shift. This can lead to an infinite loop, ultimately crashing the application. 🙃
+      // A fixed layout prevents this because it prevents columns widths from changing.
+      table-layout: fixed;
+    `]: isVirtual && !shouldTruncate,
+  });
