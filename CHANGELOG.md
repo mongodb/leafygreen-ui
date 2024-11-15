@@ -1,5 +1,11 @@
 # @lg-private/vertical-stepper
 
+## 2.1.1
+
+### Patch Changes
+
+- 066c4ce: [LG-4670](https://jira.mongodb.org/browse/LG-4670): vertically stack buttons in `VerticalStepActions` on smaller breakpoints
+
 ## 2.1.0
 
 ### Minor Changes
