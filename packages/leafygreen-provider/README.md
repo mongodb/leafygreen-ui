@@ -44,11 +44,44 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 ### Properties
 
-| Prop           | Type       | Description                                                                                                                                                                               | Default |
-| -------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `children`     | `node`     | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
-| `baseFontSize` | `14`, `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
-| `darkMode`     | `boolean`  | Determines if LG components should be rendered in dark mode.                                                                                                                              |         |
+| Prop               | Type       | Description                                                                                                                                                                               | Default |
+| ------------------ | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`         | `node`     | Children passed to `LeafyGreenProvider` will be unmodified, aside from having access to its state.                                                                                        |         |
+| `baseFontSize`     | `14`, `16` | Describes the `font-size` that the application is using. `<Body/>` and `<InlineCode />` components use this value to determine the `font-size` and `line-height` applied to their content | `14`    |
+| `darkMode`         | `boolean`  | Determines if LG components should be rendered in dark mode.                                                                                                                              |         |
+| `forceUseTopLayer` | `boolean`  | Determines globally if popover elements using `Popover` component from `@leafygreen-ui/popover` package should render in top layer                                                        | `false` |
+
+## PopoverPropsProvider
+
+The `PopoverPropsProvider` can be used to pass props to a deeply nested popover element.
+
+### Example
+
+```js
+import { PopoverPropsProvider } from '@leafygreen-ui/leafygreen-provider';
+
+const ParentComponentWithNestedPopover = ({ ...popoverProps }) => {
+  return (
+    <PopoverPropsProvider {...popoverProps}>
+      <ChildComponentWithNestedPopover />
+    </PopoverPropsProvider>
+  );
+};
+```
+
+### Properties
+
+| Prop                           | Type                                      | Description                                                                                                                                                                                                                                                                                                                                                                           | Default       |
+| ------------------------------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `dismissMode`                  | `'auto'` \| `'manual'`                    | Options to control how the popover element is dismissed. This will only apply when `renderMode` is `'top-layer'` <br> \* `'auto'` will automatically handle dismissal on backdrop click or esc key press, ensuring only one popover is visible at a time <br> \* `'manual'` will require that the consumer handle dismissal manually                                                  | `'auto'`      |
+| `onToggle`                     | `(e: ToggleEvent) => void;`               | Function that is called when the popover is toggled. This will only apply when `renderMode` is `'top-layer'`                                                                                                                                                                                                                                                                          |               |
+| `popoverZIndex` (deprecated)   | `number`                                  | Sets the z-index CSS property for the popover. This will only apply if `usePortal` is defined and `renderMode` is not `'top-layer'`                                                                                                                                                                                                                                                   |               |
+| `portalClassName` (deprecated) | `string`                                  | Passes the given className to the popover's portal container if the default portal container is being used. This will only apply when `renderMode` is `'portal'`                                                                                                                                                                                                                      |               |
+| `portalContainer` (deprecated) | `HTMLElement` \| `null`                   | Sets the container used for the popover's portal. This will only apply when `renderMode` is `'portal'`. <br> NOTE: If using a `scrollContainer` make sure that the `portalContainer` is contained within the `scrollContainer`. E.g, passing the same reference to `scrollContainer` and `portalContainer`.                                                                           |               |
+| `portalRef` (deprecated)       | `string`                                  | Passes a ref to forward to the portal element. This will only apply when `renderMode` is `'portal'`                                                                                                                                                                                                                                                                                   |               |
+| `renderMode`                   | `'inline'` \| `'portal'` \| `'top-layer'` | Options to render the popover element <br> \* [deprecated] `'inline'` will render the popover element inline in the DOM where it's written <br> \* [deprecated] `'portal'` will render the popover element in a new div appended to the body. Alternatively, can be portaled into a provided `portalContainer` <br> \* `'top-layer'` will render the popover element in the top layer | `'top-layer'` |
+| `scrollContainer` (deprecated) | `HTMLElement` \| `null`                   | If the popover portal has a scrollable ancestor other than the window, this prop allows passing a reference to that element to allow the portal to position properly. This will only apply when `renderMode` is `'portal'`                                                                                                                                                            |               |
+| `spacing`                      | `number`                                  | Specifies the amount of spacing (in pixels) between the trigger element and the content element.                                                                                                                                                                                                                                                                                      | `4`           |
 
 ## useUsingKeyboardContext
 
