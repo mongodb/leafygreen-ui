@@ -1,51 +1,59 @@
-import React, { createContext, PropsWithChildren, useContext } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+} from 'react';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
-import getParentRowId from '../utils/getParentRowId';
 
-import { type TableContextValues } from './TableContext.types';
+import { type TableProviderProps } from './TableContext.types';
 
 export const TableContext = createContext<
-  Partial<TableContextValues<LGRowData>>
+  Partial<TableProviderProps<LGRowData>>
 >({});
 
 export const useTableContext = <T extends LGRowData>() =>
-  useContext<TableContextValues<T>>(
-    TableContext as React.Context<TableContextValues<T>>,
+  useContext<TableProviderProps<T>>(
+    TableContext as React.Context<TableProviderProps<T>>,
   );
 
 const TableContextProvider = <T extends LGRowData>({
   children,
   darkMode,
-  table,
   shouldAlternateRowColor,
-  disableAnimations,
-}: PropsWithChildren<Partial<TableContextValues<T>>>) => {
-  const getRowById = (id?: string) =>
-    id ? table?.getRowModel().rowsById?.[id] : undefined;
-
-  const getParentRow = (childId?: string) =>
-    getRowById(getParentRowId(childId));
-
+  isVirtual,
+  isSelectable,
+  shouldTruncate,
+  virtualTable,
+}: PropsWithChildren<Partial<TableProviderProps<T>>>) => {
   /** The appropriately typed context provider */
-  const TableProvider = (TableContext as React.Context<TableContextValues<T>>)
+  const TableProvider = (TableContext as React.Context<TableProviderProps<T>>)
     .Provider;
+
+  const tableProviderData = useMemo(() => {
+    return {
+      shouldAlternateRowColor,
+      darkMode,
+      isVirtual,
+      isSelectable,
+      shouldTruncate,
+      virtualTable,
+    };
+  }, [
+    shouldAlternateRowColor,
+    darkMode,
+    isVirtual,
+    isSelectable,
+    shouldTruncate,
+    virtualTable,
+  ]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <TableProvider
-        value={{
-          table,
-          getRowById,
-          getParentRow,
-          shouldAlternateRowColor,
-          disableAnimations,
-        }}
-      >
-        {children}
-      </TableProvider>
+      <TableProvider value={tableProviderData}>{children}</TableProvider>
     </LeafyGreenProvider>
   );
 };

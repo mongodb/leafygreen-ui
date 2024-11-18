@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
+import styled from '@emotion/styled';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -13,6 +14,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
+  KitchenSink,
   makeData,
   makeKitchenSinkData,
   Person,
@@ -22,6 +24,7 @@ import {
   Cell,
   ExpandedContent,
   flexRender,
+  Header,
   HeaderCell,
   type HeaderGroup,
   HeaderRow,
@@ -43,7 +46,6 @@ const meta: StoryMetaType<typeof Table> = {
   component: Table,
   argTypes: {
     shouldAlternateRowColor: { control: 'boolean' },
-    disableAnimations: { control: 'boolean' },
   },
   parameters: {
     default: 'LiveExample',
@@ -96,7 +98,7 @@ const Template: StoryFn<StoryTableProps> = args => {
 
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(10));
+  const [data] = useState(() => makeKitchenSinkData(100));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -161,7 +163,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<any>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -169,71 +170,58 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-          <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
-              return (
-                <HeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </HeaderCell>
-              );
-            })}
-          </HeaderRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-          return (
-            <>
-              <Row key={row.id} row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell key={cell.id} id={cell.id} overflow="truncate">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              </Row>
-              {row.subRows &&
-                row.subRows.map(subRow => (
-                  <>
-                    <Row key={subRow.id} row={subRow}>
-                      {subRow.getVisibleCells().map(cell => {
-                        return (
-                          <Cell key={cell.id} id={cell.id}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext(),
-                            )}
-                          </Cell>
-                        );
-                      })}
-                    </Row>
-                    {subRow.original.renderExpandedContent && (
-                      <ExpandedContent row={subRow} />
+    <>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={css`
+          width: 1100px;
+        `}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
                     )}
-                  </>
-                ))}
-            </>
-          );
-        })}
-      </TableBody>
-    </Table>
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            const isExpandedContent = row.isExpandedContent ?? false;
+
+            return (
+              <Fragment key={row.id}>
+                {!isExpandedContent && (
+                  <Row row={row}>
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id} id={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                )}
+                {isExpandedContent && <ExpandedContent row={row} />}
+              </Fragment>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
   );
 };
 
@@ -243,12 +231,145 @@ LiveExample.argTypes = {
   },
 };
 
-export const AnimationsDisabled: StoryFn<StoryTableProps> = args => {
-  return <LiveExample {...args} />;
+export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(500));
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<any>({
+    data,
+    columns,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <>
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={css`
+          width: 1100px;
+        `}
+      >
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            const isExpandedContent = row.isExpandedContent ?? false;
+
+            return (
+              <Fragment key={row.id}>
+                {!isExpandedContent && (
+                  <Row row={row}>
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id} id={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                )}
+                {isExpandedContent && <ExpandedContent row={row} />}
+              </Fragment>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </>
+  );
 };
 
-AnimationsDisabled.args = {
-  disableAnimations: true,
+HundredsOfRows.argTypes = {
+  shouldAlternateRowColor: {
+    control: 'none',
+  },
+};
+
+HundredsOfRows.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
 };
 
 export const Basic = Template.bind({});
@@ -258,49 +379,9 @@ ZebraStripes.args = {
   shouldAlternateRowColor: true,
 };
 
-export const OverflowingCell: StoryFn<StoryTableProps> = args => {
-  const data = makeData(false, 100);
-  const columns = Object.keys(data[0]).filter(
-    x => x !== 'renderExpandedContent' && x !== 'subRows',
-  );
-  return (
-    <Table {...args}>
-      <TableHead>
-        <HeaderRow>
-          {columns.map((columnName: string) => (
-            <HeaderCell key={columnName}>{columnName}</HeaderCell>
-          ))}
-        </HeaderRow>
-      </TableHead>
-      <TableBody>
-        {data.map((row: AnyDict) => (
-          <Row key={row.id}>
-            {Object.keys(row).map((cellKey: string, index: number) => {
-              return (
-                <Cell key={`${cellKey}-${index}`}>
-                  <div
-                    style={{
-                      width: '80px',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {row[cellKey]}
-                  </div>
-                </Cell>
-              );
-            })}
-          </Row>
-        ))}
-      </TableBody>
-    </Table>
-  );
-};
-
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = React.useState(() => makeData(false, 20, 5, 3));
+  const [data] = React.useState(() => makeData(false, 500, 5, 3));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -346,7 +427,6 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -379,54 +459,20 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
           return (
-            <>
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                {row.subRows &&
-                  row.subRows.map(subRow => (
-                    <>
-                      <Row key={subRow.id} row={subRow}>
-                        {subRow.getVisibleCells().map(cell => {
-                          return (
-                            <Cell key={cell.id}>
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </Cell>
-                          );
-                        })}
-                      </Row>
-                      {subRow.subRows &&
-                        subRow.subRows.map(subSubRow => (
-                          <Row key={subSubRow.id} row={subSubRow}>
-                            {subSubRow.getVisibleCells().map(cell => {
-                              return (
-                                <Cell key={cell.id}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            })}
-                          </Row>
-                        ))}
-                    </>
-                  ))}
-              </Row>
-            </>
+            <Row row={row} key={row.id}>
+              {row
+                .getVisibleCells()
+                .map((cell: LeafyGreenTableCell<Person>) => {
+                  return (
+                    <Cell key={cell.id} cell={cell}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+            </Row>
           );
         })}
       </TableBody>
@@ -436,7 +482,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(true, 100))[0];
+  const data = React.useState(() => makeData(true, 500))[0];
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -479,7 +525,6 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -511,24 +556,25 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       </TableHead>
       <TableBody>
         {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.isExpandedContent ?? false;
           return (
-            <Row key={row.id} row={row}>
-              {row
-                .getVisibleCells()
-                .map((cell: LeafyGreenTableCell<Person>) => {
-                  return (
-                    <Cell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-              {row.original.renderExpandedContent && (
-                <ExpandedContent row={row} />
+            <Fragment key={row.id}>
+              {!isExpandedContent && (
+                <Row row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id} id={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
               )}
-            </Row>
+              {isExpandedContent && <ExpandedContent row={row} />}
+            </Fragment>
           );
         })}
       </TableBody>
@@ -582,7 +628,6 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
   });
@@ -617,7 +662,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
             <Row key={row.id} row={row}>
               {row.getVisibleCells().map(cell => {
                 return (
-                  <Cell key={cell.id}>
+                  <Cell key={cell.id} cell={cell}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </Cell>
                 );
@@ -640,7 +685,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -669,14 +714,13 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
@@ -740,7 +784,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -767,7 +811,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -796,14 +840,13 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
@@ -868,7 +911,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -898,7 +941,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       {
         accessorKey: 'id',
         header: 'ID',
-        size: 60,
+        size: 100,
       },
       {
         accessorKey: 'firstName',
@@ -927,14 +970,13 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
       {
         accessorKey: 'status',
         header: 'Status',
-        size: 90,
+        size: 140,
       },
     ],
     [],
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     withPagination: true,
@@ -979,7 +1021,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -1012,5 +1054,157 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
         darkMode={darkMode}
       />
     </div>
+  );
+};
+
+export const StyledComponents: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(5));
+
+  const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+        // eslint-disable-next-line react/display-name
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 90,
+        // eslint-disable-next-line react/display-name
+        cell: _ => {
+          return (
+            <>
+              <IconButton aria-label="Download">
+                <Icon glyph="Download" />
+              </IconButton>
+              <IconButton aria-label="Export">
+                <Icon glyph="Export" />
+              </IconButton>
+              <IconButton aria-label="More Options">
+                <Icon glyph="Ellipsis" />
+              </IconButton>
+            </>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<KitchenSink>({
+    data,
+    columns,
+  });
+
+  const { rows } = table.getRowModel();
+
+  const StyledCell = styled(Cell)`
+    color: grey;
+  ` as typeof Cell;
+
+  // FIXME:
+  // @ts-expect-error - proptypes error. The other components don't have proptypes but should have them
+  const StyledRow = styled(Row)`
+    background: snow;
+  ` as typeof Row;
+
+  const StyledHeaderRow = styled(HeaderRow)`
+    background: whitesmoke;
+  ` as typeof HeaderRow;
+
+  const StyledHeaderCell = styled(HeaderCell)`
+    color: black;
+  ` as typeof HeaderCell;
+
+  const StyledExpandedContent = styled(ExpandedContent)`
+    td > div {
+      background: whitesmoke;
+    }
+  ` as typeof ExpandedContent;
+
+  return (
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
+      <TableHead>
+        {table
+          .getHeaderGroups()
+          .map((headerGroup: HeaderGroup<KitchenSink>) => (
+            <StyledHeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <StyledHeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </StyledHeaderCell>
+                );
+              })}
+            </StyledHeaderRow>
+          ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
+          const isExpandedContent = row.isExpandedContent ?? false;
+          return (
+            <Fragment key={row.id}>
+              {!isExpandedContent && (
+                <StyledRow row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <StyledCell key={cell.id} id={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </StyledCell>
+                    );
+                  })}
+                </StyledRow>
+              )}
+              {isExpandedContent && <StyledExpandedContent row={row} />}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };

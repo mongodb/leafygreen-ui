@@ -33,6 +33,8 @@ import {
   RowProps,
 } from '..';
 
+// TODO: UPDATE ME
+
 const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
@@ -158,7 +160,6 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
@@ -201,7 +202,7 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
                     return (
-                      <Cell key={cell.id}>
+                      <Cell key={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
@@ -286,13 +287,13 @@ export const DisabledSelectableRows: StoryFn<
   );
 
   const table = useLeafyGreenTable<Person>({
-    containerRef: tableContainerRef,
     data,
     columns,
     state: {
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
+    enableRowSelection: !args.disabled,
     hasSelectableRows: true,
   });
 
@@ -350,7 +351,7 @@ export const DisabledSelectableRows: StoryFn<
               <Row key={row.id} row={row} {...args}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

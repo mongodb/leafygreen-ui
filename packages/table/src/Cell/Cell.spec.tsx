@@ -6,11 +6,11 @@ import { Cell, CellProps } from '.';
 
 const onScroll = jest.fn();
 
-const defaultProps: CellProps = {
+const defaultProps: CellProps<unknown> = {
   onScroll,
 };
 
-function renderCell(props: CellProps) {
+function renderCell(props: CellProps<unknown>) {
   return render(
     <table>
       <tbody>

@@ -1,3 +1,4 @@
+// @ts-nocheck - this will be updated in a separate PR
 import React, { useRef, useState } from 'react';
 
 import useLeafyGreenTable, {

@@ -1,24 +1,14 @@
-import React, { Fragment, useMemo } from 'react';
-import { VirtualItem } from 'react-virtual';
+import React, { useMemo } from 'react';
+import isEqual from 'react-fast-compare';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { Polymorph } from '@leafygreen-ui/polymorphic';
 
-import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowBase from './InternalRowBase';
-import {
-  expandedContentParentStyles,
-  grayZebraRowStyles,
-  selectedRowStyles,
-  zebraStyles,
-} from './Row.styles';
+import { getRowWithRTStyles } from './Row.styles';
 import { InternalRowWithRTProps } from './Row.types';
-import RowCellChildren from './RowCellChildren';
-import { useRowContext } from './RowContext';
+import { RowContextProvider } from './RowContext';
 
 /**
  * Renders row data provided by `useReactTable`
@@ -28,67 +18,75 @@ const InternalRowWithRT = <T extends LGRowData>({
   className,
   row,
   virtualRow,
+  disabled = false,
+  shouldAlternateRowColor,
+  theme,
+  measureElement,
+  isExpanded,
+  isParentExpanded,
+  isSelected,
   ...rest
 }: InternalRowWithRTProps<T>) => {
-  const { theme } = useDarkMode();
-  const { disabled } = useRowContext();
-  const { table, getParentRow, shouldAlternateRowColor } = useTableContext();
-  const parentRow = getParentRow?.(row.id);
-  const rowRef = virtualRow?.measureRef;
-
-  const isTableExpandable = table?.getCanSomeRowsExpand();
-  const isNested = !!parentRow;
-  const isParentExpanded = !!parentRow && parentRow.getIsExpanded();
-  const isRowVisible = isParentExpanded || !isNested;
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
-  const isExpanded = row.getIsExpanded();
-  const isSelected = row.getIsSelected();
+  const isExpandable = row.getCanExpand();
+  const depth = row.depth;
 
-  /**
-   * Render the row within a `tbody` if
-   * the table itself has any row that is expandable
-   * but not if this row is nested
-   */
-  const shouldRenderAsTBody = isTableExpandable && !isNested;
-  const containerAs = useMemo(
-    () => (shouldRenderAsTBody ? 'tbody' : Fragment),
-    [shouldRenderAsTBody],
-  );
-
-  const tBodyProps: HTMLElementProps<'tbody'> &
-    Pick<VirtualItem, 'measureRef'> = {
-    className: cx({
-      [expandedContentParentStyles[theme]]: isExpanded,
-    }),
-    'data-expanded': isExpanded,
-    // @ts-expect-error - VirtualItem.measureRef is not typed as a ref
-    ref: rowRef,
-  };
+  const contextValues = useMemo(() => {
+    return {
+      disabled,
+      isExpanded,
+      isExpandable,
+      depth,
+      toggleExpanded: () => row.toggleExpanded(),
+    };
+  }, [depth, disabled, isExpandable, isExpanded, row]);
 
   return (
-    <Polymorph as={containerAs} {...(shouldRenderAsTBody && tBodyProps)}>
+    <RowContextProvider {...contextValues}>
       <InternalRowBase
         className={cx(
-          {
-            [grayZebraRowStyles[theme]]:
-              isOddVSRow && shouldAlternateRowColor && !isSelected,
-            [zebraStyles[theme]]:
-              !virtualRow && shouldAlternateRowColor && !isSelected,
-            [selectedRowStyles[theme]]: isSelected && !disabled,
-          },
+          getRowWithRTStyles(
+            isOddVSRow,
+            shouldAlternateRowColor,
+            isSelected,
+            !!virtualRow,
+            disabled,
+            isExpanded || isParentExpanded,
+            theme,
+          ),
           className,
         )}
         data-selected={isSelected}
-        aria-hidden={!isRowVisible}
         data-expanded={isExpanded}
+        data-depth={row.depth}
         id={`lg-table-row-${row.id}`}
+        ref={node => {
+          if (measureElement) measureElement(node);
+        }}
+        data-index={virtualRow ? virtualRow!.index : ''}
         {...rest}
       >
-        <RowCellChildren row={row}>{children}</RowCellChildren>
+        {children}
       </InternalRowBase>
-    </Polymorph>
+    </RowContextProvider>
   );
 };
 
 export default InternalRowWithRT;
+
+// @ts-expect-error FIXME: the types are generic
+const arePropsEqual = (prevProps, nextProps) => {
+  // Children will never be the same
+  const { children: prevChildren, ...restPrevProps } = prevProps;
+  const { children: nextChildren, ...restNextProps } = nextProps;
+
+  const propsAreEqual = isEqual(restPrevProps, restNextProps);
+
+  return propsAreEqual;
+};
+
+export const MemoizedInternalRowWithRT = React.memo(
+  InternalRowWithRT,
+  arePropsEqual,
+);

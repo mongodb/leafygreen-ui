@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "12.7.0",
+  "version": "12.7.0-test.2",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -33,10 +33,11 @@
     "@leafygreen-ui/tokens": "^2.11.0",
     "@leafygreen-ui/typography": "^19.2.0",
     "@lg-tools/test-harnesses": "^0.1.2",
-    "@tanstack/react-table": "^8.13.2",
+    "@tanstack/react-table": "^8.20.5",
+    "@tanstack/react-virtual": "^3.10.7",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
-    "react-virtual": "^2.10.4"
+    "react-fast-compare": "3.2.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",

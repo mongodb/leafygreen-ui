@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
-import InternalRowWithRT from './InternalRowWithRT';
+import { MemoizedInternalRowWithRT } from './InternalRowWithRT';
 import { RowProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
@@ -14,17 +17,38 @@ import { RowContextProvider } from './RowContext';
 const Row = <T extends LGRowData>({
   row,
   virtualRow,
-  disabled,
+  disabled = false,
   ...rest
 }: RowProps<T>) => {
+  const { theme } = useDarkMode();
+  const { shouldAlternateRowColor, virtualTable } = useTableContext();
+
   return (
-    <RowContextProvider disabled={disabled}>
+    <>
       {row ? (
-        <InternalRowWithRT row={row} virtualRow={virtualRow} {...rest} />
+        <MemoizedInternalRowWithRT
+          // @ts-ignore FIXME:
+          row={row}
+          virtualRow={virtualRow}
+          theme={theme}
+          measureElement={virtualTable?.measureElement}
+          // @ts-ignore FIXME:
+          shouldAlternateRowColor={shouldAlternateRowColor}
+          isExpanded={row.getIsExpanded()}
+          // @ts-ignore FIXME:
+          isParentExpanded={
+            row.getParentRow() ? row.getParentRow()?.getIsExpanded() : false
+          }
+          isSelected={row.getIsSelected()}
+          disabled={disabled}
+          {...rest}
+        />
       ) : (
-        <InternalRowWithoutRT {...rest} />
+        <RowContextProvider disabled={disabled}>
+          <InternalRowWithoutRT {...rest} />
+        </RowContextProvider>
       )}
-    </RowContextProvider>
+    </>
   );
 };
 

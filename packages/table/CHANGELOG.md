@@ -1,5 +1,17 @@
 # @leafygreen-ui/table
 
+## 13.0.0-beta.1
+
+### Patch Changes
+
+- Add `react-keyed-flatten-children` to fix install error
+
+## 13.0.0-beta.0
+
+### Major Changes
+
+- First beta pre-release of Table v13. This release is a WIP and should not be used in production.
+
 ## 12.7.0
 
 ### Minor Changes
