@@ -9,19 +9,15 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
-import {
-  type TableContextValues,
-  type TableProviderValues,
-} from './TableContext.types';
-import VirtualTableContextProvider from './VirtualTableContext';
+import { type TableProviderProps } from './TableContext.types';
 
 export const TableContext = createContext<
-  Partial<TableContextValues<LGRowData>>
+  Partial<TableProviderProps<LGRowData>>
 >({});
 
 export const useTableContext = <T extends LGRowData>() =>
-  useContext<TableContextValues<T>>(
-    TableContext as React.Context<TableContextValues<T>>,
+  useContext<TableProviderProps<T>>(
+    TableContext as React.Context<TableProviderProps<T>>,
   );
 
 const TableContextProvider = <T extends LGRowData>({
@@ -33,9 +29,9 @@ const TableContextProvider = <T extends LGRowData>({
   shouldTruncate,
   virtualTable,
   verticalAlignment,
-}: PropsWithChildren<Partial<TableProviderValues<T>>>) => {
+}: PropsWithChildren<Partial<TableProviderProps<T>>>) => {
   /** The appropriately typed context provider */
-  const TableProvider = (TableContext as React.Context<TableProviderValues<T>>)
+  const TableProvider = (TableContext as React.Context<TableProviderProps<T>>)
     .Provider;
 
   const tableProviderData = useMemo(() => {
@@ -46,6 +42,7 @@ const TableContextProvider = <T extends LGRowData>({
       isSelectable,
       shouldTruncate,
       verticalAlignment,
+      virtualTable,
     };
   }, [
     shouldAlternateRowColor,
@@ -54,15 +51,12 @@ const TableContextProvider = <T extends LGRowData>({
     isSelectable,
     shouldTruncate,
     verticalAlignment,
+    virtualTable,
   ]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <TableProvider value={tableProviderData}>
-        <VirtualTableContextProvider virtualTable={virtualTable}>
-          {children}
-        </VirtualTableContextProvider>
-      </TableProvider>
+      <TableProvider value={tableProviderData}>{children}</TableProvider>
     </LeafyGreenProvider>
   );
 };

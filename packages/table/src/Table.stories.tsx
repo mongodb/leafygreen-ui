@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import styled from '@emotion/styled';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -44,6 +43,8 @@ const meta: StoryMetaType<typeof Table> = {
   component: Table,
   argTypes: {
     shouldAlternateRowColor: { control: 'boolean' },
+    shouldTruncate: { control: 'boolean' },
+    verticalAlignment: { control: 'boolean' },
   },
   parameters: {
     default: 'LiveExample',
@@ -63,13 +64,6 @@ const meta: StoryMetaType<typeof Table> = {
     docs: {
       source: { type: 'code' },
     },
-    // docs: {
-    //   source: {
-    //     // any non-empty string here will skip jsx rendering, see:
-    //     // https://github.com/storybookjs/storybook/blob/next/code/renderers/react/src/docs/jsxDecorator.tsx#L165
-    //     code: 'hello world',
-    //   },
-    // },
   },
 };
 export default meta;
@@ -101,7 +95,6 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
-// FIXME: this story freezes story book unless opened outside of an iframe
 export const LiveExample: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(100));
@@ -173,7 +166,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -204,7 +197,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
             const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
@@ -310,10 +302,15 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
-    <>
+    <div>
+      <div
+        className={css`
+          height: 50px;
+        `}
+      />
       <Table
         {...args}
         table={table}
@@ -340,7 +337,6 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
-            // const isExpandedContent = row.original.isExpandedContent ?? false;
             const isExpandedContent = row.isExpandedContent ?? false;
 
             return (
@@ -365,13 +361,24 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
           })}
         </TableBody>
       </Table>
-    </>
+      <div
+        className={css`
+          height: 2000px;
+        `}
+      />
+    </div>
   );
 };
 
-LiveExample.argTypes = {
+HundredsOfRows.argTypes = {
   shouldAlternateRowColor: {
     control: 'none',
+  },
+};
+
+HundredsOfRows.parameters = {
+  chromatic: {
+    disableSnapshots: true,
   },
 };
 
@@ -434,14 +441,14 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -532,14 +539,14 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       table={table}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -635,13 +642,13 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <Table
       {...args}
       ref={tableContainerRef}
-      data-total-rows={table.rows.length}
+      data-total-rows={table.getRowModel().rows.length}
     >
       <TableHead>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -733,7 +740,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     hasSelectableRows: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -763,7 +770,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         {...args}
         table={table}
         ref={tableContainerRef}
-        data-total-rows={table.rows.length}
+        data-total-rows={table.getRowModel().rows.length}
       >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -860,7 +867,7 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
     allowSelectAll: false,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -985,7 +992,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
     withPagination: true,
   });
 
-  const { rows } = table;
+  const { rows } = table.getRowModel();
 
   return (
     <div>
@@ -1060,151 +1067,150 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
   );
 };
 
-export const StyledComponents: StoryFn<StoryTableProps> = args => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(5));
+// TODO: Will address in a separate PR - removing from stories and will test TS in spec files.
+// TODO: create a sandbox to demonstrate styled components
+// export const StyledComponents: StoryFn<StoryTableProps> = args => {
+//   const tableContainerRef = React.useRef<HTMLDivElement>(null);
+//   const [data] = useState(() => makeKitchenSinkData(5));
 
-  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
-    () => [
-      {
-        accessorKey: 'dateCreated',
-        header: 'Date Created',
-        enableSorting: true,
-        cell: info =>
-          (info.getValue() as Date).toLocaleDateString('en-us', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }),
-      },
-      {
-        accessorKey: 'frequency',
-        header: 'Frequency',
-      },
-      {
-        accessorKey: 'clusterType',
-        header: 'Cluster Type',
-      },
-      {
-        accessorKey: 'encryptorEnabled',
-        header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
-        cell: info => (
-          <Badge variant={info.getValue() ? 'green' : 'red'}>
-            {info.getValue() ? 'Enabled' : 'Not enabled'}
-          </Badge>
-        ),
-      },
-      {
-        accessorKey: 'mdbVersion',
-        header: 'MongoDB Version',
-        enableSorting: true,
-        size: 90,
-      },
-      {
-        id: 'actions',
-        header: '',
-        size: 90,
-        // eslint-disable-next-line react/display-name
-        cell: _ => {
-          return (
-            <>
-              <IconButton aria-label="Download">
-                <Icon glyph="Download" />
-              </IconButton>
-              <IconButton aria-label="Export">
-                <Icon glyph="Export" />
-              </IconButton>
-              <IconButton aria-label="More Options">
-                <Icon glyph="Ellipsis" />
-              </IconButton>
-            </>
-          );
-        },
-      },
-    ],
-    [],
-  );
+//   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+//     () => [
+//       {
+//         accessorKey: 'dateCreated',
+//         header: 'Date Created',
+//         enableSorting: true,
+//         cell: info =>
+//           (info.getValue() as Date).toLocaleDateString('en-us', {
+//             year: 'numeric',
+//             month: 'short',
+//             day: 'numeric',
+//           }),
+//       },
+//       {
+//         accessorKey: 'frequency',
+//         header: 'Frequency',
+//       },
+//       {
+//         accessorKey: 'clusterType',
+//         header: 'Cluster Type',
+//       },
+//       {
+//         accessorKey: 'encryptorEnabled',
+//         header: 'Encryptor',
+//         // eslint-disable-next-line react/display-name
+//         cell: info => (
+//           <Badge variant={info.getValue() ? 'green' : 'red'}>
+//             {info.getValue() ? 'Enabled' : 'Not enabled'}
+//           </Badge>
+//         ),
+//       },
+//       {
+//         accessorKey: 'mdbVersion',
+//         header: 'MongoDB Version',
+//         enableSorting: true,
+//         size: 90,
+//       },
+//       {
+//         id: 'actions',
+//         header: '',
+//         size: 90,
+//         // eslint-disable-next-line react/display-name
+//         cell: _ => {
+//           return (
+//             <>
+//               <IconButton aria-label="Download">
+//                 <Icon glyph="Download" />
+//               </IconButton>
+//               <IconButton aria-label="Export">
+//                 <Icon glyph="Export" />
+//               </IconButton>
+//               <IconButton aria-label="More Options">
+//                 <Icon glyph="Ellipsis" />
+//               </IconButton>
+//             </>
+//           );
+//         },
+//       },
+//     ],
+//     [],
+//   );
 
-  const table = useLeafyGreenTable<any>({
-    data,
-    columns,
-  });
+//   const table = useLeafyGreenTable<any>({
+//     data,
+//     columns,
+//   });
 
-  const { rows } = table;
+//   const { rows } = table.getRowModel();
 
-  const StyledCell = styled(Cell)`
-    color: grey;
-  `;
+// FIXME:
+// proptypes error. The other components don't have proptypes but should have them
+// const StyledRow = styled(Row)`
+//   background: snow;
+// ` as typeof Row;
 
-  const StyledRow = styled(Row)`
-    background: snow;
-  `;
+// const StyledHeaderRow = styled(HeaderRow)`
+//   background: whitesmoke;
+// ` as typeof HeaderRow;
 
-  const StyledHeaderRow = styled(HeaderRow)`
-    background: whitesmoke;
-  `;
+// const StyledHeaderCell = styled(HeaderCell)`
+//   color: black;
+// ` as typeof HeaderCell;
 
-  const StyledHeaderCell = styled(HeaderCell)`
-    color: black;
-  `;
+// const StyledExpandedContent = styled(ExpandedContent)`
+//   td > div {
+//     background: whitesmoke;
+//   }
+// ` as typeof ExpandedContent;
 
-  const StyledExpandedContent = styled(ExpandedContent)`
-    td > div {
-      background: whitesmoke;
-    }
-  `;
-
-  return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-          <StyledHeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
-              return (
-                <StyledHeaderCell key={header.id} header={header}>
-                  {flexRender(
-                    header.column.columnDef.header,
-                    header.getContext(),
-                  )}
-                </StyledHeaderCell>
-              );
-            })}
-          </StyledHeaderRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-          // const isExpandedContent = row.original.isExpandedContent ?? false;
-          const isExpandedContent = row.isExpandedContent ?? false;
-          return (
-            <Fragment key={row.id}>
-              {!isExpandedContent && (
-                <StyledRow row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <StyledCell key={cell.id} id={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </StyledCell>
-                    );
-                  })}
-                </StyledRow>
-              )}
-              {isExpandedContent && <StyledExpandedContent row={row} />}
-            </Fragment>
-          );
-        })}
-      </TableBody>
-    </Table>
-  );
-};
+//   return (
+//     <Table
+//       {...args}
+//       table={table}
+//       ref={tableContainerRef}
+//       className={css`
+//         width: 1100px;
+//       `}
+//     >
+//       <TableHead>
+//         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+//           <StyledHeaderRow key={headerGroup.id}>
+//             {headerGroup.headers.map(header => {
+//               return (
+//                 <StyledHeaderCell key={header.id} header={header}>
+//                   {flexRender(
+//                     header.column.columnDef.header,
+//                     header.getContext(),
+//                   )}
+//                 </StyledHeaderCell>
+//               );
+//             })}
+//           </StyledHeaderRow>
+//         ))}
+//       </TableHead>
+//       <TableBody>
+//         {rows.map((row: LeafyGreenTableRow<Person>) => {
+//           const isExpandedContent = row.isExpandedContent ?? false;
+//           return (
+//             <Fragment key={row.id}>
+//               {!isExpandedContent && (
+//                 <StyledRow row={row}>
+//                   {row.getVisibleCells().map(cell => {
+//                     return (
+//                       <StyledCell key={cell.id} id={cell.id} cell={cell}>
+//                         {flexRender(
+//                           cell.column.columnDef.cell,
+//                           cell.getContext(),
+//                         )}
+//                       </StyledCell>
+//                     );
+//                   })}
+//                 </StyledRow>
+//               )}
+//               {isExpandedContent && <StyledExpandedContent row={row} />}
+//             </Fragment>
+//           );
+//         })}
+//       </TableBody>
+//     </Table>
+//   );
+// };

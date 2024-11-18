@@ -17,10 +17,6 @@ export type LGTableDataType<T extends LGRowData> = T & {
   subRows?: Array<LGTableDataType<T>>;
 };
 
-export type LGRow<T extends LGRowData> = Row<LGTableDataType<T>> & {
-  isExpandedContent?: boolean;
-};
-
 /** LeafyGreen extension of `useReactTable` {@link Cell}*/
 export type LeafyGreenTableCell<T extends LGRowData> = Cell<
   LGTableDataType<T>,
@@ -29,7 +25,9 @@ export type LeafyGreenTableCell<T extends LGRowData> = Cell<
 
 /** LeafyGreen extension of `useReactTable` {@link Row}*/
 export interface LeafyGreenTableRow<T extends LGRowData>
-  extends LGRow<LGTableDataType<T>> {}
+  extends Row<LGTableDataType<T>> {
+  isExpandedContent?: boolean;
+}
 
 export type LGColumnDef<
   T extends LGRowData,
@@ -47,9 +45,24 @@ export type LeafyGreenTableOptions<
   T extends LGRowData,
   V extends unknown = unknown,
 > = Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel' | 'columns'> & {
+  /**
+   * Setting this prop will inject a new column containing a checkbox into all rows.
+   */
   hasSelectableRows?: boolean;
+
+  /**
+   * The column definitions for the table
+   */
   columns: Array<LGColumnDef<T, V>>;
+
+  /**
+   * Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`.
+   */
   withPagination?: boolean;
+
+  /**
+   * This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.
+   */
   allowSelectAll?: boolean;
 };
 
@@ -58,6 +71,9 @@ export type LeafyGreenTableOptions<
  */
 export interface LeafyGreenTable<T extends LGRowData>
   extends Table<LGTableDataType<T>> {
+  /**
+   * Whether the table will have selectable rows.
+   */
   hasSelectableRows: boolean;
-  rows: Array<any>;
+  virtual: never;
 }
