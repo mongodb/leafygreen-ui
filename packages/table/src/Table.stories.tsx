@@ -13,7 +13,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
-  KitchenSink,
   makeData,
   makeKitchenSinkData,
   Person,
@@ -23,7 +22,6 @@ import {
   Cell,
   ExpandedContent,
   flexRender,
-  Header,
   HeaderCell,
   type HeaderGroup,
   HeaderRow,

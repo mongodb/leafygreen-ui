@@ -39,7 +39,9 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
     const isVirtual = Boolean((table as LeafyGreenVirtualTable<T>)?.virtual);
-    const virtualTable = isVirtual ? table!.virtual : undefined;
+    const virtualTable = isVirtual
+      ? (table as LeafyGreenVirtualTable<T>).virtual
+      : undefined;
     const isSelectable = table ? table.hasSelectableRows : false;
 
     // Helps to determine if the header is sticky
