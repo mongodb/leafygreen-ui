@@ -1,5 +1,3 @@
-import { MouseEvent } from 'react';
-
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 /**
@@ -10,32 +8,26 @@ export const LabelVariants = {
   Secondary: 'secondary',
 } as const;
 type LabelVariants = (typeof LabelVariants)[keyof typeof LabelVariants];
-
 export interface BaseHeaderProps extends HTMLElementProps<'div'> {
+  /**
+   * Props for the label in the header.
+   */
   labelProps: {
     value: string;
     variant?: LabelVariants;
   };
-  moreInfoButtonProps?: {
-    show?: boolean;
-    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  };
-  closeButtonProps?: {
-    show?: boolean;
-    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  };
-  fullScreenButtonProps?: {
-    show?: boolean;
-    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  };
-  resetButtonProps?: {
-    show?: boolean;
-    onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  };
+
+  /**
+   * Props for the collapse button in the header.
+   */
   collapseButtonProps?: {
     show?: boolean;
     onClick?: (collapsedState: boolean) => void;
     collapsed?: boolean;
   };
-  inputContent?: React.ReactNode;
+
+  /**
+   * Content to be rendered to the right of the label.
+   */
+  headerContent?: React.ReactNode;
 }

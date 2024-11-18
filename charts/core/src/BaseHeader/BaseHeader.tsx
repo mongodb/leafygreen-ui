@@ -21,12 +21,8 @@ export const BaseHeader = forwardRef(
   (
     {
       labelProps,
-      moreInfoButtonProps,
-      closeButtonProps,
-      fullScreenButtonProps,
-      resetButtonProps,
       collapseButtonProps,
-      inputContent,
+      headerContent,
       className,
       ...rest
     }: BaseHeaderProps,
@@ -73,54 +69,10 @@ export const BaseHeader = forwardRef(
               {labelProps.value}
             </Body>
           )}
-
-          {/* More info button */}
-          {moreInfoButtonProps?.show && (
-            <IconButton
-              aria-label="More info button"
-              onClick={moreInfoButtonProps?.onClick}
-            >
-              <Icon glyph="QuestionMarkWithCircle" />
-            </IconButton>
-          )}
         </div>
 
         {/* Slotted component */}
-        <div className={alignCenterStyles}>{inputContent}</div>
-
-        {/* Elements right of slotted component */}
-        <div className={alignCenterStyles}>
-          {/* Reset button */}
-          {resetButtonProps?.show && (
-            // TODO: LG-4664 - Swap with actual icon
-            <IconButton
-              aria-label="Reset button"
-              onClick={resetButtonProps?.onClick}
-            >
-              <Icon glyph="Refresh" />
-            </IconButton>
-          )}
-
-          {/* Fullscreen button */}
-          {fullScreenButtonProps?.show && (
-            <IconButton
-              aria-label="Fullscreen button"
-              onClick={fullScreenButtonProps?.onClick}
-            >
-              <Icon glyph="FullScreenEnter" />
-            </IconButton>
-          )}
-
-          {/* Close button */}
-          {closeButtonProps?.show && (
-            <IconButton
-              aria-label="Close button"
-              onClick={closeButtonProps?.onClick}
-            >
-              <Icon glyph="X" />
-            </IconButton>
-          )}
-        </div>
+        <div className={alignCenterStyles}>{headerContent}</div>
       </div>
     );
   },

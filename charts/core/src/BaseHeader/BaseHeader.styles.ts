@@ -12,9 +12,7 @@ export const getContainerStyles = (theme: Theme) => css`
   width: 100%;
   padding: ${spacing[150]}px ${spacing[300]}px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  border-top: 1px solid
-    ${color[theme].border[Variant.Disabled][InteractionState.Default]};
+  grid-template-columns: auto 1fr;
   border-bottom: 1px solid
     ${color[theme].border[Variant.Disabled][InteractionState.Default]};
 `;

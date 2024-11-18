@@ -1,41 +1,18 @@
-import React, {
-  Children,
-  PropsWithChildren,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { HTMLElementProps } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
-import { Body } from '@leafygreen-ui/typography';
 
-import { BaseHeader, BaseHeaderProps, LabelVariants } from '../BaseHeader';
-import { Chart } from '../Chart/Chart';
+import { BaseHeader, LabelVariants } from '../BaseHeader';
 
 import { getHeaderStyles, getWrapperStyles } from './ChartCard.styles';
-
-interface ChartCardProps
-  extends HTMLElementProps<'div'>,
-    PropsWithChildren,
-    Omit<BaseHeaderProps, 'labelProps' | 'collapsedButtonProps'> {
-  label: string;
-  numOfCharts: number;
-  defaultOpen?: boolean;
-}
+import { ChartCardProps } from './ChartCard.types';
 
 export function ChartCard({
   children,
   className,
   label,
-  numOfCharts,
-  moreInfoButtonProps,
-  closeButtonProps,
-  fullScreenButtonProps,
-  resetButtonProps,
-  inputContent,
+  headerContent,
   defaultOpen = true,
   ...rest
 }: ChartCardProps) {
@@ -81,19 +58,7 @@ export function ChartCard({
           },
           collapsed,
         }}
-        moreInfoButtonProps={moreInfoButtonProps}
-        closeButtonProps={closeButtonProps}
-        fullScreenButtonProps={fullScreenButtonProps}
-        resetButtonProps={resetButtonProps}
-        inputContent={
-          collapsed ? (
-            <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
-              ({numOfCharts} Hidden Metrics)
-            </Body>
-          ) : (
-            inputContent
-          )
-        }
+        headerContent={headerContent}
         className={getHeaderStyles(theme)}
         ref={headerRef}
       />

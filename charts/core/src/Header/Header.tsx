@@ -4,23 +4,16 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { BaseHeader, LabelVariants } from '../BaseHeader';
 
-import { getHeaderStyles } from './Header.styles';
+import { getDividerStyles } from './Header.styles';
 import { HeaderProps } from './Header.types';
 
-export function Header({
-  label,
-  closeButtonProps,
-  fullScreenButtonProps,
-  resetButtonProps,
-}: HeaderProps) {
+export function Header({ label, showDivider, headerContent }: HeaderProps) {
   const { theme } = useDarkMode();
   return (
     <BaseHeader
-      className={getHeaderStyles(theme)}
+      className={showDivider ? getDividerStyles(theme) : undefined}
       labelProps={{ value: label, variant: LabelVariants.Secondary }}
-      closeButtonProps={closeButtonProps}
-      fullScreenButtonProps={fullScreenButtonProps}
-      resetButtonProps={resetButtonProps}
+      headerContent={headerContent}
     />
   );
 }

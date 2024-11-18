@@ -1,15 +1,14 @@
-export interface HeaderProps {
+import { BaseHeaderProps } from '../BaseHeader';
+
+export interface HeaderProps
+  extends Omit<BaseHeaderProps, 'labelProps' | 'collapsedButtonProps'> {
+  /**
+   * Header label.
+   */
   label: string;
-  closeButtonProps?: {
-    show?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  };
-  fullScreenButtonProps?: {
-    show?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  };
-  resetButtonProps?: {
-    show?: boolean;
-    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  };
+
+  /**
+   * Whether to display divider line on top of header.
+   */
+  showDivider?: boolean;
 }
