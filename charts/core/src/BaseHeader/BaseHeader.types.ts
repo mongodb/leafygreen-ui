@@ -20,10 +20,12 @@ export interface BaseHeaderProps extends HTMLElementProps<'div'> {
   /**
    * Props for the collapse button in the header.
    */
-  collapseButtonProps?: {
+  openButtonProps?: {
     show?: boolean;
-    onClick?: (collapsedState: boolean) => void;
-    collapsed?: boolean;
+    onClick?: (
+      e: React.SyntheticEvent<HTMLDivElement, MouseEvent | KeyboardEvent>,
+    ) => void;
+    isOpen?: boolean;
   };
 
   /**

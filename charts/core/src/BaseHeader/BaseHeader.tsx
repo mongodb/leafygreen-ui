@@ -1,4 +1,5 @@
-import React, { ForwardedRef, forwardRef, useState } from 'react';
+import React, { useState } from 'react';
+import { Transition } from 'react-transition-group';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -9,73 +10,66 @@ import { Body } from '@leafygreen-ui/typography';
 
 import {
   alignCenterStyles,
-  collapseIconStyles,
   getContainerStyles,
+  iconTransitionStyle,
+  transitionDuration,
 } from './BaseHeader.styles';
 import { BaseHeaderProps, LabelVariants } from './BaseHeader.types';
 
 /**
  * Generic header component that will be used by both `Chart` and `ChartCard`.
  */
-export const BaseHeader = forwardRef(
-  (
-    {
-      labelProps,
-      collapseButtonProps,
-      headerContent,
-      className,
-      ...rest
-    }: BaseHeaderProps,
-    ref: ForwardedRef<HTMLDivElement>,
-  ) => {
-    const [collapsed, setCollapsed] = useState(
-      collapseButtonProps?.collapsed || false,
-    );
-    const { theme } = useDarkMode();
+export function BaseHeader({
+  labelProps,
+  openButtonProps,
+  headerContent,
+  className,
+  ...rest
+}: BaseHeaderProps) {
+  const [isOpen, setIsOpen] = useState(openButtonProps?.isOpen || true);
+  const { theme } = useDarkMode();
 
-    return (
-      <div
-        className={cx(getContainerStyles(theme), className)}
-        {...rest}
-        ref={ref}
-      >
-        {/* Elements left of slotted component */}
-        <div className={alignCenterStyles}>
-          {/* Collapse button */}
-          {collapseButtonProps?.show && (
-            <IconButton
-              aria-label="Collapse button"
-              onClick={() => {
-                setCollapsed(currentState => {
-                  collapseButtonProps?.onClick?.(!currentState);
-                  return !currentState;
-                });
-              }}
-            >
-              <Icon
-                glyph="ChevronDown"
-                className={cx(collapseIconStyles, collapsed && 'collapsed')}
-              />
-            </IconButton>
-          )}
+  return (
+    <div className={cx(getContainerStyles(theme), className)} {...rest}>
+      {/* Elements left of slotted component */}
+      <div className={alignCenterStyles}>
+        {/* Open button */}
+        {openButtonProps?.show && (
+          <Transition in={isOpen} timeout={transitionDuration}>
+            {state => (
+              <IconButton
+                // Setting 'as="div"' to avoid nesting interactive components for accessibility
+                as="div"
+                className={iconTransitionStyle[state]}
+                aria-label={`${isOpen ? 'collapse' : 'expand'} card`}
+                tabIndex={0}
+                onClick={e => {
+                  setIsOpen(!isOpen);
+                  openButtonProps.onClick?.(e);
+                }}
+              >
+                <Icon glyph="ChevronDown" size={24} />
+              </IconButton>
+            )}
+          </Transition>
+        )}
 
-          {/* Label */}
-          {labelProps.variant === LabelVariants.Secondary ? (
-            <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
-              {labelProps.value}
-            </Body>
-          ) : (
-            <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
-              {labelProps.value}
-            </Body>
-          )}
-        </div>
-
-        {/* Slotted component */}
-        <div className={alignCenterStyles}>{headerContent}</div>
+        {/* Label */}
+        {labelProps.variant === LabelVariants.Secondary ? (
+          <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
+            {labelProps.value}
+          </Body>
+        ) : (
+          <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
+            {labelProps.value}
+          </Body>
+        )}
       </div>
-    );
-  },
-);
+
+      {/* Slotted component */}
+      <div className={alignCenterStyles}>{headerContent}</div>
+    </div>
+  );
+}
 
 BaseHeader.displayName = 'BaseHeader';
