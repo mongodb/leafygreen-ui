@@ -37,6 +37,7 @@ const RowWithRef = <T extends LGRowData>(
           }
           isSelected={row.getIsSelected()}
           ref={ref}
+          disabled={disabled}
           {...rest}
         />
       ) : (

@@ -1,6 +1,13 @@
 import { LGRowData } from '../../useLeafyGreenTable';
 import { LeafyGreenVirtualTable } from '../../useLeafyGreenVirtualTable';
 
+/**
+ *  `useVirtualScrollPadding` returns an object with the `paddingTop` and `paddingBottom` values calculated based on the virtualized table's current scroll state, which will be used to create the effect of virtual scrolling. For non-virtualized tables, both values will default to 0.
+ *
+ * @param isVirtual Whether this is a virtual table
+ * @param virtualTable Available properties and methods return from the Virtualizer instance.
+ * @returns An object containing the top and bottom padding values
+ */
 export const useVirtualScrollPadding = <T extends LGRowData>(
   isVirtual = false,
   virtualTable?: LeafyGreenVirtualTable<T>['virtual'],
