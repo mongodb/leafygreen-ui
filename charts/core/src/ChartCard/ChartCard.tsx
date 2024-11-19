@@ -8,6 +8,9 @@ import { BaseHeader, LabelVariants } from '../BaseHeader';
 import { getHeaderStyles, getWrapperStyles } from './ChartCard.styles';
 import { ChartCardProps } from './ChartCard.types';
 
+/**
+ * Wrapper component that contains charts and can expand and collapse.
+ */
 export function ChartCard({
   children,
   className,
@@ -31,10 +34,9 @@ export function ChartCard({
     }
 
     if (headerRef.current) {
-      // Account for 1px border
-      setHeaderHeight(headerRef.current.offsetHeight + 1);
+      setHeaderHeight(headerRef.current.offsetHeight);
     }
-  }, []);
+  }, [containerRef, headerRef]);
 
   return (
     <div
@@ -59,7 +61,7 @@ export function ChartCard({
           collapsed,
         }}
         headerContent={headerContent}
-        className={getHeaderStyles(theme)}
+        className={getHeaderStyles()}
         ref={headerRef}
       />
       {children}
