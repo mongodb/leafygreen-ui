@@ -1,15 +1,23 @@
 import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { Body } from '@leafygreen-ui/typography';
 
-import { BaseHeader, TitleVariant } from '../BaseHeader';
-
-import { getHeaderStyles, getWrapperStyles } from './ChartCard.styles';
+import {
+  getContainerStyles,
+  getHeaderStyles,
+  leftInnerContainerStyles,
+  toggleButtonStyles,
+  toggleIconStyles,
+} from './ChartCard.styles';
 import { ChartCardProps } from './ChartCard.types';
 
 /**
- * Wrapper component that contains charts and can expand and collapse.
+ * Card component that contains charts and can expand and collapse.
  */
 export function ChartCard({
   children,
@@ -51,32 +59,40 @@ export function ChartCard({
   return (
     <div
       className={cx(
-        getWrapperStyles(theme, height, headerHeight),
+        getContainerStyles(theme, height, headerHeight),
         className,
         isOpen && 'open',
       )}
       ref={containerRef}
       {...rest}
     >
-      <BaseHeader
-        titleProps={{
-          value: title,
-          variant: TitleVariant.Primary,
-        }}
-        toggleButtonProps={{
-          show: true,
-          onClick: (e: MouseEvent<HTMLButtonElement>) => {
-            if (!isControlled) {
-              setIsOpen(currState => !currState);
-            }
-            onToggleButtonClick?.(e);
-          },
-          isOpen,
-        }}
-        headerContent={headerContent}
-        className={getHeaderStyles()}
+      <div
+        className={cx(getHeaderStyles(theme), className)}
+        {...rest}
         ref={headerRef}
-      />
+      >
+        <div className={leftInnerContainerStyles}>
+          <IconButton
+            className={toggleButtonStyles}
+            aria-label="Toggle button"
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
+              if (!isControlled) {
+                setIsOpen(currState => !currState);
+              }
+              onToggleButtonClick?.(e);
+            }}
+          >
+            <Icon
+              glyph="ChevronDown"
+              className={cx(toggleIconStyles, isOpen && 'open')}
+            />
+          </IconButton>
+          <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
+            {title}
+          </Body>
+        </div>
+        <div>{headerContent}</div>
+      </div>
       {children}
     </div>
   );

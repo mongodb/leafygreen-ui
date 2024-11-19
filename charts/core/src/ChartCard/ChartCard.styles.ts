@@ -4,11 +4,12 @@ import {
   borderRadius,
   color,
   InteractionState,
+  spacing,
   transitionDuration,
   Variant,
 } from '@leafygreen-ui/tokens';
 
-export const getWrapperStyles = (
+export const getContainerStyles = (
   theme: Theme,
   height?: number,
   headerHeight?: number,
@@ -34,7 +35,29 @@ export const getWrapperStyles = (
   }
 `;
 
-export const getHeaderStyles = () => css`
-  /* Top border is wrapper border */
-  border-top: none;
+export const getHeaderStyles = (theme: Theme) => css`
+  width: 100%;
+  padding: ${spacing[150]}px ${spacing[300]}px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border-bottom: 1px solid
+    ${color[theme].border[Variant.Disabled][InteractionState.Default]};
+`;
+
+export const toggleButtonStyles = css`
+  margin-right: ${spacing[100]}px;
+`;
+
+export const toggleIconStyles = css`
+  transform: rotate(-90deg);
+  transition: transform ${transitionDuration.slower}ms ease-in-out;
+
+  &.open {
+    transform: rotate(0deg);
+  }
+`;
+
+export const leftInnerContainerStyles = css`
+  display: flex;
+  align-items: center;
 `;
