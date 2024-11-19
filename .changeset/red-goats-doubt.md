@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/tabs': major
+'@leafygreen-ui/tabs': patch
 ---
 
-Remove incorrect `setSelectedd` prop
+Removes incorrect `setSelectedd` prop. `setSelected` is the correct prop.
