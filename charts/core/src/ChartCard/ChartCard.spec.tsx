@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 
 import { ChartCard } from './ChartCard';
 
@@ -17,5 +17,18 @@ describe('@lg-charts/core/src/ChartCard/ChartCard', () => {
       />,
     );
     expect(screen.getByTestId('my-input')).toBeInTheDocument();
+  });
+
+  it('should call onToggleButtonClick when button is clicked', () => {
+    const onToggleButtonClick = jest.fn();
+    render(
+      <ChartCard title="test" onToggleButtonClick={onToggleButtonClick} />,
+    );
+
+    act(() => {
+      screen.getByLabelText('Toggle button').click();
+    });
+
+    expect(onToggleButtonClick).toHaveBeenCalledTimes(1);
   });
 });

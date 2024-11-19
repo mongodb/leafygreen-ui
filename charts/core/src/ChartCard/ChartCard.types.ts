@@ -1,12 +1,8 @@
 import { MouseEventHandler } from 'react';
 
-import { BaseHeaderProps } from '../BaseHeader';
+import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface ChartCardProps
-  extends Omit<
-    BaseHeaderProps,
-    'titleProps' | 'collapsedButtonProps' | 'title'
-  > {
+export interface ChartCardProps extends Omit<HTMLElementProps<'div'>, 'title'> {
   /**
    * The title of the card
    */
@@ -26,4 +22,9 @@ export interface ChartCardProps
    * Callback fired when user clicks the toggle button
    */
   onToggleButtonClick?: MouseEventHandler<HTMLButtonElement>;
+
+  /**
+   * Content to be rendered to the right of the label.
+   */
+  headerContent?: React.ReactNode;
 }
