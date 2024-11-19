@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { ForwardedRef } from 'react';
 import { RowData } from '@tanstack/react-table';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
@@ -12,13 +13,15 @@ import {
   baseStyles,
   expandedContentThemeStyles,
 } from './ExpandedContent.styles';
-import { ExpandedContentProps } from './ExpandedContent.types';
+import {
+  ExpandedContentComponentType,
+  ExpandedContentProps,
+} from './ExpandedContent.types';
 
-const ExpandedContent = <T extends RowData>({
-  row,
-  virtualRow,
-  ...rest
-}: ExpandedContentProps<T>) => {
+const ExpandedContentWithRef = <T extends RowData>(
+  { row, virtualRow, ...rest }: ExpandedContentProps<T>,
+  ref: ForwardedRef<HTMLTableRowElement>,
+) => {
   const { virtualTable } = useTableContext();
 
   const content =
@@ -30,11 +33,7 @@ const ExpandedContent = <T extends RowData>({
   return (
     <InternalRowBase
       {...rest}
-      ref={node => {
-        // TODO: fix me
-        // This gets the dynamic size of the element
-        if (virtualTable) virtualTable.measureElement(node);
-      }}
+      ref={useMergeRefs([ref, virtualTable?.measureElement])}
       data-index={virtualRow ? virtualRow!.index : ''}
     >
       <td
@@ -49,6 +48,12 @@ const ExpandedContent = <T extends RowData>({
     </InternalRowBase>
   );
 };
+
+// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
+// This assertion has an interface that restores the original function signature to work with generics.
+export const ExpandedContent = React.forwardRef(
+  ExpandedContentWithRef,
+) as ExpandedContentComponentType;
 
 ExpandedContent.displayName = 'ExpandedContent';
 

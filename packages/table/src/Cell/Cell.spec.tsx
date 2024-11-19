@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { RowContextProvider } from '../Row/RowContext';
+
 import { Cell, CellProps } from '.';
 
 const onScroll = jest.fn();
@@ -28,6 +30,46 @@ describe('packages/table/Cell', () => {
       const { container } = renderCell(defaultProps);
       const results = await axe(container);
       expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('accepts a ref', () => {
+    test('regular cell', () => {
+      const ref = React.createRef<HTMLTableCellElement>();
+      render(<Cell ref={ref}>Hello</Cell>);
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello');
+    });
+
+    test('RT cell', () => {
+      const ref = React.createRef<HTMLTableCellElement>();
+      const cellObj = {
+        id: '1',
+        column: {
+          getIsFirstColumn: () => false,
+        },
+      };
+
+      const providerValue = {
+        getIsExpanded: () => false,
+        getCanExpand: () => false,
+        toggleExpanded: () => {},
+        depth: 1,
+        disabled: false,
+      };
+
+      render(
+        <RowContextProvider {...providerValue}>
+          {/* @ts-expect-error - dummy cell data is missing properties */}
+          <Cell cell={cellObj} ref={ref}>
+            Hello RT
+          </Cell>
+        </RowContextProvider>,
+      );
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello RT');
     });
   });
 });

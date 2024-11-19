@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import styled from '@emotion/styled';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -14,7 +13,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
 import {
-  KitchenSink,
   makeData,
   makeKitchenSinkData,
   Person,
@@ -24,7 +22,6 @@ import {
   Cell,
   ExpandedContent,
   flexRender,
-  Header,
   HeaderCell,
   type HeaderGroup,
   HeaderRow,
@@ -1057,154 +1054,152 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
   );
 };
 
-export const StyledComponents: StoryFn<StoryTableProps> = args => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(5));
+// export const StyledComponents: StoryFn<StoryTableProps> = args => {
+//   const tableContainerRef = React.useRef<HTMLDivElement>(null);
+//   const [data] = useState(() => makeKitchenSinkData(5));
 
-  const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
-    () => [
-      {
-        accessorKey: 'dateCreated',
-        header: 'Date Created',
-        enableSorting: true,
-        cell: info =>
-          (info.getValue() as Date).toLocaleDateString('en-us', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }),
-      },
-      {
-        accessorKey: 'frequency',
-        header: 'Frequency',
-      },
-      {
-        accessorKey: 'clusterType',
-        header: 'Cluster Type',
-      },
-      {
-        accessorKey: 'encryptorEnabled',
-        header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
-        cell: info => (
-          <Badge variant={info.getValue() ? 'green' : 'red'}>
-            {info.getValue() ? 'Enabled' : 'Not enabled'}
-          </Badge>
-        ),
-      },
-      {
-        accessorKey: 'mdbVersion',
-        header: 'MongoDB Version',
-        enableSorting: true,
-        size: 90,
-      },
-      {
-        id: 'actions',
-        header: '',
-        size: 90,
-        // eslint-disable-next-line react/display-name
-        cell: _ => {
-          return (
-            <>
-              <IconButton aria-label="Download">
-                <Icon glyph="Download" />
-              </IconButton>
-              <IconButton aria-label="Export">
-                <Icon glyph="Export" />
-              </IconButton>
-              <IconButton aria-label="More Options">
-                <Icon glyph="Ellipsis" />
-              </IconButton>
-            </>
-          );
-        },
-      },
-    ],
-    [],
-  );
+//   const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
+//     () => [
+//       {
+//         accessorKey: 'dateCreated',
+//         header: 'Date Created',
+//         enableSorting: true,
+//         cell: info =>
+//           (info.getValue() as Date).toLocaleDateString('en-us', {
+//             year: 'numeric',
+//             month: 'short',
+//             day: 'numeric',
+//           }),
+//       },
+//       {
+//         accessorKey: 'frequency',
+//         header: 'Frequency',
+//       },
+//       {
+//         accessorKey: 'clusterType',
+//         header: 'Cluster Type',
+//       },
+//       {
+//         accessorKey: 'encryptorEnabled',
+//         header: 'Encryptor',
+//         // eslint-disable-next-line react/display-name
+//         cell: info => (
+//           <Badge variant={info.getValue() ? 'green' : 'red'}>
+//             {info.getValue() ? 'Enabled' : 'Not enabled'}
+//           </Badge>
+//         ),
+//       },
+//       {
+//         accessorKey: 'mdbVersion',
+//         header: 'MongoDB Version',
+//         enableSorting: true,
+//         size: 90,
+//       },
+//       {
+//         id: 'actions',
+//         header: '',
+//         size: 90,
+//         // eslint-disable-next-line react/display-name
+//         cell: _ => {
+//           return (
+//             <>
+//               <IconButton aria-label="Download">
+//                 <Icon glyph="Download" />
+//               </IconButton>
+//               <IconButton aria-label="Export">
+//                 <Icon glyph="Export" />
+//               </IconButton>
+//               <IconButton aria-label="More Options">
+//                 <Icon glyph="Ellipsis" />
+//               </IconButton>
+//             </>
+//           );
+//         },
+//       },
+//     ],
+//     [],
+//   );
 
-  const table = useLeafyGreenTable<KitchenSink>({
-    data,
-    columns,
-  });
+//   const table = useLeafyGreenTable<KitchenSink>({
+//     data,
+//     columns,
+//   });
 
-  const { rows } = table.getRowModel();
+//   const { rows } = table.getRowModel();
 
-  const StyledCell = styled(Cell)`
-    color: grey;
-  ` as typeof Cell;
+//   const StyledCell = styled(Cell)`
+//     color: grey;
+//   ` as typeof Cell;
 
-  // FIXME:
-  // @ts-expect-error - proptypes error. The other components don't have proptypes but should have them
-  const StyledRow = styled(Row)`
-    background: snow;
-  ` as typeof Row;
+//   const StyledRow = styled(Row)`
+//     background: snow;
+//   ` as typeof Row;
 
-  const StyledHeaderRow = styled(HeaderRow)`
-    background: whitesmoke;
-  ` as typeof HeaderRow;
+//   const StyledHeaderRow = styled(HeaderRow)`
+//     background: whitesmoke;
+//   ` as typeof HeaderRow;
 
-  const StyledHeaderCell = styled(HeaderCell)`
-    color: black;
-  ` as typeof HeaderCell;
+//   const StyledHeaderCell = styled(HeaderCell)`
+//     color: black;
+//   ` as typeof HeaderCell;
 
-  const StyledExpandedContent = styled(ExpandedContent)`
-    td > div {
-      background: whitesmoke;
-    }
-  ` as typeof ExpandedContent;
+//   const StyledExpandedContent = styled(ExpandedContent)`
+//     td > div {
+//       background: whitesmoke;
+//     }
+//   ` as typeof ExpandedContent;
 
-  return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
-      <TableHead>
-        {table
-          .getHeaderGroups()
-          .map((headerGroup: HeaderGroup<KitchenSink>) => (
-            <StyledHeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <StyledHeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </StyledHeaderCell>
-                );
-              })}
-            </StyledHeaderRow>
-          ))}
-      </TableHead>
-      <TableBody>
-        {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
-          const isExpandedContent = row.isExpandedContent ?? false;
-          return (
-            <Fragment key={row.id}>
-              {!isExpandedContent && (
-                <StyledRow row={row}>
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      <StyledCell key={cell.id} id={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </StyledCell>
-                    );
-                  })}
-                </StyledRow>
-              )}
-              {isExpandedContent && <StyledExpandedContent row={row} />}
-            </Fragment>
-          );
-        })}
-      </TableBody>
-    </Table>
-  );
-};
+//   return (
+//     <Table
+//       {...args}
+//       table={table}
+//       ref={tableContainerRef}
+//       className={css`
+//         width: 1100px;
+//       `}
+//     >
+//       <TableHead>
+//         {table
+//           .getHeaderGroups()
+//           .map((headerGroup: HeaderGroup<KitchenSink>) => (
+//             <StyledHeaderRow key={headerGroup.id}>
+//               {headerGroup.headers.map(header => {
+//                 return (
+//                   <StyledHeaderCell key={header.id} header={header}>
+//                     {flexRender(
+//                       header.column.columnDef.header,
+//                       header.getContext(),
+//                     )}
+//                   </StyledHeaderCell>
+//                 );
+//               })}
+//             </StyledHeaderRow>
+//           ))}
+//       </TableHead>
+//       <TableBody>
+//         {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
+//           const isExpandedContent = row.isExpandedContent ?? false;
+//           return (
+//             <Fragment key={row.id}>
+//               {!isExpandedContent && (
+//                 <StyledRow row={row}>
+//                   {row.getVisibleCells().map(cell => {
+//                     return (
+//                       <StyledCell key={cell.id} id={cell.id} cell={cell}>
+//                         {flexRender(
+//                           cell.column.columnDef.cell,
+//                           cell.getContext(),
+//                         )}
+//                       </StyledCell>
+//                     );
+//                   })}
+//                 </StyledRow>
+//               )}
+//               {isExpandedContent && <StyledExpandedContent row={row} />}
+//             </Fragment>
+//           );
+//         })}
+//       </TableBody>
+//     </Table>
+//   );
+// };

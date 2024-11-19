@@ -36,6 +36,14 @@ describe('packages/table/TableHead', () => {
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
+
+    test('accepts a ref', () => {
+      const ref = React.createRef<HTMLTableSectionElement>();
+      render(<TableHead ref={ref}>Hello</TableHead>);
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello');
+    });
   });
 
   describe('isSticky prop', () => {
