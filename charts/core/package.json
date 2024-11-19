@@ -25,8 +25,7 @@
     "@leafygreen-ui/typography": "^19.3.0",
     "@lg-tools/storybook-utils": "^0.1.1",
     "echarts": "^5.5.1",
-    "lodash.debounce": "^4.0.8",
-    "react-transition-group": "^4.4.5"
+    "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
