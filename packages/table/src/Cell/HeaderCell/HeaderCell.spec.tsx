@@ -213,6 +213,24 @@ describe('packages/table/HeaderCell', () => {
       expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const StyledHeaderCell = styled(HeaderCell)<StyledProps>`
+        color: ${props => props.color};
+      `;
+
+      const { getByTestId } = render(
+        <StyledHeaderCell data-testid="styled" color="#69ffc6">
+          Some text
+        </StyledHeaderCell>,
+      );
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
   });
 
   // eslint-disable-next-line jest/no-disabled-tests

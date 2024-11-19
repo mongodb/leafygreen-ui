@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
@@ -30,6 +31,39 @@ describe('packages/table/Cell', () => {
       const { container } = renderCell(defaultProps);
       const results = await axe(container);
       expect(results).toHaveNoViolations();
+    });
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const StyledCell = styled(Cell)`
+        color: #69ffc6;
+      `;
+
+      const { getByTestId } = render(
+        <StyledCell data-testid="styled">Some text</StyledCell>,
+      );
+
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const StyledCell = styled(Cell)<StyledProps>`
+        color: ${props => props.color};
+      `;
+
+      const { getByTestId } = render(
+        <StyledCell data-testid="styled" color="#69ffc6">
+          Some text
+        </StyledCell>,
+      );
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });
 
