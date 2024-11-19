@@ -36,8 +36,8 @@ export default {
     tooltipSortDirection: SortDirection.Desc,
     tooltipSortKey: SortKey.Value,
     renderHeader: true,
-    headerLabel: 'LeafyGreen Chart Header',
-    chartCardLabel: 'LeafyGreen ChartCard',
+    headerTitle: 'LeafyGreen Chart Header',
+    chartCardTitle: 'LeafyGreen ChartCard',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -192,18 +192,18 @@ export default {
         category: 'Header',
       },
     },
-    headerLabel: {
+    headerTitle: {
       control: 'text',
-      description: 'Header label',
-      name: 'Label',
+      description: 'Header title',
+      name: 'Title',
       table: {
         category: 'Header',
       },
     },
-    chartCardLabel: {
+    chartCardTitle: {
       control: 'text',
-      description: 'ChartCard label',
-      name: 'Label',
+      description: 'ChartCard title',
+      name: 'Title',
       table: {
         category: 'ChartCard',
       },
@@ -230,8 +230,8 @@ export const LiveExample: StoryObj<{
   tooltipSortKey: TooltipProps['sortKey'];
   tooltipValueFormatter: TooltipProps['valueFormatter'];
   renderHeader: boolean;
-  headerLabel: HeaderProps['label'];
-  chartCardLabel: HeaderProps['label'];
+  headerTitle: HeaderProps['title'];
+  chartCardTitle: HeaderProps['title'];
 }> = {
   render: props => {
     const {
@@ -253,14 +253,14 @@ export const LiveExample: StoryObj<{
       tooltipSortKey,
       tooltipValueFormatter,
       renderHeader,
-      headerLabel,
-      chartCardLabel,
+      headerTitle,
+      chartCardTitle,
     } = props;
 
     const charts = (
       <>
         <Chart>
-          {renderHeader && <Header label={headerLabel} />}
+          {renderHeader && <Header title={headerTitle} />}
           {renderGrid && (
             <Grid
               vertical={verticalGridLines}
@@ -293,7 +293,7 @@ export const LiveExample: StoryObj<{
           ))}
         </Chart>
         <Chart>
-          {renderHeader && <Header label={headerLabel} showDivider />}
+          {renderHeader && <Header title={headerTitle} showDivider />}
           {renderGrid && (
             <Grid
               vertical={verticalGridLines}
@@ -329,7 +329,7 @@ export const LiveExample: StoryObj<{
     );
 
     return groupInChartCard ? (
-      <ChartCard label={chartCardLabel}>{charts}</ChartCard>
+      <ChartCard title={chartCardTitle}>{charts}</ChartCard>
     ) : (
       <>{charts}</>
     );

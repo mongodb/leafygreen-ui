@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { BaseHeader, LabelVariants } from '../BaseHeader';
+import { BaseHeader, TitleVariant } from '../BaseHeader';
 
 import { getHeaderStyles, getWrapperStyles } from './ChartCard.styles';
 import { ChartCardProps } from './ChartCard.types';
@@ -14,19 +14,29 @@ import { ChartCardProps } from './ChartCard.types';
 export function ChartCard({
   children,
   className,
-  label,
+  title,
   headerContent,
   defaultOpen = true,
+  isOpen: isControlledOpen,
+  onToggleButtonClick,
   ...rest
 }: ChartCardProps) {
   const { theme } = useDarkMode();
+  const isControlled = isControlledOpen !== undefined;
 
-  const [collapsed, setCollapsed] = useState(!defaultOpen);
+  const [isOpen, setIsOpen] = useState(isControlledOpen ?? defaultOpen);
   const [height, setHeight] = useState(0);
   const [headerHeight, setHeaderHeight] = useState(0);
 
   const containerRef = useRef<null | HTMLDivElement>(null);
   const headerRef = useRef<null | HTMLDivElement>(null);
+
+  // When the controlled prop changes, update the internal state
+  useEffect(() => {
+    if (isControlled) {
+      setIsOpen(isControlledOpen ?? defaultOpen);
+    }
+  }, [defaultOpen, isControlled, isControlledOpen]);
 
   useEffect(() => {
     if (containerRef.current) {
@@ -43,22 +53,25 @@ export function ChartCard({
       className={cx(
         getWrapperStyles(theme, height, headerHeight),
         className,
-        collapsed && 'collapsed',
+        isOpen && 'open',
       )}
       ref={containerRef}
       {...rest}
     >
       <BaseHeader
-        labelProps={{
-          value: label,
-          variant: LabelVariants.Primary,
+        titleProps={{
+          value: title,
+          variant: TitleVariant.Primary,
         }}
-        collapseButtonProps={{
+        toggleButtonProps={{
           show: true,
-          onClick: (collapsedState: boolean) => {
-            setCollapsed(collapsedState);
+          onClick: (e: MouseEvent<HTMLButtonElement>) => {
+            if (!isControlled) {
+              setIsOpen(currState => !currState);
+            }
+            onToggleButtonClick?.(e);
           },
-          collapsed,
+          isOpen,
         }}
         headerContent={headerContent}
         className={getHeaderStyles()}

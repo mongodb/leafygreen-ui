@@ -1,2 +1,2 @@
 export { BaseHeader } from './BaseHeader';
-export { BaseHeaderProps, LabelVariants } from './BaseHeader.types';
+export { BaseHeaderProps, TitleVariant } from './BaseHeader.types';

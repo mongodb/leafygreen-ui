@@ -1,11 +1,14 @@
 import { BaseHeaderProps } from '../BaseHeader';
 
 export interface HeaderProps
-  extends Omit<BaseHeaderProps, 'labelProps' | 'collapsedButtonProps'> {
+  extends Omit<
+    BaseHeaderProps,
+    'titleProps' | 'collapsedButtonProps' | 'title'
+  > {
   /**
-   * Header label.
+   * The title of the chart
    */
-  label: string;
+  title: string;
 
   /**
    * Whether to display divider line on top of header.

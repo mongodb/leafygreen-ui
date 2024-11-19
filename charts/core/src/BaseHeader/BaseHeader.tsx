@@ -1,4 +1,4 @@
-import React, { ForwardedRef, forwardRef, useState } from 'react';
+import React, { ForwardedRef, forwardRef, MouseEvent, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -12,7 +12,7 @@ import {
   collapseIconStyles,
   getContainerStyles,
 } from './BaseHeader.styles';
-import { BaseHeaderProps, LabelVariants } from './BaseHeader.types';
+import { BaseHeaderProps, TitleVariant } from './BaseHeader.types';
 
 /**
  * Generic header component that will be used by both `Chart` and `ChartCard`.
@@ -20,16 +20,16 @@ import { BaseHeaderProps, LabelVariants } from './BaseHeader.types';
 export const BaseHeader = forwardRef(
   (
     {
-      labelProps,
-      collapseButtonProps,
+      titleProps,
+      toggleButtonProps,
       headerContent,
       className,
       ...rest
     }: BaseHeaderProps,
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
-    const [collapsed, setCollapsed] = useState(
-      collapseButtonProps?.collapsed || false,
+    const [isOpen, setIsOpen] = useState<boolean>(
+      toggleButtonProps?.isOpen || true,
     );
     const { theme } = useDarkMode();
 
@@ -42,31 +42,29 @@ export const BaseHeader = forwardRef(
         {/* Elements left of slotted component */}
         <div className={alignCenterStyles}>
           {/* Collapse button */}
-          {collapseButtonProps?.show && (
+          {toggleButtonProps?.show && (
             <IconButton
               aria-label="Collapse button"
-              onClick={() => {
-                setCollapsed(currentState => {
-                  collapseButtonProps?.onClick?.(!currentState);
-                  return !currentState;
-                });
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
+                setIsOpen(currentState => !currentState);
+                toggleButtonProps?.onClick?.(e);
               }}
             >
               <Icon
                 glyph="ChevronDown"
-                className={cx(collapseIconStyles, collapsed && 'collapsed')}
+                className={cx(collapseIconStyles, isOpen && 'open')}
               />
             </IconButton>
           )}
 
           {/* Label */}
-          {labelProps.variant === LabelVariants.Secondary ? (
+          {titleProps.variant === TitleVariant.Secondary ? (
             <Body weight="regular" baseFontSize={BaseFontSize.Body1}>
-              {labelProps.value}
+              {titleProps.value}
             </Body>
           ) : (
             <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
-              {labelProps.value}
+              {titleProps.value}
             </Body>
           )}
         </div>

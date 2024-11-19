@@ -23,10 +23,10 @@ export const alignCenterStyles = css`
 `;
 
 export const collapseIconStyles = css`
-  transform: rotate(0deg);
+  transform: rotate(-90deg);
   transition: transform ${transitionDuration.slower}ms ease-in-out;
 
-  &.collapsed {
-    transform: rotate(-90deg);
+  &.open {
+    transform: rotate(0deg);
   }
 `;

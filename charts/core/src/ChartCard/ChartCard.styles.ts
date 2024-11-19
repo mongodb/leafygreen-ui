@@ -26,11 +26,11 @@ export const getWrapperStyles = (
   * and the header border when collapsed. By making the container height 1px shorter on collapse
   * we just cutoff the header border entirely.
   */
-  max-height: ${height ? height + 'px' : 'auto'};
+  /* Accounts for 1px border */
+  max-height: ${headerHeight ? headerHeight + 1 + 'px' : 'auto'};
   transition: max-height ${transitionDuration.slower}ms ease-in-out;
-  &.collapsed {
-    /* Accounts for 1px border */
-    max-height: ${headerHeight ? headerHeight + 1 + 'px' : 'auto'};
+  &.open {
+    max-height: ${height ? height + 'px' : 'auto'};
   }
 `;
 

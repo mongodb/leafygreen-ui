@@ -1,29 +1,32 @@
+import { MouseEventHandler } from 'react';
+
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 /**
  * Possible variants for the label in the header.
  */
-export const LabelVariants = {
+export const TitleVariant = {
   Primary: 'primary',
   Secondary: 'secondary',
 } as const;
-type LabelVariants = (typeof LabelVariants)[keyof typeof LabelVariants];
+type TitleVariant = (typeof TitleVariant)[keyof typeof TitleVariant];
+
 export interface BaseHeaderProps extends HTMLElementProps<'div'> {
   /**
-   * Props for the label in the header.
+   * Props for the title of the header.
    */
-  labelProps: {
+  titleProps: {
     value: string;
-    variant?: LabelVariants;
+    variant?: TitleVariant;
   };
 
   /**
    * Props for the collapse button in the header.
    */
-  collapseButtonProps?: {
+  toggleButtonProps?: {
     show?: boolean;
-    onClick?: (collapsedState: boolean) => void;
-    collapsed?: boolean;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
+    isOpen?: boolean;
   };
 
   /**
