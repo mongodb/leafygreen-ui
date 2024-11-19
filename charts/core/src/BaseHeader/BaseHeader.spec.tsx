@@ -13,17 +13,17 @@ describe('@lg-charts/core/src/BaseHeader/BaseHeader', () => {
 
   it('hide "collapse" button by default', () => {
     render(<BaseHeader titleProps={{ value: 'test', variant: 'primary' }} />);
-    expect(screen.queryByLabelText('Collapse button')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Toggle button')).not.toBeInTheDocument();
   });
 
   it('show "collapse" button when "show" is set tot true', () => {
     render(
       <BaseHeader
         titleProps={{ value: 'test', variant: 'primary' }}
-        collapseButtonProps={{ show: true }}
+        toggleButtonProps={{ show: true }}
       />,
     );
-    expect(screen.getByLabelText('Collapse button')).toBeInTheDocument();
+    expect(screen.getByLabelText('Toggle button')).toBeInTheDocument();
   });
 
   it('call correct onClick function when "collapse" button is clicked', async () => {
@@ -31,27 +31,27 @@ describe('@lg-charts/core/src/BaseHeader/BaseHeader', () => {
     render(
       <BaseHeader
         titleProps={{ value: 'test', variant: 'primary' }}
-        collapseButtonProps={{ show: true, onClick }}
+        toggleButtonProps={{ show: true, onClick }}
       />,
     );
     act(() => {
-      screen.getByLabelText('Collapse button').click();
+      screen.getByLabelText('Toggle button').click();
     });
     expect(onClick).toHaveBeenCalled();
   });
 
-  it('call onClick function with current button state when "collapse" button is clicked', () => {
+  it('call onClick function button is clicked', () => {
     const onClick = jest.fn();
     render(
       <BaseHeader
         titleProps={{ value: 'test', variant: 'primary' }}
-        collapseButtonProps={{ show: true, collapsed: true, onClick }}
+        toggleButtonProps={{ show: true, isOpen: true, onClick }}
       />,
     );
     act(() => {
-      screen.getByLabelText('Collapse button').click();
+      screen.getByLabelText('Toggle button').click();
     });
-    expect(onClick).toHaveBeenCalledWith(false);
+    expect(onClick).toHaveBeenCalled();
   });
 
   it('render component passed to headerContent', () => {

@@ -9,8 +9,8 @@ import { Body } from '@leafygreen-ui/typography';
 
 import {
   alignCenterStyles,
-  collapseIconStyles,
   getContainerStyles,
+  toggleIconStyles,
 } from './BaseHeader.styles';
 import { BaseHeaderProps, TitleVariant } from './BaseHeader.types';
 
@@ -44,7 +44,7 @@ export const BaseHeader = forwardRef(
           {/* Collapse button */}
           {toggleButtonProps?.show && (
             <IconButton
-              aria-label="Collapse button"
+              aria-label="Toggle button"
               onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 setIsOpen(currentState => !currentState);
                 toggleButtonProps?.onClick?.(e);
@@ -52,7 +52,7 @@ export const BaseHeader = forwardRef(
             >
               <Icon
                 glyph="ChevronDown"
-                className={cx(collapseIconStyles, isOpen && 'open')}
+                className={cx(toggleIconStyles, isOpen && 'open')}
               />
             </IconButton>
           )}

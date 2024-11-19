@@ -22,7 +22,7 @@ export const alignCenterStyles = css`
   align-items: center;
 `;
 
-export const collapseIconStyles = css`
+export const toggleIconStyles = css`
   transform: rotate(-90deg);
   transition: transform ${transitionDuration.slower}ms ease-in-out;
 
