@@ -107,8 +107,4 @@ describe('packages/table/RowWithoutRT', () => {
       expect(secondRow).toHaveFocus();
     });
   });
-
-  test.todo(
-    'the Row component passes the correct `cellIndex` value to child cells both with and without the `row` prop.',
-  );
 });
