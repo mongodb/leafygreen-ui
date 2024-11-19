@@ -209,10 +209,12 @@ describe('packages/table/HeaderCell', () => {
     );
 
     const mockHeader = result.current;
+    const ref = React.createRef<HTMLTableCellElement>();
 
     <>
       <HeaderCell />
       <HeaderCell align="center" sortState="asc" header={mockHeader} />
+      <HeaderCell ref={ref} />
     </>;
   });
 });
