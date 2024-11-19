@@ -3,6 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
 
+//TODO: why does this not work with background-color?
 export const expandedContentParentStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
     background: ${palette.gray.dark4};
