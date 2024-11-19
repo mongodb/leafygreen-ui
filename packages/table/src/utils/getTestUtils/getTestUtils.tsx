@@ -52,8 +52,10 @@ export const getTestUtils = (
 
   const getAllVisibleRows = () => {
     const allRows = element.querySelectorAll<HTMLTableRowElement>(
-      `[data-lgid=${LGIDS.row}][aria-hidden="false"], [data-lgid=${LGIDS.row}]:not([aria-hidden])`,
+      `[data-lgid=${LGIDS.row}]`,
     );
+
+    console.log({ allRows });
 
     if (!allRows.length)
       throw new Error('Unable to find any visible `tr` elements.');
@@ -106,7 +108,7 @@ export const getTestUtils = (
 
   const getAllVisibleSelectedRows = () => {
     const allRows = element.querySelectorAll<HTMLTableRowElement>(
-      `[data-lgid=${LGIDS.row}][aria-hidden="false"][data-selected="true"]`,
+      `[data-lgid=${LGIDS.row}][data-selected="true"]`,
     );
 
     return Array.from(allRows);
