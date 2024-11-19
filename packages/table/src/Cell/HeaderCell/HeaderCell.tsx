@@ -71,3 +71,5 @@ export const HeaderCell = React.forwardRef(
 ) as HeaderCellComponentType;
 
 export default HeaderCell;
+
+HeaderCell.propTypes = {};

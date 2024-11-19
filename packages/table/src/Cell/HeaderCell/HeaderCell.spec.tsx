@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import styled from '@emotion/styled';
 import { ColumnDef, Header } from '@tanstack/react-table';
 import {
   queryByRole as globalQueryByRole,
@@ -200,7 +201,7 @@ describe('packages/table/HeaderCell', () => {
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
-  test.skip('types behave as expected', () => {
+  describe.skip('types behave as expected', () => {
     const { result } = renderHook(() =>
       useMockTestHeaderData({
         accessorKey: 'id',
