@@ -1,5 +1,4 @@
-// @ts-nocheck - this will be updated in a separate PR
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import useLeafyGreenTable, {
   LeafyGreenTable,
@@ -94,7 +93,7 @@ export interface TestTableWithHookProps {
 }
 
 /**
- * A hook call utilized across different test suites to simplify test `render`s' markup
+ * A useLeafyGreenTable hook call utilized across different test suites to simplify test `render`s' markup
  */
 export const useTestHookCall = ({
   rowProps,
@@ -103,7 +102,6 @@ export const useTestHookCall = ({
   additionalData,
   hasData = true,
 }: TestTableWithHookProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [data] = useState<Array<Person>>(
     hasData
       ? () => getDefaultTestData((rowProps = rowProps ?? {}), additionalData)
@@ -115,7 +113,6 @@ export const useTestHookCall = ({
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table: LeafyGreenTable<Person> = useLeafyGreenTable({
-    containerRef,
     data,
     columns,
     state: {
@@ -129,5 +126,7 @@ export const useTestHookCall = ({
     ...hookProps,
   });
 
-  return { containerRef, table, rowSelection };
+  return { table, rowSelection };
 };
+
+// TODO: useLeafyGreenVirtualTable
