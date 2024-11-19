@@ -4,6 +4,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { expect } from '@storybook/jest';
+import { StoryFn } from '@storybook/react';
 import { within } from '@storybook/testing-library';
 
 import Badge from '@leafygreen-ui/badge';
@@ -25,15 +26,17 @@ import {
   Table,
   TableBody,
   TableHead,
+  TableProps,
   useLeafyGreenTable,
 } from '.';
 
 const meta: StoryMetaType<typeof Table> = {
   title: 'Components/Table/Interactions',
   component: Table,
-  argTypes: {
-    shouldAlternateRowColor: { control: 'boolean' },
-  },
+  // argTypes: {
+  //   shouldAlternateRowColor: { control: 'boolean' },
+  //   darkMode: { control: 'boolean' },
+  // },
   parameters: {
     default: 'Template',
     controls: {
@@ -56,7 +59,9 @@ const meta: StoryMetaType<typeof Table> = {
 };
 export default meta;
 
-const Template = () => {
+type StoryTableProps = TableProps<any>;
+
+const Template: StoryFn<StoryTableProps> = args => {
   const [data] = useState(() => makeKitchenSinkData(50));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
@@ -136,6 +141,7 @@ const Template = () => {
           width: 1100px;
         `}
         data-testid="lg-table"
+        {...args}
       >
         <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -184,7 +190,7 @@ const Template = () => {
 };
 
 export const StickyHeader = {
-  render: () => <Template />,
+  render: (args: StoryTableProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const table = await canvas.findByTestId('lg-table');
