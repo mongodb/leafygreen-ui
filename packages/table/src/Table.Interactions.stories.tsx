@@ -134,7 +134,7 @@ const Template: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
+    <div>
       <Table
         table={table}
         className={css`
@@ -185,7 +185,12 @@ const Template: StoryFn<StoryTableProps> = args => {
           })}
         </TableBody>
       </Table>
-    </>
+      <div
+        className={css`
+          height: 1000px;
+        `}
+      />
+    </div>
   );
 };
 
