@@ -1,6 +1,12 @@
+import {
+  ComponentPropsWithRef,
+  ForwardedRef,
+  PropsWithoutRef,
+  ReactElement,
+  RefAttributes,
+  WeakValidationMap,
+} from 'react';
 import { Header } from '@tanstack/react-table';
-
-import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { LGRowData } from '../../useLeafyGreenTable';
 
@@ -18,11 +24,11 @@ export interface SortStates {
 }
 
 export interface HeaderCellProps<T extends LGRowData>
-  extends HTMLElementProps<'th'> {
+  extends ComponentPropsWithRef<'th'> {
   /**
    * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
    */
-  align?: HTMLElementProps<'th'>['align'];
+  align?: ComponentPropsWithRef<'th'>['align'];
   /**
    * Determines the current sorting direction.
    */
@@ -35,4 +41,24 @@ export interface HeaderCellProps<T extends LGRowData>
    * Index of the HeaderCell set internally in HeaderRow
    */
   cellIndex?: number;
+}
+
+// https://stackoverflow.com/a/58473012
+// React.forwardRef can only work with plain function types.
+// This is an interface that restores the original function signature to work with generics.
+/**
+ * The HeaderCellComponentType that restores the original function signature to work with generics.
+ *
+ */
+export interface HeaderCellComponentType {
+  <T extends LGRowData>(
+    props: HeaderCellProps<T>,
+    ref: ForwardedRef<HTMLTableCellElement>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?:
+    | WeakValidationMap<
+        PropsWithoutRef<HeaderCellProps<LGRowData> & RefAttributes<any>>
+      >
+    | undefined;
 }

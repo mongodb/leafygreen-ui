@@ -167,58 +167,56 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <>
-      <Table
-        {...args}
-        table={table}
-        ref={tableContainerRef}
-        className={css`
-          width: 1100px;
-        `}
-      >
-        <TableHead isSticky>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            const isExpandedContent = row.isExpandedContent ?? false;
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
+      <TableHead isSticky>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.isExpandedContent ?? false;
 
-            return (
-              <Fragment key={row.id}>
-                {!isExpandedContent && (
-                  <Row row={row}>
-                    {row.getVisibleCells().map(cell => {
-                      return (
-                        <Cell key={cell.id} id={cell.id} cell={cell}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                )}
-                {isExpandedContent && <ExpandedContent row={row} />}
-              </Fragment>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </>
+          return (
+            <Fragment key={row.id}>
+              {!isExpandedContent && (
+                <Row row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id} id={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              )}
+              {isExpandedContent && <ExpandedContent row={row} />}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -302,68 +300,56 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <div>
-      <div
-        className={css`
-          height: 50px;
-        `}
-      />
-      <Table
-        {...args}
-        table={table}
-        ref={tableContainerRef}
-        className={css`
-          width: 1100px;
-        `}
-      >
-        <TableHead isSticky>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            const isExpandedContent = row.isExpandedContent ?? false;
+    <Table
+      {...args}
+      table={table}
+      ref={tableContainerRef}
+      className={css`
+        width: 1100px;
+      `}
+    >
+      <TableHead isSticky>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.isExpandedContent ?? false;
 
-            return (
-              <Fragment key={row.id}>
-                {!isExpandedContent && (
-                  <Row row={row}>
-                    {row.getVisibleCells().map(cell => {
-                      return (
-                        <Cell key={cell.id} id={cell.id} cell={cell}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                )}
-                {isExpandedContent && <ExpandedContent row={row} />}
-              </Fragment>
-            );
-          })}
-        </TableBody>
-      </Table>
-      <div
-        className={css`
-          height: 2000px;
-        `}
-      />
-    </div>
+          return (
+            <Fragment key={row.id}>
+              {!isExpandedContent && (
+                <Row row={row}>
+                  {row.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id} id={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              )}
+              {isExpandedContent && <ExpandedContent row={row} />}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
   );
 };
 
@@ -1070,7 +1056,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
 //   const tableContainerRef = React.useRef<HTMLDivElement>(null);
 //   const [data] = useState(() => makeKitchenSinkData(5));
 
-//   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+//   const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
 //     () => [
 //       {
 //         accessorKey: 'dateCreated',
@@ -1132,7 +1118,7 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
 //     [],
 //   );
 
-//   const table = useLeafyGreenTable<any>({
+//   const table = useLeafyGreenTable<KitchenSink>({
 //     data,
 //     columns,
 //   });
@@ -1141,23 +1127,27 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
 
 // FIXME:
 // proptypes error. The other components don't have proptypes but should have them
-// const StyledRow = styled(Row)`
-//   background: snow;
-// ` as typeof Row;
+//   const StyledCell = styled(Cell)`
+//     color: grey;
+//   ` as typeof Cell;
 
-// const StyledHeaderRow = styled(HeaderRow)`
-//   background: whitesmoke;
-// ` as typeof HeaderRow;
+//   const StyledRow = styled(Row)`
+//     background: snow;
+//   ` as typeof Row;
 
-// const StyledHeaderCell = styled(HeaderCell)`
-//   color: black;
-// ` as typeof HeaderCell;
-
-// const StyledExpandedContent = styled(ExpandedContent)`
-//   td > div {
+//   const StyledHeaderRow = styled(HeaderRow)`
 //     background: whitesmoke;
-//   }
-// ` as typeof ExpandedContent;
+//   ` as typeof HeaderRow;
+
+//   const StyledHeaderCell = styled(HeaderCell)`
+//     color: black;
+//   ` as typeof HeaderCell;
+
+//   const StyledExpandedContent = styled(ExpandedContent)`
+//     td > div {
+//       background: whitesmoke;
+//     }
+//   ` as typeof ExpandedContent;
 
 //   return (
 //     <Table
@@ -1169,23 +1159,25 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
 //       `}
 //     >
 //       <TableHead>
-//         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-//           <StyledHeaderRow key={headerGroup.id}>
-//             {headerGroup.headers.map(header => {
-//               return (
-//                 <StyledHeaderCell key={header.id} header={header}>
-//                   {flexRender(
-//                     header.column.columnDef.header,
-//                     header.getContext(),
-//                   )}
-//                 </StyledHeaderCell>
-//               );
-//             })}
-//           </StyledHeaderRow>
-//         ))}
+//         {table
+//           .getHeaderGroups()
+//           .map((headerGroup: HeaderGroup<KitchenSink>) => (
+//             <StyledHeaderRow key={headerGroup.id}>
+//               {headerGroup.headers.map(header => {
+//                 return (
+//                   <StyledHeaderCell key={header.id} header={header}>
+//                     {flexRender(
+//                       header.column.columnDef.header,
+//                       header.getContext(),
+//                     )}
+//                   </StyledHeaderCell>
+//                 );
+//               })}
+//             </StyledHeaderRow>
+//           ))}
 //       </TableHead>
 //       <TableBody>
-//         {rows.map((row: LeafyGreenTableRow<Person>) => {
+//         {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
 //           const isExpandedContent = row.isExpandedContent ?? false;
 //           return (
 //             <Fragment key={row.id}>
