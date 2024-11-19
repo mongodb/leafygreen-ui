@@ -200,6 +200,21 @@ describe('packages/table/HeaderCell', () => {
     expect(ref.current!.textContent).toBe('Hello');
   });
 
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const StyledHeaderCell = styled(HeaderCell)`
+        color: #69ffc6;
+      `;
+
+      const { getByTestId } = render(
+        <StyledHeaderCell data-testid="styled">Some text</StyledHeaderCell>,
+      );
+
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('types behave as expected', () => {
     const { result } = renderHook(() =>

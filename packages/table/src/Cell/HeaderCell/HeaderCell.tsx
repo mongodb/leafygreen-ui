@@ -1,4 +1,5 @@
 import React, { ForwardedRef, PropsWithChildren } from 'react';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -12,7 +13,11 @@ import {
   getBaseHeaderCellStyles,
   getHeaderCellContentStyles,
 } from './HeaderCell.styles';
-import { HeaderCellComponentType, HeaderCellProps } from './HeaderCell.types';
+import {
+  HeaderCellComponentType,
+  HeaderCellProps,
+  SortState,
+} from './HeaderCell.types';
 
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.
@@ -72,4 +77,7 @@ export const HeaderCell = React.forwardRef(
 
 export default HeaderCell;
 
-HeaderCell.propTypes = {};
+HeaderCell.propTypes = {
+  sortState: PropTypes.oneOf(Object.values(SortState)),
+  header: PropTypes.object,
+} as any; // avoid inferred types from interfering;
