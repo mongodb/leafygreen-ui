@@ -124,7 +124,6 @@ describe('packages/table/Cell', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('types behave as expected', () => {
     const { result } = renderHook(() => useMockTestCellData());
-
     const mockCell = result.current;
     const ref = React.createRef<HTMLTableCellElement>();
 
