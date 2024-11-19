@@ -3,7 +3,15 @@ import styled from '@emotion/styled';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
 import { RowContextProvider } from '../Row/RowContext';
+import useLeafyGreenTable, { LeafyGreenTableCell } from '../useLeafyGreenTable';
+import { Person } from '../utils/makeData.testutils';
+import {
+  getDefaultTestColumns,
+  getDefaultTestData,
+} from '../utils/testHookCalls.testutils';
 
 import { Cell, CellProps } from '.';
 
@@ -11,6 +19,17 @@ const onScroll = jest.fn();
 
 const defaultProps: CellProps<unknown> = {
   onScroll,
+};
+
+/** Returns the first Cell from the first Row */
+const useMockTestCellData = (): LeafyGreenTableCell<Person> => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const table = useLeafyGreenTable({
+    data: getDefaultTestData({}),
+    columns: getDefaultTestColumns({}),
+  });
+
+  return table.getRowModel().rows[0].getVisibleCells()[0];
 };
 
 function renderCell(props: CellProps<unknown>) {
@@ -78,12 +97,8 @@ describe('packages/table/Cell', () => {
 
     test('RT cell', () => {
       const ref = React.createRef<HTMLTableCellElement>();
-      const cellObj = {
-        id: '1',
-        column: {
-          getIsFirstColumn: () => false,
-        },
-      };
+      const { result } = renderHook(() => useMockTestCellData());
+      const mockCell = result.current;
 
       const providerValue = {
         getIsExpanded: () => false,
@@ -95,8 +110,7 @@ describe('packages/table/Cell', () => {
 
       render(
         <RowContextProvider {...providerValue}>
-          {/* @ts-expect-error - dummy cell data is missing properties */}
-          <Cell cell={cellObj} ref={ref}>
+          <Cell cell={mockCell} ref={ref}>
             Hello RT
           </Cell>
         </RowContextProvider>,
@@ -105,5 +119,19 @@ describe('packages/table/Cell', () => {
       expect(ref.current).toBeInTheDocument();
       expect(ref.current!.textContent).toBe('Hello RT');
     });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const { result } = renderHook(() => useMockTestCellData());
+
+    const mockCell = result.current;
+    const ref = React.createRef<HTMLTableCellElement>();
+
+    <>
+      <Cell />
+      <Cell align="center" contentClassName="hey" cell={mockCell} />
+      <Cell ref={ref} />
+    </>;
   });
 });
