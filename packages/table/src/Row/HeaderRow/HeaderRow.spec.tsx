@@ -24,4 +24,12 @@ describe('packages/table/HeaderRow', () => {
       expect(results).toHaveNoViolations();
     });
   });
+
+  test('accepts a ref', () => {
+    const ref = React.createRef<HTMLTableRowElement>();
+    render(<HeaderRow ref={ref}>Hello</HeaderRow>);
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
+  });
 });
