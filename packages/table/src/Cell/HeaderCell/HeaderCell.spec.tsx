@@ -198,4 +198,21 @@ describe('packages/table/HeaderCell', () => {
     expect(ref.current).toBeInTheDocument();
     expect(ref.current!.textContent).toBe('Hello');
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('types behave as expected', () => {
+    const { result } = renderHook(() =>
+      useMockTestHeaderData({
+        accessorKey: 'id',
+        size: 700,
+      }),
+    );
+
+    const mockHeader = result.current;
+
+    <>
+      <HeaderCell />
+      <HeaderCell align="center" sortState="asc" header={mockHeader} />
+    </>;
+  });
 });

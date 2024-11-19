@@ -37,10 +37,6 @@ export interface HeaderCellProps<T extends LGRowData>
    * Header object passed from the `useLeafyGreenTable` hook.
    */
   header?: Header<T, unknown>;
-  /**
-   * Index of the HeaderCell set internally in HeaderRow
-   */
-  cellIndex?: number;
 }
 
 // https://stackoverflow.com/a/58473012

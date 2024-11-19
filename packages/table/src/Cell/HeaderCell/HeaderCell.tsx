@@ -21,7 +21,6 @@ const HeaderCellWithRef = <T extends LGRowData>(
   {
     children,
     className,
-    cellIndex,
     header,
     align,
     ...rest
