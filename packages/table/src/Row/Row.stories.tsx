@@ -10,6 +10,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
@@ -82,8 +83,18 @@ const meta: StoryMetaType<typeof Row> = {
             >
               <TableBody>
                 <Instance>
-                  <Cell style={{ width: '60px' }}>1</Cell>
-                  <Cell style={{ width: '200px' }}>
+                  <Cell
+                    className={css`
+                      width: 60px;
+                    `}
+                  >
+                    1
+                  </Cell>
+                  <Cell
+                    className={css`
+                      width: 200px;
+                    `}
+                  >
                     Est mollitia laborum dolores dolorem corporis explicabo
                     nobis enim omnis. Minima excepturi accusantium iure culpa.
                   </Cell>
