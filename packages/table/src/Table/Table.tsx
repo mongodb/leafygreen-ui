@@ -17,7 +17,7 @@ import {
   getTableStyles,
   tableClassName,
 } from './Table.styles';
-import { TableProps } from './Table.types';
+import { TableProps, VerticalAlignment } from './Table.types';
 
 // Inferred generic type from component gets used in place of `any`
 const Table = forwardRef<HTMLDivElement, TableProps<any>>(
@@ -26,7 +26,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       table,
       children,
       className,
-      verticalAlignment = 'top',
+      verticalAlignment = VerticalAlignment.Top,
       shouldAlternateRowColor = false,
       shouldTruncate = true,
       baseFontSize: baseFontSizeProp,

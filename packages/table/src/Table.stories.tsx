@@ -12,6 +12,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
+import { VerticalAlignment } from './Table/Table.types';
 import {
   makeData,
   makeKitchenSinkData,
@@ -42,9 +43,18 @@ const meta: StoryMetaType<typeof Table> = {
   title: 'Components/Table',
   component: Table,
   argTypes: {
-    shouldAlternateRowColor: { control: 'boolean' },
-    shouldTruncate: { control: 'boolean' },
-    verticalAlignment: { control: 'boolean' },
+    shouldAlternateRowColor: { control: 'boolean', defaultValue: false },
+    shouldTruncate: { control: 'boolean', defaultValue: true },
+    verticalAlignment: {
+      control: { type: 'radio' },
+      options: VerticalAlignment,
+      defaultValue: VerticalAlignment.Top,
+    },
+  },
+  args: {
+    verticalAlignment: VerticalAlignment.Top,
+    shouldTruncate: true,
+    shouldAlternateRowColor: false,
   },
   parameters: {
     default: 'LiveExample',
@@ -222,12 +232,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   );
 };
 
-LiveExample.argTypes = {
-  shouldAlternateRowColor: {
-    control: 'none',
-  },
-};
-
 export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(500));
@@ -353,12 +357,6 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
       </TableBody>
     </Table>
   );
-};
-
-HundredsOfRows.argTypes = {
-  shouldAlternateRowColor: {
-    control: 'none',
-  },
 };
 
 HundredsOfRows.parameters = {
