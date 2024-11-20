@@ -270,7 +270,7 @@ DisabledClickableRows.args = {
 
 export const DisabledSelectableRows: StoryFn<
   RowProps<Person> & DarkModeProps
-> = ({ darkMode, ...args }) => {
+> = ({ darkMode, ...args }: DarkModeProps & RowProps<Person>) => {
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
