@@ -114,10 +114,15 @@ DisabledRows.args = {
   disabled: true,
 };
 
-export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
+export const DisabledNestedRows: StoryFn<RowProps<Person> & DarkModeProps> = ({
+  row,
+  ...rest
+}) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
+  console.log({ rest });
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
@@ -241,8 +246,7 @@ DisabledClickableRows.args = {
 
 export const DisabledSelectableRows: StoryFn<
   RowProps<Person> & DarkModeProps
-> = ({ darkMode, ...args }: DarkModeProps & RowProps<Person>) => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+> = ({ row, ...rest }) => {
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -293,7 +297,7 @@ export const DisabledSelectableRows: StoryFn<
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
-    enableRowSelection: !args.disabled,
+    enableRowSelection: !rest.disabled,
     hasSelectableRows: true,
   });
 
@@ -323,12 +327,7 @@ export const DisabledSelectableRows: StoryFn<
         </Button>
       </div>
 
-      <Table
-        darkMode={darkMode}
-        table={table}
-        ref={tableContainerRef}
-        data-total-rows={table.getRowModel().rows.length}
-      >
+      <Table table={table} data-total-rows={table.getRowModel().rows.length}>
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -348,7 +347,7 @@ export const DisabledSelectableRows: StoryFn<
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
             return (
-              <Row key={row.id} row={row} {...args}>
+              <Row key={row.id} row={row} {...rest}>
                 {row.getVisibleCells().map(cell => {
                   return (
                     <Cell key={cell.id} cell={cell}>
@@ -367,8 +366,8 @@ export const DisabledSelectableRows: StoryFn<
     </div>
   );
 };
-DisabledSelectableRows.argTypes = {
-  darkMode: storybookArgTypes.darkMode,
+DisabledSelectableRows.args = {
+  disabled: true,
 };
 
 export const Generated = () => <></>;

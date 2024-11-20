@@ -619,9 +619,11 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
-export const NoTruncation: StoryFn<StoryTableProps> = args => {
+export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(10_000));
+
+  console.log({ args });
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -667,14 +669,7 @@ export const NoTruncation: StoryFn<StoryTableProps> = args => {
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
-            <div
-            // style={{
-            //   height: '40px',
-            //   display: 'flex',
-            //   width: '125px',
-            //   objectFit: 'contain',
-            // }}
-            >
+            <div>
               <IconButton aria-label="Download">
                 <Icon glyph="Download" />
               </IconButton>
@@ -710,7 +705,6 @@ export const NoTruncation: StoryFn<StoryTableProps> = args => {
         table={table}
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
-        shouldTruncate={false}
       >
         <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -770,4 +764,9 @@ export const NoTruncation: StoryFn<StoryTableProps> = args => {
       </Table>
     </>
   );
+};
+
+export const NoTruncation = WithLeafyGreenComponents.bind({});
+NoTruncation.args = {
+  shouldTruncate: false,
 };
