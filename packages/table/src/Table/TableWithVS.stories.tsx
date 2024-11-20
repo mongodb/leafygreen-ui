@@ -619,7 +619,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
-export const DifferentHeights: StoryFn<StoryTableProps> = args => {
+export const NoTruncation: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(10_000));
 

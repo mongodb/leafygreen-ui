@@ -92,7 +92,7 @@ export const cellInnerStyles = css`
 `;
 
 export const getCellEllipsisStyles = (shouldTruncate: boolean) =>
-  cx(css``, {
+  cx({
     [css`
       flex: 1;
       overflow: hidden;

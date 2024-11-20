@@ -365,6 +365,11 @@ HundredsOfRows.parameters = {
   },
 };
 
+export const NoTruncation = LiveExample.bind({});
+NoTruncation.args = {
+  shouldTruncate: false,
+};
+
 export const Basic = Template.bind({});
 
 export const ZebraStripes = Template.bind({});
