@@ -623,8 +623,6 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(10_000));
 
-  console.log({ args });
-
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {

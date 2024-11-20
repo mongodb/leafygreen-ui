@@ -3,7 +3,6 @@
 /* eslint-disable react/prop-types*/
 import React from 'react';
 import {
-  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
@@ -33,8 +32,6 @@ import {
   RowProps,
 } from '..';
 
-// TODO: UPDATE ME
-
 const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
@@ -61,18 +58,35 @@ const meta: StoryMetaType<typeof Row> = {
       combineArgs: {
         darkMode: [false, true],
         disabled: [false, true],
+        // @ts-ignore - this is a table prop
+        shouldTruncate: [false, true],
+        verticalAlignment: ['top', 'center'],
       },
-      args: {
-        children: makeData(false, 1).map(rowData =>
-          Object.values(rowData).map(c => <Cell>{c}</Cell>),
-        ),
-      },
+      excludeCombinations: [
+        {
+          // @ts-ignore - this is a table prop
+          shouldTruncate: true,
+          verticalAlignment: 'center',
+        },
+      ],
       decorator: (Instance, ctx) => {
         return (
           <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-            <Table>
+            <Table
+              shouldTruncate={ctx?.args.shouldTruncate}
+              verticalAlignment={ctx?.args.verticalAlignment}
+            >
               <TableBody>
-                <Instance />
+                <Instance>
+                  <Cell style={{ width: '60px' }}>1</Cell>
+                  <Cell style={{ width: '200px' }}>
+                    Est mollitia laborum dolores dolorem corporis explicabo
+                    nobis enim omnis. Minima excepturi accusantium iure culpa.
+                  </Cell>
+                  <Cell>MongoDB</Cell>
+                  <Cell>7.85</Cell>
+                  <Cell>Complicated</Cell>
+                </Instance>
               </TableBody>
             </Table>
           </LeafyGreenProvider>
@@ -121,8 +135,6 @@ export const DisabledNestedRows: StoryFn<RowProps<Person> & DarkModeProps> = ({
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
-
-  console.log({ rest });
 
   const columns = React.useMemo<Array<ColumnDef<Person>>>(
     () => [
