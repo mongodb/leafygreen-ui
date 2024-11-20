@@ -1,21 +1,33 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { axe } from 'jest-axe';
 
 import { Header } from './Header';
 
+const defaultContentTestId = 'header-content';
+
+const defaultProps = {
+  title: 'test',
+  headerContent: <div data-testid={defaultContentTestId}></div>,
+};
+
+const renderHeader = () => render(<Header {...defaultProps} />);
+
 describe('@lg-charts/core/src/Header/Header', () => {
-  it('should display title value', () => {
-    render(<Header title="test" />);
-    expect(screen.getByText('test')).toBeInTheDocument();
+  test('does not have basic accessibility issues', async () => {
+    const { container } = renderHeader();
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 
-  it('render component passed to headerContent', () => {
-    render(
-      <Header
-        title="test"
-        headerContent={<input type="text" data-testid="my-input" />}
-      />,
-    );
-    expect(screen.getByTestId('my-input')).toBeInTheDocument();
+  test('should display title value', () => {
+    renderHeader();
+    expect(screen.getByText(defaultProps.title)).toBeInTheDocument();
+  });
+
+  test('render component passed to headerContent', () => {
+    renderHeader();
+    expect(screen.getByTestId(defaultContentTestId)).toBeInTheDocument();
   });
 });

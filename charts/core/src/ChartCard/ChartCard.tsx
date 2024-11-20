@@ -1,6 +1,7 @@
 import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -39,6 +40,11 @@ export function ChartCard({
   const containerRef = useRef<null | HTMLDivElement>(null);
   const headerRef = useRef<null | HTMLDivElement>(null);
 
+  const toggleId = useIdAllocator({ prefix: 'expandable-chart-card-toggle' });
+  const childrenId = useIdAllocator({
+    prefix: 'expandable-chart-card-content',
+  });
+
   // When the controlled prop changes, update the internal state
   useEffect(() => {
     if (isControlled) {
@@ -74,7 +80,10 @@ export function ChartCard({
         <div className={leftInnerContainerStyles}>
           <IconButton
             className={toggleButtonStyles}
+            id={toggleId}
             aria-label="Toggle button"
+            aria-controls={childrenId}
+            aria-expanded={isOpen}
             onClick={(e: MouseEvent<HTMLButtonElement>) => {
               if (!isControlled) {
                 setIsOpen(currState => !currState);
@@ -93,7 +102,17 @@ export function ChartCard({
         </div>
         <div>{headerContent}</div>
       </div>
-      {children}
+      <div style={{ overflow: 'hidden' }}>
+        <div
+          role="region"
+          id={childrenId}
+          aria-labelledby={toggleId}
+          aria-hidden={!isOpen}
+          data-testid="chart-card-children"
+        >
+          {children}
+        </div>
+      </div>
     </div>
   );
 }
