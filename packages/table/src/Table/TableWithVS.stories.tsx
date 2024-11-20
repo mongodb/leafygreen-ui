@@ -59,7 +59,6 @@ export default meta;
 
 const virtualScrollingContainerHeight = css`
   max-height: calc(100vh - 200px);
-  /* height: calc(100vh - 200px); */
 `;
 
 const basicColumnDefs: Array<LGColumnDef<Person>> = [
@@ -617,17 +616,17 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
             month: 'short',
             day: 'numeric',
           }),
-        size: 200,
+        size: 180,
       },
       {
         accessorKey: 'frequency',
         header: 'Frequency',
         align: 'center',
+        size: 140,
       },
       {
         accessorKey: 'clusterType',
         header: 'Cluster Type',
-        size: 200,
       },
       {
         accessorKey: 'encryptorEnabled',
