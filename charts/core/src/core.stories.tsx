@@ -48,14 +48,6 @@ export default {
         category: 'Chart',
       },
     },
-    groupInChartCard: {
-      control: 'boolean',
-      description: 'Group in ChartCard',
-      name: 'GroupInChartCard',
-      table: {
-        category: 'ChartCard',
-      },
-    },
     verticalGridLines: {
       control: 'boolean',
       description: 'Show vertical grid lines',
@@ -213,7 +205,6 @@ export default {
 
 export const LiveExample: StoryObj<{
   data: Array<LineProps>;
-  groupInChartCard: boolean;
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -236,7 +227,6 @@ export const LiveExample: StoryObj<{
   render: props => {
     const {
       data,
-      groupInChartCard,
       verticalGridLines,
       horizontalGridLines,
       renderGrid,
@@ -257,8 +247,8 @@ export const LiveExample: StoryObj<{
       chartCardTitle,
     } = props;
 
-    const charts = (
-      <>
+    return (
+      <ChartCard title={chartCardTitle}>
         <Chart>
           {renderHeader && <Header title={headerTitle} />}
           {renderGrid && (
@@ -325,13 +315,7 @@ export const LiveExample: StoryObj<{
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-      </>
-    );
-
-    return groupInChartCard ? (
-      <ChartCard title={chartCardTitle}>{charts}</ChartCard>
-    ) : (
-      <>{charts}</>
+      </ChartCard>
     );
   },
 };
