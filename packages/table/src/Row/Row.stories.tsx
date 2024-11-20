@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types*/
 import React from 'react';
 import {
+  storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
@@ -36,15 +37,18 @@ const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
   argTypes: {
-    virtualRow: { control: 'none' },
-    row: { control: 'none' },
-    className: { control: 'none' },
     disabled: { control: 'boolean' },
   },
   parameters: {
     default: null,
     controls: {
-      exclude: [...storybookExcludedControlParams, 'ref', 'children'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'ref',
+        'children',
+        'row',
+        'virtualRow',
+      ],
     },
     chromatic: {
       disableSnapshot: true,
@@ -258,7 +262,7 @@ DisabledClickableRows.args = {
 
 export const DisabledSelectableRows: StoryFn<
   RowProps<Person> & DarkModeProps
-> = ({ row, ...rest }) => {
+> = ({ darkMode, ...args }) => {
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -309,7 +313,7 @@ export const DisabledSelectableRows: StoryFn<
       rowSelection,
     },
     onRowSelectionChange: setRowSelection,
-    enableRowSelection: !rest.disabled,
+    enableRowSelection: !args.disabled,
     hasSelectableRows: true,
   });
 
@@ -339,7 +343,11 @@ export const DisabledSelectableRows: StoryFn<
         </Button>
       </div>
 
-      <Table table={table} data-total-rows={table.getRowModel().rows.length}>
+      <Table
+        darkMode={darkMode}
+        table={table}
+        data-total-rows={table.getRowModel().rows.length}
+      >
         <TableHead>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
             <HeaderRow key={headerGroup.id}>
@@ -359,7 +367,7 @@ export const DisabledSelectableRows: StoryFn<
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
             return (
-              <Row key={row.id} row={row} {...rest}>
+              <Row key={row.id} row={row} {...args}>
                 {row.getVisibleCells().map(cell => {
                   return (
                     <Cell key={cell.id} cell={cell}>
@@ -378,6 +386,10 @@ export const DisabledSelectableRows: StoryFn<
     </div>
   );
 };
+DisabledSelectableRows.argTypes = {
+  darkMode: storybookArgTypes.darkMode,
+};
+
 DisabledSelectableRows.args = {
   disabled: true,
 };
