@@ -24,7 +24,6 @@ export default {
   component: Chart,
   args: {
     data: makeLineData(10),
-    groupInChartCard: true,
     horizontalGridLines: true,
     verticalGridLines: false,
     renderGrid: true,
