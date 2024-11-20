@@ -2,7 +2,7 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum c311217e6a22a0b5511d7bc07c19199d
+* @checksum eb576996eb9cb65c1ff71978e9c44980
 */
 import * as React from "react";
 import PropTypes from 'prop-types';
