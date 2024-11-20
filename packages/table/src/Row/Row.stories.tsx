@@ -132,10 +132,7 @@ DisabledRows.args = {
   disabled: true,
 };
 
-export const DisabledNestedRows: StoryFn<RowProps<Person> & DarkModeProps> = ({
-  row,
-  ...rest
-}) => {
+export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100, 5, 3))[0];
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
