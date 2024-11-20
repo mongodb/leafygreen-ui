@@ -34,6 +34,7 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
   }: InternalRowWithRTProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
 ) => {
+  // We need to use the virtualRow index instead of nth-of-type because the rows are not static
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
   const isExpandable = row.getCanExpand();
