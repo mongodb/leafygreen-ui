@@ -111,10 +111,6 @@ describe('packages/Icon/glyphs/', () => {
       const rootGlyphObject: SVGNodeObject = toJson(svg, { object: true });
 
       function validateGlyphObject(obj: SVGNodeObject) {
-        if (getBaseName(glyphPath) === 'Revert') {
-          console.log(obj);
-        }
-
         Object.keys(obj).forEach(key => {
           const currentValue = obj[key];
 
@@ -129,7 +125,7 @@ describe('packages/Icon/glyphs/', () => {
       }
 
       // eslint-disable-next-line jest/expect-expect
-      test.only('all fills used in SVG files are "none", "black", "#000", or "#000000"', () => {
+      test('all fills used in SVG files are "none", "black", "#000", or "#000000"', () => {
         validateGlyphObject(rootGlyphObject);
       });
     });
