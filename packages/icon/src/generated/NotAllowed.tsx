@@ -1,7 +1,7 @@
 /**
 * This is a generated file. Do not modify it manually.
 *
-* @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
+* @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
 * @checksum 2b95131915b89504e60afd799eb56e38
 */
 import * as React from "react";
