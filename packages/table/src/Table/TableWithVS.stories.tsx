@@ -701,6 +701,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
                       className={css`
                         ${index === 2 &&
                         css`
+                          // This overrides the default width of 150px and makes the 3rd column responsive
                           width: auto;
                         `}
                       `}
