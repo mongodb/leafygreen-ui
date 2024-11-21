@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 13.1.1
+
+### Patch Changes
+
+- bca3969cf: Removes incorrect `setSelectedd` prop. `setSelected` is the correct prop.
+
 ## 13.1.0
 
 ### Minor Changes
