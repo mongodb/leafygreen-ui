@@ -11,8 +11,10 @@ import { Body } from '@leafygreen-ui/typography';
 import {
   childrenContainerStyles,
   getContainerStyles,
-  getHeaderStyles,
+  headerStyles,
   leftInnerContainerStyles,
+  openContainerStyles,
+  openToggleIconStyles,
   toggleButtonStyles,
   toggleIconStyles,
 } from './ChartCard.styles';
@@ -62,12 +64,12 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
     return (
       <div
         className={cx(getContainerStyles(theme), className, {
-          ['open']: isOpen,
+          [openContainerStyles]: isOpen,
         })}
         ref={forwardedRef}
         {...rest}
       >
-        <div className={cx(getHeaderStyles(theme), className)} {...rest}>
+        <div className={cx(headerStyles, className)} {...rest}>
           <div className={leftInnerContainerStyles}>
             <IconButton
               className={toggleButtonStyles}
@@ -79,7 +81,9 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
             >
               <Icon
                 glyph="ChevronDown"
-                className={cx(toggleIconStyles, isOpen && 'open')}
+                className={cx(toggleIconStyles, {
+                  [openToggleIconStyles]: isOpen,
+                })}
               />
             </IconButton>
             <Body weight="medium" baseFontSize={BaseFontSize.Body2}>

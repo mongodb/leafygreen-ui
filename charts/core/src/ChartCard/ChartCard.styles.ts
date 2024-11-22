@@ -18,13 +18,13 @@ export const getContainerStyles = (theme: Theme) => css`
   display: grid;
   grid-template-rows: 40px 0fr;
   transition: grid-template-rows ${transitionDuration.slower}ms ease-in-out;
-
-  &.open {
-    grid-template-rows: 40px 1fr;
-  }
 `;
 
-export const getHeaderStyles = (theme: Theme) => css`
+export const openContainerStyles = css`
+  grid-template-rows: 40px 1fr;
+`;
+
+export const headerStyles = css`
   width: 100%;
   padding: ${spacing[150]}px ${spacing[300]}px;
   display: grid;
@@ -42,10 +42,10 @@ export const toggleButtonStyles = css`
 export const toggleIconStyles = css`
   transform: rotate(-90deg);
   transition: transform ${transitionDuration.slower}ms ease-in-out;
+`;
 
-  &.open {
-    transform: rotate(0deg);
-  }
+export const openToggleIconStyles = css`
+  transform: rotate(0deg);
 `;
 
 export const leftInnerContainerStyles = css`
