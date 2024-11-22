@@ -17,19 +17,20 @@ import {
   getTableStyles,
   tableClassName,
 } from './Table.styles';
-import { TableProps } from './Table.types';
+import { TableProps, VerticalAlignment } from './Table.types';
 
 // Inferred generic type from component gets used in place of `any`
 const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   <T extends LGRowData>(
     {
+      table,
       children,
       className,
+      verticalAlignment = VerticalAlignment.Top,
       shouldAlternateRowColor = false,
       shouldTruncate = true,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
-      table,
       'data-lgid': lgidProp = LGIDS.root,
       ...rest
     }: TableProps<T>,
@@ -67,6 +68,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           isSelectable={isSelectable}
           shouldTruncate={shouldTruncate}
           virtualTable={virtualTable}
+          verticalAlignment={verticalAlignment}
         >
           <table
             className={cx(tableClassName, getTableStyles(theme, baseFontSize))}

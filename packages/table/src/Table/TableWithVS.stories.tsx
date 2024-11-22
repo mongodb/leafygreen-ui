@@ -1,6 +1,10 @@
 import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
@@ -34,6 +38,8 @@ import {
   useLeafyGreenVirtualTable,
 } from '..';
 
+import { VerticalAlignment } from './Table.types';
+
 type StoryTableProps = TableProps<unknown>;
 
 const meta: StoryMetaType<typeof Table> = {
@@ -43,11 +49,26 @@ const meta: StoryMetaType<typeof Table> = {
     children: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
+    shouldAlternateRowColor: { control: 'boolean', defaultValue: false },
+    shouldTruncate: { control: 'boolean', defaultValue: true },
+    verticalAlignment: {
+      control: { type: 'radio' },
+      options: VerticalAlignment,
+      defaultValue: VerticalAlignment.Top,
+    },
+  },
+  args: {
+    verticalAlignment: VerticalAlignment.Top,
+    shouldTruncate: true,
+    shouldAlternateRowColor: false,
   },
   parameters: {
     default: 'Basic',
     chromatic: {
       disableSnapshot: true,
+    },
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
     },
     docs: {
       source: { type: 'code' },
@@ -58,7 +79,6 @@ export default meta;
 
 const virtualScrollingContainerHeight = css`
   max-height: calc(100vh - 200px);
-  /* height: calc(100vh - 200px); */
 `;
 
 const basicColumnDefs: Array<ColumnDef<Person>> = [
@@ -599,7 +619,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   );
 };
 
-export const DifferentHeights: StoryFn<StoryTableProps> = args => {
+export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(10_000));
 
@@ -647,14 +667,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
-            <div
-            // style={{
-            //   height: '40px',
-            //   display: 'flex',
-            //   width: '125px',
-            //   objectFit: 'contain',
-            // }}
-            >
+            <div>
               <IconButton aria-label="Download">
                 <Icon glyph="Download" />
               </IconButton>
@@ -690,7 +703,6 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         table={table}
         ref={tableContainerRef}
         className={virtualScrollingContainerHeight}
-        shouldTruncate={false}
       >
         <TableHead isSticky>
           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
@@ -750,4 +762,9 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
       </Table>
     </>
   );
+};
+
+export const NoTruncation = WithLeafyGreenComponents.bind({});
+NoTruncation.args = {
+  shouldTruncate: false,
 };

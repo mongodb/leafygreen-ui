@@ -4,6 +4,14 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { LeafyGreenTable, LGRowData } from '../useLeafyGreenTable';
 import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGreenVirtualTable.types';
 
+export const VerticalAlignment = {
+  Top: 'top',
+  Middle: 'middle',
+} as const;
+
+export type VerticalAlignment =
+  (typeof VerticalAlignment)[keyof typeof VerticalAlignment];
+
 export interface TableProps<T extends LGRowData>
   extends HTMLElementProps<'table'>,
     DarkModeProps,
@@ -30,4 +38,10 @@ export interface TableProps<T extends LGRowData>
    * @default true
    */
   shouldTruncate?: boolean;
+
+  /**
+   * When rows are not truncated, this will determine if cells should be top or middle aligned
+   * @default 'top'
+   */
+  verticalAlignment?: VerticalAlignment;
 }

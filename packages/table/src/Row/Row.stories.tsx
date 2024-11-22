@@ -10,6 +10,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
+import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
@@ -33,21 +34,22 @@ import {
   RowProps,
 } from '..';
 
-// TODO: UPDATE ME
-
 const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
   argTypes: {
-    virtualRow: { control: 'none' },
-    row: { control: 'none' },
-    className: { control: 'none' },
     disabled: { control: 'boolean' },
   },
   parameters: {
     default: null,
     controls: {
-      exclude: [...storybookExcludedControlParams, 'ref', 'children'],
+      exclude: [
+        ...storybookExcludedControlParams,
+        'ref',
+        'children',
+        'row',
+        'virtualRow',
+      ],
     },
     chromatic: {
       disableSnapshot: true,
@@ -61,18 +63,45 @@ const meta: StoryMetaType<typeof Row> = {
       combineArgs: {
         darkMode: [false, true],
         disabled: [false, true],
+        // @ts-ignore - this is a table prop
+        shouldTruncate: [false, true],
+        verticalAlignment: ['top', 'center'],
       },
-      args: {
-        children: makeData(false, 1).map(rowData =>
-          Object.values(rowData).map(c => <Cell>{c}</Cell>),
-        ),
-      },
+      excludeCombinations: [
+        {
+          // @ts-ignore - this is a table prop
+          shouldTruncate: true,
+          verticalAlignment: 'center',
+        },
+      ],
       decorator: (Instance, ctx) => {
         return (
           <LeafyGreenProvider darkMode={ctx?.args.darkMode}>
-            <Table>
+            <Table
+              shouldTruncate={ctx?.args.shouldTruncate}
+              verticalAlignment={ctx?.args.verticalAlignment}
+            >
               <TableBody>
-                <Instance />
+                <Instance>
+                  <Cell
+                    className={css`
+                      width: 60px;
+                    `}
+                  >
+                    1
+                  </Cell>
+                  <Cell
+                    className={css`
+                      width: 200px;
+                    `}
+                  >
+                    Est mollitia laborum dolores dolorem corporis explicabo
+                    nobis enim omnis. Minima excepturi accusantium iure culpa.
+                  </Cell>
+                  <Cell>MongoDB</Cell>
+                  <Cell>7.85</Cell>
+                  <Cell>Complicated</Cell>
+                </Instance>
               </TableBody>
             </Table>
           </LeafyGreenProvider>
@@ -242,7 +271,6 @@ DisabledClickableRows.args = {
 export const DisabledSelectableRows: StoryFn<
   RowProps<Person> & DarkModeProps
 > = ({ darkMode, ...args }: DarkModeProps & RowProps<Person>) => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const data = React.useState(() => makeData(false, 100))[0];
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -326,7 +354,6 @@ export const DisabledSelectableRows: StoryFn<
       <Table
         darkMode={darkMode}
         table={table}
-        ref={tableContainerRef}
         data-total-rows={table.getRowModel().rows.length}
       >
         <TableHead>
@@ -369,6 +396,10 @@ export const DisabledSelectableRows: StoryFn<
 };
 DisabledSelectableRows.argTypes = {
   darkMode: storybookArgTypes.darkMode,
+};
+
+DisabledSelectableRows.args = {
+  disabled: true,
 };
 
 export const Generated = () => <></>;
