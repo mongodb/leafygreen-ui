@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.8.0
+
+### Minor Changes
+
+- 22d5b2d3d: Adds `Revert` icon
+
 ## 12.7.0
 
 ### Minor Changes

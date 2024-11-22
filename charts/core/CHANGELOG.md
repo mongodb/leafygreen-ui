@@ -1,5 +1,16 @@
 # @lg-charts/core
 
+## 0.6.0
+
+### Minor Changes
+
+- ba5126735: Adds both `Header` and `ChartCard` components.
+
+### Patch Changes
+
+- Updated dependencies [22d5b2d3d]
+  - @leafygreen-ui/icon@12.8.0
+
 ## 0.5.0
 
 ### Minor Changes
