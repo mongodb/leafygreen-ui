@@ -57,8 +57,8 @@ export function Chart({
           </div>
           <div
             ref={chartRef}
-            className={cx('echart', chartStyles)}
-            data-testid="echart"
+            className={chartStyles}
+            data-testid="lg-charts-core-chart-echart"
             {...rest}
           />
         </div>

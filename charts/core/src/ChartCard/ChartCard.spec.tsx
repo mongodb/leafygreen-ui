@@ -53,9 +53,8 @@ describe('@lg-charts/core/src/ChartCard/ChartCard', () => {
   test('content is not visible to accessible devices after click', () => {
     renderChartCard();
     clickToggleButton();
-    expect(screen.getByTestId('chart-card-children')).toHaveAttribute(
-      'aria-hidden',
-      'true',
-    );
+    expect(
+      screen.getByTestId('lg-charts-core-chart_card-children'),
+    ).toHaveAttribute('aria-hidden', 'true');
   });
 });

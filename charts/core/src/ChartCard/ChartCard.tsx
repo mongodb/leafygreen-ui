@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, MouseEvent, useEffect, useState } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -9,6 +9,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
+  childrenContainerStyles,
   getContainerStyles,
   getHeaderStyles,
   leftInnerContainerStyles,
@@ -20,99 +21,87 @@ import { ChartCardProps } from './ChartCard.types';
 /**
  * Card component that contains charts and can expand and collapse.
  */
-export function ChartCard({
-  children,
-  className,
-  title,
-  headerContent,
-  defaultOpen = true,
-  isOpen: isControlledOpen,
-  onToggleButtonClick,
-  ...rest
-}: ChartCardProps) {
-  const { theme } = useDarkMode();
-  const isControlled = isControlledOpen !== undefined;
+export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
+  (
+    {
+      children,
+      className,
+      title,
+      headerContent,
+      defaultOpen = true,
+      isOpen: isControlledOpen,
+      onToggleButtonClick,
+      ...rest
+    },
+    forwardedRef,
+  ) => {
+    const { theme } = useDarkMode();
+    const isControlled = isControlledOpen !== undefined;
 
-  const [isOpen, setIsOpen] = useState(isControlledOpen ?? defaultOpen);
-  const [height, setHeight] = useState(0);
-  const [headerHeight, setHeaderHeight] = useState(0);
+    const [isOpen, setIsOpen] = useState(isControlledOpen ?? defaultOpen);
 
-  const containerRef = useRef<null | HTMLDivElement>(null);
-  const headerRef = useRef<null | HTMLDivElement>(null);
+    const toggleId = useIdAllocator({ prefix: 'expandable-chart-card-toggle' });
+    const childrenId = useIdAllocator({
+      prefix: 'expandable-chart-card-content',
+    });
 
-  const toggleId = useIdAllocator({ prefix: 'expandable-chart-card-toggle' });
-  const childrenId = useIdAllocator({
-    prefix: 'expandable-chart-card-content',
-  });
+    // When the controlled prop changes, update the internal state
+    useEffect(() => {
+      if (isControlled) {
+        setIsOpen(isControlledOpen ?? defaultOpen);
+      }
+    }, [defaultOpen, isControlled, isControlledOpen]);
 
-  // When the controlled prop changes, update the internal state
-  useEffect(() => {
-    if (isControlled) {
-      setIsOpen(isControlledOpen ?? defaultOpen);
+    function handleToggleButtonClick(e: MouseEvent<HTMLButtonElement>) {
+      if (!isControlled) {
+        setIsOpen(currState => !currState);
+      }
+      onToggleButtonClick?.(e);
     }
-  }, [defaultOpen, isControlled, isControlledOpen]);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      setHeight(containerRef.current.offsetHeight);
-    }
-
-    if (headerRef.current) {
-      setHeaderHeight(headerRef.current.offsetHeight);
-    }
-  }, [containerRef, headerRef]);
-
-  return (
-    <div
-      className={cx(
-        getContainerStyles(theme, height, headerHeight),
-        className,
-        isOpen && 'open',
-      )}
-      ref={containerRef}
-      {...rest}
-    >
+    return (
       <div
-        className={cx(getHeaderStyles(theme), className)}
+        className={cx(getContainerStyles(theme), className, {
+          ['open']: isOpen,
+        })}
+        ref={forwardedRef}
         {...rest}
-        ref={headerRef}
       >
-        <div className={leftInnerContainerStyles}>
-          <IconButton
-            className={toggleButtonStyles}
-            id={toggleId}
-            aria-label="Toggle button"
-            aria-controls={childrenId}
-            aria-expanded={isOpen}
-            onClick={(e: MouseEvent<HTMLButtonElement>) => {
-              if (!isControlled) {
-                setIsOpen(currState => !currState);
-              }
-              onToggleButtonClick?.(e);
-            }}
+        <div className={cx(getHeaderStyles(theme), className)} {...rest}>
+          <div className={leftInnerContainerStyles}>
+            <IconButton
+              className={toggleButtonStyles}
+              id={toggleId}
+              aria-label="Toggle button"
+              aria-controls={childrenId}
+              aria-expanded={isOpen}
+              onClick={handleToggleButtonClick}
+            >
+              <Icon
+                glyph="ChevronDown"
+                className={cx(toggleIconStyles, isOpen && 'open')}
+              />
+            </IconButton>
+            <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
+              {title}
+            </Body>
+          </div>
+          <div>{headerContent}</div>
+        </div>
+        <div className={childrenContainerStyles}>
+          <div
+            role="region"
+            id={childrenId}
+            aria-labelledby={toggleId}
+            aria-hidden={!isOpen}
+            data-testid="lg-charts-core-chart_card-children"
           >
-            <Icon
-              glyph="ChevronDown"
-              className={cx(toggleIconStyles, isOpen && 'open')}
-            />
-          </IconButton>
-          <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
-            {title}
-          </Body>
-        </div>
-        <div>{headerContent}</div>
-      </div>
-      <div style={{ overflow: 'hidden' }}>
-        <div
-          role="region"
-          id={childrenId}
-          aria-labelledby={toggleId}
-          aria-hidden={!isOpen}
-          data-testid="chart-card-children"
-        >
-          {children}
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  },
+);
+
+ChartCard.displayName = 'ChartCard';

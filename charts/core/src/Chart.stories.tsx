@@ -2,13 +2,15 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
+
 import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
-  ChartCard,
   Grid,
   Header,
   Line,
@@ -20,7 +22,7 @@ import {
 } from '.';
 
 export default {
-  title: 'Charts/Core',
+  title: 'Charts/Chart',
   component: Chart,
   args: {
     data: makeLineData(10),
@@ -36,7 +38,7 @@ export default {
     tooltipSortKey: SortKey.Value,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
-    chartCardTitle: 'LeafyGreen ChartCard',
+    headerShowDivider: true,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -191,29 +193,29 @@ export default {
         category: 'Header',
       },
     },
-    chartCardTitle: {
-      control: 'text',
-      description: 'ChartCard title',
-      name: 'Title',
+    headerShowDivider: {
+      control: 'boolean',
+      description: 'Show divider in header',
+      name: 'ShowDivider',
       table: {
-        category: 'ChartCard',
+        category: 'Header',
       },
     },
   },
 };
 
-export const LiveExample: StoryObj<{
+interface StorybookProps {
   data: Array<LineProps>;
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
   renderXAxis: boolean;
-  renderYAxis: boolean;
   xAxisType: XAxisProps['type'];
-  yAxisType: YAxisProps['type'];
   xAxisFormatter: XAxisProps['formatter'];
-  yAxisFormatter: XAxisProps['formatter'];
   xAxisLabel: XAxisProps['label'];
+  renderYAxis: boolean;
+  yAxisType: YAxisProps['type'];
+  yAxisFormatter: YAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
   renderTooltip: boolean;
   tooltipSortDirection: TooltipProps['sortDirection'];
@@ -221,100 +223,136 @@ export const LiveExample: StoryObj<{
   tooltipValueFormatter: TooltipProps['valueFormatter'];
   renderHeader: boolean;
   headerTitle: HeaderProps['title'];
-  chartCardTitle: HeaderProps['title'];
-}> = {
-  render: props => {
-    const {
-      data,
-      verticalGridLines,
-      horizontalGridLines,
-      renderGrid,
-      renderXAxis,
-      renderYAxis,
-      xAxisType,
-      xAxisFormatter,
-      yAxisType,
-      yAxisFormatter,
-      xAxisLabel,
-      yAxisLabel,
-      renderTooltip,
-      tooltipSortDirection,
-      tooltipSortKey,
-      tooltipValueFormatter,
-      renderHeader,
-      headerTitle,
-      chartCardTitle,
-    } = props;
+  headerShowDivider: HeaderProps['showDivider'];
+}
 
+export const Basic: StoryObj<StorybookProps> = {
+  render: ({
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    renderGrid,
+    renderXAxis,
+    renderYAxis,
+    xAxisType,
+    xAxisFormatter,
+    yAxisType,
+    yAxisFormatter,
+    xAxisLabel,
+    yAxisLabel,
+    renderTooltip,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
+    renderHeader,
+    headerTitle,
+    headerShowDivider,
+  }) => {
     return (
-      <ChartCard title={chartCardTitle}>
-        <Chart>
-          {renderHeader && <Header title={headerTitle} />}
-          {renderGrid && (
-            <Grid
-              vertical={verticalGridLines}
-              horizontal={horizontalGridLines}
-            />
-          )}
-          {renderTooltip && (
-            <Tooltip
-              sortDirection={tooltipSortDirection}
-              sortKey={tooltipSortKey}
-              valueFormatter={tooltipValueFormatter}
-            />
-          )}
-          {renderXAxis && (
-            <XAxis
-              type={xAxisType}
-              formatter={xAxisFormatter}
-              label={xAxisLabel}
-            />
-          )}
-          {renderYAxis && (
-            <YAxis
-              type={yAxisType}
-              formatter={yAxisFormatter}
-              label={yAxisLabel}
-            />
-          )}
-          {data.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart>
-          {renderHeader && <Header title={headerTitle} showDivider />}
-          {renderGrid && (
-            <Grid
-              vertical={verticalGridLines}
-              horizontal={horizontalGridLines}
-            />
-          )}
-          {renderTooltip && (
-            <Tooltip
-              sortDirection={tooltipSortDirection}
-              sortKey={tooltipSortKey}
-              valueFormatter={tooltipValueFormatter}
-            />
-          )}
-          {renderXAxis && (
-            <XAxis
-              type={xAxisType}
-              formatter={xAxisFormatter}
-              label={xAxisLabel}
-            />
-          )}
-          {renderYAxis && (
-            <YAxis
-              type={yAxisType}
-              formatter={yAxisFormatter}
-              label={yAxisLabel}
-            />
-          )}
-          {data.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-      </ChartCard>
+      <Chart>
+        {renderHeader && (
+          <Header title={headerTitle} showDivider={headerShowDivider} />
+        )}
+        {renderGrid && (
+          <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+        )}
+        {renderTooltip && (
+          <Tooltip
+            sortDirection={tooltipSortDirection}
+            sortKey={tooltipSortKey}
+            valueFormatter={tooltipValueFormatter}
+          />
+        )}
+        {renderXAxis && (
+          <XAxis
+            type={xAxisType}
+            formatter={xAxisFormatter}
+            label={xAxisLabel}
+          />
+        )}
+        {renderYAxis && (
+          <YAxis
+            type={yAxisType}
+            formatter={yAxisFormatter}
+            label={yAxisLabel}
+          />
+        )}
+        {data.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHeaderContent: StoryObj<StorybookProps> = {
+  render: ({
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    renderGrid,
+    renderXAxis,
+    renderYAxis,
+    xAxisType,
+    xAxisFormatter,
+    yAxisType,
+    yAxisFormatter,
+    xAxisLabel,
+    yAxisLabel,
+    renderTooltip,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
+    renderHeader,
+    headerTitle,
+    headerShowDivider,
+  }) => {
+    return (
+      <Chart>
+        {renderHeader && (
+          <Header
+            title={headerTitle}
+            showDivider={headerShowDivider}
+            headerContent={
+              <div style={{ display: 'flex', justifyContent: 'right' }}>
+                <IconButton aria-label="FullScreen">
+                  <Icon glyph="FullScreenEnter" />
+                </IconButton>
+                <IconButton aria-label="Close">
+                  <Icon glyph="X" />
+                </IconButton>
+              </div>
+            }
+          />
+        )}
+        {renderGrid && (
+          <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+        )}
+        {renderTooltip && (
+          <Tooltip
+            sortDirection={tooltipSortDirection}
+            sortKey={tooltipSortKey}
+            valueFormatter={tooltipValueFormatter}
+          />
+        )}
+        {renderXAxis && (
+          <XAxis
+            type={xAxisType}
+            formatter={xAxisFormatter}
+            label={xAxisLabel}
+          />
+        )}
+        {renderYAxis && (
+          <YAxis
+            type={yAxisType}
+            formatter={yAxisFormatter}
+            label={yAxisLabel}
+          />
+        )}
+        {data.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
     );
   },
 };
