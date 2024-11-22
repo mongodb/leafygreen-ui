@@ -26,7 +26,9 @@ jest.mock('./hooks', () => ({
 describe('lg-charts/core/Chart', () => {
   it('renders the echart container', () => {
     render(<Chart />);
-    expect(screen.getByTestId('echart')).toBeInTheDocument();
+    expect(
+      screen.getByTestId('lg-charts-core-chart-echart'),
+    ).toBeInTheDocument();
   });
 
   it('passes the correct props to ChartProvider', () => {
