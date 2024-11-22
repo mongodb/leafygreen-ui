@@ -122,6 +122,7 @@ import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
 import Return from './Return.svg';
+import Revert from './Revert.svg';
 import Save from './Save.svg';
 import SearchIndex from './SearchIndex.svg';
 import Secondary from './Secondary.svg';
@@ -285,6 +286,7 @@ const _glyphs = {
   ReplicaSet,
   Resize,
   Return,
+  Revert,
   Save,
   Serverless,
   ShardedCluster,
