@@ -1,8 +1,8 @@
 /**
 * This is a generated file. Do not modify it manually.
 *
-* @script ./node_modules/.bin/ts-node packages/icon/scripts/build.ts
-* @checksum 17e91e7db7b54b5410c4d0f164607a14
+* @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
+* @checksum f55432b549c37402a3d41bd74d0d57d9
 */
 import * as React from "react";
 import PropTypes from 'prop-types';
