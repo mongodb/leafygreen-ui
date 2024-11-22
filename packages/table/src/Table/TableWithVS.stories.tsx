@@ -619,14 +619,14 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
         size: 180,
       },
       {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
         accessorKey: 'frequency',
         header: 'Frequency',
         align: 'center',
         size: 140,
-      },
-      {
-        accessorKey: 'clusterType',
-        header: 'Cluster Type',
       },
       {
         accessorKey: 'encryptorEnabled',
@@ -676,7 +676,7 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
   });
 
   return (
-    <>
+    <div>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
@@ -699,9 +699,9 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
                       key={header.id}
                       header={header}
                       className={css`
-                        ${index === 2 &&
+                        ${index === 1 &&
                         css`
-                          // This overrides the default width of 150px and makes the 3rd column responsive
+                          // This overrides the default width of 150px and makes the 2nd column responsive
                           width: auto;
                         `}
                       `}
@@ -759,6 +759,6 @@ export const DifferentHeights: StoryFn<StoryTableProps> = args => {
               )}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
