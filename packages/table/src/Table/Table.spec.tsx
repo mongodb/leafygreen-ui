@@ -20,14 +20,14 @@ import {
 import Table from '.';
 
 function TableWithHook(props: TestTableWithHookProps) {
-  const { containerRef, table, rowSelection } = useTestHookCall(props);
+  const { table, rowSelection } = useTestHookCall(props);
   const { rows } = table.getRowModel();
   return (
     <>
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <Table table={table} ref={containerRef}>
+      <Table table={table}>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
             <HeaderRow key={headerGroup.id}>
@@ -52,7 +52,7 @@ function TableWithHook(props: TestTableWithHookProps) {
                   .getVisibleCells()
                   .map((cell: LeafyGreenTableCell<Person>) => {
                     return (
-                      <Cell data-cellid={cell.id} key={cell.id}>
+                      <Cell data-cellid={cell.id} key={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

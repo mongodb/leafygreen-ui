@@ -13,7 +13,6 @@ import { Person } from '../utils/makeData.testutils';
 import { Row, RowProps } from '.';
 
 const defaultProps: RowProps<Person> = {};
-const onClick = jest.fn();
 
 function renderRow(props: RowProps<Person>) {
   return render(
@@ -53,10 +52,17 @@ describe('packages/table/RowWithoutRT', () => {
       expect(row.getAttribute('aria-disabled')).toBe('true');
     });
 
-    test.todo(`onClick is not called when the row is disabled`);
-    test.todo(
-      `childrens' click events are not called when the row is disabled`,
-    );
+    test(`onClick is not called when the row is disabled`, () => {
+      const onClick = jest.fn();
+      const { getByTestId } = renderRow({
+        ...defaultProps,
+        disabled: true,
+        onClick,
+      });
+      const row = getByTestId('lg-test-row-1');
+      expect(() => userEvent.click(row)).toThrow();
+      expect(onClick).not.toHaveBeenCalled();
+    });
   });
 
   describe('a11y', () => {
@@ -92,6 +98,7 @@ describe('packages/table/RowWithoutRT', () => {
 
   describe('onClick prop applies correct styles and tabIndex', () => {
     test('onClick prop is called correctly on click', async () => {
+      const onClick = jest.fn();
       const { getByTestId } = renderRow({ ...defaultProps, onClick });
       const firstRow = getByTestId('lg-test-row-1');
       fireEvent.click(firstRow);
@@ -99,12 +106,23 @@ describe('packages/table/RowWithoutRT', () => {
     });
 
     test('clickable rows are tabbable', async () => {
+      const onClick = jest.fn();
       const { getByTestId } = renderRow({ ...defaultProps, onClick });
       const firstRow = getByTestId('lg-test-row-1');
       firstRow.focus();
       userEvent.tab();
       const secondRow = getByTestId('lg-test-row-2');
       expect(secondRow).toHaveFocus();
+    });
+  });
+
+  describe('accepts a ref', () => {
+    test('regular cell', () => {
+      const ref = React.createRef<HTMLTableRowElement>();
+      render(<Row ref={ref}>Hello</Row>);
+
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello');
     });
   });
 });

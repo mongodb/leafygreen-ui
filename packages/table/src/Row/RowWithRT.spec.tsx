@@ -1,6 +1,7 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { fireEvent, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
@@ -61,8 +62,7 @@ const RowWithNestedRows = args => {
   );
 };
 
-// TODO: this should not be called NestedRows
-describe('packages/table/Row/NestedRows', () => {
+describe('packages/table/Row/RowWithRT', () => {
   test('renders the correct number of children', () => {
     render(<RowWithNestedRows />);
     const { getRowByIndex } = getTestUtils();
@@ -77,34 +77,25 @@ describe('packages/table/Row/NestedRows', () => {
     );
   });
 
-  //TODO: clean up
-  // eslint-disable-next-line jest/no-disabled-tests
-  test.skip('having a row with nested rows render all rows as tbody elements', async () => {
+  test('having a row with nested rows render all rows as tr elements', async () => {
     const { getAllByRole } = render(<RowWithNestedRows />);
-    expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+    expect(getAllByRole('row').length).toBe(4); // 1 header row and 3 tbody rows
   });
-  // eslint-disable-next-line jest/no-disabled-tests
-  test.skip('clicking expand icon button renders collapse button and nested row content', async () => {
-    const { getByLabelText, queryByText } = render(<RowWithNestedRows />);
-    const expandIconButton = getByLabelText('Expand row');
-    // the line below is not reliable as the row is expanded - the height is just 0
-    expect(queryByText('nested row name')).not.toBeVisible();
-    fireEvent.click(expandIconButton);
-    const collapseIconButton = getByLabelText('Collapse row');
-    expect(collapseIconButton).toBeInTheDocument();
-    // the line below is not reliable as the row is expanded - the height is just 0
-    expect(queryByText('nested row name')).toBeVisible();
+
+  test('clicking expand icon button renders collapse button and nested row content', async () => {
+    render(<RowWithNestedRows />);
+    const { getAllVisibleRows, getRowByIndex } = getTestUtils();
+    expect(getAllVisibleRows().length).toBe(3);
+
+    const toggleRowButton = getRowByIndex(0)?.getExpandButton();
+    expect(toggleRowButton).toHaveAttribute('aria-label', 'Expand row');
+
+    userEvent.click(toggleRowButton!);
+    expect(getAllVisibleRows().length).toBe(4);
+    expect(toggleRowButton).toHaveAttribute('aria-label', 'Collapse row');
   });
 
   describe('accepts a ref', () => {
-    test('regular cell', () => {
-      const ref = React.createRef<HTMLTableRowElement>();
-      render(<Row ref={ref}>Hello</Row>);
-
-      expect(ref.current).toBeInTheDocument();
-      expect(ref.current!.textContent).toBe('Hello');
-    });
-
     test('RT cell', () => {
       const ref = React.createRef<HTMLTableRowElement>();
       const rowObj = {

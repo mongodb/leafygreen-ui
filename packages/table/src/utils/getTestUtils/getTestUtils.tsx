@@ -55,8 +55,6 @@ export const getTestUtils = (
       `[data-lgid=${LGIDS.row}]`,
     );
 
-    console.log({ allRows });
-
     if (!allRows.length)
       throw new Error('Unable to find any visible `tr` elements.');
 

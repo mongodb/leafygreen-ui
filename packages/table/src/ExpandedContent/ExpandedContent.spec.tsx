@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
 import { flexRender } from '@tanstack/react-table';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
@@ -98,14 +99,15 @@ describe('packages/table/Row/ExpandableContent', () => {
   });
 
   test('clicking expand icon button renders collapse button and expanded content', async () => {
-    const { getByLabelText, queryByText } = render(
-      <RowWithExpandableContent />,
-    );
-    const expandIconButton = getByLabelText('Expand row');
+    const { queryByText } = render(<RowWithExpandableContent />);
+    const { getRowByIndex } = getTestUtils();
+
+    const toggleRowButton = getRowByIndex(0)?.getExpandButton();
+    expect(toggleRowButton).toHaveAttribute('aria-label', 'Expand row');
     expect(queryByText('Expandable content test')).not.toBeInTheDocument();
-    fireEvent.click(expandIconButton);
-    const collapseIconButton = getByLabelText('Collapse row');
-    expect(collapseIconButton).toBeInTheDocument();
+
+    userEvent.click(toggleRowButton!);
+    expect(toggleRowButton).toHaveAttribute('aria-label', 'Collapse row');
     expect(queryByText('Expandable content test')).toBeInTheDocument();
   });
 
