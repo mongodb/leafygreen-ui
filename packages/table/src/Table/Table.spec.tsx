@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { flexRender } from '@tanstack/react-table';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -8,7 +9,11 @@ import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
-import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafyGreenTable';
+import useLeafyGreenTable, {
+  LeafyGreenTableCell,
+  LeafyGreenTableRow,
+} from '../useLeafyGreenTable';
+import useLeafyGreenVirtualTable from '../useLeafyGreenVirtualTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
@@ -18,7 +23,6 @@ import {
 } from '../utils/testHookCalls.testutils';
 
 import Table from '.';
-
 function TableWithHook(props: TestTableWithHookProps) {
   const { table, rowSelection } = useTestHookCall(props);
   const { rows } = table.getRowModel();
@@ -198,5 +202,91 @@ describe('packages/table/Table', () => {
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent(initialFirstId!);
     });
+  });
+
+  test('Accepts a ref', () => {
+    const ref = React.createRef<HTMLTableElement>();
+    render(<Table ref={ref}>Hello</Table>);
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const StyledTable = styled(Table)`
+        table {
+          color: #69ffc6;
+        }
+      `;
+
+      const { getByTestId } = render(
+        <StyledTable data-testid="styled">Some text</StyledTable>,
+      );
+
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const StyledTable = styled(Table)<StyledProps>`
+        table {
+          color: ${props => props.color};
+        }
+      `;
+
+      const { getByTestId } = render(
+        <StyledTable data-testid="styled" color="#69ffc6">
+          Some text
+        </StyledTable>,
+      );
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const ref = React.createRef<HTMLTableElement>();
+
+    const table = useLeafyGreenTable<any>({
+      data: [],
+      columns: [
+        {
+          accessorKey: 'id',
+          size: 700,
+        },
+      ],
+    });
+
+    const virtualTable = useLeafyGreenVirtualTable<any>({
+      containerRef: React.createRef<HTMLDivElement>(),
+      data: [],
+      columns: [
+        {
+          accessorKey: 'id',
+          size: 700,
+        },
+      ],
+    });
+
+    <>
+      <Table />
+      <Table ref={ref} />
+      <Table
+        ref={ref}
+        shouldAlternateRowColor={true}
+        darkMode={true}
+        shouldTruncate={true}
+        verticalAlignment="top"
+        baseFontSize={13}
+      />
+      <Table table={table} />
+      <Table table={virtualTable} />
+    </>;
   });
 });
