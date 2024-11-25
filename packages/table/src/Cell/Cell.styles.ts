@@ -67,6 +67,10 @@ export const getCellContainerStyles = (align: Align = 'left') => css`
   overflow: hidden;
   justify-content: ${align};
   text-align: ${align};
+
+  > div {
+    justify-content: ${align};
+  }
 `;
 
 export const getBaseCellStyles = (

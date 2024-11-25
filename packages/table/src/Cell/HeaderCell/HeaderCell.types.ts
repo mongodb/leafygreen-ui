@@ -25,16 +25,6 @@ export interface SortStates {
 
 export interface HeaderCellProps<T extends LGRowData>
   extends ComponentPropsWithRef<'th'> {
-  // /**
-  //  * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
-  //  */
-  // align?: ComponentPropsWithRef<'th'>['align'];
-
-  /**
-   * Determines the current sorting direction.
-   */
-  sortState?: SortState;
-
   /**
    * Header object passed from the `useLeafyGreenTable` hook.
    */

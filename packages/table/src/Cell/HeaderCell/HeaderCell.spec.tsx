@@ -247,7 +247,7 @@ describe('packages/table/HeaderCell', () => {
 
     <>
       <HeaderCell />
-      <HeaderCell align="center" sortState="asc" header={mockHeader} />
+      <HeaderCell align="center" header={mockHeader} />
       <HeaderCell ref={ref} />
     </>;
   });

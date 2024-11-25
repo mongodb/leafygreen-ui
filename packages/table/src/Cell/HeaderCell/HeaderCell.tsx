@@ -13,11 +13,7 @@ import {
   getBaseHeaderCellStyles,
   getHeaderCellContentStyles,
 } from './HeaderCell.styles';
-import {
-  HeaderCellComponentType,
-  HeaderCellProps,
-  SortState,
-} from './HeaderCell.types';
+import { HeaderCellComponentType, HeaderCellProps } from './HeaderCell.types';
 
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.
@@ -78,6 +74,5 @@ export const HeaderCell = React.forwardRef(
 export default HeaderCell;
 
 HeaderCell.propTypes = {
-  sortState: PropTypes.oneOf(Object.values(SortState)),
   header: PropTypes.object,
 } as any; // avoid inferred types from interfering;
