@@ -1,10 +1,21 @@
 import React from 'react';
 
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
 import useLeafyGreenVirtualTable from './useLeafyGreenVirtualTable';
 
-// TODO: check that the correct object is returned
-
 describe('packages/table/useLeafyGreenVirtualTable', () => {
+  test('returns a table object', () => {
+    const { result } = renderHook(() =>
+      useLeafyGreenVirtualTable({
+        containerRef: React.createRef<HTMLDivElement>(),
+        columns: [],
+        data: [],
+      }),
+    );
+    expect(typeof result.current).toBe('object');
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Typescript', () => {
     // @ts-expect-error - requires columns, data, containerReff
