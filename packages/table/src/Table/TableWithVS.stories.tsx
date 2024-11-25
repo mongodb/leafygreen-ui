@@ -13,6 +13,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
 import {
+  KitchenSink,
   makeData,
   makeKitchenSinkData,
   Person,
@@ -81,7 +82,7 @@ const virtualScrollingContainerHeight = css`
   max-height: calc(100vh - 200px);
 `;
 
-const basicColumnDefs: Array<ColumnDef<Person>> = [
+const basicColumnDefs: Array<LGColumnDef<Person>> = [
   {
     accessorKey: 'index',
     header: 'index',
@@ -107,6 +108,7 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
     accessorKey: 'age',
     header: () => 'Age',
     size: 50,
+    align: 'center',
   },
   {
     accessorKey: 'visits',
@@ -623,7 +625,7 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(10_000));
 
-  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+  const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
     () => [
       {
         accessorKey: 'dateCreated',
@@ -635,14 +637,17 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
             month: 'short',
             day: 'numeric',
           }),
-      },
-      {
-        accessorKey: 'frequency',
-        header: 'Frequency',
+        size: 180,
       },
       {
         accessorKey: 'clusterType',
         header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+        align: 'center',
+        size: 140,
       },
       {
         accessorKey: 'encryptorEnabled',
@@ -658,12 +663,12 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
         accessorKey: 'mdbVersion',
         header: 'MongoDB Version',
         enableSorting: true,
-        size: 90,
+        size: 120,
       },
       {
         id: 'actions',
         header: '',
-        size: 90,
+        size: 120,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
@@ -685,15 +690,14 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
     [],
   );
 
-  //TODO: fix type
-  const table = useLeafyGreenVirtualTable<any>({
+  const table = useLeafyGreenVirtualTable<KitchenSink>({
     containerRef: tableContainerRef,
     data,
     columns,
   });
 
   return (
-    <>
+    <div>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>
@@ -705,27 +709,42 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
         className={virtualScrollingContainerHeight}
       >
         <TableHead isSticky>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
+          {table
+            .getHeaderGroups()
+            .map((headerGroup: HeaderGroup<KitchenSink>) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map((header, index) => {
+                  return (
+                    <HeaderCell
+                      key={header.id}
+                      header={header}
+                      className={css`
+                        ${index === 1 &&
+                        css`
+                          // This overrides the default width of 150px and makes the 2nd column responsive
+                          width: auto;
+                        `}
+                      `}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
         </TableHead>
         <TableBody>
           {table.virtual.getVirtualItems() &&
             table.virtual
               .getVirtualItems()
               .map(
-                (virtualRow: LeafyGreenVirtualItem<Person>, index: number) => {
+                (
+                  virtualRow: LeafyGreenVirtualItem<KitchenSink>,
+                  index: number,
+                ) => {
                   const row = virtualRow.row;
                   const isExpandedContent = row.isExpandedContent ?? false;
 
@@ -739,7 +758,7 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
                         >
                           {row
                             .getVisibleCells()
-                            .map((cell: LeafyGreenTableCell<Person>) => {
+                            .map((cell: LeafyGreenTableCell<KitchenSink>) => {
                               return (
                                 <Cell key={cell.id} cell={cell}>
                                   {flexRender(
@@ -760,7 +779,7 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
               )}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 

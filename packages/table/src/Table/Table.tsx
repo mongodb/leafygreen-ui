@@ -71,7 +71,10 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
           verticalAlignment={verticalAlignment}
         >
           <table
-            className={cx(tableClassName, getTableStyles(theme, baseFontSize))}
+            className={cx(
+              tableClassName,
+              getTableStyles(theme, baseFontSize, isVirtual, shouldTruncate),
+            )}
             data-lgid={lgidProp}
             data-is-sticky={!inView}
             {...rest}
