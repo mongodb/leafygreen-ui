@@ -5,6 +5,8 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
@@ -253,26 +255,30 @@ describe('packages/table/Table', () => {
   describe.skip('types behave as expected', () => {
     const ref = React.createRef<HTMLTableElement>();
 
-    const table = useLeafyGreenTable<any>({
-      data: [],
-      columns: [
-        {
-          accessorKey: 'id',
-          size: 700,
-        },
-      ],
-    });
+    const { result: tableResults } = renderHook(() =>
+      useLeafyGreenTable<any>({
+        data: [],
+        columns: [
+          {
+            accessorKey: 'id',
+            size: 700,
+          },
+        ],
+      }),
+    );
 
-    const virtualTable = useLeafyGreenVirtualTable<any>({
-      containerRef: React.createRef<HTMLDivElement>(),
-      data: [],
-      columns: [
-        {
-          accessorKey: 'id',
-          size: 700,
-        },
-      ],
-    });
+    const { result: virtualTableResults } = renderHook(() =>
+      useLeafyGreenVirtualTable<any>({
+        containerRef: React.createRef<HTMLDivElement>(),
+        data: [],
+        columns: [
+          {
+            accessorKey: 'id',
+            size: 700,
+          },
+        ],
+      }),
+    );
 
     <>
       <Table />
@@ -285,8 +291,8 @@ describe('packages/table/Table', () => {
         verticalAlignment="top"
         baseFontSize={13}
       />
-      <Table table={table} />
-      <Table table={virtualTable} />
+      <Table table={tableResults.current} />
+      <Table table={virtualTableResults.current} />
     </>;
   });
 });
