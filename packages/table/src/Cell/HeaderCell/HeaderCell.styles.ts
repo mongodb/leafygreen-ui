@@ -2,7 +2,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
 import {
-  baseCellStyles,
+  getBaseCellStyles,
   getCellContainerStyles,
   getCellPadding,
 } from '../Cell.styles';
@@ -14,7 +14,7 @@ export const headerCellContentStyles = css`
 
 export const getBaseHeaderCellStyles = (size: number, isSelectable?: boolean) =>
   cx(
-    baseCellStyles,
+    getBaseCellStyles(),
     css`
       &:first-of-type {
         ${getCellPadding({ depth: 0, isExpandable: false, isSelectable })}

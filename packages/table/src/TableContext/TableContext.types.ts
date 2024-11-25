@@ -25,7 +25,7 @@ interface BaseTableContextValue<T extends LGRowData> {
 
 type PartialTableProps<T extends LGRowData> = Pick<
   TableProps<T>,
-  'shouldAlternateRowColor' | 'shouldTruncate'
+  'shouldAlternateRowColor' | 'shouldTruncate' | 'verticalAlignment'
 >;
 
 export type TableProviderProps<T extends LGRowData> = PropsWithChildren<

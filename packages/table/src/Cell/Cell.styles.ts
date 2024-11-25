@@ -1,5 +1,7 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+
+import { VerticalAlignment } from '../Table/Table.types';
 
 import { Align } from './Cell.types';
 
@@ -67,10 +69,12 @@ export const getCellContainerStyles = (align: Align = 'left') => css`
   text-align: ${align};
 `;
 
-export const baseCellStyles = css`
+export const getBaseCellStyles = (
+  verticalAlignment: VerticalAlignment = VerticalAlignment.Top,
+) => css`
   padding: 0 ${spacing[200]}px;
   overflow: hidden;
-  vertical-align: top;
+  vertical-align: ${verticalAlignment};
 
   &:focus-visible {
     box-shadow: inset;
@@ -87,13 +91,13 @@ export const cellInnerStyles = css`
   min-width: 100%;
 `;
 
-export const getCellEllipsisStyles = (shouldTruncate: boolean) => css`
-  ${shouldTruncate &&
-  css`
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    contain: inline-size; // 🤯
-  `}
-`;
+export const getCellEllipsisStyles = (shouldTruncate: boolean) =>
+  cx({
+    [css`
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      contain: inline-size; // 🤯
+    `]: shouldTruncate,
+  });

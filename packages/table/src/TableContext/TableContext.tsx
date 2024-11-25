@@ -28,6 +28,7 @@ const TableContextProvider = <T extends LGRowData>({
   isSelectable,
   shouldTruncate,
   virtualTable,
+  verticalAlignment,
 }: PropsWithChildren<Partial<TableProviderProps<T>>>) => {
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableProviderProps<T>>)
@@ -40,6 +41,7 @@ const TableContextProvider = <T extends LGRowData>({
       isVirtual,
       isSelectable,
       shouldTruncate,
+      verticalAlignment,
       virtualTable,
     };
   }, [
@@ -48,6 +50,7 @@ const TableContextProvider = <T extends LGRowData>({
     isVirtual,
     isSelectable,
     shouldTruncate,
+    verticalAlignment,
     virtualTable,
   ]);
 
