@@ -62,14 +62,18 @@ export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
 
     function onInitialRender() {
       if (onZoom) {
-        // Enable zooming with cursor drag
+        /**
+         * Zooming is built into the chart via the toolbar. By default, a user
+         * has to click the "dataZoom" button to enable zooming. We however hide
+         * this button and want it turned on by default. This is done by dispatching
+         * an action to enable the "dataZoomSelect" feature.
+         */
         chartInstance.dispatchAction({
           type: 'takeGlobalCursor',
           key: 'dataZoomSelect',
           dataZoomSelectActive: true,
         });
 
-        // Update zoom context to propagate changes to other charts
         chartInstance.on('dataZoom', (params: any) => {
           if (params.batch) {
             const xAxisIndex = 0;
@@ -86,6 +90,12 @@ export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
             });
           }
 
+          /**
+           * If start is not 0% or end is not 100%, that means that the 'dataZoom'
+           * event was triggered by an actual zoom. Since we don't want to actually
+           * zoom on the current data, but rather provide the new values to the passed
+           * in handler, we dispatch an action to essentially override the zoom.
+           */
           const isZoomed = params?.start !== 0 || params?.end !== 100;
 
           if (isZoomed) {
@@ -112,7 +122,7 @@ export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
       window.removeEventListener('resize', resizeHandler);
       chartInstance.dispose();
     };
-  }, []);
+  }, [chartOptions, onChartReady, onZoom]);
 
   const updateChartRef = useMemo(
     () =>

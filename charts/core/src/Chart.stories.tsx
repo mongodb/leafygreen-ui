@@ -249,7 +249,7 @@ export const Basic: StoryObj<StorybookProps> = {
     headerShowDivider,
   }) => {
     return (
-      <Chart onZoom={() => {}}>
+      <Chart onZoom={e => {}}>
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
         )}

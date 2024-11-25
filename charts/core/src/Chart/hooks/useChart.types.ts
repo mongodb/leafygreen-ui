@@ -1,12 +1,12 @@
 import { Theme } from '@leafygreen-ui/lib';
 
-export interface OnZoomProps {
+export interface ZoomEvent {
   xAxis: { startValue: number; endValue: number };
   yAxis: { startValue: number; endValue: number };
 }
 
 export interface ChartHookProps {
   onChartReady?: () => void;
-  onZoom?: (props: OnZoomProps) => void;
+  onZoom?: (e: ZoomEvent) => void;
   theme: Theme;
 }
