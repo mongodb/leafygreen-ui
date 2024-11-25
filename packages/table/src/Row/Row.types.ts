@@ -21,7 +21,7 @@ export interface InternalRowBaseProps extends ComponentPropsWithRef<'tr'> {
 
 export interface InternalRowWithoutRTProps extends InternalRowBaseProps {}
 
-export interface InternalRowWithRTProps<T extends LGRowData>
+export interface InternalRowWithRTBaseProps<T extends LGRowData>
   extends InternalRowBaseProps {
   /**
    * Row object passed from the `useLeafyGreenTable` hook.
@@ -31,7 +31,10 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
+}
 
+export interface InternalRowWithRTProps<T extends LGRowData>
+  extends InternalRowWithRTBaseProps<T> {
   /**
    * Determines whether alternating rows will have dark backgrounds.
    * @default false
@@ -65,7 +68,7 @@ export interface InternalRowWithRTProps<T extends LGRowData>
 }
 
 export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
-  Partial<InternalRowWithRTProps<T>>;
+  Partial<InternalRowWithRTBaseProps<T>>;
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.

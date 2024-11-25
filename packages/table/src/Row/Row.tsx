@@ -54,10 +54,10 @@ const RowWithRef = <T extends LGRowData>(
 export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
 Row.propTypes = {
-  virtualRow: PropTypes.any,
-  row: PropTypes.any,
+  virtualRow: PropTypes.object,
+  row: PropTypes.object,
   disabled: PropTypes.bool,
-};
+} as any; // avoid inferred types from interfering
 
 Row.displayName = 'Row';
 
