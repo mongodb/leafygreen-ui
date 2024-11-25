@@ -79,13 +79,23 @@ describe('packages/table/Table', () => {
   });
 
   describe('selectable rows', () => {
-    test('renders checkboxes', async () => {
+    test('renders checkboxes with select all checkbox ', async () => {
       const { getAllByRole } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
       const data = getDefaultTestData({});
       // +1 for the header row checkbox
       expect(getAllByRole('checkbox').length).toBe(data.length + 1);
+    });
+
+    test('renders checkboxes without select all checkbox ', async () => {
+      const { getAllByRole } = render(
+        <TableWithHook
+          hookProps={{ hasSelectableRows: true, allowSelectAll: false }}
+        />,
+      );
+      const data = getDefaultTestData({});
+      expect(getAllByRole('checkbox').length).toBe(data.length);
     });
 
     test('clicking checkbox adds row index to rowSelection state', async () => {
