@@ -4,6 +4,7 @@ import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableOptions,
   LeafyGreenTableRow,
+  LGTableDataType,
 } from '../useLeafyGreenTable';
 import {
   ColumnDef,
@@ -16,7 +17,7 @@ import {
 import { Person } from './makeData.testutils';
 
 export const getDefaultTestData: (
-  rowProps: object,
+  rowProps?: Partial<LGTableDataType<Person>>,
   additionalData?: Array<Person>,
 ) => Array<Person> = (rowProps, additionalData = []) => {
   return [
@@ -91,7 +92,7 @@ export const getDefaultTestColumns: (
 ];
 
 export interface TestTableWithHookProps {
-  rowProps?: object;
+  rowProps?: Partial<LGTableDataType<Person>>;
   columnProps?: TestColumnsProps;
   hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
@@ -111,7 +112,8 @@ export const useTestHookCall = ({
 }: TestTableWithHookProps) => {
   const [data] = useState<Array<Person>>(
     hasData
-      ? () => getDefaultTestData((rowProps = rowProps ?? {}), additionalData)
+      ? () =>
+          getDefaultTestData((rowProps = rowProps ?? undefined), additionalData)
       : [],
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));

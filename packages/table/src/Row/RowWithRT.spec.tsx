@@ -23,7 +23,7 @@ const RowWithNestedRows = args => {
     rowProps: {
       subRows: [
         {
-          id: 4,
+          id: '4',
           firstName: 'nested row name',
           lastName: 'test',
           age: 40,
@@ -99,8 +99,6 @@ describe('packages/table/Row/RowWithRT', () => {
     expect(getAllVisibleRows().length).toBe(4);
     expect(toggleRowButton).toHaveAttribute('aria-label', 'Collapse row');
   });
-
-  //TODO: check is a select checkbox is added
 
   test('accepts a ref', () => {
     const ref = React.createRef<HTMLTableRowElement>();
