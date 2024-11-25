@@ -1,14 +1,17 @@
 import React from 'react';
+import styled from '@emotion/styled';
 import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { palette } from '@leafygreen-ui/palette';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { LGIDS } from '../constants';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
+import { useMockTestRowData } from '../utils/testHookCalls.testutils';
 
 import { Row, RowProps } from '.';
 
@@ -116,13 +119,58 @@ describe('packages/table/RowWithoutRT', () => {
     });
   });
 
-  describe('accepts a ref', () => {
-    test('regular cell', () => {
-      const ref = React.createRef<HTMLTableRowElement>();
-      render(<Row ref={ref}>Hello</Row>);
+  test('accepts a ref', () => {
+    const ref = React.createRef<HTMLTableRowElement>();
+    render(<Row ref={ref}>Hello</Row>);
 
-      expect(ref.current).toBeInTheDocument();
-      expect(ref.current!.textContent).toBe('Hello');
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const { result } = renderHook(() => useMockTestRowData());
+      const mockRow = result.current.firstRow;
+
+      const StyledRow = styled(Row)`
+        color: #69ffc6;
+      ` as typeof Row;
+
+      const { getByTestId } = render(
+        <StyledRow row={mockRow} data-testid="styled" />,
+      );
+
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const { result } = renderHook(() => useMockTestRowData());
+      const mockRow = result.current.firstRow;
+
+      const StyledRow = styled(Row)<StyledProps>`
+        color: ${props => props.color};
+      ` as typeof Row;
+
+      const { getByTestId } = render(
+        <StyledRow data-testid="styled" row={mockRow} color="#69ffc6" />,
+      );
+      expect(getByTestId('styled')).toBeInTheDocument();
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const ref = React.createRef<HTMLTableRowElement>();
+
+    <>
+      <Row />
+      <Row ref={ref} disabled />
+    </>;
   });
 });

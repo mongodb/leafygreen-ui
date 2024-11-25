@@ -9,28 +9,16 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 import { Cell } from '../Cell';
 import { Row } from '../Row';
 import TableBody from '../TableBody';
-import useLeafyGreenTable, { LeafyGreenTableRow } from '../useLeafyGreenTable';
+import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
-  getDefaultTestColumns,
-  getDefaultTestData,
+  useMockTestRowData,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
 import { Table } from '..';
 
 import ExpandedContent from './ExpandedContent';
-
-/** Returns the first Row */
-const useMockTestRowData = (): LeafyGreenTableRow<Person> => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const table = useLeafyGreenTable({
-    data: getDefaultTestData({}),
-    columns: getDefaultTestColumns({}),
-  });
-
-  return table.getRowModel().rows[0];
-};
 
 const RowWithExpandableContent = args => {
   const { table } = useTestHookCall({
@@ -139,7 +127,7 @@ describe('packages/table/Row/ExpandableContent', () => {
   describe('styled', () => {
     test('works with `styled`', () => {
       const { result } = renderHook(() => useMockTestRowData());
-      const mockRow = result.current;
+      const mockRow = result.current.firstRow;
 
       const StyledExpandedContent = styled(ExpandedContent)`
         color: #69ffc6;
@@ -159,7 +147,7 @@ describe('packages/table/Row/ExpandableContent', () => {
         color?: string;
       }
       const { result } = renderHook(() => useMockTestRowData());
-      const mockRow = result.current;
+      const mockRow = result.current.firstRow;
 
       const StyledExpandedContent = styled(ExpandedContent)<StyledProps>`
         color: ${props => props.color};
@@ -180,17 +168,18 @@ describe('packages/table/Row/ExpandableContent', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('types behave as expected', () => {
     const { result } = renderHook(() => useMockTestRowData());
-    const mockRow = result.current;
+    const { firstRow, firstVirtualRow } = result.current;
     const ref = React.createRef<HTMLTableRowElement>();
 
     <>
       {/* @ts-expect-error - row is missing */}
       <ExpandedContent />
 
-      <ExpandedContent row={mockRow} />
-      <ExpandedContent row={mockRow} ref={ref} />
+      <ExpandedContent row={firstRow} />
+      <ExpandedContent row={firstRow} ref={ref} />
 
-      {/* TODO: needs a virtualRow check */}
+      <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} />
+      <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} ref={ref} />
     </>;
   });
 });

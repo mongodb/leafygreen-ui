@@ -3,8 +3,15 @@ import React, { useState } from 'react';
 import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableOptions,
+  LeafyGreenTableRow,
 } from '../useLeafyGreenTable';
-import { ColumnDef, ExpandedState, SortingState } from '..';
+import {
+  ColumnDef,
+  ExpandedState,
+  LeafyGreenVirtualItem,
+  SortingState,
+  useLeafyGreenVirtualTable,
+} from '..';
 
 import { Person } from './makeData.testutils';
 
@@ -129,4 +136,20 @@ export const useTestHookCall = ({
   return { table, rowSelection };
 };
 
-// TODO: useLeafyGreenVirtualTable
+/** Returns the first Row and VirtualRow */
+export const useMockTestRowData = (): {
+  firstRow: LeafyGreenTableRow<Person>;
+  firstVirtualRow: LeafyGreenVirtualItem<Person>;
+} => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const table = useLeafyGreenVirtualTable({
+    containerRef: React.createRef<HTMLTableRowElement>(),
+    data: getDefaultTestData({}),
+    columns: getDefaultTestColumns({}),
+  });
+
+  return {
+    firstRow: table.getRowModel().rows[0],
+    firstVirtualRow: table.virtual.getVirtualItems()[0],
+  };
+};

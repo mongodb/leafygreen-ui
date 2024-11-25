@@ -17,6 +17,8 @@ function renderHeaderRow(props: HeaderRowProps) {
   );
 }
 
+//TODO: allowSelectAll
+
 describe('packages/table/HeaderRow', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {

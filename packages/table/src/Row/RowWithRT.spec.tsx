@@ -1,14 +1,19 @@
 import React from 'react';
 import { flexRender } from '@tanstack/react-table';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
-import { useTestHookCall } from '../utils/testHookCalls.testutils';
+import {
+  useMockTestRowData,
+  useTestHookCall,
+} from '../utils/testHookCalls.testutils';
 import { Table } from '..';
 
 import { Row } from '.';
@@ -95,28 +100,35 @@ describe('packages/table/Row/RowWithRT', () => {
     expect(toggleRowButton).toHaveAttribute('aria-label', 'Collapse row');
   });
 
-  describe('accepts a ref', () => {
-    test('RT cell', () => {
-      const ref = React.createRef<HTMLTableRowElement>();
-      const rowObj = {
-        id: '1',
-        getIsExpanded: () => false,
-        getParentRow: () => ({
-          getIsExpanded: () => false,
-        }),
-        getIsSelected: () => false,
-        getCanExpand: () => true,
-      };
+  //TODO: check is a select checkbox is added
 
-      render(
-        // @ts-expect-error - dummy row data is missing properties
-        <Row row={rowObj} ref={ref}>
-          Hello RT
-        </Row>,
-      );
+  test('accepts a ref', () => {
+    const ref = React.createRef<HTMLTableRowElement>();
+    const { result } = renderHook(() => useMockTestRowData());
+    const { firstRow } = result.current;
 
-      expect(ref.current).toBeInTheDocument();
-      expect(ref.current!.textContent).toBe('Hello RT');
-    });
+    render(
+      <Row row={firstRow} ref={ref}>
+        Hello RT
+      </Row>,
+    );
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello RT');
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const { result } = renderHook(() => useMockTestRowData());
+    const { firstRow, firstVirtualRow } = result.current;
+    const ref = React.createRef<HTMLTableRowElement>();
+
+    <>
+      <Row row={firstRow} />
+      <Row row={firstRow} ref={ref} />
+      <Row row={firstRow} virtualRow={firstVirtualRow} />
+      <Row row={firstRow} virtualRow={firstVirtualRow} ref={ref} />
+      <Row row={firstRow} virtualRow={firstVirtualRow} ref={ref} disabled />
+    </>;
   });
 });
