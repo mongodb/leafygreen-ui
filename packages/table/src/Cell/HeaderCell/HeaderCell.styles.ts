@@ -19,6 +19,8 @@ export const getBaseHeaderCellStyles = (size: number, isSelectable?: boolean) =>
       &:first-of-type {
         ${getCellPadding({ depth: 0, isExpandable: false, isSelectable })}
       }
+
+      line-height: 16px;
     `,
     {
       [css`
