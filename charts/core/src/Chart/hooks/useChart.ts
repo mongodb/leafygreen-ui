@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { LineChart as EchartsLineChart } from 'echarts/charts';
 import {
+  DataZoomComponent,
+  DataZoomInsideComponent,
   GridComponent,
   LegendComponent,
   TitleComponent,
@@ -11,13 +13,12 @@ import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import debounce from 'lodash.debounce';
 
-import { Theme } from '@leafygreen-ui/lib';
-
 import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
 import { chartSeriesColors } from '../chartSeriesColors';
 import { getDefaultChartOptions } from '../config';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
+import { ChartHookProps } from './useChart.types';
 
 /**
  * Register the required components. By using separate imports, we can avoid
@@ -32,24 +33,22 @@ echarts.use([
   EchartsLineChart,
   CanvasRenderer,
   ToolboxComponent,
+  DataZoomComponent,
+  DataZoomInsideComponent,
 ]);
-
-interface ChartHookProps {
-  onChartReady?: () => void;
-  theme: Theme;
-}
 
 /**
  * Creates a generic Apache ECharts options object with default values for those not set
  * that are in line with the designs and needs of the design system.
  */
-export function useChart({ theme, onChartReady }: ChartHookProps) {
+export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
   const [chartOptions, setChartOptions] = useState(
     getDefaultChartOptions(theme),
   );
 
+  // Initialize the chart
   useEffect(() => {
     const chartInstance = echarts.init(chartRef.current);
     chartInstanceRef.current = chartInstance;
@@ -61,9 +60,53 @@ export function useChart({ theme, onChartReady }: ChartHookProps) {
     };
     window.addEventListener('resize', resizeHandler);
 
-    if (onChartReady) {
-      chartInstance.on('finished', onChartReady);
+    function onInitialRender() {
+      if (onZoom) {
+        // Enable zooming with cursor drag
+        chartInstance.dispatchAction({
+          type: 'takeGlobalCursor',
+          key: 'dataZoomSelect',
+          dataZoomSelectActive: true,
+        });
+
+        // Update zoom context to propagate changes to other charts
+        chartInstance.on('dataZoom', (params: any) => {
+          if (params.batch) {
+            const xAxisIndex = 0;
+            const yAxisIndex = 1;
+
+            const { startValue: xStart, endValue: xEnd } =
+              params.batch[xAxisIndex];
+            const { startValue: yStart, endValue: yEnd } =
+              params.batch[yAxisIndex];
+
+            onZoom({
+              xAxis: { startValue: xStart, endValue: xEnd },
+              yAxis: { startValue: yStart, endValue: yEnd },
+            });
+          }
+
+          const isZoomed = params?.start !== 0 || params?.end !== 100;
+
+          if (isZoomed) {
+            chartInstance.dispatchAction({
+              type: 'dataZoom',
+              start: 0, // percentage of starting position
+              end: 100, // percentage of ending position
+            });
+          }
+        });
+      }
+
+      if (onChartReady) {
+        onChartReady();
+      }
+
+      // Remove so it doesn't get called on every render
+      chartInstance.off('rendered', onInitialRender);
     }
+
+    chartInstance.on('rendered', onInitialRender);
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
