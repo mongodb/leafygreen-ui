@@ -15,40 +15,6 @@ import { RowContextProvider } from './RowContext';
  * Renders the provided cells
  */
 
-// const Row = forwardRefWithGenerics(function Row<T extends LGRowData>(
-//   { row, virtualRow, disabled = false, ...rest }: RowProps<T>,
-//   ref: ForwardedRef<HTMLTableRowElement>,
-// ) {
-//   const { theme } = useDarkMode();
-//   const { shouldAlternateRowColor = false, virtualTable } = useTableContext();
-
-//   return (
-//     <>
-//       {row ? (
-//         <MemoizedInternalRowWithRT
-//           row={row}
-//           virtualRow={virtualRow}
-//           theme={theme}
-//           measureElement={virtualTable?.measureElement}
-//           shouldAlternateRowColor={shouldAlternateRowColor}
-//           isExpanded={row.getIsExpanded()}
-//           isParentExpanded={
-//             (row.getParentRow() && row.getParentRow()?.getIsExpanded()) ?? false
-//           }
-//           isSelected={row.getIsSelected()}
-//           ref={ref}
-//           disabled={disabled}
-//           {...rest}
-//         />
-//       ) : (
-//         <RowContextProvider disabled={disabled}>
-//           <InternalRowWithoutRT ref={ref} {...rest} />
-//         </RowContextProvider>
-//       )}
-//     </>
-//   );
-// });
-
 const RowWithForwardRef = function Row<T extends LGRowData>(
   { row, virtualRow, disabled = false, ...rest }: RowProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
@@ -82,10 +48,6 @@ const RowWithForwardRef = function Row<T extends LGRowData>(
     </>
   );
 };
-
-// const Row = React.forwardRef(RowWithForwardRef) as <T extends LGRowData>(
-//   p: RowProps<T> & { ref?: Ref<HTMLTableRowElement> },
-// ) => ReturnType<typeof RowWithForwardRef>;
 
 const Row = React.forwardRef(RowWithForwardRef) as RowComponentType;
 
