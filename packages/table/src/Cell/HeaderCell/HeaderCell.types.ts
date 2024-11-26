@@ -1,11 +1,4 @@
-import {
-  ComponentPropsWithRef,
-  ForwardedRef,
-  PropsWithoutRef,
-  ReactElement,
-  RefAttributes,
-  WeakValidationMap,
-} from 'react';
+import { ComponentPropsWithRef } from 'react';
 import { Header } from '@tanstack/react-table';
 
 import { LGRowData } from '../../useLeafyGreenTable';
@@ -29,24 +22,4 @@ export interface HeaderCellProps<T extends LGRowData>
    * Header object passed from the `useLeafyGreenTable` hook.
    */
   header?: Header<T, unknown>;
-}
-
-// https://stackoverflow.com/a/58473012
-// React.forwardRef can only work with plain function types.
-// This is an interface that restores the original function signature to work with generics.
-/**
- * The HeaderCellComponentType that restores the original function signature to work with generics.
- *
- */
-export interface HeaderCellComponentType {
-  <T extends LGRowData>(
-    props: HeaderCellProps<T>,
-    ref: ForwardedRef<HTMLTableCellElement>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<HeaderCellProps<LGRowData> & RefAttributes<any>>
-      >
-    | undefined;
 }

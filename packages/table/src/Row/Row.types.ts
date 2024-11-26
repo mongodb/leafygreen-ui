@@ -1,11 +1,4 @@
-import {
-  ComponentPropsWithRef,
-  ForwardedRef,
-  PropsWithoutRef,
-  ReactElement,
-  RefAttributes,
-  WeakValidationMap,
-} from 'react';
+import { ComponentPropsWithRef, ReactElement } from 'react';
 import React from 'react';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 
@@ -71,46 +64,7 @@ export interface InternalRowWithRTProps<T extends LGRowData>
 export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
   Partial<InternalRowWithRTBaseProps<T>>;
 
-// https://stackoverflow.com/a/58473012
-// React.forwardRef can only work with plain function types.
-// This is an interface that restores the original function signature to work with generics.
-/**
- * The RowComponentType that restores the original function signature to work with generics.
- *
- * row is optional
- */
-export interface RowComponentType {
-  <T extends LGRowData>(
-    props: RowProps<T>,
-    ref: ForwardedRef<HTMLTableRowElement>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<RowProps<LGRowData> & RefAttributes<any>>
-      >
-    | undefined;
-}
-
-// /**
-//  * The RowComponentType that restores the original function signature to work with generics.
-//  *
-//  *  row is required
-//  */
-// export interface RowComponentWithRTType {
-//   <T extends LGRowData>(
-//     props: InternalRowWithRTProps<T>,
-//     ref: ForwardedRef<HTMLTableRowElement>,
-//   ): ReactElement | null;
-//   displayName?: string;
-//   propTypes?:
-//     | WeakValidationMap<
-//         PropsWithoutRef<InternalRowWithRTProps<LGRowData> & RefAttributes<any>>
-//       >
-//     | undefined;
-// }
-
-// This removes propTypes and displayName
+// This removes propTypes and displayName but works in combination with MemoWithGenerics in R17 and R18
 export interface ForwardRefWithGenerics {
   <T, P = NonNullable<unknown>>(
     render: (props: P, ref: React.ForwardedRef<T>) => ReactElement | null,
@@ -119,7 +73,6 @@ export interface ForwardRefWithGenerics {
   ) => ReactElement | null;
 }
 
-export const forwardRefWithGenerics =
-  React.forwardRef as ForwardRefWithGenerics;
+export const forwardRefWithGenerics: ForwardRefWithGenerics = React.forwardRef;
 
-export const memoWithGenerics = React.memo as MemoWithGenerics;
+export const memoWithGenerics: MemoWithGenerics = React.memo;

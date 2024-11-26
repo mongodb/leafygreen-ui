@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../../constants';
+import { forwardRefWithGenerics } from '../../Row/Row.types';
 import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
 
@@ -13,12 +14,14 @@ import {
   getBaseHeaderCellStyles,
   getHeaderCellContentStyles,
 } from './HeaderCell.styles';
-import { HeaderCellComponentType, HeaderCellProps } from './HeaderCell.types';
+import { HeaderCellProps } from './HeaderCell.types';
 
 /**
  * Component to wrap `<th>` elements for use inside `<thead>` elements.
  */
-const HeaderCellWithRef = <T extends LGRowData>(
+const HeaderCell = forwardRefWithGenerics(function HeaderCell<
+  T extends LGRowData,
+>(
   {
     children,
     className,
@@ -27,7 +30,7 @@ const HeaderCellWithRef = <T extends LGRowData>(
     ...rest
   }: PropsWithChildren<HeaderCellProps<T>>,
   ref: ForwardedRef<HTMLTableCellElement>,
-) => {
+) {
   const { isSelectable } = useTableContext();
 
   const { columnName, sortState, onSortIconClick } = getHeaderCellState(header);
@@ -63,16 +66,11 @@ const HeaderCellWithRef = <T extends LGRowData>(
       </div>
     </th>
   );
-};
-
-// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
-export const HeaderCell = React.forwardRef(
-  HeaderCellWithRef,
-) as HeaderCellComponentType;
+});
 
 export default HeaderCell;
 
+// @ts-expect-error
 HeaderCell.propTypes = {
   header: PropTypes.object,
 } as any; // avoid inferred types from interfering;

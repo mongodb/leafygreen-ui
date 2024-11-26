@@ -8,21 +8,21 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
+import { forwardRefWithGenerics } from '../Row/Row.types';
 import { useTableContext } from '../TableContext';
 
 import {
   baseStyles,
   expandedContentThemeStyles,
 } from './ExpandedContent.styles';
-import {
-  ExpandedContentComponentType,
-  ExpandedContentProps,
-} from './ExpandedContent.types';
+import { ExpandedContentProps } from './ExpandedContent.types';
 
-const ExpandedContentWithRef = <T extends RowData>(
+const ExpandedContent = forwardRefWithGenerics(function ExpandedContent<
+  T extends RowData,
+>(
   { row, virtualRow, ...rest }: ExpandedContentProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
-) => {
+) {
   const { virtualTable } = useTableContext();
 
   const content =
@@ -48,16 +48,9 @@ const ExpandedContentWithRef = <T extends RowData>(
       </td>
     </InternalRowBase>
   );
-};
+});
 
-// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
-export const ExpandedContent = React.forwardRef(
-  ExpandedContentWithRef,
-) as ExpandedContentComponentType;
-
-ExpandedContent.displayName = 'ExpandedContent';
-
+// @ts-expect-error
 ExpandedContent.propTypes = {
   row: PropTypes.object,
   virtualRow: PropTypes.object,

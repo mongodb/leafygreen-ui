@@ -1,17 +1,17 @@
 import React, { ForwardedRef } from 'react';
 import PropTypes from 'prop-types';
 
+import { forwardRefWithGenerics } from '../Row/Row.types';
 import { LGRowData } from '../useLeafyGreenTable';
 
-import { CellComponentType } from './Cell.types';
 import InternalCellWithoutRT from './InternalCellWithoutRT';
 import InternalCellWithRT from './InternalCellWithRT';
 import { CellProps } from '.';
 
-const CellWithForwardRef = <T extends LGRowData>(
+const Cell = forwardRefWithGenerics(function Cell<T extends LGRowData>(
   { children, cell: reactTableCell, ...rest }: CellProps<T>,
   ref: ForwardedRef<HTMLTableCellElement>,
-) => {
+) {
   return (
     <>
       {reactTableCell ? (
@@ -25,18 +25,13 @@ const CellWithForwardRef = <T extends LGRowData>(
       )}
     </>
   );
-};
-
-// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
-export const Cell = React.forwardRef(CellWithForwardRef) as CellComponentType;
-
-Cell.displayName = 'Cell';
+});
 
 export default Cell;
 
+// @ts-expect-error
 Cell.propTypes = {
   cell: PropTypes.object,
   align: PropTypes.oneOf(['left', 'right', 'center']),
   contentClassName: PropTypes.string,
-} as any; // avoid inferred types from interfering;
+};

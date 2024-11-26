@@ -1,11 +1,4 @@
-import {
-  ComponentPropsWithRef,
-  ForwardedRef,
-  PropsWithoutRef,
-  ReactElement,
-  RefAttributes,
-  WeakValidationMap,
-} from 'react';
+import { ComponentPropsWithRef } from 'react';
 
 import { LeafyGreenTableCell, LGRowData } from '../useLeafyGreenTable';
 
@@ -45,42 +38,3 @@ export interface InternalCellProps extends BaseCellProps {}
 
 export interface InternalCellWithRTProps<T extends LGRowData>
   extends InternalCellWithRTRequiredProps<T> {}
-
-// https://stackoverflow.com/a/58473012
-// React.forwardRef can only work with plain function types.
-// This is an interface that original function signature to work with generics.
-/**
- * The CellComponentType that restores the original function signature to work with generics.
- *
- * cell is optional
- */
-export interface CellComponentType {
-  <T extends LGRowData>(
-    props: CellProps<T>,
-    ref: ForwardedRef<HTMLTableCellElement>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<CellProps<LGRowData> & RefAttributes<any>>
-      >
-    | undefined;
-}
-
-/**
- * The CellComponentType that restores the original function signature to work with generics.
- *
- * cell is required
- */
-export interface InternalCellWithRTComponentType {
-  <T extends LGRowData>(
-    props: InternalCellWithRTProps<T>,
-    ref: ForwardedRef<HTMLTableCellElement>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<InternalCellWithRTProps<LGRowData> & RefAttributes<any>>
-      >
-    | undefined;
-}

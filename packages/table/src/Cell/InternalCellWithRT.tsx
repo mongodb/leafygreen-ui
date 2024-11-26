@@ -2,22 +2,22 @@ import React, { ForwardedRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
+import { forwardRefWithGenerics } from '../Row/Row.types';
 import { useRowContext } from '../Row/RowContext';
 import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
-import {
-  InternalCellWithRTComponentType,
-  InternalCellWithRTProps,
-} from './Cell.types';
+import { InternalCellWithRTProps } from './Cell.types';
 import InternalCellBase from './InternalCellBase';
 
 /**
  * @internal
  */
-const InternalCellWithRTForwardRef = <T extends LGRowData>(
+const InternalCellWithRT = forwardRefWithGenerics(function InternalCellWithRT<
+  T extends LGRowData,
+>(
   {
     children,
     className,
@@ -27,7 +27,7 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
     ...rest
   }: InternalCellWithRTProps<T>,
   ref: ForwardedRef<HTMLTableCellElement>,
-) => {
+) {
   const { disabled, isExpanded, isExpandable, depth, toggleExpanded } =
     useRowContext();
   const { isSelectable, shouldTruncate = true } = useTableContext();
@@ -55,14 +55,6 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
       <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
     </InternalCellBase>
   );
-};
-
-// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
-export const InternalCellWithRT = React.forwardRef(
-  InternalCellWithRTForwardRef,
-) as InternalCellWithRTComponentType;
-
-InternalCellWithRT.displayName = 'InternalCellWithRT';
+});
 
 export default InternalCellWithRT;
