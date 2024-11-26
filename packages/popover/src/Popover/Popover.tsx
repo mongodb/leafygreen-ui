@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, useEffect } from 'react';
+import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
@@ -75,7 +75,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     fwdRef,
   ) => {
     const {
-      renderMode,
+      renderMode = RenderMode.TopLayer,
       /** top layer props */
       dismissMode = DismissMode.Auto,
       onToggle,
@@ -122,11 +122,11 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     };
     const rootProps = usePortal ? portalProps : {};
 
-    const { placeholderRef, referenceElement, referenceElDocumentPos } =
+    const { referenceElement, referenceElDocumentPos, setPlaceholderElement } =
       useReferenceElement(refEl, scrollContainer);
     const { contentNodeRef, setContentNode } = useContentNode();
 
-    const { context, floatingStyles, placement, refs } = useFloating({
+    const { context, elements, placement, refs, strategy, x, y } = useFloating({
       elements: {
         reference: referenceElement,
       },
@@ -136,13 +136,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
           [align, spacing],
         ),
         flip({
-          mainAxis: adjustOnMutation,
-          crossAxis: adjustOnMutation,
+          boundary: scrollContainer ?? 'clippingAncestors',
         }),
       ],
       open: active,
       placement: getFloatingPlacement(align, justify),
-      strategy: 'absolute',
+      strategy: renderMode === RenderMode.TopLayer ? 'fixed' : 'absolute',
       transform: false,
       whileElementsMounted: autoUpdate,
     });
@@ -176,7 +175,9 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
     const handleEntering = (isAppearing: boolean) => {
       if (renderMode === RenderMode.TopLayer) {
         // @ts-expect-error - `toggle` event not supported pre-typescript v5
-        refs.floating.current?.addEventListener('toggle', onToggle);
+        elements.floating?.addEventListener('toggle', onToggle);
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        elements.floating?.showPopover?.();
       }
 
       onEntering?.(isAppearing);
@@ -187,84 +188,77 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       onEntered?.(isAppearing);
     };
 
-    const handleExiting = () => {
-      if (renderMode === RenderMode.TopLayer) {
-        // @ts-expect-error - `toggle` event not supported pre-typescript v5
-        refs.floating.current?.removeEventListener('toggle', onToggle);
-      }
-
-      onExiting?.();
-    };
-
     const handleExited = () => {
       setIsPopoverOpen(false);
+
+      if (renderMode === RenderMode.TopLayer) {
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        elements.floating?.removeEventListener('toggle', onToggle);
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        elements.floating?.hidePopover?.();
+      }
+
       onExited?.();
     };
 
-    useEffect(() => {
-      if (!refs.floating.current || renderMode !== RenderMode.TopLayer) {
-        return;
-      }
-
-      if (context.open) {
-        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
-        refs.floating.current?.showPopover?.();
-      } else {
-        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
-        refs.floating.current?.hidePopover?.();
-      }
-    }, [context.open, renderMode]);
-
     return (
-      <Transition
-        nodeRef={contentNodeRef}
-        in={context.open}
-        timeout={TRANSITION_DURATION}
-        onEnter={onEnter}
-        onEntering={handleEntering}
-        onEntered={handleEntered}
-        onExit={onExit}
-        onExiting={handleExiting}
-        onExited={handleExited}
-        mountOnEnter
-        unmountOnExit
-        appear
-      >
-        {state => (
-          <>
-            {/* Using <span> as placeholder to prevent validateDOMNesting warnings
-            Warnings will still show up if `usePortal` is false */}
-            <span ref={placeholderRef} className={hiddenPlaceholderStyle} />
-            <Root {...rootProps}>
-              <div
-                ref={popoverRef}
-                className={getPopoverStyles({
-                  className,
-                  floatingStyles,
-                  placement: extendedPlacement,
-                  popoverZIndex,
-                  spacing,
-                  state,
-                  transformAlign,
-                })}
-                // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
-                // eslint-disable-next-line react/no-unknown-property
-                popover={
-                  renderMode === RenderMode.TopLayer ? dismissMode : undefined
-                }
-                {...restProps}
-              >
-                {/* We need to put `setContentNode` ref on this inner wrapper because
+      <>
+        {/* Using <span> as placeholder to prevent validateDOMNesting warnings
+    Warnings will still show up if `usePortal` is false */}
+        <span ref={setPlaceholderElement} className={hiddenPlaceholderStyle} />
+        <Transition
+          nodeRef={contentNodeRef}
+          in={context.open}
+          timeout={{
+            appear: 0,
+            enter: TRANSITION_DURATION,
+            exit: TRANSITION_DURATION,
+          }}
+          onEnter={onEnter}
+          onEntering={handleEntering}
+          onEntered={handleEntered}
+          onExit={onExit}
+          onExiting={onExiting}
+          onExited={handleExited}
+          mountOnEnter
+          unmountOnExit
+          appear
+        >
+          {state => (
+            <>
+              <Root {...rootProps}>
+                <div
+                  ref={popoverRef}
+                  className={getPopoverStyles({
+                    className,
+                    left: x,
+                    placement: extendedPlacement,
+                    popoverZIndex,
+                    position: strategy,
+                    spacing,
+                    state,
+                    top: y,
+                    transformAlign,
+                  })}
+                  // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
+                  // eslint-disable-next-line react/no-unknown-property
+                  popover={
+                    renderMode === RenderMode.TopLayer ? dismissMode : undefined
+                  }
+                  {...restProps}
+                >
+                  {/* We need to put `setContentNode` ref on this inner wrapper because
                 placing the ref on the parent will create an infinite loop in some cases
                 when dynamic styles are applied. */}
-                <div ref={setContentNode} className={contentClassName}>
-                  {renderChildren()}
+                  <div ref={setContentNode} className={contentClassName}>
+                    {renderChildren()}
+                  </div>
                 </div>
-              </div>
-            </Root>
-          </>
-        )}
-      </Transition>
+              </Root>
+            </>
+          )}
+        </Transition>
+      </>
     );
   },
 );
