@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 
-import { Theme } from '@leafygreen-ui/lib';
+import { MemoWithGenerics, Theme } from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
@@ -79,59 +79,47 @@ export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
  *
  * row is optional
  */
-export interface RowComponentType {
-  <T extends LGRowData>(
-    props: RowProps<T>,
-    ref: ForwardedRef<HTMLTableRowElement>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<RowProps<LGRowData> & RefAttributes<any>>
-      >
-    | undefined;
-}
-
-/**
- * The RowComponentType that restores the original function signature to work with generics.
- *
- *  row is required
- */
-export interface RowComponentWithRTType {
-  <T extends LGRowData>(
-    props: InternalRowWithRTProps<T>,
-    ref: ForwardedRef<HTMLTableRowElement>,
-  ): ReactElement | null;
-  displayName?: string;
-  propTypes?:
-    | WeakValidationMap<
-        PropsWithoutRef<InternalRowWithRTProps<LGRowData> & RefAttributes<any>>
-      >
-    | undefined;
-}
-
-export const forwardRefWithGenerics = React.forwardRef as <
-  T,
-  P = NonNullable<unknown>,
->(
-  render: (props: P, ref: React.ForwardedRef<T>) => ReactElement | null,
-) => (
-  props: React.PropsWithoutRef<P> & React.RefAttributes<T>,
-) => ReactElement | null;
-
-// export const forwardRefWithGenerics = React.forwardRef as <
-//   T,
-//   P = NonNullable<unknown>,
-// >(
-//   render: (props: P, ref: React.ForwardedRef<T>) => React.ReactElement | null,
-// ) => {
-//   (
-//     props: React.PropsWithoutRef<P> & React.RefAttributes<T>,
-//   ): React.ReactElement | null;
+// export interface RowComponentType {
+//   <T extends LGRowData>(
+//     props: RowProps<T>,
+//     ref: ForwardedRef<HTMLTableRowElement>,
+//   ): ReactElement | null;
 //   displayName?: string;
-// };
+//   propTypes?:
+//     | WeakValidationMap<
+//         PropsWithoutRef<RowProps<LGRowData> & RefAttributes<any>>
+//       >
+//     | undefined;
+// }
 
-export const memoWithGenerics = React.memo as <P extends object>(
-  Component: (props: P) => ReactElement | null,
-  propsAreEqual?: (prevProps: Readonly<P>, nextProps: Readonly<P>) => boolean,
-) => (props: P) => ReactElement | null;
+// /**
+//  * The RowComponentType that restores the original function signature to work with generics.
+//  *
+//  *  row is required
+//  */
+// export interface RowComponentWithRTType {
+//   <T extends LGRowData>(
+//     props: InternalRowWithRTProps<T>,
+//     ref: ForwardedRef<HTMLTableRowElement>,
+//   ): ReactElement | null;
+//   displayName?: string;
+//   propTypes?:
+//     | WeakValidationMap<
+//         PropsWithoutRef<InternalRowWithRTProps<LGRowData> & RefAttributes<any>>
+//       >
+//     | undefined;
+// }
+
+// This removes propTypes and displayName
+export interface ForwardRefWithGenerics {
+  <T, P = NonNullable<unknown>>(
+    render: (props: P, ref: React.ForwardedRef<T>) => ReactElement | null,
+  ): (
+    props: React.PropsWithoutRef<P> & React.RefAttributes<T>,
+  ) => ReactElement | null;
+}
+
+export const forwardRefWithGenerics =
+  React.forwardRef as ForwardRefWithGenerics;
+
+export const memoWithGenerics = React.memo as MemoWithGenerics;
