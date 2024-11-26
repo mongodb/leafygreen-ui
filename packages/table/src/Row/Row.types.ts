@@ -1,12 +1,7 @@
-import { ComponentPropsWithRef, ReactElement } from 'react';
-import React from 'react';
+import { ComponentPropsWithRef } from 'react';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 
-import {
-  ForwardRefWithGenerics,
-  MemoWithGenerics,
-  Theme,
-} from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
