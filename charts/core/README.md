@@ -23,7 +23,7 @@ npm install @lg-charts/core
 ```js
 import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
 
-<Chart>
+<Chart zoomable onZoom={handleZoom}>
   <Header title="My Chart" />
   <Grid vertical={false}>
   <XAxis type="time" />
@@ -84,9 +84,11 @@ Chart container component.
 
 #### Props
 
-| Name           | Description                                             | Type         | Default |
-| -------------- | ------------------------------------------------------- | ------------ | ------- |
-| `onChartReady` | Callback to be called when chart is finished rendering. | `() => void` |         |
+| Name                        | Description                                                      | Type                           | Default |
+| --------------------------- | ---------------------------------------------------------------- | ------------------------------ | ------- |
+| `onChartReady`              | Callback to be called when chart is finished rendering.          | `() => void`                   |         |
+| `zoomable` _(optional)_     | When true, click and drag zoom actions are enabled on the chart. | `boolean`                      | `false` |
+| `onZoomSelect` _(optional)_ | When true, click and drag zoom actions are enabled on the chart. | `(ZoomSelectionEvent) => void` |         |
 
 ## Child Components
 

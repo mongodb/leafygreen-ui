@@ -12,7 +12,7 @@ import type { ComposeOption } from 'echarts/core';
 
 import { DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { ZoomEvent } from './hooks/useChart.types';
+import { ZoomSelectionEvent } from './hooks/useChart.types';
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
@@ -38,7 +38,8 @@ export type ChartOptions = ComposeOption<
 export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
   children?: React.ReactNode;
   onChartReady?: () => void;
-  onZoom?: (e: ZoomEvent) => void;
+  zoomable?: boolean;
+  onZoomSelect?: (e: ZoomSelectionEvent) => void;
 }
 
 export const ChartActionType = {

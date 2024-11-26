@@ -41,7 +41,12 @@ echarts.use([
  * Creates a generic Apache ECharts options object with default values for those not set
  * that are in line with the designs and needs of the design system.
  */
-export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
+export function useChart({
+  theme,
+  onChartReady,
+  zoomable,
+  onZoomSelect,
+}: ChartHookProps) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
   const [chartOptions, setChartOptions] = useState(
@@ -61,7 +66,7 @@ export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
     window.addEventListener('resize', resizeHandler);
 
     function onInitialRender() {
-      if (onZoom) {
+      if (zoomable) {
         /**
          * Zooming is built into the chart via the toolbar. By default, a user
          * has to click the "dataZoom" button to enable zooming. We however hide
@@ -84,10 +89,12 @@ export function useChart({ theme, onChartReady, onZoom }: ChartHookProps) {
             const { startValue: yStart, endValue: yEnd } =
               params.batch[yAxisIndex];
 
-            onZoom({
-              xAxis: { startValue: xStart, endValue: xEnd },
-              yAxis: { startValue: yStart, endValue: yEnd },
-            });
+            if (onZoomSelect) {
+              onZoomSelect({
+                xAxis: { startValue: xStart, endValue: xEnd },
+                yAxis: { startValue: yStart, endValue: yEnd },
+              });
+            }
           }
 
           /**
