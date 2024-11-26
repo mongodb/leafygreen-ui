@@ -3382,20 +3382,20 @@
   dependencies:
     "@floating-ui/dom" "^1.6.1"
 
-"@floating-ui/react-dom@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@floating-ui/react-dom/-/react-dom-2.1.1.tgz#cca58b6b04fc92b4c39288252e285e0422291fb0"
-  integrity sha512-4h84MJt3CHrtG18mGsXuLCHMrug49d7DFkU0RMIyshRveBeyV2hmV/pDaF2Uxtu8kgq5r46llp5E5FQiR0K2Yg==
+"@floating-ui/react-dom@^2.1.2":
+  version "2.1.2"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@floating-ui/react-dom/-/react-dom-2.1.2.tgz#a1349bbf6a0e5cb5ded55d023766f20a4d439a31"
+  integrity sha512-06okr5cgPzMNBy+Ycse2A6udMi4bqwW/zgBF/rwjcNqWkyr82Mcg8b0vjX8OJpZFy/FKjJmw6wV7t44kK6kW7A==
   dependencies:
     "@floating-ui/dom" "^1.0.0"
 
-"@floating-ui/react@^0.26.23":
-  version "0.26.23"
-  resolved "https://registry.yarnpkg.com/@floating-ui/react/-/react-0.26.23.tgz#28985e5ce482c34f347f28076f11267e47a933bd"
-  integrity sha512-9u3i62fV0CFF3nIegiWiRDwOs7OW/KhSUJDNx2MkQM3LbE5zQOY01sL3nelcVBXvX7Ovvo3A49I8ql+20Wg/Hw==
+"@floating-ui/react@^0.26.28":
+  version "0.26.28"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@floating-ui/react/-/react-0.26.28.tgz#93f44ebaeb02409312e9df9507e83aab4a8c0dc7"
+  integrity sha512-yORQuuAtVpiRjpMhdc0wJj06b9JFjrYF4qp96j++v2NBpbi6SEGF7donUJ3TMieerQ6qVkAv1tgr7L4r5roTqw==
   dependencies:
-    "@floating-ui/react-dom" "^2.1.1"
-    "@floating-ui/utils" "^0.2.7"
+    "@floating-ui/react-dom" "^2.1.2"
+    "@floating-ui/utils" "^0.2.8"
     tabbable "^6.0.0"
 
 "@floating-ui/utils@^0.2.0", "@floating-ui/utils@^0.2.1":
@@ -3407,6 +3407,11 @@
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.7.tgz#d0ece53ce99ab5a8e37ebdfe5e32452a2bfc073e"
   integrity sha512-X8R8Oj771YRl/w+c1HqAC1szL8zWQRwFvgDwT129k9ACdBoud/+/rX9V0qiMl6LWUdP9voC2nDVZYPMQQsb6eA==
+
+"@floating-ui/utils@^0.2.8":
+  version "0.2.8"
+  resolved "https://artifactory.corp.mongodb.com/artifactory/api/npm/npm/@floating-ui/utils/-/utils-0.2.8.tgz#21a907684723bbbaa5f0974cf7730bd797eb8e62"
+  integrity sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==
 
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"

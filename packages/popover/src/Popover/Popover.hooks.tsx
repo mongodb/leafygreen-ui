@@ -58,7 +58,7 @@ export function usePopoverProps({
 
   const renderMode = forceUseTopLayer
     ? RenderMode.TopLayer
-    : renderModeProp || context.renderMode || RenderMode.TopLayer;
+    : renderModeProp || context.renderMode;
   const usePortal = renderMode === RenderMode.Portal;
   const useTopLayer = renderMode === RenderMode.TopLayer;
 
@@ -123,7 +123,8 @@ export function useReferenceElement(
   refEl?: PopoverProps['refEl'],
   scrollContainer?: PopoverProps['scrollContainer'],
 ): UseReferenceElementReturnObj {
-  const placeholderRef = useRef<HTMLSpanElement | null>(null);
+  const [placeholderElement, setPlaceholderElement] =
+    useState<HTMLSpanElement | null>(null);
   const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(
     null,
   );
@@ -134,14 +135,14 @@ export function useReferenceElement(
       return;
     }
 
-    const placeholderEl = placeholderRef?.current;
-    const maybeParentEl = placeholderEl !== null && placeholderEl?.parentNode;
+    const maybeParentEl =
+      placeholderElement !== null && placeholderElement.parentNode;
 
     if (maybeParentEl && maybeParentEl instanceof HTMLElement) {
       setReferenceElement(maybeParentEl);
       return;
     }
-  }, [placeholderRef.current, refEl]);
+  }, [placeholderElement, refEl]);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
@@ -151,9 +152,9 @@ export function useReferenceElement(
   );
 
   return {
-    placeholderRef,
     referenceElement,
     referenceElDocumentPos,
+    setPlaceholderElement,
   };
 }
 

@@ -1,7 +1,10 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { PortalContextProvider } from '../PortalContext';
+import {
+  PortalContextProvider,
+  usePopoverPortalContainer,
+} from '../PortalContext';
 
 import { PopoverPropsProviderProps } from './PopoverPropsContext.types';
 
@@ -23,9 +26,12 @@ export const PopoverPropsProvider = ({
   children,
   ...props
 }: PropsWithChildren<PopoverPropsProviderProps>) => {
+  const popoverPortalContext = usePopoverPortalContainer();
   const popover = {
-    portalContainer: props.portalContainer,
-    scrollContainer: props.scrollContainer,
+    portalContainer:
+      props.portalContainer || popoverPortalContext.portalContainer,
+    scrollContainer:
+      props.scrollContainer || popoverPortalContext.scrollContainer,
   };
 
   return (

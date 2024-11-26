@@ -156,7 +156,6 @@ export const DefaultSelect = (args: ModalProps) => {
               name="pets"
               value={value}
               onChange={setValue}
-              usePortal={true}
             >
               <OptionGroup label="Common">
                 <Option value="dog">Dog</Option>

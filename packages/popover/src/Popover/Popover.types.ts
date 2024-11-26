@@ -338,11 +338,6 @@ export type PopoverComponentProps = Omit<HTMLElementProps<'div'>, 'children'> &
 
 export interface UseReferenceElementReturnObj {
   /**
-   * Ref to access hidden placeholder element
-   */
-  placeholderRef: React.MutableRefObject<HTMLSpanElement | null>;
-
-  /**
    * Element against which the popover component will be positioned
    */
   referenceElement: HTMLElement | null;
@@ -351,6 +346,13 @@ export interface UseReferenceElementReturnObj {
    * Document position details of the reference element
    */
   referenceElDocumentPos: ElementPosition;
+
+  /**
+   * Callback ref attached to placeholder span element to access the parent element
+   */
+  setPlaceholderElement: React.Dispatch<
+    React.SetStateAction<HTMLSpanElement | null>
+  >;
 }
 
 export interface UseContentNodeReturnObj {

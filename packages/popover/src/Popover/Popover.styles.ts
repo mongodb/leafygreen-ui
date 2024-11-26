@@ -15,16 +15,13 @@ export const hiddenPlaceholderStyle = css`
   display: none;
 `;
 
-const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
+const basePopoverStyles = css`
   margin: 0;
   border: none;
   padding: 0;
   overflow: visible;
   background-color: transparent;
-
-  position: ${floatingStyles.position};
-  top: ${floatingStyles.top}px;
-  left: ${floatingStyles.left}px;
+  width: max-content;
 
   transition-property: opacity, transform, overlay, display;
   transition-duration: ${TRANSITION_DURATION}ms;
@@ -47,6 +44,20 @@ const getBasePopoverStyles = (floatingStyles: React.CSSProperties) => css`
       transform: scale(${TRANSFORM_INITIAL_SCALE});
     }
   }
+`;
+
+const getPositionStyles = ({
+  left,
+  position,
+  top,
+}: {
+  left: number;
+  position: 'absolute' | 'fixed';
+  top: number;
+}) => css`
+  left: ${left}px;
+  position: ${position};
+  top: ${top}px;
 `;
 
 const transformOriginStyles: Record<ExtendedPlacement, string> = {
@@ -107,28 +118,32 @@ const getClosedStyles = (spacing: number, transformAlign: TransformAlign) => {
       return cx(
         baseClosedStyles,
         css`
-          transform: translateY(${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
+          transform: translate3d(0, ${spacing}px, 0)
+            scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Bottom:
       return cx(
         baseClosedStyles,
         css`
-          transform: translateY(-${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
+          transform: translate3d(0, -${spacing}px, 0)
+            scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Left:
       return cx(
         baseClosedStyles,
         css`
-          transform: translateX(${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
+          transform: translate3d(${spacing}px, 0, 0)
+            scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Right:
       return cx(
         baseClosedStyles,
         css`
-          transform: translateX(-${spacing}px) scale(${TRANSFORM_INITIAL_SCALE});
+          transform: translate3d(-${spacing}px, 0, 0)
+            scale(${TRANSFORM_INITIAL_SCALE});
         `,
       );
     case TransformAlign.Center:
@@ -196,23 +211,28 @@ const getOpenStyles = (transformAlign: TransformAlign) => {
 
 export const getPopoverStyles = ({
   className,
-  floatingStyles,
+  left,
   placement,
   popoverZIndex,
+  position,
   spacing,
   state,
+  top,
   transformAlign,
 }: {
   className?: string;
-  floatingStyles: React.CSSProperties;
+  left: number;
   placement: ExtendedPlacement;
   popoverZIndex?: number;
+  position: 'absolute' | 'fixed';
   spacing: number;
   state: TransitionStatus;
+  top: number;
   transformAlign: TransformAlign;
 }) =>
   cx(
-    getBasePopoverStyles(floatingStyles),
+    basePopoverStyles,
+    getPositionStyles({ left, position, top }),
     transformOriginStyles[placement],
     {
       [getClosedStyles(spacing, transformAlign)]: state !== 'entered',
