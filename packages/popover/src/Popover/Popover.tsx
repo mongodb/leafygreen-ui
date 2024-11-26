@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, useEffect } from 'react';
+import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
 import PropTypes from 'prop-types';
@@ -173,98 +173,89 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       return children;
     };
 
-    const handleEntering = (isAppearing: boolean) => {
+    const handleEnter = (isAppearing: boolean) => {
+      console.log('[POPOVER] handleEnter');
+
       if (renderMode === RenderMode.TopLayer) {
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        refs.floating.current?.showPopover?.();
         // @ts-expect-error - `toggle` event not supported pre-typescript v5
         refs.floating.current?.addEventListener('toggle', onToggle);
       }
-
-      onEntering?.(isAppearing);
-    };
-
-    const handleEntered = (isAppearing: boolean) => {
       setIsPopoverOpen(true);
-      onEntered?.(isAppearing);
-    };
-
-    const handleExiting = () => {
-      if (renderMode === RenderMode.TopLayer) {
-        // @ts-expect-error - `toggle` event not supported pre-typescript v5
-        refs.floating.current?.removeEventListener('toggle', onToggle);
-      }
-
-      onExiting?.();
+      onEnter?.(isAppearing);
     };
 
     const handleExited = () => {
+      console.log('[POPOVER] handleExited');
+
+      if (renderMode === RenderMode.TopLayer) {
+        console.log('[POPOVER] removing event listener');
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        refs.floating.current?.removeEventListener('toggle', onToggle);
+        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
+        refs.floating.current?.hidePopover?.();
+      }
       setIsPopoverOpen(false);
       onExited?.();
     };
 
-    useEffect(() => {
-      if (!refs.floating.current || renderMode !== RenderMode.TopLayer) {
-        return;
-      }
-
-      if (context.open) {
-        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
-        refs.floating.current?.showPopover?.();
-      } else {
-        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
-        refs.floating.current?.hidePopover?.();
-      }
-    }, [context.open, renderMode]);
-
     return (
-      <Transition
-        nodeRef={contentNodeRef}
-        in={context.open}
-        timeout={TRANSITION_DURATION}
-        onEnter={onEnter}
-        onEntering={handleEntering}
-        onEntered={handleEntered}
-        onExit={onExit}
-        onExiting={handleExiting}
-        onExited={handleExited}
-        mountOnEnter
-        unmountOnExit
-        appear
-      >
-        {state => (
-          <>
-            {/* Using <span> as placeholder to prevent validateDOMNesting warnings
+      <>
+        <span ref={placeholderRef} className={hiddenPlaceholderStyle} />
+        <Transition
+          nodeRef={contentNodeRef}
+          in={context.open}
+          timeout={{
+            appear: TRANSITION_DURATION,
+            enter: 0,
+            exit: TRANSITION_DURATION,
+          }}
+          onEnter={handleEnter}
+          onEntering={onEntering}
+          onEntered={onEntered}
+          onExit={onExit}
+          onExiting={onExiting}
+          onExited={handleExited}
+          mountOnEnter
+          unmountOnExit
+          appear
+        >
+          {state => (
+            <>
+              {/* Using <span> as placeholder to prevent validateDOMNesting warnings
             Warnings will still show up if `usePortal` is false */}
-            <span ref={placeholderRef} className={hiddenPlaceholderStyle} />
-            <Root {...rootProps}>
-              <div
-                ref={popoverRef}
-                className={getPopoverStyles({
-                  className,
-                  floatingStyles,
-                  placement: extendedPlacement,
-                  popoverZIndex,
-                  spacing,
-                  state,
-                  transformAlign,
-                })}
-                // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
-                // eslint-disable-next-line react/no-unknown-property
-                popover={
-                  renderMode === RenderMode.TopLayer ? dismissMode : undefined
-                }
-                {...restProps}
-              >
-                {/* We need to put `setContentNode` ref on this inner wrapper because
+              <Root {...rootProps}>
+                <div
+                  ref={popoverRef}
+                  className={getPopoverStyles({
+                    className,
+                    floatingStyles,
+                    placement: extendedPlacement,
+                    popoverZIndex,
+                    spacing,
+                    state,
+                    transformAlign,
+                  })}
+                  // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
+                  // eslint-disable-next-line react/no-unknown-property
+                  popover={
+                    renderMode === RenderMode.TopLayer ? dismissMode : undefined
+                  }
+                  {...restProps}
+                >
+                  {/* We need to put `setContentNode` ref on this inner wrapper because
                 placing the ref on the parent will create an infinite loop in some cases
                 when dynamic styles are applied. */}
-                <div ref={setContentNode} className={contentClassName}>
-                  {renderChildren()}
+                  <div ref={setContentNode} className={contentClassName}>
+                    {renderChildren()}
+                  </div>
                 </div>
-              </div>
-            </Root>
-          </>
-        )}
-      </Transition>
+              </Root>
+            </>
+          )}
+        </Transition>
+      </>
     );
   },
 );

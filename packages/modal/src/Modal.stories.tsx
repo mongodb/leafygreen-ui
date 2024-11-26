@@ -131,6 +131,7 @@ Scroll.args = {
 export const DefaultSelect = (args: ModalProps) => {
   const [value, setValue] = useState('cat');
 
+  console.clear();
   return (
     <div
       className={css`
@@ -145,7 +146,7 @@ export const DefaultSelect = (args: ModalProps) => {
             .paragraphs(2, '\n')
             .split('\n')
             .map(p => (
-              <Body>{p}</Body>
+              <Body key={p}>{p}</Body>
             ))}
 
           <div>
@@ -156,7 +157,6 @@ export const DefaultSelect = (args: ModalProps) => {
               name="pets"
               value={value}
               onChange={setValue}
-              usePortal={true}
             >
               <OptionGroup label="Common">
                 <Option value="dog">Dog</Option>
