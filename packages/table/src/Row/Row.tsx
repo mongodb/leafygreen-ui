@@ -1,4 +1,4 @@
-import React, { ForwardedRef, ReactElement, Ref } from 'react';
+import React, { ForwardedRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -8,11 +8,7 @@ import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import MemoizedInternalRowWithRT from './InternalRowWithRT';
-import {
-  forwardRefWithGenerics,
-  RowComponentType,
-  RowProps,
-} from './Row.types';
+import { RowComponentType, RowProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**

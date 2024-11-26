@@ -79,18 +79,18 @@ export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
  *
  * row is optional
  */
-// export interface RowComponentType {
-//   <T extends LGRowData>(
-//     props: RowProps<T>,
-//     ref: ForwardedRef<HTMLTableRowElement>,
-//   ): ReactElement | null;
-//   displayName?: string;
-//   propTypes?:
-//     | WeakValidationMap<
-//         PropsWithoutRef<RowProps<LGRowData> & RefAttributes<any>>
-//       >
-//     | undefined;
-// }
+export interface RowComponentType {
+  <T extends LGRowData>(
+    props: RowProps<T>,
+    ref: ForwardedRef<HTMLTableRowElement>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?:
+    | WeakValidationMap<
+        PropsWithoutRef<RowProps<LGRowData> & RefAttributes<any>>
+      >
+    | undefined;
+}
 
 // /**
 //  * The RowComponentType that restores the original function signature to work with generics.
