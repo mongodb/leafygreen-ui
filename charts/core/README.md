@@ -23,7 +23,7 @@ npm install @lg-charts/core
 ```js
 import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
 
-<Chart zoomable onZoom={handleZoom}>
+<Chart zoomable onZoomSelect={handleZoom}>
   <Header title="My Chart" />
   <Grid vertical={false}>
   <XAxis type="time" />
