@@ -6,6 +6,7 @@ import {
   RefAttributes,
   WeakValidationMap,
 } from 'react';
+import React from 'react';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 
 import { Theme } from '@leafygreen-ui/lib';
@@ -108,3 +109,29 @@ export interface RowComponentWithRTType {
       >
     | undefined;
 }
+
+export const forwardRefWithGenerics = React.forwardRef as <
+  T,
+  P = NonNullable<unknown>,
+>(
+  render: (props: P, ref: React.ForwardedRef<T>) => ReactElement | null,
+) => (
+  props: React.PropsWithoutRef<P> & React.RefAttributes<T>,
+) => ReactElement | null;
+
+// export const forwardRefWithGenerics = React.forwardRef as <
+//   T,
+//   P = NonNullable<unknown>,
+// >(
+//   render: (props: P, ref: React.ForwardedRef<T>) => React.ReactElement | null,
+// ) => {
+//   (
+//     props: React.PropsWithoutRef<P> & React.RefAttributes<T>,
+//   ): React.ReactElement | null;
+//   displayName?: string;
+// };
+
+export const memoWithGenerics = React.memo as <P extends object>(
+  Component: (props: P) => ReactElement | null,
+  propsAreEqual?: (prevProps: Readonly<P>, nextProps: Readonly<P>) => boolean,
+) => (props: P) => ReactElement | null;

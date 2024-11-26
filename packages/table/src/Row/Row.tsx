@@ -1,5 +1,4 @@
 import React, { ForwardedRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -7,18 +6,18 @@ import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
-import { MemoizedInternalRowWithRT } from './InternalRowWithRT';
-import { RowComponentType, RowProps } from './Row.types';
+import MemoizedInternalRowWithRT from './InternalRowWithRT';
+import { forwardRefWithGenerics, RowProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**
  * Renders the provided cells
  */
 
-const RowWithRef = <T extends LGRowData>(
+const Row = forwardRefWithGenerics(function Row<T extends LGRowData>(
   { row, virtualRow, disabled = false, ...rest }: RowProps<T>,
   ref: ForwardedRef<HTMLTableRowElement>,
-) => {
+) {
   const { theme } = useDarkMode();
   const { shouldAlternateRowColor = false, virtualTable } = useTableContext();
 
@@ -47,18 +46,18 @@ const RowWithRef = <T extends LGRowData>(
       )}
     </>
   );
-};
+});
 
 // React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
 // This assertion has an interface that restores the original function signature to work with generics.
-export const Row = React.forwardRef(RowWithRef) as RowComponentType;
+// export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
-Row.propTypes = {
-  virtualRow: PropTypes.object,
-  row: PropTypes.object,
-  disabled: PropTypes.bool,
-} as any; // avoid inferred types from interfering
+// Row.propTypes = {
+//   virtualRow: PropTypes.object,
+//   row: PropTypes.object,
+//   disabled: PropTypes.bool,
+// } as any; // avoid inferred types from interfering
 
-Row.displayName = 'Row';
+// Row.displayName = 'Row';
 
 export default Row;
