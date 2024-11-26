@@ -28,6 +28,7 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
       pageTitle,
       resourceIcon,
       resourceName,
+      resourceBadges,
       actions,
       backLink,
       className,
@@ -43,7 +44,7 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
           data-testid={LGIDS.root}
           className={cx(
             canvasHeaderClassname,
-            canvasHeaderBaseStyles,
+            canvasHeaderBaseStyles(theme),
             className,
           )}
           {...rest}
@@ -58,7 +59,11 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
             {!!actions && <div className={actionsStyles}>{actions}</div>}
           </div>
           {!!resourceName && (
-            <Resource resourceName={resourceName} resourceIcon={resourceIcon} />
+            <Resource
+              resourceName={resourceName}
+              resourceIcon={resourceIcon}
+              resourceBadges={resourceBadges}
+            />
           )}
         </div>
       </LeafyGreenProvider>
@@ -80,4 +85,6 @@ CanvasHeader.propTypes = {
   badges: PropTypes.node,
   // @ts-expect-error - PropTypes.node does not match ReactNode
   backLink: PropTypes.node,
+  // @ts-expect-error - PropTypes.node does not match ReactNode
+  resourceBadges: PropTypes.node,
 };

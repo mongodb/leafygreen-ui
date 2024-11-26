@@ -11,19 +11,19 @@ import Icon from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 import Tooltip, { Justify } from '@leafygreen-ui/tooltip';
-import { Body } from '@leafygreen-ui/typography';
 
 import { LGIDS } from '../constants';
 
 import {
-  getResourceNameContainerStyles,
+  getResourceCopyIconWrapperStyles,
+  getResourceNameButtonStyles,
   getResourceNameStyles,
+  inlineContainerStyles,
+  resourceBadgeStyles,
   resourceBaseStyles,
   resourceCopiedStyles,
-  resourceCopyStyles,
   resourceIconBaseStyles,
-  resourceNameContainerClassname,
-  resourceNameStyles,
+  resourceNameButtonClassName,
 } from './Resource.styles';
 import { ResourceProps } from './Resource.types';
 
@@ -32,7 +32,10 @@ import { ResourceProps } from './Resource.types';
  * @internal
  */
 export const Resource = React.forwardRef<HTMLDivElement, ResourceProps>(
-  ({ resourceIcon, resourceName }: ResourceProps, forwardRef) => {
+  (
+    { resourceIcon, resourceName, resourceBadges }: ResourceProps,
+    forwardRef,
+  ) => {
     const [copied, setCopied] = useState(false);
     const { theme } = useDarkMode();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -67,49 +70,42 @@ export const Resource = React.forwardRef<HTMLDivElement, ResourceProps>(
         {!!resourceIcon && (
           <div className={resourceIconBaseStyles}>{resourceIcon}</div>
         )}
-        <Body
-          className={cx(
-            resourceNameContainerClassname,
-            getResourceNameContainerStyles(theme),
-          )}
-          role="button"
-          tabIndex={0}
-          baseFontSize={16}
-          onClick={handleClick}
-          onKeyDown={handleKeyDown}
-          data-testid={LGIDS.resourceName}
-        >
-          <span
-            className={cx(getResourceNameStyles(theme), resourceNameStyles)}
-          >
-            {resourceName}
-          </span>
+        <span className={inlineContainerStyles}>
           <span
             className={cx(
-              getResourceNameStyles(theme),
-              resourceCopyStyles,
-
-              {
-                [resourceCopiedStyles]: copied, // show the icon until the tooltip goes away
-              },
+              resourceNameButtonClassName,
+              getResourceNameButtonStyles(theme),
             )}
+            role="button"
+            tabIndex={0}
+            aria-label="Copy resource name to clipboard"
+            onClick={handleClick}
+            onKeyDown={handleKeyDown}
+            data-testid={LGIDS.resourceName}
           >
-            <Tooltip
-              open={copied}
-              justify={Justify.Middle}
-              trigger={
-                <span>
-                  <Icon
-                    aria-label="Copy resource name to clipboard"
-                    glyph={'Copy'}
-                  />
-                </span>
-              }
+            <span className={getResourceNameStyles(theme)}>{resourceName}</span>
+            <span
+              className={cx(getResourceCopyIconWrapperStyles(theme), {
+                [resourceCopiedStyles]: copied, // show the icon until the tooltip goes away
+              })}
             >
-              Copied!
-            </Tooltip>
+              <Tooltip
+                open={copied}
+                justify={Justify.Middle}
+                trigger={
+                  <span>
+                    <Icon glyph={'Copy'} />
+                  </span>
+                }
+              >
+                Copied!
+              </Tooltip>
+            </span>
           </span>
-        </Body>
+          {resourceBadges && (
+            <span className={resourceBadgeStyles}>{resourceBadges}</span>
+          )}
+        </span>
       </div>
     );
   },

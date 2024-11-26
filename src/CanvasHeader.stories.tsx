@@ -1,6 +1,7 @@
 import React from 'react';
+import { faker } from '@faker-js/faker';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
@@ -10,16 +11,36 @@ import { BackLink } from '@leafygreen-ui/typography';
 
 import { CanvasHeader } from '.';
 
+faker.seed(123);
+
+const testResourceNames = {
+  long: `${faker.database.collation()}-shard-${faker.string.uuid()}.${faker.database.mongodbObjectId()}${faker.database.mongodbObjectId()}${faker.database.mongodbObjectId()}`,
+  normal: `shard-${faker.database.mongodbObjectId()}`,
+  short: `myShard`,
+};
+
 const meta: StoryMetaType<typeof CanvasHeader> = {
   title: 'Components/CanvasHeader',
   component: CanvasHeader,
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: ['resourceIcon', 'actions', 'backLink', 'badges'],
+      exclude: [
+        'resourceIcon',
+        'actions',
+        'backLink',
+        'badges',
+        'resourceBadges',
+      ],
     },
     generate: {
-      storyNames: ['DarkMode', 'LightMode', 'Truncate', 'Interactions'],
+      storyNames: [
+        'LightMode',
+        'DarkMode',
+        'LightModeWithResource',
+        'DarkModeWithResource',
+        'Interactions',
+      ],
       decorator: Instance => {
         return (
           <div
@@ -32,21 +53,22 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
           </div>
         );
       },
-      args: { pageTitle: 'Page Title' },
       combineArgs: {
         backLink: [
+          undefined,
           <BackLink href="/home" key="1">
             Back to Cluster
           </BackLink>,
-          undefined,
         ],
-        resourceName: [
-          'ac_iqttxwn_shard-00-01.hvcuthh.mongodb.net:27017_324892384903284902384903284903284902384903284832908_long_name',
-          'normal not long short_name',
+        badges: [
           undefined,
+          <>
+            <Badge variant="green">Enabled</Badge>
+            <Badge variant="blue">In Dev Mode</Badge>
+          </>,
         ],
-        resourceIcon: [<Icon key="1" glyph={'ShardedCluster'} />, undefined],
         actions: [
+          undefined,
           <>
             <Button leftGlyph={<Icon glyph={'InviteUser'} />}>
               Invite user
@@ -55,14 +77,10 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
               Invite user
             </Button>
           </>,
-          undefined,
         ],
-        badges: [
-          <>
-            <Badge variant="green">Enabled</Badge>
-            <Badge variant="blue">In Dev Mode</Badge>
-          </>,
-          undefined,
+        pageTitle: [
+          'Page Title',
+          'Some very very long page title name that will trigger truncation eventually',
         ],
       },
     },
@@ -70,8 +88,7 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
   args: {
     backLink: <BackLink href="/home">Back to Cluster</BackLink>,
     pageTitle: 'Page title',
-    resourceName:
-      'ac_iqttxwn_shard-00-01.hvcuthh.mongodb.net:27017_324892384903284902384903284903284902384903284832908_long_name',
+    resourceName: testResourceNames.long,
     darkMode: false,
     resourceIcon: <Icon glyph={'ShardedCluster'} />,
     actions: (
@@ -83,6 +100,12 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
       <>
         <Badge variant="green">Enabled</Badge>
         <Badge variant="blue">In Dev Mode</Badge>
+      </>
+    ),
+    resourceBadges: (
+      <>
+        <Badge variant="green">Ready</Badge>
+        <Badge variant="lightgray">Queryable</Badge>
       </>
     ),
   },
@@ -111,25 +134,88 @@ LiveExample.parameters = {
   },
 };
 
-export const DarkMode: StoryType<typeof CanvasHeader> = () => <></>;
-DarkMode.parameters = {
-  generate: {
-    args: {
-      darkMode: true,
+export const LightMode: StoryObj<typeof CanvasHeader> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        darkMode: false,
+        resourceName: undefined,
+      },
     },
   },
 };
 
-export const LightMode: StoryType<typeof CanvasHeader> = () => <></>;
+export const DarkMode: StoryObj<typeof CanvasHeader> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        darkMode: true,
+        resourceName: undefined,
+      },
+    },
+  },
+};
 
-export const Truncate: StoryType<typeof CanvasHeader> = () => <></>;
-Truncate.parameters = {
-  generate: {
-    args: {
-      pageTitle: 'A relatively long page title name that triggers truncation',
-      // @ts-ignore
-      'data-hover': false,
-      'data-focus': false,
+const staticArgsForResourceStories = {
+  pageTitle: 'Page title',
+  backLink: <BackLink href="/home">Back to Cluster</BackLink>,
+  actions: (
+    <Button variant="primary" leftGlyph={<Icon glyph={'InviteUser'} />}>
+      Invite user
+    </Button>
+  ),
+  badges: (
+    <>
+      <Badge variant="green">Enabled</Badge>
+      <Badge variant="blue">In Dev Mode</Badge>
+    </>
+  ),
+};
+
+const combinedArgsForResourceStories = {
+  resourceIcon: [undefined, <Icon key="1" glyph={'ShardedCluster'} />],
+  resourceBadges: [
+    undefined,
+    <>
+      <Badge variant="green">Ready</Badge>
+      <Badge variant="lightgray">Queryable</Badge>
+    </>,
+  ],
+  resourceName: [
+    testResourceNames.short,
+    testResourceNames.normal,
+    testResourceNames.long,
+  ],
+};
+
+export const LightModeWithResource: StoryObj<typeof CanvasHeader> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        darkMode: false,
+        ...staticArgsForResourceStories,
+      },
+      combineArgs: {
+        ...combinedArgsForResourceStories,
+      },
+    },
+  },
+};
+
+export const DarkModeWithResource: StoryObj<typeof CanvasHeader> = {
+  render: () => <></>,
+  parameters: {
+    generate: {
+      args: {
+        darkMode: true,
+        ...staticArgsForResourceStories,
+      },
+      combineArgs: {
+        ...combinedArgsForResourceStories,
+      },
     },
   },
 };
@@ -138,19 +224,17 @@ export const Interactions: StoryType<typeof CanvasHeader> = () => <></>;
 Interactions.parameters = {
   generate: {
     args: {
+      pageTitle: 'Page title',
       actions: undefined,
       badges: undefined,
       backLink: undefined,
     },
     combineArgs: {
       darkMode: [true, false],
+      resourceName: [testResourceNames.short, testResourceNames.long],
       // @ts-ignore
       'data-hover': [false, true],
       'data-focus': [false, true],
-      resourceName: [
-        'ac_iqttxwn_shard-00-01.hvcuthh.mongodb.net:27017_324892384903284902384903284903284902384903284832908_long_name',
-        'normal not long short_name',
-      ],
     },
     excludeCombinations: [
       {

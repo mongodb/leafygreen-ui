@@ -11,16 +11,6 @@ export interface CanvasHeaderProps
   pageTitle: string;
 
   /**
-   * Opitional resource name that will copy to the clipboard when clicked
-   */
-  resourceName?: string;
-
-  /**
-   * Optional icon that will render to the left of the resource name
-   */
-  resourceIcon?: ReactNode;
-
-  /**
    * Optional buttons that will render to the right of the badges or resource name
    */
   actions?: ReactNode;
@@ -31,7 +21,22 @@ export interface CanvasHeaderProps
   backLink?: ReactNode;
 
   /**
-   * Optional badges that will render to the right of the resource name
+   * Optional badges that will render to the right of the page title
    */
   badges?: ReactNode;
+
+  /**
+   * Optional resource name that will copy to the clipboard when clicked
+   */
+  resourceName?: string;
+
+  /**
+   * Optional icon that will render to the left of the resource name
+   */
+  resourceIcon?: ReactNode;
+
+  /**
+   * Optional badges that will render to the right of the resource name
+   */
+  resourceBadges?: ReactNode;
 }
