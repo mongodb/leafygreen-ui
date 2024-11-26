@@ -30,6 +30,7 @@ import Popover, {
 } from '@leafygreen-ui/popover';
 
 const [open, setOpen] = useState(false);
+const buttonRef = (useRef < HTMLButtonElement) | (null > null);
 
 const handleClick = () => {
   setOpen(open => !open);
@@ -40,8 +41,10 @@ const handleToggle = (e: ToggleEvent) => {
   setOpen(newOpen);
 };
 
-<button className={containerStyle} onClick={handleClick}>
-  Open Popover
+<>
+  <button className={containerStyle} onClick={handleClick} ref={buttonRef}>
+    Open Popover
+  </button>
   <Popover
     active={open}
     align={Align.Bottom}
@@ -52,9 +55,9 @@ const handleToggle = (e: ToggleEvent) => {
     spacing={4}
     adjustOnMutation
   >
-    <div>Popover content</div>
+    Popover content
   </Popover>
-</button>;
+</>;
 ```
 
 ## Output HTML
@@ -62,14 +65,11 @@ const handleToggle = (e: ToggleEvent) => {
 ```html
 <html>
   <body>
-    <button class="leafygreen-ui-79elbk">
-      Open Popover
-      <span class="leafygreen-ui-1hyfx7x"></span>
-      <div align="bottom" justify="start" class="leafygreen-ui-1t5dnko">
-        <div>Popover content</div>
-        ::backdrop
-      </div>
-    </button>
+    <button class="leafygreen-ui-79elbk">Open Popover</button>
+    <span class="leafygreen-ui-1hyfx7x" />
+    <div class="leafygreen-ui-1t5dnko" popover="auto">
+      Popover content ::backdrop
+    </div>
   </body>
 </html>
 #top-layer > div > ::backdrop
