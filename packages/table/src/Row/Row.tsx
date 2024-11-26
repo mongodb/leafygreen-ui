@@ -8,7 +8,11 @@ import { LGRowData } from '../useLeafyGreenTable';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import MemoizedInternalRowWithRT from './InternalRowWithRT';
-import { forwardRefWithGenerics, RowProps } from './Row.types';
+import {
+  forwardRefWithGenerics,
+  RowComponentType,
+  RowProps,
+} from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**
@@ -83,15 +87,16 @@ const RowWithForwardRef = function Row<T extends LGRowData>(
   );
 };
 
-const Row = React.forwardRef(RowWithForwardRef) as <T extends LGRowData>(
-  p: RowProps<T> & { ref?: Ref<HTMLTableRowElement> },
-) => ReturnType<typeof RowWithForwardRef>;
+// const Row = React.forwardRef(RowWithForwardRef) as <T extends LGRowData>(
+//   p: RowProps<T> & { ref?: Ref<HTMLTableRowElement> },
+// ) => ReturnType<typeof RowWithForwardRef>;
 
-// @ts-ignore
+const Row = React.forwardRef(RowWithForwardRef) as RowComponentType;
+
 Row.propTypes = {
   virtualRow: PropTypes.object,
   row: PropTypes.object,
   disabled: PropTypes.bool,
-};
+} as any;
 
 export default Row;
