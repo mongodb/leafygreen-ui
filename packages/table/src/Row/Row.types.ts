@@ -2,7 +2,11 @@ import { ComponentPropsWithRef, ReactElement } from 'react';
 import React from 'react';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
 
-import { MemoWithGenerics, Theme } from '@leafygreen-ui/lib';
+import {
+  ForwardRefWithGenerics,
+  MemoWithGenerics,
+  Theme,
+} from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
@@ -21,6 +25,7 @@ export interface InternalRowWithRTBaseProps<T extends LGRowData>
    * Row object passed from the `useLeafyGreenTable` hook.
    */
   row: LeafyGreenTableRow<T>;
+
   /**
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
@@ -63,16 +68,3 @@ export interface InternalRowWithRTProps<T extends LGRowData>
 
 export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
   Partial<InternalRowWithRTBaseProps<T>>;
-
-// This removes propTypes and displayName but works in combination with MemoWithGenerics in R17 and R18
-export interface ForwardRefWithGenerics {
-  <T, P = NonNullable<unknown>>(
-    render: (props: P, ref: React.ForwardedRef<T>) => ReactElement | null,
-  ): (
-    props: React.PropsWithoutRef<P> & React.RefAttributes<T>,
-  ) => ReactElement | null;
-}
-
-export const forwardRefWithGenerics: ForwardRefWithGenerics = React.forwardRef;
-
-export const memoWithGenerics: MemoWithGenerics = React.memo;

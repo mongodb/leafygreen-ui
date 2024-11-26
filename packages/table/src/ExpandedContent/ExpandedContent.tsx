@@ -8,8 +8,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS } from '../constants';
 import InternalRowBase from '../Row/InternalRowBase';
-import { forwardRefWithGenerics } from '../Row/Row.types';
 import { useTableContext } from '../TableContext';
+import { forwardRefWithGenerics } from '../utils/genericHelpers';
 
 import {
   baseStyles,

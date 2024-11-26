@@ -5,10 +5,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useTableContext } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
+import { forwardRefWithGenerics } from '../utils/genericHelpers';
 
 import InternalRowWithoutRT from './InternalRowWithoutRT';
 import MemoizedInternalRowWithRT from './InternalRowWithRT';
-import { forwardRefWithGenerics, RowProps } from './Row.types';
+import { RowProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**
@@ -54,6 +55,6 @@ Row.propTypes = {
   virtualRow: PropTypes.object,
   row: PropTypes.object,
   disabled: PropTypes.bool,
-} as any;
+};
 
 export default Row;

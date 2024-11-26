@@ -16,6 +16,7 @@ export type {
   RecursiveRecord,
   ValuesOf,
   MemoWithGenerics,
+  ForwardRefWithGenerics,
 } from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };

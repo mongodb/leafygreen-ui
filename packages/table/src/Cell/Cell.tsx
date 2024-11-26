@@ -1,8 +1,8 @@
 import React, { ForwardedRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { forwardRefWithGenerics } from '../Row/Row.types';
 import { LGRowData } from '../useLeafyGreenTable';
+import { forwardRefWithGenerics } from '../utils/genericHelpers';
 
 import InternalCellWithoutRT from './InternalCellWithoutRT';
 import InternalCellWithRT from './InternalCellWithRT';

@@ -6,3 +6,4 @@ export type { PartialRequired } from './PartialRequired.types';
 export type { RecursiveRecord } from './RecursiveRecord.types';
 export type { ValuesOf } from './ValuesOf.types';
 export type { MemoWithGenerics } from './MemoWithGenerics.types';
+export type { ForwardRefWithGenerics } from './ForwardRefWithGenerics';

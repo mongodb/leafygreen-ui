@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { cx } from '@leafygreen-ui/emotion';
 
 import { LGIDS } from '../../constants';
-import { forwardRefWithGenerics } from '../../Row/Row.types';
 import { useTableContext } from '../../TableContext';
 import { LGRowData } from '../../useLeafyGreenTable';
+import { forwardRefWithGenerics } from '../../utils/genericHelpers';
 
 import SortIcon from './SortIcon/SortIcon';
 import { getHeaderCellState } from './utils/getHeaderCellState';

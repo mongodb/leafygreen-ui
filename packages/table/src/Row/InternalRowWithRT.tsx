@@ -5,14 +5,14 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
 import { LGRowData } from '../useLeafyGreenTable';
+import {
+  forwardRefWithGenerics,
+  memoWithGenerics,
+} from '../utils/genericHelpers';
 
 import InternalRowBase from './InternalRowBase';
 import { getRowWithRTStyles } from './Row.styles';
-import {
-  forwardRefWithGenerics,
-  InternalRowWithRTProps,
-  memoWithGenerics,
-} from './Row.types';
+import { InternalRowWithRTProps } from './Row.types';
 import { RowContextProvider } from './RowContext';
 
 /**

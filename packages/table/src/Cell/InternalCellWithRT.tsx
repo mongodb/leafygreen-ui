@@ -2,11 +2,11 @@ import React, { ForwardedRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import { forwardRefWithGenerics } from '../Row/Row.types';
 import { useRowContext } from '../Row/RowContext';
 import { useTableContext } from '../TableContext';
 import ToggleExpandedIcon from '../ToggleExpandedIcon';
 import { LGRowData } from '../useLeafyGreenTable';
+import { forwardRefWithGenerics } from '../utils/genericHelpers';
 
 import { getCellEllipsisStyles, getCellStyles } from './Cell.styles';
 import { InternalCellWithRTProps } from './Cell.types';
