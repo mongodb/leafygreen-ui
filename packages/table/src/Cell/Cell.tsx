@@ -29,7 +29,7 @@ const Cell = forwardRefWithGenerics(function Cell<T extends LGRowData>(
 
 export default Cell;
 
-// @ts-expect-error
+// @ts-expect-error - propTypes are not included in the type signature for forwardRefWithGenerics
 Cell.propTypes = {
   cell: PropTypes.object,
   align: PropTypes.oneOf(['left', 'right', 'center']),

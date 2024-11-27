@@ -70,7 +70,7 @@ const HeaderCell = forwardRefWithGenerics(function HeaderCell<
 
 export default HeaderCell;
 
-// @ts-expect-error
+// @ts-expect-error - propTypes are not included in the type signature for forwardRefWithGenerics
 HeaderCell.propTypes = {
   header: PropTypes.object,
-} as any; // avoid inferred types from interfering;
+};

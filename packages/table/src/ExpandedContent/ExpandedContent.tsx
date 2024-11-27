@@ -50,10 +50,10 @@ const ExpandedContent = forwardRefWithGenerics(function ExpandedContent<
   );
 });
 
-// @ts-expect-error
+// @ts-expect-error - propTypes are not included in the type signature for forwardRefWithGenerics
 ExpandedContent.propTypes = {
   row: PropTypes.object,
   virtualRow: PropTypes.object,
-} as any; // avoid inferred types from interfering
+};
 
 export default ExpandedContent;
