@@ -1,108 +1,116 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import {
+  borderRadius,
+  color,
+  focusRing,
+  hoverRing,
+} from '@leafygreen-ui/tokens';
 
-export const expandedContentParentStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light3};
-  `,
-};
+const getDisabledStyles = (theme: Theme) => css`
+  pointer-events: none;
+  background-color: ${color[theme].background.disabled.default};
+  color: ${color[theme].text.disabled.default};
+`;
+
+const getClickableStyles = (theme: Theme) => css`
+  border-radius: ${borderRadius[150]}px;
+  cursor: pointer;
+
+  &:hover:not(:focus) {
+    outline: none;
+    box-shadow: inset ${hoverRing[theme].gray};
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset ${focusRing[theme].input};
+  }
+`;
+
+export const getRowBaseStyles = ({
+  className,
+  isClickable,
+  isDisabled,
+  theme,
+}: {
+  className?: string;
+  isClickable: boolean;
+  isDisabled: boolean;
+  theme: Theme;
+}) =>
+  cx(
+    {
+      [getDisabledStyles(theme)]: isDisabled,
+      [getClickableStyles(theme)]: isClickable,
+    },
+    className,
+  );
 
 // applied directly to rows for VS
-export const selectedRowStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.blue.dark3};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.blue.light3};
-  `,
-};
+const getGrayZebraRowStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background.secondary.default};
+`;
+
+const getZebraStyles = (theme: Theme) => css`
+  &:nth-of-type(even) {
+    ${getGrayZebraRowStyles(theme)}
+  }
+`;
 
 // applied directly to rows for VS
-export const grayZebraRowStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    background-color: ${palette.gray.dark4};
-  `,
-  [Theme.Light]: css`
-    background-color: ${palette.gray.light3};
-  `,
-};
+const getSelectedRowStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background.secondary.focus};
+`;
 
-export const zebraStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    &:nth-of-type(even) {
-      ${grayZebraRowStyles[Theme.Dark]}
-    }
-  `,
-  [Theme.Light]: css`
-    &:nth-of-type(even) {
-      ${grayZebraRowStyles[Theme.Light]}
-    }
-  `,
-};
+const getExpandedContentParentStyles = (theme: Theme) => css`
+  background-color: ${color[theme].background.secondary.default};
+`;
 
-export const clickableStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    border-radius: 6px;
-    cursor: pointer;
-    &:hover:not(:focus) {
-      outline: none;
-      box-shadow: inset ${hoverRing[Theme.Dark].gray};
-    }
+export const getRowWithRTStyles = ({
+  className,
+  isDisabled,
+  isExpanded,
+  isOddVSRow,
+  isSelected,
+  isVirtualRow,
+  shouldAlternateRowColor,
+  theme,
+}: {
+  className?: string;
+  isDisabled: boolean;
+  isExpanded: boolean;
+  isOddVSRow: boolean;
+  isSelected: boolean;
+  isVirtualRow: boolean;
+  shouldAlternateRowColor: boolean;
+  theme: Theme;
+}) =>
+  cx(
+    {
+      [getZebraStyles(theme)]:
+        !isVirtualRow && shouldAlternateRowColor && !isSelected,
+      [getGrayZebraRowStyles(theme)]:
+        isOddVSRow && shouldAlternateRowColor && !isSelected,
+      [getSelectedRowStyles(theme)]: isSelected && !isDisabled,
+      [getExpandedContentParentStyles(theme)]: isExpanded,
+    },
+    className,
+  );
 
-    &:focus,
-    &:focus-visible {
-      outline: none;
-      box-shadow: inset ${focusRing[Theme.Dark].input};
-    }
-  `,
-  [Theme.Light]: css`
-    border-radius: 6px;
-    cursor: pointer;
-    &:hover:not(:focus) {
-      outline: none;
-      box-shadow: inset ${hoverRing[Theme.Light].gray};
-    }
-
-    &:focus,
-    &:focus-visible {
-      outline: none;
-      box-shadow: inset ${focusRing[Theme.Light].input};
-    }
-  `,
-};
-
-export const disabledStyles: Record<Theme, string> = {
-  [Theme.Dark]: css`
-    pointer-events: none;
-    background-color: ${palette.gray.dark2};
-    color: ${palette.gray.base};
-  `,
-  [Theme.Light]: css`
-    pointer-events: none;
-    background-color: ${palette.gray.light2};
-    color: ${palette.gray.base};
-  `,
-};
-
-export const getRowWithRTStyles = (
-  isOddVSRow: boolean,
-  shouldAlternateRowColor: boolean,
-  isSelected: boolean,
-  isVirtualRow: boolean,
-  isDisabled: boolean,
-  isExpanded: boolean,
-  theme: Theme,
-) =>
-  cx({
-    [grayZebraRowStyles[theme]]:
-      isOddVSRow && shouldAlternateRowColor && !isSelected,
-    [zebraStyles[theme]]:
-      !isVirtualRow && shouldAlternateRowColor && !isSelected,
-    [selectedRowStyles[theme]]: isSelected && !isDisabled,
-    [expandedContentParentStyles[theme]]: isExpanded,
-  });
+export const getRowWithoutRTStyles = ({
+  className,
+  shouldAlternateRowColor,
+  theme,
+}: {
+  className?: string;
+  shouldAlternateRowColor?: boolean;
+  theme: Theme;
+}) =>
+  cx(
+    {
+      [getZebraStyles(theme)]: shouldAlternateRowColor,
+    },
+    className,
+  );
