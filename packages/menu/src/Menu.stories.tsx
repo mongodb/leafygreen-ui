@@ -71,6 +71,33 @@ export default {
         'trigger',
       ],
     },
+    generate: {
+      storyNames: [
+        'LightModeTopAlign',
+        'DarkModeTopAlign',
+        'LightModeBottomAlign',
+        'DarkModeBottomAlign',
+        'LightModeLeftAlign',
+        'DarkModeLeftAlign',
+        'LightModeRightAlign',
+        'DarkModeRightAlign',
+      ],
+      combineArgs: {
+        justify: Object.values(Justify),
+      },
+      excludeCombinations: [
+        {
+          align: [Align.CenterHorizontal, Align.CenterVertical],
+        },
+      ],
+      decorator: (Instance, ctx) => (
+        <LeafyGreenProvider darkMode={ctx?.args?.darkMode}>
+          <div className={getDecoratorStyles(ctx?.args)}>
+            <Instance />
+          </div>
+        </LeafyGreenProvider>
+      ),
+    },
   },
   args: {
     align: Align.Bottom,
@@ -215,54 +242,101 @@ export const Controlled = {
   },
 } satisfies StoryObj<typeof Menu>;
 
-export const Generated = {
-  render: () => <></>,
-  args: {
-    open: true,
-    maxHeight: 200,
-    children: (
-      <>
-        <MenuItem>Lorem</MenuItem>
-        <SubMenu
-          title="Fruit"
-          description="A selection of fruit"
-          glyph={<CloudIcon size="large" />}
-          active={true}
-        >
-          <MenuItem active>Apple</MenuItem>
-          <MenuItem variant="destructive">Banana</MenuItem>
-          <MenuItem>Carrot</MenuItem>
-          <MenuItem>Dragonfruit</MenuItem>
-          <MenuItem>Eggplant</MenuItem>
-          <MenuItem>Fig</MenuItem>
-        </SubMenu>
-      </>
-    ),
-    trigger: <Button size="xsmall">trigger</Button>,
-  },
-  parameters: {
-    generate: {
-      combineArgs: {
-        darkMode: [false, true],
-        align: Object.values(Align),
-        justify: Object.values(Justify),
-      },
+const sharedGeneratedStoryArgs = {
+  open: true,
+  maxHeight: 200,
+  children: (
+    <>
+      <MenuItem>Lorem</MenuItem>
+      <SubMenu
+        title="Fruit"
+        description="A selection of fruit"
+        glyph={<CloudIcon size="large" />}
+        active={true}
+      >
+        <MenuItem active>Apple</MenuItem>
+        <MenuItem variant="destructive">Banana</MenuItem>
+        <MenuItem>Carrot</MenuItem>
+        <MenuItem>Dragonfruit</MenuItem>
+        <MenuItem>Eggplant</MenuItem>
+        <MenuItem>Fig</MenuItem>
+      </SubMenu>
+    </>
+  ),
+  trigger: <Button size="xsmall">trigger</Button>,
+};
 
-      excludeCombinations: [
-        {
-          align: [Align.CenterHorizontal, Align.CenterVertical],
-        },
-      ],
-      decorator: (Instance, ctx) => (
-        <LeafyGreenProvider darkMode={ctx?.args?.darkMode}>
-          <div className={getDecoratorStyles(ctx?.args)}>
-            <Instance />
-          </div>
-        </LeafyGreenProvider>
-      ),
-    },
+export const LightModeTopAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: false,
+    align: Align.Top,
   },
-} satisfies StoryObj<typeof Menu>;
+};
+
+export const DarkModeTopAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: true,
+    align: Align.Top,
+  },
+};
+
+export const LightModeBottomAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: false,
+    align: Align.Bottom,
+  },
+};
+
+export const DarkModeBottomAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: true,
+    align: Align.Bottom,
+  },
+};
+
+export const LightModeLeftAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: false,
+    align: Align.Left,
+  },
+};
+
+export const DarkModeLeftAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: true,
+    align: Align.Left,
+  },
+};
+
+export const LightModeRightAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: false,
+    align: Align.Right,
+  },
+};
+
+export const DarkModeRightAlign = {
+  render: <></>,
+  args: {
+    ...sharedGeneratedStoryArgs,
+    darkMode: true,
+    align: Align.Right,
+  },
+};
 
 export const InitialLongMenuOpen = {
   render: () => {
