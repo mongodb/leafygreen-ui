@@ -211,9 +211,9 @@ export default {
         category: 'Chart',
       },
     },
-    onZoom: {
+    onZoomSelect: {
       description: 'Zoom handler',
-      name: 'onZoom',
+      name: 'onZoomSelect',
       table: {
         category: 'Chart',
         disable: true,
