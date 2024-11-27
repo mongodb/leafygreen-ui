@@ -46,12 +46,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
       errorMessage = DEFAULT_MESSAGES.error,
       successMessage = DEFAULT_MESSAGES.success,
       onChange,
-      popoverZIndex,
-      usePortal = true,
-      portalClassName,
-      portalContainer,
-      portalRef,
-      scrollContainer,
       ...rest
     }: NumberInputProps,
     forwardedRef,
@@ -69,19 +63,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
     const isUnitInOptions = unitOptions.find(u => u.displayName === unit);
     const renderUnitOnly = hasUnit && !hasSelectOptions;
     const renderSelectOnly = hasUnit && hasSelectOptions && !!isUnitInOptions;
-
-    const popoverProps = {
-      popoverZIndex,
-      ...(usePortal
-        ? {
-            usePortal,
-            portalClassName,
-            portalContainer,
-            portalRef,
-            scrollContainer,
-          }
-        : { usePortal }),
-    } as const;
 
     const formFieldFeedbackProps = {
       disabled,
@@ -152,7 +133,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
                 onChange={onSelectChange}
                 size={size}
                 className={selectClassName}
-                {...popoverProps}
               />
             )}
           </div>
@@ -190,21 +170,4 @@ NumberInput.propTypes = {
       value: PropTypes.string.isRequired,
     }),
   ),
-  // Popover Props
-  popoverZIndex: PropTypes.number,
-  scrollContainer:
-    typeof window !== 'undefined'
-      ? PropTypes.instanceOf(Element)
-      : PropTypes.any,
-  portalContainer:
-    typeof window !== 'undefined'
-      ? PropTypes.instanceOf(Element)
-      : PropTypes.any,
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  portalClassName: PropTypes.string,
 } as any;

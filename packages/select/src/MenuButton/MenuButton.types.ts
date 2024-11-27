@@ -5,7 +5,6 @@ import { State } from '../Select/Select.types';
 
 export interface MenuButtonBaseProps
   extends HTMLElementProps<'button', HTMLButtonElement> {
-  children: React.ReactNode;
   value: string;
   text: React.ReactNode;
   name?: string;

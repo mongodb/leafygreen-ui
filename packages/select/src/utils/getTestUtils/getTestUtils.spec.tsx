@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { RenderMode } from '@leafygreen-ui/popover';
+
 import { Option, OptionGroup, Select, State } from '../../';
 
 import { getTestUtils } from './getTestUtils';
@@ -11,6 +13,8 @@ const defaultProps = {
   name: 'pet',
   description: 'Description',
 } as const;
+
+const renderModes = Object.values(RenderMode);
 
 const children = [
   <Option key="red" value="RED">
@@ -176,10 +180,10 @@ describe('packages/select/getTestUtils', () => {
     });
 
     describe('getOptions', () => {
-      describe.each([true, false])('usePortal={%p}', boolean => {
+      describe.each(renderModes)('when renderMode={%p}', renderMode => {
         test('returns all options', async () => {
           renderSelect({
-            usePortal: boolean,
+            renderMode,
           });
           const { getInput, getOptions } = getTestUtils();
 
@@ -191,10 +195,10 @@ describe('packages/select/getTestUtils', () => {
     });
 
     describe('getOptionByValue', () => {
-      describe.each([true, false])('usePortal={%p}', boolean => {
+      describe.each(renderModes)('when renderMode={%p}', renderMode => {
         test('is in the document', async () => {
           renderSelect({
-            usePortal: boolean,
+            renderMode,
           });
           const { getInput, getOptionByValue } = getTestUtils();
 
@@ -205,7 +209,7 @@ describe('packages/select/getTestUtils', () => {
 
         test('is not in the document', async () => {
           renderSelect({
-            usePortal: boolean,
+            renderMode,
           });
           const { getInput, getOptionByValue } = getTestUtils();
 
@@ -215,7 +219,7 @@ describe('packages/select/getTestUtils', () => {
 
         test('can be clicked', async () => {
           renderSelect({
-            usePortal: boolean,
+            renderMode,
           });
           const { getInput, getOptionByValue, getInputValue } = getTestUtils();
 
@@ -226,7 +230,7 @@ describe('packages/select/getTestUtils', () => {
 
         test('throws an error if the option does not exist', async () => {
           renderSelect({
-            usePortal: boolean,
+            renderMode,
           });
           const { getInput, getOptionByValue } = getTestUtils();
 
@@ -236,7 +240,7 @@ describe('packages/select/getTestUtils', () => {
 
         test('prevents a click on a disabled option', async () => {
           renderSelect({
-            usePortal: boolean,
+            renderMode,
           });
           const { getInput, getOptionByValue, getPopover, getInputValue } =
             getTestUtils();
@@ -251,11 +255,11 @@ describe('packages/select/getTestUtils', () => {
     });
 
     describe('getPopover', () => {
-      describe.each([true, false])('when usePortal={%p}', boolean => {
+      describe.each(renderModes)('when renderMode={%p}', renderMode => {
         describe('is in the document', () => {
           test('after awaiting waitFor', async () => {
             renderSelect({
-              usePortal: boolean,
+              renderMode,
             });
             const { getInput, getPopover } = getTestUtils();
 
@@ -268,7 +272,7 @@ describe('packages/select/getTestUtils', () => {
         describe('is not in the document ', () => {
           test('after clicking the trigger', async () => {
             renderSelect({
-              usePortal: boolean,
+              renderMode,
             });
             const { getInput, getPopover } = getTestUtils();
 
@@ -281,7 +285,7 @@ describe('packages/select/getTestUtils', () => {
 
           test('after clicking an option', async () => {
             renderSelect({
-              usePortal: boolean,
+              renderMode,
             });
             const { getInput, getPopover, getOptionByValue } = getTestUtils();
 
@@ -340,11 +344,11 @@ describe('packages/select/getTestUtils', () => {
           expect(getInputValue()).toBe('Yellow');
         });
 
-        describe.each([true, false])('when usePortal={%p}', boolean => {
+        describe.each(renderModes)('when renderMode={%p}', renderMode => {
           test('returns the updated value after clicking on an option', async () => {
             renderSelectControlled({
               value: 'Blue',
-              usePortal: boolean,
+              renderMode,
             });
             const { getInput, getInputValue, getOptionByValue } =
               getTestUtils();
@@ -364,11 +368,11 @@ describe('packages/select/getTestUtils', () => {
           expect(getInputValue()).toBe('Green');
         });
 
-        describe.each([true, false])('when usePortal={%p}', boolean => {
+        describe.each(renderModes)('when renderMode={%p}', renderMode => {
           test('returns the updated value after clicking on an option', async () => {
             renderSelect({
               defaultValue: 'Green',
-              usePortal: boolean,
+              renderMode,
             });
             const { getInput, getInputValue, getOptionByValue } =
               getTestUtils();

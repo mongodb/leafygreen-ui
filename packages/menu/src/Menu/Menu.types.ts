@@ -12,7 +12,8 @@ export type SubMenuType = ReactElement<
   InferredPolymorphicPropsWithRef<PolymorphicAs, SubMenuProps>
 >;
 
-export interface MenuProps extends Omit<PopoverProps, 'active'> {
+export interface MenuProps
+  extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'> {
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`

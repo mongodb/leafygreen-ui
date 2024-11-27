@@ -11,13 +11,19 @@ import {
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
-import Tooltip, { Align, Justify, TriggerEvent } from '@leafygreen-ui/tooltip';
+import Tooltip, {
+  Align,
+  Justify,
+  RenderMode,
+  TriggerEvent,
+} from '@leafygreen-ui/tooltip';
 import {
   Description,
   Label,
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
+import { TOOLTIP_VISIBLE_DURATION } from './constants';
 import {
   buttonContainerStyle,
   buttonStyle,
@@ -45,7 +51,6 @@ export default function Copyable({
   description,
   label,
   onCopy,
-  shouldTooltipUsePortal = true,
   size: SizeProp,
 }: CopyableProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -97,7 +102,7 @@ export default function Copyable({
     if (copied) {
       const timeoutId = setTimeout(() => {
         setCopied(false);
-      }, 1500);
+      }, TOOLTIP_VISIBLE_DURATION);
 
       return () => clearTimeout(timeoutId);
     }
@@ -183,7 +188,7 @@ export default function Copyable({
                 </Button>
               }
               triggerEvent={TriggerEvent.Click}
-              usePortal={shouldTooltipUsePortal}
+              renderMode={RenderMode.TopLayer}
             >
               Copied!
             </Tooltip>
@@ -204,5 +209,4 @@ Copyable.propTypes = {
   description: PropTypes.string,
   className: PropTypes.string,
   copyable: PropTypes.bool,
-  shouldTooltipUsePortal: PropTypes.bool,
 };

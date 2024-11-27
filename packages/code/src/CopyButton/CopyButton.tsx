@@ -12,34 +12,44 @@ import {
   usePopoverPortalContainer,
 } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
-import Tooltip, { Align, Justify } from '@leafygreen-ui/tooltip';
+import Tooltip, {
+  Align,
+  hoverDelay,
+  Justify,
+  RenderMode,
+} from '@leafygreen-ui/tooltip';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { copiedThemeStyle, copyButtonThemeStyles } from './CopyButton.styles';
+import {
+  copiedThemeStyle,
+  copyButtonThemeStyles,
+  tooltipStyles,
+} from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
   /**
-   * `CopyButton` controls `open` state of tooltip because when `copied` state
+   * `CopyButton` controls `tooltipOpen` state because when `copied` state
    * changes, it causes the tooltip to re-render
    */
-  const [open, setOpen] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
 
   /**
-   * toggles `open` state of tooltip
+   * toggles `tooltipOpen` state
    */
-  const closeTooltip = () => setOpen(false);
-  const openTooltip = () => setOpen(true);
+  const closeTooltip = () => setTooltipOpen(false);
+  const openTooltip = () => setTooltipOpen(true);
 
   /**
    * forcibly closes tooltip if user tabs focus on tooltip and clicks
    * outside of the trigger
    */
-  useBackdropClick(closeTooltip, buttonRef, open);
+  useBackdropClick(closeTooltip, buttonRef, tooltipOpen);
 
   useEffect(() => {
     if (!buttonRef.current) {
@@ -90,14 +100,20 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   };
 
   /**
-   * `handleMouseEnter` and `handleMouseLeave` are used to control `open`
+   * `handleMouseEnter` and `handleMouseLeave` are used to control `tooltipOpen`
    * state when mouse hovers over tooltip trigger
    */
   const handleMouseEnter = () => {
-    openTooltip();
+    timeoutRef.current = setTimeout(() => {
+      openTooltip();
+    }, hoverDelay);
   };
 
   const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
     closeTooltip();
   };
 
@@ -105,15 +121,17 @@ function CopyButton({ onCopy, contents }: CopyProps) {
    * `shouldClose` indicates to `Tooltip` component that tooltip should
    * remain open even if trigger re-renders
    */
-  const shouldClose = () => !open;
+  const shouldClose = () => !tooltipOpen;
 
   return (
     <Tooltip
-      data-testid="code_copy-button_tooltip"
-      open={open}
-      setOpen={setOpen}
       align={Align.Top}
+      className={tooltipStyles}
+      data-testid="code_copy-button_tooltip"
       justify={Justify.Middle}
+      open={tooltipOpen}
+      renderMode={RenderMode.TopLayer}
+      setOpen={setTooltipOpen}
       trigger={
         <IconButton
           data-testid="code_copy-button"
