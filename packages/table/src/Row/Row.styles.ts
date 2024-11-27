@@ -94,6 +94,8 @@ export const getRowWithRTStyles = ({
       [getGrayZebraRowStyles(theme)]:
         isOddVSRow && shouldAlternateRowColor && !isSelected,
       [getSelectedRowStyles(theme)]: isSelected && !isDisabled,
+    },
+    {
       [getExpandedContentParentStyles(theme)]: isExpanded,
     },
     className,
