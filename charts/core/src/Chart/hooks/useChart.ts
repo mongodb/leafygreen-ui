@@ -129,7 +129,7 @@ export function useChart({
       window.removeEventListener('resize', resizeHandler);
       chartInstance.dispose();
     };
-  }, [chartOptions, onChartReady, onZoom]);
+  }, [chartOptions, onChartReady, onZoomSelect, zoomable]);
 
   const updateChartRef = useMemo(
     () =>
