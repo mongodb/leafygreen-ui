@@ -1,4 +1,5 @@
 import {
+  ComponentPropsWithoutRef,
   ComponentPropsWithRef,
   ForwardedRef,
   PropsWithoutRef,
@@ -12,7 +13,7 @@ import { Theme } from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
-export interface InternalRowBaseProps extends ComponentPropsWithRef<'tr'> {
+export interface InternalRowBaseProps extends ComponentPropsWithoutRef<'tr'> {
   /**
    * Determines whether the row is disabled
    */
@@ -31,6 +32,11 @@ export interface InternalRowWithRTBaseProps<T extends LGRowData>
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
+
+  /**
+   * An internal prop used to pass a ref to the row
+   */
+  rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
@@ -67,7 +73,8 @@ export interface InternalRowWithRTProps<T extends LGRowData>
   isSelected: boolean;
 }
 
-export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
+export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
+  InternalRowBaseProps &
   Partial<InternalRowWithRTBaseProps<T>>;
 
 // https://stackoverflow.com/a/58473012
