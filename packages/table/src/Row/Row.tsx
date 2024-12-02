@@ -53,7 +53,7 @@ const RowWithRef = <T extends LGRowData>(
 };
 
 // React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
+// Asserts that `Row` is of type `RowComponentType` which works with generics
 export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
 Row.propTypes = {
