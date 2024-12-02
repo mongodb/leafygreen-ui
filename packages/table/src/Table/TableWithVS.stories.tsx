@@ -80,6 +80,7 @@ export default meta;
 
 const virtualScrollingContainerHeight = css`
   max-height: calc(100vh - 200px);
+  width: 100%;
 `;
 
 const basicColumnDefs: Array<LGColumnDef<Person>> = [
