@@ -93,10 +93,12 @@ export const getRowWithRTStyles = ({
         !isVirtualRow && shouldAlternateRowColor && !isSelected,
       [getGrayZebraRowStyles(theme)]:
         isOddVSRow && shouldAlternateRowColor && !isSelected,
-      [getSelectedRowStyles(theme)]: isSelected && !isDisabled,
     },
     {
-      [getExpandedContentParentStyles(theme)]: isExpanded,
+      [getExpandedContentParentStyles(theme)]: isExpanded && !isSelected,
+    },
+    {
+      [getSelectedRowStyles(theme)]: isSelected && !isDisabled,
     },
     className,
   );
