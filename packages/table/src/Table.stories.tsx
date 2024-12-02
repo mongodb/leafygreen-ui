@@ -496,7 +496,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(true, 500))[0];
+  const data = React.useState(() => makeData(true, 200))[0];
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
