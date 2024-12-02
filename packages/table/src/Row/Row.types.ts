@@ -31,6 +31,11 @@ export interface InternalRowWithRTBaseProps<T extends LGRowData>
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
+
+  /**
+   * An internal prop used to pass a ref to the row
+   */
+  rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
