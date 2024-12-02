@@ -7,7 +7,7 @@ import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
@@ -149,7 +149,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       {
         id: 'actions',
         header: '',
-        size: 90,
+        size: 120,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
@@ -190,9 +190,17 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       <TableHead isSticky>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
+            {headerGroup.headers.map((header, index) => {
               return (
-                <HeaderCell key={header.id} header={header}>
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                  className={cx({
+                    [css`
+                      min-width: 120px;
+                    `]: index === 5,
+                  })}
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
@@ -276,7 +284,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
       {
         id: 'actions',
         header: '',
-        size: 90,
+        size: 120,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
@@ -317,9 +325,17 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
       <TableHead isSticky>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
+            {headerGroup.headers.map((header, index) => {
               return (
-                <HeaderCell key={header.id} header={header}>
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                  className={cx({
+                    [css`
+                      min-width: 120px;
+                    `]: index === 5,
+                  })}
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),

@@ -33,10 +33,6 @@ import {
 const meta: StoryMetaType<typeof Table> = {
   title: 'Components/Table/Interactions',
   component: Table,
-  // argTypes: {
-  //   shouldAlternateRowColor: { control: 'boolean' },
-  //   darkMode: { control: 'boolean' },
-  // },
   parameters: {
     default: 'Template',
     controls: {
