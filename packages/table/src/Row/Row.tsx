@@ -1,6 +1,7 @@
 import React, { ForwardedRef } from 'react';
 import PropTypes from 'prop-types';
 
+import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useTableContext } from '../TableContext';
@@ -17,10 +18,12 @@ import { RowContextProvider } from './RowContext';
 
 const RowWithRef = <T extends LGRowData>(
   { row, virtualRow, disabled = false, ...rest }: RowProps<T>,
-  ref: ForwardedRef<HTMLTableRowElement>,
+  fwdRef: ForwardedRef<HTMLTableRowElement>,
 ) => {
   const { theme } = useDarkMode();
   const { shouldAlternateRowColor = false, virtualTable } = useTableContext();
+
+  const ref = useForwardedRef(fwdRef, null);
 
   return (
     <>
@@ -36,7 +39,7 @@ const RowWithRef = <T extends LGRowData>(
             (row.getParentRow() && row.getParentRow()?.getIsExpanded()) ?? false
           }
           isSelected={row.getIsSelected()}
-          ref={ref}
+          rowRef={ref}
           disabled={disabled}
           {...rest}
         />

@@ -28,7 +28,7 @@ const InternalRowWithRT = <T extends LGRowData>({
   isExpanded,
   isParentExpanded,
   isSelected,
-  rowRef: ref,
+  rowRef,
   ...rest
 }: InternalRowWithRTProps<T>) => {
   // We need to use the virtualRow index instead of nth-of-type because the rows are not static
@@ -66,7 +66,7 @@ const InternalRowWithRT = <T extends LGRowData>({
         data-expanded={isExpanded}
         data-depth={row.depth}
         id={`lg-table-row-${row.id}`}
-        ref={useMergeRefs([ref, measureElement])}
+        ref={useMergeRefs([rowRef, measureElement])}
         data-index={virtualRow ? virtualRow!.index : ''}
         {...rest}
       >
