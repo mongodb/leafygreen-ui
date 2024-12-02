@@ -1,5 +1,11 @@
 # @lg-private/canvas-header
 
+## 2.1.0
+
+### Minor Changes
+
+- daef9ca: Adds `resourceBadges` prop to render badges to the right of the resource name
+
 ## 2.0.1
 
 ### Patch Changes
