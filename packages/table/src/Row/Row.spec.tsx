@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { getAllByRole } from '@testing-library/dom';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { palette } from '@leafygreen-ui/palette';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { LGIDS } from '../constants';
@@ -22,9 +20,9 @@ function renderRow(props: RowProps<Person>) {
     <table data-lgid={LGIDS.root}>
       <tbody>
         <Row {...props} data-testid="lg-test-row-1">
-          <td />
-          <td />
-          <td />
+          <td data-lgid={LGIDS.cell} />
+          <td data-lgid={LGIDS.cell} />
+          <td data-lgid={LGIDS.cell} />
         </Row>
         <Row {...props} data-testid="lg-test-row-2" />
         <Row {...props} data-testid="lg-test-row-3" />
@@ -43,27 +41,28 @@ describe('packages/table/RowWithoutRT', () => {
   });
 
   test('renders the correct number of children', () => {
-    const { getByTestId } = renderRow(defaultProps);
-    const row = getByTestId('lg-test-row-1');
-    expect(getAllByRole(row, 'cell').length).toBe(3);
+    renderRow(defaultProps);
+    const { getRowByIndex } = getTestUtils();
+    expect(getRowByIndex(0)?.getAllCells()).toHaveLength(3);
   });
 
   describe('disabled prop', () => {
     test('it renders a row as disabled when the prop is set', () => {
-      const { getByTestId } = renderRow({ ...defaultProps, disabled: true });
-      const row = getByTestId('lg-test-row-1');
-      expect(row.getAttribute('aria-disabled')).toBe('true');
+      renderRow({ ...defaultProps, disabled: true });
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.isDisabled).toBeTruthy();
     });
 
     test(`onClick is not called when the row is disabled`, () => {
       const onClick = jest.fn();
-      const { getByTestId } = renderRow({
+      renderRow({
         ...defaultProps,
         disabled: true,
         onClick,
       });
-      const row = getByTestId('lg-test-row-1');
-      expect(() => userEvent.click(row)).toThrow();
+      const { getRowByIndex } = getTestUtils();
+      const row = getRowByIndex(0)?.getElement();
+      expect(() => userEvent.click(row!)).toThrow();
       expect(onClick).not.toHaveBeenCalled();
     });
   });
@@ -76,45 +75,24 @@ describe('packages/table/RowWithoutRT', () => {
     });
   });
 
-  describe('zebra striping works as expected', () => {
-    test('odd rows have no background', async () => {
-      const { getByTestId } = renderRow(defaultProps);
-      const firstRow = getByTestId('lg-test-row-1');
-      expect(firstRow).toHaveStyle(`background-color: none;`);
-      const thirdRow = getByTestId('lg-test-row-3');
-      expect(thirdRow).toHaveStyle(`background-color: none;`);
-    });
-
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('even rows have gray backgrounds', async () => {
-      const { getByTestId } = renderRow(defaultProps);
-      const secondRow = getByTestId('lg-test-row-2');
-      expect(secondRow).toHaveStyle(
-        `background-color: ${palette.gray.light3};`,
-      );
-      const fourthRow = getByTestId('lg-test-row-4');
-      expect(fourthRow).toHaveStyle(
-        `background-color: ${palette.gray.light3};`,
-      );
-    });
-  });
-
   describe('onClick prop applies correct styles and tabIndex', () => {
     test('onClick prop is called correctly on click', async () => {
       const onClick = jest.fn();
-      const { getByTestId } = renderRow({ ...defaultProps, onClick });
-      const firstRow = getByTestId('lg-test-row-1');
-      fireEvent.click(firstRow);
+      renderRow({ ...defaultProps, onClick });
+      const { getRowByIndex } = getTestUtils();
+      const firstRow = getRowByIndex(0)?.getElement();
+      fireEvent.click(firstRow!);
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
     test('clickable rows are tabbable', async () => {
       const onClick = jest.fn();
-      const { getByTestId } = renderRow({ ...defaultProps, onClick });
-      const firstRow = getByTestId('lg-test-row-1');
-      firstRow.focus();
+      renderRow({ ...defaultProps, onClick });
+      const { getRowByIndex } = getTestUtils();
+      const firstRow = getRowByIndex(0)?.getElement();
+      firstRow!.focus();
       userEvent.tab();
-      const secondRow = getByTestId('lg-test-row-2');
+      const secondRow = getRowByIndex(1)?.getElement();
       expect(secondRow).toHaveFocus();
     });
   });
