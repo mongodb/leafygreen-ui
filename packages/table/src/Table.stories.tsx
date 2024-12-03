@@ -150,8 +150,6 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         id: 'actions',
         header: '',
         size: 120,
-        minSize: 120,
-        // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
             <>
