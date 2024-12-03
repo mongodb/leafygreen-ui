@@ -559,8 +559,8 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
     {
       accessorKey: 'id',
       header: 'ID',
-      // @ts-expect-error - size expects a number, this makes the size auto
-      size: 'auto',
+      // This makes the width auto
+      size: NaN,
     },
     {
       accessorKey: 'firstName',
@@ -697,8 +697,8 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'clusterType',
         header: 'Cluster Type',
-        // @ts-expect-error - size expects a number, this makes the size auto
-        size: 'auto',
+        // his makes the size auto
+        size: NaN,
       },
       {
         accessorKey: 'frequency',

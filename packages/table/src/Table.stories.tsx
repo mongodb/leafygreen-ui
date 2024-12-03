@@ -150,6 +150,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
         id: 'actions',
         header: '',
         size: 120,
+        minSize: 120,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
@@ -190,6 +191,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
                   header={header}
                   className={cx({
                     [css`
+                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
                       min-width: 120px;
                     `]: index === 5,
                   })}
