@@ -1,35 +1,26 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
-
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
-import PortalContextProvider, {
-  PortalContextValues,
+import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
+import { MigrationProvider, useMigrationContext } from './MigrationContext';
+import {
+  PortalContextProvider,
   usePopoverPortalContainer,
 } from './PortalContext';
-import TypographyProvider, {
-  TypographyProviderProps,
-  useBaseFontSize,
-} from './TypographyContext';
+import TypographyProvider, { useBaseFontSize } from './TypographyContext';
 import UsingKeyboardProvider from './UsingKeyboardContext';
-
-export type LeafyGreenProviderProps = {
-  /**
-   * Define a container HTMLElement for components that utilize the `Portal` component
-   */
-  popoverPortalContainer?: PortalContextValues['popover'];
-} & TypographyProviderProps &
-  DarkModeProps;
 
 function LeafyGreenProvider({
   children,
   baseFontSize: fontSizeProp,
   popoverPortalContainer: popoverPortalContainerProp,
   darkMode: darkModeProp,
+  forceUseTopLayer: forceUseTopLayerProp = false,
 }: PropsWithChildren<LeafyGreenProviderProps>) {
-  // if the prop is set, we use that
-  // if the prop is not set, we use outer context
+  /**
+   * If `darkMode` prop is provided, use that. Otherwise, use context value
+   */
   const { contextDarkMode: inheritedDarkMode } = useDarkModeContext();
   const [darkModeState, setDarkMode] = useState(
     darkModeProp ?? inheritedDarkMode,
@@ -39,13 +30,25 @@ function LeafyGreenProvider({
     setDarkMode(darkModeProp ?? inheritedDarkMode);
   }, [darkModeProp, inheritedDarkMode]);
 
-  // Similarly with base font size
+  /**
+   * If `baseFontSize` prop is provided, use that. Otherwise, use context value
+   */
   const inheritedFontSize = useBaseFontSize();
   const baseFontSize = fontSizeProp ?? inheritedFontSize;
-  // and popover portal container
+
+  /**
+   * If `popoverPortalContainer` prop is provided, use that. Otherwise, use context value
+   */
   const inheritedContainer = usePopoverPortalContainer();
   const popoverPortalContainer =
     popoverPortalContainerProp ?? inheritedContainer;
+
+  /**
+   * If `forceUseTopLayerProp` is true, it will globally apply to all children
+   */
+  const migrationContext = useMigrationContext();
+  const forceUseTopLayer =
+    forceUseTopLayerProp || migrationContext.forceUseTopLayer;
 
   return (
     <UsingKeyboardProvider>
@@ -55,7 +58,9 @@ function LeafyGreenProvider({
             contextDarkMode={darkModeState}
             setDarkMode={setDarkMode}
           >
-            {children}
+            <MigrationProvider forceUseTopLayer={forceUseTopLayer}>
+              {children}
+            </MigrationProvider>
           </DarkModeProvider>
         </TypographyProvider>
       </PortalContextProvider>

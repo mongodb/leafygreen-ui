@@ -14,6 +14,7 @@ import {
   chipTextClassName,
   getTextStyles,
   getWrapperStyles,
+  inlineDefinitionStyles,
 } from './Chip.styles';
 import { ChipProps, TruncationLocation, Variant } from './Chip.types';
 
@@ -28,7 +29,6 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       darkMode: darkModeProp,
       label,
       onDismiss,
-      popoverZIndex,
       className,
       dismissButtonAriaLabel,
       glyph,
@@ -82,8 +82,8 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
               darkMode={darkMode}
               definition={label}
               align="bottom"
-              popoverZIndex={popoverZIndex}
               className={chipInlineDefinitionClassName}
+              tooltipClassName={inlineDefinitionStyles}
             >
               {truncatedName}
             </InlineDefinition>
@@ -111,7 +111,6 @@ Chip.propTypes = {
   label: PropTypes.string.isRequired,
   chipCharacterLimit: PropTypes.number,
   chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
-  popoverZIndex: PropTypes.number,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   variant: PropTypes.oneOf(Object.values(Variant)),
   onDismiss: PropTypes.func,

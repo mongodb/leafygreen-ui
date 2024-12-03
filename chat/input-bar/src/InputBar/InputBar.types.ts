@@ -2,7 +2,7 @@ import { FormEvent, ReactElement } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
-import { PortalControlProps } from '@leafygreen-ui/popover';
+import { PopoverRenderModeProps } from '@leafygreen-ui/popover';
 
 export type InputBarProps = HTMLElementProps<'form'> &
   DarkModeProps & {
@@ -46,9 +46,18 @@ export type InputBarProps = HTMLElementProps<'form'> &
     dropdownFooterSlot?: ReactElement;
 
     /**
-     * Props passed to the Popover that renders the suggested promps.
+     * Props passed to the Popover that renders the suggested prompts.
      */
-    dropdownProps?: PortalControlProps;
+    dropdownProps?: Omit<
+      PopoverRenderModeProps,
+      | 'dismissMode'
+      | 'onToggle'
+      | 'portalClassName'
+      | 'portalContainer'
+      | 'portalRef'
+      | 'renderMode'
+      | 'scrollContainer'
+    >;
   };
 
 export type { TextareaAutosizeProps };

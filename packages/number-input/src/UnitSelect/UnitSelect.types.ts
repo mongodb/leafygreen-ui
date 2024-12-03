@@ -1,14 +1,6 @@
-import {
-  PopoverProps as ImportedPopoverProps,
-  PortalControlProps,
-} from '@leafygreen-ui/popover';
-
 import { Size, UnitOption } from '../NumberInput/NumberInput.types';
 
-export type PopoverProps = PortalControlProps &
-  Pick<ImportedPopoverProps, 'popoverZIndex'>;
-
-export type UnitSelectProps = {
+export interface UnitSelectProps {
   /**
    * Id for the select component.
    */
@@ -51,4 +43,4 @@ export type UnitSelectProps = {
    * @internal
    */
   ['data-testid']?: string;
-} & PopoverProps;
+}

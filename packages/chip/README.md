@@ -33,7 +33,6 @@ or
   baseFontSize={13}
   disabled
   onDismiss={() => {}}
-  popoverZIndex={1}
   chipCharacterLimit={10}
   chipTruncationLocation="end"
   dismissButtonAriaLabel="aria-label"
@@ -49,7 +48,6 @@ or
 | `label`                  | `React.ReactNode`                                                                    | Label rendered in the chip                                                                                                                                                                                                                                |                     |
 | `chipTruncationLocation` | `'end'` \| `'middle'` \| `'none'` \| `'start'`                                       | Defines where the ellipses will appear in a Chip when the label length exceeds the `chipCharacterLimit`. If `none` is passed, the chip will not truncate. **Note**: If there is any truncation, the full label text will appear inside a tooltip on hover | `none`              |
 | `chipCharacterLimit`     | `number`                                                                             | Defines the character limit of a Chip before they start truncating. **Note**: the three ellipses dots are included in the character limit and the chip will only truncate if the chip length is greater than the `chipCharacterLimit`.                    |                     |
-| `popoverZIndex`          | `number`                                                                             | Number that controls the z-index of the tooltip containing the full label text.                                                                                                                                                                           |                     |
 | `baseFontSize`           | `'13'` \| `'16'`                                                                     | Determines the base font-size of the chip.                                                                                                                                                                                                                |                     |
 | `variant`                | `'gray'` \| `'blue'` \| `'green'` \| `'purple'` \| `'red'` \| `'yellow'` \| `'blue'` | The color of the chip.                                                                                                                                                                                                                                    |                     |
 | `glyph`                  | `React.ReactElement`                                                                 | An icon glyph rendered before the text. To use a custom icon, see [Link](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets) docs                                                              |                     |

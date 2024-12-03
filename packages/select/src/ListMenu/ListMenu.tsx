@@ -34,18 +34,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       className,
       labelId,
       dropdownWidthBasis,
-      usePortal = true,
-      portalContainer,
-      portalRef,
-      scrollContainer,
-      portalClassName,
-      popoverZIndex,
-      onEntering,
-      onEnter,
-      onEntered,
-      onExiting,
-      onExit,
-      onExited,
     }: ListMenuProps,
     forwardedRef,
   ) {
@@ -69,25 +57,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
       [ref],
     );
 
-    const popoverProps = {
-      popoverZIndex,
-      onEntering,
-      onEnter,
-      onEntered,
-      onExiting,
-      onExit,
-      onExited,
-      ...(usePortal
-        ? {
-            usePortal,
-            portalClassName,
-            portalContainer,
-            portalRef,
-            scrollContainer,
-          }
-        : { usePortal }),
-    };
-
     return (
       <Popover
         active={open && !disabled}
@@ -99,7 +68,6 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
           [autoWidthStyles]: dropdownWidthBasis === DropdownWidthBasis.Option,
         })}
         refEl={referenceElement}
-        {...popoverProps}
       >
         {/* Keyboard events handled in Select component through event listener hook */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
