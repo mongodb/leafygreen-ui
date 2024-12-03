@@ -1,12 +1,11 @@
 import React, { forwardRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useTableContext } from '../TableContext';
 
 import InternalRowBase from './InternalRowBase';
-import { zebraStyles } from './Row.styles';
+import { getRowWithoutRTStyles } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
 
 /**
@@ -23,12 +22,11 @@ const InternalRowWithoutRT = forwardRef<
 
   return (
     <InternalRowBase
-      className={cx(
-        {
-          [zebraStyles[theme]]: shouldAlternateRowColor,
-        },
+      className={getRowWithoutRTStyles({
         className,
-      )}
+        shouldAlternateRowColor,
+        theme,
+      })}
       ref={fwdRef}
       {...rest}
     >
