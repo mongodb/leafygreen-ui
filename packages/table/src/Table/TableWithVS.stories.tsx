@@ -8,7 +8,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
@@ -606,7 +606,11 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   });
 
   return (
-    <>
+    <div
+      className={css`
+        width: 100%;
+      `}
+    >
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
         <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
@@ -668,7 +672,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
               })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
 };
 
@@ -750,7 +754,11 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
   });
 
   return (
-    <div>
+    <div
+      className={css`
+        width: 100%;
+      `}
+    >
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
       </div>

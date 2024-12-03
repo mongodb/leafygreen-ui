@@ -179,14 +179,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
+    <Table {...args} table={table} ref={tableContainerRef}>
       <TableHead isSticky>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>
@@ -314,14 +307,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
+    <Table {...args} table={table} ref={tableContainerRef}>
       <TableHead isSticky>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>
