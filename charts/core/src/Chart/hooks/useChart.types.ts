@@ -7,7 +7,6 @@ export interface ZoomSelectionEvent {
 
 export interface ChartHookProps {
   onChartReady?: () => void;
-  zoomable?: boolean;
   onZoomSelect?: (e: ZoomSelectionEvent) => void;
   theme: Theme;
 }

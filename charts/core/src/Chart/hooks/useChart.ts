@@ -44,7 +44,6 @@ echarts.use([
 export function useChart({
   theme,
   onChartReady,
-  zoomable,
   onZoomSelect,
 }: ChartHookProps) {
   const chartRef = useRef(null);
@@ -66,12 +65,21 @@ export function useChart({
     window.addEventListener('resize', resizeHandler);
 
     function onInitialRender() {
-      if (zoomable) {
+      /**
+       * IMPORTANT NOTE: We use the presence of the handler to determine if the zoom click
+       * and drag is enabled or not. This is an exception! Typically we'd want a `zoomable` prop,
+       * or something similar to enable/disable, and a handler just to handle the action.
+       * We don't want to set a precedent with the pattern of implying functionality (like
+       * the click and drag action) based on the presence of a handler like this.
+       * This was deemed an exception to the rule due to the fact that the data is always
+       * controlled and there never exists a scenario where one would be useful without the other.
+       */
+      if (onZoomSelect) {
         /**
-         * Zooming is built into the chart via the toolbar. By default, a user
+         * Zooming is built into echart via the toolbar. By default, a user
          * has to click the "dataZoom" button to enable zooming. We however hide
          * this button and want it turned on by default. This is done by dispatching
-         * an action to enable the "dataZoomSelect" feature.
+         * an action to enable the "dataZoomSelect" feature, as if it were clicked.
          */
         chartInstance.dispatchAction({
           type: 'takeGlobalCursor',
@@ -89,12 +97,10 @@ export function useChart({
             const { startValue: yStart, endValue: yEnd } =
               params.batch[yAxisIndex];
 
-            if (onZoomSelect) {
-              onZoomSelect({
-                xAxis: { startValue: xStart, endValue: xEnd },
-                yAxis: { startValue: yStart, endValue: yEnd },
-              });
-            }
+            onZoomSelect({
+              xAxis: { startValue: xStart, endValue: xEnd },
+              yAxis: { startValue: yStart, endValue: yEnd },
+            });
           }
 
           /**
@@ -129,7 +135,7 @@ export function useChart({
       window.removeEventListener('resize', resizeHandler);
       chartInstance.dispose();
     };
-  }, [chartOptions, onChartReady, onZoomSelect, zoomable]);
+  }, [chartOptions, onChartReady, onZoomSelect]);
 
   const updateChartRef = useMemo(
     () =>

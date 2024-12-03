@@ -1,3 +1,4 @@
+import { PropsWithChildren } from 'react';
 import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
 import type { LineSeriesOption } from 'echarts/charts';
 import type {
@@ -35,10 +36,19 @@ export type ChartOptions = ComposeOption<
   | YAXisComponentOption
 > & { series?: Array<SeriesOption> };
 
-export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
-  children?: React.ReactNode;
+export interface ChartProps
+  extends HTMLElementProps<'div'>,
+    DarkModeProps,
+    PropsWithChildren {
+  /**
+   * Callback to be called when chart is finished rendering.
+   */
   onChartReady?: () => void;
-  zoomable?: boolean;
+
+  /**
+   * Callback to be called when a user clicks and drags on a chart to zoom.
+   * Click and drag action will only be enabled if this handler is present.
+   */
   onZoomSelect?: (e: ZoomSelectionEvent) => void;
 }
 

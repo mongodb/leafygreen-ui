@@ -22,7 +22,6 @@ export function Chart({
   children,
   darkMode: darkModeProp,
   onChartReady,
-  zoomable,
   onZoomSelect,
   className,
   ...rest
@@ -37,7 +36,6 @@ export function Chart({
   } = useChart({
     theme,
     onChartReady,
-    zoomable,
     onZoomSelect,
   });
 

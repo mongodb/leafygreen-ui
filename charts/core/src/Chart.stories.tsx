@@ -5,7 +5,6 @@ import type { StoryObj } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
-import { ChartProps } from './Chart/Chart.types';
 import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
@@ -40,7 +39,6 @@ export default {
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
     headerShowDivider: true,
-    zoomable: true,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -203,14 +201,6 @@ export default {
         category: 'Header',
       },
     },
-    zoomable: {
-      control: 'boolean',
-      description: 'Allow zooming',
-      name: 'zoomable',
-      table: {
-        category: 'Chart',
-      },
-    },
     onZoomSelect: {
       description: 'Zoom handler',
       name: 'onZoomSelect',
@@ -242,7 +232,6 @@ interface StorybookProps {
   renderHeader: boolean;
   headerTitle: HeaderProps['title'];
   headerShowDivider: HeaderProps['showDivider'];
-  zoomable: ChartProps['zoomable'];
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -266,10 +255,9 @@ export const Basic: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
-    zoomable,
   }) => {
     return (
-      <Chart zoomable={zoomable}>
+      <Chart>
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
         )}
@@ -326,10 +314,9 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
-    zoomable,
   }) => {
     return (
-      <Chart zoomable={zoomable}>
+      <Chart>
         {renderHeader && (
           <Header
             title={headerTitle}
