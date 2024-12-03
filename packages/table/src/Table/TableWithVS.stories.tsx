@@ -8,7 +8,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
@@ -539,11 +539,61 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   const data = React.useMemo(() => {
     return makeData(false, 10_000).map(d => ({
       ...d,
-      id: faker.string.uuid() + '--' + faker.string.uuid(),
+      id:
+        faker.string.uuid() +
+        '--' +
+        faker.string.uuid() +
+        '--' +
+        faker.string.uuid() +
+        '--' +
+        faker.string.uuid(),
     }));
   }, []);
 
-  const columns = useMemo(() => basicColumnDefs, []);
+  const columnDefs: Array<LGColumnDef<Person>> = [
+    {
+      accessorKey: 'index',
+      header: 'index',
+      size: 90,
+    },
+    {
+      accessorKey: 'id',
+      header: 'ID',
+      // @ts-expect-error - size expects a number, this makes the size auto
+      size: 'auto',
+    },
+    {
+      accessorKey: 'firstName',
+      header: 'First Name',
+      cell: info => info.getValue(),
+      size: 120,
+    },
+    {
+      accessorFn: row => row.lastName,
+      id: 'lastName',
+      cell: info => info.getValue(),
+      header: () => <span>Last Name</span>,
+      size: 120,
+    },
+    {
+      accessorKey: 'age',
+      header: () => 'Age',
+      size: 50,
+      align: 'center',
+    },
+    {
+      accessorKey: 'visits',
+      header: () => <span>Visits</span>,
+      size: 50,
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      size: 110,
+    },
+  ];
+
+  const columns = useMemo(() => columnDefs, []);
   const estimateSize = useCallback(() => 68, []);
 
   const table = useLeafyGreenVirtualTable<Person>({
@@ -592,7 +642,7 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
                 const row = virtualRow.row;
                 const cells = row.getVisibleCells();
                 return (
-                  <Row key={row.id}>
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
                       return (
                         <Cell
@@ -643,6 +693,8 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'clusterType',
         header: 'Cluster Type',
+        // @ts-expect-error - size expects a number, this makes the size auto
+        size: 'auto',
       },
       {
         accessorKey: 'frequency',
@@ -714,19 +766,9 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
             .getHeaderGroups()
             .map((headerGroup: HeaderGroup<KitchenSink>) => (
               <HeaderRow key={headerGroup.id}>
-                {headerGroup.headers.map((header, index) => {
+                {headerGroup.headers.map(header => {
                   return (
-                    <HeaderCell
-                      key={header.id}
-                      header={header}
-                      className={css`
-                        ${index === 1 &&
-                        css`
-                          // This overrides the default width of 150px and makes the 2nd column responsive
-                          width: auto;
-                        `}
-                      `}
-                    >
+                    <HeaderCell key={header.id} header={header}>
                       {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
@@ -741,43 +783,34 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
           {table.virtual.getVirtualItems() &&
             table.virtual
               .getVirtualItems()
-              .map(
-                (
-                  virtualRow: LeafyGreenVirtualItem<KitchenSink>,
-                  index: number,
-                ) => {
-                  const row = virtualRow.row;
-                  const isExpandedContent = row.isExpandedContent ?? false;
+              .map((virtualRow: LeafyGreenVirtualItem<KitchenSink>) => {
+                const row = virtualRow.row;
+                const isExpandedContent = row.isExpandedContent ?? false;
 
-                  return (
-                    <Fragment key={virtualRow.key}>
-                      {!isExpandedContent && (
-                        <Row
-                          row={row}
-                          virtualRow={virtualRow}
-                          data-row-index={index}
-                        >
-                          {row
-                            .getVisibleCells()
-                            .map((cell: LeafyGreenTableCell<KitchenSink>) => {
-                              return (
-                                <Cell key={cell.id} cell={cell}>
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            })}
-                        </Row>
-                      )}
-                      {isExpandedContent && (
-                        <ExpandedContent row={row} virtualRow={virtualRow} />
-                      )}
-                    </Fragment>
-                  );
-                },
-              )}
+                return (
+                  <Fragment key={virtualRow.key}>
+                    {!isExpandedContent && (
+                      <Row row={row} virtualRow={virtualRow}>
+                        {row
+                          .getVisibleCells()
+                          .map((cell: LeafyGreenTableCell<KitchenSink>) => {
+                            return (
+                              <Cell key={cell.id} cell={cell}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                      </Row>
+                    )}
+                    {isExpandedContent && (
+                      <ExpandedContent row={row} virtualRow={virtualRow} />
+                    )}
+                  </Fragment>
+                );
+              })}
         </TableBody>
       </Table>
     </div>
