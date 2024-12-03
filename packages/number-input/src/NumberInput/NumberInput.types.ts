@@ -8,8 +8,6 @@ import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { FormFieldState } from '@leafygreen-ui/form-field';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import { PopoverProps } from '../UnitSelect/UnitSelect.types';
-
 export const Direction = {
   Increment: 'increment',
   Decrement: 'decrement',
@@ -154,5 +152,4 @@ export interface BaseNumberInputProps
 
 export type NumberInputProps = BaseNumberInputProps &
   ConditionalUnitSelectProps &
-  PopoverProps &
   AriaLabelPropsWithLabel;

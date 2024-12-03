@@ -19,7 +19,7 @@ npm install @lg-tools/codemods
 ## Usage
 
 ```jsx
-yarn lg codemod <codemod> <path> [...options]
+yarn lg codemod <codemod-name> <path> [...options]
 ```
 
 ### Arguments
@@ -38,111 +38,148 @@ files or directory to transform
 
 ### Options
 
-#### `--i or --ignore`
+#### `-i or --ignore`
 
 Glob patterns to ignore
 
-```jsx
-yarn lg codemod <codemode> <path> --ignore **/node_modules/** **/.next/**
+```js
+yarn lg codemod <codemod-name> <path> --ignore **/node_modules/** **/.next/**
 ```
 
-#### `--d or --dry`
+#### `-d or --dry`
 
 Dry run (no changes to files are made)
 
-```jsx
-yarn lg codemod <codemode> <path> --dry
+```js
+yarn lg codemod <codemod-name> <path> --dry
 ```
 
-#### `--p or --print`
+#### `-p or --print`
 
 Print transformed files to stdout and changes are also made to files
 
-```jsx
-yarn lg codemod <codemode> <path> --print
+```js
+yarn lg codemod <codemod-name> <path> --print
 ```
 
-#### `--f or --force`
+#### `-f or --force`
 
 Bypass Git safety checks and forcibly run codemods.
 
-```jsx
-yarn lg codemod <codemode> <path> --force
+```js
+yarn lg codemod <codemod-name> <path> --force
+```
+
+#### `--packages`
+
+Restrict the codemod to certain packages
+
+```js
+yarn lg codemod <codemod-name> <path> --packages @leafygreen-ui/popover @leafygreen-ui/select
 ```
 
 ## Codemods
 
-**_NOTE:_ These codemods are for testing purposes only**
+### `popover-v12`
 
-### `consolidate-props`
+This codemod can be used to get started in refactoring LG components dependent on v12+ of `@leafygreen-ui/popover`.
 
-This codemod consolidates two props into one.
+By default, the codemod will apply for all below listed packages. Use the `--packages` flag to filter for a subset of these.
 
-```jsx
-yarn lg codemod codemode-props <path>
+This codemod does the following:
+
+1. Adds an explicit `usePortal={true}` declaration if left undefined and consolidates the `usePortal` and `renderMode` props into a single `renderMode` prop for components in the following packages:
+
+- `@leafygreen-ui/combobox`
+- `@leafygreen-ui/menu`
+- `@leafygreen-ui/popover`
+- `@leafygreen-ui/select`
+- `@leafygreen-ui/split-button`
+- `@leafygreen-ui/tooltip`
+
+2. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `portalRef`, `scrollContainer`, and `usePortal` props from the following components:
+
+- `@leafygreen-ui/info-sprinkle`
+- `@leafygreen-ui/inline-definition`
+- `@leafygreen-ui/number-input`
+
+3. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `portalRef`, and `scrollContainer` props from the following components:
+
+- `@leafygreen-ui/date-picker`
+- `@leafygreen-ui/guide-cue`
+
+4. Removes `popoverZIndex`, `portalClassName`, `portalContainer`, `scrollContainer`, and `usePortal` props from `Code` component in the `@leafygreen-ui/code` package
+
+5. Removes `portalClassName`, `portalContainer`, `portalRef`, `scrollContainer`, and `usePortal` props from `SearchInput` component in the `@leafygreen-ui/search-input` package
+
+6. Removes `shouldTooltipUsePortal` prop from `Copyable` component in the `@leafygreen-ui/copyable` package
+
+7. Replaces `justify="fit"` prop value with `justify="middle"` for components in the following packages:
+
+- `@leafygreen-ui/date-picker`
+- `@leafygreen-ui/info-sprinkle`
+- `@leafygreen-ui/inline-definition`
+- `@leafygreen-ui/menu`
+- `@leafygreen-ui/popover`
+- `@leafygreen-ui/tooltip`
+
+```js
+yarn lg codemod popover-v12 <path> --packages @leafygreen-ui/combobox @leafygreen-ui/code @leafygreen-ui/info-sprinkle @leafygreen-ui/copyable
 ```
-
-E.g.
-In this example, the `disabled` props is merged into the `state` prop.
 
 **Before**:
 
 ```jsx
-<MyComponent disabled={true} state="valid" />
+import LeafyGreenCode from '@leafygreen-ui/code';
+import { Combobox as LGCombobox } from '@leafygreen-ui/combobox';
+import { DatePicker } from '@leafygreen-ui/date-picker';
+import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
+import { Menu } from '@leafygreen-ui/menu';
+import Copyable from '@leafygreen-ui/copyable';
+import Tooltip from '@leafygreen-ui/tooltip';
+
+<LGCombobox />
+<LGCombobox usePortal={true} />
+<LGCombobox usePortal={false} />
+
+<LeafyGreenCode portalClassName="portal-class" portalRef={ref} usePortal />
+<InfoSprinkle popoverZIndex={9999} usePortal={false} />
+
+<DatePicker portalContainer={containerRef} scrollContainer={containerRef} />
+<Menu portalClassName="portal-class" usePortal />
+
+<Copyable shouldTooltipUsePortal />
+<Copyable shouldTooltipUsePortal={true} />
+<Copyable shouldTooltipUsePortal={false} />
+
+<Menu justify="fit" renderMode="top-layer" />
+<Tooltip justify="fit" renderMode="top-layer" />
 ```
 
 **After**:
 
 ```jsx
-<MyComponent state="disabled" />
-```
+import LeafyGreenCode from '@leafygreen-ui/code';
+import { Combobox as LGCombobox } from '@leafygreen-ui/combobox';
+import { DatePicker } from '@leafygreen-ui/date-picker';
+import { InfoSprinkle } from '@leafygreen-ui/info-sprinkle';
+import { Menu } from '@leafygreen-ui/menu';
+import Copyable from '@leafygreen-ui/copyable';
 
-<hr>
+<LGCombobox renderMode="portal" />
+<LGCombobox renderMode="portal" />
+<LGCombobox renderMode="inline" />
 
-### `rename-component-prop`
+<LeafyGreenCode />
+<InfoSprinkle />
 
-This codemod renames a component prop
+<DatePicker portalContainer={containerRef} scrollContainer={containerRef} />
+<Menu portalClassName="portal-class" usePortal />
 
-```jsx
-yarn lg codemod codemode-component-prop <path>
-```
+<Copyable />
+<Copyable />
+<Copyable />
 
-E.g.
-In this example, `prop` is renamed to `newProp`.
-
-**Before**:
-
-```jsx
-<MyComponent prop="hey" />
-```
-
-**After**:
-
-```jsx
-<MyComponent newProp="hey" />
-```
-
-<hr>
-
-### `update-component-prop-value`
-
-This codemod updates a prop value
-
-```jsx
-yarn lg codemod codemode-component-prop-value <path>
-```
-
-E.g.
-In this example, `value` is updated to `new prop value`.
-
-**Before**:
-
-```jsx
-<MyComponent prop="value" />
-```
-
-**After**:
-
-```jsx
-<MyComponent prop="new prop value" />
+<Menu justify="middle" renderMode="top-layer" />
+<Tooltip justify="middle" renderMode="top-layer" />
 ```

@@ -5,8 +5,6 @@ function resolve(transform) {
 
 module.exports = {
   presets: {
-    'consolidate-props': resolve('consolidate-props'),
-    'rename-component-prop': resolve('rename-component-prop'),
-    'update-component-prop-value': resolve('update-component-prop-value'),
+    'popover-v12': resolve('popover-v12'),
   },
 };

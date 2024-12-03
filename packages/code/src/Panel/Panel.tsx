@@ -8,7 +8,6 @@ import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import {
   LanguageOption,
   LanguageSwitcher as LanguageSwitcherProps,
-  PopoverProps,
 } from '../types';
 
 import {
@@ -27,7 +26,7 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
   className?: string;
-} & PopoverProps;
+};
 
 function Panel({
   language,
@@ -38,22 +37,9 @@ function Panel({
   showCopyButton,
   customActionButtons,
   showCustomActionButtons,
-  usePortal,
-  portalClassName,
-  portalContainer,
-  scrollContainer,
-  popoverZIndex,
   className,
 }: PanelProps) {
   const { theme } = useDarkMode();
-
-  const popoverProps = {
-    popoverZIndex,
-    usePortal,
-    portalClassName,
-    portalContainer,
-    scrollContainer,
-  } as const;
 
   return (
     <div
@@ -75,7 +61,6 @@ function Panel({
             onChange={onChange}
             language={language}
             languageOptions={languageOptions}
-            {...popoverProps}
           />
         )}
 

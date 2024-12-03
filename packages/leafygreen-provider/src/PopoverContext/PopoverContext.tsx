@@ -1,40 +1,34 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 
-export interface PopoverState {
-  /**
-   * Whether the most immediate popover ancestor is open
-   */
-  isPopoverOpen: boolean;
-  /**
-   * Sets the internal state
-   * @internal
-   */
-  setIsPopoverOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { PopoverContextType } from './PopoverContext.types';
 
-export const PopoverContext = createContext<PopoverState>({
+export const PopoverContext = createContext<PopoverContextType>({
   isPopoverOpen: false,
   setIsPopoverOpen: () => {},
 });
 
 /**
- * Access the popover state
- * @returns `isPopoverOpen: boolean`
+ * Access the popover context to read and write if a popover element is open in a modal
  */
-export function usePopoverContext(): PopoverState {
+export const usePopoverContext = (): PopoverContextType => {
   return useContext(PopoverContext);
-}
-
-interface PopoverProviderProps {
-  children?: React.ReactNode;
-}
+};
 
 /**
- * Creates a Popover context.
+ * Creates a Popover context to read and write if a popover element is open in a modal
  * Call `usePopoverContext` to access the popover state
+ * This is defined separately from `PopoverPropsContext` to avoid incorrectly resetting `isPopoverOpen` value
+ * We avoid renaming this provider because it will trigger major changes in all packages because
+ * `@leafygreen-ui/leafygreen-provider` is a peer dependency to all LG packages
  */
-export function PopoverProvider({ children }: PopoverProviderProps) {
+export const PopoverProvider = ({ children }: PropsWithChildren<{}>) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   const providerValue = useMemo(
@@ -50,7 +44,7 @@ export function PopoverProvider({ children }: PopoverProviderProps) {
       {children}
     </PopoverContext.Provider>
   );
-}
+};
 
 PopoverProvider.displayName = 'PopoverProvider';
 

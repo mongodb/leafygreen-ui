@@ -1,8 +1,7 @@
-import React, { createRef, PropsWithChildren, useState } from 'react';
+import React, { createRef, useState } from 'react';
 import {
   act,
   fireEvent,
-  getByText as getByTextFor,
   render,
   RenderResult,
   waitFor,
@@ -11,8 +10,10 @@ import {
 import userEvent from '@testing-library/user-event';
 
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';
-import { PopoverContext } from '@leafygreen-ui/leafygreen-provider';
+import * as LeafyGreenProviderModule from '@leafygreen-ui/leafygreen-provider';
+import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+import { RenderMode } from '@leafygreen-ui/popover';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
@@ -305,6 +306,7 @@ describe('packages/select', () => {
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
       const { getInput } = renderSelect({
+        renderMode: RenderMode.Portal,
         portalContainer,
         portalRef,
       });
@@ -694,8 +696,9 @@ describe('packages/select', () => {
 
           await waitForElementToBeRemoved(listbox);
 
-          expect(getByTextFor(button, optionText)).toBeVisible();
+          expect(button).toBeVisible();
           expect(button).toHaveFocus();
+          expect(button).toHaveTextContent(optionText);
           expect(button).toHaveValue(optionValue);
         });
 
@@ -722,8 +725,9 @@ describe('packages/select', () => {
 
           await waitForElementToBeRemoved(listbox);
 
-          expect(getByTextFor(button, optionText)).toBeVisible();
+          expect(button).toBeVisible();
           expect(button).toHaveFocus();
+          expect(button).toHaveTextContent(optionText);
           expect(button).toHaveValue(optionValue);
         });
 
@@ -746,8 +750,9 @@ describe('packages/select', () => {
 
           await waitForElementToBeRemoved(listbox);
 
-          expect(getByTextFor(button, optionText)).toBeVisible();
+          expect(button).toBeVisible();
           expect(button).toHaveFocus();
+          expect(button).toHaveTextContent(optionText);
           expect(button).toHaveValue(optionValue);
         });
       });
@@ -776,9 +781,9 @@ describe('packages/select', () => {
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeInTheDocument();
 
-          expect(getByTextFor(button, 'Select')).toBeVisible();
+          expect(button).toBeVisible();
           expect(targetOption).toHaveFocus();
-
+          expect(button).toHaveTextContent('Select');
           expect(button).toHaveValue('');
         });
 
@@ -797,7 +802,8 @@ describe('packages/select', () => {
           expect(onChangeSpy).not.toHaveBeenCalled();
           expect(listbox).toBeInTheDocument();
 
-          expect(getByTextFor(button, 'Select')).toBeVisible();
+          expect(button).toBeVisible();
+          expect(button).toHaveTextContent('Select');
           expect(button).toHaveValue('');
         });
       });
@@ -959,186 +965,168 @@ describe('packages/select', () => {
     });
   });
 
-  describe('without Portal (usePortal="false")', () => {
-    test('menu opens', async () => {
-      const { getInput, getPopover } = renderSelect({ usePortal: false });
-
-      userEvent.click(getInput());
-      await waitFor(() => expect(getPopover()).toBeVisible());
-    });
-
-    test('menu renders as a child of button', async () => {
-      const { getPopover, getInput } = renderSelect({
-        usePortal: false,
-      });
-
-      userEvent.click(getInput());
-
-      await waitFor(() => {
-        const popover = getPopover();
-        expect(popover).toBeInTheDocument();
-        expect(getInput()).toContainElement(popover);
-      });
-    });
-
-    describe('fires onChange when selecting an option', () => {
-      test('on mouse click', async () => {
-        const onChange = jest.fn();
-
-        const { getInput, getOptionByValue } = renderSelect({
-          usePortal: false,
-          onChange: onChange,
-        });
+  describe.each([RenderMode.Inline, RenderMode.TopLayer])(
+    `when renderMode=%p`,
+    renderMode => {
+      test('menu opens', async () => {
+        const { getInput, getPopover } = renderSelect({ renderMode });
 
         userEvent.click(getInput());
-        userEvent.click(getOptionByValue('Red')!);
-        expect(onChange).toHaveBeenCalled();
+        await waitFor(() => expect(getPopover()).toBeVisible());
       });
 
-      test('on enter', async () => {
-        const onChange = jest.fn();
-        const { getInput } = renderSelect({
-          usePortal: false,
-          onChange: onChange,
-        });
-
-        const button = getInput();
-        userEvent.type(button, '{arrowdown}');
-        // first option is focused by default
-        userEvent.keyboard('{enter}');
-        expect(onChange).toHaveBeenCalled();
-      });
-
-      test('on space', async () => {
-        const onChange = jest.fn();
-        const { getInput } = renderSelect({
-          usePortal: false,
-          onChange: onChange,
-        });
-
-        const button = getInput();
-        userEvent.type(button, '{arrowdown}');
-        // first option is focused by default
-        userEvent.keyboard('{space}');
-        expect(onChange).toHaveBeenCalled();
-      });
-    });
-
-    describe('closing', () => {
-      describe('selecting an option closes menu', () => {
+      describe('fires onChange when selecting an option', () => {
         test('on mouse click', async () => {
-          const { getInput, getPopover, getOptionByValue } = renderSelect({
-            usePortal: false,
+          const onChange = jest.fn();
+
+          const { getInput, getOptionByValue } = renderSelect({
+            renderMode,
+            onChange: onChange,
           });
+
           userEvent.click(getInput());
-          await waitFor(() => {
-            expect(getPopover()).toBeVisible();
-          });
           userEvent.click(getOptionByValue('Red')!);
-          await waitForElementToBeRemoved(getPopover());
-          expect(getPopover()).not.toBeInTheDocument();
+          expect(onChange).toHaveBeenCalled();
         });
 
         test('on enter', async () => {
-          const { getInput, getPopover } = renderSelect({
-            usePortal: false,
+          const onChange = jest.fn();
+          const { getInput } = renderSelect({
+            renderMode,
+            onChange: onChange,
           });
 
           const button = getInput();
           userEvent.type(button, '{arrowdown}');
-          await waitFor(() => {
-            expect(getPopover()).toBeInTheDocument();
-          });
           // first option is focused by default
           userEvent.keyboard('{enter}');
-          await waitForElementToBeRemoved(getPopover());
-          expect(getPopover()).not.toBeInTheDocument();
+          expect(onChange).toHaveBeenCalled();
         });
 
         test('on space', async () => {
-          const { getInput, getPopover } = renderSelect({
-            usePortal: false,
+          const onChange = jest.fn();
+          const { getInput } = renderSelect({
+            renderMode,
+            onChange: onChange,
           });
 
           const button = getInput();
           userEvent.type(button, '{arrowdown}');
-          await waitFor(() => {
-            expect(getPopover()).toBeInTheDocument();
-          });
           // first option is focused by default
           userEvent.keyboard('{space}');
-          await waitForElementToBeRemoved(getPopover());
-          expect(getPopover()).not.toBeInTheDocument();
+          expect(onChange).toHaveBeenCalled();
         });
       });
-    });
 
-    describe('fires Popover callbacks', () => {
-      test('opening the select fires the `onEnter*` callbacks', async () => {
-        const onEnter = jest.fn();
-        const onEntering = jest.fn();
-        const onEntered = jest.fn();
+      describe('closing', () => {
+        describe('selecting an option closes menu', () => {
+          test('on mouse click', async () => {
+            const { getInput, getPopover, getOptionByValue } = renderSelect({
+              renderMode,
+            });
+            userEvent.click(getInput());
+            await waitFor(() => {
+              expect(getPopover()).toBeVisible();
+            });
+            userEvent.click(getOptionByValue('Red')!);
+            await waitForElementToBeRemoved(getPopover());
+            expect(getPopover()).not.toBeInTheDocument();
+          });
 
-        const { getInput } = renderSelect({
-          onEnter: onEnter,
-          onEntering: onEntering,
-          onEntered: onEntered,
-          usePortal: false,
+          test('on enter', async () => {
+            const { getInput, getPopover } = renderSelect({
+              renderMode,
+            });
+
+            const button = getInput();
+            userEvent.type(button, '{arrowdown}');
+            await waitFor(() => {
+              expect(getPopover()).toBeInTheDocument();
+            });
+            // first option is focused by default
+            userEvent.keyboard('{enter}');
+            await waitForElementToBeRemoved(getPopover());
+            expect(getPopover()).not.toBeInTheDocument();
+          });
+
+          test('on space', async () => {
+            const { getInput, getPopover } = renderSelect({
+              renderMode,
+            });
+
+            const button = getInput();
+            userEvent.type(button, '{arrowdown}');
+            await waitFor(() => {
+              expect(getPopover()).toBeInTheDocument();
+            });
+            // first option is focused by default
+            userEvent.keyboard('{space}');
+            await waitForElementToBeRemoved(getPopover());
+            expect(getPopover()).not.toBeInTheDocument();
+          });
         });
-
-        userEvent.click(getInput());
-        expect(onEnter).toHaveBeenCalled();
-        expect(onEntering).toHaveBeenCalled();
-        await waitFor(() => expect(onEntered).toHaveBeenCalled());
       });
 
-      test('closing the select fires the `onExit*` callbacks', async () => {
-        const onExit = jest.fn();
-        const onExiting = jest.fn();
-        const onExited = jest.fn();
+      describe('fires Popover callbacks', () => {
+        test('opening the select fires the `onEnter*` callbacks', async () => {
+          const onEnter = jest.fn();
+          const onEntering = jest.fn();
+          const onEntered = jest.fn();
 
-        const { getInput } = renderSelect({
-          onExit: onExit,
-          onExiting: onExiting,
-          onExited: onExited,
-          usePortal: false,
+          const { getInput } = renderSelect({
+            onEnter: onEnter,
+            onEntering: onEntering,
+            onEntered: onEntered,
+            renderMode,
+          });
+
+          userEvent.click(getInput());
+          expect(onEnter).toHaveBeenCalled();
+          expect(onEntering).toHaveBeenCalled();
+          await waitFor(() => expect(onEntered).toHaveBeenCalled());
         });
 
-        userEvent.click(getInput());
-        userEvent.click(getInput());
+        test('closing the select fires the `onExit*` callbacks', async () => {
+          const onExit = jest.fn();
+          const onExiting = jest.fn();
+          const onExited = jest.fn();
 
-        expect(onExit).toHaveBeenCalled();
-        expect(onExiting).toHaveBeenCalled();
-        await waitFor(() => expect(onExited).toHaveBeenCalled());
+          const { getInput } = renderSelect({
+            onExit: onExit,
+            onExiting: onExiting,
+            onExited: onExited,
+            renderMode,
+          });
+
+          userEvent.click(getInput());
+          userEvent.click(getInput());
+
+          expect(onExit).toHaveBeenCalled();
+          expect(onExiting).toHaveBeenCalled();
+          await waitFor(() => expect(onExited).toHaveBeenCalled());
+        });
       });
-    });
-  });
+    },
+  );
 
   describe('with PopoverContext', () => {
     const mockSetIsPopoverOpen = jest.fn();
 
-    const MockPopoverProvider = ({ children }: PropsWithChildren<{}>) => {
-      return (
-        <PopoverContext.Provider
-          value={{
-            isPopoverOpen: false,
-            setIsPopoverOpen: mockSetIsPopoverOpen,
-          }}
-        >
-          {children}
-        </PopoverContext.Provider>
-      );
-    };
-
-    beforeEach(() => {
-      mockSetIsPopoverOpen.mockClear();
+    afterEach(() => {
+      mockSetIsPopoverOpen.mockReset();
     });
 
     test('calls `setIsPopoverOpen`', async () => {
+      jest
+        .spyOn(LeafyGreenProviderModule, 'usePopoverContext')
+        .mockImplementation(() => ({
+          isPopoverOpen: false,
+          setIsPopoverOpen: mockSetIsPopoverOpen,
+        }));
       render(
-        <MockPopoverProvider>
+        <PopoverProvider>
           <Select {...defaultProps} />
-        </MockPopoverProvider>,
+        </PopoverProvider>,
       );
 
       const { getInput } = getTestUtils();
@@ -1153,11 +1141,17 @@ describe('packages/select', () => {
       );
     });
 
-    test('calls `setIsPopoverOpen` when `usePortal == false`', async () => {
+    test(`calls setIsPopoverOpen when renderMode="${RenderMode.Inline}"`, async () => {
+      jest
+        .spyOn(LeafyGreenProviderModule, 'usePopoverContext')
+        .mockImplementation(() => ({
+          isPopoverOpen: false,
+          setIsPopoverOpen: mockSetIsPopoverOpen,
+        }));
       render(
-        <MockPopoverProvider>
-          <Select usePortal={false} {...defaultProps} />
-        </MockPopoverProvider>,
+        <PopoverProvider>
+          <Select {...defaultProps} renderMode={RenderMode.Inline} />
+        </PopoverProvider>,
       );
 
       const { getInput } = getTestUtils();

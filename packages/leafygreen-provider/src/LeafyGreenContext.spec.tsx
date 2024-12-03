@@ -1,7 +1,7 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 
-import { LeafyGreenProviderProps } from './LeafyGreenContext';
+import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
 import LeafyGreenProvider, {
   useBaseFontSize,
   useDarkMode,
@@ -53,6 +53,7 @@ describe('packages/leafygreen-provider/LeafyGreenProvider', () => {
       baseFontSize = 16,
       portalId = 'portal',
       scrollId = 'scroll',
+      forceUseTopLayer = false,
     ) => {
       const portalContainer = document.createElement('div');
       portalContainer.setAttribute('id', portalId);
@@ -66,6 +67,7 @@ describe('packages/leafygreen-provider/LeafyGreenProvider', () => {
           portalContainer,
           scrollContainer,
         },
+        forceUseTopLayer,
       } as Required<LeafyGreenProviderProps>;
     };
 

@@ -1,0 +1,1 @@
+export const TOOLTIP_VISIBLE_DURATION = 1500;

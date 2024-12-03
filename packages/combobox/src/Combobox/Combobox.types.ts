@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { type ChipProps } from '@leafygreen-ui/chip';
 import { Either, HTMLElementProps } from '@leafygreen-ui/lib';
-import { PortalControlProps } from '@leafygreen-ui/popover';
+import { PopoverProps } from '@leafygreen-ui/popover';
 
 import {
   ComboboxSize,
@@ -56,11 +56,19 @@ export interface ComboboxMultiselectProps<M extends boolean> {
 
 type PartialChipProps = Pick<
   ChipProps,
-  'chipTruncationLocation' | 'chipCharacterLimit' | 'popoverZIndex'
+  'chipTruncationLocation' | 'chipCharacterLimit'
 >;
 
 export type BaseComboboxProps = Omit<HTMLElementProps<'div'>, 'onChange'> &
-  PortalControlProps &
+  Pick<
+    PopoverProps,
+    | 'popoverZIndex'
+    | 'portalClassName'
+    | 'portalContainer'
+    | 'portalRef'
+    | 'renderMode'
+    | 'scrollContainer'
+  > &
   PartialChipProps & {
     /**
      * Defines the Combobox Options by passing children. Must be `ComboboxOption` or `ComboboxGroup`
