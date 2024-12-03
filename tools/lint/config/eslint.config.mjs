@@ -25,9 +25,19 @@ export default [
       'plugin:storybook/recommended',
     ),
   ),
-  //   {
-  //     ignores: ['../src/eslint.ts', 'src/eslint.ts'],
-  //   },
+  {
+    ignores: [
+      '**/dist/**/*',
+      '**/bin/**/*',
+      'storybook-static/**/*',
+      '**/stories.js*',
+      '.turbo',
+      'tools/**/config/**/*',
+      'packages/icon/src/glyphs/*.svg',
+      'packages/icon/src/generated/*.tsx',
+      'prettier.config.js',
+    ],
+  },
   {
     plugins: {
       '@emotion': emotion,
