@@ -11,6 +11,7 @@ jest.mock('echarts/core', () => ({
     setOption: jest.fn(),
     dispose: jest.fn(),
     resize: jest.fn(),
+    on: jest.fn(),
   })),
   use: jest.fn(),
 }));

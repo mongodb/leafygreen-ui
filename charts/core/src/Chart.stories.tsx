@@ -201,6 +201,14 @@ export default {
         category: 'Header',
       },
     },
+    onZoomSelect: {
+      description: 'Zoom handler',
+      name: 'onZoomSelect',
+      table: {
+        category: 'Chart',
+        disable: true,
+      },
+    },
   },
 };
 

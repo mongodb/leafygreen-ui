@@ -1,3 +1,4 @@
+import { PropsWithChildren } from 'react';
 import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
 import type { LineSeriesOption } from 'echarts/charts';
 import type {
@@ -11,6 +12,8 @@ import type {
 import type { ComposeOption } from 'echarts/core';
 
 import { DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
+
+import { ZoomSelectionEvent } from './hooks/useChart.types';
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
@@ -33,10 +36,20 @@ export type ChartOptions = ComposeOption<
   | YAXisComponentOption
 > & { series?: Array<SeriesOption> };
 
-export interface ChartProps extends HTMLElementProps<'div'>, DarkModeProps {
-  children?: React.ReactNode;
-  onChartReady?: () => void;
-}
+export type ChartProps = HTMLElementProps<'div'> &
+  DarkModeProps &
+  PropsWithChildren<{
+    /**
+     * Callback to be called when chart is finished rendering.
+     */
+    onChartReady?: () => void;
+
+    /**
+     * Callback to be called when a user clicks and drags on a chart to zoom.
+     * Click and drag action will only be enabled if this handler is present.
+     */
+    onZoomSelect?: (e: ZoomSelectionEvent) => void;
+  }>;
 
 export const ChartActionType = {
   addChartSeries: 'addChartSeries',

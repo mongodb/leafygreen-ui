@@ -1,4 +1,5 @@
 import { Theme } from '@leafygreen-ui/lib';
+import { palette } from '@leafygreen-ui/palette';
 import {
   color,
   InteractionState,
@@ -71,5 +72,22 @@ export const getDefaultChartOptions = (
   yAxis: {
     type: 'value',
     ...commonAxisOptions,
+  },
+
+  // Sets up zooming
+  toolbox: {
+    feature: {
+      dataZoom: {
+        show: true,
+        icon: {
+          zoom: 'path://', // hack to remove zoom button
+          back: 'path://', // hack to remove restore button
+        },
+        brushStyle: {
+          color: palette.gray.light1,
+          opacity: 0.2,
+        },
+      },
+    },
   },
 });
