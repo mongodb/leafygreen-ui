@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useRef } from 'react';
 import { render } from '@testing-library/react';
-import { createSyntheticEvent, HTMLElementProps } from '..';
 import userEvent from '@testing-library/user-event';
+
+import { createSyntheticEvent, HTMLElementProps } from '..';
 
 const MyInputComponent = ({ onChange }: HTMLElementProps<'input'>) => {
   const inputRef = useRef<HTMLInputElement>(null);

@@ -80,6 +80,7 @@ describe('packages/lib', () => {
     });
   });
 
+  // eslint-disable-next-line jest/no-disabled-tests
   test.skip('enforceExhaustive', () => {
     (color: 'red' | 'blue') => {
       switch (color) {
