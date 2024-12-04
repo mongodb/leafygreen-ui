@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import styled from '@emotion/styled';
 import { ColumnDef, Header } from '@tanstack/react-table';
 import {
   queryByRole as globalQueryByRole,
@@ -197,5 +198,55 @@ describe('packages/table/HeaderCell', () => {
 
     expect(ref.current).toBeInTheDocument();
     expect(ref.current!.textContent).toBe('Hello');
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const StyledHeaderCell = styled(HeaderCell)`
+        color: #69ffc6;
+      `;
+
+      const { getByTestId } = render(
+        <StyledHeaderCell data-testid="styled">Some text</StyledHeaderCell>,
+      );
+
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const StyledHeaderCell = styled(HeaderCell)<StyledProps>`
+        color: ${props => props.color};
+      `;
+
+      const { getByTestId } = render(
+        <StyledHeaderCell data-testid="styled" color="#69ffc6">
+          Some text
+        </StyledHeaderCell>,
+      );
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const { result } = renderHook(() =>
+      useMockTestHeaderData({
+        accessorKey: 'id',
+        size: 700,
+      }),
+    );
+
+    const mockHeader = result.current;
+    const ref = React.createRef<HTMLTableCellElement>();
+
+    <>
+      <HeaderCell />
+      <HeaderCell align="center" header={mockHeader} />
+      <HeaderCell ref={ref} />
+    </>;
   });
 });

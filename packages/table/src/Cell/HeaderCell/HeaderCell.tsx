@@ -1,4 +1,5 @@
 import React, { ForwardedRef, PropsWithChildren } from 'react';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -21,7 +22,6 @@ const HeaderCellWithRef = <T extends LGRowData>(
   {
     children,
     className,
-    cellIndex,
     header,
     align,
     ...rest
@@ -66,9 +66,13 @@ const HeaderCellWithRef = <T extends LGRowData>(
 };
 
 // React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
+// Asserts that `HeaderCell` is of type `HeaderCellComponentType` which works with generics
 export const HeaderCell = React.forwardRef(
   HeaderCellWithRef,
 ) as HeaderCellComponentType;
 
 export default HeaderCell;
+
+HeaderCell.propTypes = {
+  header: PropTypes.object,
+} as any; // avoid inferred types from interfering;

@@ -34,6 +34,29 @@ import {
   RowProps,
 } from '..';
 
+const rowCells = (
+  <>
+    <Cell
+      className={css`
+        width: 60px;
+      `}
+    >
+      1
+    </Cell>
+    <Cell
+      className={css`
+        width: 200px;
+      `}
+    >
+      Est mollitia laborum dolores dolorem corporis explicabo nobis enim omnis.
+      Minima excepturi accusantium iure culpa.
+    </Cell>
+    <Cell>MongoDB</Cell>
+    <Cell>7.85</Cell>
+    <Cell>Complicated</Cell>
+  </>
+);
+
 const meta: StoryMetaType<typeof Row> = {
   title: 'Components/Table/Row',
   component: Row,
@@ -66,6 +89,7 @@ const meta: StoryMetaType<typeof Row> = {
         // @ts-ignore - this is a table prop
         shouldTruncate: [false, true],
         verticalAlignment: ['top', 'center'],
+        shouldAlternateRowColor: [false, true],
       },
       excludeCombinations: [
         {
@@ -80,28 +104,12 @@ const meta: StoryMetaType<typeof Row> = {
             <Table
               shouldTruncate={ctx?.args.shouldTruncate}
               verticalAlignment={ctx?.args.verticalAlignment}
+              shouldAlternateRowColor={ctx?.args.shouldAlternateRowColor}
             >
               <TableBody>
-                <Instance>
-                  <Cell
-                    className={css`
-                      width: 60px;
-                    `}
-                  >
-                    1
-                  </Cell>
-                  <Cell
-                    className={css`
-                      width: 200px;
-                    `}
-                  >
-                    Est mollitia laborum dolores dolorem corporis explicabo
-                    nobis enim omnis. Minima excepturi accusantium iure culpa.
-                  </Cell>
-                  <Cell>MongoDB</Cell>
-                  <Cell>7.85</Cell>
-                  <Cell>Complicated</Cell>
-                </Instance>
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <Instance key={index}>{rowCells}</Instance>
+                ))}
               </TableBody>
             </Table>
           </LeafyGreenProvider>
