@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.8.1
+
+### Patch Changes
+
+- 117a463f8: Exports `Deep*` types from package root
+
 ## 13.8.0
 
 ### Minor Changes

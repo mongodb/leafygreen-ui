@@ -1,5 +1,23 @@
 # @leafygreen-ui/stepper
 
+## 4.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): The tooltip for the ellipses step renders in the top layer using popover API
+
+  Additionally, the tooltip opens immediately on hover instead of default 500ms delay
+
+### Patch Changes
+
+- Updated dependencies [117a463f8]
+- Updated dependencies [04bb887c0]
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/lib@13.8.1
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/tooltip@12.0.0
+  - @leafygreen-ui/typography@20.0.0
+
 ## 3.2.13
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/input-option",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "leafyGreen UI Kit Internal Input Option",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -32,17 +32,17 @@
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.5.0",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.6.1",
+    "@leafygreen-ui/lib": "^13.8.1",
     "@leafygreen-ui/palette": "^4.0.9",
     "@leafygreen-ui/polymorphic": "^2.0.0",
     "@leafygreen-ui/tokens": "^2.9.0",
-    "@leafygreen-ui/typography": "^19.2.1"
+    "@leafygreen-ui/typography": "^20.0.0"
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "^12.5.4",
     "@lg-tools/storybook-utils": "^0.1.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
   }
 }

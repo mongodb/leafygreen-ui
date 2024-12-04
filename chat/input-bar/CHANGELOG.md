@@ -1,5 +1,33 @@
 # @lg-chat/input-bar
 
+## 6.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): `InputBar` renders results menu in top layer using popover API. As a result, the following props are deprecated and removed:
+  - `portalClassName`
+  - `portalContainer`
+  - `portalRef`
+  - `scrollContainer`
+  - `usePortal`
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+- Updated dependencies [117a463f8]
+- Updated dependencies [04bb887c0]
+- Updated dependencies [04bb887c0]
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/lib@13.8.1
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/popover@12.0.0
+  - @leafygreen-ui/search-input@4.0.0
+  - @leafygreen-ui/badge@9.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/input-option@3.0.0
+  - @leafygreen-ui/typography@20.0.0
+
 ## 5.1.0
 
 ### Minor Changes

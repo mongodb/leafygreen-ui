@@ -1,5 +1,17 @@
 # @leafygreen-ui/marketing-modal
 
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [117a463f8]
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/lib@13.8.1
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/modal@17.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/typography@20.0.0
+
 ## 4.2.3
 
 ### Patch Changes

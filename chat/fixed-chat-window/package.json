@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/fixed-chat-window",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "LeafyGreen UI Kit Fixed Chat Window",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -17,27 +17,27 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/icon": "^12.6.0",
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
-    "@leafygreen-ui/lib": "^13.6.1",
+    "@leafygreen-ui/leafygreen-provider": "^3.2.0",
+    "@leafygreen-ui/lib": "^13.8.1",
     "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/popover": "^11.3.1",
+    "@leafygreen-ui/popover": "^12.0.0",
     "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^19.3.0",
-    "@lg-chat/chat-window": "^2.0.1",
-    "@lg-chat/title-bar": "^2.0.2",
+    "@leafygreen-ui/typography": "^20.0.0",
+    "@lg-chat/chat-window": "^3.0.0",
+    "@lg-chat/title-bar": "^3.0.0",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
-    "@lg-chat/avatar": "^3.0.1",
-    "@lg-chat/input-bar": "^5.0.0",
-    "@lg-chat/message": "^4.1.1",
-    "@lg-chat/message-feed": "^3.0.1",
-    "@lg-chat/message-prompts": "^2.0.2",
-    "@lg-chat/message-feedback": "^2.1.0",
+    "@lg-chat/avatar": "^4.0.0",
+    "@lg-chat/input-bar": "^6.0.0",
+    "@lg-chat/message": "^5.0.0",
+    "@lg-chat/message-feed": "^4.0.0",
+    "@lg-chat/message-prompts": "^3.0.0",
+    "@lg-chat/message-feedback": "^3.0.0",
     "@lg-tools/storybook-utils": "^0.1.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/fixed-chat-window",
   "repository": {

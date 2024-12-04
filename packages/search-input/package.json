@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/search-input",
-  "version": "3.1.4",
+  "version": "4.0.0",
   "description": "leafyGreen UI Kit Search Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -32,21 +32,21 @@
   "dependencies": {
     "@leafygreen-ui/a11y": "^1.5.0",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.2.1",
+    "@leafygreen-ui/hooks": "^8.3.0",
     "@leafygreen-ui/icon": "^12.5.4",
-    "@leafygreen-ui/icon-button": "^15.0.21",
-    "@leafygreen-ui/input-option": "^2.0.0",
-    "@leafygreen-ui/lib": "^13.6.1",
+    "@leafygreen-ui/icon-button": "^16.0.0",
+    "@leafygreen-ui/input-option": "^3.0.0",
+    "@leafygreen-ui/lib": "^13.8.1",
     "@leafygreen-ui/palette": "^4.0.10",
     "@leafygreen-ui/polymorphic": "^2.0.0",
-    "@leafygreen-ui/popover": "^11.4.0",
+    "@leafygreen-ui/popover": "^12.0.0",
     "@leafygreen-ui/tokens": "^2.9.0",
-    "@leafygreen-ui/typography": "^19.2.1",
+    "@leafygreen-ui/typography": "^20.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
   },
   "devDependencies": {
     "@lg-tools/storybook-utils": "^0.1.1"

@@ -1,5 +1,20 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 3.2.0
+
+### Minor Changes
+
+- 04bb887c0: [LG-4446](https://jira.mongodb.org/browse/LG-4446): Adds `PopoverPropsContext` to pass props to a deeply nested popover element
+
+  Additionally exposes a `forceUseTopLayer` prop in the `LeafyGreenProvider` which can be used to test interactions with all LG popover elements forcibly set to `renderMode="top-layer"`. This can help pressure test for any regressions to more confidently and safely migrate. However, this should only be used when all LG dependencies are relying on v12+ of `@leafygreen-ui/popover`.
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/lib@13.8.1
+
 ## 3.1.12
 
 ### Patch Changes

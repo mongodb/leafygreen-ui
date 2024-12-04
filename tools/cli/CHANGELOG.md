@@ -1,5 +1,18 @@
 # @lg-tools/cli
 
+## 0.7.0
+
+### Minor Changes
+
+- 04bb887c0: Adds `--packages` flag to `lg codemod` command. Passing in this flag will specify which package names should be filtered for in a given codemod.
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+- Updated dependencies [04bb887c0]
+  - @lg-tools/codemods@0.1.0
+  - @lg-tools/validate@0.3.0
+
 ## 0.6.3
 
 ### Patch Changes

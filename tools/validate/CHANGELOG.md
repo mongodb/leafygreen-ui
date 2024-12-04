@@ -1,5 +1,11 @@
 # @lg-tools/validate
 
+## 0.3.0
+
+### Minor Changes
+
+- 04bb887c0: Updates `ignoreFilePatterns` and `depcheckOptions.ignorePatterns` to exclude validating dependencies in `*.input.*` and `*.output.*` files in `tools/codemods` directory
+
 ## 0.2.0
 
 ### Minor Changes

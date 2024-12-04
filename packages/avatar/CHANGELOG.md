@@ -1,5 +1,18 @@
 # @leafygreen-ui/avatar
 
+## 2.0.0
+
+### Minor Changes
+
+- e0578023d: Font is now bolded when the size is `'xlarge'`
+
+### Patch Changes
+
+- Updated dependencies [117a463f8]
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/lib@13.8.1
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+
 ## 1.0.2
 
 ### Patch Changes

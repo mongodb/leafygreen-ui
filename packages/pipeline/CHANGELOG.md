@@ -1,5 +1,24 @@
 # @leafygreen-ui/pipeline
 
+## 6.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): `Pipeline` renders tooltip in the top layer using popover API
+
+  Additionally, the tooltip opens immediately on hover instead of default 500ms delay
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+- Updated dependencies [117a463f8]
+- Updated dependencies [04bb887c0]
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/lib@13.8.1
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/tooltip@12.0.0
+
 ## 5.0.20
 
 ### Patch Changes
