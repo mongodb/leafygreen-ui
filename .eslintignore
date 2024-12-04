@@ -1,8 +1,0 @@
-node_modules
-dist
-lib
-packages/icon/src/glyphs/*.svg
-packages/icon/src/generated/*.tsx
-storybook-static
-packages/**/stories.js*
-.turbo

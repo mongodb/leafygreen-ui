@@ -88,7 +88,7 @@ describe('packages/toast/controlled', () => {
     test('does not render when `open` is true and component is unmounted', async () => {
       const { queryByTestId } = render(
         <ToastProvider>
-          {false && (
+          {false && ( // eslint-disable-line  no-constant-binary-expression
             <Toast
               open={true}
               title="Test 1"
