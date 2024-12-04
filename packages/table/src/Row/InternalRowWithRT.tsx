@@ -1,7 +1,6 @@
 import React, { ForwardedRef, useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { GenericMemo } from '@leafygreen-ui/lib';
 
@@ -39,6 +38,7 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
 
   const isExpandable = row.getCanExpand();
   const depth = row.depth;
+  const hasSubRows = row.subRows.length > 0;
 
   const contextValues = useMemo(() => {
     return {
@@ -53,18 +53,16 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
   return (
     <RowContextProvider {...contextValues}>
       <InternalRowBase
-        className={cx(
-          getRowWithRTStyles(
-            isOddVSRow,
-            shouldAlternateRowColor,
-            isSelected,
-            !!virtualRow,
-            disabled,
-            isExpanded || isParentExpanded,
-            theme,
-          ),
+        className={getRowWithRTStyles({
           className,
-        )}
+          isDisabled: disabled,
+          isExpanded: (isExpanded && hasSubRows) || isParentExpanded,
+          isOddVSRow,
+          isSelected,
+          isVirtualRow: !!virtualRow,
+          shouldAlternateRowColor,
+          theme,
+        })}
         data-selected={isSelected}
         data-expanded={isExpanded}
         data-depth={row.depth}
@@ -93,9 +91,9 @@ export const MemoizedInternalRowWithRT = genericMemo(
   InternalRowWithRT,
   (prevProps, nextProps) => {
     const { children: prevChildren, ...restPrevProps } = prevProps;
-    const { children: nextChildren, ...restnextProps } = nextProps;
+    const { children: nextChildren, ...restNextProps } = nextProps;
 
-    const propsAreEqual = isEqual(restPrevProps, restnextProps);
+    const propsAreEqual = isEqual(restPrevProps, restNextProps);
 
     return propsAreEqual;
   },
