@@ -38,20 +38,12 @@
 ### Patch Changes
 
 - Updated dependencies [04bb887c0]
-- Updated dependencies [117a463f8]
-- Updated dependencies [04bb887c0]
-- Updated dependencies [04bb887c0]
-- Updated dependencies [04bb887c0]
-- Updated dependencies [04bb887c0]
   - @leafygreen-ui/hooks@8.3.0
-  - @leafygreen-ui/lib@13.8.1
   - @leafygreen-ui/leafygreen-provider@3.2.0
-  - @leafygreen-ui/popover@12.0.0
   - @leafygreen-ui/select@13.0.0
   - @leafygreen-ui/tooltip@12.0.0
-  - @leafygreen-ui/button@22.0.0
-  - @leafygreen-ui/form-field@2.0.0
-  - @leafygreen-ui/typography@20.0.0
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
 
 ## 2.2.2
 

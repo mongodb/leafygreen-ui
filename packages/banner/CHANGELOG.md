@@ -1,16 +1,5 @@
 # @leafygreen-ui/banner
 
-## 9.0.0
-
-### Patch Changes
-
-- Updated dependencies [117a463f8]
-- Updated dependencies [04bb887c0]
-  - @leafygreen-ui/lib@13.8.1
-  - @leafygreen-ui/leafygreen-provider@3.2.0
-  - @leafygreen-ui/icon-button@16.0.0
-  - @leafygreen-ui/typography@20.0.0
-
 ## 8.0.1
 
 ### Patch Changes

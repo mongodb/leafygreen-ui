@@ -9,7 +9,6 @@
 ### Patch Changes
 
 - Updated dependencies [04bb887c0]
-- Updated dependencies [04bb887c0]
   - @lg-tools/codemods@0.1.0
   - @lg-tools/validate@0.3.0
 
