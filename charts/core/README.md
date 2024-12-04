@@ -89,6 +89,13 @@ Chart container component.
 | `onChartReady`              | Callback to be called when chart is finished rendering.                                                                                       | `() => void`                   |         |
 | `onZoomSelect` _(optional)_ | Callback to be called when a user clicks and drags on a chart to zoom. Click and drag action will only be enabled if this handler is present. | `(ZoomSelectionEvent) => void` |         |
 
+```ts
+ZoomSelectionEvent = {
+  xAxis: { startValue: number; endValue: number };
+  yAxis: { startValue: number; endValue: number };
+}
+```
+
 ## Child Components
 
 ### `ChartCard`

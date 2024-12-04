@@ -36,21 +36,20 @@ export type ChartOptions = ComposeOption<
   | YAXisComponentOption
 > & { series?: Array<SeriesOption> };
 
-export interface ChartProps
-  extends HTMLElementProps<'div'>,
-    DarkModeProps,
-    PropsWithChildren {
-  /**
-   * Callback to be called when chart is finished rendering.
-   */
-  onChartReady?: () => void;
+export type ChartProps = HTMLElementProps<'div'> &
+  DarkModeProps &
+  PropsWithChildren<{
+    /**
+     * Callback to be called when chart is finished rendering.
+     */
+    onChartReady?: () => void;
 
-  /**
-   * Callback to be called when a user clicks and drags on a chart to zoom.
-   * Click and drag action will only be enabled if this handler is present.
-   */
-  onZoomSelect?: (e: ZoomSelectionEvent) => void;
-}
+    /**
+     * Callback to be called when a user clicks and drags on a chart to zoom.
+     * Click and drag action will only be enabled if this handler is present.
+     */
+    onZoomSelect?: (e: ZoomSelectionEvent) => void;
+  }>;
 
 export const ChartActionType = {
   addChartSeries: 'addChartSeries',
