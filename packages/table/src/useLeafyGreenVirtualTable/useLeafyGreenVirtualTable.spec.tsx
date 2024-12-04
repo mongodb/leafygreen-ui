@@ -18,7 +18,7 @@ describe('packages/table/useLeafyGreenVirtualTable', () => {
 
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Typescript', () => {
-    // @ts-expect-error - requires columns, data, containerReff
+    // @ts-expect-error - requires columns, data, containerRef
     useLeafyGreenVirtualTable({});
 
     // @ts-expect-error - requires containerRef

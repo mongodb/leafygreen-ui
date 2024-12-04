@@ -23,40 +23,49 @@ describe('packages/table/useLeafyGreenTable', () => {
   });
 
   test('returns the correct number of rows', () => {
+    const data = getDefaultTestData({});
+
     const { result } = renderHook(() =>
       useLeafyGreenTable({
-        data: getDefaultTestData({}),
+        data,
         columns: getDefaultTestColumns({}),
       }),
     );
-    expect(result.current.getRowModel().rows.length).toEqual(3);
+    expect(result.current.getRowModel().rows.length).toEqual(data.length);
   });
 
   test('returns the correct number of rows with expandedContent', () => {
+    const data = getDefaultTestData({
+      // eslint-disable-next-line react/display-name
+      renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
+        return <>Expandable content test</>;
+      },
+    });
+
     const { result } = renderHook(() =>
       useLeafyGreenTable({
-        data: getDefaultTestData({
-          // eslint-disable-next-line react/display-name
-          renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
-            return <>Expandable content test</>;
-          },
-        }),
+        data,
         columns: getDefaultTestColumns({}),
       }),
     );
-    expect(result.current.getRowModel().rows.length).toEqual(3);
+
+    expect(result.current.getRowModel().rows.length).toEqual(data.length);
   });
 
   test('returns the correct number of rows with subRows', () => {
+    const data = getDefaultTestData({
+      subRows: getDefaultTestData({}),
+    });
+
     const { result } = renderHook(() =>
       useLeafyGreenTable({
-        data: getDefaultTestData({
-          subRows: getDefaultTestData({}),
-        }),
+        data,
         columns: getDefaultTestColumns({}),
       }),
     );
-    expect(result.current.getRowModel().rows.length).toEqual(3);
+
+    // Subrows are only included if they are expanded
+    expect(result.current.getRowModel().rows.length).toEqual(data.length);
   });
 
   // eslint-disable-next-line jest/no-disabled-tests

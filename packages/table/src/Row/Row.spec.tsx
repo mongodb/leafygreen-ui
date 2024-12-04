@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -32,7 +32,7 @@ function renderRow(props: RowProps<Person>) {
   );
 }
 
-describe('packages/table/RowWithoutRT', () => {
+describe('packages/table/Row', () => {
   test('renders a table row', () => {
     renderRow(defaultProps);
     const { getRowByIndex } = getTestUtils();
@@ -81,7 +81,7 @@ describe('packages/table/RowWithoutRT', () => {
       renderRow({ ...defaultProps, onClick });
       const { getRowByIndex } = getTestUtils();
       const firstRow = getRowByIndex(0)?.getElement();
-      fireEvent.click(firstRow!);
+      userEvent.click(firstRow!);
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
