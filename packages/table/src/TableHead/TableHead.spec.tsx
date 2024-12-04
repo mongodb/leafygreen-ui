@@ -3,8 +3,6 @@ import styled from '@emotion/styled';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { renderStyledComponent } from '../utils/styled.testutils';
-
 import TableHead from '.';
 
 describe('packages/table/TableHead', () => {
