@@ -15,7 +15,6 @@ export type {
   PartialRequired,
   RecursiveRecord,
   ValuesOf,
-  GenericMemo,
 } from './types';
 
 export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };

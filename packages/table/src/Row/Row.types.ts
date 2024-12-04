@@ -1,4 +1,5 @@
 import {
+  ComponentPropsWithoutRef,
   ComponentPropsWithRef,
   ForwardedRef,
   PropsWithoutRef,
@@ -12,7 +13,7 @@ import { Theme } from '@leafygreen-ui/lib';
 
 import { LeafyGreenTableRow, LGRowData } from '../useLeafyGreenTable';
 
-export interface InternalRowBaseProps extends ComponentPropsWithRef<'tr'> {
+export interface InternalRowBaseProps extends ComponentPropsWithoutRef<'tr'> {
   /**
    * Determines whether the row is disabled
    */
@@ -21,7 +22,7 @@ export interface InternalRowBaseProps extends ComponentPropsWithRef<'tr'> {
 
 export interface InternalRowWithoutRTProps extends InternalRowBaseProps {}
 
-export interface InternalRowWithRTProps<T extends LGRowData>
+export interface InternalRowWithRTBaseProps<T extends LGRowData>
   extends InternalRowBaseProps {
   /**
    * Row object passed from the `useLeafyGreenTable` hook.
@@ -32,6 +33,14 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    */
   virtualRow?: VirtualItem;
 
+  /**
+   * An internal prop used to pass a ref to the row
+   */
+  rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
+}
+
+export interface InternalRowWithRTProps<T extends LGRowData>
+  extends InternalRowWithRTBaseProps<T> {
   /**
    * Determines whether alternating rows will have dark backgrounds.
    * @default false
@@ -64,15 +73,14 @@ export interface InternalRowWithRTProps<T extends LGRowData>
   isSelected: boolean;
 }
 
-export type RowProps<T extends LGRowData> = InternalRowWithoutRTProps &
-  Partial<InternalRowWithRTProps<T>>;
+export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
+  InternalRowBaseProps &
+  Partial<InternalRowWithRTBaseProps<T>>;
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
-// This is an interface that restores the original function signature to work with generics.
 /**
- * The RowComponentType that restores the original function signature to work with generics.
- *
+ * Type definition for `Row` that works with generics.
  * row is optional
  */
 export interface RowComponentType {
@@ -89,9 +97,8 @@ export interface RowComponentType {
 }
 
 /**
- * The RowComponentType that restores the original function signature to work with generics.
- *
- *  row is required
+ * Type definition for `InternalRowWithRT` that works with generics.
+ * row is required
  */
 export interface RowComponentWithRTType {
   <T extends LGRowData>(

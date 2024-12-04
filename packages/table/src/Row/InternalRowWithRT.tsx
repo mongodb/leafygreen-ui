@@ -1,8 +1,7 @@
-import React, { ForwardedRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import isEqual from 'react-fast-compare';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
-import { GenericMemo } from '@leafygreen-ui/lib';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -16,23 +15,21 @@ import { RowContextProvider } from './RowContext';
  *
  * @internal
  */
-const InternalRowWithRTForwardRef = <T extends LGRowData>(
-  {
-    children,
-    className,
-    row,
-    virtualRow,
-    disabled = false,
-    shouldAlternateRowColor,
-    theme,
-    measureElement,
-    isExpanded,
-    isParentExpanded,
-    isSelected,
-    ...rest
-  }: InternalRowWithRTProps<T>,
-  ref: ForwardedRef<HTMLTableRowElement>,
-) => {
+const InternalRowWithRT = <T extends LGRowData>({
+  children,
+  className,
+  row,
+  virtualRow,
+  disabled = false,
+  shouldAlternateRowColor,
+  theme,
+  measureElement,
+  isExpanded,
+  isParentExpanded,
+  isSelected,
+  rowRef,
+  ...rest
+}: InternalRowWithRTProps<T>) => {
   // We need to use the virtualRow index instead of nth-of-type because the rows are not static
   const isOddVSRow = !!virtualRow && virtualRow.index % 2 !== 0;
 
@@ -67,7 +64,7 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
         data-expanded={isExpanded}
         data-depth={row.depth}
         id={`lg-table-row-${row.id}`}
-        ref={useMergeRefs([ref, measureElement])}
+        ref={useMergeRefs([rowRef, measureElement])}
         data-index={virtualRow ? virtualRow!.index : ''}
         {...rest}
       >
@@ -77,17 +74,7 @@ const InternalRowWithRTForwardRef = <T extends LGRowData>(
   );
 };
 
-// React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
-// This assertion has an interface that restores the original function signature to work with generics.
-export const InternalRowWithRT = React.forwardRef(
-  InternalRowWithRTForwardRef,
-) as RowComponentWithRTType;
-
-export default InternalRowWithRT;
-
-const genericMemo: GenericMemo = React.memo;
-
-export const MemoizedInternalRowWithRT = genericMemo(
+export const MemoizedInternalRowWithRT = React.memo(
   InternalRowWithRT,
   (prevProps, nextProps) => {
     const { children: prevChildren, ...restPrevProps } = prevProps;
@@ -97,4 +84,4 @@ export const MemoizedInternalRowWithRT = genericMemo(
 
     return propsAreEqual;
   },
-);
+) as RowComponentWithRTType;

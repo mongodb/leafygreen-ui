@@ -3,13 +3,21 @@ import React, { useState } from 'react';
 import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableOptions,
+  LeafyGreenTableRow,
+  LGTableDataType,
 } from '../useLeafyGreenTable';
-import { ColumnDef, ExpandedState, SortingState } from '..';
+import {
+  ColumnDef,
+  ExpandedState,
+  LeafyGreenVirtualItem,
+  SortingState,
+  useLeafyGreenVirtualTable,
+} from '..';
 
 import { Person } from './makeData.testutils';
 
 export const getDefaultTestData: (
-  rowProps: object,
+  rowProps?: Partial<LGTableDataType<Person>>,
   additionalData?: Array<Person>,
 ) => Array<Person> = (rowProps, additionalData = []) => {
   return [
@@ -84,7 +92,7 @@ export const getDefaultTestColumns: (
 ];
 
 export interface TestTableWithHookProps {
-  rowProps?: object;
+  rowProps?: Partial<LGTableDataType<Person>>;
   columnProps?: TestColumnsProps;
   hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
@@ -104,7 +112,8 @@ export const useTestHookCall = ({
 }: TestTableWithHookProps) => {
   const [data] = useState<Array<Person>>(
     hasData
-      ? () => getDefaultTestData((rowProps = rowProps ?? {}), additionalData)
+      ? () =>
+          getDefaultTestData((rowProps = rowProps ?? undefined), additionalData)
       : [],
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
@@ -129,4 +138,20 @@ export const useTestHookCall = ({
   return { table, rowSelection };
 };
 
-// TODO: useLeafyGreenVirtualTable
+/** Returns the first Row and VirtualRow */
+export const useMockTestRowData = (): {
+  firstRow: LeafyGreenTableRow<Person>;
+  firstVirtualRow: LeafyGreenVirtualItem<Person>;
+} => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const table = useLeafyGreenVirtualTable({
+    containerRef: React.createRef<HTMLTableRowElement>(),
+    data: getDefaultTestData({}),
+    columns: getDefaultTestColumns({}),
+  });
+
+  return {
+    firstRow: table.getRowModel().rows[0],
+    firstVirtualRow: table.virtual.getVirtualItems()[0],
+  };
+};

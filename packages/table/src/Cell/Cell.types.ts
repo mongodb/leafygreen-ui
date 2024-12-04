@@ -48,10 +48,8 @@ export interface InternalCellWithRTProps<T extends LGRowData>
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
-// This is an interface that original function signature to work with generics.
 /**
- * The CellComponentType that restores the original function signature to work with generics.
- *
+ * Type definition for `Cell` that works with generics.
  * cell is optional
  */
 export interface CellComponentType {
@@ -68,8 +66,7 @@ export interface CellComponentType {
 }
 
 /**
- * The CellComponentType that restores the original function signature to work with generics.
- *
+ * Type definition for `InternalCellWithRT` that works with generics.
  * cell is required
  */
 export interface InternalCellWithRTComponentType {

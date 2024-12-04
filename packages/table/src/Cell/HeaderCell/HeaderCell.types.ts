@@ -26,29 +26,15 @@ export interface SortStates {
 export interface HeaderCellProps<T extends LGRowData>
   extends ComponentPropsWithRef<'th'> {
   /**
-   * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
-   */
-  align?: ComponentPropsWithRef<'th'>['align'];
-  /**
-   * Determines the current sorting direction.
-   */
-  sortState?: SortState;
-  /**
    * Header object passed from the `useLeafyGreenTable` hook.
    */
   header?: Header<T, unknown>;
-  /**
-   * Index of the HeaderCell set internally in HeaderRow
-   */
-  cellIndex?: number;
 }
 
 // https://stackoverflow.com/a/58473012
 // React.forwardRef can only work with plain function types.
-// This is an interface that restores the original function signature to work with generics.
 /**
- * The HeaderCellComponentType that restores the original function signature to work with generics.
- *
+ * Type definition for `Header` that works with generics.
  */
 export interface HeaderCellComponentType {
   <T extends LGRowData>(
