@@ -6,7 +6,18 @@ export { Align, Justify };
 
 type ModifiedTooltipProps = Omit<
   TooltipProps,
-  'onClick' | 'trigger' | 'triggerEvent' | 'refEl' | 'spacing'
+  | 'dismissMode'
+  | 'onClick'
+  | 'popoverZIndex'
+  | 'portalClassName'
+  | 'portalContainer'
+  | 'portalRef'
+  | 'refEl'
+  | 'renderMode'
+  | 'scrollContainer'
+  | 'spacing'
+  | 'trigger'
+  | 'triggerEvent'
 >;
 
 export interface InfoSprinkleProps extends ModifiedTooltipProps {

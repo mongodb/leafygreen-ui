@@ -6,12 +6,14 @@ import * as jscodeshift from 'jscodeshift/src/Runner';
 import path from 'path';
 
 import { checkGitStatus } from './utils/checkGitStatus';
+import { LGPackage } from './types';
 
 export interface MigrateOptions {
   dry?: boolean;
   print?: boolean;
   force?: boolean;
   ignore?: Array<string>;
+  packages?: Array<LGPackage>;
 }
 
 export const migrator = async (

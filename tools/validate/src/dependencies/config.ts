@@ -38,6 +38,7 @@ export const ignoreFilePatterns: Array<RegExp> = [
   /.*package.json?/,
   /.*README.md/,
   /.*CHANGELOG.md/,
+  /.*.(input|output).(t|j)sx?/,
 ];
 
 /**
@@ -73,6 +74,15 @@ export const externalDependencies = [
   '*-lint*',
 ];
 
+/**
+ * These are directories that should be ignored when running depcheck
+ */
+export const patternsToIgnore = [
+  'tools/codemods/src/codemods/*/tests',
+  'tools/codemods/src/utils/transformations/*/tests',
+];
+
 export const depcheckOptions: depcheck.Options = {
   ignoreMatches: externalDependencies,
+  ignorePatterns: patternsToIgnore,
 };

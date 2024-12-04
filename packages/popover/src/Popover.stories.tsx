@@ -3,13 +3,23 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { color } from '@leafygreen-ui/tokens';
 
-import Popover, { Align, Justify, PopoverProps } from '.';
+import { getPopoverRenderModeProps } from './utils/getPopoverRenderModeProps';
+import {
+  Align,
+  DismissMode,
+  Justify,
+  Popover,
+  PopoverProps,
+  RenderMode,
+  ToggleEvent,
+} from './Popover';
 
 const popoverStyle = css`
   border: 1px solid ${palette.gray.light1};
@@ -24,7 +34,7 @@ const popoverStyle = css`
   background-color: initial;
 `;
 
-const regularStyles = css`
+const containerStyles = css`
   position: relative;
   width: 100%;
   height: 100%;
@@ -33,7 +43,7 @@ const regularStyles = css`
   justify-content: center;
 `;
 
-const scrollableStyle = css`
+const scrollableOuterStyles = css`
   width: 500px;
   height: 90vh;
   background-color: ${palette.gray.light2};
@@ -41,39 +51,23 @@ const scrollableStyle = css`
   position: relative;
 `;
 
-const scrollableInnerStyle = css`
+const scrollableInnerStyles = css`
   position: relative;
-  height: 130vh;
+  height: 160vh;
+  width: 80vw;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const buttonStyles = css`
-  position: relative;
-`;
-
-const referenceElPositions: { [key: string]: string } = {
-  centered: css`
-    position: relative;
-  `,
-  top: css`
-    top: 0;
-    position: absolute;
-  `,
-  right: css`
-    right: 0;
-    position: absolute;
-  `,
-  bottom: css`
-    bottom: 0;
-    position: absolute;
-  `,
-  left: css`
-    left: 0;
-    position: absolute;
-  `,
-};
+const defaultExcludedControls = [
+  ...storybookExcludedControlParams,
+  'active',
+  'children',
+  'portalClassName',
+  'refButtonPosition',
+  'refEl',
+];
 
 const meta: StoryMetaType<typeof Popover> = {
   title: 'Components/Popover',
@@ -81,19 +75,18 @@ const meta: StoryMetaType<typeof Popover> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [
-        ...storybookExcludedControlParams,
-        'children',
-        'active',
-        'refEl',
-        'portalClassName',
-        'refButtonPosition',
-        'usePortal',
-      ],
+      exclude: defaultExcludedControls,
     },
     generate: {
+      storyNames: [
+        'Top',
+        'Right',
+        'Bottom',
+        'Left',
+        'CenterHorizontal',
+        'CenterVertical',
+      ],
       combineArgs: {
-        align: Object.values(Align),
         justify: Object.values(Justify),
       },
       args: {
@@ -102,46 +95,62 @@ const meta: StoryMetaType<typeof Popover> = {
       },
       // eslint-disable-next-line react/display-name
       decorator: Instance => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const ref = useRef(null);
-
         return (
           <div
             className={css`
               position: relative;
-              width: 50vw;
+              width: 60vw;
               height: 150px;
               display: flex;
               align-items: center;
               justify-content: center;
             `}
           >
-            <Button ref={ref}>refEl</Button>
-            <Instance refEl={ref} />
+            <Button>
+              Button Text
+              <Instance
+                buttonText={undefined}
+                className={css`
+                  background-color: ${color.light.background.primary.default};
+                `}
+                dismissMode="manual"
+              />
+            </Button>
           </div>
         );
       },
     },
   },
   args: {
-    align: Align.Top,
-    justify: Justify.Start,
-    spacing: 10,
     adjustOnMutation: false,
+    align: Align.Top,
     buttonText: 'Button Text',
+    dismissMode: DismissMode.Auto,
+    justify: Justify.Start,
+    renderMode: RenderMode.TopLayer,
+    spacing: 4,
   },
   argTypes: {
+    align: {
+      options: Object.values(Align),
+      control: { type: 'radio' },
+    },
     buttonText: {
       type: 'string',
       description:
         'Storybook only prop. Used to change the reference button text',
     },
-    refButtonPosition: {
-      options: ['centered', 'top', 'right', 'bottom', 'left'],
-      control: { type: 'select' },
-      description:
-        'Storybook only prop. Used to change position of the reference button',
-      defaultValue: 'centered',
+    dismissMode: {
+      options: Object.values(DismissMode),
+      control: { type: 'radio' },
+    },
+    justify: {
+      options: Object.values(Justify),
+      control: { type: 'radio' },
+    },
+    renderMode: {
+      options: Object.values(RenderMode),
+      control: { type: 'radio' },
     },
   },
 };
@@ -149,29 +158,57 @@ export default meta;
 
 type PopoverStoryProps = PopoverProps & {
   buttonText: string;
-  refButtonPosition: string;
 };
-
 export const LiveExample: StoryFn<PopoverStoryProps> = ({
-  refButtonPosition,
   buttonText,
-  ...args
+  ...props
 }: PopoverStoryProps) => {
+  const {
+    portalClassName,
+    portalContainer,
+    portalRef,
+    scrollContainer,
+    dismissMode,
+    renderMode = RenderMode.TopLayer,
+    onToggle,
+    ...rest
+  } = props;
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState<boolean>(false);
 
-  const position = referenceElPositions[refButtonPosition];
+  const handleClick = () => {
+    setActive(active => !active);
+  };
+
+  const handleToggle = (e: ToggleEvent) => {
+    onToggle?.(e);
+    const newActive = e.newState === 'open';
+    setActive(newActive);
+  };
+
+  const popoverProps = {
+    active,
+    refEl: buttonRef,
+    ...getPopoverRenderModeProps({
+      dismissMode,
+      onToggle: handleToggle,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      renderMode,
+      scrollContainer,
+    }),
+    ...rest,
+  };
 
   return (
-    <div className={regularStyles}>
-      <Button
-        className={cx(buttonStyles, position)}
-        onClick={() => setActive(active => !active)}
-      >
+    <div className={containerStyles}>
+      <Button onClick={handleClick} ref={buttonRef}>
         {buttonText}
-        <Popover {...args} active={active}>
-          <div className={popoverStyle}>Popover content</div>
-        </Popover>
       </Button>
+      <Popover {...popoverProps}>
+        <div className={popoverStyle}>Popover content</div>
+      </Popover>
     </div>
   );
 };
@@ -181,32 +218,27 @@ LiveExample.parameters = {
   },
 };
 
-export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
-  refButtonPosition,
+const PortalPopoverInScrollableContainer = ({
   buttonText,
-  ...args
+  ...props
 }: PopoverStoryProps) => {
+  const { dismissMode, onToggle, renderMode, ...rest } = props;
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
-  const portalContainer = useRef<HTMLDivElement | null>(null);
-
-  const position = referenceElPositions[refButtonPosition];
+  const scrollContainer = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className={scrollableStyle}>
-      <div className={scrollableInnerStyle} ref={portalContainer}>
-        <Button
-          onClick={() => setActive(active => !active)}
-          className={position}
-        >
+    <div className={scrollableOuterStyles}>
+      <div className={scrollableInnerStyles} ref={scrollContainer}>
+        <Button onClick={() => setActive(active => !active)}>
           {buttonText}
-          {/* @ts-expect-error */}
           <Popover
-            {...args}
+            {...rest}
             active={active}
-            portalContainer={portalContainer.current}
+            renderMode={RenderMode.Portal}
+            portalContainer={scrollContainer.current}
             portalRef={portalRef}
-            scrollContainer={portalContainer.current}
+            scrollContainer={scrollContainer.current}
           >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
@@ -215,20 +247,159 @@ export const ScrollableContainer: StoryFn<PopoverStoryProps> = ({
     </div>
   );
 };
-ScrollableContainer.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+export const RenderModePortalInScrollableContainer = {
+  render: PortalPopoverInScrollableContainer,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+    controls: {
+      exclude: [...defaultExcludedControls, 'dismissMode', 'renderMode'],
+    },
+  },
+  argTypes: {
+    renderMode: { control: 'none' },
+    portalClassName: { control: 'none' },
+    refEl: { control: 'none' },
+    className: { control: 'none' },
+    active: { control: 'none' },
   },
 };
-ScrollableContainer.args = {
-  usePortal: true,
+
+const InlinePopover = ({ buttonText, ...props }: PopoverStoryProps) => {
+  const {
+    dismissMode,
+    onToggle,
+    renderMode,
+    portalClassName,
+    portalContainer,
+    portalRef,
+    scrollContainer,
+    ...rest
+  } = props;
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [active, setActive] = useState<boolean>(false);
+
+  return (
+    <div className={containerStyles}>
+      <Button onClick={() => setActive(active => !active)} ref={buttonRef}>
+        {buttonText}
+      </Button>
+      <Popover
+        {...rest}
+        active={active}
+        refEl={buttonRef}
+        renderMode={RenderMode.Inline}
+      >
+        <div className={popoverStyle}>Popover content</div>
+      </Popover>
+    </div>
+  );
 };
-ScrollableContainer.argTypes = {
-  usePortal: { control: 'none' },
-  portalClassName: { control: 'none' },
-  refEl: { control: 'none' },
-  className: { control: 'none' },
-  active: { control: 'none' },
+export const RenderModeInline = {
+  render: InlinePopover,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+    controls: {
+      exclude: [...defaultExcludedControls, 'dismissMode', 'renderMode'],
+    },
+  },
+  argTypes: {
+    renderMode: { control: 'none' },
+    portalClassName: { control: 'none' },
+    refEl: { control: 'none' },
+    className: { control: 'none' },
+    active: { control: 'none' },
+  },
 };
 
-export const Generated = () => {};
+const generatedStoryExcludedControlParams = [
+  ...storybookExcludedControlParams,
+  'active',
+  'adjustOnMutation',
+  'align',
+  'buttonText',
+  'children',
+  'dismissMode',
+  'justify',
+  'portalClassName',
+  'refButtonPosition',
+  'refEl',
+  'renderMode',
+  'spacing',
+  'usePortal',
+];
+
+export const Top = {
+  render: LiveExample.bind({}),
+  args: {
+    align: Align.Top,
+  },
+  parameters: {
+    controls: {
+      exclude: generatedStoryExcludedControlParams,
+    },
+  },
+};
+
+export const Bottom = {
+  render: LiveExample.bind({}),
+  args: {
+    align: Align.Bottom,
+  },
+  parameters: {
+    controls: {
+      exclude: generatedStoryExcludedControlParams,
+    },
+  },
+};
+
+export const Left = {
+  render: LiveExample.bind({}),
+  args: {
+    align: Align.Left,
+  },
+  parameters: {
+    controls: {
+      exclude: generatedStoryExcludedControlParams,
+    },
+  },
+};
+
+export const Right = {
+  render: LiveExample.bind({}),
+  args: {
+    align: Align.Right,
+  },
+  parameters: {
+    controls: {
+      exclude: generatedStoryExcludedControlParams,
+    },
+  },
+};
+
+export const CenterHorizontal = {
+  render: LiveExample.bind({}),
+  args: {
+    align: Align.CenterHorizontal,
+  },
+  parameters: {
+    controls: {
+      exclude: generatedStoryExcludedControlParams,
+    },
+  },
+};
+
+export const CenterVertical: StoryObj<PopoverStoryProps> = {
+  render: LiveExample.bind({}),
+  args: {
+    align: Align.CenterVertical,
+  },
+  parameters: {
+    controls: {
+      exclude: generatedStoryExcludedControlParams,
+    },
+  },
+};

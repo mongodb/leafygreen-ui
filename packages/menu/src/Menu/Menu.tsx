@@ -9,7 +9,13 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined, keyMap, Theme } from '@leafygreen-ui/lib';
-import Popover, { Align, Justify } from '@leafygreen-ui/popover';
+import Popover, {
+  Align,
+  DismissMode,
+  getPopoverRenderModeProps,
+  Justify,
+  RenderMode,
+} from '@leafygreen-ui/popover';
 
 import { LGIDs } from '../constants';
 import { useHighlightReducer } from '../HighlightReducer';
@@ -40,7 +46,7 @@ import { MenuProps } from './Menu.types';
  * @param props.align Alignment of Menu relative to another element: `top`, `bottom`, `left`, `right`.
  * @param props.justify Justification of Menu relative to another element: `start`, `middle`, `end`.
  * @param props.refEl Reference element that Menu should be positioned against.
- * @param props.usePortal Boolean to describe if content should be portaled to end of DOM, or appear in DOM tree.
+ * @param props.renderMode Options to render the popover element: `inline`, `portal`, `top-layer`.
  * @param props.trigger Trigger element can be ReactNode or function, and, if present, internally manages active state of Menu.
  * @param props.darkMode Determines whether or not the component will be rendered in dark theme.
  */
@@ -52,7 +58,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     shouldClose = () => true,
     spacing = 6,
     maxHeight = 344,
-    usePortal = true,
     initialOpen = false,
     open: controlledOpen,
     setOpen: controlledSetOpen,
@@ -62,6 +67,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     className,
     refEl,
     trigger,
+    renderMode = RenderMode.TopLayer,
     portalClassName,
     portalContainer,
     portalRef,
@@ -74,7 +80,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
-  const triggerRef = useRef<HTMLElement>(null);
+  const defaultTriggerRef = useRef<HTMLElement>(null);
+  const triggerRef = refEl ?? defaultTriggerRef;
+  const keyboardUsedRef = useRef<boolean>(false);
 
   const [uncontrolledOpen, uncontrolledSetOpen] = useState(initialOpen);
 
@@ -84,12 +92,13 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const open = controlledOpen ?? uncontrolledOpen;
   const handleClose = useCallback(() => {
     if (shouldClose()) {
+      keyboardUsedRef.current = false;
       setOpen(false);
     }
   }, [setOpen, shouldClose]);
 
   const maxMenuHeightValue = useMenuHeight({
-    refEl: refEl || triggerRef,
+    refEl: triggerRef,
     spacing,
     maxHeight,
   });
@@ -116,7 +125,9 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   // Handling on this event ensures that the `descendants` elements
   // exist in the DOM before attempting to set `focus`
   const handlePopoverOpen = () => {
-    moveHighlight('first');
+    if (keyboardUsedRef.current) {
+      moveHighlight('first');
+    }
   };
 
   // Fired on global keyDown event
@@ -133,14 +144,14 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         break;
 
       case keyMap.Tab:
-        e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `usePortal={true}`
+        e.preventDefault(); // Prevent tabbing outside of portal and outside of the DOM when `renderMode="portal"`
         handleClose();
-        (refEl || triggerRef)?.current?.focus(); // Focus the trigger on close
+        triggerRef?.current?.focus(); // Focus the trigger on close
         break;
 
       case keyMap.Escape:
         handleClose();
-        (refEl || triggerRef)?.current?.focus(); // Focus the trigger on close
+        triggerRef?.current?.focus(); // Focus the trigger on close
         break;
 
       case keyMap.Space:
@@ -156,17 +167,16 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const popoverProps = {
     popoverZIndex,
-    ...(usePortal
-      ? {
-          spacing,
-          usePortal,
-          portalClassName,
-          portalContainer,
-          portalRef,
-          scrollContainer,
-        }
-      : { spacing, usePortal }),
-  };
+    spacing,
+    ...getPopoverRenderModeProps({
+      dismissMode: DismissMode.Manual,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      renderMode,
+      scrollContainer,
+    }),
+  } as const;
 
   const popoverContent = (
     <MenuDescendantsProvider>
@@ -185,7 +195,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           active={open}
           align={align}
           justify={justify}
-          refEl={refEl}
+          refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
           data-testid={LGIDs.root}
@@ -229,6 +239,12 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   if (trigger) {
     const triggerClickHandler = (event?: React.MouseEvent) => {
       event?.preventDefault();
+
+      // If enter or space key is pressed, event detail is 0 https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event#usage_notes
+      if (event?.detail === 0) {
+        keyboardUsedRef.current = true;
+      }
+
       setOpen((curr: boolean) => !curr);
 
       if (trigger && typeof trigger !== 'function') {
@@ -242,29 +258,32 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     };
 
     if (typeof trigger === 'function') {
-      return trigger({
-        onClick: triggerClickHandler,
-        ref: triggerRef,
-        children: popoverContent,
-        ['aria-expanded']: open,
-        ['aria-haspopup']: true,
-      });
+      return (
+        <>
+          {trigger({
+            onClick: triggerClickHandler,
+            ref: triggerRef,
+            ['aria-expanded']: open,
+            ['aria-haspopup']: true,
+          })}
+          {popoverContent}
+        </>
+      );
     }
 
     const renderedTrigger = React.cloneElement(trigger, {
       ref: triggerRef,
       onClick: triggerClickHandler,
-      children: (
-        <>
-          {trigger.props.children}
-          {popoverContent}
-        </>
-      ),
       ['aria-expanded']: open,
       ['aria-haspopup']: true,
     });
 
-    return renderedTrigger;
+    return (
+      <>
+        {renderedTrigger}
+        {popoverContent}
+      </>
+    );
   }
 
   return popoverContent;
@@ -289,7 +308,7 @@ Menu.propTypes = {
         ? PropTypes.instanceOf(Element)
         : PropTypes.any,
   }),
-  usePortal: PropTypes.bool,
+  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
   trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   open: PropTypes.bool,
   setOpen: PropTypes.func,

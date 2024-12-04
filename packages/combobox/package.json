@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "9.1.5",
+  "version": "9.1.6",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,7 +25,7 @@
     "@leafygreen-ui/checkbox": "^13.1.2",
     "@leafygreen-ui/chip": "^1.2.1",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/form-field": "^1.2.4",
+    "@leafygreen-ui/form-field": "^1.2.5",
     "@leafygreen-ui/hooks": "^8.2.1",
     "@leafygreen-ui/icon": "^12.5.4",
     "@leafygreen-ui/icon-button": "^15.0.23",

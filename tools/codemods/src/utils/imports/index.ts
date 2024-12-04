@@ -1,0 +1,1 @@
+export { getImportSpecifiersForDeclaration } from './getImportSpecifiersForDeclaration';

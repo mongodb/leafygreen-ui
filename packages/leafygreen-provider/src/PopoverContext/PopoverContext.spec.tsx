@@ -1,11 +1,12 @@
-import React, { PropsWithChildren } from 'react';
-import { act, fireEvent, render, waitFor } from '@testing-library/react';
+import React from 'react';
+import { act, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { PopoverProvider, type PopoverState, usePopoverContext } from '.';
+import { PopoverProvider, usePopoverContext } from './PopoverContext';
 
-const childTestID = 'popover-provider';
+const childTestID = 'modal-popover-provider';
 const buttonTestId = 'test-button';
 
 function TestContextComponent() {
@@ -39,41 +40,23 @@ describe('packages/leafygreen-provider/PopoverContext', () => {
     const { container, testChild } = renderProvider();
     expect(container.firstChild).toBe(testChild);
   });
-
-  test('isPopoverOpen is initialized as false', () => {
-    const { testChild } = renderProvider();
-    expect(testChild.textContent).toBe('false');
-  });
-
-  test('when passed true, setIsPopoverOpen sets isPopoverOpen to true', () => {
-    const { testChild, getByTestId } = renderProvider();
-
-    // The button's click handler fires setIsPopoverOpen(true)
-    fireEvent.click(getByTestId(buttonTestId));
-
-    expect(testChild.textContent).toBe('true');
-  });
 });
 
 describe('usePopoverContext', () => {
-  test('is `false` by default', () => {
+  test('`isPopoverOpen` is `false` by default', () => {
     const { result } = renderHook(usePopoverContext);
     expect(result.current.isPopoverOpen).toBeFalsy();
   });
 
-  test('setter updates the value', async () => {
-    const { result, rerender } = renderHook<
-      PropsWithChildren<{}>,
-      PopoverState
-    >(usePopoverContext, {
+  test('`setIsPopoverOpen` updates the value of `isPopoverOpen`', async () => {
+    const { result, rerender } = renderHook(usePopoverContext, {
       wrapper: ({ children }) => <PopoverProvider>{children}</PopoverProvider>,
     });
 
     act(() => result.current.setIsPopoverOpen(true));
     rerender();
-    await waitFor(() => {
-      expect(result.current.isPopoverOpen).toBe(true);
-    });
+
+    expect(result.current.isPopoverOpen).toBe(true);
   });
 
   describe('with test component', () => {
@@ -92,7 +75,7 @@ describe('usePopoverContext', () => {
       const { testChild, getByTestId } = renderTestComponent();
 
       // The button's click handler fires setIsPopoverOpen(true)
-      fireEvent.click(getByTestId(buttonTestId));
+      userEvent.click(getByTestId(buttonTestId));
 
       expect(testChild.textContent).toBe('false');
     });

@@ -139,7 +139,6 @@ describe('packages/modal', () => {
             size="small"
             placeholder="animals"
             name="pets"
-            usePortal={true}
             data-testid="modal-select-test-id"
           >
             <OptionGroup label="Common">

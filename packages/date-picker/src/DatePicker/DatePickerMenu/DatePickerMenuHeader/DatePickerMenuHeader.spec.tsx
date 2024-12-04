@@ -329,7 +329,7 @@ describe('packages/date-picker/menu/header', () => {
     };
 
     test('opening & closing a select menu calls `setIsSelectOpen` in SharedDatePickerContext', async () => {
-      const { getByLabelText } = render(
+      const { findAllByRole, getByLabelText } = render(
         <AllMockProviders>
           <DatePickerMenuHeader setMonth={() => {}} />
         </AllMockProviders>,
@@ -343,8 +343,11 @@ describe('packages/date-picker/menu/header', () => {
         jest.advanceTimersByTime(transitionDuration.default);
         expect(mockSetIsSelectOpen).toHaveBeenCalledWith(true);
       });
-      userEvent.click(monthSelect);
 
+      const options = await findAllByRole('option');
+      await waitFor(() => expect(options[0]).toBeInTheDocument());
+
+      userEvent.click(monthSelect);
       await waitFor(() => {
         jest.advanceTimersByTime(transitionDuration.default);
         expect(mockSetIsSelectOpen).toHaveBeenCalledWith(false);

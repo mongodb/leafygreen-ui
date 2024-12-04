@@ -6,14 +6,15 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
+      "@lg-tools/*": [
+        "../*/src"
+      ]
     }
   },
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.story.*"],
+  "exclude": ["**/*.input.*", "**/*.output.*", "**/*.spec.*", "**/*.stories.*"],
   "references": [
   ]
 }
