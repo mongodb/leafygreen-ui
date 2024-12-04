@@ -1,5 +1,6 @@
 import { fixupConfigRules } from '@eslint/compat';
 import * as emotion from '@emotion/eslint-plugin';
+import importPlugin from 'eslint-plugin-import';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import babelParser from '@babel/eslint-parser';
@@ -45,6 +46,7 @@ export default [
   {
     plugins: {
       '@emotion': emotion,
+      import: importPlugin,
       'simple-import-sort': simpleImportSort,
     },
 
