@@ -318,6 +318,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
                   header={header}
                   className={cx({
                     [css`
+                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
                       min-width: 120px;
                     `]: index === 5,
                   })}
