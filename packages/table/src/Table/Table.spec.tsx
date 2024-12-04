@@ -226,7 +226,6 @@ describe('packages/table/Table', () => {
         <StyledTable data-testid="styled">Some text</StyledTable>,
       );
 
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
 
@@ -246,7 +245,7 @@ describe('packages/table/Table', () => {
           Some text
         </StyledTable>,
       );
-      expect(getByTestId('styled')).toBeInTheDocument();
+
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });

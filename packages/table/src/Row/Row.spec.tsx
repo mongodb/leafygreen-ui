@@ -118,7 +118,6 @@ describe('packages/table/RowWithoutRT', () => {
         <StyledRow row={mockRow} data-testid="styled" />,
       );
 
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
 
@@ -137,7 +136,7 @@ describe('packages/table/RowWithoutRT', () => {
       const { getByTestId } = render(
         <StyledRow data-testid="styled" row={mockRow} color="#69ffc6" />,
       );
-      expect(getByTestId('styled')).toBeInTheDocument();
+
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });

@@ -137,7 +137,6 @@ describe('packages/table/Row/ExpandableContent', () => {
         <StyledExpandedContent row={mockRow} data-testid="styled" />,
       );
 
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
 
@@ -160,7 +159,7 @@ describe('packages/table/Row/ExpandableContent', () => {
           color="#69ffc6"
         />,
       );
-      expect(getByTestId('styled')).toBeInTheDocument();
+
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });

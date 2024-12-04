@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { renderStyledComponent } from '../utils/styled.testutils';
+
 import TableHead from '.';
 
 describe('packages/table/TableHead', () => {
@@ -35,7 +37,6 @@ describe('packages/table/TableHead', () => {
           <StyledTableHead data-testid="styled" />,
         );
 
-        expect(getByTestId('styled')).toBeInTheDocument();
         expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
       });
 
@@ -52,7 +53,7 @@ describe('packages/table/TableHead', () => {
         const { getByTestId } = render(
           <StyledTableHead data-testid="styled" color="#69ffc6" />,
         );
-        expect(getByTestId('styled')).toBeInTheDocument();
+
         expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
       });
     });

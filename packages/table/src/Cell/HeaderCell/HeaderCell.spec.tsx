@@ -210,7 +210,6 @@ describe('packages/table/HeaderCell', () => {
         <StyledHeaderCell data-testid="styled">Some text</StyledHeaderCell>,
       );
 
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
 
@@ -228,7 +227,6 @@ describe('packages/table/HeaderCell', () => {
           Some text
         </StyledHeaderCell>,
       );
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });

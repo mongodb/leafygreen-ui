@@ -63,7 +63,6 @@ describe('packages/table/Cell', () => {
         <StyledCell data-testid="styled">Some text</StyledCell>,
       );
 
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
 
@@ -81,7 +80,7 @@ describe('packages/table/Cell', () => {
           Some text
         </StyledCell>,
       );
-      expect(getByTestId('styled')).toBeInTheDocument();
+
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });

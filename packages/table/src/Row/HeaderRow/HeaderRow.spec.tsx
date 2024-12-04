@@ -42,7 +42,6 @@ describe('packages/table/HeaderRow', () => {
 
       const { getByTestId } = render(<StyledHeaderRow data-testid="styled" />);
 
-      expect(getByTestId('styled')).toBeInTheDocument();
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
 
@@ -59,7 +58,7 @@ describe('packages/table/HeaderRow', () => {
       const { getByTestId } = render(
         <StyledHeaderRow data-testid="styled" color="#69ffc6" />,
       );
-      expect(getByTestId('styled')).toBeInTheDocument();
+
       expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
   });
