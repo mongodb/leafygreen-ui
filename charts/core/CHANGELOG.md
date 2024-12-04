@@ -1,5 +1,21 @@
 # @lg-charts/core
 
+## 0.6.2
+
+### Minor Changes
+
+- 2393c0c13: Adds zooming functionality to `Chart`
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+
+  - @leafygreen-ui/combobox@10.0.0
+  - @leafygreen-ui/hooks@8.3.1
+
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 0.6.1
 
 ### Patch Changes
