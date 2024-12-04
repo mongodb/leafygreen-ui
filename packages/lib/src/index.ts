@@ -8,6 +8,12 @@ export * from './helpers';
 export { validateChildren, isComponentType } from './validateChildren';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export type {
+  Concat,
+  DeepKeys,
+  DeepPartial,
+  DeepPathValues,
+  DeepPick,
+  DeepUnion,
   ExclusiveUnion,
   Mutable,
   Only,
