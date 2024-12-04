@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/checkbox.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/checkbox/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/checkbox/live-example/)
 
 ## Installation
 
