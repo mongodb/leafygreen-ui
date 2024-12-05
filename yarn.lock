@@ -3869,6 +3869,31 @@
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
 
+"@leafygreen-ui/code@^14.3.2", "@leafygreen-ui/code@^14.3.3":
+  version "14.4.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/code/-/code-14.4.0.tgz#6fffa1b2e18d7a0e696470624b22cf1f61fe84a5"
+  integrity sha512-JIEsohSv0T9zOrB3+mVwxFbmOXAon+Cm7W6mKNQpHhrw+I4NofKjg1XK/ss0k3EdlZ2oXTta5+IhbxUcjlXThA==
+  dependencies:
+    "@leafygreen-ui/a11y" "^1.4.13"
+    "@leafygreen-ui/button" "^21.1.0"
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/hooks" "^8.1.4"
+    "@leafygreen-ui/icon" "^12.5.4"
+    "@leafygreen-ui/icon-button" "^15.0.23"
+    "@leafygreen-ui/lib" "^13.6.0"
+    "@leafygreen-ui/palette" "^4.0.9"
+    "@leafygreen-ui/select" "^12.0.0"
+    "@leafygreen-ui/tokens" "^2.9.0"
+    "@leafygreen-ui/tooltip" "^11.0.3"
+    "@types/facepaint" "^1.2.1"
+    "@types/highlight.js" "^10.1.0"
+    clipboard "^2.0.6"
+    facepaint "^1.2.1"
+    highlight.js "~11.5.0"
+    highlightjs-graphql "^1.0.1"
+    lodash "^4.17.21"
+    polished "^4.2.2"
+
 "@leafygreen-ui/lib@^12.0.0":
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/@leafygreen-ui/lib/-/lib-12.0.0.tgz#1ab22c541435e6c0060e21d7097dd65892da24a1"
@@ -3877,6 +3902,114 @@
     "@storybook/csf" "^0.1.0"
     lodash "^4.17.21"
     prop-types "^15.7.2"
+
+"@leafygreen-ui/pagination@^1.0.23":
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/pagination/-/pagination-1.0.24.tgz#da272c52ff5a93ff872e35acbcd26bb380654773"
+  integrity sha512-Uni5ZRkae+Du9Gopr0TVtDTCzIdk5jJSQnaQBlX57b01JEP8PjIfG7lcvOk4qsFX6quUKlW0txuvsliB4MMGPw==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/hooks" "^8.1.3"
+    "@leafygreen-ui/icon" "^12.0.1"
+    "@leafygreen-ui/icon-button" "^15.0.21"
+    "@leafygreen-ui/lib" "^13.3.0"
+    "@leafygreen-ui/select" "^12.0.0"
+    "@leafygreen-ui/tokens" "^2.6.0"
+    "@leafygreen-ui/typography" "^19.1.0"
+    lodash "^4.17.21"
+
+"@leafygreen-ui/popover@^11.3.1", "@leafygreen-ui/popover@^11.4.0":
+  version "11.4.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/popover/-/popover-11.4.0.tgz#cecdea9154acb73040373729086f2dcf8f266913"
+  integrity sha512-hSr3zbbWOCUuhByR5ncFJTkXxFfA7o2QjVjDXKLVPPn9Gh7+sYRLe87mTQWs9m8fbRx9O4Uk7Vq0R9U4A77dxw==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/hooks" "^8.1.3"
+    "@leafygreen-ui/lib" "^13.5.0"
+    "@leafygreen-ui/portal" "^5.1.1"
+    "@leafygreen-ui/tokens" "^2.8.0"
+    "@types/react-transition-group" "^4.4.5"
+    react-transition-group "^4.4.5"
+
+"@leafygreen-ui/search-input@^3.1.2":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/search-input/-/search-input-3.1.4.tgz#8e883c882818339fdd160f417847e2f753b8a6e0"
+  integrity sha512-pZKkBJ+R8KjNA+uwOUAwsCKy/8jDdE8/zEhO623dbMtDr83yL4lq4K07ZK6a0CSrooxOcf1+1uYGGzt8dgU1sg==
+  dependencies:
+    "@leafygreen-ui/a11y" "^1.5.0"
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/hooks" "^8.2.1"
+    "@leafygreen-ui/icon" "^12.5.4"
+    "@leafygreen-ui/icon-button" "^15.0.21"
+    "@leafygreen-ui/input-option" "^2.0.0"
+    "@leafygreen-ui/lib" "^13.6.1"
+    "@leafygreen-ui/palette" "^4.0.10"
+    "@leafygreen-ui/polymorphic" "^2.0.0"
+    "@leafygreen-ui/popover" "^11.4.0"
+    "@leafygreen-ui/tokens" "^2.9.0"
+    "@leafygreen-ui/typography" "^19.2.1"
+    lodash "^4.17.21"
+    polished "^4.2.2"
+
+"@leafygreen-ui/select@^12.0.0":
+  version "12.1.7"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/select/-/select-12.1.7.tgz#b7ef3dec1511d8adf1e4d5f04a30d215163773cb"
+  integrity sha512-k6sI2b5AvX4LMDWa4M9mYro5tJLrLPrgebQX9GQgIyVnWuXkxwjoYf5IUQE8k33/My+VeDuyh/5aZ5FS3IfQlw==
+  dependencies:
+    "@leafygreen-ui/button" "^21.2.0"
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/form-field" "^1.2.5"
+    "@leafygreen-ui/hooks" "^8.2.1"
+    "@leafygreen-ui/icon" "^12.5.4"
+    "@leafygreen-ui/input-option" "^2.0.1"
+    "@leafygreen-ui/lib" "^13.6.1"
+    "@leafygreen-ui/palette" "^4.0.10"
+    "@leafygreen-ui/popover" "^11.4.0"
+    "@leafygreen-ui/tokens" "^2.9.0"
+    "@leafygreen-ui/typography" "^19.2.1"
+    "@lg-tools/test-harnesses" "^0.1.2"
+    "@types/react-is" "^18.0.0"
+    lodash "^4.17.21"
+    polished "^4.1.3"
+    react-is "^18.0.1"
+
+"@leafygreen-ui/tooltip@^11.0.3":
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/@leafygreen-ui/tooltip/-/tooltip-11.1.0.tgz#cb76be7a79e75378c20d1c9b8ffcb2b2327e10a3"
+  integrity sha512-nVIirNqBShuj25u9koOPAVYpqGWKSDe/rsdRyPWZLeL9rLfbtZi9Xn44HeDX7brVo+KBkE29Gsuh1Y3J7LN5ng==
+  dependencies:
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/hooks" "^8.1.3"
+    "@leafygreen-ui/icon" "^12.5.0"
+    "@leafygreen-ui/lib" "^13.5.0"
+    "@leafygreen-ui/palette" "^4.0.9"
+    "@leafygreen-ui/popover" "^11.4.0"
+    "@leafygreen-ui/tokens" "^2.8.0"
+    "@leafygreen-ui/typography" "^19.0.0"
+    lodash "^4.17.21"
+    polished "^4.2.2"
+
+"@lg-chat/input-bar@^5.0.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@lg-chat/input-bar/-/input-bar-5.1.0.tgz#0f7809389c9aaa44cdf0153ab7fc0cd2df4ea862"
+  integrity sha512-qr5tYrtfg+zQyTwCQgHJ1vP1lDmmkybbeMz7Y8kvPaZ2KZdqJbCXvkTKBVXW+ogfodgBsPUaG5yMNxRnZpwgDw==
+  dependencies:
+    "@leafygreen-ui/badge" "^8.1.2"
+    "@leafygreen-ui/button" "^21.2.0"
+    "@leafygreen-ui/emotion" "^4.0.8"
+    "@leafygreen-ui/hooks" "^8.1.3"
+    "@leafygreen-ui/icon" "^12.5.4"
+    "@leafygreen-ui/input-option" "^2.0.0"
+    "@leafygreen-ui/lib" "^13.6.1"
+    "@leafygreen-ui/palette" "^4.0.10"
+    "@leafygreen-ui/polymorphic" "^2.0.0"
+    "@leafygreen-ui/popover" "^11.3.1"
+    "@leafygreen-ui/search-input" "^3.1.2"
+    "@leafygreen-ui/tokens" "^2.9.0"
+    "@leafygreen-ui/typography" "^19.2.1"
+    lodash "^4.17.21"
+    react-keyed-flatten-children "^1.3.0"
+    react-textarea-autosize "^8.3.2"
 
 "@lg-tools/build@0.5.0":
   version "0.5.0"

@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import MarketingModal from '..';
@@ -39,6 +34,26 @@ function renderModal(
 }
 
 describe('packages/marketing-modal', () => {
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container, getByText } = renderModal({ open: true });
@@ -53,13 +68,19 @@ describe('packages/marketing-modal', () => {
       expect(newResults).toHaveNoViolations();
     });
   });
-  test('does not render if closed', () => {
-    renderModal();
-    expect(document.body.innerHTML).toEqual('<div></div>');
+
+  test('is not visible when closed', () => {
+    const { getByRole } = renderModal();
+    const dialog = getByRole('dialog', { hidden: true });
+    expect(dialog).not.toBeVisible();
   });
 
-  test('renders if open', () => {
-    const { getByText, getByLabelText } = renderModal({ open: true });
+  test('is visible if open', () => {
+    const { getByText, getByLabelText, getByRole } = renderModal({
+      open: true,
+    });
+    const dialog = getByRole('dialog');
+    expect(dialog).toBeVisible();
     expect(getByLabelText('Image graphic')).toBeVisible();
     expect(getByText('Title text')).toBeVisible();
     expect(getByText('Content text')).toBeVisible();
@@ -112,21 +133,19 @@ describe('packages/marketing-modal', () => {
   describe('closes when', () => {
     test('escape key is pressed', async () => {
       const { getByRole } = renderModal({ open: true });
-      const modal = getByRole('dialog');
 
       fireEvent.keyDown(document, { key: 'Escape', keyCode: 27 });
 
-      await waitForElementToBeRemoved(modal);
+      await waitFor(() => getByRole('dialog', { hidden: true }));
     });
 
     test('x icon is clicked', async () => {
       const { getByLabelText, getByRole } = renderModal({ open: true });
-      const modal = getByRole('dialog');
 
       const x = getByLabelText('Close modal');
       fireEvent.click(x);
 
-      await waitForElementToBeRemoved(modal);
+      await waitFor(() => getByRole('dialog', { hidden: true }));
     });
   });
 
