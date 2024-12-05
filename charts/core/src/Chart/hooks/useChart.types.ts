@@ -8,5 +8,6 @@ export interface ZoomSelectionEvent {
 export interface ChartHookProps {
   onChartReady?: () => void;
   onZoomSelect?: (e: ZoomSelectionEvent) => void;
+  groupId?: string;
   theme: Theme;
 }

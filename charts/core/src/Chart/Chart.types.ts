@@ -49,6 +49,11 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Click and drag action will only be enabled if this handler is present.
      */
     onZoomSelect?: (e: ZoomSelectionEvent) => void;
+
+    /**
+     * Charts with same groupID will have their tooltips synchronized.
+     */
+    groupId?: string;
   }>;
 
 export const ChartActionType = {
