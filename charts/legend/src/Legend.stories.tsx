@@ -15,6 +15,10 @@ export default {
 
 export const Basic: StoryObj<{}> = {
   render: () => {
-    return <></>;
+    return (
+      <>
+        <Legend />
+      </>
+    );
   },
 };

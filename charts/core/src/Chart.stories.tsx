@@ -316,7 +316,7 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     headerShowDivider,
   }) => {
     return (
-      <Chart>
+      <Chart onZoomSelect={() => {}}>
         {renderHeader && (
           <Header
             title={headerTitle}

@@ -1,5 +1,11 @@
 import React from 'react';
 
+import Checkbox from '../Checkbox';
+
 export function Legend() {
-  return <></>;
+  return (
+    <>
+      <Checkbox label="Test" animate={false} />
+    </>
+  );
 }
