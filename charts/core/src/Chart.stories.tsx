@@ -364,3 +364,80 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     );
   },
 };
+
+export const WithZoom: StoryObj<StorybookProps> = {
+  render: ({
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    renderGrid,
+    renderXAxis,
+    renderYAxis,
+    xAxisType,
+    xAxisFormatter,
+    yAxisType,
+    yAxisFormatter,
+    xAxisLabel,
+    yAxisLabel,
+    renderTooltip,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
+    renderHeader,
+    headerTitle,
+    headerShowDivider,
+  }) => {
+    return (
+      <Chart
+        zoomSelect={{
+          // xAxis: true,
+          yAxis: true,
+        }}
+      >
+        {renderHeader && (
+          <Header
+            title={headerTitle}
+            showDivider={headerShowDivider}
+            headerContent={
+              <div style={{ display: 'flex', justifyContent: 'right' }}>
+                <IconButton aria-label="FullScreen">
+                  <Icon glyph="FullScreenEnter" />
+                </IconButton>
+                <IconButton aria-label="Close">
+                  <Icon glyph="X" />
+                </IconButton>
+              </div>
+            }
+          />
+        )}
+        {renderGrid && (
+          <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+        )}
+        {renderTooltip && (
+          <Tooltip
+            sortDirection={tooltipSortDirection}
+            sortKey={tooltipSortKey}
+            valueFormatter={tooltipValueFormatter}
+          />
+        )}
+        {renderXAxis && (
+          <XAxis
+            type={xAxisType}
+            formatter={xAxisFormatter}
+            label={xAxisLabel}
+          />
+        )}
+        {renderYAxis && (
+          <YAxis
+            type={yAxisType}
+            formatter={yAxisFormatter}
+            label={yAxisLabel}
+          />
+        )}
+        {data.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};

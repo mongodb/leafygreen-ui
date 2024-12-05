@@ -84,15 +84,19 @@ Chart container component.
 
 #### Props
 
-| Name                        | Description                                                                                                                                   | Type                           | Default |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------- |
-| `onChartReady`              | Callback to be called when chart is finished rendering.                                                                                       | `() => void`                   |         |
-| `onZoomSelect` _(optional)_ | Callback to be called when a user clicks and drags on a chart to zoom. Click and drag action will only be enabled if this handler is present. | `(ZoomSelectionEvent) => void` |         |
+| Name                      | Description                                             | Type                                                                                                                                                   | Default |
+| ------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `onChartReady`            | Callback to be called when chart is finished rendering. | `() => void`                                                                                                                                           |         |
+| `zoomSelect` _(optional)_ | Configuration for click and drag zoom selection.        | <pre><code>{</code><br><code> xAxis?: boolean</code><br><code> xAxis?: boolean</code><br><code> onZoomSelect?: function</code><br><code>}</code></pre> |         |
+
+**Note**: Callback passed to `zoomSelect.onZoomSelect` callback receives the following `ZoomSelectionEvent` as an argument:
 
 ```ts
 ZoomSelectionEvent = {
-  xAxis: { startValue: number; endValue: number };
-  yAxis: { startValue: number; endValue: number };
+  // present if xAxis is enabled
+  xAxis?: { startValue: number; endValue: number };
+  // present if yAxis is enabled
+  yAxis?: { startValue: number; endValue: number };
 }
 ```
 
