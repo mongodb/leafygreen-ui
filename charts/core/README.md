@@ -84,10 +84,11 @@ Chart container component.
 
 #### Props
 
-| Name                      | Description                                             | Type                                                                                                                                                   | Default |
-| ------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `onChartReady`            | Callback to be called when chart is finished rendering. | `() => void`                                                                                                                                           |         |
-| `zoomSelect` _(optional)_ | Configuration for click and drag zoom selection.        | <pre><code>{</code><br><code> xAxis?: boolean</code><br><code> xAxis?: boolean</code><br><code> onZoomSelect?: function</code><br><code>}</code></pre> |         |
+| Name                        | Description                                                         | Type                                   | Default                          |
+| --------------------------- | ------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
+| `onChartReady`              | Callback to be called when chart is finished rendering.             | `() => void`                           |                                  |
+| `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis. | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |
+| `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if enabled.     | `(e: ZoomSelectionEvent) => void`      |                                  |
 
 **Note**: Callback passed to `onZoomSelect` callback receives the following `ZoomSelectionEvent` as an argument:
 
