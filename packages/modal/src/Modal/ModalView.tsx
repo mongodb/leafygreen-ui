@@ -1,175 +1,110 @@
-import React, { useCallback, useState } from 'react';
-import { Transition, TransitionStatus } from 'react-transition-group';
-import { Options } from 'focus-trap';
-import FocusTrap from 'focus-trap-react';
+import React, { useEffect, useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useEscapeKey, useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider, {
-  PortalContextProvider,
   useDarkMode,
-  usePopoverContext,
 } from '@leafygreen-ui/leafygreen-provider';
-import Portal from '@leafygreen-ui/portal';
 
-import { LGIDS_MODAL } from '../constants';
-
+import { CloseIconColor, ModalSize } from './Modal.types';
 import {
-  backdropBaseStyle,
-  backdropThemeStyles,
-  baseCloseButtonStyles,
-  closeButton,
-  modalContentStyle,
-  modalSizes,
-  modalThemeStyles,
-  scrollContainer,
-  visibleBackdrop,
-  visibleModalContentStyle,
-} from './Modal.styles';
-import {
-  CloseIconColor,
-  ForwardedRef,
-  ModalProps,
-  ModalSize,
-} from './Modal.types';
+  animationStyles,
+  closeButtonStyles,
+  dialogContentStyle,
+  sizeStyles,
+} from './Dialog.styles';
 
-/**
- * @internal
- * Internal Modal View component
- */
-const ModalView = React.forwardRef(
-  (
-    {
-      open = false,
-      size: sizeProp = ModalSize.Default,
-      setOpen = () => {},
-      shouldClose = () => true,
-      closeIconColor = CloseIconColor.Default,
-      darkMode: darkModeProp,
-      id: idProp,
-      children,
-      className,
-      contentClassName,
-      initialFocus,
-      ...rest
-    }: ModalProps,
-    forwardedRef: ForwardedRef,
-  ) => {
-    const { theme, darkMode } = useDarkMode(darkModeProp);
+interface DialogProps extends Omit<HTMLDialogElement, 'children'> {
+  children: React.ReactNode;
+  closeIconColor: CloseIconColor;
+  contentClassName: string;
+  darkMode?: boolean;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  shouldClose: () => boolean;
+  size: ModalSize;
+}
 
-    const nodeRef = React.useRef<HTMLDivElement | null>(null);
-    const ref = forwardedRef ?? nodeRef;
+function CloseButton({
+  closeIconColor = CloseIconColor.Default,
+  handleClose,
+}: {
+  closeIconColor: CloseIconColor;
+  handleClose?: () => void;
+}) {
+  const { theme } = useDarkMode();
 
-    const [scrollContainerRef, setScrollContainerRef] =
-      useState<null | HTMLDivElement>(null);
+  return (
+    <IconButton
+      onClick={handleClose}
+      aria-label="Close modal"
+      className={closeButtonStyles(theme, closeIconColor)}
+    >
+      <XIcon />
+    </IconButton>
+  );
+}
 
-    const { isPopoverOpen } = usePopoverContext();
+export default function Dialog(
+  {
+    children,
+    closeIconColor,
+    contentClassName,
+    darkMode: darkModeProp,
+    open,
+    setOpen,
+    shouldClose = () => true,
+    size: sizeProp = ModalSize.Default,
+    ...rest
+  }: DialogProps,
+  forwardRef: React.Ref<HTMLDialogElement>,
+) {
+  const { theme } = useDarkMode(darkModeProp);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-    const handleClose = useCallback(() => {
-      if (setOpen && shouldClose()) {
+  const handleClose = () => {
+    if (shouldClose()) {
+      dialogRef?.current?.close();
+
+      if (setOpen) {
         setOpen(false);
       }
-    }, [setOpen, shouldClose]);
+    }
+  };
 
-    const id = useIdAllocator({ prefix: 'modal', id: idProp });
-    const closeId = useIdAllocator({ prefix: 'modal' });
+  useEffect(() => {
+    if (open && dialogRef.current) {
+      dialogRef.current.showModal();
+    }
 
-    useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
+    if (!open && dialogRef.current) {
+      handleClose();
+    }
+  }, [open]);
 
-    const focusTrapOptions: Options = initialFocus
-      ? {
-          initialFocus: `#${id} ${initialFocus}`,
-          fallbackFocus: `#${closeId}`,
-          escapeDeactivates: false,
-        }
-      : {
-          fallbackFocus: `#${closeId}`, // tests fail without a fallback. (https://github.com/focus-trap/focus-trap-react/issues/91)
-          escapeDeactivates: false,
-        };
+  const allowedSize = Object.values(ModalSize).includes(sizeProp);
+  const size = allowedSize ? sizeProp : ModalSize.Default;
 
-    const allowedSize = Object.values(ModalSize).includes(sizeProp);
-    const size = allowedSize ? sizeProp : ModalSize.Default;
-
-    return (
-      <Transition
-        in={open}
-        timeout={150}
-        mountOnEnter
-        unmountOnExit
-        nodeRef={nodeRef}
-      >
-        {(state: TransitionStatus) => (
-          <Portal>
-            <div
-              {...rest}
-              id={id}
-              ref={ref}
-              className={cx(
-                className,
-                backdropBaseStyle,
-                backdropThemeStyles[theme],
-                {
-                  [visibleBackdrop]: state === 'entered',
-                },
-              )}
-            >
-              <LeafyGreenProvider darkMode={darkMode}>
-                <FocusTrap
-                  active={state === 'entered'}
-                  focusTrapOptions={focusTrapOptions}
-                >
-                  <div
-                    className={scrollContainer}
-                    ref={el => setScrollContainerRef(el)}
-                  >
-                    <div
-                      data-testid={LGIDS_MODAL.root}
-                      aria-modal="true"
-                      role="dialog"
-                      tabIndex={-1}
-                      className={cx(
-                        modalContentStyle,
-                        modalThemeStyles[theme],
-                        modalSizes[size],
-                        {
-                          [visibleModalContentStyle]: state === 'entered',
-                        },
-                        contentClassName,
-                      )}
-                    >
-                      <PortalContextProvider
-                        popover={{
-                          portalContainer: scrollContainerRef,
-                          scrollContainer: scrollContainerRef,
-                        }}
-                      >
-                        {children}
-                        <IconButton
-                          id={closeId}
-                          data-testid={LGIDS_MODAL.close}
-                          onClick={handleClose}
-                          aria-label="Close modal"
-                          className={cx(
-                            baseCloseButtonStyles,
-                            closeButton[theme][closeIconColor],
-                          )}
-                        >
-                          <XIcon />
-                        </IconButton>
-                      </PortalContextProvider>
-                    </div>
-                  </div>
-                </FocusTrap>
-              </LeafyGreenProvider>
-            </div>
-          </Portal>
+  return (
+    <LeafyGreenProvider>
+      {/* @ts-ignore */}
+      <dialog
+        {...rest}
+        ref={dialogRef}
+        className={cx(
+          animationStyles(theme),
+          dialogContentStyle,
+          sizeStyles[size],
+          contentClassName,
         )}
-      </Transition>
-    );
-  },
-);
-
-ModalView.displayName = 'ModalView';
-export default ModalView;
+      >
+        {children}
+        <CloseButton
+          handleClose={handleClose}
+          closeIconColor={closeIconColor}
+        />
+      </dialog>
+    </LeafyGreenProvider>
+  );
+}
