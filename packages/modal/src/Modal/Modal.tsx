@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useEscapeKey, useMergeRefs } from '@leafygreen-ui/hooks';
-
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
 import CloseButton from '../CloseButton';
-import { CloseIconColor, ModalSize, ModalProps } from './Modal.types';
+
 import { modalStyles } from './Modal.styles';
+import { CloseIconColor, ModalProps,ModalSize } from './Modal.types';
 
 /**
  *

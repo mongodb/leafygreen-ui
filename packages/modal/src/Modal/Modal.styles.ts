@@ -3,8 +3,6 @@ import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-
-import { ModalSize } from './Modal.types';
 import {
   borderRadius,
   breakpoints,
@@ -13,6 +11,8 @@ import {
   spacing,
   transitionDuration,
 } from '@leafygreen-ui/tokens';
+
+import { ModalSize } from './Modal.types';
 
 const animationStyles = (theme: Theme) => css`
   &[open] {

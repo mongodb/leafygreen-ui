@@ -7,6 +7,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { LGIDS_MODAL } from '../constants';
 import { CloseIconColor } from '../Modal/Modal.types';
+
 import { closeButtonStyles } from './CloseButton.styles';
 import { CloseButtonProps } from './CloseButton.types';
 
