@@ -8,8 +8,10 @@ import {
   HTMLElementProps,
   LgIdProps,
 } from '@leafygreen-ui/lib';
-import { PopoverProps } from '@leafygreen-ui/popover';
+import { DismissMode, PopoverProps, RenderMode } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+
+export { DismissMode, RenderMode };
 
 export const Size = {
   XSmall: 'xsmall',
@@ -35,7 +37,7 @@ export interface BaseSelectProps
       HTMLElementProps<'button', HTMLButtonElement>,
       'onChange' | 'onClick'
     >,
-    Omit<PopoverProps, 'active' | 'spacing'>,
+    Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle' | 'spacing'>,
     DarkModeProps,
     LgIdProps {
   /**

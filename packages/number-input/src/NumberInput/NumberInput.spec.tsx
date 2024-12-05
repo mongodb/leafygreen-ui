@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -351,21 +351,6 @@ describe('packages/number-input', () => {
         value: selectProps.unitOptions[1].value,
       });
     });
-
-    test('accepts a portalRef', () => {
-      const portalContainer = document.createElement('div');
-      document.body.appendChild(portalContainer);
-      const portalRef = createRef<HTMLElement>();
-      const { getByRole } = renderNumberInput({
-        ...selectProps,
-        portalContainer,
-        portalRef,
-      });
-      const trigger = getByRole('button', { name: unitProps.unit });
-      fireEvent.click(trigger);
-      expect(portalRef.current).toBeDefined();
-      expect(portalRef.current).toBe(portalContainer);
-    });
   });
 
   /* eslint-disable jest/no-disabled-tests */
@@ -417,54 +402,6 @@ describe('packages/number-input', () => {
         darkMode={true}
         id="1"
         size={Size.Default}
-      />
-
-      {/* @ts-expect-error - portalClassName should be undefined */}
-      <NumberInput
-        unit={unitProps.unit}
-        unitOptions={selectProps.unitOptions}
-        onSelectChange={() => {}}
-        label={label}
-        usePortal={false}
-        portalClassName="classname"
-      />
-
-      {/* @ts-expect-error - scrollContainer should be undefined */}
-      <NumberInput
-        unit={unitProps.unit}
-        unitOptions={selectProps.unitOptions}
-        onSelectChange={() => {}}
-        label={label}
-        usePortal={false}
-        scrollContainer={{} as HTMLElement}
-      />
-
-      {/* @ts-expect-error - portalContainer should be undefined */}
-      <NumberInput
-        unit={unitProps.unit}
-        unitOptions={selectProps.unitOptions}
-        onSelectChange={() => {}}
-        label={label}
-        usePortal={false}
-        portalContainer={{} as HTMLElement}
-      />
-
-      <NumberInput
-        unit={unitProps.unit}
-        unitOptions={selectProps.unitOptions}
-        onSelectChange={() => {}}
-        label={label}
-        usePortal={false}
-      />
-
-      <NumberInput
-        unit={unitProps.unit}
-        unitOptions={selectProps.unitOptions}
-        onSelectChange={() => {}}
-        label={label}
-        portalContainer={{} as HTMLElement}
-        scrollContainer={{} as HTMLElement}
-        portalClassName="classname"
       />
     </>;
   });

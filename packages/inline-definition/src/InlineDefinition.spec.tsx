@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   act,
-  fireEvent,
   render,
   screen,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { H2 } from '@leafygreen-ui/typography';
@@ -33,7 +33,7 @@ describe('packages/inline-definition', () => {
       expect(results).toHaveNoViolations();
 
       let newResults = null as any;
-      act(() => void fireEvent.mouseEnter(getByText('Shard')));
+      act(() => void userEvent.hover(getByText('Shard')));
       await act(async () => {
         newResults = await axe(container);
       });
@@ -54,18 +54,15 @@ describe('packages/inline-definition', () => {
     renderInlineDefinition();
     const children = screen.getByText('Shard');
 
-    fireEvent.mouseEnter(children);
+    userEvent.hover(children);
 
-    await waitFor(
-      () => expect(screen.getByText(shardDefinition)).toBeVisible(),
-      { timeout: 500 },
+    await waitFor(() =>
+      expect(screen.getByText(shardDefinition)).toBeVisible(),
     );
 
-    fireEvent.mouseLeave(children);
+    userEvent.unhover(children);
 
-    await waitForElementToBeRemoved(screen.getByText(shardDefinition), {
-      timeout: 500,
-    });
+    await waitForElementToBeRemoved(screen.getByText(shardDefinition));
   });
 
   /* eslint-disable jest/no-disabled-tests, jest/expect-expect */

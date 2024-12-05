@@ -24,6 +24,21 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
         darkMode: [false, true],
       },
       args: { open: true },
+      decorator: Instance => {
+        return (
+          <div
+            className={css`
+              width: 50vw;
+              height: 200px;
+              display: flex;
+              justify-content: center;
+              align-items: flex-start;
+            `}
+          >
+            <Instance />
+          </div>
+        );
+      },
     },
   },
   args: {

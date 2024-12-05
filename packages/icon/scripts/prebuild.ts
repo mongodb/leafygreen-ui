@@ -18,7 +18,7 @@ interface FileObject {
 
 const usageString = `
 Usage
-  $ ts-node ./build.ts <filename(s)>
+  $ ts-node ./prebuild.ts <filename(s)>
 
 Options
   --outDir, -o  Output directory for built SVG components
@@ -115,7 +115,8 @@ function processFile(outputDir: string) {
       },
     );
 
-    const script = './node_modules/.bin/ts-node packages/icon/scripts/build.ts';
+    const script =
+      './node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts';
 
     const checksum = createHash('md5')
       .update(script)

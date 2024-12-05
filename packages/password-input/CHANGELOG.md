@@ -1,5 +1,11 @@
 # @leafygreen-ui/password-input
 
+## 2.0.3
+
+### Patch Changes
+
+- 65c6f321d: [LG-4507](https://jira.mongodb.org/browse/LG-4507): bumps to [v1.2.5](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#125) of `@leafygreen-ui/form-field`
+
 ## 2.0.2
 
 ### Patch Changes
@@ -15,7 +21,7 @@
 
 ### Patch Changes
 
-- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.3.0](https://github.com/mongodb/leafygreen-ui/blob/c70072026333fabeec21e00c93d3f1eb48bf4c3b/packages/form-field/CHANGELOG.md#130) of `@leafygreen-ui/form-field`
+- c95b81376: [LG-4409](https://jira.mongodb.org/browse/LG-4409): bumps to [v1.2.4](https://github.com/mongodb/leafygreen-ui/blob/main/packages/form-field/CHANGELOG.md#124) of `@leafygreen-ui/form-field`
 - Updated dependencies [c95b81376]
   - @leafygreen-ui/form-field@1.2.4
 

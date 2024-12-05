@@ -3,6 +3,7 @@ import {
   fireEvent,
   getAllByRole as globalGetAllByRole,
   render,
+  waitFor,
   waitForElementToBeRemoved,
   within,
 } from '@testing-library/react';
@@ -10,6 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { MenuItem } from '@leafygreen-ui/menu';
+import { RenderMode } from '@leafygreen-ui/popover';
 
 import { MenuItemsType } from './SplitButton.types';
 import { SplitButton } from '.';
@@ -64,8 +66,14 @@ function renderSplitButton(props = {}) {
   /**
    * Opens the menu, and manually fires transition events
    */
-  async function openMenu() {
-    userEvent.click(menuTrigger);
+  async function openMenu(options?: { withKeyboard: boolean }) {
+    if (options?.withKeyboard) {
+      menuTrigger.focus();
+      userEvent.keyboard('{enter}');
+    } else {
+      userEvent.click(menuTrigger);
+    }
+
     const menuElements = await findMenuElements();
     fireEvent.transitionEnd(menuElements.menuEl as Element); // JSDOM does not automatically fire these events
     return menuElements;
@@ -200,6 +208,7 @@ describe('packages/split-button', () => {
         open,
         portalContainer,
         portalRef,
+        renderMode: RenderMode.Portal,
       });
       expect(portalRef.current).toBeDefined();
       expect(portalRef.current).toBe(portalContainer);
@@ -291,8 +300,10 @@ describe('packages/split-button', () => {
         const { openMenu } = renderSplitButton({
           menuItems,
         });
-        const { menuItemElements } = await openMenu();
-        expect(menuItemElements[0]).toHaveFocus();
+        const { menuItemElements } = await openMenu({
+          withKeyboard: true,
+        });
+        await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
         userEvent.type(menuItemElements?.[0]!, `{${key}}`);
         expect(onClick).toHaveBeenCalled();
@@ -321,16 +332,25 @@ describe('packages/split-button', () => {
         <MenuItem key="2">Item 2</MenuItem>,
         <MenuItem key="3">Item 3</MenuItem>,
       ];
+
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuEl, menuItemElements } = await openMenu({
+            withKeyboard: true,
+          });
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
+
           userEvent.type(menuEl!, '{arrowdown}');
           expect(menuItemElements[1]).toHaveFocus();
         });
+
         test('cycles highlight to the top', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuEl, menuItemElements } = await openMenu({
+            withKeyboard: true,
+          });
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           for (let i = 0; i < menuItemElements.length; i++) {
             userEvent.type(menuEl!, '{arrowdown}');
@@ -343,15 +363,24 @@ describe('packages/split-button', () => {
       describe('Up arrow', () => {
         test('highlights the previous option in the menu', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuEl, menuItemElements } = await openMenu({
+            withKeyboard: true,
+          });
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           userEvent.type(menuEl!, '{arrowdown}');
+          expect(menuItemElements[1]).toHaveFocus();
+
           userEvent.type(menuEl!, '{arrowup}');
           expect(menuItemElements[0]).toHaveFocus();
         });
+
         test('cycles highlight to the bottom', async () => {
           const { openMenu } = renderSplitButton({ menuItems });
-          const { menuEl, menuItemElements } = await openMenu();
+          const { menuEl, menuItemElements } = await openMenu({
+            withKeyboard: true,
+          });
+          await waitFor(() => expect(menuItemElements[0]).toHaveFocus());
 
           const lastOption = menuItemElements[menuItemElements.length - 1];
           userEvent.type(menuEl!, '{arrowup}');
@@ -389,7 +418,7 @@ describe('packages/split-button', () => {
           align="top"
           justify="start"
           className="test"
-          usePortal={true}
+          renderMode="portal"
           portalContainer={{} as HTMLElement}
           scrollContainer={{} as HTMLElement}
           portalClassName="classname"

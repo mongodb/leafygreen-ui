@@ -59,7 +59,7 @@ export interface StageProps extends HTMLElementProps<'li', never> {
   threshold?: number | Array<number>;
 }
 
-export interface CounterProps {
+export interface CounterProps extends HTMLElementProps<'div', never> {
   /**
    * Content that will appear inside of the Counter component.
    */

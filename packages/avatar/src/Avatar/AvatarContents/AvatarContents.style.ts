@@ -35,7 +35,9 @@ export const getAvatarTextStyles = ({
   return css`
     user-select: none;
     font-size: ${fontSize}px;
-    font-weight: ${isSingleCharacter ? 'bold' : 'normal'};
+    font-weight: ${isSingleCharacter || size === AvatarSize.XLarge
+      ? 'bold'
+      : 'normal'};
   `;
 };
 
