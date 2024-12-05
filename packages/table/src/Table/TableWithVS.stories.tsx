@@ -697,7 +697,7 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'clusterType',
         header: 'Cluster Type',
-        // his makes the size auto
+        // This makes the size auto
         size: NaN,
       },
       {
