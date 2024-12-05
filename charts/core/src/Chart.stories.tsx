@@ -226,6 +226,16 @@ export default {
         category: 'ZoomSelect',
       },
     },
+    onZoomSelect: {
+      table: {
+        disable: true,
+      },
+    },
+    zoomSelectCallback: {
+      table: {
+        disable: true,
+      },
+    },
   },
 };
 
@@ -284,8 +294,8 @@ export const Basic: StoryObj<StorybookProps> = {
         zoomSelect={{
           xAxis: zoomSelectXAxis,
           yAxis: zoomSelectYAxis,
-          onZoomSelect: zoomSelectCallback,
         }}
+        onZoomSelect={zoomSelectCallback}
       >
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
@@ -352,8 +362,8 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
         zoomSelect={{
           xAxis: zoomSelectXAxis,
           yAxis: zoomSelectYAxis,
-          onZoomSelect: zoomSelectCallback,
         }}
+        onZoomSelect={zoomSelectCallback}
       >
         {renderHeader && (
           <Header

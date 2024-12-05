@@ -5,7 +5,7 @@ export interface ZoomSelectionEvent {
   yAxis?: { startValue: number; endValue: number };
 }
 
-export interface zoomSelect {
+export interface ZoomSelect {
   /**
    * Should zoom selection be enabled on the x-axis.
    */
@@ -15,15 +15,23 @@ export interface zoomSelect {
    * Should zoom selection be enabled on the y-axis.
    */
   yAxis?: boolean;
+}
+
+export interface ChartHookProps {
+  theme: Theme;
+
+  /**
+   * Callback to be called when chart is finished rendering.
+   */
+  onChartReady?: () => void;
+
+  /**
+   * Zoom selection enablement configuration.
+   */
+  zoomSelect?: ZoomSelect;
 
   /**
    * Callback to be called when a zoom selection is made.
    */
   onZoomSelect?: (e: ZoomSelectionEvent) => void;
-}
-
-export interface ChartHookProps {
-  onChartReady?: () => void;
-  zoomSelect?: zoomSelect;
-  theme: Theme;
 }

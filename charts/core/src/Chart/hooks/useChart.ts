@@ -41,7 +41,12 @@ echarts.use([
  * Creates a generic Apache ECharts options object with default values for those not set
  * that are in line with the designs and needs of the design system.
  */
-export function useChart({ theme, onChartReady, zoomSelect }: ChartHookProps) {
+export function useChart({
+  theme,
+  onChartReady,
+  zoomSelect,
+  onZoomSelect,
+}: ChartHookProps) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
   const [chartOptions, setChartOptions] = useState(
@@ -49,12 +54,12 @@ export function useChart({ theme, onChartReady, zoomSelect }: ChartHookProps) {
   );
 
   function handleDataZoom(params: any) {
-    if (zoomSelect?.onZoomSelect) {
+    if (onZoomSelect) {
       if (zoomSelect?.xAxis && zoomSelect?.yAxis) {
         if (params.batch) {
           const { startValue: xStart, endValue: xEnd } = params.batch[0];
           const { startValue: yStart, endValue: yEnd } = params.batch[1];
-          zoomSelect.onZoomSelect({
+          onZoomSelect({
             xAxis: { startValue: xStart, endValue: xEnd },
             yAxis: { startValue: yStart, endValue: yEnd },
           });
@@ -68,14 +73,14 @@ export function useChart({ theme, onChartReady, zoomSelect }: ChartHookProps) {
             startValue: params.startValue,
             endValue: params.endValue,
           };
-          zoomSelect.onZoomSelect(zoomEventResponse);
+          onZoomSelect(zoomEventResponse);
         } else if (params.batch) {
           const { startValue, endValue } = params.batch[0];
           zoomEventResponse[axis] = {
             startValue,
             endValue,
           };
-          zoomSelect.onZoomSelect(zoomEventResponse);
+          onZoomSelect(zoomEventResponse);
         }
       }
     }

@@ -89,7 +89,7 @@ Chart container component.
 | `onChartReady`            | Callback to be called when chart is finished rendering. | `() => void`                                                                                                                                           |         |
 | `zoomSelect` _(optional)_ | Configuration for click and drag zoom selection.        | <pre><code>{</code><br><code> xAxis?: boolean</code><br><code> xAxis?: boolean</code><br><code> onZoomSelect?: function</code><br><code>}</code></pre> |         |
 
-**Note**: Callback passed to `zoomSelect.onZoomSelect` callback receives the following `ZoomSelectionEvent` as an argument:
+**Note**: Callback passed to `onZoomSelect` callback receives the following `ZoomSelectionEvent` as an argument:
 
 ```ts
 ZoomSelectionEvent = {
