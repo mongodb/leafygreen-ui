@@ -7,7 +7,7 @@ import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
@@ -150,8 +150,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       {
         id: 'actions',
         header: '',
-        size: 90,
-        // eslint-disable-next-line react/display-name
+        size: 120,
         cell: _ => {
           return (
             <>
@@ -180,20 +179,22 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
+    <Table {...args} table={table} ref={tableContainerRef}>
       <TableHead isSticky>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
+            {headerGroup.headers.map((header, index) => {
               return (
-                <HeaderCell key={header.id} header={header}>
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                  className={cx({
+                    [css`
+                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
+                      min-width: 120px;
+                    `]: index === 5,
+                  })}
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
@@ -277,7 +278,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
       {
         id: 'actions',
         header: '',
-        size: 90,
+        size: 120,
         // eslint-disable-next-line react/display-name
         cell: _ => {
           return (
@@ -307,20 +308,22 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const { rows } = table.getRowModel();
 
   return (
-    <Table
-      {...args}
-      table={table}
-      ref={tableContainerRef}
-      className={css`
-        width: 1100px;
-      `}
-    >
+    <Table {...args} table={table} ref={tableContainerRef}>
       <TableHead isSticky>
         {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
           <HeaderRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => {
+            {headerGroup.headers.map((header, index) => {
               return (
-                <HeaderCell key={header.id} header={header}>
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                  className={cx({
+                    [css`
+                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
+                      min-width: 120px;
+                    `]: index === 5,
+                  })}
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
@@ -380,7 +383,7 @@ ZebraStripes.args = {
 
 export const NestedRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = React.useState(() => makeData(false, 500, 5, 3));
+  const [data] = React.useState(() => makeData(false, 200, 5, 3));
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
@@ -481,7 +484,7 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
 export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useState(() => makeData(true, 500))[0];
+  const data = React.useState(() => makeData(true, 200))[0];
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
