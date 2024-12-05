@@ -1,5 +1,16 @@
 # @lg-charts/core
 
+## 0.7.0
+
+### Minor Changes
+
+- 878cab966: Adds synchronizing of Tooltips across charts
+
+### Patch Changes
+
+- Updated dependencies [ba855c702]
+  - @leafygreen-ui/lib@13.8.2
+
 ## 0.6.2
 
 ### Minor Changes

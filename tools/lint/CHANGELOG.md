@@ -1,5 +1,11 @@
 # @lg-tools/lint
 
+## 1.0.0
+
+### Major Changes
+
+- ba855c702: Upgrades ESLint to v9
+
 ## 0.2.3
 
 ### Patch Changes
