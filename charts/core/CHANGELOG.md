@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.8.0
+
+### Minor Changes
+
+- 9f02d734f: Adds ability to enable zoom selection per axis individually.
+
 ## 0.7.0
 
 ### Minor Changes
