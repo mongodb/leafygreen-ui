@@ -84,12 +84,12 @@ Chart container component.
 
 #### Props
 
-| Name                        | Description                                                                   | Type                                   | Default                          |
-| --------------------------- | ----------------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
-| `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts. | `string`                               |                                  |
-| `onChartReady`              | Callback to be called when chart is finished rendering.                       | `() => void`                           |                                  |
-| `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if enabled.               | `(e: ZoomSelectionEvent) => void`      |                                  |
-| `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis.           | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |
+| Name                        | Description                                                                     | Type                                   | Default                          |
+| --------------------------- | ------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
+| `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts.   | `string`                               |                                  |
+| `onChartReady`              | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
+| `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if `ZoomSelect` is enabled. | `(e: ZoomSelectionEvent) => void`      |                                  |
+| `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis.             | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |
 
 **Note**: Callback passed to `onZoomSelect` callback receives the following `ZoomSelectionEvent` as an argument:
 
