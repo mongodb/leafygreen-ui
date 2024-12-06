@@ -38,7 +38,7 @@ const createToast = () => {
 
 return (
   <ToastProvider>
-    <Button onClick={handleClick}>Create toast</Button>
+    <Button onClick={createToast}>Create toast</Button>
   </ToastProvider>
 );
 ```
