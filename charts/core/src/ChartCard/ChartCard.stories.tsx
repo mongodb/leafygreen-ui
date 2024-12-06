@@ -90,7 +90,26 @@ export const ContainingChart: StoryObj<ChartCardProps> = {
           <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
           <XAxis type="time" />
           <YAxis type="value" />
-          {makeLineData(50).map(({ name, data }) => (
+          {makeLineData(10).map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+      </ChartCard>
+    );
+  },
+};
+
+export const ContainingChartWithOverflowingTooltip: StoryObj<ChartCardProps> = {
+  render: ({ chartCardTitle }) => {
+    return (
+      <ChartCard title={chartCardTitle}>
+        <Chart>
+          <Header title="Chart 1" showDivider />
+          <Grid vertical={false} />
+          <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
+          <XAxis type="time" />
+          <YAxis type="value" />
+          {makeLineData(20).map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
