@@ -18,7 +18,7 @@ import { chartSeriesColors } from '../chartSeriesColors';
 import { getDefaultChartOptions } from '../config';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
-import { ChartHookProps } from './useChart.types';
+import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
 
 /**
  * Register the required components. By using separate imports, we can avoid
@@ -44,6 +44,7 @@ echarts.use([
 export function useChart({
   theme,
   onChartReady,
+  zoomSelect,
   onZoomSelect,
   groupId,
 }: ChartHookProps) {
@@ -52,6 +53,96 @@ export function useChart({
   const [chartOptions, setChartOptions] = useState(
     getDefaultChartOptions(theme),
   );
+
+  function handleDataZoom(params: any) {
+    if (onZoomSelect) {
+      if (zoomSelect?.xAxis && zoomSelect?.yAxis) {
+        if (params.batch) {
+          const { startValue: xStart, endValue: xEnd } = params.batch[0];
+          const { startValue: yStart, endValue: yEnd } = params.batch[1];
+          onZoomSelect({
+            xAxis: { startValue: xStart, endValue: xEnd },
+            yAxis: { startValue: yStart, endValue: yEnd },
+          });
+        }
+      } else if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
+        const axis = zoomSelect?.xAxis ? 'xAxis' : 'yAxis';
+        const zoomEventResponse: ZoomSelectionEvent = {};
+
+        if (params.startValue && params.endValue) {
+          zoomEventResponse[axis] = {
+            startValue: params.startValue,
+            endValue: params.endValue,
+          };
+          onZoomSelect(zoomEventResponse);
+        } else if (params.batch) {
+          const { startValue, endValue } = params.batch[0];
+          zoomEventResponse[axis] = {
+            startValue,
+            endValue,
+          };
+          onZoomSelect(zoomEventResponse);
+        }
+      } else {
+        console.error(
+          'zoomSelect configuration provided without any axes props. Either xAxis or yAxis must be set.',
+        );
+      }
+    }
+
+    /**
+     * If start is not 0% or end is not 100%, that means that the 'dataZoom'
+     * event was triggered by an actual zoom. Since we don't want to actually
+     * zoom on the current data, but rather provide the new values to the passed
+     * in handler, we dispatch an action to essentially override the zoom.
+     */
+    const isZoomed = params?.start !== 0 || params?.end !== 100;
+
+    if (chartInstanceRef.current && isZoomed) {
+      chartInstanceRef.current.dispatchAction({
+        type: 'dataZoom',
+        start: 0, // percentage of starting position
+        end: 100, // percentage of ending position
+      });
+    }
+  }
+
+  /**
+   * Meant to be called once on initial render
+   */
+  function onInitialRender() {
+    if (!chartInstanceRef.current) {
+      return;
+    }
+
+    const chartInstance = chartInstanceRef.current;
+
+    if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
+      /**
+       * Zooming is built into echart via the toolbar. By default, a user
+       * has to click the "dataZoom" button to enable zooming. We however hide
+       * this button and want it turned on by default. This is done by dispatching
+       * an action to enable the "dataZoomSelect" feature, as if it were clicked.
+       */
+      chartInstance.dispatchAction({
+        type: 'takeGlobalCursor',
+        key: 'dataZoomSelect',
+        dataZoomSelectActive: true,
+      });
+
+      chartInstance.on('dataZoom', handleDataZoom);
+    }
+
+    if (onChartReady) {
+      onChartReady();
+    }
+
+    /**
+     * This is only done on initial render because what's inside itself
+     * triggers a render which creates an infinite loop if not removed.
+     */
+    chartInstance.off('rendered', onInitialRender);
+  }
 
   // Initialize the chart
   useEffect(() => {
@@ -71,78 +162,39 @@ export function useChart({
     };
     window.addEventListener('resize', resizeHandler);
 
-    function onInitialRender() {
-      /**
-       * IMPORTANT NOTE: We use the presence of the handler to determine if the zoom click
-       * and drag is enabled or not. This is an exception! Typically we'd want a `zoomable` prop,
-       * or something similar to enable/disable, and a handler just to handle the action.
-       * We don't want to set a precedent with the pattern of implying functionality (like
-       * the click and drag action) based on the presence of a handler like this.
-       * This was deemed an exception to the rule due to the fact that the data is always
-       * controlled and there never exists a scenario where one would be useful without the other.
-       */
-      if (onZoomSelect) {
-        /**
-         * Zooming is built into echart via the toolbar. By default, a user
-         * has to click the "dataZoom" button to enable zooming. We however hide
-         * this button and want it turned on by default. This is done by dispatching
-         * an action to enable the "dataZoomSelect" feature, as if it were clicked.
-         */
-        chartInstance.dispatchAction({
-          type: 'takeGlobalCursor',
-          key: 'dataZoomSelect',
-          dataZoomSelectActive: true,
-        });
-
-        chartInstance.on('dataZoom', (params: any) => {
-          if (params.batch) {
-            const xAxisIndex = 0;
-            const yAxisIndex = 1;
-
-            const { startValue: xStart, endValue: xEnd } =
-              params.batch[xAxisIndex];
-            const { startValue: yStart, endValue: yEnd } =
-              params.batch[yAxisIndex];
-
-            onZoomSelect({
-              xAxis: { startValue: xStart, endValue: xEnd },
-              yAxis: { startValue: yStart, endValue: yEnd },
-            });
-          }
-
-          /**
-           * If start is not 0% or end is not 100%, that means that the 'dataZoom'
-           * event was triggered by an actual zoom. Since we don't want to actually
-           * zoom on the current data, but rather provide the new values to the passed
-           * in handler, we dispatch an action to essentially override the zoom.
-           */
-          const isZoomed = params?.start !== 0 || params?.end !== 100;
-
-          if (isZoomed) {
-            chartInstance.dispatchAction({
-              type: 'dataZoom',
-              start: 0, // percentage of starting position
-              end: 100, // percentage of ending position
-            });
-          }
-        });
-      }
-
-      if (onChartReady) {
-        onChartReady();
-      }
-
-      // Remove so it doesn't get called on every render
-      chartInstance.off('rendered', onInitialRender);
-    }
-
     chartInstance.on('rendered', onInitialRender);
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
       chartInstance.dispose();
     };
-  }, [chartOptions, onChartReady, onZoomSelect]);
+  }, [chartOptions, onChartReady, zoomSelect]);
+
+  // Set which axis zoom is enabled on
+  useEffect(() => {
+    // `0` index enables zoom on that index, `'none'` disables zoom on that index
+    let xAxisIndex: number | string = 0;
+    let yAxisIndex: number | string = 0;
+
+    if (!zoomSelect?.xAxis) {
+      xAxisIndex = 'none';
+    }
+
+    if (!zoomSelect?.yAxis) {
+      yAxisIndex = 'none';
+    }
+
+    updateChartOptions({
+      toolbox: {
+        feature: {
+          dataZoom: {
+            xAxisIndex,
+            yAxisIndex,
+          },
+        },
+      },
+    });
+  }, [zoomSelect]);
 
   const updateChartRef = useMemo(
     () =>
