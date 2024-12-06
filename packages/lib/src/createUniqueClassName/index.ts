@@ -25,6 +25,7 @@ const createUniqueClassName = (prefix: string = ''): string => {
   } else {
     classNameRegistry.set(prefix, [uniqueClassName]);
   }
+
   return uniqueClassName;
 };
 

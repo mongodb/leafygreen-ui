@@ -1,5 +1,50 @@
 # @leafygreen-ui/date-picker
 
+## 2.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): `DatePicker` renders menu, month selector, and year selector in top layer using popover API. As a result, the following props are deprecated and removed:
+
+  - `popoverZIndex`
+  - `portalClassName`
+  - `portalContainer`
+  - `portalRef`
+  - `scrollContainer`
+
+  Additional changes include:
+
+  - Deprecates and removes `justify="fit"`. Instead, use `justify="middle"`
+  - Removes unused `contentClassName` prop
+
+  #### Migration guide
+
+  Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
+
+  ##### Old
+
+  ```js
+  <DatePicker portalContainer={containerRef} scrollContainer={containerRef} />
+  <DatePicker portalClassName="portal-class" />
+  ```
+
+  ##### New
+
+  ```js
+  <DatePicker />
+  <DatePicker />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/popover@12.0.0
+  - @leafygreen-ui/select@13.0.0
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 1.2.2
 
 ### Patch Changes

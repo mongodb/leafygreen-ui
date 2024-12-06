@@ -23,6 +23,7 @@ export function Chart({
   darkMode: darkModeProp,
   onChartReady,
   onZoomSelect,
+  groupId,
   className,
   ...rest
 }: ChartProps) {
@@ -37,6 +38,7 @@ export function Chart({
     theme,
     onChartReady,
     onZoomSelect,
+    groupId,
   });
 
   return (

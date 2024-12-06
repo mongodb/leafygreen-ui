@@ -57,7 +57,7 @@ import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
 import { ChartCard, Chart, Line, XAxis, YAxis } from '@lg-charts/core';
 
 <ChartCard title="My Group of Charts">
-  <Chart>
+  <Chart groupId="group1">
     <XAxis type="time" />
     <YAxis type="value" formatter={(value) => `${value}GB`} />
     <Line
@@ -65,7 +65,7 @@ import { ChartCard, Chart, Line, XAxis, YAxis } from '@lg-charts/core';
       data={seriesData}
     />
   </Chart>
-  <Chart>
+  <Chart groupId="group1">
     <XAxis type="time" />
     <YAxis type="value" formatter={(value) => `${value}GB`} />
     <Line
@@ -88,6 +88,7 @@ Chart container component.
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ | ------- |
 | `onChartReady`              | Callback to be called when chart is finished rendering.                                                                                       | `() => void`                   |         |
 | `onZoomSelect` _(optional)_ | Callback to be called when a user clicks and drags on a chart to zoom. Click and drag action will only be enabled if this handler is present. | `(ZoomSelectionEvent) => void` |         |
+| `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts.                                                                 | `string`                       |         |
 
 ```ts
 ZoomSelectionEvent = {
