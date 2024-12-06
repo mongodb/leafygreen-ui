@@ -156,6 +156,7 @@ export const DefaultSelect = (args: ModalProps) => {
               name="pets"
               value={value}
               onChange={setValue}
+              renderMode="top-layer"
             >
               <OptionGroup label="Common">
                 <Option value="dog">Dog</Option>

@@ -19,12 +19,7 @@ export const ModalSize = {
 
 export type ModalSize = (typeof ModalSize)[keyof typeof ModalSize];
 
-export type ForwardedRef =
-  | React.ForwardedRef<HTMLDivElement | null>
-  | null
-  | undefined;
-
-export interface ModalProps extends HTMLElementProps<'div'>, DarkModeProps {
+export interface ModalProps extends HTMLElementProps<'dialog'>, DarkModeProps {
   /**
    * Content that will appear inside of the Modal component.
    */
@@ -62,13 +57,6 @@ export interface ModalProps extends HTMLElementProps<'div'>, DarkModeProps {
    * Disclaimer: This prop may be deprecated in future versions of Modal
    */
   contentClassName?: string;
-
-  /**
-   * By default, when a focus trap is activated the first element in the focus trap's tab order will receive focus.
-   * With this option you can specify a different element to receive that initial focus.
-   * Selector string (which will be passed to document.querySelector() to find the DOM node)
-   */
-  initialFocus?: string;
 
   /**
    * Determines the color of the close icon.
