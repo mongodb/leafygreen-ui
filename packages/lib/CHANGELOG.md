@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 13.8.2
+
+### Patch Changes
+
+- ba855c702: Relints files according to ESLint migration
+
 ## 13.8.1
 
 ### Patch Changes
