@@ -53,6 +53,11 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Zoom selection enablement configuration.
      */
     onZoomSelect?: (e: ZoomSelectionEvent) => void;
+
+    /**
+     * Charts with same groupID will have their tooltips synchronized.
+     */
+    groupId?: string;
   }>;
 
 export const ChartActionType = {

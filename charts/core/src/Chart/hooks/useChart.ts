@@ -46,6 +46,7 @@ export function useChart({
   onChartReady,
   zoomSelect,
   onZoomSelect,
+  groupId,
 }: ChartHookProps) {
   const chartRef = useRef(null);
   const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
@@ -144,6 +145,12 @@ export function useChart({
     const chartInstance = echarts.init(chartRef.current);
     chartInstanceRef.current = chartInstance;
     chartInstance.setOption(chartOptions);
+
+    // Connects a chart to a group which allows for synchronized tooltips
+    if (groupId) {
+      chartInstance.group = groupId;
+      echarts.connect(groupId);
+    }
 
     // ECharts does not automatically resize when the window resizes.
     const resizeHandler = () => {

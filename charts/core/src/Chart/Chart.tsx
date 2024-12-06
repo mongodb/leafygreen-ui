@@ -24,6 +24,7 @@ export function Chart({
   onChartReady,
   zoomSelect,
   onZoomSelect,
+  groupId,
   className,
   ...rest
 }: ChartProps) {
@@ -39,6 +40,7 @@ export function Chart({
     onChartReady,
     zoomSelect,
     onZoomSelect,
+    groupId,
   });
 
   return (

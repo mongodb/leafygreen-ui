@@ -18,6 +18,7 @@ export interface ZoomSelect {
 }
 
 export interface ChartHookProps {
+  groupId?: string;
   theme: Theme;
 
   /**

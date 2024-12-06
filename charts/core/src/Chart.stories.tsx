@@ -236,6 +236,14 @@ export default {
         disable: true,
       },
     },
+    groupId: {
+      description: 'Group ID for synced tooltips',
+      name: 'groupId',
+      table: {
+        category: 'Chart',
+        disable: true,
+      },
+    },
   },
 };
 
@@ -409,6 +417,107 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
+    );
+  },
+};
+
+export const WithSameGroupIds: StoryObj<StorybookProps> = {
+  render: ({
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    renderGrid,
+    renderXAxis,
+    renderYAxis,
+    xAxisType,
+    xAxisFormatter,
+    yAxisType,
+    yAxisFormatter,
+    xAxisLabel,
+    yAxisLabel,
+    renderTooltip,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
+    renderHeader,
+    headerTitle,
+    headerShowDivider,
+  }) => {
+    return (
+      <div
+        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+      >
+        <Chart groupId="group1">
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart groupId="group1">
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+      </div>
     );
   },
 };
