@@ -1,44 +1,82 @@
 import React from 'react';
 
+import { renderHook } from '@leafygreen-ui/testing-lib';
+
+import { Person } from '../utils/makeData.testutils';
+import {
+  getDefaultTestColumns,
+  getDefaultTestData,
+} from '../utils/testHookCalls.testutils';
+
 import useLeafyGreenTable from './useLeafyGreenTable';
+import { LeafyGreenTableRow } from './useLeafyGreenTable.types';
 
 describe('packages/table/useLeafyGreenTable', () => {
+  test('returns a table object', () => {
+    const { result } = renderHook(() =>
+      useLeafyGreenTable({
+        columns: [],
+        data: [],
+      }),
+    );
+    expect(typeof result.current).toBe('object');
+  });
+
+  test('returns the correct number of rows', () => {
+    const data = getDefaultTestData({});
+
+    const { result } = renderHook(() =>
+      useLeafyGreenTable({
+        data,
+        columns: getDefaultTestColumns({}),
+      }),
+    );
+    expect(result.current.getRowModel().rows.length).toEqual(data.length);
+  });
+
+  test('returns the correct number of rows with expandedContent', () => {
+    const data = getDefaultTestData({
+      // eslint-disable-next-line react/display-name
+      renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
+        return <>Expandable content test</>;
+      },
+    });
+
+    const { result } = renderHook(() =>
+      useLeafyGreenTable({
+        data,
+        columns: getDefaultTestColumns({}),
+      }),
+    );
+
+    expect(result.current.getRowModel().rows.length).toEqual(data.length);
+  });
+
+  test('returns the correct number of rows with subRows', () => {
+    const data = getDefaultTestData({
+      subRows: getDefaultTestData({}),
+    });
+
+    const { result } = renderHook(() =>
+      useLeafyGreenTable({
+        data,
+        columns: getDefaultTestColumns({}),
+      }),
+    );
+
+    // Subrows are only included if they are expanded
+    expect(result.current.getRowModel().rows.length).toEqual(data.length);
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('Typescript', () => {
-    // @ts-expect-error - requires containerRef, columns, data
+    // @ts-expect-error - requires columns, data
     useLeafyGreenTable({});
 
-    // containerRef, columns, data are necessary & sufficient options
+    // columns, data are necessary & sufficient options
     useLeafyGreenTable({
-      containerRef: React.createRef<HTMLDivElement>(),
       columns: [],
       data: [],
-    });
-
-    const necessaryOptions = {
-      containerRef: React.createRef<HTMLDivElement>(),
-      columns: [],
-      data: [],
-    };
-
-    // @ts-expect-error - virtualizerOptions is not valid when useVirtualScrolling is false/undefined
-    useLeafyGreenTable({
-      ...necessaryOptions,
-      virtualizerOptions: {},
-    });
-
-    // @ts-expect-error - virtualizerOptions is not valid when useVirtualScrolling is false/undefined
-    useLeafyGreenTable({
-      ...necessaryOptions,
-      useVirtualScrolling: false,
-      virtualizerOptions: {},
-    });
-
-    // virtualizerOptions is a valid prop when useVirtualScrolling is true
-    useLeafyGreenTable({
-      ...necessaryOptions,
-      useVirtualScrolling: true,
-      virtualizerOptions: {},
     });
   });
 });
