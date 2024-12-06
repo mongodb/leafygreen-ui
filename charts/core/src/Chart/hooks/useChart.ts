@@ -83,6 +83,10 @@ export function useChart({
           };
           onZoomSelect(zoomEventResponse);
         }
+      } else {
+        console.error(
+          'zoomSelect configuration provided without any axes props. Either xAxis or yAxis must be set.',
+        );
       }
     }
 

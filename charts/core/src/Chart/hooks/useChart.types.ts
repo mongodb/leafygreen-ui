@@ -5,21 +5,24 @@ export interface ZoomSelectionEvent {
   yAxis?: { startValue: number; endValue: number };
 }
 
-export interface ZoomSelect {
-  /**
-   * Should zoom selection be enabled on the x-axis.
-   */
-  xAxis?: boolean;
-
-  /**
-   * Should zoom selection be enabled on the y-axis.
-   */
-  yAxis?: boolean;
-}
+export type ZoomSelect =
+  | {
+      xAxis: boolean;
+      yAxis?: boolean;
+    }
+  | {
+      xAxis?: boolean;
+      yAxis: boolean;
+    }
+  | undefined;
 
 export interface ChartHookProps {
-  groupId?: string;
   theme: Theme;
+
+  /**
+   * Charts with the same `groupId` will have their tooltips synced across charts.
+   */
+  groupId?: string;
 
   /**
    * Callback to be called when chart is finished rendering.
