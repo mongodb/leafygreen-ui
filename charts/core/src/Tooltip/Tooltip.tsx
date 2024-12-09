@@ -35,6 +35,7 @@ export function Tooltip({
         borderRadius: borderRadius[200],
         borderWidth: 0,
         confine: true,
+        appendTo: 'body',
         enterable: false,
         hideDelay: 0,
         valueFormatter: valueFormatter
