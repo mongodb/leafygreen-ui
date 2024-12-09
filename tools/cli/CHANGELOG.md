@@ -1,5 +1,12 @@
 # @lg-tools/cli
 
+## 0.7.2
+
+### Patch Changes
+
+- Updated dependencies [cf1693532]
+  - @lg-tools/slackbot@0.2.8
+
 ## 0.7.1
 
 ### Patch Changes
