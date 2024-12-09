@@ -8,12 +8,13 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
 - All LeafyGreen table components accept `forwardRefs`
 - All LeafyGreen table components support `StyledComponents`
-- Rows now support multiline text. By default, text truncation is enabled but can be disabled using the `shouldTruncate` prop on `<Table>`. When `shouldTruncate` is `true`, all rows will display a single line of text. When `false`, rows with long text will display all lines of the content.
+- Rows now support multiline text. By default, text truncation is enabled but can be disabled using the `shouldTruncate` prop on `<Table>`. When `shouldTruncate` is `true`, all rows will display a single line of text. When `false`, rows with long text will display all lines of the content. Additionally, when truncation is disabled, text is top-aligned by default. You can change this alignment to `middle` or `top` using the new `verticalAlignment` prop.
 
   ```
     <Table
       table={table}
       shouldTruncate={false}
+      verticalAlignment='middle'
     >
       ...
     </Table>
@@ -21,10 +22,12 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
 ## What changed?
 
-### Rows
+### `Row` component
 
 - Row transition were removed to increase performance.
 - Rows are memoized to increase performance.
+- `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
+- `virtualRow` is a reguired prop if using `useLeafyGreenVirtualTable`.
 - Internally, we removed the mapping and flattening of `Row` children. Moving forward, consumers no longer need to explicitly render subrows and expanded content as children of `Row`. Instead, rows, subrows, and expanded content are returned as siblings within the row object.
 
   **Before**:
@@ -86,7 +89,7 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
   **After**:
 
-  This will render both rows and subrows. No extra checks needed.
+  This will render both rows and subrows. No extra checks are needed.
 
   ```
   {rows.map((row: LeafyGreenTableRow<Person>) => {
@@ -109,54 +112,29 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
   })}
   ```
 
-### Expanded content
+### `Cell` component
 
-Expanded content is included in the row object as a sibling of its parent row. You will need to check if a row is expanded content using `row.isExpandedContent`.
+- `cell` is a new required prop on `Cell` if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`. This is needed for styling purposes.
 
-**Before**:
+### `ExpandedContent` component
 
-Expanded content is rendered as a child of `Row` and we check for `row.original.renderExpandedContent`
+- `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
+- `virtualRow` is a reguired prop if using `useLeafyGreenVirtualTable`.
+- Expanded content is included in the row object as a sibling of its parent row. You will need to check if a row is expanded content using `row.isExpandedContent`.
 
-```
-{rows.map((row: LeafyGreenTableRow<Person>) => {
-  return (
-    <Row key={row.id} row={row}>
-      {row
-        .getVisibleCells()
-        .map((cell: LeafyGreenTableCell<Person>) => {
-          return (
-            <Cell key={cell.id}>
-              {flexRender(
-                cell.column.columnDef.cell,
-                cell.getContext(),
-              )}
-            </Cell>
-          );
-        })}
-       // renders expanded content
-      {row.original.renderExpandedContent && (
-        <ExpandedContent row={row} />
-      )}
-    </Row>
-  );
-})}
-```
+  **Before**:
 
-**After**:
+  Expanded content is rendered as a child of `Row` and we check for `row.original.renderExpandedContent`
 
-Expanded content is rendered as a sibling of `Row`. Instead of checking for `row.original.renderExpandedContent`, we check for `row.isExpandedContent`.
-
-```
-{rows.map((row: LeafyGreenTableRow<Person>) => {
-  const isExpandedContent = row.isExpandedContent ?? false;
-
-  return (
-    <Fragment key={row.id}>
-      {!isExpandedContent && (
-        <Row row={row}>
-          {row.getVisibleCells().map(cell => {
+  ```
+  {rows.map((row: LeafyGreenTableRow<Person>) => {
+    return (
+      <Row key={row.id} row={row}>
+        {row
+          .getVisibleCells()
+          .map((cell: LeafyGreenTableCell<Person>) => {
             return (
-              <Cell key={cell.id} id={cell.id} cell={cell}>
+              <Cell key={cell.id}>
                 {flexRender(
                   cell.column.columnDef.cell,
                   cell.getContext(),
@@ -164,14 +142,45 @@ Expanded content is rendered as a sibling of `Row`. Instead of checking for `row
               </Cell>
             );
           })}
-        </Row>
-      )}
-      // renders expanded content
-      {isExpandedContent && <ExpandedContent row={row} />}
-    </Fragment>
-  );
-})}
-```
+        // renders expanded content
+        {row.original.renderExpandedContent && (
+          <ExpandedContent row={row} />
+        )}
+      </Row>
+    );
+  })}
+  ```
+
+  **After**:
+
+  Expanded content is rendered as a sibling of `Row`. Instead of checking for `row.original.renderExpandedContent`, we check for `row.isExpandedContent`.
+
+  ```
+  {rows.map((row: LeafyGreenTableRow<Person>) => {
+    const isExpandedContent = row.isExpandedContent ?? false;
+
+    return (
+      <Fragment key={row.id}>
+        {!isExpandedContent && (
+          <Row row={row}>
+            {row.getVisibleCells().map(cell => {
+              return (
+                <Cell key={cell.id} id={cell.id} cell={cell}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext(),
+                  )}
+                </Cell>
+              );
+            })}
+          </Row>
+        )}
+        // renders expanded content
+        {isExpandedContent && <ExpandedContent row={row} />}
+      </Fragment>
+    );
+  })}
+  ```
 
 ### `useLeafyGreenTable` hook
 

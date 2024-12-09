@@ -156,10 +156,12 @@ return (
           return (
             <Fragment key={row.id}>
               {!isExpandedContent && (
+                // row is required
                 <Row row={row}>
 	                // Maps through visible cells
                   {row.getVisibleCells().map(cell => {
                     return (
+                      // cell is required
                       <Cell key={cell.id} id={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -473,6 +475,7 @@ return (
 	            return (
 	              <Fragment key={virtualRow.key}>
 	                {!isExpandedContent && (
+                    // row and virtualRow is required
 	                  <Row
 	                    row={row}
 	                    virtualRow={virtualRow}
@@ -482,6 +485,7 @@ return (
 	                      .getVisibleCells()
 	                      .map((cell: LeafyGreenTableCell<KitchenSink>) => {
 	                        return (
+                            // cell is required
 	                          <Cell key={cell.id} cell={cell}>
 	                            {flexRender(
 	                              cell.column.columnDef.cell,
@@ -565,9 +569,11 @@ return(
 	<TableBody>
 	  {rows.map((row: LeafyGreenTableRow<Person>) => {
 	    return (
+        // row is required
 	      <Row row={row} key={row.id}>
 	        {row.getVisibleCells().map(cell => {
 	          return (
+              // cell is required
 	            <Cell key={cell.id} id={cell.id} cell={cell}>
 	              {flexRender(cell.column.columnDef.cell, cell.getContext())}
 	            </Cell>
@@ -605,9 +611,11 @@ const virtualItems = table.virtual.getVirtualItems();
       const row = virtualRow.row;
       const cells = row.getVisibleCells();
       return (
+        // row and virtualRow is required
         <Row key={virtualRow.key} virtualRow={virtualRow} row={row}>
           {cells.map((cell: LeafyGreenTableCell<Person>) => {
             return (
+              // cell is required
               <Cell key={cell.id} cell={cell}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </Cell>
@@ -651,9 +659,11 @@ const { rows } = table.getRowModel();
     return (
       <Fragment key={row.id}>
         {!isExpandedContent && (
+          // row is required
           <Row row={row}>
             {row.getVisibleCells().map(cell => {
               return (
+                // cell is required
                 <Cell key={cell.id} id={cell.id} cell={cell}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </Cell>
@@ -661,6 +671,7 @@ const { rows } = table.getRowModel();
             })}
           </Row>
         )}
+        // row is required
         {isExpandedContent && <ExpandedContent row={row} />}
       </Fragment>
     );
@@ -695,8 +706,10 @@ const virtualItems = table.virtual.getVirtualItems();
       const isExpandedContent = row.isExpandedContent ?? false;
 
       return (
+        // note: the key should be virtualRow.key not row.id
         <Fragment key={virtualRow.key}>
           {!isExpandedContent && (
+            // row and virtualRow is required
             <Row row={row} virtualRow={virtualRow}>
               {row
                 .getVisibleCells()
@@ -713,6 +726,7 @@ const virtualItems = table.virtual.getVirtualItems();
             </Row>
           )}
           {isExpandedContent && (
+            // row and virtualRow is required
             <ExpandedContent row={row} virtualRow={virtualRow} />
           )}
         </Fragment>
@@ -735,6 +749,7 @@ Since rows and expanded subrows are returned in the same hierarchy within the ro
     return (
       <Fragment key={row.id}>
         {!isExpandedContent && (
+          // row is required
           // Different styling for a subrow
           <Row
             row={row}
@@ -744,6 +759,7 @@ Since rows and expanded subrows are returned in the same hierarchy within the ro
           >
             {row.getVisibleCells().map(cell => {
               return (
+                // cell is required
                 <Cell key={cell.id} id={cell.id} cell={cell}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   // Additional text for a subrow
@@ -753,6 +769,7 @@ Since rows and expanded subrows are returned in the same hierarchy within the ro
             })}
           </Row>
         )}
+        // row is required
         {isExpandedContent && <ExpandedContent row={row} />}
       </Fragment>
     );
@@ -878,19 +895,19 @@ All HTML `tr` element props
 
 ### Row
 
-| Name         | Description                                                                                                                                                           | Type                    | Default |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------- |
-| `disabled`   | Determines whether the row is disabled                                                                                                                                | `boolean`               | `false` |
-| `row`        | Row object passed from the `useLeafygreenTable` or `useLeafyGreenVirtualTable` hook. Required if using the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hooks. | `LeafygreenTableRow<T>` | -       |
-| `virtualRow` | Virtual row object passed from the `useLeafyGreenVirtualTable` hook. Required if using the `useLeafyGreenVirtualTable` hooks.                                         | `VirtualItem`           | -       |
+| Name         | Description                                                                                                                                                               | Type                    | Default |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------- |
+| `disabled`   | Determines whether the row is disabled                                                                                                                                    | `boolean`               | `false` |
+| `row`        | Row object passed from the `useLeafygreenTable` or `useLeafyGreenVirtualTable` hook. **Required** if using the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hooks. | `LeafygreenTableRow<T>` | -       |
+| `virtualRow` | Virtual row object passed from the `useLeafyGreenVirtualTable` hook. **Required** if using the `useLeafyGreenVirtualTable` hooks.                                         | `VirtualItem`           | -       |
 
 \+ other HTML `tr` element props
 
 ### Cell
 
-| Name   | Description                                                                                                                                                                                                            | Type                     | Default |
-| ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------- |
-| `cell` | The cell object that is returned when mapping through a row passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook. Required if using the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hooks. | `LeafyGreenTableCell<T>` | -       |
+| Name   | Description                                                                                                                                                                                                                | Type                     | Default |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------- |
+| `cell` | The cell object that is returned when mapping through a row passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook. **Required** if using the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hooks. | `LeafyGreenTableCell<T>` | -       |
 
 \+ other HTML `td` element props.
 
