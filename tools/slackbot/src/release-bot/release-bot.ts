@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import * as dotenv from 'dotenv';
+require('dotenv').config();
 import { isValidJSON } from '@lg-tools/meta';
 import { WebClient } from '@slack/web-api';
 import chalk from 'chalk';
@@ -19,8 +19,6 @@ import {
   isValidUpdatesArray,
   ReleaseBotOptions,
 } from './release-bot.types';
-
-dotenv.config();
 
 export function releaseBot(
   updates: string | undefined,
