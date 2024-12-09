@@ -59,9 +59,16 @@ Example:
 
 ```js
 const portalRef = useRef<HTMLDivElement | null>(null)
+const [containerState, setContainerState] = useState<React.RefObject<HTMLDivElement>>(null)
+
+useEffect(() => {
+  if (portalRef.current) {
+    setContainerState(portalRef)
+  }
+}, [portalRef])
 
 <Modal portalRef={portalRef}>
-  <Select renderMode="portal" portalContainer={portalRef.current}/>
+  <Select renderMode="portal" portalContainer={containerState.current}/>
 </Modal>
 ```
 
