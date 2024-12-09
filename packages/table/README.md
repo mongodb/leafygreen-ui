@@ -1016,3 +1016,32 @@ const {
 | `isExpanded()`      | Returns if the `<tr>`(`<Row>`) is expanded                         | `boolean`                     |
 | `isSelected()`      | Returns if the `<tr>`(`<Row>`) is selected                         | `boolean`                     |
 | `isDisabled()`      | Returns if the `<tr>`(`<Row>`) is disabled                         | `boolean`                     |
+
+# Examples (WIP)
+
+- Basic
+- Styled components
+- Sticky header
+- `useLeafyGreenTable`
+  - Only rows
+  - Rows and subrows
+  - Expanded content
+  - With extra custom columns
+  - No Truncation
+  - Zebra Stripes
+  - Sortable rows
+  - Selectable rows
+  - Selectable rows with no select all
+  - Disabled rows
+  - With pagination
+- `useLeafyGreenVirtualTable`
+  - Only rows
+  - Rows and subrows
+  - Expanded content
+  - With extra custom columns
+  - No Truncation
+  - Zebra Stripes
+  - Sortable rows
+  - Selectable rows
+  - Selectable rows with no select all
+  - Disabled rows
