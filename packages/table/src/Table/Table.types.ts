@@ -29,7 +29,7 @@ export interface TableProps<T extends LGRowData>
   baseFontSize?: BaseFontSize;
 
   /**
-   * The `useLeafyGreenTable` or `useLeafyGreenVirtualTable` return value
+   * Object returned from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook
    */
   table?: LeafyGreenTable<T> | LeafyGreenVirtualTable<T>;
 
@@ -40,7 +40,7 @@ export interface TableProps<T extends LGRowData>
   shouldTruncate?: boolean;
 
   /**
-   * When rows are not truncated, this will determine if cells should be top or middle aligned
+   * When rows truncation is disabled, this will determine if cell contents should be top or middle aligned
    * @default 'top'
    */
   verticalAlignment?: VerticalAlignment;

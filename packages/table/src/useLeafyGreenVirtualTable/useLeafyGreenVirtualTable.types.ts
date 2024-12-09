@@ -20,7 +20,7 @@ export interface LeafyGreenVirtualTableOptions<
   V extends unknown = unknown,
 > extends LeafyGreenTableOptions<T, V> {
   /**
-   * A ref to the <div> wrapping <table>
+   * A required ref to the <div> wrapping <table>
    */
   containerRef: RefObject<HTMLElement>;
 

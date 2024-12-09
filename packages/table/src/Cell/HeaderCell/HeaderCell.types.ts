@@ -8,6 +8,8 @@ import {
 } from 'react';
 import { Header } from '@tanstack/react-table';
 
+import { HTMLElementProps } from '@leafygreen-ui/lib';
+
 import { LGRowData } from '../../useLeafyGreenTable';
 
 export const SortState = {
@@ -25,6 +27,11 @@ export interface SortStates {
 
 export interface HeaderCellProps<T extends LGRowData>
   extends ComponentPropsWithRef<'th'> {
+  /**
+   * The `align` prop set on a HeaderCell will serve as the default `align` prop on the TableCell corresponding to the HeaderCell's index.
+   */
+  align?: HTMLElementProps<'th'>['align'];
+
   /**
    * Header object passed from the `useLeafyGreenTable` hook.
    */

@@ -47,6 +47,8 @@ export type LeafyGreenTableOptions<
 > = Omit<TableOptions<LGTableDataType<T>>, 'getCoreRowModel' | 'columns'> & {
   /**
    * Setting this prop will inject a new column containing a checkbox into all rows.
+   *
+   * @default `false`
    */
   hasSelectableRows?: boolean;
 
@@ -57,11 +59,15 @@ export type LeafyGreenTableOptions<
 
   /**
    * Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`.
+   *
+   * @default `false`
    */
   withPagination?: boolean;
 
   /**
    * This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.
+   *
+   * @default `true`
    */
   allowSelectAll?: boolean;
 };

@@ -25,18 +25,14 @@ export interface InternalRowWithoutRTProps extends InternalRowBaseProps {}
 export interface InternalRowWithRTBaseProps<T extends LGRowData>
   extends InternalRowBaseProps {
   /**
-   * Row object passed from the `useLeafyGreenTable` hook.
+   * Row object passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook.
    */
   row: LeafyGreenTableRow<T>;
+
   /**
    * Virtual row object passed from the `useLeafyGreenVirtualTable` hook
    */
   virtualRow?: VirtualItem;
-
-  /**
-   * An internal prop used to pass a ref to the row
-   */
-  rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
 }
 
 export interface InternalRowWithRTProps<T extends LGRowData>
@@ -71,6 +67,11 @@ export interface InternalRowWithRTProps<T extends LGRowData>
    * Whether the row is selected
    */
   isSelected: boolean;
+
+  /**
+   * An internal prop used to pass a ref to the row
+   */
+  rowRef?: React.MutableRefObject<HTMLTableRowElement | null>;
 }
 
 export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
