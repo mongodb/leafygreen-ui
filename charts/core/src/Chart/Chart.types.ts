@@ -13,7 +13,7 @@ import type { ComposeOption } from 'echarts/core';
 
 import { DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { ZoomSelectionEvent } from './hooks/useChart.types';
+import { ZoomSelect, ZoomSelectionEvent } from './hooks/useChart.types';
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
@@ -45,10 +45,19 @@ export type ChartProps = HTMLElementProps<'div'> &
     onChartReady?: () => void;
 
     /**
-     * Callback to be called when a user clicks and drags on a chart to zoom.
-     * Click and drag action will only be enabled if this handler is present.
+     * Zoom selection configuration.
+     */
+    zoomSelect?: ZoomSelect;
+
+    /**
+     * Zoom selection enablement configuration.
      */
     onZoomSelect?: (e: ZoomSelectionEvent) => void;
+
+    /**
+     * Charts with same groupID will have their tooltips synchronized.
+     */
+    groupId?: string;
   }>;
 
 export const ChartActionType = {
