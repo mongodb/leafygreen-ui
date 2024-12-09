@@ -1,5 +1,13 @@
 # @leafygreen-ui/toast
 
+## 6.1.28
+
+### Patch Changes
+
+- ba855c702: Relints files according to ESLint migration
+- Updated dependencies [ba855c702]
+  - @leafygreen-ui/lib@13.8.2
+
 ## 6.1.27
 
 ### Patch Changes

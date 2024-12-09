@@ -90,7 +90,7 @@ export const ContainingChart: StoryObj<ChartCardProps> = {
           <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
           <XAxis type="time" />
           <YAxis type="value" />
-          {makeLineData(10).map(({ name, data }) => (
+          {makeLineData(20).map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
@@ -109,7 +109,7 @@ export const ContainingMultiCharts: StoryObj<ChartCardProps> = {
           <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
           <XAxis type="time" />
           <YAxis type="value" />
-          {makeLineData(10).map(({ name, data }) => (
+          {makeLineData(20).map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
@@ -119,7 +119,7 @@ export const ContainingMultiCharts: StoryObj<ChartCardProps> = {
           <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
           <XAxis type="time" />
           <YAxis type="value" />
-          {makeLineData(10).map(({ name, data }) => (
+          {makeLineData(20).map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>

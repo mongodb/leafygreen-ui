@@ -1,5 +1,11 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.11
+
+### Patch Changes
+
+- ba855c702: Relints files according to ESLint migration
+
 ## 0.2.10
 
 ### Patch Changes
