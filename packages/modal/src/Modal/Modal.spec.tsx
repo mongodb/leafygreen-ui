@@ -3,7 +3,7 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Option, OptionGroup,Select } from '@leafygreen-ui/select';
+import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
 import Modal from './Modal';
 import { ModalProps } from './Modal.types';
