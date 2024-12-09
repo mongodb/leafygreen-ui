@@ -1,3 +1,5 @@
+# Upgrading v12 to v13
+
 # Upgrading v11 to v12
 
 Table v12 cleans up the API for features introduced in v11, allowing developers to use the Table component with no exports directly from `@tanstack/react-table`.
