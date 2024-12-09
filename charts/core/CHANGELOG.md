@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.8.1
+
+### Patch Changes
+
+- a151a3534: Prevents large tooltips from being cutoff my `ChartCard`
+
 ## 0.8.0
 
 ### Minor Changes
