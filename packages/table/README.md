@@ -47,7 +47,7 @@ import {
   Cell,
 } from '@leafygreen-ui/table';
 
-<Table {...args}>
+<Table>
   <TableHead>
     <HeaderRow>
       {columns.map((columnName: string) => (
@@ -77,6 +77,7 @@ import {
   TableBody,
   Row,
   Cell,
+  flexRender,
 } from '@leafygreen-ui/table';
 
 const tableContainerRef = React.useRef<HTMLDivElement>(null);
@@ -168,6 +169,7 @@ import {
   TableBody,
   Row,
   Cell,
+  flexRender
 } from '@leafygreen-ui/table';
 
 const tableContainerRef = React.useRef<HTMLDivElement>(null);
@@ -263,68 +265,6 @@ const virtualItems = table.virtual.getVirtualItems();
 </Table>
 ```
 
-# Exports
-
-## `useLeafygreenTable`
-
-`useLeafygreenTable` wraps [`react-table`](https://tanstack.com/table/v8) and [`react-virtual`](https://tanstack.com/virtual/v3/) to support advanced table functionalities and virtual scrolling.
-
-`useLeafygreenTable` takes an `options` object and returns a table.
-
-https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/Table.story.tsx#L660-L669
-
-### Options
-
-`useLeafygreenTable` exposes all [options](https://tanstack.com/table/v8/docs/api/core/table#options) used in `react-table`, with the following exceptions:
-
----
-
-#### `hasSelectableRows?: boolean`
-
-Setting this prop will inject checkbox cells into all rows. Refer to our [Storybook deployment](https://mongodb.github.io/leafygreen-ui) to find examples.
-
----
-
-#### `allowSelectAll?: boolean`
-
-This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.
-
----
-
-#### `withPagination?: boolean`
-
-Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. Find an example of how this prop should be used on our [Storybook deployment](https://mongodb.github.io/leafygreen-ui).
-
----
-
-#### `data` / `renderExpandedContent`
-
-`useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `renderExpandedContent` prop to be passed to the table's data type.
-
-https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/useLeafyGreenTable/useLeafyGreenTable.types.ts#L19-L22
-
-This option determines how the row's expanded content will be rendered. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
-
----
-
-#### `data` / `subRows`
-
-`useLeafygreenTable` extends `react-table`'s `data` [option](https://tanstack.com/table/v8/docs/api/core/table#data) to allow a `subRows` prop to be passed to the table's data type.
-
-https://github.com/mongodb/leafygreen-ui/blob/63877b7ef6f40e165f691a39ca00fc5de39b690d/packages/table/src/useLeafyGreenTable/useLeafyGreenTable.types.ts#L19-L22
-
-This option defines the data displayed in nested rows and expects an array of objects with the same shape as other rows. Rows can be nested multiple times. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
-
----
-
-#### `columns` / `align`
-
-`useLeafygreenTable` extends `react-table`'s `columns` [option](https://tanstack.com/table/v8/docs/api/core/table#columns) to allow a `align` prop to be passed to the column's data.
-
-This option determines the alignment of the column. Refer to [Storybook deployment](https://mongodb.github.io/leafygreen-ui) for an example.
-
----
-
 ## `Table`
 
 #### Props
@@ -360,9 +300,9 @@ All HTML `tr` element props
 
 #### Props
 
-| Name     | Description                                                  | Type           | Default |
-| -------- | ------------------------------------------------------------ | -------------- | ------- |
-| `header` | `Header` object returned from the `useLeafygreenTable` hook. | Header<T, any> | -       |
+| Name     | Description                                                  | Type             | Default |
+| -------- | ------------------------------------------------------------ | ---------------- | ------- |
+| `header` | `Header` object returned from the `useLeafygreenTable` hook. | `Header<T, any>` | -       |
 
 \+ other HTML `th` element props
 
