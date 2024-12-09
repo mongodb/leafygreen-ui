@@ -171,6 +171,60 @@ export const DefaultSelect = (args: ModalProps) => {
   );
 };
 
+export const PortalSelect = (args: ModalProps) => {
+  const [value, setValue] = useState('cat');
+  const portalRef = React.useRef<HTMLDivElement>(null);
+  const [container, setContainer] =
+    React.useState<React.MutableRefObject<HTMLDivElement> | null>(null);
+
+  React.useEffect(() => {
+    if (portalRef.current) {
+      /* @ts-ignore mutable versus immutable ref object */
+      setContainer(portalRef);
+    }
+  }, [portalRef]);
+
+  return (
+    <div
+      className={css`
+        height: 100vh;
+        min-height: ${breakpoints.Desktop};
+      `}
+    >
+      <Modal {...args} portalRef={portalRef}>
+        <div className={margin}>
+          <Subtitle>Modal Content goes here.</Subtitle>
+          {faker.lorem
+            .paragraphs(2, '\n')
+            .split('\n')
+            .map(p => (
+              <Body>{p}</Body>
+            ))}
+
+          <div>
+            <Select
+              label="label"
+              size="small"
+              placeholder="animals"
+              name="pets"
+              value={value}
+              onChange={setValue}
+              renderMode="portal"
+              portalContainer={container?.current}
+            >
+              <OptionGroup label="Common">
+                <Option value="dog">Dog</Option>
+                <Option value="cat">Cat</Option>
+                <Option value="axolotl">Axolotl</Option>
+              </OptionGroup>
+            </Select>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
 export function CopyableModal(args: ModalProps) {
   const jsSnippet = `
 

@@ -63,4 +63,9 @@ export interface ModalProps extends HTMLElementProps<'dialog'>, DarkModeProps {
    * @default 'default'
    */
   closeIconColor?: CloseIconColor;
+
+  /**
+   * Allows consuming applications to portal components inside the dialog element
+   */
+  portalRef?: React.MutableRefObject<HTMLDivElement | null>;
 }

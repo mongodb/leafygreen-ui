@@ -11,7 +11,7 @@ import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import CloseButton from '../CloseButton';
 
 import { modalStyles } from './Modal.styles';
-import { CloseIconColor, ModalProps,ModalSize } from './Modal.types';
+import { CloseIconColor, ModalProps, ModalSize } from './Modal.types';
 
 /**
  *
@@ -38,12 +38,17 @@ const Modal = React.forwardRef(
       setOpen,
       shouldClose = () => true,
       size: sizeProp = ModalSize.Default,
+      portalRef,
       ...rest
     }: ModalProps,
     forwardRef: React.Ref<HTMLDialogElement>,
   ) => {
     const { theme } = useDarkMode(darkModeProp);
     const localRef = useRef<HTMLDialogElement>(null);
+    const portalContainer = useRef<HTMLDivElement>(
+      document.createElement('div'),
+    );
+
     const mergedRef = useMergeRefs<HTMLDialogElement>([localRef, forwardRef]);
 
     const consumerSetClose = () => {
@@ -71,6 +76,18 @@ const Modal = React.forwardRef(
         }
       }
     }, [open, localRef, handleClose]);
+
+    useEffect(() => {
+      if (open && localRef.current != null) {
+        localRef.current.appendChild(portalContainer.current);
+        portalContainer.current.id = 'test';
+
+        // Expose the portal container via the ref
+        if (portalRef) {
+          portalRef.current = portalContainer.current;
+        }
+      }
+    }, [open, localRef, portalRef]);
 
     const allowedSize = Object.values(ModalSize).includes(sizeProp);
     const size = allowedSize ? sizeProp : ModalSize.Default;
