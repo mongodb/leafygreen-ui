@@ -24,6 +24,9 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
 ## What changed?
 
+### Table V10 and V11 Adapter
+- These have been removed in this version.
+
 ### `Row` component
 
 - Row transition were removed to increase performance.
@@ -114,10 +117,6 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
   })}
   ```
 
-### `Cell` component
-
-- `cell` is a new required prop on `Cell` if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`. This is needed for styling purposes.
-
 ### `ExpandedContent` component
 
 - `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
@@ -183,6 +182,19 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
     );
   })}
   ```
+
+### `Cell` component
+
+- `cell` is a new required prop on `Cell` if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`. This is needed for styling purposes.
+- Removes `overflow` prop. Instead use `shouldTruncate` on `<Table>`
+
+
+### `HeaderCell` component
+- Removes `sortState` prop. It was never used in the component.
+- Removes `cellIndex` prop.
+
+### `Table` component
+- Removes `disableAnimations` prop. 
 
 ### `useLeafyGreenTable` hook
 
