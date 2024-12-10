@@ -1,5 +1,44 @@
 # @lg-charts/core
 
+## 0.8.1
+
+### Patch Changes
+
+- a151a3534: Prevents large tooltips from being cutoff my `ChartCard`
+
+## 0.8.0
+
+### Minor Changes
+
+- 9f02d734f: Adds ability to enable zoom selection per axis individually.
+
+## 0.7.0
+
+### Minor Changes
+
+- 878cab966: Adds synchronizing of Tooltips across charts
+
+### Patch Changes
+
+- Updated dependencies [ba855c702]
+  - @leafygreen-ui/lib@13.8.2
+
+## 0.6.2
+
+### Minor Changes
+
+- 2393c0c13: Adds zooming functionality to `Chart`
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+
+  - @leafygreen-ui/combobox@10.0.0
+  - @leafygreen-ui/hooks@8.3.1
+
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 0.6.1
 
 ### Patch Changes

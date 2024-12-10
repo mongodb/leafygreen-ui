@@ -1,12 +1,11 @@
-import * as typeIs from './typeIs';
 import createUniqueClassName from './createUniqueClassName';
-import getNodeTextContent from './getNodeTextContent';
 import DarkModeProps, { Theme } from './DarkModeProps';
-import { type LgIdProps } from './LgIdProps';
+import getNodeTextContent from './getNodeTextContent';
 import getTheme from './getTheme';
-export * from './helpers';
-export { validateChildren, isComponentType } from './validateChildren';
+import { type LgIdProps } from './LgIdProps';
+import * as typeIs from './typeIs';
 export { createSyntheticEvent } from './createSyntheticEvent';
+export * from './helpers';
 export type {
   Concat,
   DeepKeys,
@@ -22,8 +21,9 @@ export type {
   RecursiveRecord,
   ValuesOf,
 } from './types';
+export { isComponentType, validateChildren } from './validateChildren';
 
-export { typeIs, createUniqueClassName, getNodeTextContent, getTheme, Theme };
+export { createUniqueClassName, getNodeTextContent, getTheme, Theme, typeIs };
 export type { DarkModeProps, LgIdProps };
 
 /** Helper type to extract an HTML element's valid props */

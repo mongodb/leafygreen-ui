@@ -1,5 +1,31 @@
 # @lg-tools/cli
 
+## 0.7.2
+
+### Patch Changes
+
+- Updated dependencies [cf1693532]
+  - @lg-tools/slackbot@0.2.8
+
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [ba855c702]
+  - @lg-tools/lint@1.0.0
+
+## 0.7.0
+
+### Minor Changes
+
+- 04bb887c0: Adds `--packages` flag to `lg codemod` command. Passing in this flag will specify which package names should be filtered for in a given codemod.
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+  - @lg-tools/codemods@0.1.0
+  - @lg-tools/validate@0.3.0
+
 ## 0.6.3
 
 ### Patch Changes

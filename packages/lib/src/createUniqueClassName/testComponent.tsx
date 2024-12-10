@@ -1,4 +1,5 @@
 import React from 'react';
+
 import createUniqueClassName from '.';
 
 const className1 = createUniqueClassName();

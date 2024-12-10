@@ -1,7 +1,8 @@
 import React from 'react';
-import createUniqueClassName from '.';
-import { TestComponent } from './testComponent';
 import { getByTestId, render } from '@testing-library/react';
+
+import { TestComponent } from './testComponent';
+import createUniqueClassName from '.';
 
 const renderTestComponent = () => {
   return render(React.createElement(TestComponent));
@@ -14,6 +15,7 @@ describe('packages/lib/createUniqueClassName', () => {
       const expectedUuidLength = 8;
       const result = createUniqueClassName();
       expect(result.startsWith(lgPrefix)).toBe(true);
+      // eslint-disable-next-line jest/valid-expect
       expect(result.length == lgPrefix.length + expectedUuidLength);
     });
 

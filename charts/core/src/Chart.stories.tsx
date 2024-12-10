@@ -1,5 +1,6 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
+import { action } from '@storybook/addon-actions';
 import type { StoryObj } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
@@ -39,6 +40,9 @@ export default {
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
     headerShowDivider: true,
+    zoomSelectXAxis: true,
+    zoomSelectYAxis: true,
+    zoomSelectCallback: action('onZoomSelect'),
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -201,9 +205,40 @@ export default {
         category: 'Header',
       },
     },
+    zoomSelect: {
+      table: {
+        disable: true,
+      },
+    },
+    zoomSelectXAxis: {
+      control: 'boolean',
+      description: 'Enable zoom selection on x-axis',
+      name: 'XAxis',
+      table: {
+        category: 'ZoomSelect',
+      },
+    },
+    zoomSelectYAxis: {
+      control: 'boolean',
+      description: 'Enable zoom selection on y-axis',
+      name: 'YAxis',
+      table: {
+        category: 'ZoomSelect',
+      },
+    },
     onZoomSelect: {
-      description: 'Zoom handler',
-      name: 'onZoomSelect',
+      table: {
+        disable: true,
+      },
+    },
+    zoomSelectCallback: {
+      table: {
+        disable: true,
+      },
+    },
+    groupId: {
+      description: 'Group ID for synced tooltips',
+      name: 'groupId',
       table: {
         category: 'Chart',
         disable: true,
@@ -232,6 +267,9 @@ interface StorybookProps {
   renderHeader: boolean;
   headerTitle: HeaderProps['title'];
   headerShowDivider: HeaderProps['showDivider'];
+  zoomSelectXAxis: boolean;
+  zoomSelectYAxis: boolean;
+  zoomSelectCallback;
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -255,9 +293,18 @@ export const Basic: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
+    zoomSelectXAxis,
+    zoomSelectYAxis,
+    zoomSelectCallback,
   }) => {
     return (
-      <Chart>
+      <Chart
+        zoomSelect={{
+          xAxis: zoomSelectXAxis,
+          yAxis: zoomSelectYAxis,
+        }}
+        onZoomSelect={zoomSelectCallback}
+      >
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
         )}
@@ -314,9 +361,18 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
+    zoomSelectXAxis,
+    zoomSelectYAxis,
+    zoomSelectCallback,
   }) => {
     return (
-      <Chart>
+      <Chart
+        zoomSelect={{
+          xAxis: zoomSelectXAxis,
+          yAxis: zoomSelectYAxis,
+        }}
+        onZoomSelect={zoomSelectCallback}
+      >
         {renderHeader && (
           <Header
             title={headerTitle}
@@ -361,6 +417,107 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
           <Line name={name} data={data} key={name} />
         ))}
       </Chart>
+    );
+  },
+};
+
+export const WithSameGroupIds: StoryObj<StorybookProps> = {
+  render: ({
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    renderGrid,
+    renderXAxis,
+    renderYAxis,
+    xAxisType,
+    xAxisFormatter,
+    yAxisType,
+    yAxisFormatter,
+    xAxisLabel,
+    yAxisLabel,
+    renderTooltip,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
+    renderHeader,
+    headerTitle,
+    headerShowDivider,
+  }) => {
+    return (
+      <div
+        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+      >
+        <Chart groupId="group1">
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+        <Chart groupId="group1">
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+        </Chart>
+      </div>
     );
   },
 };
