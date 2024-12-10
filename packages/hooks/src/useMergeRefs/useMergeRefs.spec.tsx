@@ -1,9 +1,42 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import useMergeRefs from '.';
+import { useMergeRefs } from '.';
+test('should merge refs', () => {
+  const callbackRefMockFunc = jest.fn();
+  const callbackRef: React.SetStateAction<HTMLElement | null> = element =>
+    callbackRefMockFunc(element);
+  const mutableRef: React.MutableRefObject<HTMLElement | null> = {
+    current: null,
+  };
 
-test('useMergeRefs', () => {
+  const {
+    result: { current: mergedCallbackRef },
+  } = renderHook(() => useMergeRefs([callbackRef, mutableRef]));
+
+  expect(mergedCallbackRef).toBeInstanceOf(Function);
+  expect(callbackRefMockFunc).not.toHaveBeenCalled();
+  expect(mutableRef.current).toBe(null);
+
+  const element = document.createElement('div');
+  mergedCallbackRef?.(element);
+
+  expect(callbackRefMockFunc).toHaveBeenCalledTimes(1);
+  expect(callbackRefMockFunc).toHaveBeenCalledWith(element);
+  expect(mutableRef.current).toBe(element);
+});
+
+test('should return null when all refs are null or undefined', () => {
+  const ref1 = null;
+  const ref2 = undefined;
+
+  const { result } = renderHook(() => useMergeRefs([ref1, ref2]));
+
+  expect(result.current).toBe(null);
+});
+
+test('returns the correct value for multiple refs', () => {
   const TestForwardRefComponent = React.forwardRef(
     function TestForwardRefComponent(_, ref) {
       React.useImperativeHandle(ref, () => 'refValue');
@@ -29,7 +62,7 @@ test('useMergeRefs', () => {
   expect(refAsObj2.current).toBe('refValue');
 });
 
-test('useMergeRefs with undefined and null refs', () => {
+test('returns the correct value with undefined and null refs', () => {
   const TestForwardRefComponent = React.forwardRef(
     function TestForwardRefComponent(_, ref) {
       React.useImperativeHandle(ref, () => 'refValue');

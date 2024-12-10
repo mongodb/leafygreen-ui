@@ -1,21 +1,25 @@
-/**
- * Copied from https://github.com/gregberge/react-merge-refs
- * @param refs
- * @returns
- */
+import * as React from 'react';
 
-export default function useMergeRefs<T = any>(
-  refs: Array<
-    React.MutableRefObject<T> | React.LegacyRef<T> | undefined | null
-  >,
-): React.RefCallback<T> {
-  return value => {
-    refs.forEach(ref => {
-      if (typeof ref === 'function') {
-        ref(value);
-      } else if (ref != null) {
-        (ref as React.MutableRefObject<T | null>).current = value;
-      }
-    });
-  };
+/**
+ * Merges an array of refs into a single memoized callback ref or `null`.
+ */
+export function useMergeRefs<Instance>(
+  refs: Array<React.Ref<Instance> | undefined>,
+): React.RefCallback<Instance> | null {
+  return React.useMemo(() => {
+    if (refs.every(ref => ref == null)) {
+      return null;
+    }
+
+    return value => {
+      refs.forEach(ref => {
+        if (typeof ref === 'function') {
+          ref(value);
+        } else if (ref != null) {
+          (ref as React.MutableRefObject<Instance | null>).current = value;
+        }
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-depss
+  }, refs);
 }
