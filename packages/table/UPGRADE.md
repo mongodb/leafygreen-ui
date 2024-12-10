@@ -213,6 +213,8 @@ const table = useLeafyGreenTable<Person>({
 
 To implement a virtual table, use the `useLeafyGreenVirtualTable` hook. This hook extends the functionality of `useLeafyGreenTable`.
 
+We have upgraded to the latest version of TanStack's `react-virtual` package. As a result, some properties and instances returned from `useLeafyGreenVirtualTable` may differ slightly from those returned by `useLeafyGreenTable` in versions 11 and 12. For a complete list of properties and methods, refer to TanStack's [documentation](https://tanstack.com/virtual/v3/docs/api/virtualizer#virtualizer-instance).
+
 **Before**:
 
 You map through virtrual rows with `table.virtualRows` and get the corresponding row with `rows[virtualRow.index]`
