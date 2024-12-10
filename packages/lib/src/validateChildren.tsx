@@ -1,6 +1,7 @@
+import React, { ReactElement } from 'react';
 import isObject from 'lodash/isObject';
 import isUndefined from 'lodash/isUndefined';
-import React, { ReactElement } from 'react';
+
 import { consoleOnce } from '.';
 
 /** Helper type to check if element is a specific React Component  */

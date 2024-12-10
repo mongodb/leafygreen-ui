@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/copyable",
-  "version": "8.1.0",
+  "version": "9.0.0",
   "description": "leafyGreen UI Kit Copyable",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,18 +24,18 @@
   "dependencies": {
     "@leafygreen-ui/button": "^21.2.0",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.2.0",
+    "@leafygreen-ui/hooks": "^8.3.0",
     "@leafygreen-ui/icon": "^12.5.4",
-    "@leafygreen-ui/lib": "^13.6.0",
+    "@leafygreen-ui/lib": "^13.8.1",
     "@leafygreen-ui/palette": "^4.0.9",
     "@leafygreen-ui/tokens": "^2.9.0",
-    "@leafygreen-ui/tooltip": "^11.0.4",
+    "@leafygreen-ui/tooltip": "^12.0.0",
     "@leafygreen-ui/typography": "^19.2.0",
     "clipboard": "^2.0.6",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/copyable",
   "repository": {

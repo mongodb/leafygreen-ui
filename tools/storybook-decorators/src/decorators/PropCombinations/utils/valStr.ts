@@ -13,6 +13,7 @@ export function valStr(val: any): string {
   if (typeof val === 'object') {
     if (val.type) {
       if (typeof val.type === 'string') return `<${val.type} />`;
+      // eslint-disable-next-line no-constant-binary-expression
       return `<${val.type.displayName} />` ?? 'JSX Element';
     }
 

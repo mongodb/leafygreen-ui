@@ -5,8 +5,8 @@ import path from 'path';
 
 import { LintFn } from './lint.types';
 
-const rootDir = process.cwd();
-const eslintConfigPath = path.resolve(__dirname, '../config/eslint.config.js');
+// const rootDir = process.cwd();
+const eslintConfigPath = path.resolve(__dirname, '../config/eslint.config.mjs');
 export const esLintExtensions = ['ts', 'tsx'];
 
 /** Spawns an eslint job */
@@ -18,7 +18,6 @@ export const eslint: LintFn = ({ fix, verbose }) => {
       [
         '--config',
         eslintConfigPath,
-        `${rootDir}/**/*.{${esLintExtensions.join(',')}}`,
         fix ? '--fix' : '--no-fix',
         verbose ? '' : '--quiet',
       ],
