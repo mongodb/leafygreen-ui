@@ -27,7 +27,6 @@ export const markerStyles = css`
   position: relative;
   font-size: 12px;
   font-weight: 500;
-  padding: ${spacing[50]}px;
 `;
 
 export const titleStyles = css`
