@@ -6,7 +6,7 @@ import { SeriesOption } from '../Chart.types';
 
 import { useChart } from './useChart';
 
-jest.mock('echarts', () => ({
+jest.mock('echarts/core', () => ({
   init: jest.fn(() => ({
     setOption: jest.fn(),
     dispose: jest.fn(),
@@ -14,6 +14,22 @@ jest.mock('echarts', () => ({
     on: jest.fn(),
   })),
   use: jest.fn(),
+}));
+
+jest.mock('echarts/charts', () => ({
+  LineChart: jest.fn(),
+}));
+
+jest.mock('echarts/components', () => ({
+  TitleComponent: jest.fn(),
+  TooltipComponent: jest.fn(),
+  GridComponent: jest.fn(),
+  LegendComponent: jest.fn(),
+  ToolboxComponent: jest.fn(),
+}));
+
+jest.mock('echarts/renderers', () => ({
+  CanvasRenderer: jest.fn(),
 }));
 
 describe('@lg-echarts/core/hooks/useChart', () => {
