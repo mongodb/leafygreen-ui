@@ -1,8 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { color, spacing } from '@leafygreen-ui/tokens';
 
-export const contentClassName = createUniqueClassName('content');
 export const stepIconClassName = createUniqueClassName('step');
 
 const MARKER_SIZE = 20;
@@ -11,17 +10,10 @@ export const baseStyles = css`
   display: flex;
   gap: ${spacing[200]}px;
   margin-bottom: ${spacing[100]}px;
-
-  &:last-of-type {
-    .${contentClassName} {
-      margin: 0;
-    }
-  }
 `;
 
 export const contentStyles = css`
   margin-block-end: ${spacing[400]}px;
-  transition: margin-block-end ${transitionDuration.slowest}ms ease-in-out;
   width: 100%;
 `;
 
@@ -31,7 +23,6 @@ export const markerStyles = css`
   align-items: center;
   justify-content: center;
   border: 1px solid;
-  transition: ${transitionDuration.default}ms ease;
   width: ${MARKER_SIZE}px;
   height: ${MARKER_SIZE}px;
   position: relative;

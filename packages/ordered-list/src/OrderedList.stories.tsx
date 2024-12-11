@@ -4,7 +4,7 @@ import { StoryFn } from '@storybook/react';
 
 import { Link } from '@leafygreen-ui/typography';
 
-import { OrderedListItem, OrderedList } from '.';
+import { OrderedList, OrderedListItem } from '.';
 
 export const LiveExample = (args: { darkMode?: boolean }) => {
   return (

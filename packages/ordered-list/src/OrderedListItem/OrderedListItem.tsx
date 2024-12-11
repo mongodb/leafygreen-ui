@@ -10,7 +10,6 @@ import { OrderedListContext } from '../OrderedListContext/OrderedListContext';
 
 import {
   baseStyles,
-  contentClassName,
   contentStyles,
   getThemedStateStyles,
   markerStyles,
@@ -35,7 +34,7 @@ const OrderedListItem = React.forwardRef(
           </div>
         </div>
 
-        <div className={cx(contentClassName, contentStyles)}>
+        <div className={contentStyles}>
           <Body baseFontSize={16} className={titleStyles}>
             {title}
           </Body>
