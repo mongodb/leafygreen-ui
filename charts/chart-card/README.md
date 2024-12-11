@@ -24,7 +24,7 @@ npm install @lg-charts/chart-card
 import { ChartCard } from '@lg-charts/chart-card';
 import IconButton from '@leafygreen-ui/icon-button';
 
-<ChartCard 
+<ChartCard
   title="My Group of Charts"
   defaultOpen={true}
   headerContent={

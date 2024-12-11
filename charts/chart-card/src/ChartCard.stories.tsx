@@ -1,10 +1,4 @@
 import React from 'react';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import type { StoryObj } from '@storybook/react';
-
-import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
 import {
   Chart,
   Grid,
@@ -16,9 +10,16 @@ import {
   XAxis,
   YAxis,
 } from '@lg-charts/chart';
+import { storybookArgTypes } from '@lg-tools/storybook-utils';
+import type { StoryObj } from '@storybook/react';
+
+import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
+import Icon from '@leafygreen-ui/icon';
+import IconButton from '@leafygreen-ui/icon-button';
+
+import { ChartCard } from '..';
 
 import { makeLineData } from './testUtils';
-import { ChartCard } from '..';
 
 export default {
   title: 'Charts/ChartCard',
