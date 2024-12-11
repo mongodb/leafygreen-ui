@@ -45,15 +45,6 @@ describe('packages/typography/ordered-list', () => {
       expect(descriptions).toHaveLength(3);
     });
 
-    test('renders list items with step numbers', () => {
-      renderOL();
-
-      const steps = screen.getAllByRole('listitem');
-      steps.forEach((step, index) => {
-        expect(step).toHaveTextContent(`${index + 1}`);
-      });
-    });
-
     test('renders list items with step numbers in order', () => {
       renderOL();
 
