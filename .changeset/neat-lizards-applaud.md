@@ -2,4 +2,4 @@
 '@leafygreen-ui/ordered-list': major
 ---
 
-Releases OrderedList and ListItem components
+Releases OrderedList and OrderedListItem components

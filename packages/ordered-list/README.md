@@ -24,7 +24,7 @@ npm install @leafygreen-ui/ordered-list
 | ---------- | --------- | ------------------------------------------------ | ------- |
 | `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
 
-# ListItem
+# OrderedListItem
 
 | Prop        | Type              | Description                                                         | Default |
 | ----------- | ----------------- | ------------------------------------------------------------------- | ------- |
