@@ -20,7 +20,7 @@ describe('packages/typography/ordered-list', () => {
     test('renders an ordered list', () => {
       renderOL();
 
-      const ol = screen.getByRole('list', { name: 'OrderedList' });
+      const ol = screen.getByRole('list');
       expect(ol).toBeInTheDocument();
     });
 

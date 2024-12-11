@@ -10,6 +10,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { OrderedListContext } from '../OrderedListContext';
+
 import { baseStyles } from './OrderedList.styles';
 import { OrderedListProps } from './OrderedList.types';
 
