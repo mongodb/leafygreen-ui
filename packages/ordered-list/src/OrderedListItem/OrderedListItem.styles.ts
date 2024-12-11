@@ -13,7 +13,6 @@ export const baseStyles = css`
 `;
 
 export const contentStyles = css`
-  margin-block-end: ${spacing[400]}px;
   width: 100%;
 `;
 
@@ -28,6 +27,7 @@ export const markerStyles = css`
   position: relative;
   font-size: 12px;
   font-weight: 500;
+  padding: ${spacing[50]}px;
 `;
 
 export const titleStyles = css`
