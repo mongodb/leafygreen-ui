@@ -1,7 +1,7 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
-import { Link, ListItem, OrderedList } from '../../index';
+import { Link, ListItem, OrderedList } from '../index';
 
 import { OrderedListProps } from './OrderedList.types';
 

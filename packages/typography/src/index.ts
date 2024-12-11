@@ -29,7 +29,6 @@ export {
   type LinkProps,
   linkStyles,
 } from './Link';
-export { ListItem, OrderedList } from './OrderedList';
 export { default as Overline } from './Overline/Overline';
 export type { OverlineProps } from './Overline/Overline.types';
 export { bodyTypeScaleStyles } from './styles';

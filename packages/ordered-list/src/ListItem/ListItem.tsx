@@ -3,9 +3,9 @@ import React from 'react';
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Body, Description } from '@leafygreen-ui/typography';
 
-import { Body, Description } from '../..';
-import { OrderedListContext } from '../OrderedListContext/';
+import { OrderedListContext } from '../OrderedListContext/OrderedListContext';
 
 import {
   baseStyles,

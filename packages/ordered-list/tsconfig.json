@@ -15,27 +15,24 @@
   ],
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
-    
+    {"path": "../descendants"},
     {
-      "path": "../emotion"
-    },
-    {
-      "path": "../icon"
-    },
-    {
-      "path": "../lib"
+      "path": "../typography"
     },
     {
       "path": "../palette"
-    },
-    {
-      "path": "../polymorphic"
     },
     {
       "path": "../tokens"
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../lib"
     }
   ]
 }
