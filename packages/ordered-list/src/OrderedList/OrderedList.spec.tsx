@@ -1,16 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { ListItem } from '../OrderedListItem';
+import { OrderedListItem } from '../OrderedListItem';
 
 import { OrderedList } from './OrderedList';
 
 const renderOL = () => {
   return render(
     <OrderedList>
-      <ListItem title="Title" description="Description" />
-      <ListItem title="Title" description="Description" />
-      <ListItem title="Title" description="Description" />
+      <OrderedListItem title="Title" description="Description" />
+      <OrderedListItem title="Title" description="Description" />
+      <OrderedListItem title="Title" description="Description" />
     </OrderedList>,
   );
 };
