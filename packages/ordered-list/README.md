@@ -26,7 +26,7 @@ npm install @leafygreen-ui/ordered-list
 
 # ListItem
 
-| Prop        | Type              | Description                                                    | Default |
-| ----------- | ----------------- | -------------------------------------------------------------- | ------- |
-| title       | `string`          | The title of the step.                                         |         |
-| description | `React.ReactNode` | The description of the step. This will render below the title. |         |
+| Prop        | Type              | Description                                                         | Default |
+| ----------- | ----------------- | ------------------------------------------------------------------- | ------- |
+| title       | `string`          | The title of the list item.                                         |         |
+| description | `React.ReactNode` | The description of the list item. This will render below the title. |         |

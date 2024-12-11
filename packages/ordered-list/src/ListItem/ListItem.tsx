@@ -1,4 +1,5 @@
 import React from 'react';
+import propTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
@@ -46,5 +47,10 @@ const ListItem = React.forwardRef(
 );
 
 ListItem.displayName = 'ListItem';
+
+ListItem.propTypes = {
+  title: propTypes.node,
+  description: propTypes.node,
+};
 
 export { ListItem };

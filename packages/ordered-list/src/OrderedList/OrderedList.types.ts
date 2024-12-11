@@ -1,3 +1,3 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type OrderedListProps = HTMLElementProps<'ol'> & { darkMode?: boolean };
+export type OrderedListProps = HTMLElementProps<'ol'> & DarkModeProps;
