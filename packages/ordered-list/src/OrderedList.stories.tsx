@@ -1,18 +1,19 @@
 import React from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn } from '@storybook/react';
 
 import { Link } from '@leafygreen-ui/typography';
 
-import { ListItem, OrderedList } from '.';
+import { OrderedListItem, OrderedList } from '.';
 
-export const Basic = (args: { darkMode?: boolean }) => {
+export const LiveExample = (args: { darkMode?: boolean }) => {
   return (
     <OrderedList {...args}>
-      <ListItem
+      <OrderedListItem
         title="Title"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
       />
-      <ListItem
+      <OrderedListItem
         title="Title"
         description={
           <>
@@ -22,7 +23,7 @@ export const Basic = (args: { darkMode?: boolean }) => {
           </>
         }
       />
-      <ListItem
+      <OrderedListItem
         title="Title"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
       />
@@ -34,7 +35,7 @@ const meta: StoryMetaType<typeof OrderedList> = {
   title: 'Components/OrderedList',
   component: OrderedList,
   parameters: {
-    default: 'Basic',
+    default: 'LiveExample',
     generate: {
       combineArgs: {
         darkMode: [false, true],

@@ -16,12 +16,12 @@ import {
   markerStyles,
   stepIconClassName,
   titleStyles,
-} from './ListItem.styles';
-import { ListItemProps } from './ListItem.types';
+} from './OrderedListItem.styles';
+import { OrderedListItemProps } from './OrderedListItem.types';
 
-const ListItem = React.forwardRef(
+const OrderedListItem = React.forwardRef(
   (
-    { children, className, title, description, ...rest }: ListItemProps,
+    { children, className, title, description, ...rest }: OrderedListItemProps,
     forwardRef: React.ForwardedRef<HTMLLIElement>,
   ) => {
     const { index, ref } = useDescendant(OrderedListContext, forwardRef);
@@ -46,11 +46,11 @@ const ListItem = React.forwardRef(
   },
 );
 
-ListItem.displayName = 'ListItem';
+OrderedListItem.displayName = 'OrderedListItem';
 
-ListItem.propTypes = {
+OrderedListItem.propTypes = {
   title: propTypes.node,
   description: propTypes.node,
 };
 
-export { ListItem };
+export { OrderedListItem };

@@ -1,6 +1,6 @@
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
-export type ListItemProps = Omit<HTMLElementProps<'li'>, 'title'> &
+export type OrderedListItemProps = Omit<HTMLElementProps<'li'>, 'title'> &
   DarkModeProps & {
     /**
      *

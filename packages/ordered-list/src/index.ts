@@ -1,4 +1,4 @@
-export { ListItem } from './ListItem';
+export { OrderedListItem } from './OrderedListItem';
 export { OrderedList } from './OrderedList';
 export {
   OrderedListContext,

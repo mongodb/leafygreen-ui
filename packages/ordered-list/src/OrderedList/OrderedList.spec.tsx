@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { ListItem } from '../ListItem';
+import { ListItem } from '../OrderedListItem';
 
 import { OrderedList } from './OrderedList';
 
