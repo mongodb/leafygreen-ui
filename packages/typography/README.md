@@ -98,8 +98,6 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `Label`         | `label` |
 | `Description`   | `p`     |
 | `Label`         | `p`     |
-| `OrderedList`   | `ol`    |
-| `ListItem`      | `li`    |
 
 # H1
 
