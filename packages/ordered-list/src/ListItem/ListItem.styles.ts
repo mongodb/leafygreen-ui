@@ -1,7 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 export const contentClassName = createUniqueClassName('content');
 export const stepIconClassName = createUniqueClassName('step');
@@ -17,19 +16,6 @@ export const baseStyles = css`
     .${contentClassName} {
       margin: 0;
     }
-  }
-`;
-
-export const stepWrapperStyles = css`
-  position: relative;
-
-  &::after {
-    background: ${palette.gray.base};
-    position: absolute;
-    width: 1px;
-    height: calc(100% - ${STEP_SIZE}px);
-    left: 50%;
-    transition: background ${transitionDuration.default}ms ease;
   }
 `;
 
@@ -58,12 +44,8 @@ export const titleStyles = css`
   line-height: unset;
 `;
 
-export const getThemedStateStyles = (theme: Theme) => {
-  const isLight = theme === Theme.Light;
-
-  return css`
-    color: ${isLight ? palette.gray.dark1 : palette.gray.light1};
-    background-color: rgba(255, 255, 255, 0);
-    border-color: ${isLight ? palette.gray.base : palette.gray.light1};
-  `;
-};
+export const getThemedStateStyles = (theme: Theme) => css`
+  color: ${color[theme].text.primary.default};
+  background-color: rgba(255, 255, 255, 0);
+  border-color: ${color[theme].border.primary.default};
+`;

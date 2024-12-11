@@ -14,7 +14,6 @@ import {
   getThemedStateStyles,
   stepIconClassName,
   stepStyles,
-  stepWrapperStyles,
   titleStyles,
 } from './ListItem.styles';
 import { ListItemProps } from './ListItem.types';
@@ -29,7 +28,7 @@ const ListItem = React.forwardRef(
 
     return (
       <li ref={ref} className={cx(baseStyles, className)} {...rest}>
-        <div className={cx(stepIconClassName, stepWrapperStyles)}>
+        <div className={stepIconClassName}>
           <div className={cx(stepStyles, getThemedStateStyles(theme))}>
             {index + 1}
           </div>

@@ -3,7 +3,7 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { Link } from '@leafygreen-ui/typography';
 
-import { ListItem,OrderedList } from '.';
+import { ListItem, OrderedList } from '.';
 
 export const Basic = (args: { darkMode?: boolean }) => {
   return (
