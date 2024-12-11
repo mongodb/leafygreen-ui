@@ -1,0 +1,45 @@
+{
+  "name": "@lg-charts/chart",
+  "version": "0.8.2",
+  "description": "lg-charts Core Chart Components",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@leafygreen-ui/emotion": "^4.0.7",
+    "@leafygreen-ui/hooks": "^8.3.0",
+    "@leafygreen-ui/icon": "^12.8.0",
+    "@leafygreen-ui/icon-button": "^15.0.23",
+    "@leafygreen-ui/lib": "13.8.2",
+    "@leafygreen-ui/palette": "^4.1.1",
+    "@leafygreen-ui/tokens": "^2.11.0",
+    "@leafygreen-ui/typography": "^19.3.0",
+    "echarts": "^5.5.1",
+    "lodash.debounce": "^4.0.8"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "8.0.2",
+    "@leafygreen-ui/combobox": "^10.0.0",
+    "@lg-tools/storybook-utils": "^0.1.1",
+    "@types/lodash.debounce": "^4.0.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}
