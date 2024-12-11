@@ -5,7 +5,7 @@ import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 export const contentClassName = createUniqueClassName('content');
 export const stepIconClassName = createUniqueClassName('step');
 
-const STEP_SIZE = 20;
+const MARKER_SIZE = 20;
 
 export const baseStyles = css`
   display: flex;
@@ -25,15 +25,15 @@ export const contentStyles = css`
   width: 100%;
 `;
 
-export const stepStyles = css`
+export const markerStyles = css`
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid;
   transition: ${transitionDuration.default}ms ease;
-  width: ${STEP_SIZE}px;
-  height: ${STEP_SIZE}px;
+  width: ${MARKER_SIZE}px;
+  height: ${MARKER_SIZE}px;
   position: relative;
   font-size: 12px;
   font-weight: 500;
