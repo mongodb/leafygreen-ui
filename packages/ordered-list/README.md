@@ -18,6 +18,30 @@ yarn add @leafygreen-ui/ordered-list
 npm install @leafygreen-ui/ordered-list
 ```
 
+## Example
+
+```js
+<OrderedList>
+  <OrderedListItem
+    title="Title"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+  />
+  <OrderedListItem
+    title="Title"
+    description={
+      <>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna. <Link>Learn more.</Link>
+      </>
+    }
+  />
+  <OrderedListItem
+    title="Title"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna."
+  />
+</OrderedList>
+```
+
 # OrderedList
 
 | Prop       | Type      | Description                                      | Default |
