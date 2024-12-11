@@ -25,6 +25,9 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
+  "devDependencies": {
+    "@lg-tools/storybook-utils": "^0.1.1"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ordered-list",
   "repository": {
     "type": "git",
