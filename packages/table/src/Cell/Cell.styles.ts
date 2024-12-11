@@ -1,36 +1,18 @@
-import { TransitionStatus } from 'react-transition-group';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
-import { css } from '@leafygreen-ui/emotion';
-import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
+import { VerticalAlignment } from '../Table/Table.types';
 
 import { Align } from './Cell.types';
 
 /** The base left & right padding in the table */
-export const baseTableSidePadding = spacing[4];
+export const baseTableSidePadding = spacing[600];
 
 /** the default width of the expand icon */
 const iconSize = 28;
 
 /** the default height of a cell */
 export const standardCellHeight = spacing[5] + spacing[2];
-
-export const baseCellStyles = css`
-  padding: 0 8px;
-  overflow: hidden;
-
-  &:focus-visible {
-    box-shadow: inset;
-  }
-
-  &:last-child {
-    padding-right: ${baseTableSidePadding}px;
-  }
-`;
-
-export const alignmentStyles = (align: Align = 'left') => css`
-  justify-content: ${align};
-  text-align: ${align};
-`;
 
 export const getCellPadding = ({
   depth = 0,
@@ -44,19 +26,19 @@ export const getCellPadding = ({
   if (depth === 0) {
     if (isSelectable) {
       return css`
-        padding-left: ${spacing[2]}px;
-        padding-right: ${spacing[2]}px;
+        padding-left: ${spacing[200]}px;
+        padding-right: ${spacing[200]}px;
       `;
     } else {
       return css`
         padding-left: ${baseTableSidePadding +
-        (isExpandable ? 0 : spacing[2])}px;
+        (isExpandable ? 0 : spacing[200])}px;
       `;
     }
   }
 
   const parentIconsPadding = 8 * (depth - 1); // how much space do parent icons take up
-  const thisIconPadding = isExpandable ? spacing[2] : 0;
+  const thisIconPadding = isExpandable ? spacing[200] : 0;
   const depthPadding =
     iconSize * depth - (parentIconsPadding + thisIconPadding);
   return css`
@@ -64,57 +46,62 @@ export const getCellPadding = ({
   `;
 };
 
-export const basicCellStyles = css`
+export const getCellStyles = (
+  depth = 0,
+  isExpandable = false,
+  isSelectable = false,
+) => css`
   &:first-child {
     ${getCellPadding({
-      depth: 0,
-      isExpandable: false,
-      isSelectable: false,
+      depth,
+      isExpandable,
+      isSelectable,
     })}
   }
 `;
 
-export const cellTransitionContainerStyles = css`
+export const getCellContainerStyles = (align: Align = 'left') => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
-  transition-property: min-height, max-height, opacity, padding, transform;
-  transition-duration: ${transitionDuration.default}ms;
-  transition-timing-function: ease;
+  overflow: hidden;
+  justify-content: ${align};
+  text-align: ${align};
+
+  > div {
+    justify-content: ${align};
+  }
 `;
 
-export const truncatedContentStyles = css`
-  /* See https://css-tricks.com/line-clampin/#aa-the-standardized-way */
-  display: -webkit-box;
-  -webkit-line-clamp: ${standardCellHeight / typeScales.body1.lineHeight};
-  -webkit-box-orient: vertical;
-  -webkit-box-align: start;
+export const getBaseCellStyles = (
+  verticalAlignment: VerticalAlignment = VerticalAlignment.Top,
+) => css`
+  padding: 0 ${spacing[200]}px;
+  overflow: hidden;
+  vertical-align: ${verticalAlignment};
+
+  &:focus-visible {
+    box-shadow: inset;
+  }
+
+  &:last-child {
+    padding-right: ${baseTableSidePadding}px;
+  }
 `;
 
-export const disableAnimationStyles = css`
-  transition-duration: 0;
-  transition: none;
+export const cellInnerStyles = css`
+  display: flex;
+  align-items: center;
+  min-width: 100%;
 `;
 
-export const cellContentTransitionStateStyles = (
-  height?: number,
-): Record<TransitionStatus, string> => {
-  const _hiddenStyles = css`
-    opacity: 0;
-    min-height: 0;
-    max-height: 0;
-    overflow: hidden;
-  `;
-
-  return {
-    entered: css`
-      opacity: 1;
-      min-height: ${standardCellHeight}px;
-      max-height: ${height ? height + 'px' : 'unset'};
-    `,
-    entering: _hiddenStyles,
-    exiting: _hiddenStyles,
-    exited: _hiddenStyles,
-    unmounted: _hiddenStyles,
-  };
-};
+export const getCellEllipsisStyles = (shouldTruncate: boolean) =>
+  cx({
+    [css`
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      contain: inline-size; // 🤯
+    `]: shouldTruncate,
+  });

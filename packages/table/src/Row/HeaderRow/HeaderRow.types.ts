@@ -1,3 +1,3 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { ComponentPropsWithRef } from 'react';
 
-export interface HeaderRowProps extends HTMLElementProps<'tr'> {}
+export interface HeaderRowProps extends ComponentPropsWithRef<'tr'> {}

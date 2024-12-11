@@ -1,23 +1,28 @@
-import React, { PropsWithChildren, ReactElement, ReactNode } from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 
-import { HeaderCell } from '../../Cell';
+import { cx } from '@leafygreen-ui/emotion';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { getBaseStyles } from './HeaderRow.styles';
 import { HeaderRowProps } from './HeaderRow.types';
 
-const HeaderRow = ({
-  children,
-  ...rest
-}: PropsWithChildren<HeaderRowProps>) => {
-  return (
-    <tr {...rest}>
-      {React.Children.map(children, (child: ReactNode, index: number) => {
-        return (
-          <HeaderCell {...(child as ReactElement).props} cellIndex={index} />
-        );
-      })}
-    </tr>
-  );
-};
+const HeaderRow = forwardRef<HTMLTableRowElement, HeaderRowProps>(
+  (
+    { children, className, ...rest }: PropsWithChildren<HeaderRowProps>,
+    fwdRef,
+  ) => {
+    const { theme } = useDarkMode();
+    return (
+      <tr
+        ref={fwdRef}
+        className={cx(getBaseStyles(theme), className)}
+        {...rest}
+      >
+        {children}
+      </tr>
+    );
+  },
+);
 
 HeaderRow.displayName = 'HeaderRow';
 

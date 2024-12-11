@@ -1,15 +1,23 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableOptions,
+  LeafyGreenTableRow,
+  LGTableDataType,
 } from '../useLeafyGreenTable';
-import { ColumnDef, ExpandedState, SortingState } from '..';
+import {
+  ColumnDef,
+  ExpandedState,
+  LeafyGreenVirtualItem,
+  SortingState,
+  useLeafyGreenVirtualTable,
+} from '..';
 
 import { Person } from './makeData.testutils';
 
 export const getDefaultTestData: (
-  rowProps: object,
+  rowProps?: Partial<LGTableDataType<Person>>,
   additionalData?: Array<Person>,
 ) => Array<Person> = (rowProps, additionalData = []) => {
   return [
@@ -84,7 +92,7 @@ export const getDefaultTestColumns: (
 ];
 
 export interface TestTableWithHookProps {
-  rowProps?: object;
+  rowProps?: Partial<LGTableDataType<Person>>;
   columnProps?: TestColumnsProps;
   hookProps?: Partial<LeafyGreenTableOptions<Person>>;
   stateProps?: any;
@@ -93,7 +101,7 @@ export interface TestTableWithHookProps {
 }
 
 /**
- * A hook call utilized across different test suites to simplify test `render`s' markup
+ * A useLeafyGreenTable hook call utilized across different test suites to simplify test `render`s' markup
  */
 export const useTestHookCall = ({
   rowProps,
@@ -102,10 +110,10 @@ export const useTestHookCall = ({
   additionalData,
   hasData = true,
 }: TestTableWithHookProps) => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [data] = useState<Array<Person>>(
     hasData
-      ? () => getDefaultTestData((rowProps = rowProps ?? {}), additionalData)
+      ? () =>
+          getDefaultTestData((rowProps = rowProps ?? undefined), additionalData)
       : [],
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
@@ -114,7 +122,6 @@ export const useTestHookCall = ({
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table: LeafyGreenTable<Person> = useLeafyGreenTable({
-    containerRef,
     data,
     columns,
     state: {
@@ -128,5 +135,23 @@ export const useTestHookCall = ({
     ...hookProps,
   });
 
-  return { containerRef, table, rowSelection };
+  return { table, rowSelection };
+};
+
+/** Returns the first Row and VirtualRow */
+export const useMockTestRowData = (): {
+  firstRow: LeafyGreenTableRow<Person>;
+  firstVirtualRow: LeafyGreenVirtualItem<Person>;
+} => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const table = useLeafyGreenVirtualTable({
+    containerRef: React.createRef<HTMLTableRowElement>(),
+    data: getDefaultTestData({}),
+    columns: getDefaultTestColumns({}),
+  });
+
+  return {
+    firstRow: table.getRowModel().rows[0],
+    firstVirtualRow: table.virtual.getVirtualItems()[0],
+  };
 };
