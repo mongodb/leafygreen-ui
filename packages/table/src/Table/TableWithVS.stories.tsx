@@ -534,147 +534,147 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
   );
 };
 
-export const TallRows: StoryFn<StoryTableProps> = args => {
-  const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const data = React.useMemo(() => {
-    return makeData(false, 10_000).map(d => ({
-      ...d,
-      id:
-        faker.string.uuid() +
-        '--' +
-        faker.string.uuid() +
-        '--' +
-        faker.string.uuid() +
-        '--' +
-        faker.string.uuid(),
-    }));
-  }, []);
+// export const TallRows: StoryFn<StoryTableProps> = args => {
+//   const tableContainerRef = React.useRef<HTMLDivElement>(null);
+//   const data = React.useMemo(() => {
+//     return makeData(false, 10_000).map(d => ({
+//       ...d,
+//       id:
+//         faker.string.uuid() +
+//         '--' +
+//         faker.string.uuid() +
+//         '--' +
+//         faker.string.uuid() +
+//         '--' +
+//         faker.string.uuid(),
+//     }));
+//   }, []);
 
-  const columnDefs: Array<LGColumnDef<Person>> = [
-    {
-      accessorKey: 'index',
-      header: 'index',
-      size: 90,
-    },
-    {
-      accessorKey: 'id',
-      header: 'ID',
-      // This makes the width auto
-      size: NaN,
-    },
-    {
-      accessorKey: 'firstName',
-      header: 'First Name',
-      cell: info => info.getValue(),
-      size: 120,
-    },
-    {
-      accessorFn: row => row.lastName,
-      id: 'lastName',
-      cell: info => info.getValue(),
-      header: () => <span>Last Name</span>,
-      size: 120,
-    },
-    {
-      accessorKey: 'age',
-      header: () => 'Age',
-      size: 50,
-      align: 'center',
-    },
-    {
-      accessorKey: 'visits',
-      header: () => <span>Visits</span>,
-      size: 50,
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-      size: 110,
-    },
-  ];
+//   const columnDefs: Array<LGColumnDef<Person>> = [
+//     {
+//       accessorKey: 'index',
+//       header: 'index',
+//       size: 90,
+//     },
+//     {
+//       accessorKey: 'id',
+//       header: 'ID',
+//       // This makes the width auto
+//       size: NaN,
+//     },
+//     {
+//       accessorKey: 'firstName',
+//       header: 'First Name',
+//       cell: info => info.getValue(),
+//       size: 120,
+//     },
+//     {
+//       accessorFn: row => row.lastName,
+//       id: 'lastName',
+//       cell: info => info.getValue(),
+//       header: () => <span>Last Name</span>,
+//       size: 120,
+//     },
+//     {
+//       accessorKey: 'age',
+//       header: () => 'Age',
+//       size: 50,
+//       align: 'center',
+//     },
+//     {
+//       accessorKey: 'visits',
+//       header: () => <span>Visits</span>,
+//       size: 50,
+//     },
+//     {
+//       accessorKey: 'status',
+//       header: 'Status',
+//       size: 110,
+//     },
+//   ];
 
-  const columns = useMemo(() => columnDefs, []);
-  const estimateSize = useCallback(() => 68, []);
+//   const columns = useMemo(() => columnDefs, []);
+//   const estimateSize = useCallback(() => 68, []);
 
-  const table = useLeafyGreenVirtualTable<Person>({
-    containerRef: tableContainerRef,
-    data,
-    columns,
-    virtualizerOptions: {
-      estimateSize,
-    },
-  });
+//   const table = useLeafyGreenVirtualTable<Person>({
+//     containerRef: tableContainerRef,
+//     data,
+//     columns,
+//     virtualizerOptions: {
+//       estimateSize,
+//     },
+//   });
 
-  return (
-    <div
-      className={css`
-        width: 100%;
-      `}
-    >
-      <div>
-        <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
-      </div>
+//   return (
+//     <div
+//       className={css`
+//         width: 100%;
+//       `}
+//     >
+//       <div>
+//         <p>{table.getRowModel().rows.length} total rows</p>
+//         <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
+//       </div>
 
-      <Table
-        {...args}
-        table={table}
-        ref={tableContainerRef}
-        className={virtualScrollingContainerHeight}
-      >
-        <TableHead isSticky>
-          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {table.virtual.getVirtualItems() &&
-            table.virtual
-              .getVirtualItems()
-              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
-                const row = virtualRow.row;
-                const cells = row.getVisibleCells();
-                return (
-                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
-                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                      return (
-                        <Cell
-                          key={cell.id}
-                          className={css`
-                            padding-block: 4px;
+//       <Table
+//         {...args}
+//         table={table}
+//         ref={tableContainerRef}
+//         className={virtualScrollingContainerHeight}
+//       >
+//         <TableHead isSticky>
+//           {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+//             <HeaderRow key={headerGroup.id}>
+//               {headerGroup.headers.map(header => {
+//                 return (
+//                   <HeaderCell key={header.id} header={header}>
+//                     {flexRender(
+//                       header.column.columnDef.header,
+//                       header.getContext(),
+//                     )}
+//                   </HeaderCell>
+//                 );
+//               })}
+//             </HeaderRow>
+//           ))}
+//         </TableHead>
+//         <TableBody>
+//           {table.virtual.getVirtualItems() &&
+//             table.virtual
+//               .getVirtualItems()
+//               .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+//                 const row = virtualRow.row;
+//                 const cells = row.getVisibleCells();
+//                 return (
+//                   <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+//                     {cells.map((cell: LeafyGreenTableCell<Person>) => {
+//                       return (
+//                         <Cell
+//                           key={cell.id}
+//                           className={css`
+//                             padding-block: 4px;
 
-                            & > div {
-                              max-height: unset;
-                            }
-                          `}
-                          cell={cell}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          )}
-                        </Cell>
-                      );
-                    })}
-                  </Row>
-                );
-              })}
-        </TableBody>
-      </Table>
-    </div>
-  );
-};
+//                             & > div {
+//                               max-height: unset;
+//                             }
+//                           `}
+//                           cell={cell}
+//                         >
+//                           {flexRender(
+//                             cell.column.columnDef.cell,
+//                             cell.getContext(),
+//                           )}
+//                         </Cell>
+//                       );
+//                     })}
+//                   </Row>
+//                 );
+//               })}
+//         </TableBody>
+//       </Table>
+//     </div>
+//   );
+// };
 
 export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
