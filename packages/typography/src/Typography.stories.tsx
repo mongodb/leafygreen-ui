@@ -23,6 +23,8 @@ import {
   InlineKeyCode,
   Label,
   Link,
+  ListItem,
+  OrderedList,
   Overline,
   StaticWidthText,
   Subtitle,
@@ -120,6 +122,21 @@ const TypographyDemoComponent = ({
         </Disclaimer>
 
         <Error>Hello I am an Error!</Error>
+
+        <OrderedList>
+          <ListItem
+            title="Title"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Learn more"
+          />
+          <ListItem
+            title="Title"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Learn more"
+          />
+          <ListItem
+            title="Title"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna. Learn more"
+          />
+        </OrderedList>
 
         <div className={cx(displayBlock)}>
           <Label htmlFor="id">This is a label</Label>

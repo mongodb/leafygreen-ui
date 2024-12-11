@@ -22,6 +22,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/descendants": "^1.0.1",
     "@leafygreen-ui/emotion": "^4.0.8",
     "@leafygreen-ui/icon": "^12.6.0",
     "@leafygreen-ui/lib": "^13.6.1",

@@ -98,6 +98,8 @@ All props extend the HTMLElementProps of their root tag, however the below compo
 | `Label`         | `label` |
 | `Description`   | `p`     |
 | `Label`         | `p`     |
+| `OrderedList`   | `ol`    |
+| `ListItem`      | `li`    |
 
 # H1
 
@@ -205,3 +207,16 @@ _Note_: `BackLink` is intended for internal linking only
 | -------------- | ------------ | ------------------------------------------------ | --------------------------------------------- |
 | `darkMode`     | `boolean`    | Determines if the component renders in dark mode | `false`                                       |
 | `baseFontSize` | `13` \| `16` | font-size applied to typography element          | Defaults to value set by LeafyGreen Provider. |
+
+# OrderedList
+
+| Prop       | Type      | Description                                      | Default |
+| ---------- | --------- | ------------------------------------------------ | ------- |
+| `darkMode` | `boolean` | Determines if the component renders in dark mode | `false` |
+
+# ListItem
+
+| Prop        | Type              | Description                                                    | Default |
+| ----------- | ----------------- | -------------------------------------------------------------- | ------- |
+| title       | `string`          | The title of the step.                                         |         |
+| description | `React.ReactNode` | The description of the step. This will render below the title. |         |
