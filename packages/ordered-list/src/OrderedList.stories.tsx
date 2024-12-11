@@ -3,9 +3,9 @@ import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { Link } from '@leafygreen-ui/typography';
 
-import { OrderedListProps, OrderedList, ListItem } from '.';
+import { OrderedList, ListItem } from '.';
 
-export const Basic = (args: OrderedListProps) => {
+export const Basic = (args: { darkMode?: boolean }) => {
   return (
     <OrderedList {...args}>
       <ListItem

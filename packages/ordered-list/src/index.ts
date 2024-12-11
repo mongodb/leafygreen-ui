@@ -1,4 +1,4 @@
-export { OrderedList, OrderedListProps } from './OrderedList';
+export { OrderedList } from './OrderedList';
 export { ListItem } from './ListItem';
 export {
   OrderedListContext,
