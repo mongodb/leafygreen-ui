@@ -509,7 +509,7 @@ The `useLeafyGreenVirtualTable` hook returns an object that extends the `useL
 
 - `virtual`: An object containing properties and methods from the virtualizer instance, including a custom `getVirtualItems` method that maps virtual items to rows.
   - `getVirtualItems`: used to retrieve the virtualized items, mapping them to the corresponding rows in the table. This method ensures that only the visible rows are rendered, which improves performance when dealing with large datasets.
-  - For more methods and properties from from the virtualizer instance, refer to [TanStack's virtualizer instance docs](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
+  - For more methods and properties available on the virtualizer instance, refer to [TanStack's virtualizer instance docs](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
 
 ## Rendering Rows
 
@@ -886,7 +886,7 @@ All HTML `tr` element props
 | `data`              | Data in the form of an array of objects, where each object represents a row in the table. Each property of the object corresponds to a column in the table.                                                                                                                                                                           | `TableOptions<LGTableDataType<T>>` | -       |
 | `columns`           | The columns configuration is an array of objects, where each object defines how a column behaves and renders.                                                                                                                                                                                                                         | `TableOptions<LGTableDataType<T>>` | -       |
 | `hasSelectableRows` | Setting this prop will inject a new column containing a checkbox into all rows.                                                                                                                                                                                                                                                       | `boolean`                          | `false` |
-| `withPagination`    | Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. For more information, check out TanStack's [pagination documentation](https://tanstack.com/table/latest/docs/guide/pagination) on pagination. | `boolean`                          | `false` |
+| `withPagination`    | Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. For more information, check out [TanStack's pagination documentation](https://tanstack.com/table/latest/docs/guide/pagination) on pagination. | `boolean`                          | `false` |
 | `allowSelectAll`    | This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.                                                                                                                                                                                                         | `boolean`                          | `true`  |
 
 ### `useLeafyGreenVirtualTable`
@@ -898,7 +898,7 @@ All HTML `tr` element props
 | `columns`            | The columns configuration is an array of objects, where each object defines how a column behaves and renders.                                               | `TableOptions<LGTableDataType<T>>` | -       |
 | `hasSelectableRows`  | Setting this prop will inject a new column containing a checkbox into all rows.                                                                             | `boolean`                          | `false` |
 | `allowSelectAll`     | This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.                               | `boolean`                          | `true`  |
-| `virtualizerOptions` | Available [virtualizer options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance                               |
+| `virtualizerOptions` | Available [TanStack virtualizer options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance                      |
 
 # Test Harnesses
 
