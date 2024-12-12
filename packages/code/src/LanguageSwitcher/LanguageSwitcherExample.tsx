@@ -103,10 +103,26 @@ const languageOptions = [
 
 const jsSnippet = `
 
+import datetime from './';
+
+const myVar = 42;
+
+var myObj = {
+  someProp: ['arr', 'ay'],
+  regex: /([A-Z])\w+/
+}
+
+export default class myClass {
+  constructor(){
+    // access properties
+    this.myProp = false
+  }
+}
+
 function greeting(entity) {
   return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
-
+ 
 console.log(greeting('World'));
 
 `;
@@ -154,6 +170,9 @@ function LanguageSwitcher({
       darkMode={darkMode}
       customActionButtons={customActionButtons}
       showCustomActionButtons={showCustomActionButtons}
+      // showTopBar={false}
+      // topBarTitle="example.ts"
+      expandable
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>

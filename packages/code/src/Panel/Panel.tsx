@@ -26,6 +26,7 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
   className?: string;
+  topBarTitle?: string;
 };
 
 function Panel({
@@ -38,6 +39,7 @@ function Panel({
   customActionButtons,
   showCustomActionButtons,
   className,
+  topBarTitle,
 }: PanelProps) {
   const { theme } = useDarkMode();
 
@@ -47,33 +49,43 @@ function Panel({
         basePanelStyle,
         basePanelThemeStyle[theme],
         {
-          [sidePanelThemeStyles[theme]]: !language,
+          //   [sidePanelThemeStyles[theme]]: !language,
           [languageSwitcherPanelThemeStyles[theme]]: !!language,
         },
         className,
       )}
       data-testid="leafygreen-code-panel"
     >
-      {language !== undefined &&
-        languageOptions !== undefined &&
-        onChange !== undefined && (
-          <LanguageSwitcher
-            onChange={onChange}
-            language={language}
-            languageOptions={languageOptions}
-          />
+      <div>{topBarTitle && <div className="">{topBarTitle}</div>}</div>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}
+      >
+        {language !== undefined &&
+          languageOptions !== undefined &&
+          onChange !== undefined && (
+            <LanguageSwitcher
+              onChange={onChange}
+              language={language}
+              languageOptions={languageOptions}
+            />
+          )}
+
+        {showCustomActionButtons && (
+          <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
         )}
 
-      {showCopyButton && (
-        <CopyButton
-          onCopy={onCopy}
-          contents={contents}
-          withLanguageSwitcher={!!language}
-        />
-      )}
-      {showCustomActionButtons && (
-        <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
-      )}
+        {showCopyButton && (
+          <CopyButton
+            onCopy={onCopy}
+            contents={contents}
+            withLanguageSwitcher={!!language}
+          />
+        )}
+      </div>
     </div>
   );
 }

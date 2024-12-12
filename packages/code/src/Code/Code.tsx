@@ -82,6 +82,8 @@ function Code({
   onChange,
   customActionButtons = [],
   showCustomActionButtons = false,
+  showTopBar = false,
+  topBarTitle,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -107,8 +109,13 @@ function Code({
   );
 
   const showPanel =
-    !showWindowChrome &&
-    (copyable || !!currentLanguage || showCustomActionsInPanel);
+    showTopBar || !!currentLanguage || showCustomActionsInPanel || topBarTitle;
+
+  console.log({ showPanel });
+
+  // const showPanel =
+  //   !showWindowChrome &&
+  //   (copyable || !!currentLanguage || showCustomActionsInPanel);
 
   const highlightLanguage = currentLanguage
     ? currentLanguage.language
@@ -217,8 +224,8 @@ function Code({
             baseScrollShadowStyles,
             getScrollShadow(scrollState, theme),
             {
-              [contentWrapperStyleWithPicker]: showLanguagePicker,
-              [scrollShadowStylesWithPicker]: showLanguagePicker,
+              [contentWrapperStyleWithPicker]: showPanel,
+              [scrollShadowStylesWithPicker]: showPanel,
               [contentWrapperStylesNoPanel]: !showPanel,
               [scrollShadowStylesNoPanel]: !showPanel,
               [expandableContentWrapperStyle]: showExpandButton,
@@ -269,6 +276,7 @@ function Code({
               isMultiline={isMultiline}
               customActionButtons={filteredCustomActionIconButtons}
               showCustomActionButtons={showCustomActionsInPanel}
+              topBarTitle={topBarTitle}
             />
           )}
 

@@ -8,6 +8,7 @@ export const basePanelStyle = css`
   align-items: center;
   flex-shrink: 0;
   gap: ${spacing[1]}px;
+  height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
 
   svg {
     width: 16px;
@@ -51,7 +52,7 @@ export const languageSwitcherPanelStyle = css`
   justify-content: space-between;
   padding: 0;
   padding-right: 8px;
-  height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
+  /* height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher */
 `;
 
 export const languageSwitcherPanelThemeStyles: Record<Theme, string> = {

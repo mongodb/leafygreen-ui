@@ -62,11 +62,13 @@ export type CodeProps = Omit<
    * @default: `false`
    */
   showWindowChrome?: boolean;
+  showTopBar?: boolean;
 
   /**
    * Renders a file name or other descriptor for a block of code
    */
   chromeTitle?: string;
+  topBarTitle?: string;
 
   /**
    * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
