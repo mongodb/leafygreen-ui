@@ -1,16 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { LineChart as EchartsLineChart } from 'echarts/charts';
-import {
-  DataZoomComponent,
-  DataZoomInsideComponent,
-  GridComponent,
-  LegendComponent,
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-} from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
+import * as echarts from 'echarts';
 import debounce from 'lodash.debounce';
 
 import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
@@ -19,23 +8,6 @@ import { getDefaultChartOptions } from '../config';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
-
-/**
- * Register the required components. By using separate imports, we can avoid
- * importing the entire echarts library which will reduce the bundle size.
- * Must be added to if additional functionality is supported.
- */
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  LegendComponent,
-  EchartsLineChart,
-  CanvasRenderer,
-  ToolboxComponent,
-  DataZoomComponent,
-  DataZoomInsideComponent,
-]);
 
 /**
  * Creates a generic Apache ECharts options object with default values for those not set

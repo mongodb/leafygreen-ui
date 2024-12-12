@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/cli",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Command Line tools for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -22,7 +22,7 @@
     "@lg-tools/install": "0.1.9",
     "@lg-tools/link": "0.2.4",
     "@lg-tools/lint": "1.0.0",
-    "@lg-tools/slackbot": "0.2.7",
+    "@lg-tools/slackbot": "0.2.8",
     "@lg-tools/test": "0.4.10",
     "@lg-tools/update": "0.1.9",
     "@lg-tools/validate": "0.3.0",
