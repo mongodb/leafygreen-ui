@@ -214,6 +214,7 @@ The `useLeafyGreenTable` hook expects data in the form of an array of objects, w
   ```
 
 - **ExpandedContent**: Is used to display additional content when a row is expanded. This content is not necessarily a nested row but can be any additional information related to the row.
+
   **Example**:
 
   ```jsx
