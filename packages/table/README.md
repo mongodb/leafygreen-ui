@@ -20,12 +20,13 @@ A basic table displays data in rows and columns without any additional functiona
 
 ```jsx
 import {
-  Table,
-  TableHead,
-  HeaderRow,
-  TableBody,
-  Row,
   Cell,
+  HeaderCell
+  HeaderRow,
+  Row,
+  Table,
+  TableBody,
+  TableHead,
 } from '@leafygreen-ui/table';
 
 <Table>
@@ -37,16 +38,13 @@ import {
     </HeaderRow>
   </TableHead>
   <TableBody>
-    <Row>
-      <Cell>cell 1</Cell>
-      <Cell>cell 2</Cell>
-      <Cell>cell 3</Cell>
-    </Row>
-    <Row>
-      <Cell>cell 1</Cell>
-      <Cell>cell 2</Cell>
-      <Cell>cell 3</Cell>
-    </Row>
+    {data.map((row: { [key: string]: any }) => (
+      <Row key={row.id}>
+        {Object.keys(row).map((cellKey: string, index: number) => {
+          return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+        })}
+      </Row>
+    ))}
   </TableBody>
 </Table>;
 ```
@@ -57,34 +55,23 @@ The `useLeafyGreenTable` hook provides a custom integration with the `@tanstack/
 
 Although all `react-table` features are supported using LeafyGreen Table, only the following features are styled according to design system guidelines:
 
-- Nested rows
+- Sub rows
 - Expandable rows
 - Selectable rows
 - Sortable rows
 - Sticky row header
 
-**Usage**:
-
-```jsx
-const table = useLeafyGreenTable({
-  data,
-  columns,
-  hasSelectableRows,
-  withPagination,
-  allowSelectAll,
-});
-```
-
 **Usage with LeafyGreen Table components**:
 
 ```jsx
 import {
-  Table,
-  TableHead,
-  HeaderRow,
-  TableBody,
-  Row,
   Cell,
+  HeaderCell
+  HeaderRow,
+  Row,
+  Table,
+  TableBody,
+  TableHead,
   useLeafyGreenTable,
   flexRender
 } from '@leafygreen-ui/table';
@@ -149,35 +136,35 @@ return (
 	      ))}
 	  </TableHead>
 	  <TableBody>
-        {rows.map((row: LeafyGreenTableRow<Person>) => {
-	        // Checks if row is expandedContent
-          const isExpandedContent = row.isExpandedContent ?? false;
+      {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
+        // Checks if row is expandedContent
+        const isExpandedContent = row.isExpandedContent ?? false;
 
-          return (
-            <Fragment key={row.id}>
-              {!isExpandedContent && (
-                // row is required
-                <Row row={row}>
-	                // Maps through visible cells
-                  {row.getVisibleCells().map(cell => {
-                    return (
-                      // cell is required
-                      <Cell key={cell.id} id={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              )}
-              {isExpandedContent && <ExpandedContent row={row} />}
-            </Fragment>
-          );
-        })}
-      </TableBody>
-	</Table>
+        return (
+          <Fragment key={row.id}>
+            {!isExpandedContent && (
+              // row is required
+              <Row row={row}>
+                // Maps through visible cells
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    // cell is required
+                    <Cell key={cell.id} id={cell.id} cell={cell}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              </Row>
+            )}
+            {isExpandedContent && <ExpandedContent row={row} />}
+          </Fragment>
+        );
+      })}
+    </TableBody>
+</Table>
 )
 ```
 
@@ -243,7 +230,7 @@ The `useLeafyGreenTable` hook expects data in the form of an array of objects, w
 
 #### Stable Reference
 
-Data passed to `useLeafyGreenTable` MUST have a stable reference to ensure optimal performance and avoid unnecessary re-renders. Internally, `useReactTable` rely on reference equality for state updates. If the reference changes frequently, the hook might assume the data has been modified, triggering expensive updates. Changes to the data should explicitly signal an update. Stable references allow React to detect when actual changes occur versus unnecessary re-renders.
+Data passed to `useLeafyGreenTable` MUST have a stable reference to ensure optimal performance and avoid unnecessary re-renders. Internally, `useReactTable` relies on reference equality for state updates. If the reference changes frequently, the hook might assume the data has been modified, triggering expensive updates. Changes to the data should explicitly signal an update. Stable references allow React to detect when actual changes occur versus unnecessary re-renders.
 
 Example:
 
@@ -275,7 +262,7 @@ export default function MyComponent() {
 
 The main thing to avoid is defining the data array inside the same scope as the useReactTable call. That will cause the data array to be redefined on every render, which will cause an infinite loop of re-renders.
 
-For more information check out [TanStack](https://tanstack.com/table/latest/docs/guide/data#give-data-a-stable-reference) docs.
+For more information check out [TanStack's docs on giving data a stable reference](https://tanstack.com/table/latest/docs/guide/data#give-data-a-stable-reference).
 
 ### **Columns** (required)
 
@@ -284,7 +271,7 @@ The columns configuration is an array of objects, where each object defines how 
 - `accessorKey`: The key in the data object to use for that column.
 - `header`: A string or function to define the column header.
 - `cell`: A function for custom cell rendering.
-- Other options like `enableSorting`, `size`, or `accessorFn` for computed values. Checkout [TanStack docs](https://tanstack.com/table/latest/docs/guide/column-defs) for more information.
+- Other options like `enableSorting`, `size`, or `accessorFn` for computed values. Checkout [TanStack's docs on column definitions](https://tanstack.com/table/latest/docs/guide/column-defs) for more information.
   Example:
   ```jsx
   const columns = [
@@ -297,7 +284,7 @@ The columns configuration is an array of objects, where each object defines how 
 
 ### Options (optional)
 
-`useLeafyGreenTable` also exposes all [options](https://tanstack.com/table/latest/docs/api/core/table#options) used in `react-table` and by default, `useLeafyGreenTable` includes a few of those options:
+`useLeafyGreenTable` also exposes all [table options](https://tanstack.com/table/latest/docs/api/core/table#options) used in `react-table` and by default, `useLeafyGreenTable` includes a few of those options:
 
 ```jsx
 const [expanded, setExpanded] = useState < ExpandedState > {};
@@ -342,13 +329,7 @@ const table =
 - `getSubRows`: used to access the sub rows for any given row
 - `onExpandedChange`: called when the expanded table state changes
 
-#### Other optional options
-
-- `hasSelectableRows`: Setting this prop will inject checkbox cells into all rows.
-- `allowSelectAll`: This prop controls whether a 'select all' checkbox will be rendered in the header row.
-- `withPagination`: Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`.
-- `shouldTruncate`: Setting this prop will truncate all rows. If true, cells will truncate at one line. If false then there will be no height limit and cells will not truncate.
-- `verticalAlignment`: When rows truncation is disabled, this will determine if cell contents should be top or middle aligned.
+For other optional options check out the `useLeafyGreenTable` prop table [below](#useleafygreentable-3).
 
 ### What is returned?
 
@@ -356,7 +337,7 @@ The `useLeafyGreenTable` hook returns an object that extends the Table objec
 
 - `getRowModel`: Returns the an array with all rows, in addition to expanded subrows and expanded content. Subrows and expandedContent that are not expanded are not returned.
 - `hasSelectableRows`: A boolean indicating whether the table has selectable rows.
-- For more methods and properties available on the table object, refer to [TanStack doc](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
+- For more methods and properties available on the table object, refer to [TanStack's table API documentation](https://tanstack.com/table/latest/docs/api/core/table#table-api).
 
 ## `useLeafyGreenVirtualTable`
 
@@ -369,21 +350,7 @@ The primary differences between `useLeafyGreenTable` and `useLeafyGreenVirtualTa
 - **Container Reference**: Requires a `containerRef` for the scrolling container.
 - **Virtual Properties**: Adds a `virtual` object to the returned table model, exposing properties and methods from the virtualizer for managing virtualized rows.
 
-**Usage**:
-
-```jsx
-const table = useLeafyGreenVirtualTable({
-  data,
-  columns,
-  containerRef: ref,
-  virtualizerOptions: {},
-  hasSelectableRows,
-  withPagination,
-  allowSelectAll,
-});
-```
-
-The options passed to `useLeafyGreenVirtualTable` are the same as those passed to `useLeafyGreenTable`, with the addition of properties specific to virtualization, such as a required `containerRef` and [optional virtualizer configuration options](https://tanstack.com/virtual/latest/docs/api/virtualizer#optional-options).
+The options passed to `useLeafyGreenVirtualTable` are the same as those passed to `useLeafyGreenTable`, with the addition of properties specific to virtualization, such as a required `containerRef` and [optional virtualizer configuration options from Tanstack Virtual](https://tanstack.com/virtual/latest/docs/api/virtualizer#optional-options).
 
 **Usage with LeafyGreen `Table` components**:
 
@@ -462,49 +429,49 @@ return (
 	      ))}
 	  </TableHead>
 	  <TableBody>
-	    {table.virtual.getVirtualItems() &&
-	      table.virtual
-	        .getVirtualItems()
-	        .map(
-	          (
-	            virtualRow: LeafyGreenVirtualItem<KitchenSink>,
-	            index: number,
-	          ) => {
-	            const row = virtualRow.row;
-	            const isExpandedContent = row.isExpandedContent ?? false;
+      {table.virtual.getVirtualItems() &&
+        table.virtual
+          .getVirtualItems()
+          .map(
+            (
+              virtualRow: LeafyGreenVirtualItem<KitchenSink>,
+              index: number,
+            ) => {
+              const row = virtualRow.row;
+              const isExpandedContent = row.isExpandedContent ?? false;
 
-	            return (
-	              <Fragment key={virtualRow.key}>
-	                {!isExpandedContent && (
+              return (
+                <Fragment key={virtualRow.key}>
+                  {!isExpandedContent && (
                     // row and virtualRow is required
-	                  <Row
-	                    row={row}
-	                    virtualRow={virtualRow}
-	                    data-row-index={index}
-	                  >
-	                    {row
-	                      .getVisibleCells()
-	                      .map((cell: LeafyGreenTableCell<KitchenSink>) => {
-	                        return (
+                    <Row
+                      row={row}
+                      virtualRow={virtualRow}
+                      data-row-index={index}
+                    >
+                      {row
+                        .getVisibleCells()
+                        .map((cell: LeafyGreenTableCell<KitchenSink>) => {
+                          return (
                             // cell is required
-	                          <Cell key={cell.id} cell={cell}>
-	                            {flexRender(
-	                              cell.column.columnDef.cell,
-	                              cell.getContext(),
-	                            )}
-	                          </Cell>
-	                        );
-	                      })}
-	                  </Row>
-	                )}
-	                {isExpandedContent && (
-	                  <ExpandedContent row={row} virtualRow={virtualRow} />
-	                )}
-	              </Fragment>
-	            );
-	          },
-	        )}
-	  </TableBody>
+                            <Cell key={cell.id} cell={cell}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                    </Row>
+                  )}
+                  {isExpandedContent && (
+                    <ExpandedContent row={row} virtualRow={virtualRow} />
+                  )}
+                </Fragment>
+              );
+            },
+          )}
+    </TableBody>
 	</Table>
 )
 ```
@@ -534,7 +501,7 @@ const _virtualizer = useVirtualizer({
 - `estimateSize`: This function is passed the index of each item and should return the actual size (or estimated size if you will be dynamically measuring items with virtualItem.measureElement) for each item. This measurement should return either the width or height depending on the orientation of your virtualizer.
 - `overscan`: The number of items to render above and below the visible area. Increasing this number will increase the amount of time it takes to render the virtualizer, but might decrease the likelihood of seeing slow-rendering blank items at the top and bottom of the virtualizer when scrolling.
 
-You can override any of these defaults in the `useLeafyGreenVirtualTable` hook with any of these [options](https://tanstack.com/virtual/latest/docs/api/virtualizer#optional-options).
+You can override any of these defaults in the `useLeafyGreenVirtualTable` hook with any of these [options from TanStack's virtualizer options docs](https://tanstack.com/virtual/latest/docs/api/virtualizer#optional-options).
 
 ### What is returned?
 
@@ -542,7 +509,7 @@ The `useLeafyGreenVirtualTable` hook returns an object that extends the `useL
 
 - `virtual`: An object containing properties and methods from the virtualizer instance, including a custom `getVirtualItems` method that maps virtual items to rows.
   - `getVirtualItems`: used to retrieve the virtualized items, mapping them to the corresponding rows in the table. This method ensures that only the visible rows are rendered, which improves performance when dealing with large datasets.
-  - For more methods and properties from from the virtualizer instance, refer to [TanStack doc](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
+  - For more methods and properties from from the virtualizer instance, refer to [TanStack's virtualizer instance docs](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
 
 ## Rendering Rows
 
@@ -914,13 +881,13 @@ All HTML `tr` element props
 
 ### `useLeafyGreenTable`
 
-| Name                | Description                                                                                                                                                                                                                                                                                                                | Type                               | Default |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------- |
-| `data`              | Data in the form of an array of objects, where each object represents a row in the table. Each property of the object corresponds to a column in the table.                                                                                                                                                                | `TableOptions<LGTableDataType<T>>` | -       |
-| `columns`           | The columns configuration is an array of objects, where each object defines how a column behaves and renders.                                                                                                                                                                                                              | `TableOptions<LGTableDataType<T>>` | -       |
-| `hasSelectableRows` | Setting this prop will inject a new column containing a checkbox into all rows.                                                                                                                                                                                                                                            | `boolean`                          | `false` |
-| `withPagination`    | Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. For more information, check out TanStack's [documentation](https://tanstack.com/table/latest/docs/guide/pagination) on pagination. | `boolean`                          | `false` |
-| `allowSelectAll`    | This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.                                                                                                                                                                                              | `boolean`                          | `true`  |
+| Name                | Description                                                                                                                                                                                                                                                                                                                           | Type                               | Default |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- | ------- |
+| `data`              | Data in the form of an array of objects, where each object represents a row in the table. Each property of the object corresponds to a column in the table.                                                                                                                                                                           | `TableOptions<LGTableDataType<T>>` | -       |
+| `columns`           | The columns configuration is an array of objects, where each object defines how a column behaves and renders.                                                                                                                                                                                                                         | `TableOptions<LGTableDataType<T>>` | -       |
+| `hasSelectableRows` | Setting this prop will inject a new column containing a checkbox into all rows.                                                                                                                                                                                                                                                       | `boolean`                          | `false` |
+| `withPagination`    | Setting this prop will indicate that the Table component is being used with the Pagination component. This will expose various pagination utilities from `table.getState().pagination`. For more information, check out TanStack's [pagination documentation](https://tanstack.com/table/latest/docs/guide/pagination) on pagination. | `boolean`                          | `false` |
+| `allowSelectAll`    | This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.                                                                                                                                                                                                         | `boolean`                          | `true`  |
 
 ### `useLeafyGreenVirtualTable`
 
@@ -931,7 +898,7 @@ All HTML `tr` element props
 | `columns`            | The columns configuration is an array of objects, where each object defines how a column behaves and renders.                                               | `TableOptions<LGTableDataType<T>>` | -       |
 | `hasSelectableRows`  | Setting this prop will inject a new column containing a checkbox into all rows.                                                                             | `boolean`                          | `false` |
 | `allowSelectAll`     | This prop controls whether a 'select all' checkbox will be rendered in the header row. This will be set to `true` by default.                               | `boolean`                          | `true`  |
-| `virtualizerOptions` | Available [options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance                                           |
+| `virtualizerOptions` | Available [virtualizer options](https://tanstack.com/virtual/latest/docs/api/virtualizer) to pass to the virtualizer instance                               |
 
 # Test Harnesses
 
