@@ -66,6 +66,7 @@ Although all `react-table` features are supported using LeafyGreen Table, only t
 ```jsx
 import {
   Cell,
+  flexRender
   HeaderCell
   HeaderRow,
   Row,
@@ -73,7 +74,6 @@ import {
   TableBody,
   TableHead,
   useLeafyGreenTable,
-  flexRender
 } from '@leafygreen-ui/table';
 
 // Data that should be passed to the `useLeafyGreenTable` hook.
@@ -356,14 +356,15 @@ The options passed to `useLeafyGreenVirtualTable` are the same as those passed t
 
 ```jsx
 import {
-  Table,
-  TableHead,
-  HeaderRow,
-  TableBody,
-  Row,
   Cell,
-  useLeafyGreenVirtualTable,
   flexRender
+  HeaderCell
+  HeaderRow,
+  Row,
+  Table,
+  TableBody,
+  TableHead,
+  useLeafyGreenVirtualTable,
 } from '@leafygreen-ui/table';
 
 const tableContainerRef = React.useRef<HTMLDivElement>(null);
