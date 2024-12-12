@@ -15,6 +15,7 @@ import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
 import Modal, { CloseIconColor, ModalProps, ModalSize } from '.';
@@ -268,5 +269,22 @@ console.log(greeting('World'));
         </div>
       </Modal>
     </div>
+  );
+}
+
+export function TooltipTrigger(args: ModalProps) {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <>
+      <Tooltip
+        trigger={
+          <Button onClick={() => setOpen(curr => !curr)}>Click me</Button>
+        }
+      >
+        Lorem Ipsum
+      </Tooltip>
+      <Modal {...args} open={open} setOpen={setOpen} />
+    </>
   );
 }
