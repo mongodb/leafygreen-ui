@@ -199,7 +199,7 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
 ### `useLeafyGreenTable` hook
 
-`useLeafyGreenTable` will no longer accept `useVirtualScrolling` and `virtualizerOptions`. To use a virtual table, use the new hook, (`useLeafyGreenVirtualTable`)[#useleafygreenvirtualtable-hook], which extends `useLeafyGreenTable`.
+`useLeafyGreenTable` will no longer accept `useVirtualScrolling` and `virtualizerOptions`. To use a virtual table, use the new hook, [`useLeafyGreenVirtualTable`](#useleafygreenvirtualtable-hook), which extends `useLeafyGreenTable`.
 
 **Before**:
 
