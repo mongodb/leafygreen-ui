@@ -1,16 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { LineChart as EchartsLineChart } from 'echarts/charts';
-import {
-  DataZoomComponent,
-  DataZoomInsideComponent,
-  GridComponent,
-  LegendComponent,
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-} from 'echarts/components';
-import * as echarts from 'echarts/core';
-import { CanvasRenderer } from 'echarts/renderers';
 import debounce from 'lodash.debounce';
 
 import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
@@ -19,23 +7,7 @@ import { getDefaultChartOptions } from '../config';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
-
-/**
- * Register the required components. By using separate imports, we can avoid
- * importing the entire echarts library which will reduce the bundle size.
- * Must be added to if additional functionality is supported.
- */
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  LegendComponent,
-  EchartsLineChart,
-  CanvasRenderer,
-  ToolboxComponent,
-  DataZoomComponent,
-  DataZoomInsideComponent,
-]);
+import { useEchartsInstance } from '../../Echarts/useEchartsInstance';
 
 /**
  * Creates a generic Apache ECharts options object with default values for those not set
@@ -43,13 +15,13 @@ echarts.use([
  */
 export function useChart({
   theme,
-  onChartReady,
+  onChartReady = () => {},
   zoomSelect,
   onZoomSelect,
   groupId,
 }: ChartHookProps) {
   const chartRef = useRef(null);
-  const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
+  const { chart, echarts } = useEchartsInstance(chartRef.current);
   const [chartOptions, setChartOptions] = useState(
     getDefaultChartOptions(theme),
   );
@@ -91,15 +63,13 @@ export function useChart({
     }
 
     /**
-     * If start is not 0% or end is not 100%, that means that the 'dataZoom'
-     * event was triggered by an actual zoom. Since we don't want to actually
-     * zoom on the current data, but rather provide the new values to the passed
-     * in handler, we dispatch an action to essentially override the zoom.
+     * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
+     * We override the zoom to provide new values to the handler.
      */
     const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-    if (chartInstanceRef.current && isZoomed) {
-      chartInstanceRef.current.dispatchAction({
+    if (chart && isZoomed) {
+      chart.dispatchAction({
         type: 'dataZoom',
         start: 0, // percentage of starting position
         end: 100, // percentage of ending position
@@ -107,83 +77,54 @@ export function useChart({
     }
   }
 
-  /**
-   * Meant to be called once on initial render
-   */
-  function onInitialRender() {
-    if (!chartInstanceRef.current) {
-      return;
-    }
-
-    const chartInstance = chartInstanceRef.current;
-
-    if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-      /**
-       * Zooming is built into echart via the toolbar. By default, a user
-       * has to click the "dataZoom" button to enable zooming. We however hide
-       * this button and want it turned on by default. This is done by dispatching
-       * an action to enable the "dataZoomSelect" feature, as if it were clicked.
-       */
-      chartInstance.dispatchAction({
-        type: 'takeGlobalCursor',
-        key: 'dataZoomSelect',
-        dataZoomSelectActive: true,
-      });
-
-      chartInstance.on('dataZoom', handleDataZoom);
-    }
-
-    if (onChartReady) {
-      onChartReady();
-    }
-
-    /**
-     * This is only done on initial render because what's inside itself
-     * triggers a render which creates an infinite loop if not removed.
-     */
-    chartInstance.off('rendered', onInitialRender);
-  }
-
   // Initialize the chart
   useEffect(() => {
-    const chartInstance = echarts.init(chartRef.current);
-    chartInstanceRef.current = chartInstance;
-    chartInstance.setOption(chartOptions);
+    if (!chart || !echarts) return;
+
+    chart.setOption(chartOptions);
 
     // Connects a chart to a group which allows for synchronized tooltips
     if (groupId) {
-      chartInstance.group = groupId;
+      chart.group = groupId;
       echarts.connect(groupId);
     }
 
     // ECharts does not automatically resize when the window resizes.
     const resizeHandler = () => {
-      chartInstance.resize();
+      chart.resize();
     };
     window.addEventListener('resize', resizeHandler);
 
-    chartInstance.on('rendered', onInitialRender);
+    chart.on('rendered', function onInitialRender() {
+      // Enable zooming by default by dispatching the "dataZoomSelect" action.
+      chart.dispatchAction({
+        type: 'takeGlobalCursor',
+        key: 'dataZoomSelect',
+        dataZoomSelectActive: zoomSelect?.xAxis || zoomSelect?.yAxis,
+      });
+
+      chart.on('dataZoom', handleDataZoom);
+      onChartReady();
+      chart.off('rendered', onInitialRender);
+    });
 
     return () => {
       window.removeEventListener('resize', resizeHandler);
-      chartInstance.dispose();
+      chart.dispose();
     };
-  }, [chartOptions, onChartReady, zoomSelect]);
+  }, [chart, echarts]);
 
   // Set which axis zoom is enabled on
   useEffect(() => {
     // `0` index enables zoom on that index, `'none'` disables zoom on that index
     let xAxisIndex: number | string = 0;
     let yAxisIndex: number | string = 0;
-
     if (!zoomSelect?.xAxis) {
       xAxisIndex = 'none';
     }
-
     if (!zoomSelect?.yAxis) {
       yAxisIndex = 'none';
     }
-
     updateChartOptions({
       toolbox: {
         feature: {
@@ -204,7 +145,7 @@ export function useChart({
          * This is needed to ensure that series get removed properly.
          * See issue: https://github.com/apache/echarts/issues/6202
          * */
-        chartInstanceRef.current?.setOption(chartOptions, true);
+        chart?.setOption(chartOptions, true);
       }, 50),
     [],
   );
@@ -259,6 +200,5 @@ export function useChart({
     addChartSeries,
     removeChartSeries,
     chartRef,
-    chartInstanceRef,
   };
 }
