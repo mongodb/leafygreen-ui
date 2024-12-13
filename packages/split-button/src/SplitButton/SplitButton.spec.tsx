@@ -10,9 +10,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import { Optional } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
+import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
 
 import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
@@ -38,7 +38,10 @@ const defaultProps = {
   menuItems: getMenuItems(),
 };
 
-type RenderSplitButtonProps = Optional<InferredPolymorphicPropsWithRef<'button', SplitButtonProps>, keyof typeof defaultProps>;
+type RenderSplitButtonProps = Optional<
+  InferredPolymorphicPropsWithRef<'button', SplitButtonProps>,
+  keyof typeof defaultProps
+>;
 
 function renderSplitButton(props: RenderSplitButtonProps = {}) {
   const renderResult = render(
@@ -267,7 +270,7 @@ describe('packages/split-button', () => {
       });
       test('Returns focus to trigger {renderMode: "portal"}', async () => {
         const { openMenu, menuTrigger } = renderSplitButton({
-          renderMode: "portal"
+          renderMode: 'portal',
         });
         const { menuEl } = await openMenu();
 
@@ -278,7 +281,7 @@ describe('packages/split-button', () => {
 
       test('Returns focus to trigger {renderMode: "inline"}', async () => {
         const { openMenu, menuTrigger } = renderSplitButton({
-          renderMode: "inline"
+          renderMode: 'inline',
         });
         const { menuEl } = await openMenu();
 
