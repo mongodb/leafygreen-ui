@@ -178,7 +178,7 @@ describe('packages/split-button', () => {
     test('trigger opens the menu when clicked', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      fireEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       expect(menu).toBeInTheDocument();
@@ -189,7 +189,7 @@ describe('packages/split-button', () => {
         disabled: true,
       });
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      fireEvent.click(menuTrigger);
 
       const menu = queryByTestId(menuTestId);
       expect(menu).not.toBeInTheDocument();
@@ -198,7 +198,7 @@ describe('packages/split-button', () => {
     test('has correct menu items', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      fireEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       expect(menu.childElementCount).toEqual(4);
@@ -224,7 +224,7 @@ describe('packages/split-button', () => {
       const onChange = jest.fn();
       const { menuTrigger, getByTestId } = renderSplitButton({ onChange });
 
-      userEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       const options = globalGetAllByRole(menu, 'menuitem');
