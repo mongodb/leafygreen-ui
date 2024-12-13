@@ -14,7 +14,7 @@ import { chartSeriesColors } from '../Chart/chartSeriesColors';
 
 type EchartsType = any; // has to be any since no types exist until import
 
-// Singleton promise for initialization to prevent duplicatation
+// Singleton promise for initialization to prevent duplication
 let initPromise: Promise<void> | null = null;
 let echartsCore: any;
 let echartsCharts: any;
