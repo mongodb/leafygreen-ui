@@ -10,10 +10,12 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
+import { Optional } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
 import { RenderMode } from '@leafygreen-ui/popover';
 
-import { MenuItemsType } from './SplitButton.types';
+import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
 import { SplitButton } from '.';
 
 const menuTestId = 'lg-split-button-menu';
@@ -36,7 +38,9 @@ const defaultProps = {
   menuItems: getMenuItems(),
 };
 
-function renderSplitButton(props = {}) {
+type RenderSplitButtonProps = Optional<InferredPolymorphicPropsWithRef<'button', SplitButtonProps>, keyof typeof defaultProps>;
+
+function renderSplitButton(props: RenderSplitButtonProps = {}) {
   const renderResult = render(
     <SplitButton data-testid="split-button" {...defaultProps} {...props} />,
   );
