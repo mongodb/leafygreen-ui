@@ -36,14 +36,10 @@ jobs:
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
         run: |
           export NODE_OPTIONS="--max-old-space-size=4096"
             yarn build
