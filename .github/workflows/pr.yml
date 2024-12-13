@@ -36,11 +36,11 @@ jobs:
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: node --max_old_space_size=4096 yarn install --frozen-lockfile --prefer-offline
+        run: yarn install --frozen-lockfile --prefer-offline
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: node --max_old_space_size=4096 yarn build
+        run: yarn build
 
   lint:
     name: Check lints
