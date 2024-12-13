@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -75,7 +75,7 @@ async function initializeEcharts() {
 
 export function useEchart(container: HTMLDivElement | null) {
   const [chart, setChart] = useState<EchartsType | null>(null);
-  const [isReady, setisReady] = useState(true);
+  const [isReady, setIsReady] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const { theme } = useDarkMode();
   const [chartOptions, setChartOptions] = useState(
@@ -92,7 +92,7 @@ export function useEchart(container: HTMLDivElement | null) {
   useEffect(() => {
     (async function setupChart() {
       try {
-        setisReady(true);
+        setIsReady(true);
         setError(null);
 
         await initializeEcharts();
@@ -113,7 +113,7 @@ export function useEchart(container: HTMLDivElement | null) {
             : new Error('Failed to initialize ECharts'),
         );
       } finally {
-        setisReady(false);
+        setIsReady(false);
       }
     })();
 
@@ -208,7 +208,7 @@ export function useEchart(container: HTMLDivElement | null) {
     switch (action) {
       case 'zoomSelect': {
         chart.on('dataZoom', (params: any) => {
-          callback(params); // TODO: Add logic
+          callback(params); // TODO: Add logic to parse data
         });
         break;
       }

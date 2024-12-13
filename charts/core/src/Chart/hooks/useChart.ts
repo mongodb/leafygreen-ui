@@ -1,11 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import debounce from 'lodash.debounce';
+import { useEffect, useRef } from 'react';
 
-import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
-import { chartSeriesColors } from '../chartSeriesColors';
-import { getDefaultChartOptions } from '../config';
-
-import { addSeries, removeSeries, updateOptions } from './updateUtils';
 import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
 import { useEchart } from '../../echarts/useEchart';
 
