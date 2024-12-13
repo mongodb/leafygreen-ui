@@ -7,7 +7,7 @@ import { getDefaultChartOptions } from '../config';
 
 import { addSeries, removeSeries, updateOptions } from './updateUtils';
 import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
-import { useEchartsInstance } from '../../Echarts/useEchartsInstance';
+import { useEchart } from '../../Echarts/useEchart';
 
 /**
  * Creates a generic Apache ECharts options object with default values for those not set
@@ -21,7 +21,7 @@ export function useChart({
   groupId,
 }: ChartHookProps) {
   const chartRef = useRef(null);
-  const { chart, echarts } = useEchartsInstance(chartRef.current);
+  const { chart, core, addToGroup } = useEchart(chartRef.current);
   const [chartOptions, setChartOptions] = useState(
     getDefaultChartOptions(theme),
   );
@@ -79,14 +79,14 @@ export function useChart({
 
   // Initialize the chart
   useEffect(() => {
-    if (!chart || !echarts) return;
+    if (!chart || !core) {
+      return;
+    }
 
     chart.setOption(chartOptions);
 
-    // Connects a chart to a group which allows for synchronized tooltips
     if (groupId) {
-      chart.group = groupId;
-      echarts.connect(groupId);
+      addToGroup(groupId);
     }
 
     // ECharts does not automatically resize when the window resizes.
@@ -112,7 +112,7 @@ export function useChart({
       window.removeEventListener('resize', resizeHandler);
       chart.dispose();
     };
-  }, [chart, echarts]);
+  }, [chart, core]);
 
   // Set which axis zoom is enabled on
   useEffect(() => {
