@@ -217,6 +217,16 @@ describe('packages/split-button', () => {
       expect(portalRef.current).toBeDefined();
       expect(portalRef.current).toBe(portalContainer);
     });
+
+    describe('managed', () => {
+      test('calls setOpen when triggered', () => {
+        const setOpen = jest.fn();
+        const { menuTrigger } = renderSplitButton({ open: false, setOpen });
+
+        userEvent.click(menuTrigger);
+        expect(setOpen).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 
   describe('MenuItem', () => {
