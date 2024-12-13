@@ -4,11 +4,10 @@ import debounce from 'lodash.debounce';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getDefaultChartOptions } from '../Chart/config';
-import { ChartOptions, SeriesOption } from '../Chart';
+import { ChartOptions } from '../Chart';
 import * as updateUtils from '../Chart/hooks/updateUtils';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
-
-type EchartsType = any; // has to be any since no types exist until import
+import { EChartsInstance } from './echarts.types';
 
 // Singleton promise for initialization to prevent duplication
 let initPromise: Promise<void> | null = null;
@@ -69,16 +68,24 @@ async function initializeEcharts() {
   return initPromise;
 }
 
-export function useEchart(container: HTMLDivElement | null) {
-  const [chartInstance, setChartInstance] = useState<EchartsType | null>(null);
-  const [error, setError] = useState<Error | null>(null);
+/**
+ * Wrapper around the ECharts library. Instantiates and returns an ECharts instance.
+ * Provides helper methods to hide ECharts specific logic and provide a clean API
+ * for interacting with a chart.
+ */
+export function useEchart(container: HTMLDivElement | null): EChartsInstance {
+  const [echartsInstance, setEchartsInstance] = useState<any>(null); // has to be any since no types exist until import
+  const [error, setError] = useState<EChartsInstance['error']>(null);
+  const [ready, setReady] = useState<EChartsInstance['ready']>(false);
   const { theme } = useDarkMode();
-  const [options, setOptions] = useState(getDefaultChartOptions(theme));
+  const [options, setOptions] = useState<EChartsInstance['options']>(
+    getDefaultChartOptions(theme),
+  );
 
   // ECharts does not automatically resize when the window resizes.
   const resizeHandler = () => {
-    if (chartInstance) {
-      chartInstance.resize();
+    if (echartsInstance) {
+      echartsInstance.resize();
     }
   };
 
@@ -93,9 +100,11 @@ export function useEchart(container: HTMLDivElement | null) {
           const newChart = echartsCore.init(container);
           newChart.setOption(options);
           window.addEventListener('resize', resizeHandler);
-          setChartInstance(newChart);
+          setEchartsInstance(newChart);
+          setReady(true);
         }
       } catch (err) {
+        setReady(false);
         console.error(err);
         setError(
           err instanceof Error
@@ -107,9 +116,9 @@ export function useEchart(container: HTMLDivElement | null) {
 
     // Cleanup function
     return () => {
-      if (chartInstance) {
+      if (echartsInstance) {
         window.removeEventListener('resize', resizeHandler);
-        chartInstance.dispose();
+        echartsInstance.dispose();
       }
     };
   }, [container]);
@@ -125,23 +134,20 @@ export function useEchart(container: HTMLDivElement | null) {
     });
   }, [theme]);
 
-  function addToGroup(groupId: string) {
-    chartInstance.group = groupId;
+  const addToGroup: EChartsInstance['addToGroup'] = groupId => {
+    echartsInstance.group = groupId;
     echartsCore.connect(groupId);
-  }
+  };
 
-  function removeFromGroup() {
-    chartInstance.group = null;
-  }
+  const removeFromGroup: EChartsInstance['removeFromGroup'] = () => {
+    echartsInstance.group = null;
+  };
 
-  function setupZoomSelect({
+  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = ({
     xAxis,
     yAxis,
-  }: {
-    xAxis?: boolean;
-    yAxis?: boolean;
-  }) {
-    if (chartInstance) {
+  }) => {
+    if (echartsInstance) {
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       let xAxisIndex: number | string = 0;
       let yAxisIndex: number | string = 0;
@@ -165,23 +171,23 @@ export function useEchart(container: HTMLDivElement | null) {
         },
       });
 
-      chartInstance.on('rendered', () => {
-        chartInstance.dispatchAction({
+      echartsInstance.on('rendered', () => {
+        echartsInstance.dispatchAction({
           type: 'takeGlobalCursor',
           key: 'dataZoomSelect',
           dataZoomSelectActive: xAxis || yAxis,
         });
       });
 
-      chartInstance.on('dataZoom', (params: any) => {
+      echartsInstance.on('dataZoom', (params: any) => {
         /**
          * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
          * We override the zoom to prevent it from actually zooming.
          */
         const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-        if (chartInstance && isZoomed) {
-          chartInstance.dispatchAction({
+        if (echartsInstance && isZoomed) {
+          echartsInstance.dispatchAction({
             type: 'dataZoom',
             start: 0, // percentage of starting position
             end: 100, // percentage of ending position
@@ -189,26 +195,33 @@ export function useEchart(container: HTMLDivElement | null) {
         }
       });
     }
-  }
+  };
 
-  // TODO: update type
-  function on(action: 'zoomSelect' | string, callback: any) {
+  const on: EChartsInstance['on'] = (action, callback) => {
     switch (action) {
-      case 'zoomSelect': {
-        chartInstance.on('dataZoom', (params: any) => {
+      case 'zoomselect': {
+        echartsInstance.on('datazoom', (params: any) => {
           callback(params); // TODO: Add logic to parse data
         });
         break;
       }
       default: {
-        chartInstance.on(action, callback);
+        echartsInstance.on(action, callback);
       }
     }
-  }
+  };
 
-  function off(action: string, callback: any) {
-    chartInstance.off(action, callback);
-  }
+  const off: EChartsInstance['off'] = (action, callback) => {
+    switch (action) {
+      case 'zoomselect': {
+        echartsInstance.off('datazoom', callback);
+        break;
+      }
+      default: {
+        echartsInstance.on(action, callback);
+      }
+    }
+  };
 
   const setEchartOptions = useMemo(
     () =>
@@ -218,13 +231,13 @@ export function useEchart(container: HTMLDivElement | null) {
          * This is needed to ensure that series get removed properly.
          * See issue: https://github.com/apache/echarts/issues/6202
          * */
-        chartInstance?.setOption(options, true);
+        echartsInstance?.setOption(options, true);
       }, 50),
     [],
   );
 
-  const addSeries = useCallback(
-    (data: SeriesOption) => {
+  const addSeries: EChartsInstance['addSeries'] = useCallback(
+    data => {
       setOptions(currentOptions => {
         const updatedOptions = updateUtils.addSeries(currentOptions, data);
         setEchartOptions(updatedOptions);
@@ -234,8 +247,8 @@ export function useEchart(container: HTMLDivElement | null) {
     [setEchartOptions],
   );
 
-  const removeSeries = useCallback(
-    (name: string) => {
+  const removeSeries: EChartsInstance['removeSeries'] = useCallback(
+    name => {
       setOptions(currentOptions => {
         const updatedOptions = updateUtils.removeSeries(currentOptions, name);
         setEchartOptions(updatedOptions);
@@ -245,8 +258,8 @@ export function useEchart(container: HTMLDivElement | null) {
     [setEchartOptions],
   );
 
-  const updateOptions = useCallback(
-    (options: Omit<Partial<ChartOptions>, 'series'>) => {
+  const updateOptions: EChartsInstance['updateOptions'] = useCallback(
+    options => {
       setOptions(currentOptions => {
         const updatedOptions = updateUtils.updateOptions(
           currentOptions,
@@ -260,16 +273,17 @@ export function useEchart(container: HTMLDivElement | null) {
   );
 
   return {
-    instance: chartInstance,
+    _echartsInstance: echartsInstance,
+    ready,
     options,
-    addToGroup,
-    removeFromGroup,
-    setupZoomSelect,
+    updateOptions,
     on,
     off,
     addSeries,
     removeSeries,
-    updateOptions,
+    addToGroup,
+    removeFromGroup,
+    setupZoomSelect,
     error,
   };
 }
