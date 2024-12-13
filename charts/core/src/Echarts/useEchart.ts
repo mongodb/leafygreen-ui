@@ -5,11 +5,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { getDefaultChartOptions } from '../Chart/config';
 import { ChartOptions, SeriesOption } from '../Chart';
-import {
-  addSeries,
-  removeSeries,
-  updateOptions,
-} from '../Chart/hooks/updateUtils';
+import * as updateUtils from '../Chart/hooks/updateUtils';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
 
 type EchartsType = any; // has to be any since no types exist until import
@@ -74,37 +70,31 @@ async function initializeEcharts() {
 }
 
 export function useEchart(container: HTMLDivElement | null) {
-  const [chart, setChart] = useState<EchartsType | null>(null);
-  const [isReady, setIsReady] = useState(true);
+  const [chartInstance, setChartInstance] = useState<EchartsType | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const { theme } = useDarkMode();
-  const [chartOptions, setChartOptions] = useState(
-    getDefaultChartOptions(theme),
-  );
+  const [options, setOptions] = useState(getDefaultChartOptions(theme));
 
   // ECharts does not automatically resize when the window resizes.
   const resizeHandler = () => {
-    if (chart) {
-      chart.resize();
+    if (chartInstance) {
+      chartInstance.resize();
     }
   };
 
   useEffect(() => {
     (async function setupChart() {
       try {
-        setIsReady(true);
         setError(null);
 
         await initializeEcharts();
 
         if (container) {
           const newChart = echartsCore.init(container);
-          newChart.setOption(chartOptions);
+          newChart.setOption(options);
           window.addEventListener('resize', resizeHandler);
-          setChart(newChart);
+          setChartInstance(newChart);
         }
-
-        console.log('is ready');
       } catch (err) {
         console.error(err);
         setError(
@@ -112,22 +102,20 @@ export function useEchart(container: HTMLDivElement | null) {
             ? err
             : new Error('Failed to initialize ECharts'),
         );
-      } finally {
-        setIsReady(false);
       }
     })();
 
     // Cleanup function
     return () => {
-      if (chart) {
+      if (chartInstance) {
         window.removeEventListener('resize', resizeHandler);
-        chart.dispose();
+        chartInstance.dispose();
       }
     };
   }, [container]);
 
   useEffect(() => {
-    setChartOptions(currentOptions => {
+    setOptions(currentOptions => {
       const updatedOptions = {
         ...currentOptions,
         color: chartSeriesColors[theme],
@@ -138,12 +126,12 @@ export function useEchart(container: HTMLDivElement | null) {
   }, [theme]);
 
   function addToGroup(groupId: string) {
-    chart.group = groupId;
+    chartInstance.group = groupId;
     echartsCore.connect(groupId);
   }
 
   function removeFromGroup() {
-    chart.group = null;
+    chartInstance.group = null;
   }
 
   function setupZoomSelect({
@@ -153,7 +141,7 @@ export function useEchart(container: HTMLDivElement | null) {
     xAxis?: boolean;
     yAxis?: boolean;
   }) {
-    if (chart) {
+    if (chartInstance) {
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       let xAxisIndex: number | string = 0;
       let yAxisIndex: number | string = 0;
@@ -166,7 +154,7 @@ export function useEchart(container: HTMLDivElement | null) {
         yAxisIndex = 'none';
       }
 
-      updateChartOptions({
+      updateOptions({
         toolbox: {
           feature: {
             dataZoom: {
@@ -177,23 +165,23 @@ export function useEchart(container: HTMLDivElement | null) {
         },
       });
 
-      chart.on('rendered', () => {
-        chart.dispatchAction({
+      chartInstance.on('rendered', () => {
+        chartInstance.dispatchAction({
           type: 'takeGlobalCursor',
           key: 'dataZoomSelect',
           dataZoomSelectActive: xAxis || yAxis,
         });
       });
 
-      chart.on('dataZoom', (params: any) => {
+      chartInstance.on('dataZoom', (params: any) => {
         /**
          * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
          * We override the zoom to prevent it from actually zooming.
          */
         const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-        if (chart && isZoomed) {
-          chart.dispatchAction({
+        if (chartInstance && isZoomed) {
+          chartInstance.dispatchAction({
             type: 'dataZoom',
             start: 0, // percentage of starting position
             end: 100, // percentage of ending position
@@ -207,38 +195,38 @@ export function useEchart(container: HTMLDivElement | null) {
   function on(action: 'zoomSelect' | string, callback: any) {
     switch (action) {
       case 'zoomSelect': {
-        chart.on('dataZoom', (params: any) => {
+        chartInstance.on('dataZoom', (params: any) => {
           callback(params); // TODO: Add logic to parse data
         });
         break;
       }
       default: {
-        chart.on(action, callback);
+        chartInstance.on(action, callback);
       }
     }
   }
 
   function off(action: string, callback: any) {
-    chart.off(action, callback);
+    chartInstance.off(action, callback);
   }
 
   const setEchartOptions = useMemo(
     () =>
-      debounce((chartOptions: Partial<ChartOptions>) => {
+      debounce((options: Partial<ChartOptions>) => {
         /**
          * The second argument is `true` to merge the new options with the existing ones.
          * This is needed to ensure that series get removed properly.
          * See issue: https://github.com/apache/echarts/issues/6202
          * */
-        chart?.setOption(chartOptions, true);
+        chartInstance?.setOption(options, true);
       }, 50),
     [],
   );
 
-  const addChartSeries = useCallback(
+  const addSeries = useCallback(
     (data: SeriesOption) => {
-      setChartOptions(currentOptions => {
-        const updatedOptions = addSeries(currentOptions, data);
+      setOptions(currentOptions => {
+        const updatedOptions = updateUtils.addSeries(currentOptions, data);
         setEchartOptions(updatedOptions);
         return updatedOptions;
       });
@@ -246,10 +234,10 @@ export function useEchart(container: HTMLDivElement | null) {
     [setEchartOptions],
   );
 
-  const removeChartSeries = useCallback(
+  const removeSeries = useCallback(
     (name: string) => {
-      setChartOptions(currentOptions => {
-        const updatedOptions = removeSeries(currentOptions, name);
+      setOptions(currentOptions => {
+        const updatedOptions = updateUtils.removeSeries(currentOptions, name);
         setEchartOptions(updatedOptions);
         return updatedOptions;
       });
@@ -257,10 +245,13 @@ export function useEchart(container: HTMLDivElement | null) {
     [setEchartOptions],
   );
 
-  const updateChartOptions = useCallback(
+  const updateOptions = useCallback(
     (options: Omit<Partial<ChartOptions>, 'series'>) => {
-      setChartOptions(currentOptions => {
-        const updatedOptions = updateOptions(currentOptions, options);
+      setOptions(currentOptions => {
+        const updatedOptions = updateUtils.updateOptions(
+          currentOptions,
+          options,
+        );
         setEchartOptions(updatedOptions);
         return updatedOptions;
       });
@@ -269,17 +260,16 @@ export function useEchart(container: HTMLDivElement | null) {
   );
 
   return {
-    chart,
-    chartOptions,
+    instance: chartInstance,
+    options,
     addToGroup,
     removeFromGroup,
     setupZoomSelect,
     on,
     off,
-    addChartSeries,
-    removeChartSeries,
-    updateChartOptions,
-    isReady,
+    addSeries,
+    removeSeries,
+    updateOptions,
     error,
   };
 }
