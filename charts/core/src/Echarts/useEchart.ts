@@ -1,16 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Type for the ECharts instance
-type EchartsType = any;
+type EchartsType = any; // has to be any since no types exist until import
 
-interface UseEchartsResult {
-  chart: EchartsType | null;
-  isLoading: boolean;
-  error: Error | null;
-  echarts: any;
-}
-
-// Singleton promise for initialization
+// Singleton promise for initialization to prevent duplicatation
 let initPromise: Promise<void> | null = null;
 let echartsCore: any;
 let echartsCharts: any;
@@ -69,15 +61,13 @@ async function initializeEcharts() {
   return initPromise;
 }
 
-export function useEchartsInstance(
-  container: HTMLDivElement | null,
-): UseEchartsResult {
+export function useEchart(container: HTMLDivElement | null) {
   const [chart, setChart] = useState<EchartsType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    async function setupChart() {
+    (async function setupChart() {
       try {
         setIsLoading(true);
         setError(null);
@@ -86,7 +76,6 @@ export function useEchartsInstance(
 
         if (container) {
           const newChart = echartsCore.init(container);
-          console.log('post init');
           setChart(newChart);
         }
       } catch (err) {
@@ -99,9 +88,7 @@ export function useEchartsInstance(
       } finally {
         setIsLoading(false);
       }
-    }
-
-    setupChart();
+    })();
 
     // Cleanup function
     return () => {
@@ -111,5 +98,10 @@ export function useEchartsInstance(
     };
   }, [container]);
 
-  return { chart, echarts: echartsCore, isLoading, error };
+  function addToGroup(groupId: string) {
+    chart.group = groupId;
+    echartsCore.connect(groupId);
+  }
+
+  return { chart, addToGroup, core: echartsCore, isLoading, error };
 }
