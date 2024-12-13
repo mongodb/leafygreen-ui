@@ -36,17 +36,11 @@ jobs:
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: node --max_old_space_size=4096 yarn install --frozen-lockfile --prefer-offline
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
-        run: |
-          export NODE_OPTIONS="--max-old-space-size=4096"
-            yarn build
+        run: node --max_old_space_size=4096 yarn build
 
   lint:
     name: Check lints
@@ -110,7 +104,7 @@ jobs:
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: 'build-storybook'
+          buildScriptName: 'node --max_old_space_size=4096 build-storybook'
           onlyChanged: true
           exitOnceUploaded: true
           exitZeroOnChanges: true
