@@ -10,7 +10,7 @@ export function useChart({
   groupId,
 }: ChartHookProps) {
   const chartRef = useRef(null);
-  const chart = useEchart(chartRef.current);
+  const echart = useEchart(chartRef.current);
 
   function handleDataZoom(params: any) {
     if (onZoomSelect) {
@@ -50,34 +50,34 @@ export function useChart({
   }
 
   useEffect(() => {
-    if (chart.instance) {
+    if (echart.ready) {
       onChartReady();
     }
-  }, [chart.instance]);
+  }, [echart.ready]);
 
   useEffect(() => {
-    if (chart.instance) {
+    if (echart.ready) {
       if (groupId) {
-        chart.addToGroup(groupId);
+        echart.addToGroup(groupId);
       }
     }
-  }, [chart.instance, groupId]);
+  }, [echart.ready, groupId]);
 
   useEffect(() => {
-    if (chart.instance) {
-      chart.setupZoomSelect({
+    if (echart.ready) {
+      echart.setupZoomSelect({
         xAxis: zoomSelect?.xAxis,
         yAxis: zoomSelect?.yAxis,
       });
-      chart.on('zoomSelect', handleDataZoom);
+      echart.on('zoomselect', handleDataZoom);
     }
-  }, [chart.instance, zoomSelect]);
+  }, [echart.ready, zoomSelect]);
 
   return {
-    chartOptions: chart.options,
-    updateChartOptions: chart.updateOptions,
-    addChartSeries: chart.addSeries,
-    removeChartSeries: chart.removeSeries,
+    chartOptions: echart.options,
+    updateChartOptions: echart.updateOptions,
+    addChartSeries: echart.addSeries,
+    removeChartSeries: echart.removeSeries,
     chartRef,
   };
 }
