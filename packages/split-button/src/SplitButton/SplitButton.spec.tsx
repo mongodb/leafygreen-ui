@@ -209,7 +209,7 @@ describe('packages/split-button', () => {
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
       renderSplitButton({
-        open,
+        open: true,
         portalContainer,
         portalRef,
         renderMode: RenderMode.Portal,
@@ -255,9 +255,9 @@ describe('packages/split-button', () => {
         await waitForElementToBeRemoved(menuEl);
         expect(menuEl).not.toBeInTheDocument();
       });
-      test('Returns focus to trigger {usePortal: true}', async () => {
+      test('Returns focus to trigger {renderMode: "portal"}', async () => {
         const { openMenu, menuTrigger } = renderSplitButton({
-          usePortal: true,
+          renderMode: "portal"
         });
         const { menuEl } = await openMenu();
 
@@ -266,9 +266,9 @@ describe('packages/split-button', () => {
         expect(menuTrigger).toHaveFocus();
       });
 
-      test('Returns focus to trigger {usePortal: false}', async () => {
+      test('Returns focus to trigger {renderMode: "inline"}', async () => {
         const { openMenu, menuTrigger } = renderSplitButton({
-          usePortal: false,
+          renderMode: "inline"
         });
         const { menuEl } = await openMenu();
 
