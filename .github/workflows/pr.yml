@@ -104,7 +104,7 @@ jobs:
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: 'node --max_old_space_size=4096 build-storybook'
+          buildScriptName: 'build-storybook'
           onlyChanged: true
           exitOnceUploaded: true
           exitZeroOnChanges: true
