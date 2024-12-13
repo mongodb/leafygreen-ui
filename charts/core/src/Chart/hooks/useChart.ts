@@ -18,7 +18,6 @@ export function useChart({
   const chartRef = useRef(null);
   const {
     chart,
-    isLoading,
     chartOptions,
     on,
     addToGroup,
