@@ -23,13 +23,13 @@
   },
   "dependencies": {
     "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
+    "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "^12.5.0",
-    "@leafygreen-ui/lib": "^13.5.0",
+    "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/modal": "^16.0.8",
-    "@leafygreen-ui/palette": "^4.0.10",
+    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/text-input": "^13.1.0",
-    "@leafygreen-ui/tokens": "^2.11.0",
+    "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "^19.0.0"
   },
   "peerDependencies": {
@@ -43,7 +43,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
-  }
+  "devDependencies": {}
 }

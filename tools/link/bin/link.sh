@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 # $1 the first argument after the command is the relative or absolute path to the client
-# directory, where you intend to run yarn link on installed UI-Kit modules.
+# directory, where you intend to run pnpm link on installed UI-Kit modules.
 # To run, navigate to your leafygreen-ui folder root, then in the shell run
-# yarn run link -- ${PATH_TO_APPLICATION}
+# pnpm run link -- ${PATH_TO_APPLICATION}
 
 if [ "$1" == "" ]; then
     echo "This script requires a path to the target application from the root folder of this repository."
@@ -28,18 +28,18 @@ for d in *; do
     fi
 done
 cd $LEAFYGREEN_HOME
-yarn
+pnpm
 set +e
-yarn run link:all
+pnpm run link:all
 set -e
 cd $LEAFYGREEN_HOME
 # Add `--no-build` to the end of the command to skip the build step
 if [$2 != "--no-build"]; then
-    yarn build
+    pnpm build
 fi
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
-    yarn link @leafygreen-ui/$f
+    pnpm link @leafygreen-ui/$f
 done
 
 exit 0;

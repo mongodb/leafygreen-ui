@@ -15,13 +15,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/banner": "^8.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/palette": "^4.0.10",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@lg-tools/build": "^0.6.0",
-    "@storybook/react": "^7.6.17",
-    "@lg-tools/storybook-utils": "^0.1.0",
+    "@leafygreen-ui/banner": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "@storybook/react": "^7.6.20",
+    "@lg-tools/storybook-utils": "workspace:^",
     "lodash": "4.17.21"
   },
   "peerDependencies": {
