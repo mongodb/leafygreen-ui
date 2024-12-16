@@ -58,24 +58,30 @@ type EChartsEvents =
   | 'selectchanged' // Triggered when selection state changes
   | 'globalcursortaken'; // Triggered when global cursor is taken
 
+export interface ZoomSelectionEvent {
+  xAxis?: { startValue: number; endValue: number };
+  yAxis?: { startValue: number; endValue: number };
+}
+
 export interface setupZoomSelectProps {
   xAxis?: boolean;
   yAxis?: boolean;
 }
+
+type EChartsEventHandlerType = {
+  // Regular events use the original param type
+  (event: EChartsEvents, callback: (params: any) => void): void;
+  // Specific override for 'zoomselect'
+  (event: 'zoomselect', callback: (params: ZoomSelectionEvent) => void): void;
+};
 
 export interface EChartsInstance {
   _echartsInstance: any;
   ready: boolean;
   options: Partial<ChartOptions>;
   updateOptions: (options: Omit<Partial<ChartOptions>, 'series'>) => void;
-  on: (
-    event: EChartsEvents | 'zoomselect',
-    callback: (params: any) => void,
-  ) => void;
-  off: (
-    event: EChartsEvents | 'zoomselect',
-    callback: (params: any) => void,
-  ) => void;
+  on: EChartsEventHandlerType;
+  off: EChartsEventHandlerType;
   addSeries: (series: SeriesOption) => void;
   removeSeries: (name: string) => void;
   addToGroup: (groupId: string) => void;

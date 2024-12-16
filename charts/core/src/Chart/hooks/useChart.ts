@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
+import { ChartHookProps } from './useChart.types';
 import { useEchart } from '../../echarts/useEchart';
 
 export function useChart({
@@ -11,43 +11,6 @@ export function useChart({
 }: ChartHookProps) {
   const chartRef = useRef(null);
   const echart = useEchart(chartRef.current);
-
-  function handleDataZoom(params: any) {
-    if (onZoomSelect) {
-      if (zoomSelect?.xAxis && zoomSelect?.yAxis) {
-        if (params.batch) {
-          const { startValue: xStart, endValue: xEnd } = params.batch[0];
-          const { startValue: yStart, endValue: yEnd } = params.batch[1];
-          onZoomSelect({
-            xAxis: { startValue: xStart, endValue: xEnd },
-            yAxis: { startValue: yStart, endValue: yEnd },
-          });
-        }
-      } else if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-        const axis = zoomSelect?.xAxis ? 'xAxis' : 'yAxis';
-        const zoomEventResponse: ZoomSelectionEvent = {};
-
-        if (params.startValue && params.endValue) {
-          zoomEventResponse[axis] = {
-            startValue: params.startValue,
-            endValue: params.endValue,
-          };
-          onZoomSelect(zoomEventResponse);
-        } else if (params.batch) {
-          const { startValue, endValue } = params.batch[0];
-          zoomEventResponse[axis] = {
-            startValue,
-            endValue,
-          };
-          onZoomSelect(zoomEventResponse);
-        }
-      } else {
-        console.error(
-          'zoomSelect configuration provided without any axes props. Either xAxis or yAxis must be set.',
-        );
-      }
-    }
-  }
 
   useEffect(() => {
     if (echart.ready) {
@@ -69,9 +32,21 @@ export function useChart({
         xAxis: zoomSelect?.xAxis,
         yAxis: zoomSelect?.yAxis,
       });
-      echart.on('zoomselect', handleDataZoom);
+      if (onZoomSelect) {
+        echart.on('zoomselect', zoomEventResponse => {
+          onZoomSelect(zoomEventResponse);
+        });
+      }
     }
   }, [echart.ready, zoomSelect]);
+
+  useEffect(() => {
+    if (echart.ready && onZoomSelect) {
+      echart.on('zoomselect', zoomEventResponse => {
+        onZoomSelect(zoomEventResponse);
+      });
+    }
+  }, [echart.ready, onZoomSelect]);
 
   return {
     chartOptions: echart.options,
