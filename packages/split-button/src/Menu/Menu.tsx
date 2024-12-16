@@ -58,9 +58,7 @@ export const Menu = ({
 
   const handleTriggerClick: MouseEventHandler = e => {
     onTriggerClick?.(e);
-    if (typeof controlledOpen !== 'boolean') {
-      setOpen(o => !o);
-    }
+    setOpen(o => !o);
   };
 
   const handleClose = useCallback(() => {
