@@ -14,7 +14,7 @@ import {
   basePanelStyle,
   basePanelThemeStyle,
   languageSwitcherPanelThemeStyles,
-  sidePanelThemeStyles,
+  // sidePanelThemeStyles,
 } from './Panel.styles';
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {

@@ -108,8 +108,9 @@ function Code({
     option => option.displayName === languageProp,
   );
 
-  const showPanel =
-    showTopBar || !!currentLanguage || showCustomActionsInPanel || topBarTitle;
+  const showPanel = Boolean(
+    showTopBar || !!currentLanguage || showCustomActionsInPanel || topBarTitle,
+  );
 
   console.log({ showPanel });
 

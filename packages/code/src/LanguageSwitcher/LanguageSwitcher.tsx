@@ -1,32 +1,32 @@
 import React from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+// import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import FileIcon from '@leafygreen-ui/icon/dist/File';
+// import { isComponentGlyph } from '@leafygreen-ui/icon';
+// import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
+// import { isComponentType } from '@leafygreen-ui/lib';
+// import { palette } from '@leafygreen-ui/palette';
 import { Option, RenderMode, Select } from '@leafygreen-ui/select';
 
-import { CustomSelectMenuButton } from '../CustomSelectMenuButton';
+// import { CustomSelectMenuButton } from '../CustomSelectMenuButton';
 import { LanguageOption } from '../types';
 
 import {
-  buttonModeStyle,
+  // buttonModeStyle,
   containerStyle,
-  iconMargin,
-  menuButtonStyle,
+  // iconMargin,
+  // menuButtonStyle,
   selectStyle,
 } from './LanguageSwitcher.styles';
 
-function isLeafyGreenIcon(element: React.ReactNode) {
-  if (isComponentGlyph(element) || isComponentType(element, 'Icon')) {
-    return true;
-  }
+// function isLeafyGreenIcon(element: React.ReactNode) {
+//   if (isComponentGlyph(element) || isComponentType(element, 'Icon')) {
+//     return true;
+//   }
 
-  return false;
-}
+//   return false;
+// }
 
 interface Props {
   language: LanguageOption;
@@ -35,7 +35,7 @@ interface Props {
 }
 
 function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
-  const { theme, darkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {
@@ -52,27 +52,27 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
     }
   };
 
-  const iconStyle = cx(
-    iconMargin,
-    css`
-      color: ${darkMode ? palette.gray.light1 : palette.gray.base};
-    `,
-  );
+  // const iconStyle = cx(
+  //   iconMargin,
+  //   css`
+  //     color: ${darkMode ? palette.gray.light1 : palette.gray.base};
+  //   `,
+  // );
 
   // Placeholder for file icon
-  let renderedLogo = <FileIcon className={iconStyle} />;
+  // let renderedLogo = <FileIcon className={iconStyle} />;
 
-  if (language.image != null) {
-    if (isLeafyGreenIcon(language.image)) {
-      renderedLogo = React.cloneElement(language.image, {
-        className: iconStyle,
-      });
-    } else {
-      renderedLogo = React.cloneElement(language.image, {
-        className: iconMargin,
-      });
-    }
-  }
+  // if (language.image != null) {
+  //   if (isLeafyGreenIcon(language.image)) {
+  //     renderedLogo = React.cloneElement(language.image, {
+  //       className: iconStyle,
+  //     });
+  //   } else {
+  //     renderedLogo = React.cloneElement(language.image, {
+  //       className: iconMargin,
+  //     });
+  //   }
+  // }
 
   return (
     <div className={containerStyle}>
