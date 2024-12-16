@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -7,7 +7,7 @@ import { getDefaultChartOptions } from '../Chart/config';
 import { ChartOptions } from '../Chart';
 import * as updateUtils from '../Chart/hooks/updateUtils';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
-import { EChartsInstance } from './echarts.types';
+import { EChartsInstance, ZoomSelectionEvent } from './echarts.types';
 
 // Singleton promise for initialization to prevent duplication
 let initPromise: Promise<void> | null = null;
@@ -82,6 +82,9 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
     getDefaultChartOptions(theme),
   );
 
+  // Keep track of active handlers
+  const activeHandlers = useRef(new Map());
+
   // ECharts does not automatically resize when the window resizes.
   const resizeHandler = () => {
     if (echartsInstance) {
@@ -143,22 +146,43 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
     echartsInstance.group = null;
   };
 
-  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = ({
+  const clearDataZoom = useCallback(
+    (params: any) => {
+      /**
+       * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
+       * We override the zoom to prevent it from actually zooming.
+       */
+      const isZoomed = params?.start !== 0 || params?.end !== 100;
+
+      if (echartsInstance && isZoomed) {
+        echartsInstance.dispatchAction({
+          type: 'dataZoom',
+          start: 0, // percentage of starting position
+          end: 100, // percentage of ending position
+        });
+      }
+    },
+    [echartsInstance],
+  );
+
+  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = async ({
     xAxis,
     yAxis,
   }) => {
+    function enableZoom() {
+      echartsInstance.dispatchAction({
+        type: 'takeGlobalCursor',
+        key: 'dataZoomSelect',
+        dataZoomSelectActive: xAxis || yAxis,
+      });
+      // This will trigger a render so we need to remove the handler to prevent a loop
+      echartsInstance.off('rendered', enableZoom);
+    }
+
     if (echartsInstance) {
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
-      let xAxisIndex: number | string = 0;
-      let yAxisIndex: number | string = 0;
-
-      if (!xAxis) {
-        xAxisIndex = 'none';
-      }
-
-      if (!yAxis) {
-        yAxisIndex = 'none';
-      }
+      let xAxisIndex: number | string = xAxis ? 0 : 'none';
+      let yAxisIndex: number | string = yAxis ? 0 : 'none';
 
       updateOptions({
         toolbox: {
@@ -171,57 +195,110 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
         },
       });
 
-      echartsInstance.on('rendered', () => {
-        echartsInstance.dispatchAction({
-          type: 'takeGlobalCursor',
-          key: 'dataZoomSelect',
-          dataZoomSelectActive: xAxis || yAxis,
-        });
-      });
+      echartsInstance.on('rendered', enableZoom);
+      echartsInstance.off('dataZoom', clearDataZoom); // prevent adding dupes
+      echartsInstance.on('dataZoom', clearDataZoom);
+    }
+  };
 
-      echartsInstance.on('dataZoom', (params: any) => {
-        /**
-         * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
-         * We override the zoom to prevent it from actually zooming.
-         */
-        const isZoomed = params?.start !== 0 || params?.end !== 100;
+  const off: EChartsInstance['off'] = useCallback(
+    (action, callback) => {
+      if (!echartsInstance) return;
 
-        if (echartsInstance && isZoomed) {
-          echartsInstance.dispatchAction({
-            type: 'dataZoom',
-            start: 0, // percentage of starting position
-            end: 100, // percentage of ending position
-          });
+      switch (action) {
+        case 'zoomselect': {
+          echartsInstance.off('datazoom', callback);
+          // Remove from active handlers
+          activeHandlers.current.delete(`${action}-${callback.toString()}`);
+          break;
         }
-      });
-    }
-  };
+        default: {
+          echartsInstance.off(action, callback);
+          activeHandlers.current.delete(`${action}-${callback.toString()}`);
+        }
+      }
+    },
+    [echartsInstance],
+  );
 
-  const on: EChartsInstance['on'] = (action, callback) => {
-    switch (action) {
-      case 'zoomselect': {
-        echartsInstance.on('datazoom', (params: any) => {
-          callback(params); // TODO: Add logic to parse data
+  const on: EChartsInstance['on'] = useCallback(
+    (action, callback) => {
+      if (!echartsInstance) return;
+
+      // Create a unique key for this handler
+      const handlerKey = `${action}-${callback.toString()}`;
+
+      // If this exact handler is already registered, skip
+      if (activeHandlers.current.has(handlerKey)) {
+        return;
+      }
+
+      switch (action) {
+        case 'zoomselect': {
+          const zoomHandler = (params: any) => {
+            const zoomSelectionEvent: ZoomSelectionEvent = {};
+
+            if (
+              params.startValue !== undefined &&
+              params.endValue !== undefined
+            ) {
+              // Handle single axis zoom
+              const axis = params.dataZoomId?.includes('y') ? 'yAxis' : 'xAxis';
+              zoomSelectionEvent[axis] = {
+                startValue: params.startValue,
+                endValue: params.endValue,
+              };
+              callback(zoomSelectionEvent);
+            } else if (params.batch) {
+              // Handle batch zoom (multiple axes)
+              params.batch.forEach((batchItem: any) => {
+                if (batchItem.dataZoomId?.includes('y')) {
+                  zoomSelectionEvent.yAxis = {
+                    startValue: batchItem.startValue,
+                    endValue: batchItem.endValue,
+                  };
+                } else {
+                  zoomSelectionEvent.xAxis = {
+                    startValue: batchItem.startValue,
+                    endValue: batchItem.endValue,
+                  };
+                }
+              });
+              callback(zoomSelectionEvent);
+            }
+          };
+
+          // Store the wrapper function so we can remove it later
+          activeHandlers.current.set(handlerKey, zoomHandler);
+          echartsInstance.on('datazoom', zoomHandler);
+          break;
+        }
+        default: {
+          activeHandlers.current.set(handlerKey, callback);
+          echartsInstance.on(action, callback);
+        }
+      }
+    },
+    [echartsInstance],
+  );
+
+  // Clean up all handlers when the echartsInstance changes
+  useEffect(() => {
+    return () => {
+      if (echartsInstance) {
+        // Remove all registered handlers
+        activeHandlers.current.forEach((handler, key) => {
+          const [action] = key.split('-');
+          if (action === 'zoomselect') {
+            echartsInstance.off('datazoom', handler);
+          } else {
+            echartsInstance.off(action, handler);
+          }
         });
-        break;
+        activeHandlers.current.clear();
       }
-      default: {
-        echartsInstance.on(action, callback);
-      }
-    }
-  };
-
-  const off: EChartsInstance['off'] = (action, callback) => {
-    switch (action) {
-      case 'zoomselect': {
-        echartsInstance.off('datazoom', callback);
-        break;
-      }
-      default: {
-        echartsInstance.on(action, callback);
-      }
-    }
-  };
+    };
+  }, [echartsInstance]);
 
   const setEchartOptions = useMemo(
     () =>
@@ -233,7 +310,7 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
          * */
         echartsInstance?.setOption(options, true);
       }, 50),
-    [],
+    [echartsInstance],
   );
 
   const addSeries: EChartsInstance['addSeries'] = useCallback(
