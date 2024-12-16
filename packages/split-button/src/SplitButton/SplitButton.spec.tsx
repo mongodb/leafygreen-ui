@@ -138,7 +138,7 @@ describe('packages/split-button', () => {
           disabled: true,
         });
 
-        fireEvent.click(primaryButton);
+        userEvent.click(primaryButton);
         expect(onClick).not.toHaveBeenCalled();
       });
 
@@ -150,7 +150,7 @@ describe('packages/split-button', () => {
           as: 'a',
         });
 
-        fireEvent.click(primaryButton);
+        userEvent.click(primaryButton);
         expect(onClick).not.toHaveBeenCalled();
       });
     });
@@ -161,7 +161,7 @@ describe('packages/split-button', () => {
         onClick,
       });
 
-      fireEvent.click(primaryButton);
+      userEvent.click(primaryButton);
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
@@ -172,7 +172,7 @@ describe('packages/split-button', () => {
         onClick,
       });
 
-      fireEvent.click(primaryButton);
+      userEvent.click(primaryButton);
       expect(onClick).toHaveBeenCalledTimes(0);
     });
   });
@@ -181,7 +181,7 @@ describe('packages/split-button', () => {
     test('trigger opens the menu when clicked', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       expect(menu).toBeInTheDocument();
@@ -192,7 +192,7 @@ describe('packages/split-button', () => {
         disabled: true,
       });
 
-      fireEvent.click(menuTrigger);
+      userEvent.click(menuTrigger);
 
       const menu = queryByTestId(menuTestId);
       expect(menu).not.toBeInTheDocument();
@@ -201,7 +201,7 @@ describe('packages/split-button', () => {
     test('has correct menu items', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       expect(menu.childElementCount).toEqual(4);
