@@ -85,6 +85,55 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
+  const setEchartOptions = useMemo(
+    () =>
+      debounce((options: Partial<ChartOptions>) => {
+        /**
+         * The second argument is `true` to merge the new options with the existing ones.
+         * This is needed to ensure that series get removed properly.
+         * See issue: https://github.com/apache/echarts/issues/6202
+         * */
+        echartsInstance?.setOption(options, true);
+      }, 50),
+    [echartsInstance],
+  );
+
+  const addSeries: EChartsInstance['addSeries'] = useCallback(
+    data => {
+      setOptions(currentOptions => {
+        const updatedOptions = updateUtils.addSeries(currentOptions, data);
+        setEchartOptions(updatedOptions);
+        return updatedOptions;
+      });
+    },
+    [setEchartOptions],
+  );
+
+  const removeSeries: EChartsInstance['removeSeries'] = useCallback(
+    name => {
+      setOptions(currentOptions => {
+        const updatedOptions = updateUtils.removeSeries(currentOptions, name);
+        setEchartOptions(updatedOptions);
+        return updatedOptions;
+      });
+    },
+    [setEchartOptions],
+  );
+
+  const updateOptions: EChartsInstance['updateOptions'] = useCallback(
+    options => {
+      setOptions(currentOptions => {
+        const updatedOptions = updateUtils.updateOptions(
+          currentOptions,
+          options,
+        );
+        setEchartOptions(updatedOptions);
+        return updatedOptions;
+      });
+    },
+    [setEchartOptions],
+  );
+
   // ECharts does not automatically resize when the window resizes.
   const resizeHandler = () => {
     if (echartsInstance) {
@@ -92,59 +141,18 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
     }
   };
 
-  useEffect(() => {
-    (async function setupChart() {
-      try {
-        setError(null);
+  const addToGroup: EChartsInstance['addToGroup'] = useCallback(
+    groupId => {
+      echartsInstance.group = groupId;
+      echartsCore.connect(groupId);
+    },
+    [echartsCore, echartsInstance],
+  );
 
-        await initializeEcharts();
-
-        if (container) {
-          const newChart = echartsCore.init(container);
-          newChart.setOption(options);
-          window.addEventListener('resize', resizeHandler);
-          setEchartsInstance(newChart);
-          setReady(true);
-        }
-      } catch (err) {
-        setReady(false);
-        console.error(err);
-        setError(
-          err instanceof Error
-            ? err
-            : new Error('Failed to initialize ECharts'),
-        );
-      }
-    })();
-
-    // Cleanup function
-    return () => {
-      if (echartsInstance) {
-        window.removeEventListener('resize', resizeHandler);
-        echartsInstance.dispose();
-      }
-    };
-  }, [container]);
-
-  useEffect(() => {
-    setOptions(currentOptions => {
-      const updatedOptions = {
-        ...currentOptions,
-        color: chartSeriesColors[theme],
-      };
-      setEchartOptions(updatedOptions);
-      return updatedOptions;
-    });
-  }, [theme]);
-
-  const addToGroup: EChartsInstance['addToGroup'] = groupId => {
-    echartsInstance.group = groupId;
-    echartsCore.connect(groupId);
-  };
-
-  const removeFromGroup: EChartsInstance['removeFromGroup'] = () => {
-    echartsInstance.group = null;
-  };
+  const removeFromGroup: EChartsInstance['removeFromGroup'] =
+    useCallback(() => {
+      echartsInstance.group = null;
+    }, [echartsInstance]);
 
   const clearDataZoom = useCallback(
     (params: any) => {
@@ -165,21 +173,20 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
     [echartsInstance],
   );
 
-  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = async ({
-    xAxis,
-    yAxis,
-  }) => {
-    function enableZoom() {
-      echartsInstance.dispatchAction({
-        type: 'takeGlobalCursor',
-        key: 'dataZoomSelect',
-        dataZoomSelectActive: xAxis || yAxis,
-      });
-      // This will trigger a render so we need to remove the handler to prevent a loop
-      echartsInstance.off('rendered', enableZoom);
-    }
+  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
+    async ({ xAxis, yAxis }) => {
+      if (!echartsInstance) return;
 
-    if (echartsInstance) {
+      function enableZoom() {
+        echartsInstance.dispatchAction({
+          type: 'takeGlobalCursor',
+          key: 'dataZoomSelect',
+          dataZoomSelectActive: xAxis || yAxis,
+        });
+        // This will trigger a render so we need to remove the handler to prevent a loop
+        echartsInstance.off('rendered', enableZoom);
+      }
+
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       let xAxisIndex: number | string = xAxis ? 0 : 'none';
       let yAxisIndex: number | string = yAxis ? 0 : 'none';
@@ -198,8 +205,9 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
       echartsInstance.on('rendered', enableZoom);
       echartsInstance.off('dataZoom', clearDataZoom); // prevent adding dupes
       echartsInstance.on('dataZoom', clearDataZoom);
-    }
-  };
+    },
+    [echartsInstance, updateOptions],
+  );
 
   const off: EChartsInstance['off'] = useCallback(
     (action, callback) => {
@@ -222,7 +230,7 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
   );
 
   const on: EChartsInstance['on'] = useCallback(
-    (action, callback) => {
+    async (action, callback) => {
       if (!echartsInstance) return;
 
       // Create a unique key for this handler
@@ -282,6 +290,50 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
     [echartsInstance],
   );
 
+  useEffect(() => {
+    (async function setupChart() {
+      try {
+        setError(null);
+
+        await initializeEcharts();
+
+        if (container) {
+          const newChart = echartsCore.init(container);
+          newChart.setOption(options);
+          window.addEventListener('resize', resizeHandler);
+          setEchartsInstance(newChart);
+          setReady(true);
+        }
+      } catch (err) {
+        setReady(false);
+        console.error(err);
+        setError(
+          err instanceof Error
+            ? err
+            : new Error('Failed to initialize ECharts'),
+        );
+      }
+    })();
+
+    return () => {
+      if (echartsInstance) {
+        window.removeEventListener('resize', resizeHandler);
+        echartsInstance.dispose();
+      }
+    };
+  }, [container]);
+
+  useEffect(() => {
+    setOptions(currentOptions => {
+      const updatedOptions = {
+        ...currentOptions,
+        color: chartSeriesColors[theme],
+      };
+      setEchartOptions(updatedOptions);
+      return updatedOptions;
+    });
+  }, [theme]);
+
   // Clean up all handlers when the echartsInstance changes
   useEffect(() => {
     return () => {
@@ -299,55 +351,6 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
       }
     };
   }, [echartsInstance]);
-
-  const setEchartOptions = useMemo(
-    () =>
-      debounce((options: Partial<ChartOptions>) => {
-        /**
-         * The second argument is `true` to merge the new options with the existing ones.
-         * This is needed to ensure that series get removed properly.
-         * See issue: https://github.com/apache/echarts/issues/6202
-         * */
-        echartsInstance?.setOption(options, true);
-      }, 50),
-    [echartsInstance],
-  );
-
-  const addSeries: EChartsInstance['addSeries'] = useCallback(
-    data => {
-      setOptions(currentOptions => {
-        const updatedOptions = updateUtils.addSeries(currentOptions, data);
-        setEchartOptions(updatedOptions);
-        return updatedOptions;
-      });
-    },
-    [setEchartOptions],
-  );
-
-  const removeSeries: EChartsInstance['removeSeries'] = useCallback(
-    name => {
-      setOptions(currentOptions => {
-        const updatedOptions = updateUtils.removeSeries(currentOptions, name);
-        setEchartOptions(updatedOptions);
-        return updatedOptions;
-      });
-    },
-    [setEchartOptions],
-  );
-
-  const updateOptions: EChartsInstance['updateOptions'] = useCallback(
-    options => {
-      setOptions(currentOptions => {
-        const updatedOptions = updateUtils.updateOptions(
-          currentOptions,
-          options,
-        );
-        setEchartOptions(updatedOptions);
-        return updatedOptions;
-      });
-    },
-    [setEchartOptions],
-  );
 
   return {
     _echartsInstance: echartsInstance,
