@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/storybook-utils.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/storybook-utils/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/storybook-utils/live-example/)
 
 ## Installation
 

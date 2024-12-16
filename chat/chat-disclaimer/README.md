@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/chat-disclaimer.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/chat-disclaimer/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/chat-disclaimer/live-example/)
 
 ## Installation
 

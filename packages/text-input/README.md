@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/text-input.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/text-input/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/text-input/live-example/)
 
 ## Installation
 

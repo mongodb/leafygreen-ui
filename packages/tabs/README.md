@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/tabs.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/tabs/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/tabs/live-example/)
 
 ## Installation
 

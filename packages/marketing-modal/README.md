@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/marketing-modal.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/marketing-modal/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/marketing-modal/live-example/)
 
 ## Installation
 

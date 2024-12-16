@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/guide-cue.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/guide-cue/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/guide-cue/live-example/)
 
 ## Installation
 
