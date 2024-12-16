@@ -69,8 +69,8 @@ async function initializeEcharts() {
 }
 
 /**
- * Wrapper around the ECharts library. Instantiates and returns an ECharts instance.
- * Provides helper methods to hide ECharts specific logic and provide a clean API
+ * Wrapper around the ECharts library. Instantiates an ECharts instance.
+ * Provides helper methods to hide ECharts specific logic and give a cleaner API
  * for interacting with a chart.
  */
 export function useEchart(container: HTMLDivElement | null): EChartsInstance {
@@ -85,16 +85,28 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
+  const withInstanceCheck = <T extends (...args: any[]) => void>(fn: T) => {
+    return (...args: Parameters<T>) => {
+      if (!echartsInstance) {
+        return;
+      }
+      fn(...args);
+    };
+  };
+
   const setEchartOptions = useMemo(
     () =>
-      debounce((options: Partial<ChartOptions>) => {
-        /**
-         * The second argument is `true` to merge the new options with the existing ones.
-         * This is needed to ensure that series get removed properly.
-         * See issue: https://github.com/apache/echarts/issues/6202
-         * */
-        echartsInstance?.setOption(options, true);
-      }, 50),
+      debounce(
+        withInstanceCheck((options: Partial<ChartOptions>) => {
+          /**
+           * The second argument is `true` to merge the new options with the existing ones.
+           * This is needed to ensure that series get removed properly.
+           * See issue: https://github.com/apache/echarts/issues/6202
+           * */
+          echartsInstance?.setOption(options, true);
+        }),
+        50,
+      ),
     [echartsInstance],
   );
 
@@ -135,49 +147,47 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
   );
 
   // ECharts does not automatically resize when the window resizes.
-  const resizeHandler = () => {
-    if (echartsInstance) {
-      echartsInstance.resize();
-    }
-  };
+  const resizeHandler = withInstanceCheck(() => {
+    echartsInstance.resize();
+  });
 
   const addToGroup: EChartsInstance['addToGroup'] = useCallback(
-    groupId => {
+    withInstanceCheck(groupId => {
       echartsInstance.group = groupId;
       echartsCore.connect(groupId);
-    },
+    }),
     [echartsCore, echartsInstance],
   );
 
-  const removeFromGroup: EChartsInstance['removeFromGroup'] =
-    useCallback(() => {
+  const removeFromGroup: EChartsInstance['removeFromGroup'] = useCallback(
+    withInstanceCheck(() => {
       echartsInstance.group = null;
-    }, [echartsInstance]);
+    }),
+    [echartsInstance],
+  );
 
   const clearDataZoom = useCallback(
-    (params: any) => {
+    withInstanceCheck((params: any) => {
       /**
        * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
        * We override the zoom to prevent it from actually zooming.
        */
       const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-      if (echartsInstance && isZoomed) {
+      if (isZoomed) {
         echartsInstance.dispatchAction({
           type: 'dataZoom',
           start: 0, // percentage of starting position
           end: 100, // percentage of ending position
         });
       }
-    },
+    }),
     [echartsInstance],
   );
 
   const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
-    async ({ xAxis, yAxis }) => {
-      if (!echartsInstance) return;
-
-      function enableZoom() {
+    withInstanceCheck(({ xAxis, yAxis }) => {
+      const enableZoom = withInstanceCheck(() => {
         echartsInstance.dispatchAction({
           type: 'takeGlobalCursor',
           key: 'dataZoomSelect',
@@ -185,7 +195,7 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
         });
         // This will trigger a render so we need to remove the handler to prevent a loop
         echartsInstance.off('rendered', enableZoom);
-      }
+      });
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       let xAxisIndex: number | string = xAxis ? 0 : 'none';
@@ -205,14 +215,12 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
       echartsInstance.on('rendered', enableZoom);
       echartsInstance.off('dataZoom', clearDataZoom); // prevent adding dupes
       echartsInstance.on('dataZoom', clearDataZoom);
-    },
+    }),
     [echartsInstance, updateOptions],
   );
 
   const off: EChartsInstance['off'] = useCallback(
-    (action, callback) => {
-      if (!echartsInstance) return;
-
+    withInstanceCheck((action, callback) => {
       switch (action) {
         case 'zoomselect': {
           echartsInstance.off('datazoom', callback);
@@ -225,14 +233,12 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
           activeHandlers.current.delete(`${action}-${callback.toString()}`);
         }
       }
-    },
+    }),
     [echartsInstance],
   );
 
   const on: EChartsInstance['on'] = useCallback(
-    async (action, callback) => {
-      if (!echartsInstance) return;
-
+    withInstanceCheck((action, callback) => {
       // Create a unique key for this handler
       const handlerKey = `${action}-${callback.toString()}`;
 
@@ -286,7 +292,7 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
           echartsInstance.on(action, callback);
         }
       }
-    },
+    }),
     [echartsInstance],
   );
 
