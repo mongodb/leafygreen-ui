@@ -41,7 +41,7 @@ export const ConfirmationModal = React.forwardRef(
       cancelButtonProps = {},
       ...modalProps
     }: ConfirmationModalProps,
-    forwardRef: React.ForwardedRef<HTMLDivElement | null>,
+    forwardRef: React.ForwardedRef<HTMLDialogElement | null>,
   ) => {
     const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
     const { theme, darkMode } = useDarkMode(darkModeProp);
