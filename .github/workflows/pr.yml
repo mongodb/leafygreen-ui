@@ -10,6 +10,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check-resources:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Memory and CPU
+        run: |
+          echo "CPU Info:"
+          lscpu
+          echo "Memory Info:"
+          free -h
   build:
     name: Build packages
     runs-on: ubuntu-latest
