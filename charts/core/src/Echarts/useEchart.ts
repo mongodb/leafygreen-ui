@@ -88,6 +88,7 @@ export function useEchart(container: HTMLDivElement | null): EChartsInstance {
   const withInstanceCheck = <T extends (...args: any[]) => void>(fn: T) => {
     return (...args: Parameters<T>) => {
       if (!echartsInstance) {
+        console.error('Echart instance not initialized');
         return;
       }
       fn(...args);
