@@ -89,9 +89,13 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
         name: Restore build cache
         id: build-cache
         with:
