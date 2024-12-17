@@ -53,18 +53,23 @@ type ButtonProps = Omit<
   'rightGlyph' | 'href' | 'as' | 'variant'
 >;
 
-export type SelectedMenuProps = Omit<
+export type SelectedMenuProps = Pick<
   ImportedMenuProps,
-  | 'children'
-  | 'trigger'
-  | 'shouldClose'
   | 'darkMode'
-  | 'onClick'
+  | 'maxHeight'
+  | 'adjustOnMutation'
+  | 'popoverZIndex'
+  | 'renderDarkMenu'
+  | 'renderMode'
+  | 'portalClassName'
+  | 'portalContainer'
+  | 'portalRef'
+  | 'scrollContainer'
   | 'align'
   | 'justify'
-  | 'className'
-  | 'refEl'
-  | 'spacing'
+  | 'id'
+  | 'open'
+  | 'setOpen'
 >;
 
 export interface MenuProps extends SelectedMenuProps {
