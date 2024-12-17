@@ -10,6 +10,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check-resources:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Memory and CPU
+        run: |
+          echo "CPU Info:"
+          lscpu
+          echo "Memory Info:"
+          free -h
   build:
     name: Build packages
     runs-on: ubuntu-latest
@@ -41,6 +50,11 @@ jobs:
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn build
+
+      - name: Check Memory After Build
+        run: |
+          echo "Memory Usage After Build:"
+          free -h
 
   lint:
     name: Check lints
@@ -89,9 +103,13 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
+        env:
+          NODE_OPTIONS: '--max_old_space_size=8192'
         name: Restore build cache
         id: build-cache
         with:
@@ -102,7 +120,7 @@ jobs:
 
       - name: Publish to Chromatic
         env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
+          NODE_OPTIONS: '--max_old_space_size=8192'
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
@@ -110,6 +128,11 @@ jobs:
           onlyChanged: true
           exitOnceUploaded: true
           exitZeroOnChanges: true
+
+      - name: Check Memory After Build
+        run: |
+          echo "Memory Usage After Build:"
+          free -h
 
   tests:
     name: Run tests
