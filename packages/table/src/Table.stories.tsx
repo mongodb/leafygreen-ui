@@ -187,12 +187,12 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
                 <HeaderCell
                   key={header.id}
                   header={header}
-                  className={cx({
-                    [css`
-                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
-                      min-width: 120px;
-                    `]: index === 5,
-                  })}
+                  // className={cx({
+                  //   [css`
+                  //     // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
+                  //     min-width: 120px;
+                  //   `]: index === 5,
+                  // })}
                 >
                   {flexRender(
                     header.column.columnDef.header,
@@ -316,12 +316,12 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
                 <HeaderCell
                   key={header.id}
                   header={header}
-                  className={cx({
-                    [css`
-                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
-                      min-width: 120px;
-                    `]: index === 5,
-                  })}
+                  // className={cx({
+                  //   [css`
+                  //     // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
+                  //     min-width: 120px;
+                  //   `]: index === 5,
+                  // })}
                 >
                   {flexRender(
                     header.column.columnDef.header,
