@@ -111,6 +111,8 @@ export default {
     },
     darkMode: storybookArgTypes.darkMode,
     renderDarkMenu: {
+      description:
+        'Whether the menu should always render dark, regardless of the theme context',
       control: 'boolean',
     },
   },
