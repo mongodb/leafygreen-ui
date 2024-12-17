@@ -104,12 +104,12 @@ jobs:
 
       - name: Install Dependencies
         env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
+          NODE_OPTIONS: '--max_old_space_size=8192'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
         env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
+          NODE_OPTIONS: '--max_old_space_size=8192'
         name: Restore build cache
         id: build-cache
         with:
@@ -120,7 +120,7 @@ jobs:
 
       - name: Publish to Chromatic
         env:
-          NODE_OPTIONS: '--max_old_space_size=4096'
+          NODE_OPTIONS: '--max_old_space_size=8192'
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
