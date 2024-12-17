@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { ChartHookProps } from './useChart.types';
+import { ChartHookProps, ChartInstance } from './useChart.types';
 import { useEchart } from '../../echarts/useEchart';
 
 export function useChart({
@@ -8,7 +8,7 @@ export function useChart({
   zoomSelect,
   onZoomSelect,
   groupId,
-}: ChartHookProps) {
+}: ChartHookProps): ChartInstance {
   const chartRef = useRef(null);
   const echart = useEchart(chartRef.current);
 
@@ -49,10 +49,7 @@ export function useChart({
   }, [echart.ready, onZoomSelect]);
 
   return {
-    chartOptions: echart.options,
-    updateChartOptions: echart.updateOptions,
-    addChartSeries: echart.addSeries,
-    removeChartSeries: echart.removeSeries,
-    chartRef,
+    ...echart,
+    ref: chartRef,
   };
 }
