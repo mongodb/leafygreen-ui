@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.8.2
+
+### Patch Changes
+
+- 6e37cfa6e: Fixes CommonJS imports
+
 ## 0.8.1
 
 ### Patch Changes

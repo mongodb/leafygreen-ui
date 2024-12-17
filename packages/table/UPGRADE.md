@@ -1,20 +1,21 @@
 # Upgrading v12 to v13
 
-Table v11 and v12 had performace issues when working with large datasets and didn't offer much flexibility. Table v13 makes table more performant and flexible to use.
+Table v13 brings performance optimizations when working with large datasets and offers greater flexibility.
 
 For more details on how to use LeafyGreen `Table` v13, check out the [README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/README.md).
 
 ## What's new?
 
-- All LeafyGreen table components accept `forwardRefs`
-- All LeafyGreen table components support `StyledComponents`
-- Rows now support multiline text. By default, text truncation is enabled but can be disabled using the `shouldTruncate` prop on `<Table>`. When `shouldTruncate` is `true`, all rows will display a single line of text. When `false`, rows with long text will display all lines of the content. Additionally, when truncation is disabled, text is top-aligned by default. You can change this alignment to `middle` or `top` using the new `verticalAlignment` prop.
+- All LeafyGreen table children components can accept a `forwardRef`
+- All LeafyGreen table components support `styled-components`
+- `shouldTruncate`: Rows now support multiline text. By default, text truncation is enabled but can be disabled using the `shouldTruncate` prop on `<Table>`. When `shouldTruncate` is `true`, all rows will display a single line of text. When `false`, rows with long text will display all lines of the content. Additionally, when truncation is disabled, text is top-aligned by default.
+- `verticalAlignment`: If text truncation is disabled, you can change the text alignment to `middle` or `top` using the new `verticalAlignment` prop.
 
   ```
     <Table
       table={table}
       shouldTruncate={false}
-      verticalAlignment='middle'
+      verticalAlignment="middle"
     >
       ...
     </Table>
@@ -28,10 +29,10 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
 ### `Row` component
 
-- Row transition were removed to increase performance.
+- Row transitions were removed to increase performance.
 - Rows are memoized to increase performance.
 - `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
-- `virtualRow` is a reguired prop if using `useLeafyGreenVirtualTable`.
+- `virtualRow` is a required prop if using `useLeafyGreenVirtualTable`.
 - Internally, we removed the mapping and flattening of `Row` children. Moving forward, consumers no longer need to explicitly render subrows and expanded content as children of `Row`. Instead, rows, subrows, and expanded content are returned as siblings within the row object.
 
   **Before**:
@@ -119,7 +120,7 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 ### `ExpandedContent` component
 
 - `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
-- `virtualRow` is a reguired prop if using `useLeafyGreenVirtualTable`.
+- `virtualRow` is a required prop if using `useLeafyGreenVirtualTable`.
 - Expanded content is included in the row object as a sibling of its parent row. You will need to check if a row is expanded content using `row.isExpandedContent`.
 
   **Before**:
@@ -198,7 +199,7 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 
 ### `useLeafyGreenTable` hook
 
-`useLeafyGreenTable` will no longer accept `useVirtualScrolling` and `virtualizerOptions`. To use a virtual table, use the new hook, `useLeafyGreenVirtualTable`, which extends `useLeafyGreenTable`.
+`useLeafyGreenTable` will no longer accept `useVirtualScrolling` and `virtualizerOptions`. To use a virtual table, use the new hook, [`useLeafyGreenVirtualTable`](#useleafygreenvirtualtable-hook), which extends `useLeafyGreenTable`.
 
 **Before**:
 
@@ -255,16 +256,7 @@ const { rows } = table.getRowModel();
         <Row key={row.id}>
           {cells.map((cell: LeafyGreenTableCell<Person>) => {
             return (
-              <Cell
-                key={cell.id}
-                className={css`
-                  padding-block: 4px;
-
-                  & > div {
-                    max-height: unset;
-                  }
-                `}
-              >
+              <Cell key={cell.id}>
                 {flexRender(
                   cell.column.columnDef.cell,
                   cell.getContext(),

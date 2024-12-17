@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 12.9.0
+
+### Minor Changes
+
+- d4b4d5115: Adds `'Coin'` to glyph set
+
 ## 12.8.0
 
 ### Minor Changes

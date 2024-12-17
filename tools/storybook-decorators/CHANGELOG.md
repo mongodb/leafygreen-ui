@@ -1,5 +1,11 @@
 # @lg-tools/storybook-decorators
 
+## 0.2.12
+
+### Patch Changes
+
+- 7a83cd4c6: Removes `overflow: auto` from `rootStyles`.
+
 ## 0.2.11
 
 ### Patch Changes
