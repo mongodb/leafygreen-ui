@@ -33,7 +33,7 @@ const getMenuItems = (): MenuItemsType => {
 
 const defaultProps = {
   label: 'Button Label',
-  menuItems: getMenuItems(),
+  children: getMenuItems(),
 };
 
 function renderSplitButton(props = {}) {
@@ -216,16 +216,16 @@ describe('packages/split-button', () => {
   });
 
   describe('MenuItem', () => {
-    test('click triggers onChange callback', () => {
-      const onChange = jest.fn();
-      const { menuTrigger, getByTestId } = renderSplitButton({ onChange });
+    test('click triggers onItemClick callback', () => {
+      const onItemClick = jest.fn();
+      const { menuTrigger, getByTestId } = renderSplitButton({ onItemClick });
 
       userEvent.click(menuTrigger as HTMLElement);
 
       const menu = getByTestId(menuTestId);
       const options = globalGetAllByRole(menu, 'menuitem');
       userEvent.click(options[0]);
-      expect(onChange).toHaveBeenCalledTimes(1);
+      expect(onItemClick).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -298,7 +298,7 @@ describe('packages/split-button', () => {
 
       test('Fires the click handler of the highlighted item', async () => {
         const { openMenu } = renderSplitButton({
-          menuItems,
+          children: menuItems,
         });
         const { menuItemElements } = await openMenu({
           withKeyboard: true,
@@ -315,7 +315,7 @@ describe('packages/split-button', () => {
         // https://github.com/testing-library/react-testing-library/issues/269#issuecomment-1453666401 - this needs v13 of testing-library
         // TODO: This is not triggered so the test fails
         const { openMenu, menuTrigger } = renderSplitButton({
-          menuItems,
+          children: menuItems,
         });
         const { menuEl, menuItemElements } = await openMenu();
         userEvent.type(menuItemElements?.[0]!, `{${key}}`);
@@ -335,7 +335,7 @@ describe('packages/split-button', () => {
 
       describe('Down arrow', () => {
         test('highlights the next option in the menu', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
+          const { openMenu } = renderSplitButton({ children: menuItems });
           const { menuEl, menuItemElements } = await openMenu({
             withKeyboard: true,
           });
@@ -346,7 +346,7 @@ describe('packages/split-button', () => {
         });
 
         test('cycles highlight to the top', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
+          const { openMenu } = renderSplitButton({ children: menuItems });
           const { menuEl, menuItemElements } = await openMenu({
             withKeyboard: true,
           });
@@ -362,7 +362,7 @@ describe('packages/split-button', () => {
 
       describe('Up arrow', () => {
         test('highlights the previous option in the menu', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
+          const { openMenu } = renderSplitButton({ children: menuItems });
           const { menuEl, menuItemElements } = await openMenu({
             withKeyboard: true,
           });
@@ -376,7 +376,7 @@ describe('packages/split-button', () => {
         });
 
         test('cycles highlight to the bottom', async () => {
-          const { openMenu } = renderSplitButton({ menuItems });
+          const { openMenu } = renderSplitButton({ children: menuItems });
           const { menuEl, menuItemElements } = await openMenu({
             withKeyboard: true,
           });
@@ -394,22 +394,19 @@ describe('packages/split-button', () => {
   describe('Types behave as expected', () => {
     test.skip('Accepts base props', () => {
       <>
-        <SplitButton label="label" menuItems={getMenuItems()} />
+        <SplitButton label="label" children={getMenuItems()} />
+        <SplitButton label="label">
+          <MenuItem key="0">Menu Item</MenuItem>
+          <MenuItem key="1" disabled>
+            Disabled Menu Item
+          </MenuItem>
+          <MenuItem key="2" description="I am also a description">
+            Menu Item With Description
+          </MenuItem>
+        </SplitButton>
         <SplitButton
           label="label"
-          menuItems={[
-            <MenuItem key="0">Menu Item</MenuItem>,
-            <MenuItem key="1" disabled>
-              Disabled Menu Item
-            </MenuItem>,
-            <MenuItem key="2" description="I am also a description">
-              , Menu Item With Description
-            </MenuItem>,
-          ]}
-        />
-        <SplitButton
-          label="label"
-          menuItems={getMenuItems()}
+          children={getMenuItems()}
           onClick={() => {}}
           disabled={true}
           size="default"
@@ -426,17 +423,15 @@ describe('packages/split-button', () => {
           open={false}
           triggerAriaLabel="im the trigger silly"
         />
-        {/* @ts-expect-error - expects label and menuItems*/}
-        <SplitButton />
-        {/* @ts-expect-error - expects menuItems */}
-        <SplitButton label="label" />
         {/* @ts-expect-error - expects label */}
-        <SplitButton menuItems={getMenuItems()} />
+        <SplitButton />
+        {/* @ts-expect-error - expects label */}
+        <SplitButton children={getMenuItems()} />
       </>;
     });
 
     test.skip('Accepts string as `as` prop', () => {
-      <SplitButton as="p" label="label" menuItems={getMenuItems()} />;
+      <SplitButton as="p" label="label" children={getMenuItems()} />;
     });
 
     test.skip('Accepts component as `as` prop', () => {
@@ -448,7 +443,7 @@ describe('packages/split-button', () => {
           data-testid="split-button"
           as={As}
           label="label"
-          menuItems={getMenuItems()}
+          children={getMenuItems()}
         />,
       );
     });
@@ -459,25 +454,25 @@ describe('packages/split-button', () => {
       };
 
       <>
-        <SplitButton href="allowed" label="label" menuItems={getMenuItems()} />
+        <SplitButton href="allowed" label="label" children={getMenuItems()} />
         <SplitButton
           as="a"
           href="allowed"
           label="label"
-          menuItems={getMenuItems()}
+          children={getMenuItems()}
         />
         <SplitButton
           as="div"
           // @ts-expect-error - href not allowed when as is div
           href="string"
           label="label"
-          menuItems={getMenuItems()}
+          children={getMenuItems()}
         />
         <SplitButton
           as={AnchorLikeWrapper}
           href="string"
           label="label"
-          menuItems={getMenuItems()}
+          children={getMenuItems()}
         />
       </>;
     });

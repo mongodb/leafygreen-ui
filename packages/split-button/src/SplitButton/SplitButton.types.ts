@@ -17,6 +17,7 @@ import {
   Align as ImportedAlign,
   Justify as ImportedJustify,
 } from '@leafygreen-ui/popover';
+import type { ItemClickHandler } from '../Menu/Menu.types';
 
 export type MenuItemType = ReactElement<
   InferredPolymorphicProps<PolymorphicAs, MenuItemProps>
@@ -50,11 +51,12 @@ export type Justify = (typeof Justify)[keyof typeof Justify];
 // https://jira.mongodb.org/browse/LG-3260
 type ButtonProps = Omit<
   ImportedButtonProps,
-  'rightGlyph' | 'href' | 'as' | 'variant'
+  'children' | 'rightGlyph' | 'href' | 'as' | 'variant'
 >;
 
 export type SelectedMenuProps = Pick<
   ImportedMenuProps,
+  | 'children'
   | 'darkMode'
   | 'maxHeight'
   | 'adjustOnMutation'
@@ -87,42 +89,27 @@ export interface MenuProps extends SelectedMenuProps {
   justify?: Justify;
 
   /**
-   * The menu items to appear in the menu dropdown. Must be an array of `<MenuItem />`.
-   *
-   * ```js
-   * [
-   *   <MenuItem key='0' onClick={()=>{}}> Menu Item</MenuItem>,
-   *   <MenuItem key='1' description="I am a description" disabled>Disabled Menu Item</MenuItem>,
-   *   <MenuItem key='2' description="I am also a description">,
-   *     Menu Item With Description
-   *   </MenuItem>
-   * ]
-   * ```
-   *
-   * @type Array<MenuItem>
-   */
-  menuItems: MenuItemsType;
-
-  /**
    * Callback fired when the trigger is clicked.
    */
   onTriggerClick?: MouseEventHandler;
 
   /**
+   * Callback called when an item is clicked, with the click event and an options object.
+   * Provide an implementation to avoid the default behavior of the menu closing when an item is clicked.
+   */
+  onItemClick?: ItemClickHandler;
+
+  /**
    * aria-label for the menu trigger button.
    */
   triggerAriaLabel?: string;
-
-  /**
-   * Callback fired when a menuItem is clicked.
-   */
-  onChange?: MouseEventHandler;
 }
 
 export interface SplitButtonProps
   extends DarkModeProps,
     ButtonProps,
     MenuProps {
+
   /**
    * Sets the variant for both Buttons.
    *

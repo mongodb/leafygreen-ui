@@ -1,5 +1,4 @@
 import React, {
-  MouseEvent,
   MouseEventHandler,
   useCallback,
   useMemo,
@@ -15,34 +14,55 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Menu as LGMenu } from '@leafygreen-ui/menu';
 
-import { MenuItemType } from '../SplitButton';
-
 import {
   triggerBaseStyles,
   triggerSizeStyles,
   triggerThemeStyles,
 } from './Menu.styles';
-import { MenuProps } from './Menu.types';
+import { ItemClickHandler, MenuProps } from './Menu.types';
+
+function hasOnClickHandler(
+  element: React.ReactElement<unknown>,
+): element is React.ReactElement<{
+  onClick: React.MouseEventHandler<unknown>;
+}> {
+  return (
+    typeof element.props === 'object' &&
+    element.props !== null &&
+    'onClick' in element.props &&
+    typeof element.props.onClick === 'function'
+  );
+}
+
+export const defaultItemClick: ItemClickHandler = (
+  event,
+  { close, element },
+) => {
+  close();
+  if (hasOnClickHandler(element)) {
+    element.props.onClick(event);
+  }
+};
 
 /**
  * @internal
  */
 export const Menu = ({
+  children,
   variant,
   disabled,
   align,
   justify,
   size,
   baseFontSize,
-  menuItems,
   containerRef,
   portalRef,
   id,
   onTriggerClick,
-  onChange,
   triggerAriaLabel,
   open: controlledOpen,
   setOpen: controlledSetOpen,
+  onItemClick,
   ...rest
 }: MenuProps) => {
   const { theme } = useDarkMode();
@@ -80,40 +100,19 @@ export const Menu = ({
   useEventListener('keydown', handleKeyDown, { enabled: open });
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
-  const renderMenuItems = useMemo(() => {
-    const onMenuItemClick = (e: MouseEvent, menuItem: MenuItemType) => {
-      handleClose();
-      menuItem.props.onClick?.(e);
-      onChange?.(e);
-    };
-
-    const renderMenuItem = (menuItem: MenuItemType) => {
-      if (isComponentType(menuItem, 'MenuItem')) {
-        return React.cloneElement(menuItem, {
-          active: false,
-          key: `menuItem-${menuItem.key}`,
-          onClick: (e: MouseEvent) => onMenuItemClick(e, menuItem),
+  const enhancedChildren = useMemo(() => {
+    return React.Children.map(children, (child): React.ReactNode => {
+      if (isComponentType(child, 'MenuItem')) {
+        return React.cloneElement(child, {
+          onClick(event: React.MouseEvent<unknown>) {
+            onItemClick(event, { element: child, close: handleClose });
+          },
         });
       } else {
-        console.warn(
-          'Please use a LeafyGreen <MenuItem /> component. Received: ',
-          menuItem,
-        );
+        return child;
       }
-    };
-
-    if (Array.isArray(menuItems) && menuItems.length) {
-      return menuItems.map(
-        (menuItem: MenuItemType): MenuItemType | undefined => {
-          if (menuItem == null) {
-            return menuItem;
-          }
-
-          return renderMenuItem(menuItem);
-        },
-      );
-    }
-  }, [handleClose, menuItems, onChange]);
+    });
+  }, [handleClose, children, onItemClick]);
 
   return (
     <LGMenu
@@ -145,7 +144,7 @@ export const Menu = ({
         />
       }
     >
-      {renderMenuItems}
+      {enhancedChildren}
     </LGMenu>
   );
 };

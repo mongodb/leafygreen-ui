@@ -14,7 +14,7 @@ import {
 import { RenderMode } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { Menu } from '../Menu';
+import { Menu, defaultItemClick } from '../Menu';
 
 import {
   buttonBaseStyles,
@@ -26,6 +26,7 @@ import { Align, Justify, SplitButtonProps, Variant } from './SplitButton.types';
 export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
   (
     {
+      children,
       darkMode: darkModeProp,
       variant = Variant.Default,
       type = 'button',
@@ -33,7 +34,6 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       justify = Justify.End,
       size = Size.Default,
       disabled = false,
-      menuItems = [],
       as,
       baseFontSize,
       label,
@@ -49,8 +49,8 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       open,
       setOpen,
       onTriggerClick,
+      onItemClick = defaultItemClick,
       triggerAriaLabel,
-      onChange,
       ...rest
     },
     ref: React.Ref<any>,
@@ -101,15 +101,16 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
             align={align}
             justify={justify}
             containerRef={containerRef}
-            menuItems={menuItems}
             id={menuId}
             disabled={disabled}
             open={open}
             setOpen={setOpen}
             onTriggerClick={onTriggerClick}
+            onItemClick={onItemClick}
             triggerAriaLabel={triggerAriaLabel}
-            onChange={onChange}
-          />
+          >
+            {children}
+          </Menu>
         </LeafyGreenProvider>
       </div>
     );
@@ -126,7 +127,6 @@ SplitButton.propTypes = {
   justify: PropTypes.oneOf(Object.values(Justify)),
   variant: PropTypes.oneOf(Object.values(Variant)),
   label: PropTypes.string.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.element).isRequired,
   baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
   disabled: PropTypes.bool,
   leftGlyph: PropTypes.element,
