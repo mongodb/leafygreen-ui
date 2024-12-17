@@ -14,7 +14,7 @@ const validSteps = ['build', 'tsc', 'docs'];
 
 export function build(
   packages: Array<string>,
-  { only, verbose }: BuildOptions,
+  { only }: BuildOptions,
 ) {
   console.log({ packages, only });
 

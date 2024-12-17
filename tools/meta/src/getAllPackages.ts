@@ -11,7 +11,7 @@ export const getAllPackages = () => {
 
   const paths: Array<string> = [];
 
-  for (let scopePath of Object.values(scopes)) {
+  for (const scopePath of Object.values(scopes)) {
     const scopeDir = path.resolve(rootDir, scopePath);
 
     if (fse.existsSync(scopeDir)) {

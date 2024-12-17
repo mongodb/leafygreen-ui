@@ -14,7 +14,7 @@ export { previewHead } from './preview-head';
 
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,charts,chat,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
+  '../{packages,tools,charts,chat}/**/*.stor@(y|ies).@(js|ts)?(x)',
   '../{packages,tools,charts,chat}/*/node_modules',
 );
 
@@ -72,11 +72,11 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   ) as RuleSetRule | undefined;
 
   if (fileLoaderRule) {
-    fileLoaderRule.exclude = /\.svg$/;
+    fileLoaderRule.exclude = '/\.svg$/';
   }
 
   config.module.rules.push({
-    test: /\.svg$/,
+    test: '/\.svg$/',
     enforce: 'pre',
     loader: require.resolve('@svgr/webpack'),
   });
@@ -93,7 +93,6 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   };
 
   config.plugins.push(
-    // @ts-expect-error - webpack TS can of worms
     new ProvidePlugin({
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer'],

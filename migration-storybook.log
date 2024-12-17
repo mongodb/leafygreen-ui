@@ -1,0 +1,574 @@
+🔎 checking possible migrations..
+Unable to find .eslintrc config file, skipping
+
+🔎 found a 'sb-scripts' migration:
+╭ Automigration detected ─────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                     │
+│   We've detected you are using Storybook 8.4.7 with scripts from previous versions of Storybook.                                    │
+│   Starting in Storybook 7, the start-storybook and build-storybook binaries have changed to storybook dev and storybook build       │
+│   respectively.                                                                                                                     │
+│   In order to work with Storybook 8.4.7, your storybook scripts have to be adjusted to use the binary. We can adjust them for       │
+│   you:                                                                                                                              │
+│                                                                                                                                     │
+│   watch                                                                                                                             │
+│   from:                                                                                                                             │
+│   npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm build-storybook --test'                                                      │
+│   to:                                                                                                                               │
+│   npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm storybook build --test'                                                      │
+│                                                                                                                                     │
+│   In case this migration did not cover all of your scripts, or you'd like more info:                                                │
+│   https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#start-storybook--build-storybook-binaries-removed                 │
+│                                                                                                                                     │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'sb-scripts' migration on your project? › (Y/n)✔ Do you want to run the 'sb-scripts' migration on your project? … yes
+✅ Updating scripts in package.json
+
+
+✅ ran sb-scripts migration
+
+🔎 found a 'wrap-require' migration:
+╭ Automigration detected ─────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                             │
+│   We have detected that you're using Storybook 8.4.7 in a monorepo project.                                                 │
+│   For Storybook to work correctly, some fields in your main config must be updated. We can do this for you automatically.   │
+│                                                                                                                             │
+│   More info: https://storybook.js.org/docs/faq#how-do-i-fix-module-resolution-in-special-environments                       │
+│                                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+? Do you want to run the 'wrap-require' migration on your project? › (Y/n)✔ Do you want to run the 'wrap-require' migration on your project? … yes
+✅ ran wrap-require migration
+
+⚠️  failed to check fix react-docgen
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix storyshots
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix remove-react-dependency
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix remove-legacy-mdx1
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix webpack5-compiler-setup
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix mdx1to3
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix upgradeStorybookRelatedDependencies
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix visual-tests-addon
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix autodocs-tags
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+⚠️  failed to check fix initial-globals
+
+Error: Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your .storybook/main.ts file.
+
+Original error:
+Error: Cannot find module '@storybook/react-webpack5/package.json'
+Require stack:
+- /.storybook/main.ts
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs
+- /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)
+    at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)
+    at Function.resolve (node:internal/modules/helpers:188:19)
+    at getAbsolutePath (/.storybook/main.ts:14:26)
+    at Object.<anonymous> (/.storybook/main.ts:5:11)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at getStorybookData (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:72:2624)
+    at async runFixes (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:2659)
+    at async automigrate (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:531:1625)
+    at async doUpgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:1612)
+    at async withTelemetry (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/core-server/index.cjs:35757:12)
+    at async upgrade (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs:600:2078)
+
+╭ Migration check ran with failures ──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                     │
+│   Successful migrations:                                                                                                            │
+│                                                                                                                                     │
+│   sb-scripts, wrap-require                                                                                                          │
+│                                                                                                                                     │
+│   Failed migrations:                                                                                                                │
+│                                                                                                                                     │
+│   react-docgen:                                                                                                                     │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   storyshots:                                                                                                                       │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   remove-react-dependency:                                                                                                          │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   remove-legacy-mdx1:                                                                                                               │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   webpack5-compiler-setup:                                                                                                          │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   mdx1to3:                                                                                                                          │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   upgradeStorybookRelatedDependencies:                                                                                              │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   visual-tests-addon:                                                                                                               │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   autodocs-tags:                                                                                                                    │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│   initial-globals:                                                                                                                  │
+│   Unable to find or evaluate .storybook/main.ts: SB_CORE-SERVER_0007 (MainFileEvaluationError): Storybook couldn't evaluate your    │
+│   .storybook/main.ts file.                                                                                                          │
+│                                                                                                                                     │
+│   Original error:                                                                                                                   │
+│   Error: Cannot find module '@storybook/react-webpack5/package.json'                                                                │
+│   Require stack:                                                                                                                    │
+│   - /.storybook/main.ts                                                                                                             │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/core/dist/common/index.cjs                                │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/storybook/core/common/index.cjs                                      │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/dist/bin/index.cjs                                    │
+│   - /Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/@storybook/cli/bin/index.cjs                                         │
+│   at Module._resolveFilename (node:internal/modules/cjs/loader:1134:15)                                                             │
+│   at Module._resolveFilename (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:4794:36)     │
+│   at Function.resolve (node:internal/modules/helpers:188:19)                                                                        │
+│   at getAbsolutePath (/.storybook/main.ts:14:26)                                                                                    │
+│   at Object.<anonymous> (/.storybook/main.ts:5:11)                                                                                  │
+│   at Module._compile (node:internal/modules/cjs/loader:1356:14)                                                                     │
+│   at Module._compile (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2258:26)             │
+│   at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)                                                              │
+│   at Object.newLoader [as .ts] (/Users/stephen.lee/.npm/_npx/7122ab1f221a777a/node_modules/esbuild-register/dist/node.js:2262:9)    │
+│   at Module.load (node:internal/modules/cjs/loader:1197:32)                                                                         │
+│                                                                                                                                     │
+│   You can find the full logs in /Users/stephen.lee/src/leafygreen-ui/migration-storybook.log                                        │
+│                                                                                                                                     │
+│   ─────────────────────────────────────────────────                                                                                 │
+│                                                                                                                                     │
+│   If you'd like to run the migrations again, you can do so by running 'npx storybook automigrate'                                   │
+│                                                                                                                                     │
+│   The automigrations try to migrate common patterns in your project, but might not contain everything needed to migrate to the      │
+│   latest version of Storybook.                                                                                                      │
+│                                                                                                                                     │
+│   Please check the changelog and migration guide for manual migrations and more information:                                        │
+│   https://storybook.js.org/docs/migration-guide                                                                                     │
+│   And reach out on Discord if you need help: https://discord.gg/storybook                                                           │
+│                                                                                                                                     │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+

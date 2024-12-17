@@ -18,7 +18,7 @@ export const mockTimeZone = (timeZone: string, UTCOffset: number) => {
 
   /** DTF.resolvedOptions */
   jest
-    .spyOn(global.Intl.DateTimeFormat.prototype, 'resolvedOptions')
+    .spyOn(globalThis.Intl.DateTimeFormat.prototype, 'resolvedOptions')
     .mockImplementation(() => ({
       ...DTFResolved,
       timeZone,
@@ -26,15 +26,15 @@ export const mockTimeZone = (timeZone: string, UTCOffset: number) => {
 
   /** getTimezoneOffset */
   jest
-    .spyOn(global.Date.prototype, 'getTimezoneOffset')
+    .spyOn(globalThis.Date.prototype, 'getTimezoneOffset')
     .mockImplementation(() => UTCOffset * 60);
 
   /** getDate */
-  jest.spyOn(global.Date.prototype, 'getDate').mockImplementation(mockGetDate);
+  jest.spyOn(globalThis.Date.prototype, 'getDate').mockImplementation(mockGetDate);
 
   /** getHours */
   jest
-    .spyOn(global.Date.prototype, 'getHours')
+    .spyOn(globalThis.Date.prototype, 'getHours')
     .mockImplementation(mockGetHours);
 
   /**
