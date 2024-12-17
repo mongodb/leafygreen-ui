@@ -146,7 +146,7 @@ export const ToastContainer = ({
     handleTransitionEnter,
   } = useToastTransitions({
     getShouldExpand,
-    enterCallback: () => {
+    enterCallback: useCallback(() => {
       if (toastContainerRef.current) {
         toastContainerRef.current.scrollTop = totalStackHeight;
       }
@@ -155,8 +155,8 @@ export const ToastContainer = ({
       if (getShouldExpand()) {
         updateToastHeights();
       }
-    },
-    exitCallback: () => {
+    }, [getShouldExpand, updateToastHeights]),
+    exitCallback: useCallback(() => {
       if (scrollContainerRef.current) {
         // check whether the toast container is still hovered
         const _isHovered = scrollContainerRef.current.matches(':hover');
@@ -167,7 +167,7 @@ export const ToastContainer = ({
       if (getShouldExpand()) {
         updateToastHeights();
       }
-    },
+    }, [getShouldExpand, updateToastHeights]),
   });
 
   /**
