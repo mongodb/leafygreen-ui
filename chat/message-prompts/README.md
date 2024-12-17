@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/message-prompts.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/message-prompts/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/message-prompts/live-example/)
 
 ## Installation
 

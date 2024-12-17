@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/fixed-chat-window.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/fixed-chat-window/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/fixed-chat-window/live-example/)
 
 ## Installation
 

@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/pagination.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/pagination/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/pagination/live-example/)
 
 ## Installation
 
