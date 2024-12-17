@@ -51,6 +51,11 @@ jobs:
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: yarn build
 
+      - name: Check Memory After Build
+        run: |
+          echo "Memory Usage After Build:"
+          free -h
+
   lint:
     name: Check lints
     runs-on: ubuntu-latest
@@ -123,6 +128,11 @@ jobs:
           onlyChanged: true
           exitOnceUploaded: true
           exitZeroOnChanges: true
+
+      - name: Check Memory After Build
+        run: |
+          echo "Memory Usage After Build:"
+          free -h
 
   tests:
     name: Run tests
