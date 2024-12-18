@@ -63,17 +63,17 @@ export interface ZoomSelectionEvent {
   yAxis?: { startValue: number; endValue: number };
 }
 
-export interface setupZoomSelectProps {
+export interface SetupZoomSelectProps {
   xAxis?: boolean;
   yAxis?: boolean;
 }
 
-type EChartsEventHandlerType = {
+interface EChartsEventHandlerType {
   // Regular events use the original param type
   (event: EChartsEvents, callback: (params: any) => void): void;
   // Specific override for 'zoomselect'
   (event: 'zoomselect', callback: (params: ZoomSelectionEvent) => void): void;
-};
+}
 
 export interface EChartsInstance {
   _echartsInstance: any;
@@ -86,7 +86,7 @@ export interface EChartsInstance {
   removeSeries: (name: string) => void;
   addToGroup: (groupId: string) => void;
   removeFromGroup: () => void;
-  setupZoomSelect: (setupZoomSelectProps: setupZoomSelectProps) => void;
+  setupZoomSelect: (SetupZoomSelectProps: SetupZoomSelectProps) => void;
   error: Error | null;
 }
 
