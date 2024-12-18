@@ -1,11 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-
 import { ChartOptions } from '../Chart';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
-import { getDefaultChartOptions } from '../Chart/config';
 import * as updateUtils from '../Chart/hooks/updateUtils';
 
 import {

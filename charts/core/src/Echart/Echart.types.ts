@@ -1,4 +1,5 @@
-import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
+import { Theme } from '@leafygreen-ui/lib';
+
 import type { ChartOptions, SeriesOption } from '../Chart';
 
 type EChartsEvents =
