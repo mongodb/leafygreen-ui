@@ -4,6 +4,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { expect } from '@storybook/jest';
+import { waitFor } from '@storybook/test';
 import { StoryFn } from '@storybook/react';
 import { within } from '@storybook/testing-library';
 
@@ -190,8 +191,11 @@ export const StickyHeader = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const table = await canvas.findByTestId('lg-table');
+
     window.scrollTo(0, 500);
-    await new Promise(r => setTimeout(r, 2000));
-    expect(table).toHaveAttribute('data-is-sticky', 'true');
+
+    await waitFor(async () => {
+      expect(table).toHaveAttribute('data-is-sticky', 'true');
+    });
   },
 };
