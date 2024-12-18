@@ -113,12 +113,12 @@ const createKitchenSinkData: (depth?: number) => KitchenSink = (depth = 0) => {
     frequency: faker.helpers.arrayElement(['Daily', 'Weekly', 'Monthly']),
     clusterType: faker.helpers.weightedArrayElement([
       { value: 'Replica set', weight: 0.45 },
-      { value: 'Sharded cluster', weight: 0.45 },
       { value: faker.lorem.lines(2), weight: 0.1 },
       {
         value: faker.string.alpha({ length: { min: 25, max: 45 } }),
         weight: 0.1,
       },
+      { value: 'Sharded cluster', weight: 0.45 },
     ]),
     encryptorEnabled: faker.datatype.boolean(0.75),
     mdbVersion: faker.system.semver(),

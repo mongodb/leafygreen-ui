@@ -41,6 +41,7 @@
     "@storybook/components": "7.6.17",
     "@storybook/core-events": "7.6.17",
     "@storybook/jest": "^0.2.3",
+    "@storybook/test": "^7.6.17",
     "@storybook/react": "7.6.17",
     "@storybook/react-webpack5": "7.6.17",
     "@storybook/testing-library": "0.2.0",
