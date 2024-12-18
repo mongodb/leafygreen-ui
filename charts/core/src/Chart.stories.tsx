@@ -498,6 +498,7 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
             xAxis: zoomSelectXAxis,
             yAxis: zoomSelectYAxis,
           }}
+          onZoomSelect={zoomSelectCallback}
         >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />
