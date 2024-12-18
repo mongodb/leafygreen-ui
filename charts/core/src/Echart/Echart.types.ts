@@ -1,3 +1,4 @@
+import { DarkModeProps, Theme } from '@leafygreen-ui/lib';
 import type { ChartOptions, SeriesOption } from '../Chart';
 
 type EChartsEvents =
@@ -93,4 +94,5 @@ export interface EChartsInstance {
 export interface EChartHookProps {
   container: HTMLDivElement | null;
   initialOptions?: Partial<ChartOptions>;
+  theme: Theme;
 }

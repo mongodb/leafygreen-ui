@@ -14,7 +14,11 @@ export function useChart({
 }: ChartHookProps): ChartInstance {
   const chartRef = useRef(null);
   const initialOptions = getDefaultChartOptions(theme);
-  const echart = useEchart({ container: chartRef.current, initialOptions });
+  const echart = useEchart({
+    container: chartRef.current,
+    initialOptions,
+    theme,
+  });
 
   useEffect(() => {
     if (echart.ready) {

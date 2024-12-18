@@ -81,11 +81,11 @@ async function initializeEcharts() {
 export function useEchart({
   container,
   initialOptions,
+  theme,
 }: EChartHookProps): EChartsInstance {
   const [echartsInstance, setEchartsInstance] = useState<any>(null); // has to be any since no types exist until import
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
-  const { theme } = useDarkMode();
   const [options, setOptions] = useState<EChartsInstance['options']>(
     initialOptions || {},
   );
