@@ -93,7 +93,7 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   };
 
   config.plugins.push(
-    // @ts-expect-error - webpack TS can of worms
+    // @ts-expect-error - Can of worms
     new ProvidePlugin({
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer'],

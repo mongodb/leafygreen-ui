@@ -266,12 +266,12 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
 Popover.displayName = 'Popover';
 
 Popover.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   active: PropTypes.bool,
   className: PropTypes.string,
   align: PropTypes.oneOf(Object.values(Align)),
   justify: PropTypes.oneOf(Object.values(Justify)),
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
+  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
   refEl: PropTypes.shape({
     current:
       typeof window !== 'undefined'

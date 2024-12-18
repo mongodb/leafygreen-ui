@@ -104,7 +104,7 @@ IconButton.propTypes = {
   darkMode: PropTypes.bool,
   size: PropTypes.oneOf(Object.values(Size)),
   className: PropTypes.string,
-  children: PropTypes.node,
+  children: PropTypes.element,
   disabled: PropTypes.bool,
   href: PropTypes.string,
   active: PropTypes.bool,

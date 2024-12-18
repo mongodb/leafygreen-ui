@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/popover.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/popover/live-example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/popover/example/)
 
 ## Installation
 

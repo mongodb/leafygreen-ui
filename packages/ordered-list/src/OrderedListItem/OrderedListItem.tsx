@@ -48,8 +48,8 @@ const OrderedListItem = React.forwardRef(
 OrderedListItem.displayName = 'OrderedListItem';
 
 OrderedListItem.propTypes = {
-  title: propTypes.node,
-  description: propTypes.node,
+  title: propTypes.element,
+  description: propTypes.element,
 };
 
 export { OrderedListItem };

@@ -1,0 +1,5 @@
+packages:
+  - 'charts/*'
+  - 'chat/*'
+  - 'packages/*'
+  - 'tools/*'
