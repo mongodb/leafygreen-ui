@@ -17,13 +17,13 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/marketing-modal": "^4.2.3",
+    "@leafygreen-ui/marketing-modal": "workspace:^4.2.3",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.0.0"
+    "@leafygreen-ui/typography": "workspace:^19.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/modal": "^16.0.7"
+    "@leafygreen-ui/button": "workspace:^21.2.0",
+    "@leafygreen-ui/modal": "workspace:^16.0.7"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/chat-disclaimer",
   "repository": {

@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/avatar": "^1.0.0",
+    "@leafygreen-ui/avatar": "workspace:^1.0.0",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",

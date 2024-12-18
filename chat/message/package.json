@@ -21,19 +21,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/banner": "^8.0.1",
+    "@leafygreen-ui/banner": "workspace:^8.0.1",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/polymorphic": "^2.0.0",
+    "@leafygreen-ui/polymorphic": "workspace:^2.0.0",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.2.0",
-    "@lg-chat/lg-markdown": "^2.0.2",
-    "@lg-chat/rich-links": "^1.2.0"
+    "@leafygreen-ui/typography": "workspace:^19.2.0",
+    "@lg-chat/lg-markdown": "workspace:^2.0.2",
+    "@lg-chat/rich-links": "workspace:^1.2.0"
   },
   "devDependencies": {
-    "@lg-chat/avatar": "^3.1.0",
-    "@lg-chat/message-feedback": "^2.1.0"
+    "@lg-chat/avatar": "workspace:^3.1.0",
+    "@lg-chat/message-feedback": "workspace:^2.1.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12",

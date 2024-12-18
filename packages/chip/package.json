@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "^12.5.4",
-    "@leafygreen-ui/inline-definition": "^7.0.0",
+    "@leafygreen-ui/icon": "workspace:^12.5.4",
+    "@leafygreen-ui/inline-definition": "workspace:^7.0.0",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^"

@@ -22,16 +22,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.13",
-    "@leafygreen-ui/box": "^3.1.9",
+    "@leafygreen-ui/a11y": "workspace:^1.4.13",
+    "@leafygreen-ui/box": "workspace:^3.1.9",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/icon": "^12.0.1",
+    "@leafygreen-ui/icon": "workspace:^12.0.1",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/portal": "^5.1.1",
+    "@leafygreen-ui/portal": "workspace:^5.1.1",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/tooltip": "^12.0.0",
+    "@leafygreen-ui/tooltip": "workspace:^12.0.0",
     "@leafygreen-ui/typography": "workspace:^",
     "polished": "^4.2.2",
     "react-transition-group": "^4.4.5"
@@ -40,7 +40,7 @@
     "@leafygreen-ui/leafygreen-provider": "^3.2.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/select": "^13.0.0"
+    "@leafygreen-ui/select": "workspace:^13.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {

@@ -15,15 +15,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^11.0.0",
+    "@leafygreen-ui/card": "workspace:^11.0.0",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "^12.6.0",
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
+    "@leafygreen-ui/icon": "workspace:^12.6.0",
+    "@leafygreen-ui/leafygreen-provider": "workspace:^3.1.12",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/polymorphic": "^2.0.2",
+    "@leafygreen-ui/polymorphic": "workspace:^2.0.2",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.3.0"
+    "@leafygreen-ui/typography": "workspace:^19.3.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
@@ -35,5 +35,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "devDependencies": {}
 }

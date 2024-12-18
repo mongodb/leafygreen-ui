@@ -17,12 +17,12 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/icon": "^12.8.0",
-    "@leafygreen-ui/icon-button": "^15.0.23",
+    "@leafygreen-ui/icon": "workspace:^12.8.0",
+    "@leafygreen-ui/icon-button": "workspace:^15.0.23",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.3.0",
+    "@leafygreen-ui/typography": "workspace:^19.3.0",
     "echarts": "^5.5.1",
     "lodash.debounce": "^4.0.8"
   },
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@leafygreen-ui/combobox": "^10.0.0",
+    "@leafygreen-ui/combobox": "workspace:^10.0.0",
     "@types/lodash.debounce": "^4.0.9"
   },
   "repository": {

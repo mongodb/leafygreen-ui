@@ -22,19 +22,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "^3.1.9",
+    "@leafygreen-ui/box": "workspace:^3.1.9",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/ripple": "^1.1.13",
+    "@leafygreen-ui/ripple": "workspace:^1.1.13",
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/test-harnesses": "^0.1.2",
     "polished": "^4.2.2"
   },
   "devDependencies": {
     "next": "^13.0.5",
-    "@leafygreen-ui/icon": "^12.0.1",
-    "@leafygreen-ui/loading-indicator": "^2.0.12"
+    "@leafygreen-ui/icon": "workspace:^12.0.1",
+    "@leafygreen-ui/loading-indicator": "workspace:^2.0.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

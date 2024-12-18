@@ -16,10 +16,10 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "^12.6.0",
+    "@leafygreen-ui/icon": "workspace:^12.6.0",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/tooltip": "^12.0.0",
+    "@leafygreen-ui/tooltip": "workspace:^12.0.0",
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {

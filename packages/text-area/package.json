@@ -23,11 +23,11 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/form-field": "^1.2.5",
+    "@leafygreen-ui/form-field": "workspace:^1.2.5",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.0.0",
+    "@leafygreen-ui/typography": "workspace:^19.0.0",
     "@lg-tools/test-harnesses": "^0.1.2"
   },
   "peerDependencies": {

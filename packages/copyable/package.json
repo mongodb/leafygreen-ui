@@ -22,15 +22,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/button": "workspace:^21.2.0",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/icon": "^12.5.4",
+    "@leafygreen-ui/icon": "workspace:^12.5.4",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/tooltip": "^12.0.0",
-    "@leafygreen-ui/typography": "^19.2.0",
+    "@leafygreen-ui/tooltip": "workspace:^12.0.0",
+    "@leafygreen-ui/typography": "workspace:^19.2.0",
     "clipboard": "^2.0.6",
     "polished": "^4.2.2"
   },
