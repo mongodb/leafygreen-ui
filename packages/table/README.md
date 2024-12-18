@@ -1012,6 +1012,7 @@ const {
   - Only rows
   - Rows and subrows
   - Expanded content
+  - [Row, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-k4nmqq)
   - With extra custom columns
   - No Truncation
   - Zebra Stripes
