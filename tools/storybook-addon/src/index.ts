@@ -4,7 +4,6 @@
 
 export {
   addons,
-  babel,
   core,
   docs,
   framework,

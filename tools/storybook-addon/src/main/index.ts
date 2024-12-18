@@ -43,22 +43,6 @@ export const staticDirs: StorybookConfig['staticDirs'] = [
   '../node_modules/@lg-tools/storybook-addon/static',
 ];
 
-export const babel: StorybookConfig['babel'] = async options => {
-  return {
-    ...options,
-    presets: [
-      '@babel/preset-typescript',
-      '@babel/preset-react',
-      [
-        '@babel/preset-env',
-        {
-          modules: false,
-        },
-      ],
-    ],
-  };
-};
-
 export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   config.module = config.module ?? {};
   config.module.rules = config.module.rules ?? [];
@@ -72,13 +56,34 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   ) as RuleSetRule | undefined;
 
   if (fileLoaderRule) {
-    fileLoaderRule.exclude = '/\.svg$/';
+    fileLoaderRule.exclude = /\.svg$/;
   }
 
   config.module.rules.push({
-    test: '/\.svg$/',
+    test: /\.svg$/,
     enforce: 'pre',
     loader: require.resolve('@svgr/webpack'),
+  });
+
+  config.module.rules.push({
+    test: /\.(ts|tsx)$/,
+    use: [
+      {
+        loader: require.resolve('babel-loader'),
+        options: {
+          presets: [
+            '@babel/preset-typescript',
+            '@babel/preset-react',
+            [
+              '@babel/preset-env',
+              {
+                modules: false,
+              },
+            ],
+          ],
+        },
+      },
+    ],
   });
 
   // Required for Webpack 5:
