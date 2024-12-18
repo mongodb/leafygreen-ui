@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactElement } from 'react';
+import { MouseEventHandler } from 'react';
 
 import {
   type ButtonProps as ImportedButtonProps,
@@ -6,24 +6,13 @@ import {
 } from '@leafygreen-ui/button';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import {
-  MenuItemProps,
   type MenuProps as ImportedMenuProps,
 } from '@leafygreen-ui/menu';
-import {
-  InferredPolymorphicProps,
-  PolymorphicAs,
-} from '@leafygreen-ui/polymorphic';
 import {
   Align as ImportedAlign,
   Justify as ImportedJustify,
 } from '@leafygreen-ui/popover';
 import type { ItemClickHandler } from '../Menu/Menu.types';
-
-export type MenuItemType = ReactElement<
-  InferredPolymorphicProps<PolymorphicAs, MenuItemProps>
->;
-
-export type MenuItemsType = Array<MenuItemType>;
 
 export const Variant = {
   Default: ButtonVariants.Default,
