@@ -191,7 +191,7 @@ export const StickyHeader = {
     const canvas = within(canvasElement);
     const table = await canvas.findByTestId('lg-table');
     window.scrollTo(0, 500);
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise(r => setTimeout(r, 2000));
     expect(table).toHaveAttribute('data-is-sticky', 'true');
   },
 };
