@@ -30,12 +30,12 @@ const meta: StoryMetaType<typeof SplitButton> = {
         ...storybookExcludedControlParams,
         'as',
         'children',
-        'menuItems',
         'href',
         'type',
         'maxHeight',
         'open',
         'onTriggerClick',
+        'onItemClick',
         'triggerAriaLabel',
       ],
     },
@@ -74,7 +74,7 @@ const meta: StoryMetaType<typeof SplitButton> = {
     variant: Variant.Default,
     align: Align.Bottom,
     justify: Justify.End,
-    menuItems: [
+    children: [
       <MenuItem key="0" onClick={(event: MouseEvent) => console.log(event)}>
         Menu Item
       </MenuItem>,
