@@ -1,5 +1,6 @@
 import { AriaLabelPropsWithChildren } from '@leafygreen-ui/a11y';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
 /**
  * TERMINOLOGY
@@ -55,6 +56,10 @@ export interface BaseInputOptionProps {
   isInteractive?: boolean;
 }
 
-export type InputOptionProps = DarkModeProps &
+export type InternalInputOptionProps = DarkModeProps &
   AriaLabelPropsWithChildren &
   BaseInputOptionProps;
+
+// External only
+export type InputOptionProps<TAsProp extends PolymorphicAs = 'li'> =
+  PolymorphicProps<TAsProp, InternalInputOptionProps>;
