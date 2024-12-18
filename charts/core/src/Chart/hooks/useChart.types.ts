@@ -1,4 +1,8 @@
+import { MutableRefObject } from 'react';
+
 import { Theme } from '@leafygreen-ui/lib';
+
+import type { EChartsInstance } from '../../Echart';
 
 export interface ZoomSelectionEvent {
   xAxis?: { startValue: number; endValue: number };
@@ -38,4 +42,8 @@ export interface ChartHookProps {
    * Callback to be called when a zoom selection is made.
    */
   onZoomSelect?: (e: ZoomSelectionEvent) => void;
+}
+
+export interface ChartInstance extends EChartsInstance {
+  ref: MutableRefObject<HTMLDivElement | null>;
 }
