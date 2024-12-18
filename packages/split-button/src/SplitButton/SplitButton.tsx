@@ -21,9 +21,17 @@ import {
   buttonContainerStyles,
   buttonThemeStyles,
 } from './SplitButton.styles';
-import { Align, Justify, SplitButtonProps, Variant } from './SplitButton.types';
+import {
+  Align,
+  InternalSplitButtonProps,
+  Justify,
+  Variant,
+} from './SplitButton.types';
 
-export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
+export const SplitButton = InferredPolymorphic<
+  InternalSplitButtonProps,
+  'button'
+>(
   (
     {
       darkMode: darkModeProp,
