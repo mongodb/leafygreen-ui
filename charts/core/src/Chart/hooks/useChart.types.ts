@@ -1,6 +1,8 @@
-import { Theme } from '@leafygreen-ui/lib';
-import type { EChartsInstance } from '../../Echart';
 import { MutableRefObject } from 'react';
+
+import { Theme } from '@leafygreen-ui/lib';
+
+import type { EChartsInstance } from '../../Echart';
 
 export interface ZoomSelectionEvent {
   xAxis?: { startValue: number; endValue: number };

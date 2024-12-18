@@ -3,10 +3,11 @@ import debounce from 'lodash.debounce';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { getDefaultChartOptions } from '../Chart/config';
 import { ChartOptions } from '../Chart';
-import * as updateUtils from '../Chart/hooks/updateUtils';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
+import { getDefaultChartOptions } from '../Chart/config';
+import * as updateUtils from '../Chart/hooks/updateUtils';
+
 import {
   EChartHookProps,
   EChartsInstance,
@@ -92,7 +93,9 @@ export function useEchart({
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
-  const withInstanceCheck = <T extends (...args: any[]) => void>(fn: T) => {
+  const withInstanceCheck = <T extends (...args: Array<any>) => void>(
+    fn: T,
+  ) => {
     return (...args: Parameters<T>) => {
       if (!echartsInstance) {
         console.error('Echart instance not initialized');
@@ -236,6 +239,7 @@ export function useEchart({
           activeHandlers.current.delete(`${action}-${callback.toString()}`);
           break;
         }
+
         default: {
           echartsInstance.off(action, callback);
           activeHandlers.current.delete(`${action}-${callback.toString()}`);
@@ -295,6 +299,7 @@ export function useEchart({
           echartsInstance.on('datazoom', zoomHandler);
           break;
         }
+
         default: {
           activeHandlers.current.set(handlerKey, callback);
           echartsInstance.on(action, callback);
@@ -355,6 +360,7 @@ export function useEchart({
         // Remove all registered handlers
         activeHandlers.current.forEach((handler, key) => {
           const [action] = key.split('-');
+
           if (action === 'zoomselect') {
             echartsInstance.off('datazoom', handler);
           } else {

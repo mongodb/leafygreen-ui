@@ -1,6 +1,9 @@
 import { act } from 'react-dom/test-utils';
+
 import { renderHook } from '@leafygreen-ui/testing-lib';
+
 import { type SeriesOption } from '../Chart';
+
 import { useEchart } from './useEchart';
 
 // Mock echarts instance creation with all required methods

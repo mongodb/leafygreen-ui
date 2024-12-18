@@ -1,6 +1,6 @@
-export { useEchart } from './useEchart';
 export type {
-  ZoomSelectionEvent,
-  setupZoomSelectProps,
   EChartsInstance,
+  SetupZoomSelectProps,
+  ZoomSelectionEvent,
 } from './Echart.types';
+export { useEchart } from './useEchart';

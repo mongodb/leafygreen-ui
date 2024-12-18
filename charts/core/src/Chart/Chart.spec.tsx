@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { ChartProvider } from '../ChartContext';
-import { useChart } from './hooks';
 
 import { Chart } from './Chart';
+import { useChart } from './hooks';
 
 jest.mock('../ChartContext', () => ({
   ChartProvider: jest.fn(({ children }) => <div>{children}</div>),
