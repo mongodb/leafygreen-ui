@@ -3,4 +3,4 @@ export type {
   ZoomSelectionEvent,
   setupZoomSelectProps,
   EChartsInstance,
-} from './echarts.types';
+} from './Echart.types';

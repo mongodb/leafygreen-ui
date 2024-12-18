@@ -1,16 +1,19 @@
 import { useEffect, useRef } from 'react';
 
 import type { ChartHookProps, ChartInstance } from './useChart.types';
-import { useEchart } from '../../Echarts';
+import { useEchart } from '../../Echart';
+import { getDefaultChartOptions } from '../config';
 
 export function useChart({
   onChartReady = () => {},
   zoomSelect,
   onZoomSelect,
   groupId,
+  theme,
 }: ChartHookProps): ChartInstance {
   const chartRef = useRef(null);
-  const echart = useEchart(chartRef.current);
+  const initialOptions = getDefaultChartOptions(theme);
+  const echart = useEchart({ container: chartRef.current, initialOptions });
 
   useEffect(() => {
     if (echart.ready) {
@@ -32,11 +35,6 @@ export function useChart({
         xAxis: zoomSelect?.xAxis,
         yAxis: zoomSelect?.yAxis,
       });
-      if (onZoomSelect) {
-        echart.on('zoomselect', zoomEventResponse => {
-          onZoomSelect(zoomEventResponse);
-        });
-      }
     }
   }, [echart.ready, zoomSelect]);
 

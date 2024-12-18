@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { ChartProvider } from '../ChartContext';
+import { useChart } from './hooks';
 
 import { Chart } from './Chart';
 
@@ -9,13 +10,15 @@ jest.mock('../ChartContext', () => ({
   ChartProvider: jest.fn(({ children }) => <div>{children}</div>),
 }));
 
+const mockChartInstance = {
+  chartOptions: {},
+  updateChartOptions: jest.fn(),
+  addChartSeries: jest.fn(),
+  removeChartSeries: jest.fn(),
+};
+
 jest.mock('./hooks', () => ({
-  useChart: jest.fn(() => ({
-    chartOptions: {},
-    updateChartOptions: jest.fn(),
-    addChartSeries: jest.fn(),
-    removeChartSeries: jest.fn(),
-  })),
+  useChart: jest.fn(() => mockChartInstance),
 }));
 
 /**
@@ -24,23 +27,29 @@ jest.mock('./hooks', () => ({
  * Chromatic tests for rendering logic.
  */
 describe('lg-charts/core/Chart', () => {
-  it('renders the echart container', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test('renders the echart container', () => {
     render(<Chart />);
     expect(
       screen.getByTestId('lg-charts-core-chart-echart'),
     ).toBeInTheDocument();
   });
 
-  it('passes the correct props to ChartProvider', () => {
+  test('passes the chart instance to ChartProvider', () => {
     render(<Chart />);
+
+    // Verify useChart was called
+    expect(useChart).toHaveBeenCalled();
+
+    // Verify ChartProvider was called with the correct chart instance
     expect(ChartProvider).toHaveBeenCalledWith(
       expect.objectContaining({
-        chartOptions: {},
-        updateChartOptions: expect.any(Function),
-        addChartSeries: expect.any(Function),
-        removeChartSeries: expect.any(Function),
+        chart: mockChartInstance,
       }),
-      expect.anything(),
+      expect.any(Object),
     );
   });
 });

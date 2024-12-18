@@ -7,7 +7,11 @@ import { getDefaultChartOptions } from '../Chart/config';
 import { ChartOptions } from '../Chart';
 import * as updateUtils from '../Chart/hooks/updateUtils';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
-import { EChartsInstance, ZoomSelectionEvent } from './echarts.types';
+import {
+  EChartHookProps,
+  EChartsInstance,
+  ZoomSelectionEvent,
+} from './Echart.types';
 
 // Singleton promise for initialization to prevent duplication
 let initPromise: Promise<void> | null = null;
@@ -73,13 +77,16 @@ async function initializeEcharts() {
  * Provides helper methods to hide ECharts specific logic and give a cleaner API
  * for interacting with a chart.
  */
-export function useEchart(container: HTMLDivElement | null): EChartsInstance {
+export function useEchart({
+  container,
+  initialOptions,
+}: EChartHookProps): EChartsInstance {
   const [echartsInstance, setEchartsInstance] = useState<any>(null); // has to be any since no types exist until import
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
   const { theme } = useDarkMode();
   const [options, setOptions] = useState<EChartsInstance['options']>(
-    getDefaultChartOptions(theme),
+    initialOptions || {},
   );
 
   // Keep track of active handlers
