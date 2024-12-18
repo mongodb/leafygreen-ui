@@ -51,7 +51,7 @@ const setupHook = async () => {
 
   await act(async () => {
     const hookResult = renderHook(() =>
-      useEchart({ container: mockContainer }),
+      useEchart({ theme: 'dark', container: mockContainer }),
     );
     result = hookResult.result;
     // Wait for all state updates to complete
