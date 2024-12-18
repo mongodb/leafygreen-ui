@@ -61,5 +61,6 @@
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "storybook": "^7.6.20"
-  }
+  },
+  "devDependencies": {}
 }

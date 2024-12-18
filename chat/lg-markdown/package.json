@@ -25,7 +25,7 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.0.0",
+    "@leafygreen-ui/typography": "workspace:^19.0.0",
     "react-markdown": "^8.0.7"
   },
   "peerDependencies": {

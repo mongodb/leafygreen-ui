@@ -25,7 +25,7 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/polymorphic": "^2.0.2",
+    "@leafygreen-ui/polymorphic": "workspace:^2.0.2",
     "@leafygreen-ui/tokens": "workspace:^",
     "polished": "^4.2.2"
   },

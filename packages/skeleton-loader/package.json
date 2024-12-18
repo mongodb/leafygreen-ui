@@ -30,13 +30,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/card": "^11.0.0",
+    "@leafygreen-ui/card": "workspace:^11.0.0",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "^12.6.0",
+    "@leafygreen-ui/icon": "workspace:^12.6.0",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.3.0",
+    "@leafygreen-ui/typography": "workspace:^19.3.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {

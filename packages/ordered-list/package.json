@@ -15,7 +15,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/descendants": "^1.0.1",
+    "@leafygreen-ui/descendants": "workspace:^1.0.1",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",

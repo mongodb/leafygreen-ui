@@ -33,5 +33,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "devDependencies": {}
 }

@@ -22,13 +22,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/button": "workspace:^21.2.0",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/modal": "^16.0.7",
+    "@leafygreen-ui/modal": "workspace:^16.0.7",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.0.0"
+    "@leafygreen-ui/typography": "workspace:^19.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"

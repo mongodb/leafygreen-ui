@@ -22,15 +22,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.5.0",
-    "@leafygreen-ui/descendants": "^1.0.0",
+    "@leafygreen-ui/a11y": "workspace:^1.5.0",
+    "@leafygreen-ui/descendants": "workspace:^1.0.0",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/polymorphic": "^2.0.2",
+    "@leafygreen-ui/polymorphic": "workspace:^2.0.2",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.3.0",
+    "@leafygreen-ui/typography": "workspace:^19.3.0",
     "@lg-tools/test-harnesses": "0.1.2"
   },
   "peerDependencies": {
@@ -45,9 +45,9 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/card": "^11.0.0",
-    "@leafygreen-ui/icon": "^12.6.0",
-    "@leafygreen-ui/icon-button": "^15.0.23"
+    "@leafygreen-ui/button": "workspace:^21.2.0",
+    "@leafygreen-ui/card": "workspace:^11.0.0",
+    "@leafygreen-ui/icon": "workspace:^12.6.0",
+    "@leafygreen-ui/icon-button": "workspace:^15.0.23"
   }
 }

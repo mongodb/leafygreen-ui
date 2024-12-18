@@ -43,5 +43,6 @@
   },
   "peerDependencies": {
     "@babel/core": "^7.23.2"
-  }
+  },
+  "devDependencies": {}
 }

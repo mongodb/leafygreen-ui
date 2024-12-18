@@ -24,13 +24,13 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/icon": "^12.0.1",
-    "@leafygreen-ui/icon-button": "^15.0.23",
+    "@leafygreen-ui/icon": "workspace:^12.0.1",
+    "@leafygreen-ui/icon-button": "workspace:^15.0.23",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/portal": "^5.1.1",
+    "@leafygreen-ui/portal": "workspace:^5.1.1",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "^19.0.0",
+    "@leafygreen-ui/typography": "workspace:^19.0.0",
     "lodash": "^4.17.21",
     "polished": "^4.2.2",
     "react-transition-group": "^4.4.5"
@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/button": "workspace:^21.2.0",
     "react-test-renderer": "^18.2.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",

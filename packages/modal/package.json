@@ -24,11 +24,11 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/icon": "^12.5.0",
-    "@leafygreen-ui/icon-button": "^15.0.22",
+    "@leafygreen-ui/icon": "workspace:^12.5.0",
+    "@leafygreen-ui/icon-button": "workspace:^15.0.22",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/portal": "^5.1.1",
+    "@leafygreen-ui/portal": "workspace:^5.1.1",
     "@leafygreen-ui/tokens": "workspace:^",
     "focus-trap": "6.9.4",
     "focus-trap-react": "^9.0.2",
@@ -38,10 +38,10 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/code": "^14.3.3",
-    "@leafygreen-ui/copyable": "^8.0.25",
-    "@leafygreen-ui/select": "^12.1.0",
+    "@leafygreen-ui/button": "workspace:^21.2.0",
+    "@leafygreen-ui/code": "workspace:^15.0.0",
+    "@leafygreen-ui/copyable": "workspace:^9.0.0",
+    "@leafygreen-ui/select": "workspace:^13.0.0",
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {

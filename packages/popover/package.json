@@ -26,13 +26,13 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/portal": "^5.1.1",
+    "@leafygreen-ui/portal": "workspace:^5.1.1",
     "@leafygreen-ui/tokens": "workspace:^",
     "@types/react-transition-group": "^4.4.5",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.3.0",
+    "@leafygreen-ui/button": "workspace:^21.3.0",
     "@leafygreen-ui/palette": "workspace:^"
   },
   "peerDependencies": {

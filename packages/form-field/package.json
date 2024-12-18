@@ -17,7 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
-    "@leafygreen-ui/icon": "^12.4.0",
+    "@leafygreen-ui/icon": "workspace:^12.4.0",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
@@ -27,8 +27,8 @@
     "@leafygreen-ui/leafygreen-provider": "^3.1.12"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.1",
-    "@leafygreen-ui/icon-button": "^15.0.21"
+    "@leafygreen-ui/button": "workspace:^21.2.1",
+    "@leafygreen-ui/icon-button": "workspace:^15.0.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-field",
   "repository": {

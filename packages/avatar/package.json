@@ -23,9 +23,9 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/icon": "^12.5.0",
+    "@leafygreen-ui/icon": "workspace:^12.5.0",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/logo": "^9.1.0",
+    "@leafygreen-ui/logo": "workspace:^9.1.0",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "lodash": "^4.17.21"
