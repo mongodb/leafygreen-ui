@@ -89,8 +89,6 @@ jobs:
           cache-dependency-path: 'yarn.lock'
 
       - name: Install Dependencies
-        env:
-          NODE_OPTIONS: '--max_old_space_size=8192'
         run: yarn install --frozen-lockfile --prefer-offline
 
       - uses: actions/cache/restore@v3
@@ -103,6 +101,8 @@ jobs:
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
+        env:
+          NODE_OPTIONS: '--max_old_space_size=16384'
         uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
