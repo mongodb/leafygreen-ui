@@ -1,5 +1,5 @@
 import { Theme } from '@leafygreen-ui/lib';
-import { EChartsInstance } from '../../echarts/echarts.types';
+import type { EChartsInstance } from '../../Echarts';
 import { MutableRefObject } from 'react';
 
 export interface ZoomSelectionEvent {
