@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React from 'react';
+import styled from '@emotion/styled';
 import { ColumnDef, Header } from '@tanstack/react-table';
 import {
   queryByRole as globalQueryByRole,
@@ -60,16 +61,13 @@ const headerCellTestData: Array<Partial<Person>> = [
 ];
 
 const TestSortableHeaderCell = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const table = useLeafyGreenTable({
-    containerRef,
     columns: headerCellTestColumns,
     data: headerCellTestData,
   });
 
   return (
-    <div ref={containerRef}>
+    <div>
       <table>
         <thead>
           <tr>
@@ -95,7 +93,6 @@ const useMockTestHeaderData = (
 ): Header<LGTableDataType<any>, unknown> => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const table = useLeafyGreenTable({
-    containerRef: React.createRef<HTMLDivElement>(),
     data: [],
     columns: [columnDef],
   });
@@ -193,5 +190,63 @@ describe('packages/table/HeaderCell', () => {
     );
     const headerCell = getByTestId('lg-header-cell-test');
     expect(getComputedStyle(headerCell).width).toBe('700px');
+  });
+
+  test('Accepts a ref', () => {
+    const ref = React.createRef<HTMLTableCellElement>();
+    render(<HeaderCell ref={ref}>Hello</HeaderCell>);
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const StyledHeaderCell = styled(HeaderCell)`
+        color: #69ffc6;
+      `;
+
+      const { getByTestId } = render(
+        <StyledHeaderCell data-testid="styled">Some text</StyledHeaderCell>,
+      );
+
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const StyledHeaderCell = styled(HeaderCell)<StyledProps>`
+        color: ${props => props.color};
+      `;
+
+      const { getByTestId } = render(
+        <StyledHeaderCell data-testid="styled" color="#69ffc6">
+          Some text
+        </StyledHeaderCell>,
+      );
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const { result } = renderHook(() =>
+      useMockTestHeaderData({
+        accessorKey: 'id',
+        size: 700,
+      }),
+    );
+
+    const mockHeader = result.current;
+    const ref = React.createRef<HTMLTableCellElement>();
+
+    <>
+      <HeaderCell />
+      <HeaderCell align="center" header={mockHeader} />
+      <HeaderCell ref={ref} />
+    </>;
   });
 });
