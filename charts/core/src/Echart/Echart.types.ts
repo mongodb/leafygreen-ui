@@ -1,4 +1,4 @@
-import { ChartOptions, SeriesOption } from '../Chart';
+import type { ChartOptions, SeriesOption } from '../Chart';
 
 type EChartsEvents =
   // Mouse Events
@@ -88,4 +88,9 @@ export interface EChartsInstance {
   removeFromGroup: () => void;
   setupZoomSelect: (setupZoomSelectProps: setupZoomSelectProps) => void;
   error: Error | null;
+}
+
+export interface EChartHookProps {
+  container: HTMLDivElement | null;
+  initialOptions?: Partial<ChartOptions>;
 }
