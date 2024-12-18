@@ -4,9 +4,12 @@ import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
 import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
-import { SearchResultProps } from './SearchResult.types';
+import { InternalSearchResultProps } from './SearchResult.types';
 
-export const SearchResult = InferredPolymorphic<SearchResultProps, 'li'>(
+export const SearchResult = InferredPolymorphic<
+  InternalSearchResultProps,
+  'li'
+>(
   (
     {
       as = 'li' as PolymorphicAs,

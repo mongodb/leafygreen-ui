@@ -10,12 +10,12 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { colorSet, containerStyle } from './styles';
-import { CardProps, ContentStyle } from './types';
+import { ContentStyle, InternalCardProps } from './types';
 
 /**
  * Cards are used to organize information into consumable chunks.
  */
-export const Card = InferredPolymorphic<CardProps, 'div'>(
+export const Card = InferredPolymorphic<InternalCardProps, 'div'>(
   (
     {
       as = 'div' as PolymorphicAs,
