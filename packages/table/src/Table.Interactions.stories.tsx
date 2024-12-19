@@ -4,8 +4,8 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { expect } from '@storybook/jest';
-import { waitFor } from '@storybook/test';
 import { StoryFn } from '@storybook/react';
+import { waitFor } from '@storybook/test';
 import { within } from '@storybook/testing-library';
 
 import Badge from '@leafygreen-ui/badge';
