@@ -1,29 +1,9 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import styled from '@emotion/styled';
+import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import TableHead, { TableHeadProps } from '.';
-
-const renderTableHeadScrollTest = (props: TableHeadProps = {}) => {
-  return render(
-    <div style={{ height: '500px', overflowY: 'scroll', position: 'relative' }}>
-      <table>
-        <TableHead {...props}>
-          <tr>
-            <td>thead test</td>
-          </tr>
-        </TableHead>
-        <tbody>
-          <tr>
-            <td>
-              <div style={{ height: '5000px' }}>test div</div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>,
-  );
-};
+import TableHead from '.';
 
 describe('packages/table/TableHead', () => {
   describe('a11y', () => {
@@ -36,39 +16,56 @@ describe('packages/table/TableHead', () => {
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
-  });
 
-  describe('isSticky prop', () => {
-    // this is not supported by jsdom. need cypress or puppeteer
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('non-sticky header is not visible after long scroll', async () => {
-      const { container, getByText } = renderTableHeadScrollTest();
-      const onScrollCallback = jest.fn();
-      container.addEventListener('scroll', () => {
-        onScrollCallback();
-      });
-      fireEvent.scroll(container, { target: { scrollY: 4000 } });
-      expect(onScrollCallback).toHaveBeenCalledTimes(1);
+    test('accepts a ref', () => {
+      const ref = React.createRef<HTMLTableSectionElement>();
+      render(<TableHead ref={ref}>Hello</TableHead>);
 
-      const theadText = getByText('thead test');
-      expect(theadText).not.toBeVisible();
+      expect(ref.current).toBeInTheDocument();
+      expect(ref.current!.textContent).toBe('Hello');
     });
 
-    // this is not supported by jsdom. need cypress or puppeteer
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('sticky header is visible after long scroll', async () => {
-      const { container, getByText } = renderTableHeadScrollTest({
-        isSticky: true,
-      });
-      const onScrollCallback = jest.fn();
-      container.addEventListener('scroll', () => {
-        onScrollCallback();
-      });
-      fireEvent.scroll(container, { target: { scrollY: 4000 } });
-      expect(onScrollCallback).toHaveBeenCalledTimes(1);
+    describe('styled', () => {
+      test('works with `styled`', () => {
+        const StyledTableHead = styled(TableHead)`
+          color: #69ffc6;
+        `;
 
-      const theadText = getByText('thead test');
-      expect(theadText).toBeVisible();
+        const { getByTestId } = render(
+          <StyledTableHead data-testid="styled" />,
+        );
+
+        expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+      });
+
+      test('works with `styled` props', () => {
+        // We need to define the additional props that styled should expect
+        interface StyledProps {
+          color?: string;
+        }
+
+        const StyledTableHead = styled(TableHead)<StyledProps>`
+          color: ${props => props.color};
+        `;
+
+        const { getByTestId } = render(
+          <StyledTableHead data-testid="styled" color="#69ffc6" />,
+        );
+
+        expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+      });
+    });
+
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip('types behave as expected', () => {
+      const ref = React.createRef<HTMLTableSectionElement>();
+
+      <>
+        <TableHead />
+        <TableHead ref={ref} />
+        <TableHead ref={ref} isSticky={true} />
+        <TableHead ref={ref} isSticky={false} />
+      </>;
     });
   });
 });
