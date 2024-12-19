@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/form-field.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/form-field/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/form-field/live-example/)
 
 ## Installation
 

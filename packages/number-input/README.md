@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/number-input.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/number-input/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/number-input/live-example/)
 
 ## Installation
 

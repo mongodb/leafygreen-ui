@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/combobox.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/combobox/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/combobox/live-example/)
 
 ## Installation
 

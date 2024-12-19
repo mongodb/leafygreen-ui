@@ -7,7 +7,7 @@ last_updated: 2024-06-12
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/descendants.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/descendants/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/descendants/live-example/)
 
 ## Installation
 

@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/segmented-control.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/segmented-control/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/segmented-control/live-example/)
 
 ## Installation
 

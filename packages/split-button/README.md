@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/split-button.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/split-button/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/split-button/live-example/)
 
 ## Installation
 

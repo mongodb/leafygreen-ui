@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/icon.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/icon/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/icon/live-example/)
 
 ## Installation
 

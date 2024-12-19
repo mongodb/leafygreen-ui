@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/form-footer.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/form-footer/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/form-footer/live-example/)
 
 ## Installation
 
