@@ -5,6 +5,7 @@ import {
 } from '@lg-tools/storybook-utils';
 import { expect } from '@storybook/jest';
 import { StoryFn } from '@storybook/react';
+import { waitFor } from '@storybook/test';
 import { within } from '@storybook/testing-library';
 
 import Badge from '@leafygreen-ui/badge';
@@ -181,11 +182,6 @@ const Template: StoryFn<StoryTableProps> = args => {
           })}
         </TableBody>
       </Table>
-      <div
-        className={css`
-          height: 1000px;
-        `}
-      />
     </div>
   );
 };
@@ -195,8 +191,11 @@ export const StickyHeader = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const table = await canvas.findByTestId('lg-table');
+
     window.scrollTo(0, 500);
-    await new Promise(r => setTimeout(r, 500));
-    expect(table).toHaveAttribute('data-is-sticky', 'true');
+
+    await waitFor(async () => {
+      expect(table).toHaveAttribute('data-is-sticky', 'true');
+    });
   },
 };

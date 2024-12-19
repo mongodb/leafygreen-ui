@@ -364,7 +364,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
 
 HundredsOfRows.parameters = {
   chromatic: {
-    disableSnapshots: true,
+    disableSnapshot: true,
   },
 };
 
