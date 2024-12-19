@@ -1025,6 +1025,7 @@ const {
   - Only rows
   - Rows and subrows
   - Expanded content
+  - [Rows, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-subrows-and-expanded-content-45lvd7)
   - With extra custom columns
   - No Truncation
   - Zebra Stripes
