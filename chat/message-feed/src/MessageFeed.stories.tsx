@@ -4,10 +4,14 @@ import { Avatar } from '@lg-chat/avatar';
 import { DisclaimerText } from '@lg-chat/chat-disclaimer';
 import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
-import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
+// TODO: fix this story after PNPM migration
+// import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
-import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import {
+  storybookArgTypes,
+  StoryMetaType,
+  StoryType,
+} from '@lg-tools/storybook-utils';
 
 import { Link } from '@leafygreen-ui/typography';
 
@@ -53,12 +57,12 @@ const MyMessage = ({
         </MessagePrompts>
       )}
       {/* @ts-ignore onChange is passed in the story itself */}
-      {hasMessageRating && <MessageFeedbackStory />}
+      {/* {hasMessageRating && <MessageFeedbackStory />} */}
     </Message>
   );
 };
 
-const Template: StoryFn<typeof MessageFeed> = ({
+const Template: StoryType<typeof MessageFeed> = ({
   children,
   darkMode,
   ...rest
@@ -80,9 +84,9 @@ const Template: StoryFn<typeof MessageFeed> = ({
   </LeafyGreenChatProvider>
 );
 
-export const Basic: StoryFn<typeof MessageFeed> = Template.bind({});
+export const Basic: StoryType<typeof MessageFeed> = Template.bind({});
 
-export const OneMessage: StoryFn<typeof MessageFeed> = ({
+export const OneMessage: StoryType<typeof MessageFeed> = ({
   darkMode,
   ...rest
 }) => {
@@ -100,7 +104,7 @@ export const OneMessage: StoryFn<typeof MessageFeed> = ({
   );
 };
 
-export const ChangingMessages: StoryFn<typeof MessageFeed> = ({
+export const ChangingMessages: StoryType<typeof MessageFeed> = ({
   darkMode,
   ...rest
 }) => {

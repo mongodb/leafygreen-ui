@@ -15,6 +15,8 @@
     "access": "public"
   },
   "dependencies": {
+    "@storybook/csf": "0.1.2",
+    "@storybook/react": "7.6.20",
     "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
@@ -24,5 +26,6 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  }
+  },
+  "devDependencies": {}
 }

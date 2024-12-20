@@ -29,6 +29,5 @@ function useGlobalId({ id: idOverride, prefix }: Params): string {
 }
 
 export default function useId({ prefix, id: idOverride }: Params): string {
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- `React.useId` is invariant at runtime.
   return useGlobalId({ id: idOverride, prefix });
 }

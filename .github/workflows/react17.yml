@@ -14,29 +14,34 @@ jobs:
     name: Test in React 17
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Setup Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'yarn'
+          cache: pnpm
 
       - name: Install node-gyp
-        run: yarn global add node-gyp
+        run: pnpm add --global node-gyp
 
       - name: Install package.json
-        run: yarn install --prefer-offline
+        run: pnpm install --prefer-offline
 
       - name: Build CLI
-        run: yarn build:cli
+        run: pnpm build:cli
 
       # TODO: Will nohoist help here?
       - name: Install testing tools for React 17
         run: npx ts-node tools/test/scripts/install-react17.ts
 
       - name: Build packages
-        run: yarn build
+        run: pnpm build
 
       - name: Run tests in React 17
-        run: yarn lg test --react17
+        run: pnpm lg test --react17

@@ -9,5 +9,6 @@
   "eslint.format.enable": true,
   "eslint.runtime": "node",
   "eslint.workingDirectories": ["./"],
-  "typescript.preferences.importModuleSpecifier": "project-relative"
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "cSpell.words": ["weekstart"]
 }

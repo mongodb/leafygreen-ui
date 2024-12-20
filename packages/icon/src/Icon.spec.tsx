@@ -124,7 +124,6 @@ describe('packages/Icon/glyphs/', () => {
         });
       }
 
-      // eslint-disable-next-line jest/expect-expect
       test('all fills used in SVG files are "none", "black", "#000", or "#000000"', () => {
         validateGlyphObject(rootGlyphObject);
       });

@@ -16,7 +16,7 @@
     "@babel/core": "7.23.2",
     "@babel/eslint-parser": "7.25.9",
     "@emotion/eslint-plugin": "11.12.0",
-    "@lg-tools/build": "^0.6.0",
+    "@lg-tools/build": "workspace:*",
     "@types/cross-spawn": "6.0.2",
     "@typescript-eslint/eslint-plugin": "8.17.0",
     "@typescript-eslint/parser": "8.17.0",

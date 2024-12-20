@@ -19,7 +19,6 @@ const meta: StoryMetaType<typeof LeafyGreenProvider> = {
 };
 export default meta;
 
-// eslint-disable-next-line react/prop-types
 const Template: StoryFn<typeof LeafyGreenProvider> = props => (
   <LeafyGreenProvider {...props}>
     <TestComponent />
