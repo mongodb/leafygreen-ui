@@ -46,7 +46,7 @@ cli
   .option('-v --verbose', 'Prints additional information to the console', false)
   .option(
     '-W, --ignore-workspace-root-check',
-    'Pass through flag for yarn',
+    'Pass through flag for pnpm',
     false,
   )
   .action(installLeafyGreen);
@@ -74,7 +74,7 @@ cli
   .description('Unlink local LeafyGreen packages from a destination app.')
   .arguments('destination')
   .option('-v --verbose', 'Prints additional information to the console', false)
-  .option('--noInstall', 'Skip the yarn install step', false)
+  .option('--noInstall', 'Skip the pnpm install step', false)
   .option('--scope <name>', 'The NPM organization')
   .action(unlinkPackages);
 
@@ -88,7 +88,7 @@ const slackbotCmd = cli.command('slackbot');
  * This is the "Bot User OAuth Token" found at https://api.slack.com/apps/A02H2UGAMDM/oauth, and should start with "xoxb-"
  *
  * To run this automatically, pass in an array of updates (in the format output by \`changeset\`) as the first argument.
- * i.e. \`yarn slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
+ * i.e. \`pnpm slackbot '[{"name": "@leafygreen-ui/sample", "version": "0.1.0"}]' \`
  *
  * Optionally pass in a channel name (defaults to 'leafygreen-ui-releases').
  * Valid channels are: \`${Object.keys(Channels).join('`, `')}\`.

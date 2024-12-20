@@ -16,17 +16,20 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "@lg-tools/build": "0.6.0",
-    "@lg-tools/codemods": "0.1.0",
-    "@lg-tools/create": "0.2.8",
-    "@lg-tools/install": "0.1.9",
-    "@lg-tools/link": "0.2.4",
-    "@lg-tools/lint": "1.0.0",
-    "@lg-tools/slackbot": "0.2.8",
-    "@lg-tools/test": "0.4.10",
-    "@lg-tools/update": "0.1.9",
-    "@lg-tools/validate": "0.3.0",
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/codemods": "workspace:^",
+    "@lg-tools/create": "workspace:^",
+    "@lg-tools/install": "workspace:^",
+    "@lg-tools/link": "workspace:^",
+    "@lg-tools/lint": "workspace:^",
+    "@lg-tools/slackbot": "workspace:^",
+    "@lg-tools/test": "workspace:^",
+    "@lg-tools/update": "workspace:^",
+    "@lg-tools/validate": "workspace:^",
     "commander": "^11.0.0",
     "read-pkg-up": "7.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.3"
   }
 }

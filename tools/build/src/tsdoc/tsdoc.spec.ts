@@ -6,7 +6,7 @@ import { parseTSDoc } from './tsdocParser';
 type SpawnType = ReturnType<typeof xSpawn.spawn>;
 
 const spawnSpy = jest.spyOn(xSpawn, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as SpawnType));
+spawnSpy.mockImplementation(() => ({} as SpawnType));
 
 describe('tools/build/tsdoc', () => {
   describe('parser', () => {

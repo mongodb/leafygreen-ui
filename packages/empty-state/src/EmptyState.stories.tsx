@@ -51,7 +51,6 @@ const meta: StoryMetaType<typeof BasicEmptyState | typeof FeaturesEmptyState> =
 export default meta;
 
 export const LiveExample: StoryFn<StoryProps> = ({
-  // eslint-disable-next-line react/prop-types
   variant,
   ...rest
 }: StoryProps) => {
