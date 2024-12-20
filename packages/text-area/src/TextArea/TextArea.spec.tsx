@@ -170,7 +170,7 @@ describe('packages/text-area', () => {
     });
   });
 
-  /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+  /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
     test('TextArea throws error when neither aria-labelledby or label is supplied', () => {
       // @ts-expect-error
@@ -179,5 +179,5 @@ describe('packages/text-area', () => {
       <TextArea aria-labelledby="some-id" />;
     });
   });
-  /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
+  /* eslint-enable jest/no-disabled-tests */
 });

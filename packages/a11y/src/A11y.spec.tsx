@@ -124,7 +124,7 @@ describe('packages/a11y', () => {
   });
 
   // testing types
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect, @typescript-eslint/no-unused-vars */
+  /* eslint-disable jest/no-disabled-tests */
   describe.skip('AriaLabelProps types', () => {
     test('AriaLabelProps', () => {
       // @ts-expect-error - empty object not allowed

@@ -1,6 +1,5 @@
 import React, { ForwardedRef, forwardRef } from 'react';
-import { Avatar } from '@lg-chat/avatar';
-import { ChatAvatarVariant } from '@lg-chat/avatar/src/Avatar';
+import { Avatar, Variant } from '@lg-chat/avatar';
 
 import Badge from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';
@@ -46,7 +45,7 @@ export const TitleBar = forwardRef(
               [contentAlignmentStyles]: align === Align.Center,
             })}
           >
-            <Avatar variant={ChatAvatarVariant.Mongo} sizeOverride={24} />
+            <Avatar variant={Variant.Mongo} sizeOverride={24} />
             <Body>
               <strong>{title}</strong>
             </Body>

@@ -205,7 +205,7 @@ describe('packages/text-input', () => {
     });
   });
 
-  /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+  /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
     test('TextInput throws error when no label is supplied', () => {
       // @ts-expect-error
@@ -223,5 +223,5 @@ describe('packages/text-input', () => {
       <TextInput type="search" aria-labelledby="some label" />;
     });
   });
-  /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
+  /* eslint-enable jest/no-disabled-tests */
 });

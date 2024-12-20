@@ -104,8 +104,8 @@ const packageJSON = `
       "access": "public"
     },
     "dependencies": {
-      "@leafygreen-ui/emotion": "^4.0.4",
-      "@leafygreen-ui/lib": "^10.3.3"
+      "@leafygreen-ui/emotion": "workspace:^",
+      "@leafygreen-ui/lib": "workspace:^"
     }
   }
 `;
@@ -143,6 +143,12 @@ const readMe = `
 #### [View on MongoDB.design](https://www.mongodb.design/component/${packageNameKebab}/live-example/)
 
 ## Installation
+
+### PNPM
+
+\`\`\`shell
+pnpm add @leafygreen-ui/${packageNameKebab}
+\`\`\`
 
 ### Yarn
 
