@@ -761,7 +761,6 @@ describe('packages/select', () => {
         ['disabled option', 'Orange'],
         ['option in disabled group', 'Indigo'],
       ])('does not occur for %p', (_, optionText) => {
-        // eslint-disable-next-line jest/no-identical-title
         test('by Enter key', async () => {
           userEvent.click(button);
 
@@ -787,7 +786,6 @@ describe('packages/select', () => {
           expect(button).toHaveValue('');
         });
 
-        // eslint-disable-next-line jest/no-identical-title
         test('by clicking', async () => {
           userEvent.click(button);
 

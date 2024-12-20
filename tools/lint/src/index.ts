@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { eslint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
@@ -28,9 +27,16 @@ export const lint = (options: LintCommandOptions) => {
       if (results.every(isTrue)) {
         process.exit(0);
       }
+
+      const total = results.length;
+      const successes = results.filter(isTrue).length;
+      verbose && console.error(`${successes} of ${total} linters passing`);
+
       process.exit(1);
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(`Error resolving linter(s)`);
+      console.error(err);
       process.exit(1);
     });
 };

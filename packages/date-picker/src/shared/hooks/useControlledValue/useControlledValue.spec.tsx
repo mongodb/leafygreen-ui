@@ -166,7 +166,7 @@ describe('packages/date-picker/hooks/useControlledValue', () => {
       handlerProp?: (val?: string) => void;
     }) => {
       const initialVal = '';
-      // eslint-disable-next-line react-hooks/rules-of-hooks
+
       const { value, setValue } = useControlledValue(
         valueProp,
         handlerProp,

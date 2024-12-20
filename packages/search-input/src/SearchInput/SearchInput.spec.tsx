@@ -674,7 +674,7 @@ describe('packages/search-input', () => {
     });
   });
 
-  /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+  /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
     test('SearchInput throws error when no `aria-label` or `aria-labelledby` is supplied', () => {
       // @ts-expect-error
@@ -683,5 +683,5 @@ describe('packages/search-input', () => {
       <SearchInput aria-labelledby="some-id" />;
     });
   });
-  /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
+  /* eslint-enable jest/no-disabled-tests */
 });

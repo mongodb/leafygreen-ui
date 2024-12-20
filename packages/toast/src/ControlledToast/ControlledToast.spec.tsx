@@ -182,7 +182,6 @@ describe('packages/toast/controlled', () => {
       expect(toast).not.toBeInTheDocument();
     });
 
-    // eslint-disable-next-line jest/expect-expect
     test('does not close until manually closed', async () => {
       const { findByTestId } = render(
         <ToastProvider>

@@ -43,5 +43,12 @@
     {
       "path": "../validate"
     }
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
   ]
 }

@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-/* eslint-disable no-console */
+
 import { spawn } from 'cross-spawn';
 
 import { getConfigFile } from './utils/getConfigFile';
@@ -50,7 +50,7 @@ export const test = (
     watch ? '--watch' : '',
     verbose ? '--verbose' : '',
     ...(ci ? ciFlags : []),
-    '--silent',
+    `--silent="${String(!verbose)}"`,
     ...passThroughOptions,
   ].filter(v => v !== '');
 

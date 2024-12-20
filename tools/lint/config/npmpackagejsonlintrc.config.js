@@ -7,7 +7,6 @@ module.exports = {
         'name',
         'version',
         'description',
-        'workspaces',
         'publishConfig',
         'scripts',
         'dependencies',
