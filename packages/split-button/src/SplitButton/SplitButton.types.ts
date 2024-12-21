@@ -115,7 +115,7 @@ export interface MenuProps extends SelectedMenuProps {
   onChange?: MouseEventHandler;
 }
 
-export interface SplitButtonProps
+export interface InternalSplitButtonProps
   extends DarkModeProps,
     ButtonProps,
     MenuProps {
@@ -131,3 +131,7 @@ export interface SplitButtonProps
    */
   label: string;
 }
+
+// External only
+export type SplitButtonProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, InternalSplitButtonProps>;
