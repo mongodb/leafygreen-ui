@@ -1,99 +1,129 @@
+import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
+import type { LineSeriesOption } from 'echarts/charts';
+import type {
+  DatasetComponentOption,
+  GridComponentOption,
+  LegendComponentOption,
+  TitleComponentOption,
+  ToolboxComponentOption,
+  TooltipComponentOption,
+} from 'echarts/components';
+import type { EChartsType } from 'echarts/core';
+import type { ComposeOption } from 'echarts/core';
+
 import { Theme } from '@leafygreen-ui/lib';
 
-import type { ChartOptions, SeriesOption } from '../Chart';
+type RequiredSeriesProps = 'type' | 'name' | 'data';
+export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
+  Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
 
-type EChartsEvents =
+/**
+ * TODO: This might need to be improved. `ComposeOption` appears to make most base option
+ * keys "Arrayable". This is making it difficult to properly test partial options on
+ * methods like updateUtils > updateOptions(), since something like `options.grid` could be
+ * an array even if an object.
+ */
+export type EChartOptions = ComposeOption<
+  | TooltipComponentOption
+  | GridComponentOption
+  | DatasetComponentOption
+  | TitleComponentOption
+  | LegendComponentOption
+  | ToolboxComponentOption
+  | XAXisComponentOption
+  | YAXisComponentOption
+> & { series?: Array<EChartSeriesOption> };
+
+export const EChartEvents = {
   // Mouse Events
-  | 'click' // Triggered when clicking on a series, data item, or other graphical element
-  | 'dblclick' // Triggered when double clicking
-  | 'mousedown' // Triggered when pressing down the mouse button
-  | 'mouseup' // Triggered when releasing the mouse button
-  | 'mouseover' // Triggered when mouse hovers over a component
-  | 'mouseout' // Triggered when mouse leaves a component
-  | 'mousemove' // Triggered when mouse moves within a component
-  | 'globalout' // Triggered when mouse leaves the chart area
-  | 'contextmenu' // Triggered when right clicking
-
+  Click: 'click',
+  DblClick: 'dblclick',
+  MouseDown: 'mousedown',
+  MouseUp: 'mouseup',
+  MouseOver: 'mouseover',
+  MouseOut: 'mouseout',
+  MouseMove: 'mousemove',
+  GlobalOut: 'globalout',
+  ContextMenu: 'contextmenu',
   // Drag Events
-  | 'dragstart' // Triggered when starting to drag a component
-  | 'drag' // Triggered while dragging
-  | 'dragend' // Triggered when ending a drag operation
-
+  DragStart: 'dragstart',
+  Drag: 'drag',
+  DragEnd: 'dragend',
   // Brush Events
-  | 'brushselected' // Triggered when selecting an area using the brush tool
-  | 'brushEnd' // Triggered when brush selection ends
-  | 'brush' // Triggered during brush selection
-
+  BrushSelected: 'brushselected',
+  BrushEnd: 'brushEnd',
+  Brush: 'brush',
   // Legend Events
-  | 'legendselectchanged' // Triggered when legend selection changes
-  | 'legendselected' // Triggered when clicking legend item
-  | 'legendunselected' // Triggered when unselecting legend item
-  | 'legendselectall' // Triggered when selecting all legend items
-  | 'legendinverseselect' // Triggered when inversely selecting legend items
-  | 'legendscroll' // Triggered when scrolling legend
-
-  // Dataoom Events
-  | 'datazoom' // Triggered when data zoom area changes
-  | 'datarangeselected' // Triggered when selecting a range in continuous visual map
-  | 'timelinechanged' // Triggered when timeline changes
-  | 'timelineplaychanged' // Triggered when timeline play state changes
-  | 'restore' // Triggered when restoring chart to initial state
-
+  LegendSelectChanged: 'legendselectchanged',
+  LegendSelected: 'legendselected',
+  LegendUnselected: 'legendunselected',
+  LegendSelectAll: 'legendselectall',
+  LegendInverseSelect: 'legendinverseselect',
+  LegendScroll: 'legendscroll',
+  // Datzoom Events
+  DataZoom: 'datazoom',
+  DataRangeSelected: 'datarangeselected',
+  TimelineChanged: 'timelinechanged',
+  TimelinePlayChanged: 'timelineplaychanged',
+  Restore: 'restore',
   // Map Events
-  | 'georoam' // Triggered when roaming (zooming/panning) in geo coordinate system
-  | 'geoselected' // Triggered when selecting areas in geo coordinate system
-  | 'geounselected' // Triggered when unselecting areas in geo coordinate system
-
+  GeoRoam: 'georoam',
+  GeoSelected: 'geoselected',
+  GeoUnselected: 'geounselected',
   // Axis Events
-  | 'axisareaselected' // Triggered when selecting an axis area
-  | 'focusnodeadjacency' // Triggered when focusing on adjacent nodes (graph)
-  | 'unfocusnodeadjacency' // Triggered when unfocusing adjacent nodes (graph)
-
+  AxisAreaSelected: 'axisareaselected',
+  FocusNodeAdjacency: 'focusnodeadjacency',
+  UnfocusNodeAdjacency: 'unfocusnodeadjacency',
   // Rendering Events
-  | 'rendered' // Triggered after chart rendering finished
-  | 'finished' // Triggered after chart animation finished
-
+  Rendered: 'rendered',
+  Finished: 'finished',
   // Chart Action Events
-  | 'magictypechanged' // Triggered when changing chart type using magic type switcher
-  | 'tooltipshown' // Triggered when tooltip is shown
-  | 'tooltiphidden' // Triggered when tooltip is hidden
-  | 'selectchanged' // Triggered when selection state changes
-  | 'globalcursortaken'; // Triggered when global cursor is taken
+  MagicTypeChanged: 'magictypechanged',
+  TooltipShown: 'tooltipshown',
+  TooltipHidden: 'tooltiphidden',
+  SelectChanged: 'selectchanged',
+  GlobalCursorTaken: 'globalcursortaken',
+  // Custom
+  ZoomSelect: 'zoomselect',
+} as const;
 
-export interface ZoomSelectionEvent {
+export type EChartEventsType = (typeof EChartEvents)[keyof typeof EChartEvents];
+
+export interface EChartZoomSelectionEvent {
   xAxis?: { startValue: number; endValue: number };
   yAxis?: { startValue: number; endValue: number };
 }
 
-export interface SetupZoomSelectProps {
+export interface EChartSetupZoomSelectProps {
   xAxis?: boolean;
   yAxis?: boolean;
 }
 
 interface EChartsEventHandlerType {
-  // Regular events use the original param type
-  (event: EChartsEvents, callback: (params: any) => void): void;
-  // Specific override for 'zoomselect'
-  (event: 'zoomselect', callback: (params: ZoomSelectionEvent) => void): void;
+  (event: EChartEventsType, callback: (params: any) => void): void;
+  (
+    event: 'zoomselect',
+    callback: (params: EChartZoomSelectionEvent) => void,
+  ): void;
 }
 
 export interface EChartsInstance {
-  _echartsInstance: any;
+  _echartsInstance: EChartsType | null;
   ready: boolean;
-  options: Partial<ChartOptions>;
-  updateOptions: (options: Omit<Partial<ChartOptions>, 'series'>) => void;
+  options: Partial<EChartOptions>;
+  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
   on: EChartsEventHandlerType;
   off: EChartsEventHandlerType;
-  addSeries: (series: SeriesOption) => void;
+  addSeries: (series: EChartSeriesOption) => void;
   removeSeries: (name: string) => void;
   addToGroup: (groupId: string) => void;
   removeFromGroup: () => void;
-  setupZoomSelect: (SetupZoomSelectProps: SetupZoomSelectProps) => void;
+  setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
   error: Error | null;
 }
 
 export interface EChartHookProps {
   container: HTMLDivElement | null;
-  initialOptions?: Partial<ChartOptions>;
+  initialOptions?: Partial<EChartOptions>;
   theme: Theme;
 }

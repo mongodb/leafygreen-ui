@@ -1,74 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { EChartsType } from 'echarts/core';
 import debounce from 'lodash.debounce';
 
-import { ChartOptions } from '../Chart';
 import { chartSeriesColors } from '../Chart/chartSeriesColors';
 import * as updateUtils from '../Chart/hooks/updateUtils';
 
 import {
-  EChartHookProps,
-  EChartsInstance,
-  ZoomSelectionEvent,
+  EChartEvents,
+  type EChartHookProps,
+  type EChartOptions,
+  type EChartsInstance,
+  type EChartZoomSelectionEvent,
 } from './Echart.types';
-
-// Singleton promise for initialization to prevent duplication
-let initPromise: Promise<void> | null = null;
-let echartsCore: any;
-let echartsCharts: any;
-let echartsRenders: any;
-let echartsComponents: any;
-
-async function initializeEcharts() {
-  // If already initialized, return immediately
-  if (echartsCore) {
-    return;
-  }
-
-  // If initialization is in progress, wait for it
-  if (initPromise) {
-    return initPromise;
-  }
-
-  // Start initialization and store the promise
-  initPromise = (async () => {
-    try {
-      const [
-        echartsCoreResolved,
-        echartsChartsResolved,
-        echartsRendersResolved,
-        echartsComponentsResolved,
-      ] = await Promise.all([
-        import('echarts/core'),
-        import('echarts/charts'),
-        import('echarts/renderers'),
-        import('echarts/components'),
-      ]);
-
-      echartsCore = echartsCoreResolved;
-      echartsCharts = echartsChartsResolved;
-      echartsRenders = echartsRendersResolved;
-      echartsComponents = echartsComponentsResolved;
-
-      echartsCore.use([
-        echartsCharts.LineChart,
-        echartsRenders.CanvasRenderer,
-        echartsComponents.TitleComponent,
-        echartsComponents.TooltipComponent,
-        echartsComponents.GridComponent,
-        echartsComponents.LegendComponent,
-        echartsComponents.ToolboxComponent,
-        echartsComponents.DataZoomComponent,
-        echartsComponents.DataZoomInsideComponent,
-      ]);
-    } catch (error) {
-      // Ensure we clear the promise if initialization fails
-      initPromise = null;
-      throw error;
-    }
-  })();
-
-  return initPromise;
-}
+import { initializeEcharts } from './initializeEcharts';
 
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
@@ -80,7 +24,10 @@ export function useEchart({
   initialOptions,
   theme,
 }: EChartHookProps): EChartsInstance {
-  const [echartsInstance, setEchartsInstance] = useState<any>(null); // has to be any since no types exist until import
+  const echartsCoreRef = useRef<typeof import('echarts/core') | null>(null);
+  const [echartsInstance, setEchartsInstance] = useState<EChartsType | null>(
+    null,
+  );
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
   const [options, setOptions] = useState<EChartsInstance['options']>(
@@ -90,22 +37,21 @@ export function useEchart({
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
-  const withInstanceCheck = <T extends (...args: Array<any>) => void>(
-    fn: T,
-  ) => {
-    return (...args: Parameters<T>) => {
+  const withInstanceCheck = <T extends (...args: Array<any>) => any>(fn: T) => {
+    return (...args: Parameters<T>): ReturnType<T> => {
       if (!echartsInstance) {
         console.error('Echart instance not initialized');
-        return;
+        return undefined as ReturnType<T>;
       }
-      fn(...args);
+
+      return fn(...args);
     };
   };
 
   const setEchartOptions = useMemo(
     () =>
       debounce(
-        withInstanceCheck((options: Partial<ChartOptions>) => {
+        withInstanceCheck((options: Partial<EChartOptions>) => {
           /**
            * The second argument is `true` to merge the new options with the existing ones.
            * This is needed to ensure that series get removed properly.
@@ -154,22 +100,24 @@ export function useEchart({
     [setEchartOptions],
   );
 
-  // ECharts does not automatically resize when the window resizes.
-  const resizeHandler = withInstanceCheck(() => {
-    echartsInstance.resize();
+  const resizeEchartInstance = withInstanceCheck(() => {
+    echartsInstance?.resize();
   });
 
   const addToGroup: EChartsInstance['addToGroup'] = useCallback(
-    withInstanceCheck(groupId => {
-      echartsInstance.group = groupId;
-      echartsCore.connect(groupId);
+    withInstanceCheck((groupId: string) => {
+      // echartsCoreRef.current should exist if instance does, but checking for extra safety
+      if (echartsCoreRef.current) {
+        (echartsInstance as EChartsType).group = groupId;
+        echartsCoreRef.current.connect(groupId);
+      }
     }),
-    [echartsCore, echartsInstance],
+    [echartsCoreRef.current, echartsInstance],
   );
 
   const removeFromGroup: EChartsInstance['removeFromGroup'] = useCallback(
     withInstanceCheck(() => {
-      echartsInstance.group = null;
+      (echartsInstance as EChartsType).group = '';
     }),
     [echartsInstance],
   );
@@ -177,13 +125,14 @@ export function useEchart({
   const clearDataZoom = useCallback(
     withInstanceCheck((params: any) => {
       /**
-       * If start is not 0% or end is not 100%, the 'dataZoom' event was triggered by a zoom.
-       * We override the zoom to prevent it from actually zooming.
+       * If start is not 0% or end is not 100%, the 'dataZoom' event was
+       * triggered by a zoom. We override the zoom to prevent it from actually
+       * zooming.
        */
       const isZoomed = params?.start !== 0 || params?.end !== 100;
 
       if (isZoomed) {
-        echartsInstance.dispatchAction({
+        echartsInstance?.dispatchAction({
           type: 'dataZoom',
           start: 0, // percentage of starting position
           end: 100, // percentage of ending position
@@ -196,13 +145,13 @@ export function useEchart({
   const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
     withInstanceCheck(({ xAxis, yAxis }) => {
       const enableZoom = withInstanceCheck(() => {
-        echartsInstance.dispatchAction({
+        echartsInstance?.dispatchAction({
           type: 'takeGlobalCursor',
           key: 'dataZoomSelect',
           dataZoomSelectActive: xAxis || yAxis,
         });
         // This will trigger a render so we need to remove the handler to prevent a loop
-        echartsInstance.off('rendered', enableZoom);
+        echartsInstance?.off('rendered', enableZoom);
       });
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
@@ -220,9 +169,9 @@ export function useEchart({
         },
       });
 
-      echartsInstance.on('rendered', enableZoom);
-      echartsInstance.off('dataZoom', clearDataZoom); // prevent adding dupes
-      echartsInstance.on('dataZoom', clearDataZoom);
+      echartsInstance?.on('rendered', enableZoom);
+      echartsInstance?.off('dataZoom', clearDataZoom); // prevent adding dupes
+      echartsInstance?.on('dataZoom', clearDataZoom);
     }),
     [echartsInstance, updateOptions],
   );
@@ -230,15 +179,15 @@ export function useEchart({
   const off: EChartsInstance['off'] = useCallback(
     withInstanceCheck((action, callback) => {
       switch (action) {
-        case 'zoomselect': {
-          echartsInstance.off('datazoom', callback);
+        case EChartEvents.ZoomSelect: {
+          echartsInstance?.off('datazoom', callback);
           // Remove from active handlers
           activeHandlers.current.delete(`${action}-${callback.toString()}`);
           break;
         }
 
         default: {
-          echartsInstance.off(action, callback);
+          echartsInstance?.off(action, callback);
           activeHandlers.current.delete(`${action}-${callback.toString()}`);
         }
       }
@@ -257,15 +206,13 @@ export function useEchart({
       }
 
       switch (action) {
-        case 'zoomselect': {
+        case EChartEvents.ZoomSelect: {
           const zoomHandler = (params: any) => {
-            const zoomSelectionEvent: ZoomSelectionEvent = {};
+            const zoomSelectionEvent: EChartZoomSelectionEvent = {};
+            const isSingleAxisZoom =
+              params.startValue !== undefined && params.endValue !== undefined;
 
-            if (
-              params.startValue !== undefined &&
-              params.endValue !== undefined
-            ) {
-              // Handle single axis zoom
+            if (isSingleAxisZoom) {
               const axis = params.dataZoomId?.includes('y') ? 'yAxis' : 'xAxis';
               zoomSelectionEvent[axis] = {
                 startValue: params.startValue,
@@ -293,34 +240,43 @@ export function useEchart({
 
           // Store the wrapper function so we can remove it later
           activeHandlers.current.set(handlerKey, zoomHandler);
-          echartsInstance.on('datazoom', zoomHandler);
+          echartsInstance?.on('datazoom', zoomHandler);
           break;
         }
 
         default: {
           activeHandlers.current.set(handlerKey, callback);
-          echartsInstance.on(action, callback);
+          echartsInstance?.on(action, callback);
         }
       }
     }),
     [echartsInstance],
   );
 
+  /**
+   * Sets up the echart instance on initial render or if the container changes.
+   * Additionally, disposes of echart instance and cleans up handlers on unmount.
+   */
   useEffect(() => {
-    (async function setupChart() {
-      try {
-        setError(null);
+    setError(null);
 
-        await initializeEcharts();
+    initializeEcharts()
+      .then(echartsCore => {
+        echartsCoreRef.current = echartsCore;
 
         if (container) {
-          const newChart = echartsCore.init(container);
+          // Init an echart instance
+          const newChart = echartsCoreRef.current.init(container);
+          // Set the initial options on the instance
           newChart.setOption(options);
-          window.addEventListener('resize', resizeHandler);
+          // Resize chart when window resizes because echarts don't be default
+          window.addEventListener('resize', resizeEchartInstance);
+
           setEchartsInstance(newChart);
           setReady(true);
         }
-      } catch (err) {
+      })
+      .catch(err => {
         setReady(false);
         console.error(err);
         setError(
@@ -328,46 +284,36 @@ export function useEchart({
             ? err
             : new Error('Failed to initialize ECharts'),
         );
-      }
-    })();
+      });
 
     return () => {
+      window.removeEventListener('resize', resizeEchartInstance);
+      activeHandlers.current.clear();
+
       if (echartsInstance) {
-        window.removeEventListener('resize', resizeHandler);
-        echartsInstance.dispose();
+        echartsInstance?.dispose();
       }
     };
   }, [container]);
 
+  /**
+   * Sets the theme when the instance is created or the theme changes.
+   * This is not actually necessary on initial render because the theme
+   * is also set on the default options. This is primarily necessary
+   * for updating the theme if the theme changes.
+   */
   useEffect(() => {
-    setOptions(currentOptions => {
-      const updatedOptions = {
-        ...currentOptions,
-        color: chartSeriesColors[theme],
-      };
-      setEchartOptions(updatedOptions);
-      return updatedOptions;
-    });
-  }, [theme]);
-
-  // Clean up all handlers when the echartsInstance changes
-  useEffect(() => {
-    return () => {
-      if (echartsInstance) {
-        // Remove all registered handlers
-        activeHandlers.current.forEach((handler, key) => {
-          const [action] = key.split('-');
-
-          if (action === 'zoomselect') {
-            echartsInstance.off('datazoom', handler);
-          } else {
-            echartsInstance.off(action, handler);
-          }
-        });
-        activeHandlers.current.clear();
-      }
-    };
-  }, [echartsInstance]);
+    if (echartsInstance) {
+      setOptions(currentOptions => {
+        const updatedOptions = {
+          ...currentOptions,
+          color: chartSeriesColors[theme],
+        };
+        setEchartOptions(updatedOptions);
+        return updatedOptions;
+      });
+    }
+  }, [echartsInstance, theme]);
 
   return {
     _echartsInstance: echartsInstance,

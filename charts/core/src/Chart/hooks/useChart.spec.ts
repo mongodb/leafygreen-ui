@@ -4,6 +4,10 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useChart } from './useChart';
 
+const EChartEventsMock = {
+  ZoomSelect: 'zoomselect',
+};
+
 // Mock the useEchart hook
 jest.mock('../../Echart', () => ({
   useEchart: jest.fn(() => ({
@@ -12,6 +16,7 @@ jest.mock('../../Echart', () => ({
     setupZoomSelect: jest.fn(),
     on: jest.fn(),
   })),
+  EChartEvents: EChartEventsMock,
 }));
 
 describe('@lg-echarts/core/hooks/useChart', () => {
@@ -88,7 +93,10 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     renderHook(() => useChart({ theme: 'dark', onZoomSelect }));
 
-    expect(on).toHaveBeenCalledWith('zoomselect', expect.any(Function));
+    expect(on).toHaveBeenCalledWith(
+      EChartEventsMock.ZoomSelect,
+      expect.any(Function),
+    );
 
     // Simulate zoom select event
     const zoomEventResponse = { start: 0, end: 100 };
@@ -115,7 +123,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     expect(result.current).toEqual({
       ...mockEchartInstance,
-      ref: expect.any(Object),
+      ref: expect.any(Function),
     });
   });
 });

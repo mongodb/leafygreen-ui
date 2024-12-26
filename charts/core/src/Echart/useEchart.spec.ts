@@ -149,7 +149,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current._echartsInstance.on).toHaveBeenCalledWith(
+    expect(result?.current?._echartsInstance?.on).toHaveBeenCalledWith(
       'click',
       mockCallback,
     );
@@ -165,7 +165,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current._echartsInstance.off).toHaveBeenCalledWith(
+    expect(result?.current?._echartsInstance?.off).toHaveBeenCalledWith(
       'click',
       mockCallback,
     );
@@ -179,7 +179,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current._echartsInstance.group).toBe('test-group');
+    expect(result?.current?._echartsInstance?.group).toBe('test-group');
   });
 
   test('should remove chart from group on call to `removeFromGroup`', async () => {
@@ -191,7 +191,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current._echartsInstance.group).toBeNull();
+    expect(result?.current?._echartsInstance?.group).toBe('');
   });
 
   test('should setup zoom select on call to `setupZoomSelect`', async () => {
@@ -218,13 +218,13 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       await Promise.resolve();
     });
 
-    expect(result.current._echartsInstance.dispatchAction).toHaveBeenCalledWith(
-      {
-        type: 'takeGlobalCursor',
-        key: 'dataZoomSelect',
-        dataZoomSelectActive: true,
-      },
-    );
+    expect(
+      result?.current?._echartsInstance?.dispatchAction,
+    ).toHaveBeenCalledWith({
+      type: 'takeGlobalCursor',
+      key: 'dataZoomSelect',
+      dataZoomSelectActive: true,
+    });
   });
 
   test('should set `ready` to true when chart instance is available', async () => {

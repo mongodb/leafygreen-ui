@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { RefCallback, useCallback, useEffect, useState } from 'react';
 
 import { useEchart } from '../../Echart';
+import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
 
 import type { ChartHookProps, ChartInstance } from './useChart.types';
@@ -12,10 +13,20 @@ export function useChart({
   groupId,
   theme,
 }: ChartHookProps): ChartInstance {
-  const chartRef = useRef(null);
   const initialOptions = getDefaultChartOptions(theme);
+
+  /**
+   * It is necessary for `useEchart` to know when the container exists
+   * in order to instantiate the chart. Since this happens only on first render,
+   * we use a container element stored in state and a ref callback so that the
+   * element only gets populated after render.
+   */
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const chartRef: RefCallback<HTMLDivElement> = useCallback(node => {
+    setContainer(node);
+  }, []);
   const echart = useEchart({
-    container: chartRef.current,
+    container,
     initialOptions,
     theme,
   });
@@ -45,7 +56,7 @@ export function useChart({
 
   useEffect(() => {
     if (echart.ready && onZoomSelect) {
-      echart.on('zoomselect', zoomEventResponse => {
+      echart.on(EChartEvents.ZoomSelect, zoomEventResponse => {
         onZoomSelect(zoomEventResponse);
       });
     }
