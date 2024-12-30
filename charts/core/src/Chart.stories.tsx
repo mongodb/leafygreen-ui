@@ -442,12 +442,22 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
+    zoomSelectXAxis,
+    zoomSelectYAxis,
+    zoomSelectCallback,
   }) => {
     return (
       <div
         style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
       >
-        <Chart groupId="group1">
+        <Chart
+          groupId="group1"
+          zoomSelect={{
+            xAxis: zoomSelectXAxis,
+            yAxis: zoomSelectYAxis,
+          }}
+          onZoomSelect={zoomSelectCallback}
+        >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />
           )}
@@ -482,7 +492,14 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1">
+        <Chart
+          groupId="group1"
+          zoomSelect={{
+            xAxis: zoomSelectXAxis,
+            yAxis: zoomSelectYAxis,
+          }}
+          onZoomSelect={zoomSelectCallback}
+        >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />
           )}

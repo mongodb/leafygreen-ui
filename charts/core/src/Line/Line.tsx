@@ -6,10 +6,12 @@ import { defaultLineOptions } from './config';
 import { LineProps } from './Line.types';
 
 export function Line({ name, data }: LineProps) {
-  const { addChartSeries, removeChartSeries } = useChartContext();
+  const { chart } = useChartContext();
 
   useEffect(() => {
-    addChartSeries({
+    if (!chart.ready) return;
+
+    chart.addSeries({
       ...defaultLineOptions,
       name,
       data,
@@ -20,9 +22,9 @@ export function Line({ name, data }: LineProps) {
        * Remove the series when the component unmounts to make sure the series
        * is removed when a `Line` is hidden.
        */
-      removeChartSeries(name);
+      chart.removeSeries(name);
     };
-  }, [name, data]);
+  }, [chart.ready, name, data]);
 
   return null;
 }
