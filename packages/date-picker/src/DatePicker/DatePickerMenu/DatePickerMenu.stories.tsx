@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks, react/prop-types */
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useRef, useState } from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import { Decorator, StoryFn, StoryObj } from '@storybook/react';

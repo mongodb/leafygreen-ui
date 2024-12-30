@@ -115,7 +115,7 @@ describe('packages/Card', () => {
     return <a {...props}>content</a>;
   }
 
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  /* eslint-disable jest/no-disabled-tests*/
   describe.skip('Types behave as expected', () => {
     test('Allows no props', () => {
       <Card />;

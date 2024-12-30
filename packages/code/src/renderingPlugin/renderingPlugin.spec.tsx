@@ -312,12 +312,10 @@ describe('treeToLines()', () => {
     });
   }
 
-  // eslint-disable-next-line jest/expect-expect
   test('when passed a valid set of children, returns a valid Array', () => {
     treeToLines(sampleChildren).forEach(validateLine);
   });
 
-  // eslint-disable-next-line jest/expect-expect
   test('when passed an invalid set of children, returns a valid Array', () => {
     // @ts-expect-error
     treeToLines([...sampleChildren, null, 0]).forEach(validateLine);

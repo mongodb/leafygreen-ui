@@ -11,6 +11,12 @@ export const readMe = ({
 
 ## Installation
 
+### PNPM
+
+\`\`\`shell
+pnpm add @leafygreen-ui/${packageNameKebab}
+\`\`\`
+
 ### Yarn
 
 \`\`\`shell

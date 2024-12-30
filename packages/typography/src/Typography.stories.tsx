@@ -46,7 +46,6 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-// eslint-disable-next-line react/prop-types
 const TypographyDemoComponent = ({
   baseFontSize,
   darkMode,

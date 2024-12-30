@@ -22,14 +22,13 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^13.7.0",
-    "@leafygreen-ui/palette": "^4.0.9",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "lodash": "^4.17.21",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",
   "repository": {

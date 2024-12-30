@@ -65,7 +65,7 @@ describe('packages/inline-definition', () => {
     await waitForElementToBeRemoved(screen.getByText(shardDefinition));
   });
 
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
+  /* eslint-disable jest/no-disabled-tests */
   describe.skip('Tests behave as expected', () => {
     test('Requires a definition prop and children', () => {
       /// @ts-expect-error

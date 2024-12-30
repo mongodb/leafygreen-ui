@@ -641,7 +641,6 @@ describe('packages/tab', () => {
   });
 });
 
-/* eslint-disable jest/expect-expect */
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Prop Types behave as expected', () => {
   test('children is required', () => {
