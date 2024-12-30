@@ -1,5 +1,12 @@
 # @lg-charts/core
 
+## 0.8.3
+
+### Patch Changes
+
+- 54fb23497: - Adds treeshaking of echarts to minimize bundle size.
+  - Improves echart initialization logic to better handle race conditions.
+
 ## 0.8.2
 
 ### Patch Changes
