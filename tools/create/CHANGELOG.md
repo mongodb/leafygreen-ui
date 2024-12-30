@@ -1,5 +1,11 @@
 # @lg-tools/create
 
+## 0.2.9
+
+### Patch Changes
+
+- 659bb0e81: Updates .design url from `/example/` to `/live-example/`
+
 ## 0.2.8
 
 ### Patch Changes

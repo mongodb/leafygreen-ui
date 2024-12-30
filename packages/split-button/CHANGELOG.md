@@ -1,5 +1,12 @@
 # @leafygreen-ui/split-button
 
+## 3.0.1
+
+### Patch Changes
+
+- 5f9185bee: Fix passing `renderDarkMenu` to the underlying `Menu`
+- 4245d16d1: Fix using `SplitButton` as a managed component by calling the `setOpen` function passed as prop when clicking the trigger.
+
 ## 3.0.0
 
 ### Major Changes
