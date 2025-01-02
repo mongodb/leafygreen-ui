@@ -1,4 +1,8 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 
 export const ContentStyle = {
   None: 'none',
@@ -7,7 +11,7 @@ export const ContentStyle = {
 
 export type ContentStyle = (typeof ContentStyle)[keyof typeof ContentStyle];
 
-export interface CardProps extends DarkModeProps {
+export interface InternalCardProps extends DarkModeProps {
   /**
    * Determines whether the Card should be styled as clickable.
    *
@@ -23,3 +27,7 @@ export interface CardProps extends DarkModeProps {
    */
   title?: string;
 }
+
+// External only
+export type CardProps<TAsProp extends PolymorphicAs = 'div'> =
+  InferredPolymorphicProps<TAsProp, InternalCardProps>;
