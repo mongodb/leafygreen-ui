@@ -52,6 +52,14 @@ describe('packages/checkbox', () => {
     expect(checkbox.getAttribute('aria-checked')).toBe('false');
   });
 
+  test('renders as checked when defaultChecked prop is set', () => {
+    const { checkbox, getInputValue } = renderCheckbox({
+      defaultChecked: true,
+    });
+    expect(getInputValue()).toBe(true);
+    expect(checkbox.getAttribute('aria-checked')).toBe('true');
+  });
+
   test('renders as checked when the prop is set', () => {
     const { checkbox, getInputValue } = renderCheckbox({ checked: true });
     expect(getInputValue()).toBe(true);
@@ -143,6 +151,14 @@ describe('packages/checkbox', () => {
       const { checkbox, getInputValue } = renderCheckbox({});
       fireEvent.click(checkbox);
       expect(getInputValue()).toBe(true);
+    });
+
+    test('checkbox becomes unchecked when clicked if defaultChecked is set', () => {
+      const { checkbox, getInputValue } = renderCheckbox({
+        defaultChecked: true,
+      });
+      fireEvent.click(checkbox);
+      expect(getInputValue()).toBe(false);
     });
   });
 });
