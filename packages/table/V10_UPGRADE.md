@@ -469,3 +469,134 @@ const columns = [
 ```
 
 For more information on sorting, check out the [sorting section in the README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/README.md#sorting)
+
+### Nested Rows/Sub Rows/Expanded Content
+
+**Before:**
+
+```jsx
+<Table
+  data={[
+    {
+      title: 'People',
+      people: defaultData,
+    },
+    {
+      title: 'Average',
+      age: (
+        defaultData.reduce((sum, { age }) => sum + age, 0) / defaultData.length
+      ).toFixed(2),
+    },
+  ]}
+  columns={
+    <HeaderRow>
+      <TableHeader key="name" label="Name" dataType="string" />
+      <TableHeader key="age" label="Age" dataType="number" />
+      <TableHeader label="Color" dataType="string" key="color" />
+      <TableHeader key="location" label="Location" />
+    </HeaderRow>
+  }
+>
+  {({ datum }: { datum: any }) => (
+    <Row key={datum.title}>
+      <Cell isHeader={withHeaders}>{datum.title}</Cell>
+
+      {datum.people ? (
+        datum.people.map((person: any) => (
+          <Row key={person.name}>
+            <Cell isHeader={withHeaders}>{person.name}</Cell>
+            <Cell>{person.age}</Cell>
+            <Cell>{person.color}</Cell>
+            <Cell>{person.location}</Cell>
+          </Row>
+        ))
+      ) : (
+        <Cell>{datum.age}</Cell>
+      )}
+    </Row>
+  )}
+</Table>
+```
+
+**After:**
+
+Nested rows/sub rows render just like regular rows.
+
+```jsx
+// data
+
+const data = [
+  {
+    id: '1',
+    name: 'One',
+    color: 'red',
+    subRows: [
+      {
+        id: '1.b',
+        name: 'One',
+        color: 'red',
+      },
+    ],
+  },
+];
+```
+
+```jsx
+<Table table={table}>
+  ...
+  <TableBody>
+    // renders both rows and subrows
+    {rows.map((row: LeafyGreenTableRow<any>) => {
+      return (
+        <Row row={row} key={row.id}>
+          {row.getVisibleCells().map((cell: LeafyGreenTableCell<any>) => {
+            return (
+              <Cell key={cell.id} cell={cell}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </Cell>
+            );
+          })}
+        </Row>
+      );
+    })}
+  </TableBody>
+</Table>
+```
+
+Expanded Content is conditionally rendered by checking `row.isExpandedContent`
+
+```jsx
+const data = [
+  {
+    id: '1',
+    name: 'One',
+    color: 'red',
+    renderExpandedContent: row => <div>hi</div>,
+  },
+];
+```
+
+```jsx
+<TableBody>
+  {rows.map((row: LeafyGreenTableRow<Person>) => {
+    // Checks if this is an expanded content
+    const isExpandedContent = row.isExpandedContent ?? false;
+    return (
+      <Fragment key={row.id}>
+        {!isExpandedContent && (
+          <Row row={row}>
+            {row.getVisibleCells().map(cell => {
+              return (
+                <Cell key={cell.id} id={cell.id} cell={cell}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </Cell>
+              );
+            })}
+          </Row>
+        )}
+        {isExpandedContent && <ExpandedContent row={row} />}
+      </Fragment>
+    );
+  })}
+</TableBody>
+```
