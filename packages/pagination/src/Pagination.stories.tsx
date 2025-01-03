@@ -59,7 +59,7 @@ const meta: StoryMetaType<typeof Pagination> = {
           itemsPerPage: 15,
         },
       ],
-      // eslint-disable-next-line react/display-name
+
       decorator: Instance => (
         <div style={{ width: '500px' }}>
           <Instance />

@@ -36,10 +36,10 @@ describe('tools/link/utils/install', () => {
   });
 
   test('runs install command using local package manager', async () => {
-    fsx.createFileSync('./tmp/yarn.lock');
+    fsx.createFileSync('./tmp/pnpm-lock.yaml');
     await installPackages('./tmp');
     expect(spawnSpy).toHaveBeenCalledWith(
-      'yarn',
+      'pnpm',
       ['install'],
       expect.objectContaining({}),
     );

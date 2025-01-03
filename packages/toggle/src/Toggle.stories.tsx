@@ -48,10 +48,7 @@ LiveExample.parameters = {
   },
 };
 
-export const WithLabel: StoryFn<ToggleProps> = ({
-  // eslint-disable-next-line react/prop-types
-  ...args
-}) => (
+export const WithLabel: StoryFn<ToggleProps> = ({ ...args }) => (
   <div>
     <label
       htmlFor="toggle"

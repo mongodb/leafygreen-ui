@@ -234,7 +234,7 @@ describe('packages/sub-menu', () => {
   //   });
   // });
 
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect */
+  /* eslint-disable jest/no-disabled-tests */
   describe.skip('Types behave as expected', () => {
     test('Accepts string as `as` prop', () => {
       <SubMenu data-testid="sub-menu-a" as="p" />;
@@ -274,5 +274,5 @@ describe('packages/sub-menu', () => {
       </>;
     });
   });
-  /* eslint-enable jest/no-disabled-tests, jest/expect-expect */
+  /* eslint-enable jest/no-disabled-tests */
 });

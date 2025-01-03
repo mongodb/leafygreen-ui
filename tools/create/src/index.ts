@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getLGConfig } from '@lg-tools/meta';
 
 import { CreatePackageOptions } from './create.types';

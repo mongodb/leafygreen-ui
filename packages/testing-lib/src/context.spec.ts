@@ -468,7 +468,7 @@ describe('Context', () => {
       await expect(isPromise).resolves.toEqual(1);
     });
 
-    /* eslint-disable jest/expect-expect, jest/no-disabled-tests */
+    /* eslint-disable jest/no-disabled-tests */
     test.skip('Missing `enter`', () => {
       within(
         // @ts-expect-error
@@ -628,6 +628,6 @@ describe('Context', () => {
         );
       });
     });
-    /* eslint-enable jest/expect-expect, jest/no-disabled-tests */
+    /* eslint-enable jest/no-disabled-tests */
   });
 });

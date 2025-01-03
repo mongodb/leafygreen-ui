@@ -1,0 +1,6 @@
+packages:
+  # all packages in direct subdirectories of charts/, chat/, packages/, & tools/
+  - 'charts/*'
+  - 'chat/*'
+  - 'packages/*'
+  - 'tools/*'
