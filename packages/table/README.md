@@ -108,10 +108,7 @@ const table = useLeafyGreenTable<KitchenSink>({
 const { rows } = table.getRowModel();
 
 return (
-	<Table
-	  table={table}
-	  className={virtualScrollingContainerHeight}
-	>
+	<Table table={table}>
 	  <TableHead>
 	   // Mapping through header rows
 	    {table
@@ -512,15 +509,46 @@ The `useLeafyGreenVirtualTable` hook returns an object that extends the `useL
   - `getVirtualItems`: used to retrieve the virtualized items, mapping them to the corresponding rows in the table. This method ensures that only the visible rows are rendered, which improves performance when dealing with large datasets.
   - For more methods and properties available on the virtualizer instance, refer to [TanStack's virtualizer instance docs](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
 
+## Rendering Headers
+
+Headers are returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` table instance with the `getHeadersGroups()` function. The `getHeaderGroups` function is used to retrieve all header groups for a table. It returns an array of HeaderGroup objects. For more information, check out [Tanstack's documentation on HeaderGroups](https://tanstack.com/table/latest/docs/guide/header-groups).
+
+Example:
+
+```jsx
+const table = useLeafyGreenTable<any>({
+  data,
+  columns,
+});
+
+return(
+  ...
+  <TableHead>
+    {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
+      <HeaderRow key={headerGroup.id}>
+        {headerGroup.headers.map((header, index) => {
+          return (
+            <HeaderCell key={header.id} header={header}>
+              {flexRender(header.column.columnDef.header, header.getContext())}
+            </HeaderCell>
+          );
+        })}
+      </HeaderRow>
+    ))}
+  </TableHead>
+  ...
+)
+```
+
 ## Rendering Rows
 
-Rows returned from `useLeafyGreenTable` and `useLeafyGreenVirtualTable` differ slightly:
+Rows returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` table instance differ slightly:
 
 ### Rows and subrows without expanded content
 
 ### `useLeafyGreenTable`
 
-Rows are accessed from the `table` object using the `getRowModel` method. In this case, the returned rows array includes only visible rows. Subrows that are not visible are excluded, but if a row is expanded, its corresponding subrows are included in the array.
+Rows are accessed from the `table` object using the `getRowModel` method. In this case, the returned rows array includes only visible rows. Subrows that are not visible are excluded, but if a row is expanded, its corresponding subrows are included in the array. For more information on `getRowModel` check out [TanStack's documentation on row models](https://tanstack.com/table/latest/docs/guide/row-models).
 
 Example:
 
@@ -536,7 +564,7 @@ const { rows } = table.getRowModel();
 return(
 	...
 	<TableBody>
-	  {rows.map((row: LeafyGreenTableRow<Person>) => {
+	  {rows.map((row: LeafyGreenTableRow<any>) => {
 	    return (
         // row is required
 	      <Row row={row} key={row.id}>
@@ -745,6 +773,56 @@ Since rows and expanded subrows are returned in the same hierarchy within the ro
   })}
 </TableBody>
 ```
+
+## Sorting
+
+Sorting can be applied within the column definitions:
+
+```jsx
+const columns = [
+  {
+    header: () => 'Name',
+    accessorKey: 'name',
+    sortingFn: 'alphanumeric', // use built-in sorting function by name
+  },
+  {
+    header: () => 'Age',
+    accessorKey: 'age',
+    sortingFn: 'myCustomSortingFn', // use custom global sorting function
+  },
+  {
+    header: () => 'Birthday',
+    accessorKey: 'birthday',
+    sortingFn: 'datetime', // recommended for date columns
+  },
+  {
+    header: () => 'Profile',
+    accessorKey: 'profile',
+    // use custom sorting function directly
+    sortingFn: (rowA, rowB, columnId) => {
+      return rowA.original.someProperty - rowB.original.someProperty;
+    },
+  },
+  {
+    header: () => 'Color',
+    accessorKey: 'color',
+    sortDescFirst: true, //sort by color in descending order first (default is ascending for string columns)
+  },
+];
+```
+
+Be default, sorting is disabled, but you can enable sorting by setting `enableSorting: true`.
+
+```jsx
+{
+  accessorKey: 'mdbVersion',
+  header: 'MongoDB Version',
+  enableSorting: true,
+  size: 90,
+},
+```
+
+For more information on sorting, check out [TanStack's documentation on sorting](https://tanstack.com/table/latest/docs/guide/sorting).
 
 ## Table Layout
 
