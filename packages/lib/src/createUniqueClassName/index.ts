@@ -13,7 +13,7 @@ const generateUniqueClassName = (prefix: string) => {
 
 const classNameRegistry: Map<string, Array<string>> = new Map();
 
-const createUniqueClassName = (prefix: string = ''): string => {
+const createUniqueClassName = (prefix = ''): string => {
   const uniqueClassName = generateUniqueClassName(prefix);
 
   if (classNameRegistry.has(prefix)) {

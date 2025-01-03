@@ -93,7 +93,7 @@ const meta: StoryMetaType<typeof Popover> = {
         active: true,
         children: <div className={popoverStyle}>Popover content</div>,
       },
-      // eslint-disable-next-line react/display-name
+
       decorator: Instance => {
         return (
           <div
