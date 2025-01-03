@@ -520,7 +520,7 @@ For more information on sorting, check out the [sorting section in the README](h
 
 **After:**
 
-Nested rows/sub rows render just like regular rows.
+Nested rows/sub rows render just like regular rows:
 
 ```jsx
 // data
@@ -560,10 +560,11 @@ const data = [
       );
     })}
   </TableBody>
+  ...
 </Table>
 ```
 
-Expanded Content is conditionally rendered by checking `row.isExpandedContent`
+Expanded Content is conditionally rendered by checking `row.isExpandedContent`:
 
 ```jsx
 const data = [
@@ -577,26 +578,32 @@ const data = [
 ```
 
 ```jsx
-<TableBody>
-  {rows.map((row: LeafyGreenTableRow<Person>) => {
-    // Checks if this is an expanded content
-    const isExpandedContent = row.isExpandedContent ?? false;
-    return (
-      <Fragment key={row.id}>
-        {!isExpandedContent && (
-          <Row row={row}>
-            {row.getVisibleCells().map(cell => {
-              return (
-                <Cell key={cell.id} id={cell.id} cell={cell}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </Cell>
-              );
-            })}
-          </Row>
-        )}
-        {isExpandedContent && <ExpandedContent row={row} />}
-      </Fragment>
-    );
-  })}
-</TableBody>
+<Table table={table}>
+  ...
+  <TableBody>
+    {rows.map((row: LeafyGreenTableRow<Person>) => {
+      // Checks if this is an expanded content
+      const isExpandedContent = row.isExpandedContent ?? false;
+      return (
+        <Fragment key={row.id}>
+          {!isExpandedContent && (
+            <Row row={row}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <Cell key={cell.id} id={cell.id} cell={cell}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                );
+              })}
+            </Row>
+          )}
+          {isExpandedContent && <ExpandedContent row={row} />}
+        </Fragment>
+      );
+    })}
+  </TableBody>
+  ...
+</Table>
 ```
+
+For more information on rows, subrows, and expanded content, check out the [rendering rows section in the README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/table#rendering-rows)
