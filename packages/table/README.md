@@ -774,6 +774,56 @@ Since rows and expanded subrows are returned in the same hierarchy within the ro
 </TableBody>
 ```
 
+## Sorting
+
+Sorting can be applied within the column definitions:
+
+```jsx
+const columns = [
+  {
+    header: () => 'Name',
+    accessorKey: 'name',
+    sortingFn: 'alphanumeric', // use built-in sorting function by name
+  },
+  {
+    header: () => 'Age',
+    accessorKey: 'age',
+    sortingFn: 'myCustomSortingFn', // use custom global sorting function
+  },
+  {
+    header: () => 'Birthday',
+    accessorKey: 'birthday',
+    sortingFn: 'datetime', // recommended for date columns
+  },
+  {
+    header: () => 'Profile',
+    accessorKey: 'profile',
+    // use custom sorting function directly
+    sortingFn: (rowA, rowB, columnId) => {
+      return rowA.original.someProperty - rowB.original.someProperty;
+    },
+  },
+  {
+    header: () => 'Color',
+    accessorKey: 'color',
+    sortDescFirst: true, //sort by color in descending order first (default is ascending for string columns)
+  },
+];
+```
+
+Be default, sorting is disabled, but you can enable sorting by setting `enableSorting: true`.
+
+```jsx
+{
+  accessorKey: 'mdbVersion',
+  header: 'MongoDB Version',
+  enableSorting: true,
+  size: 90,
+},
+```
+
+For more information on sorting, check out [TanStack's documentation on sorting](https://tanstack.com/table/latest/docs/guide/sorting).
+
 ## Table Layout
 
 By default, LeafyGreen `Table` uses `table-layout: auto`. This [CSS property](https://developer.mozilla.org/en-US/docs/Web/CSS/table-layout) sets the algorithm used to lay out [`<table>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table) cells, rows, and columns. When a `table-layout` is set to `auto` this means that the widths of the table and its cells are adjusted to fit the content, which is the default in most browsers.

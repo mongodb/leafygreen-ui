@@ -378,3 +378,94 @@ return (
       })}
     </TableBody>
 ```
+
+### Sorting
+
+In v10, there are three props that can be used for sorting: `sortBy`, `compareFn`, and `handleSort`.
+
+These props have been removed in v13. Instead, sorting is handled within the column definition.
+
+**Before:**
+
+```jsx
+  <TableHeader
+    dataType={DataType.String}
+    label="Name"
+    key="name"
+    compareFn={(a: any, b: any, dir) => {
+      const reverse = (str: string) => str.split('').reverse().join('');
+
+      // Pin 'Yvonne' to the top
+      if (b.name === 'Yvonne') return 1;
+      else if (a.name === 'Yvonne') return -1;
+
+      // Sort by reversed name
+      if (dir == 'desc') {
+        return reverse(b.name) >= reverse(a.name) ? 1 : -1;
+      }
+
+      return reverse(b.name) >= reverse(a.name) ? -1 : 1;
+    }}
+  />
+
+  <TableHeader
+    dataType={DataType.Number}
+    label="Age"
+    key="age"
+    sortBy={(datum: any) => datum.age.toString()}
+  />
+
+  <TableHeader
+    dataType={DataType.String}
+    label="Favorite Color"
+    key="color"
+    sortBy={(datum: any) => datum.color}
+  />
+
+  <TableHeader
+    dataType={DataType.String}
+    label="Location"
+    key="location"
+    handleSort={dir => {
+      // eslint-disable-next-line no-console
+      console.log(`Sorting location ${dir}`);
+    }}
+  />
+```
+
+**After:**
+
+```jsx
+const columns = [
+  {
+    header: () => 'Name',
+    accessorKey: 'name',
+    sortingFn: 'alphanumeric', // use built-in sorting function by name
+  },
+  {
+    header: () => 'Age',
+    accessorKey: 'age',
+    sortingFn: 'myCustomSortingFn', // use custom global sorting function
+  },
+  {
+    header: () => 'Birthday',
+    accessorKey: 'birthday',
+    sortingFn: 'datetime', // recommended for date columns
+  },
+  {
+    header: () => 'Profile',
+    accessorKey: 'profile',
+    // use custom sorting function directly
+    sortingFn: (rowA, rowB, columnId) => {
+      return rowA.original.someProperty - rowB.original.someProperty;
+    },
+  },
+  {
+    header: () => 'Color',
+    accessorKey: 'color',
+    sortDescFirst: true, //sort by color in descending order first (default is ascending for string columns)
+  },
+];
+```
+
+For more information on sorting, check out the [sorting section in the README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/README.md#sorting)
