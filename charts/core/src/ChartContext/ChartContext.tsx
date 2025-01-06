@@ -8,22 +8,10 @@ export const ChartContext = createContext<ChartContextType | undefined>(
 
 export const ChartProvider = ({
   children,
-  chartOptions,
-  updateChartOptions,
-  addChartSeries,
-  removeChartSeries,
+  chart,
 }: PropsWithChildren<ChartContextType>) => {
   return (
-    <ChartContext.Provider
-      value={{
-        chartOptions,
-        updateChartOptions,
-        addChartSeries,
-        removeChartSeries,
-      }}
-    >
-      {children}
-    </ChartContext.Provider>
+    <ChartContext.Provider value={{ chart }}>{children}</ChartContext.Provider>
   );
 };
 

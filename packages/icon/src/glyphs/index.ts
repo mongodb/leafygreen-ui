@@ -38,6 +38,7 @@ import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
+import Coin from './Coin.svg';
 import Colon from './Colon.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
@@ -202,6 +203,7 @@ const _glyphs = {
   Cloud,
   Code,
   CodeBlock,
+  Coin,
   Colon,
   Connect,
   Copy,

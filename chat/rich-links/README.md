@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@lg-chat/rich-links.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/rich-links/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/rich-links/live-example/)
 
 ## Installation
 

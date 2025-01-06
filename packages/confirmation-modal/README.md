@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/confirmation-modal.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/confirmation-modal/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/confirmation-modal/live-example/)
 
 ## Installation
 

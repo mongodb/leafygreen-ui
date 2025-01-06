@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/copyable.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/copyable/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/copyable/live-example/)
 
 ## Installation
 

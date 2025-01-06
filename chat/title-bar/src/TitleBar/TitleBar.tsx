@@ -1,6 +1,5 @@
 import React, { ForwardedRef, forwardRef } from 'react';
-import { Avatar } from '@lg-chat/avatar';
-import { ChatAvatarVariant } from '@lg-chat/avatar/src/Avatar';
+import { Avatar, Variant as ChatAvatarVariant } from '@lg-chat/avatar';
 
 import Badge from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';

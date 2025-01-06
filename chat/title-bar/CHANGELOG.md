@@ -1,5 +1,11 @@
 # @lg-chat/title-bar
 
+## 2.0.4
+
+### Patch Changes
+
+- 371e14b38: Fixes broken import of `ChatAvatarVariant`
+
 ## 2.0.3
 
 ### Patch Changes

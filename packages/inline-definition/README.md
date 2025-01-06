@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/inline-definition.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/inline-definition/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/inline-definition/live-example/)
 
 ## Installation
 

@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 8.3.1
+
+### Patch Changes
+
+- 7a83cd4c6: Adds `useMergeRefs` into `useMergeRef` directory
+
 ## 8.3.0
 
 ### Minor Changes

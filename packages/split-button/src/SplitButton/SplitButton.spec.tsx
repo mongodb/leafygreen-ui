@@ -10,10 +10,12 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { Optional } from '@leafygreen-ui/lib';
 import { MenuItem } from '@leafygreen-ui/menu';
+import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
 
-import { MenuItemsType } from './SplitButton.types';
+import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
 import { SplitButton } from '.';
 
 const menuTestId = 'lg-split-button-menu';
@@ -36,7 +38,12 @@ const defaultProps = {
   menuItems: getMenuItems(),
 };
 
-function renderSplitButton(props = {}) {
+type RenderSplitButtonProps = Optional<
+  InferredPolymorphicPropsWithRef<'button', SplitButtonProps>,
+  keyof typeof defaultProps
+>;
+
+function renderSplitButton(props: RenderSplitButtonProps = {}) {
   const renderResult = render(
     <SplitButton data-testid="split-button" {...defaultProps} {...props} />,
   );
@@ -131,7 +138,7 @@ describe('packages/split-button', () => {
           disabled: true,
         });
 
-        fireEvent.click(primaryButton);
+        userEvent.click(primaryButton);
         expect(onClick).not.toHaveBeenCalled();
       });
 
@@ -143,7 +150,7 @@ describe('packages/split-button', () => {
           as: 'a',
         });
 
-        fireEvent.click(primaryButton);
+        userEvent.click(primaryButton);
         expect(onClick).not.toHaveBeenCalled();
       });
     });
@@ -154,7 +161,7 @@ describe('packages/split-button', () => {
         onClick,
       });
 
-      fireEvent.click(primaryButton);
+      userEvent.click(primaryButton);
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
@@ -165,7 +172,7 @@ describe('packages/split-button', () => {
         onClick,
       });
 
-      fireEvent.click(primaryButton);
+      userEvent.click(primaryButton);
       expect(onClick).toHaveBeenCalledTimes(0);
     });
   });
@@ -174,7 +181,7 @@ describe('packages/split-button', () => {
     test('trigger opens the menu when clicked', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       expect(menu).toBeInTheDocument();
@@ -185,7 +192,7 @@ describe('packages/split-button', () => {
         disabled: true,
       });
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
       const menu = queryByTestId(menuTestId);
       expect(menu).not.toBeInTheDocument();
@@ -194,7 +201,7 @@ describe('packages/split-button', () => {
     test('has correct menu items', () => {
       const { menuTrigger, getByTestId } = renderSplitButton({});
 
-      fireEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       expect(menu.childElementCount).toEqual(4);
@@ -205,13 +212,23 @@ describe('packages/split-button', () => {
       document.body.appendChild(portalContainer);
       const portalRef = createRef<HTMLElement>();
       renderSplitButton({
-        open,
+        open: true,
         portalContainer,
         portalRef,
         renderMode: RenderMode.Portal,
       });
       expect(portalRef.current).toBeDefined();
       expect(portalRef.current).toBe(portalContainer);
+    });
+
+    describe('managed', () => {
+      test('calls setOpen when triggered', () => {
+        const setOpen = jest.fn();
+        const { menuTrigger } = renderSplitButton({ open: false, setOpen });
+
+        userEvent.click(menuTrigger);
+        expect(setOpen).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -220,7 +237,7 @@ describe('packages/split-button', () => {
       const onChange = jest.fn();
       const { menuTrigger, getByTestId } = renderSplitButton({ onChange });
 
-      userEvent.click(menuTrigger as HTMLElement);
+      userEvent.click(menuTrigger);
 
       const menu = getByTestId(menuTestId);
       const options = globalGetAllByRole(menu, 'menuitem');
@@ -251,9 +268,9 @@ describe('packages/split-button', () => {
         await waitForElementToBeRemoved(menuEl);
         expect(menuEl).not.toBeInTheDocument();
       });
-      test('Returns focus to trigger {usePortal: true}', async () => {
+      test('Returns focus to trigger {renderMode: "portal"}', async () => {
         const { openMenu, menuTrigger } = renderSplitButton({
-          usePortal: true,
+          renderMode: 'portal',
         });
         const { menuEl } = await openMenu();
 
@@ -262,9 +279,9 @@ describe('packages/split-button', () => {
         expect(menuTrigger).toHaveFocus();
       });
 
-      test('Returns focus to trigger {usePortal: false}', async () => {
+      test('Returns focus to trigger {renderMode: "inline"}', async () => {
         const { openMenu, menuTrigger } = renderSplitButton({
-          usePortal: false,
+          renderMode: 'inline',
         });
         const { menuEl } = await openMenu();
 
