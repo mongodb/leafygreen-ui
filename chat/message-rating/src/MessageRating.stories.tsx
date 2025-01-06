@@ -35,7 +35,6 @@ const Template: StoryFn<typeof MessageRating> = props => (
 export const Basic: StoryFn<typeof MessageRating> = Template.bind({});
 
 export const Controlled: StoryFn<typeof MessageRating> = ({
-  // eslint-disable-next-line react/prop-types
   value: valueProp,
   ...rest
 }) => {

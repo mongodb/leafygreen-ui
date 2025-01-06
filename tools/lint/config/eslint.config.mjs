@@ -93,7 +93,7 @@ export default [
           additionalHooks: '(useIsomorphicLayoutEffect)',
         },
       ],
-
+      'react/prop-types': 'off',
       'react/sort-comp': 'error',
       'import/no-extraneous-dependencies': 'off',
 

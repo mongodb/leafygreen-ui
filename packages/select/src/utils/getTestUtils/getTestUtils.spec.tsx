@@ -51,7 +51,6 @@ function renderSelect(props = {}) {
 function renderSelectControlled(props = {}) {
   const ControlledSelect = (props = {}) => {
     // @ts-expect-error
-    // eslint-disable-next-line react/prop-types
     const { value: propValue, ...rest } = props;
     const [value, setValue] = useState(propValue);
 
