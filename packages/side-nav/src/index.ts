@@ -6,5 +6,5 @@ export {
   sideNavWidth,
 } from './SideNav';
 export { type SideNavProps } from './SideNav/SideNav.types';
-export { SideNavGroup } from './SideNavGroup';
-export { SideNavItem } from './SideNavItem';
+export { SideNavGroup, SideNavGroupProps } from './SideNavGroup';
+export { SideNavItem, SideNavItemProps } from './SideNavItem';

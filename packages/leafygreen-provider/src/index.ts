@@ -4,6 +4,7 @@ export { type LeafyGreenProviderProps } from './LeafyGreenContext.types';
 export { useMigrationContext } from './MigrationContext';
 export {
   PopoverContext,
+  PopoverContextType,
   PopoverProvider,
   usePopoverContext,
 } from './PopoverContext';
@@ -15,6 +16,7 @@ export {
   usePopoverPropsContext,
 } from './PopoverPropsContext';
 export {
+  PortalContextInterface,
   PortalContextProvider,
   usePopoverPortalContainer,
 } from './PortalContext';
