@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -139,18 +138,5 @@ function SideNavGroup({
 }
 
 SideNavGroup.displayName = 'SideNavGroup';
-
-SideNavGroup.propTypes = {
-  className: PropTypes.string,
-  header: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-    PropTypes.node,
-  ]),
-  collapsible: PropTypes.bool,
-  initialCollapsed: PropTypes.bool,
-  glyph: PropTypes.node,
-  children: PropTypes.node,
-};
 
 export default SideNavGroup;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -7,7 +6,6 @@ import {
   InferredPolymorphic,
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { codeTypeScaleStyles } from '../styles';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -82,11 +80,5 @@ const InlineCode = InferredPolymorphic<BaseInlineCodeProps, 'code'>(
 );
 
 InlineCode.displayName = 'InlineCode';
-InlineCode.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-};
 
 export default InlineCode;

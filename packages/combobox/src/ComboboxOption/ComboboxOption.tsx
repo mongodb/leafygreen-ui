@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
@@ -140,13 +139,3 @@ export function ComboboxOption(_: ComboboxOptionProps): JSX.Element {
   throw Error('`ComboboxOption` must be a child of a `Combobox` instance');
 }
 ComboboxOption.displayName = 'ComboboxOption';
-
-ComboboxOption.propTypes = {
-  displayName: PropTypes.string,
-  value: PropTypes.string,
-  glyph: PropTypes.node,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  description: PropTypes.string,
-  onClick: PropTypes.func,
-};

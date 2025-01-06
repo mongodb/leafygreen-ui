@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum dc98edb9162e77cb8b4e3a57bb8c748f
+* @checksum f24257c40a939e8faeeffd14225fa2c3
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const PersonGroup = ({
 };
 PersonGroup.displayName = 'PersonGroup';
 PersonGroup.isGlyph = true;
-PersonGroup.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default PersonGroup;

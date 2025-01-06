@@ -87,8 +87,6 @@ export default [
         },
       ],
 
-      'react/forbid-prop-types': 'warn',
-
       'react-hooks/exhaustive-deps': [
         'warn',
         {

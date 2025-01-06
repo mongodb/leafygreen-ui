@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 5bb8f76799c6c5a52bfc0951200aded6
+* @checksum f58b7f77e7f9e0c2a69696b267c5648e
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ArrowLeft = ({
 };
 ArrowLeft.displayName = 'ArrowLeft';
 ArrowLeft.isGlyph = true;
-ArrowLeft.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ArrowLeft;

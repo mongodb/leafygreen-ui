@@ -1,5 +1,4 @@
 import React, { ForwardedRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -55,12 +54,6 @@ const RowWithRef = <T extends LGRowData>(
 // React.forwardRef can only work with plain function types, i.e. types with a single call signature and no other members.
 // Asserts that `Row` is of type `RowComponentType` which works with generics
 export const Row = React.forwardRef(RowWithRef) as RowComponentType;
-
-Row.propTypes = {
-  virtualRow: PropTypes.object,
-  row: PropTypes.object,
-  disabled: PropTypes.bool,
-} as any; // avoid inferred types from interfering
 
 Row.displayName = 'Row';
 

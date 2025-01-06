@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import isNull from 'lodash/isNull';
 import once from 'lodash/once';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useDynamicRefs, useIdAllocator } from '@leafygreen-ui/hooks';
@@ -358,15 +357,3 @@ SegmentedControl.displayName = 'SegmentedControl';
 
 const errorOnce = once(console.error);
 const warnOnce = once(console.warn);
-
-SegmentedControl.propTypes = {
-  darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(Size)),
-  onChange: PropTypes.func,
-  defaultValue: PropTypes.string,
-  value: PropTypes.string,
-  label: PropTypes.node,
-  name: PropTypes.string,
-  followFocus: PropTypes.bool,
-  className: PropTypes.string,
-};

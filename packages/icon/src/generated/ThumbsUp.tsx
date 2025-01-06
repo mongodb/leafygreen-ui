@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum fcc8bdd26259dfea9b19766d18d85c16
+* @checksum 2eea86d9da91dde17a5c9053df3435a3
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ThumbsUp = ({
 };
 ThumbsUp.displayName = 'ThumbsUp';
 ThumbsUp.isGlyph = true;
-ThumbsUp.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ThumbsUp;

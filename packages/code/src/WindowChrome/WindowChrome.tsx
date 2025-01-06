@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -25,10 +24,5 @@ function WindowChrome({ chromeTitle = '' }: WindowChromeProps) {
 }
 
 WindowChrome.displayName = 'WindowChrome';
-
-WindowChrome.propTypes = {
-  darkMode: PropTypes.bool,
-  chromeTitle: PropTypes.string,
-};
 
 export default WindowChrome;

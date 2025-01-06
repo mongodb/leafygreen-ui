@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum af1255193cd36eac24edba11d8be395d
+* @checksum d562fc16ed402a594b4b6898241cf048
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const InfoWithCircle = ({
 };
 InfoWithCircle.displayName = 'InfoWithCircle';
 InfoWithCircle.isGlyph = true;
-InfoWithCircle.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default InfoWithCircle;

@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 8b1814c19b41b04a90b81c802708ca1e
+* @checksum a7878c5c8def938e86005730e39f8c8d
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ShardedCluster = ({
 };
 ShardedCluster.displayName = 'ShardedCluster';
 ShardedCluster.isGlyph = true;
-ShardedCluster.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ShardedCluster;

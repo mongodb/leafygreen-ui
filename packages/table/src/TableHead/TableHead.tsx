@@ -1,5 +1,4 @@
 import React, { forwardRef, PropsWithChildren } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -31,9 +30,5 @@ const TableHead = forwardRef<HTMLTableSectionElement, TableHeadProps>(
 );
 
 TableHead.displayName = 'TableHead';
-
-TableHead.propTypes = {
-  isSticky: PropTypes.bool,
-};
 
 export default TableHead;
