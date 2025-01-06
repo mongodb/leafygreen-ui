@@ -108,31 +108,31 @@ const table = useLeafyGreenTable<KitchenSink>({
 const { rows } = table.getRowModel();
 
 return (
-	<Table table={table}>
-	  <TableHead>
-	   // Mapping through header rows
-	    {table
-	      .getHeaderGroups()
-	      .map((headerGroup: HeaderGroup<KitchenSink>) => (
-	        <HeaderRow key={headerGroup.id}>
-	         // Mapping through header cells
-	          {headerGroup.headers.map((header, index) => {
-	            return (
-	              <HeaderCell
-	                key={header.id}
-	                header={header}
-	              >
-	                {flexRender(
-	                  header.column.columnDef.header,
-	                  header.getContext(),
-	                )}
-	              </HeaderCell>
-	            );
-	          })}
-	        </HeaderRow>
-	      ))}
-	  </TableHead>
-	  <TableBody>
+  <Table table={table}>
+    <TableHead>
+      // Mapping through header rows
+      {table
+        .getHeaderGroups()
+        .map((headerGroup: HeaderGroup<KitchenSink>) => (
+          <HeaderRow key={headerGroup.id}>
+            // Mapping through header cells
+            {headerGroup.headers.map((header, index) => {
+              return (
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+    </TableHead>
+    <TableBody>
       {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
         // Checks if row is expandedContent
         const isExpandedContent = row.isExpandedContent ?? false;
@@ -161,7 +161,7 @@ return (
         );
       })}
     </TableBody>
-</Table>
+  </Table>
 )
 ```
 
