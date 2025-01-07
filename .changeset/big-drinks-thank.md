@@ -1,5 +1,5 @@
 ---
-'@leafygreen-ui/split-button': minor
+'@leafygreen-ui/split-button': major
 ---
 
-Add data-testid attribute on SplitButton's menu trigger element
+Update `data-testid` and `data-lgid` attributes on SplitButton's button, trigger and menu elements.
