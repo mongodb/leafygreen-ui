@@ -97,7 +97,9 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const submenuTriggerRef = useRef<HTMLButtonElement>(null);
     const subMenuHeight = useChildrenHeight(submenuRef, [open]);
 
-    const handleClick: MouseEventHandler = e => {
+    const handleClick: MouseEventHandler<
+      HTMLAnchorElement & HTMLButtonElement
+    > = e => {
       if (onClick || rest.href) {
         if (!disabled) {
           onClick?.(e);

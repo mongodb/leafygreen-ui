@@ -9,9 +9,9 @@ import { MenuDescendantsContext } from '../MenuContext';
 
 import { InternalMenuItemContent } from './InternalMenuItemContent';
 import { menuItemClassName, menuItemContainerStyles } from './MenuItem.styles';
-import { MenuItemProps } from './MenuItem.types';
+import { InternalMenuItemProps } from './MenuItem.types';
 
-export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
+export const MenuItem = InferredPolymorphic<InternalMenuItemProps, 'button'>(
   (
     { as, disabled = false, active = false, onClick, ...rest },
     fwdRef: React.Ref<any>,
