@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { TabProps } from './Tab.types';
 
@@ -30,16 +29,5 @@ function Tab({ children, ...rest }: TabProps) {
 }
 
 Tab.displayName = 'Tab';
-
-Tab.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  default: PropTypes.bool,
-  disabled: PropTypes.bool,
-  href: PropTypes.string,
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  selected: PropTypes.bool,
-  to: PropTypes.string,
-};
 
 export default Tab;

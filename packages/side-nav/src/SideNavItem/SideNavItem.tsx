@@ -1,5 +1,4 @@
 import React, { forwardRef, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
@@ -198,14 +197,5 @@ const SideNavItem: ExtendableBox<
 });
 
 SideNavItem.displayName = 'SideNavItem';
-
-SideNavItem.propTypes = {
-  active: PropTypes.bool,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  ariaCurrentValue: PropTypes.oneOf(Object.values(AriaCurrentValue)),
-  children: PropTypes.node,
-  href: PropTypes.string,
-};
 
 export default SideNavItem;

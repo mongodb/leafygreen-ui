@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -148,20 +147,5 @@ function Radio({
 }
 
 Radio.displayName = 'Radio';
-
-Radio.propTypes = {
-  checked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  children: PropTypes.node,
-  onChange: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  size: PropTypes.oneOf(Object.values(Size)),
-  default: PropTypes.bool,
-  darkMode: PropTypes.bool,
-  description: PropTypes.string,
-};
 
 export default Radio;

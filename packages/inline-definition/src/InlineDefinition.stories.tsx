@@ -57,11 +57,7 @@ const meta: StoryMetaType<typeof InlineDefinition> = {
 
 export default meta;
 
-const Template: StoryFn<InlineDefinitionProps> = ({
-  // eslint-disable-next-line react/prop-types
-  darkMode,
-  ...args
-}) => (
+const Template: StoryFn<InlineDefinitionProps> = ({ darkMode, ...args }) => (
   <Body darkMode={darkMode}>
     <InlineDefinition darkMode={darkMode} {...args} />
   </Body>
@@ -70,7 +66,6 @@ const Template: StoryFn<InlineDefinitionProps> = ({
 export const Basic = Template.bind({});
 
 export const LiveExample: StoryFn<InlineDefinitionProps> = ({
-  // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }) => (

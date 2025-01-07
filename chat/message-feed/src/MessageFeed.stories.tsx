@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { ChangeEvent, useState } from 'react';
 import { Avatar } from '@lg-chat/avatar';
 import { DisclaimerText } from '@lg-chat/chat-disclaimer';

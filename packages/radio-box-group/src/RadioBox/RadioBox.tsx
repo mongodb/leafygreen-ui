@@ -1,5 +1,4 @@
 import React, { HTMLProps, useCallback, useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -144,16 +143,3 @@ export function RadioBox({
 }
 
 RadioBox.displayName = 'RadioBox';
-
-RadioBox.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  onChange: PropTypes.func,
-  checked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  id: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.node,
-  default: PropTypes.bool,
-  darkMode: PropTypes.bool,
-};

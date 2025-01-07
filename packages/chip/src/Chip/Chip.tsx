@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import InlineDefinition from '@leafygreen-ui/inline-definition';
@@ -105,14 +104,3 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
   },
 );
 Chip.displayName = 'Chip';
-
-Chip.propTypes = {
-  glyph: PropTypes.node,
-  label: PropTypes.string.isRequired,
-  chipCharacterLimit: PropTypes.number,
-  chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  onDismiss: PropTypes.func,
-  dismissButtonAriaLabel: PropTypes.string,
-} as any; // avoid inferred types from interfering;

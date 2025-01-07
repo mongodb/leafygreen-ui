@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 11903dcb921d401b6e3d9b027231fc53
+* @checksum 99f837105b3b9e6a153854c2fc0f0c7d
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ChevronDown = ({
 };
 ChevronDown.displayName = 'ChevronDown';
 ChevronDown.isGlyph = true;
-ChevronDown.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ChevronDown;

@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum f5ac7e393276c91ff8013715dfe9d478
+* @checksum ca5b7e5117d04a419c4b138d05317280
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const GovernmentBuilding = ({
 };
 GovernmentBuilding.displayName = 'GovernmentBuilding';
 GovernmentBuilding.isGlyph = true;
-GovernmentBuilding.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default GovernmentBuilding;

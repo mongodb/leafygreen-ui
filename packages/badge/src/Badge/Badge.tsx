@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -29,12 +28,5 @@ function Badge({
 }
 
 Badge.displayName = 'Badge';
-
-Badge.propTypes = {
-  darkMode: PropTypes.bool,
-  className: PropTypes.string,
-  children: PropTypes.node,
-  variant: PropTypes.oneOf(Object.values(Variant)),
-};
 
 export default Badge;

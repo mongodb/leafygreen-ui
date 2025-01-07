@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { HTMLElementProps } from '@leafygreen-ui/lib';
@@ -28,10 +27,5 @@ function VisuallyHidden({
 }
 
 VisuallyHidden.displayName = 'VisuallyHidden';
-
-VisuallyHidden.propTypes = {
-  children: PropTypes.string,
-  className: PropTypes.string,
-};
 
 export default VisuallyHidden;

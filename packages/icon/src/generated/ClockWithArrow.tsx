@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum b9c22d897c2f372310154986cc46dcd6
+* @checksum 0d60dabed21d02280e3d737581c66ed7
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ClockWithArrow = ({
 };
 ClockWithArrow.displayName = 'ClockWithArrow';
 ClockWithArrow.isGlyph = true;
-ClockWithArrow.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ClockWithArrow;

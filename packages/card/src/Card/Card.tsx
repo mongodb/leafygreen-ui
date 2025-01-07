@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -57,9 +56,3 @@ export const Card = InferredPolymorphic<CardProps, 'div'>(
 );
 
 Card.displayName = 'Card';
-
-Card.propTypes = {
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  contentStyle: PropTypes.oneOf(Object.values(ContentStyle)),
-};

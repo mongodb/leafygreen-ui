@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 7a8733d0f0fe3e70c03c2390657f8e64
+* @checksum 12300e460374feb36fd40a9644ee9bfb
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const CurlyBraces = ({
 };
 CurlyBraces.displayName = 'CurlyBraces';
 CurlyBraces.isGlyph = true;
-CurlyBraces.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default CurlyBraces;

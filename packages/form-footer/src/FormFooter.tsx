@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Banner, { Variant as BannerVariant } from '@leafygreen-ui/banner';
 import Button, { Variant as ButtonVariant } from '@leafygreen-ui/button';
@@ -98,12 +97,3 @@ export default function FormFooter({
 }
 
 FormFooter.displayName = 'ConfirmationModal';
-
-FormFooter.propTypes = {
-  contentClassName: PropTypes.string,
-  errorMessage: PropTypes.string,
-  darkMode: PropTypes.bool,
-  primaryButtonProps: PropTypes.objectOf(PropTypes.any),
-  cancelButtonProps: PropTypes.objectOf(PropTypes.any),
-  backButtonProps: PropTypes.objectOf(PropTypes.any),
-};

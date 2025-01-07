@@ -5,7 +5,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 
 import { PopoverContextType } from './PopoverContext.types';
 
@@ -47,5 +46,3 @@ export const PopoverProvider = ({ children }: PropsWithChildren<{}>) => {
 };
 
 PopoverProvider.displayName = 'PopoverProvider';
-
-PopoverProvider.propTypes = { children: PropTypes.node };

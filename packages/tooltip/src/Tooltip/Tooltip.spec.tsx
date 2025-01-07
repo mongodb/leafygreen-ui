@@ -33,7 +33,6 @@ interface ButtonTestProps {
 
 class ClassTrigger extends React.Component<ButtonTestProps> {
   render() {
-    // eslint-disable-next-line react/prop-types
     const { children } = this.props;
     return (
       <button {...this.props} data-testid="class-trigger">

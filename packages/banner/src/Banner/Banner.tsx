@@ -1,5 +1,4 @@
 import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -88,12 +87,3 @@ const Banner = forwardRef<HTMLDivElement, BannerProps>(
 export default Banner;
 
 Banner.displayName = 'Banner';
-
-Banner.propTypes = {
-  darkMode: PropTypes.bool,
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  onClose: PropTypes.func,
-  dismissible: PropTypes.bool,
-  image: PropTypes.element,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-};
