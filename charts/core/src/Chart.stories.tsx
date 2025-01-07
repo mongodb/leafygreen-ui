@@ -12,6 +12,7 @@ import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
+  EventMarker,
   Grid,
   Header,
   Line,
@@ -335,6 +336,7 @@ export const Basic: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
+        <EventMarker />
       </Chart>
     );
   },

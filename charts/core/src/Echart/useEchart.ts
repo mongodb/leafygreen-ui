@@ -58,6 +58,7 @@ export function useEchart({
            * See issue: https://github.com/apache/echarts/issues/6202
            * */
           echartsInstance?.setOption(options, true);
+          console.log(options);
         }),
         50,
       ),
