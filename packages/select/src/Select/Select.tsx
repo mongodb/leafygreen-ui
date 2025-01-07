@@ -1,13 +1,10 @@
 import React, {
-  ComponentProps,
   forwardRef,
   useCallback,
   useEffect,
   useMemo,
   useState,
-  WeakValidationMap,
 } from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
@@ -639,33 +636,3 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 );
 
 Select.displayName = 'Select';
-
-Select.propTypes = {
-  label: PropTypes.string,
-  'aria-labelledby': PropTypes.string,
-  'aria-label': PropTypes.string,
-  description: PropTypes.node,
-  placeholder: PropTypes.string,
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(Size)),
-  disabled: PropTypes.bool,
-  id: PropTypes.string,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
-  onChange: PropTypes.func,
-  readOnly: PropTypes.bool,
-  errorMessage: PropTypes.node,
-  successMessage: PropTypes.node,
-  state: PropTypes.oneOf(Object.values(State)),
-  allowDeselect: PropTypes.bool,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-  dropdownWidthBasis: PropTypes.oneOf(Object.values(DropdownWidthBasis)),
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-} as WeakValidationMap<ComponentProps<typeof Select>>;

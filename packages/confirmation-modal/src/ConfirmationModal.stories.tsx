@@ -54,7 +54,6 @@ const meta: StoryMetaType<typeof ConfirmationModal> = {
 export default meta;
 
 export const LiveExample: StoryFn<ConfirmationModalProps> = ({
-  // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }) => {
@@ -84,7 +83,6 @@ LiveExample.parameters = {
 };
 
 export const Basic: StoryFn<ConfirmationModalProps> = ({
-  // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }) => {

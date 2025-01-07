@@ -33,7 +33,6 @@
     "focus-trap": "6.9.4",
     "focus-trap-react": "^9.0.2",
     "polished": "^4.2.2",
-    "prop-types": "^15.8.1",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {

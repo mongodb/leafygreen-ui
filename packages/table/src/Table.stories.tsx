@@ -930,7 +930,6 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
 };
 
 export const WithPagination: StoryFn<StoryTableProps> = ({
-  // eslint-disable-next-line react/prop-types
   darkMode,
   ...rest
 }) => {

@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 99fa7c1c7d6297737e2718d1d3254e83
+* @checksum e85708a6ef9a36d9834d1da59e7c8bc7
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ReplicaSet = ({
 };
 ReplicaSet.displayName = 'ReplicaSet';
 ReplicaSet.isGlyph = true;
-ReplicaSet.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ReplicaSet;

@@ -64,7 +64,6 @@ LiveExample.parameters = {
 };
 
 export const WithRichContent: StoryFn<CalloutProps> = ({
-  // eslint-disable-next-line react/prop-types
   darkMode,
   ...args
 }) => {

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Tooltip, { RenderMode } from '@leafygreen-ui/tooltip';
@@ -56,11 +55,5 @@ function InlineDefinition({
 }
 
 InlineDefinition.displayName = 'InlineDefinition';
-
-InlineDefinition.propTypes = {
-  definition: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  children: PropTypes.node,
-};
 
 export default InlineDefinition;

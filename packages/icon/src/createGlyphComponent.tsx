@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -63,15 +62,6 @@ export function createGlyphComponent(
   GlyphComponent.displayName = glyphName;
 
   GlyphComponent.isGlyph = true;
-
-  GlyphComponent.propTypes = {
-    fill: PropTypes.string,
-    size: PropTypes.oneOfType([
-      PropTypes.oneOf(Object.values(Size)),
-      PropTypes.number,
-    ]),
-    className: PropTypes.string,
-  };
 
   return GlyphComponent;
 }

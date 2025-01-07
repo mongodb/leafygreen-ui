@@ -1,7 +1,6 @@
 import React, { ForwardedRef, forwardRef, useEffect, useRef } from 'react';
 import flattenChildren from 'react-keyed-flatten-children';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
@@ -82,7 +81,3 @@ export const MessageFeed = forwardRef(
 );
 
 MessageFeed.displayName = 'MessageFeed';
-
-MessageFeed.propTypes = {
-  darkMode: PropTypes.bool,
-};

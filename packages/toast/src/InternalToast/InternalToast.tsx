@@ -1,6 +1,5 @@
 import React from 'react';
 import defaults from 'lodash/defaults';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import XIcon from '@leafygreen-ui/icon/dist/X';
@@ -147,12 +146,3 @@ export const InternalToast = React.forwardRef<
 );
 
 InternalToast.displayName = 'InternalToast';
-
-InternalToast.propTypes = {
-  title: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
-  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  progress: PropTypes.number,
-  onClose: PropTypes.func,
-  dismissible: PropTypes.bool,
-};

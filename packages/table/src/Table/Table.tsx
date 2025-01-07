@@ -1,6 +1,5 @@
 import React, { ForwardedRef, forwardRef } from 'react';
 import { useInView } from 'react-intersection-observer';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -86,15 +85,6 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
     );
   },
 );
-
-Table.propTypes = {
-  darkMode: PropTypes.bool,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-  shouldAlternateRowColor: PropTypes.bool,
-  shouldTruncate: PropTypes.bool,
-  verticalAlignment: PropTypes.oneOf(Object.values(VerticalAlignment)),
-  table: PropTypes.object,
-} as any; // avoid inferred types from interfering;;
 
 Table.displayName = 'Table';
 

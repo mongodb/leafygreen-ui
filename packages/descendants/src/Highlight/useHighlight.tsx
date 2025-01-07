@@ -103,7 +103,7 @@ export const useHighlight = <T extends HTMLElement>(
   };
 
   const Provider: HighlightHookReturnType<T>['Provider'] = useMemo(() => {
-    // eslint-disable-next-line react/display-name, react/prop-types
+    // eslint-disable-next-line react/display-name
     return ({ children }) => {
       return (
         <HighlightProvider context={context} highlight={getHighlight()}>

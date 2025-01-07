@@ -1,5 +1,4 @@
 import React from 'react';
-import propTypes from 'prop-types';
 
 import {
   DescendantsProvider,
@@ -42,9 +41,5 @@ const OrderedList = React.forwardRef(
 );
 
 OrderedList.displayName = 'OrderedList';
-
-OrderedList.propTypes = {
-  darkMode: propTypes.bool,
-};
 
 export { OrderedList };

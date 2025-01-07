@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -108,8 +107,3 @@ export const AtlasLogoLockup = React.forwardRef(
 );
 
 AtlasLogoLockup.displayName = 'AtlasLogoLockup';
-
-AtlasLogoLockup.propTypes = {
-  height: PropTypes.number,
-  color: PropTypes.oneOf(Object.values(SupportedColors)),
-};

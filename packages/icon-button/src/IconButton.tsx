@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import Box from '@leafygreen-ui/box';
@@ -99,13 +98,3 @@ export const IconButton = React.forwardRef(
 );
 
 IconButton.displayName = 'IconButton';
-
-IconButton.propTypes = {
-  darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(Size)),
-  className: PropTypes.string,
-  children: PropTypes.node,
-  disabled: PropTypes.bool,
-  href: PropTypes.string,
-  active: PropTypes.bool,
-};

@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum c8d0dd9b7d10d9d36bd5177148f2645a
+* @checksum 0f200de7d4099c9336c7153e94695e28
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const CheckmarkWithCircle = ({
 };
 CheckmarkWithCircle.displayName = 'CheckmarkWithCircle';
 CheckmarkWithCircle.isGlyph = true;
-CheckmarkWithCircle.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default CheckmarkWithCircle;

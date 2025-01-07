@@ -1,7 +1,6 @@
 import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
-import PropTypes from 'prop-types';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
@@ -264,24 +263,3 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
 );
 
 Popover.displayName = 'Popover';
-
-Popover.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  active: PropTypes.bool,
-  className: PropTypes.string,
-  align: PropTypes.oneOf(Object.values(Align)),
-  justify: PropTypes.oneOf(Object.values(Justify)),
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
-  refEl: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
-  portalClassName: PropTypes.string,
-  spacing: PropTypes.number,
-  adjustOnMutation: PropTypes.bool,
-};

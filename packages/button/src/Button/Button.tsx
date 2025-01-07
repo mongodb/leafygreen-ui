@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Box, { BoxProps } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
@@ -87,17 +86,3 @@ export const Button = React.forwardRef(function Button(
 });
 
 Button.displayName = 'Button';
-
-Button.propTypes = {
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-  size: PropTypes.oneOf(Object.values(Size)),
-  darkMode: PropTypes.bool,
-  disabled: PropTypes.bool,
-  leftGlyph: PropTypes.element,
-  rightGlyph: PropTypes.element,
-  href: PropTypes.string,
-  isLoading: PropTypes.bool,
-  loadingText: PropTypes.string,
-  loadingIndicator: PropTypes.element,
-};

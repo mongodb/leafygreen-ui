@@ -148,7 +148,6 @@ describe('packages/button', () => {
     });
 
     test(`renders a when passing in a NextJS Link wrapper`, () => {
-      // eslint-disable-next-line react/prop-types
       const Linker = ({ href, children, ...props }: any) => (
         <NextLink href={href} {...props}>
           {children}
@@ -165,7 +164,6 @@ describe('packages/button', () => {
     });
 
     test(`renders a when passing in a legacy NextJS Link wrapper`, () => {
-      // eslint-disable-next-line react/prop-types
       const Linker = ({ href, children, ...props }: any) => (
         <NextLink legacyBehavior href={href}>
           <a {...props}>{children}</a>
