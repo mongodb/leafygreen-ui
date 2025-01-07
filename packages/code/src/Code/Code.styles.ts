@@ -42,10 +42,13 @@ export const wrapperStyle: Record<Theme, string> = {
 export const contentWrapperStyles = css`
   position: relative;
   display: grid;
-  grid-template-areas: 'code panel';
-  grid-template-columns: auto 38px;
+  /* grid-template-areas: 'code panel'; */
+  /* grid-template-columns: auto 38px; */
   border-radius: inherit;
   z-index: 0; // new stacking context
+  grid-template-areas:
+    'panel'
+    'code';
 `;
 
 export const contentWrapperStylesNoPanel = css`

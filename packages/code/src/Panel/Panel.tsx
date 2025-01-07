@@ -22,10 +22,10 @@ type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   contents: string;
   showCopyButton?: boolean;
   language?: LanguageOption;
-  isMultiline?: boolean;
   customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
   className?: string;
+  title?: string;
 };
 
 function Panel({
@@ -37,6 +37,7 @@ function Panel({
   showCopyButton,
   customActionButtons,
   showCustomActionButtons,
+  title,
   className,
 }: PanelProps) {
   const { theme } = useDarkMode();
@@ -46,14 +47,13 @@ function Panel({
       className={cx(
         basePanelStyle,
         basePanelThemeStyle[theme],
-        {
-          [sidePanelThemeStyles[theme]]: !language,
-          [languageSwitcherPanelThemeStyles[theme]]: !!language,
-        },
+        languageSwitcherPanelThemeStyles[theme],
         className,
       )}
       data-testid="leafygreen-code-panel"
     >
+      {title && <div>{title}</div>}
+
       {language !== undefined &&
         languageOptions !== undefined &&
         onChange !== undefined && (
@@ -64,16 +64,17 @@ function Panel({
           />
         )}
 
-      {showCopyButton && (
-        <CopyButton
-          onCopy={onCopy}
-          contents={contents}
-          withLanguageSwitcher={!!language}
-        />
-      )}
       {showCustomActionButtons && (
         <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
       )}
+
+      {/* {showCopyButton && ( */}
+      <CopyButton
+        onCopy={onCopy}
+        contents={contents}
+        withLanguageSwitcher={!!language}
+      />
+      {/* )} */}
     </div>
   );
 }

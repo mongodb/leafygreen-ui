@@ -12,7 +12,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
-import Code, { CodeProps, Language } from '.';
+import Code, { CodeProps, Language, Panel } from '.';
 
 const jsSnippet = `
 import datetime from './';
@@ -128,7 +128,7 @@ const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
     <Icon glyph="Cloud" />
   </IconButton>,
-  <Icon glyph="Shell" size={30} key="3" />,
+  // <Icon glyph="Shell" size={30} key="3" />,
   <IconButton
     href="https://mongodb.design"
     aria-label="label2"
@@ -139,11 +139,49 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-export const WithCustomActions = LiveExample.bind({});
-WithCustomActions.args = {
-  showCustomActionButtons: true,
-  customActionButtons,
-};
+// export const WithCustomActions = LiveExample.bind({});
+// WithCustomActions.args = {
+//   showCustomActionButtons: true,
+//   customActionButtons,
+//   // panel: [
+//   //   <Panel
+//   //     language={language}
+//   //     languageOptions={languageOptions}
+//   //     customActionButtons={customActionButtons}
+//   //     showCustomActionButtons={showCustomActionButtons}
+//   //     onChange={handleChange}
+//   //     showCopyButton
+//   //     contents={snippetMap[languageIndex as 'javascript' | 'python']}
+//   //   />
+//   // ]
+// };
+
+export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      panel={
+        <Panel
+          language={args.languageOptions?.find(
+            option => option.displayName === args.language,
+          )}
+          customActionButtons={customActionButtons}
+          showCustomActionButtons
+          showCopyButton
+          contents={jsSnippet}
+          title="Language Switcher"
+        />
+      }
+    >
+      {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
 
 export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,

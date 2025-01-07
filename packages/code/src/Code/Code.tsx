@@ -82,6 +82,7 @@ function Code({
   onChange,
   customActionButtons = [],
   showCustomActionButtons = false,
+  panel,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -229,6 +230,23 @@ function Code({
             },
           )}
         >
+          {/* Can make this a more robust check in the future */}
+          {/* Right now the panel will only be rendered with copyable or a language switcher */}
+          {/* {showPanel && (
+            <Panel
+              className={cx(panelStyles)}
+              language={currentLanguage}
+              languageOptions={languageOptions}
+              onChange={onChange}
+              contents={children}
+              onCopy={onCopy}
+              showCopyButton={showCopyBar}
+              isMultiline={isMultiline}
+              customActionButtons={filteredCustomActionIconButtons}
+              showCustomActionButtons={showCustomActionsInPanel}
+            />
+          )} */}
+
           <pre
             {...(rest as DetailedElementProps<HTMLPreElement>)}
             className={cx(
@@ -236,7 +254,8 @@ function Code({
               getCodeWrapperVariantStyle(theme),
               {
                 [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
-                [codeWrapperStyleNoPanel]: !showPanel,
+                // [codeWrapperStyleNoPanel]: !showPanel,
+                [codeWrapperStyleNoPanel]: !panel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
                 [getExpandableCodeWrapperStyle(
                   expanded,
@@ -255,22 +274,7 @@ function Code({
             {renderedSyntaxComponent}
           </pre>
 
-          {/* Can make this a more robust check in the future */}
-          {/* Right now the panel will only be rendered with copyable or a language switcher */}
-          {showPanel && (
-            <Panel
-              className={cx(panelStyles)}
-              language={currentLanguage}
-              languageOptions={languageOptions}
-              onChange={onChange}
-              contents={children}
-              onCopy={onCopy}
-              showCopyButton={showCopyBar}
-              isMultiline={isMultiline}
-              customActionButtons={filteredCustomActionIconButtons}
-              showCustomActionButtons={showCustomActionsInPanel}
-            />
-          )}
+          {!!panel && panel}
 
           {showExpandButton && (
             <button

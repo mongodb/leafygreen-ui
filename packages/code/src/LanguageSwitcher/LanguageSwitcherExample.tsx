@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Language, LanguageOption } from '../types';
-import Code from '..';
+import Code, { Panel } from '..';
 
 export function PythonLogo({ className }: { className?: string }) {
   return (
@@ -154,6 +154,18 @@ function LanguageSwitcher({
       darkMode={darkMode}
       customActionButtons={customActionButtons}
       showCustomActionButtons={showCustomActionButtons}
+      panel={
+        <Panel
+          language={language}
+          languageOptions={languageOptions}
+          customActionButtons={customActionButtons}
+          showCustomActionButtons={showCustomActionButtons}
+          onChange={handleChange}
+          showCopyButton
+          contents={snippetMap[languageIndex as 'javascript' | 'python']}
+          title="Language Switcher"
+        />
+      }
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
