@@ -84,7 +84,7 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         className={selectStyle}
         allowDeselect={false}
         renderMode={RenderMode.TopLayer}
-        size="small"
+        size="xsmall"
         // __INTERNAL__menuButtonSlot__={CustomSelectMenuButton}
         // __INTERNAL__menuButtonSlotProps__={{
         //   className: cx(menuButtonStyle, buttonModeStyle[theme]),

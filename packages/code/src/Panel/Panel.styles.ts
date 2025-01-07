@@ -3,27 +3,46 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-export const getBasePanelStyle = css`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-  gap: ${spacing[100]}px;
-  height: 40px; // 28px (icon) + 2 x 6px (focus shadow). Can't use padding b/c switcher
+export const getBasePanelStyle = ({
+  hasTitle,
+  theme,
+  className,
+}: {
+  hasTitle: boolean;
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
+    css`
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: ${spacing[100]}px;
 
-  z-index: 2; // Above the shadows
-  grid-area: panel;
+      z-index: 2; // Above the shadows
+      grid-area: panel;
 
-  flex-direction: row;
-  border-bottom: 1px solid;
-  justify-content: space-between;
-  padding-inline: 8px 16px;
+      border-bottom: 1px solid;
+      padding-inline: ${spacing[400]}px ${spacing[200]}px;
+      height: 36px;
 
-  svg {
-    width: 16px;
-    height: 16px;
-  }
-`;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    `,
+    {
+      [css`
+        justify-content: flex-end;
+      `]: hasTitle,
+    },
+    basePanelThemeStyle[theme],
+    className,
+  );
 
+// TODO: can use vars?
 export const basePanelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.white};
@@ -35,29 +54,9 @@ export const basePanelThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const sidePanelStyle = css`
-  flex-direction: column;
-  padding: 6px;
-  border-left: solid 1px;
-`;
-
-export const sidePanelThemeStyles: Record<Theme, string> = {
-  [Theme.Light]: cx(
-    sidePanelStyle,
-    css`
-      border-color: ${palette.gray.light2};
-    `,
-  ),
-  [Theme.Dark]: cx(
-    sidePanelStyle,
-    css`
-      border-color: ${palette.gray.dark2};
-    `,
-  ),
-};
-
 export const panelLeftStyles = css`
   display: flex;
+  align-items: center;
   gap: ${spacing[200]}px;
 `;
 

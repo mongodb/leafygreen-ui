@@ -14,7 +14,7 @@ import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
-import { Panel } from '../Panel';
+// import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { CodeProps, Language } from '../types';
 import { WindowChrome } from '../WindowChrome';
@@ -35,7 +35,7 @@ import {
   getExpandableCodeWrapperStyle,
   getExpandButtonVariantStyle,
   getScrollShadow,
-  panelStyles,
+  // panelStyles,
   scrollShadowStylesNoPanel,
   scrollShadowStylesWithPicker,
   singleLineCodeWrapperStyle,
@@ -87,6 +87,7 @@ function Code({
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
+  // @ts-ignore
   const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();

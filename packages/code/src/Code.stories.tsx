@@ -172,9 +172,8 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
           )}
           customActionButtons={customActionButtons}
           showCustomActionButtons
-          showCopyButton
           contents={jsSnippet}
-          title="Title"
+          // title="Title"
         />
       }
     >

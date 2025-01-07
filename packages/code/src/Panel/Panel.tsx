@@ -12,7 +12,6 @@ import {
 
 import {
   getBasePanelStyle,
-  basePanelThemeStyle,
   panelIconsStyles,
   panelLeftStyles,
 } from './Panel.styles';
@@ -21,7 +20,6 @@ import { Body } from '@leafygreen-ui//typography';
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   onCopy?: Function;
   contents: string;
-  showCopyButton?: boolean;
   language?: LanguageOption;
   customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
@@ -35,7 +33,6 @@ function Panel({
   contents,
   onChange,
   onCopy,
-  // showCopyButton,
   customActionButtons,
   showCustomActionButtons,
   title,
@@ -43,12 +40,14 @@ function Panel({
 }: PanelProps) {
   const { theme } = useDarkMode();
 
+  const hasTitle = !title;
+
   return (
     <div
-      className={cx(getBasePanelStyle, basePanelThemeStyle[theme], className)}
+      className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
       data-testid="leafygreen-code-panel" // TODO: update testid
     >
-      <div>{title && <Body>{title}</Body>}</div>
+      {title && <Body>{title}</Body>}
 
       <div className={panelLeftStyles}>
         {language !== undefined &&
@@ -65,11 +64,7 @@ function Panel({
           {showCustomActionButtons && (
             <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
           )}
-          <CopyButton
-            onCopy={onCopy}
-            contents={contents}
-            withLanguageSwitcher={!!language}
-          />
+          <CopyButton onCopy={onCopy} contents={contents} />
         </div>
       </div>
     </div>
