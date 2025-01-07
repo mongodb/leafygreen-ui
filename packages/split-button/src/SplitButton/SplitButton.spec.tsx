@@ -49,7 +49,7 @@ function renderSplitButton(props: RenderSplitButtonProps = {}) {
   );
   const wrapper = renderResult.container.firstChild as HTMLElement;
   const primaryButton = renderResult.getByTestId('split-button');
-  const menuTrigger = primaryButton.nextSibling as HTMLElement;
+  const menuTrigger = renderResult.getByTestId('lg-split-button-trigger');
 
   /**
    * Since menu elements won't exist until component is interacted with,

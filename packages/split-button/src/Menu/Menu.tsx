@@ -138,6 +138,7 @@ export const Menu = ({
           className={cx(triggerBaseStyles, triggerSizeStyles[size], {
             [triggerThemeStyles(theme, variant)]: !disabled,
           })}
+          data-testid="lg-split-button-trigger"
           aria-label={triggerAriaLabel || 'More options'}
           aria-controls={open ? id : ''}
           onClick={handleTriggerClick}
