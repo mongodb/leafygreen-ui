@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)
 
-> _Upgrading from v11 or v12? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
+> _Upgrading from v11 or v12? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for help on how to migrate to the updated API._
 
 > _Upgrading from v10? Check out our [v10 to v13 upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
 
