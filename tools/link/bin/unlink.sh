@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 # $1 the first argument after the command is the relative or absolute path to the client
-# directory, where you intend to run yarn unlink on installed UI-Kit modules.
+# directory, where you intend to run pnpm unlink on installed UI-Kit modules.
 # To run, navigate to your leafygreen-ui folder root, then in the shell run
-# yarn run unlink -- ${PATH_TO_APPLICATION}
+# pnpm run unlink -- ${PATH_TO_APPLICATION}
 
 if [ "$1" == "" ]; then
     echo "This script requires a path to the target application from the root folder of this repository."
@@ -31,9 +31,9 @@ done
 set +e
 cd $APPLICATION_HOME
 for f in "${INSTALLED_PACKAGES_ARRAY[@]}"; do
-    yarn unlink @leafygreen-ui/$f
+    pnpm unlink @leafygreen-ui/$f
 done
 
-yarn --force
+pnpm --force
 
 exit 0;

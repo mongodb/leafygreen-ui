@@ -15,18 +15,16 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/descendants": "^2.0.0",
-    "@leafygreen-ui/emotion": "^4.0.7",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/tokens": "^2.11.1",
-    "@leafygreen-ui/typography": "^20.0.0"
+    "@leafygreen-ui/descendants": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^4.0.0"
   },
-  "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
-  },
+  "devDependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ordered-list",
   "repository": {
     "type": "git",

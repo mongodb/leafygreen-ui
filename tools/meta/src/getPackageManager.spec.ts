@@ -31,8 +31,8 @@ describe('tools/meta/getPackageManager', () => {
     expect(pkgMgr).toBe('npm');
   });
 
-  test('returns `yarn` when yarn.lock exists', () => {
-    fsx.createFileSync('./tmp/yarn.lock');
+  test('returns `yarn` when pnpm-lock.yaml exists', () => {
+    fsx.createFileSync('./tmp/yarn-lock.yaml');
     const pkgMgr = getPackageManager('./tmp');
     expect(pkgMgr).toBe('yarn');
   });

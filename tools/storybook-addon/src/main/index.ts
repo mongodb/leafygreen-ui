@@ -14,7 +14,7 @@ export { previewHead } from './preview-head';
 
 // @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,charts,chat,stories}/**/*.stor@(y|ies).@(js|ts|md)?(x)',
+  '../{packages,tools,charts,chat}/**/*.stor@(y|ies).@(js|ts)?(x)',
   '../{packages,tools,charts,chat}/*/node_modules',
 );
 
@@ -43,22 +43,6 @@ export const staticDirs: StorybookConfig['staticDirs'] = [
   '../node_modules/@lg-tools/storybook-addon/static',
 ];
 
-export const babel: StorybookConfig['babel'] = async options => {
-  return {
-    ...options,
-    presets: [
-      '@babel/preset-typescript',
-      '@babel/preset-react',
-      [
-        '@babel/preset-env',
-        {
-          modules: false,
-        },
-      ],
-    ],
-  };
-};
-
 export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   config.module = config.module ?? {};
   config.module.rules = config.module.rules ?? [];
@@ -81,6 +65,27 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
     loader: require.resolve('@svgr/webpack'),
   });
 
+  config.module.rules.push({
+    test: /\.(ts|tsx)$/,
+    use: [
+      {
+        loader: require.resolve('babel-loader'),
+        options: {
+          presets: [
+            '@babel/preset-typescript',
+            '@babel/preset-react',
+            [
+              '@babel/preset-env',
+              {
+                modules: false,
+              },
+            ],
+          ],
+        },
+      },
+    ],
+  });
+
   // Required for Webpack 5:
   // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
   // This is no longer the case. Verify if you need this module and configure a polyfill for it.
@@ -88,8 +93,10 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
     buffer: require.resolve('buffer'),
     constants: false,
     fs: false,
+    os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
     stream: require.resolve('stream-browserify'),
+    tty: require.resolve('tty-browserify'),
   };
 
   config.plugins.push(

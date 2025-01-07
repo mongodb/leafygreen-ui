@@ -240,7 +240,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                     transformAlign,
                   })}
                   // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
-                  // eslint-disable-next-line react/no-unknown-property
+
                   popover={
                     renderMode === RenderMode.TopLayer ? dismissMode : undefined
                   }

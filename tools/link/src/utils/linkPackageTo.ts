@@ -11,8 +11,8 @@ interface LinkPackagesToOptions
 }
 
 /**
- * Runs the yarn link <packageName> command in the destination directory
- * @returns Promise that resolves when the yarn link <packageName> command has finished
+ * Runs the pnpm link <packageName> command in the destination directory
+ * @returns Promise that resolves when the pnpm link <packageName> command has finished
  */
 export function linkPackageTo(
   destination: string,

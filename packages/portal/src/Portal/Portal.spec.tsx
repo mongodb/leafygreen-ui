@@ -129,7 +129,6 @@ describe('packages/Portal', () => {
     );
   });
 
-  // eslint-disable-next-line jest/expect-expect
   test('container and className props cannot both be provided', () => {
     const div = document.createElement('div');
     div.id = 'custom-container';
