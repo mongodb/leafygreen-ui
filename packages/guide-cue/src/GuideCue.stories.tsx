@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React, { useRef, useState } from 'react';
 import {
   storybookArgTypes,

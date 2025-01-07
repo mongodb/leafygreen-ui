@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { getPackageManager } from '@lg-tools/meta';
 import chalk from 'chalk';
 import { spawn } from 'cross-spawn';

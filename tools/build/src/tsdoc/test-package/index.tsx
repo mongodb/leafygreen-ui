@@ -5,4 +5,4 @@ interface TestProps {
   description?: string;
 }
 
-export const TestComponent = (props: TestProps) => {};
+export const TestComponent = (_props: TestProps) => {};

@@ -22,19 +22,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/checkbox": "^14.0.0",
-    "@leafygreen-ui/chip": "^3.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/form-field": "^2.0.0",
-    "@leafygreen-ui/hooks": "^8.3.2",
-    "@leafygreen-ui/icon": "^13.0.0",
-    "@leafygreen-ui/icon-button": "^16.0.0",
-    "@leafygreen-ui/input-option": "^3.0.0",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/popover": "^13.0.0",
-    "@leafygreen-ui/tokens": "^2.11.1",
-    "@leafygreen-ui/typography": "^20.0.0",
+    "@leafygreen-ui/checkbox": "workspace:^",
+    "@leafygreen-ui/chip": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/form-field": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/input-option": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "chalk": "^4.1.2",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
@@ -43,9 +43,7 @@
     "@leafygreen-ui/leafygreen-provider": "^4.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^22.0.0",
-    "@leafygreen-ui/testing-lib": "^0.7.0",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@leafygreen-ui/button": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

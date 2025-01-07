@@ -13,7 +13,6 @@ export function setReactTextAreaValue(
 ) {
   const previousValue = input.value;
 
-  // eslint-disable-next-line no-param-reassign
   input.value = value;
 
   // @ts-ignore custom field

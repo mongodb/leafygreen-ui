@@ -1225,7 +1225,7 @@ export function Combobox<M extends boolean>({
           )}
 
           {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
+          {}
           <div
             ref={comboboxRef}
             role="combobox"

@@ -15,17 +15,15 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/hooks": "^8.3.2",
-    "@leafygreen-ui/lib": "^14.0.0",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/button": "^22.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/popover": "^13.0.0",
-    "@leafygreen-ui/testing-lib": "^0.7.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^4.0.0"

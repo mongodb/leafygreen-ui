@@ -14,62 +14,74 @@ jobs:
     name: Build packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/cache@v3
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - uses: actions/cache@v4
         name: Check for build cache
         id: build-cache
         with:
           path: |
             **/dist
-            !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+            .pnpm-store
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('pnpm-lock.yaml', '**/src/**/*', 'package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-cache-
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          node-version: 18.12.0
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn build
+        run: pnpm build
 
   lint:
     name: Check lints
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Use Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          node-version: 18.12.0
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: lint
-        run: yarn lint
+        run: pnpm lint
 
   chromatic:
     name: Chromatic
@@ -77,28 +89,33 @@ jobs:
     needs: [build]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Use Node 18
-        uses: actions/setup-node@v3
+      - name: pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          version: 9.15.0
+
+      - name: Use Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.12.0
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
         env:
@@ -116,29 +133,34 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Use Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          node-version: 18.12.0
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: tests
-        run: yarn test --ci
+        run: pnpm run test --ci
         env:
           JEST_JUNIT_OUTPUT: 'reports/junit/js-test-results.xml'
 
@@ -147,26 +169,31 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Use Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          node-version: 18.12.0
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
             **/dist
             !**/node_modules
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: validate
-        run: yarn validate
+        run: pnpm validate

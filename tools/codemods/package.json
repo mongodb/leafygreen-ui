@@ -14,7 +14,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@lg-tools/build": "0.5.0",
+    "@lg-tools/build": "workspace:^",
+    "@types/fs-extra": "11.0.1",
     "chalk": "4.1.2",
     "fs-extra": "11.1.1",
     "glob": "10.3.12",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@types/is-git-clean": "1.1.0",
+    "@types/jest": "^29.5.12",
     "@types/jscodeshift": "0.11.11"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/codemods",

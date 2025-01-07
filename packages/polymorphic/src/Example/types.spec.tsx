@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * This test file ensures that all Typescript types behave as intended
  * for components extending Polymorphic/InferredPolymorphic

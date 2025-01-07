@@ -9,12 +9,17 @@ jobs:
     name: Check file size
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Use Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18.12.0
 
       - uses: preactjs/compressed-size-action@v2
         with:
