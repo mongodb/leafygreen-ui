@@ -163,7 +163,7 @@ function LanguageSwitcher({
           onChange={handleChange}
           showCopyButton
           contents={snippetMap[languageIndex as 'javascript' | 'python']}
-          title="Language Switcher"
+          title="Title"
         />
       }
     >

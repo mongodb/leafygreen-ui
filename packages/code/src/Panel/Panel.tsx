@@ -11,11 +11,12 @@ import {
 } from '../types';
 
 import {
-  basePanelStyle,
+  getBasePanelStyle,
   basePanelThemeStyle,
-  languageSwitcherPanelThemeStyles,
-  sidePanelThemeStyles,
+  panelIconsStyles,
+  panelLeftStyles,
 } from './Panel.styles';
+import { Body } from '@leafygreen-ui//typography';
 
 type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> & {
   onCopy?: Function;
@@ -34,7 +35,7 @@ function Panel({
   contents,
   onChange,
   onCopy,
-  showCopyButton,
+  // showCopyButton,
   customActionButtons,
   showCustomActionButtons,
   title,
@@ -44,37 +45,33 @@ function Panel({
 
   return (
     <div
-      className={cx(
-        basePanelStyle,
-        basePanelThemeStyle[theme],
-        languageSwitcherPanelThemeStyles[theme],
-        className,
-      )}
-      data-testid="leafygreen-code-panel"
+      className={cx(getBasePanelStyle, basePanelThemeStyle[theme], className)}
+      data-testid="leafygreen-code-panel" // TODO: update testid
     >
-      {title && <div>{title}</div>}
+      <div>{title && <Body>{title}</Body>}</div>
 
-      {language !== undefined &&
-        languageOptions !== undefined &&
-        onChange !== undefined && (
-          <LanguageSwitcher
-            onChange={onChange}
-            language={language}
-            languageOptions={languageOptions}
+      <div className={panelLeftStyles}>
+        {language !== undefined &&
+          languageOptions !== undefined &&
+          onChange !== undefined && (
+            <LanguageSwitcher
+              onChange={onChange}
+              language={language}
+              languageOptions={languageOptions}
+            />
+          )}
+
+        <div className={panelIconsStyles}>
+          {showCustomActionButtons && (
+            <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
+          )}
+          <CopyButton
+            onCopy={onCopy}
+            contents={contents}
+            withLanguageSwitcher={!!language}
           />
-        )}
-
-      {showCustomActionButtons && (
-        <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
-      )}
-
-      {/* {showCopyButton && ( */}
-      <CopyButton
-        onCopy={onCopy}
-        contents={contents}
-        withLanguageSwitcher={!!language}
-      />
-      {/* )} */}
+        </div>
+      </div>
     </div>
   );
 }

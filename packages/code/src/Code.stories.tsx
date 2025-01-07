@@ -174,7 +174,7 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
           showCustomActionButtons
           showCopyButton
           contents={jsSnippet}
-          title="Language Switcher"
+          title="Title"
         />
       }
     >
