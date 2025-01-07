@@ -1,4 +1,5 @@
 import React, { ForwardedRef, PropsWithChildren } from 'react';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -71,3 +72,7 @@ export const HeaderCell = React.forwardRef(
 ) as HeaderCellComponentType;
 
 export default HeaderCell;
+
+HeaderCell.propTypes = {
+  header: PropTypes.object,
+} as any; // avoid inferred types from interfering;

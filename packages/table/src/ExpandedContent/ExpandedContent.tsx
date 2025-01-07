@@ -1,5 +1,6 @@
 import React, { ForwardedRef } from 'react';
 import { RowData } from '@tanstack/react-table';
+import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -58,3 +59,8 @@ export const ExpandedContent = React.forwardRef(
 ExpandedContent.displayName = 'ExpandedContent';
 
 export default ExpandedContent;
+
+ExpandedContent.propTypes = {
+  row: PropTypes.object,
+  virtualRow: PropTypes.object,
+} as any; // avoid inferred types from interfering

@@ -1,4 +1,5 @@
 import React, { ForwardedRef } from 'react';
+import PropTypes from 'prop-types';
 
 import { useForwardedRef } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -56,5 +57,11 @@ const RowWithRef = <T extends LGRowData>(
 export const Row = React.forwardRef(RowWithRef) as RowComponentType;
 
 Row.displayName = 'Row';
+
+Row.propTypes = {
+  virtualRow: PropTypes.object,
+  row: PropTypes.object,
+  disabled: PropTypes.bool,
+} as any; // avoid inferred types from interfering
 
 export default Row;
