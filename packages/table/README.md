@@ -4,20 +4,20 @@
 
 > _Upgrading from v11 or v12? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
 
-> _Upgrading from v10? Check out our [ v10 to v13 upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
+> _Upgrading from v10? Check out our [v10 to v13 upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
 
 # Installation
 
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/table
+yarn add @leafygreen-ui/table@13.0.0-rc.0
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/table
+npm install @leafygreen-ui/table@13.0.0-rc.0
 ```
 
 ## Basic
