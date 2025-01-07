@@ -1,5 +1,12 @@
 # @leafygreen-ui/hooks
 
+## 8.3.2
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/lib@14.0.0
+
 ## 8.3.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/split-button",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "leafyGreen UI Kit Split Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,19 +30,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
+    "@leafygreen-ui/button": "^22.0.0",
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.3.0",
-    "@leafygreen-ui/icon": "^12.5.4",
-    "@leafygreen-ui/lib": "^13.8.1",
-    "@leafygreen-ui/menu": "^27.0.0",
+    "@leafygreen-ui/hooks": "^8.3.2",
+    "@leafygreen-ui/icon": "^13.0.0",
+    "@leafygreen-ui/lib": "^14.0.0",
+    "@leafygreen-ui/menu": "^28.0.0",
     "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/polymorphic": "^2.0.0",
-    "@leafygreen-ui/popover": "^12.0.0",
-    "@leafygreen-ui/tokens": "^2.9.0"
+    "@leafygreen-ui/polymorphic": "^2.0.3",
+    "@leafygreen-ui/popover": "^13.0.0",
+    "@leafygreen-ui/tokens": "^2.11.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
   },
   "devDependencies": {
     "@lg-tools/storybook-utils": "^0.1.1"

@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 4.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
 ## 3.1.9
 
 ### Patch Changes

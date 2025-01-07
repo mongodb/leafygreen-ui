@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/lint",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
@@ -19,7 +19,7 @@
     "@eslint/compat": "^1.2.3",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.16.0",
-    "@lg-tools/build": "^0.6.0",
+    "@lg-tools/build": "^0.7.0",
     "@types/cross-spawn": "6.0.2",
     "@typescript-eslint/eslint-plugin": "8.17.0",
     "@typescript-eslint/parser": "8.17.0",
