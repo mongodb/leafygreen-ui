@@ -56,11 +56,16 @@ export const contentWrapperStylesNoPanel = css`
   grid-template-areas: 'code code';
 `;
 
-export const contentWrapperStyleWithPicker = css`
+export const panelStyles = css`
   grid-template-areas:
     'panel'
     'code';
   grid-template-columns: unset;
+
+  &:before,
+  &:after {
+    grid-row: 2; // Placed on the top under the Picker Panel
+  }
 `;
 
 export const expandableContentWrapperStyle = css`
@@ -140,10 +145,10 @@ export function getExpandableCodeWrapperStyle(
   `;
 }
 
-export const panelStyles = css`
-  z-index: 2; // Above the shadows
-  grid-area: panel;
-`;
+// export const panelStyles = css`
+//   z-index: 2; // Above the shadows
+//   grid-area: panel;
+// `;
 
 export function getCodeWrapperVariantStyle(theme: Theme): string {
   const colors = variantColors[theme];
@@ -225,12 +230,12 @@ export const scrollShadowStylesNoPanel = css`
   }
 `;
 
-export const scrollShadowStylesWithPicker = css`
-  &:before,
-  &:after {
-    grid-row: 2; // Placed on the top under the Picker Panel
-  }
-`;
+// export const scrollShadowStylesWithPicker = css`
+//   &:before,
+//   &:after {
+//     grid-row: 2; // Placed on the top under the Picker Panel
+//   }
+// `;
 
 export function getScrollShadow(
   scrollState: ScrollState,

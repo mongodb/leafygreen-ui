@@ -26,7 +26,6 @@ import {
   codeWrapperStyleWithLanguagePicker,
   contentWrapperStyles,
   contentWrapperStylesNoPanel,
-  contentWrapperStyleWithPicker,
   expandableContentWrapperStyle,
   expandableContentWrapperStyleNoPanel,
   expandableContentWrapperStyleWithPicker,
@@ -35,9 +34,8 @@ import {
   getExpandableCodeWrapperStyle,
   getExpandButtonVariantStyle,
   getScrollShadow,
-  // panelStyles,
+  panelStyles,
   scrollShadowStylesNoPanel,
-  scrollShadowStylesWithPicker,
   singleLineCodeWrapperStyle,
   wrapperStyle,
 } from './Code.styles';
@@ -97,26 +95,28 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
 
-  const filteredCustomActionIconButtons = customActionButtons.filter(
-    (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
-  );
+  // const filteredCustomActionIconButtons = customActionButtons.filter(
+  //   (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
+  // );
 
-  const showCustomActionsInPanel =
-    showCustomActionButtons && !!filteredCustomActionIconButtons.length;
+  // const showCustomActionsInPanel =
+  //   showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
   const currentLanguage = languageOptions?.find(
     option => option.displayName === languageProp,
   );
 
-  const showPanel =
-    !showWindowChrome &&
-    (copyable || !!currentLanguage || showCustomActionsInPanel);
+  // const showPanel =
+  //   !showWindowChrome &&
+  //   (copyable || !!currentLanguage || showCustomActionsInPanel);
+
+  const showPanel = !!panel;
 
   const highlightLanguage = currentLanguage
     ? currentLanguage.language
     : languageProp;
 
-  const showLanguagePicker = !!currentLanguage;
+  // const showLanguagePicker = !!currentLanguage;
 
   useEffect(() => {
     setShowCopyBar(copyable && ClipboardJS.isSupported());
@@ -208,6 +208,14 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
+  // console.log({
+  //   expandable,
+  //   showPanel,
+  //   showExpandButton,
+  //   numOfLinesOfCode,
+  //   numOfCollapsedLinesOfCode,
+  // });
+
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={wrapperStyle[theme]}>
@@ -219,42 +227,26 @@ function Code({
             baseScrollShadowStyles,
             getScrollShadow(scrollState, theme),
             {
-              [contentWrapperStyleWithPicker]: showLanguagePicker,
-              [scrollShadowStylesWithPicker]: showLanguagePicker,
+              [panelStyles]: showPanel,
+              // [contentWrapperStyleWithPicker]: showPanel,
+              // [scrollShadowStylesWithPicker]: showPanel,
               [contentWrapperStylesNoPanel]: !showPanel,
               [scrollShadowStylesNoPanel]: !showPanel,
               [expandableContentWrapperStyle]: showExpandButton,
               [expandableContentWrapperStyleWithPicker]:
-                showExpandButton && showLanguagePicker,
+                showExpandButton && showPanel,
               [expandableContentWrapperStyleNoPanel]:
                 showExpandButton && !showPanel,
             },
           )}
         >
-          {/* Can make this a more robust check in the future */}
-          {/* Right now the panel will only be rendered with copyable or a language switcher */}
-          {/* {showPanel && (
-            <Panel
-              className={cx(panelStyles)}
-              language={currentLanguage}
-              languageOptions={languageOptions}
-              onChange={onChange}
-              contents={children}
-              onCopy={onCopy}
-              showCopyButton={showCopyBar}
-              isMultiline={isMultiline}
-              customActionButtons={filteredCustomActionIconButtons}
-              showCustomActionButtons={showCustomActionsInPanel}
-            />
-          )} */}
-
           <pre
             {...(rest as DetailedElementProps<HTMLPreElement>)}
             className={cx(
               codeWrapperStyle,
               getCodeWrapperVariantStyle(theme),
               {
-                [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
+                [codeWrapperStyleWithLanguagePicker]: showPanel,
                 // [codeWrapperStyleNoPanel]: !showPanel,
                 [codeWrapperStyleNoPanel]: !panel,
                 [singleLineCodeWrapperStyle]: !isMultiline,
