@@ -4,6 +4,7 @@
 
 ### Patch Changes
 
+- Updated dependencies [9a8c43faa]
 - Updated dependencies [274d7e1a7]
   - @lg-tools/lint@2.0.0
   - @lg-tools/validate@0.4.0
