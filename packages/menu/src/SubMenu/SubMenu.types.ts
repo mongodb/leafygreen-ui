@@ -51,7 +51,5 @@ export interface InternalSubMenuProps
 }
 
 // External only
-export type SubMenuProps = InferredPolymorphicProps<
-  PolymorphicAs,
-  InternalSubMenuProps
->;
+export type SubMenuProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, InternalSubMenuProps>;
