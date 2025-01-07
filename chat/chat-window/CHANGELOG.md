@@ -1,5 +1,17 @@
 # @lg-chat/chat-window
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-chat/leafygreen-chat-provider@3.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @lg-chat/avatar@4.0.0
+  - @lg-chat/title-bar@3.0.0
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 2.0.1
 
 ### Patch Changes

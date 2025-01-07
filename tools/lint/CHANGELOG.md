@@ -1,5 +1,16 @@
 # @lg-tools/lint
 
+## 2.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+
 ## 1.0.0
 
 ### Major Changes

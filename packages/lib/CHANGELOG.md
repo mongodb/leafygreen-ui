@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 14.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
 ## 13.8.2
 
 ### Patch Changes
