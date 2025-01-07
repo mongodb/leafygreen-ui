@@ -1,4 +1,10 @@
-# Table Docs
+# Table
+
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)
+
+> _Upgrading from v11 or v12? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
+
+> _Upgrading from v10? Check out our [ v10 to v13 upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
 
 # Installation
 
@@ -511,7 +517,7 @@ The `useLeafyGreenVirtualTable` hook returns an object that extends the `useL
 
 ## Rendering Headers
 
-Headers are returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` table instance with the `getHeadersGroups()` function. The `getHeaderGroups` function is used to retrieve all header groups for a table. It returns an array of HeaderGroup objects. For more information, check out [Tanstack's documentation on HeaderGroups](https://tanstack.com/table/latest/docs/guide/header-groups).
+Headers are returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` instances with the `getHeaderGroups()` function. The `getHeaderGroups` function is used to retrieve all header groups for a table. It returns an array of `HeaderGroup` objects. For more information, check out [Tanstack's documentation on HeaderGroups](https://tanstack.com/table/latest/docs/guide/header-groups).
 
 Example:
 
@@ -542,7 +548,7 @@ return(
 
 ## Rendering Rows
 
-Rows returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` table instance differ slightly:
+Rows returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` instances differ slightly:
 
 ### Rows and subrows without expanded content
 

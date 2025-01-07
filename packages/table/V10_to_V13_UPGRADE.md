@@ -63,35 +63,31 @@ const table = useLeafyGreenTable<KitchenSink>({
 const { rows } = table.getRowModel();
 
 return (
-	<Table table={table}>
-	  <TableHead>
-	   // Mapping through header rows
-	    {table
-	      .getHeaderGroups()
-	      .map((headerGroup: HeaderGroup<KitchenSink>) => (
-	        <HeaderRow key={headerGroup.id}>
-	         // Mapping through header cells
-	          {headerGroup.headers.map((header, index) => {
-	            return (
-	              <HeaderCell
-	                key={header.id}
-	                header={header}
-	              >
-	                {flexRender(
-	                  header.column.columnDef.header,
-	                  header.getContext(),
-	                )}
-	              </HeaderCell>
-	            );
-	          })}
-	        </HeaderRow>
-	      ))}
-	  </TableHead>
-	  <TableBody>
+  <Table table={table}>
+    <TableHead>
+      // Mapping through header rows
+      {table
+        .getHeaderGroups()
+        .map((headerGroup: HeaderGroup<KitchenSink>) => (
+          <HeaderRow key={headerGroup.id}>
+            // Mapping through header cells
+            {headerGroup.headers.map((header, index) => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+    </TableHead>
+    <TableBody>
       {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
         // Checks if row is expandedContent
         const isExpandedContent = row.isExpandedContent ?? false;
-
         return (
           <Fragment key={row.id}>
             {!isExpandedContent && (
@@ -116,8 +112,8 @@ return (
         );
       })}
     </TableBody>
-</Table>
-)
+  </Table>
+);
 ```
 
 ## What changed?
@@ -233,7 +229,7 @@ In v10, the `columns` prop defines the structure of the table columns. Each colu
 
 Column definition:
 
-Column definitions are essential for setting up a table, as they define how the data is accessed and displayed. Each column definition is a plain object that can include various options such as accessorKey, accessorFn, header, and more. For more information on column configurations, please refer to the [columns section in the README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/README.md#columns-required).
+Column definitions are essential for setting up a table, as they define how the data is accessed and displayed. Each column definition is a plain object that can include various options such as `accessorKey`, `accessorFn`, `header`, and more. For more information on column configurations, please refer to the [columns section in the README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/README.md#columns-required).
 
 ```jsx
 const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
@@ -263,7 +259,7 @@ const table = useLeafyGreenTable<KitchenSink>({
 
 Header columns:
 
-The `getHeaderGroups` function is used to retrieve all header groups for a table. It returns an array of HeaderGroup objects. In this example, `table.getHeaderGroups()` is called to get the header groups, and then each header group is mapped over to render the headers. Each header within a group is also mapped over to render its content.
+The `getHeaderGroups` function is used to retrieve all header groups for a table. It returns an array of `HeaderGroup` objects. In this example, `table.getHeaderGroups()` is called to get the header groups, and then each header group is mapped over to render the headers. Each header within a group is also mapped over to render its content.
 
 _note:_ `flexRender` is used to render the cell content based on the column definition and the context provided by the table. This approach ensures that any additional markup or JSX is handled correctly, allowing for more complex cell rendering logic.
 
@@ -522,9 +518,9 @@ For more information on sorting, check out the [sorting section in the README](h
 
 Nested rows/sub rows render just like regular rows:
 
-```jsx
-// data
+Data:
 
+```jsx
 const data = [
   {
     id: '1',
@@ -540,6 +536,8 @@ const data = [
   },
 ];
 ```
+
+Rendering:
 
 ```jsx
 <Table table={table}>
@@ -566,6 +564,8 @@ const data = [
 
 Expanded Content is conditionally rendered by checking `row.isExpandedContent`:
 
+Data:
+
 ```jsx
 const data = [
   {
@@ -576,6 +576,8 @@ const data = [
   },
 ];
 ```
+
+Rendering:
 
 ```jsx
 <Table table={table}>
