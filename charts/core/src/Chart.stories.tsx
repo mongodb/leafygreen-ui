@@ -12,10 +12,10 @@ import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
-  EventMarker,
   Grid,
   Header,
   Line,
+  ThresholdLine,
   Tooltip,
   XAxis,
   XAxisProps,
@@ -336,7 +336,7 @@ export const Basic: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
-        <EventMarker />
+        <ThresholdLine point={600} label="Threshold: 600" />
       </Chart>
     );
   },
