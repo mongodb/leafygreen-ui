@@ -8,6 +8,7 @@
 
 ### Patch Changes
 
+- 9a8c43faa: Adds missing dependencies: `@eslint/compat`, `@eslint/eslintrc`, `@eslint/js`, `globals`
 - Updated dependencies [274d7e1a7]
   - @lg-tools/build@0.7.0
 
