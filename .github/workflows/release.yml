@@ -26,8 +26,6 @@ jobs:
             **/tsdoc.json
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
-          restore-keys: |
-            ${{ runner.os }}-build-cache-
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18

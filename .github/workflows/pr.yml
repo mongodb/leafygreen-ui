@@ -27,10 +27,8 @@ jobs:
         with:
           path: |
             **/dist
-            .pnpm-store
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('pnpm-lock.yaml', '**/src/**/*', 'package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-cache-
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
