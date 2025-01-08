@@ -7,7 +7,7 @@ export function getPackageManager(
   appPath: string,
   defaultPackageManager: SupportedPackageManager = 'npm',
 ): SupportedPackageManager {
-  if (fse.existsSync(`${appPath}/yarn-lock.yaml`)) {
+  if (fse.existsSync(`${appPath}/yarn.lock`)) {
     return 'yarn';
   } else if (fse.existsSync(`${appPath}/pnpm-lock.yaml`)) {
     return 'pnpm';
