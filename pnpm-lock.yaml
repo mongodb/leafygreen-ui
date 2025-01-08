@@ -3234,10 +3234,10 @@ importers:
         specifier: workspace:^
         version: link:../../packages/testing-lib
       '@lg-tools/build':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../build
       '@lg-tools/meta':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../meta
       '@testing-library/dom':
         specifier: 9.3.1

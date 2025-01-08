@@ -46,7 +46,7 @@ export async function fixDependencies(
 
     spawnSync(
       'npx',
-      ['pnpm@9.15.0', 'add', '--dev', ...missingDevDependencies],
+      ['pnpm@9.15.0', 'add', '--save-dev', ...missingDevDependencies],
       spawnContext,
     );
   }
