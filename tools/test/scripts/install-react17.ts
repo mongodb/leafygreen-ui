@@ -22,10 +22,10 @@ if (!isValidJSON(r17packagesString)) {
 
 const r17packages = JSON.parse(r17packagesString);
 
-// Add resolutions
-pkgJson.resolutions = {
-  ...pkgJson.resolutions,
-  ...r17packages.resolutions,
+// Add pnpm.overrides
+pkgJson.pnpm.overrides = {
+  ...pkgJson.pnpm.overrides,
+  ...r17packages.pnpm.overrides,
 };
 
 const pkgJsonPath = path.resolve(rootDir, 'package.json');
