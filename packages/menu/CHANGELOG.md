@@ -1,5 +1,28 @@
 # @leafygreen-ui/menu
 
+## 28.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- a3d63cb95: Export prop types for components already wrapped in polymorphic types
+- Updated dependencies [a3d63cb95]
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/input-option@3.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/icon-button@16.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/descendants@2.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 27.0.0
 
 ### Major Changes

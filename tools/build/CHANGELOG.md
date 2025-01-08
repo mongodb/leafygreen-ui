@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.7.0
+
+### Minor Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
 ## 0.6.0
 
 ### Minor Changes

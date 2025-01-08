@@ -1,5 +1,16 @@
 # @leafygreen-ui/logo
 
+## 10.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/lib@14.0.0
+
 ## 9.2.0
 
 ### Minor Changes
