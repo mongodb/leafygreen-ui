@@ -39,3 +39,5 @@ const packagesToInstall = Object.entries(r17packages.dependencies).map(
 spawnSync('pnpm', ['add', '--save-dev', '--ignore-workspace-root-check', ...packagesToInstall], {
   stdio: 'inherit',
 });
+
+spawnSync('pnpm', ['install']);
