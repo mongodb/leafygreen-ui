@@ -2783,34 +2783,34 @@ importers:
   tools/cli:
     dependencies:
       '@lg-tools/build':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../build
       '@lg-tools/codemods':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../codemods
       '@lg-tools/create':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../create
       '@lg-tools/install':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../install
       '@lg-tools/link':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../link
       '@lg-tools/lint':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../lint
       '@lg-tools/slackbot':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../slackbot
       '@lg-tools/test':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../test
       '@lg-tools/update':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../update
       '@lg-tools/validate':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../validate
       commander:
         specifier: ^11.0.0
@@ -2849,9 +2849,6 @@ importers:
       '@types/is-git-clean':
         specifier: 1.1.0
         version: 1.1.0
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.14
       '@types/jscodeshift':
         specifier: 0.11.11
         version: 0.11.11
