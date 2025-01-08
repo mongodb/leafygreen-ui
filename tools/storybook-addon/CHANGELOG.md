@@ -8,7 +8,7 @@
   - @leafygreen-ui/typography@20.0.0
   - @leafygreen-ui/lib@14.0.0
   - @lg-tools/build@0.7.0
-  - @lg-tools/storybook-decorators@1.0.0
+  - @lg-tools/storybook-decorators@0.3.0
   - @leafygreen-ui/tokens@2.11.1
 
 ## 0.2.5
