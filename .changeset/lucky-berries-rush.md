@@ -40,7 +40,6 @@
 '@leafygreen-ui/toggle': major
 '@leafygreen-ui/badge': major
 '@leafygreen-ui/modal': major
-'@leafygreen-ui/table': major
 '@leafygreen-ui/toast': major
 '@leafygreen-ui/a11y': major
 '@leafygreen-ui/card': major
