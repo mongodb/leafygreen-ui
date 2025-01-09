@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 
@@ -45,10 +44,3 @@ export const VerticalStep = React.forwardRef<HTMLLIElement, VerticalStepProps>(
 );
 
 VerticalStep.displayName = 'VerticalStep';
-
-VerticalStep.prototype = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.node.isRequired,
-  media: PropTypes.element,
-  actions: PropTypes.node,
-};

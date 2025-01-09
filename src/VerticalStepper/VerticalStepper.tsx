@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
 
 import {
   DescendantsProvider,
@@ -36,7 +35,9 @@ export const VerticalStepper = React.forwardRef<
     const { darkMode } = useDarkMode(darkModeProp);
     const childrenLength = React.Children.toArray(children).length;
 
-    const { descendants, dispatch } = useInitDescendants<HTMLLIElement>();
+    const { descendants, dispatch } = useInitDescendants<HTMLLIElement>(
+      VerticalStepperDescendantsContext,
+    );
 
     const providerData = useMemo(() => {
       return { currentStep, hasVerticalStepperParent: true };
@@ -71,9 +72,3 @@ export const VerticalStepper = React.forwardRef<
 );
 
 VerticalStepper.displayName = 'VerticalStepper';
-
-VerticalStepper.propTypes = {
-  darkMode: PropTypes.bool,
-  currentStep: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired,
-} as any; // avoid inferred types from interfering
