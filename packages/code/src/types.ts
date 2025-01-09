@@ -2,13 +2,6 @@ import { HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { SupportedLanguages } from './languages';
 
-export const Mode = {
-  Light: 'light',
-  Dark: 'dark',
-} as const;
-
-export type Mode = (typeof Mode)[keyof typeof Mode];
-
 export const Language = {
   ...SupportedLanguages,
   None: 'none',
@@ -19,35 +12,3 @@ export type Language = (typeof Language)[keyof typeof Language];
 export type LineHighlightingDefinition = ReadonlyArray<
   number | readonly [number, number]
 >;
-
-export interface SyntaxProps extends HTMLElementProps<'code'> {
-  /**
-   * The children to render inside Code. This is usually going to be a formatted code block or line.
-   * @required
-   */
-  children: string;
-
-  /**
-   * The language to highlight the syntax of.
-   */
-  language: Language;
-
-  /**
-   * Shows line numbers. This is specifically used for the Code component implementation.
-   *
-   * default: `false`
-   */
-  showLineNumbers?: boolean;
-
-  /**
-   * Specifies the number by which to start line numbering.
-   *
-   * default: `1`
-   */
-  lineNumberStart?: number;
-
-  /**
-   * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
-   */
-  highlightLines?: LineHighlightingDefinition;
-}

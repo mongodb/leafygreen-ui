@@ -1,4 +1,5 @@
-import { Language, SyntaxProps } from '../types';
+import { SyntaxProps } from '../syntax/Syntax.types';
+import { Language } from '../types';
 
 export const ScrollState = {
   None: 'none',
