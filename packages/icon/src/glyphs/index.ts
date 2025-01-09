@@ -32,6 +32,7 @@ import ChevronDown from './ChevronDown.svg';
 import ChevronLeft from './ChevronLeft.svg';
 import ChevronRight from './ChevronRight.svg';
 import ChevronUp from './ChevronUp.svg';
+import Circle from './Circle.svg';
 import Clock from './Clock.svg';
 import ClockWithArrow from './ClockWithArrow.svg';
 import Clone from './Clone.svg';
@@ -197,6 +198,7 @@ const _glyphs = {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Circle,
   Clock,
   ClockWithArrow,
   Clone,
