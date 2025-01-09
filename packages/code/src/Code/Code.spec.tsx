@@ -130,9 +130,7 @@ describe('packages/Code', () => {
 
   describe('panel', () => {
     test('is not rendered when language switcher is not present and when copyable is false and showCustomActionButtons is false', () => {
-      expect(container).not.toContain(
-        screen.queryByTestId('leafygreen-code-panel'),
-      );
+      expect(container).not.toContain(screen.queryByTestId('lg-code-panel'));
     });
 
     test('is rendered when language switcher is not present, when copyable is false, showCustomActionButtons is true, and actionsButtons has items', () => {
@@ -145,7 +143,7 @@ describe('packages/Code', () => {
           {codeSnippet}
         </Code>,
       );
-      expect(screen.queryByTestId('leafygreen-code-panel')).toBeDefined();
+      expect(screen.queryByTestId('lg-code-panel')).toBeDefined();
     });
 
     test('is not rendered when language switcher is not present, when copyable is false, when showCustomActionButtons is true, and actionsButtons has no items', () => {
@@ -158,9 +156,7 @@ describe('packages/Code', () => {
           {codeSnippet}
         </Code>,
       );
-      expect(container).not.toContain(
-        screen.queryByTestId('leafygreen-code-panel'),
-      );
+      expect(container).not.toContain(screen.queryByTestId('lg-code-panel'));
     });
   });
 

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-import { cx } from '@leafygreen-ui/emotion';
+// import { cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
@@ -20,11 +20,7 @@ import Tooltip, {
 } from '@leafygreen-ui/tooltip';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import {
-  copiedThemeStyle,
-  copyButtonThemeStyles,
-  tooltipStyles,
-} from './CopyButton.styles';
+import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
@@ -137,9 +133,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
           data-testid="code_copy-button"
           ref={buttonRef}
           aria-label={COPY_TEXT}
-          className={cx(copyButtonThemeStyles[theme], {
-            [copiedThemeStyle[theme]]: copied,
-          })}
+          className={getCopyButtonStyles({ theme, copied })}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
           onMouseEnter={handleMouseEnter}

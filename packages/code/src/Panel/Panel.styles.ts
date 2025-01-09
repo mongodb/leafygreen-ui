@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { spacing, color } from '@leafygreen-ui/tokens';
 
 export const getBasePanelStyle = ({
   hasTitle,
@@ -62,4 +62,8 @@ export const panelLeftStyles = css`
 export const panelIconsStyles = css`
   display: flex;
   gap: ${spacing[100]}px;
+`;
+
+export const getPanelTitleStyles = (theme: Theme) => css`
+  color: ${color[theme].text.secondary.default};
 `;

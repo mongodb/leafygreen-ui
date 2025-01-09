@@ -8,6 +8,7 @@ import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
 import {
   getBasePanelStyle,
+  getPanelTitleStyles,
   panelIconsStyles,
   panelLeftStyles,
 } from './Panel.styles';
@@ -15,6 +16,7 @@ import { Body } from '@leafygreen-ui//typography';
 import { PanelProps } from './Panel.types';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useCodeContext } from '../CodeContext/CodeContext';
+import { LGIDs } from '../constants';
 
 function Panel({
   language,
@@ -41,9 +43,9 @@ function Panel({
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
-      data-testid="leafygreen-code-panel" // TODO: update testid
+      data-testid={LGIDs.panel}
     >
-      {title && <Body>{title}</Body>}
+      {title && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}
 
       <div className={panelLeftStyles}>
         {language !== undefined &&
