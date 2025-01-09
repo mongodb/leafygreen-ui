@@ -75,7 +75,6 @@ const meta: StoryMetaType<typeof Code> = {
     language: 'js',
     baseFontSize: 14,
     children: shortJsSnippet,
-    chromeTitle: 'example.ts',
   },
   argTypes: {
     copyable: { control: 'boolean' },
@@ -83,7 +82,6 @@ const meta: StoryMetaType<typeof Code> = {
     showLineNumbers: { control: 'boolean' },
     highlightLines: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
-    chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
     baseFontSize: storybookArgTypes.baseFontSize,
     language: {
@@ -165,9 +163,6 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       panel={
         <Panel
-          language={args.languageOptions?.find(
-            option => option.displayName === args.language,
-          )}
           customActionButtons={customActionButtons}
           showCustomActionButtons
           contents={jsSnippet}

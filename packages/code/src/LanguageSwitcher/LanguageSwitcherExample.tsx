@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { Language, LanguageOption } from '../types';
+import { Language } from '../types';
+import { LanguageOption } from '../Panel/Panel.types';
 import Code, { Panel } from '..';
 
 export function PythonLogo({ className }: { className?: string }) {
@@ -147,13 +148,11 @@ function LanguageSwitcher({
 
   return (
     <Code
-      language={language?.displayName}
+      language={language?.displayName as Language}
       lineNumberStart={1}
-      onChange={handleChange}
-      languageOptions={languageOptions}
+      // onChange={handleChange}
+      // languageOptions={languageOptions}
       darkMode={darkMode}
-      customActionButtons={customActionButtons}
-      showCustomActionButtons={showCustomActionButtons}
       panel={
         <Panel
           language={language}

@@ -57,18 +57,6 @@ export type CodeProps = Omit<
   'onCopy' | 'language' | 'onChange'
 > & {
   /**
-   * Shows window chrome for code block;
-   *
-   * @default: `false`
-   */
-  showWindowChrome?: boolean;
-
-  /**
-   * Renders a file name or other descriptor for a block of code
-   */
-  chromeTitle?: string;
-
-  /**
    * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
    * @default: `true`
@@ -89,19 +77,6 @@ export type CodeProps = Omit<
   onCopy?: Function;
 
   /**
-   * Custom action buttons. Should be an array of `IconButton`.
-   *
-   * @type <IconButton />[]
-   */
-  customActionButtons?: Array<React.ReactElement>;
-
-  /**
-   * When true, custom action buttons will be shown.
-   *
-   */
-  showCustomActionButtons?: boolean;
-
-  /**
    * Determines whether or not the syntax will be rendered in dark mode.
    *
    * @default `false`
@@ -113,39 +88,10 @@ export type CodeProps = Omit<
    *
    */
   panel?: React.ReactNode;
-} & (
-    | {
-        /**
-         * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
-         */
-        language: Language;
-        languageOptions?: undefined;
-        onChange?: undefined;
-      }
-    | {
-        /**
-         * The `displayName` of the selected `languageOption`
-         */
-        language: LanguageOption['displayName'];
-        /**
-         * An array of `LanguageOptions` to select from. Enables the Language switcher.
-         */
-        languageOptions: Array<LanguageOption>;
-        /**
-         * Callback fired when the language option changes.
-         */
-        onChange: (arg0: LanguageOption) => void;
-      }
-  );
 
-export interface LanguageOption {
-  displayName: string;
+  /**
+   * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
+   */
+
   language: Language;
-  image?: React.ReactElement;
-}
-
-export interface LanguageSwitcher {
-  onChange: (arg0: LanguageOption) => void;
-  language: LanguageOption['displayName'];
-  languageOptions: Array<LanguageOption>;
-}
+};

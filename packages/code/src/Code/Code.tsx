@@ -10,7 +10,6 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-// import { isComponentType } from '@leafygreen-ui/lib';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
 import { Syntax } from '../Syntax';
@@ -32,20 +31,6 @@ function getHorizontalScrollbarHeight(element: HTMLElement): number {
   return element.offsetHeight - element.clientHeight;
 }
 
-/**
- *
- * React Component that outputs single-line and multi-line code blocks.
- *
- * @param props.children The string to be formatted.
- * @param props.className An additional CSS class added to the root element of Code.
- * @param props.language The language used for syntax highlighting.
- * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
- * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
- * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
- * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
- * @param props.onCopy Callback fired when Code is copied
- * @param props.expandable When true, allows the code block to be expanded and collapsed when there are more than 5 lined of code. Default: `false`
- */
 function Code({
   children = '',
   className,
@@ -53,15 +38,10 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  chromeTitle = '',
   copyable = true,
   expandable = false,
   onCopy,
   highlightLines = [],
-  languageOptions,
-  onChange,
-  customActionButtons = [],
-  showCustomActionButtons = false,
   panel,
   ...rest
 }: CodeProps) {
@@ -77,28 +57,7 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
 
-  // const filteredCustomActionIconButtons = customActionButtons.filter(
-  //   (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
-  // );
-
-  // const showCustomActionsInPanel =
-  //   showCustomActionButtons && !!filteredCustomActionIconButtons.length;
-
-  const currentLanguage = languageOptions?.find(
-    option => option.displayName === languageProp,
-  );
-
-  // const showPanel =
-  //   !showWindowChrome &&
-  //   (copyable || !!currentLanguage || showCustomActionsInPanel);
-
   const showPanel = !!panel;
-
-  const highlightLanguage = currentLanguage
-    ? currentLanguage.language
-    : languageProp;
-
-  // const showLanguagePicker = !!currentLanguage;
 
   // TODO: update this
   useEffect(() => {
@@ -149,7 +108,7 @@ function Code({
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      language={highlightLanguage as Language}
+      language={languageProp}
       highlightLines={highlightLines}
     >
       {children}

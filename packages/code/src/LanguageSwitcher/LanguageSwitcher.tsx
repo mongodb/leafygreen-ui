@@ -10,7 +10,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Option, RenderMode, Select } from '@leafygreen-ui/select';
 
 // import { CustomSelectMenuButton } from '../CustomSelectMenuButton';
-import { LanguageOption } from '../types';
+import { LanguageOption } from '../Panel/Panel.types';
 
 import {
   // buttonModeStyle,
