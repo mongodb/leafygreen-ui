@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-prompts",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "LeafyGreen UI Kit Message Prompts",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -16,13 +16,13 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/lib": "^14.0.0",
     "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@leafygreen-ui/typography": "^19.0.0"
+    "@leafygreen-ui/tokens": "^2.11.1",
+    "@leafygreen-ui/typography": "^20.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/message-prompts",
   "repository": {
