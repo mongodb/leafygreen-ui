@@ -55,10 +55,10 @@ export const getCodeStyles = ({
     baseScrollShadowStyles,
     getScrollShadow(scrollState, theme),
     {
-      [panelStyles]: showPanel,
-      [contentWrapperStylesNoPanel]: !showPanel,
-      [expandableContentWrapperStyleWithPicker]: showExpandButton && showPanel,
-      [expandableContentWrapperStyleNoPanel]: showExpandButton && !showPanel,
+      [codeWithPanelStyles]: showPanel,
+      [codeWithoutPanelStyles]: !showPanel,
+      [expandableContentWithPanelStyles]: showExpandButton && showPanel,
+      [expandableContentWithoutPanelStyles]: showExpandButton && !showPanel,
     },
   );
 
@@ -85,9 +85,9 @@ export const getCodeWrapperStyles = ({
     codeWrapperStyle,
     getCodeWrapperVariantStyle(theme),
     {
-      [codeWrapperStyleWithPanel]: showPanel,
-      [codeWrapperStyleNoPanel]: !showPanel,
-      [singleLineCodeWrapperStyle]: !isMultiline,
+      [codeWrapperWithPanelStyles]: showPanel,
+      [codeWrapperWithoutPanelStyles]: !showPanel,
+      [codeWrapperSingleLineStyles]: !isMultiline,
       [getExpandableCodeWrapperStyle(
         expanded,
         codeHeight,
@@ -110,7 +110,7 @@ export const contentWrapperStyles = css`
     'code';
 `;
 
-export const contentWrapperStylesNoPanel = css`
+export const codeWithoutPanelStyles = css`
   // No panel, all code
   grid-template-areas: 'code code';
 
@@ -119,7 +119,7 @@ export const contentWrapperStylesNoPanel = css`
   }
 `;
 
-export const panelStyles = css`
+export const codeWithPanelStyles = css`
   grid-template-areas:
     'panel'
     'code';
@@ -131,17 +131,12 @@ export const panelStyles = css`
   }
 `;
 
-// export const expandableContentWrapperStyle = css`
-//   grid-template-areas: 'code panel' 'expandButton expandButton';
-//   grid-template-rows: auto 28px;
-// `;
-
-export const expandableContentWrapperStyleNoPanel = css`
+export const expandableContentWithoutPanelStyles = css`
   grid-template-areas: 'code code' 'expandButton expandButton';
   grid-template-rows: auto 28px;
 `;
 
-export const expandableContentWrapperStyleWithPicker = css`
+export const expandableContentWithPanelStyles = css`
   grid-template-areas:
     'panel'
     'code'
@@ -176,20 +171,20 @@ export const codeWrapperStyle = css`
   }
 `;
 
-export const codeWrapperStyleNoPanel = css`
+export const codeWrapperWithoutPanelStyles = css`
   border-left: 0;
   border-radius: inherit;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 `;
-export const codeWrapperStyleWithPanel = css`
+export const codeWrapperWithPanelStyles = css`
   border-left: 0;
   border-radius: inherit;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 `;
 
-export const singleLineCodeWrapperStyle = css`
+export const codeWrapperSingleLineStyles = css`
   display: flex;
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;

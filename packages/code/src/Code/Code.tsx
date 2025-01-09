@@ -46,7 +46,6 @@ function Code({
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
-  // @ts-ignore
   const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
@@ -149,14 +148,6 @@ function Code({
     numOfLinesOfCode &&
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
-
-  // console.log({
-  //   expandable,
-  //   showPanel,
-  //   showExpandButton,
-  //   numOfLinesOfCode,
-  //   numOfCollapsedLinesOfCode,
-  // });
 
   return (
     <CodeContextProvider darkMode={darkMode} contents={children}>
