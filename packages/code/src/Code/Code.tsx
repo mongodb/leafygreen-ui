@@ -6,14 +6,12 @@ import PropTypes from 'prop-types';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
 import { Syntax } from '../Syntax';
-import { CodeProps, Language } from '../types';
+import { Language } from '../types';
 
 import {
   getCodeStyles,
@@ -21,7 +19,8 @@ import {
   getExpandedButtonStyles,
   wrapperStyle,
 } from './Code.styles';
-import { DetailedElementProps, ScrollState } from './Code.types';
+import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
+import CodeContextProvider from '../CodeContext/CodeContext';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -56,10 +55,9 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-
   const showPanel = !!panel;
 
-  // TODO: update this
+  // TODO: update this with new prop copyButtonAppearance
   useEffect(() => {
     setShowCopyBar(copyable && ClipboardJS.isSupported());
   }, [copyable, showCopyBar]);
@@ -75,6 +73,7 @@ function Code({
     }
   }, []);
 
+  //TODO: move to utils
   function setExpandableState() {
     if (!expandable || !scrollableElementRef.current) return;
 
@@ -115,6 +114,7 @@ function Code({
     </Syntax>
   );
 
+  //TODO: move to utils
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
@@ -159,7 +159,7 @@ function Code({
   // });
 
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
+    <CodeContextProvider darkMode={darkMode} contents={children}>
       <div className={wrapperStyle[theme]}>
         <div
           className={getCodeStyles({
@@ -205,7 +205,7 @@ function Code({
           )}
         </div>
       </div>
-    </LeafyGreenProvider>
+    </CodeContextProvider>
   );
 }
 

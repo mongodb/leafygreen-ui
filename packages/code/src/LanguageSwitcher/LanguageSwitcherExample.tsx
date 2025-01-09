@@ -160,7 +160,6 @@ function LanguageSwitcher({
           customActionButtons={customActionButtons}
           showCustomActionButtons={showCustomActionButtons}
           onChange={handleChange}
-          contents={snippetMap[languageIndex as 'javascript' | 'python']}
           title="Title"
         />
       }

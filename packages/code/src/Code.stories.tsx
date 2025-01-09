@@ -165,7 +165,6 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
         <Panel
           customActionButtons={customActionButtons}
           showCustomActionButtons
-          contents={jsSnippet}
           // title="Title"
         />
       }

@@ -21,9 +21,6 @@ export type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> &
      */
     onCopy?: Function;
 
-    // TODO: this needs to be in a context
-    contents: string;
-
     language?: LanguageOption;
     customActionButtons?: Array<React.ReactElement>;
     showCustomActionButtons?: boolean;

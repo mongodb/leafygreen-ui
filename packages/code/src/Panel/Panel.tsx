@@ -14,11 +14,11 @@ import {
 import { Body } from '@leafygreen-ui//typography';
 import { PanelProps } from './Panel.types';
 import { isComponentType } from '@leafygreen-ui/lib';
+import { useCodeContext } from '../CodeContext/CodeContext';
 
 function Panel({
   language,
   languageOptions,
-  contents,
   onChange,
   onCopy,
   customActionButtons = [],
@@ -27,6 +27,7 @@ function Panel({
   className,
 }: PanelProps) {
   const { theme } = useDarkMode();
+  const { contents } = useCodeContext();
 
   const hasTitle = !title;
 

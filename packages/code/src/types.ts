@@ -84,7 +84,7 @@ export type CodeProps = Omit<
   darkMode?: boolean;
 
   /**
-   * Slot that renders the top panel. This is typically used for rendering the language switcher and custom action buttons.
+   * Slot that renders the top panel. This is used for rendering the language switcher, custom action buttons, and copy button.
    *
    */
   panel?: React.ReactNode;
