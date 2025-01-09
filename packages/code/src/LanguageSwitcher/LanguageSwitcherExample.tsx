@@ -150,8 +150,6 @@ function LanguageSwitcher({
     <Code
       language={language?.displayName as Language}
       lineNumberStart={1}
-      // onChange={handleChange}
-      // languageOptions={languageOptions}
       darkMode={darkMode}
       panel={
         <Panel

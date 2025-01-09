@@ -42,7 +42,6 @@ export const getBasePanelStyle = ({
     className,
   );
 
-// TODO: can use vars?
 export const basePanelThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     background-color: ${palette.white};
