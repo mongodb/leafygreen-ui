@@ -1,5 +1,17 @@
 # @lg-tools/validate
 
+## 0.4.0
+
+### Minor Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+  - @lg-tools/meta@0.3.5
+
 ## 0.3.0
 
 ### Minor Changes
