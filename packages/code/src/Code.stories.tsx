@@ -67,7 +67,6 @@ const meta: StoryMetaType<typeof Code> = {
         darkMode: [false, true],
         copyable: [true, false],
         expandable: [true, false],
-        showWindowChrome: [false, true],
         showLineNumbers: [false, true],
       },
     },
@@ -81,7 +80,6 @@ const meta: StoryMetaType<typeof Code> = {
   argTypes: {
     copyable: { control: 'boolean' },
     expandable: { control: 'boolean' },
-    showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     highlightLines: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,

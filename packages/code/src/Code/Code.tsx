@@ -3,7 +3,6 @@ import ClipboardJS from 'clipboard';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
@@ -11,32 +10,16 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
+// import { isComponentType } from '@leafygreen-ui/lib';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
-// import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { CodeProps, Language } from '../types';
-import { WindowChrome } from '../WindowChrome';
 
 import {
-  baseScrollShadowStyles,
-  codeWrapperStyle,
-  codeWrapperStyleNoPanel,
-  codeWrapperStyleWithLanguagePicker,
-  contentWrapperStyles,
-  contentWrapperStylesNoPanel,
-  expandableContentWrapperStyle,
-  expandableContentWrapperStyleNoPanel,
-  expandableContentWrapperStyleWithPicker,
-  expandButtonStyle,
-  getCodeWrapperVariantStyle,
-  getExpandableCodeWrapperStyle,
-  getExpandButtonVariantStyle,
-  getScrollShadow,
-  panelStyles,
-  scrollShadowStylesNoPanel,
-  singleLineCodeWrapperStyle,
+  getCodeStyles,
+  getCodeWrapperStyles,
+  getExpandedButtonStyles,
   wrapperStyle,
 } from './Code.styles';
 import { DetailedElementProps, ScrollState } from './Code.types';
@@ -70,7 +53,6 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  showWindowChrome = false,
   chromeTitle = '',
   copyable = true,
   expandable = false,
@@ -89,8 +71,8 @@ function Code({
   const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
-  const [codeHeight, setCodeHeight] = useState<number>();
-  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>();
+  const [codeHeight, setCodeHeight] = useState<number>(0);
+  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>(0);
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
@@ -118,9 +100,10 @@ function Code({
 
   // const showLanguagePicker = !!currentLanguage;
 
+  // TODO: update this
   useEffect(() => {
     setShowCopyBar(copyable && ClipboardJS.isSupported());
-  }, [copyable, showWindowChrome]);
+  }, [copyable, showCopyBar]);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -219,45 +202,26 @@ function Code({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={wrapperStyle[theme]}>
-        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} />}
-
         <div
-          className={cx(
-            contentWrapperStyles,
-            baseScrollShadowStyles,
-            getScrollShadow(scrollState, theme),
-            {
-              [panelStyles]: showPanel,
-              // [contentWrapperStyleWithPicker]: showPanel,
-              // [scrollShadowStylesWithPicker]: showPanel,
-              [contentWrapperStylesNoPanel]: !showPanel,
-              [scrollShadowStylesNoPanel]: !showPanel,
-              [expandableContentWrapperStyle]: showExpandButton,
-              [expandableContentWrapperStyleWithPicker]:
-                showExpandButton && showPanel,
-              [expandableContentWrapperStyleNoPanel]:
-                showExpandButton && !showPanel,
-            },
-          )}
+          className={getCodeStyles({
+            scrollState,
+            theme,
+            showPanel,
+            showExpandButton,
+          })}
         >
           <pre
             {...(rest as DetailedElementProps<HTMLPreElement>)}
-            className={cx(
-              codeWrapperStyle,
-              getCodeWrapperVariantStyle(theme),
-              {
-                [codeWrapperStyleWithLanguagePicker]: showPanel,
-                // [codeWrapperStyleNoPanel]: !showPanel,
-                [codeWrapperStyleNoPanel]: !panel,
-                [singleLineCodeWrapperStyle]: !isMultiline,
-                [getExpandableCodeWrapperStyle(
-                  expanded,
-                  codeHeight as number,
-                  collapsedCodeHeight as number,
-                )]: showExpandButton,
-              },
+            className={getCodeWrapperStyles({
+              theme,
+              showPanel,
+              expanded,
+              codeHeight,
+              collapsedCodeHeight,
+              isMultiline,
+              showExpandButton,
               className,
-            )}
+            })}
             onScroll={onScroll}
             ref={scrollableElementRef}
             // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
@@ -271,10 +235,7 @@ function Code({
 
           {showExpandButton && (
             <button
-              className={cx(
-                expandButtonStyle,
-                getExpandButtonVariantStyle(theme),
-              )}
+              className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
               data-testid="lg-code-expand_button"
             >

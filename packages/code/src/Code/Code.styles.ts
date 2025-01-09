@@ -1,7 +1,7 @@
 import facepaint from 'facepaint';
 import { transparentize } from 'polished';
 
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -39,11 +39,70 @@ export const wrapperStyle: Record<Theme, string> = {
   `,
 };
 
+export const getCodeStyles = ({
+  scrollState,
+  theme,
+  showPanel,
+  showExpandButton,
+}: {
+  scrollState: ScrollState;
+  theme: Theme;
+  showPanel: boolean;
+  showExpandButton: boolean;
+}) =>
+  cx(
+    contentWrapperStyles,
+    baseScrollShadowStyles,
+    getScrollShadow(scrollState, theme),
+    {
+      [panelStyles]: showPanel,
+      [contentWrapperStylesNoPanel]: !showPanel,
+      [expandableContentWrapperStyleWithPicker]: showExpandButton && showPanel,
+      [expandableContentWrapperStyleNoPanel]: showExpandButton && !showPanel,
+    },
+  );
+
+export const getCodeWrapperStyles = ({
+  theme,
+  showPanel,
+  expanded,
+  codeHeight,
+  collapsedCodeHeight,
+  isMultiline,
+  showExpandButton,
+  className,
+}: {
+  theme: Theme;
+  showPanel: boolean;
+  expanded: boolean;
+  codeHeight: number;
+  collapsedCodeHeight: number;
+  isMultiline: boolean;
+  showExpandButton: boolean;
+  className?: string;
+}) =>
+  cx(
+    codeWrapperStyle,
+    getCodeWrapperVariantStyle(theme),
+    {
+      [codeWrapperStyleWithPanel]: showPanel,
+      [codeWrapperStyleNoPanel]: !showPanel,
+      [singleLineCodeWrapperStyle]: !isMultiline,
+      [getExpandableCodeWrapperStyle(
+        expanded,
+        codeHeight,
+        collapsedCodeHeight,
+      )]: showExpandButton,
+    },
+    className,
+  );
+
+export const getExpandedButtonStyles = ({ theme }: { theme: Theme }) =>
+  cx(expandButtonStyle, getExpandButtonVariantStyle(theme));
+
 export const contentWrapperStyles = css`
   position: relative;
   display: grid;
-  /* grid-template-areas: 'code panel'; */
-  /* grid-template-columns: auto 38px; */
   border-radius: inherit;
   z-index: 0; // new stacking context
   grid-template-areas:
@@ -54,6 +113,10 @@ export const contentWrapperStyles = css`
 export const contentWrapperStylesNoPanel = css`
   // No panel, all code
   grid-template-areas: 'code code';
+
+  &:after {
+    grid-column: -1; // Placed on the right edge
+  }
 `;
 
 export const panelStyles = css`
@@ -68,10 +131,10 @@ export const panelStyles = css`
   }
 `;
 
-export const expandableContentWrapperStyle = css`
-  grid-template-areas: 'code panel' 'expandButton expandButton';
-  grid-template-rows: auto 28px;
-`;
+// export const expandableContentWrapperStyle = css`
+//   grid-template-areas: 'code panel' 'expandButton expandButton';
+//   grid-template-rows: auto 28px;
+// `;
 
 export const expandableContentWrapperStyleNoPanel = css`
   grid-template-areas: 'code code' 'expandButton expandButton';
@@ -119,7 +182,7 @@ export const codeWrapperStyleNoPanel = css`
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 `;
-export const codeWrapperStyleWithLanguagePicker = css`
+export const codeWrapperStyleWithPanel = css`
   border-left: 0;
   border-radius: inherit;
   border-top-right-radius: 0;
@@ -144,11 +207,6 @@ export function getExpandableCodeWrapperStyle(
     transition: max-height ${transitionDuration.slower}ms ease-in-out;
   `;
 }
-
-// export const panelStyles = css`
-//   z-index: 2; // Above the shadows
-//   grid-area: panel;
-// `;
 
 export function getCodeWrapperVariantStyle(theme: Theme): string {
   const colors = variantColors[theme];
@@ -223,19 +281,6 @@ export const baseScrollShadowStyles = css`
     grid-column: 2; // Placed either under Panel, or on the right edge
   }
 `;
-
-export const scrollShadowStylesNoPanel = css`
-  &:after {
-    grid-column: -1; // Placed on the right edge
-  }
-`;
-
-// export const scrollShadowStylesWithPicker = css`
-//   &:before,
-//   &:after {
-//     grid-row: 2; // Placed on the top under the Picker Panel
-//   }
-// `;
 
 export function getScrollShadow(
   scrollState: ScrollState,
