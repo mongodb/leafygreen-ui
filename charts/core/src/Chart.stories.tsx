@@ -12,6 +12,7 @@ import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
+  EventMarker,
   Grid,
   Header,
   Line,
@@ -336,6 +337,16 @@ export const Basic: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
+        <EventMarker
+          point={new Date('2020-06-09T00:10:00-04:00').getTime()}
+          label="June 9, 2020 - 12:10 AM"
+          type="info"
+        />
+        <EventMarker
+          point={new Date('2020-06-09T00:25:00-04:00').getTime()}
+          label="June 9, 2020 - 12:25 AM"
+          type="warning"
+        />
         <ThresholdLine point={600} label="Threshold: 600" />
       </Chart>
     );
