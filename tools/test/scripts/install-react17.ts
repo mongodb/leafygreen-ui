@@ -31,13 +31,17 @@ pkgJson.pnpm.overrides = {
 const pkgJsonPath = path.resolve(rootDir, 'package.json');
 fse.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
 
-// Install dependencies
-const packagesToInstall = Object.entries(r17packages.dependencies).map(
+// Add and install dependencies
+const packagesToAdd = Object.entries(r17packages.dependencies).map(
   ([pkg, version]) => `${pkg}@${version}`,
 );
 
-spawnSync('pnpm', ['add', '--save-dev', '--ignore-workspace-root-check', ...packagesToInstall], {
-  stdio: 'inherit',
-});
+spawnSync(
+  'pnpm',
+  ['add', '--save-dev', '--ignore-workspace-root-check', ...packagesToAdd],
+  {
+    stdio: 'inherit',
+  },
+);
 
 spawnSync('pnpm', ['install']);
