@@ -78,7 +78,6 @@
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "18.2.23",
       "caniuse-lite": "^1.0.30001585",
       "jackspeak": "2.1.1"
     }
