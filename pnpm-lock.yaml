@@ -2789,34 +2789,34 @@ importers:
   tools/cli:
     dependencies:
       '@lg-tools/build':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../build
       '@lg-tools/codemods':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../codemods
       '@lg-tools/create':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../create
       '@lg-tools/install':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../install
       '@lg-tools/link':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../link
       '@lg-tools/lint':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../lint
       '@lg-tools/slackbot':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../slackbot
       '@lg-tools/test':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../test
       '@lg-tools/update':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../update
       '@lg-tools/validate':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../validate
       commander:
         specifier: ^11.0.0
@@ -3237,10 +3237,10 @@ importers:
         specifier: workspace:^
         version: link:../../packages/testing-lib
       '@lg-tools/build':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../build
       '@lg-tools/meta':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../meta
       '@testing-library/dom':
         specifier: 9.3.1
