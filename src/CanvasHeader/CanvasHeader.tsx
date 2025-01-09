@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
@@ -72,19 +71,3 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
 );
 
 CanvasHeader.displayName = 'CanvasHeader';
-
-CanvasHeader.propTypes = {
-  pageTitle: PropTypes.string.isRequired,
-  resourceName: PropTypes.string,
-  darkMode: PropTypes.bool,
-  // @ts-expect-error - PropTypes.node does not match ReactNode
-  resourceIcon: PropTypes.node,
-  // @ts-expect-error - PropTypes.node does not match ReactNode
-  actions: PropTypes.node,
-  // @ts-expect-error - PropTypes.node does not match ReactNode
-  badges: PropTypes.node,
-  // @ts-expect-error - PropTypes.node does not match ReactNode
-  backLink: PropTypes.node,
-  // @ts-expect-error - PropTypes.node does not match ReactNode
-  resourceBadges: PropTypes.node,
-};
