@@ -9,13 +9,12 @@ import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
-import LanguageSwitcherExample, {
-  PythonLogo,
-} from '../LanguageSwitcher/LanguageSwitcherExample';
+import LanguageSwitcherExample from '../LanguageSwitcher/LanguageSwitcherExample';
 
 import Code, { hasMultipleLines } from './Code';
 import { Panel } from '../Panel';
 import { CodeProps } from './Code.types';
+import { Language } from '../types';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
@@ -31,6 +30,17 @@ const actionData = [
   >
     <Icon glyph="Code" />
   </IconButton>,
+];
+
+const languageOptions = [
+  {
+    displayName: 'JavaScript',
+    language: Language.JavaScript,
+  },
+  {
+    displayName: 'Python',
+    language: Language.Python,
+  },
 ];
 
 const renderCode = (props: Partial<CodeProps> = {}) => {
@@ -193,12 +203,47 @@ describe('packages/Code', () => {
     });
 
     describe('language switcher', () => {
-      test.todo('does not render if the languageOptions is not defined');
-      test.todo('does not render if languageOptions is an empty array');
-      test.todo('does not render if langauage is not defined');
-      test.todo(
-        'renders when languageOptions is passed an array and language is defined',
-      );
+      test('renders when languageOptions, language, and onChange are defined', () => {
+        const { getByTestId } = renderCode({
+          language: languageOptions[0],
+          panel: (
+            <Panel onChange={() => {}} languageOptions={languageOptions} />
+          ),
+        });
+        expect(getByTestId('lg-code-select')).toBeDefined();
+      });
+
+      test('does not render if the languageOptions is not defined', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0],
+          panel: <Panel onChange={() => {}} />,
+        });
+        expect(queryByTestId('lg-code-select')).toBeNull();
+      });
+
+      test('does not render if onChange is not defined', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0],
+          panel: <Panel languageOptions={languageOptions} />,
+        });
+        expect(queryByTestId('lg-code-select')).toBeNull();
+      });
+
+      test('does not render if languageOptions is an empty array', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0],
+          panel: <Panel onChange={() => {}} languageOptions={[]} />,
+        });
+        expect(queryByTestId('lg-code-select')).toBeNull();
+      });
+
+      test('does not render if langauage is a string', () => {
+        const { queryByTestId } = renderCode({
+          language: 'javascript',
+          panel: <Panel onChange={() => {}} languageOptions={[]} />,
+        });
+        expect(queryByTestId('lg-code-select')).toBeNull();
+      });
     });
 
     describe('custom action buttons', () => {
@@ -308,7 +353,6 @@ describe('packages/Code', () => {
 
       expect(onChange).toHaveBeenCalledWith({
         displayName: 'Python',
-        image: <PythonLogo />,
         language: 'python',
       });
     });

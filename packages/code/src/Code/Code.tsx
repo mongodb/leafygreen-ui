@@ -102,11 +102,14 @@ function Code({
     baseFontSize, // will cause changes in code height
   ]);
 
+  const highLightLanguage =
+    typeof languageProp === 'string' ? languageProp : languageProp.displayName;
+
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      language={languageProp}
+      language={highLightLanguage as Language}
       highlightLines={highlightLines}
     >
       {children}
@@ -150,7 +153,11 @@ function Code({
   );
 
   return (
-    <CodeContextProvider darkMode={darkMode} contents={children}>
+    <CodeContextProvider
+      darkMode={darkMode}
+      contents={children}
+      language={languageProp}
+    >
       <div className={wrapperStyle[theme]}>
         <div
           className={getCodeStyles({

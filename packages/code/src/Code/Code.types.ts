@@ -1,3 +1,4 @@
+import { LanguageOption } from '../Panel/Panel.types';
 import { SyntaxProps } from '../syntax/Syntax.types';
 import { Language } from '../types';
 
@@ -56,5 +57,5 @@ export type CodeProps = Omit<
    * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
    */
 
-  language: Language;
+  language: Language | LanguageOption;
 };

@@ -20,6 +20,7 @@ const CodeContextProvider = ({
   children,
   contents,
   darkMode,
+  language,
 }: PropsWithChildren<CodeProviderProps>) => {
   const CodeProvider = (CodeContext as React.Context<CodeProviderProps>)
     .Provider;
@@ -27,6 +28,7 @@ const CodeContextProvider = ({
   const CodeProviderData = useMemo(() => {
     return {
       contents,
+      language,
     };
   }, [contents]);
 

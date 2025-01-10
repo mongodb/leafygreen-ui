@@ -13,13 +13,12 @@ import {
   panelLeftStyles,
 } from './Panel.styles';
 import { Body } from '@leafygreen-ui//typography';
-import { PanelProps } from './Panel.types';
+import { LanguageOption, PanelProps } from './Panel.types';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
 
 function Panel({
-  language,
   languageOptions,
   onChange,
   onCopy,
@@ -29,8 +28,9 @@ function Panel({
   className,
 }: PanelProps) {
   const { theme } = useDarkMode();
-  const { contents } = useCodeContext();
+  const { contents, language: languageProp } = useCodeContext();
 
+  const language = typeof languageProp === 'string' ? undefined : languageProp;
   const hasTitle = !title;
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
@@ -54,7 +54,7 @@ function Panel({
           onChange !== undefined && (
             <LanguageSwitcher
               onChange={onChange}
-              language={language}
+              language={language as LanguageOption} // TODO: check if the language is in the languageOptions
               languageOptions={languageOptions}
             />
           )}
