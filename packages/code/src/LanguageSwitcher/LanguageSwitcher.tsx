@@ -33,8 +33,6 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
     }
   };
 
-  console.log('💚');
-
   return (
     <div className={containerStyle}>
       <Select
