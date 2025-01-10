@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
-import { useChartContext } from '../ChartContext';
-import { SeriesOption } from '../Chart';
+import { useChartContext } from '../../ChartContext';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { EventLevel } from '../EventMarker.types';
+
+import { SeriesOption } from '../../Chart';
 import {
   borderRadius,
   color,
@@ -10,28 +13,21 @@ import {
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
-import { infoIcon, warningIcon } from './iconsSvgPaths';
+import { infoIcon, warningIcon } from '../iconsSvgPaths';
 
-const EventType = {
-  Warning: 'warning',
-  Info: 'info',
-} as const;
-type EventType = (typeof EventType)[keyof typeof EventType];
-
-function getMarkLineConfig({
+export function getMarkLineConfig({
   name,
-  point,
   theme,
   label,
-  type,
+  level,
+  point,
 }: {
   name: string;
-  point: number;
   theme: Theme;
   label: string;
-  type: EventType;
+  level: EventLevel;
+  point: string | number;
 }): SeriesOption {
   return {
     name,
@@ -71,7 +67,7 @@ function getMarkLineConfig({
       },
       lineStyle: {
         color:
-          type === EventType.Warning
+          level === EventLevel.Warning
             ? color[theme].icon[Variant.Error][InteractionState.Default]
             : color[theme].icon[Variant.Primary][InteractionState.Default],
         type: 'solid',
@@ -79,25 +75,27 @@ function getMarkLineConfig({
       },
       silent: false,
       symbol:
-        type === EventType.Warning ? [warningIcon, 'none'] : [infoIcon, 'none'],
+        level === EventLevel.Warning
+          ? [warningIcon, 'none']
+          : [infoIcon, 'none'],
       symbolSize: [17, 17],
       symbolRotate: 360,
     },
   };
 }
 
-export function EventMarker({
+export function EventMarkerLine({
   point,
   label,
-  type = EventType.Warning,
+  level = EventLevel.Warning,
 }: {
-  point: number;
+  point: string | number;
   label: string;
-  type?: EventType;
+  level?: EventLevel;
 }) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
-  const name = `threshold-${point}`;
+  const name = `event-marker-${point}`;
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -108,7 +106,7 @@ export function EventMarker({
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a Tooltip.
      */
-    chart.addSeries(getMarkLineConfig({ name, point, theme, label, type }));
+    chart.addSeries(getMarkLineConfig({ name, theme, label, level, point }));
 
     return () => {
       /**

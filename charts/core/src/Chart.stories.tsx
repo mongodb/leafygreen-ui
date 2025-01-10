@@ -12,7 +12,8 @@ import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import {
   Chart,
-  EventMarker,
+  EventMarkerLine,
+  EventMarkerPoint,
   Grid,
   Header,
   Line,
@@ -337,15 +338,19 @@ export const Basic: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
-        <EventMarker
+        <EventMarkerPoint
+          label="my label"
+          position={['2020-06-09T04:51:00.000Z', 66]}
+        />
+        <EventMarkerLine
           point={new Date('2020-06-09T00:10:00-04:00').getTime()}
           label="June 9, 2020 - 12:10 AM"
-          type="info"
+          level="info"
         />
-        <EventMarker
+        <EventMarkerLine
           point={new Date('2020-06-09T00:25:00-04:00').getTime()}
           label="June 9, 2020 - 12:25 AM"
-          type="warning"
+          level="warning"
         />
         <ThresholdLine point={600} label="Threshold: 600" />
       </Chart>

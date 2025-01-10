@@ -62,6 +62,7 @@ export async function initializeEcharts(): Promise<
         echartsComponents.DataZoomComponent,
         echartsComponents.DataZoomInsideComponent,
         echartsComponents.MarkLineComponent,
+        echartsComponents.MarkPointComponent,
       ]);
 
       return echartsCore;

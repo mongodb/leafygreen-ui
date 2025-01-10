@@ -1,6 +1,6 @@
 export { Chart, type ChartOptions, type SeriesOption } from './Chart';
 export { ChartCard } from './ChartCard';
-export { EventMarker } from './EventMarker';
+export { EventMarkerLine, EventMarkerPoint } from './EventMarkers';
 export { Grid } from './Grid';
 export { Header } from './Header';
 export { Line } from './Line';
