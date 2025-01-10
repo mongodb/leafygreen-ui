@@ -6,11 +6,9 @@ import { axe } from 'jest-axe';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import { typeIs } from '@leafygreen-ui/lib';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
-import LanguageSwitcherExample from '../LanguageSwitcher/LanguageSwitcherExample';
 
 import Code, { hasMultipleLines } from './Code';
 import { Panel } from '../Panel';
@@ -146,15 +144,10 @@ describe('packages/Code', () => {
 
   const codeContainer = (container.firstChild as HTMLElement).lastChild;
   const codeRoot = (codeContainer as HTMLElement).firstChild; //pre tag
-  // const copyButton = codeRoot?.nextSibling?.firstChild as HTMLElement;
 
   // TODO: add back
   // if (!codeRoot || !typeIs.element(codeRoot)) {
   //   throw new Error('Code element not found');
-  // }
-
-  // if (!copyButton || !typeIs.element(copyButton)) {
-  //   throw new Error('Copy button not found');
   // }
 
   test.skip('root element renders as a <pre> tag', () => {

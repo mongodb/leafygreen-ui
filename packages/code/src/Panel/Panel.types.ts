@@ -4,7 +4,6 @@ import { Language } from '../types';
 export interface LanguageOption {
   displayName: string;
   language: Language;
-  image?: React.ReactElement;
 }
 
 export interface LanguageSwitcherProps {
