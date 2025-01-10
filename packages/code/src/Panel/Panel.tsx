@@ -61,7 +61,11 @@ function Panel({
 
         <div className={panelIconsStyles}>
           {showCustomActionsInPanel && (
-            <>{customActionButtons?.map((action: React.ReactNode) => action)}</>
+            <>
+              {filteredCustomActionIconButtons?.map(
+                (action: React.ReactNode) => action,
+              )}
+            </>
           )}
           <CopyButton onCopy={onCopy} contents={contents} />
         </div>

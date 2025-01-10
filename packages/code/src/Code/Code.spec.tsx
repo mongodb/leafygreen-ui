@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
 
@@ -15,10 +16,32 @@ import Code, { hasMultipleLines } from './Code';
 import { Panel } from '../Panel';
 import { CodeProps } from './Code.types';
 import { Language } from '../types';
+import { PanelProps } from '../Panel/Panel.types';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 const className = 'test-class';
 const onCopy = jest.fn();
+
+const customActionButtons = [
+  <IconButton
+    onClick={() => {}}
+    aria-label="label"
+    key="1"
+    data-testid="lg-code-icon_button"
+  >
+    <Icon glyph="Cloud" />
+  </IconButton>,
+  <Icon glyph="Shell" size={30} key="3" data-testid="lg-code-icon_button" />,
+  <IconButton
+    href="https://mongodb.design"
+    aria-label="label2"
+    key="2"
+    target="_blank"
+    data-testid="lg-code-icon_button"
+  >
+    <Icon glyph="Code" size={30} />
+  </IconButton>,
+];
 
 const actionData = [
   <IconButton
@@ -55,6 +78,27 @@ const renderCode = (props: Partial<CodeProps> = {}) => {
   };
 };
 
+const renderCodeWithLanguageSwitcher = (props: Partial<PanelProps> = {}) => {
+  const renderResults = render(
+    <Code
+      language={languageOptions[0]}
+      panel={
+        <Panel
+          onChange={() => {}}
+          languageOptions={languageOptions}
+          {...props}
+        />
+      }
+    >
+      {codeSnippet}
+    </Code>,
+  );
+
+  return {
+    ...renderResults,
+  };
+};
+
 describe('packages/Code', () => {
   const { container } = Context.within(
     Jest.spyContext(ClipboardJS, 'isSupported'),
@@ -76,7 +120,7 @@ describe('packages/Code', () => {
     });
 
     describe('copy button', () => {
-      test.skip('announces copied to screenreaders when content is copied', () => {
+      test.skip('announces copied to screenreaders when content is copied without a panel', () => {
         Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
           spy.mockReturnValue(true);
           renderCode();
@@ -247,14 +291,34 @@ describe('packages/Code', () => {
     });
 
     describe('custom action buttons', () => {
-      test.todo('does not render if showCustomActionButtons is false');
-      test.todo('does not render if customActionButtons is an empty array');
-      test.todo(
-        'does not render if customActionButtons contains non-IconButton elements',
-      );
-      test.todo(
-        'renders when showCustomActionButtons is true and customActionButtons contains IconButton elements',
-      );
+      test('do not render if showCustomActionButtons is false', () => {
+        const { queryAllByTestId } = renderCode({
+          panel: (
+            <Panel
+              showCustomActionButtons={false}
+              customActionButtons={customActionButtons}
+            />
+          ),
+        });
+        expect(queryAllByTestId('lg-code-icon_button')).toHaveLength(0);
+      });
+      test('do not render if customActionButtons is an empty array', () => {
+        const { queryAllByTestId } = renderCode({
+          panel: <Panel showCustomActionButtons customActionButtons={[]} />,
+        });
+        expect(queryAllByTestId('lg-code-icon_button')).toHaveLength(0);
+      });
+      test('only renders IconButton elements', () => {
+        const { queryAllByTestId } = renderCode({
+          panel: (
+            <Panel
+              showCustomActionButtons
+              customActionButtons={customActionButtons}
+            />
+          ),
+        });
+        expect(queryAllByTestId('lg-code-icon_button')).toHaveLength(2);
+      });
     });
 
     test.skip('is rendered when language switcher is not present, when copyable is false, showCustomActionButtons is true, and actionsButtons has items', () => {
@@ -284,7 +348,7 @@ describe('packages/Code', () => {
     });
   });
 
-  describe.skip('when rendered as a language switcher', () => {
+  describe('when rendered as a language switcher', () => {
     let offsetParentSpy: jest.SpyInstance;
     beforeAll(() => {
       offsetParentSpy = jest.spyOn(
@@ -308,23 +372,23 @@ describe('packages/Code', () => {
     });
 
     test('a collapsed select is rendered, with an active state based on the language prop', () => {
-      render(<LanguageSwitcherExample />);
+      renderCodeWithLanguageSwitcher();
       expect(
         screen.getByRole('button', { name: 'JavaScript' }),
       ).toBeInTheDocument();
     });
 
     test('clicking the collapsed select menu button opens a select', () => {
-      render(<LanguageSwitcherExample />);
+      renderCodeWithLanguageSwitcher();
       const trigger = screen.getByRole('button', { name: 'JavaScript' });
-      fireEvent.click(trigger);
+      userEvent.click(trigger);
       expect(screen.getByRole('listbox')).toBeInTheDocument();
     });
 
     test('options displayed in select are based on the languageOptions prop', () => {
-      render(<LanguageSwitcherExample />);
+      renderCodeWithLanguageSwitcher();
       const trigger = screen.getByRole('button', { name: 'JavaScript' });
-      fireEvent.click(trigger);
+      userEvent.click(trigger);
 
       ['JavaScript', 'Python'].forEach(lang => {
         expect(screen.getByRole('option', { name: lang })).toBeInTheDocument();
@@ -333,23 +397,23 @@ describe('packages/Code', () => {
 
     test('onChange prop gets called when new language is selected', () => {
       const onChange = jest.fn();
-      render(<LanguageSwitcherExample onChange={onChange} />);
+      renderCodeWithLanguageSwitcher({ onChange });
 
       const trigger = screen.getByRole('button', { name: 'JavaScript' });
-      fireEvent.click(trigger);
+      userEvent.click(trigger);
 
-      fireEvent.click(screen.getByRole('option', { name: 'Python' }));
+      userEvent.click(screen.getByRole('option', { name: 'Python' }));
       expect(onChange).toHaveBeenCalled();
     });
 
     test('onChange prop is called with an object that represents the newly selected language when called', () => {
       const onChange = jest.fn();
-      render(<LanguageSwitcherExample onChange={onChange} />);
+      renderCodeWithLanguageSwitcher({ onChange });
 
       const trigger = screen.getByRole('button', { name: 'JavaScript' });
-      fireEvent.click(trigger);
+      userEvent.click(trigger);
 
-      fireEvent.click(screen.getByRole('option', { name: 'Python' }));
+      userEvent.click(screen.getByRole('option', { name: 'Python' }));
 
       expect(onChange).toHaveBeenCalledWith({
         displayName: 'Python',
