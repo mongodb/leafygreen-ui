@@ -68,6 +68,13 @@ function getMarkLineConfig({
       },
       silent: false,
       symbol: ['none', svgSymbolPath],
+      symbolOffset: [
+        // Allowed format. See https://echarts.apache.org/en/option.html#series-line.markLine.symbolOffset
+        // @ts-ignore Type '[number, number]' is not assignable to type 'string | number'.
+        [0, 0],
+        // @ts-ignore Type '[number, number]' is not assignable to type 'string | number'.
+        [-3, 0], // Needed to move array to be flesh with the last vertical line
+      ],
       symbolSize: [7, 10],
       symbolRotate: 360,
     },

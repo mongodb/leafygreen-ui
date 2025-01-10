@@ -65,7 +65,7 @@ export function getMarkPointConfig({
         formatter: label,
         lineHeight: 20,
         padding: spacing[150],
-        position: 'top',
+        position: 'insideBottom',
         show: false, // Only show on hover / emphasis
       },
       symbol: level === EventLevel.Warning ? warningIcon : infoIcon,
