@@ -340,7 +340,7 @@ export const Basic: StoryObj<StorybookProps> = {
         ))}
         <EventMarkerPoint
           label="my label"
-          position={['2020-06-09T04:51:00.000Z', 66]}
+          position={['2020-06-09T04:51:00.000Z', 992]}
         />
         <EventMarkerLine
           point={new Date('2020-06-09T00:10:00-04:00').getTime()}

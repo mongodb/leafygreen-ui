@@ -62,6 +62,28 @@ export function useChart({
     }
   }, [echart.ready, onZoomSelect]);
 
+  function hideTooltip() {
+    echart.hideTooltip();
+  }
+
+  useEffect(() => {
+    if (echart.ready) {
+      echart.on('mouseover', e => {
+        if (e.componentType === 'markPoint') {
+          hideTooltip();
+          echart.on('mousemove', hideTooltip);
+        }
+      });
+
+      // Cleanup
+      echart.on('mouseout', e => {
+        if (e.componentType === 'markPoint') {
+          echart.off('mousemove', hideTooltip);
+        }
+      });
+    }
+  }, [echart.ready]);
+
   return {
     ...echart,
     ref: chartRef,

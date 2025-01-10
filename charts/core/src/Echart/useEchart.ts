@@ -253,6 +253,12 @@ export function useEchart({
     [echartsInstance],
   );
 
+  const hideTooltip = withInstanceCheck(() => {
+    echartsInstance?.dispatchAction({
+      type: 'hideTip',
+    });
+  });
+
   /**
    * Sets up the echart instance on initial render or if the container changes.
    * Additionally, disposes of echart instance and cleans up handlers on unmount.
@@ -327,6 +333,7 @@ export function useEchart({
     addToGroup,
     removeFromGroup,
     setupZoomSelect,
+    hideTooltip,
     error,
   };
 }
