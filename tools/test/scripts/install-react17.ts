@@ -21,6 +21,7 @@ if (!isValidJSON(r17packagesString)) {
   throw new Error(`Invalid JSON found in ${r17packagesFile}`);
 }
 
+// eslint-disable-next-line no-console
 console.log(chalk.bold.blue('Updating package.json with React 17 versions'));
 
 const r17packages = JSON.parse(r17packagesString);
@@ -38,18 +39,21 @@ const pkgJsonPath = path.resolve(rootDir, 'package.json');
 fse.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
 
 // Remove the lock file referencing any _new_ versions of React
+// eslint-disable-next-line no-console
 console.log(chalk.bold.blue('Removing pnpm-lock.yaml'));
 spawnSync('rm', ['-f', 'pnpm-lock.yaml'], {
   stdio: 'inherit',
 });
 
 // Clean up the node_modules
+// eslint-disable-next-line no-console
 console.log(chalk.bold.blue('Cleaning up node_modules'));
 spawnSync('pnpm', ['clean:modules'], {
   stdio: 'inherit',
 });
 
 // Install the new versions of React
+// eslint-disable-next-line no-console
 console.log(chalk.bold.blue('Installing new versions of React 17 packages'));
 spawnSync('pnpm', ['install'], {
   stdio: 'inherit',

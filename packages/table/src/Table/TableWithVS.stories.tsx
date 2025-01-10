@@ -284,20 +284,20 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
         enableSorting: true,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
         enableSorting: true,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -709,7 +709,7 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'encryptorEnabled',
         header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
+
         cell: info => (
           <Badge variant={info.getValue() ? 'green' : 'red'}>
             {info.getValue() ? 'Enabled' : 'Not enabled'}
@@ -726,7 +726,7 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
         id: 'actions',
         header: '',
         size: 120,
-        // eslint-disable-next-line react/display-name
+
         cell: _ => {
           return (
             <div>

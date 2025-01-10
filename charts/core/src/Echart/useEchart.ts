@@ -155,8 +155,8 @@ export function useEchart({
       });
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
-      let xAxisIndex: number | string = xAxis ? 0 : 'none';
-      let yAxisIndex: number | string = yAxis ? 0 : 'none';
+      const xAxisIndex: number | string = xAxis ? 0 : 'none';
+      const yAxisIndex: number | string = yAxis ? 0 : 'none';
 
       updateOptions({
         toolbox: {
