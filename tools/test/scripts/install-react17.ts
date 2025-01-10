@@ -1,6 +1,6 @@
 import { getRootPackageJson, isValidJSON } from '@lg-tools/meta';
-import { sync as spawnSync } from 'cross-spawn';
 import chalk from 'chalk';
+import { sync as spawnSync } from 'cross-spawn';
 import fse from 'fs-extra';
 import path from 'path';
 const rootDir = process.cwd();
