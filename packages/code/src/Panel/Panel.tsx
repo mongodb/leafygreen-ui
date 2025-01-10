@@ -40,6 +40,17 @@ function Panel({
   const showCustomActionsInPanel =
     showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
+  const isLanguageAnOption = languageOptions?.some(
+    option => option === language,
+  );
+
+  const shouldRenderLanguageSwitcher =
+    language !== undefined &&
+    languageOptions !== undefined &&
+    languageOptions.length !== 0 &&
+    onChange !== undefined &&
+    isLanguageAnOption;
+
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
@@ -48,16 +59,13 @@ function Panel({
       {title && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}
 
       <div className={panelLeftStyles}>
-        {language !== undefined &&
-          languageOptions !== undefined &&
-          languageOptions.length !== 0 &&
-          onChange !== undefined && (
-            <LanguageSwitcher
-              onChange={onChange}
-              language={language as LanguageOption} // TODO: check if the language is in the languageOptions
-              languageOptions={languageOptions}
-            />
-          )}
+        {shouldRenderLanguageSwitcher && (
+          <LanguageSwitcher
+            onChange={onChange}
+            language={language as LanguageOption}
+            languageOptions={languageOptions}
+          />
+        )}
 
         <div className={panelIconsStyles}>
           {showCustomActionsInPanel && (
