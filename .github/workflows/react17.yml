@@ -36,7 +36,6 @@ jobs:
       - name: Build CLI
         run: pnpm build:cli
 
-      # TODO: Will nohoist help here?
       - name: Install testing tools for React 17
         run: npx ts-node tools/test/scripts/install-react17.ts
 
