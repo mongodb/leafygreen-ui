@@ -37,13 +37,19 @@ export function getMarkPointConfig({
         {
           name: name,
           coord: position,
-          emphasis: {
-            label: {
-              show: true,
-            },
-          },
         },
       ],
+      emphasis: {
+        /**
+         * This is working and is supported at least by the global series emphasis since v5.3.2
+         * See: https://echarts.apache.org/en/option.html#series-line.emphasis.scale
+         */
+        // @ts-ignore Object literal may only specify known properties, and 'scale' does not exist in type 'MarkPointStateOption & { blurScope?: BlurScope | undefined; disabled?: boolean | undefined; }'
+        scale: 1.125,
+        label: {
+          show: true,
+        },
+      },
       label: {
         borderRadius: borderRadius[200],
         distance: spacing[300],
@@ -60,12 +66,11 @@ export function getMarkPointConfig({
         lineHeight: 20,
         padding: spacing[150],
         position: 'top',
-        show: false, // Needed so it only shows on hover (aka emphasis)
+        show: false, // Only show on hover / emphasis
       },
       silent: false,
       symbol: level === EventLevel.Warning ? warningIcon : infoIcon,
-      symbolSize: [17, 17],
-      symbolRotate: 360,
+      symbolSize: [16, 16],
     },
   };
 }

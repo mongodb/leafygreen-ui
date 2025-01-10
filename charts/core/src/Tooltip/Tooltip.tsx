@@ -29,6 +29,9 @@ export function Tooltip({
 
     chart.updateOptions({
       tooltip: {
+        axisPointer: {
+          z: 0,
+        },
         show: true,
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
