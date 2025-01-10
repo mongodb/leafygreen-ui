@@ -68,7 +68,6 @@ export function getMarkPointConfig({
         position: 'top',
         show: false, // Only show on hover / emphasis
       },
-      silent: false,
       symbol: level === EventLevel.Warning ? warningIcon : infoIcon,
       symbolSize: [16, 16],
     },
