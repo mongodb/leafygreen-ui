@@ -68,7 +68,6 @@ function LanguageSwitcher({
         <Panel
           languageOptions={languageOptions}
           customActionButtons={customActionButtons}
-          showCustomActionButtons={showCustomActionButtons}
           onChange={handleChange}
           title="Title"
         />
