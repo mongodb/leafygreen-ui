@@ -50,6 +50,7 @@ function Panel({
       <div className={panelLeftStyles}>
         {language !== undefined &&
           languageOptions !== undefined &&
+          languageOptions.length !== 0 &&
           onChange !== undefined && (
             <LanguageSwitcher
               onChange={onChange}
