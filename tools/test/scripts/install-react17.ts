@@ -22,7 +22,10 @@ if (!isValidJSON(r17packagesString)) {
 
 const r17packages = JSON.parse(r17packagesString);
 
-// Add pnpm.overrides
+pkgJson.dependencies = {
+  ...pkgJson.devDependencies,
+  ...r17packages.dependencies,
+};
 pkgJson.pnpm.overrides = {
   ...pkgJson.pnpm.overrides,
   ...r17packages.pnpm.overrides,
@@ -31,17 +34,15 @@ pkgJson.pnpm.overrides = {
 const pkgJsonPath = path.resolve(rootDir, 'package.json');
 fse.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
 
-// Add and install dependencies
-const packagesToAdd = Object.entries(r17packages.dependencies).map(
-  ([pkg, version]) => `${pkg}@${version}`,
-);
+// Remove the lock file referencing any _new_ versions of React
+spawnSync('rm', ['-f', 'pnpm-lock.yaml'], {
+  stdio: 'inherit',
+});
 
-spawnSync(
-  'pnpm',
-  ['add', '--save-dev', '--ignore-workspace-root-check', ...packagesToAdd],
-  {
-    stdio: 'inherit',
-  },
-);
-
-spawnSync('pnpm', ['install']);
+// Clean up the node_modules and install the new versions
+spawnSync('pnpm', ['clean:modules'], {
+  stdio: 'inherit',
+});
+spawnSync('pnpm', ['install', '--fix-lockfile'], {
+  stdio: 'inherit',
+});
