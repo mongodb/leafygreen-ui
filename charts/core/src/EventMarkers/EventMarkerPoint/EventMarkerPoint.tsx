@@ -27,9 +27,10 @@ export function getMarkPointConfig({
   theme: Theme;
   label: string;
   level: EventLevel;
-  position: [string | number | Date, string | number | Date];
+  position: [string | number, string | number];
 }): SeriesOption {
   return {
+    animation: false,
     name,
     type: 'line', // Requires a type even though it's not an actual series
     markPoint: {
@@ -79,7 +80,7 @@ export function EventMarkerPoint({
   label,
   level = EventLevel.Warning,
 }: {
-  position: [string | number | Date, string | number | Date];
+  position: [string | number, string | number];
   label: string;
   level?: EventLevel;
 }) {

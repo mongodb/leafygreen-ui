@@ -30,6 +30,7 @@ export function getMarkLineConfig({
   point: string | number;
 }): SeriesOption {
   return {
+    animation: false,
     name,
     type: 'line', // Requires a type even though it's not an actual series
     markLine: {
@@ -37,16 +38,16 @@ export function getMarkLineConfig({
         {
           name: name,
           xAxis: point,
-          emphasis: {
-            label: {
-              show: true,
-            },
-            lineStyle: {
-              width: 2, // needed to show line but style actually controlled by LineStyle
-            },
-          },
         },
       ],
+      emphasis: {
+        label: {
+          show: true,
+        },
+        lineStyle: {
+          width: 2, // needed to show line but style actually controlled by LineStyle
+        },
+      },
       label: {
         borderRadius: borderRadius[200],
         distance: spacing[300],
@@ -74,13 +75,11 @@ export function getMarkLineConfig({
         type: 'solid',
         width: 1,
       },
-      silent: false,
       symbol:
         level === EventLevel.Warning
           ? [warningIcon, 'none']
           : [infoIcon, 'none'],
-      symbolSize: [17, 17],
-      symbolRotate: 360,
+      symbolSize: [16, 16],
     },
   };
 }
