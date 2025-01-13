@@ -24,7 +24,6 @@ export const LGMarkdown = ({
   const providerBaseFontSize: 14 | 16 = baseFontSize === 13 ? 14 : 16; // todo: update when LGProvider switches to 13/16
   return (
     <LeafyGreenProvider darkMode={darkMode} baseFontSize={providerBaseFontSize}>
-      {/* @ts-ignore - address after PNPM migration */}
       <ReactMarkdown
         components={{ ...componentsMap, ...components }}
         className={cx(baseStyles, className)}

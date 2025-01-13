@@ -54,7 +54,6 @@ import { SideNavItemProps } from './SideNavItem.types';
  @param props.as When provided, the component will be rendered as the component or html tag indicated
  *  by this prop. Other additional props will be spread on the anchor element.
  */
-// @ts-ignore - fix after PNPM migration
 const SideNavItem: ExtendableBox<
   SideNavItemProps & { ref?: React.Ref<any> },
   'button'

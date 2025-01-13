@@ -37,7 +37,6 @@ import { State, TextAreaProps } from './TextArea.types';
  */
 
 type TextArea = React.ForwardRefExoticComponent<TextAreaProps>;
-// @ts-ignore - fix after PNPM migration
 export const TextArea: TextArea = forwardRef<
   HTMLTextAreaElement,
   TextAreaProps

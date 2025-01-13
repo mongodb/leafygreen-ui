@@ -32,7 +32,6 @@ export const Polymorphic = <
   // Using ts-ignore instead of ts-expect-error since expect throws an unused expect TS error in a React 17 environment
   // @ts-ignore FIXME: https://jira.mongodb.org/browse/LG-3410
   const PolyComponent: PolymorphicComponentType<XP, DefaultAs> =
-    // @ts-ignore - fix after PNPM migration
     render.length === 1 ? render : forwardRef(render);
 
   PolyComponent.displayName =

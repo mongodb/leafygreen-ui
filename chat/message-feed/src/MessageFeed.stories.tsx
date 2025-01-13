@@ -3,8 +3,7 @@ import { Avatar } from '@lg-chat/avatar';
 import { DisclaimerText } from '@lg-chat/chat-disclaimer';
 import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { Message } from '@lg-chat/message';
-// TODO: fix this story after PNPM migration
-// import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
+import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feedback/src/InlineMessageFeedback/InlineMessageFeedback.stories';
 import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import {
   storybookArgTypes,
@@ -56,7 +55,7 @@ const MyMessage = ({
         </MessagePrompts>
       )}
       {/* @ts-ignore onChange is passed in the story itself */}
-      {/* {hasMessageRating && <MessageFeedbackStory />} */}
+      {hasMessageRating && <MessageFeedbackStory />}
     </Message>
   );
 };
