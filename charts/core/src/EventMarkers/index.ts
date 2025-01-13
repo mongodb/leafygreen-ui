@@ -1,2 +1,5 @@
-export { EventMarkerPoint } from './EventMarkerPoint';
-export { EventMarkerLine } from './EventMarkerLine';
+export {
+  EventMarkerPoint,
+  type EventMarkerPointProps,
+} from './EventMarkerPoint';
+export { EventMarkerLine, type EventMarkerLineProps } from './EventMarkerLine';

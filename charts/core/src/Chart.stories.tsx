@@ -13,6 +13,7 @@ import { makeLineData } from './testUtils';
 import {
   Chart,
   EventMarkerLine,
+  EventMarkerLineProps,
   EventMarkerPoint,
   Grid,
   Header,
@@ -29,7 +30,7 @@ export default {
   title: 'Charts/Chart',
   component: Chart,
   args: {
-    data: makeLineData(10),
+    data: makeLineData(5),
     horizontalGridLines: true,
     verticalGridLines: false,
     renderGrid: true,
@@ -46,6 +47,10 @@ export default {
     zoomSelectXAxis: true,
     zoomSelectYAxis: true,
     zoomSelectCallback: action('onZoomSelect'),
+    renderEventMarkerLine: true,
+    eventMarkerLineMessage: 'Event marker line message',
+    eventMarkerLineLabel: 'Event marker line label',
+    eventMarkerLineLevel: 'warning',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -247,6 +252,36 @@ export default {
         disable: true,
       },
     },
+    renderEventMarkerLine: {
+      description: 'Show the event marker line',
+      name: 'EventMarkerLine',
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    eventMarkerLineMessage: {
+      description: 'Label rendered in the the event marker line tooltip',
+      name: 'EventMarkerLineLabel',
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+  },
+  eventMarkerLineMessage: {
+    description: 'Message rendered in the the event marker line tooltip',
+    name: 'EventMarkerLineMessage',
+    table: {
+      category: 'EventMarkerLine',
+    },
+  },
+  eventMarkerLineLevel: {
+    description: 'Level of the event marker line',
+    name: 'EventMarkerLineLevel',
+    control: 'select',
+    options: ['warning', 'info'],
+    table: {
+      category: 'EventMarkerLine',
+    },
   },
 };
 
@@ -273,6 +308,10 @@ interface StorybookProps {
   zoomSelectXAxis: boolean;
   zoomSelectYAxis: boolean;
   zoomSelectCallback;
+  renderEventMarkerLine: boolean;
+  eventMarkerLineMessage: EventMarkerLineProps['message'];
+  eventMarkerLineLabel: EventMarkerLineProps['label'];
+  eventMarkerLineLevel: EventMarkerLineProps['level'];
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -299,6 +338,10 @@ export const Basic: StoryObj<StorybookProps> = {
     zoomSelectXAxis,
     zoomSelectYAxis,
     zoomSelectCallback,
+    renderEventMarkerLine,
+    eventMarkerLineMessage,
+    eventMarkerLineLabel,
+    eventMarkerLineLevel,
   }) => {
     return (
       <Chart
@@ -339,23 +382,19 @@ export const Basic: StoryObj<StorybookProps> = {
           <Line name={name} data={data} key={name} />
         ))}
         <EventMarkerPoint
-          label="This is a label"
-          message="This is a message"
-          position={[new Date('2020-06-09T00:40:00-04:00').getTime(), 939]}
+          label="Event Marker Point Label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:37:00').getTime(), 699]}
         />
-        <EventMarkerLine
-          point={new Date('2020-06-09T00:00:00-04:00').getTime()}
-          label="This is a label"
-          message="This is a message"
-          level="warning"
-        />
-        <EventMarkerLine
-          point={new Date('2020-06-09T00:59:00-04:00').getTime()}
-          label="This is a label"
-          message="This is a message"
-          level="warning"
-        />
-        <ThresholdLine point={600} label="Cluster Limit" value="600" />
+        {renderEventMarkerLine && (
+          <EventMarkerLine
+            position={new Date('2024-01-01T00:20:00').getTime()}
+            label={eventMarkerLineLabel}
+            message={eventMarkerLineMessage}
+            level={eventMarkerLineLevel}
+          />
+        )}
+        <ThresholdLine position={1400} label="Cluster Limit" value="1400" />
       </Chart>
     );
   },

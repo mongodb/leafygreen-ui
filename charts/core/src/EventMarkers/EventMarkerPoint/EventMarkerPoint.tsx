@@ -15,6 +15,7 @@ import {
 } from '@leafygreen-ui/tokens';
 import { Theme } from '@leafygreen-ui/lib';
 import { infoIcon, warningIcon } from '../iconsSvgPaths';
+import { EventMarkerPointProps } from './EventMarkerPoint.types';
 
 export function getMarkPointConfig({
   name,
@@ -43,12 +44,6 @@ export function getMarkPointConfig({
         },
       ],
       emphasis: {
-        /**
-         * This is working and is supported at least by the global series emphasis since v5.3.2
-         * See: https://echarts.apache.org/en/option.html#series-line.emphasis.scale
-         */
-        // @ts-ignore Object literal may only specify known properties, and 'scale' does not exist in type 'MarkPointStateOption & { blurScope?: BlurScope | undefined; disabled?: boolean | undefined; }'
-        scale: 0,
         label: {
           show: true,
         },
@@ -94,12 +89,7 @@ export function EventMarkerPoint({
   label,
   message,
   level = EventLevel.Warning,
-}: {
-  position: [string | number, string | number];
-  label: string;
-  message: string;
-  level?: EventLevel;
-}) {
+}: EventMarkerPointProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
   const name = `event-marker-${position[0]}-${position[1]}`;
@@ -123,7 +113,7 @@ export function EventMarkerPoint({
        */
       chart.removeSeries(name);
     };
-  }, [theme, chart.ready, position]);
+  }, [theme, chart.ready, position, label, message, level]);
 
   return null;
 }

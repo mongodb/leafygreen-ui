@@ -13,8 +13,8 @@ import {
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
-import { Theme } from '@leafygreen-ui/lib';
 import { infoIcon, warningIcon } from '../iconsSvgPaths';
+import { EventMarkerLineProps } from './EventMarkerLine.types';
 
 export function getMarkLineConfig({
   name,
@@ -22,15 +22,8 @@ export function getMarkLineConfig({
   label,
   message,
   level,
-  point,
-}: {
-  name: string;
-  theme: Theme;
-  label: string;
-  message: string;
-  level: EventLevel;
-  point: string | number;
-}): SeriesOption {
+  position,
+}: EventMarkerLineProps): SeriesOption {
   return {
     animation: false,
     name,
@@ -39,7 +32,7 @@ export function getMarkLineConfig({
       data: [
         {
           name: name,
-          xAxis: point,
+          xAxis: position,
         },
       ],
       emphasis: {
@@ -64,7 +57,7 @@ export function getMarkLineConfig({
         formatter: [`{label|${label}}`, `{message|${message}}`].join('\n'),
         lineHeight: 15,
         padding: spacing[150],
-        position: 'insideStartTop', // This will position it high on the left side
+        position: 'start',
         rich: {
           label: {
             color:
@@ -77,7 +70,7 @@ export function getMarkLineConfig({
             align: 'left',
           },
         },
-        show: false, // Needed so it only shows on hover (aka emphasis)
+        show: false, // Only show on hover / emphasis
       },
       lineStyle: {
         color:
@@ -98,19 +91,19 @@ export function getMarkLineConfig({
 }
 
 export function EventMarkerLine({
-  point,
+  position,
   label,
   message,
   level = EventLevel.Warning,
 }: {
-  point: string | number;
+  position: string | number;
   label: string;
   message: string;
   level?: EventLevel;
 }) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
-  const name = `event-marker-${point}`;
+  const name = `event-marker-${position}`;
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -122,7 +115,7 @@ export function EventMarkerLine({
      * series in something like a Tooltip.
      */
     chart.addSeries(
-      getMarkLineConfig({ name, theme, label, message, level, point }),
+      getMarkLineConfig({ name, theme, label, message, level, position }),
     );
 
     return () => {
@@ -131,7 +124,7 @@ export function EventMarkerLine({
        */
       chart.removeSeries(name);
     };
-  }, [theme, chart.ready, point]);
+  }, [theme, chart.ready, position, label, message, level]);
 
   return null;
 }

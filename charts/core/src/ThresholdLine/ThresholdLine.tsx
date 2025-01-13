@@ -16,13 +16,13 @@ import { Theme } from '@leafygreen-ui/lib';
 
 function getMarkLineConfig({
   name,
-  point,
+  position,
   theme,
   label,
   value,
 }: {
   name: string;
-  point: number;
+  position: number;
   theme: Theme;
   label: string;
   value: string;
@@ -34,7 +34,7 @@ function getMarkLineConfig({
       data: [
         {
           name: name,
-          yAxis: point,
+          yAxis: position,
           emphasis: {
             label: {
               show: true,
@@ -69,7 +69,7 @@ function getMarkLineConfig({
               ],
           },
         },
-        show: false, // Needed so it only shows on hover (aka emphasis)
+        show: false, // Only show on hover / emphasis
       },
       lineStyle: {
         color: color[theme].icon[Variant.Error][InteractionState.Default],
@@ -92,17 +92,17 @@ function getMarkLineConfig({
 }
 
 export function ThresholdLine({
-  point,
+  position,
   label,
   value,
 }: {
-  point: number;
+  position: number;
   label: string;
   value: string;
 }) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
-  const name = `threshold-${point}`;
+  const name = `threshold-${position}`;
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -113,7 +113,7 @@ export function ThresholdLine({
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a Tooltip.
      */
-    chart.addSeries(getMarkLineConfig({ name, point, theme, label, value }));
+    chart.addSeries(getMarkLineConfig({ name, position, theme, label, value }));
 
     return () => {
       /**
@@ -121,7 +121,7 @@ export function ThresholdLine({
        */
       chart.removeSeries(name);
     };
-  }, [theme, chart.ready, point]);
+  }, [theme, chart.ready, position, label, value]);
 
   return null;
 }
