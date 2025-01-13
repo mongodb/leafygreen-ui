@@ -2,10 +2,15 @@ import facepaint from 'facepaint';
 import { transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import {
+  createUniqueClassName,
+  Theme,
+  getMobileMediaQuery,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  breakpoints,
   color,
   fontFamilies,
   spacing,
@@ -14,7 +19,11 @@ import {
 
 import { variantColors } from '../globalStyles';
 
-import { ScrollState } from './Code.types';
+import { CopyButtonAppearance, ScrollState } from './Code.types';
+
+const copyButtonWithoutPanelClassName = createUniqueClassName(
+  'lg-code-copy_button',
+);
 
 // We use max-device-width to select specifically for iOS devices
 const mq = facepaint([
@@ -42,12 +51,12 @@ export const wrapperStyle: Record<Theme, string> = {
 export const getCodeStyles = ({
   scrollState,
   theme,
-  showPanel,
+  hasPanel,
   showExpandButton,
 }: {
   scrollState: ScrollState;
   theme: Theme;
-  showPanel: boolean;
+  hasPanel: boolean;
   showExpandButton: boolean;
 }) =>
   cx(
@@ -55,16 +64,16 @@ export const getCodeStyles = ({
     baseScrollShadowStyles,
     getScrollShadow(scrollState, theme),
     {
-      [codeWithPanelStyles]: showPanel,
-      [codeWithoutPanelStyles]: !showPanel,
-      [expandableContentWithPanelStyles]: showExpandButton && showPanel,
-      [expandableContentWithoutPanelStyles]: showExpandButton && !showPanel,
+      [codeWithPanelStyles]: hasPanel,
+      [codeWithoutPanelStyles]: !hasPanel,
+      [expandableContentWithPanelStyles]: showExpandButton && hasPanel,
+      [expandableContentWithoutPanelStyles]: showExpandButton && !hasPanel,
     },
   );
 
 export const getCodeWrapperStyles = ({
   theme,
-  showPanel,
+  hasPanel,
   expanded,
   codeHeight,
   collapsedCodeHeight,
@@ -73,7 +82,7 @@ export const getCodeWrapperStyles = ({
   className,
 }: {
   theme: Theme;
-  showPanel: boolean;
+  hasPanel: boolean;
   expanded: boolean;
   codeHeight: number;
   collapsedCodeHeight: number;
@@ -84,9 +93,10 @@ export const getCodeWrapperStyles = ({
   cx(
     codeWrapperStyle,
     getCodeWrapperVariantStyle(theme),
+    codeWrapperHoverStyles,
     {
-      [codeWrapperWithPanelStyles]: showPanel,
-      [codeWrapperWithoutPanelStyles]: !showPanel,
+      [codeWrapperWithPanelStyles]: hasPanel,
+      [codeWrapperWithoutPanelStyles]: !hasPanel,
       [codeWrapperSingleLineStyles]: !isMultiline,
       [getExpandableCodeWrapperStyle(
         expanded,
@@ -99,6 +109,38 @@ export const getCodeWrapperStyles = ({
 
 export const getExpandedButtonStyles = ({ theme }: { theme: Theme }) =>
   cx(expandButtonStyle, getExpandButtonVariantStyle(theme));
+
+export const getCopyButtonWithoutPanelStyles = ({
+  copyButtonAppearance,
+}: {
+  copyButtonAppearance: CopyButtonAppearance;
+}) =>
+  cx(
+    copyButtonWithoutPanelClassName,
+    css`
+      position: absolute;
+      z-index: 1;
+      top: ${spacing[200]}px;
+      right: ${spacing[200]}px;
+      transition: opacity ${transitionDuration.default}ms ease-in-out;
+
+      // On hover or focus, the copy button should always be visible
+      &:hover,
+      &:focus-within {
+        opacity: 1;
+      }
+    `,
+    {
+      [css`
+        opacity: 0;
+
+        // On a mobile device, the copy button should always be visible
+        ${getMobileMediaQuery(breakpoints.Desktop)} {
+          opacity: 1;
+        }
+      `]: copyButtonAppearance === CopyButtonAppearance.Hover,
+    },
+  );
 
 export const contentWrapperStyles = css`
   position: relative;
@@ -189,6 +231,14 @@ export const codeWrapperSingleLineStyles = css`
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
+`;
+
+export const codeWrapperHoverStyles = css`
+  &:hover {
+    & + .${copyButtonWithoutPanelClassName} {
+      opacity: 1;
+    }
+  }
 `;
 
 export function getExpandableCodeWrapperStyle(

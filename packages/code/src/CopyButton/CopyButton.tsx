@@ -22,6 +22,8 @@ import Tooltip, {
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
+import { useCodeContext } from '../CodeContext/CodeContext';
+import Button from '@leafygreen-ui/button';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
@@ -34,6 +36,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
+  const { hasPanel } = useCodeContext();
 
   /**
    * toggles `tooltipOpen` state
@@ -119,6 +122,17 @@ function CopyButton({ onCopy, contents }: CopyProps) {
    */
   const shouldClose = () => !tooltipOpen;
 
+  const sharedButtonProps = {
+    'aria-label': COPY_TEXT,
+    className: getCopyButtonStyles({ theme, copied }),
+    onClick: handleClick,
+    onKeyDown: handleKeyDown,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    ref: buttonRef,
+    'data-testid': 'code_copy-button',
+  };
+
   return (
     <Tooltip
       align={Align.Top}
@@ -129,21 +143,24 @@ function CopyButton({ onCopy, contents }: CopyProps) {
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
       trigger={
-        <IconButton
-          data-testid="code_copy-button"
-          ref={buttonRef}
-          aria-label={COPY_TEXT}
-          className={getCopyButtonStyles({ theme, copied })}
-          onClick={handleClick}
-          onKeyDown={handleKeyDown}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {copied ? <CheckmarkIcon /> : <CopyIcon />}
-          {copied && (
-            <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
-          )}
-        </IconButton>
+        hasPanel ? (
+          <IconButton {...sharedButtonProps}>
+            {copied ? <CheckmarkIcon /> : <CopyIcon />}
+            {copied && (
+              <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
+            )}
+          </IconButton>
+        ) : (
+          <Button
+            leftGlyph={copied ? <CheckmarkIcon /> : <CopyIcon />}
+            size="xsmall"
+            {...sharedButtonProps}
+          >
+            {copied && (
+              <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
+            )}
+          </Button>
+        )
       }
       shouldClose={shouldClose}
     >

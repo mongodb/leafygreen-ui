@@ -11,6 +11,15 @@ export const ScrollState = {
 
 export type ScrollState = (typeof ScrollState)[keyof typeof ScrollState];
 
+export const CopyButtonAppearance = {
+  Hover: 'hover',
+  Persist: 'persist',
+  None: 'none',
+} as const;
+
+export type CopyButtonAppearance =
+  (typeof CopyButtonAppearance)[keyof typeof CopyButtonAppearance];
+
 export type DetailedElementProps<T> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
@@ -58,4 +67,19 @@ export type CodeProps = Omit<
    */
 
   language: Language | LanguageOption;
+
+  /**
+   * Determines the appearance of the copy button when the panel is not present.
+   *
+   * If `hover`, the copy button will only appear when the user hovers over the code block.
+   *
+   * If `persist`, the copy button will always be visible.
+   *
+   * If `none`, the copy button will not be rendered.
+   *
+   * If there is a panel, this prop will be ignored. TODO: is this a goood decision?
+   *
+   * @default `hover`
+   */
+  copyButtonAppearance?: CopyButtonAppearance;
 };

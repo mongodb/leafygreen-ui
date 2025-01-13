@@ -12,7 +12,7 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
-import Code, { CodeProps, Language, Panel } from '.';
+import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
 
 const jsSnippet = `
 import datetime from './';
@@ -75,6 +75,7 @@ const meta: StoryMetaType<typeof Code> = {
     language: 'js',
     baseFontSize: 14,
     children: shortJsSnippet,
+    copyButtonAppearance: CopyButtonAppearance.Hover,
   },
   argTypes: {
     copyable: { control: 'boolean' },
@@ -86,6 +87,12 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: storybookArgTypes.baseFontSize,
     language: {
       options: Object.values(Language),
+      control: {
+        type: 'select',
+      },
+    },
+    copyButtonAppearance: {
+      options: Object.values(CopyButtonAppearance),
       control: {
         type: 'select',
       },
@@ -124,7 +131,7 @@ const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
     <Icon glyph="Cloud" />
   </IconButton>,
-  // <Icon glyph="Shell" size={30} key="3" />,
+  <Icon glyph="Shell" size={30} key="3" />,
   <IconButton
     href="https://mongodb.design"
     aria-label="label2"
@@ -165,7 +172,6 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
         <Panel
           customActionButtons={customActionButtons}
           showCustomActionButtons
-          // title="Title"
         />
       }
     >

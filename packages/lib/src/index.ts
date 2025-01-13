@@ -22,6 +22,7 @@ export type {
   ValuesOf,
 } from './types';
 export { isComponentType, validateChildren } from './validateChildren';
+export { getMobileMediaQuery } from './getMobileMediaQuery';
 
 export { createUniqueClassName, getNodeTextContent, getTheme, Theme, typeIs };
 export type { DarkModeProps, LgIdProps };

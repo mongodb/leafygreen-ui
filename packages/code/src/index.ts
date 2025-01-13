@@ -1,5 +1,5 @@
-import { Code } from './Code';
-export { Code };
+import { Code, CopyButtonAppearance } from './Code';
+export { Code, CopyButtonAppearance };
 export { variantColors } from './globalStyles';
 export { Panel } from './Panel';
 export type { LineHighlightingDefinition } from './types';

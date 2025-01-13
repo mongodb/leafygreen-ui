@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
@@ -14,13 +13,20 @@ import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
 import {
+  getCopyButtonWithoutPanelStyles,
   getCodeStyles,
   getCodeWrapperStyles,
   getExpandedButtonStyles,
   wrapperStyle,
 } from './Code.styles';
-import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
+import {
+  CodeProps,
+  CopyButtonAppearance,
+  DetailedElementProps,
+  ScrollState,
+} from './Code.types';
 import CodeContextProvider from '../CodeContext/CodeContext';
+import CopyButton from '../CopyButton/CopyButton';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -42,6 +48,7 @@ function Code({
   onCopy,
   highlightLines = [],
   panel,
+  copyButtonAppearance = CopyButtonAppearance.Hover,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -54,7 +61,7 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-  const showPanel = !!panel;
+  const hasPanel = !!panel;
 
   // TODO: update this with new prop copyButtonAppearance
   useEffect(() => {
@@ -157,13 +164,14 @@ function Code({
       darkMode={darkMode}
       contents={children}
       language={languageProp}
+      hasPanel={hasPanel}
     >
       <div className={wrapperStyle[theme]}>
         <div
           className={getCodeStyles({
             scrollState,
             theme,
-            showPanel,
+            hasPanel,
             showExpandButton,
           })}
         >
@@ -171,7 +179,7 @@ function Code({
             {...(rest as DetailedElementProps<HTMLPreElement>)}
             className={getCodeWrapperStyles({
               theme,
-              showPanel,
+              hasPanel,
               expanded,
               codeHeight,
               collapsedCodeHeight,
@@ -187,6 +195,17 @@ function Code({
           >
             {renderedSyntaxComponent}
           </pre>
+
+          {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
+          {!hasPanel && copyButtonAppearance !== CopyButtonAppearance.None && (
+            <div
+              className={getCopyButtonWithoutPanelStyles({
+                copyButtonAppearance,
+              })}
+            >
+              <CopyButton onCopy={onCopy} contents={children} />
+            </div>
+          )}
 
           {!!panel && panel}
 
@@ -208,25 +227,5 @@ function Code({
 }
 
 Code.displayName = 'Code';
-
-Code.propTypes = {
-  children: PropTypes.string.isRequired,
-  language: PropTypes.oneOfType([
-    PropTypes.oneOf(Object.values(Language)),
-    PropTypes.string,
-  ]),
-  darkMode: PropTypes.bool,
-  className: PropTypes.string,
-  showLineNumbers: PropTypes.bool,
-  lineNumberStart: PropTypes.number,
-  showWindowChrome: PropTypes.bool,
-  chromeTitle: PropTypes.string,
-  highlightLines: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.number),
-      PropTypes.number,
-    ]),
-  ),
-};
 
 export default Code;

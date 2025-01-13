@@ -7,4 +7,5 @@ export type CodeProviderProps = PropsWithChildren &
   DarkModeProps & {
     contents: string;
     language: Language | LanguageOption;
+    hasPanel?: boolean;
   };
