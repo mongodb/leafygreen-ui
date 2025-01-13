@@ -46,14 +46,14 @@ export function getMarkPointConfig({
          * See: https://echarts.apache.org/en/option.html#series-line.emphasis.scale
          */
         // @ts-ignore Object literal may only specify known properties, and 'scale' does not exist in type 'MarkPointStateOption & { blurScope?: BlurScope | undefined; disabled?: boolean | undefined; }'
-        scale: 1.125,
+        scale: 0,
         label: {
           show: true,
         },
       },
       label: {
         borderRadius: borderRadius[200],
-        distance: spacing[300],
+        distance: 4,
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
             InteractionState.Default
@@ -66,7 +66,7 @@ export function getMarkPointConfig({
         formatter: label,
         lineHeight: 20,
         padding: spacing[150],
-        position: 'insideBottom',
+        position: 'bottom',
         show: false, // Only show on hover / emphasis
       },
       symbol: level === EventLevel.Warning ? warningIcon : infoIcon,

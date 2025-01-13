@@ -60,7 +60,7 @@ export function getMarkLineConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: label,
+        formatter: `${label}\nSome message`,
         lineHeight: 20,
         padding: spacing[150],
         position: 'insideStart',
@@ -80,6 +80,7 @@ export function getMarkLineConfig({
           ? [warningIcon, 'none']
           : [infoIcon, 'none'],
       symbolSize: [16, 16],
+      symbolRotate: 360,
     },
   };
 }

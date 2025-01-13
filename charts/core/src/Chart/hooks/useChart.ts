@@ -69,7 +69,7 @@ export function useChart({
   useEffect(() => {
     if (echart.ready) {
       echart.on('mouseover', e => {
-        if (e.componentType === 'markPoint' || e.componentType === 'markLine') {
+        if (e.componentType === 'markPoint') {
           hideTooltip();
           echart.on('mousemove', hideTooltip);
         }
@@ -77,7 +77,7 @@ export function useChart({
 
       // Cleanup
       echart.on('mouseout', e => {
-        if (e.componentType === 'markPoint' || e.componentType === 'markLine') {
+        if (e.componentType === 'markPoint') {
           echart.off('mousemove', hideTooltip);
         }
       });
