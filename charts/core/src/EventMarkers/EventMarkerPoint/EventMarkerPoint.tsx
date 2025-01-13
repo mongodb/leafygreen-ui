@@ -65,7 +65,7 @@ export function getMarkPointConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: [`{label|${label}}`, message].join('\n'),
+        formatter: [`{label|${label}}`, `{message|${message}}`].join('\n'),
         lineHeight: 15,
         padding: spacing[150],
         position: 'bottom',
@@ -75,6 +75,10 @@ export function getMarkPointConfig({
               color[theme].text[Variant.InverseSecondary][
                 InteractionState.Default
               ],
+            align: 'left',
+          },
+          message: {
+            align: 'left',
           },
         },
         show: false, // Only show on hover / emphasis

@@ -52,7 +52,6 @@ export function getMarkLineConfig({
       },
       label: {
         borderRadius: borderRadius[200],
-        distance: spacing[300],
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
             InteractionState.Default
@@ -62,19 +61,22 @@ export function getMarkLineConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: [`{label|${label}}`, message].join('\n'),
+        formatter: [`{label|${label}}`, `{message|${message}}`].join('\n'),
         lineHeight: 15,
         padding: spacing[150],
-        position: 'insideStart',
+        position: 'insideStartTop', // This will position it high on the left side
         rich: {
           label: {
             color:
               color[theme].text[Variant.InverseSecondary][
                 InteractionState.Default
               ],
+            align: 'left',
+          },
+          message: {
+            align: 'left',
           },
         },
-        rotate: 360,
         show: false, // Needed so it only shows on hover (aka emphasis)
       },
       lineStyle: {

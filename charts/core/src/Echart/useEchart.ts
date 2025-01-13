@@ -57,6 +57,7 @@ export function useEchart({
            * This is needed to ensure that series get removed properly.
            * See issue: https://github.com/apache/echarts/issues/6202
            * */
+          console.log(options);
           echartsInstance?.setOption(options, true);
         }),
         50,
@@ -320,6 +321,49 @@ export function useEchart({
       });
     }
   }, [echartsInstance, theme]);
+
+  useEffect(() => {
+    if (echartsInstance) {
+      // const handleFinished = () => {
+      //   // Get the grid component to determine chart boundaries
+      //   const grid = echartsInstance.getModel().getComponent('grid');
+      //   const gridRect = grid.getRect();
+      //   // Get the mark line coordinates
+      //   const markLineCoord = echartsInstance.convertToPixel(
+      //     { xAxisIndex: 0, yAxisIndex: 0 },
+      //     [0, 200],
+      //   );
+      //   // Get the label's text metrics using the canvas context
+      //   const canvas = echartsInstance.getDom().querySelector('canvas');
+      //   const ctx = canvas?.getContext('2d');
+      //   const labelText = 'Very Long Label That Might Get Cut Off';
+      //   const textMetrics = ctx?.measureText(labelText);
+      //   debugger;
+      //   // Check if the label would extend beyond the grid
+      //   if (
+      //     markLineCoord[0] + textMetrics.width >
+      //     gridRect.x + gridRect.width
+      //   ) {
+      //     // Update to end position if it would overflow
+      //     echartsInstance.setOption({
+      //       series: [
+      //         {
+      //           markLine: {
+      //             label: {
+      //               position: 'end',
+      //             },
+      //           },
+      //         },
+      //       ],
+      //     });
+      //   }
+      // };
+      // echartsInstance.on('finished', handleFinished);
+      // return () => {
+      //   echartsInstance.off('finished', handleFinished);
+      // };
+    }
+  }, [echartsInstance]);
 
   return {
     _echartsInstance: echartsInstance,

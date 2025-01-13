@@ -344,13 +344,13 @@ export const Basic: StoryObj<StorybookProps> = {
           position={[new Date('2020-06-09T00:40:00-04:00').getTime(), 939]}
         />
         <EventMarkerLine
-          point={new Date('2020-06-09T00:10:00-04:00').getTime()}
+          point={new Date('2020-06-09T00:00:00-04:00').getTime()}
           label="This is a label"
           message="This is a message"
-          level="info"
+          level="warning"
         />
         <EventMarkerLine
-          point={new Date('2020-06-09T00:25:00-04:00').getTime()}
+          point={new Date('2020-06-09T00:59:00-04:00').getTime()}
           label="This is a label"
           message="This is a message"
           level="warning"
