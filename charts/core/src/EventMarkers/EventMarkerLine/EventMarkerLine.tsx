@@ -62,7 +62,8 @@ export function getMarkLineConfig({
         formatter: label,
         lineHeight: 20,
         padding: spacing[150],
-        position: 'start',
+        position: 'insideStart',
+        rotate: 360,
         show: false, // Needed so it only shows on hover (aka emphasis)
       },
       lineStyle: {
