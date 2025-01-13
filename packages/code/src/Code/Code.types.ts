@@ -69,7 +69,7 @@ export type CodeProps = Omit<
   language: Language | LanguageOption;
 
   /**
-   * Determines the appearance of the copy button when the panel is not present.
+   * Determines the appearance of the copy button when the panel is not present. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
    *
    * If `hover`, the copy button will only appear when the user hovers over the code block.
    *

@@ -43,7 +43,6 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  copyable = true,
   expandable = false,
   onCopy,
   highlightLines = [],
@@ -53,7 +52,6 @@ function Code({
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
-  const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
   const [codeHeight, setCodeHeight] = useState<number>(0);
@@ -61,12 +59,8 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-  const hasPanel = !!panel;
 
-  // TODO: update this with new prop copyButtonAppearance
-  useEffect(() => {
-    setShowCopyBar(copyable && ClipboardJS.isSupported());
-  }, [copyable, showCopyBar]);
+  const hasPanel = !!panel;
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -197,15 +191,17 @@ function Code({
           </pre>
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
-          {!hasPanel && copyButtonAppearance !== CopyButtonAppearance.None && (
-            <div
-              className={getCopyButtonWithoutPanelStyles({
-                copyButtonAppearance,
-              })}
-            >
-              <CopyButton onCopy={onCopy} contents={children} />
-            </div>
-          )}
+          {!hasPanel &&
+            copyButtonAppearance !== CopyButtonAppearance.None &&
+            ClipboardJS.isSupported() && (
+              <div
+                className={getCopyButtonWithoutPanelStyles({
+                  copyButtonAppearance,
+                })}
+              >
+                <CopyButton onCopy={onCopy} contents={children} />
+              </div>
+            )}
 
           {!!panel && panel}
 
