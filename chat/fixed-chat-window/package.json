@@ -29,6 +29,7 @@
   "devDependencies": {
     "@lg-chat/avatar": "workspace:^",
     "@lg-chat/input-bar": "workspace:^",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",

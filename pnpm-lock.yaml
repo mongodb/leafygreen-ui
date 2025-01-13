@@ -200,8 +200,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/tokens
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^3.0.0
-        version: 3.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
 
   chat/chat-disclaimer:
     dependencies:
@@ -316,6 +316,9 @@ importers:
       '@lg-chat/input-bar':
         specifier: workspace:^
         version: link:../input-bar
+      '@lg-chat/leafygreen-chat-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -374,8 +377,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^3.0.0
-        version: 3.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -443,8 +446,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^3.0.0
-        version: 3.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
       '@lg-chat/lg-markdown':
         specifier: workspace:^
         version: link:../lg-markdown
@@ -480,8 +483,8 @@ importers:
         specifier: workspace:^
         version: link:../avatar
       '@lg-chat/leafygreen-chat-provider':
-        specifier: ^3.0.0
-        version: 3.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
@@ -4568,9 +4571,6 @@ packages:
     resolution: {integrity: sha512-aQKRevfcQxpHy5CaS6gLb5T1WMBSpb7wCrvC68lPJaKAbiR2nPr2H8EgZfByez26RrEGhACmgtDbSGJ0Kd31hA==}
     peerDependencies:
       react: ^17.0.0 || ^18.0.0
-
-  '@lg-chat/leafygreen-chat-provider@3.0.0':
-    resolution: {integrity: sha512-AMtDQuxmym0AILZe70dZC4l0hfIovr+00e1ijkbxjxQg1DXOGa+5m/hE3bT6Of49hONQTJ17D9APcO8zhz9/QA==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -12860,13 +12860,6 @@ snapshots:
       '@storybook/csf': 0.1.2
       lodash: 4.17.21
       react: 18.2.0
-
-  '@lg-chat/leafygreen-chat-provider@3.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      use-resize-observer: 9.1.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-    transitivePeerDependencies:
-      - react
-      - react-dom
 
   '@manypkg/find-root@1.1.0':
     dependencies:

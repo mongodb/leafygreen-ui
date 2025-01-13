@@ -40,7 +40,7 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^4.0.0",
-    "@lg-chat/leafygreen-chat-provider": "^3.0.0"
+    "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
   "devDependencies": {}
 }
