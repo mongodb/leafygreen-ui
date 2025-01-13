@@ -13,11 +13,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.15.0
-
       - name: Cleanup
         run: |
           gh extension install actions/gh-actions-cache

@@ -19,7 +19,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 9.15.x
 
       - uses: actions/cache@v4
         name: Check for build cache
@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v4
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: 18.12.0
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -57,12 +57,12 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 9.15.x
 
       - name: Use Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18.12.0
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -94,12 +94,12 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 9.15.x
 
       - name: Use Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18.12.0
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -136,12 +136,12 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 9.15.x
 
       - name: Use Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18.12.0
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
@@ -172,12 +172,12 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.0
+          version: 9.15.x
 
       - name: Use Node 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18.12.0
+          node-version: 18
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
