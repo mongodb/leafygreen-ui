@@ -379,8 +379,6 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
             onSubmit={handleFormSubmit}
             {...rest}
           >
-            {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-            {}
             <div
               ref={searchBoxRef}
               role="searchbox"

@@ -27,11 +27,7 @@ export async function fixDependencies(
   if (missingDependencies.length > 0) {
     verbose &&
       console.log('Installing missing dependencies...', missingDependencies);
-    spawnSync(
-      'npx',
-      ['pnpm@9.15.0', 'add', ...missingDependencies],
-      spawnContext,
-    );
+    spawnSync('npx', ['pnpm', 'add', ...missingDependencies], spawnContext);
   }
 
   // Install any missing devDependencies
@@ -46,7 +42,7 @@ export async function fixDependencies(
 
     spawnSync(
       'npx',
-      ['pnpm@9.15.0', 'add', '--save-dev', ...missingDevDependencies],
+      ['pnpm', 'add', '--save-dev', ...missingDevDependencies],
       spawnContext,
     );
   }
@@ -56,7 +52,7 @@ export async function fixDependencies(
 
   if (unused.length > 0) {
     verbose && console.log('Removing unused dependencies...', unused);
-    spawnSync('npx', ['pnpm@9.15.0', 'remove', ...unused], spawnContext);
+    spawnSync('npx', ['pnpm', 'remove', ...unused], spawnContext);
   }
 
   // TODO: Autofix these

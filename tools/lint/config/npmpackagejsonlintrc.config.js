@@ -12,6 +12,7 @@ module.exports = {
         'dependencies',
         'devDependencies',
         'peerDependencies',
+        'pnpm',
       ],
     ],
     'prefer-caret-version-dependencies': [

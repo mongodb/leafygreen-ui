@@ -47,7 +47,6 @@
     "@lg-tools/storybook-utils": "workspace:^",
     "@lg-tools/test": "workspace:^",
     "@storybook/react": "^7.6.20",
-    "@svgr/babel-plugin-replace-jsx-attribute-value": "8.0.0",
     "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0",
     "@testing-library/react-hooks": ">=3.7.0",
     "@testing-library/user-event": "13.5.0",
