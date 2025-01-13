@@ -1,4 +1,5 @@
 import React from 'react';
+import ClipboardJS from 'clipboard';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -75,7 +76,9 @@ function Panel({
               )}
             </>
           )}
-          <CopyButton onCopy={onCopy} contents={contents} />
+          {ClipboardJS.isSupported() && (
+            <CopyButton onCopy={onCopy} contents={contents} />
+          )}
         </div>
       </div>
     </div>
