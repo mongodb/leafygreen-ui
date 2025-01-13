@@ -339,33 +339,23 @@ export const Basic: StoryObj<StorybookProps> = {
           <Line name={name} data={data} key={name} />
         ))}
         <EventMarkerPoint
-          label="Critical Event Occurred"
-          position={['2020-06-09T04:51:00.000Z', 992]}
+          label="This is a label"
+          message="This is a message"
+          position={[new Date('2020-06-09T00:40:00-04:00').getTime(), 939]}
         />
         <EventMarkerLine
           point={new Date('2020-06-09T00:10:00-04:00').getTime()}
-          label="June 9, 2020 - 12:10 AM"
-          level="info"
-        />
-        <EventMarkerLine
-          point={new Date('2020-06-09T00:10:30-04:00').getTime()}
-          label="June 9, 2020 - 12:10 AM"
-          level="info"
-        />
-        <EventMarkerLine
-          point={new Date('2020-06-09T00:11:00-04:00').getTime()}
-          label="June 9, 2020 - 12:10 AM"
+          label="This is a label"
+          message="This is a message"
           level="info"
         />
         <EventMarkerLine
           point={new Date('2020-06-09T00:25:00-04:00').getTime()}
-          label="June 9, 2020 - 12:25 AM"
+          label="This is a label"
+          message="This is a message"
           level="warning"
         />
-        <ThresholdLine
-          point={600}
-          label="Cluster Limit: I can type whatever message I want here"
-        />
+        <ThresholdLine point={600} label="Cluster Limit" value="600" />
       </Chart>
     );
   },

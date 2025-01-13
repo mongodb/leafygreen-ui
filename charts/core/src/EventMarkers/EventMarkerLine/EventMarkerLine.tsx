@@ -20,12 +20,14 @@ export function getMarkLineConfig({
   name,
   theme,
   label,
+  message,
   level,
   point,
 }: {
   name: string;
   theme: Theme;
   label: string;
+  message: string;
   level: EventLevel;
   point: string | number;
 }): SeriesOption {
@@ -60,10 +62,18 @@ export function getMarkLineConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: `${label}\nSome message`,
-        lineHeight: 20,
+        formatter: [`{label|${label}}`, message].join('\n'),
+        lineHeight: 15,
         padding: spacing[150],
         position: 'insideStart',
+        rich: {
+          label: {
+            color:
+              color[theme].text[Variant.InverseSecondary][
+                InteractionState.Default
+              ],
+          },
+        },
         rotate: 360,
         show: false, // Needed so it only shows on hover (aka emphasis)
       },
@@ -88,10 +98,12 @@ export function getMarkLineConfig({
 export function EventMarkerLine({
   point,
   label,
+  message,
   level = EventLevel.Warning,
 }: {
   point: string | number;
   label: string;
+  message: string;
   level?: EventLevel;
 }) {
   const { chart } = useChartContext();
@@ -107,7 +119,9 @@ export function EventMarkerLine({
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a Tooltip.
      */
-    chart.addSeries(getMarkLineConfig({ name, theme, label, level, point }));
+    chart.addSeries(
+      getMarkLineConfig({ name, theme, label, message, level, point }),
+    );
 
     return () => {
       /**

@@ -20,12 +20,14 @@ export function getMarkPointConfig({
   name,
   theme,
   label,
+  message,
   level,
   position,
 }: {
   name: string;
   theme: Theme;
   label: string;
+  message: string;
   level: EventLevel;
   position: [string | number, string | number];
 }): SeriesOption {
@@ -63,10 +65,18 @@ export function getMarkPointConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: label,
-        lineHeight: 20,
+        formatter: [`{label|${label}}`, message].join('\n'),
+        lineHeight: 15,
         padding: spacing[150],
         position: 'bottom',
+        rich: {
+          label: {
+            color:
+              color[theme].text[Variant.InverseSecondary][
+                InteractionState.Default
+              ],
+          },
+        },
         show: false, // Only show on hover / emphasis
       },
       symbol: level === EventLevel.Warning ? warningIcon : infoIcon,
@@ -78,10 +88,12 @@ export function getMarkPointConfig({
 export function EventMarkerPoint({
   position,
   label,
+  message,
   level = EventLevel.Warning,
 }: {
   position: [string | number, string | number];
   label: string;
+  message: string;
   level?: EventLevel;
 }) {
   const { chart } = useChartContext();
@@ -98,7 +110,7 @@ export function EventMarkerPoint({
      * series in something like a Tooltip.
      */
     chart.addSeries(
-      getMarkPointConfig({ name, theme, label, level, position }),
+      getMarkPointConfig({ name, theme, label, message, level, position }),
     );
 
     return () => {

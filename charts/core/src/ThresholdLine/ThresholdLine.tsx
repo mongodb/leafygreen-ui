@@ -19,11 +19,13 @@ function getMarkLineConfig({
   point,
   theme,
   label,
+  value,
 }: {
   name: string;
   point: number;
   theme: Theme;
   label: string;
+  value: string;
 }): SeriesOption {
   return {
     name,
@@ -55,10 +57,18 @@ function getMarkLineConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: label,
+        formatter: `{label|${label}}: ${value}`,
         lineHeight: 20,
         padding: spacing[150],
         position: 'insideEnd',
+        rich: {
+          label: {
+            color:
+              color[theme].text[Variant.InverseSecondary][
+                InteractionState.Default
+              ],
+          },
+        },
         show: false, // Needed so it only shows on hover (aka emphasis)
       },
       lineStyle: {
@@ -84,9 +94,11 @@ function getMarkLineConfig({
 export function ThresholdLine({
   point,
   label,
+  value,
 }: {
   point: number;
   label: string;
+  value: string;
 }) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
@@ -101,7 +113,7 @@ export function ThresholdLine({
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a Tooltip.
      */
-    chart.addSeries(getMarkLineConfig({ name, point, theme, label }));
+    chart.addSeries(getMarkLineConfig({ name, point, theme, label, value }));
 
     return () => {
       /**
