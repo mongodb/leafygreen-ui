@@ -51,6 +51,7 @@ export default {
     eventMarkerLineMessage: 'Event marker line message',
     eventMarkerLineLabel: 'Event marker line label',
     eventMarkerLineLevel: 'warning',
+    eventMarkerLinePosition: new Date('2024-01-01T00:20:00').getTime(),
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -254,33 +255,40 @@ export default {
     },
     renderEventMarkerLine: {
       description: 'Show the event marker line',
-      name: 'EventMarkerLine',
+      name: 'RenderEventMarkerLine',
       table: {
         category: 'EventMarkerLine',
       },
     },
-    eventMarkerLineMessage: {
+    eventMarkerLineLabel: {
       description: 'Label rendered in the the event marker line tooltip',
       name: 'EventMarkerLineLabel',
       table: {
         category: 'EventMarkerLine',
       },
     },
-  },
-  eventMarkerLineMessage: {
-    description: 'Message rendered in the the event marker line tooltip',
-    name: 'EventMarkerLineMessage',
-    table: {
-      category: 'EventMarkerLine',
+    eventMarkerLineMessage: {
+      description: 'Message rendered in the the event marker line tooltip',
+      name: 'EventMarkerLineMessage',
+      table: {
+        category: 'EventMarkerLine',
+      },
     },
-  },
-  eventMarkerLineLevel: {
-    description: 'Level of the event marker line',
-    name: 'EventMarkerLineLevel',
-    control: 'select',
-    options: ['warning', 'info'],
-    table: {
-      category: 'EventMarkerLine',
+    eventMarkerLineLevel: {
+      description: 'Level of the event marker line',
+      name: 'EventMarkerLineLevel',
+      control: 'select',
+      options: ['warning', 'info'],
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    eventMarkerLinePosition: {
+      description: 'Position of event marker line',
+      name: 'EventMarkerLinePosition',
+      table: {
+        category: 'EventMarkerLine',
+      },
     },
   },
 };
@@ -312,6 +320,7 @@ interface StorybookProps {
   eventMarkerLineMessage: EventMarkerLineProps['message'];
   eventMarkerLineLabel: EventMarkerLineProps['label'];
   eventMarkerLineLevel: EventMarkerLineProps['level'];
+  eventMarkerLinePosition: EventMarkerLineProps['position'];
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -342,6 +351,7 @@ export const Basic: StoryObj<StorybookProps> = {
     eventMarkerLineMessage,
     eventMarkerLineLabel,
     eventMarkerLineLevel,
+    eventMarkerLinePosition,
   }) => {
     return (
       <Chart
@@ -388,7 +398,7 @@ export const Basic: StoryObj<StorybookProps> = {
         />
         {renderEventMarkerLine && (
           <EventMarkerLine
-            position={new Date('2024-01-01T00:20:00').getTime()}
+            position={eventMarkerLinePosition}
             label={eventMarkerLineLabel}
             message={eventMarkerLineMessage}
             level={eventMarkerLineLevel}
@@ -424,6 +434,11 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     zoomSelectXAxis,
     zoomSelectYAxis,
     zoomSelectCallback,
+    renderEventMarkerLine,
+    eventMarkerLineMessage,
+    eventMarkerLineLabel,
+    eventMarkerLineLevel,
+    eventMarkerLinePosition,
   }) => {
     return (
       <Chart
@@ -476,6 +491,14 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
+        {renderEventMarkerLine && (
+          <EventMarkerLine
+            position={eventMarkerLinePosition}
+            label={eventMarkerLineLabel}
+            message={eventMarkerLineMessage}
+            level={eventMarkerLineLevel}
+          />
+        )}
       </Chart>
     );
   },
@@ -505,6 +528,11 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
     zoomSelectXAxis,
     zoomSelectYAxis,
     zoomSelectCallback,
+    renderEventMarkerLine,
+    eventMarkerLineMessage,
+    eventMarkerLineLabel,
+    eventMarkerLineLevel,
+    eventMarkerLinePosition,
   }) => {
     return (
       <div
@@ -551,6 +579,14 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
           {data.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
+          {renderEventMarkerLine && (
+            <EventMarkerLine
+              position={eventMarkerLinePosition}
+              label={eventMarkerLineLabel}
+              message={eventMarkerLineMessage}
+              level={eventMarkerLineLevel}
+            />
+          )}
         </Chart>
         <Chart
           groupId="group1"
@@ -593,6 +629,14 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
           {data.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
+          {renderEventMarkerLine && (
+            <EventMarkerLine
+              position={eventMarkerLinePosition}
+              label={eventMarkerLineLabel}
+              message={eventMarkerLineMessage}
+              level={eventMarkerLineLevel}
+            />
+          )}
         </Chart>
       </div>
     );
