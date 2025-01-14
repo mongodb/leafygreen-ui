@@ -21,9 +21,7 @@ import { variantColors } from '../globalStyles';
 
 import { CopyButtonAppearance, ScrollState } from './Code.types';
 
-const copyButtonWithoutPanelClassName = createUniqueClassName(
-  'lg-code-copy_button',
-);
+const copyButtonWithoutPanelClassName = createUniqueClassName('copy_button');
 
 // We use max-device-width to select specifically for iOS devices
 const mq = facepaint([

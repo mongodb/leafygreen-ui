@@ -24,6 +24,7 @@ import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 import { useCodeContext } from '../CodeContext/CodeContext';
 import Button from '@leafygreen-ui/button';
+import { LGIDs } from '../constants';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
@@ -61,6 +62,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     });
 
     if (copied) {
+      console.log('🤡');
       const timeoutId = setTimeout(() => {
         setCopied(false);
       }, COPIED_SUCCESS_DURATION);
@@ -130,7 +132,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     ref: buttonRef,
-    'data-testid': 'code_copy-button',
+    'data-testid': LGIDs.copyButton,
   };
 
   return (

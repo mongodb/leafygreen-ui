@@ -98,21 +98,28 @@ const renderCodeWithLanguageSwitcher = (props: Partial<PanelProps> = {}) => {
 };
 
 describe('packages/Code', () => {
-  const { container } = Context.within(
-    Jest.spyContext(ClipboardJS, 'isSupported'),
-    spy => {
-      spy.mockReturnValue(true);
-
-      return render(
-        <Code className={className} language="javascript">
-          {codeSnippet}
-        </Code>,
-      );
+  // https://stackoverflow.com/a/69574825/13156339
+  Object.defineProperty(navigator, 'clipboard', {
+    value: {
+      // Provide mock implementation
+      writeText: jest.fn().mockReturnValueOnce(Promise.resolve()),
     },
-  );
+  });
 
   describe('a11y', () => {
     test('does not have basic accessibility violations', async () => {
+      const { container } = Context.within(
+        Jest.spyContext(ClipboardJS, 'isSupported'),
+        spy => {
+          spy.mockReturnValue(true);
+
+          return render(
+            <Code className={className} language="javascript">
+              {codeSnippet}
+            </Code>,
+          );
+        },
+      );
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -121,7 +128,7 @@ describe('packages/Code', () => {
       test.skip('announces copied to screenreaders when content is copied without a panel', () => {
         Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
           spy.mockReturnValue(true);
-          renderCode();
+          return renderCode();
         });
 
         const copyIcon = screen.getByRole('button');
@@ -132,7 +139,7 @@ describe('packages/Code', () => {
       test('announces copied to screenreaders when content is copied in the panel', () => {
         Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
           spy.mockReturnValue(true);
-          renderCode({ panel: <Panel /> });
+          return renderCode({ panel: <Panel /> });
         });
 
         const copyIcon = screen.getByRole('button');
@@ -142,8 +149,8 @@ describe('packages/Code', () => {
     });
   });
 
-  const codeContainer = (container.firstChild as HTMLElement).lastChild;
-  const codeRoot = (codeContainer as HTMLElement).firstChild; //pre tag
+  // const codeContainer = (container.firstChild as HTMLElement).lastChild;
+  // const codeRoot = (codeContainer as HTMLElement).firstChild; //pre tag
 
   // TODO: add back
   // if (!codeRoot || !typeIs.element(codeRoot)) {
@@ -202,16 +209,64 @@ describe('packages/Code', () => {
   describe('Without panel slot', () => {
     test('does not render a panel', () => {
       // TODO: update this test
+      const { container } = renderCode();
       expect(container).not.toContain(screen.queryByTestId('lg-code-panel'));
     });
 
     describe('renders a copy button', () => {
-      test.todo('when copyAppearance is persist');
-      test.todo('when copyAppearance is hover');
+      test('with default value', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode();
+          },
+        );
+        expect(queryByTestId('lg-code-copy_button')).not.toBeNull();
+      });
+      test('when copyButtonAppearance is persist', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({ copyButtonAppearance: 'persist' });
+          },
+        );
+        expect(queryByTestId('lg-code-copy_button')).not.toBeNull();
+      });
+      test('when copyButtonAppearance is hover', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({ copyButtonAppearance: 'hover' });
+          },
+        );
+        expect(queryByTestId('lg-code-copy_button')).not.toBeNull();
+      });
     });
 
     describe('does not renders a copy button', () => {
-      test.todo('when copyAppearance is none');
+      test('when copyButtonAppearance is none', () => {
+        const { queryByTestId } = renderCode({ copyButtonAppearance: 'none' });
+        expect(queryByTestId('lg-code-copy_button')).toBeNull();
+      });
+    });
+
+    // TODO: get this to work
+    test.skip('copies the correct text when copy button is clicked', () => {
+      const { queryByTestId } = Context.within(
+        Jest.spyContext(ClipboardJS, 'isSupported'),
+        spy => {
+          spy.mockReturnValue(true);
+          return render(<Code language="javascript">{codeSnippet}</Code>);
+        },
+      );
+
+      const copyButton = queryByTestId('lg-code-copy_button');
+      expect(copyButton).not.toBeNull();
+      userEvent.click(copyButton);
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(codeSnippet);
     });
   });
 
@@ -237,6 +292,8 @@ describe('packages/Code', () => {
         });
         expect(queryByTestId('lg-code-panel')).toBeDefined();
       });
+
+      test.todo('copies the correct text when copy button is clicked');
     });
 
     describe('language switcher', () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import debounce from 'lodash/debounce';
 
