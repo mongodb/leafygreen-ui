@@ -1,17 +1,23 @@
-# Table Docs
+# Table
+
+![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/table.svg)
+
+> _Upgrading from v11 or v12? Check out our [upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/UPGRADE.md) for help on how to migrate to the updated API._
+
+> _Upgrading from v10? Check out our [v10 to v13 upgrade guide](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/V10_to_V13_UPGRADE.md) for help on how to migrate to the updated API._
 
 # Installation
 
 ### Yarn
 
 ```shell
-yarn add @leafygreen-ui/table
+yarn add @leafygreen-ui/table@13.0.0-rc.0
 ```
 
 ### NPM
 
 ```shell
-npm install @leafygreen-ui/table
+npm install @leafygreen-ui/table@13.0.0-rc.0
 ```
 
 ## Basic
@@ -108,34 +114,31 @@ const table = useLeafyGreenTable<KitchenSink>({
 const { rows } = table.getRowModel();
 
 return (
-	<Table
-	  table={table}
-	  className={virtualScrollingContainerHeight}
-	>
-	  <TableHead>
-	   // Mapping through header rows
-	    {table
-	      .getHeaderGroups()
-	      .map((headerGroup: HeaderGroup<KitchenSink>) => (
-	        <HeaderRow key={headerGroup.id}>
-	         // Mapping through header cells
-	          {headerGroup.headers.map((header, index) => {
-	            return (
-	              <HeaderCell
-	                key={header.id}
-	                header={header}
-	              >
-	                {flexRender(
-	                  header.column.columnDef.header,
-	                  header.getContext(),
-	                )}
-	              </HeaderCell>
-	            );
-	          })}
-	        </HeaderRow>
-	      ))}
-	  </TableHead>
-	  <TableBody>
+  <Table table={table}>
+    <TableHead>
+      // Mapping through header rows
+      {table
+        .getHeaderGroups()
+        .map((headerGroup: HeaderGroup<KitchenSink>) => (
+          <HeaderRow key={headerGroup.id}>
+            // Mapping through header cells
+            {headerGroup.headers.map((header, index) => {
+              return (
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+    </TableHead>
+    <TableBody>
       {rows.map((row: LeafyGreenTableRow<KitchenSink>) => {
         // Checks if row is expandedContent
         const isExpandedContent = row.isExpandedContent ?? false;
@@ -164,7 +167,7 @@ return (
         );
       })}
     </TableBody>
-</Table>
+  </Table>
 )
 ```
 
@@ -512,15 +515,46 @@ The `useLeafyGreenVirtualTable` hook returns an object that extends the `useL
   - `getVirtualItems`: used to retrieve the virtualized items, mapping them to the corresponding rows in the table. This method ensures that only the visible rows are rendered, which improves performance when dealing with large datasets.
   - For more methods and properties available on the virtualizer instance, refer to [TanStack's virtualizer instance docs](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance).
 
+## Rendering Headers
+
+Headers are returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` instances with the `getHeaderGroups()` function. The `getHeaderGroups` function is used to retrieve all header groups for a table. It returns an array of `HeaderGroup` objects. For more information, check out [Tanstack's documentation on HeaderGroups](https://tanstack.com/table/latest/docs/guide/header-groups).
+
+Example:
+
+```jsx
+const table = useLeafyGreenTable<any>({
+  data,
+  columns,
+});
+
+return(
+  ...
+  <TableHead>
+    {table.getHeaderGroups().map((headerGroup: HeaderGroup<any>) => (
+      <HeaderRow key={headerGroup.id}>
+        {headerGroup.headers.map((header, index) => {
+          return (
+            <HeaderCell key={header.id} header={header}>
+              {flexRender(header.column.columnDef.header, header.getContext())}
+            </HeaderCell>
+          );
+        })}
+      </HeaderRow>
+    ))}
+  </TableHead>
+  ...
+)
+```
+
 ## Rendering Rows
 
-Rows returned from `useLeafyGreenTable` and `useLeafyGreenVirtualTable` differ slightly:
+Rows returned from the `useLeafyGreenTable` and `useLeafyGreenVirtualTable` instances differ slightly:
 
 ### Rows and subrows without expanded content
 
 ### `useLeafyGreenTable`
 
-Rows are accessed from the `table` object using the `getRowModel` method. In this case, the returned rows array includes only visible rows. Subrows that are not visible are excluded, but if a row is expanded, its corresponding subrows are included in the array.
+Rows are accessed from the `table` object using the `getRowModel` method. In this case, the returned rows array includes only visible rows. Subrows that are not visible are excluded, but if a row is expanded, its corresponding subrows are included in the array. For more information on `getRowModel` check out [TanStack's documentation on row models](https://tanstack.com/table/latest/docs/guide/row-models).
 
 Example:
 
@@ -536,7 +570,7 @@ const { rows } = table.getRowModel();
 return(
 	...
 	<TableBody>
-	  {rows.map((row: LeafyGreenTableRow<Person>) => {
+	  {rows.map((row: LeafyGreenTableRow<any>) => {
 	    return (
         // row is required
 	      <Row row={row} key={row.id}>
@@ -745,6 +779,56 @@ Since rows and expanded subrows are returned in the same hierarchy within the ro
   })}
 </TableBody>
 ```
+
+## Sorting
+
+Sorting can be applied within the column definitions:
+
+```jsx
+const columns = [
+  {
+    header: () => 'Name',
+    accessorKey: 'name',
+    sortingFn: 'alphanumeric', // use built-in sorting function by name
+  },
+  {
+    header: () => 'Age',
+    accessorKey: 'age',
+    sortingFn: 'myCustomSortingFn', // use custom global sorting function
+  },
+  {
+    header: () => 'Birthday',
+    accessorKey: 'birthday',
+    sortingFn: 'datetime', // recommended for date columns
+  },
+  {
+    header: () => 'Profile',
+    accessorKey: 'profile',
+    // use custom sorting function directly
+    sortingFn: (rowA, rowB, columnId) => {
+      return rowA.original.someProperty - rowB.original.someProperty;
+    },
+  },
+  {
+    header: () => 'Color',
+    accessorKey: 'color',
+    sortDescFirst: true, //sort by color in descending order first (default is ascending for string columns)
+  },
+];
+```
+
+Be default, sorting is disabled, but you can enable sorting by setting `enableSorting: true`.
+
+```jsx
+{
+  accessorKey: 'mdbVersion',
+  header: 'MongoDB Version',
+  enableSorting: true,
+  size: 90,
+},
+```
+
+For more information on sorting, check out [TanStack's documentation on sorting](https://tanstack.com/table/latest/docs/guide/sorting).
 
 ## Table Layout
 
