@@ -1,8 +1,6 @@
-import { EventLevel } from '../EventMarker.types';
+import { BaseEventMarkerProps } from '../BaseEventMarker';
 
-export interface EventMarkerPointProps {
+export interface EventMarkerPointProps
+  extends Omit<BaseEventMarkerProps, 'type'> {
   position: [string | number, string | number];
-  label: string;
-  message: string;
-  level?: EventLevel;
 }

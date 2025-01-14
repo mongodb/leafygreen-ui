@@ -29,16 +29,16 @@ import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
   <XAxis type="time" />
   <YAxis type="value" formatter={(value) => `${value}GB`} />
   <EventMarkerPoint
-    label={'2024/01/04 (value 3)'}
-    message={'Critical event occurred'}
+    label='2024/01/04 (value 3)'
+    message='Critical event occurred'
     position={[new Date(2020, 01, 04), 3]}
-    level={'warning'}
+    level='warning'
   />
   <EventMarkerLine
-    label={'2024/01/02'}
-    message={'Something happened of note'}
+    label='2024/01/02'
+    message='Something happened of note'
     position={new Date(2020, 01, 02)}
-    level={'info'}
+    level='info'
   />
   <ThresholdLine
     position={3}

@@ -1,12 +1,6 @@
-import { Theme } from '@leafygreen-ui/lib';
+import { BaseEventMarkerProps } from '../BaseEventMarker';
 
-import { EventLevel } from '../EventMarker.types';
-
-export interface EventMarkerLineProps {
-  name: string;
-  theme: Theme;
-  label: string;
-  message: string;
-  level: EventLevel;
+export interface EventMarkerLineProps
+  extends Omit<BaseEventMarkerProps, 'type'> {
   position: string | number;
 }
