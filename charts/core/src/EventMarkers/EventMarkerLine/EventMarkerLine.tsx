@@ -42,7 +42,7 @@ export function getMarkLineConfig({
           show: true,
         },
         lineStyle: {
-          width: 2, // needed to show line but style actually controlled by LineStyle
+          width: 2,
         },
       },
       label: {
@@ -72,7 +72,7 @@ export function getMarkLineConfig({
             align: 'left',
           },
         },
-        show: false, // Only show on hover / emphasis
+        show: false, // Needed so it only shows on hover (aka emphasis)
       },
       lineStyle: {
         color:
@@ -87,7 +87,7 @@ export function getMarkLineConfig({
           ? [warningIcon, 'none']
           : [infoIcon, 'none'],
       symbolSize: [16, 16],
-      symbolRotate: 360,
+      symbolRotate: 360, // Icon shows upside down without this
     },
   };
 }
@@ -121,9 +121,6 @@ export function EventMarkerLine({
     );
 
     return () => {
-      /**
-       * Remove...
-       */
       chart.removeSeries(name);
     };
   }, [theme, chart.ready, position, label, message, level]);

@@ -78,7 +78,7 @@ export function getMarkPointConfig({
             align: 'left',
           },
         },
-        show: false, // Only show on hover / emphasis
+        show: false, // Needed so it only shows on hover (aka emphasis)
       },
       symbol: level === EventLevel.Warning ? warningIcon : infoIcon,
       symbolSize: [16, 16],
@@ -110,9 +110,6 @@ export function EventMarkerPoint({
     );
 
     return () => {
-      /**
-       * Remove...
-       */
       chart.removeSeries(name);
     };
   }, [theme, chart.ready, position, label, message, level]);

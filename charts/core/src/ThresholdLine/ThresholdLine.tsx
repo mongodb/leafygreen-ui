@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
+import { useChartContext } from '../ChartContext';
+import { svgSymbolPath } from './svgSymbolPath';
+import { SeriesOption } from '../Chart';
 import {
   borderRadius,
   color,
@@ -11,11 +11,8 @@ import {
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
-
-import { SeriesOption } from '../Chart';
-import { useChartContext } from '../ChartContext';
-
-import { svgSymbolPath } from './svgSymbolPath';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 
 function getMarkLineConfig({
   name,
@@ -43,7 +40,7 @@ function getMarkLineConfig({
               show: true,
             },
             lineStyle: {
-              width: 1, // needed to show line but style actually controlled by LineStyle
+              width: 1,
             },
           },
         },
@@ -72,7 +69,7 @@ function getMarkLineConfig({
               ],
           },
         },
-        show: false, // Only show on hover / emphasis
+        show: false, // Needed so it only shows on hover (aka emphasis)
       },
       lineStyle: {
         color: color[theme].icon[Variant.Error][InteractionState.Default],
@@ -119,9 +116,6 @@ export function ThresholdLine({
     chart.addSeries(getMarkLineConfig({ name, position, theme, label, value }));
 
     return () => {
-      /**
-       * Remove...
-       */
       chart.removeSeries(name);
     };
   }, [theme, chart.ready, position, label, value]);
