@@ -10,6 +10,7 @@ import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
+import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
   EventMarkerLine,
@@ -26,7 +27,6 @@ import {
   YAxis,
   YAxisProps,
 } from '.';
-import { ThresholdLineProps } from './ThresholdLine';
 
 export default {
   title: 'Charts/Chart',

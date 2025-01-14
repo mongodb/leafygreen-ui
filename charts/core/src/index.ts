@@ -2,9 +2,9 @@ export { Chart, type ChartOptions, type SeriesOption } from './Chart';
 export { ChartCard } from './ChartCard';
 export {
   EventMarkerLine,
+  type EventMarkerLineProps,
   EventMarkerPoint,
   type EventMarkerPointProps,
-  type EventMarkerLineProps,
 } from './EventMarkers';
 export { Grid } from './Grid';
 export { Header } from './Header';

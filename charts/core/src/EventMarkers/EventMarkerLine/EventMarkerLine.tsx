@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import { useChartContext } from '../../ChartContext';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { EventLevel } from '../EventMarker.types';
 
-import { SeriesOption } from '../../Chart';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
   color,
@@ -13,7 +10,12 @@ import {
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
+
+import { SeriesOption } from '../../Chart';
+import { useChartContext } from '../../ChartContext';
+import { EventLevel } from '../EventMarker.types';
 import { infoIcon, warningIcon } from '../iconsSvgPaths';
+
 import { EventMarkerLineProps } from './EventMarkerLine.types';
 
 export function getMarkLineConfig({

@@ -57,7 +57,6 @@ export function useEchart({
            * This is needed to ensure that series get removed properly.
            * See issue: https://github.com/apache/echarts/issues/6202
            * */
-          console.log(options);
           echartsInstance?.setOption(options, true);
         }),
         50,

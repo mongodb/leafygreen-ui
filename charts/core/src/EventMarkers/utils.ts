@@ -1,4 +1,4 @@
-import { SeriesOption } from '../Chart';
+import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
   color,
@@ -8,7 +8,9 @@ import {
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
-import { Theme } from '@leafygreen-ui/lib';
+
+import { SeriesOption } from '../Chart';
+
 import { infoIcon, warningIcon } from './iconsSvgPaths';
 
 const EventLevel = {

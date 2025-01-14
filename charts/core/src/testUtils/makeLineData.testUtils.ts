@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+
 import { LineProps } from '../Line/Line.types';
 
 /**
