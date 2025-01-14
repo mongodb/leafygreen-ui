@@ -57,12 +57,6 @@ importers:
       '@testing-library/user-event':
         specifier: 13.5.0
         version: 13.5.0(@testing-library/dom@9.3.4)
-      '@types/cross-spawn':
-        specifier: 6.0.2
-        version: 6.0.2
-      '@types/fs-extra':
-        specifier: 11.0.1
-        version: 11.0.1
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -78,30 +72,15 @@ importers:
       '@types/react-dom':
         specifier: 18.2.8
         version: 18.2.8
-      '@types/react-transition-group':
-        specifier: ^4.4.10
-        version: 4.4.10
       chromatic:
         specifier: ^11.0.0
         version: 11.0.0
-      cross-spawn:
-        specifier: 7.0.3
-        version: 7.0.3
       dotenv:
         specifier: ^10.0.0
         version: 10.0.0
-      eslint:
-        specifier: 9.16.0
-        version: 9.16.0
-      fs-extra:
-        specifier: 11.1.1
-        version: 11.1.1
       gh-pages:
         specifier: ^3.1.0
         version: 3.2.3
-      node-fetch:
-        specifier: ^3.3.2
-        version: 3.3.2
       npm-package-json-lint:
         specifier: 8.0.0
         version: 8.0.0(typescript@4.9.5)
@@ -121,7 +100,7 @@ importers:
         specifier: ^7.6.20
         version: 7.6.20
       ts-node:
-        specifier: ^10.9.2
+        specifier: 10.9.2
         version: 10.9.2(@swc/core@1.4.2(@swc/helpers@0.5.1))(@types/node@20.17.12)(typescript@4.9.5)
       turbo:
         specifier: ^2.0.6
@@ -2457,6 +2436,9 @@ importers:
 
   packages/testing-lib:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
       '@testing-library/react':
         specifier: ^12.0.0 || ^13.1.0 || ^14.0.0
         version: 14.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -2470,10 +2452,6 @@ importers:
       '@testing-library/react-hooks':
         specifier: '>=3.7.0'
         version: 8.0.1(@types/react@18.2.23)(react-dom@18.2.0(react@18.2.0))(react-test-renderer@18.2.0(react@18.2.0))(react@18.2.0)
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
 
   packages/text-area:
     dependencies:
@@ -2828,9 +2806,9 @@ importers:
 
   tools/codemods:
     dependencies:
-      '@types/fs-extra':
-        specifier: 11.0.1
-        version: 11.0.1
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       chalk:
         specifier: 4.1.2
         version: 4.1.2
@@ -2850,9 +2828,9 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
+      '@types/fs-extra':
+        specifier: 11.0.1
+        version: 11.0.1
       '@types/is-git-clean':
         specifier: 1.1.0
         version: 1.1.0
@@ -7024,10 +7002,6 @@ packages:
     resolution: {integrity: sha512-hpA5C/YrPjucXypHPPc0oJ1l9Hf6wWbiOL7Ik42cxnsUOhWiCB/fylKbKqqJalW9FgkNQCw16YO8uW9Hs0Iy1A==}
     engines: {node: '>=4'}
 
-  data-uri-to-buffer@4.0.1:
-    resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
-    engines: {node: '>= 12'}
-
   data-urls@3.0.2:
     resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}
     engines: {node: '>=12'}
@@ -7655,10 +7629,6 @@ packages:
   fd-slicer@1.1.0:
     resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
 
-  fetch-blob@3.2.0:
-    resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
-    engines: {node: ^12.20 || >= 14.13}
-
   fetch-retry@5.0.6:
     resolution: {integrity: sha512-3yurQZ2hD9VISAhJJP9bpYFNQrHHBXE2JxxjY5aLEcDi46RmAzJE2OC9FAde0yis5ElW0jTTzs0zfg/Cca4XqQ==}
 
@@ -7794,10 +7764,6 @@ packages:
   form-data@4.0.0:
     resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
     engines: {node: '>= 6'}
-
-  formdata-polyfill@4.0.10:
-    resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
-    engines: {node: '>=12.20.0'}
 
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
@@ -9232,10 +9198,6 @@ packages:
     resolution: {integrity: sha512-tmPX422rYgofd4epzrNoOXiE8XFZYOcCq1vD7MAXCDO+O+zndlA2ztdKKMa+EeuBG5tHETpr4ml4RGgpqDCCAg==}
     engines: {node: '>= 0.10.5'}
 
-  node-domexception@1.0.0:
-    resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
-    engines: {node: '>=10.5.0'}
-
   node-expat@2.4.0:
     resolution: {integrity: sha512-X8Y/Zk/izfNgfayeOeUGqze7KlaOwVJ9SDTjHUMKd0hu0aFTRpLlLCBwmx79cTPiQWD24I1YOafF+U+rTvEMfQ==}
 
@@ -9259,10 +9221,6 @@ packages:
     peerDependenciesMeta:
       encoding:
         optional: true
-
-  node-fetch@3.3.2:
-    resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
@@ -11038,10 +10996,6 @@ packages:
 
   wcwidth@1.0.1:
     resolution: {integrity: sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==}
-
-  web-streams-polyfill@3.3.3:
-    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
-    engines: {node: '>= 8'}
 
   webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
@@ -16010,8 +15964,6 @@ snapshots:
 
   dashify@2.0.0: {}
 
-  data-uri-to-buffer@4.0.1: {}
-
   data-urls@3.0.2:
     dependencies:
       abab: 2.0.6
@@ -16855,11 +16807,6 @@ snapshots:
     dependencies:
       pend: 1.2.0
 
-  fetch-blob@3.2.0:
-    dependencies:
-      node-domexception: 1.0.0
-      web-streams-polyfill: 3.3.3
-
   fetch-retry@5.0.6: {}
 
   file-entry-cache@8.0.0:
@@ -17023,10 +16970,6 @@ snapshots:
       asynckit: 0.4.0
       combined-stream: 1.0.8
       mime-types: 2.1.35
-
-  formdata-polyfill@4.0.10:
-    dependencies:
-      fetch-blob: 3.2.0
 
   forwarded@0.2.0: {}
 
@@ -18935,8 +18878,6 @@ snapshots:
     dependencies:
       minimatch: 3.1.2
 
-  node-domexception@1.0.0: {}
-
   node-expat@2.4.0:
     dependencies:
       bindings: 1.5.0
@@ -18951,12 +18892,6 @@ snapshots:
   node-fetch@2.6.12:
     dependencies:
       whatwg-url: 5.0.0
-
-  node-fetch@3.3.2:
-    dependencies:
-      data-uri-to-buffer: 4.0.1
-      fetch-blob: 3.2.0
-      formdata-polyfill: 4.0.10
 
   node-int64@0.4.0: {}
 
@@ -20927,8 +20862,6 @@ snapshots:
   wcwidth@1.0.1:
     dependencies:
       defaults: 1.0.4
-
-  web-streams-polyfill@3.3.3: {}
 
   webidl-conversions@3.0.1: {}
 

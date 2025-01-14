@@ -19,7 +19,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.x
+          version: 9.15.0
 
       - uses: actions/cache@v4
         name: Check for build cache
@@ -57,7 +57,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.x
+          version: 9.15.0
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -94,7 +94,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.x
+          version: 9.15.0
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -136,7 +136,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.x
+          version: 9.15.0
 
       - name: Use Node 18
         uses: actions/setup-node@v4
@@ -172,7 +172,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.15.x
+          version: 9.15.0
 
       - name: Use Node 18
         uses: actions/setup-node@v4
