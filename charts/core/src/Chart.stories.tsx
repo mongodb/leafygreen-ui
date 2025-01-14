@@ -15,6 +15,7 @@ import {
   EventMarkerLine,
   EventMarkerLineProps,
   EventMarkerPoint,
+  EventMarkerPointProps,
   Grid,
   Header,
   Line,
@@ -52,6 +53,12 @@ export default {
     eventMarkerLineLabel: 'Event marker line label',
     eventMarkerLineLevel: 'warning',
     eventMarkerLinePosition: new Date('2024-01-01T00:20:00').getTime(),
+    renderEventMarkerPoint: true,
+    eventMarkerPointMessage: 'Event marker line message',
+    eventMarkerPointLabel: 'Event marker line label',
+    eventMarkerPointLevel: 'warning',
+    eventMarkerPointXPosition: new Date('2024-01-01T00:37:00').getTime(),
+    eventMarkerPointYPosition: 699,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -290,6 +297,50 @@ export default {
         category: 'EventMarkerLine',
       },
     },
+    renderEventMarkerPoint: {
+      description: 'Show the event marker point',
+      name: 'RenderEventMarkerPoint',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointLabel: {
+      description: 'Label rendered in the the event marker point tooltip',
+      name: 'EventMarkerPointLabel',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointMessage: {
+      description: 'Message rendered in the the event marker point tooltip',
+      name: 'EventMarkerPointMessage',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointLevel: {
+      description: 'Level of the event marker point',
+      name: 'EventMarkerPointLevel',
+      control: 'select',
+      options: ['warning', 'info'],
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointXPosition: {
+      description: 'Position of event marker point along x-axis',
+      name: 'EventMarkerPointXPosition',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointYPosition: {
+      description: 'Position of event marker point along y-axis',
+      name: 'EventMarkerPointYPosition',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
   },
 };
 
@@ -321,6 +372,12 @@ interface StorybookProps {
   eventMarkerLineLabel: EventMarkerLineProps['label'];
   eventMarkerLineLevel: EventMarkerLineProps['level'];
   eventMarkerLinePosition: EventMarkerLineProps['position'];
+  renderEventMarkerPoint: boolean;
+  eventMarkerPointMessage: EventMarkerPointProps['message'];
+  eventMarkerPointLabel: EventMarkerPointProps['label'];
+  eventMarkerPointLevel: EventMarkerPointProps['level'];
+  eventMarkerPointXPosition: EventMarkerPointProps['position'][0];
+  eventMarkerPointYPosition: EventMarkerPointProps['position'][1];
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -352,6 +409,12 @@ export const Basic: StoryObj<StorybookProps> = {
     eventMarkerLineLabel,
     eventMarkerLineLevel,
     eventMarkerLinePosition,
+    renderEventMarkerPoint,
+    eventMarkerPointMessage,
+    eventMarkerPointLabel,
+    eventMarkerPointLevel,
+    eventMarkerPointXPosition,
+    eventMarkerPointYPosition,
   }) => {
     return (
       <Chart
@@ -391,11 +454,14 @@ export const Basic: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
-        <EventMarkerPoint
-          label="Event Marker Point Label"
-          message="Event marker point message"
-          position={[new Date('2024-01-01T00:37:00').getTime(), 699]}
-        />
+        {renderEventMarkerPoint && (
+          <EventMarkerPoint
+            label={eventMarkerPointLabel}
+            message={eventMarkerPointMessage}
+            position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+            level={eventMarkerPointLevel}
+          />
+        )}
         {renderEventMarkerLine && (
           <EventMarkerLine
             position={eventMarkerLinePosition}
@@ -439,6 +505,12 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     eventMarkerLineLabel,
     eventMarkerLineLevel,
     eventMarkerLinePosition,
+    renderEventMarkerPoint,
+    eventMarkerPointMessage,
+    eventMarkerPointLabel,
+    eventMarkerPointLevel,
+    eventMarkerPointXPosition,
+    eventMarkerPointYPosition,
   }) => {
     return (
       <Chart
@@ -491,6 +563,14 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
+        {renderEventMarkerPoint && (
+          <EventMarkerPoint
+            label={eventMarkerPointLabel}
+            message={eventMarkerPointMessage}
+            position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+            level={eventMarkerPointLevel}
+          />
+        )}
         {renderEventMarkerLine && (
           <EventMarkerLine
             position={eventMarkerLinePosition}
@@ -533,6 +613,12 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
     eventMarkerLineLabel,
     eventMarkerLineLevel,
     eventMarkerLinePosition,
+    renderEventMarkerPoint,
+    eventMarkerPointMessage,
+    eventMarkerPointLabel,
+    eventMarkerPointLevel,
+    eventMarkerPointXPosition,
+    eventMarkerPointYPosition,
   }) => {
     return (
       <div
@@ -579,6 +665,14 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
           {data.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
+          {renderEventMarkerPoint && (
+            <EventMarkerPoint
+              label={eventMarkerPointLabel}
+              message={eventMarkerPointMessage}
+              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+              level={eventMarkerPointLevel}
+            />
+          )}
           {renderEventMarkerLine && (
             <EventMarkerLine
               position={eventMarkerLinePosition}
@@ -629,6 +723,14 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
           {data.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
+          {renderEventMarkerPoint && (
+            <EventMarkerPoint
+              label={eventMarkerPointLabel}
+              message={eventMarkerPointMessage}
+              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+              level={eventMarkerPointLevel}
+            />
+          )}
           {renderEventMarkerLine && (
             <EventMarkerLine
               position={eventMarkerLinePosition}
