@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { useChartContext } from '../ChartContext';
-import { svgSymbolPath } from './svgSymbolPath';
-import { SeriesOption } from '../Chart';
+
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
   color,
@@ -11,8 +11,11 @@ import {
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
+
+import { SeriesOption } from '../Chart';
+import { useChartContext } from '../ChartContext';
+
+import { svgSymbolPath } from './svgSymbolPath';
 
 function getMarkLineConfig({
   name,
