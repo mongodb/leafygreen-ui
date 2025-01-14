@@ -26,6 +26,7 @@ import {
   YAxis,
   YAxisProps,
 } from '.';
+import { ThresholdLineProps } from './ThresholdLine';
 
 export default {
   title: 'Charts/Chart',
@@ -59,6 +60,10 @@ export default {
     eventMarkerPointLevel: 'warning',
     eventMarkerPointXPosition: new Date('2024-01-01T00:37:00').getTime(),
     eventMarkerPointYPosition: 699,
+    renderThresholdLine: true,
+    thresholdLineLabel: 'Cluster Limit',
+    thresholdLineValue: '1400',
+    thresholdLinePosition: 1400,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -341,6 +346,34 @@ export default {
         category: 'EventMarkerPoint',
       },
     },
+    renderThresholdLine: {
+      description: 'Show the threshold line',
+      name: 'RenderThresholdLine',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
+    thresholdLineLabel: {
+      description: 'Threshold line tooltip label.',
+      name: 'ThresholdLineLabel',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
+    thresholdLineValue: {
+      description: 'Threshold line tooltip value.',
+      name: 'ThresholdLineValue',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
+    thresholdLinePosition: {
+      description: 'Where along the y-axis the line should be positioned.',
+      name: 'ThresholdLinePosition',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
   },
 };
 
@@ -378,6 +411,10 @@ interface StorybookProps {
   eventMarkerPointLevel: EventMarkerPointProps['level'];
   eventMarkerPointXPosition: EventMarkerPointProps['position'][0];
   eventMarkerPointYPosition: EventMarkerPointProps['position'][1];
+  renderThresholdLine: true;
+  thresholdLineLabel: ThresholdLineProps['label'];
+  thresholdLineValue: ThresholdLineProps['value'];
+  thresholdLinePosition: ThresholdLineProps['position'];
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -415,6 +452,10 @@ export const Basic: StoryObj<StorybookProps> = {
     eventMarkerPointLevel,
     eventMarkerPointXPosition,
     eventMarkerPointYPosition,
+    renderThresholdLine,
+    thresholdLineLabel,
+    thresholdLineValue,
+    thresholdLinePosition,
   }) => {
     return (
       <Chart
@@ -470,7 +511,13 @@ export const Basic: StoryObj<StorybookProps> = {
             level={eventMarkerLineLevel}
           />
         )}
-        <ThresholdLine position={1400} label="Cluster Limit" value="1400" />
+        {renderThresholdLine && (
+          <ThresholdLine
+            position={thresholdLinePosition}
+            label={thresholdLineLabel}
+            value={thresholdLineValue}
+          />
+        )}
       </Chart>
     );
   },
@@ -511,6 +558,10 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     eventMarkerPointLevel,
     eventMarkerPointXPosition,
     eventMarkerPointYPosition,
+    renderThresholdLine,
+    thresholdLineLabel,
+    thresholdLineValue,
+    thresholdLinePosition,
   }) => {
     return (
       <Chart
@@ -579,6 +630,13 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
             level={eventMarkerLineLevel}
           />
         )}
+        {renderThresholdLine && (
+          <ThresholdLine
+            position={thresholdLinePosition}
+            label={thresholdLineLabel}
+            value={thresholdLineValue}
+          />
+        )}
       </Chart>
     );
   },
@@ -619,6 +677,10 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
     eventMarkerPointLevel,
     eventMarkerPointXPosition,
     eventMarkerPointYPosition,
+    renderThresholdLine,
+    thresholdLineLabel,
+    thresholdLineValue,
+    thresholdLinePosition,
   }) => {
     return (
       <div
@@ -681,6 +743,13 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
               level={eventMarkerLineLevel}
             />
           )}
+          {renderThresholdLine && (
+            <ThresholdLine
+              position={thresholdLinePosition}
+              label={thresholdLineLabel}
+              value={thresholdLineValue}
+            />
+          )}
         </Chart>
         <Chart
           groupId="group1"
@@ -737,6 +806,13 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
               label={eventMarkerLineLabel}
               message={eventMarkerLineMessage}
               level={eventMarkerLineLevel}
+            />
+          )}
+          {renderThresholdLine && (
+            <ThresholdLine
+              position={thresholdLinePosition}
+              label={thresholdLineLabel}
+              value={thresholdLineValue}
             />
           )}
         </Chart>
