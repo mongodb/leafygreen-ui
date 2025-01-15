@@ -1,5 +1,17 @@
 # @lg-charts/core
 
+## 0.10.0
+
+### Minor Changes
+
+- 287e1ed46: - Adds `EventMarkerPoint`, `EventMarkerLine`, and `ThresholdLine` components
+  - Removes animation delay from tooltip to make tooltip more snappy.
+
+### Patch Changes
+
+- Updated dependencies [3dee4332a]
+  - @leafygreen-ui/icon@13.1.0
+
 ## 0.9.0
 
 ### Minor Changes
