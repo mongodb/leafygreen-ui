@@ -356,3 +356,9 @@ export function getScrollShadow(
     }
   `;
 }
+
+export const loadingStyles = css`
+  grid-area: code;
+  padding-block: ${spacing[400]}px 80px;
+  padding-inline: ${spacing[400]}px 28px;
+`;

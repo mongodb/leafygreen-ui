@@ -12,12 +12,15 @@ import { numOfCollapsedLinesOfCode } from '../constants';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
+import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
+
 import {
   getCopyButtonWithoutPanelStyles,
   getCodeStyles,
   getCodeWrapperStyles,
   getExpandedButtonStyles,
   wrapperStyle,
+  loadingStyles,
 } from './Code.styles';
 import {
   CodeProps,
@@ -37,17 +40,18 @@ function getHorizontalScrollbarHeight(element: HTMLElement): number {
 }
 
 function Code({
-  children = '',
-  className,
   language: languageProp,
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
   expandable = false,
-  onCopy,
+  isLoading = false,
   highlightLines = [],
-  panel,
   copyButtonAppearance = CopyButtonAppearance.Hover,
+  children = '',
+  className,
+  onCopy,
+  panel,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -147,10 +151,12 @@ function Code({
     debounceScroll(e);
   };
 
+  // TODO: don't show when isLoading
   const showExpandButton = !!(
     expandable &&
     numOfLinesOfCode &&
-    numOfLinesOfCode > numOfCollapsedLinesOfCode
+    numOfLinesOfCode > numOfCollapsedLinesOfCode &&
+    !isLoading
   );
 
   return (
@@ -169,26 +175,30 @@ function Code({
             showExpandButton,
           })}
         >
-          <pre
-            {...(rest as DetailedElementProps<HTMLPreElement>)}
-            className={getCodeWrapperStyles({
-              theme,
-              hasPanel,
-              expanded,
-              codeHeight,
-              collapsedCodeHeight,
-              isMultiline,
-              showExpandButton,
-              className,
-            })}
-            onScroll={onScroll}
-            ref={scrollableElementRef}
-            // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={scrollState !== ScrollState.None ? 0 : -1}
-          >
-            {renderedSyntaxComponent}
-          </pre>
+          {!isLoading && (
+            <pre
+              {...(rest as DetailedElementProps<HTMLPreElement>)}
+              className={getCodeWrapperStyles({
+                theme,
+                hasPanel,
+                expanded,
+                codeHeight,
+                collapsedCodeHeight,
+                isMultiline,
+                showExpandButton,
+                className,
+              })}
+              onScroll={onScroll}
+              ref={scrollableElementRef}
+              // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              tabIndex={scrollState !== ScrollState.None ? 0 : -1}
+            >
+              {renderedSyntaxComponent}
+            </pre>
+          )}
+
+          {isLoading && <CodeSkeleton className={loadingStyles} />}
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
           {!hasPanel &&

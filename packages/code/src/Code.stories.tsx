@@ -78,6 +78,7 @@ const meta: StoryMetaType<typeof Code> = {
     copyButtonAppearance: CopyButtonAppearance.Hover,
   },
   argTypes: {
+    isLoading: { control: 'boolean' },
     copyable: { control: 'boolean' },
     expandable: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
@@ -116,6 +117,7 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
     <Code
       {...(args as CodeProps)}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      style={{ maxWidth: '100%' }}
     >
       {jsSnippet}
     </Code>
