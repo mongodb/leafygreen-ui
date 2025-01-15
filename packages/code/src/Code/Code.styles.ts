@@ -55,23 +55,21 @@ export const getCodeStyles = ({
   theme,
   hasPanel,
   showExpandButton,
+  isLoading,
 }: {
   scrollState: ScrollState;
   theme: Theme;
   hasPanel: boolean;
   showExpandButton: boolean;
+  isLoading: boolean;
 }) =>
-  cx(
-    contentWrapperStyles,
-    baseScrollShadowStyles,
-    getScrollShadow(scrollState, theme),
-    {
-      [codeWithPanelStyles]: hasPanel,
-      [codeWithoutPanelStyles]: !hasPanel,
-      [expandableContentWithPanelStyles]: showExpandButton && hasPanel,
-      [expandableContentWithoutPanelStyles]: showExpandButton && !hasPanel,
-    },
-  );
+  cx(contentWrapperStyles, baseScrollShadowStyles, {
+    [getScrollShadow(scrollState, theme)]: !isLoading,
+    [codeWithPanelStyles]: hasPanel,
+    [codeWithoutPanelStyles]: !hasPanel,
+    [expandableContentWithPanelStyles]: showExpandButton && hasPanel,
+    [expandableContentWithoutPanelStyles]: showExpandButton && !hasPanel,
+  });
 
 export const getCodeWrapperStyles = ({
   theme,

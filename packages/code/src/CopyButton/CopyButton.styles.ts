@@ -1,7 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color } from '@leafygreen-ui/tokens';
 
 export const tooltipStyles = css`
   svg {
@@ -23,7 +22,6 @@ export const getCopyButtonStyles = ({
     },
     css`
       align-self: center;
-      color: ${color[theme].icon.primary.default};
     `,
   );
 

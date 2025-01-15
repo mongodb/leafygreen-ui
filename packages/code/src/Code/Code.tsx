@@ -176,6 +176,7 @@ function Code({
             theme,
             hasPanel,
             showExpandButton,
+            isLoading,
           })}
         >
           {!isLoading && (
