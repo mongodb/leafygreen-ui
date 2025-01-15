@@ -1,8 +1,8 @@
 # @lg-charts/core
 
-## 1.0.0
+## 0.9.0
 
-### Patch Changes
+### Minor Changes
 
 - Updated dependencies [274d7e1a7]
   - @leafygreen-ui/leafygreen-provider@4.0.0
