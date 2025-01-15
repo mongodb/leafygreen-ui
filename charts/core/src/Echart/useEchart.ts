@@ -263,7 +263,7 @@ export function useEchart({
   useEffect(() => {
     setError(null);
 
-    let resizeCallback: (e: UIEvent) => void;
+    let resizeCallback: () => void;
 
     initializeEcharts()
       .then(echartsCore => {
