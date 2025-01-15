@@ -417,7 +417,7 @@ interface StorybookProps {
   thresholdLinePosition: ThresholdLineProps['position'];
 }
 
-export const Basic: StoryObj<StorybookProps> = {
+export const LiveExample: StoryObj<StorybookProps> = {
   render: ({
     data,
     verticalGridLines,
