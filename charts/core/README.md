@@ -214,8 +214,8 @@ Renders a vertical line marker at a specific point on the x-axis to annotate an 
 | Name                 | Description                                                 | Type                  | Default     |
 | -------------------- | ----------------------------------------------------------- | --------------------- | ----------- |
 | `position`           | Position along the x-axis where the line should be placed.  | `string \| number`    |             |
-| `label`              | Label text shown in the tooltip when hovering.              | `string`              |             |
 | `message`            | Additional message text shown in the tooltip when hovering. | `string`              |             |
+| `label` _(optional)_ | Label text shown in the tooltip when hovering.              | `string`              |             |
 | `level` _(optional)_ | Visual style of the marker indicating its severity.         | `'warning' \| 'info'` | `'warning'` |
 
 ### `EventMarkerPoint`
@@ -227,8 +227,8 @@ Renders a point marker at specific coordinates to annotate an event.
 | Name                 | Description                                                 | Type                                   | Default     |
 | -------------------- | ----------------------------------------------------------- | -------------------------------------- | ----------- |
 | `position`           | Coordinates where the point should be placed [x, y].        | `[string \| number, string \| number]` |             |
-| `label`              | Label text shown in the tooltip when hovering.              | `string`                               |             |
 | `message`            | Additional message text shown in the tooltip when hovering. | `string`                               |             |
+| `label` _(optional)_ | Label text shown in the tooltip when hovering.              | `string`                               |             |
 | `level` _(optional)_ | Visual style of the marker indicating its severity.         | `'warning' \| 'info'`                  | `'warning'` |
 
 ### `ThresholdLine`
@@ -237,8 +237,8 @@ Renders a horizontal dashed line at a specific value on the y-axis to indicate a
 
 #### Props
 
-| Name       | Description                                                    | Type     | Default |
-| ---------- | -------------------------------------------------------------- | -------- | ------- |
-| `position` | Position along the y-axis where the line should be placed.     | `number` |         |
-| `label`    | Label text shown in the tooltip when hovering.                 | `string` |         |
-| `value`    | Value text shown after the label in the tooltip when hovering. | `string` |         |
+| Name                 | Description                                                    | Type     | Default |
+| -------------------- | -------------------------------------------------------------- | -------- | ------- |
+| `position`           | Position along the y-axis where the line should be placed.     | `number` |         |
+| `value`              | Value text shown after the label in the tooltip when hovering. | `string` |         |
+| `label` _(optional)_ | Label text shown in the tooltip when hovering.                 | `string` |         |

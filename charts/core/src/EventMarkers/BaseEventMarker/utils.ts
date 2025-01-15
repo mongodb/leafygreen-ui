@@ -11,7 +11,7 @@ import {
 import { SeriesOption } from '../../Chart';
 import { infoIcon, warningIcon } from '../iconsSvgPaths';
 
-import { BaseEventMarkerProps, EventLevel } from './BaseEventMarker.types';
+import { EventLevel, GetMarkConfigProps } from './BaseEventMarker.types';
 
 export function getMarkConfig({
   name,
@@ -21,46 +21,45 @@ export function getMarkConfig({
   level,
   position,
   type,
-}: BaseEventMarkerProps): SeriesOption {
+}: GetMarkConfigProps): SeriesOption {
+  const labelConfig = {
+    borderRadius: borderRadius[200],
+    backgroundColor:
+      color[theme].background[Variant.InversePrimary][InteractionState.Default],
+    color: color[theme].text[Variant.InversePrimary][InteractionState.Default],
+    fontFamily: fontFamilies.default,
+    fontSize: 12,
+    fontWeight: fontWeights.regular,
+    formatter: label
+      ? `{label|${label}}\n{message|${message}}`
+      : `{message|${message}}`,
+    lineHeight: 15,
+    padding: spacing[150],
+    position: type === 'line' ? 'start' : 'bottom',
+    rich: {
+      label: {
+        color:
+          color[theme].text[Variant.InverseSecondary][InteractionState.Default],
+        align: 'left',
+      },
+      message: {
+        align: 'left',
+      },
+    },
+    show: false, // Needed so it only shows on hover (aka emphasis)
+  };
+
   const commonConfig = {
     animation: false,
     name,
     type: 'line', // Requires a type even though it's not an actual series
-    label: {
-      borderRadius: borderRadius[200],
-      backgroundColor:
-        color[theme].background[Variant.InversePrimary][
-          InteractionState.Default
-        ],
-      color:
-        color[theme].text[Variant.InversePrimary][InteractionState.Default],
-      fontFamily: fontFamilies.default,
-      fontSize: 12,
-      fontWeight: fontWeights.regular,
-      formatter: [`{label|${label}}`, `{message|${message}}`].join('\n'),
-      lineHeight: 15,
-      padding: spacing[150],
-      position: type === 'line' ? 'start' : 'bottom',
-      rich: {
-        label: {
-          color:
-            color[theme].text[Variant.InverseSecondary][
-              InteractionState.Default
-            ],
-          align: 'left',
-        },
-        message: {
-          align: 'left',
-        },
-      },
-      show: false, // Needed so it only shows on hover (aka emphasis)
-    },
   };
 
   if (type === 'line') {
     return {
       ...commonConfig,
       markLine: {
+        label: labelConfig,
         data: [
           {
             name: name,
@@ -95,6 +94,7 @@ export function getMarkConfig({
     return {
       ...commonConfig,
       markPoint: {
+        label: labelConfig,
         data: [
           {
             name: name,
@@ -106,6 +106,8 @@ export function getMarkConfig({
             show: true,
           },
         },
+        symbolSize: [16, 16],
+        symbol: level === EventLevel.Warning ? warningIcon : infoIcon,
       },
     } as SeriesOption;
   }

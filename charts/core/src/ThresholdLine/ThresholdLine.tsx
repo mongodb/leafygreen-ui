@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
   color,
@@ -16,20 +15,18 @@ import { SeriesOption } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { svgSymbolPath } from './svgSymbolPath';
+import {
+  GetThresholdLineConfig,
+  ThresholdLineProps,
+} from './ThresholdLine.types';
 
-function getMarkLineConfig({
+function getThresholdLineConfig({
   name,
   position,
   theme,
   label,
   value,
-}: {
-  name: string;
-  position: number;
-  theme: Theme;
-  label: string;
-  value: string;
-}): SeriesOption {
+}: GetThresholdLineConfig): SeriesOption {
   return {
     name,
     type: 'line', // Requires a type even though it's not an actual series
@@ -60,7 +57,7 @@ function getMarkLineConfig({
         fontFamily: fontFamilies.default,
         fontSize: 12,
         fontWeight: fontWeights.regular,
-        formatter: `{label|${label}}: ${value}`,
+        formatter: label ? `{label|${label}:} ${value}` : value,
         lineHeight: 20,
         padding: spacing[150],
         position: 'insideEnd',
@@ -94,15 +91,7 @@ function getMarkLineConfig({
   };
 }
 
-export function ThresholdLine({
-  position,
-  label,
-  value,
-}: {
-  position: number;
-  label: string;
-  value: string;
-}) {
+export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
   const name = `threshold-${position}`;
@@ -116,7 +105,9 @@ export function ThresholdLine({
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a Tooltip.
      */
-    chart.addSeries(getMarkLineConfig({ name, position, theme, label, value }));
+    chart.addSeries(
+      getThresholdLineConfig({ name, position, theme, label, value }),
+    );
 
     return () => {
       chart.removeSeries(name);
