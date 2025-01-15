@@ -62,6 +62,29 @@ export function useChart({
     }
   }, [echart.ready, onZoomSelect]);
 
+  function hideTooltip() {
+    echart.hideTooltip();
+  }
+
+  // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
+  useEffect(() => {
+    if (echart.ready) {
+      echart.on('mouseover', e => {
+        if (e.componentType === 'markPoint') {
+          hideTooltip();
+          echart.on('mousemove', hideTooltip);
+        }
+      });
+
+      // Stop hiding once the mouse leaves the `EventMarkerPoint`
+      echart.on('mouseout', e => {
+        if (e.componentType === 'markPoint') {
+          echart.off('mousemove', hideTooltip);
+        }
+      });
+    }
+  }, [echart.ready]);
+
   return {
     ...echart,
     ref: chartRef,

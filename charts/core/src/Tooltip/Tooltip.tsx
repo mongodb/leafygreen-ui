@@ -60,6 +60,7 @@ export function Tooltip({
           color:
             color[theme].text[Variant.InversePrimary][InteractionState.Default],
         },
+        transitionDuration: 0,
         trigger: 'axis',
       },
     });
