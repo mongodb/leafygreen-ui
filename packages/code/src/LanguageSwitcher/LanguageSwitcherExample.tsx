@@ -43,7 +43,8 @@ function LanguageSwitcher({
   darkMode,
   onChange,
   customActionButtons = [],
-  showCustomActionButtons = false,
+  showCustomActionButtons = true,
+  ...rest
 }: {
   darkMode?: boolean;
   onChange?: Function;
@@ -61,6 +62,7 @@ function LanguageSwitcher({
 
   return (
     <Code
+      {...rest}
       language={language}
       lineNumberStart={1}
       darkMode={darkMode}
@@ -68,6 +70,7 @@ function LanguageSwitcher({
         <Panel
           languageOptions={languageOptions}
           customActionButtons={customActionButtons}
+          showCustomActionButtons={showCustomActionButtons}
           onChange={handleChange}
           title="Title"
         />

@@ -8,4 +8,5 @@ export type CodeProviderProps = PropsWithChildren &
     contents: string;
     language: Language | LanguageOption;
     hasPanel?: boolean;
+    isLoading: boolean;
   };

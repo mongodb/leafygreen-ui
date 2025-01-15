@@ -33,18 +33,22 @@ const singleLineComponentHeight = 36;
 const lineHeight = 24;
 const codeWrappingVerticalPadding = spacing[200];
 
-export const wrapperStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border: 1px solid ${variantColors[Theme.Light][1]};
-    border-radius: 12px;
-    overflow: hidden;
-  `,
-  [Theme.Dark]: css`
-    border: 1px solid ${variantColors[Theme.Dark][1]};
-    border-radius: 12px;
-    overflow: hidden;
-  `,
-};
+export const getWrapperStyles = ({
+  theme,
+  className,
+}: {
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
+    css`
+      border: 1px solid ${variantColors[theme][1]};
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+    `,
+    className,
+  );
 
 export const getCodeStyles = ({
   scrollState,
@@ -357,8 +361,10 @@ export function getScrollShadow(
   `;
 }
 
-export const loadingStyles = css`
-  grid-area: code;
-  padding-block: ${spacing[400]}px 80px;
-  padding-inline: ${spacing[400]}px 28px;
-`;
+export const getLoadingStyles = (theme: Theme) =>
+  cx(css`
+    grid-area: code;
+    padding-block: ${spacing[400]}px 80px;
+    padding-inline: ${spacing[400]}px 28px;
+    background-color: ${variantColors[theme][0]};
+  `);

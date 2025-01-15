@@ -19,8 +19,8 @@ import {
   getCodeStyles,
   getCodeWrapperStyles,
   getExpandedButtonStyles,
-  wrapperStyle,
-  loadingStyles,
+  getWrapperStyles,
+  getLoadingStyles,
 } from './Code.styles';
 import {
   CodeProps,
@@ -31,10 +31,12 @@ import {
 import CodeContextProvider from '../CodeContext/CodeContext';
 import CopyButton from '../CopyButton/CopyButton';
 
+// TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
 }
 
+// TODO: move to utils
 function getHorizontalScrollbarHeight(element: HTMLElement): number {
   return element.offsetHeight - element.clientHeight;
 }
@@ -151,7 +153,6 @@ function Code({
     debounceScroll(e);
   };
 
-  // TODO: don't show when isLoading
   const showExpandButton = !!(
     expandable &&
     numOfLinesOfCode &&
@@ -165,8 +166,10 @@ function Code({
       contents={children}
       language={languageProp}
       hasPanel={hasPanel}
+      isLoading={isLoading}
     >
-      <div className={wrapperStyle[theme]}>
+      {/* TODO: note in changeset that className was moved to the parent wrapper */}
+      <div className={getWrapperStyles({ theme, className })}>
         <div
           className={getCodeStyles({
             scrollState,
@@ -186,7 +189,6 @@ function Code({
                 collapsedCodeHeight,
                 isMultiline,
                 showExpandButton,
-                className,
               })}
               onScroll={onScroll}
               ref={scrollableElementRef}
@@ -198,10 +200,11 @@ function Code({
             </pre>
           )}
 
-          {isLoading && <CodeSkeleton className={loadingStyles} />}
+          {isLoading && <CodeSkeleton className={getLoadingStyles(theme)} />}
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
           {!hasPanel &&
+            !isLoading &&
             copyButtonAppearance !== CopyButtonAppearance.None &&
             ClipboardJS.isSupported() && (
               <div

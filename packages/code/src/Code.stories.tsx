@@ -13,6 +13,7 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
+import { css } from '@leafygreen-ui/emotion';
 
 const jsSnippet = `
 import datetime from './';
@@ -117,7 +118,9 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
     <Code
       {...(args as CodeProps)}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-      style={{ maxWidth: '100%' }}
+      className={css`
+        width: 100%;
+      `}
     >
       {jsSnippet}
     </Code>

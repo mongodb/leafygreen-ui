@@ -8,6 +8,7 @@ import { LanguageOption } from '../Panel/Panel.types';
 
 import { containerStyle, selectStyle } from './LanguageSwitcher.styles';
 import { LGIDs } from '../constants';
+import { useCodeContext } from '../CodeContext/CodeContext';
 
 interface Props {
   language: LanguageOption;
@@ -18,6 +19,7 @@ interface Props {
 function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
   const { darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
+  const { isLoading } = useCodeContext();
 
   const handleChange = (val: string) => {
     if (val === '' && previousLanguage !== undefined) {
@@ -45,6 +47,7 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         renderMode={RenderMode.TopLayer}
         size={Size.XSmall}
         data-testid={LGIDs.select}
+        disabled={isLoading}
       >
         {languageOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>
