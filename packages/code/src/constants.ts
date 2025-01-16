@@ -7,4 +7,6 @@ export const LGIDs = {
   panel: `${LGID_ROOT}-panel`,
   select: `${LGID_ROOT}-select`,
   copyButton: `${LGID_ROOT}-copy_button`,
+  skeleton: `${LGID_ROOT}-skeleton`,
+  pre: `${LGID_ROOT}-pre`,
 } as const;

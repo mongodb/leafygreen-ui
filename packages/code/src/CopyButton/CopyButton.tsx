@@ -62,7 +62,6 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     });
 
     if (copied) {
-      console.log('🤡');
       const timeoutId = setTimeout(() => {
         setCopied(false);
       }, COPIED_SUCCESS_DURATION);

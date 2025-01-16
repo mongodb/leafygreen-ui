@@ -66,7 +66,7 @@ const languageOptions = [
 
 const renderCode = (props: Partial<CodeProps> = {}) => {
   const renderResults = render(
-    <Code language="javascript" {...props}>
+    <Code language={languageOptions[0].language} {...props}>
       {codeSnippet}
     </Code>,
   );
@@ -149,22 +149,6 @@ describe('packages/Code', () => {
     });
   });
 
-  // const codeContainer = (container.firstChild as HTMLElement).lastChild;
-  // const codeRoot = (codeContainer as HTMLElement).firstChild; //pre tag
-
-  // TODO: add back
-  // if (!codeRoot || !typeIs.element(codeRoot)) {
-  //   throw new Error('Code element not found');
-  // }
-
-  test.skip('root element renders as a <pre> tag', () => {
-    expect(codeRoot.tagName).toBe('PRE');
-  });
-
-  test.skip(`renders "${className}" in the root element's classList`, () => {
-    expect(codeRoot.classList.contains(className)).toBe(true);
-  });
-
   // TODO: remove this test when we remove the prop
   describe.skip('when copyable is true', () => {
     test('onCopy callback is fired when code is copied', () => {
@@ -203,6 +187,133 @@ describe('packages/Code', () => {
     test('when passed multiple lines with preceding and subsequent line breaks, returns "true"', () => {
       const codeExample = `\nExample\nstring\n`;
       expect(hasMultipleLines(codeExample)).toBeTruthy();
+    });
+  });
+
+  describe('isLoading prop', () => {
+    describe('when isLoading is true', () => {
+      test('renders a skeleton', () => {
+        const { getByTestId } = renderCode({ isLoading: true });
+        expect(getByTestId('lg-code-skeleton')).toBeDefined();
+      });
+
+      test('does not render a pre tag', () => {
+        const { queryByTestId } = renderCode({ isLoading: true });
+        expect(queryByTestId('lg-code-pre')).toBeNull();
+      });
+
+      describe('with panel slot', () => {
+        test('language switcher is disabled', () => {
+          const { getByTestId } = renderCode({
+            isLoading: true,
+            language: languageOptions[0],
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getByTestId('lg-code-select')).toHaveAttribute(
+            'aria-disabled',
+            'true',
+          );
+        });
+        test('copy button is disabled', () => {
+          const { getByTestId } = Context.within(
+            Jest.spyContext(ClipboardJS, 'isSupported'),
+            spy => {
+              spy.mockReturnValue(true);
+              return renderCode({
+                isLoading: true,
+                language: languageOptions[0],
+                panel: <Panel />,
+              });
+            },
+          );
+
+          expect(getByTestId('lg-code-copy_button')).toHaveAttribute(
+            'aria-disabled',
+            'true',
+          );
+        });
+      });
+
+      describe('without panel slot', () => {
+        test('copy button is not rendered', () => {
+          const { queryByTestId } = Context.within(
+            Jest.spyContext(ClipboardJS, 'isSupported'),
+            spy => {
+              spy.mockReturnValue(true);
+              return renderCode({
+                isLoading: true,
+              });
+            },
+          );
+
+          expect(queryByTestId('lg-code-copy_button')).toBeNull();
+        });
+      });
+    });
+    describe('when isLoading is false', () => {
+      test('does not render a skeleton', () => {
+        const { queryByTestId } = renderCode({ isLoading: false });
+        expect(queryByTestId('lg-code-skeleton')).toBeNull();
+      });
+      test('renders a pre tag', () => {
+        const { getByTestId } = renderCode({ isLoading: false });
+        expect(getByTestId('lg-code-pre')).toBeInTheDocument();
+      });
+
+      describe('with panel slot', () => {
+        test('language switcher is enabled', () => {
+          const { getByTestId } = renderCode({
+            isLoading: false,
+            language: languageOptions[0],
+            panel: (
+              <Panel onChange={() => {}} languageOptions={languageOptions} />
+            ),
+          });
+          expect(getByTestId('lg-code-select')).toHaveAttribute(
+            'aria-disabled',
+            'false',
+          );
+        });
+        test('copy button is enabled', () => {
+          const { getByTestId } = Context.within(
+            Jest.spyContext(ClipboardJS, 'isSupported'),
+            spy => {
+              spy.mockReturnValue(true);
+              return renderCode({
+                isLoading: false,
+                language: languageOptions[0],
+                panel: <Panel />,
+              });
+            },
+          );
+
+          expect(getByTestId('lg-code-copy_button')).toHaveAttribute(
+            'aria-disabled',
+            'false',
+          );
+        });
+      });
+
+      describe('without panel slot', () => {
+        test('copy button is enabled', () => {
+          const { getByTestId } = Context.within(
+            Jest.spyContext(ClipboardJS, 'isSupported'),
+            spy => {
+              spy.mockReturnValue(true);
+              return renderCode({
+                isLoading: false,
+              });
+            },
+          );
+
+          expect(getByTestId('lg-code-copy_button')).toHaveAttribute(
+            'aria-disabled',
+            'false',
+          );
+        });
+      });
     });
   });
 
@@ -270,6 +381,9 @@ describe('packages/Code', () => {
     });
   });
 
+  // TODO: refactor these tests
+  // move everything inside renders
+  // replace queryby with getby for things that should be in the doc
   describe('With panel slot', () => {
     describe('renders', () => {
       test('panel with only the copy button when no props are passed', () => {

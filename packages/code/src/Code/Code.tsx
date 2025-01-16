@@ -8,7 +8,7 @@ import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
-import { numOfCollapsedLinesOfCode } from '../constants';
+import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
@@ -181,6 +181,7 @@ function Code({
         >
           {!isLoading && (
             <pre
+              data-testid={LGIDs.pre}
               {...(rest as DetailedElementProps<HTMLPreElement>)}
               className={getCodeWrapperStyles({
                 theme,
@@ -201,7 +202,12 @@ function Code({
             </pre>
           )}
 
-          {isLoading && <CodeSkeleton className={getLoadingStyles(theme)} />}
+          {isLoading && (
+            <CodeSkeleton
+              data-testid={LGIDs.skeleton}
+              className={getLoadingStyles(theme)}
+            />
+          )}
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
           {!hasPanel &&
