@@ -100,10 +100,6 @@ export function useEchart({
     [setEchartOptions],
   );
 
-  const resizeEchartInstance = withInstanceCheck(() => {
-    echartsInstance?.resize();
-  });
-
   const addToGroup: EChartsInstance['addToGroup'] = useCallback(
     withInstanceCheck((groupId: string) => {
       // echartsCoreRef.current should exist if instance does, but checking for extra safety
@@ -260,11 +256,14 @@ export function useEchart({
   });
 
   /**
+   * CHART INITIALIZATION ---------------------
    * Sets up the echart instance on initial render or if the container changes.
    * Additionally, disposes of echart instance and cleans up handlers on unmount.
    */
   useEffect(() => {
     setError(null);
+
+    let resizeCallback: () => void;
 
     initializeEcharts()
       .then(echartsCore => {
@@ -280,8 +279,12 @@ export function useEchart({
           });
           // Set the initial options on the instance
           newChart.setOption(options);
+
           // Resize chart when window resizes because echarts don't be default
-          window.addEventListener('resize', resizeEchartInstance);
+          resizeCallback = () => {
+            newChart.resize();
+          };
+          window.addEventListener('resize', resizeCallback);
 
           setEchartsInstance(newChart);
           setReady(true);
@@ -298,7 +301,7 @@ export function useEchart({
       });
 
     return () => {
-      window.removeEventListener('resize', resizeEchartInstance);
+      window.removeEventListener('resize', resizeCallback);
       activeHandlers.current.clear();
 
       if (echartsInstance) {
@@ -308,6 +311,7 @@ export function useEchart({
   }, [container]);
 
   /**
+   * SETTING THEME ---------------------
    * Sets the theme when the instance is created or the theme changes.
    * This is not actually necessary on initial render because the theme
    * is also set on the default options. This is primarily necessary
