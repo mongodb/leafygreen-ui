@@ -48,7 +48,7 @@ jobs:
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: pnpm build
+        run: pnpm build:cli
 
       - uses: actions/cache/save@v4
         name: Save build cache
