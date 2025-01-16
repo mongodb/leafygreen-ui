@@ -104,3 +104,16 @@ export const disclaimerTextStyles = css`
   margin-top: ${spacing[4]}px;
   margin-bottom: ${spacing[6]}px;
 `;
+
+export const scrollButtonStyles = css`
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  > button {
+    boxshadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
+    border-radius: ${spacing[400]}px;
+  }
+`;

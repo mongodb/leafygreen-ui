@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, Fragment, useState } from 'react';
 import { Avatar } from '@lg-chat/avatar';
 import { DisclaimerText } from '@lg-chat/chat-disclaimer';
 import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
@@ -147,9 +147,8 @@ export const ChangingMessages: StoryType<typeof MessageFeed> = ({
             const { id, isMongo, messageBody, userName } =
               message as MessageFields;
             return (
-              <>
+              <Fragment key={id}>
                 <Message
-                  key={id}
                   sourceType="markdown"
                   darkMode={darkMode}
                   avatar={
@@ -172,7 +171,7 @@ export const ChangingMessages: StoryType<typeof MessageFeed> = ({
                     </MessagePrompt>
                   </MessagePrompts>
                 )}
-              </>
+              </Fragment>
             );
           })}
         </MessageFeed>
