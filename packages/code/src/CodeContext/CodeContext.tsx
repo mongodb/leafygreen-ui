@@ -21,6 +21,9 @@ const CodeContextProvider = ({
   contents,
   darkMode,
   language,
+  customActionButtons,
+  showCustomActionButtons,
+  chromeTitle,
 }: PropsWithChildren<CodeProviderProps>) => {
   const CodeProvider = (CodeContext as React.Context<CodeProviderProps>)
     .Provider;
@@ -29,8 +32,17 @@ const CodeContextProvider = ({
     return {
       contents,
       language,
+      customActionButtons,
+      showCustomActionButtons,
+      chromeTitle,
     };
-  }, [contents]);
+  }, [
+    contents,
+    language,
+    customActionButtons,
+    showCustomActionButtons,
+    chromeTitle,
+  ]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

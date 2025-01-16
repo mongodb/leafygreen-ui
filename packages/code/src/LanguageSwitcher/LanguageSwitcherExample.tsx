@@ -39,7 +39,7 @@ const snippetMap = {
   [Language.Python]: pythonSnippet,
 };
 
-function LanguageSwitcher({
+export function LanguageSwitcherWithPanelExample({
   darkMode,
   onChange,
   customActionButtons = [],
@@ -78,4 +78,37 @@ function LanguageSwitcher({
   );
 }
 
-export default LanguageSwitcher;
+export function LanguageSwitcherWithDepricatedPropsExample({
+  darkMode,
+  onChange,
+  customActionButtons = [],
+  showCustomActionButtons = false,
+}: {
+  darkMode?: boolean;
+  onChange?: Function;
+  customActionButtons?: Array<React.ReactElement>;
+  showCustomActionButtons?: boolean;
+}) {
+  const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
+
+  const handleChange = (languageObject: LanguageOption) => {
+    setLanguage(languageObject);
+    onChange?.(languageObject);
+  };
+
+  const languageIndex = language.language;
+
+  return (
+    <Code
+      language={language}
+      lineNumberStart={1}
+      darkMode={darkMode}
+      languageOptions={languageOptions}
+      customActionButtons={customActionButtons}
+      onChange={handleChange}
+      chromeTitle="Title"
+    >
+      {snippetMap[languageIndex as 'javascript' | 'python']}
+    </Code>
+  );
+}

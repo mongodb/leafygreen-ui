@@ -21,6 +21,7 @@ import {
 } from './Code.styles';
 import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
 import CodeContextProvider from '../CodeContext/CodeContext';
+import { Panel } from '../Panel';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -42,6 +43,11 @@ function Code({
   onCopy,
   highlightLines = [],
   panel,
+  customActionButtons,
+  showCustomActionButtons,
+  chromeTitle,
+  languageOptions,
+  onChange,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -54,7 +60,6 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-  const showPanel = !!panel;
 
   // TODO: update this with new prop copyButtonAppearance
   useEffect(() => {
@@ -152,6 +157,17 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
+  const shouldRenderTempPanelSubComponent =
+    (!panel &&
+      showCustomActionButtons &&
+      customActionButtons &&
+      customActionButtons.length > 0) ||
+    (!panel && !!chromeTitle) ||
+    (!panel && languageOptions && languageOptions.length > 0) ||
+    (!panel && copyable);
+
+  const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+
   return (
     <CodeContextProvider
       darkMode={darkMode}
@@ -188,7 +204,19 @@ function Code({
             {renderedSyntaxComponent}
           </pre>
 
+          {/* if there are props then render then manually render the panel component */}
           {!!panel && panel}
+
+          {/* TODO: remove when deprecated props are removed */}
+          {shouldRenderTempPanelSubComponent && (
+            <Panel
+              showCustomActionButtons={showCustomActionButtons}
+              customActionButtons={customActionButtons}
+              title={chromeTitle}
+              languageOptions={languageOptions}
+              onChange={onChange}
+            />
+          )}
 
           {showExpandButton && (
             <button

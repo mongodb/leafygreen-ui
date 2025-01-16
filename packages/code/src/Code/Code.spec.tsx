@@ -145,19 +145,6 @@ describe('packages/Code', () => {
   const codeContainer = (container.firstChild as HTMLElement).lastChild;
   const codeRoot = (codeContainer as HTMLElement).firstChild; //pre tag
 
-  // TODO: add back
-  // if (!codeRoot || !typeIs.element(codeRoot)) {
-  //   throw new Error('Code element not found');
-  // }
-
-  test.skip('root element renders as a <pre> tag', () => {
-    expect(codeRoot.tagName).toBe('PRE');
-  });
-
-  test.skip(`renders "${className}" in the root element's classList`, () => {
-    expect(codeRoot.classList.contains(className)).toBe(true);
-  });
-
   // TODO: remove this test when we remove the prop
   describe.skip('when copyable is true', () => {
     test('onCopy callback is fired when code is copied', () => {

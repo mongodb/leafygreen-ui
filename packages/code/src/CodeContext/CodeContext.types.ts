@@ -7,4 +7,7 @@ export type CodeProviderProps = PropsWithChildren &
   DarkModeProps & {
     contents: string;
     language: Language | LanguageOption;
+    customActionButtons?: Array<React.ReactElement>;
+    showCustomActionButtons?: boolean;
+    chromeTitle?: string;
   };
