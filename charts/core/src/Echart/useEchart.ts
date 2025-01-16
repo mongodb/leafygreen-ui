@@ -276,8 +276,6 @@ export function useEchart({
           const newChart = echartsCoreRef.current.init(container, null, {
             devicePixelRatio: window.devicePixelRatio || 1,
             renderer: 'canvas',
-            width: container.clientWidth,
-            height: container.clientHeight,
           });
           // Set the initial options on the instance
           newChart.setOption(options);
