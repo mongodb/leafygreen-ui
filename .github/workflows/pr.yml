@@ -34,18 +34,18 @@ jobs:
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
         uses: actions/setup-node@v4
-        # if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
           node-version: 18
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install
-        # if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: Build
-        # if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: pnpm build
 
   lint:
@@ -67,14 +67,14 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
-      # - uses: actions/cache/restore@v4
-      #   name: Restore build cache
-      #   id: build-cache
-      #   with:
-      #     path: |
-      #       **/dist
-      #       !**/node_modules
-      #     key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+      - uses: actions/cache/restore@v4
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -107,14 +107,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      # - uses: actions/cache/restore@v4
-      #   name: Restore build cache
-      #   id: build-cache
-      #   with:
-      #     path: |
-      #       **/dist
-      #       !**/node_modules
-      #     key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+      - uses: actions/cache/restore@v4
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: Publish to Chromatic
         env:
@@ -149,14 +149,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      # - uses: actions/cache/restore@v4
-      #   name: Restore build cache
-      #   id: build-cache
-      #   with:
-      #     path: |
-      #       **/dist
-      #       !**/node_modules
-      #     key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+      - uses: actions/cache/restore@v4
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: tests
         run: pnpm run test --ci
@@ -185,14 +185,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
-      # - uses: actions/cache/restore@v4
-      #   name: Restore build cache
-      #   id: build-cache
-      #   with:
-      #     path: |
-      #       **/dist
-      #       !**/node_modules
-      #     key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+      - uses: actions/cache/restore@v4
+        name: Restore build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       - name: validate
         run: pnpm validate
