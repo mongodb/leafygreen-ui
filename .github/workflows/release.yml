@@ -21,8 +21,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
@@ -77,8 +79,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
@@ -122,8 +126,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
@@ -163,8 +169,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}

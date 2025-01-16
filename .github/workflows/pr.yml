@@ -28,8 +28,12 @@ jobs:
         name: Check for build cache
         id: build-cache
         with:
+          # Note: `path` doesn't like complex glob patterns (i.e. `+(charts|chat|packages|tools)`)
           path: |
-            +(charts|chat|packages|tools)/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       # Only setup & build if there was no build cache hit
@@ -54,7 +58,10 @@ jobs:
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
           path: |
-            +(charts|chat|packages|tools)/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   lint:
@@ -81,7 +88,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            +(charts|chat|packages|tools)/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Install Dependencies
@@ -117,7 +127,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            +(charts|chat|packages|tools)/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Install Dependencies
@@ -161,7 +174,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            +(charts|chat|packages|tools)/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: tests
@@ -196,7 +212,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            +(charts|chat|packages|tools)/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: validate
