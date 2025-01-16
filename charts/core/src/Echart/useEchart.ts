@@ -14,6 +14,9 @@ import {
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
 
+// FIXME:
+/* eslint-disable react-hooks/exhaustive-deps */
+
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
  * Provides helper methods to hide ECharts specific logic and give a cleaner API

@@ -24,6 +24,8 @@ export function Line({ name, data }: LineProps) {
        */
       chart.removeSeries(name);
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chart.ready, name, data]);
 
   return null;

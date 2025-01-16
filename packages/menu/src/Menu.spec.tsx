@@ -239,7 +239,7 @@ describe('packages/menu', () => {
         const { triggerEl, findMenuElements } = renderMenu({});
         triggerEl.focus();
         userEventInteraction(triggerEl, key);
-        const { menuEl, menuItemElements } = await findMenuElements();
+        const { menuItemElements } = await findMenuElements();
         await waitFor(() => {
           expect(menuItemElements[0]).toHaveFocus();
         });

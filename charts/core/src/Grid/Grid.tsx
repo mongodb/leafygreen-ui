@@ -44,6 +44,8 @@ export function Grid({ horizontal = true, vertical = true }: GridProps) {
         yAxis: unsetGridOptions,
       });
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chart.ready, horizontal, vertical, theme]);
 
   return null;

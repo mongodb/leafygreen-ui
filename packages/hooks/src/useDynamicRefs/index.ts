@@ -59,6 +59,8 @@ export function useDynamicRefs<T>(
       const getter = getGetRef<T>(refMap);
       return getter;
     },
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     prefix ? [prefix] : [],
   );
 
