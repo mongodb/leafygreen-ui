@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum c6c96150ab702177f05b969fbbe92cd7
+* @checksum 6b86fe0b76f6364c647b5a18d497bd9f
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const SplitHorizontal = ({
 };
 SplitHorizontal.displayName = 'SplitHorizontal';
 SplitHorizontal.isGlyph = true;
-SplitHorizontal.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default SplitHorizontal;

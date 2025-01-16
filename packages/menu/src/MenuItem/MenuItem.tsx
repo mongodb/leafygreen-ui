@@ -1,5 +1,4 @@
 import React, { MouseEventHandler } from 'react';
-import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
@@ -10,9 +9,9 @@ import { MenuDescendantsContext } from '../MenuContext';
 
 import { InternalMenuItemContent } from './InternalMenuItemContent';
 import { menuItemClassName, menuItemContainerStyles } from './MenuItem.styles';
-import { MenuItemProps } from './MenuItem.types';
+import { InternalMenuItemProps } from './MenuItem.types';
 
-export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
+export const MenuItem = InferredPolymorphic<InternalMenuItemProps, 'button'>(
   (
     { as, disabled = false, active = false, onClick, ...rest },
     fwdRef: React.Ref<any>,
@@ -50,14 +49,5 @@ export const MenuItem = InferredPolymorphic<MenuItemProps, 'button'>(
   },
   'MenuItem',
 );
-
-MenuItem.propTypes = {
-  onClick: PropTypes.func,
-  className: PropTypes.string,
-  description: PropTypes.node,
-  disabled: PropTypes.bool,
-  active: PropTypes.bool,
-  children: PropTypes.node,
-};
 
 export default MenuItem;

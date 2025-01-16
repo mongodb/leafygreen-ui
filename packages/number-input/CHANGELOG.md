@@ -1,5 +1,71 @@
 # @leafygreen-ui/number-input
 
+## 4.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/tooltip@13.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/select@14.0.0
+  - @leafygreen-ui/a11y@2.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/form-field@2.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/tokens@2.11.1
+
+## 3.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): `NumberInput` renders unit selector and tooltip in the top layer using popover API. As a result, the following props are removed:
+
+  - `popoverZIndex`
+  - `portalClassName`
+  - `portalContainer`
+  - `portalRef`
+  - `scrollContainer`
+  - `usePortal`
+
+  Additional changes include:
+
+  - Opens tooltip immediately on hover instead of default 500ms delay
+
+  #### Migration guide
+
+  Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
+
+  ##### Old
+
+  ```js
+  <NumberInput popoverZIndex={9999} usePortal={false} />
+  <NumberInput portalClassName="portal-class" usePortal />
+  ```
+
+  ##### New
+
+  ```js
+  <NumberInput />
+  <NumberInput />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/select@13.0.0
+  - @leafygreen-ui/tooltip@12.0.0
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 2.2.2
 
 ### Patch Changes

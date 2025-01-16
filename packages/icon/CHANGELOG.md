@@ -1,5 +1,23 @@
 # @leafygreen-ui/icon
 
+## 13.1.0
+
+### Minor Changes
+
+- 3dee4332a: Adds Circle to glyph set.
+
+## 13.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+## 12.9.0
+
+### Minor Changes
+
+- d4b4d5115: Adds `'Coin'` to glyph set
+
 ## 12.8.0
 
 ### Minor Changes

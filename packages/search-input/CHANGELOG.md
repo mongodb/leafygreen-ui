@@ -1,5 +1,65 @@
 # @leafygreen-ui/search-input
 
+## 5.0.0
+
+### Patch Changes
+
+- a3d63cb95: Export prop types for components already wrapped in polymorphic types
+- Updated dependencies [a3d63cb95]
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/input-option@3.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/icon-button@16.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/a11y@2.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
+## 4.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): `SearchInput` renders results menu in the top layer using popover API. As a result, the following props are removed:
+
+  - `portalClassName`
+  - `portalContainer`
+  - `portalRef`
+  - `scrollContainer`
+  - `usePortal`
+
+  #### Migration guide
+
+  Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
+
+  ##### Old
+
+  ```js
+  <SearchInput popoverZIndex={9999} usePortal={false} />
+  <SearchInput portalClassName="portal-class" usePortal />
+  ```
+
+  ##### New
+
+  ```js
+  <SearchInput />
+  <SearchInput />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/popover@12.0.0
+
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 3.1.4
 
 ### Patch Changes

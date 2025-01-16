@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/info-sprinkle",
-  "version": "2.1.0",
+  "version": "4.0.0",
   "description": "LeafyGreen UI Kit Info Sprinkle",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -16,14 +16,14 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/icon": "^12.6.0",
-    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/icon": "^13.0.0",
+    "@leafygreen-ui/lib": "^14.0.0",
     "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tooltip": "^11.0.3",
-    "@leafygreen-ui/tokens": "^2.5.2"
+    "@leafygreen-ui/tooltip": "^13.0.0",
+    "@leafygreen-ui/tokens": "^2.11.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/info-sprinkle",
   "repository": {

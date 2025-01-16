@@ -65,7 +65,6 @@ export const externalDependencies = [
   'jest-*',
   'jest-axe',
   'prettier*',
-  'prop-types',
   'react-*',
   'rollup*',
   'storybook-*',

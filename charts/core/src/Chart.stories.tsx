@@ -1,5 +1,6 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
+import { action } from '@storybook/addon-actions';
 import type { StoryObj } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
@@ -9,11 +10,17 @@ import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
+import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
+  EventMarkerLine,
+  EventMarkerLineProps,
+  EventMarkerPoint,
+  EventMarkerPointProps,
   Grid,
   Header,
   Line,
+  ThresholdLine,
   Tooltip,
   XAxis,
   XAxisProps,
@@ -25,7 +32,7 @@ export default {
   title: 'Charts/Chart',
   component: Chart,
   args: {
-    data: makeLineData(10),
+    data: makeLineData(5),
     horizontalGridLines: true,
     verticalGridLines: false,
     renderGrid: true,
@@ -39,6 +46,24 @@ export default {
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
     headerShowDivider: true,
+    zoomSelectXAxis: true,
+    zoomSelectYAxis: true,
+    zoomSelectCallback: action('onZoomSelect'),
+    renderEventMarkerLine: true,
+    eventMarkerLineMessage: 'Event marker line message',
+    eventMarkerLineLabel: 'Event marker line label',
+    eventMarkerLineLevel: 'warning',
+    eventMarkerLinePosition: new Date('2024-01-01T00:20:00'),
+    renderEventMarkerPoint: true,
+    eventMarkerPointMessage: 'Event marker point message',
+    eventMarkerPointLabel: 'Event marker point label',
+    eventMarkerPointLevel: 'warning',
+    eventMarkerPointXPosition: new Date('2024-01-01T00:37:00'),
+    eventMarkerPointYPosition: 699,
+    renderThresholdLine: true,
+    thresholdLineLabel: 'Cluster Limit',
+    thresholdLineValue: '1400',
+    thresholdLinePosition: 1400,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -201,6 +226,154 @@ export default {
         category: 'Header',
       },
     },
+    zoomSelect: {
+      table: {
+        disable: true,
+      },
+    },
+    zoomSelectXAxis: {
+      control: 'boolean',
+      description: 'Enable zoom selection on x-axis',
+      name: 'XAxis',
+      table: {
+        category: 'ZoomSelect',
+      },
+    },
+    zoomSelectYAxis: {
+      control: 'boolean',
+      description: 'Enable zoom selection on y-axis',
+      name: 'YAxis',
+      table: {
+        category: 'ZoomSelect',
+      },
+    },
+    onZoomSelect: {
+      table: {
+        disable: true,
+      },
+    },
+    zoomSelectCallback: {
+      table: {
+        disable: true,
+      },
+    },
+    groupId: {
+      description: 'Group ID for synced tooltips',
+      name: 'groupId',
+      table: {
+        category: 'Chart',
+        disable: true,
+      },
+    },
+    renderEventMarkerLine: {
+      description: 'Show the event marker line',
+      name: 'RenderEventMarkerLine',
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    eventMarkerLineLabel: {
+      description: 'Label rendered in the the event marker line tooltip',
+      name: 'EventMarkerLineLabel',
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    eventMarkerLineMessage: {
+      description: 'Message rendered in the the event marker line tooltip',
+      name: 'EventMarkerLineMessage',
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    eventMarkerLineLevel: {
+      description: 'Level of the event marker line',
+      name: 'EventMarkerLineLevel',
+      control: 'select',
+      options: ['warning', 'info'],
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    eventMarkerLinePosition: {
+      description: 'Position of event marker line',
+      name: 'EventMarkerLinePosition',
+      table: {
+        category: 'EventMarkerLine',
+      },
+    },
+    renderEventMarkerPoint: {
+      description: 'Show the event marker point',
+      name: 'RenderEventMarkerPoint',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointLabel: {
+      description: 'Label rendered in the the event marker point tooltip',
+      name: 'EventMarkerPointLabel',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointMessage: {
+      description: 'Message rendered in the the event marker point tooltip',
+      name: 'EventMarkerPointMessage',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointLevel: {
+      description: 'Level of the event marker point',
+      name: 'EventMarkerPointLevel',
+      control: 'select',
+      options: ['warning', 'info'],
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointXPosition: {
+      description: 'Position of event marker point along x-axis',
+      name: 'EventMarkerPointXPosition',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    eventMarkerPointYPosition: {
+      description: 'Position of event marker point along y-axis',
+      name: 'EventMarkerPointYPosition',
+      table: {
+        category: 'EventMarkerPoint',
+      },
+    },
+    renderThresholdLine: {
+      description: 'Show the threshold line',
+      name: 'RenderThresholdLine',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
+    thresholdLineLabel: {
+      description: 'Threshold line tooltip label.',
+      name: 'ThresholdLineLabel',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
+    thresholdLineValue: {
+      description: 'Threshold line tooltip value.',
+      name: 'ThresholdLineValue',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
+    thresholdLinePosition: {
+      description: 'Where along the y-axis the line should be positioned.',
+      name: 'ThresholdLinePosition',
+      table: {
+        category: 'ThresholdLine',
+      },
+    },
   },
 };
 
@@ -224,6 +397,24 @@ interface StorybookProps {
   renderHeader: boolean;
   headerTitle: HeaderProps['title'];
   headerShowDivider: HeaderProps['showDivider'];
+  zoomSelectXAxis: boolean;
+  zoomSelectYAxis: boolean;
+  zoomSelectCallback;
+  renderEventMarkerLine: boolean;
+  eventMarkerLineMessage: EventMarkerLineProps['message'];
+  eventMarkerLineLabel: EventMarkerLineProps['label'];
+  eventMarkerLineLevel: EventMarkerLineProps['level'];
+  eventMarkerLinePosition: EventMarkerLineProps['position'];
+  renderEventMarkerPoint: boolean;
+  eventMarkerPointMessage: EventMarkerPointProps['message'];
+  eventMarkerPointLabel: EventMarkerPointProps['label'];
+  eventMarkerPointLevel: EventMarkerPointProps['level'];
+  eventMarkerPointXPosition: EventMarkerPointProps['position'][0];
+  eventMarkerPointYPosition: EventMarkerPointProps['position'][1];
+  renderThresholdLine: true;
+  thresholdLineLabel: ThresholdLineProps['label'];
+  thresholdLineValue: ThresholdLineProps['value'];
+  thresholdLinePosition: ThresholdLineProps['position'];
 }
 
 export const Basic: StoryObj<StorybookProps> = {
@@ -247,9 +438,33 @@ export const Basic: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
+    zoomSelectXAxis,
+    zoomSelectYAxis,
+    zoomSelectCallback,
+    renderEventMarkerLine,
+    eventMarkerLineMessage,
+    eventMarkerLineLabel,
+    eventMarkerLineLevel,
+    eventMarkerLinePosition,
+    renderEventMarkerPoint,
+    eventMarkerPointMessage,
+    eventMarkerPointLabel,
+    eventMarkerPointLevel,
+    eventMarkerPointXPosition,
+    eventMarkerPointYPosition,
+    renderThresholdLine,
+    thresholdLineLabel,
+    thresholdLineValue,
+    thresholdLinePosition,
   }) => {
     return (
-      <Chart>
+      <Chart
+        zoomSelect={{
+          xAxis: zoomSelectXAxis,
+          yAxis: zoomSelectYAxis,
+        }}
+        onZoomSelect={zoomSelectCallback}
+      >
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
         )}
@@ -280,6 +495,29 @@ export const Basic: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
+        {renderEventMarkerPoint && (
+          <EventMarkerPoint
+            label={eventMarkerPointLabel}
+            message={eventMarkerPointMessage}
+            position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+            level={eventMarkerPointLevel}
+          />
+        )}
+        {renderEventMarkerLine && (
+          <EventMarkerLine
+            position={eventMarkerLinePosition}
+            label={eventMarkerLineLabel}
+            message={eventMarkerLineMessage}
+            level={eventMarkerLineLevel}
+          />
+        )}
+        {renderThresholdLine && (
+          <ThresholdLine
+            position={thresholdLinePosition}
+            label={thresholdLineLabel}
+            value={thresholdLineValue}
+          />
+        )}
       </Chart>
     );
   },
@@ -306,9 +544,33 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
     renderHeader,
     headerTitle,
     headerShowDivider,
+    zoomSelectXAxis,
+    zoomSelectYAxis,
+    zoomSelectCallback,
+    renderEventMarkerLine,
+    eventMarkerLineMessage,
+    eventMarkerLineLabel,
+    eventMarkerLineLevel,
+    eventMarkerLinePosition,
+    renderEventMarkerPoint,
+    eventMarkerPointMessage,
+    eventMarkerPointLabel,
+    eventMarkerPointLevel,
+    eventMarkerPointXPosition,
+    eventMarkerPointYPosition,
+    renderThresholdLine,
+    thresholdLineLabel,
+    thresholdLineValue,
+    thresholdLinePosition,
   }) => {
     return (
-      <Chart>
+      <Chart
+        zoomSelect={{
+          xAxis: zoomSelectXAxis,
+          yAxis: zoomSelectYAxis,
+        }}
+        onZoomSelect={zoomSelectCallback}
+      >
         {renderHeader && (
           <Header
             title={headerTitle}
@@ -352,7 +614,209 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
         {data.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
+        {renderEventMarkerPoint && (
+          <EventMarkerPoint
+            label={eventMarkerPointLabel}
+            message={eventMarkerPointMessage}
+            position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+            level={eventMarkerPointLevel}
+          />
+        )}
+        {renderEventMarkerLine && (
+          <EventMarkerLine
+            position={eventMarkerLinePosition}
+            label={eventMarkerLineLabel}
+            message={eventMarkerLineMessage}
+            level={eventMarkerLineLevel}
+          />
+        )}
+        {renderThresholdLine && (
+          <ThresholdLine
+            position={thresholdLinePosition}
+            label={thresholdLineLabel}
+            value={thresholdLineValue}
+          />
+        )}
       </Chart>
+    );
+  },
+};
+
+export const WithSameGroupIds: StoryObj<StorybookProps> = {
+  render: ({
+    data,
+    verticalGridLines,
+    horizontalGridLines,
+    renderGrid,
+    renderXAxis,
+    renderYAxis,
+    xAxisType,
+    xAxisFormatter,
+    yAxisType,
+    yAxisFormatter,
+    xAxisLabel,
+    yAxisLabel,
+    renderTooltip,
+    tooltipSortDirection,
+    tooltipSortKey,
+    tooltipValueFormatter,
+    renderHeader,
+    headerTitle,
+    headerShowDivider,
+    zoomSelectXAxis,
+    zoomSelectYAxis,
+    zoomSelectCallback,
+    renderEventMarkerLine,
+    eventMarkerLineMessage,
+    eventMarkerLineLabel,
+    eventMarkerLineLevel,
+    eventMarkerLinePosition,
+    renderEventMarkerPoint,
+    eventMarkerPointMessage,
+    eventMarkerPointLabel,
+    eventMarkerPointLevel,
+    eventMarkerPointXPosition,
+    eventMarkerPointYPosition,
+    renderThresholdLine,
+    thresholdLineLabel,
+    thresholdLineValue,
+    thresholdLinePosition,
+  }) => {
+    return (
+      <div
+        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+      >
+        <Chart
+          groupId="group1"
+          zoomSelect={{
+            xAxis: zoomSelectXAxis,
+            yAxis: zoomSelectYAxis,
+          }}
+          onZoomSelect={zoomSelectCallback}
+        >
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+          {renderEventMarkerPoint && (
+            <EventMarkerPoint
+              label={eventMarkerPointLabel}
+              message={eventMarkerPointMessage}
+              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+              level={eventMarkerPointLevel}
+            />
+          )}
+          {renderEventMarkerLine && (
+            <EventMarkerLine
+              position={eventMarkerLinePosition}
+              label={eventMarkerLineLabel}
+              message={eventMarkerLineMessage}
+              level={eventMarkerLineLevel}
+            />
+          )}
+          {renderThresholdLine && (
+            <ThresholdLine
+              position={thresholdLinePosition}
+              label={thresholdLineLabel}
+              value={thresholdLineValue}
+            />
+          )}
+        </Chart>
+        <Chart
+          groupId="group1"
+          zoomSelect={{
+            xAxis: zoomSelectXAxis,
+            yAxis: zoomSelectYAxis,
+          }}
+          onZoomSelect={zoomSelectCallback}
+        >
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={tooltipValueFormatter}
+            />
+          )}
+          {renderXAxis && (
+            <XAxis
+              type={xAxisType}
+              formatter={xAxisFormatter}
+              label={xAxisLabel}
+            />
+          )}
+          {renderYAxis && (
+            <YAxis
+              type={yAxisType}
+              formatter={yAxisFormatter}
+              label={yAxisLabel}
+            />
+          )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+          {renderEventMarkerPoint && (
+            <EventMarkerPoint
+              label={eventMarkerPointLabel}
+              message={eventMarkerPointMessage}
+              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+              level={eventMarkerPointLevel}
+            />
+          )}
+          {renderEventMarkerLine && (
+            <EventMarkerLine
+              position={eventMarkerLinePosition}
+              label={eventMarkerLineLabel}
+              message={eventMarkerLineMessage}
+              level={eventMarkerLineLevel}
+            />
+          )}
+          {renderThresholdLine && (
+            <ThresholdLine
+              position={thresholdLinePosition}
+              label={thresholdLineLabel}
+              value={thresholdLineValue}
+            />
+          )}
+        </Chart>
+      </div>
     );
   },
 };

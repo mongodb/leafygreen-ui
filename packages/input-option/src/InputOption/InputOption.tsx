@@ -15,9 +15,9 @@ import {
   getInputOptionWedge,
   inputOptionClassName,
 } from './InputOption.style';
-import { InputOptionProps } from './InputOption.types';
+import { InternalInputOptionProps } from './InputOption.types';
 
-export const InputOption = Polymorphic<InputOptionProps>(
+export const InputOption = Polymorphic<InternalInputOptionProps>(
   (
     {
       as = 'li' as PolymorphicAs,

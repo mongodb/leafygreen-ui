@@ -1,5 +1,4 @@
 import React, { forwardRef, useContext, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 import Box from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
@@ -136,10 +135,3 @@ export const SegmentedControlOption = forwardRef<
 );
 
 SegmentedControlOption.displayName = 'SegmentedControlOption';
-
-SegmentedControlOption.propTypes = {
-  value: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  glyph: PropTypes.element,
-};

@@ -22,29 +22,24 @@ export function Chart({
   children,
   darkMode: darkModeProp,
   onChartReady,
+  zoomSelect,
+  onZoomSelect,
+  groupId,
   className,
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
-  const {
-    chartOptions,
-    updateChartOptions,
-    addChartSeries,
-    removeChartSeries,
-    chartRef,
-  } = useChart({
+  const chart = useChart({
     theme,
     onChartReady,
+    zoomSelect,
+    onZoomSelect,
+    groupId,
   });
 
   return (
     <LeafyGreenProvider darkMode={darkModeProp}>
-      <ChartProvider
-        chartOptions={chartOptions}
-        updateChartOptions={updateChartOptions}
-        addChartSeries={addChartSeries}
-        removeChartSeries={removeChartSeries}
-      >
+      <ChartProvider chart={chart}>
         <div className={cx(chartContainerStyles, className)}>
           <div>
             {/**
@@ -56,7 +51,7 @@ export function Chart({
             {children}
           </div>
           <div
-            ref={chartRef}
+            ref={chart.ref}
             className={chartStyles}
             data-testid="lg-charts-core-chart-echart"
             {...rest}

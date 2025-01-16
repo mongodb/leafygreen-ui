@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { cx } from '@leafygreen-ui/emotion';
@@ -95,15 +94,5 @@ function Toggle({
 }
 
 Toggle.displayName = 'Toggle';
-
-Toggle.propTypes = {
-  size: PropTypes.oneOf(Object.values(Size)),
-  darkMode: PropTypes.bool,
-  checked: PropTypes.bool,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  onChange: PropTypes.func,
-  onClick: PropTypes.func,
-};
 
 export default Toggle;

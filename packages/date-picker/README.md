@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/date-picker.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/date-picker/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/date-picker/live-example/)
 
 ## Installation
 

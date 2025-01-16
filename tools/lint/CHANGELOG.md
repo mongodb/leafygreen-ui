@@ -1,5 +1,23 @@
 # @lg-tools/lint
 
+## 2.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- 9a8c43faa: Adds missing dependencies: `@eslint/compat`, `@eslint/eslintrc`, `@eslint/js`, `globals`
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+
+## 1.0.0
+
+### Major Changes
+
+- ba855c702: Upgrades ESLint to v9
+
 ## 0.2.3
 
 ### Patch Changes

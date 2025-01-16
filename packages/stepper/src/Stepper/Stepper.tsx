@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
@@ -107,9 +106,3 @@ export const Stepper = ({
 };
 
 Stepper.displayName = 'Stepper';
-
-Stepper.propTypes = {
-  currentStep: PropTypes.number,
-  maxDisplayedSteps: PropTypes.number,
-  completedStepsShown: PropTypes.number,
-};

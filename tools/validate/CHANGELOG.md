@@ -1,5 +1,23 @@
 # @lg-tools/validate
 
+## 0.4.0
+
+### Minor Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+  - @lg-tools/meta@0.3.5
+
+## 0.3.0
+
+### Minor Changes
+
+- 04bb887c0: Updates `ignoreFilePatterns` and `depcheckOptions.ignorePatterns` to exclude validating dependencies in `*.input.*` and `*.output.*` files in `tools/codemods` directory
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,19 @@
 # @lg-tools/slackbot
 
+## 0.2.9
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+  - @lg-tools/meta@0.3.5
+
+## 0.2.8
+
+### Patch Changes
+
+- cf1693532: Adds missing `dotenv` dependency
+
 ## 0.2.7
 
 ### Patch Changes

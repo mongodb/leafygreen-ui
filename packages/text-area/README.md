@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/text-area.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/text-area/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/text-area/live-example/)
 
 ## Installation
 

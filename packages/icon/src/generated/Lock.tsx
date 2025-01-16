@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum d8520fa97fd2173c0d019481f3be9b90
+* @checksum 8b6903d5907a752d614d0eea8ecf149c
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const Lock = ({
 };
 Lock.displayName = 'Lock';
 Lock.isGlyph = true;
-Lock.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default Lock;

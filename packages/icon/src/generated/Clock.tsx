@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum bbe68c4bd53d9781f4c7b0dab95932d8
+* @checksum cf62af63cfb279bbbc089512ddfe29c3
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const Clock = ({
 };
 Clock.displayName = 'Clock';
 Clock.isGlyph = true;
-Clock.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default Clock;

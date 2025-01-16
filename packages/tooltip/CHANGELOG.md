@@ -1,5 +1,61 @@
 # @leafygreen-ui/tooltip
 
+## 13.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/tokens@2.11.1
+
+## 12.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): Replaces `usePortal` prop with `renderMode` prop. `renderMode="inline"` and `renderMode="portal"` are deprecated, and all popover elements should migrate to using the top layer. The old default was `usePortal=true`, and the new default is `renderMode="top-layer"`.
+
+  See [@leafygreen-ui/popover package 12.0.0 changelog](https://github.com/mongodb/leafygreen-ui/blob/main/packages/popover/CHANGELOG.md#1200) for more info.
+
+  Additional changes include:
+
+  - Deprecates and removes `justify="fit"`. Instead, use `justify="middle"`
+
+  #### Migration guide
+
+  Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
+
+  ##### Old
+
+  ```js
+  <Tooltip popoverZIndex={9999} usePortal={false} />
+  <Tooltip portalClassName="portal-class" usePortal />
+  ```
+
+  ##### New
+
+  ```js
+  <Tooltip popoverZIndex={9999} renderMode="inline" />
+  <Tooltip portalClassName="portal-class" renderMode="portal" />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/popover@12.0.0
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 11.1.0
 
 ### Minor Changes

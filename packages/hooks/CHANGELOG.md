@@ -1,5 +1,29 @@
 # @leafygreen-ui/hooks
 
+## 8.3.2
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/lib@14.0.0
+
+## 8.3.1
+
+### Patch Changes
+
+- 7a83cd4c6: Adds `useMergeRefs` into `useMergeRef` directory
+
+## 8.3.0
+
+### Minor Changes
+
+- 04bb887c0: Add `useMergeRefs` hook for merging array of refs into a single memoized callback ref or `null`
+
+### Patch Changes
+
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 8.2.1
 
 ### Patch Changes

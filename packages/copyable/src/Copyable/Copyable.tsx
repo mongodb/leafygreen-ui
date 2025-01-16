@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
-import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -200,13 +199,3 @@ export default function Copyable({
 }
 
 Copyable.displayName = 'Copyable';
-
-Copyable.propTypes = {
-  darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(Size)),
-  children: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  description: PropTypes.string,
-  className: PropTypes.string,
-  copyable: PropTypes.bool,
-};

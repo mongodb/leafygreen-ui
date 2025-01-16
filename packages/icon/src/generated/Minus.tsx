@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 9e2ee5026ea490c45958f54edbc17d24
+* @checksum 025ac38437ecef30cefbd08a4e384af6
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const Minus = ({
 };
 Minus.displayName = 'Minus';
 Minus.isGlyph = true;
-Minus.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default Minus;

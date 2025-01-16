@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { useEventListener } from '@leafygreen-ui/hooks';
 
@@ -72,7 +71,5 @@ function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {
 }
 
 UsingKeyboardProvider.displayName = 'UsingKeyboardProvider';
-
-UsingKeyboardProvider.propTypes = { children: PropTypes.node };
 
 export default UsingKeyboardProvider;

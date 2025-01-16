@@ -1,6 +1,5 @@
 import React from 'react';
 import kebabCase from 'lodash/kebabCase';
-import PropTypes from 'prop-types';
 
 import { Size } from './glyphCommon';
 import { LGGlyph } from './types';
@@ -51,14 +50,6 @@ export function createIconComponent<G extends GlyphObject = GlyphObject>(
   Icon.displayName = 'Icon';
 
   Icon.isGlyph = true;
-
-  Icon.propTypes = {
-    glyph: PropTypes.oneOf(Object.keys(glyphs)).isRequired,
-    size: PropTypes.oneOfType([
-      PropTypes.oneOf(Object.values(Size)),
-      PropTypes.number,
-    ]),
-  } as any;
 
   return Icon;
 }

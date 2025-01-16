@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/toast.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/toast/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/toast/live-example/)
 
 ## Installation
 
@@ -21,90 +21,59 @@ npm install @leafygreen-ui/toast
 ## Example
 
 ```js
-import Toast from '@leafygreen-ui/toast';
+import Button from '@leafygreen-ui/button';
+import { ToastProvider, useToast, Variant } from '@leafygreen-ui/toast';
 
-const [toastOpen, setToastOpen] = useState(true);
+const { pushToast, clearStack, getStack, updateToast } = useToast();
+const stack = getStack();
+
+const createToast = () => {
+  pushToast({
+    title: 'Toast Title',
+    description: 'Toast Description',
+    variant: Variant.Success,
+    timeout: null,
+  });
+};
 
 return (
-  <Toast
-    variant="success"
-    title="This is a title"
-    body="This is a description"
-    open={toastOpen}
-    close={() => setToastOpen(false)}
-  />
+  <ToastProvider>
+    <Button onClick={createToast}>Create toast</Button>
+  </ToastProvider>
 );
 ```
 
-**Output HTML**
+## Properties, useToast
 
-```html
-<div role="status" aria-live="polite" aria-atomic="true" aria-relevant="all">
-  <div class="leafygreen-ui-r1u4g0">
-    <div class="leafygreen-ui-1lymiei">
-      <svg
-        class="leafygreen-ui-1b4llpu"
-        height="30"
-        width="30"
-        aria-hidden="true"
-        viewBox="0 0 16 16"
-        role="img"
-      >
-        <title>Checkmark With Circle Icon</title>
-        <g
-          id="Glyphs-/-Checkmark-With-Circle"
-          stroke="none"
-          stroke-width="1"
-          fill="none"
-          fill-rule="evenodd"
-        >
-          <path d="..." fill="currentColor"></path>
-        </g>
-      </svg>
+useToast is a React hook that enables a consumer to interact with a Toast stack. It may only be used inside of a `<ToastProvider />`. The hook takes no arguments and returns the following functions:
 
-      <div>
-        <p class="leafygreen-ui-d2tjkm">This is a title</p>
-        <p class="leafygreen-ui-10eu8wb">This is a description</p>
-      </div>
-    </div>
+| Name        | Signature                                                                |
+| ----------- | ------------------------------------------------------------------------ |
+| pushToast   | `(payload: ToastProps) => ToastId`                                       |
+| popToast    | `(payload: ToastId) => ToastProps \| undefined`                          |
+| updateToast | `(id: ToastId, props: Partial<ToastProps>, ) => ToastProps \| undefined` |
+| getToast    | `(id: ToastId) => ToastProps \| undefined`                               |
+| getStack    | `() => ToastStack \|undefined`                                           |
+| clearStack  | `() => void`                                                             |
 
-    <button
-      tabindex="0"
-      aria-disabled="false"
-      aria-label="Close Message"
-      class="leafygreen-ui-ptvv4q"
-    >
-      <div class="leafygreen-ui-xhlipt">
-        <svg class="" height="16" width="16" viewBox="0 0 16 16" role="img">
-          <g
-            id="X-Copy"
-            stroke="none"
-            stroke-width="1"
-            fill="none"
-            fill-rule="evenodd"
-          >
-            <path
-              d="..."
-              fill="currentColor"
-              transform="translate(8.000000, 8.000000) rotate(45.000000) translate(-8.000000, -8.000000) "
-            ></path>
-          </g>
-        </svg>
-      </div>
-    </button>
-  </div>
-</div>
-```
+## Properties, ToastProvider
 
-## Properties
+| Prop            | Type                      | Default | Description                                           |
+| --------------- | ------------------------- | ------- | ----------------------------------------------------- |
+| initialValue    | Map<ToastId, ToastProps>; |         | The initial toasts in the stack.                      |
+| portalClassName | `string`                  |         | Class name applied to the containing Portal component |
 
-| Prop                 | Type                                                            | Description                                                                                                                                                       | Default |
-| -------------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `title`              | `ReactNode`                                                     | Optional text shown in bold above the body text.                                                                                                                  |         |
-| `body` (Required)    | `ReactNode`                                                     | Main text for the Toast.                                                                                                                                          |         |
-| `className`          | `string`                                                        | Optional className passed to the wrapping `<div />` for the toast.                                                                                                |         |
-| `variant` (Required) | `'success'`, `'note'`, `'warning'`, `'important'`, `'progress'` | Style variant to render the Toast as.                                                                                                                             |         |
-| `progress`           | `number` (0...1)                                                | Optional number between 0 and 1 that sets the progress bar's progress. Note that the progress bar is only rendered when the Toast variant is set to `'progress'`. | `1`     |
-| `open`               | `boolean`                                                       | Optional boolean that renders the Toast and makes it visible when true.                                                                                           | `false` |
-| `close`              | `function` (MouseEventHandler)                                  | Optional click event handler that, when set, renders a close button that receives the passed handler.                                                             |         |
-| `darkMode`           | `boolean`                                                       | Determines if the component renders in dark theme                                                                                                                 | `false` |
+## Properties, Controlled Toast
+
+| Prop             | Type                                                | Default | Description                                                                                                                                                                                                                                                                                       |
+| ---------------- | --------------------------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| actionElement    | `React.ReactNode `                                  |         | Optional action button, or other element. Only rendered if `variant === 'progress'`. This should be a shortcut only—and not the _only_ way to perform the action. The provided action element should have an `aria-description` attribute that describes how to alternatively perform the action. |
+| darkMode         | `boolean`                                           | `false` | Renders the component with dark mode styles.                                                                                                                                                                                                                                                      |
+| description      | `React.ReactNode `                                  |         | Additional body text                                                                                                                                                                                                                                                                              |
+| dismissible      | `boolean`                                           | `true`  | Determines whether to render the close button. If `timeout === null`, then `dismissible` is forced to `true`.                                                                                                                                                                                     |
+| onClose          | `(event: ToastCloseEvent) => void`                  |         | Fired either when the close button is clicked, or when timeout has elapsed. When triggered by button click, `event.type === "click"`. When triggered by timeout, `event.type === "timeout"`.                                                                                                      |
+| open _required_  | `boolean`                                           |         | Required boolean that renders the Toast and makes it visible when true. Note: open is not a valid prop when rendering toasts programmatically                                                                                                                                                     |
+| progress         | `number`                                            |         | Optional number between 0 and 1 that sets the progress bar's progress. Note: the progress bar is only rendered when the Toast variant is set to `'progress'`.                                                                                                                                     |
+| timeout          | `number \| null `                                   | `6,000` | Dismiss the Toast after `timeout` milliseconds. If timeout is `null` or `0`, the Toast will never dismiss automatically. Note: Timeout timer will be paused when a user is interacting with a Toast.                                                                                              |
+| title _required_ | `React.ReactNode`                                   |         | Primary text for the toast                                                                                                                                                                                                                                                                        |
+| variant          | `'success' 'note' 'warning' 'progress' 'important'` | `note`  | Required style variant to render the Toast as. Progress variants will ignore the `timeout` prop.                                                                                                                                                                                                  |

@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/info-sprinkle.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/info-sprinkle/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/info-sprinkle/live-example/)
 
 ## Installation
 

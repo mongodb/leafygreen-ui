@@ -1,5 +1,27 @@
 # @lg-tools/storybook-decorators
 
+## 0.3.0
+
+### Minor Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/banner@9.0.0
+  - @lg-tools/build@0.7.0
+  - @leafygreen-ui/tokens@2.11.1
+
+## 0.2.12
+
+### Patch Changes
+
+- 7a83cd4c6: Removes `overflow: auto` from `rootStyles`.
+
+## 0.2.11
+
+### Patch Changes
+
+- ba855c702: Relints files according to ESLint migration
+
 ## 0.2.10
 
 ### Patch Changes

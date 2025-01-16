@@ -1,5 +1,18 @@
 # @leafygreen-ui/input-option
 
+## 3.0.0
+
+### Patch Changes
+
+- a3d63cb95: Export prop types for components already wrapped in polymorphic types
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/a11y@2.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 2.0.2
 
 ### Patch Changes

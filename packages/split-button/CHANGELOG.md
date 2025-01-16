@@ -1,5 +1,70 @@
 # @leafygreen-ui/split-button
 
+## 4.0.0
+
+### Major Changes
+
+- f5d842764: Update types to reflect what is actually being passed through to the underlying `Menu`
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- a3d63cb95: Export prop types for components already wrapped in polymorphic types
+- Updated dependencies [a3d63cb95]
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/menu@28.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
+## 3.0.1
+
+### Patch Changes
+
+- 5f9185bee: Fix passing `renderDarkMenu` to the underlying `Menu`
+- 4245d16d1: Fix using `SplitButton` as a managed component by calling the `setOpen` function passed as prop when clicking the trigger.
+
+## 3.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): Replaces `usePortal` prop with `renderMode` prop with values of `'inline'`, `'portal'`, and `'top-layer'`. `renderMode="inline"` and `renderMode="portal"` are deprecated, and all popover elements should migrate to using the top layer.
+
+  See [@leafygreen-ui/menu package 26.0.0 changelog](https://github.com/mongodb/leafygreen-ui/blob/main/packages/menu/CHANGELOG.md#2600) for more info.
+
+  #### Migration guide
+
+  Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
+
+  ##### Old
+
+  ```js
+  <SplitButton popoverZIndex={9999} usePortal={false} />
+  <SplitButton portalClassName="portal-class" usePortal />
+  ```
+
+  ##### New
+
+  ```js
+  <SplitButton popoverZIndex={9999} renderMode="inline" />
+  <SplitButton portalClassName="portal-class" renderMode="portal" />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/menu@27.0.0
+  - @leafygreen-ui/popover@12.0.0
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 2.0.0
 
 ### Major Changes

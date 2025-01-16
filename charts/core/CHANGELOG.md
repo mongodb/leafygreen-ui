@@ -1,5 +1,82 @@
 # @lg-charts/core
 
+## 0.10.0
+
+### Minor Changes
+
+- 287e1ed46: - Adds `EventMarkerPoint`, `EventMarkerLine`, and `ThresholdLine` components
+  - Removes animation delay from tooltip to make tooltip more snappy.
+
+### Patch Changes
+
+- Updated dependencies [3dee4332a]
+  - @leafygreen-ui/icon@13.1.0
+
+## 0.9.0
+
+### Minor Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/icon-button@16.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/tokens@2.11.1
+
+## 0.8.3
+
+### Patch Changes
+
+- 54fb23497: - Adds treeshaking of echarts to minimize bundle size.
+  - Improves echart initialization logic to better handle race conditions.
+
+## 0.8.2
+
+### Patch Changes
+
+- 6e37cfa6e: Fixes CommonJS imports
+
+## 0.8.1
+
+### Patch Changes
+
+- a151a3534: Prevents large tooltips from being cutoff my `ChartCard`
+
+## 0.8.0
+
+### Minor Changes
+
+- 9f02d734f: Adds ability to enable zoom selection per axis individually.
+
+## 0.7.0
+
+### Minor Changes
+
+- 878cab966: Adds synchronizing of Tooltips across charts
+
+### Patch Changes
+
+- Updated dependencies [ba855c702]
+  - @leafygreen-ui/lib@13.8.2
+
+## 0.6.2
+
+### Minor Changes
+
+- 2393c0c13: Adds zooming functionality to `Chart`
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+
+  - @leafygreen-ui/combobox@10.0.0
+  - @leafygreen-ui/hooks@8.3.1
+
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 0.6.1
 
 ### Patch Changes

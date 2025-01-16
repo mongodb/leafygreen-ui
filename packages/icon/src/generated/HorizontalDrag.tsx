@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 4d8ae29f8a6bccc52937ee28328f119a
+* @checksum 71b4026b24b7f1f4c06b7f3b40e84fc0
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const HorizontalDrag = ({
 };
 HorizontalDrag.displayName = 'HorizontalDrag';
 HorizontalDrag.isGlyph = true;
-HorizontalDrag.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default HorizontalDrag;

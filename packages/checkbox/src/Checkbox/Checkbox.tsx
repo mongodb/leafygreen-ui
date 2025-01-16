@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -180,18 +179,5 @@ function Checkbox({
 }
 
 Checkbox.displayName = 'Checkbox';
-
-Checkbox.propTypes = {
-  darkMode: PropTypes.bool,
-  description: PropTypes.string,
-  checked: PropTypes.bool,
-  label: PropTypes.node,
-  disabled: PropTypes.bool,
-  indeterminate: PropTypes.bool,
-  className: PropTypes.string,
-  onChange: PropTypes.func,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  animate: PropTypes.bool,
-};
 
 export default Checkbox;

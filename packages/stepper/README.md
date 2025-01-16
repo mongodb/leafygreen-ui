@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/stepper.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/stepper/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/stepper/live-example/)
 
 ## Installation
 

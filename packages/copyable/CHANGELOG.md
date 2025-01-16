@@ -1,5 +1,58 @@
 # @leafygreen-ui/copyable
 
+## 10.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/tooltip@13.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/tokens@2.11.1
+
+## 9.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): `Copyable` renders tooltip in the top layer using popover API. As a result, the `shouldTooltipUsePortal` prop is removed
+
+  #### Migration guide
+
+  Use [popover-v12 codemod](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#popover-v12) for migration assistance.
+
+  ##### Old
+
+  ```js
+  <Copyable shouldTooltipUsePortal={false} />
+  <Copyable shouldTooltipUsePortal />
+  ```
+
+  ##### New
+
+  ```js
+  <Copyable />
+  <Copyable />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/tooltip@12.0.0
+
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 8.1.0
 
 ### Minor Changes

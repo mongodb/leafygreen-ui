@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/password-input.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/password-input/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/password-input/live-example/)
 
 ## Installation
 

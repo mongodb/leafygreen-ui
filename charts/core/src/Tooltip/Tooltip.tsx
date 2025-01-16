@@ -21,11 +21,13 @@ export function Tooltip({
   sortKey = SortKey.Value,
   valueFormatter,
 }: TooltipProps) {
-  const { updateChartOptions } = useChartContext();
+  const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    updateChartOptions({
+    if (!chart.ready) return;
+
+    chart.updateOptions({
       tooltip: {
         show: true,
         backgroundColor:
@@ -35,10 +37,11 @@ export function Tooltip({
         borderRadius: borderRadius[200],
         borderWidth: 0,
         confine: true,
+        appendTo: 'body',
         enterable: false,
         hideDelay: 0,
         valueFormatter: valueFormatter
-          ? value => {
+          ? (value: any) => {
               if (typeof value === 'number' || typeof value === 'string') {
                 return valueFormatter(value);
               }
@@ -57,18 +60,19 @@ export function Tooltip({
           color:
             color[theme].text[Variant.InversePrimary][InteractionState.Default],
         },
+        transitionDuration: 0,
         trigger: 'axis',
       },
     });
 
     return () => {
-      updateChartOptions({
+      chart.updateOptions({
         tooltip: {
           show: false,
         },
       });
     };
-  }, [theme, sortDirection, sortKey, valueFormatter, updateChartOptions]);
+  }, [chart.ready, theme, sortDirection, sortKey, valueFormatter]);
 
   return null;
 }

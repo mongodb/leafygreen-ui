@@ -1,5 +1,40 @@
 # @leafygreen-ui/side-nav
 
+## 16.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/tooltip@13.0.0
+  - @leafygreen-ui/portal@6.0.0
+  - @leafygreen-ui/a11y@2.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/box@4.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/tokens@2.11.1
+
+## 15.0.0
+
+### Major Changes
+
+- 04bb887c0: [LG-4121](https://jira.mongodb.org/browse/LG-4121): The tooltip for the expand/collapse toggle button renders in the top layer using popover API
+
+### Patch Changes
+
+- Updated dependencies [04bb887c0]
+  - @leafygreen-ui/hooks@8.3.0
+  - @leafygreen-ui/leafygreen-provider@3.2.0
+  - @leafygreen-ui/tooltip@12.0.0
+- Updated dependencies [117a463f8]
+  - @leafygreen-ui/lib@13.8.1
+
 ## 14.1.3
 
 ### Patch Changes

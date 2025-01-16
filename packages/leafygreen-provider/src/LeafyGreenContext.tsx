@@ -1,5 +1,4 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
 import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
@@ -69,16 +68,5 @@ function LeafyGreenProvider({
 }
 
 LeafyGreenProvider.displayName = 'LeafyGreenProvider';
-
-LeafyGreenProvider.propTypes = {
-  popoverPortalContainer: PropTypes.shape({
-    popover: PropTypes.shape({
-      portalContainer: PropTypes.elementType,
-      scrollContainer: PropTypes.elementType,
-    }),
-  }),
-  baseFontSize: PropTypes.oneOf([14, 16]),
-  darkMode: PropTypes.bool,
-};
 
 export default LeafyGreenProvider;

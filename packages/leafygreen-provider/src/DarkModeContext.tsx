@@ -1,5 +1,4 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import { getTheme, Theme } from '@leafygreen-ui/lib';
 
@@ -45,10 +44,5 @@ function DarkModeProvider({
 }
 
 DarkModeProvider.displayName = 'DarkModeProvider';
-
-DarkModeProvider.propTypes = {
-  children: PropTypes.node,
-  contextDarkMode: PropTypes.bool,
-};
 
 export default DarkModeProvider;

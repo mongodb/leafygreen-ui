@@ -53,18 +53,23 @@ type ButtonProps = Omit<
   'rightGlyph' | 'href' | 'as' | 'variant'
 >;
 
-export type SelectedMenuProps = Omit<
+export type SelectedMenuProps = Pick<
   ImportedMenuProps,
-  | 'children'
-  | 'trigger'
-  | 'shouldClose'
   | 'darkMode'
-  | 'onClick'
+  | 'maxHeight'
+  | 'adjustOnMutation'
+  | 'popoverZIndex'
+  | 'renderDarkMenu'
+  | 'renderMode'
+  | 'portalClassName'
+  | 'portalContainer'
+  | 'portalRef'
+  | 'scrollContainer'
   | 'align'
   | 'justify'
-  | 'className'
-  | 'refEl'
-  | 'spacing'
+  | 'id'
+  | 'open'
+  | 'setOpen'
 >;
 
 export interface MenuProps extends SelectedMenuProps {
@@ -115,7 +120,7 @@ export interface MenuProps extends SelectedMenuProps {
   onChange?: MouseEventHandler;
 }
 
-export interface SplitButtonProps
+export interface InternalSplitButtonProps
   extends DarkModeProps,
     ButtonProps,
     MenuProps {
@@ -131,3 +136,7 @@ export interface SplitButtonProps
    */
   label: string;
 }
+
+// External only
+export type SplitButtonProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, InternalSplitButtonProps>;

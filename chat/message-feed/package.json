@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-feed",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "lg-chat Message Feed",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,21 +22,21 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.3.0",
+    "@leafygreen-ui/lib": "^14.0.0",
     "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.5.2",
-    "@lg-chat/avatar": "^3.0.1",
-    "@lg-chat/message": "^4.1.1",
-    "@lg-chat/message-rating": "^2.0.2"
+    "@leafygreen-ui/tokens": "^2.11.1",
+    "@lg-chat/avatar": "^4.0.0",
+    "@lg-chat/message": "^5.0.0",
+    "@lg-chat/message-rating": "^3.0.0"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "^19.0.0",
-    "@lg-chat/chat-disclaimer": "^3.0.2",
-    "@lg-chat/message-prompts": "^2.0.2",
+    "@leafygreen-ui/typography": "^20.0.0",
+    "@lg-chat/chat-disclaimer": "^3.0.3",
+    "@lg-chat/message-prompts": "^3.0.0",
     "@lg-tools/storybook-utils": "^0.1.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12",
-    "@lg-chat/leafygreen-chat-provider": "^2.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.0",
+    "@lg-chat/leafygreen-chat-provider": "^3.0.0"
   }
 }

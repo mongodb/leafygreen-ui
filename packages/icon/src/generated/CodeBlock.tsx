@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 3663db12b49019986b11fb66b7fa8cf8
+* @checksum af2515aaf0c6a7a156bd0a09f98b279c
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const CodeBlock = ({
 };
 CodeBlock.displayName = 'CodeBlock';
 CodeBlock.isGlyph = true;
-CodeBlock.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default CodeBlock;

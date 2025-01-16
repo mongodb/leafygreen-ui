@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { DEFAULT_MESSAGES } from '@leafygreen-ui/form-field';
@@ -28,11 +27,7 @@ import {
   Size,
   State,
 } from './PasswordInput.types';
-import {
-  convertStateToFormFieldState,
-  getStateFromArray,
-  stateNotificationCheck,
-} from './utils';
+import { convertStateToFormFieldState, getStateFromArray } from './utils';
 
 export const PasswordInput = React.forwardRef<
   HTMLInputElement,
@@ -168,20 +163,3 @@ export const PasswordInput = React.forwardRef<
 );
 
 PasswordInput.displayName = 'PasswordInput';
-
-PasswordInput.propTypes = {
-  id: PropTypes.string,
-  label: PropTypes.string,
-  'aria-label': PropTypes.string,
-  'aria-labelledby': PropTypes.string,
-  'aria-describedby': PropTypes.string,
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
-  placeholder: PropTypes.string,
-  size: PropTypes.oneOf(Object.values(Size)),
-  value: PropTypes.string,
-  stateNotifications: stateNotificationCheck,
-} as any;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button, { Size } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -12,7 +11,6 @@ import {
   useInferredPolymorphic,
 } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { Menu } from '../Menu';
 
@@ -21,9 +19,17 @@ import {
   buttonContainerStyles,
   buttonThemeStyles,
 } from './SplitButton.styles';
-import { Align, Justify, SplitButtonProps, Variant } from './SplitButton.types';
+import {
+  Align,
+  InternalSplitButtonProps,
+  Justify,
+  Variant,
+} from './SplitButton.types';
 
-export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
+export const SplitButton = InferredPolymorphic<
+  InternalSplitButtonProps,
+  'button'
+>(
   (
     {
       darkMode: darkModeProp,
@@ -51,6 +57,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
       onTriggerClick,
       triggerAriaLabel,
       onChange,
+      renderDarkMenu,
       ...rest
     },
     ref: React.Ref<any>,
@@ -109,6 +116,7 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
             onTriggerClick={onTriggerClick}
             triggerAriaLabel={triggerAriaLabel}
             onChange={onChange}
+            renderDarkMenu={renderDarkMenu}
           />
         </LeafyGreenProvider>
       </div>
@@ -118,37 +126,3 @@ export const SplitButton = InferredPolymorphic<SplitButtonProps, 'button'>(
 );
 
 SplitButton.displayName = 'SplitButton';
-
-SplitButton.propTypes = {
-  darkMode: PropTypes.bool,
-  className: PropTypes.string,
-  align: PropTypes.oneOf(Object.values(Align)),
-  justify: PropTypes.oneOf(Object.values(Justify)),
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  label: PropTypes.string.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.element).isRequired,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-  disabled: PropTypes.bool,
-  leftGlyph: PropTypes.element,
-  onChange: PropTypes.func,
-  onTriggerClick: PropTypes.func,
-  triggerAriaLabel: PropTypes.string,
-  // Popover Props
-  popoverZIndex: PropTypes.number,
-  scrollContainer:
-    typeof window !== 'undefined'
-      ? PropTypes.instanceOf(Element)
-      : PropTypes.any,
-  portalContainer:
-    typeof window !== 'undefined'
-      ? PropTypes.instanceOf(Element)
-      : PropTypes.any,
-  portalClassName: PropTypes.string,
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-} as any;

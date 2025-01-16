@@ -1,5 +1,25 @@
 # @lg-chat/title-bar
 
+## 3.0.0
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/icon-button@16.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/badge@9.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @lg-chat/avatar@4.0.0
+  - @leafygreen-ui/tokens@2.11.1
+
+## 2.0.4
+
+### Patch Changes
+
+- 371e14b38: Fixes broken import of `ChatAvatarVariant`
+
 ## 2.0.3
 
 ### Patch Changes

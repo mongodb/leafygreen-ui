@@ -1,20 +1,20 @@
-import { HTMLElementProps } from '@leafygreen-ui/lib';
+import {
+  ComponentPropsWithRef,
+  ForwardedRef,
+  PropsWithoutRef,
+  ReactElement,
+  RefAttributes,
+  WeakValidationMap,
+} from 'react';
+
+import { LeafyGreenTableCell, LGRowData } from '../useLeafyGreenTable';
 
 export type Align = Extract<
-  HTMLElementProps<'td'>['align'],
+  ComponentPropsWithRef<'td'>['align'],
   'left' | 'right' | 'center'
 >;
 
-export const CellOverflowBehavior = {
-  Default: 'default',
-  Truncate: 'truncate',
-  // TODO: `Expand`: The cell will expand to the height of its content
-  // Expand: 'expand',
-} as const;
-export type CellOverflowBehavior =
-  (typeof CellOverflowBehavior)[keyof typeof CellOverflowBehavior];
-
-interface BaseCellProps extends HTMLElementProps<'td'> {
+interface BaseCellProps extends ComponentPropsWithRef<'td'> {
   /**
    * Alignment of the cell's contents
    *
@@ -22,49 +22,62 @@ interface BaseCellProps extends HTMLElementProps<'td'> {
    */
   align?: Align;
 
-  /** A `className` applied to the inner `div` of the Cell  */
-  contentClassName?: string;
-
   /**
-   * Defines how a cell should behave when its content is larger than the standard cell height.
-   *
-   * `Default`: The cell height will be fixed to the standard cell height (40px by default).
-   * Any overflowing content will be clipped.
-   *
-   * `Truncate`: The cell height will be fixed to the standard cell height (40px by default),
-   * and include an ellipsis before the content is clipped.
-   *
-   * Note: It's recommended to provide the same value for all cells in a given row.
-   *
-   * @default CellOverflowBehavior.Default
+   * A `className` applied to the inner `div` of the Cell
    */
-  overflow?: CellOverflowBehavior;
+  contentClassName?: string;
 }
 
-export type CellProps = BaseCellProps;
-
-export interface InternalCellProps extends BaseCellProps {
+export interface CellProps<T extends LGRowData> extends BaseCellProps {
   /**
-   * Index of the cell in its parent row.
+   * The cell object that is returned when mapping through a row passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook.
    */
-  cellIndex: number;
+  cell?: LeafyGreenTableCell<T>;
+}
 
-  /**
-   * Depth of nesting its parent row has.
-   */
-  depth: number;
+export type InternalCellWithRTRequiredProps<T extends LGRowData> = Omit<
+  CellProps<T>,
+  'cell'
+> &
+  Required<Pick<CellProps<T>, 'cell'>>;
 
-  /**
-   * Defines whether the cell's row is visible (i.e. expanded)
-   *
-   * @default true
-   */
-  isVisible?: boolean;
+export interface InternalCellProps extends BaseCellProps {}
 
-  /**
-   * Defines whether the cell's row is expandable
-   *
-   * @default false
-   */
-  isExpandable?: boolean;
+export interface InternalCellWithRTProps<T extends LGRowData>
+  extends InternalCellWithRTRequiredProps<T> {}
+
+// https://stackoverflow.com/a/58473012
+// React.forwardRef can only work with plain function types.
+/**
+ * Type definition for `Cell` that works with generics.
+ * cell is optional
+ */
+export interface CellComponentType {
+  <T extends LGRowData>(
+    props: CellProps<T>,
+    ref: ForwardedRef<HTMLTableCellElement>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?:
+    | WeakValidationMap<
+        PropsWithoutRef<CellProps<LGRowData> & RefAttributes<any>>
+      >
+    | undefined;
+}
+
+/**
+ * Type definition for `InternalCellWithRT` that works with generics.
+ * cell is required
+ */
+export interface InternalCellWithRTComponentType {
+  <T extends LGRowData>(
+    props: InternalCellWithRTProps<T>,
+    ref: ForwardedRef<HTMLTableCellElement>,
+  ): ReactElement | null;
+  displayName?: string;
+  propTypes?:
+    | WeakValidationMap<
+        PropsWithoutRef<InternalCellWithRTProps<LGRowData> & RefAttributes<any>>
+      >
+    | undefined;
 }

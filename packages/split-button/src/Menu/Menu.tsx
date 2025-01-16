@@ -58,9 +58,7 @@ export const Menu = ({
 
   const handleTriggerClick: MouseEventHandler = e => {
     onTriggerClick?.(e);
-    if (typeof controlledOpen !== 'boolean') {
-      setOpen(o => !o);
-    }
+    setOpen(o => !o);
   };
 
   const handleClose = useCallback(() => {
@@ -81,7 +79,10 @@ export const Menu = ({
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
   const renderMenuItems = useMemo(() => {
-    const onMenuItemClick = (e: MouseEvent, menuItem: MenuItemType) => {
+    const onMenuItemClick = (
+      e: MouseEvent<HTMLAnchorElement & HTMLButtonElement>,
+      menuItem: MenuItemType,
+    ) => {
       handleClose();
       menuItem.props.onClick?.(e);
       onChange?.(e);
@@ -92,7 +93,8 @@ export const Menu = ({
         return React.cloneElement(menuItem, {
           active: false,
           key: `menuItem-${menuItem.key}`,
-          onClick: (e: MouseEvent) => onMenuItemClick(e, menuItem),
+          onClick: (e: MouseEvent<HTMLAnchorElement & HTMLButtonElement>) =>
+            onMenuItemClick(e, menuItem),
         });
       } else {
         console.warn(

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
@@ -141,15 +140,6 @@ export function Option(_: OptionProps): JSX.Element {
 }
 
 Option.displayName = 'Option';
-
-Option.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  glyph: PropTypes.element,
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-  description: PropTypes.string,
-};
 
 // React.ReactComponentElement messes up the original
 // typing of props, so it is fixed up by overriding it.

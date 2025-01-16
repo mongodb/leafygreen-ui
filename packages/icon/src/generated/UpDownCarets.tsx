@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 499ff6b3b63ddb6243799058ce69fd4a
+* @checksum f9fa0e9bf4619b84789e1fa36917cc62
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const UpDownCarets = ({
 };
 UpDownCarets.displayName = 'UpDownCarets';
 UpDownCarets.isGlyph = true;
-UpDownCarets.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default UpDownCarets;

@@ -1,5 +1,23 @@
 # @leafygreen-ui/lib
 
+## 14.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+## 13.8.2
+
+### Patch Changes
+
+- ba855c702: Relints files according to ESLint migration
+
+## 13.8.1
+
+### Patch Changes
+
+- 117a463f8: Exports `Deep*` types from package root
+
 ## 13.8.0
 
 ### Minor Changes

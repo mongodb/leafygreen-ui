@@ -32,12 +32,14 @@ import ChevronDown from './ChevronDown.svg';
 import ChevronLeft from './ChevronLeft.svg';
 import ChevronRight from './ChevronRight.svg';
 import ChevronUp from './ChevronUp.svg';
+import Circle from './Circle.svg';
 import Clock from './Clock.svg';
 import ClockWithArrow from './ClockWithArrow.svg';
 import Clone from './Clone.svg';
 import Cloud from './Cloud.svg';
 import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
+import Coin from './Coin.svg';
 import Colon from './Colon.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
@@ -196,12 +198,14 @@ const _glyphs = {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Circle,
   Clock,
   ClockWithArrow,
   Clone,
   Cloud,
   Code,
   CodeBlock,
+  Coin,
   Colon,
   Connect,
   Copy,
