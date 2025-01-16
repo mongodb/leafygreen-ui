@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/core",
-  "version": "1.0.0",
+  "version": "0.10.0",
   "description": "lg-charts Core Chart Components",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -17,7 +17,7 @@
   "dependencies": {
     "@leafygreen-ui/emotion": "^4.0.7",
     "@leafygreen-ui/hooks": "^8.3.2",
-    "@leafygreen-ui/icon": "^13.0.0",
+    "@leafygreen-ui/icon": "^13.1.0",
     "@leafygreen-ui/icon-button": "^16.0.0",
     "@leafygreen-ui/lib": "14.0.0",
     "@leafygreen-ui/palette": "^4.1.1",

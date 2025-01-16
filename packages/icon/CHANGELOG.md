@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 13.1.0
+
+### Minor Changes
+
+- 3dee4332a: Adds Circle to glyph set.
+
 ## 13.0.0
 
 ### Major Changes

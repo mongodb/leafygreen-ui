@@ -1,5 +1,11 @@
 # @leafygreen-ui/empty-state
 
+## 2.0.1
+
+### Patch Changes
+
+- 13f619427: Changes the max-width property value from `432px` to `466px`
+
 ## 2.0.0
 
 ### Major Changes
