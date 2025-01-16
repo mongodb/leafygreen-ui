@@ -14,6 +14,8 @@ jobs:
     name: Build packages
     runs-on: ubuntu-latest
     timeout-minutes: 20 # Should not take more than 20 minutes to build
+    outputs:
+      cache-primary-key: ${{ steps.build-cache.outputs.cache-primary-key }}
     steps:
       - uses: actions/checkout@v4
 
@@ -89,7 +91,7 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -119,9 +121,6 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
 
-      - name: Install Dependencies
-        run: pnpm install --frozen-lockfile --prefer-offline
-
       - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
@@ -131,7 +130,10 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: Publish to Chromatic
         env:
@@ -175,7 +177,7 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: tests
         run: pnpm run test --ci
@@ -213,7 +215,7 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: validate
         run: pnpm validate
