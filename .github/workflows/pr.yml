@@ -22,14 +22,14 @@ jobs:
         with:
           version: 9.15.0
 
-      # - uses: actions/cache@v4
-      #   name: Check for build cache
-      #   id: build-cache
-      #   with:
-      #     path: |
-      #       **/dist
-      #       !**/node_modules
-      #     key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+      - uses: actions/cache@v4
+        name: Check for build cache
+        id: build-cache
+        with:
+          path: |
+            **/dist
+            !**/node_modules
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
