@@ -104,8 +104,10 @@ export function useEchart({
     withInstanceCheck((groupId: string) => {
       // echartsCoreRef.current should exist if instance does, but checking for extra safety
       if (echartsCoreRef.current) {
-        (echartsInstance as EChartsType).group = groupId;
-        echartsCoreRef.current.connect(groupId);
+        if ((echartsInstance as EChartsType).group !== groupId) {
+          (echartsInstance as EChartsType).group = groupId;
+          echartsCoreRef.current.connect(groupId);
+        }
       }
     }),
     [echartsCoreRef.current, echartsInstance],

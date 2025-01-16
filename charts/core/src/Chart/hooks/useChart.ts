@@ -42,6 +42,10 @@ export function useChart({
       if (groupId) {
         echart.addToGroup(groupId);
       }
+
+      return () => {
+        echart.removeFromGroup();
+      };
     }
   }, [echart.ready, groupId]);
 
