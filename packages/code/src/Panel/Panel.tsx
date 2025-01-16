@@ -31,19 +31,8 @@ function Panel({
   const { theme } = useDarkMode();
   const { contents, language: languageProp } = useCodeContext();
 
-  // TODO: remove this when showCustomActionButtons on code is removed
-  // const shouldshowCustomActionButtons =
-  //   showCustomActionButtons || contextShowCustomActionButtons;
-
-  // TODO: remove this when customActionButtons on code is removed
-
-  // const normalizedCustomActionButtons =
-  //   customActionButtons || contextCustomActionButtons;
-
   const language = typeof languageProp === 'string' ? undefined : languageProp;
   const hasTitle = !!title;
-
-  console.log({ hasTitle });
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
     (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,

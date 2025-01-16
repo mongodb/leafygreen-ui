@@ -127,7 +127,7 @@ const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
     <Icon glyph="Cloud" />
   </IconButton>,
-  // <Icon glyph="Shell" size={30} key="3" />,
+  <Icon glyph="Shell" size={30} key="3" />,
   <IconButton
     href="https://mongodb.design"
     aria-label="label2"
@@ -137,23 +137,6 @@ const customActionButtons = [
     <Icon glyph="Code" size={30} />
   </IconButton>,
 ];
-
-// export const WithCustomActions = LiveExample.bind({});
-// WithCustomActions.args = {
-//   showCustomActionButtons: true,
-//   customActionButtons,
-//   // panel: [
-//   //   <Panel
-//   //     language={language}
-//   //     languageOptions={languageOptions}
-//   //     customActionButtons={customActionButtons}
-//   //     showCustomActionButtons={showCustomActionButtons}
-//   //     onChange={handleChange}
-//   //     showCopyButton
-//   //     contents={snippetMap[languageIndex as 'javascript' | 'python']}
-//   //   />
-//   // ]
-// };
 
 export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
@@ -221,7 +204,7 @@ export const WithDeprecatedCopyableProps: StoryType<
   </LeafygreenProvider>
 );
 
-export const WithDeprecatedLanguageSwitcher: StoryType<
+export const WithDeprecatedLanguageSwitcherProps: StoryType<
   typeof Code,
   FontSizeProps
 > = ({ baseFontSize, ...args }: CodeProps & FontSizeProps) => (
@@ -233,20 +216,5 @@ export const WithDeprecatedLanguageSwitcher: StoryType<
     />
   </LeafygreenProvider>
 );
-
-// export const WithDeprecatedLanguageProps: StoryType<
-//   typeof Code,
-//   FontSizeProps
-// > = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
-//   <LeafygreenProvider baseFontSize={baseFontSize}>
-//     <Code
-//       {...(args as CodeProps)}
-//       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-//       copyable
-//     >
-//       {jsSnippet}
-//     </Code>
-//   </LeafygreenProvider>
-// );
 
 export const Generated = () => {};
