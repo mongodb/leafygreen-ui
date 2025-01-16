@@ -59,7 +59,7 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
+          key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   lint:
     name: Check lints
