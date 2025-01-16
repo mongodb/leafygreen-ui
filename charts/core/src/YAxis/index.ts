@@ -1,2 +1,2 @@
 export { YAxis } from './YAxis';
-export { YAxisProps } from './YAxis.types';
+export type { YAxisProps, YAxisType } from './YAxis.types';

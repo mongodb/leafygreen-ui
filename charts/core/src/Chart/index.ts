@@ -1,6 +1,7 @@
 export { Chart } from './Chart';
-export {
-  type ChartOptions,
-  type ChartProps,
-  type SeriesOption,
+export type {
+  ChartOptions,
+  ChartProps,
+  SeriesOption,
+  ZoomSelectionEvent,
 } from './Chart.types';
