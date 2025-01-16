@@ -13,6 +13,7 @@ jobs:
   build:
     name: Build packages
     runs-on: ubuntu-latest
+    timeout-minutes: 20 # Should not take more than 20 minutes to build
     steps:
       - uses: actions/checkout@v4
 
