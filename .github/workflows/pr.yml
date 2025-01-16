@@ -27,7 +27,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            {charts,chat,packages,tools}/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       # Only setup & build if there was no build cache hit
@@ -45,14 +48,17 @@ jobs:
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: pnpm build
+        run: pnpm build:cli
 
       - uses: actions/cache/save@v4
         name: Save build cache
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
           path: |
-            {charts,chat,packages,tools}/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
   lint:
@@ -79,7 +85,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            {charts,chat,packages,tools}/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       - name: Install Dependencies
@@ -118,7 +127,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            {charts,chat,packages,tools}/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       - name: Publish to Chromatic
@@ -159,7 +171,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            {charts,chat,packages,tools}/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       - name: tests
@@ -194,7 +209,10 @@ jobs:
         id: build-cache
         with:
           path: |
-            {charts,chat,packages,tools}/*/dist/*
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       - name: validate
