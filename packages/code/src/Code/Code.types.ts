@@ -63,29 +63,35 @@ export type CodeProps = Omit<
    * Custom action buttons. Should be an array of `IconButton`.
    *
    * @type <IconButton />[]
-   * @deprecated use `<Panel customActionButtons={}>` instead
+   * use `<Panel customActionButtons={}>` instead
+   * @deprecated
    */
   customActionButtons?: Array<React.ReactElement>;
 
   /**
    * When true, custom action buttons will be shown.
-   *@deprecated - use `<Panel showCustomActionButtons={}>` instead
+   *
+   * Use `panel={<Panel showCustomActionButtons={}>}` instead
+   *@deprecated
    */
   showCustomActionButtons?: boolean;
 
   /**
    * Renders a file name or other descriptor for a block of code
-   * @deprecated - use `<Panel title={}>` instead
+   * use `<Panel title={}>` instead
+   * @deprecated
    */
   chromeTitle?: string;
 
   /**
-   * @deprecated - use `<Panel languageOptions={}>` instead
+   * use `<Panel languageOptions={}>` instead
+   * @deprecated
    */
   languageOptions?: Array<LanguageOption>;
 
   /**
-   * @deprecated - use `<Panel onChange={}>` instead
+   * use `<Panel onChange={}>` instead
+   * @deprecated
    */
   onChange?: (arg0: LanguageOption) => void;
 };

@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import ClipboardJS from 'clipboard';
+import React, { useMemo, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
 import PropTypes from 'prop-types';
 
@@ -52,7 +51,6 @@ function Code({
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
-  const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
   const [codeHeight, setCodeHeight] = useState<number>(0);
@@ -60,11 +58,6 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-
-  // TODO: update this with new prop copyButtonAppearance
-  useEffect(() => {
-    setShowCopyBar(copyable && ClipboardJS.isSupported());
-  }, [copyable, showCopyBar]);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
