@@ -55,7 +55,7 @@ jobs:
 
       - name: Generate docs
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: pnpm run turbo run docs
+        run: pnpm build:docs
 
       - uses: actions/cache/save@v4
         name: Save build cache
