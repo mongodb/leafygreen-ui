@@ -1,6 +1,6 @@
 # @leafygreen-ui/table
 
-## 13.0.0
+## 13.0.0-rc.1
 
 ### Patch Changes
 
