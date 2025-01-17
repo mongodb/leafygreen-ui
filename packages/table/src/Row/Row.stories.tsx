@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/display-name */
 import React from 'react';
 import {
   storybookArgTypes,
@@ -171,18 +169,18 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -297,18 +295,18 @@ export const DisabledSelectableRows: StoryFn<
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },

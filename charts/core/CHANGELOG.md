@@ -1,5 +1,13 @@
 # @lg-charts/core
 
+## 0.10.1
+
+### Patch Changes
+
+- 86ac72bf3: Fixes duplicate tooltip bug in remounted chart groups
+- 99484f720: Fixes bug that prevented chart resizing after initial render
+- 8d924f633: Ensure canvas is sized to container with correct pixel ratio
+
 ## 0.10.0
 
 ### Minor Changes

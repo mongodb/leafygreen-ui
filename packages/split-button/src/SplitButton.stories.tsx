@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-console */
-/* eslint-disable react/display-name */
+
 import React, { MouseEvent, useRef } from 'react';
 import {
   storybookArgTypes,

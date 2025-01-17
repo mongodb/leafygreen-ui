@@ -22,14 +22,14 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.3.2",
-    "@leafygreen-ui/icon": "^13.0.0",
-    "@leafygreen-ui/icon-button": "^16.0.0",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/portal": "^6.0.0",
-    "@leafygreen-ui/tokens": "^2.11.1",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/portal": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
     "focus-trap": "6.9.4",
     "focus-trap-react": "^9.0.2",
     "polished": "^4.2.2",
@@ -37,12 +37,11 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@leafygreen-ui/button": "^22.0.0",
-    "@leafygreen-ui/code": "^16.0.0",
-    "@leafygreen-ui/copyable": "^10.0.0",
-    "@leafygreen-ui/select": "^14.0.0",
-    "@leafygreen-ui/typography": "^20.0.0",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/code": "workspace:^",
+    "@leafygreen-ui/copyable": "workspace:^",
+    "@leafygreen-ui/select": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "^4.0.0"

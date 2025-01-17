@@ -5,66 +5,76 @@
   "license": "Apache-2.0",
   "private": true,
   "engines": {
-    "node": ">= 18.0.0",
-    "npm": ">= 8.19.4"
+    "node": ">= 18.12.0",
+    "pnpm": ">= 9.15.0"
   },
   "scripts": {
-    "init": "yarn && yarn build",
-    "init17": "yarn && yarn build:cli && npx ts-node tools/test/scripts/install-react17.ts && yarn build",
+    "init": "pnpm install && pnpm build",
+    "init17": "pnpm install && pnpm build:cli && npx ts-node tools/test/scripts/install-react17.ts && pnpm build",
     "create-package": "lg create",
-    "prebuild": "yarn build:cli",
+    "prebuild": "pnpm build:cli",
     "build": "turbo run build tsc",
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
-    "build-storybook": "npx storybook build",
+    "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
+    "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
-    "clean:builds": "rm -rf {packages,tools,chat,charts}/*/{dist,tsconfig.tsbuildinfo,stories.js,.turbo}",
-    "clean:cache": "rm -rf .turbo {cache}",
-    "clean:modules": "rm -rf node_modules {packages,tools,chat,charts}/*/node_modules",
-    "clean:ts": "rm -rf {packages,tools,chat,charts}/*/{dist/**/*.ts,dist/**/*.ts.map,tsconfig.tsbuildinfo,ts-trace,.turbo}",
+    "clean:builds": "pnpm recursive exec -- rm -rf ./{dist,tsconfig.tsbuildinfo,stories.js}",
+    "clean:modules": "pnpm recursive exec -- rm -rf node_modules; rm -rf node_modules",
     "fix": "lg lint --fix",
     "link": "lg link",
     "lint": "lg lint",
-    "prepublishOnly": "yarn build && turbo run docs",
-    "publish": "yarn changeset publish --public",
+    "prepublishOnly": "pnpm run build && turbo run docs",
+    "publish": "pnpm changeset publish --public",
     "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates",
     "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
     "validate": "lg validate",
-    "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'yarn build-storybook --test'"
+    "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm run storybook build --test'"
   },
   "devDependencies": {
     "@actions/core": "^1.10.1",
     "@babel/core": "7.24.3",
     "@changesets/cli": "^2.26.0",
-    "@lg-tools/cli": "*",
-    "@lg-tools/storybook-addon": "*",
+    "@leafygreen-ui/testing-lib": "workspace:^",
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/cli": "workspace:^",
+    "@lg-tools/lint": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
+    "@lg-tools/storybook-addon": "workspace:^",
+    "@lg-tools/storybook-utils": "workspace:^",
+    "@lg-tools/test": "workspace:^",
+    "@storybook/react": "^7.6.20",
+    "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0",
+    "@testing-library/react-hooks": ">=3.7.0",
+    "@testing-library/user-event": "13.5.0",
+    "@types/jest": "^29.5.12",
     "@types/lodash": "^4.14.170",
+    "@types/node": "^20.12.5",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
     "chromatic": "^11.0.0",
     "dotenv": "^10.0.0",
     "gh-pages": "^3.1.0",
+    "npm-package-json-lint": "8.0.0",
     "npm-run-all": "^4.1.5",
+    "prettier": "2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.6.17",
+    "storybook": "^7.6.20",
+    "ts-node":"10.9.2",
     "turbo": "^2.0.6",
     "typescript": "~4.9.0"
   },
-  "resolutions": {
-    "caniuse-lite": "^1.0.30001585",
-    "jackspeak": "2.1.1"
+  "pnpm": {
+    "overrides": {
+      "caniuse-lite": "^1.0.30001585",
+      "jackspeak": "2.1.1"
+    }
   },
-  "workspaces": [
-    "charts/*",
-    "chat/*",
-    "packages/*",
-    "tools/*"
-  ],
   "keywords": [
     "mongodb",
     "ui",
@@ -81,5 +91,5 @@
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "pnpm@9.15.0"
 }

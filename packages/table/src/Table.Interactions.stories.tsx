@@ -85,7 +85,7 @@ const Template: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'encryptorEnabled',
         header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
+
         cell: info => (
           <Badge variant={info.getValue() ? 'green' : 'red'}>
             {info.getValue() ? 'Enabled' : 'Not enabled'}
@@ -102,7 +102,7 @@ const Template: StoryFn<StoryTableProps> = args => {
         id: 'actions',
         header: '',
         size: 90,
-        // eslint-disable-next-line react/display-name
+
         cell: _ => {
           return (
             <>

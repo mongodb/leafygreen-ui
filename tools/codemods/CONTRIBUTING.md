@@ -12,7 +12,7 @@ src
  ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.input.tsx            # input file for test
  ┃ ┃ ┃ ┃ ┣ <name-of-codemod>.output.tsx           # output file for test
  ┃ ┃ ┃ ┃ ┗ transform.spec.ts                      # jest test file
- ┃ ┃ ┣ testing.tsx                                # (optional) file used to test `yarn lg codemod...`
+ ┃ ┃ ┣ testing.tsx                                # (optional) file used to test `pnpm lg codemod...`
  ┃ ┃ ┗ transform.ts                               # transformer function (file that modifies the code )
  ┃ ┗ ...
  ┗ ...

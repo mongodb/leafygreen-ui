@@ -1,4 +1,3 @@
-/* eslint-disable react/display-name */
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 

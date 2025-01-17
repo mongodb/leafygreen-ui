@@ -52,10 +52,10 @@ import { Combobox, ComboboxOptions } from '@leafygreen-ui/combobox';
 ### Without CLI
 
 1. Create or open a React project
-2. Install individual LeafyGreen components using `npm` or `yarn`
+2. Install individual LeafyGreen components using `npm`, `pnpm`, or `yarn`
 
 ```bash
-yarn add @leafygreen-ui/button
+pnpm add @leafygreen-ui/button
 ```
 
 3. Import LeafyGreen components into your project
@@ -132,7 +132,7 @@ import Button from '@leafygreen-ui/button';
 | [@leafygreen-ui/tokens](./packages/tokens)                           | [![version](https://img.shields.io/npm/v/@leafygreen-ui/tokens)](https://www.npmjs.com/package/@leafygreen-ui/tokens)                           | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/tokens?color=white)              | [Docs](http://mongodb.design/component/tokens/live-example)                   |
 | [@leafygreen-ui/tooltip](./packages/tooltip)                         | [![version](https://img.shields.io/npm/v/@leafygreen-ui/tooltip)](https://www.npmjs.com/package/@leafygreen-ui/tooltip)                         | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/tooltip?color=white)             | [Docs](http://mongodb.design/component/tooltip/live-example)                  |
 | [@leafygreen-ui/typography](./packages/typography)                   | [![version](https://img.shields.io/npm/v/@leafygreen-ui/typography)](https://www.npmjs.com/package/@leafygreen-ui/typography)                   | ![downloads](https://img.shields.io/npm/dm/@leafygreen-ui/typography?color=white)          | [Docs](http://mongodb.design/component/typography/live-example)               |
-| [@lg-charts/line-chart](./charts/line-chart)                         | [![version](https://img.shields.io/npm/v/@lg-charts/line-chart)](https://www.npmjs.com/package/@lg-charts/line-chart)                           | ![downloads](https://img.shields.io/npm/dm/@lg-charts/line-chart?color=white)              | [Docs](http://mongodb.design/component/line-chart/live-example)               |
+| [@lg-charts/core](./charts/core)                                     | [![version](https://img.shields.io/npm/v/@lg-charts/core)](https://www.npmjs.com/package/@lg-charts/core)                                       | ![downloads](https://img.shields.io/npm/dm/@lg-charts/core?color=white)                    | [Docs](http://mongodb.design/component/chart/live-example)                    |
 | [@lg-chat/avatar](./chat/avatar)                                     | [![version](https://img.shields.io/npm/v/@lg-chat/avatar)](https://www.npmjs.com/package/@lg-chat/avatar)                                       | ![downloads](https://img.shields.io/npm/dm/@lg-chat/avatar?color=white)                    | [Docs](http://mongodb.design/component/avatar/live-example)                   |
 | [@lg-chat/chat-disclaimer](./chat/chat-disclaimer)                   | [![version](https://img.shields.io/npm/v/@lg-chat/chat-disclaimer)](https://www.npmjs.com/package/@lg-chat/chat-disclaimer)                     | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-disclaimer?color=white)           | [Docs](http://mongodb.design/component/chat-disclaimer/live-example)          |
 | [@lg-chat/chat-window](./chat/chat-window)                           | [![version](https://img.shields.io/npm/v/@lg-chat/chat-window)](https://www.npmjs.com/package/@lg-chat/chat-window)                             | ![downloads](https://img.shields.io/npm/dm/@lg-chat/chat-window?color=white)               | [Docs](http://mongodb.design/component/chat-window/live-example)              |
@@ -166,7 +166,7 @@ import Button from '@leafygreen-ui/button';
 | [@lg-tools/update](./tools/update)                                   | [![version](https://img.shields.io/npm/v/@lg-tools/update)](https://www.npmjs.com/package/@lg-tools/update)                                     | ![downloads](https://img.shields.io/npm/dm/@lg-tools/update?color=white)                   | [Docs](http://mongodb.design/component/update/live-example)                   |
 | [@lg-tools/validate](./tools/validate)                               | [![version](https://img.shields.io/npm/v/@lg-tools/validate)](https://www.npmjs.com/package/@lg-tools/validate)                                 | ![downloads](https://img.shields.io/npm/dm/@lg-tools/validate?color=white)                 | [Docs](http://mongodb.design/component/validate/live-example)                 |
 
-## Developement
+## Development
 
 ### Setup
 
@@ -176,9 +176,9 @@ import Button from '@leafygreen-ui/button';
 
    via [nodejs installer](https://nodejs.org/en/)
 
-2. Install Yarn >= 1.20.0.
+2. Install PNPM >= 9.15.0.
 
-   [Yarn Installation documentation](https://classic.yarnpkg.com/en/docs/install/#mac-stable)
+   [PNPM Installation documentation](https://pnpm.io/installation)
 
 3. Clone the repository.
 
@@ -193,7 +193,7 @@ import Button from '@leafygreen-ui/button';
 
 4. Install dependencies and link packages.
    ```ts
-   yarn run init
+   pnpm run init
    ```
 
 ### Storybook
@@ -201,7 +201,7 @@ import Button from '@leafygreen-ui/button';
 Start up storybook to see all UI components that exist:
 
 ```ts
-yarn start
+pnpm start
 ```
 
 Note: Running storybook doesn't trigger changes in dependencies, only the main component's — e.g. If you're looking at `Button`, and make a change to `Lib`, you need to rebuild `Lib` for Storybook to see those changes in `Button`.
@@ -211,13 +211,13 @@ Note: Running storybook doesn't trigger changes in dependencies, only the main c
 To rebuild all packages:
 
 ```ts
-yarn build
+pnpm build
 ```
 
 To rebuild select packages, filter using `--filter`:
 
 ```ts
-yarn build --filter="[package]"
+pnpm build --filter="[package]"
 // ex. --filter="@leafygreen-ui/hooks"
 ```
 
@@ -230,7 +230,7 @@ This will allow you to make changes to your local repository of `leafygreen-ui` 
 To do this, clone this repository and navigate to the root directory (where `package.json` is located), then run the following:
 
 ```
-yarn run link -- ${PATH_TO_APPLICATION}
+pnpm run link -- ${PATH_TO_APPLICATION}
 ```
 
 The script does several things in order:
@@ -240,9 +240,9 @@ The script does several things in order:
 2. It scans your application for any installed `leafygreen-ui` components in your `node_modules/@leafygreen-ui` folder.
    **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within your application inside `node_modules/@leafygreen-ui` before running this command.
 
-3. If any `leafygreen-ui` components are found then the script uses `yarn link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
+3. If any `leafygreen-ui` components are found then the script uses `pnpm link` to link every `node_modules/@leafygreen-ui` module to your local `leafygreen-ui` repository.
 
-After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `yarn build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
+After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, run `pnpm build` in the root of the `leafygreen-ui` repository and the changes will be visible on your running application.
 
 ## create-leafygreen-app
 
@@ -270,37 +270,37 @@ npx create-leafygreen-app@latest --packages-only
 
 ### Getting Started
 
-To get started quickly and easily run `yarn create-package my-new-package`. When you run this command, we create a directory containing all of the boilerplate code that you'll need to start developing your new Component.
+To get started quickly and easily run `pnpm create-package my-new-package`. When you run this command, we create a directory containing all of the boilerplate code that you'll need to start developing your new Component.
 
 Note: it's important to follow the kebab-casing convention described above.
 
 - Add the new component to `build.tsconfig.json`
 - If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
-- Run `yarn run init` to link all packages before starting development
+- Run `pnpm run init` to link all packages before starting development
 
 ## Formatting and linting
 
-When you run `yarn fix`, we do the following:
+When you run `pnpm fix`, we do the following:
 
-- We run `yarn prettier:fix` so that we have consistently formatted code.
-- We run `yarn eslint:fix` to catch any syntax errors, unused variables, and any other easy-to-catch issues.
+- We run `pnpm prettier:fix` so that we have consistently formatted code.
+- We run `pnpm eslint:fix` to catch any syntax errors, unused variables, and any other easy-to-catch issues.
 
 To fix all files in the repository, run the following:
 
 ```
-yarn fix
+pnpm fix
 ```
 
 To check if any files need formatting without automatically formatting them, run the following:
 
 ```
-yarn prettier:check
+pnpm prettier:check
 ```
 
 To run linting without automatically fixing issues, run the following:
 
 ```
-yarn eslint:check
+pnpm eslint:check
 ```
 
 ## Typechecking
@@ -308,7 +308,7 @@ yarn eslint:check
 To run typechecking without compiling the code, run the following:
 
 ```
-yarn ts
+pnpm ts
 ```
 
 ## Testing
@@ -316,7 +316,7 @@ yarn ts
 To run the unit tests for our components, run the following:
 
 ```
-yarn test
+pnpm test
 ```
 
 ## Committing
@@ -324,7 +324,7 @@ yarn test
 When making a PR that contains changes that should be included in a package's changelog, be sure to do so by running:
 
 ```
-yarn changeset
+pnpm changeset
 ```
 
 This will generate a `changes.json` file, keeping track of version upgrades and update descriptions. We follow semver conventions for versioning, so each change will either be major, minor, or patch.
@@ -351,12 +351,12 @@ Let's imagine we want to publish a `beta` release of some component. Our work is
 
 1. Create a new branch off your component branch `git checkout -b pre-release`
    - this makes sure your package updates stay independent
-2. Enter pre-release mode: `yarn changeset pre enter beta` (name can be `next`, `beta`, `alpha`, or any other name)
-3. Update package versions `yarn changeset version`
+2. Enter pre-release mode: `pnpm changeset pre enter beta` (name can be `next`, `beta`, `alpha`, or any other name)
+3. Update package versions `pnpm changeset version`
    - This will update any packages with existing changeset files to version `X.Y.Z-beta.0` (or whatever name you used)
 4. Commit these updates `git commit -am "Prerelease version packages"`
-5. Build the component(s) you're pre-releasing `yarn build <...components>`
-6. Publish the prerelease with `yarn changeset publish`
+5. Build the component(s) you're pre-releasing `pnpm build <...components>`
+6. Publish the prerelease with `pnpm changeset publish`
 
 Any new work you do should be done in the _original_ (`new-feature`) branch.
 To publish a new pre-release version, pull the changes from `new-feature` into branch `pre-release`, and follow steps 3-5.
@@ -368,11 +368,11 @@ When `new-feature` is merged into `main`, you can safely delete the `pre-release
 You can deploy a static build of our Storybook site to gh-pages from the `main` branch.
 
 1. First be sure you've built a static version of Storybook with the script: `build-storybook`
-2. Then deploy to gh-pages: `yarn release:site`
+2. Then deploy to gh-pages: `pnpm release:site`
 
 ### To deploy to your own mirror of leafygreen-ui
 
-1. Run `yarn demo:site [your_github_username]`.
+1. Run `pnpm demo:site [your_github_username]`.
 2. If you haven't built a static version of Storybook yet, you will be prompted to do so.
 3. You will be asked for confirmation before Storybook is published.
 

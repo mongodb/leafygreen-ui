@@ -14,6 +14,9 @@ import {
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
 
+// FIXME:
+/* eslint-disable react-hooks/exhaustive-deps */
+
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
  * Provides helper methods to hide ECharts specific logic and give a cleaner API
@@ -104,8 +107,10 @@ export function useEchart({
     withInstanceCheck((groupId: string) => {
       // echartsCoreRef.current should exist if instance does, but checking for extra safety
       if (echartsCoreRef.current) {
-        (echartsInstance as EChartsType).group = groupId;
-        echartsCoreRef.current.connect(groupId);
+        if ((echartsInstance as EChartsType).group !== groupId) {
+          (echartsInstance as EChartsType).group = groupId;
+          echartsCoreRef.current.connect(groupId);
+        }
       }
     }),
     [echartsCoreRef.current, echartsInstance],
@@ -151,8 +156,8 @@ export function useEchart({
       });
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
-      let xAxisIndex: number | string = xAxis ? 0 : 'none';
-      let yAxisIndex: number | string = yAxis ? 0 : 'none';
+      const xAxisIndex: number | string = xAxis ? 0 : 'none';
+      const yAxisIndex: number | string = yAxis ? 0 : 'none';
 
       updateOptions({
         toolbox: {

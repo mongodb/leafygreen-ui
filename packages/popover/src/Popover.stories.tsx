@@ -6,7 +6,7 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
 import { color } from '@leafygreen-ui/tokens';
 
@@ -93,7 +93,7 @@ const meta: StoryMetaType<typeof Popover> = {
         active: true,
         children: <div className={popoverStyle}>Popover content</div>,
       },
-      // eslint-disable-next-line react/display-name
+
       decorator: Instance => {
         return (
           <div

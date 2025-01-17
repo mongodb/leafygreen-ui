@@ -14,7 +14,7 @@ const prettierConfigPath = path.resolve(
 const prettierExtensions = [...esLintExtensions, 'mjs', 'json', 'md', 'yml'];
 
 /** Spawns a prettier job */
-export const prettier: LintFn = ({ fix, verbose }) => {
+export const prettier: LintFn = ({ fix, verbose: _verbose }) => {
   return new Promise<boolean>((resolve, reject) => {
     console.log(chalk.magenta('Running Prettier...'));
     spawn(

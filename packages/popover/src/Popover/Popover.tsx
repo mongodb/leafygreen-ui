@@ -48,7 +48,7 @@ import {
  * @param props.spacing The spacing (in pixels) between the reference element, and the popover.
  * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
- * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.adjustOnMutation: Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  * @param props.children Content to appear inside of Popover container.
  * @param props.className Classname applied to Popover container.
  * @param props.popoverZIndex Number that controls the z-index of the popover element directly.
@@ -63,6 +63,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
+      // FIXME:
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       adjustOnMutation = false,
       align = Align.Bottom,
       children,
@@ -240,7 +242,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                     transformAlign,
                   })}
                   // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
-                  // eslint-disable-next-line react/no-unknown-property
+
                   popover={
                     renderMode === RenderMode.TopLayer ? dismissMode : undefined
                   }
