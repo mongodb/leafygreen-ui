@@ -12,7 +12,6 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
-import { Align } from './Cell/Cell.types';
 import { VerticalAlignment } from './Table/Table.types';
 import {
   makeData,

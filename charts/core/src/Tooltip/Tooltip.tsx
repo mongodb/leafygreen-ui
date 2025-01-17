@@ -72,6 +72,8 @@ export function Tooltip({
         },
       });
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chart.ready, theme, sortDirection, sortKey, valueFormatter]);
 
   return null;

@@ -593,6 +593,8 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
     },
   ];
 
+  // FIXME:
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const columns = useMemo(() => columnDefs, []);
   const estimateSize = useCallback(() => 68, []);
 

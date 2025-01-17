@@ -3,7 +3,7 @@ import child_process, { ChildProcess } from 'child_process';
 
 import { update } from '.';
 const spawnSpy = jest.spyOn(child_process, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as ChildProcess));
+spawnSpy.mockImplementation((..._args) => ({} as ChildProcess));
 
 const packageMgr = getPackageManager('.');
 

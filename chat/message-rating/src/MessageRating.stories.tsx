@@ -41,6 +41,7 @@ export const Controlled: StoryFn<typeof MessageRating> = ({
   const [value, setValue] = useState<MessageRatingProps['value']>(valueProp);
   useEffect(() => {
     setValue(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueProp]);
   const handleRatingChange: ChangeEventHandler<HTMLInputElement> = e => {
     setValue(e.target.value as MessageRatingProps['value']);
