@@ -9,14 +9,21 @@ jobs:
   build:
     name: Build packages
     runs-on: ubuntu-latest
+    outputs:
+      cache-primary-key: ${{ steps.build-cache.outputs.cache-primary-key }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
         run: pnpm add --global node-gyp
 
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         name: Check for build cache
         id: build-cache
         with:
@@ -27,7 +34,7 @@ jobs:
             tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
@@ -49,6 +56,17 @@ jobs:
       - name: Generate docs
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         run: pnpm run turbo run docs
+
+      - uses: actions/cache/save@v4
+        name: Save build cache
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          path: |
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
+          key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   chromatic:
     name: Establish Chromatic baseline
@@ -85,7 +103,7 @@ jobs:
             tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -132,7 +150,7 @@ jobs:
             tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Version packages
         id: changesets
@@ -147,7 +165,7 @@ jobs:
   notify:
     name: Notify Slack & Website
     runs-on: ubuntu-latest
-    needs: [release]
+    needs: [build, release]
     if: ${{ needs.release.outputs.published == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -175,13 +193,14 @@ jobs:
             tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Notify Slack channel of new releases
         id: slackbot
         run: pnpm slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+
   dispatch-to-website:
     name: Dispatch to Website repo
     runs-on: ubuntu-latest
