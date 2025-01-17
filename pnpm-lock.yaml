@@ -124,8 +124,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -164,8 +164,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -210,8 +210,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -259,8 +259,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -329,8 +329,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -380,8 +380,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -404,8 +404,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -444,8 +444,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -499,8 +499,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -530,8 +530,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -557,8 +557,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -617,8 +617,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
@@ -656,8 +656,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -680,8 +680,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -704,8 +704,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -730,8 +730,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -770,8 +770,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -795,8 +795,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -825,8 +825,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -858,8 +858,8 @@ importers:
         specifier: workspace:^
         version: link:../inline-definition
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -891,8 +891,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -960,8 +960,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1003,8 +1003,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1039,8 +1039,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1087,8 +1087,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1164,8 +1164,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1207,8 +1207,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1240,8 +1240,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1270,8 +1270,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1307,8 +1307,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1340,8 +1340,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1429,8 +1429,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1453,8 +1453,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1474,8 +1474,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1502,8 +1502,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1551,8 +1551,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1590,8 +1590,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1629,8 +1629,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1681,8 +1681,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1748,8 +1748,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1781,8 +1781,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1808,8 +1808,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1859,8 +1859,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1886,8 +1886,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1932,8 +1932,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -1982,8 +1982,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2007,8 +2007,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2049,8 +2049,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2091,8 +2091,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2137,8 +2137,8 @@ importers:
         specifier: workspace:^
         version: link:../input-option
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2188,8 +2188,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2231,8 +2231,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2264,8 +2264,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2294,8 +2294,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2330,8 +2330,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2400,8 +2400,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2468,8 +2468,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2498,8 +2498,8 @@ importers:
         specifier: workspace:^
         version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2528,8 +2528,8 @@ importers:
         specifier: workspace:^
         version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2577,8 +2577,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2623,8 +2623,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -2660,8 +2660,8 @@ importers:
         specifier: workspace:^
         version: link:../icon
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
@@ -3162,8 +3162,8 @@ importers:
         specifier: workspace:^
         version: link:../../packages/emotion
       '@leafygreen-ui/leafygreen-provider':
-        specifier: ^4.0.0
-        version: 4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../../packages/palette
@@ -4536,17 +4536,6 @@ packages:
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-
-  '@leafygreen-ui/hooks@8.3.2':
-    resolution: {integrity: sha512-Ay33jalhGZl5lPuDoU9/bGQHm3D9Rgwx4y2/tvvddsoR2KB/kJUCy3P42S9dnA7iN+zxVwSB5FFwfWaH0H7HXw==}
-
-  '@leafygreen-ui/leafygreen-provider@4.0.0':
-    resolution: {integrity: sha512-D1kbgWYuVmDThsFaP0+IT4NEgYOLwNCSspm1hiiENDm2gFQz7MVh6UJ1bHaWCWfLQNGDhyUbs8KuP0rdTObyJA==}
-
-  '@leafygreen-ui/lib@14.0.0':
-    resolution: {integrity: sha512-aQKRevfcQxpHy5CaS6gLb5T1WMBSpb7wCrvC68lPJaKAbiR2nPr2H8EgZfByez26RrEGhACmgtDbSGJ0Kd31hA==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -12790,28 +12779,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
 
   '@juggle/resize-observer@3.4.0': {}
-
-  '@leafygreen-ui/hooks@8.3.2(react@18.2.0)':
-    dependencies:
-      '@leafygreen-ui/lib': 14.0.0(react@18.2.0)
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - react
-
-  '@leafygreen-ui/leafygreen-provider@4.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@leafygreen-ui/hooks': 8.3.2(react@18.2.0)
-      '@leafygreen-ui/lib': 14.0.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
-  '@leafygreen-ui/lib@14.0.0(react@18.2.0)':
-    dependencies:
-      '@storybook/csf': 0.1.2
-      lodash: 4.17.21
-      react: 18.2.0
 
   '@manypkg/find-root@1.1.0':
     dependencies:
