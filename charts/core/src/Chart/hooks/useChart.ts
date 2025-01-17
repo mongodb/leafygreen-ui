@@ -35,6 +35,8 @@ export function useChart({
     if (echart.ready) {
       onChartReady();
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready]);
 
   useEffect(() => {
@@ -47,6 +49,8 @@ export function useChart({
         echart.removeFromGroup();
       };
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, groupId]);
 
   useEffect(() => {
@@ -56,6 +60,8 @@ export function useChart({
         yAxis: zoomSelect?.yAxis,
       });
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, zoomSelect]);
 
   useEffect(() => {
@@ -64,6 +70,8 @@ export function useChart({
         onZoomSelect(zoomEventResponse);
       });
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, onZoomSelect]);
 
   function hideTooltip() {
@@ -87,6 +95,8 @@ export function useChart({
         }
       });
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready]);
 
   return {

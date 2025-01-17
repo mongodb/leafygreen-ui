@@ -51,7 +51,7 @@ export const installLeafyGreen = (
 
   fetch(lguiNpmUrl)
     .then(data => data.json())
-    .then(({ objects, total }: NpmFetchData) => {
+    .then(({ objects }: NpmFetchData) => {
       console.log('Installing Leafygreen packages');
 
       const packagesToInstall = objects

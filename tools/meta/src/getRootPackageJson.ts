@@ -18,6 +18,7 @@ export function isValidJSON(str?: string): boolean {
     JSON.parse(str);
     return true;
   } catch (error) {
+    console.error(error);
     return false;
   }
 }

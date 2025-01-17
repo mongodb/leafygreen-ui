@@ -36,7 +36,6 @@ describe('packages/table/useLeafyGreenTable', () => {
 
   test('returns the correct number of rows with expandedContent', () => {
     const data = getDefaultTestData({
-      // eslint-disable-next-line react/display-name
       renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
         return <>Expandable content test</>;
       },

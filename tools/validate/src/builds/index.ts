@@ -177,7 +177,7 @@ function getModuleTypes(path: string): Array<ModuleType> {
   // globals during the detection process.
   try {
     vm.runInContext(src, context);
-  } catch (e) {
+  } catch (_e) {
     if (ES6ImportExportRegExp.test(src) || ES6AliasRegExp.test(src)) {
       mods.push(ModuleType.esm);
     }
