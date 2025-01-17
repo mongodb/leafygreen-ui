@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/a11y",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "leafyGreen UI Kit A11y",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

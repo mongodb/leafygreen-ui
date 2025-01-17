@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/banner",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "description": "leafyGreen UI Kit Banner",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,7 +31,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/banner",
   "repository": {

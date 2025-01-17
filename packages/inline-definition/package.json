@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/inline-definition",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "leafyGreen UI Kit Inline Definition",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -29,7 +29,7 @@
     "@leafygreen-ui/tooltip": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/inline-definition",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/title-bar",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "lg-chat Title Bar",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -32,7 +32,7 @@
     "@lg-chat/avatar": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {}
 }

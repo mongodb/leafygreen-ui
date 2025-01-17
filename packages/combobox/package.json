@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "11.0.0",
+  "version": "11.0.1",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -40,7 +40,7 @@
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^"

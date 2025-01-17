@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-field",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "LeafyGreen UI Kit Form Field",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -24,7 +24,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",

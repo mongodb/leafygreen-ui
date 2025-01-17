@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-rating",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "lg-chat Message Rating",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +30,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {}
 }

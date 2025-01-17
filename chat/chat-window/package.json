@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-window",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "lg-chat Chat Window",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -38,6 +38,6 @@
     "@lg-chat/message-feedback": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   }
 }

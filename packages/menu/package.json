@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/menu",
-  "version": "28.0.0",
+  "version": "28.0.1",
   "description": "LeafyGreen UI Kit Menu",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -43,7 +43,7 @@
     "@leafygreen-ui/text-input": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/menu",

@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/core",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "lg-charts Core Chart Components",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -27,7 +27,7 @@
     "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",

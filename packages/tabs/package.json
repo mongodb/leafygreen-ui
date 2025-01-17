@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "14.0.0",
+  "version": "14.0.1",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -34,7 +34,7 @@
     "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs",
   "repository": {

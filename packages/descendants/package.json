@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/descendants",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "LeafyGreen UI Kit Descendants",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -26,7 +26,7 @@
     "@leafygreen-ui/popover": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/descendants",
   "repository": {

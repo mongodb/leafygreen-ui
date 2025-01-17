@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "16.0.0",
+  "version": "16.0.1",
   "description": "leafyGreen UI Kit Side Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -37,7 +37,7 @@
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
     "@leafygreen-ui/select": "workspace:^"
