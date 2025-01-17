@@ -1,5 +1,12 @@
 # @lg-tools/build
 
+## 0.7.1
+
+### Patch Changes
+
+- 79c88b5b1: Fixes `tsdoc` build to only look at a package's `/src`
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+
 ## 0.7.0
 
 ### Minor Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/fixed-chat-window",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "LeafyGreen UI Kit Fixed Chat Window",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -36,7 +36,7 @@
     "@lg-chat/message-feedback": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/fixed-chat-window",
   "repository": {

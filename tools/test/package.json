@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/test",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "Jest setup & config for LeafyGreen repositories",
   "license": "Apache-2.0",
   "main": "dist/index.js",

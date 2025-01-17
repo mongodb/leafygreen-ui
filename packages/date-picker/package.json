@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/date-picker",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "LeafyGreen UI Kit Date Picker",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -34,7 +34,7 @@
     "weekstart": "^2.0.0"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",

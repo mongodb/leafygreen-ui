@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "13.0.0-rc.0",
+  "version": "13.0.0",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -48,7 +48,7 @@
     "@leafygreen-ui/pagination": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/table",
   "repository": {

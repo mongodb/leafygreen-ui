@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/pagination",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "leafyGreen UI Kit Pagination",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -41,7 +41,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "devDependencies": {}
 }

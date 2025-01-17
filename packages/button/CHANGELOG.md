@@ -1,5 +1,19 @@
 # @leafygreen-ui/button
 
+## 22.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @lg-tools/test-harnesses@0.1.3
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/ripple@1.1.14
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/box@4.0.1
+  - @leafygreen-ui/lib@14.0.1
+
 ## 22.0.0
 
 ### Major Changes

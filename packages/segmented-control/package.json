@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/segmented-control",
-  "version": "10.0.0",
+  "version": "10.0.1",
   "description": "leafyGreen UI Kit Segmented Control",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -37,7 +37,7 @@
     "@leafygreen-ui/button": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/segmented-control",
   "repository": {

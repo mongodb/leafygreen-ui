@@ -1,5 +1,19 @@
 # @lg-tools/storybook-decorators
 
+## 0.3.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @lg-tools/storybook-utils@0.1.2
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/banner@9.0.1
+  - @leafygreen-ui/tokens@2.11.2
+
 ## 0.3.0
 
 ### Minor Changes

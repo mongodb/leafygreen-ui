@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/lg-markdown",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "lg-chat LGMarkdown",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -29,7 +29,7 @@
     "react-markdown": "^8.0.7"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "devDependencies": {}
 }

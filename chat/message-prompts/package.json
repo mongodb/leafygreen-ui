@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-prompts",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "LeafyGreen UI Kit Message Prompts",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,7 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/message-prompts",
   "repository": {

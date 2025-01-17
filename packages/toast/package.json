@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/toast",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "leafyGreen UI Kit Toast",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -36,7 +36,7 @@
     "react-transition-group": "^4.4.5"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",

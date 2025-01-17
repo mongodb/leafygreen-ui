@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "13.0.0",
+  "version": "13.0.1",
   "description": "LeafyGreen UI Kit Tooltip",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -37,7 +37,7 @@
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tooltip",
   "repository": {
