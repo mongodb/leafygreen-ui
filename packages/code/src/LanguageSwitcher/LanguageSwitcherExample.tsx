@@ -78,7 +78,7 @@ export function LanguageSwitcherWithPanelExample({
   );
 }
 
-export function LanguageSwitcherWithDepricatedPropsExample({
+export function LanguageSwitcherWithDeprecatedPropsExample({
   darkMode,
   onChange,
   customActionButtons = [],

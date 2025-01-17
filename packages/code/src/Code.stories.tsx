@@ -13,7 +13,7 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import {
   LanguageSwitcherWithPanelExample,
-  LanguageSwitcherWithDepricatedPropsExample,
+  LanguageSwitcherWithDeprecatedPropsExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language, Panel } from '.';
 
@@ -209,7 +209,7 @@ export const WithDeprecatedLanguageSwitcherProps: StoryType<
   FontSizeProps
 > = ({ baseFontSize, ...args }: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
-    <LanguageSwitcherWithDepricatedPropsExample
+    <LanguageSwitcherWithDeprecatedPropsExample
       showCustomActionButtons={true}
       customActionButtons={customActionButtons}
       {...args}

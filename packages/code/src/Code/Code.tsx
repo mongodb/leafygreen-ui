@@ -197,9 +197,9 @@ function Code({
             {renderedSyntaxComponent}
           </pre>
 
-          {/* if there are props then render then manually render the panel component */}
           {!!panel && panel}
 
+          {/* if there are props then manually render the panel component */}
           {/* TODO: remove when deprecated props are removed */}
           {shouldRenderTempPanelSubComponent && (
             <Panel
