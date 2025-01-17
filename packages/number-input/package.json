@@ -45,7 +45,7 @@
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {}
 }

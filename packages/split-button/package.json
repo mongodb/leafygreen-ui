@@ -42,7 +42,7 @@
     "@leafygreen-ui/tokens": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {}
 }

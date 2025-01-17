@@ -42,6 +42,6 @@
     "@leafygreen-ui/icon": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   }
 }

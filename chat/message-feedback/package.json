@@ -38,7 +38,7 @@
     "@lg-chat/message-rating": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.1"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
