@@ -9,6 +9,7 @@ jobs:
   build:
     name: Build packages
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Should not take more than 30 minutes to build with docs
     outputs:
       cache-primary-key: ${{ steps.build-cache.outputs.cache-primary-key }}
     steps:
