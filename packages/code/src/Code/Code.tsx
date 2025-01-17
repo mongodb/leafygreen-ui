@@ -150,14 +150,36 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === languageProp,
+  );
+
+  // const shouldRenderTempPanelSubComponent =
+  //   (!panel &&
+  //     showCustomActionButtons &&
+  //     customActionButtons &&
+  //     customActionButtons.length > 0) ||
+  //   (!panel && !!chromeTitle) ||
+  //   (!panel &&
+  //     languageOptions &&
+  //     languageOptions.length > 0 &&
+  //     typeof languageProp !== 'string' &&
+  //     !!currentLanguage) ||
+  //   (!panel && copyable) ||
+  //   (!panel && !!chromeTitle);
+
   const shouldRenderTempPanelSubComponent =
-    (!panel &&
-      showCustomActionButtons &&
+    !panel &&
+    ((showCustomActionButtons &&
       customActionButtons &&
       customActionButtons.length > 0) ||
-    (!panel && !!chromeTitle) ||
-    (!panel && languageOptions && languageOptions.length > 0) ||
-    (!panel && copyable);
+      !!chromeTitle ||
+      (languageOptions &&
+        languageOptions.length > 0 &&
+        typeof languageProp !== 'string' &&
+        !!currentLanguage) ||
+      copyable ||
+      !!chromeTitle);
 
   const showPanel = !!panel || shouldRenderTempPanelSubComponent;
 

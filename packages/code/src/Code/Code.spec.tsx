@@ -164,6 +164,52 @@ describe('packages/Code', () => {
     });
   });
 
+  describe('Deprecated props', () => {
+    describe('custom action buttons', () => {
+      test.todo(
+        'does not renders a panel with custom action buttons when customActionButtons is passed',
+      );
+      test.todo(
+        'does not renders a panel with custom action buttons when showCustomActionButtons is true',
+      );
+      test.todo(
+        'renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed',
+      );
+    });
+
+    describe('language switcher', () => {
+      test.todo(
+        'renders a panel when language, onChange, and languageOptions are defined',
+      );
+      test.todo(
+        'does not render a panel when language and onChange are defined but languageOptions is not defined',
+      );
+      test.todo(
+        'does not render a panel when language and languageOptions are defined but onChange is not defined',
+      );
+      test.todo(
+        'does not render a panel when languageOptions is an empty array',
+      );
+      test.todo('does not render a panel if language is a string');
+      test.todo(
+        'does not render a panel if language is not in languageOptions',
+      );
+    });
+
+    describe('chromeTitle', () => {
+      test.todo('renders a panel with a title when chromeTitle is defined');
+    });
+
+    describe('copyable', () => {
+      test.todo('renders a panel with a copy button when copyable is true');
+      test.todo(
+        'does not render a panel with a copy button when copyable is false',
+      );
+    });
+
+    describe('panel slot', () => {});
+  });
+
   describe('hasMultipleLines()', () => {
     test('when passed a single line without preceding and subsequent line breaks, returns "false"', () => {
       const codeExample = `Example`;
@@ -268,6 +314,8 @@ describe('packages/Code', () => {
         });
         expect(queryByTestId('lg-code-select')).toBeNull();
       });
+
+      test.todo('does not render if language is not in languageOptions');
     });
 
     describe('custom action buttons', () => {
