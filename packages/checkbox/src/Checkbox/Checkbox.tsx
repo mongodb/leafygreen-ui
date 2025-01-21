@@ -49,6 +49,7 @@ function Checkbox({
   id: idProp,
   indeterminate: indeterminateProp,
   label = '',
+  defaultChecked = false,
   onClick: onClickProp,
   onChange: onChangeProp,
   name,
@@ -58,7 +59,7 @@ function Checkbox({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(defaultChecked);
   const isChecked = React.useMemo(
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
