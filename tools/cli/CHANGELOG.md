@@ -1,5 +1,22 @@
 # @lg-tools/cli
 
+## 0.7.6
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-tools/build@0.7.2
+  - @lg-tools/codemods@0.1.2
+  - @lg-tools/create@0.2.12
+  - @lg-tools/install@0.1.12
+  - @lg-tools/link@0.2.7
+  - @lg-tools/lint@2.0.2
+  - @lg-tools/slackbot@0.2.11
+  - @lg-tools/test@0.4.13
+  - @lg-tools/update@0.1.12
+  - @lg-tools/validate@0.4.2
+
 ## 0.7.5
 
 ### Patch Changes

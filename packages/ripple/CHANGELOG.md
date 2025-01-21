@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.15
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/tokens@2.11.3
+
 ## 1.1.14
 
 ### Patch Changes

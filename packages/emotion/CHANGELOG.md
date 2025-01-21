@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.9
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 4.0.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lg-tools/storybook-utils
 
+## 0.1.3
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 0.1.2
 
 ### Patch Changes

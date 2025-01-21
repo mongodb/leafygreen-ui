@@ -1,5 +1,23 @@
 # @leafygreen-ui/tabs
 
+## 14.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/a11y@2.0.2
+  - @leafygreen-ui/descendants@2.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/polymorphic@2.0.5
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+  - @lg-tools/test-harnesses@0.1.4
+
 ## 14.0.1
 
 ### Patch Changes

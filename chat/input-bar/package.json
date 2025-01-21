@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/input-bar",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "description": "lg-chat Input Bar",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

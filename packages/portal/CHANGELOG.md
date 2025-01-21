@@ -1,5 +1,14 @@
 # @leafygreen-ui/portal
 
+## 6.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/lib@14.0.2
+
 ## 6.0.1
 
 ### Patch Changes

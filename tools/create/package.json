@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/create",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "Creates a new LeafyGreen packages",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",

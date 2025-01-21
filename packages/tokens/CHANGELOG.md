@@ -1,5 +1,14 @@
 # @leafygreen-ui/tokens
 
+## 2.11.3
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+
 ## 2.11.2
 
 ### Patch Changes

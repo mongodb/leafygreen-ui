@@ -1,5 +1,19 @@
 # @lg-tools/storybook-decorators
 
+## 0.3.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/banner@9.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/tokens@2.11.3
+  - @lg-tools/build@0.7.2
+  - @lg-tools/storybook-utils@0.1.3
+
 ## 0.3.1
 
 ### Patch Changes

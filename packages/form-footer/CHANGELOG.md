@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 5.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/banner@9.0.2
+  - @leafygreen-ui/button@22.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/icon@13.1.2
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+
 ## 5.0.1
 
 ### Patch Changes

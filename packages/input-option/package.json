@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/input-option",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "leafyGreen UI Kit Internal Input Option",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
