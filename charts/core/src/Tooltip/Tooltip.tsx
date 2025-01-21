@@ -30,7 +30,7 @@ export function Tooltip({
     chart.updateOptions({
       tooltip: {
         axisPointer: {
-          z: 0, // Prevents dashed emphasis line from rendered on top of mark lines and labels
+          z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
         },
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
