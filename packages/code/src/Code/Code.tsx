@@ -43,7 +43,7 @@ function Code({
   highlightLines = [],
   panel,
   customActionButtons,
-  showCustomActionButtons,
+  showCustomActionButtons = false,
   chromeTitle,
   languageOptions,
   onChange,
@@ -151,7 +151,7 @@ function Code({
   );
 
   const currentLanguage = languageOptions?.find(
-    option => option.displayName === languageProp,
+    option => option.displayName === highLightLanguage,
   );
 
   // const shouldRenderTempPanelSubComponent =
@@ -171,17 +171,39 @@ function Code({
   const shouldRenderTempPanelSubComponent =
     !panel &&
     ((showCustomActionButtons &&
-      customActionButtons &&
+      !!customActionButtons &&
       customActionButtons.length > 0) ||
       !!chromeTitle ||
-      (languageOptions &&
+      (!!languageOptions &&
         languageOptions.length > 0 &&
         typeof languageProp !== 'string' &&
-        !!currentLanguage) ||
-      copyable ||
-      !!chromeTitle);
+        !!currentLanguage &&
+        !!onChange) ||
+      copyable);
 
   const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+
+  console.log(
+    {
+      shouldRenderTempPanelSubComponent,
+      showPanel,
+      hasCustomActionButtons:
+        showCustomActionButtons &&
+        !!customActionButtons &&
+        customActionButtons.length > 0,
+      hasChormeTitle: !!chromeTitle,
+      hasLanguageOptions:
+        !!languageOptions &&
+        languageOptions.length > 0 &&
+        typeof languageProp !== 'string' &&
+        !!currentLanguage &&
+        !!onChange,
+      isCopyable: copyable,
+      currentLanguage,
+      highLightLanguage,
+    },
+    '🤡',
+  );
 
   return (
     <CodeContextProvider

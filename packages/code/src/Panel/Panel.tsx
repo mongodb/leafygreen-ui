@@ -27,6 +27,7 @@ function Panel({
   showCustomActionButtons,
   title,
   className,
+  ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
   const { contents, language: languageProp } = useCodeContext();
@@ -56,6 +57,7 @@ function Panel({
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
       data-testid={LGIDs.panel}
+      {...rest}
     >
       {title && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}
 
