@@ -151,6 +151,9 @@ importers:
       '@leafygreen-ui/combobox':
         specifier: workspace:^
         version: link:../../packages/combobox
+      '@storybook/addon-actions':
+        specifier: ^8.5.0
+        version: 8.5.0(storybook@7.6.20)
       '@types/lodash.debounce':
         specifier: ^4.0.9
         version: 4.0.9
@@ -5131,6 +5134,11 @@ packages:
 
   '@storybook/addon-actions@7.6.20':
     resolution: {integrity: sha512-c/GkEQ2U9BC/Ew/IMdh+zvsh4N6y6n7Zsn2GIhJgcu9YEAa5aF2a9/pNgEGBMOABH959XE8DAOMERw/5qiLR8g==}
+
+  '@storybook/addon-actions@8.5.0':
+    resolution: {integrity: sha512-6CW9+17rk5eNx6I8EKqCxRKtsJFTR/lHL+xiJ6/iBWApIm8sg63vhXvUTJ58UixmIkT5oLh0+ESNPh+x10D8fw==}
+    peerDependencies:
+      storybook: ^8.5.0
 
   '@storybook/addon-backgrounds@7.6.20':
     resolution: {integrity: sha512-a7ukoaXT42vpKsMxkseIeO3GqL0Zst2IxpCTq5dSlXiADrcemSF/8/oNpNW9C4L6F1Zdt+WDtECXslEm017FvQ==}
@@ -13330,6 +13338,15 @@ snapshots:
       '@types/uuid': 9.0.8
       dequal: 2.0.3
       polished: 4.3.1
+      uuid: 9.0.0
+
+  '@storybook/addon-actions@8.5.0(storybook@7.6.20)':
+    dependencies:
+      '@storybook/global': 5.0.0
+      '@types/uuid': 9.0.8
+      dequal: 2.0.3
+      polished: 4.3.1
+      storybook: 7.6.20
       uuid: 9.0.0
 
   '@storybook/addon-backgrounds@7.6.20':

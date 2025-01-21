@@ -67,6 +67,7 @@ export function getMarkConfig({
           },
         ],
         emphasis: {
+          focus: 'series',
           label: {
             show: true,
           },
@@ -102,6 +103,7 @@ export function getMarkConfig({
           },
         ],
         emphasis: {
+          focus: 'series',
           label: {
             show: true,
           },

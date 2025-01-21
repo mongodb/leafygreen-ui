@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { BaseEventMarker, EventLevel } from '../BaseEventMarker';
-
-import { EventMarkerLineProps } from './EventMarkerLine.types';
+import {
+  BaseEventMarker,
+  EventLevel,
+  LineEventMarkerProps,
+} from '../BaseEventMarker';
 
 export function EventMarkerLine({
   position,
   label,
   message,
   level = EventLevel.Warning,
-}: EventMarkerLineProps) {
+}: Omit<LineEventMarkerProps, 'type'>) {
   return (
     <BaseEventMarker
       position={position}

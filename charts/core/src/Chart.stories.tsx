@@ -1,6 +1,6 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { action } from '@storybook/addon-actions';
+// import { action } from '@storybook/addon-actions';
 import type { StoryObj } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
@@ -48,7 +48,7 @@ export default {
     headerShowDivider: true,
     zoomSelectXAxis: true,
     zoomSelectYAxis: true,
-    zoomSelectCallback: action('onZoomSelect'),
+    zoomSelectCallback: undefined, //action('onZoomSelect'),
     renderEventMarkerLine: true,
     eventMarkerLineMessage: 'Event marker line message',
     eventMarkerLineLabel: 'Event marker line label',

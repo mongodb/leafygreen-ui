@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { BaseEventMarker, EventLevel } from '../BaseEventMarker';
-
-import { EventMarkerPointProps } from './EventMarkerPoint.types';
+import {
+  BaseEventMarker,
+  EventLevel,
+  PointEventMarkerProps,
+} from '../BaseEventMarker';
 
 export function EventMarkerPoint({
   position,
   label,
   message,
   level = EventLevel.Warning,
-}: EventMarkerPointProps) {
+}: Omit<PointEventMarkerProps, 'type'>) {
   return (
     <BaseEventMarker
       position={position}
