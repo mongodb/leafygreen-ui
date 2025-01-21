@@ -30,11 +30,17 @@ jobs:
         with:
           path: |
             charts/*/dist/*
+            charts/*/tsdoc.json
+            charts/*/stories.js
             chat/*/dist/*
+            chat/*/tsdoc.json
+            chat/*/stories.js
             packages/*/dist/*
+            packages/*/tsdoc.json
+            packages/*/stories.js
             tools/*/dist/*
-            **/tsdoc.json
-            **/stories.js
+            tools/*/tsdoc.json
+            tools/*/stories.js
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       # Only setup & build if there was no build cache hit
@@ -64,11 +70,17 @@ jobs:
         with:
           path: |
             charts/*/dist/*
+            charts/*/tsdoc.json
+            charts/*/stories.js
             chat/*/dist/*
+            chat/*/tsdoc.json
+            chat/*/stories.js
             packages/*/dist/*
+            packages/*/tsdoc.json
+            packages/*/stories.js
             tools/*/dist/*
-            **/tsdoc.json
-            **/stories.js
+            tools/*/tsdoc.json
+            tools/*/stories.js
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   chromatic:
@@ -101,11 +113,17 @@ jobs:
         with:
           path: |
             charts/*/dist/*
+            charts/*/tsdoc.json
+            charts/*/stories.js
             chat/*/dist/*
+            chat/*/tsdoc.json
+            chat/*/stories.js
             packages/*/dist/*
+            packages/*/tsdoc.json
+            packages/*/stories.js
             tools/*/dist/*
-            **/tsdoc.json
-            **/stories.js
+            tools/*/tsdoc.json
+            tools/*/stories.js
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Publish to Chromatic
@@ -148,11 +166,17 @@ jobs:
         with:
           path: |
             charts/*/dist/*
+            charts/*/tsdoc.json
+            charts/*/stories.js
             chat/*/dist/*
+            chat/*/tsdoc.json
+            chat/*/stories.js
             packages/*/dist/*
+            packages/*/tsdoc.json
+            packages/*/stories.js
             tools/*/dist/*
-            **/tsdoc.json
-            **/stories.js
+            tools/*/tsdoc.json
+            tools/*/stories.js
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Version packages
@@ -191,11 +215,17 @@ jobs:
         with:
           path: |
             charts/*/dist/*
+            charts/*/tsdoc.json
+            charts/*/stories.js
             chat/*/dist/*
+            chat/*/tsdoc.json
+            chat/*/stories.js
             packages/*/dist/*
+            packages/*/tsdoc.json
+            packages/*/stories.js
             tools/*/dist/*
-            **/tsdoc.json
-            **/stories.js
+            tools/*/tsdoc.json
+            tools/*/stories.js
           key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Notify Slack channel of new releases
