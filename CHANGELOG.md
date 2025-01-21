@@ -1,5 +1,11 @@
 # @lg-private/vertical-stepper
 
+## 3.0.0
+
+### Major Changes
+
+- c9203f7: Removes `prop-types`. Updates LG core packages to latest
+
 ## 2.1.1
 
 ### Patch Changes
