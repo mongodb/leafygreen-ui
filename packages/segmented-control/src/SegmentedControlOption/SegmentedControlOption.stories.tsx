@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key, react/display-name */
+/* eslint-disable react/jsx-key */
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 

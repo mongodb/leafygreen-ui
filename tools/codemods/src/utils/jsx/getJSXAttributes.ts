@@ -1,4 +1,4 @@
-import type { ASTPath } from 'jscodeshift';
+import type { ASTPath, Collection } from 'jscodeshift';
 import type core from 'jscodeshift';
 
 // https://astexplorer.net/#/gist/0735cadf00b74e764defef5f75c6d044/219778bcf6c39ff47dbe4483c4ae619fb8caab45
@@ -14,7 +14,7 @@ export function getJSXAttributes(
   j: core.JSCodeshift,
   element: ASTPath<any>,
   propName: string,
-) {
+): Collection<core.JSXAttribute> {
   // Targeting the openingElement directly targets only the parent element rather than all of its children elements e.g j(element). We do this to avoid selecting children that might have props names identical to the parent element.
   const elementCollection = j(element.value.openingElement);
   return elementCollection.find(j.JSXAttribute).filter(attribute => {

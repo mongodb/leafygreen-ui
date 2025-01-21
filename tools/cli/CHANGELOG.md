@@ -1,5 +1,23 @@
 # @lg-tools/cli
 
+## 0.7.5
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+  - @lg-tools/codemods@0.1.1
+  - @lg-tools/slackbot@0.2.10
+  - @lg-tools/validate@0.4.1
+  - @lg-tools/install@0.1.11
+  - @lg-tools/create@0.2.11
+  - @lg-tools/update@0.1.11
+  - @lg-tools/link@0.2.6
+  - @lg-tools/lint@2.0.1
+  - @lg-tools/test@0.4.12
+
 ## 0.7.4
 
 ### Patch Changes

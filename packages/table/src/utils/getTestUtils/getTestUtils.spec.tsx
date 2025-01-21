@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { Fragment } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { fireEvent, render } from '@testing-library/react';
@@ -27,7 +26,6 @@ function TableWithHook(props: TestTableWithHookProps) {
   const { ['data-lgid']: dataLgId, isDisabled = false, ...rest } = props;
   const { table, rowSelection } = useTestHookCall({
     rowProps: {
-      // eslint-disable-next-line react/display-name
       renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
         return <>Expandable content test</>;
       },

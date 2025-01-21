@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-feedback",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "LeafyGreen UI Kit Message Feedback",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,24 +22,23 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^22.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.3.2",
-    "@leafygreen-ui/icon": "^13.0.0",
-    "@leafygreen-ui/icon-button": "^16.0.0",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/popover": "^13.0.0",
-    "@leafygreen-ui/text-area": "^10.0.0",
-    "@leafygreen-ui/tokens": "^2.11.1",
-    "@leafygreen-ui/typography": "^20.0.0"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
+    "@leafygreen-ui/text-area": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "devDependencies": {
-    "@lg-chat/message-rating": "^3.0.0",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@lg-chat/message-rating": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"

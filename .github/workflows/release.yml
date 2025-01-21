@@ -9,74 +9,102 @@ jobs:
   build:
     name: Build packages
     runs-on: ubuntu-latest
+    timeout-minutes: 30 # Should not take more than 30 minutes to build with docs
+    outputs:
+      cache-primary-key: ${{ steps.build-cache.outputs.cache-primary-key }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: yarn global add node-gyp
+        run: pnpm add --global node-gyp
 
-      - uses: actions/cache@v3
+      - uses: actions/cache/restore@v4
         name: Check for build cache
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
 
       # Only setup & build if there was no build cache hit
       - name: Use Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          node-version: 18
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
       - name: Build
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn build
+        run: pnpm build
 
       - name: Generate docs
         if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
-        run: yarn turbo run docs
+        run: pnpm build:docs
+
+      - uses: actions/cache/save@v4
+        name: Save build cache
+        if: ${{ steps.build-cache.outputs.cache-hit != 'true' }}
+        with:
+          path: |
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
+          key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   chromatic:
     name: Establish Chromatic baseline
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Use Node 18
-        uses: actions/setup-node@v3
+      - name: pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          version: 9.15.0
+
+      - name: Use Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
@@ -95,35 +123,42 @@ jobs:
       published: ${{ steps.changesets.outputs.published }}
       publishedPackages: ${{ steps.changesets.outputs.publishedPackages }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Use Node 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          cache: yarn
-          cache-dependency-path: 'yarn.lock'
+          node-version: 18
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Version packages
         id: changesets
         uses: changesets/action@v1
         with:
-          version: yarn changeset version
-          publish: yarn run publish
+          version: pnpm changeset version
+          publish: pnpm publish -r
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
@@ -131,41 +166,54 @@ jobs:
   notify:
     name: Notify Slack & Website
     runs-on: ubuntu-latest
-    needs: [release]
+    needs: [build, release]
     if: ${{ needs.release.outputs.published == 'true' }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
-        run: yarn global add node-gyp
+        run: pnpm global add node-gyp
 
       - name: Install
-        run: yarn install --frozen-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --prefer-offline
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
         with:
           path: |
-            **/dist
-            !**/node_modules
+            charts/*/dist/*
+            chat/*/dist/*
+            packages/*/dist/*
+            tools/*/dist/*
             **/tsdoc.json
             **/stories.js
-          key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'yarn.lock', '**/src/', '!**/node_modules', '!**/dist') }}
+          key: ${{needs.build.outputs.cache-primary-key}}
 
       - name: Notify Slack channel of new releases
         id: slackbot
-        run: yarn slackbot '${{ needs.release.outputs.publishedPackages }}'
+        run: pnpm slackbot '${{ needs.release.outputs.publishedPackages }}'
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+
   dispatch-to-website:
     name: Dispatch to Website repo
     runs-on: ubuntu-latest
     needs: [release]
     if: ${{ needs.release.outputs.published == 'true' }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
       - name: Dispatch to Website repo
         uses: peter-evans/repository-dispatch@v2

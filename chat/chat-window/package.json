@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-window",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "lg-chat Chat Window",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,24 +21,23 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.11.1",
-    "@lg-chat/avatar": "^4.0.0",
-    "@lg-chat/leafygreen-chat-provider": "^3.0.0",
-    "@lg-chat/title-bar": "^3.0.0",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-chat/avatar": "workspace:^",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^",
+    "@lg-chat/title-bar": "workspace:^",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
-    "@lg-chat/input-bar": "^7.0.0",
-    "@lg-chat/message": "^5.0.0",
-    "@lg-chat/message-feed": "^4.0.0",
-    "@lg-chat/message-prompts": "^3.0.0",
-    "@lg-chat/message-feedback": "^3.0.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
+    "@lg-chat/input-bar": "workspace:^",
+    "@lg-chat/message": "workspace:^",
+    "@lg-chat/message-feed": "workspace:^",
+    "@lg-chat/message-prompts": "workspace:^",
+    "@lg-chat/message-feedback": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   }
 }

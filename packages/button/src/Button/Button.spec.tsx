@@ -297,7 +297,7 @@ describe('packages/button', () => {
     });
   });
 
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  /* eslint-disable jest/no-disabled-tests*/
   describe.skip('types behave as expected', () => {
     test('does not throw an error when no children are passed to the component', () => {
       <Button onClick={() => {}} />;

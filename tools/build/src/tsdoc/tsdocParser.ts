@@ -99,12 +99,12 @@ export function parseTSDoc(
 ): Array<CustomComponentDoc> | undefined {
   const { excludeTags } = defaults(options, defaultParseFunctionOptions);
 
-  const packageDir = path.resolve(process.cwd(), packageRoot);
+  const packageSrc = path.resolve(process.cwd(), packageRoot, 'src');
 
-  if (fse.existsSync(packageDir)) {
-    const componentFileNames = parseFileNames(packageDir);
+  if (fse.existsSync(packageSrc)) {
+    const componentFileNames = parseFileNames(packageSrc);
 
-    const pkgJsonPath = path.join(packageDir, 'package.json');
+    const pkgJsonPath = path.join(packageSrc, '../package.json');
     const packageName = fse.existsSync(pkgJsonPath)
       ? JSON.parse(fse.readFileSync(pkgJsonPath, 'utf-8'))?.name
       : undefined;
@@ -140,7 +140,7 @@ export function parseTSDoc(
     console.warn(
       chalk.yellow(
         'Could not find directory:',
-        chalk.bold(`\`${packageDir}\``),
+        chalk.bold(`\`${packageSrc}\``),
       ),
     );
   }

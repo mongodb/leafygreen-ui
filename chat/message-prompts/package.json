@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-prompts",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "LeafyGreen UI Kit Message Prompts",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -15,14 +15,14 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^14.0.0",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/tokens": "^2.11.1",
-    "@leafygreen-ui/typography": "^20.0.0"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^4.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/message-prompts",
   "repository": {
@@ -32,7 +32,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
-  }
+  "devDependencies": {}
 }

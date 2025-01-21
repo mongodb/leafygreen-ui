@@ -7,6 +7,7 @@ export function isValidLocale(str?: string): str is string {
   try {
     new Intl.Locale(str);
   } catch (error) {
+    console.error(error);
     return false;
   }
 

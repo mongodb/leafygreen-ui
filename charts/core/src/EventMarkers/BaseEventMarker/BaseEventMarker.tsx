@@ -34,6 +34,8 @@ export function BaseEventMarker({
     return () => {
       chart.removeSeries(name);
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme, chart.ready, position, label, message, level, type]);
 
   return null;

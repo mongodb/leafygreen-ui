@@ -47,8 +47,8 @@ export async function unlinkPackages(destination: string, opts: UnlinkOpts) {
 
   if (noInstall) {
     console.log(
-      ` Skipping yarn install. \nYou will need to run ${formatLog.cmd(
-        'yarn install --force',
+      ` Skipping pnpm install. \nYou will need to run ${formatLog.cmd(
+        'pnpm install --force',
       )} in ${formatLog.path(destination)} to restore dependencies.`,
     );
   } else {
@@ -96,7 +96,7 @@ function unlinkPackageFromDestination(
   return new Promise(resolve => {
     verbose && console.log('Linking package:', chalk.blue(fullPackageName));
 
-    spawn('yarn', ['unlink', fullPackageName], {
+    spawn('pnpm', ['unlink', fullPackageName], {
       cwd: destination,
       stdio: verbose ? 'inherit' : 'ignore',
     })
@@ -112,7 +112,7 @@ function forceInstall(destination: string) {
     console.log(
       chalk.gray(` Reinstalling packages in ${formatLog.path(destination)}...`),
     );
-    spawn('yarn', ['install', '--force'], {
+    spawn('pnpm', ['install', '--force'], {
       cwd: destination,
       stdio: 'inherit',
     }).on('close', resolve);

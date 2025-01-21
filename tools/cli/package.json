@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/cli",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Command Line tools for LeafyGreen",
   "license": "Apache-2.0",
   "main": "./dist/index.js",
@@ -16,16 +16,16 @@
     "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "@lg-tools/build": "0.7.0",
-    "@lg-tools/codemods": "0.1.0",
-    "@lg-tools/create": "0.2.10",
-    "@lg-tools/install": "0.1.10",
-    "@lg-tools/link": "0.2.5",
-    "@lg-tools/lint": "2.0.0",
-    "@lg-tools/slackbot": "0.2.9",
-    "@lg-tools/test": "0.4.11",
-    "@lg-tools/update": "0.1.10",
-    "@lg-tools/validate": "0.4.0",
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/codemods": "workspace:^",
+    "@lg-tools/create": "workspace:^",
+    "@lg-tools/install": "workspace:^",
+    "@lg-tools/link": "workspace:^",
+    "@lg-tools/lint": "workspace:^",
+    "@lg-tools/slackbot": "workspace:^",
+    "@lg-tools/test": "workspace:^",
+    "@lg-tools/update": "workspace:^",
+    "@lg-tools/validate": "workspace:^",
     "commander": "^11.0.0",
     "read-pkg-up": "7.0.1"
   }

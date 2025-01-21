@@ -1,5 +1,15 @@
 # @lg-tools/create
 
+## 0.2.11
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+  - @lg-tools/meta@0.3.6
+
 ## 0.2.10
 
 ### Patch Changes

@@ -58,8 +58,9 @@ export function useDynamicRefs<T>(
       const refMap: RefMap<T> = new Map<string, React.RefObject<T>>();
       const getter = getGetRef<T>(refMap);
       return getter;
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     prefix ? [prefix] : [],
   );
 
