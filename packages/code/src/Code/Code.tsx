@@ -27,6 +27,7 @@ import {
 } from './Code.types';
 import CodeContextProvider from '../CodeContext/CodeContext';
 import CopyButton from '../CopyButton/CopyButton';
+import { Panel } from '../Panel';
 
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
@@ -44,10 +45,16 @@ function Code({
   showLineNumbers = false,
   lineNumberStart = 1,
   expandable = false,
+  copyable = true,
   onCopy,
   highlightLines = [],
   panel,
   copyButtonAppearance = CopyButtonAppearance.Hover,
+  customActionButtons,
+  showCustomActionButtons = false,
+  chromeTitle,
+  languageOptions,
+  onChange,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -60,7 +67,7 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
 
-  const hasPanel = !!panel;
+  // const hasPanel = !!panel;
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -153,19 +160,74 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === highLightLanguage,
+  );
+
+  // const shouldRenderTempPanelSubComponent =
+  //   (!panel &&
+  //     showCustomActionButtons &&
+  //     customActionButtons &&
+  //     customActionButtons.length > 0) ||
+  //   (!panel && !!chromeTitle) ||
+  //   (!panel &&
+  //     languageOptions &&
+  //     languageOptions.length > 0 &&
+  //     typeof languageProp !== 'string' &&
+  //     !!currentLanguage) ||
+  //   (!panel && copyable) ||
+  //   (!panel && !!chromeTitle);
+
+  const shouldRenderTempPanelSubComponent =
+    !panel &&
+    ((showCustomActionButtons &&
+      !!customActionButtons &&
+      customActionButtons.length > 0) ||
+      !!chromeTitle ||
+      (!!languageOptions &&
+        languageOptions.length > 0 &&
+        typeof languageProp !== 'string' &&
+        !!currentLanguage &&
+        !!onChange) ||
+      copyable);
+
+  const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+
+  console.log(
+    {
+      shouldRenderTempPanelSubComponent,
+      showPanel,
+      hasCustomActionButtons:
+        showCustomActionButtons &&
+        !!customActionButtons &&
+        customActionButtons.length > 0,
+      hasChormeTitle: !!chromeTitle,
+      hasLanguageOptions:
+        !!languageOptions &&
+        languageOptions.length > 0 &&
+        typeof languageProp !== 'string' &&
+        !!currentLanguage &&
+        !!onChange,
+      isCopyable: copyable,
+      currentLanguage,
+      highLightLanguage,
+    },
+    '🤡',
+  );
+
   return (
     <CodeContextProvider
       darkMode={darkMode}
       contents={children}
       language={languageProp}
-      hasPanel={hasPanel}
+      hasPanel={showPanel}
     >
       <div className={wrapperStyle[theme]}>
         <div
           className={getCodeStyles({
             scrollState,
             theme,
-            hasPanel,
+            hasPanel: showPanel,
             showExpandButton,
           })}
         >
@@ -173,7 +235,7 @@ function Code({
             {...(rest as DetailedElementProps<HTMLPreElement>)}
             className={getCodeWrapperStyles({
               theme,
-              hasPanel,
+              hasPanel: showPanel,
               expanded,
               codeHeight,
               collapsedCodeHeight,
@@ -191,7 +253,7 @@ function Code({
           </pre>
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
-          {!hasPanel &&
+          {!showPanel &&
             copyButtonAppearance !== CopyButtonAppearance.None &&
             ClipboardJS.isSupported() && (
               <div
@@ -204,6 +266,18 @@ function Code({
             )}
 
           {!!panel && panel}
+
+          {/* if there are props then manually render the panel component */}
+          {/* TODO: remove when deprecated props are removed */}
+          {shouldRenderTempPanelSubComponent && (
+            <Panel
+              showCustomActionButtons={showCustomActionButtons}
+              customActionButtons={customActionButtons}
+              title={chromeTitle}
+              languageOptions={languageOptions}
+              onChange={onChange}
+            />
+          )}
 
           {showExpandButton && (
             <button

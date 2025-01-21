@@ -36,7 +36,7 @@ export const getBasePanelStyle = ({
     {
       [css`
         justify-content: flex-end;
-      `]: hasTitle,
+      `]: !hasTitle,
     },
     basePanelThemeStyle[theme],
     className,
