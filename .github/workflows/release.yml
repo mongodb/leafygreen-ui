@@ -67,6 +67,8 @@ jobs:
             chat/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
+            **/tsdoc.json
+            **/stories.js
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
 
   chromatic:
