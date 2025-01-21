@@ -136,9 +136,6 @@ describe('packages/Code', () => {
     });
   });
 
-  // const codeContainer = (container.firstChild as HTMLElement).lastChild;
-  // const codeRoot = (codeContainer as HTMLElement).firstChild; //pre tag
-
   // TODO: remove this test when we remove the prop
   describe.skip('when copyable is true', () => {
     test('onCopy callback is fired when code is copied', () => {
