@@ -1,5 +1,17 @@
 # @lg-charts/core
 
+## 0.11.0
+
+### Minor Changes
+
+- c2bca684a: Cleans up exported types
+  - Adds: `ChartCardProps`, `GridProps`, `HeaderProps`, `LineProps`, `ThresholdLineProps`, `SortDirection`, `SortKey`, `SortOrder`, `TooltipProps`, `XAxisType`, `YAxisType`
+  - Removes: `ChartOptions`, `SeriesOption`
+
+### Patch Changes
+
+- a1cb248b6: Reverts absolute dimensions to allow for proper resizing
+
 ## 0.10.2
 
 ### Patch Changes
