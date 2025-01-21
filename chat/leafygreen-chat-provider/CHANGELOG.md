@@ -1,5 +1,11 @@
 # @lg-chat/leafygreen-chat-provider
 
+## 3.0.1
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 3.0.0
 
 ### Major Changes

@@ -1,5 +1,18 @@
 # @lg-chat/lg-markdown
 
+## 3.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/code@16.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+
 ## 3.0.1
 
 ### Patch Changes

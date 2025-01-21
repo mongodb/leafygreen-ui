@@ -1,5 +1,13 @@
 # @leafygreen-ui/hooks
 
+## 8.3.4
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/lib@14.0.2
+
 ## 8.3.3
 
 ### Patch Changes

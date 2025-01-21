@@ -1,5 +1,11 @@
 # @lg-tools/test-harnesses
 
+## 0.1.4
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 0.1.3
 
 ### Patch Changes

@@ -1,5 +1,19 @@
 # @lg-tools/storybook-addon
 
+## 0.2.8
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+  - @lg-tools/build@0.7.2
+  - @lg-tools/storybook-decorators@0.3.2
+  - @lg-tools/storybook-utils@0.1.3
+
 ## 0.2.7
 
 ### Patch Changes

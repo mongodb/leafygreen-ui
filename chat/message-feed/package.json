@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-feed",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "lg-chat Message Feed",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

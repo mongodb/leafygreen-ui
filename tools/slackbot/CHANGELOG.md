@@ -1,5 +1,14 @@
 # @lg-tools/slackbot
 
+## 0.2.11
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-tools/build@0.7.2
+  - @lg-tools/meta@0.3.7
+
 ## 0.2.10
 
 ### Patch Changes

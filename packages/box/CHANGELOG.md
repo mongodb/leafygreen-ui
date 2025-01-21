@@ -1,5 +1,11 @@
 # @leafygreen-ui/box
 
+## 4.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 4.0.1
 
 ### Patch Changes

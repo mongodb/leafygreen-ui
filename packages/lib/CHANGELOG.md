@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 14.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 14.0.1
 
 ### Patch Changes

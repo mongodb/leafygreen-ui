@@ -1,5 +1,15 @@
 # @lg-tools/test
 
+## 0.4.13
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/testing-lib@0.7.2
+  - @lg-tools/build@0.7.2
+  - @lg-tools/meta@0.3.7
+
 ## 0.4.12
 
 ### Patch Changes

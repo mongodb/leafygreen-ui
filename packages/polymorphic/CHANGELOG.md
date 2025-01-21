@@ -1,5 +1,13 @@
 # @leafygreen-ui/polymorphic
 
+## 2.0.5
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/lib@14.0.2
+
 ## 2.0.4
 
 ### Patch Changes

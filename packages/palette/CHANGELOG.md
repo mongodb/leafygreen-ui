@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.1.3
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
 ## 4.1.2
 
 ### Patch Changes
