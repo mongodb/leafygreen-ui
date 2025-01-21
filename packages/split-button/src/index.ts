@@ -1,3 +1,4 @@
+export { LGIDs } from './constants';
 export {
   Align,
   Justify,

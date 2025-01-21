@@ -12,6 +12,7 @@ import {
 } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
 
+import { LGIDs } from '../constants';
 import { Menu } from '../Menu';
 
 import {
@@ -58,6 +59,7 @@ export const SplitButton = InferredPolymorphic<
       triggerAriaLabel,
       onChange,
       renderDarkMenu,
+      'data-testid': testId = LGIDs.root,
       ...rest
     },
     ref: React.Ref<any>,
@@ -82,7 +84,12 @@ export const SplitButton = InferredPolymorphic<
     } as const;
 
     return (
-      <div className={cx(buttonContainerStyles, className)} ref={containerRef}>
+      <div
+        className={cx(buttonContainerStyles, className)}
+        ref={containerRef}
+        data-testid={testId}
+        data-lgid={LGIDs.root}
+      >
         <LeafyGreenProvider darkMode={darkMode}>
           <Button
             as={Component}
@@ -91,6 +98,8 @@ export const SplitButton = InferredPolymorphic<
             className={cx(buttonBaseStyles, {
               [buttonThemeStyles(theme, variant)]: !disabled,
             })}
+            data-testid={LGIDs.button}
+            data-lgid={LGIDs.button}
             {...rest}
           >
             {label}

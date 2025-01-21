@@ -18,7 +18,7 @@ import { RenderMode } from '@leafygreen-ui/popover';
 import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
 import { SplitButton } from '.';
 
-const menuTestId = 'lg-split-button-menu';
+const menuTestId = 'lg-split_button-menu';
 
 const getMenuItems = (): MenuItemsType => {
   return [
@@ -47,9 +47,9 @@ function renderSplitButton(props: RenderSplitButtonProps = {}) {
   const renderResult = render(
     <SplitButton data-testid="split-button" {...defaultProps} {...props} />,
   );
-  const wrapper = renderResult.container.firstChild as HTMLElement;
-  const primaryButton = renderResult.getByTestId('split-button');
-  const menuTrigger = primaryButton.nextSibling as HTMLElement;
+  const wrapper = renderResult.getByTestId('split-button');
+  const primaryButton = renderResult.getByTestId('lg-split_button-button');
+  const menuTrigger = renderResult.getByTestId('lg-split_button-trigger');
 
   /**
    * Since menu elements won't exist until component is interacted with,
