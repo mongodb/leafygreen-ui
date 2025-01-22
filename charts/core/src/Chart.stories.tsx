@@ -1,11 +1,10 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
-// import { action } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 import type { StoryObj } from '@storybook/react';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-
 import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
@@ -48,7 +47,7 @@ export default {
     headerShowDivider: true,
     zoomSelectXAxis: true,
     zoomSelectYAxis: true,
-    zoomSelectCallback: undefined, //action('onZoomSelect'),
+    zoomSelectCallback: () => {},
     renderEventMarkerLine: true,
     eventMarkerLineMessage: 'Event marker line message',
     eventMarkerLineLabel: 'Event marker line label',

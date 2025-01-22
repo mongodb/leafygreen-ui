@@ -32,7 +32,6 @@
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
     "@leafygreen-ui/combobox": "workspace:^",
-    "@storybook/addon-actions": "^8.5.0",
     "@types/lodash.debounce": "^4.0.9"
   },
   "repository": {
