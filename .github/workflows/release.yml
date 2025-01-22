@@ -160,6 +160,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
 
+      - name: Updating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //registry.npmjs.org/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - uses: actions/cache/restore@v4
         name: Restore build cache
         id: build-cache
@@ -184,7 +192,7 @@ jobs:
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
-          publish: pnpm publish -r
+          publish: pnpm publish -r --no-git-checks
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           NPM_TOKEN: '${{ secrets.NPM_TOKEN }}'
