@@ -9,14 +9,14 @@ import React, {
 import flattenChildren from 'react-keyed-flatten-children';
 import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
+import Button, { Size as ButtonSize } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
+import Icon from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
-import Icon from '@leafygreen-ui/icon';
-import Button, { Size as ButtonSize } from '@leafygreen-ui/button';
 
 import {
   avatarPaddingStyles,
@@ -114,7 +114,7 @@ export const MessageFeed = forwardRef(
       if (!showScrollButton) {
         scrollToLatest();
       }
-    }, [children, showScrollButton]);
+    }, [children, showScrollButton, scrollToLatest]);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>

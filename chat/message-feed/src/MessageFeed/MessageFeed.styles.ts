@@ -3,7 +3,7 @@ import { avatarSizes, Size } from '@lg-chat/avatar';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { breakpoints, borderRadius, spacing } from '@leafygreen-ui/tokens';
+import { borderRadius, breakpoints, spacing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
   height: 500px;
