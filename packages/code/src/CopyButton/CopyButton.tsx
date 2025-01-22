@@ -39,6 +39,8 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const { portalContainer } = usePopoverPortalContainer();
   const { hasPanel, isLoading } = useCodeContext();
 
+  console.log({ hasPanel }, '🌈');
+
   /**
    * toggles `tooltipOpen` state
    */
@@ -139,7 +141,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     <Tooltip
       align={Align.Top}
       className={tooltipStyles}
-      data-testid="code_copy-button_tooltip"
+      data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}

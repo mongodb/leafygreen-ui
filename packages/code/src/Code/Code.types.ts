@@ -30,13 +30,6 @@ export type CodeProps = Omit<
   'onCopy' | 'language' | 'onChange'
 > & {
   /**
-   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
-   *
-   * @default: `true`
-   */
-  copyable?: boolean;
-
-  /**
    * Makes code blocks longer than 5 lines long expandable
    *
    * @default `false`
@@ -57,7 +50,7 @@ export type CodeProps = Omit<
   darkMode?: boolean;
 
   /**
-   * Slot that renders the top panel. This is used for rendering the language switcher, custom action buttons, and copy button.
+   * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button.
    *
    */
   panel?: React.ReactNode;
@@ -95,6 +88,7 @@ export type CodeProps = Omit<
    *
    * @type <IconButton />[]
    * use `<Panel customActionButtons={} />` instead
+   *
    * @deprecated
    */
   customActionButtons?: Array<React.ReactElement>;
@@ -103,13 +97,16 @@ export type CodeProps = Omit<
    * When true, custom action buttons will be shown.
    *
    * Use `panel={<Panel showCustomActionButtons={} />}` instead
+   *
    *@deprecated
    */
   showCustomActionButtons?: boolean;
 
   /**
    * Renders a file name or other descriptor for a block of code
-   * use `panel={<Panel title={} />}` instead
+   *
+   * Use `panel={<Panel title={} />}` instead
+   *
    * @deprecated
    */
   chromeTitle?: string;
@@ -125,4 +122,14 @@ export type CodeProps = Omit<
    * @deprecated
    */
   onChange?: (arg0: LanguageOption) => void;
+
+  /**
+   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
+   *
+   * Use `panel={<Panel />}` or `copyButtonApperance` instead
+   *
+   * @default `true`
+   * @deprecated
+   */
+  copyable?: boolean;
 };

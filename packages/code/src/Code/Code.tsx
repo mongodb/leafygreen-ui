@@ -47,9 +47,9 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
+  copyable = false,
   expandable = false,
   isLoading = false,
-  copyable = true,
   highlightLines = [],
   copyButtonAppearance = CopyButtonAppearance.Hover,
   children = '',
@@ -169,6 +169,7 @@ function Code({
     option => option.displayName === highLightLanguage,
   );
 
+  // This will render a temp panel component if deprecated props are used
   const shouldRenderTempPanelSubComponent =
     !panel &&
     ((showCustomActionButtons &&
@@ -250,15 +251,16 @@ function Code({
 
           {!!panel && panel}
 
-          {/* if there are props then manually render the panel component */}
-          {/* TODO: remove when deprecated props are removed */}
+          {/* if there are deprecated props then manually render the panel component */}
+          {/* TODO: remove when deprecated props are removed, make ticket */}
           {shouldRenderTempPanelSubComponent && (
             <Panel
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={customActionButtons}
               title={chromeTitle}
-              languageOptions={languageOptions}
-              onChange={onChange}
+              languageOptions={languageOptions || []} // Empty array as default
+              onChange={onChange || (() => {})} // No-op function as default
+              onCopy={onCopy}
             />
           )}
 
@@ -266,7 +268,7 @@ function Code({
             <button
               className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
-              data-testid="lg-code-expand_button"
+              data-testid={LGIDs.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}
