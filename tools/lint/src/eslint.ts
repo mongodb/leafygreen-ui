@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import chalk from 'chalk';
 import { ESLint } from 'eslint';
 import path from 'path';
 
@@ -26,9 +28,9 @@ interface ESLintRunnerOptions extends BaseLintRunnerOptions {
 /**
  * Creates and runs an ESLint instance
  */
-export async function eslint(
-  options?: ESLintRunnerOptions,
-): Promise<Array<ESLint.LintResult>> {
+export async function eslint(options?: ESLintRunnerOptions): Promise<boolean> {
+  console.log(chalk.blue('Running ESLint...'));
+
   const filePaths = options?.filePaths || allFilePaths;
   const fix = options?.fix || false;
 
@@ -41,8 +43,12 @@ export async function eslint(
 
   const formatter = await eslint.loadFormatter('stylish');
   const resultText = formatter.format(results);
-  // eslint-disable-next-line no-console
   console.log(resultText);
 
-  return results;
+  const totalErrors = results.reduce(
+    (acc, result) => acc + result.errorCount,
+    0,
+  );
+
+  return totalErrors > 0;
 }
