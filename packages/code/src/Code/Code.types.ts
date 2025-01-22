@@ -1,5 +1,5 @@
 import { LanguageOption } from '../Panel/Panel.types';
-import { SyntaxProps } from '../syntax/Syntax.types';
+import { SyntaxProps } from '../Syntax/Syntax.types';
 import { Language } from '../types';
 
 export const ScrollState = {
