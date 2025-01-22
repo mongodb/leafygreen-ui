@@ -14,8 +14,24 @@ import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 import {
   LanguageSwitcherWithPanelExample,
   LanguageSwitcherWithDeprecatedPropsExample,
+  languageOptions,
 } from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language, Panel } from '.';
+
+const customActionButtons = [
+  <IconButton onClick={() => {}} aria-label="label" key="1">
+    <Icon glyph="Cloud" />
+  </IconButton>,
+  <Icon glyph="Shell" size={30} key="3" />,
+  <IconButton
+    href="https://mongodb.design"
+    aria-label="label2"
+    key="2"
+    target="_blank"
+  >
+    <Icon glyph="Code" size={30} />
+  </IconButton>,
+];
 
 const jsSnippet = `
 import datetime from './';
@@ -68,14 +84,50 @@ const meta: StoryMetaType<typeof Code> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        copyable: [true, false],
         expandable: [true, false],
         showLineNumbers: [false, true],
+        language: ['js', languageOptions[0]],
+        panel: [
+          undefined,
+          <Panel />,
+          <Panel title="Title" />,
+          <Panel
+            title="Title"
+            languageOptions={languageOptions}
+            onChange={() => {}}
+          />,
+          <Panel languageOptions={languageOptions} onChange={() => {}} />,
+          <Panel
+            showCustomActionButtons
+            customActionButtons={customActionButtons}
+          />,
+          <Panel
+            title="Title"
+            showCustomActionButtons
+            customActionButtons={customActionButtons}
+          />,
+          <Panel
+            title="Title"
+            showCustomActionButtons
+            customActionButtons={customActionButtons}
+            languageOptions={languageOptions}
+            onChange={() => {}}
+          />,
+        ],
       },
+      excludeCombinations: [
+        {
+          language: 'js',
+          panel: <Panel />,
+        },
+        {
+          language: languageOptions[0],
+          panel: undefined,
+        },
+      ],
     },
   },
   args: {
-    language: 'js',
     baseFontSize: 14,
     children: shortJsSnippet,
   },
@@ -123,21 +175,6 @@ LiveExample.parameters = {
   },
 };
 
-const customActionButtons = [
-  <IconButton onClick={() => {}} aria-label="label" key="1">
-    <Icon glyph="Cloud" />
-  </IconButton>,
-  <Icon glyph="Shell" size={30} key="3" />,
-  <IconButton
-    href="https://mongodb.design"
-    aria-label="label2"
-    key="2"
-    target="_blank"
-  >
-    <Icon glyph="Code" size={30} />
-  </IconButton>,
-];
-
 export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
   highlightLines,
@@ -151,7 +188,6 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
         <Panel
           customActionButtons={customActionButtons}
           showCustomActionButtons
-          // title="Title"
         />
       }
     >

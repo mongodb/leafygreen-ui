@@ -4,7 +4,7 @@ import { Language } from '../types';
 import { LanguageOption } from '../Panel/Panel.types';
 import Code, { Panel } from '..';
 
-const languageOptions = [
+export const languageOptions = [
   {
     displayName: 'JavaScript',
     language: Language.JavaScript,
