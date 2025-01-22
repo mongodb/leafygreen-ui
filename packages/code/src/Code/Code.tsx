@@ -37,7 +37,7 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  copyable = true,
+  copyable = false,
   expandable = false,
   onCopy,
   highlightLines = [],
@@ -216,6 +216,7 @@ function Code({
               title={chromeTitle}
               languageOptions={languageOptions}
               onChange={onChange}
+              onCopy={onCopy}
             />
           )}
 

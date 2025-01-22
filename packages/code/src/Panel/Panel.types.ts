@@ -13,7 +13,7 @@ export interface LanguageSwitcherProps {
 }
 
 export type PanelProps = Partial<Omit<LanguageSwitcherProps, 'language'>> &
-  Omit<ComponentPropsWithRef<'div'>, 'onChange'> & {
+  Omit<ComponentPropsWithRef<'div'>, 'onChange' | 'onCopy'> & {
     /**
      * Callback fired when Code is copied via the copy button.
      *
