@@ -66,7 +66,7 @@ export const MessageFeed = forwardRef(
     });
 
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const scrollTimerRef = useRef<Timeout | null>(null);
+    const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const scrollToLatest = useCallback(() => {
       if (containerRef.current) {
