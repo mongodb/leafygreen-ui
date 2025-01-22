@@ -5,7 +5,8 @@ export const EventLevel = {
   Info: 'info',
 } as const;
 export type EventLevel = (typeof EventLevel)[keyof typeof EventLevel];
-export interface BaseEventMarkerProps {
+
+interface BaseEventMarkerProps {
   label?: string;
   message: string;
   level: EventLevel;
