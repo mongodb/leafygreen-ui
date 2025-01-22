@@ -22,6 +22,7 @@ import Tooltip, {
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
+import { LGIDs } from '../constants';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);
@@ -123,14 +124,14 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     <Tooltip
       align={Align.Top}
       className={tooltipStyles}
-      data-testid="code_copy-button_tooltip"
+      data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
       trigger={
         <IconButton
-          data-testid="code_copy-button"
+          data-testid={LGIDs.copyButton}
           ref={buttonRef}
           aria-label={COPY_TEXT}
           className={getCopyButtonStyles({ theme, copied })}
