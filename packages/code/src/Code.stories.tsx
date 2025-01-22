@@ -128,6 +128,7 @@ const meta: StoryMetaType<typeof Code> = {
     },
   },
   args: {
+    language: 'js',
     baseFontSize: 14,
     children: shortJsSnippet,
   },
