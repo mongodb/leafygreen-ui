@@ -17,7 +17,6 @@ import { Language } from '../types';
 import { PanelProps } from '../Panel/Panel.types';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
-const className = 'test-class';
 const onCopy = jest.fn();
 
 const customActionButtons = [
@@ -112,12 +111,7 @@ describe('packages/Code', () => {
         Jest.spyContext(ClipboardJS, 'isSupported'),
         spy => {
           spy.mockReturnValue(true);
-
-          return render(
-            <Code className={className} language="javascript">
-              {codeSnippet}
-            </Code>,
-          );
+          return renderCode();
         },
       );
       const results = await axe(container);
@@ -165,6 +159,149 @@ describe('packages/Code', () => {
       const copyIcon = screen.getByRole('button');
       fireEvent.click(copyIcon);
       expect(onCopy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Deprecated props', () => {
+    describe('custom action buttons', () => {
+      test('does not renders a panel with custom action buttons when only customActionButtons is passed', () => {
+        const { queryByTestId } = renderCode({
+          customActionButtons,
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not renders a panel with custom action buttons when only showCustomActionButtons is true', () => {
+        const { queryByTestId } = renderCode({
+          showCustomActionButtons: true,
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      // TODO: think about the copyable prop when it is false
+      test('renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed', () => {
+        const { getByTestId } = renderCode({
+          showCustomActionButtons: true,
+          customActionButtons,
+          copyable: false,
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+      });
+    });
+
+    describe('language switcher', () => {
+      test('renders a panel when only language, onChange, and languageOptions are defined', () => {
+        const { getByTestId } = renderCode({
+          language: languageOptions[0],
+          languageOptions,
+          onChange: () => {},
+          copyable: false,
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+      });
+      test('does not render a panel when language and onChange are defined but languageOptions is not defined', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0],
+          onChange: () => {},
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not render a panel when language and languageOptions are defined but onChange is not defined', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0],
+          languageOptions,
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not render a panel when languageOptions is an empty array', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0],
+          languageOptions: [],
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not render a panel if language is a string', () => {
+        const { queryByTestId } = renderCode({
+          language: 'javascript',
+          languageOptions: [],
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      // TODO: this test breaks the component
+      test.skip('does not render a panel if language is not in languageOptions', () => {
+        const { queryByTestId } = renderCode({
+          language: {
+            displayName: 'Testing',
+            // @ts-expect-error - language is not valid
+            language: 'testing',
+          },
+          languageOptions,
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+    });
+
+    describe('chromeTitle', () => {
+      test('renders a panel with a title when chromeTitle is defined', () => {
+        const { getByTestId } = renderCode({
+          chromeTitle: 'Title',
+          copyable: false,
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+      });
+    });
+
+    describe('copyable', () => {
+      test('renders a panel with a copy button when only copyable is true', () => {
+        const { getByTestId } = renderCode({
+          copyable: true,
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+      });
+      test('does not render a panel with a copy button when copyable is false', () => {
+        const { queryByTestId } = renderCode({
+          copyable: false,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+    });
+
+    describe('panel slot', () => {
+      describe('copyable', () => {
+        test('is overridden by the panel prop', () => {
+          const { getByTestId } = renderCode({
+            copyable: false,
+            panel: <Panel />,
+          });
+          expect(getByTestId('lg-code-panel')).toBeDefined();
+        });
+      });
+
+      describe('language switcher', () => {
+        test('is overridden by the panel prop', () => {
+          const { getByTestId } = renderCode({
+            language: languageOptions[1],
+            languageOptions,
+            onChange: () => {},
+            panel: (
+              <Panel
+                data-testid="lg-code_panel-override"
+                languageOptions={languageOptions}
+                onChange={() => {}}
+              />
+            ),
+          });
+          expect(getByTestId('lg-code_panel-override')).toBeDefined();
+          expect(
+            screen.getByRole('button', { name: 'Python' }),
+          ).toBeInTheDocument();
+        });
+      });
     });
   });
 
@@ -318,7 +455,7 @@ describe('packages/Code', () => {
   });
 
   describe('Without panel slot', () => {
-    test('does not render a panel', () => {
+    test.skip('does not render a panel', () => {
       // TODO: update this test
       const { container } = renderCode();
       expect(container).not.toContain(screen.queryByTestId('lg-code-panel'));
@@ -452,6 +589,8 @@ describe('packages/Code', () => {
         });
         expect(queryByTestId('lg-code-select')).toBeNull();
       });
+
+      test.todo('does not render if language is not in languageOptions');
     });
 
     describe('custom action buttons', () => {

@@ -27,12 +27,13 @@ function Panel({
   showCustomActionButtons,
   title,
   className,
+  ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
   const { contents, language: languageProp } = useCodeContext();
 
   const language = typeof languageProp === 'string' ? undefined : languageProp;
-  const hasTitle = !title;
+  const hasTitle = !!title;
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
     (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
@@ -56,6 +57,7 @@ function Panel({
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
       data-testid={LGIDs.panel}
+      {...rest}
     >
       {title && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}
 

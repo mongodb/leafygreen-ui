@@ -11,7 +11,10 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
+import {
+  LanguageSwitcherWithPanelExample,
+  LanguageSwitcherWithDeprecatedPropsExample,
+} from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -147,23 +150,6 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-// export const WithCustomActions = LiveExample.bind({});
-// WithCustomActions.args = {
-//   showCustomActionButtons: true,
-//   customActionButtons,
-//   // panel: [
-//   //   <Panel
-//   //     language={language}
-//   //     languageOptions={languageOptions}
-//   //     customActionButtons={customActionButtons}
-//   //     showCustomActionButtons={showCustomActionButtons}
-//   //     onChange={handleChange}
-//   //     showCopyButton
-//   //     contents={snippetMap[languageIndex as 'javascript' | 'python']}
-//   //   />
-//   // ]
-// };
-
 export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
   highlightLines,
@@ -190,7 +176,51 @@ export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
   ...args
 }: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
-    <LanguageSwitcherExample
+    <LanguageSwitcherWithPanelExample
+      showCustomActionButtons={true}
+      customActionButtons={customActionButtons}
+      {...args}
+    />
+  </LeafygreenProvider>
+);
+
+export const WithDeprecatedCustomActionProps: StoryType<
+  typeof Code,
+  FontSizeProps
+> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      customActionButtons={customActionButtons}
+      showCustomActionButtons
+    >
+      {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
+
+export const WithDeprecatedCopyableProps: StoryType<
+  typeof Code,
+  FontSizeProps
+> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      copyable
+    >
+      {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
+
+export const WithDeprecatedLanguageSwitcherProps: StoryType<
+  typeof Code,
+  FontSizeProps
+> = ({ baseFontSize, ...args }: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <LanguageSwitcherWithDeprecatedPropsExample
       showCustomActionButtons={true}
       customActionButtons={customActionButtons}
       {...args}
