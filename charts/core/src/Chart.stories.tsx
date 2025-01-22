@@ -47,7 +47,7 @@ export default {
     headerShowDivider: true,
     zoomSelectXAxis: true,
     zoomSelectYAxis: true,
-    zoomSelectCallback: () => {},
+    zoomSelectCallback: () => console.log('Zoom select callback called'),
     renderEventMarkerLine: true,
     eventMarkerLineMessage: 'Event marker line message',
     eventMarkerLineLabel: 'Event marker line label',
