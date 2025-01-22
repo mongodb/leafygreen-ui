@@ -20,7 +20,7 @@ export function BaseEventMarker({
 }: LineEventMarkerProps | PointEventMarkerProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
-  let name =
+  const name =
     type === 'line'
       ? `event-marker-${position}`
       : `event-marker-${position[0]}-${position[1]}`;
