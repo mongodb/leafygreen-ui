@@ -205,6 +205,7 @@ describe('packages/Code', () => {
         const { queryByTestId } = renderCode({
           language: languageOptions[0],
           languageOptions: [],
+          onChange: () => {},
         });
         expect(queryByTestId('lg-code-panel')).toBeNull();
       });
@@ -212,6 +213,7 @@ describe('packages/Code', () => {
         const { queryByTestId } = renderCode({
           language: 'javascript',
           languageOptions: [],
+          onChange: () => {},
         });
         expect(queryByTestId('lg-code-panel')).toBeNull();
       });
@@ -224,6 +226,7 @@ describe('packages/Code', () => {
               language: 'testing',
             },
             languageOptions,
+            onChange: () => {},
           });
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
@@ -398,7 +401,24 @@ describe('packages/Code', () => {
         expect(queryByTestId('lg-code-select')).toBeNull();
       });
 
-      test.todo('does not render if language is not in languageOptions');
+      test('throws an error if language is not in languageOptions', () => {
+        try {
+          renderCode({
+            language: {
+              displayName: 'Testing',
+              // @ts-expect-error - language is not valid
+              language: 'testing',
+            },
+            panel: <Panel onChange={() => {}} languageOptions={[]} />,
+          });
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(/Unknown language: "Testing"/),
+          );
+        }
+      });
     });
 
     describe('custom action buttons', () => {
