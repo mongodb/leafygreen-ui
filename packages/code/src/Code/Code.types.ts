@@ -48,7 +48,7 @@ export type CodeProps = Omit<
   darkMode?: boolean;
 
   /**
-   * Slot that renders the top panel. This is used for rendering the language switcher, custom action buttons, and copy button.
+   * Slot to pass the `<Panel/>` sub-component to render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button.
    *
    */
   panel?: React.ReactNode;

@@ -347,15 +347,6 @@ describe('packages/Code', () => {
         });
         expect(queryByTestId('lg-code-panel')).toBeDefined();
       });
-
-      test('panel when custom action buttons are present', () => {
-        const { queryByTestId } = renderCode({
-          panel: (
-            <Panel showCustomActionButtons customActionButtons={actionData} />
-          ),
-        });
-        expect(queryByTestId('lg-code-panel')).toBeDefined();
-      });
     });
 
     describe('language switcher', () => {
@@ -439,6 +430,15 @@ describe('packages/Code', () => {
         });
         expect(queryAllByTestId('lg-code-icon_button')).toHaveLength(0);
       });
+
+      test('renders when custom action buttons are present and showCustomActionButtons is true', () => {
+        const { queryByTestId } = renderCode({
+          panel: (
+            <Panel showCustomActionButtons customActionButtons={actionData} />
+          ),
+        });
+        expect(queryByTestId('lg-code-panel')).toBeDefined();
+      });
       test('only renders IconButton elements', () => {
         const { queryAllByTestId } = renderCode({
           panel: (
@@ -450,32 +450,6 @@ describe('packages/Code', () => {
         });
         expect(queryAllByTestId('lg-code-icon_button')).toHaveLength(2);
       });
-    });
-
-    test.skip('is rendered when language switcher is not present, when copyable is false, showCustomActionButtons is true, and actionsButtons has items', () => {
-      render(
-        <Code
-          language="javascript"
-          panel={
-            <Panel showCustomActionButtons customActionButtons={actionData} />
-          }
-        >
-          {codeSnippet}
-        </Code>,
-      );
-      expect(screen.queryByTestId('lg-code-panel')).toBeDefined();
-    });
-
-    test.skip('is not rendered when language switcher is not present, when copyable is false, when showCustomActionButtons is true, and actionsButtons has no items', () => {
-      const { container } = render(
-        <Code
-          language="javascript"
-          panel={<Panel showCustomActionButtons customActionButtons={[]} />}
-        >
-          {codeSnippet}
-        </Code>,
-      );
-      expect(container).not.toContain(screen.queryByTestId('lg-code-panel'));
     });
   });
 
