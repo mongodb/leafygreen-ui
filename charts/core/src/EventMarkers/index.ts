@@ -1,7 +1,6 @@
+export { EventLevel } from './BaseEventMarker';
+export { EventMarkerLine, type EventMarkerLineProps } from './EventMarkerLine';
 export {
-  EventLevel,
-  type EventMarkerLineProps,
+  EventMarkerPoint,
   type EventMarkerPointProps,
-} from './BaseEventMarker';
-export { EventMarkerLine } from './EventMarkerLine';
-export { EventMarkerPoint } from './EventMarkerPoint';
+} from './EventMarkerPoint';

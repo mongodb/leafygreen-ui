@@ -26,12 +26,6 @@ export interface BaseEventMarkerPointProps
   position: [string | number, string | number];
 }
 
-export interface EventMarkerLineProps
-  extends Omit<BaseEventMarkerLineProps, 'type'> {}
-
-export interface EventMarkerPointProps
-  extends Omit<BaseEventMarkerPointProps, 'type'> {}
-
 export interface GetMarkConfigProps extends BaseEventMarkerProps {
   name: string;
   theme: Theme;
