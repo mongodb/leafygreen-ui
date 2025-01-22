@@ -86,6 +86,7 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
   onChange,
   customActionButtons = [],
   showCustomActionButtons = false,
+  ...rest
 }: {
   darkMode?: boolean;
   onChange?: Function;
@@ -103,11 +104,13 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
 
   return (
     <Code
+      {...rest}
       language={language}
       lineNumberStart={1}
       darkMode={darkMode}
       languageOptions={languageOptions}
       customActionButtons={customActionButtons}
+      showCustomActionButtons={showCustomActionButtons}
       onChange={handleChange}
       chromeTitle="Title"
     >
