@@ -319,7 +319,7 @@ describe('packages/Code', () => {
   });
 
   describe('Without panel slot', () => {
-    test.skip('does not render a panel', () => {
+    test('does not render a panel', () => {
       const { queryByTestId } = renderCode();
       expect(queryByTestId('lg-code-panel')).toBeNull();
     });
