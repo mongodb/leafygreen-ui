@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { BaseEventMarker, EventLevel } from '../BaseEventMarker';
+
 import { EventMarkerLineProps } from './EventMarkerLine.types';
 
 export function EventMarkerLine({
