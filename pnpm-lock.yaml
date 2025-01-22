@@ -440,9 +440,15 @@ importers:
 
   chat/message-feed:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../../packages/button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../../packages/leafygreen-provider
