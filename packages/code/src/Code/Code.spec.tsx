@@ -96,24 +96,27 @@ const renderCodeWithLanguageSwitcher = (props: Partial<PanelProps> = {}) => {
   };
 };
 
-describe('packages/Code', () => {
-  // https://stackoverflow.com/a/69574825/13156339
-  Object.defineProperty(navigator, 'clipboard', {
-    value: {
-      // Provide mock implementation
-      writeText: jest.fn().mockReturnValueOnce(Promise.resolve()),
-    },
-  });
+jest.mock('clipboard', () => {
+  const ClipboardJSOriginal = jest.requireActual('clipboard');
 
+  // Return a mock that preserves the class and mocks `isSupported`
+  return class ClipboardJSMock extends ClipboardJSOriginal {
+    static isSupported = jest.fn(() => true); // Mock isSupported
+  };
+});
+
+// https://stackoverflow.com/a/69574825/13156339
+Object.defineProperty(navigator, 'clipboard', {
+  value: {
+    // Provide mock implementation
+    writeText: jest.fn().mockReturnValueOnce(Promise.resolve()),
+  },
+});
+
+describe('packages/Code', () => {
   describe('a11y', () => {
     test('does not have basic accessibility violations', async () => {
-      const { container } = Context.within(
-        Jest.spyContext(ClipboardJS, 'isSupported'),
-        spy => {
-          spy.mockReturnValue(true);
-          return renderCode();
-        },
-      );
+      const { container } = renderCode();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -131,11 +134,11 @@ describe('packages/Code', () => {
       });
 
       test('announces copied to screenreaders when content is copied in the panel', () => {
-        Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-          spy.mockReturnValue(true);
-          return renderCode({ panel: <Panel /> });
-        });
-
+        // Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+        //   spy.mockReturnValue(true);
+        //   return renderCode({ panel: <Panel /> });
+        // });
+        renderCode({ panel: <Panel /> });
         const copyIcon = screen.getByRole('button');
         fireEvent.click(copyIcon);
         expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -354,17 +357,11 @@ describe('packages/Code', () => {
           );
         });
         test('copy button is disabled', () => {
-          const { getByTestId } = Context.within(
-            Jest.spyContext(ClipboardJS, 'isSupported'),
-            spy => {
-              spy.mockReturnValue(true);
-              return renderCode({
-                isLoading: true,
-                language: languageOptions[0],
-                panel: <Panel />,
-              });
-            },
-          );
+          const { getByTestId } = renderCode({
+            isLoading: true,
+            language: languageOptions[0],
+            panel: <Panel />,
+          });
 
           expect(getByTestId('lg-code-copy_button')).toHaveAttribute(
             'aria-disabled',
@@ -381,6 +378,7 @@ describe('packages/Code', () => {
               spy.mockReturnValue(true);
               return renderCode({
                 isLoading: true,
+                copyable: false,
               });
             },
           );

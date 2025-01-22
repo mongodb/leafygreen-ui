@@ -73,8 +73,6 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
 
-  // const hasPanel = !!panel;
-
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
 
@@ -171,20 +169,6 @@ function Code({
     option => option.displayName === highLightLanguage,
   );
 
-  // const shouldRenderTempPanelSubComponent =
-  //   (!panel &&
-  //     showCustomActionButtons &&
-  //     customActionButtons &&
-  //     customActionButtons.length > 0) ||
-  //   (!panel && !!chromeTitle) ||
-  //   (!panel &&
-  //     languageOptions &&
-  //     languageOptions.length > 0 &&
-  //     typeof languageProp !== 'string' &&
-  //     !!currentLanguage) ||
-  //   (!panel && copyable) ||
-  //   (!panel && !!chromeTitle);
-
   const shouldRenderTempPanelSubComponent =
     !panel &&
     ((showCustomActionButtons &&
@@ -199,28 +183,6 @@ function Code({
       copyable);
 
   const showPanel = !!panel || shouldRenderTempPanelSubComponent;
-
-  console.log(
-    {
-      shouldRenderTempPanelSubComponent,
-      showPanel,
-      hasCustomActionButtons:
-        showCustomActionButtons &&
-        !!customActionButtons &&
-        customActionButtons.length > 0,
-      hasChormeTitle: !!chromeTitle,
-      hasLanguageOptions:
-        !!languageOptions &&
-        languageOptions.length > 0 &&
-        typeof languageProp !== 'string' &&
-        !!currentLanguage &&
-        !!onChange,
-      isCopyable: copyable,
-      currentLanguage,
-      highLightLanguage,
-    },
-    '🤡',
-  );
 
   return (
     <CodeContextProvider
