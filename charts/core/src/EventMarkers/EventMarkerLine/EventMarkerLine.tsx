@@ -11,7 +11,7 @@ export function EventMarkerLine({
   label,
   message,
   level = EventLevel.Warning,
-}: Omit<EventMarkerLineProps, 'type'>) {
+}: EventMarkerLineProps) {
   return (
     <BaseEventMarker
       position={position}

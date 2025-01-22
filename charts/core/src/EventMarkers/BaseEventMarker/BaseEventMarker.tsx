@@ -5,9 +5,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useChartContext } from '../../ChartContext';
 
 import {
+  BaseEventMarkerLineProps,
+  BaseEventMarkerPointProps,
   EventLevel,
-  EventMarkerLineProps,
-  EventMarkerPointProps,
 } from './BaseEventMarker.types';
 import { getMarkConfig } from './utils';
 
@@ -17,7 +17,7 @@ export function BaseEventMarker({
   message,
   level = EventLevel.Warning,
   type,
-}: EventMarkerLineProps | EventMarkerPointProps) {
+}: BaseEventMarkerLineProps | BaseEventMarkerPointProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
   const name =

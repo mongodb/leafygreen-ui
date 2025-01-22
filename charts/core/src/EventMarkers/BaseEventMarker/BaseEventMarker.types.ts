@@ -5,7 +5,6 @@ export const EventLevel = {
   Info: 'info',
 } as const;
 export type EventLevel = (typeof EventLevel)[keyof typeof EventLevel];
-
 export interface BaseEventMarkerProps {
   label?: string;
   message: string;
@@ -14,17 +13,23 @@ export interface BaseEventMarkerProps {
   type: 'line' | 'point';
 }
 
-export interface EventMarkerLineProps
+export interface BaseEventMarkerLineProps
   extends Omit<BaseEventMarkerProps, 'name' | 'theme'> {
   type: 'line';
   position: string | number;
 }
 
-export interface EventMarkerPointProps
+export interface BaseEventMarkerPointProps
   extends Omit<BaseEventMarkerProps, 'name' | 'theme'> {
   type: 'point';
   position: [string | number, string | number];
 }
+
+export interface EventMarkerLineProps
+  extends Omit<BaseEventMarkerLineProps, 'type'> {}
+
+export interface EventMarkerPointProps
+  extends Omit<BaseEventMarkerPointProps, 'type'> {}
 
 export interface GetMarkConfigProps extends BaseEventMarkerProps {
   name: string;
