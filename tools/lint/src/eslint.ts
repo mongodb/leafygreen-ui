@@ -49,6 +49,7 @@ export async function eslint(options?: ESLintRunnerOptions): Promise<boolean> {
     (acc, result) => acc + result.errorCount,
     0,
   );
+  const hasErrors = totalErrors > 0;
 
-  return totalErrors > 0;
+  return !hasErrors;
 }
