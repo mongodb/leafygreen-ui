@@ -8,7 +8,7 @@ import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
-import { numOfCollapsedLinesOfCode } from '../constants';
+import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
@@ -44,8 +44,8 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
+  copyable = false,
   expandable = false,
-  copyable = true,
   onCopy,
   highlightLines = [],
   panel,
@@ -164,20 +164,7 @@ function Code({
     option => option.displayName === highLightLanguage,
   );
 
-  // const shouldRenderTempPanelSubComponent =
-  //   (!panel &&
-  //     showCustomActionButtons &&
-  //     customActionButtons &&
-  //     customActionButtons.length > 0) ||
-  //   (!panel && !!chromeTitle) ||
-  //   (!panel &&
-  //     languageOptions &&
-  //     languageOptions.length > 0 &&
-  //     typeof languageProp !== 'string' &&
-  //     !!currentLanguage) ||
-  //   (!panel && copyable) ||
-  //   (!panel && !!chromeTitle);
-
+  // This will render a temp panel component if deprecated props are used
   const shouldRenderTempPanelSubComponent =
     !panel &&
     ((showCustomActionButtons &&
@@ -192,28 +179,6 @@ function Code({
       copyable);
 
   const showPanel = !!panel || shouldRenderTempPanelSubComponent;
-
-  console.log(
-    {
-      shouldRenderTempPanelSubComponent,
-      showPanel,
-      hasCustomActionButtons:
-        showCustomActionButtons &&
-        !!customActionButtons &&
-        customActionButtons.length > 0,
-      hasChormeTitle: !!chromeTitle,
-      hasLanguageOptions:
-        !!languageOptions &&
-        languageOptions.length > 0 &&
-        typeof languageProp !== 'string' &&
-        !!currentLanguage &&
-        !!onChange,
-      isCopyable: copyable,
-      currentLanguage,
-      highLightLanguage,
-    },
-    '🤡',
-  );
 
   return (
     <CodeContextProvider
@@ -267,15 +232,16 @@ function Code({
 
           {!!panel && panel}
 
-          {/* if there are props then manually render the panel component */}
-          {/* TODO: remove when deprecated props are removed */}
+          {/* if there are deprecated props then manually render the panel component */}
+          {/* TODO: remove when deprecated props are removed, make ticket */}
           {shouldRenderTempPanelSubComponent && (
             <Panel
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={customActionButtons}
               title={chromeTitle}
-              languageOptions={languageOptions}
-              onChange={onChange}
+              languageOptions={languageOptions || []} // Empty array as default
+              onChange={onChange || (() => {})} // No-op function as default
+              onCopy={onCopy}
             />
           )}
 
@@ -283,7 +249,7 @@ function Code({
             <button
               className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
-              data-testid="lg-code-expand_button"
+              data-testid={LGIDs.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}

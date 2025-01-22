@@ -62,7 +62,6 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     });
 
     if (copied) {
-      console.log('🤡');
       const timeoutId = setTimeout(() => {
         setCopied(false);
       }, COPIED_SUCCESS_DURATION);
@@ -139,7 +138,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
     <Tooltip
       align={Align.Top}
       className={tooltipStyles}
-      data-testid="code_copy-button_tooltip"
+      data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
