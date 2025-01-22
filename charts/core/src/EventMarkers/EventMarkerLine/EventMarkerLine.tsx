@@ -3,7 +3,7 @@ import React from 'react';
 import {
   BaseEventMarker,
   EventLevel,
-  LineEventMarkerProps,
+  EventMarkerLineProps,
 } from '../BaseEventMarker';
 
 export function EventMarkerLine({
@@ -11,7 +11,7 @@ export function EventMarkerLine({
   label,
   message,
   level = EventLevel.Warning,
-}: Omit<LineEventMarkerProps, 'type'>) {
+}: Omit<EventMarkerLineProps, 'type'>) {
   return (
     <BaseEventMarker
       position={position}

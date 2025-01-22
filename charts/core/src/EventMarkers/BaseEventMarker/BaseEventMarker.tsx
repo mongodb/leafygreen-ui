@@ -6,8 +6,8 @@ import { useChartContext } from '../../ChartContext';
 
 import {
   EventLevel,
-  LineEventMarkerProps,
-  PointEventMarkerProps,
+  EventMarkerLineProps,
+  EventMarkerPointProps,
 } from './BaseEventMarker.types';
 import { getMarkConfig } from './utils';
 
@@ -17,7 +17,7 @@ export function BaseEventMarker({
   message,
   level = EventLevel.Warning,
   type,
-}: LineEventMarkerProps | PointEventMarkerProps) {
+}: EventMarkerLineProps | EventMarkerPointProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
   const name =
