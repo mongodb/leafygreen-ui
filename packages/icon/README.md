@@ -22,8 +22,10 @@ npm install @leafygreen-ui/icon
 
 ```js
 import Icon from '@leafygreen-ui/icon';
+import PlusIcon from '@leafygreen-ui/icon/dist/Plus';
 
 const SomeComponent = () => <Icon glyph="Plus" fill="#FF0000" />;
+const OneImport = () => <PlusIcon />;
 ```
 
 **Output HTML**
