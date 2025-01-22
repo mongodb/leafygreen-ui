@@ -363,6 +363,7 @@ describe('packages/Code', () => {
       test('does not render if the languageOptions is not defined', () => {
         const { queryByTestId } = renderCode({
           language: languageOptions[0],
+          // @ts-expect-error
           panel: <Panel onChange={() => {}} />,
         });
         expect(queryByTestId('lg-code-select')).toBeNull();
@@ -371,6 +372,7 @@ describe('packages/Code', () => {
       test('does not render if onChange is not defined', () => {
         const { queryByTestId } = renderCode({
           language: languageOptions[0],
+          // @ts-expect-error - onChange is not defined
           panel: <Panel languageOptions={languageOptions} />,
         });
         expect(queryByTestId('lg-code-select')).toBeNull();

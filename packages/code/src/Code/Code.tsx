@@ -154,6 +154,7 @@ function Code({
     option => option.displayName === highLightLanguage,
   );
 
+  // This will render a temp panel component if deprecated props are used
   const shouldRenderTempPanelSubComponent =
     !panel &&
     ((showCustomActionButtons &&
@@ -214,8 +215,8 @@ function Code({
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={customActionButtons}
               title={chromeTitle}
-              languageOptions={languageOptions}
-              onChange={onChange}
+              languageOptions={languageOptions || []} // Empty array as default
+              onChange={onChange || (() => {})} // No-op function as default
               onCopy={onCopy}
             />
           )}
