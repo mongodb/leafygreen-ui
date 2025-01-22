@@ -11,10 +11,16 @@ import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ChartProvider } from '../ChartContext';
 
-import { chartContainerStyles, chartStyles } from './Chart.styles';
+import {
+  chartContainerStyles,
+  chartStyles,
+  chartWrapperStyles,
+  loadingOverlayStyles,
+} from './Chart.styles';
 import { ChartProps } from './Chart.types';
 import { useChart } from './hooks';
 
@@ -26,6 +32,7 @@ export function Chart({
   onZoomSelect,
   groupId,
   className,
+  isLoading = false,
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -50,12 +57,19 @@ export function Chart({
              */}
             {children}
           </div>
-          <div
-            ref={chart.ref}
-            className={chartStyles}
-            data-testid="lg-charts-core-chart-echart"
-            {...rest}
-          />
+          <div className={chartWrapperStyles}>
+            {isLoading && (
+              <div className={loadingOverlayStyles}>
+                <Spinner description="Loading chart..." />
+              </div>
+            )}
+            <div
+              ref={chart.ref}
+              className={chartStyles}
+              data-testid="lg-charts-core-chart-echart"
+              {...rest}
+            />
+          </div>
         </div>
       </ChartProvider>
     </LeafyGreenProvider>

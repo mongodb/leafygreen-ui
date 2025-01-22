@@ -23,7 +23,7 @@ npm install @lg-charts/core
 ```js
 import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
 
-<Chart onZoomSelect={handleZoom}>
+<Chart onZoomSelect={handleZoom} isLoading={false}>
   <Header title="My Chart" />
   <Grid vertical={false}>
   <XAxis type="time" />
@@ -104,7 +104,8 @@ Chart container component.
 | Name                        | Description                                                                     | Type                                   | Default                          |
 | --------------------------- | ------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
 | `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts.   | `string`                               |                                  |
-| `onChartReady`              | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
+| `isLoading` _(optional)_    | Whether to show a loading spinner over the chart.                               | `boolean`                              | `false`                          |
+| `onChartReady` _(optional)_ | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
 | `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if `zoomSelect` is enabled. | `(e: ZoomSelectionEvent) => void`      |                                  |
 | `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis.             | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |
 

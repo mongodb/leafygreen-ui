@@ -36,4 +36,9 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Charts with same groupID will have their tooltips synchronized.
      */
     groupId?: string;
+
+    /**
+     * Controlled loading state.
+     */
+    isLoading?: boolean;
   }>;
