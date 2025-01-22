@@ -3,7 +3,7 @@ import { avatarSizes, Size } from '@lg-chat/avatar';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { breakpoints, borderRadius, spacing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
   height: 500px;
@@ -113,7 +113,7 @@ export const scrollButtonStyles = css`
   justify-content: center;
 
   > button {
-    boxshadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
-    border-radius: ${spacing[400]}px;
+    box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
+    border-radius: ${borderRadius[400]}px;
   }
 `;

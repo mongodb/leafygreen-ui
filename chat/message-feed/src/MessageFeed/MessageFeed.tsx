@@ -17,7 +17,6 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { breakpoints } from '@leafygreen-ui/tokens';
 import Icon from '@leafygreen-ui/icon';
 import Button, { Size as ButtonSize } from '@leafygreen-ui/button';
-import IconButton from '@leafygreen-ui/icon-button';
 
 import {
   avatarPaddingStyles,
@@ -67,7 +66,7 @@ export const MessageFeed = forwardRef(
     });
 
     const [showScrollButton, setShowScrollButton] = useState(false);
-    const scrollTimerRef = useRef(null);
+    const scrollTimerRef = useRef<Timeout | null>(null);
 
     const scrollToLatest = useCallback(() => {
       if (containerRef.current) {
@@ -81,8 +80,7 @@ export const MessageFeed = forwardRef(
 
       const isScrolledToEnd = () => {
         if (!containerRef.current) return true;
-        const { scrollHeight, scrollTop, clientHeight, offsetHeight } =
-          containerRef.current;
+        const { scrollHeight, scrollTop, clientHeight } = containerRef.current;
         // Add a small buffer (2px) to account for floating point differences
         return scrollHeight - scrollTop - clientHeight <= 2;
       };
@@ -94,10 +92,12 @@ export const MessageFeed = forwardRef(
           clearTimeout(scrollTimerRef.current);
         }
 
-        // Wait until scroll animation completes
+        // Wait until scroll animation completes This avoids a brief flicker
+        // when the user scrolls to the bottom
+        const scrollDuration = 100;
         scrollTimerRef.current = setTimeout(() => {
           setShowScrollButton(!isScrolledToEnd());
-        }, 100);
+        }, scrollDuration);
       };
 
       scrollElement.addEventListener('scroll', handleScroll);
@@ -159,9 +159,9 @@ function ScrollToLatestButton({
         darkMode={darkMode}
         aria-label="Scroll to latest message"
         size={ButtonSize.Small}
+        rightGlyph={<Icon glyph="ArrowDown" />}
       >
         Scroll to latest
-        <Icon glyph="ArrowDown" />
       </Button>
     </div>
   ) : null;
