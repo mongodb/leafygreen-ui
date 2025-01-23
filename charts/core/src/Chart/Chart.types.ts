@@ -14,6 +14,12 @@ export type SeriesOption = EChartSeriesOption;
 export type ChartOptions = EChartOptions;
 export type ZoomSelectionEvent = EChartZoomSelectionEvent;
 
+export const ChartStates = {
+  Default: 'default',
+  Loading: 'loading',
+} as const;
+export type ChartStates = (typeof ChartStates)[keyof typeof ChartStates];
+
 export type ChartProps = HTMLElementProps<'div'> &
   DarkModeProps &
   PropsWithChildren<{
@@ -38,7 +44,7 @@ export type ChartProps = HTMLElementProps<'div'> &
     groupId?: string;
 
     /**
-     * Controlled loading state.
+     * Controls the current chart state.
      */
-    isLoading?: boolean;
+    state?: ChartStates;
   }>;

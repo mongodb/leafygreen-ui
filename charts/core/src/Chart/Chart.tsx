@@ -21,7 +21,7 @@ import {
   chartWrapperStyles,
   loadingOverlayStyles,
 } from './Chart.styles';
-import { ChartProps } from './Chart.types';
+import { ChartProps, ChartStates } from './Chart.types';
 import { useChart } from './hooks';
 
 export function Chart({
@@ -32,7 +32,7 @@ export function Chart({
   onZoomSelect,
   groupId,
   className,
-  isLoading = false,
+  state = ChartStates.Default,
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -58,7 +58,7 @@ export function Chart({
             {children}
           </div>
           <div className={chartWrapperStyles}>
-            {isLoading && (
+            {state === ChartStates.Loading && (
               <div className={loadingOverlayStyles}>
                 <Spinner description="Loading chart..." />
               </div>
