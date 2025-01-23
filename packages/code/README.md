@@ -48,7 +48,11 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
-const SomeComponent = () => <Code>{codeSnippet}</Code>;
+const SomeComponent = () => (
+  <Code language="javascript" panel={<Panel title="Example Code" />}>
+    {codeSnippet}
+  </Code>
+);
 ```
 
 # Props

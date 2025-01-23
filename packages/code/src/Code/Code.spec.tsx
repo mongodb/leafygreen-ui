@@ -592,4 +592,67 @@ describe('packages/Code', () => {
       );
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  test.skip('types behave as expected', () => {
+    <>
+      <Code language="javascript">snippet</Code>
+
+      {/* @ts-expect-error - missing language prop */}
+      <Code>snippet</Code>
+
+      {/* @ts-expect-error - missing children */}
+      <Code language="javascript"></Code>
+
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        panel={<Panel />}
+      >
+        snippet
+      </Code>
+
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        // @ts-expect-error - onChange prop is missing on <Panel />
+        panel={<Panel languageOptions={[]} />}
+      >
+        snippet
+      </Code>
+
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        // @ts-expect-error - languageOptions prop is missing on <Panel />
+        panel={<Panel onChange={() => {}} />}
+      >
+        snippet
+      </Code>
+
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        panel={
+          <Panel
+            onChange={() => {}}
+            languageOptions={[]}
+            showCustomActionButtons
+            customActionButtons={[]}
+            title="Title"
+          />
+        }
+      >
+        snippet
+      </Code>
+    </>;
+  });
 });
