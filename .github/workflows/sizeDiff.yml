@@ -5,30 +5,24 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  noop:
-    name: No-op
+  sizeDiff:
+    name: Check file size
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Placeholder for sizeDiff job"
-  # TODO: uncomment this job after PNPM migration
-  # sizeDiff:
-  #   name: Check file size
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-  #     - name: pnpm
-  #       uses: pnpm/action-setup@v4
-  #       with:
-  #         version: 9.15.0
+      - name: pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
 
-  #     - name: Use Node.js 18
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 18
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-  #     - uses: preactjs/compressed-size-action@v2
-  #       with:
-  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
-  #         build-script: 'build  --force'
-  #         clean-script: 'clean'
+      - uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          build-script: 'build  --force'
+          clean-script: 'clean'
