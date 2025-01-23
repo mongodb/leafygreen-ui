@@ -128,12 +128,12 @@ export const MessageFeed = forwardRef(
             ref={containerRef}
           >
             {renderedChildren}
-            <ScrollToLatestButton
-              visible={showScrollButton}
-              handleScroll={scrollToLatest}
-              darkMode={darkMode}
-            />
           </div>
+          <ScrollToLatestButton
+            visible={showScrollButton}
+            handleScroll={scrollToLatest}
+            darkMode={darkMode}
+          />
         </div>
       </LeafyGreenProvider>
     );
@@ -154,15 +154,19 @@ function ScrollToLatestButton({
   const { darkMode } = useDarkMode(darkModeProp);
   return visible ? (
     <div className={scrollButtonStyles}>
-      <Button
-        onClick={handleScroll}
-        darkMode={darkMode}
-        aria-label="Scroll to latest message"
-        size={ButtonSize.Small}
-        rightGlyph={<Icon glyph="ArrowDown" />}
-      >
-        Scroll to latest
-      </Button>
+      <div>
+        <div>
+          <Button
+            onClick={handleScroll}
+            darkMode={darkMode}
+            aria-label="Scroll to latest message"
+            size={ButtonSize.Small}
+            rightGlyph={<Icon glyph="ArrowDown" />}
+          >
+            Scroll to latest
+          </Button>
+        </div>
+      </div>
     </div>
   ) : null;
 }

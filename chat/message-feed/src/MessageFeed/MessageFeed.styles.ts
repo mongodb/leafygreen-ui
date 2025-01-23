@@ -10,6 +10,7 @@ export const baseStyles = css`
   width: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 export const themeStyles: Record<Theme, string> = {
@@ -30,7 +31,6 @@ export const messageFeedStyles = css`
   scroll-behavior: smooth;
   position: relative;
   padding: ${spacing[3]}px ${spacing[5]}px ${spacing[2]}px;
-  z-index: 2;
 `;
 
 export const messageFeedThemeStyles: Record<Theme, string> = {
@@ -106,14 +106,26 @@ export const disclaimerTextStyles = css`
 `;
 
 export const scrollButtonStyles = css`
-  position: sticky;
-  bottom: 0;
-  width: 100%;
+  position: absolute;
   display: flex;
   justify-content: center;
+  bottom: ${spacing[400]}px;
 
-  > button {
-    box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
-    border-radius: ${borderRadius[400]}px;
+  > div {
+    position: sticky;
+    display: flex;
+    justify-content: center;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+
+      > button {
+        box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
+        border-radius: ${borderRadius[400]}px;
+      }
+    }
   }
 `;
