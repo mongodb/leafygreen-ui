@@ -86,7 +86,7 @@ const meta: StoryMetaType<typeof Code> = {
         darkMode: [false, true],
         expandable: [true, false],
         showLineNumbers: [false, true],
-        language: ['js', languageOptions[0]],
+        language: ['js', languageOptions[0].displayName],
         panel: [
           undefined,
           <Panel />,
@@ -121,7 +121,7 @@ const meta: StoryMetaType<typeof Code> = {
           panel: <Panel />,
         },
         {
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           panel: undefined,
         },
       ],

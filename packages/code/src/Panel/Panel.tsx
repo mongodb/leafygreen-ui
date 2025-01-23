@@ -14,7 +14,7 @@ import {
   panelLeftStyles,
 } from './Panel.styles';
 import { Body } from '@leafygreen-ui//typography';
-import { LanguageOption, PanelProps } from './Panel.types';
+import { PanelProps } from './Panel.types';
 import { isComponentType } from '@leafygreen-ui/lib';
 import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
@@ -30,9 +30,8 @@ function Panel({
   ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
-  const { contents, language: languageProp } = useCodeContext();
+  const { contents, language } = useCodeContext();
 
-  const language = typeof languageProp === 'string' ? undefined : languageProp;
   const hasTitle = !!title;
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
@@ -42,8 +41,8 @@ function Panel({
   const showCustomActionsInPanel =
     showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
-  const isLanguageAnOption = languageOptions?.some(
-    option => option === language,
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === language,
   );
 
   const shouldRenderLanguageSwitcher =
@@ -51,7 +50,7 @@ function Panel({
     languageOptions !== undefined &&
     languageOptions.length !== 0 &&
     onChange !== undefined &&
-    isLanguageAnOption;
+    !!currentLanguage;
 
   return (
     <div
@@ -65,7 +64,7 @@ function Panel({
         {shouldRenderLanguageSwitcher && (
           <LanguageSwitcher
             onChange={onChange}
-            language={language as LanguageOption}
+            language={currentLanguage}
             languageOptions={languageOptions}
           />
         )}

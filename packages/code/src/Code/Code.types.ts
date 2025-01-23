@@ -50,7 +50,7 @@ export type CodeProps = Omit<
    * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
    */
 
-  language: Language | LanguageOption;
+  language: Language | LanguageOption['displayName'];
 
   /**
    * Custom action buttons. Should be an array of `IconButton`.

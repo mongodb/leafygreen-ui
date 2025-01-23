@@ -11,5 +11,5 @@ export type CodeProviderProps = DarkModeProps & {
   /**
    * The language of the code snippet.
    */
-  language: Language | LanguageOption;
+  language: Language | LanguageOption['displayName'];
 };

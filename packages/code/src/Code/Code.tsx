@@ -21,10 +21,12 @@ import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { Panel } from '../Panel';
 
+//TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
 }
 
+//TODO: move to utils
 function getHorizontalScrollbarHeight(element: HTMLElement): number {
   return element.offsetHeight - element.clientHeight;
 }
@@ -44,7 +46,7 @@ function Code({
   customActionButtons,
   showCustomActionButtons = false,
   chromeTitle,
-  languageOptions,
+  languageOptions = [],
   onChange,
   ...rest
 }: CodeProps) {
@@ -99,8 +101,13 @@ function Code({
     baseFontSize, // will cause changes in code height
   ]);
 
-  const highlightLanguage =
-    typeof languageProp === 'string' ? languageProp : languageProp.displayName;
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === languageProp,
+  );
+
+  const highlightLanguage = currentLanguage
+    ? currentLanguage.language
+    : languageProp;
 
   const renderedSyntaxComponent = (
     <Syntax
@@ -149,10 +156,6 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
-  const currentLanguage = languageOptions?.find(
-    option => option.displayName === highlightLanguage,
-  );
-
   const shouldRenderTempCustomActionButtons =
     showCustomActionButtons &&
     !!customActionButtons &&
@@ -161,7 +164,6 @@ function Code({
   const shouldRenderTempLanguageSwitcher =
     !!languageOptions &&
     languageOptions.length > 0 &&
-    typeof languageProp !== 'string' &&
     !!currentLanguage &&
     !!onChange;
 

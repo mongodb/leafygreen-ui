@@ -61,7 +61,7 @@ export function LanguageSwitcherWithPanelExample({
 
   return (
     <Code
-      language={language}
+      language={language.displayName}
       lineNumberStart={1}
       darkMode={darkMode}
       panel={
@@ -100,11 +100,12 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
 
   return (
     <Code
-      language={language}
+      language={language.displayName}
       lineNumberStart={1}
       darkMode={darkMode}
       languageOptions={languageOptions}
       customActionButtons={customActionButtons}
+      showCustomActionButtons={showCustomActionButtons}
       onChange={handleChange}
       chromeTitle="Title"
     >

@@ -77,7 +77,7 @@ const renderCode = (props: Partial<CodeProps> = {}) => {
 const renderCodeWithLanguageSwitcher = (props: Partial<PanelProps> = {}) => {
   const renderResults = render(
     <Code
-      language={languageOptions[0]}
+      language={languageOptions[0].displayName}
       panel={
         <Panel
           onChange={() => {}}
@@ -180,7 +180,7 @@ describe('packages/Code', () => {
     describe('language switcher', () => {
       test('renders a panel when only language, onChange, and languageOptions are defined', () => {
         const { getByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           languageOptions,
           onChange: () => {},
         });
@@ -188,21 +188,21 @@ describe('packages/Code', () => {
       });
       test('does not render a panel when language and onChange are defined but languageOptions is not defined', () => {
         const { queryByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           onChange: () => {},
         });
         expect(queryByTestId('lg-code-panel')).toBeNull();
       });
       test('does not render a panel when language and languageOptions are defined but onChange is not defined', () => {
         const { queryByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           languageOptions,
         });
         expect(queryByTestId('lg-code-panel')).toBeNull();
       });
       test('does not render a panel when languageOptions is an empty array', () => {
         const { queryByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           languageOptions: [],
           onChange: () => {},
         });
@@ -219,11 +219,7 @@ describe('packages/Code', () => {
       test('throws an error if language is not in languageOptions', () => {
         try {
           renderCode({
-            language: {
-              displayName: 'Testing',
-              // @ts-expect-error - language is not valid
-              language: 'testing',
-            },
+            language: 'Testing',
             languageOptions,
             onChange: () => {},
           });
@@ -275,7 +271,7 @@ describe('packages/Code', () => {
       describe('language switcher', () => {
         test('is overridden by the panel prop', () => {
           const { getByTestId } = renderCode({
-            language: languageOptions[1],
+            language: languageOptions[1].displayName,
             languageOptions,
             onChange: () => {},
             panel: (
@@ -351,7 +347,7 @@ describe('packages/Code', () => {
     describe('language switcher', () => {
       test('renders when languageOptions, language, and onChange are defined', () => {
         const { getByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           panel: (
             <Panel onChange={() => {}} languageOptions={languageOptions} />
           ),
@@ -361,7 +357,7 @@ describe('packages/Code', () => {
 
       test('does not render if the languageOptions is not defined', () => {
         const { queryByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           // @ts-expect-error
           panel: <Panel onChange={() => {}} />,
         });
@@ -370,7 +366,7 @@ describe('packages/Code', () => {
 
       test('does not render if onChange is not defined', () => {
         const { queryByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           // @ts-expect-error - onChange is not defined
           panel: <Panel languageOptions={languageOptions} />,
         });
@@ -379,7 +375,7 @@ describe('packages/Code', () => {
 
       test('does not render if languageOptions is an empty array', () => {
         const { queryByTestId } = renderCode({
-          language: languageOptions[0],
+          language: languageOptions[0].displayName,
           panel: <Panel onChange={() => {}} languageOptions={[]} />,
         });
         expect(queryByTestId('lg-code-select')).toBeNull();
@@ -396,11 +392,7 @@ describe('packages/Code', () => {
       test('throws an error if language is not in languageOptions', () => {
         try {
           renderCode({
-            language: {
-              displayName: 'Testing',
-              // @ts-expect-error - language is not valid
-              language: 'testing',
-            },
+            language: 'Testing',
             panel: <Panel onChange={() => {}} languageOptions={[]} />,
           });
         } catch (error) {
