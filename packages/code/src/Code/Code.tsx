@@ -99,14 +99,14 @@ function Code({
     baseFontSize, // will cause changes in code height
   ]);
 
-  const highLightLanguage =
+  const highlightLanguage =
     typeof languageProp === 'string' ? languageProp : languageProp.displayName;
 
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      language={highLightLanguage as Language}
+      language={highlightLanguage as Language}
       highlightLines={highlightLines}
     >
       {children}
@@ -150,21 +150,27 @@ function Code({
   );
 
   const currentLanguage = languageOptions?.find(
-    option => option.displayName === highLightLanguage,
+    option => option.displayName === highlightLanguage,
   );
+
+  const shouldRenderTempCustomActionButtons =
+    showCustomActionButtons &&
+    !!customActionButtons &&
+    customActionButtons.length > 0;
+
+  const shouldRenderTempLanguageSwitcher =
+    !!languageOptions &&
+    languageOptions.length > 0 &&
+    typeof languageProp !== 'string' &&
+    !!currentLanguage &&
+    !!onChange;
 
   // This will render a temp panel component if deprecated props are used
   const shouldRenderTempPanelSubComponent =
     !panel &&
-    ((showCustomActionButtons &&
-      !!customActionButtons &&
-      customActionButtons.length > 0) ||
+    (shouldRenderTempCustomActionButtons ||
+      shouldRenderTempLanguageSwitcher ||
       !!chromeTitle ||
-      (!!languageOptions &&
-        languageOptions.length > 0 &&
-        typeof languageProp !== 'string' &&
-        !!currentLanguage &&
-        !!onChange) ||
       copyable);
 
   const showPanel = !!panel || shouldRenderTempPanelSubComponent;

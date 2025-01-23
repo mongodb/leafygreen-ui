@@ -53,14 +53,6 @@ function Panel({
     onChange !== undefined &&
     isLanguageAnOption;
 
-  // console.log({
-  //   shouldRenderLanguageSwitcher,
-  //   language,
-  //   languageOptions,
-  //   onChange,
-  //   isLanguageAnOption,
-  // });
-
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}

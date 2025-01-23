@@ -168,7 +168,6 @@ describe('packages/Code', () => {
         });
         expect(queryByTestId('lg-code-panel')).toBeNull();
       });
-      // TODO: think about the copyable prop when it is false
       test('renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed', () => {
         const { getByTestId } = renderCode({
           showCustomActionButtons: true,
