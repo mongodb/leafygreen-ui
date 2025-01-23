@@ -1,5 +1,4 @@
 import React, { forwardRef, Ref } from 'react';
-import PropTypes from 'prop-types';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
@@ -89,16 +88,5 @@ export const BasicEmptyState = forwardRef(
     );
   },
 );
-
-BasicEmptyState.propTypes = {
-  darkMode: PropTypes.bool,
-  externalLink: PropTypes.element,
-  secondaryButton: PropTypes.element,
-  primaryButton: PropTypes.element,
-  description: PropTypes.oneOfType([PropTypes.element, PropTypes.string])
-    .isRequired,
-  title: PropTypes.string.isRequired,
-  graphic: PropTypes.element,
-} as any; // avoid inferred types from interfering with complex unions
 
 BasicEmptyState.displayName = 'BasicEmptyState';

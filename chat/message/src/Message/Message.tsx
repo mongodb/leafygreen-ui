@@ -92,6 +92,8 @@ export const Message = forwardRef(
           setIsRenderingAvatar(true);
         }
       }
+      // FIXME:
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [ref.current]);
 
     const isVerified = verified !== undefined;

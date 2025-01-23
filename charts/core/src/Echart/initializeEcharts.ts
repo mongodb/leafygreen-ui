@@ -51,6 +51,7 @@ export async function initializeEcharts(): Promise<
       echartsRenders = echartsRendersResolved;
       echartsComponents = echartsComponentsResolved;
 
+      // Registers any component we need to use. This is necessary to facilitate tree shaking.
       echartsCore.use([
         echartsCharts.LineChart,
         echartsRenders.CanvasRenderer,
@@ -61,6 +62,8 @@ export async function initializeEcharts(): Promise<
         echartsComponents.ToolboxComponent,
         echartsComponents.DataZoomComponent,
         echartsComponents.DataZoomInsideComponent,
+        echartsComponents.MarkLineComponent,
+        echartsComponents.MarkPointComponent,
       ]);
 
       return echartsCore;

@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import PropTypes from 'prop-types';
 import useResizeObserver from 'use-resize-observer';
 
 import { LeafyGreenChatContextProps } from './LeafyGreenChatProvider.types';
@@ -35,7 +34,3 @@ export function LeafyGreenChatProvider({
 }
 
 LeafyGreenChatProvider.displayName = 'LeafyGreenChatProvider';
-
-LeafyGreenChatProvider.propTypes = {
-  children: PropTypes.node,
-};

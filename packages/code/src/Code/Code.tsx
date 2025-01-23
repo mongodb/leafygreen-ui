@@ -1,6 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
@@ -239,25 +238,5 @@ function Code({
 }
 
 Code.displayName = 'Code';
-
-Code.propTypes = {
-  children: PropTypes.string.isRequired,
-  language: PropTypes.oneOfType([
-    PropTypes.oneOf(Object.values(Language)),
-    PropTypes.string,
-  ]),
-  darkMode: PropTypes.bool,
-  className: PropTypes.string,
-  showLineNumbers: PropTypes.bool,
-  lineNumberStart: PropTypes.number,
-  showWindowChrome: PropTypes.bool,
-  chromeTitle: PropTypes.string,
-  highlightLines: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.number),
-      PropTypes.number,
-    ]),
-  ),
-};
 
 export default Code;

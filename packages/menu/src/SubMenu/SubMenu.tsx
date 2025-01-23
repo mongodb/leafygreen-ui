@@ -7,7 +7,6 @@ import React, {
 import { Transition } from 'react-transition-group';
 import { EnterHandler, ExitHandler } from 'react-transition-group/Transition';
 import isUndefined from 'lodash/isUndefined';
-import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -98,7 +97,9 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
     const submenuTriggerRef = useRef<HTMLButtonElement>(null);
     const subMenuHeight = useChildrenHeight(submenuRef, [open]);
 
-    const handleClick: MouseEventHandler = e => {
+    const handleClick: MouseEventHandler<
+      HTMLAnchorElement & HTMLButtonElement
+    > = e => {
       if (onClick || rest.href) {
         if (!disabled) {
           onClick?.(e);
@@ -249,20 +250,5 @@ export const SubMenu = InferredPolymorphic<InternalSubMenuProps, 'button'>(
 );
 
 SubMenu.displayName = 'SubMenu';
-
-SubMenu.propTypes = {
-  title: PropTypes.string,
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  children: PropTypes.node,
-  setOpen: PropTypes.func,
-  onKeyDown: PropTypes.func,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  glyph: PropTypes.element,
-  onExited: PropTypes.func,
-  open: PropTypes.bool,
-  active: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
 
 export default SubMenu;

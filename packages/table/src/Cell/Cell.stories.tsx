@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types*/
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 

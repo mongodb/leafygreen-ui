@@ -35,13 +35,13 @@ const Template: StoryFn<typeof MessageRating> = props => (
 export const Basic: StoryFn<typeof MessageRating> = Template.bind({});
 
 export const Controlled: StoryFn<typeof MessageRating> = ({
-  // eslint-disable-next-line react/prop-types
   value: valueProp,
   ...rest
 }) => {
   const [value, setValue] = useState<MessageRatingProps['value']>(valueProp);
   useEffect(() => {
     setValue(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [valueProp]);
   const handleRatingChange: ChangeEventHandler<HTMLInputElement> = e => {
     setValue(e.target.value as MessageRatingProps['value']);

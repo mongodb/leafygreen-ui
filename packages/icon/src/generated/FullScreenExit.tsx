@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 9cfa05eac52d1abfc6b539dae8ccd571
+* @checksum 25f1eeeb9688684e346a49cd4f9fce1d
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const FullScreenExit = ({
 };
 FullScreenExit.displayName = 'FullScreenExit';
 FullScreenExit.isGlyph = true;
-FullScreenExit.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default FullScreenExit;

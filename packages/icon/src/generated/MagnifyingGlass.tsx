@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum a2882985a1caddeed8e413721a30f4f9
+* @checksum cd11495da744f67c637424ad322b61b6
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const MagnifyingGlass = ({
 };
 MagnifyingGlass.displayName = 'MagnifyingGlass';
 MagnifyingGlass.isGlyph = true;
-MagnifyingGlass.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default MagnifyingGlass;

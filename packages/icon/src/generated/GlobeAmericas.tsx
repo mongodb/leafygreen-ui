@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 8c585d8e16261657d8a0a1bfa27eea4d
+* @checksum 53afac737295bfb37ee8be4247857d0f
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const GlobeAmericas = ({
 };
 GlobeAmericas.displayName = 'GlobeAmericas';
 GlobeAmericas.isGlyph = true;
-GlobeAmericas.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default GlobeAmericas;

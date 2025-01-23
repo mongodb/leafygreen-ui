@@ -35,6 +35,8 @@ export function useChart({
     if (echart.ready) {
       onChartReady();
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready]);
 
   useEffect(() => {
@@ -42,7 +44,13 @@ export function useChart({
       if (groupId) {
         echart.addToGroup(groupId);
       }
+
+      return () => {
+        echart.removeFromGroup();
+      };
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, groupId]);
 
   useEffect(() => {
@@ -52,6 +60,8 @@ export function useChart({
         yAxis: zoomSelect?.yAxis,
       });
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, zoomSelect]);
 
   useEffect(() => {
@@ -60,7 +70,34 @@ export function useChart({
         onZoomSelect(zoomEventResponse);
       });
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, onZoomSelect]);
+
+  function hideTooltip() {
+    echart.hideTooltip();
+  }
+
+  // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
+  useEffect(() => {
+    if (echart.ready) {
+      echart.on('mouseover', e => {
+        if (e.componentType === 'markPoint') {
+          hideTooltip();
+          echart.on('mousemove', hideTooltip);
+        }
+      });
+
+      // Stop hiding once the mouse leaves the `EventMarkerPoint`
+      echart.on('mouseout', e => {
+        if (e.componentType === 'markPoint') {
+          echart.off('mousemove', hideTooltip);
+        }
+      });
+    }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [echart.ready]);
 
   return {
     ...echart,

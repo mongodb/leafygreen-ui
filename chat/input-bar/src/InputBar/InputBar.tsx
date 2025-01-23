@@ -172,6 +172,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
         resultsCount,
         updatedChildren,
       };
+      // FIXME:
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [children, highlightIndex, textareaRef, promptRefs, setMessageBody]);
 
     const { updatedChildren, resultsCount } = useMemo(
@@ -186,6 +188,8 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
       if (newState !== shouldRenderButtonText) {
         setShouldRenderButtonText(newState);
       }
+      // FIXME:
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [containerWidth]);
 
     const handleChange: ChangeEventHandler<HTMLTextAreaElement> = e => {

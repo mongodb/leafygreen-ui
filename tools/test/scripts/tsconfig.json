@@ -4,7 +4,7 @@
     "noEmit": true,
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
     "incremental": true,
-    "target": "ES5",
+    "target": "ES6",
     "jsx": "react",
     "allowJs": true,
     "pretty": true,

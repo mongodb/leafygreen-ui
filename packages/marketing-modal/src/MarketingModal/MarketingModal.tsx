@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -93,22 +92,5 @@ const MarketingModal = ({
 };
 
 MarketingModal.displayName = 'MarketingModal';
-
-MarketingModal.propTypes = {
-  title: PropTypes.element.isRequired,
-  graphic: PropTypes.element.isRequired,
-  graphicStyle: PropTypes.oneOf(Object.values(GraphicStyle)),
-  open: PropTypes.bool,
-  onButtonClick: PropTypes.func,
-  onLinkClick: PropTypes.func,
-  onClose: PropTypes.func,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  buttonText: PropTypes.string.isRequired,
-  linkText: PropTypes.string.isRequired,
-  blobPosition: PropTypes.oneOf(Object.values(BlobPosition)),
-  showBlob: PropTypes.bool,
-  darkMode: PropTypes.bool,
-};
 
 export default MarketingModal;

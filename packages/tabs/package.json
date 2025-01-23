@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tabs",
-  "version": "13.1.1",
+  "version": "14.0.2",
   "description": "leafyGreen UI Kit Tabs",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,19 +22,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.5.0",
-    "@leafygreen-ui/descendants": "^1.0.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.2.0",
-    "@leafygreen-ui/lib": "^13.7.0",
-    "@leafygreen-ui/palette": "^4.1.0",
-    "@leafygreen-ui/polymorphic": "^2.0.2",
-    "@leafygreen-ui/tokens": "^2.10.0",
-    "@leafygreen-ui/typography": "^19.3.0",
-    "@lg-tools/test-harnesses": "0.1.2"
+    "@leafygreen-ui/a11y": "workspace:^",
+    "@leafygreen-ui/descendants": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/polymorphic": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tabs",
   "repository": {
@@ -45,10 +45,9 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/card": "^11.0.0",
-    "@leafygreen-ui/icon": "^12.6.0",
-    "@leafygreen-ui/icon-button": "^15.0.23",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/card": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^"
   }
 }

@@ -120,7 +120,7 @@ export interface MenuProps extends SelectedMenuProps {
   onChange?: MouseEventHandler;
 }
 
-export interface SplitButtonProps
+export interface InternalSplitButtonProps
   extends DarkModeProps,
     ButtonProps,
     MenuProps {
@@ -135,4 +135,13 @@ export interface SplitButtonProps
    * The text that will appear inside of the primary button.
    */
   label: string;
+
+  /**
+   * A test id put onto the root element.
+   */
+  'data-testid'?: string;
 }
+
+// External only
+export type SplitButtonProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, InternalSplitButtonProps>;

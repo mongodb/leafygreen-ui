@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 78088ce50cb3261f601efab705c13fe1
+* @checksum bb8a92ca75c026fdbdbfce7759175706
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const EmptyFolder = ({
 };
 EmptyFolder.displayName = 'EmptyFolder';
 EmptyFolder.isGlyph = true;
-EmptyFolder.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default EmptyFolder;

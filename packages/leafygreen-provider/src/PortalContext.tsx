@@ -24,7 +24,7 @@ export function usePopoverPortalContainer() {
   return popover;
 }
 
-interface PortalContext {
+export interface PortalContextInterface {
   popover?: PortalContextValues['popover'];
   children: React.ReactNode;
 }
@@ -32,7 +32,7 @@ interface PortalContext {
 export function PortalContextProvider({
   popover = defaultPortalContextValues.popover,
   children,
-}: PortalContext) {
+}: PortalContextInterface) {
   return (
     <PortalContext.Provider value={{ popover }}>
       {children}

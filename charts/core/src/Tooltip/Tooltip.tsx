@@ -60,6 +60,7 @@ export function Tooltip({
           color:
             color[theme].text[Variant.InversePrimary][InteractionState.Default],
         },
+        transitionDuration: 0,
         trigger: 'axis',
       },
     });
@@ -71,6 +72,8 @@ export function Tooltip({
         },
       });
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chart.ready, theme, sortDirection, sortKey, valueFormatter]);
 
   return null;

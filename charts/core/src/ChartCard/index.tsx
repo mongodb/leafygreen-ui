@@ -1,2 +1,2 @@
 export { ChartCard } from './ChartCard';
-export { ChartCardProps } from './ChartCard.types';
+export type { ChartCardProps } from './ChartCard.types';

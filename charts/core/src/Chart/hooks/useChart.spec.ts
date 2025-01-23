@@ -13,6 +13,7 @@ jest.mock('../../Echart', () => ({
   useEchart: jest.fn(() => ({
     ready: false,
     addToGroup: jest.fn(),
+    removeFromGroup: jest.fn(),
     setupZoomSelect: jest.fn(),
     on: jest.fn(),
   })),
@@ -32,6 +33,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     (useEchart as jest.Mock).mockReturnValue({
       ready: false,
       addToGroup: jest.fn(),
+      removeFromGroup: jest.fn(),
       setupZoomSelect: jest.fn(),
       on: jest.fn(),
     });
@@ -46,6 +48,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     (useEchart as jest.Mock).mockReturnValue({
       ready: true,
       addToGroup: jest.fn(),
+      removeFromGroup: jest.fn(),
       setupZoomSelect: jest.fn(),
       on: jest.fn(),
     });
@@ -62,6 +65,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     (useEchart as jest.Mock).mockReturnValue({
       ready: true,
       addToGroup: jest.fn(),
+      removeFromGroup: jest.fn(),
       setupZoomSelect,
       on: jest.fn(),
     });
@@ -87,6 +91,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     (useEchart as jest.Mock).mockReturnValue({
       ready: true,
       addToGroup: jest.fn(),
+      removeFromGroup: jest.fn(),
       setupZoomSelect: jest.fn(),
       on,
     });
@@ -113,6 +118,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     const mockEchartInstance = {
       ready: true,
       addToGroup: jest.fn(),
+      removeFromGroup: jest.fn(),
       setupZoomSelect: jest.fn(),
       on: jest.fn(),
     };
@@ -125,5 +131,45 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       ...mockEchartInstance,
       ref: expect.any(Function),
     });
+  });
+
+  test('should call `addToGroup` when `groupId` is present', async () => {
+    const { useEchart } = require('../../Echart');
+    const addToGroup = jest.fn();
+
+    (useEchart as jest.Mock).mockReturnValue({
+      ready: true,
+      addToGroup,
+      removeFromGroup: jest.fn(),
+      setupZoomSelect: jest.fn(),
+      on: jest.fn(),
+    });
+
+    const groupId = 'test-group';
+
+    renderHook(() => useChart({ theme: 'dark', groupId }));
+
+    expect(addToGroup).toHaveBeenCalledWith(groupId);
+  });
+
+  test('should call `removeFromGroup` on unmount if `groupId` is present', async () => {
+    const { useEchart } = require('../../Echart');
+    const removeFromGroup = jest.fn();
+
+    (useEchart as jest.Mock).mockReturnValue({
+      ready: true,
+      addToGroup: jest.fn(),
+      removeFromGroup,
+      setupZoomSelect: jest.fn(),
+      on: jest.fn(),
+    });
+
+    const groupId = 'test-group';
+
+    const { unmount } = renderHook(() => useChart({ theme: 'dark', groupId }));
+
+    unmount();
+
+    expect(removeFromGroup).toHaveBeenCalled();
   });
 });

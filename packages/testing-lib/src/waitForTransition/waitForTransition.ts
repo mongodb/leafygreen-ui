@@ -15,7 +15,9 @@ export async function waitForTransition(
 ) {
   if (element) {
     await waitFor(() => {
-      act(() => fireEvent.transitionEnd(element, options));
+      act(() => {
+        fireEvent.transitionEnd(element, options);
+      });
     });
   }
 }

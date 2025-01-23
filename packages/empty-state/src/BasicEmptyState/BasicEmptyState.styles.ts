@@ -11,7 +11,7 @@ export const rootStyles = css`
 `;
 
 export const textContainerStyles = css`
-  max-width: 432px;
+  max-width: 466px;
 `;
 
 export const getBadgeStyles = (className?: string) =>

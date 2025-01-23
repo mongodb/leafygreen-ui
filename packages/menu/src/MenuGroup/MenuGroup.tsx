@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
@@ -74,9 +73,5 @@ export function MenuGroup({
 }
 
 MenuGroup.displayName = 'MenuGroup';
-
-MenuGroup.propTypes = {
-  children: PropTypes.node,
-};
 
 export default MenuGroup;

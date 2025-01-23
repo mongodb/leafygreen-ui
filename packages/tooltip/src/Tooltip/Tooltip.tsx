@@ -7,7 +7,6 @@ import React, {
 } from 'react';
 import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
@@ -35,9 +34,7 @@ import {
   positionRelative,
 } from './Tooltip.styles';
 import {
-  Align,
   DismissMode,
-  Justify,
   PopoverFunctionParameters,
   RenderMode,
   TooltipProps,
@@ -319,28 +316,5 @@ function Tooltip({
 }
 
 Tooltip.displayName = 'Tooltip';
-
-Tooltip.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  align: PropTypes.oneOf(Object.values(Align)),
-  justify: PropTypes.oneOf(Object.values(Justify)),
-  trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  triggerEvent: PropTypes.oneOf(Object.values(TriggerEvent)),
-  darkMode: PropTypes.bool,
-  enabled: PropTypes.bool,
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-  id: PropTypes.string,
-  shouldClose: PropTypes.func,
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-  portalClassName: PropTypes.string,
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-};
 
 export default Tooltip;

@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
@@ -148,20 +147,5 @@ function Syntax({
 }
 
 Syntax.displayName = 'Syntax';
-
-Syntax.propTypes = {
-  children: PropTypes.string.isRequired,
-  language: PropTypes.oneOf(Object.values(Language)),
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  showLineNumbers: PropTypes.bool,
-  lineNumberStart: PropTypes.number,
-  highlightLines: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.number),
-      PropTypes.number,
-    ]),
-  ),
-};
 
 export default Syntax;

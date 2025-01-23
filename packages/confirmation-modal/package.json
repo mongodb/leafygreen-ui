@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/confirmation-modal",
-  "version": "5.2.1",
+  "version": "6.0.2",
   "description": "leafyGreen UI Kit Confirmation Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,18 +22,18 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/button": "^21.2.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/icon": "^12.5.0",
-    "@leafygreen-ui/lib": "^13.5.0",
-    "@leafygreen-ui/modal": "^16.0.8",
-    "@leafygreen-ui/palette": "^4.0.10",
-    "@leafygreen-ui/text-input": "^13.1.0",
-    "@leafygreen-ui/tokens": "^2.11.0",
-    "@leafygreen-ui/typography": "^19.0.0"
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/modal": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/text-input": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.1.12"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/confirmation-modal",
   "repository": {
@@ -43,7 +43,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.1"
-  }
+  "devDependencies": {}
 }

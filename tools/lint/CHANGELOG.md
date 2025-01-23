@@ -1,5 +1,34 @@
 # @lg-tools/lint
 
+## 2.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-tools/build@0.7.2
+
+## 2.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+
+## 2.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- 9a8c43faa: Adds missing dependencies: `@eslint/compat`, `@eslint/eslintrc`, `@eslint/js`, `globals`
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+
 ## 1.0.0
 
 ### Major Changes

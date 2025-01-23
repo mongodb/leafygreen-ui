@@ -1,5 +1,4 @@
 import React, { forwardRef, Ref } from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -95,20 +94,5 @@ export const FeaturesEmptyState = forwardRef(
     );
   },
 );
-
-FeaturesEmptyState.propTypes = {
-  darkMode: PropTypes.bool,
-  externalLink: PropTypes.element,
-  secondaryButton: PropTypes.element,
-  primaryButton: PropTypes.element.isRequired,
-  features: PropTypes.arrayOf(
-    PropTypes.exact({
-      graphic: PropTypes.element.isRequired,
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-    }).isRequired,
-  ).isRequired,
-  title: PropTypes.string.isRequired,
-};
 
 FeaturesEmptyState.displayName = 'FeaturesEmptyState';

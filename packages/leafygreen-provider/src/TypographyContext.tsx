@@ -1,5 +1,4 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 // TODO: Refresh - update to 13 | 16
 type FontSize = 14 | 16;
@@ -28,10 +27,5 @@ function TypographyProvider({
 }
 
 TypographyProvider.displayName = 'TypographyProvider';
-
-TypographyProvider.propTypes = {
-  children: PropTypes.node,
-  baseFontSize: PropTypes.number,
-};
 
 export default TypographyProvider;

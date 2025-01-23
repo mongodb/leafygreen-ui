@@ -1,5 +1,17 @@
 # @lg-tools/test-harnesses
 
+## 0.1.4
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
+## 0.1.3
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+
 ## 0.1.2
 
 ### Patch Changes

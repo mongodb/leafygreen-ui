@@ -1,5 +1,4 @@
 import React, { ForwardedRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { LGRowData } from '../useLeafyGreenTable';
 
@@ -34,9 +33,3 @@ export const Cell = React.forwardRef(CellWithForwardRef) as CellComponentType;
 Cell.displayName = 'Cell';
 
 export default Cell;
-
-Cell.propTypes = {
-  cell: PropTypes.object,
-  align: PropTypes.oneOf(['left', 'right', 'center']),
-  contentClassName: PropTypes.string,
-} as any; // avoid inferred types from interfering;
