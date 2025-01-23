@@ -95,7 +95,7 @@ export type CodeProps = Omit<
   /**
    * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
-   * Use `panel={<Panel />}` or `copyButtonApperance` instead
+   * Use `panel={<Panel />}` or `copyButtonAppearance` instead
    *
    * @default `true`
    * @deprecated
