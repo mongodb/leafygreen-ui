@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/display-name */
+
 import React, { useState } from 'react';
 import {
   storybookArgTypes,

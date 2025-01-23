@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -47,12 +46,6 @@ const ToggleExpandedIcon = ({
       />
     </IconButton>
   );
-};
-
-ToggleExpandedIcon.propTypes = {
-  disabled: PropTypes.bool,
-  toggleExpanded: PropTypes.func.isRequired,
-  isExpanded: PropTypes.bool.isRequired,
 };
 
 export default ToggleExpandedIcon;

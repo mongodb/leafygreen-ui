@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Language } from '../types';
 import { LanguageOption } from '../Panel/Panel.types';
+import { Language } from '../types';
 import Code, { Panel } from '..';
 
 export const languageOptions = [
@@ -61,13 +61,14 @@ export function LanguageSwitcherWithPanelExample({
 
   return (
     <Code
-      language={language}
+      language={language.displayName}
       lineNumberStart={1}
       darkMode={darkMode}
       panel={
         <Panel
           languageOptions={languageOptions}
           customActionButtons={customActionButtons}
+          showCustomActionButtons={showCustomActionButtons}
           onChange={handleChange}
           title="Title"
         />
@@ -100,11 +101,12 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
 
   return (
     <Code
-      language={language}
+      language={language.displayName}
       lineNumberStart={1}
       darkMode={darkMode}
       languageOptions={languageOptions}
       customActionButtons={customActionButtons}
+      showCustomActionButtons={showCustomActionButtons}
       onChange={handleChange}
       chromeTitle="Title"
     >

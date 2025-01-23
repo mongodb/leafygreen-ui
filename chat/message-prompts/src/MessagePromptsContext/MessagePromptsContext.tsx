@@ -1,5 +1,4 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import { MessagePromptsContextProps } from './MessagePromptsContext.types';
 
@@ -24,7 +23,3 @@ export function MessagePromptsProvider({
 }
 
 MessagePromptsProvider.displayName = 'MessagePromptsProvider';
-
-MessagePromptsProvider.propTypes = {
-  children: PropTypes.node,
-};

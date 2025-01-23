@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key, react/display-name, react-hooks/rules-of-hooks */
+/* eslint-disable react/display-name */
 import React from 'react';
 import { InstanceDecorator } from '@lg-tools/storybook-utils';
 import noop from 'lodash/noop';

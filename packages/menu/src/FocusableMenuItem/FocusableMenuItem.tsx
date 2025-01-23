@@ -1,5 +1,4 @@
 import React, { ComponentPropsWithRef, ReactElement } from 'react';
-import PropTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
@@ -43,9 +42,5 @@ export const FocusableMenuItem = React.forwardRef<
 });
 
 FocusableMenuItem.displayName = 'FocusableMenuItem';
-
-FocusableMenuItem.propTypes = {
-  children: PropTypes.element.isRequired,
-};
 
 export default FocusableMenuItem;

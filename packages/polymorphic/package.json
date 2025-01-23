@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/polymorphic",
-  "version": "2.0.2",
+  "version": "2.0.5",
   "description": "LeafyGreen UI Kit Polymorphic",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -31,12 +31,10 @@
   },
   "devDependencies": {
     "@emotion/styled": "^11.10.5",
-    "@lg-tools/build": "^0.6.0",
-    "@lg-tools/storybook-utils": "^0.1.0",
     "next": "^13.1.6"
   },
   "dependencies": {
-    "@leafygreen-ui/lib": "^13.6.0",
+    "@leafygreen-ui/lib": "workspace:^",
     "lodash": "^4.17.21"
   }
 }

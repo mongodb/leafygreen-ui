@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useForwardedRef, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { LGIDS_TEXT_INPUT } from '../constants';
@@ -187,24 +185,5 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
 ) as TextInputComponentType;
 
 TextInput.displayName = 'TextInput';
-
-TextInput.propTypes = {
-  id: PropTypes.string,
-  label: PropTypes.string,
-  'aria-labelledby': PropTypes.string,
-  description: PropTypes.string,
-  optional: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func,
-  placeholder: PropTypes.string,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string,
-  state: PropTypes.oneOf(Object.values(State)),
-  value: PropTypes.string,
-  className: PropTypes.string,
-  sizeVariant: PropTypes.oneOf(Object.values(SizeVariant)),
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-  darkMode: PropTypes.bool,
-};
 
 export default TextInput;

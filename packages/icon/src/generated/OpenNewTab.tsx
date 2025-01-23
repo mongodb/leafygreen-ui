@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum d1926ffad325a7ee34d98caa3633aec0
+* @checksum 4c0c51ef41459b43820d5e5bc95d79ca
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const OpenNewTab = ({
 };
 OpenNewTab.displayName = 'OpenNewTab';
 OpenNewTab.isGlyph = true;
-OpenNewTab.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default OpenNewTab;

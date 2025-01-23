@@ -1,6 +1,5 @@
 import React, { MutableRefObject } from 'react';
 import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 
@@ -69,11 +68,5 @@ function Portal({
 }
 
 Portal.displayName = 'Portal';
-
-Portal.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  container: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
-};
 
 export default Portal;

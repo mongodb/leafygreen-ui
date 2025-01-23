@@ -1,4 +1,3 @@
-// eslint-disable-next-line simple-import-sort/imports
 import React, { TransitionEventHandler } from 'react';
 import { render, waitFor } from '@testing-library/react';
 

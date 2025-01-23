@@ -1,9 +1,13 @@
 import React from 'react';
 import ClipboardJS from 'clipboard';
 
+import { Body } from '@leafygreen-ui/typography';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 
+import { useCodeContext } from '../CodeContext/CodeContext';
+import { LGIDs } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
@@ -13,11 +17,7 @@ import {
   panelIconsStyles,
   panelLeftStyles,
 } from './Panel.styles';
-import { Body } from '@leafygreen-ui//typography';
-import { LanguageOption, PanelProps } from './Panel.types';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { useCodeContext } from '../CodeContext/CodeContext';
-import { LGIDs } from '../constants';
+import { PanelProps } from './Panel.types';
 
 function Panel({
   languageOptions,
@@ -30,9 +30,8 @@ function Panel({
   ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
-  const { contents, language: languageProp } = useCodeContext();
+  const { contents, language } = useCodeContext();
 
-  const language = typeof languageProp === 'string' ? undefined : languageProp;
   const hasTitle = !!title;
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
@@ -42,8 +41,8 @@ function Panel({
   const showCustomActionsInPanel =
     showCustomActionButtons && !!filteredCustomActionIconButtons.length;
 
-  const isLanguageAnOption = languageOptions?.some(
-    option => option === language,
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === language,
   );
 
   const shouldRenderLanguageSwitcher =
@@ -51,15 +50,7 @@ function Panel({
     languageOptions !== undefined &&
     languageOptions.length !== 0 &&
     onChange !== undefined &&
-    isLanguageAnOption;
-
-  // console.log({
-  //   shouldRenderLanguageSwitcher,
-  //   language,
-  //   languageOptions,
-  //   onChange,
-  //   isLanguageAnOption,
-  // });
+    !!currentLanguage;
 
   return (
     <div
@@ -73,7 +64,7 @@ function Panel({
         {shouldRenderLanguageSwitcher && (
           <LanguageSwitcher
             onChange={onChange}
-            language={language as LanguageOption}
+            language={currentLanguage}
             languageOptions={languageOptions}
           />
         )}

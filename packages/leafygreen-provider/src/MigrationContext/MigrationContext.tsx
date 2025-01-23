@@ -1,5 +1,4 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import { MigrationContextType } from './MigrationContext.types';
 
@@ -30,5 +29,3 @@ export const MigrationProvider = ({
 };
 
 MigrationProvider.displayName = 'MigrationProvider';
-
-MigrationProvider.propTypes = { children: PropTypes.node };

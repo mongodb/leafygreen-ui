@@ -161,31 +161,26 @@ describe('packages/box', () => {
 
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('types work as expected', () => {
-    // eslint-disable-next-line jest/expect-expect
     test('does not allow specifying "target", without "as" or "href"', () => {
       // @ts-expect-error
       <Box target="_blank" />;
     });
 
-    // eslint-disable-next-line jest/expect-expect
     test('does not allow specifying "href", when "as" is set to "div"', () => {
       // @ts-expect-error
       <Box as="div" href="string" />;
     });
 
-    // eslint-disable-next-line jest/expect-expect
     test('does not allow props that do not exist on the "as" element', () => {
       // @ts-expect-error
       <Box as="div" x="" />;
     });
 
-    // eslint-disable-next-line jest/expect-expect
     test('expects "href" to be a string when as is an anchor component wrapper', () => {
       // @ts-expect-error
       <Box as={TestAnchorLike} href={1} />;
     });
 
-    // eslint-disable-next-line jest/expect-expect
     test('expects required props to exist when as is a React Component with required props', () => {
       // @ts-expect-error
       <Box as={TestComponent} />;
@@ -195,55 +190,46 @@ describe('packages/box', () => {
   describe('packages/box/ExtendableBox', () => {
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip('the types work as expected', () => {
-      // eslint-disable-next-line jest/expect-expect
       test('does not allow specifying "target", without "as" or "href"', () => {
         // @ts-expect-error
         <TestExtendableBox target="_blank" />;
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('does not allow specifying "href", when "as" is set to "div"', () => {
         // @ts-expect-error
         <TestExtendableBox as="div" href="string" />;
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('does not allow props that do not exist on the "as" element', () => {
         // @ts-expect-error
         <TestExtendableBox as="div" x="" />;
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('expects "href" to be a string when as is an anchor component wrapper', () => {
         // @ts-expect-error
         <TestExtendableBox as={TestAnchorLike} href={1} />;
       });
 
-      // eslint-disable-next-line jest/expect-expect
       test('expects required props to exist when as is a React Component with required props', () => {
         // @ts-expect-error
         <TestExtendableBox as={TestComponent} />;
       });
 
       describe('when Extendable Box has a default "as" that is not a "div"', () => {
-        // eslint-disable-next-line jest/expect-expect
         test('allows props based on the default supplied', () => {
           <TestExtendableBoxWithButton type="submit" />;
         });
 
-        // eslint-disable-next-line jest/expect-expect
         test('errors when "as" overwrites default and props are no longer compatible', () => {
           // @ts-expect-error
           <TestExtendableBoxWithButton type="submit" as="div" />;
         });
 
-        // eslint-disable-next-line jest/expect-expect
         test('errors when prop that only belongs on "a" is supplied without setting "as"', () => {
           // @ts-expect-error
           <TestExtendableBoxWithButton target="_blank" />;
         });
 
-        // eslint-disable-next-line jest/expect-expect
         test('allows prop that only belongs on "a" when setting "as"', () => {
           <TestExtendableBoxWithButton target="_blank" as="a" />;
         });

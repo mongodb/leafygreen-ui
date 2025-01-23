@@ -12,7 +12,7 @@ import { ZoomSelect } from './hooks/useChart.types';
 
 export type SeriesOption = EChartSeriesOption;
 export type ChartOptions = EChartOptions;
-type ZoomSelectionEvent = EChartZoomSelectionEvent;
+export type ZoomSelectionEvent = EChartZoomSelectionEvent;
 
 export type ChartProps = HTMLElementProps<'div'> &
   DarkModeProps &

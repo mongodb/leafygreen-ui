@@ -7,12 +7,12 @@ module.exports = {
         'name',
         'version',
         'description',
-        'workspaces',
         'publishConfig',
         'scripts',
         'dependencies',
         'devDependencies',
         'peerDependencies',
+        'pnpm',
       ],
     ],
     'prefer-caret-version-dependencies': [

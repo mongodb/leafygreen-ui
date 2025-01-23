@@ -145,7 +145,6 @@ Truncate.parameters = {
   },
 };
 
-// eslint-disable-next-line react/prop-types
 export const LiveExample: StoryType<typeof Chip> = ({ glyph, ...rest }) => (
   <Chip // @ts-expect-error - glyph type error
     glyph={glyph ? <Icon glyph={glyph} /> : undefined}

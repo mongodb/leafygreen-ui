@@ -1,5 +1,45 @@
 # @lg-tools/storybook-addon
 
+## 0.2.8
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+  - @lg-tools/build@0.7.2
+  - @lg-tools/storybook-decorators@0.3.2
+  - @lg-tools/storybook-utils@0.1.3
+
+## 0.2.7
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+  - @lg-tools/storybook-decorators@0.3.1
+  - @lg-tools/storybook-utils@0.1.2
+  - @leafygreen-ui/typography@20.0.1
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/lib@14.0.1
+
+## 0.2.6
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @lg-tools/build@0.7.0
+  - @lg-tools/storybook-decorators@0.3.0
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 0.2.5
 
 ### Patch Changes

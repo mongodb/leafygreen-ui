@@ -114,6 +114,8 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
         xAxis: unsetAxisOptions,
       });
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, label, formatter, theme, chart.ready]);
 
   return null;

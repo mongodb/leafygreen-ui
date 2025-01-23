@@ -1,5 +1,67 @@
 # @lg-chat/input-bar
 
+## 7.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-chat/leafygreen-chat-provider@3.0.1
+  - @leafygreen-ui/badge@9.0.2
+  - @leafygreen-ui/button@22.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/icon@13.1.2
+  - @leafygreen-ui/input-option@3.0.2
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/polymorphic@2.0.5
+  - @leafygreen-ui/popover@13.0.2
+  - @leafygreen-ui/search-input@5.0.2
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+
+## 7.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @leafygreen-ui/input-option@3.0.1
+  - @leafygreen-ui/search-input@5.0.1
+  - @leafygreen-ui/polymorphic@2.0.4
+  - @leafygreen-ui/typography@20.0.1
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/popover@13.0.1
+  - @leafygreen-ui/button@22.0.1
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/badge@9.0.1
+  - @leafygreen-ui/hooks@8.3.3
+  - @leafygreen-ui/icon@13.1.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 7.0.0
+
+### Patch Changes
+
+- Updated dependencies [a3d63cb95]
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/input-option@3.0.0
+  - @leafygreen-ui/search-input@5.0.0
+  - @lg-chat/leafygreen-chat-provider@3.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/badge@9.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 6.0.0
 
 ### Major Changes

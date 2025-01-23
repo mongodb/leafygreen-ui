@@ -1,5 +1,29 @@
 # @lg-tools/meta
 
+## 0.3.7
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-tools/build@0.7.2
+
+## 0.3.6
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+
+## 0.3.5
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/build@0.7.0
+
 ## 0.3.4
 
 ### Patch Changes

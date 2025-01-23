@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
@@ -62,14 +61,5 @@ function Callout({
     </LeafyGreenProvider>
   );
 }
-
-Callout.propTypes = {
-  darkMode: PropTypes.bool,
-  variant: PropTypes.oneOf(Object.values(Variant)).isRequired,
-  title: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  baseFontSize: PropTypes.oneOf(Object.values(BaseFontSize)),
-};
 
 export default Callout;

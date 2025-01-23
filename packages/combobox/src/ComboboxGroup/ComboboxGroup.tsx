@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -43,12 +42,6 @@ export function InternalComboboxGroup({
 }
 
 ComboboxGroup.displayName = 'ComboboxGroup';
-
-ComboboxGroup.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  label: PropTypes.string.isRequired,
-};
 
 export function ComboboxGroup(_: ComboboxGroupProps): JSX.Element {
   throw Error('`ComboboxGroup` must be a child of a `Combobox` instance');

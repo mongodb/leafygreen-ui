@@ -62,6 +62,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       // On unmount, removes the timeout that is set on `onMouseLeave` and `'onBlur` of the wrapper container.
       return () => {
         if (translateTimeout.current) {
+          // FIXME:
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           clearTimeout(translateTimeout.current);
         }
       };

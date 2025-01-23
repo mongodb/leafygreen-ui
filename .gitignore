@@ -23,9 +23,6 @@ reports
 ehthumbs.db
 Thumbs.db
 
-# Yarn Error Log
-yarn-error.log
-
 # TypeScript type-checking artifact
 tsconfig.tsbuildinfo
 ts-trace/
@@ -43,9 +40,6 @@ parsed-docs.json
 # Compiled story files
 **/stories.js*
 
-# Local yarn releases
-.yarn
-
 # Storybook/Chromatic logs
 build-storybook.log
 doctor-storybook.log
@@ -54,7 +48,6 @@ doctor-storybook.log
 scripts/tmp.*
 
 # 
-.npmrc
 .changeset/pre.json
 
 TODO.md

@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -157,8 +156,3 @@ export const CommunityEditionLogoLockup = React.forwardRef(
 );
 
 CommunityEditionLogoLockup.displayName = 'CommunityEditionLogoLockup';
-
-CommunityEditionLogoLockup.propTypes = {
-  height: PropTypes.number,
-  color: PropTypes.oneOf(Object.values(SupportedColors)),
-};

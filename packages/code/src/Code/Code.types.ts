@@ -59,7 +59,7 @@ export type CodeProps = Omit<
    * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
    */
 
-  language: Language | LanguageOption;
+  language: Language | LanguageOption['displayName'];
 
   /**
    * Determines the appearance of the copy button when the panel is not present. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
@@ -119,7 +119,7 @@ export type CodeProps = Omit<
   /**
    * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
-   * Use `panel={<Panel />}` or `copyButtonApperance` instead
+   * Use `panel={<Panel />}` or `copyButtonAppearance` instead
    *
    * @default `true`
    * @deprecated

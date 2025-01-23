@@ -1,20 +1,27 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-   "compilerOptions": {
+  "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../*/src"
+      ]
     }
   },
   "include": [
     "src/**/*",
     "../../typings"
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
   "references": [
     {
       "path": "../a11y"
@@ -48,6 +55,9 @@
     },
     {
       "path": "../tooltip"
+    },
+    {
+      "path": "../typography"
     },
     {
       "path": "../leafygreen-provider"

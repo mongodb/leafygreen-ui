@@ -1,6 +1,5 @@
 import React, { ForwardedRef, forwardRef, useRef, useState } from 'react';
 import { Transition } from 'react-transition-group';
-import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -247,12 +246,5 @@ const SideNav = forwardRef(
 );
 
 SideNav.displayName = 'SideNav';
-
-SideNav.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.node,
-  id: PropTypes.string,
-  darkMode: PropTypes.bool,
-};
 
 export default SideNav;

@@ -14,6 +14,9 @@ import {
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
 
+// FIXME:
+/* eslint-disable react-hooks/exhaustive-deps */
+
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
  * Provides helper methods to hide ECharts specific logic and give a cleaner API
@@ -100,16 +103,14 @@ export function useEchart({
     [setEchartOptions],
   );
 
-  const resizeEchartInstance = withInstanceCheck(() => {
-    echartsInstance?.resize();
-  });
-
   const addToGroup: EChartsInstance['addToGroup'] = useCallback(
     withInstanceCheck((groupId: string) => {
       // echartsCoreRef.current should exist if instance does, but checking for extra safety
       if (echartsCoreRef.current) {
-        (echartsInstance as EChartsType).group = groupId;
-        echartsCoreRef.current.connect(groupId);
+        if ((echartsInstance as EChartsType).group !== groupId) {
+          (echartsInstance as EChartsType).group = groupId;
+          echartsCoreRef.current.connect(groupId);
+        }
       }
     }),
     [echartsCoreRef.current, echartsInstance],
@@ -155,8 +156,8 @@ export function useEchart({
       });
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
-      let xAxisIndex: number | string = xAxis ? 0 : 'none';
-      let yAxisIndex: number | string = yAxis ? 0 : 'none';
+      const xAxisIndex: number | string = xAxis ? 0 : 'none';
+      const yAxisIndex: number | string = yAxis ? 0 : 'none';
 
       updateOptions({
         toolbox: {
@@ -253,12 +254,21 @@ export function useEchart({
     [echartsInstance],
   );
 
+  const hideTooltip = withInstanceCheck(() => {
+    echartsInstance?.dispatchAction({
+      type: 'hideTip',
+    });
+  });
+
   /**
+   * CHART INITIALIZATION ---------------------
    * Sets up the echart instance on initial render or if the container changes.
    * Additionally, disposes of echart instance and cleans up handlers on unmount.
    */
   useEffect(() => {
     setError(null);
+
+    let resizeCallback: () => void;
 
     initializeEcharts()
       .then(echartsCore => {
@@ -266,11 +276,18 @@ export function useEchart({
 
         if (container) {
           // Init an echart instance
-          const newChart = echartsCoreRef.current.init(container);
+          const newChart = echartsCoreRef.current.init(container, null, {
+            devicePixelRatio: window.devicePixelRatio || 1,
+            renderer: 'canvas',
+          });
           // Set the initial options on the instance
           newChart.setOption(options);
+
           // Resize chart when window resizes because echarts don't be default
-          window.addEventListener('resize', resizeEchartInstance);
+          resizeCallback = () => {
+            newChart.resize();
+          };
+          window.addEventListener('resize', resizeCallback);
 
           setEchartsInstance(newChart);
           setReady(true);
@@ -287,7 +304,7 @@ export function useEchart({
       });
 
     return () => {
-      window.removeEventListener('resize', resizeEchartInstance);
+      window.removeEventListener('resize', resizeCallback);
       activeHandlers.current.clear();
 
       if (echartsInstance) {
@@ -297,6 +314,7 @@ export function useEchart({
   }, [container]);
 
   /**
+   * SETTING THEME ---------------------
    * Sets the theme when the instance is created or the theme changes.
    * This is not actually necessary on initial render because the theme
    * is also set on the default options. This is primarily necessary
@@ -327,6 +345,7 @@ export function useEchart({
     addToGroup,
     removeFromGroup,
     setupZoomSelect,
+    hideTooltip,
     error,
   };
 }

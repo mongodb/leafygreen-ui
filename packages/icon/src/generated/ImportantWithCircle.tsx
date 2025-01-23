@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 18ec4c65a423b4de569bc730da66a1f6
+* @checksum 44cc9fbded34a1c763ffbba9ca20d022
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const ImportantWithCircle = ({
 };
 ImportantWithCircle.displayName = 'ImportantWithCircle';
 ImportantWithCircle.isGlyph = true;
-ImportantWithCircle.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default ImportantWithCircle;

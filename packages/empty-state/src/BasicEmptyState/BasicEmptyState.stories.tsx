@@ -96,16 +96,13 @@ const graphics: Record<Theme, Record<string, ReactElement>> = {
 };
 
 const Template: StoryFn<BasicEmptyStateProps> = ({
-  // eslint-disable-next-line react/prop-types
   graphicSize = 'normal',
   ...rest
 }) => {
-  // eslint-disable-next-line react/prop-types
   const theme = rest.darkMode ? Theme.Dark : Theme.Light;
   return (
     <BasicEmptyState
       {...(rest as BasicEmptyStateProps)}
-      // eslint-disable-next-line react/prop-types
       graphic={rest.graphic ? graphics[theme][graphicSize] : undefined}
     />
   );

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code",
-  "version": "15.0.0",
+  "version": "16.0.2",
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -23,17 +23,18 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "^1.4.13",
-    "@leafygreen-ui/button": "^21.1.0",
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.3.0",
-    "@leafygreen-ui/icon": "^12.5.4",
-    "@leafygreen-ui/icon-button": "^15.0.23",
-    "@leafygreen-ui/lib": "^13.8.1",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/select": "^13.0.0",
-    "@leafygreen-ui/tokens": "^2.9.0",
-    "@leafygreen-ui/tooltip": "^12.0.0",
+    "@leafygreen-ui/a11y": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/select": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "@types/facepaint": "^1.2.1",
     "@types/highlight.js": "^10.1.0",
     "clipboard": "^2.0.6",
@@ -43,12 +44,9 @@
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
-  "devDependencies": {
-    "@leafygreen-ui/testing-lib": "^0.7.0",
-    "@lg-tools/storybook-utils": "^0.1.0"
-  },
+  "devDependencies": {},
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code",

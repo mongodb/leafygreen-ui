@@ -120,6 +120,7 @@ export interface EChartsInstance {
   removeFromGroup: () => void;
   setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
   error: Error | null;
+  hideTooltip: () => void;
 }
 
 export interface EChartHookProps {

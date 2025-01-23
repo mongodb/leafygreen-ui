@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -10,12 +9,12 @@ import {
 } from '@leafygreen-ui/polymorphic';
 
 import { colorSet, containerStyle } from './styles';
-import { CardProps, ContentStyle } from './types';
+import { ContentStyle, InternalCardProps } from './types';
 
 /**
  * Cards are used to organize information into consumable chunks.
  */
-export const Card = InferredPolymorphic<CardProps, 'div'>(
+export const Card = InferredPolymorphic<InternalCardProps, 'div'>(
   (
     {
       as = 'div' as PolymorphicAs,
@@ -57,9 +56,3 @@ export const Card = InferredPolymorphic<CardProps, 'div'>(
 );
 
 Card.displayName = 'Card';
-
-Card.propTypes = {
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  contentStyle: PropTypes.oneOf(Object.values(ContentStyle)),
-};

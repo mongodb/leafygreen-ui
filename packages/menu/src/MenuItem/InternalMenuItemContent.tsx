@@ -20,11 +20,11 @@ import {
   getMenuItemStyles,
   getNestedMenuItemStyles,
 } from './MenuItem.styles';
-import { MenuItemProps, Variant } from './MenuItem.types';
+import { InternalMenuItemProps, Variant } from './MenuItem.types';
 
 export type InternalMenuItemContentProps = InferredPolymorphicProps<
   PolymorphicAs,
-  MenuItemProps
+  InternalMenuItemProps
 > & {
   index: number;
 };
