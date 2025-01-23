@@ -7,7 +7,9 @@ import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
+import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
+import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
@@ -18,8 +20,6 @@ import {
   wrapperStyle,
 } from './Code.styles';
 import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
-import CodeContextProvider from '../CodeContext/CodeContext';
-import { Panel } from '../Panel';
 
 //TODO: move to utils
 export function hasMultipleLines(string: string): boolean {

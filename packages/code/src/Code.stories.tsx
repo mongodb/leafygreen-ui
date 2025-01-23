@@ -12,9 +12,9 @@ import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import {
-  LanguageSwitcherWithPanelExample,
-  LanguageSwitcherWithDeprecatedPropsExample,
   languageOptions,
+  LanguageSwitcherWithDeprecatedPropsExample,
+  LanguageSwitcherWithPanelExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, Language, Panel } from '.';
 
@@ -89,22 +89,29 @@ const meta: StoryMetaType<typeof Code> = {
         language: ['js', languageOptions[0].displayName],
         panel: [
           undefined,
-          <Panel />,
-          <Panel title="Title" />,
+          <Panel key={1} />,
+          <Panel title="Title" key={2} />,
           <Panel
             title="Title"
             languageOptions={languageOptions}
             onChange={() => {}}
+            key={3}
           />,
-          <Panel languageOptions={languageOptions} onChange={() => {}} />,
+          <Panel
+            languageOptions={languageOptions}
+            onChange={() => {}}
+            key={4}
+          />,
           <Panel
             showCustomActionButtons
             customActionButtons={customActionButtons}
+            key={5}
           />,
           <Panel
             title="Title"
             showCustomActionButtons
             customActionButtons={customActionButtons}
+            key={6}
           />,
           <Panel
             title="Title"
@@ -112,6 +119,7 @@ const meta: StoryMetaType<typeof Code> = {
             customActionButtons={customActionButtons}
             languageOptions={languageOptions}
             onChange={() => {}}
+            key={7}
           />,
         ],
       },

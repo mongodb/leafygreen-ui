@@ -9,12 +9,12 @@ import IconButton from '@leafygreen-ui/icon-button';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
 import { numOfCollapsedLinesOfCode } from '../constants';
+import { Panel } from '../Panel';
+import { PanelProps } from '../Panel/Panel.types';
+import { Language } from '../types';
 
 import Code, { hasMultipleLines } from './Code';
-import { Panel } from '../Panel';
 import { CodeProps } from './Code.types';
-import { Language } from '../types';
-import { PanelProps } from '../Panel/Panel.types';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 

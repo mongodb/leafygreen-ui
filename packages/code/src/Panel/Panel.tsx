@@ -1,9 +1,13 @@
 import React from 'react';
 import ClipboardJS from 'clipboard';
 
+import { Body } from '@leafygreen-ui//typography';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { isComponentType } from '@leafygreen-ui/lib';
 
+import { useCodeContext } from '../CodeContext/CodeContext';
+import { LGIDs } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
@@ -13,11 +17,7 @@ import {
   panelIconsStyles,
   panelLeftStyles,
 } from './Panel.styles';
-import { Body } from '@leafygreen-ui//typography';
 import { PanelProps } from './Panel.types';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { useCodeContext } from '../CodeContext/CodeContext';
-import { LGIDs } from '../constants';
 
 function Panel({
   languageOptions,

@@ -19,10 +19,11 @@ import Tooltip, {
   RenderMode,
 } from '@leafygreen-ui/tooltip';
 
+import { LGIDs } from '../constants';
+
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
-import { LGIDs } from '../constants';
 
 function CopyButton({ onCopy, contents }: CopyProps) {
   const [copied, setCopied] = useState(false);

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import { Language } from '../types';
 import { LanguageOption } from '../Panel/Panel.types';
+import { Language } from '../types';
 import Code, { Panel } from '..';
 
 export const languageOptions = [
@@ -68,6 +68,7 @@ export function LanguageSwitcherWithPanelExample({
         <Panel
           languageOptions={languageOptions}
           customActionButtons={customActionButtons}
+          showCustomActionButtons={showCustomActionButtons}
           onChange={handleChange}
           title="Title"
         />

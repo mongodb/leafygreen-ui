@@ -1,4 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react';
+
 import { Language, LineHighlightingDefinition } from '../types';
 
 export interface SyntaxProps extends ComponentPropsWithoutRef<'code'> {

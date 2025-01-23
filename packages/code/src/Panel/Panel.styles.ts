@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing, color } from '@leafygreen-ui/tokens';
+import { color,spacing } from '@leafygreen-ui/tokens';
 
 export const getBasePanelStyle = ({
   hasTitle,
