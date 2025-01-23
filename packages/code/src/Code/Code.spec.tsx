@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ClipboardJS from 'clipboard';
 import { axe } from 'jest-axe';
@@ -113,7 +113,8 @@ describe('packages/Code', () => {
     });
 
     describe('copy button', () => {
-      // TODO: test with copyButtonAppearance
+      // TODO: tests are in copyButtonAppearance PR
+      // eslint-disable-next-line jest/no-disabled-tests
       test.skip('announces copied to screenreaders when content is copied without a panel', () => {
         Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
           spy.mockReturnValue(true);
@@ -121,14 +122,14 @@ describe('packages/Code', () => {
         });
 
         const copyIcon = screen.getByRole('button');
-        fireEvent.click(copyIcon);
+        userEvent.click(copyIcon);
         expect(screen.getByRole('alert')).toBeInTheDocument();
       });
 
       test('announces copied to screenreaders when content is copied in the panel', () => {
         renderCode({ panel: <Panel /> });
         const copyIcon = screen.getByRole('button');
-        fireEvent.click(copyIcon);
+        userEvent.click(copyIcon);
         expect(screen.getByRole('alert')).toBeInTheDocument();
       });
     });
@@ -149,7 +150,7 @@ describe('packages/Code', () => {
       });
 
       const copyIcon = screen.getByRole('button');
-      fireEvent.click(copyIcon);
+      userEvent.click(copyIcon);
       expect(onCopy).toHaveBeenCalledTimes(1);
     });
   });
@@ -570,7 +571,7 @@ describe('packages/Code', () => {
       );
 
       const actionButton = screen.getByTestId('lg-code-expand_button');
-      fireEvent.click(actionButton);
+      userEvent.click(actionButton);
       expect(actionButton).toHaveTextContent('Click to collapse');
     });
 
@@ -584,8 +585,8 @@ describe('packages/Code', () => {
       );
 
       const actionButton = screen.getByTestId('lg-code-expand_button');
-      fireEvent.click(actionButton); // Expand
-      fireEvent.click(actionButton); // Collapse
+      userEvent.click(actionButton); // Expand
+      userEvent.click(actionButton); // Collapse
 
       expect(actionButton).toHaveTextContent(
         `Click to expand (${lineCount} lines)`,
