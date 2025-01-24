@@ -1,5 +1,11 @@
 # @leafygreen-ui/split-button
 
+## 4.1.0
+
+### Minor Changes
+
+- cc9874a9c: Update `data-testid` and `data-lgid` attributes on SplitButton's button, trigger and menu elements.
+
 ## 4.0.2
 
 ### Patch Changes
