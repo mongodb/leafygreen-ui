@@ -232,7 +232,9 @@ export const codeWrapperSingleLineStyles = css`
 `;
 
 export const codeWrapperHoverStyles = css`
-  &:hover {
+  &:hover,
+  &[data-hover='true'] {
+    // On hover of the pre tag, the sibling copy button should be visible
     & + .${copyButtonWithoutPanelClassName} {
       opacity: 1;
     }
