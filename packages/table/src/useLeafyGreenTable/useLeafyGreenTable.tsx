@@ -95,10 +95,6 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
   }
 
   const table = useReactTable<LGTableDataType<T>>({
-    state: {
-      expanded,
-      ...rest.state,
-    },
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -113,6 +109,10 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     onExpandedChange: setExpanded,
     getExpandedRowModel: getLGExpandedRowModel(),
     ...rest,
+    state: {
+      expanded,
+      ...rest.state,
+    },
   });
 
   return {
