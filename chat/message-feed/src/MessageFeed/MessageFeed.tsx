@@ -25,6 +25,7 @@ import {
   disclaimerTextStyles,
   messageFeedStyles,
   messageFeedThemeStyles,
+  scrollButtonContainerStyles,
   scrollButtonStyles,
   themeStyles,
 } from './MessageFeed.styles';
@@ -153,20 +154,17 @@ function ScrollToLatestButton({
 }) {
   const { darkMode } = useDarkMode(darkModeProp);
   return visible ? (
-    <div className={scrollButtonStyles}>
-      <div>
-        <div>
-          <Button
-            onClick={handleScroll}
-            darkMode={darkMode}
-            aria-label="Scroll to latest message"
-            size={ButtonSize.Small}
-            rightGlyph={<Icon glyph="ArrowDown" />}
-          >
-            Scroll to latest
-          </Button>
-        </div>
-      </div>
+    <div className={scrollButtonContainerStyles}>
+      <Button
+        className={scrollButtonStyles}
+        onClick={handleScroll}
+        darkMode={darkMode}
+        aria-label="Scroll to latest message"
+        size={ButtonSize.Small}
+        rightGlyph={<Icon glyph="ArrowDown" />}
+      >
+        Scroll to latest
+      </Button>
     </div>
   ) : null;
 }

@@ -105,27 +105,12 @@ export const disclaimerTextStyles = css`
   margin-bottom: ${spacing[6]}px;
 `;
 
-export const scrollButtonStyles = css`
+export const scrollButtonContainerStyles = css`
   position: absolute;
-  display: flex;
-  justify-content: center;
   bottom: ${spacing[400]}px;
+`;
 
-  > div {
-    position: sticky;
-    display: flex;
-    justify-content: center;
-
-    > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: flex-end;
-
-      > button {
-        box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
-        border-radius: ${borderRadius[400]}px;
-      }
-    }
-  }
+export const scrollButtonStyles = css`
+  box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
+  border-radius: ${borderRadius[400]}px;
 `;
