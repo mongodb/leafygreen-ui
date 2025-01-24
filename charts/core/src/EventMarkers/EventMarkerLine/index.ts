@@ -1,2 +1,2 @@
 export { EventMarkerLine } from './EventMarkerLine';
-export { EventMarkerLineProps } from './EventMarkerLine.types';
+export { type EventMarkerLineProps } from './EventMarkerLine.types';
