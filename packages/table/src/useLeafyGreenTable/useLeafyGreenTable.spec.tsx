@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { act, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Person } from '../utils/makeData.testutils';
 import {
@@ -65,6 +65,32 @@ describe('packages/table/useLeafyGreenTable', () => {
 
     // Subrows are only included if they are expanded
     expect(result.current.getRowModel().rows.length).toEqual(data.length);
+  });
+
+  test('returns the correct number of rows when a row is expanded and an empty state is passed', () => {
+    const data = getDefaultTestData({
+      renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
+        return <>Expandable content test</>;
+      },
+    });
+
+    const { result } = renderHook(() =>
+      useLeafyGreenTable({
+        data,
+        columns: getDefaultTestColumns({}),
+        // This empty state should not affect the default behavior
+        state: {},
+      }),
+    );
+
+    const [firstRow] = result.current.getExpandedRowModel().rows;
+    expect(result.current.getRowCount()).toEqual(data.length);
+
+    // Expand the first row and expect a new row to appear
+    act(() => {
+      firstRow.toggleExpanded();
+    });
+    expect(result.current.getRowCount()).toEqual(data.length + 1);
   });
 
   // eslint-disable-next-line jest/no-disabled-tests
