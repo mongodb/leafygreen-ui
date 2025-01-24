@@ -129,6 +129,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
+      '@leafygreen-ui/loading-indicator':
+        specifier: workspace:^
+        version: link:../../packages/loading-indicator
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../../packages/palette
