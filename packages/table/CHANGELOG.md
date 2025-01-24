@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 13.0.1
+
+### Patch Changes
+
+- 3c6278d95: Fix expanding when passing `state` to `useLeafyGreenTable`
+
 ## 13.0.0
 
 ### Patch Changes
