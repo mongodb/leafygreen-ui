@@ -30,6 +30,7 @@ import {
 
 interface StorybookProps {
   data: Array<LineProps>;
+  chartState: ChartProps['chartState'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;

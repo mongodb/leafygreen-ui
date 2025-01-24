@@ -17,9 +17,9 @@ import { ChartProvider } from '../ChartContext';
 
 import {
   chartContainerStyles,
+  chartHeaderContainerStyles,
   chartStyles,
   chartWrapperStyles,
-  chartHeaderContainerStyles
   loadingOverlayStyles,
 } from './Chart.styles';
 import { ChartProps, ChartStates } from './Chart.types';
