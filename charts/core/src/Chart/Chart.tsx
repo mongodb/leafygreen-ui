@@ -32,7 +32,7 @@ export function Chart({
   onZoomSelect,
   groupId,
   className,
-  state = ChartStates.Default,
+  chartState = ChartStates.Unset,
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -58,7 +58,7 @@ export function Chart({
             {children}
           </div>
           <div className={chartWrapperStyles}>
-            {state === ChartStates.Loading && (
+            {chartState === ChartStates.Loading && (
               <div className={loadingOverlayStyles}>
                 <Spinner description="Loading chart..." />
               </div>

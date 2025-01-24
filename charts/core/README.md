@@ -21,9 +21,9 @@ npm install @lg-charts/core
 ## Basic Chart Example
 
 ```js
-import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
+import { Chart, Line, Grid, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
 
-<Chart onZoomSelect={handleZoom} isLoading={false}>
+<Chart onZoomSelect={handleZoom} chartState={ChartStates.Unset}>
   <Header title="My Chart" />
   <Grid vertical={false}>
   <XAxis type="time" />
@@ -103,10 +103,10 @@ Chart container component.
 
 | Name                        | Description                                                                     | Type                                   | Default                          |
 | --------------------------- | ------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
+| `chartState` _(optional)_   | The state of the chart.                                                         | `ChartStates ('unset \| 'loading')`    | `'unset'`                        |
 | `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts.   | `string`                               |                                  |
 | `onChartReady` _(optional)_ | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
 | `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if `zoomSelect` is enabled. | `(e: ZoomSelectionEvent) => void`      |                                  |
-| `state` _(optional)_        | The state of the chart.                                                         | `ChartStates ('default \| 'loading')`  | `'default'`                      |
 | `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis.             | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |
 
 **Note**: Callback passed to `onZoomSelect` callback receives the following `ZoomSelectionEvent` as an argument:

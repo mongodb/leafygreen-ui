@@ -15,7 +15,7 @@ export type ChartOptions = EChartOptions;
 export type ZoomSelectionEvent = EChartZoomSelectionEvent;
 
 export const ChartStates = {
-  Default: 'default',
+  Unset: 'unset',
   Loading: 'loading',
 } as const;
 export type ChartStates = (typeof ChartStates)[keyof typeof ChartStates];
@@ -46,5 +46,5 @@ export type ChartProps = HTMLElementProps<'div'> &
     /**
      * Controls the current chart state.
      */
-    state?: ChartStates;
+    chartState?: ChartStates;
   }>;

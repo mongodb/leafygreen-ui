@@ -34,7 +34,7 @@ export default {
   component: Chart,
   args: {
     data: makeLineData(5),
-    state: 'default',
+    chartState: 'default',
     horizontalGridLines: true,
     verticalGridLines: false,
     renderGrid: true,
@@ -76,7 +76,7 @@ export default {
         category: 'Chart',
       },
     },
-    state: {
+    chartState: {
       control: 'select',
       options: ['default', 'loading'],
       description: 'The state of the chart',
@@ -389,7 +389,7 @@ export default {
 
 interface StorybookProps {
   data: Array<LineProps>;
-  state: ChartProps['state'];
+  chartState: ChartProps['chartState'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -431,7 +431,7 @@ interface StorybookProps {
 export const LiveExample: StoryObj<StorybookProps> = {
   render: ({
     data,
-    state,
+    chartState,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -476,7 +476,7 @@ export const LiveExample: StoryObj<StorybookProps> = {
           yAxis: zoomSelectYAxis,
         }}
         onZoomSelect={zoomSelectCallback}
-        state={state}
+        chartState={chartState}
       >
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
@@ -539,7 +539,7 @@ export const LiveExample: StoryObj<StorybookProps> = {
 export const WithHeaderContent: StoryObj<StorybookProps> = {
   render: ({
     data,
-    state,
+    chartState,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -584,7 +584,7 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
           yAxis: zoomSelectYAxis,
         }}
         onZoomSelect={zoomSelectCallback}
-        state={state}
+        chartState={chartState}
       >
         {renderHeader && (
           <Header
@@ -660,7 +660,7 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
 export const WithSameGroupIds: StoryObj<StorybookProps> = {
   render: ({
     data,
-    state,
+    chartState,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -709,7 +709,7 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
             yAxis: zoomSelectYAxis,
           }}
           onZoomSelect={zoomSelectCallback}
-          state={state}
+          chartState={chartState}
         >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />
@@ -775,7 +775,7 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
             yAxis: zoomSelectYAxis,
           }}
           onZoomSelect={zoomSelectCallback}
-          state={state}
+          chartState={chartState}
         >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />
