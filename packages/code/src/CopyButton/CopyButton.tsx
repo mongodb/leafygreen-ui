@@ -126,7 +126,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
-    className: getCopyButtonStyles({ theme, copied }),
+    className: getCopyButtonStyles({ theme, copied, hasPanel }),
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onMouseEnter: handleMouseEnter,

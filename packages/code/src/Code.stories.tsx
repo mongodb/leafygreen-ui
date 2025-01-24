@@ -83,57 +83,6 @@ const meta: StoryMetaType<typeof Code> = {
     },
     generate: {
       storyNames: ['Generated', 'MinimalCopyButton'],
-      // combineArgs: {
-      //   darkMode: [false, true],
-      //   expandable: [true, false],
-      //   showLineNumbers: [false, true],
-      //   language: ['js', languageOptions[0].displayName],
-      //   panel: [
-      //     undefined,
-      //     <Panel key={1} />,
-      //     <Panel title="Title" key={2} />,
-      //     <Panel
-      //       title="Title"
-      //       languageOptions={languageOptions}
-      //       onChange={() => {}}
-      //       key={3}
-      //     />,
-      //     <Panel
-      //       languageOptions={languageOptions}
-      //       onChange={() => {}}
-      //       key={4}
-      //     />,
-      //     <Panel
-      //       showCustomActionButtons
-      //       customActionButtons={customActionButtons}
-      //       key={5}
-      //     />,
-      //     <Panel
-      //       title="Title"
-      //       showCustomActionButtons
-      //       customActionButtons={customActionButtons}
-      //       key={6}
-      //     />,
-      //     <Panel
-      //       title="Title"
-      //       showCustomActionButtons
-      //       customActionButtons={customActionButtons}
-      //       languageOptions={languageOptions}
-      //       onChange={() => {}}
-      //       key={7}
-      //     />,
-      //   ],
-      // },
-      // excludeCombinations: [
-      //   {
-      //     language: 'js',
-      //     panel: <Panel />,
-      //   },
-      //   {
-      //     language: languageOptions[0].displayName,
-      //     panel: undefined,
-      //   },
-      // ],
     },
   },
   args: {

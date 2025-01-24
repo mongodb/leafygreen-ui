@@ -14,5 +14,8 @@ export type CodeProviderProps = DarkModeProps & {
    */
   language: Language | LanguageOption['displayName'];
 
-  hasPanel?: boolean;
+  /**
+   * Whether or not the code snippet has a panel.
+   */
+  hasPanel: boolean;
 };
