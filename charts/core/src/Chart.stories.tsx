@@ -6,6 +6,7 @@ import type { StoryObj } from '@storybook/react';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
+import { ChartProps } from './Chart/Chart.types';
 import { HeaderProps } from './Header/Header.types';
 import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
@@ -33,6 +34,7 @@ export default {
   component: Chart,
   args: {
     data: makeLineData(5),
+    chartState: 'default',
     horizontalGridLines: true,
     verticalGridLines: false,
     renderGrid: true,
@@ -70,6 +72,14 @@ export default {
     data: {
       control: 'object',
       description: 'Data to plot in chart',
+      table: {
+        category: 'Chart',
+      },
+    },
+    chartState: {
+      control: 'select',
+      options: ['default', 'loading'],
+      description: 'The state of the chart',
       table: {
         category: 'Chart',
       },
@@ -379,6 +389,7 @@ export default {
 
 interface StorybookProps {
   data: Array<LineProps>;
+  chartState: ChartProps['chartState'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -420,6 +431,7 @@ interface StorybookProps {
 export const LiveExample: StoryObj<StorybookProps> = {
   render: ({
     data,
+    chartState,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -464,6 +476,7 @@ export const LiveExample: StoryObj<StorybookProps> = {
           yAxis: zoomSelectYAxis,
         }}
         onZoomSelect={zoomSelectCallback}
+        chartState={chartState}
       >
         {renderHeader && (
           <Header title={headerTitle} showDivider={headerShowDivider} />
@@ -526,6 +539,7 @@ export const LiveExample: StoryObj<StorybookProps> = {
 export const WithHeaderContent: StoryObj<StorybookProps> = {
   render: ({
     data,
+    chartState,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -570,6 +584,7 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
           yAxis: zoomSelectYAxis,
         }}
         onZoomSelect={zoomSelectCallback}
+        chartState={chartState}
       >
         {renderHeader && (
           <Header
@@ -645,6 +660,7 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
 export const WithSameGroupIds: StoryObj<StorybookProps> = {
   render: ({
     data,
+    chartState,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -693,6 +709,7 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
             yAxis: zoomSelectYAxis,
           }}
           onZoomSelect={zoomSelectCallback}
+          chartState={chartState}
         >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />
@@ -758,6 +775,7 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
             yAxis: zoomSelectYAxis,
           }}
           onZoomSelect={zoomSelectCallback}
+          chartState={chartState}
         >
           {renderHeader && (
             <Header title={headerTitle} showDivider={headerShowDivider} />

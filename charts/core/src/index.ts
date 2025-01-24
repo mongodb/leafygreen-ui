@@ -1,4 +1,4 @@
-export { Chart } from './Chart';
+export { Chart, type ChartStates } from './Chart';
 export { ChartCard, type ChartCardProps } from './ChartCard';
 export {
   EventMarkerLine,
