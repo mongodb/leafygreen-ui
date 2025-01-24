@@ -14,7 +14,11 @@ import LeafyGreenProvider, {
 
 import { ChartProvider } from '../ChartContext';
 
-import { chartContainerStyles, chartStyles } from './Chart.styles';
+import {
+  chartContainerStyles,
+  chartHeaderContainerStyles,
+  chartStyles,
+} from './Chart.styles';
 import { ChartProps } from './Chart.types';
 import { useChart } from './hooks';
 
@@ -41,7 +45,7 @@ export function Chart({
     <LeafyGreenProvider darkMode={darkModeProp}>
       <ChartProvider chart={chart}>
         <div className={cx(chartContainerStyles, className)}>
-          <div>
+          <div className={chartHeaderContainerStyles}>
             {/**
              * Children other than Header are not expected to be rendered to the DOM,
              * but are used to provide a more declarative API for adding functionality

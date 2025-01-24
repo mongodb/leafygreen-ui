@@ -5,7 +5,13 @@ export const chartContainerStyles = css`
   grid-template-areas:
     'chartHeader'
     'chart';
+  grid-template-columns: 100%;
+  grid-template-rows: auto auto;
   width: 100%;
+`;
+
+export const chartHeaderContainerStyles = css`
+  grid-area: chartHeader;
 `;
 
 export const chartStyles = css`
