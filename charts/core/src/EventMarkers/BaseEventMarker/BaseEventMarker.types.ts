@@ -14,14 +14,12 @@ interface BaseEventMarkerProps {
   type: 'line' | 'point';
 }
 
-export interface BaseEventMarkerLineProps
-  extends Omit<BaseEventMarkerProps, 'name' | 'theme'> {
+export interface BaseEventMarkerLineProps extends BaseEventMarkerProps {
   type: 'line';
   position: string | number;
 }
 
-export interface BaseEventMarkerPointProps
-  extends Omit<BaseEventMarkerProps, 'name' | 'theme'> {
+export interface BaseEventMarkerPointProps extends BaseEventMarkerProps {
   type: 'point';
   position: [string | number, string | number];
 }
