@@ -1,6 +1,4 @@
-import { BaseEventMarkerProps } from '../BaseEventMarker';
+import { BaseEventMarkerPointProps } from '../BaseEventMarker';
 
 export interface EventMarkerPointProps
-  extends Omit<BaseEventMarkerProps, 'type'> {
-  position: [string | number, string | number];
-}
+  extends Omit<BaseEventMarkerPointProps, 'type'> {}

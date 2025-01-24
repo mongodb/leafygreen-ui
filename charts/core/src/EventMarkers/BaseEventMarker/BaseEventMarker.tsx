@@ -4,7 +4,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../../ChartContext';
 
-import { BaseEventMarkerProps, EventLevel } from './BaseEventMarker.types';
+import {
+  BaseEventMarkerLineProps,
+  BaseEventMarkerPointProps,
+  EventLevel,
+} from './BaseEventMarker.types';
 import { getMarkConfig } from './utils';
 
 export function BaseEventMarker({
@@ -13,10 +17,13 @@ export function BaseEventMarker({
   message,
   level = EventLevel.Warning,
   type,
-}: Omit<BaseEventMarkerProps, 'name' | 'theme'> & { type: 'line' | 'point' }) {
+}: BaseEventMarkerLineProps | BaseEventMarkerPointProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
-  const name = `event-marker-${position}`;
+  const name =
+    type === 'line'
+      ? `event-marker-${position}`
+      : `event-marker-${position[0]}-${position[1]}`;
 
   useEffect(() => {
     if (!chart.ready) return;
