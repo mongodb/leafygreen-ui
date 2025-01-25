@@ -10,6 +10,7 @@ import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
+import { SearchInput } from '@leafygreen-ui/search-input';
 
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
@@ -26,6 +27,7 @@ import {
   ColumnDef,
   ExpandedState,
   flexRender,
+  getFilteredRowModel,
   HeaderGroup,
   LGColumnDef,
   RowProps,
@@ -255,6 +257,130 @@ export const DisabledNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
 DisabledNestedRows.args = {
   disabled: true,
 };
+
+export const FilteredNestedRows: StoryFn<typeof Row> = ({ row, ...rest }) => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const data = React.useState(() => makeData(false, 100, 5, 3))[0];
+  const [filter, setFilter] = React.useState('');
+  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+
+  const columns = React.useMemo<Array<ColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'ID',
+        size: 60,
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        cell: info => info.getValue(),
+      },
+      {
+        accessorFn: row => row.lastName,
+        id: 'lastName',
+        cell: info => info.getValue(),
+
+        header: () => <span>Last Name</span>,
+      },
+      {
+        accessorKey: 'age',
+
+        header: () => 'Age',
+        size: 50,
+      },
+      {
+        accessorKey: 'visits',
+
+        header: () => <span>Visits</span>,
+        size: 50,
+      },
+      {
+        accessorKey: 'status',
+        header: 'Status',
+        size: 90,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<Person>({
+    data,
+    columns,
+    enableGlobalFilter: true,
+    filterFromLeafRows: true,
+    state: {
+      globalFilter: filter,
+      // Expand all rows when filtering is applied
+      expanded: filter === '' ? expanded : true,
+    },
+    onExpandedChange: setExpanded,
+    getFilteredRowModel: getFilteredRowModel(),
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      `}
+    >
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+        <SearchInput
+          aria-label="Type to filter"
+          placeholder="Type to filter"
+          onChange={({ target }) => setFilter(target.value)}
+          value={filter}
+        />
+        <pre>Expanded rows: {JSON.stringify(expanded, null, 2)}</pre>
+      </div>
+
+      <Table table={table} ref={tableContainerRef}>
+        <TableHead>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            return (
+              <Row key={row.id} row={row} {...rest}>
+                {row
+                  .getVisibleCells()
+                  .map((cell: LeafyGreenTableCell<Person>) => {
+                    return (
+                      <Cell key={cell.id} cell={cell}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+              </Row>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+FilteredNestedRows.args = {};
 
 export const ClickableRows = Template.bind({});
 ClickableRows.args = {
