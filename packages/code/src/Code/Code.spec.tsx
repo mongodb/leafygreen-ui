@@ -323,7 +323,7 @@ describe('packages/Code', () => {
     });
 
     describe('renders a copy button', () => {
-      test('with default value og hover', () => {
+      test('with default value of hover', () => {
         const { queryByTestId } = Context.within(
           Jest.spyContext(ClipboardJS, 'isSupported'),
           spy => {
