@@ -32,7 +32,7 @@ const CodeContextProvider = ({
       language,
       hasPanel,
     };
-  }, [contents, language]);
+  }, [contents, language, hasPanel]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
