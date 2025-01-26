@@ -494,9 +494,6 @@ describe('packages/Code', () => {
     });
   });
 
-  // TODO: refactor these tests
-  // move everything inside renders
-  // replace queryby with getby for things that should be in the doc
   describe('With panel slot', () => {
     describe('renders', () => {
       test('panel with only the copy button when no props are passed', () => {
