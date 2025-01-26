@@ -323,7 +323,7 @@ describe('packages/Code', () => {
     });
 
     describe('renders a copy button', () => {
-      test('with default value', () => {
+      test('with default value og hover', () => {
         const { queryByTestId } = Context.within(
           Jest.spyContext(ClipboardJS, 'isSupported'),
           spy => {
@@ -363,6 +363,7 @@ describe('packages/Code', () => {
     });
 
     // TODO: get this to work
+    // eslint-disable-next-line jest/no-disabled-tests
     test.skip('copies the correct text when copy button is clicked', () => {
       const { queryByTestId } = Context.within(
         Jest.spyContext(ClipboardJS, 'isSupported'),

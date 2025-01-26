@@ -4,8 +4,8 @@ import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   createUniqueClassName,
-  Theme,
   getMobileMediaQuery,
+  Theme,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
