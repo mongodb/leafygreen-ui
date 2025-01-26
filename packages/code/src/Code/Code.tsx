@@ -10,15 +10,14 @@ import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
-import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
 import {
+  getCopyButtonWithoutPanelStyles,
   getCodeStyles,
   getCodeWrapperStyles,
-  getCopyButtonWithoutPanelStyles,
   getExpandedButtonStyles,
   wrapperStyle,
 } from './Code.styles';
@@ -28,6 +27,7 @@ import {
   DetailedElementProps,
   ScrollState,
 } from './Code.types';
+import CopyButton from '../CopyButton/CopyButton';
 
 //TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
@@ -68,8 +68,6 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-
-  // const hasPanel = !!panel;
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
