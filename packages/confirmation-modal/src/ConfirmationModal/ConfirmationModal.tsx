@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -153,18 +152,3 @@ export const ConfirmationModal = React.forwardRef(
 );
 
 ConfirmationModal.displayName = 'ConfirmationModal';
-
-ConfirmationModal.propTypes = {
-  title: PropTypes.string.isRequired,
-  open: PropTypes.bool,
-  onConfirm: PropTypes.func,
-  onCancel: PropTypes.func,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  buttonText: PropTypes.string,
-  variant: PropTypes.oneOf(Object.values(Variant)),
-  requiredInputText: PropTypes.string,
-  darkMode: PropTypes.bool,
-  confirmButtonProps: PropTypes.objectOf(PropTypes.any),
-  cancelButtonProps: PropTypes.objectOf(PropTypes.any),
-};

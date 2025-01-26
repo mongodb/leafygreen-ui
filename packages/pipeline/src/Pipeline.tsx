@@ -6,7 +6,6 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useMutationObserver } from '@leafygreen-ui/hooks';
@@ -181,12 +180,5 @@ const Pipeline = forwardRef(
 );
 
 Pipeline.displayName = 'Pipeline';
-
-Pipeline.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  size: PropTypes.oneOf(Object.values(Size)).isRequired,
-  darkMode: PropTypes.bool,
-};
 
 export default Pipeline;

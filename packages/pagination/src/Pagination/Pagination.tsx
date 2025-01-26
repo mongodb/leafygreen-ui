@@ -1,6 +1,5 @@
 import React from 'react';
 import range from 'lodash/range';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -169,19 +168,6 @@ function Pagination<T extends number>({
     </LeafyGreenProvider>
   );
 }
-
-Pagination.propTypes = {
-  darkMode: PropTypes.bool,
-  onBackArrowClick: PropTypes.func.isRequired,
-  onForwardArrowClick: PropTypes.func.isRequired,
-  numTotalItems: PropTypes.number,
-  onCurrentPageOptionChange: PropTypes.func,
-  currentPage: PropTypes.number,
-  onItemsPerPageOptionChange: PropTypes.func,
-  itemsPerPageOptions: PropTypes.arrayOf(PropTypes.number),
-  itemsPerPage: PropTypes.number,
-  // casting to unknown ensures TS does not infer types from these prop-types
-};
 
 Pagination.displayName = 'Pagination';
 

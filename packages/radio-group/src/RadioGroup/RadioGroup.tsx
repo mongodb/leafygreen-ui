@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -103,16 +102,6 @@ function RadioGroup({
     </div>
   );
 }
-
-RadioGroup.propTypes = {
-  darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(Size)),
-  className: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func,
-  children: PropTypes.node,
-  name: PropTypes.string,
-};
 
 RadioGroup.displayName = 'RadioGroup';
 

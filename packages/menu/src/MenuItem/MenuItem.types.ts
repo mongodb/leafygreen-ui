@@ -1,5 +1,10 @@
 import { ReactElement, ReactNode } from 'react';
 
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
+
 const Variant = {
   Default: 'default',
   Destructive: 'destructive',
@@ -9,7 +14,7 @@ type Variant = (typeof Variant)[keyof typeof Variant];
 
 export { Variant };
 
-export interface MenuItemProps {
+export interface InternalMenuItemProps {
   /**
    * Determines whether or not the MenuItem is disabled.
    */
@@ -54,3 +59,7 @@ export interface MenuItemProps {
   // TODO: codemod to remove `size` props from existing implementations
   size?: 'default' | 'large';
 }
+
+// External only
+export type MenuItemProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, InternalMenuItemProps>;

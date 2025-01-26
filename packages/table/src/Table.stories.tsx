@@ -12,7 +12,6 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 
-import { Align } from './Cell/Cell.types';
 import { VerticalAlignment } from './Table/Table.types';
 import {
   makeData,
@@ -133,7 +132,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'encryptorEnabled',
         header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
+
         cell: info => (
           <Badge variant={info.getValue() ? 'green' : 'red'}>
             {info.getValue() ? 'Enabled' : 'Not enabled'}
@@ -261,7 +260,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
       {
         accessorKey: 'encryptorEnabled',
         header: 'Encryptor',
-        // eslint-disable-next-line react/display-name
+
         cell: info => (
           <Badge variant={info.getValue() ? 'green' : 'red'}>
             {info.getValue() ? 'Enabled' : 'Not enabled'}
@@ -278,7 +277,7 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
         id: 'actions',
         header: '',
         size: 120,
-        // eslint-disable-next-line react/display-name
+
         cell: _ => {
           return (
             <>
@@ -400,19 +399,19 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
         align: 'right',
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
         align: 'right',
@@ -501,18 +500,18 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -697,18 +696,18 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -823,18 +822,18 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -930,7 +929,6 @@ export const SelectableRowsNoSelectAll: StoryFn<StoryTableProps> = args => {
 };
 
 export const WithPagination: StoryFn<StoryTableProps> = ({
-  // eslint-disable-next-line react/prop-types
   darkMode,
   ...rest
 }) => {
@@ -953,18 +951,18 @@ export const WithPagination: StoryFn<StoryTableProps> = ({
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },

@@ -12,18 +12,23 @@ export const tooltipStyles = css`
 export const getCopyButtonStyles = ({
   theme,
   copied,
+  hasPanel,
 }: {
   theme: Theme;
   copied: boolean;
+  hasPanel: boolean;
 }) =>
   cx(
     {
       [copiedThemeStyle[theme]]: copied,
+      [minimalThemeStyle[theme]]: !hasPanel,
     },
     css`
       align-self: center;
     `,
   );
+
+// export const getCopiedThemeStyles = ({isMininalButton, theme}: {isMininalButton: boolean, theme: Theme}) => cx();
 
 export const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -50,6 +55,19 @@ export const copiedThemeStyle: Record<Theme, string> = {
       &:before {
         background-color: ${palette.green.base};
       }
+    }
+  `,
+};
+
+export const minimalThemeStyle: Record<Theme, string> = {
+  [Theme.Light]: css`
+    svg {
+      color: ${palette.gray.dark1};
+    }
+  `,
+  [Theme.Dark]: css`
+    svg {
+      color: ${palette.gray.light1};
     }
   `,
 };

@@ -22,17 +22,12 @@ export async function fixDependencies(
     stdio: 'inherit',
     cwd: `packages/${pkg}`,
   };
-  // Using yarn 1.19.0 https://stackoverflow.com/questions/62254089/expected-workspace-package-to-exist-for-sane
 
   // Install any missing dependencies
   if (missingDependencies.length > 0) {
     verbose &&
       console.log('Installing missing dependencies...', missingDependencies);
-    spawnSync(
-      'npx',
-      ['yarn@1.19.0', 'add', ...missingDependencies],
-      spawnContext,
-    );
+    spawnSync('npx', ['pnpm', 'add', ...missingDependencies], spawnContext);
   }
 
   // Install any missing devDependencies
@@ -47,7 +42,7 @@ export async function fixDependencies(
 
     spawnSync(
       'npx',
-      ['yarn@1.19.0', 'add', '--dev', ...missingDevDependencies],
+      ['pnpm', 'add', '--save-dev', ...missingDevDependencies],
       spawnContext,
     );
   }
@@ -57,7 +52,7 @@ export async function fixDependencies(
 
   if (unused.length > 0) {
     verbose && console.log('Removing unused dependencies...', unused);
-    spawnSync('npx', ['yarn@1.19.0', 'remove', ...unused], spawnContext);
+    spawnSync('npx', ['pnpm', 'remove', ...unused], spawnContext);
   }
 
   // TODO: Autofix these

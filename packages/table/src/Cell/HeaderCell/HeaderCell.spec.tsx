@@ -91,7 +91,6 @@ const TestSortableHeaderCell = () => {
 const useMockTestHeaderData = (
   columnDef: ColumnDef<any>,
 ): Header<LGTableDataType<any>, unknown> => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const table = useLeafyGreenTable({
     data: [],
     columns: [columnDef],

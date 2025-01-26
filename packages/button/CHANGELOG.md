@@ -1,5 +1,48 @@
 # @leafygreen-ui/button
 
+## 22.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/box@4.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/ripple@1.1.15
+  - @leafygreen-ui/tokens@2.11.3
+  - @lg-tools/test-harnesses@0.1.4
+
+## 22.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @lg-tools/test-harnesses@0.1.3
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/ripple@1.1.14
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/box@4.0.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 22.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/box@4.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 21.3.0
 
 ### Minor Changes

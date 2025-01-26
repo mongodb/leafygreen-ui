@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 5ff1d91dabc9d76efaf9c8d249c04a17
+* @checksum a39d723a24e7a9e639899289621a1d97
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const InternalEmployee = ({
 };
 InternalEmployee.displayName = 'InternalEmployee';
 InternalEmployee.isGlyph = true;
-InternalEmployee.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default InternalEmployee;

@@ -1,5 +1,50 @@
 # @lg-chat/rich-links
 
+## 2.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/card@12.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/icon@13.1.2
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/polymorphic@2.0.5
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+
+## 2.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @leafygreen-ui/polymorphic@2.0.4
+  - @leafygreen-ui/typography@20.0.1
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/card@12.0.1
+  - @leafygreen-ui/icon@13.1.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [a3d63cb95]
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/card@12.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 1.2.0
 
 ### Minor Changes

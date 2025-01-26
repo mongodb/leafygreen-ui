@@ -259,7 +259,7 @@ describe('packages/hooks/useControlledValue', () => {
     }) => {
       const initialVal = '';
       const inputRef = useRef<HTMLInputElement>(null);
-      // eslint-disable-next-line react-hooks/rules-of-hooks
+
       const { value, handleChange, updateValue } = useControlledValue(
         valueProp,
         handlerProp,

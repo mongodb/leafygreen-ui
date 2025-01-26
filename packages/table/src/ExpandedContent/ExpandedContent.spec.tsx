@@ -23,7 +23,6 @@ import ExpandedContent from './ExpandedContent';
 const RowWithExpandableContent = args => {
   const { table } = useTestHookCall({
     rowProps: {
-      // eslint-disable-next-line react/display-name
       renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
         return <>Expandable content test</>;
       },

@@ -143,7 +143,6 @@ export const useMockTestRowData = (): {
   firstRow: LeafyGreenTableRow<Person>;
   firstVirtualRow: LeafyGreenVirtualItem<Person>;
 } => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const table = useLeafyGreenVirtualTable({
     containerRef: React.createRef<HTMLTableRowElement>(),
     data: getDefaultTestData({}),

@@ -1,5 +1,4 @@
 import React, { forwardRef, ReactElement, Ref, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -74,10 +73,5 @@ const Counter = forwardRef(
 );
 
 Counter.displayName = 'Counter';
-
-Counter.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-};
 
 export default Counter;

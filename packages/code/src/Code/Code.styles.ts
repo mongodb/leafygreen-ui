@@ -4,8 +4,8 @@ import { transparentize } from 'polished';
 import { css, cx } from '@leafygreen-ui/emotion';
 import {
   createUniqueClassName,
-  Theme,
   getMobileMediaQuery,
+  Theme,
 } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -234,7 +234,9 @@ export const codeWrapperSingleLineStyles = css`
 `;
 
 export const codeWrapperHoverStyles = css`
-  &:hover {
+  &:hover,
+  &[data-hover='true'] {
+    // On hover of the pre tag, the sibling copy button should be visible
     & + .${copyButtonWithoutPanelClassName} {
       opacity: 1;
     }

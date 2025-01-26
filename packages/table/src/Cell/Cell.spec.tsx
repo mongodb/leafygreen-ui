@@ -23,7 +23,6 @@ const defaultProps: CellProps<unknown> = {
 
 /** Returns the first Cell from the first Row */
 const useMockTestCellData = (): LeafyGreenTableCell<Person> => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const table = useLeafyGreenTable({
     data: getDefaultTestData({}),
     columns: getDefaultTestColumns({}),

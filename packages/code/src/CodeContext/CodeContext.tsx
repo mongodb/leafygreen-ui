@@ -9,7 +9,6 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { type CodeProviderProps } from './CodeContext.types';
 
-// TODO: defaults for darkMode, language, and hasPanel
 export const CodeContext = createContext<Partial<CodeProviderProps>>({});
 
 export const useCodeContext = () =>

@@ -87,15 +87,13 @@ export default [
         },
       ],
 
-      'react/forbid-prop-types': 'warn',
-
       'react-hooks/exhaustive-deps': [
         'warn',
         {
           additionalHooks: '(useIsomorphicLayoutEffect)',
         },
       ],
-
+      'react/prop-types': 'off',
       'react/sort-comp': 'error',
       'import/no-extraneous-dependencies': 'off',
 

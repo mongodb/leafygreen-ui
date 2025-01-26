@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/lint",
-  "version": "1.0.0",
+  "version": "2.0.2",
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
@@ -16,7 +16,10 @@
     "@babel/core": "7.23.2",
     "@babel/eslint-parser": "7.25.9",
     "@emotion/eslint-plugin": "11.12.0",
-    "@lg-tools/build": "^0.6.0",
+    "@eslint/compat": "^1.2.3",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.16.0",
+    "@lg-tools/build": "workspace:^",
     "@types/cross-spawn": "6.0.2",
     "@typescript-eslint/eslint-plugin": "8.17.0",
     "@typescript-eslint/parser": "8.17.0",
@@ -31,17 +34,12 @@
     "eslint-plugin-react-hooks": "5.0.0",
     "eslint-plugin-simple-import-sort": "12.1.1",
     "eslint-plugin-storybook": "0.11.1",
+    "globals": "^15.13.0",
     "npm-package-json-lint": "8.0.0",
     "npm-package-json-lint-config-default": "7.0.1",
     "prettier": "2.8.8"
   },
   "peerDependencies": {
     "typescript": "~4.9.0"
-  },
-  "devDependencies": {
-    "@eslint/compat": "^1.2.3",
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.16.0",
-    "globals": "^15.13.0"
   }
 }

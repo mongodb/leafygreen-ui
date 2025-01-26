@@ -113,6 +113,8 @@ export function YAxis({ type, label, formatter }: YAxisProps) {
         yAxis: unsetAxisOptions,
       });
     };
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, label, formatter, theme, chart.ready]);
 
   return null;

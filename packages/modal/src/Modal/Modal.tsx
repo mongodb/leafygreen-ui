@@ -1,14 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
-import {
-  CloseIconColor,
-  ForwardedRef,
-  ModalProps,
-  ModalSize,
-} from './Modal.types';
+import { ForwardedRef, ModalProps } from './Modal.types';
 import ModalView from './ModalView';
 
 /**
@@ -34,16 +28,5 @@ const Modal = React.forwardRef((props: ModalProps, ref: ForwardedRef) => {
 });
 
 Modal.displayName = 'Modal';
-
-Modal.propTypes = {
-  open: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(ModalSize)),
-  children: PropTypes.node,
-  shouldClose: PropTypes.func,
-  className: PropTypes.string,
-  setOpen: PropTypes.func,
-  darkMode: PropTypes.bool,
-  closeIconColor: PropTypes.oneOf(Object.values(CloseIconColor)),
-};
 
 export default Modal;

@@ -60,6 +60,9 @@
       "path": "../tooltip"
     },
     {
+      "path": "../typography"
+    },
+    {
       "path": "../leafygreen-provider"
     }
   ]

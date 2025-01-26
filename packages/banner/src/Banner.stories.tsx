@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
 import React from 'react';

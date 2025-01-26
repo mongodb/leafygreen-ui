@@ -105,7 +105,7 @@ export function processToken(token: TreeItem, key?: number): React.ReactNode {
 const cellStyle = css`
   border-spacing: 0;
   vertical-align: top;
-  padding: 0 ${spacing[3]}px;
+  padding: 0 ${spacing[300]}px;
 `;
 
 function getHighlightedRowStyle(darkMode: boolean) {
@@ -178,7 +178,7 @@ export function LineTableRow({
             css`
               user-select: none;
               text-align: right;
-              padding-left: ${spacing[3] - 1}px;
+              padding-left: ${spacing[400]}px;
               padding-right: 0;
               color: ${highlighted ? highlightedNumberColor : numberColor};
             `,

@@ -59,18 +59,18 @@ export type CodeProps = Omit<
    * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
    */
 
-  language: Language | LanguageOption;
+  language: Language | LanguageOption['displayName'];
 
   /**
-   * Determines the appearance of the copy button when the panel is not present. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+   * Determines the appearance of the copy button if the panel prop is not defined. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
    *
-   * If `hover`, the copy button will only appear when the user hovers over the code block.
+   * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
    *
    * If `persist`, the copy button will always be visible.
    *
    * If `none`, the copy button will not be rendered.
    *
-   * If there is a panel, this prop will be ignored. TODO: is this a goood decision?
+   * If the `panel` prop is defined, this prop will be ignored.
    *
    * @default `hover`
    */
@@ -126,7 +126,7 @@ export type CodeProps = Omit<
   /**
    * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
    *
-   * Use `panel={<Panel />}` or `copyButtonApperance` instead
+   * Use `panel={<Panel />}` or `copyButtonAppearance` instead
    *
    * @default `true`
    * @deprecated

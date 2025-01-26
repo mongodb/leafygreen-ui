@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
@@ -144,30 +143,3 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
 );
 
 NumberInput.displayName = 'NumberInput';
-
-NumberInput.propTypes = {
-  id: PropTypes.string,
-  'aria-label': PropTypes.string,
-  'aria-labelledby': PropTypes.string,
-  label: PropTypes.string,
-  description: PropTypes.string,
-  errorMessage: PropTypes.string,
-  'aria-describedby': PropTypes.string,
-  className: PropTypes.string,
-  darkMode: PropTypes.bool,
-  disabled: PropTypes.bool,
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
-  onSelectChange: PropTypes.func,
-  placeholder: PropTypes.string,
-  size: PropTypes.oneOf(Object.values(Size)),
-  state: PropTypes.oneOf(Object.values(State)),
-  value: PropTypes.string,
-  unit: PropTypes.string,
-  unitOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      displayName: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
-    }),
-  ),
-} as any;

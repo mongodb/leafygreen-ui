@@ -1,5 +1,56 @@
 # @lg-tools/cli
 
+## 0.7.6
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-tools/build@0.7.2
+  - @lg-tools/codemods@0.1.2
+  - @lg-tools/create@0.2.12
+  - @lg-tools/install@0.1.12
+  - @lg-tools/link@0.2.7
+  - @lg-tools/lint@2.0.2
+  - @lg-tools/slackbot@0.2.11
+  - @lg-tools/test@0.4.13
+  - @lg-tools/update@0.1.12
+  - @lg-tools/validate@0.4.2
+
+## 0.7.5
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+  - @lg-tools/codemods@0.1.1
+  - @lg-tools/slackbot@0.2.10
+  - @lg-tools/validate@0.4.1
+  - @lg-tools/install@0.1.11
+  - @lg-tools/create@0.2.11
+  - @lg-tools/update@0.1.11
+  - @lg-tools/link@0.2.6
+  - @lg-tools/lint@2.0.1
+  - @lg-tools/test@0.4.12
+
+## 0.7.4
+
+### Patch Changes
+
+- Updated dependencies [9a8c43faa]
+- Updated dependencies [274d7e1a7]
+  - @lg-tools/lint@2.0.0
+  - @lg-tools/validate@0.4.0
+  - @lg-tools/build@0.7.0
+  - @lg-tools/create@0.2.10
+  - @lg-tools/install@0.1.10
+  - @lg-tools/link@0.2.5
+  - @lg-tools/slackbot@0.2.9
+  - @lg-tools/test@0.4.11
+  - @lg-tools/update@0.1.10
+
 ## 0.7.3
 
 ### Patch Changes

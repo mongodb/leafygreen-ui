@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import { Language } from '../types';
 import { LanguageOption } from '../Panel/Panel.types';
+import { Language } from '../types';
 import Code, { Panel } from '..';
 
-const languageOptions = [
+export const languageOptions = [
   {
     displayName: 'JavaScript',
     language: Language.JavaScript,
@@ -63,7 +63,7 @@ export function LanguageSwitcherWithPanelExample({
   return (
     <Code
       {...rest}
-      language={language}
+      language={language.displayName}
       lineNumberStart={1}
       darkMode={darkMode}
       panel={
@@ -105,7 +105,7 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
   return (
     <Code
       {...rest}
-      language={language}
+      language={language.displayName}
       lineNumberStart={1}
       darkMode={darkMode}
       languageOptions={languageOptions}

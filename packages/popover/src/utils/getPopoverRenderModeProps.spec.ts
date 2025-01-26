@@ -1,4 +1,4 @@
-import { PopoverRenderModeProps, RenderMode } from '../Popover';
+import { GetPopoverRenderModeProps, RenderMode } from '../Popover';
 
 import { getPopoverRenderModeProps } from './getPopoverRenderModeProps';
 
@@ -9,7 +9,7 @@ const testProps = {
   portalContainer: document.createElement('div'),
   portalRef: { current: null },
   scrollContainer: document.createElement('div'),
-};
+} as Partial<GetPopoverRenderModeProps>;
 
 describe('getPopoverRenderModeProps', () => {
   test(`should return only renderMode when renderMode is ${RenderMode.Inline}`, () => {

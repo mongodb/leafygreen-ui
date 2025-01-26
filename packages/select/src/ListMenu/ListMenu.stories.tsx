@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/display-name, react/jsx-key */
+
 import React, { useEffect, useState } from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
-import { DismissMode } from '@leafygreen-ui/popover';
 
 import { InternalOption } from '../Option';
 import { SelectContext } from '../SelectContext';

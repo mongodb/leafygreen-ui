@@ -1,17 +1,50 @@
 import xSpawn from 'cross-spawn';
-import path from 'path';
+import fsx from 'fs-extra';
 
 import { parseTSDoc } from './tsdocParser';
 
-type SpawnType = ReturnType<typeof xSpawn.spawn>;
+const _testPackageJson = JSON.stringify(
+  {
+    name: 'test-package',
+    version: '0.0.0',
+    private: true,
+  },
+  null,
+  2,
+);
+const _testComponentContents = `
+interface TestProps {
+  /** The title for a component */
+  title: string;
+  /** The component description */
+  description?: string;
+}
 
+export const TestComponent = (_props: TestProps) => {};
+`;
+
+type SpawnType = ReturnType<typeof xSpawn.spawn>;
 const spawnSpy = jest.spyOn(xSpawn, 'spawn');
-spawnSpy.mockImplementation((...args) => ({} as SpawnType));
+spawnSpy.mockImplementation(() => ({} as SpawnType));
 
 describe('tools/build/tsdoc', () => {
   describe('parser', () => {
+    beforeAll(() => {
+      fsx.emptyDirSync('./test-package');
+      fsx.rmdirSync('./test-package/');
+      fsx.mkdirSync('./test-package/');
+      fsx.mkdirSync('./test-package/src');
+      fsx.writeFileSync('./test-package/package.json', _testPackageJson);
+      fsx.writeFileSync('./test-package/src/index.tsx', _testComponentContents);
+    });
+
+    afterAll(() => {
+      fsx.emptyDirSync('./test-package');
+      fsx.rmdirSync('./test-package/');
+    });
+
     test('Parses TSDoc', () => {
-      const tsdoc = parseTSDoc(path.resolve(__dirname, 'test-package'));
+      const tsdoc = parseTSDoc('./test-package');
 
       expect(tsdoc).not.toBeUndefined();
       expect(tsdoc).toHaveLength(1);

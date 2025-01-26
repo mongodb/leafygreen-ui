@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 
@@ -93,8 +92,3 @@ export const MongoDBLogo = React.forwardRef(
 );
 
 MongoDBLogo.displayName = 'MongoDBLogo';
-
-MongoDBLogo.propTypes = {
-  height: PropTypes.number,
-  color: PropTypes.oneOf(Object.values(SupportedColors)),
-};

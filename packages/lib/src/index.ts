@@ -5,6 +5,7 @@ import getTheme from './getTheme';
 import { type LgIdProps } from './LgIdProps';
 import * as typeIs from './typeIs';
 export { createSyntheticEvent } from './createSyntheticEvent';
+export { getMobileMediaQuery } from './getMobileMediaQuery';
 export * from './helpers';
 export type {
   Concat,
@@ -22,7 +23,6 @@ export type {
   ValuesOf,
 } from './types';
 export { isComponentType, validateChildren } from './validateChildren';
-export { getMobileMediaQuery } from './getMobileMediaQuery';
 
 export { createUniqueClassName, getNodeTextContent, getTheme, Theme, typeIs };
 export type { DarkModeProps, LgIdProps };

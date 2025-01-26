@@ -8,7 +8,9 @@ import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
+import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
+import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
@@ -28,16 +30,14 @@ import {
   DetailedElementProps,
   ScrollState,
 } from './Code.types';
-import CodeContextProvider from '../CodeContext/CodeContext';
 import CopyButton from '../CopyButton/CopyButton';
-import { Panel } from '../Panel';
 
-// TODO: move to utils
+//TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
 }
 
-// TODO: move to utils
+//TODO: move to utils
 function getHorizontalScrollbarHeight(element: HTMLElement): number {
   return element.offsetHeight - element.clientHeight;
 }
@@ -59,7 +59,7 @@ function Code({
   customActionButtons,
   showCustomActionButtons = false,
   chromeTitle,
-  languageOptions,
+  languageOptions = [],
   onChange,
   ...rest
 }: CodeProps) {
@@ -114,14 +114,19 @@ function Code({
     baseFontSize, // will cause changes in code height
   ]);
 
-  const highLightLanguage =
-    typeof languageProp === 'string' ? languageProp : languageProp.displayName;
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === languageProp,
+  );
+
+  const highlightLanguage = currentLanguage
+    ? currentLanguage.language
+    : languageProp;
 
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      language={highLightLanguage as Language}
+      language={highlightLanguage as Language}
       highlightLines={highlightLines}
     >
       {children}
@@ -165,22 +170,23 @@ function Code({
     !isLoading
   );
 
-  const currentLanguage = languageOptions?.find(
-    option => option.displayName === highLightLanguage,
-  );
+  const shouldRenderTempCustomActionButtons =
+    showCustomActionButtons &&
+    !!customActionButtons &&
+    customActionButtons.length > 0;
+
+  const shouldRenderTempLanguageSwitcher =
+    !!languageOptions &&
+    languageOptions.length > 0 &&
+    !!currentLanguage &&
+    !!onChange;
 
   // This will render a temp panel component if deprecated props are used
   const shouldRenderTempPanelSubComponent =
     !panel &&
-    ((showCustomActionButtons &&
-      !!customActionButtons &&
-      customActionButtons.length > 0) ||
+    (shouldRenderTempCustomActionButtons ||
+      shouldRenderTempLanguageSwitcher ||
       !!chromeTitle ||
-      (!!languageOptions &&
-        languageOptions.length > 0 &&
-        typeof languageProp !== 'string' &&
-        !!currentLanguage &&
-        !!onChange) ||
       copyable);
 
   const showPanel = !!panel || shouldRenderTempPanelSubComponent;

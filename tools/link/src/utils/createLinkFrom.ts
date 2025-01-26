@@ -13,8 +13,8 @@ interface CreateLinkOptions extends PackageDetails {
 }
 
 /**
- * Runs the yarn link command in a leafygreen-ui package directory
- * @returns Promise that resolves when the yarn link command has finished
+ * Runs the pnpm link command in a leafygreen-ui package directory
+ * @returns Promise that resolves when the pnpm link command has finished
  */
 export function createLinkFrom(
   source: string = process.cwd(),

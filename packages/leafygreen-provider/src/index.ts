@@ -15,6 +15,7 @@ export {
   usePopoverPropsContext,
 } from './PopoverPropsContext';
 export {
+  type PortalContextInterface,
   PortalContextProvider,
   usePopoverPortalContainer,
 } from './PortalContext';

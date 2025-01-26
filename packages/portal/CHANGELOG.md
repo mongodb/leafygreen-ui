@@ -1,5 +1,35 @@
 # @leafygreen-ui/portal
 
+## 6.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/lib@14.0.2
+
+## 6.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/hooks@8.3.3
+  - @leafygreen-ui/lib@14.0.1
+
+## 6.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+
 ## 5.1.1
 
 ### Patch Changes

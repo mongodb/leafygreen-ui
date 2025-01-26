@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum d58fe4ceb4f295c1092db66d28ee8ea7
+* @checksum d430dab168f84a6d8a44445505b7ed9a
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const CaretLeft = ({
 };
 CaretLeft.displayName = 'CaretLeft';
 CaretLeft.isGlyph = true;
-CaretLeft.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default CaretLeft;
