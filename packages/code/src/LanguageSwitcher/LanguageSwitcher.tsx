@@ -4,11 +4,11 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Option, RenderMode, Select, Size } from '@leafygreen-ui/select';
 
+import { useCodeContext } from '../CodeContext/CodeContext';
+import { LGIDs } from '../constants';
 import { LanguageOption } from '../Panel/Panel.types';
 
 import { containerStyle, selectStyle } from './LanguageSwitcher.styles';
-import { LGIDs } from '../constants';
-import { useCodeContext } from '../CodeContext/CodeContext';
 
 interface Props {
   language: LanguageOption;

@@ -7,6 +7,7 @@ import {
   type StoryType,
 } from '@lg-tools/storybook-utils';
 
+import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -17,7 +18,6 @@ import {
   LanguageSwitcherWithPanelExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
-import { css } from '@leafygreen-ui/emotion';
 
 const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">

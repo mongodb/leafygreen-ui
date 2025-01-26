@@ -7,22 +7,22 @@ import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
+import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 
-import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
-
 import {
-  getCopyButtonWithoutPanelStyles,
   getCodeStyles,
   getCodeWrapperStyles,
+  getCopyButtonWithoutPanelStyles,
   getExpandedButtonStyles,
-  getWrapperStyles,
   getLoadingStyles,
+  getWrapperStyles,
 } from './Code.styles';
 import {
   CodeProps,
@@ -30,7 +30,6 @@ import {
   DetailedElementProps,
   ScrollState,
 } from './Code.types';
-import CopyButton from '../CopyButton/CopyButton';
 
 //TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
