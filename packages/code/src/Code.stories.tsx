@@ -83,7 +83,7 @@ const meta: StoryMetaType<typeof Code> = {
       ],
     },
     generate: {
-      storyNames: ['Generated', 'MinimalCopyButton'],
+      storyNames: ['Generated', 'MinimalCopyButton', 'Loading'],
     },
   },
   args: {
@@ -301,5 +301,30 @@ MinimalCopyButton.parameters = {
         panel: undefined,
       },
     ],
+  },
+};
+
+export const Loading = () => {};
+Loading.parameters = {
+  generate: {
+    combineArgs: {
+      darkMode: [false, true],
+      expandable: [true, false],
+      panel: [
+        undefined,
+        <Panel
+          title="Title"
+          showCustomActionButtons
+          customActionButtons={customActionButtons}
+          languageOptions={languageOptions}
+          onChange={() => {}}
+          key={7}
+        />,
+      ],
+    },
+    args: {
+      language: languageOptions[0].displayName,
+      isLoading: true,
+    },
   },
 };
