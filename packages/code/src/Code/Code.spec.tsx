@@ -104,15 +104,15 @@ jest.mock('clipboard', () => {
   };
 });
 
-// https://stackoverflow.com/a/69574825/13156339
-Object.defineProperty(navigator, 'clipboard', {
-  value: {
-    // Provide mock implementation
-    writeText: jest.fn().mockReturnValueOnce(Promise.resolve()),
-  },
-});
-
 describe('packages/Code', () => {
+  // https://stackoverflow.com/a/69574825/13156339
+  Object.defineProperty(navigator, 'clipboard', {
+    value: {
+      // Provide mock implementation
+      writeText: jest.fn().mockReturnValueOnce(Promise.resolve()),
+    },
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility violations', async () => {
       const { container } = renderCode();
@@ -312,7 +312,7 @@ describe('packages/Code', () => {
     describe('when isLoading is true', () => {
       test('renders a skeleton', () => {
         const { getByTestId } = renderCode({ isLoading: true });
-        expect(getByTestId('lg-code-skeleton')).toBeDefined();
+        expect(getByTestId('lg-code-skeleton')).toBeInTheDocument();
       });
 
       test('does not render a pre tag', () => {
@@ -324,7 +324,7 @@ describe('packages/Code', () => {
         test('language switcher is disabled', () => {
           const { getByTestId } = renderCode({
             isLoading: true,
-            language: languageOptions[0],
+            language: languageOptions[0].displayName,
             panel: (
               <Panel onChange={() => {}} languageOptions={languageOptions} />
             ),
@@ -337,7 +337,7 @@ describe('packages/Code', () => {
         test('copy button is disabled', () => {
           const { getByTestId } = renderCode({
             isLoading: true,
-            language: languageOptions[0],
+            language: languageOptions[0].displayName,
             panel: <Panel />,
           });
 
@@ -379,7 +379,7 @@ describe('packages/Code', () => {
         test('language switcher is enabled', () => {
           const { getByTestId } = renderCode({
             isLoading: false,
-            language: languageOptions[0],
+            language: languageOptions[0].displayName,
             panel: (
               <Panel onChange={() => {}} languageOptions={languageOptions} />
             ),
@@ -396,7 +396,7 @@ describe('packages/Code', () => {
               spy.mockReturnValue(true);
               return renderCode({
                 isLoading: false,
-                language: languageOptions[0],
+                language: languageOptions[0].displayName,
                 panel: <Panel />,
               });
             },
