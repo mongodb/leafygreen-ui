@@ -686,6 +686,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         panel={<Panel />}
       >
         snippet
