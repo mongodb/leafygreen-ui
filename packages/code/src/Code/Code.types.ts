@@ -97,7 +97,7 @@ export type CodeProps = Omit<
    *
    * Use `panel={<Panel />}` or `copyButtonAppearance` instead
    *
-   * @default `true`
+   * @default `false`
    * @deprecated
    */
   copyable?: boolean;
