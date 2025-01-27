@@ -41,22 +41,24 @@ function getHorizontalScrollbarHeight(element: HTMLElement): number {
 
 function Code({
   children = '',
-  className,
   language: languageProp,
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  copyable = false,
   expandable = false,
-  onCopy,
-  highlightLines = [],
-  panel,
   copyButtonAppearance = CopyButtonAppearance.Hover,
-  customActionButtons,
+  highlightLines = [],
+  className,
+  onCopy,
+  panel,
+  // Deprecated props
+  copyable = false,
   showCustomActionButtons = false,
-  chromeTitle,
   languageOptions = [],
+  customActionButtons,
+  chromeTitle,
   onChange,
+  // rest
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);

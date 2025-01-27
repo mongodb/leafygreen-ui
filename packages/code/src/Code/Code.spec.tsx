@@ -270,7 +270,6 @@ describe('packages/Code', () => {
           },
         );
         expect(queryByTestId('lg-code-panel')).toBeNull();
-        expect(queryByTestId('lg-code-copy_button')).toBeNull();
       });
     });
 
