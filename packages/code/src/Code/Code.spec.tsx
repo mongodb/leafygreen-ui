@@ -614,11 +614,11 @@ describe('packages/Code', () => {
       <Code
         language="javascript"
         customActionButtons={[]}
-        showCustomActionButtons={}
-        chromeTitle={}
-        languageOptions={}
-        onChange={}
-        copyable={}
+        showCustomActionButtons={true}
+        chromeTitle=""
+        languageOptions={[]}
+        onChange={() => {}}
+        copyable={true}
       >
         snippet
       </Code>

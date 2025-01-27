@@ -24,7 +24,7 @@ panel={<Panel/>}
 ```
 ### `chromeTitle`
 
-`<Panel />`  accepts the same props as `Code` with the exception of `chromeTitle`. `chromeTitle` has been replaced with `title`.
+`<Panel />` accepts the same props as `Code` with the exception of `chromeTitle`. `chromeTitle` has been replaced with `title`. Instead of the `chromeTitle` rendering inside of the window chrome bar, the `title` will render inside the top panel and the window chrome bar has been removed.
 
 e.g.
 
@@ -55,10 +55,7 @@ The following props have been marked as `deprecated`:
 - `onChange`
 - `copyable`
 
-InsMoving forward these props should be passed to the new sub-component, `<Panel />`.
-
-
-
+Moving forward these props should be passed to the new sub-component, `<Panel />`.
 
 **Before**:
 ```js
