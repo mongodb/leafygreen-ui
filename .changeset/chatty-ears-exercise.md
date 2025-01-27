@@ -24,7 +24,7 @@ panel={<Panel/>}
 ```
 ### `chromeTitle`
 
-`<Panel />` accepts the same props as `Code` with the exception of `chromeTitle`. `chromeTitle` has been replaced with `title`. Instead of the `chromeTitle` rendering inside of the window chrome bar, the `title` will render inside the top panel and the window chrome bar has been removed.
+`<Panel/>` accepts the [deprecated `Code` props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/code#deprecated) listed below, with one key difference: the `chromeTitle` prop has been replaced by `title`. Instead of rendering inside the window chrome bar, the `title` now appears within the top panel, as the window chrome bar has been removed.
 
 e.g.
 
