@@ -149,156 +149,6 @@ describe('packages/Code', () => {
     });
   });
 
-  describe('Deprecated props', () => {
-    describe('custom action buttons', () => {
-      test('does not renders a panel with custom action buttons when only customActionButtons is passed', () => {
-        const { queryByTestId } = renderCode({
-          customActionButtons,
-        });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-      test('does not renders a panel with custom action buttons when only showCustomActionButtons is true', () => {
-        const { queryByTestId } = renderCode({
-          showCustomActionButtons: true,
-        });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-      test('renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed', () => {
-        const { getByTestId } = renderCode({
-          showCustomActionButtons: true,
-          customActionButtons,
-        });
-        expect(getByTestId('lg-code-panel')).toBeDefined();
-      });
-    });
-
-    describe('language switcher', () => {
-      test('renders a panel when only language, onChange, and languageOptions are defined', () => {
-        const { getByTestId } = renderCode({
-          language: languageOptions[0].displayName,
-          languageOptions,
-          onChange: () => {},
-        });
-        expect(getByTestId('lg-code-panel')).toBeDefined();
-      });
-      test('does not render a panel when language and onChange are defined but languageOptions is not defined', () => {
-        const { queryByTestId } = renderCode({
-          language: languageOptions[0].displayName,
-          onChange: () => {},
-        });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-      test('does not render a panel when language and languageOptions are defined but onChange is not defined', () => {
-        const { queryByTestId } = renderCode({
-          language: languageOptions[0].displayName,
-          languageOptions,
-        });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-      test('does not render a panel when languageOptions is an empty array', () => {
-        const { queryByTestId } = renderCode({
-          language: languageOptions[0].displayName,
-          languageOptions: [],
-          onChange: () => {},
-        });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-      test('does not render a panel if language is a string', () => {
-        const { queryByTestId } = renderCode({
-          language: 'javascript',
-          languageOptions: [],
-          onChange: () => {},
-        });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-      test('throws an error if language is not in languageOptions', () => {
-        try {
-          renderCode({
-            language: 'Testing',
-            languageOptions,
-            onChange: () => {},
-          });
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-          expect(error).toHaveProperty(
-            'message',
-            expect.stringMatching(/Unknown language: "Testing"/),
-          );
-        }
-      });
-    });
-
-    describe('chromeTitle', () => {
-      test('renders a panel with a title when chromeTitle is defined', () => {
-        const { getByTestId } = renderCode({
-          chromeTitle: 'Title',
-        });
-        expect(getByTestId('lg-code-panel')).toBeDefined();
-      });
-    });
-
-    describe('copyable', () => {
-      test('renders a panel with a copy button when only copyable is true', () => {
-        const { getByTestId } = Context.within(
-          Jest.spyContext(ClipboardJS, 'isSupported'),
-          spy => {
-            spy.mockReturnValue(true);
-            return renderCode({
-              copyable: true,
-            });
-          },
-        );
-        expect(getByTestId('lg-code-panel')).toBeDefined();
-        expect(getByTestId('lg-code-copy_button')).toBeDefined();
-      });
-      test('does not render a panel with a copy button when copyable is false', () => {
-        const { queryByTestId } = Context.within(
-          Jest.spyContext(ClipboardJS, 'isSupported'),
-          spy => {
-            spy.mockReturnValue(true);
-            return renderCode({
-              copyable: false,
-            });
-          },
-        );
-        expect(queryByTestId('lg-code-panel')).toBeNull();
-      });
-    });
-
-    describe('panel slot', () => {
-      describe('copyable', () => {
-        test('is overridden by the panel prop', () => {
-          const { getByTestId } = renderCode({
-            copyable: false,
-            panel: <Panel />,
-          });
-          expect(getByTestId('lg-code-panel')).toBeDefined();
-        });
-      });
-
-      describe('language switcher', () => {
-        test('is overridden by the panel prop', () => {
-          const { getByTestId } = renderCode({
-            language: languageOptions[1].displayName,
-            languageOptions,
-            onChange: () => {},
-            panel: (
-              <Panel
-                data-testid="lg-code_panel-override"
-                languageOptions={languageOptions}
-                onChange={() => {}}
-              />
-            ),
-          });
-          expect(getByTestId('lg-code_panel-override')).toBeDefined();
-          expect(
-            screen.getByRole('button', { name: 'Python' }),
-          ).toBeInTheDocument();
-        });
-      });
-    });
-  });
-
   describe('hasMultipleLines()', () => {
     test('when passed a single line without preceding and subsequent line breaks, returns "false"', () => {
       const codeExample = `Example`;
@@ -771,9 +621,172 @@ describe('packages/Code', () => {
     });
   });
 
+  describe('Deprecated props', () => {
+    describe('custom action buttons', () => {
+      test('does not renders a panel with custom action buttons when only customActionButtons is passed', () => {
+        const { queryByTestId } = renderCode({
+          customActionButtons,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not renders a panel with custom action buttons when only showCustomActionButtons is true', () => {
+        const { queryByTestId } = renderCode({
+          showCustomActionButtons: true,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed', () => {
+        const { getByTestId } = renderCode({
+          showCustomActionButtons: true,
+          customActionButtons,
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+      });
+    });
+
+    describe('language switcher', () => {
+      test('renders a panel when only language, onChange, and languageOptions are defined', () => {
+        const { getByTestId } = renderCode({
+          language: languageOptions[0].displayName,
+          languageOptions,
+          onChange: () => {},
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+      });
+      test('does not render a panel when language and onChange are defined but languageOptions is not defined', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0].displayName,
+          onChange: () => {},
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not render a panel when language and languageOptions are defined but onChange is not defined', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0].displayName,
+          languageOptions,
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not render a panel when languageOptions is an empty array', () => {
+        const { queryByTestId } = renderCode({
+          language: languageOptions[0].displayName,
+          languageOptions: [],
+          onChange: () => {},
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('does not render a panel if language is a string', () => {
+        const { queryByTestId } = renderCode({
+          language: 'javascript',
+          languageOptions: [],
+          onChange: () => {},
+        });
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+      test('throws an error if language is not in languageOptions', () => {
+        try {
+          renderCode({
+            language: 'Testing',
+            languageOptions,
+            onChange: () => {},
+          });
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(/Unknown language: "Testing"/),
+          );
+        }
+      });
+    });
+
+    describe('chromeTitle', () => {
+      test('renders a panel with a title when chromeTitle is defined', () => {
+        const { getByTestId } = renderCode({
+          chromeTitle: 'Title',
+        });
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+        expect(getByTestId('lg-code-panel')).toHaveTextContent('Title');
+      });
+    });
+
+    describe('copyable', () => {
+      test('renders a panel with a copy button when only copyable is true', () => {
+        const { getByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              copyable: true,
+            });
+          },
+        );
+        expect(getByTestId('lg-code-panel')).toBeDefined();
+        expect(getByTestId('lg-code-copy_button')).toBeDefined();
+      });
+      test('does not render a panel with a copy button when copyable is false', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              copyable: false,
+            });
+          },
+        );
+        expect(queryByTestId('lg-code-panel')).toBeNull();
+      });
+    });
+
+    describe('panel slot', () => {
+      describe('copyable', () => {
+        test('is overridden by the panel prop', () => {
+          const { getByTestId } = renderCode({
+            copyable: false,
+            panel: <Panel />,
+          });
+          expect(getByTestId('lg-code-panel')).toBeDefined();
+        });
+      });
+
+      describe('language switcher', () => {
+        test('is overridden by the panel prop', () => {
+          const { getByTestId } = renderCode({
+            language: languageOptions[1].displayName,
+            languageOptions,
+            onChange: () => {},
+            panel: (
+              <Panel
+                data-testid="lg-code_panel-override"
+                languageOptions={languageOptions}
+                onChange={() => {}}
+              />
+            ),
+          });
+          expect(getByTestId('lg-code_panel-override')).toBeDefined();
+          expect(
+            screen.getByRole('button', { name: 'Python' }),
+          ).toBeInTheDocument();
+        });
+      });
+    });
+  });
+
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
+      <Code
+        language="javascript"
+        customActionButtons={[]}
+        showCustomActionButtons={true}
+        chromeTitle=""
+        languageOptions={[]}
+        onChange={() => {}}
+        copyable={true}
+      >
+        snippet
+      </Code>
+
       <Code language="javascript">snippet</Code>
 
       {/* @ts-expect-error - missing language prop */}
@@ -787,6 +800,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         panel={<Panel />}
       >
         snippet
@@ -797,6 +811,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         // @ts-expect-error - onChange prop is missing on <Panel />
         panel={<Panel languageOptions={[]} />}
       >
@@ -808,6 +823,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         // @ts-expect-error - languageOptions prop is missing on <Panel />
         panel={<Panel onChange={() => {}} />}
       >
@@ -819,6 +835,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         panel={
           <Panel
             onChange={() => {}}

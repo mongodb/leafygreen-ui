@@ -62,7 +62,7 @@ export type CodeProps = Omit<
   language: Language | LanguageOption['displayName'];
 
   /**
-   * Determines the appearance of the copy button if the panel prop is not defined. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+   * Determines the appearance of the copy button if the panel prop is not defined. If `panel` is defined, this prop will be ignored. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
    *
    * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
    *
@@ -128,7 +128,7 @@ export type CodeProps = Omit<
    *
    * Use `panel={<Panel />}` or `copyButtonAppearance` instead
    *
-   * @default `true`
+   * @default `false`
    * @deprecated
    */
   copyable?: boolean;
