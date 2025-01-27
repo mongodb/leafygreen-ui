@@ -3,7 +3,6 @@ import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import Button from '@leafygreen-ui/button';
-// import { cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
