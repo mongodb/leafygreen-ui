@@ -247,16 +247,30 @@ describe('packages/Code', () => {
 
     describe('copyable', () => {
       test('renders a panel with a copy button when only copyable is true', () => {
-        const { getByTestId } = renderCode({
-          copyable: true,
-        });
+        const { getByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              copyable: true,
+            });
+          },
+        );
         expect(getByTestId('lg-code-panel')).toBeDefined();
+        expect(getByTestId('lg-code-copy_button')).toBeDefined();
       });
       test('does not render a panel with a copy button when copyable is false', () => {
-        const { queryByTestId } = renderCode({
-          copyable: false,
-        });
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              copyable: false,
+            });
+          },
+        );
         expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryByTestId('lg-code-copy_button')).toBeNull();
       });
     });
 
