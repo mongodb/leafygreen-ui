@@ -63,7 +63,11 @@ export function useChart({
       if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
         function enableZoomOnRender() {
           echart.enableZoom();
-          // Zooming triggers a render itself. This prevents an infinite loop.
+          /**
+           * Enabling zoom triggers a render, so once we enable it, we want to
+           * remove the handler or else there will be an infinite loop of
+           * render -> enable -> render -> etc.
+           */
           echart?.off('rendered', enableZoomOnRender);
         }
 
