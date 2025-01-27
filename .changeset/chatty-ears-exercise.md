@@ -3,7 +3,7 @@
 ---
 ## What's new?
 
-### `panel` prop
+### `panel`
 
 Adds a new slot prop, `panel`, that accepts the new `<Panel/>` sub-component. This will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button.
 
@@ -25,8 +25,16 @@ or
 panel={<Panel/>}
 ```
 
-### `copyButtonAppearance` prop
-Adds a new prop, `copyButtonAppearance`. This prop determines the appearance of the copy button if the panel prop is not defined. If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible. If `persist`, the copy button will always be visible. If `none`, the copy button will not be rendered.
+### `copyButtonAppearance`
+Adds a new prop, `copyButtonAppearance`. This prop determines the appearance of the copy button if the `panel` prop is not defined. If `panel` is defined, this prop will be ignored. 
+
+If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible. 
+
+If `persist`, the copy button will always be visible. 
+
+If `none`, the copy button will not be rendered.
+
+e.g.
 
 ```js
 <Code
