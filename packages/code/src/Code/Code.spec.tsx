@@ -611,6 +611,18 @@ describe('packages/Code', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
+      <Code
+        language="javascript"
+        customActionButtons={[]}
+        showCustomActionButtons={}
+        chromeTitle={}
+        languageOptions={}
+        onChange={}
+        copyable={}
+      >
+        snippet
+      </Code>
+
       <Code language="javascript">snippet</Code>
 
       {/* @ts-expect-error - missing language prop */}
