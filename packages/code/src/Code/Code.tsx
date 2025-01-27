@@ -46,7 +46,6 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  copyable = false,
   expandable = false,
   isLoading = false,
   highlightLines = [],
@@ -55,11 +54,14 @@ function Code({
   className,
   onCopy,
   panel,
-  customActionButtons,
+  // Deprecated props
+  copyable = false,
   showCustomActionButtons = false,
-  chromeTitle,
   languageOptions = [],
+  customActionButtons,
+  chromeTitle,
   onChange,
+  // rest
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
