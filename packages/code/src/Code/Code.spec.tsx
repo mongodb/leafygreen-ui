@@ -696,6 +696,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         // @ts-expect-error - onChange prop is missing on <Panel />
         panel={<Panel languageOptions={[]} />}
       >
@@ -707,6 +708,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         // @ts-expect-error - languageOptions prop is missing on <Panel />
         panel={<Panel onChange={() => {}} />}
       >
@@ -718,6 +720,7 @@ describe('packages/Code', () => {
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
+        copyButtonAppearance="hover"
         panel={
           <Panel
             onChange={() => {}}

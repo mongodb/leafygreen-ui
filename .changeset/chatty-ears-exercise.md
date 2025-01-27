@@ -3,6 +3,8 @@
 ---
 ## What's new?
 
+### `panel` prop
+
 Adds a new slot prop, `panel`, that accepts the new `<Panel/>` sub-component. This will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button.
 
 e.g.
@@ -22,6 +24,20 @@ or
 ```js
 panel={<Panel/>}
 ```
+
+### `copyButtonAppearance` prop
+Adds a new prop, `copyButtonAppearance`. This prop determines the appearance of the copy button if the panel prop is not defined. If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible. If `persist`, the copy button will always be visible. If `none`, the copy button will not be rendered.
+
+```js
+<Code
+  language="javascript"
+  copyButtonAppearance="hover"
+>
+  {snippet}
+</Code>
+```
+
+
 ### `chromeTitle`
 
 `<Panel/>` accepts the [deprecated `Code` props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/code#deprecated) listed below, with one key difference: the `chromeTitle` prop has been replaced by `title`. Instead of rendering inside the window chrome bar, the `title` now appears within the top panel, as the window chrome bar has been removed.
