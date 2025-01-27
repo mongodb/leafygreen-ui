@@ -35,7 +35,7 @@ function Panel({
   const hasTitle = !!title;
 
   const filteredCustomActionIconButtons = customActionButtons.filter(
-    (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
+    (item: React.ReactElement) => isComponentType(item, 'IconButton'),
   );
 
   const showCustomActionsInPanel =

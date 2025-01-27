@@ -238,10 +238,11 @@ describe('packages/Code', () => {
 
     describe('chromeTitle', () => {
       test('renders a panel with a title when chromeTitle is defined', () => {
-        const { getByTestId } = renderCode({
+        const { getByTestId, container } = renderCode({
           chromeTitle: 'Title',
         });
         expect(getByTestId('lg-code-panel')).toBeDefined();
+        expect(getByTestId('lg-code-panel')).toHaveTextContent('Title');
       });
     });
 
@@ -660,6 +661,18 @@ describe('packages/Code', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
+      <Code
+        language="javascript"
+        customActionButtons={[]}
+        showCustomActionButtons={true}
+        chromeTitle=""
+        languageOptions={[]}
+        onChange={() => {}}
+        copyable={true}
+      >
+        snippet
+      </Code>
+
       <Code language="javascript">snippet</Code>
 
       {/* @ts-expect-error - missing language prop */}
