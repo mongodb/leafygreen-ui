@@ -1191,6 +1191,15 @@ importers:
         specifier: workspace:^
         version: link:../popover
 
+  packages/drawer:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+
   packages/emotion:
     dependencies:
       '@emotion/css':
