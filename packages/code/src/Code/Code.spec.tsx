@@ -339,7 +339,7 @@ describe('packages/Code', () => {
       });
     });
 
-    // TODO: get this to work
+    // TODO: get this to work https://jira.mongodb.org/browse/LG-4760
     // eslint-disable-next-line jest/no-disabled-tests
     test.skip('copies the correct text when copy button is clicked', () => {
       const { queryByTestId } = Context.within(
