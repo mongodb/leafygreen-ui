@@ -77,6 +77,13 @@ export type CodeProps = Omit<
   copyButtonAppearance?: CopyButtonAppearance;
 
   /**
+   * Determines whether or not the loading skeleton will be rendered in place of the code block.
+   *
+   * @default `false`
+   */
+  isLoading?: boolean;
+
+  /**
    * Custom action buttons. Should be an array of `IconButton`.
    *
    * @type <IconButton />[]

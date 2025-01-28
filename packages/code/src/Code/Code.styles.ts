@@ -33,41 +33,43 @@ const singleLineComponentHeight = 36;
 const lineHeight = 24;
 const codeWrappingVerticalPadding = spacing[200];
 
-export const wrapperStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border: 1px solid ${variantColors[Theme.Light][1]};
-    border-radius: 12px;
-    overflow: hidden;
-  `,
-  [Theme.Dark]: css`
-    border: 1px solid ${variantColors[Theme.Dark][1]};
-    border-radius: 12px;
-    overflow: hidden;
-  `,
-};
+export const getWrapperStyles = ({
+  theme,
+  className,
+}: {
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
+    css`
+      border: 1px solid ${variantColors[theme][1]};
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+    `,
+    className,
+  );
 
 export const getCodeStyles = ({
   scrollState,
   theme,
   hasPanel,
   showExpandButton,
+  isLoading,
 }: {
   scrollState: ScrollState;
   theme: Theme;
   hasPanel: boolean;
   showExpandButton: boolean;
+  isLoading: boolean;
 }) =>
-  cx(
-    contentWrapperStyles,
-    baseScrollShadowStyles,
-    getScrollShadow(scrollState, theme),
-    {
-      [codeWithPanelStyles]: hasPanel,
-      [codeWithoutPanelStyles]: !hasPanel,
-      [expandableContentWithPanelStyles]: showExpandButton && hasPanel,
-      [expandableContentWithoutPanelStyles]: showExpandButton && !hasPanel,
-    },
-  );
+  cx(contentWrapperStyles, baseScrollShadowStyles, {
+    [getScrollShadow(scrollState, theme)]: !isLoading,
+    [codeWithPanelStyles]: hasPanel,
+    [codeWithoutPanelStyles]: !hasPanel,
+    [expandableContentWithPanelStyles]: showExpandButton && hasPanel,
+    [expandableContentWithoutPanelStyles]: showExpandButton && !hasPanel,
+  });
 
 export const getCodeWrapperStyles = ({
   theme,
@@ -358,3 +360,11 @@ export function getScrollShadow(
     }
   `;
 }
+
+export const getLoadingStyles = (theme: Theme) =>
+  cx(css`
+    grid-area: code;
+    padding-block: ${spacing[400]}px 80px;
+    padding-inline: ${spacing[400]}px 28px;
+    background-color: ${variantColors[theme][0]};
+  `);
