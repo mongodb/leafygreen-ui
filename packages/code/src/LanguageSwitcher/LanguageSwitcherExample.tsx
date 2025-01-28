@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { LanguageOption } from '../Panel/Panel.types';
 import { Language } from '../types';
 import Code, { Panel } from '..';
-import { rest } from 'lodash';
 
 export const languageOptions = [
   {
