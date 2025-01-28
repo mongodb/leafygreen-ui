@@ -60,6 +60,14 @@ function initializeSyntaxHighlighting() {
   } as Partial<HLJSOptions>);
 
   hljs.addPlugin(renderingPlugin as HLJSPlugin);
+
+  hljs.addPlugin({
+    'after:highlight': results => {
+      console.log('🍓', { results });
+      // move the language from the result into the dataset
+      // el.dataset.language = result.language;
+    },
+  });
 }
 
 const codeStyles = css`
