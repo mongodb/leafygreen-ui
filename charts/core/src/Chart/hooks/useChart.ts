@@ -117,22 +117,31 @@ export function useChart({
         return;
       }
 
-      echart.resize();
-
-      /**
-       * If the chart has been resized, the chart appears to reset zoom, which
-       * disables it. We need to re-enable it after the resize however, doing so
-       * immediately doesn't work. Tying into the 'rendered' and 'finished'
-       * events was attempted but doesn't work either. Manually waiting a bit
-       * does work however... I know, I know... I hate it too.
-       */
       if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-        setTimeout(() => {
-          echart.enableZoom();
-        }, 100);
+        /**
+         * If the chart has been resized, the chart appears to reset zoom, which
+         * disables it. We need to re-enable it after the resize however, doing so
+         * immediately doesn't work. To work around this, we listen for the `finished`
+         * event, which is triggered after the chart has been rendered, and then
+         * execute the re-enable zoom logic after all tasks on the queue have been
+         * processed.
+         *
+         * TODO(LG-4818): Investigate why this is necessary
+         */
+        function reEnableZoom() {
+          function reEnableZoomCallback() {
+            echart.enableZoom();
+            echart.off('finished', reEnableZoom);
+          }
+          setTimeout(reEnableZoomCallback, 0);
+        }
+
+        echart.on('finished', reEnableZoom);
       }
+
+      echart.resize();
     }
-  }, [echart.ready, initialRenderRef]);
+  }, [echart.ready, initialRenderRef, zoomSelect]);
 
   useEffect(() => {
     if (echart.ready && container) {
