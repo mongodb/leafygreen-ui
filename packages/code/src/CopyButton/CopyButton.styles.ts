@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { color } from '@leafygreen-ui/tokens';
+import { color, transitionDuration } from '@leafygreen-ui/tokens';
 
 export const tooltipStyles = css`
   svg {
@@ -20,39 +20,59 @@ export const getCopyButtonStyles = ({
   hasPanel: boolean;
 }) =>
   cx(
-    {
-      [copiedThemeStyle[theme]]: copied,
-      [minimalThemeStyle[theme]]: !hasPanel,
-    },
     css`
       align-self: center;
       color: ${color[theme].icon.primary.default};
-    `,
-  );
 
-// export const getCopiedThemeStyles = ({isMininalButton, theme}: {isMininalButton: boolean, theme: Theme}) => cx();
+      &,
+      & svg {
+        transition: all ${transitionDuration.default}ms ease-in-out;
+      }
+    `,
+    {
+      [copiedThemeStyle[theme]]: copied,
+      [minimalButtonThemeStyle[theme]]: !hasPanel,
+    },
+  );
 
 export const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    color: ${palette.white};
+    &,
+    & svg {
+      color: ${palette.white};
+
+      &:focus,
+      &:hover {
+        color: ${palette.white};
+      }
+    }
+
     background-color: ${palette.green.dark1};
 
     &:focus,
     &:hover {
-      color: ${palette.white};
-
+      background-color: ${palette.green.dark1};
       &:before {
         background-color: ${palette.green.dark1};
       }
     }
   `,
   [Theme.Dark]: css`
-    color: ${palette.gray.dark3};
+    &,
+    & svg {
+      color: ${palette.gray.dark3};
+
+      &:focus,
+      &:hover {
+        color: ${palette.gray.dark3};
+      }
+    }
+
     background-color: ${palette.green.base};
 
     &:focus,
     &:hover {
-      color: ${palette.gray.dark3};
+      background-color: ${palette.green.base};
 
       &:before {
         background-color: ${palette.green.base};
@@ -61,15 +81,19 @@ export const copiedThemeStyle: Record<Theme, string> = {
   `,
 };
 
-export const minimalThemeStyle: Record<Theme, string> = {
+export const getMinimalButtonCopiedStyles = ({
+  theme,
+}: {
+  theme: Theme;
+}) => css`
+  border-color: ${color[theme].icon.primary.default};
+`;
+
+export const minimalButtonThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
-    svg {
-      color: ${palette.gray.dark1};
-    }
+    border-color: ${palette.gray.base};
   `,
   [Theme.Dark]: css`
-    svg {
-      color: ${palette.gray.light1};
-    }
+    border-color: ${palette.gray.light2};
   `,
 };
