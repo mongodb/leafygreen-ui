@@ -1,5 +1,12 @@
 # @lg-charts/core
 
+## 0.12.1
+
+### Patch Changes
+
+- 19105f5f4: Fixes `Chart` not resizing when container dynamically changes
+- 0652ac97e: Removes spinner animation from `Chart` loading state
+
 ## 0.12.0
 
 ### Minor Changes
