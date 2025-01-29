@@ -187,6 +187,10 @@ function Code({
       copyable);
 
   const showPanelOrTempPanel = !!panel || shouldRenderTempPanelSubComponent;
+  const showCopyButtonWithoutPanel =
+    !showPanelOrTempPanel &&
+    copyButtonAppearance !== CopyButtonAppearance.None &&
+    ClipboardJS.isSupported();
 
   return (
     <CodeContextProvider
@@ -226,17 +230,15 @@ function Code({
           </pre>
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
-          {!showPanelOrTempPanel &&
-            copyButtonAppearance !== CopyButtonAppearance.None &&
-            ClipboardJS.isSupported() && (
-              <div
-                className={getCopyButtonWithoutPanelStyles({
-                  copyButtonAppearance,
-                })}
-              >
-                <CopyButton onCopy={onCopy} contents={children} />
-              </div>
-            )}
+          {showCopyButtonWithoutPanel && (
+            <div
+              className={getCopyButtonWithoutPanelStyles({
+                copyButtonAppearance,
+              })}
+            >
+              <CopyButton onCopy={onCopy} contents={children} />
+            </div>
+          )}
 
           {!!panel && panel}
 
