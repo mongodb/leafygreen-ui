@@ -1,10 +1,13 @@
-import { RefCallback, useCallback, useEffect, useState } from 'react';
+import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
 
 import { useEchart } from '../../Echart';
 import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
 
 import type { ChartHookProps, ChartInstance } from './useChart.types';
+
+// TODO(LG-4803): Fix linting issues
+/* eslint-disable react-hooks/exhaustive-deps */
 
 export function useChart({
   onChartReady = () => {},
@@ -35,8 +38,6 @@ export function useChart({
     if (echart.ready) {
       onChartReady();
     }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready]);
 
   useEffect(() => {
@@ -49,19 +50,30 @@ export function useChart({
         echart.removeFromGroup();
       };
     }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, groupId]);
 
+  // SETUP AND ENABLE ZOOM
   useEffect(() => {
     if (echart.ready) {
       echart.setupZoomSelect({
         xAxis: zoomSelect?.xAxis,
         yAxis: zoomSelect?.yAxis,
       });
+
+      if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
+        function enableZoomOnRender() {
+          echart.enableZoom();
+          /**
+           * Enabling zoom triggers a render, so once we enable it, we want to
+           * remove the handler or else there will be an infinite loop of
+           * render -> enable -> render -> etc.
+           */
+          echart?.off('rendered', enableZoomOnRender);
+        }
+
+        echart?.on('rendered', enableZoomOnRender);
+      }
     }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, zoomSelect]);
 
   useEffect(() => {
@@ -70,8 +82,6 @@ export function useChart({
         onZoomSelect(zoomEventResponse);
       });
     }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [echart.ready, onZoomSelect]);
 
   function hideTooltip() {
@@ -95,9 +105,54 @@ export function useChart({
         }
       });
     }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [echart.ready]);
+  }, [echart, echart.ready]);
+
+  const initialRenderRef = useRef(true);
+
+  const handleResize = useCallback(() => {
+    if (echart.ready) {
+      // Skip the first resize event, as it's triggered by the initial render
+      if (initialRenderRef.current) {
+        initialRenderRef.current = false;
+        return;
+      }
+
+      if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
+        /**
+         * If the chart has been resized, the chart appears to reset zoom, which
+         * disables it. We need to re-enable it after the resize however, doing so
+         * immediately doesn't work. To work around this, we listen for the `finished`
+         * event, which is triggered after the chart has been rendered, and then
+         * execute the re-enable zoom logic after all tasks on the queue have been
+         * processed.
+         *
+         * TODO(LG-4818): Investigate why this is necessary
+         */
+        function reEnableZoom() {
+          function reEnableZoomCallback() {
+            echart.enableZoom();
+            echart.off('finished', reEnableZoom);
+          }
+          setTimeout(reEnableZoomCallback, 0);
+        }
+
+        echart.on('finished', reEnableZoom);
+      }
+
+      echart.resize();
+    }
+  }, [echart.ready, initialRenderRef, zoomSelect]);
+
+  useEffect(() => {
+    if (echart.ready && container) {
+      const resizeObserver = new ResizeObserver(handleResize);
+      resizeObserver.observe(container);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+  }, [echart.ready, container, handleResize]);
 
   return {
     ...echart,

@@ -118,9 +118,12 @@ export interface EChartsInstance {
   removeSeries: (name: string) => void;
   addToGroup: (groupId: string) => void;
   removeFromGroup: () => void;
+  enableZoom: () => void;
+  disableZoom: () => void;
   setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
   error: Error | null;
   hideTooltip: () => void;
+  resize: () => void;
 }
 
 export interface EChartHookProps {

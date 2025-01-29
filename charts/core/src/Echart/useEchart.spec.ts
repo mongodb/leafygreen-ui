@@ -194,39 +194,6 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     expect(result?.current?._echartsInstance?.group).toBe('');
   });
 
-  test('should setup zoom select on call to `setupZoomSelect`', async () => {
-    const { result } = await setupHook();
-
-    // Store the 'rendered' event handler when it's registered
-    let renderedHandler: () => void;
-    mockEchartsInstance.on.mockImplementation(
-      (event: string, handler: () => void) => {
-        if (event === 'rendered') {
-          renderedHandler = handler;
-        }
-      },
-    );
-
-    await act(async () => {
-      result.current.setupZoomSelect({ xAxis: true, yAxis: false });
-      await Promise.resolve();
-    });
-
-    // Trigger the 'rendered' event handler
-    await act(async () => {
-      renderedHandler();
-      await Promise.resolve();
-    });
-
-    expect(
-      result?.current?._echartsInstance?.dispatchAction,
-    ).toHaveBeenCalledWith({
-      type: 'takeGlobalCursor',
-      key: 'dataZoomSelect',
-      dataZoomSelectActive: true,
-    });
-  });
-
   test('should set `ready` to true when chart instance is available', async () => {
     const { result } = await setupHook();
     expect(result.current.ready).toBe(true);

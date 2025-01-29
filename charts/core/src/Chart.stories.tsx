@@ -28,44 +28,93 @@ import {
   YAxisProps,
 } from '.';
 
+interface StorybookProps {
+  data: Array<LineProps>;
+  chartState: ChartProps['chartState'];
+  verticalGridLines: boolean;
+  horizontalGridLines: boolean;
+  renderGrid: boolean;
+  renderXAxis: boolean;
+  xAxisType: XAxisProps['type'];
+  xAxisFormatter: XAxisProps['formatter'];
+  xAxisLabel: XAxisProps['label'];
+  renderYAxis: boolean;
+  yAxisType: YAxisProps['type'];
+  yAxisFormatter: YAxisProps['formatter'];
+  yAxisLabel: YAxisProps['label'];
+  renderTooltip: boolean;
+  tooltipSortDirection: TooltipProps['sortDirection'];
+  tooltipSortKey: TooltipProps['sortKey'];
+  tooltipValueFormatter: TooltipProps['valueFormatter'];
+  renderHeader: boolean;
+  headerTitle: HeaderProps['title'];
+  headerShowDivider: HeaderProps['showDivider'];
+  zoomSelectXAxis: boolean;
+  zoomSelectYAxis: boolean;
+  zoomSelectCallback;
+  renderEventMarkerLine: boolean;
+  eventMarkerLineMessage: EventMarkerLineProps['message'];
+  eventMarkerLineLabel: EventMarkerLineProps['label'];
+  eventMarkerLineLevel: EventMarkerLineProps['level'];
+  eventMarkerLinePosition: EventMarkerLineProps['position'];
+  renderEventMarkerPoint: boolean;
+  eventMarkerPointMessage: EventMarkerPointProps['message'];
+  eventMarkerPointLabel: EventMarkerPointProps['label'];
+  eventMarkerPointLevel: EventMarkerPointProps['level'];
+  eventMarkerPointXPosition: EventMarkerPointProps['position'][0];
+  eventMarkerPointYPosition: EventMarkerPointProps['position'][1];
+  renderThresholdLine: true;
+  thresholdLineLabel: ThresholdLineProps['label'];
+  thresholdLineValue: ThresholdLineProps['value'];
+  thresholdLinePosition: ThresholdLineProps['position'];
+}
+
+const defaultArgs: Omit<
+  StorybookProps,
+  | 'xAxisFormatter'
+  | 'xAxisLabel'
+  | 'yAxisFormatter'
+  | 'yAxisLabel'
+  | 'tooltipValueFormatter'
+> = {
+  data: makeLineData(5),
+  horizontalGridLines: true,
+  verticalGridLines: false,
+  renderGrid: true,
+  renderXAxis: true,
+  xAxisType: 'time',
+  renderYAxis: true,
+  yAxisType: 'value',
+  renderTooltip: true,
+  tooltipSortDirection: SortDirection.Desc,
+  tooltipSortKey: SortKey.Value,
+  renderHeader: true,
+  headerTitle: 'LeafyGreen Chart Header',
+  headerShowDivider: true,
+  zoomSelectXAxis: true,
+  zoomSelectYAxis: true,
+  zoomSelectCallback: () => {},
+  renderEventMarkerLine: true,
+  eventMarkerLineMessage: 'Event marker line message',
+  eventMarkerLineLabel: 'Event marker line label',
+  eventMarkerLineLevel: 'warning',
+  eventMarkerLinePosition: new Date('2024-01-01T00:20:00').getTime(),
+  renderEventMarkerPoint: true,
+  eventMarkerPointMessage: 'Event marker point message',
+  eventMarkerPointLabel: 'Event marker point label',
+  eventMarkerPointLevel: 'warning',
+  eventMarkerPointXPosition: new Date('2024-01-01T00:37:00').getTime(),
+  eventMarkerPointYPosition: 699,
+  renderThresholdLine: true,
+  thresholdLineLabel: 'Cluster Limit',
+  thresholdLineValue: '1400',
+  thresholdLinePosition: 1400,
+};
+
 export default {
   title: 'Charts/Chart',
   component: Chart,
-  args: {
-    data: makeLineData(5),
-    chartState: 'default',
-    horizontalGridLines: true,
-    verticalGridLines: false,
-    renderGrid: true,
-    renderXAxis: true,
-    xAxisType: 'time',
-    renderYAxis: true,
-    yAxisType: 'value',
-    renderTooltip: true,
-    tooltipSortDirection: SortDirection.Desc,
-    tooltipSortKey: SortKey.Value,
-    renderHeader: true,
-    headerTitle: 'LeafyGreen Chart Header',
-    headerShowDivider: true,
-    zoomSelectXAxis: true,
-    zoomSelectYAxis: true,
-    zoomSelectCallback: () => {},
-    renderEventMarkerLine: true,
-    eventMarkerLineMessage: 'Event marker line message',
-    eventMarkerLineLabel: 'Event marker line label',
-    eventMarkerLineLevel: 'warning',
-    eventMarkerLinePosition: new Date('2024-01-01T00:20:00'),
-    renderEventMarkerPoint: true,
-    eventMarkerPointMessage: 'Event marker point message',
-    eventMarkerPointLabel: 'Event marker point label',
-    eventMarkerPointLevel: 'warning',
-    eventMarkerPointXPosition: new Date('2024-01-01T00:37:00'),
-    eventMarkerPointYPosition: 699,
-    renderThresholdLine: true,
-    thresholdLineLabel: 'Cluster Limit',
-    thresholdLineValue: '1400',
-    thresholdLinePosition: 1400,
-  },
+  args: defaultArgs,
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     data: {
@@ -385,47 +434,6 @@ export default {
     },
   },
 };
-
-interface StorybookProps {
-  data: Array<LineProps>;
-  chartState: ChartProps['chartState'];
-  verticalGridLines: boolean;
-  horizontalGridLines: boolean;
-  renderGrid: boolean;
-  renderXAxis: boolean;
-  xAxisType: XAxisProps['type'];
-  xAxisFormatter: XAxisProps['formatter'];
-  xAxisLabel: XAxisProps['label'];
-  renderYAxis: boolean;
-  yAxisType: YAxisProps['type'];
-  yAxisFormatter: YAxisProps['formatter'];
-  yAxisLabel: YAxisProps['label'];
-  renderTooltip: boolean;
-  tooltipSortDirection: TooltipProps['sortDirection'];
-  tooltipSortKey: TooltipProps['sortKey'];
-  tooltipValueFormatter: TooltipProps['valueFormatter'];
-  renderHeader: boolean;
-  headerTitle: HeaderProps['title'];
-  headerShowDivider: HeaderProps['showDivider'];
-  zoomSelectXAxis: boolean;
-  zoomSelectYAxis: boolean;
-  zoomSelectCallback;
-  renderEventMarkerLine: boolean;
-  eventMarkerLineMessage: EventMarkerLineProps['message'];
-  eventMarkerLineLabel: EventMarkerLineProps['label'];
-  eventMarkerLineLevel: EventMarkerLineProps['level'];
-  eventMarkerLinePosition: EventMarkerLineProps['position'];
-  renderEventMarkerPoint: boolean;
-  eventMarkerPointMessage: EventMarkerPointProps['message'];
-  eventMarkerPointLabel: EventMarkerPointProps['label'];
-  eventMarkerPointLevel: EventMarkerPointProps['level'];
-  eventMarkerPointXPosition: EventMarkerPointProps['position'][0];
-  eventMarkerPointYPosition: EventMarkerPointProps['position'][1];
-  renderThresholdLine: true;
-  thresholdLineLabel: ThresholdLineProps['label'];
-  thresholdLineValue: ThresholdLineProps['value'];
-  thresholdLinePosition: ThresholdLineProps['position'];
-}
 
 export const LiveExample: StoryObj<StorybookProps> = {
   render: ({
@@ -806,6 +814,155 @@ export const WithSameGroupIds: StoryObj<StorybookProps> = {
               label={yAxisLabel}
             />
           )}
+          {data.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
+          {renderEventMarkerPoint && (
+            <EventMarkerPoint
+              label={eventMarkerPointLabel}
+              message={eventMarkerPointMessage}
+              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
+              level={eventMarkerPointLevel}
+            />
+          )}
+          {renderEventMarkerLine && (
+            <EventMarkerLine
+              position={eventMarkerLinePosition}
+              label={eventMarkerLineLabel}
+              message={eventMarkerLineMessage}
+              level={eventMarkerLineLevel}
+            />
+          )}
+          {renderThresholdLine && (
+            <ThresholdLine
+              position={thresholdLinePosition}
+              label={thresholdLineLabel}
+              value={thresholdLineValue}
+            />
+          )}
+        </Chart>
+      </div>
+    );
+  },
+};
+
+export const ResizingWithContainer: StoryObj<
+  StorybookProps & { containerWidth: number }
+> = {
+  args: {
+    containerWidth: 500,
+  },
+  argTypes: {
+    containerWidth: {
+      control: 'number',
+      description: 'Width of the container',
+      name: 'Width',
+      table: {
+        category: 'Container',
+      },
+    },
+    // Hide other controls
+    data: { table: { disable: true } },
+    horizontalGridLines: { table: { disable: true } },
+    verticalGridLines: { table: { disable: true } },
+    renderGrid: { table: { disable: true } },
+    renderXAxis: { table: { disable: true } },
+    xAxisType: { table: { disable: true } },
+    xAxisFormatter: { table: { disable: true } },
+    xAxisLabel: { table: { disable: true } },
+    renderYAxis: { table: { disable: true } },
+    yAxisType: { table: { disable: true } },
+    yAxisFormatter: { table: { disable: true } },
+    yAxisLabel: { table: { disable: true } },
+    renderTooltip: { table: { disable: true } },
+    tooltipSortDirection: { table: { disable: true } },
+    tooltipSortKey: { table: { disable: true } },
+    tooltipValueFormatter: { table: { disable: true } },
+    renderHeader: { table: { disable: true } },
+    headerTitle: { table: { disable: true } },
+    headerShowDivider: { table: { disable: true } },
+    zoomSelectXAxis: { table: { disable: true } },
+    zoomSelectYAxis: { table: { disable: true } },
+    zoomSelectCallback: { table: { disable: true } },
+    renderEventMarkerLine: { table: { disable: true } },
+    eventMarkerLineMessage: { table: { disable: true } },
+    eventMarkerLineLabel: { table: { disable: true } },
+    eventMarkerLineLevel: { table: { disable: true } },
+    eventMarkerLinePosition: { table: { disable: true } },
+    renderEventMarkerPoint: { table: { disable: true } },
+    eventMarkerPointMessage: { table: { disable: true } },
+    eventMarkerPointLabel: { table: { disable: true } },
+    eventMarkerPointLevel: { table: { disable: true } },
+    eventMarkerPointXPosition: { table: { disable: true } },
+    eventMarkerPointYPosition: { table: { disable: true } },
+    renderThresholdLine: { table: { disable: true } },
+    thresholdLineLabel: { table: { disable: true } },
+    thresholdLineValue: { table: { disable: true } },
+    thresholdLinePosition: { table: { disable: true } },
+  },
+  render: ({ containerWidth }) => {
+    const {
+      data,
+      verticalGridLines,
+      horizontalGridLines,
+      renderGrid,
+      renderXAxis,
+      renderYAxis,
+      xAxisType,
+      yAxisType,
+      renderTooltip,
+      tooltipSortDirection,
+      tooltipSortKey,
+      renderHeader,
+      headerTitle,
+      headerShowDivider,
+      zoomSelectXAxis,
+      zoomSelectYAxis,
+      zoomSelectCallback,
+      renderEventMarkerLine,
+      eventMarkerLineMessage,
+      eventMarkerLineLabel,
+      eventMarkerLineLevel,
+      eventMarkerLinePosition,
+      renderEventMarkerPoint,
+      eventMarkerPointMessage,
+      eventMarkerPointLabel,
+      eventMarkerPointLevel,
+      eventMarkerPointXPosition,
+      eventMarkerPointYPosition,
+      renderThresholdLine,
+      thresholdLineLabel,
+      thresholdLineValue,
+      thresholdLinePosition,
+    } = defaultArgs;
+
+    return (
+      <div style={{ width: containerWidth, overflow: 'hidden' }}>
+        <Chart
+          zoomSelect={{
+            xAxis: zoomSelectXAxis,
+            yAxis: zoomSelectYAxis,
+          }}
+          onZoomSelect={zoomSelectCallback}
+        >
+          {renderHeader && (
+            <Header title={headerTitle} showDivider={headerShowDivider} />
+          )}
+          {renderGrid && (
+            <Grid
+              vertical={verticalGridLines}
+              horizontal={horizontalGridLines}
+            />
+          )}
+          {renderTooltip && (
+            <Tooltip
+              sortDirection={tooltipSortDirection}
+              sortKey={tooltipSortKey}
+              valueFormatter={() => ''}
+            />
+          )}
+          {renderXAxis && <XAxis type={xAxisType} formatter={() => ''} />}
+          {renderYAxis && <YAxis type={yAxisType} formatter={() => ''} />}
           {data.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
