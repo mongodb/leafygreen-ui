@@ -11,7 +11,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Spinner } from '@leafygreen-ui/loading-indicator';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { Body } from '@leafygreen-ui/typography';
 
 import { ChartProvider } from '../ChartContext';
 
@@ -25,8 +26,6 @@ import {
 } from './Chart.styles';
 import { ChartProps, ChartStates } from './Chart.types';
 import { useChart } from './hooks';
-import { Body } from '@leafygreen-ui/typography';
-import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export function Chart({
   children,
