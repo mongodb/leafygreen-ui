@@ -1,5 +1,11 @@
 # @lg-chat/message-feed
 
+## 4.1.0
+
+### Minor Changes
+
+- ff9299333: Improves autoscroll behavior. If a user scrolls up, autoscroll turns off and instead we show a "scroll to latest" button.
+
 ## 4.0.2
 
 ### Patch Changes
