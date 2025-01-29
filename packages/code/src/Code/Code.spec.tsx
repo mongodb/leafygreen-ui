@@ -238,7 +238,7 @@ describe('packages/Code', () => {
 
     describe('chromeTitle', () => {
       test('renders a panel with a title when chromeTitle is defined', () => {
-        const { getByTestId, container } = renderCode({
+        const { getByTestId } = renderCode({
           chromeTitle: 'Title',
         });
         expect(getByTestId('lg-code-panel')).toBeDefined();

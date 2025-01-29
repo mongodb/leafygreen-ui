@@ -875,9 +875,6 @@ importers:
       '@leafygreen-ui/a11y':
         specifier: workspace:^
         version: link:../a11y
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion

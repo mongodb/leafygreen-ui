@@ -60,6 +60,7 @@ export function LanguageSwitcherWithPanelExample({
 
   return (
     <Code
+      {...rest}
       language={language.displayName}
       panel={
         <Panel
@@ -70,7 +71,6 @@ export function LanguageSwitcherWithPanelExample({
           title="Title"
         />
       }
-      {...rest}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
