@@ -78,6 +78,7 @@ const defaultArgs: Omit<
   | 'tooltipValueFormatter'
 > = {
   data: makeLineData(5),
+  chartState: 'unset',
   horizontalGridLines: true,
   verticalGridLines: false,
   renderGrid: true,
@@ -126,7 +127,7 @@ export default {
     },
     chartState: {
       control: 'select',
-      options: ['default', 'loading'],
+      options: ['unset', 'loading'],
       description: 'The state of the chart',
       table: {
         category: 'Chart',
