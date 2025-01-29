@@ -28,6 +28,8 @@ export function generateKindClassName(...kinds: Array<any>): string {
         return kind;
       }
 
+      // console.log({ kind });
+
       const classes = kind
         .split('.')
         .map(k => `${prefix}${k}`)
@@ -219,6 +221,8 @@ export function flattenNestedTree(
     return children;
   }
 
+  console.log({ children });
+
   if (isTokenObject(children)) {
     return flattenNestedTree(children.children, kind);
   }
@@ -228,6 +232,8 @@ export function flattenNestedTree(
     parentKinds = parentKinds.filter(
       (str): str is string => isString(str) && str.length > 0,
     );
+
+    // console.log({ parentKinds });
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
@@ -421,10 +427,16 @@ export function TableContent({ lines }: TableContentProps) {
 
 const plugin: LeafyGreenHLJSPlugin = {
   'after:highlight': function (result: LeafyGreenHighlightResult) {
+    // console.log('💚', { result });
+
     const { rootNode } = result._emitter;
     // console.log(JSON.stringify(rootNode.children, null, 2));
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+
+    // console.log('💚💚💚', { result: result.react });
   },
 };
 
 export default plugin;
+
+// TODO: maybe an object with key and value. If that key is found above then add this classname?

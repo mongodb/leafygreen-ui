@@ -61,13 +61,22 @@ function initializeSyntaxHighlighting() {
 
   hljs.addPlugin(renderingPlugin as HLJSPlugin);
 
-  hljs.addPlugin({
-    'after:highlight': results => {
-      console.log('🍓', { results });
-      // move the language from the result into the dataset
-      // el.dataset.language = result.language;
-    },
-  });
+  // hljs.addPlugin({
+  //   'before:highlight': results => {
+  //     console.log('🍓🍓🍓', { code: results.code });
+  //     results.code = results.code.replace(
+  //       /datetime/g,
+  //       '<div class="highlighted">datetime</div>',
+  //     );
+  //   },
+  // });
+
+  // in after:highlight, the code is already a react component so I don't think I can modify it
+  // hljs.addPlugin({
+  //   'after:highlight': results => {
+  //     console.log('🍓🍓🍓', { results });
+  //   },
+  // });
 }
 
 const codeStyles = css`
@@ -157,3 +166,5 @@ function Syntax({
 Syntax.displayName = 'Syntax';
 
 export default Syntax;
+
+export { hljs };
