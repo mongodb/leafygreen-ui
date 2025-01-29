@@ -37,7 +37,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
-  const { hasPanel } = useCodeContext();
+  const { showPanel } = useCodeContext();
 
   /**
    * toggles `tooltipOpen` state
@@ -125,7 +125,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
-    className: getCopyButtonStyles({ theme, copied, hasPanel }),
+    className: getCopyButtonStyles({ theme, copied, showPanel }),
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onMouseEnter: handleMouseEnter,
@@ -144,7 +144,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
       trigger={
-        hasPanel ? (
+        showPanel ? (
           <IconButton {...sharedButtonProps}>
             {copied ? <CheckmarkIcon /> : <CopyIcon />}
             {copied && (

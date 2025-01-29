@@ -186,21 +186,21 @@ function Code({
       !!chromeTitle ||
       copyable);
 
-  const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+  const showPanelOrTempPanel = !!panel || shouldRenderTempPanelSubComponent;
 
   return (
     <CodeContextProvider
       darkMode={darkMode}
       contents={children}
       language={languageProp}
-      hasPanel={showPanel}
+      showPanel={showPanelOrTempPanel}
     >
       <div className={wrapperStyle[theme]}>
         <div
           className={getCodeStyles({
             scrollState,
             theme,
-            hasPanel: showPanel,
+            showPanel: showPanelOrTempPanel,
             showExpandButton,
           })}
         >
@@ -208,7 +208,7 @@ function Code({
             {...(rest as DetailedElementProps<HTMLPreElement>)}
             className={getCodeWrapperStyles({
               theme,
-              hasPanel: showPanel,
+              showPanel: showPanelOrTempPanel,
               expanded,
               codeHeight,
               collapsedCodeHeight,
@@ -226,7 +226,7 @@ function Code({
           </pre>
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
-          {!showPanel &&
+          {!showPanelOrTempPanel &&
             copyButtonAppearance !== CopyButtonAppearance.None &&
             ClipboardJS.isSupported() && (
               <div

@@ -49,12 +49,12 @@ export const wrapperStyle: Record<Theme, string> = {
 export const getCodeStyles = ({
   scrollState,
   theme,
-  hasPanel,
+  showPanel,
   showExpandButton,
 }: {
   scrollState: ScrollState;
   theme: Theme;
-  hasPanel: boolean;
+  showPanel: boolean;
   showExpandButton: boolean;
 }) =>
   cx(
@@ -62,16 +62,16 @@ export const getCodeStyles = ({
     baseScrollShadowStyles,
     getScrollShadow(scrollState, theme),
     {
-      [codeWithPanelStyles]: hasPanel,
-      [codeWithoutPanelStyles]: !hasPanel,
-      [expandableContentWithPanelStyles]: showExpandButton && hasPanel,
-      [expandableContentWithoutPanelStyles]: showExpandButton && !hasPanel,
+      [codeWithPanelStyles]: showPanel,
+      [codeWithoutPanelStyles]: !showPanel,
+      [expandableContentWithPanelStyles]: showExpandButton && showPanel,
+      [expandableContentWithoutPanelStyles]: showExpandButton && !showPanel,
     },
   );
 
 export const getCodeWrapperStyles = ({
   theme,
-  hasPanel,
+  showPanel,
   expanded,
   codeHeight,
   collapsedCodeHeight,
@@ -80,7 +80,7 @@ export const getCodeWrapperStyles = ({
   className,
 }: {
   theme: Theme;
-  hasPanel: boolean;
+  showPanel: boolean;
   expanded: boolean;
   codeHeight: number;
   collapsedCodeHeight: number;
@@ -93,8 +93,8 @@ export const getCodeWrapperStyles = ({
     getCodeWrapperVariantStyle(theme),
     codeWrapperHoverStyles,
     {
-      [codeWrapperWithPanelStyles]: hasPanel,
-      [codeWrapperWithoutPanelStyles]: !hasPanel,
+      [codeWrapperWithPanelStyles]: showPanel,
+      [codeWrapperWithoutPanelStyles]: !showPanel,
       [codeWrapperSingleLineStyles]: !isMultiline,
       [getExpandableCodeWrapperStyle(
         expanded,

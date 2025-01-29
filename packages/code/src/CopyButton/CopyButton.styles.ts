@@ -13,11 +13,11 @@ export const tooltipStyles = css`
 export const getCopyButtonStyles = ({
   theme,
   copied,
-  hasPanel,
+  showPanel,
 }: {
   theme: Theme;
   copied: boolean;
-  hasPanel: boolean;
+  showPanel: boolean;
 }) =>
   cx(
     css`
@@ -31,7 +31,7 @@ export const getCopyButtonStyles = ({
     `,
     {
       [copiedThemeStyle[theme]]: copied,
-      [minimalButtonThemeStyle[theme]]: !hasPanel,
+      [minimalButtonThemeStyle[theme]]: !showPanel,
     },
   );
 

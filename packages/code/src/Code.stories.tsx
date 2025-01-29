@@ -217,31 +217,6 @@ WithDeprecatedCustomActionProps.parameters = {
   },
 };
 
-export const WithDeprecatedCopyableProps: StoryType<
-  typeof Code,
-  FontSizeProps
-> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code
-      {...(args as CodeProps)}
-      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-    >
-      {jsSnippet}
-    </Code>
-  </LeafygreenProvider>
-);
-WithDeprecatedCopyableProps.parameters = {
-  controls: {
-    exclude: [
-      'highlightLines',
-      'copyButtonAppearance',
-      'children',
-      'expandable',
-      'language',
-    ],
-  },
-};
-
 export const WithDeprecatedLanguageSwitcherProps: StoryType<
   typeof Code,
   FontSizeProps
@@ -312,10 +287,6 @@ WithPanel.parameters = {
         language: 'js',
         panel: <Panel />,
       },
-      // {
-      //   language: languageOptions[0].displayName,
-      //   panel: undefined,
-      // },
     ],
   },
 };
