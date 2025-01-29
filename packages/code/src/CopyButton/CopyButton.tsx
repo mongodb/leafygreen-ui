@@ -26,7 +26,7 @@ import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
-function CopyButton({ onCopy, contents }: CopyProps) {
+function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const [copied, setCopied] = useState(false);
   /**
    * `CopyButton` controls `tooltipOpen` state because when `copied` state
@@ -125,13 +125,14 @@ function CopyButton({ onCopy, contents }: CopyProps) {
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
-    className: getCopyButtonStyles({ theme, copied, showPanel }),
+    className: getCopyButtonStyles({ theme, copied, showPanel, className }),
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     ref: buttonRef,
     'data-testid': LGIDs.copyButton,
+    ...rest,
   };
 
   return (

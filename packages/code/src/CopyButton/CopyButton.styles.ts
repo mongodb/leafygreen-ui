@@ -14,10 +14,12 @@ export const getCopyButtonStyles = ({
   theme,
   copied,
   showPanel,
+  className,
 }: {
   theme: Theme;
   copied: boolean;
   showPanel: boolean;
+  className?: string;
 }) =>
   cx(
     css`
@@ -33,6 +35,7 @@ export const getCopyButtonStyles = ({
       [copiedThemeStyle[theme]]: copied,
       [minimalButtonThemeStyle[theme]]: !showPanel,
     },
+    className,
   );
 
 export const copiedThemeStyle: Record<Theme, string> = {
