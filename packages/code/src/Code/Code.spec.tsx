@@ -672,56 +672,68 @@ describe('packages/Code', () => {
       >
         snippet
       </Code>
-
       <Code language="javascript">snippet</Code>
-
       {/* @ts-expect-error - missing language prop */}
       <Code>snippet</Code>
-
       {/* @ts-expect-error - missing children */}
       <Code language="javascript"></Code>
-
       <Code
         language="javascript"
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
-        copyButtonAppearance="hover"
         panel={<Panel />}
       >
         snippet
       </Code>
 
+      {/* @ts-expect-error - cannot pass both panel and copyButtonAppearance */}
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        panel={<Panel />}
+        copyButtonAppearance="hover"
+      >
+        snippet
+      </Code>
+
       <Code
         language="javascript"
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
         copyButtonAppearance="hover"
+      >
+        snippet
+      </Code>
+
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
         // @ts-expect-error - onChange prop is missing on <Panel />
         panel={<Panel languageOptions={[]} />}
       >
         snippet
       </Code>
-
       <Code
         language="javascript"
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
-        copyButtonAppearance="hover"
         // @ts-expect-error - languageOptions prop is missing on <Panel />
         panel={<Panel onChange={() => {}} />}
       >
         snippet
       </Code>
-
       <Code
         language="javascript"
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
-        copyButtonAppearance="hover"
         panel={
           <Panel
             onChange={() => {}}

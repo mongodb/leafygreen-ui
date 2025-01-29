@@ -151,6 +151,7 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <Code
       {...(args as CodeProps)}
+      copyButtonAppearance={undefined}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       panel={
         <Panel

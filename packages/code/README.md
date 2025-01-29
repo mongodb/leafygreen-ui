@@ -48,13 +48,12 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
-const SomeComponent = () => (
+const SomeComponentWithPanel = () => (
   <Code
     language="javascript"
     showLineNumbers={true}
     onCopy={() => {}}
     darkMode={true}
-    copyButtonAppearance="hover"
     panel={
       <Panel
         onChange={() => {}}
@@ -64,6 +63,18 @@ const SomeComponent = () => (
         title="Title"
       />
     }
+  >
+    {codeSnippet}
+  </Code>
+);
+
+const SomeComponentWithoutPanel = () => (
+  <Code
+    language="javascript"
+    showLineNumbers={true}
+    onCopy={() => {}}
+    darkMode={true}
+    copyButtonAppearance="persist"
   >
     {codeSnippet}
   </Code>
@@ -86,7 +97,7 @@ const SomeComponent = () => (
 | `expandable`                             | `boolean`                                                                                                                                                                                                                                                                 | When true, allows the code block to be expanded and collapsed when there are more than 5 lines of code.                                                                                                                                                                                                                                                                                                                                                                                      | `false` |
 | `highlightLines`                         | `Array<number` \| `[number, number]>`                                                                                                                                                                                                                                     | An optional array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);                                                                                                                                                                                                                                                                                                           |         |
 | `copyButtonAppearance`                   | `'none'`, `'hover'`, `'persist'`                                                                                                                                                                                                                                          | Determines the appearance of the copy button if the panel prop is not defined. If `panel` is defined, this prop will be ignored. The copy button allows the code block to be copied to the user's clipboard by clicking the button. If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible. If `persist`, the copy button will always be visible. If `none`, the copy button will not be rendered. | `hover` |
-| `panel`                                  | `React.ReactNode`                                                                                                                                                                                                                                                         | Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button.                                                                                                                                                                                                                                              | ``      |
+| `panel`                                  | `React.ReactNode`                                                                                                                                                                                                                                                         | Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. This prop takes precedence over `copyButtonAppearance`.                                                                                                                                                                                      | ``      |
 | `copyable` (`Deprecated`)                | `boolean`                                                                                                                                                                                                                                                                 | When true, allows the code block to be copied to the user's clipboard. **_Note:_** `@deprecated` - use `<Panel  />` or `copyButtonAppearance`                                                                                                                                                                                                                                                                                                                                                | `false` |
 | `chromeTitle`(`Deprecated`)              | `string`                                                                                                                                                                                                                                                                  | Shows a filename-like title in the window chrome frame.**NOTE:** While you can set this prop if `showWindowChrome` is `false`, it will not be displayed unless the `showWindowChrome` prop is `true`. **_Note:_** `@deprecated` - use `panel={<Panel title={} />}`                                                                                                                                                                                                                           | `''`    |
 | `showCustomActionButtons` (`Deprecated`) | `boolean`                                                                                                                                                                                                                                                                 | Shows custom action buttons in the panel if set to `true` and there is at least one item in `customActionButtons`. **_Note:_** `@deprecated` - use `<Panel showCustomActionButtons={} />`                                                                                                                                                                                                                                                                                                    | `false` |
