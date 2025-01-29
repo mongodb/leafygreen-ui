@@ -20,10 +20,13 @@ import {
   chartHeaderContainerStyles,
   chartStyles,
   chartWrapperStyles,
-  loadingOverlayStyles,
+  getLoadingOverlayStyles,
+  getLoadingTextStyles,
 } from './Chart.styles';
 import { ChartProps, ChartStates } from './Chart.types';
 import { useChart } from './hooks';
+import { Body } from '@leafygreen-ui/typography';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export function Chart({
   children,
@@ -60,8 +63,13 @@ export function Chart({
           </div>
           <div className={chartWrapperStyles}>
             {chartState === ChartStates.Loading && (
-              <div className={loadingOverlayStyles}>
-                <Spinner description="Loading chart..." />
+              <div className={getLoadingOverlayStyles(theme)}>
+                <Body
+                  className={getLoadingTextStyles(theme)}
+                  baseFontSize={BaseFontSize.Body2}
+                >
+                  Loading chart...
+                </Body>
               </div>
             )}
             <div
