@@ -11,8 +11,27 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import LanguageSwitcherExample from './LanguageSwitcher/LanguageSwitcherExample';
-import Code, { CodeProps, Language } from '.';
+import {
+  languageOptions,
+  LanguageSwitcherWithDeprecatedPropsExample,
+  LanguageSwitcherWithPanelExample,
+} from './LanguageSwitcher/LanguageSwitcherExample';
+import Code, { CodeProps, Language, Panel } from '.';
+
+const customActionButtons = [
+  <IconButton onClick={() => {}} aria-label="label" key="1">
+    <Icon glyph="Cloud" />
+  </IconButton>,
+  <Icon glyph="Shell" size={30} key="3" />,
+  <IconButton
+    href="https://mongodb.design"
+    aria-label="label2"
+    key="2"
+    target="_blank"
+  >
+    <Icon glyph="Code" size={30} />
+  </IconButton>,
+];
 
 const jsSnippet = `
 import datetime from './';
@@ -65,27 +84,68 @@ const meta: StoryMetaType<typeof Code> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        copyable: [true, false],
         expandable: [true, false],
-        showWindowChrome: [false, true],
         showLineNumbers: [false, true],
+        language: ['js', languageOptions[0].displayName],
+        panel: [
+          undefined,
+          <Panel key={1} />,
+          <Panel title="Title" key={2} />,
+          <Panel
+            title="Title"
+            languageOptions={languageOptions}
+            onChange={() => {}}
+            key={3}
+          />,
+          <Panel
+            languageOptions={languageOptions}
+            onChange={() => {}}
+            key={4}
+          />,
+          <Panel
+            showCustomActionButtons
+            customActionButtons={customActionButtons}
+            key={5}
+          />,
+          <Panel
+            title="Title"
+            showCustomActionButtons
+            customActionButtons={customActionButtons}
+            key={6}
+          />,
+          <Panel
+            title="Title"
+            showCustomActionButtons
+            customActionButtons={customActionButtons}
+            languageOptions={languageOptions}
+            onChange={() => {}}
+            key={7}
+          />,
+        ],
       },
+      excludeCombinations: [
+        {
+          language: 'js',
+          panel: <Panel />,
+        },
+        {
+          language: languageOptions[0].displayName,
+          panel: undefined,
+        },
+      ],
     },
   },
   args: {
     language: 'js',
     baseFontSize: 14,
     children: shortJsSnippet,
-    chromeTitle: 'example.ts',
   },
   argTypes: {
     copyable: { control: 'boolean' },
     expandable: { control: 'boolean' },
-    showWindowChrome: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
     highlightLines: { control: 'boolean' },
     darkMode: storybookArgTypes.darkMode,
-    chromeTitle: { control: 'text' },
     lineNumberStart: { control: 'number' },
     baseFontSize: storybookArgTypes.baseFontSize,
     language: {
@@ -124,33 +184,77 @@ LiveExample.parameters = {
   },
 };
 
-const customActionButtons = [
-  <IconButton onClick={() => {}} aria-label="label" key="1">
-    <Icon glyph="Cloud" />
-  </IconButton>,
-  <Icon glyph="Shell" size={30} key="3" />,
-  <IconButton
-    href="https://mongodb.design"
-    aria-label="label2"
-    key="2"
-    target="_blank"
-  >
-    <Icon glyph="Code" size={30} />
-  </IconButton>,
-];
-
-export const WithCustomActions = LiveExample.bind({});
-WithCustomActions.args = {
-  showCustomActionButtons: true,
-  customActionButtons,
-};
+export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      panel={
+        <Panel
+          customActionButtons={customActionButtons}
+          showCustomActionButtons
+        />
+      }
+    >
+      {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
 
 export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
   baseFontSize,
   ...args
 }: CodeProps & FontSizeProps) => (
   <LeafygreenProvider baseFontSize={baseFontSize}>
-    <LanguageSwitcherExample
+    <LanguageSwitcherWithPanelExample
+      showCustomActionButtons={true}
+      customActionButtons={customActionButtons}
+      {...args}
+    />
+  </LeafygreenProvider>
+);
+
+export const WithDeprecatedCustomActionProps: StoryType<
+  typeof Code,
+  FontSizeProps
+> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      customActionButtons={customActionButtons}
+      showCustomActionButtons
+    >
+      {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
+
+export const WithDeprecatedCopyableProps: StoryType<
+  typeof Code,
+  FontSizeProps
+> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      copyable
+    >
+      {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
+
+export const WithDeprecatedLanguageSwitcherProps: StoryType<
+  typeof Code,
+  FontSizeProps
+> = ({ baseFontSize, ...args }: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <LanguageSwitcherWithDeprecatedPropsExample
       showCustomActionButtons={true}
       customActionButtons={customActionButtons}
       {...args}

@@ -1,69 +1,36 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import ClipboardJS from 'clipboard';
+import React, { useMemo, useRef, useState } from 'react';
 import debounce from 'lodash/debounce';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
 
-import { numOfCollapsedLinesOfCode } from '../constants';
+import CodeContextProvider from '../CodeContext/CodeContext';
+import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
-import { CodeProps, Language } from '../types';
-import { WindowChrome } from '../WindowChrome';
+import { Language } from '../types';
 
 import {
-  baseScrollShadowStyles,
-  codeWrapperStyle,
-  codeWrapperStyleNoPanel,
-  codeWrapperStyleWithLanguagePicker,
-  contentWrapperStyles,
-  contentWrapperStylesNoPanel,
-  contentWrapperStyleWithPicker,
-  expandableContentWrapperStyle,
-  expandableContentWrapperStyleNoPanel,
-  expandableContentWrapperStyleWithPicker,
-  expandButtonStyle,
-  getCodeWrapperVariantStyle,
-  getExpandableCodeWrapperStyle,
-  getExpandButtonVariantStyle,
-  getScrollShadow,
-  panelStyles,
-  scrollShadowStylesNoPanel,
-  scrollShadowStylesWithPicker,
-  singleLineCodeWrapperStyle,
+  getCodeStyles,
+  getCodeWrapperStyles,
+  getExpandedButtonStyles,
   wrapperStyle,
 } from './Code.styles';
-import { DetailedElementProps, ScrollState } from './Code.types';
+import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
 
+//TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
   return string.trim().includes('\n');
 }
 
+//TODO: move to utils
 function getHorizontalScrollbarHeight(element: HTMLElement): number {
   return element.offsetHeight - element.clientHeight;
 }
 
-/**
- *
- * React Component that outputs single-line and multi-line code blocks.
- *
- * @param props.children The string to be formatted.
- * @param props.className An additional CSS class added to the root element of Code.
- * @param props.language The language used for syntax highlighting.
- * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
- * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
- * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
- * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
- * @param props.onCopy Callback fired when Code is copied
- * @param props.expandable When true, allows the code block to be expanded and collapsed when there are more than 5 lined of code. Default: `false`
- */
 function Code({
   children = '',
   className,
@@ -71,53 +38,27 @@ function Code({
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  showWindowChrome = false,
-  chromeTitle = '',
-  copyable = true,
+  copyable = false,
   expandable = false,
   onCopy,
   highlightLines = [],
-  languageOptions,
-  onChange,
-  customActionButtons = [],
+  panel,
+  customActionButtons,
   showCustomActionButtons = false,
+  chromeTitle,
+  languageOptions = [],
+  onChange,
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
-  const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
-  const [codeHeight, setCodeHeight] = useState<number>();
-  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>();
+  const [codeHeight, setCodeHeight] = useState<number>(0);
+  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>(0);
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
-
-  const filteredCustomActionIconButtons = customActionButtons.filter(
-    (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
-  );
-
-  const showCustomActionsInPanel =
-    showCustomActionButtons && !!filteredCustomActionIconButtons.length;
-
-  const currentLanguage = languageOptions?.find(
-    option => option.displayName === languageProp,
-  );
-
-  const showPanel =
-    !showWindowChrome &&
-    (copyable || !!currentLanguage || showCustomActionsInPanel);
-
-  const highlightLanguage = currentLanguage
-    ? currentLanguage.language
-    : languageProp;
-
-  const showLanguagePicker = !!currentLanguage;
-
-  useEffect(() => {
-    setShowCopyBar(copyable && ClipboardJS.isSupported());
-  }, [copyable, showWindowChrome]);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -130,6 +71,7 @@ function Code({
     }
   }, []);
 
+  //TODO: move to utils
   function setExpandableState() {
     if (!expandable || !scrollableElementRef.current) return;
 
@@ -159,6 +101,14 @@ function Code({
     baseFontSize, // will cause changes in code height
   ]);
 
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === languageProp,
+  );
+
+  const highlightLanguage = currentLanguage
+    ? currentLanguage.language
+    : languageProp;
+
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
@@ -170,6 +120,7 @@ function Code({
     </Syntax>
   );
 
+  //TODO: move to utils
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
@@ -205,46 +156,54 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
-  return (
-    <LeafyGreenProvider darkMode={darkMode}>
-      <div className={wrapperStyle[theme]}>
-        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} />}
+  const shouldRenderTempCustomActionButtons =
+    showCustomActionButtons &&
+    !!customActionButtons &&
+    customActionButtons.length > 0;
 
+  const shouldRenderTempLanguageSwitcher =
+    !!languageOptions &&
+    languageOptions.length > 0 &&
+    !!currentLanguage &&
+    !!onChange;
+
+  // This will render a temp panel component if deprecated props are used
+  const shouldRenderTempPanelSubComponent =
+    !panel &&
+    (shouldRenderTempCustomActionButtons ||
+      shouldRenderTempLanguageSwitcher ||
+      !!chromeTitle ||
+      copyable);
+
+  const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+
+  return (
+    <CodeContextProvider
+      darkMode={darkMode}
+      contents={children}
+      language={languageProp}
+    >
+      <div className={wrapperStyle[theme]}>
         <div
-          className={cx(
-            contentWrapperStyles,
-            baseScrollShadowStyles,
-            getScrollShadow(scrollState, theme),
-            {
-              [contentWrapperStyleWithPicker]: showLanguagePicker,
-              [scrollShadowStylesWithPicker]: showLanguagePicker,
-              [contentWrapperStylesNoPanel]: !showPanel,
-              [scrollShadowStylesNoPanel]: !showPanel,
-              [expandableContentWrapperStyle]: showExpandButton,
-              [expandableContentWrapperStyleWithPicker]:
-                showExpandButton && showLanguagePicker,
-              [expandableContentWrapperStyleNoPanel]:
-                showExpandButton && !showPanel,
-            },
-          )}
+          className={getCodeStyles({
+            scrollState,
+            theme,
+            showPanel,
+            showExpandButton,
+          })}
         >
           <pre
             {...(rest as DetailedElementProps<HTMLPreElement>)}
-            className={cx(
-              codeWrapperStyle,
-              getCodeWrapperVariantStyle(theme),
-              {
-                [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
-                [codeWrapperStyleNoPanel]: !showPanel,
-                [singleLineCodeWrapperStyle]: !isMultiline,
-                [getExpandableCodeWrapperStyle(
-                  expanded,
-                  codeHeight as number,
-                  collapsedCodeHeight as number,
-                )]: showExpandButton,
-              },
+            className={getCodeWrapperStyles({
+              theme,
+              showPanel,
+              expanded,
+              codeHeight,
+              collapsedCodeHeight,
+              isMultiline,
+              showExpandButton,
               className,
-            )}
+            })}
             onScroll={onScroll}
             ref={scrollableElementRef}
             // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
@@ -254,31 +213,26 @@ function Code({
             {renderedSyntaxComponent}
           </pre>
 
-          {/* Can make this a more robust check in the future */}
-          {/* Right now the panel will only be rendered with copyable or a language switcher */}
-          {showPanel && (
+          {!!panel && panel}
+
+          {/* if there are deprecated props then manually render the panel component */}
+          {/* TODO: remove when deprecated props are removed, make ticket */}
+          {shouldRenderTempPanelSubComponent && (
             <Panel
-              className={cx(panelStyles)}
-              language={currentLanguage}
-              languageOptions={languageOptions}
-              onChange={onChange}
-              contents={children}
+              showCustomActionButtons={showCustomActionButtons}
+              customActionButtons={customActionButtons}
+              title={chromeTitle}
+              languageOptions={languageOptions || []} // Empty array as default
+              onChange={onChange || (() => {})} // No-op function as default
               onCopy={onCopy}
-              showCopyButton={showCopyBar}
-              isMultiline={isMultiline}
-              customActionButtons={filteredCustomActionIconButtons}
-              showCustomActionButtons={showCustomActionsInPanel}
             />
           )}
 
           {showExpandButton && (
             <button
-              className={cx(
-                expandButtonStyle,
-                getExpandButtonVariantStyle(theme),
-              )}
+              className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
-              data-testid="lg-code-expand_button"
+              data-testid={LGIDs.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}
@@ -287,7 +241,7 @@ function Code({
           )}
         </div>
       </div>
-    </LeafyGreenProvider>
+    </CodeContextProvider>
   );
 }
 

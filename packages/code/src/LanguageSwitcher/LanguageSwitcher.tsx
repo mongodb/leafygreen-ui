@@ -1,32 +1,13 @@
 import React from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import { usePrevious } from '@leafygreen-ui/hooks';
-import { isComponentGlyph } from '@leafygreen-ui/icon';
-import FileIcon from '@leafygreen-ui/icon/dist/File';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { Option, RenderMode, Select } from '@leafygreen-ui/select';
+import { Option, RenderMode, Select, Size } from '@leafygreen-ui/select';
 
-import { CustomSelectMenuButton } from '../CustomSelectMenuButton';
-import { LanguageOption } from '../types';
+import { LGIDs } from '../constants';
+import { LanguageOption } from '../Panel/Panel.types';
 
-import {
-  buttonModeStyle,
-  containerStyle,
-  iconMargin,
-  menuButtonStyle,
-  selectStyle,
-} from './LanguageSwitcher.styles';
-
-function isLeafyGreenIcon(element: React.ReactNode) {
-  if (isComponentGlyph(element) || isComponentType(element, 'Icon')) {
-    return true;
-  }
-
-  return false;
-}
+import { containerStyle, selectStyle } from './LanguageSwitcher.styles';
 
 interface Props {
   language: LanguageOption;
@@ -35,7 +16,7 @@ interface Props {
 }
 
 function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
-  const { theme, darkMode } = useDarkMode();
+  const { darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
 
   const handleChange = (val: string) => {
@@ -52,28 +33,6 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
     }
   };
 
-  const iconStyle = cx(
-    iconMargin,
-    css`
-      color: ${darkMode ? palette.gray.light1 : palette.gray.base};
-    `,
-  );
-
-  // Placeholder for file icon
-  let renderedLogo = <FileIcon className={iconStyle} />;
-
-  if (language.image != null) {
-    if (isLeafyGreenIcon(language.image)) {
-      renderedLogo = React.cloneElement(language.image, {
-        className: iconStyle,
-      });
-    } else {
-      renderedLogo = React.cloneElement(language.image, {
-        className: iconMargin,
-      });
-    }
-  }
-
   return (
     <div className={containerStyle}>
       <Select
@@ -84,11 +43,8 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         className={selectStyle}
         allowDeselect={false}
         renderMode={RenderMode.TopLayer}
-        __INTERNAL__menuButtonSlot__={CustomSelectMenuButton}
-        __INTERNAL__menuButtonSlotProps__={{
-          className: cx(menuButtonStyle, buttonModeStyle[theme]),
-          leftGlyph: renderedLogo,
-        }}
+        size={Size.XSmall}
+        data-testid={LGIDs.select}
       >
         {languageOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>

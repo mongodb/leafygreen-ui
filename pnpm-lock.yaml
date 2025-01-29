@@ -875,9 +875,6 @@ importers:
       '@leafygreen-ui/a11y':
         specifier: workspace:^
         version: link:../a11y
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -908,6 +905,9 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@types/facepaint':
         specifier: ^1.2.1
         version: 1.2.2
