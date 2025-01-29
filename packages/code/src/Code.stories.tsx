@@ -79,6 +79,7 @@ const meta: StoryMetaType<typeof Code> = {
         'showCustomButtons',
         'customActionButtons',
         'languageOptions',
+        'children',
       ],
     },
     generate: {
@@ -90,6 +91,7 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: 14,
     children: shortJsSnippet,
     copyButtonAppearance: CopyButtonAppearance.Hover,
+    chromeTitle: '',
   },
   argTypes: {
     copyable: { control: 'boolean' },
@@ -174,6 +176,18 @@ export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
     />
   </LeafygreenProvider>
 );
+WithLanguageSwitcher.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'chromeTitle',
+    ],
+  },
+};
 
 export const WithDeprecatedCustomActionProps: StoryType<
   typeof Code,
@@ -190,6 +204,18 @@ export const WithDeprecatedCustomActionProps: StoryType<
     </Code>
   </LeafygreenProvider>
 );
+WithDeprecatedCustomActionProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'language',
+    ],
+  },
+};
 
 export const WithDeprecatedCopyableProps: StoryType<
   typeof Code,
@@ -199,12 +225,22 @@ export const WithDeprecatedCopyableProps: StoryType<
     <Code
       {...(args as CodeProps)}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-      copyable
     >
       {jsSnippet}
     </Code>
   </LeafygreenProvider>
 );
+WithDeprecatedCopyableProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'children',
+      'expandable',
+      'language',
+    ],
+  },
+};
 
 export const WithDeprecatedLanguageSwitcherProps: StoryType<
   typeof Code,
@@ -218,6 +254,19 @@ export const WithDeprecatedLanguageSwitcherProps: StoryType<
     />
   </LeafygreenProvider>
 );
+WithDeprecatedLanguageSwitcherProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'chromeTitle',
+      'language',
+    ],
+  },
+};
 
 export const Generated = () => {};
 Generated.parameters = {
