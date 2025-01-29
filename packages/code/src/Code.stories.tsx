@@ -83,7 +83,7 @@ const meta: StoryMetaType<typeof Code> = {
       ],
     },
     generate: {
-      storyNames: ['Generated', 'MinimalCopyButton'],
+      storyNames: ['WithPanel', 'WithoutPanel'],
     },
   },
   args: {
@@ -268,8 +268,8 @@ WithDeprecatedLanguageSwitcherProps.parameters = {
   },
 };
 
-export const Generated = () => {};
-Generated.parameters = {
+export const WithPanel = () => {};
+WithPanel.parameters = {
   generate: {
     combineArgs: {
       darkMode: [false, true],
@@ -277,7 +277,6 @@ Generated.parameters = {
       showLineNumbers: [false, true],
       language: ['js', languageOptions[0].displayName],
       panel: [
-        undefined,
         <Panel key={1} />,
         <Panel title="Title" key={2} />,
         <Panel
@@ -313,36 +312,36 @@ Generated.parameters = {
         language: 'js',
         panel: <Panel />,
       },
-      {
-        language: languageOptions[0].displayName,
-        panel: undefined,
-      },
+      // {
+      //   language: languageOptions[0].displayName,
+      //   panel: undefined,
+      // },
     ],
   },
 };
 
-export const MinimalCopyButton: StoryType<typeof Code> = () => <></>;
-MinimalCopyButton.parameters = {
+export const WithoutPanel: StoryType<typeof Code> = () => <></>;
+WithoutPanel.parameters = {
   generate: {
+    args: {
+      language: languageOptions[0].displayName,
+    },
     combineArgs: {
       // @ts-expect-error - data-hover is not a valid prop
       'data-hover': [false, true],
       darkMode: [false, true],
       expandable: [true, false],
-      language: ['js', languageOptions[0].displayName],
       copyButtonAppearance: [
         CopyButtonAppearance.Hover,
         CopyButtonAppearance.Persist,
       ],
+      showLineNumbers: [false, true],
     },
     excludeCombinations: [
       {
-        language: 'js',
-        panel: <Panel />,
-      },
-      {
-        language: languageOptions[0].displayName,
-        panel: undefined,
+        // @ts-expect-error - data-hover is not a valid prop
+        ['data-hover']: true,
+        copyButtonAppearance: CopyButtonAppearance.Persist,
       },
     ],
   },
