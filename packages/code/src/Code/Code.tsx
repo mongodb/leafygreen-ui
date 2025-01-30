@@ -200,7 +200,6 @@ function Code({
       language={languageProp}
       isLoading={isLoading}
       hasPanel={showPanel}
-      customHighlights={customHighlights}
     >
       {/* TODO: note in changeset that className was moved to the parent wrapper */}
       <div className={getWrapperStyles({ theme, className })}>
