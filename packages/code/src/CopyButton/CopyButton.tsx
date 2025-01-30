@@ -23,7 +23,7 @@ import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
+import { getCopyButtonStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
 function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
@@ -138,7 +138,6 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   return (
     <Tooltip
       align={Align.Top}
-      className={tooltipStyles}
       data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}

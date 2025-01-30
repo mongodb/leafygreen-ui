@@ -3,13 +3,6 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, transitionDuration } from '@leafygreen-ui/tokens';
 
-export const tooltipStyles = css`
-  svg {
-    width: 26px;
-    height: 26px;
-  }
-`;
-
 export const getCopyButtonStyles = ({
   theme,
   copied,

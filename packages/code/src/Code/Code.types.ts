@@ -115,14 +115,14 @@ export type CodeProps = Omit<
          *
          * If `none`, the copy button will not be rendered.
          *
-         * Note: This prop will be ignored if the `panel` prop is defined. Either use `copyButtonAppearance` or `panel`, not both.
+         * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
          *
          * @default `hover`
          */
         copyButtonAppearance?: CopyButtonAppearance;
 
         /**
-         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: This prop takes precedence over `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both.
          *
          */
         panel?: never;
@@ -137,14 +137,14 @@ export type CodeProps = Omit<
          *
          * If `none`, the copy button will not be rendered.
          *
-         * Note: This prop will be ignored if the `panel` prop is defined. Either use `copyButtonAppearance` or `panel`, not both.
+         * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
          *
          * @default `hover`
          */
         copyButtonAppearance?: never;
 
         /**
-         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: This prop takes precedence over `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both.
          *
          */
         panel?: React.ReactNode;
