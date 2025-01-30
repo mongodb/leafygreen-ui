@@ -199,7 +199,8 @@ function Code({
   const showCopyButtonWithoutPanel =
     !showPanel &&
     copyButtonAppearance !== CopyButtonAppearance.None &&
-    ClipboardJS.isSupported();
+    ClipboardJS.isSupported() &&
+    !isLoading;
 
   return (
     <CodeContextProvider
