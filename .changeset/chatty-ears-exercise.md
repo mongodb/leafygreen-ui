@@ -73,6 +73,10 @@ e.g.
  {snippet}
 </Code>
 ```
+
+### `baseFontSize`
+Adds `baseFontSize` prop, which allows you to override the `LeafyGreenProvider` value.
+
 ## Deprecated
 
 The following props have been marked as `deprecated`:
