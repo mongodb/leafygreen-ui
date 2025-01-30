@@ -1,3 +1,5 @@
+import { BaseFontSize } from '@leafygreen-ui/tokens';
+
 import { LanguageOption } from '../Panel/Panel.types';
 import { SyntaxProps } from '../Syntax/Syntax.types';
 import { Language } from '../types';
@@ -104,6 +106,13 @@ export type CodeProps = Omit<
    * @deprecated
    */
   copyable?: boolean;
+
+  /**
+   * Determines the base font-size of the component
+   *
+   * @default 13
+   */
+  baseFontSize?: BaseFontSize;
 } & (
     | {
         /**
