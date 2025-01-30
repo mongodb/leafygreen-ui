@@ -9,12 +9,22 @@ import LeafyGreenProvider, {
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { LGIDS_DRAWER } from './Drawer.constants';
 import { getDrawerStyles, getHeaderStyles } from './Drawer.styles';
 import { DrawerProps } from './Drawer.types';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
-    { children, className, id: idProp, open = false, setOpen, title, ...rest },
+    {
+      children,
+      className,
+      'data-lgid': dataLgId = LGIDS_DRAWER.root,
+      id: idProp,
+      open = false,
+      setOpen,
+      title,
+      ...rest
+    },
     fwdRef,
   ) => {
     const { darkMode, theme } = useDarkMode();
@@ -28,6 +38,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           aria-hidden={!open}
           aria-labelledby={titleId}
           className={getDrawerStyles({ className, open, theme })}
+          data-lgid={dataLgId}
           id={id}
           ref={fwdRef}
           role="dialog"

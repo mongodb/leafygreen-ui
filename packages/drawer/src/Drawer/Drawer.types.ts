@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface DrawerProps
   extends Omit<HTMLElementProps<'div'>, 'title'>,
-    DarkModeProps {
+    DarkModeProps,
+    LgIdProps {
   /**
    * Determines if the Drawer is open or closed
    * @defaultValue false
