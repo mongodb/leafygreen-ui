@@ -19,6 +19,8 @@ interface TokenProps {
 
 export function generateKindClassName(...kinds: Array<any>): string {
   const prefix = 'lg-highlight-';
+  console.log({ kinds });
+
   return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
@@ -212,18 +214,25 @@ function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
   return false;
 }
 
+const testingObj = {
+  datetime: 'testing',
+};
+
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
 export function flattenNestedTree(
   children: TokenObject['children'] | TokenObject,
   kind?: string,
 ): Array<string | FlatTokenObject> {
+  // console.log({ typeOf: typeof children });
+
   if (typeof children === 'string') {
     return children;
   }
 
-  console.log({ children });
+  // console.log({ children, kind });
 
   if (isTokenObject(children)) {
+    console.log('isTokenObject', children);
     return flattenNestedTree(children.children, kind);
   }
 
@@ -233,10 +242,11 @@ export function flattenNestedTree(
       (str): str is string => isString(str) && str.length > 0,
     );
 
-    // console.log({ parentKinds });
+    console.log({ parentKinds });
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
+      console.log({ entity });
       if (isString(entity)) {
         return parentKinds.length > 0
           ? {
@@ -247,7 +257,15 @@ export function flattenNestedTree(
               ),
               children: [entity],
             }
-          : entity; // entity is basic text
+          : testingObj[entity.trim()]
+          ? {
+              kind: generateKindClassName(testingObj[entity.trim()]),
+              children: [entity],
+            }
+          : entity;
+        // : entity; // entity is basic text
+
+        // TODO: here, check if entity is a string, if its a string then check if its in the custom highlight obj, if it is then genereate a kindClassName.
       }
 
       // If this is a nested entity, then flat map it's children
@@ -274,6 +292,10 @@ export function flattenNestedTree(
       return entity as FlatTokenObject;
     };
   }
+
+  // console.log({ children });
+
+  // console.log('💚', flatMap(children, flatMapTreeWithKinds(kind)));
 
   return flatMap(children, flatMapTreeWithKinds(kind));
 }
@@ -316,6 +338,8 @@ export function treeToLines(
   };
 
   flattenNestedTree(children).forEach(child => {
+    console.log({ child });
+
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
       if (isString(child)) {
