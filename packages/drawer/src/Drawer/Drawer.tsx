@@ -46,7 +46,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         >
           <div className={getHeaderStyles(theme)}>
             <Body
-              as={typeof title === 'string' ? 'p' : 'div'}
+              as={typeof title === 'string' ? 'h2' : 'div'}
               baseFontSize={BaseFontSize.Body2}
               id={titleId}
               weight="medium"
