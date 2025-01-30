@@ -26,8 +26,13 @@ export const getCopyButtonStyles = ({
       align-self: center;
       color: ${color[theme].icon.primary.default};
 
+      div[role='tooltip'] svg {
+        width: 26px;
+        height: 26px;
+      }
+
       &,
-      & svg {
+      & > div > svg {
         transition: all ${transitionDuration.default}ms ease-in-out;
       }
     `,
@@ -41,7 +46,7 @@ export const getCopyButtonStyles = ({
 export const copiedThemeStyle: Record<Theme, string> = {
   [Theme.Light]: css`
     &,
-    & svg {
+    & > div > svg {
       color: ${palette.white};
 
       &:focus,
@@ -62,7 +67,7 @@ export const copiedThemeStyle: Record<Theme, string> = {
   `,
   [Theme.Dark]: css`
     &,
-    & svg {
+    & > div > svg {
       color: ${palette.gray.dark3};
 
       &:focus,
