@@ -17,7 +17,7 @@ export type CodeProviderProps = DarkModeProps & {
   /**
    * Whether or not the code snippet has a panel.
    */
-  hasPanel: boolean;
+  showPanel: boolean;
 
   /**
    * Whether the loading skeleton should be shown.

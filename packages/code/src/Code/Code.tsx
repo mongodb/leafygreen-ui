@@ -171,26 +171,35 @@ function Code({
     !isLoading
   );
 
-  const shouldRenderTempCustomActionButtons =
+  // TODO: remove when deprecated props are removed
+  const hasDeprecatedCustomActionButtons =
     showCustomActionButtons &&
     !!customActionButtons &&
     customActionButtons.length > 0;
 
-  const shouldRenderTempLanguageSwitcher =
+  // TODO: remove when deprecated props are removed
+  const hasDeprecatedLanguageSwitcher =
     !!languageOptions &&
     languageOptions.length > 0 &&
     !!currentLanguage &&
     !!onChange;
 
-  // This will render a temp panel component if deprecated props are used
-  const shouldRenderTempPanelSubComponent =
+  // This will render a temp deprecated panel component if deprecated props are used
+  // TODO: remove when deprecated props are removed
+  const shouldRenderDeprecatedPanel =
     !panel &&
-    (shouldRenderTempCustomActionButtons ||
-      shouldRenderTempLanguageSwitcher ||
+    (hasDeprecatedCustomActionButtons ||
+      hasDeprecatedLanguageSwitcher ||
       !!chromeTitle ||
       copyable);
 
-  const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+  // TODO: remove when deprecated props are removed. Should only check panel
+  const showPanel = !!panel || shouldRenderDeprecatedPanel;
+
+  const showCopyButtonWithoutPanel =
+    !showPanel &&
+    copyButtonAppearance !== CopyButtonAppearance.None &&
+    ClipboardJS.isSupported();
 
   return (
     <CodeContextProvider
@@ -198,7 +207,7 @@ function Code({
       contents={children}
       language={languageProp}
       isLoading={isLoading}
-      hasPanel={showPanel}
+      showPanel={showPanel}
     >
       {/* TODO: note in changeset that className was moved to the parent wrapper */}
       <div className={getWrapperStyles({ theme, className })}>
@@ -206,7 +215,7 @@ function Code({
           className={getCodeStyles({
             scrollState,
             theme,
-            hasPanel: showPanel,
+            showPanel,
             showExpandButton,
             isLoading,
           })}
@@ -217,7 +226,7 @@ function Code({
               {...(rest as DetailedElementProps<HTMLPreElement>)}
               className={getCodeWrapperStyles({
                 theme,
-                hasPanel: showPanel,
+                showPanel,
                 expanded,
                 codeHeight,
                 collapsedCodeHeight,
@@ -243,24 +252,21 @@ function Code({
           )}
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
-          {!showPanel &&
-            !isLoading &&
-            copyButtonAppearance !== CopyButtonAppearance.None &&
-            ClipboardJS.isSupported() && (
-              <div
-                className={getCopyButtonWithoutPanelStyles({
-                  copyButtonAppearance,
-                })}
-              >
-                <CopyButton onCopy={onCopy} contents={children} />
-              </div>
-            )}
+          {showCopyButtonWithoutPanel && (
+            <CopyButton
+              className={getCopyButtonWithoutPanelStyles({
+                copyButtonAppearance,
+              })}
+              onCopy={onCopy}
+              contents={children}
+            />
+          )}
 
           {!!panel && panel}
 
           {/* if there are deprecated props then manually render the panel component */}
           {/* TODO: remove when deprecated props are removed, make ticket */}
-          {shouldRenderTempPanelSubComponent && (
+          {shouldRenderDeprecatedPanel && (
             <Panel
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={customActionButtons}

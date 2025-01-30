@@ -80,10 +80,11 @@ const meta: StoryMetaType<typeof Code> = {
         'showCustomButtons',
         'customActionButtons',
         'languageOptions',
+        'children',
       ],
     },
     generate: {
-      storyNames: ['Generated', 'MinimalCopyButton', 'Loading'],
+      storyNames: ['WithPanel', 'WithoutPanel', 'Loading'],
     },
   },
   args: {
@@ -91,6 +92,7 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: 14,
     children: shortJsSnippet,
     copyButtonAppearance: CopyButtonAppearance.Hover,
+    chromeTitle: '',
   },
   argTypes: {
     isLoading: { control: 'boolean' },
@@ -154,6 +156,7 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <Code
       {...(args as CodeProps)}
+      copyButtonAppearance={undefined}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       panel={
         <Panel
@@ -179,6 +182,18 @@ export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
     />
   </LeafygreenProvider>
 );
+WithLanguageSwitcher.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'chromeTitle',
+    ],
+  },
+};
 
 export const WithDeprecatedCustomActionProps: StoryType<
   typeof Code,
@@ -195,21 +210,18 @@ export const WithDeprecatedCustomActionProps: StoryType<
     </Code>
   </LeafygreenProvider>
 );
-
-export const WithDeprecatedCopyableProps: StoryType<
-  typeof Code,
-  FontSizeProps
-> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code
-      {...(args as CodeProps)}
-      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-      copyable
-    >
-      {jsSnippet}
-    </Code>
-  </LeafygreenProvider>
-);
+WithDeprecatedCustomActionProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'language',
+    ],
+  },
+};
 
 export const WithDeprecatedLanguageSwitcherProps: StoryType<
   typeof Code,
@@ -223,9 +235,22 @@ export const WithDeprecatedLanguageSwitcherProps: StoryType<
     />
   </LeafygreenProvider>
 );
+WithDeprecatedLanguageSwitcherProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'chromeTitle',
+      'language',
+    ],
+  },
+};
 
-export const Generated = () => {};
-Generated.parameters = {
+export const WithPanel = () => {};
+WithPanel.parameters = {
   generate: {
     combineArgs: {
       darkMode: [false, true],
@@ -233,7 +258,6 @@ Generated.parameters = {
       showLineNumbers: [false, true],
       language: ['js', languageOptions[0].displayName],
       panel: [
-        undefined,
         <Panel key={1} />,
         <Panel title="Title" key={2} />,
         <Panel
@@ -269,36 +293,32 @@ Generated.parameters = {
         language: 'js',
         panel: <Panel />,
       },
-      {
-        language: languageOptions[0].displayName,
-        panel: undefined,
-      },
     ],
   },
 };
 
-export const MinimalCopyButton: StoryType<typeof Code> = () => <></>;
-MinimalCopyButton.parameters = {
+export const WithoutPanel: StoryType<typeof Code> = () => <></>;
+WithoutPanel.parameters = {
   generate: {
+    args: {
+      language: languageOptions[0].displayName,
+    },
     combineArgs: {
       // @ts-expect-error - data-hover is not a valid prop
       'data-hover': [false, true],
       darkMode: [false, true],
       expandable: [true, false],
-      language: ['js', languageOptions[0].displayName],
       copyButtonAppearance: [
         CopyButtonAppearance.Hover,
         CopyButtonAppearance.Persist,
       ],
+      showLineNumbers: [false, true],
     },
     excludeCombinations: [
       {
-        language: 'js',
-        panel: <Panel />,
-      },
-      {
-        language: languageOptions[0].displayName,
-        panel: undefined,
+        // @ts-expect-error - data-hover is not a valid prop
+        ['data-hover']: true,
+        copyButtonAppearance: CopyButtonAppearance.Persist,
       },
     ],
   },
@@ -306,6 +326,9 @@ MinimalCopyButton.parameters = {
 
 export const Loading = () => {};
 Loading.parameters = {
+  controls: {
+    exclude: /.*/g,
+  },
   generate: {
     combineArgs: {
       darkMode: [false, true],

@@ -71,7 +71,6 @@ export function LanguageSwitcherWithPanelExample({
           title="Title"
         />
       }
-      {...rest}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
