@@ -49,9 +49,9 @@ function ExampleComponent() {
 
 ## Properties
 
-| Prop       | Type              | Description                                        | Default |
-| ---------- | ----------------- | -------------------------------------------------- | ------- |
-| `children` | `React.ReactNode` | Children that will be rendered inside the `Drawer` |         |
-| `open`     | `boolean`         | Determines if the `Drawer` is open or closed       | `false` |
-| `setOpen`  | `function`        | Callback to change the open state of the `Drawer`  |         |
-| `title`    | `string`          | Title of the `Drawer`                              |         |
+| Prop       | Type        | Description                                        | Default |
+| ---------- | ----------- | -------------------------------------------------- | ------- |
+| `children` | `ReactNode` | Children that will be rendered inside the `Drawer` |         |
+| `open`     | `boolean`   | Determines if the `Drawer` is open or closed       | `false` |
+| `setOpen`  | `function`  | Callback to change the open state of the `Drawer`  |         |
+| `title`    | `ReactNode` | Title of the `Drawer`                              |         |
