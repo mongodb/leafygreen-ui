@@ -167,28 +167,33 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
-  const shouldRenderTempCustomActionButtons =
+  // TODO: remove when deprecated props are removed
+  const hasDeprecatedCustomActionButtons =
     showCustomActionButtons &&
     !!customActionButtons &&
     customActionButtons.length > 0;
 
-  const shouldRenderTempLanguageSwitcher =
+  // TODO: remove when deprecated props are removed
+  const hasDeprecatedLanguageSwitcher =
     !!languageOptions &&
     languageOptions.length > 0 &&
     !!currentLanguage &&
     !!onChange;
 
-  // This will render a temp panel component if deprecated props are used
-  const shouldRenderTempPanelSubComponent =
+  // This will render a temp deprecated panel component if deprecated props are used
+  // TODO: remove when deprecated props are removed
+  const shouldRenderDeprecatedPanel =
     !panel &&
-    (shouldRenderTempCustomActionButtons ||
-      shouldRenderTempLanguageSwitcher ||
+    (hasDeprecatedCustomActionButtons ||
+      hasDeprecatedLanguageSwitcher ||
       !!chromeTitle ||
       copyable);
 
-  const showPanelOrTempPanel = !!panel || shouldRenderTempPanelSubComponent;
+  // TODO: remove when deprecated props are removed. Should only check panel
+  const showPanel = !!panel || shouldRenderDeprecatedPanel;
+
   const showCopyButtonWithoutPanel =
-    !showPanelOrTempPanel &&
+    !showPanel &&
     copyButtonAppearance !== CopyButtonAppearance.None &&
     ClipboardJS.isSupported();
 
@@ -197,14 +202,14 @@ function Code({
       darkMode={darkMode}
       contents={children}
       language={languageProp}
-      showPanel={showPanelOrTempPanel}
+      showPanel={showPanel}
     >
       <div className={wrapperStyle[theme]}>
         <div
           className={getCodeStyles({
             scrollState,
             theme,
-            showPanel: showPanelOrTempPanel,
+            showPanel,
             showExpandButton,
           })}
         >
@@ -212,7 +217,7 @@ function Code({
             {...(rest as DetailedElementProps<HTMLPreElement>)}
             className={getCodeWrapperStyles({
               theme,
-              showPanel: showPanelOrTempPanel,
+              showPanel,
               expanded,
               codeHeight,
               collapsedCodeHeight,
@@ -244,7 +249,7 @@ function Code({
 
           {/* if there are deprecated props then manually render the panel component */}
           {/* TODO: remove when deprecated props are removed, make ticket */}
-          {shouldRenderTempPanelSubComponent && (
+          {shouldRenderDeprecatedPanel && (
             <Panel
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={customActionButtons}
