@@ -8,7 +8,7 @@
 
 Adds a new slot prop, `panel`, that accepts the new `<Panel/>` sub-component. This will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. 
 
-**_Note: This prop takes precedence over `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both._**
+**_Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both._**
 
 e.g.
 
@@ -37,7 +37,7 @@ If `persist`, the copy button will always be visible.
 
 If `none`, the copy button will not be rendered.
 
-**_Note: This prop will be ignored if the `panel` prop is defined. Either use `copyButtonAppearance` or `panel`, not both._**
+**_Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both._**
 
 e.g.
 

@@ -263,6 +263,17 @@ function Code({
             />
           )}
 
+          {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
+          {showCopyButtonWithoutPanel && (
+            <CopyButton
+              className={getCopyButtonWithoutPanelStyles({
+                copyButtonAppearance,
+              })}
+              onCopy={onCopy}
+              contents={children}
+            />
+          )}
+
           {!!panel && panel}
 
           {/* if there are deprecated props then manually render the panel component */}
