@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 
 import { VisuallyHidden } from '@leafygreen-ui/a11y';
-// import { cx } from '@leafygreen-ui/emotion';
+import Button from '@leafygreen-ui/button';
 import { useBackdropClick } from '@leafygreen-ui/hooks';
 import CheckmarkIcon from '@leafygreen-ui/icon/dist/Checkmark';
 import CopyIcon from '@leafygreen-ui/icon/dist/Copy';
@@ -19,13 +19,14 @@ import Tooltip, {
   RenderMode,
 } from '@leafygreen-ui/tooltip';
 
+import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
+import { getCopyButtonStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
-function CopyButton({ onCopy, contents }: CopyProps) {
+function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const [copied, setCopied] = useState(false);
   /**
    * `CopyButton` controls `tooltipOpen` state because when `copied` state
@@ -36,6 +37,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
+  const { showPanel } = useCodeContext();
 
   /**
    * toggles `tooltipOpen` state
@@ -121,31 +123,45 @@ function CopyButton({ onCopy, contents }: CopyProps) {
    */
   const shouldClose = () => !tooltipOpen;
 
+  const sharedButtonProps = {
+    'aria-label': COPY_TEXT,
+    className: getCopyButtonStyles({ theme, copied, showPanel, className }),
+    onClick: handleClick,
+    onKeyDown: handleKeyDown,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    ref: buttonRef,
+    'data-testid': LGIDs.copyButton,
+    ...rest,
+  };
+
   return (
     <Tooltip
       align={Align.Top}
-      className={tooltipStyles}
       data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
       trigger={
-        <IconButton
-          data-testid={LGIDs.copyButton}
-          ref={buttonRef}
-          aria-label={COPY_TEXT}
-          className={getCopyButtonStyles({ theme, copied })}
-          onClick={handleClick}
-          onKeyDown={handleKeyDown}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          {copied ? <CheckmarkIcon /> : <CopyIcon />}
-          {copied && (
-            <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
-          )}
-        </IconButton>
+        showPanel ? (
+          <IconButton {...sharedButtonProps}>
+            {copied ? <CheckmarkIcon /> : <CopyIcon />}
+            {copied && (
+              <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
+            )}
+          </IconButton>
+        ) : (
+          <Button
+            leftGlyph={copied ? <CheckmarkIcon /> : <CopyIcon />}
+            size="xsmall"
+            {...sharedButtonProps}
+          >
+            {copied && (
+              <VisuallyHidden role="alert">{COPIED_TEXT}</VisuallyHidden>
+            )}
+          </Button>
+        )
       }
       shouldClose={shouldClose}
     >

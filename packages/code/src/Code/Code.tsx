@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
+import ClipboardJS from 'clipboard';
 import debounce from 'lodash/debounce';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
@@ -9,6 +10,7 @@ import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
+import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
@@ -16,10 +18,16 @@ import { Language } from '../types';
 import {
   getCodeStyles,
   getCodeWrapperStyles,
+  getCopyButtonWithoutPanelStyles,
   getExpandedButtonStyles,
   wrapperStyle,
 } from './Code.styles';
-import { CodeProps, DetailedElementProps, ScrollState } from './Code.types';
+import {
+  CodeProps,
+  CopyButtonAppearance,
+  DetailedElementProps,
+  ScrollState,
+} from './Code.types';
 
 //TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
@@ -33,21 +41,24 @@ function getHorizontalScrollbarHeight(element: HTMLElement): number {
 
 function Code({
   children = '',
-  className,
   language: languageProp,
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  copyable = false,
   expandable = false,
-  onCopy,
+  copyButtonAppearance = CopyButtonAppearance.Hover,
   highlightLines = [],
+  className,
+  onCopy,
   panel,
-  customActionButtons,
+  // Deprecated props
+  copyable = false,
   showCustomActionButtons = false,
-  chromeTitle,
   languageOptions = [],
+  customActionButtons,
+  chromeTitle,
   onChange,
+  // rest
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -156,32 +167,42 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode
   );
 
-  const shouldRenderTempCustomActionButtons =
+  // TODO: remove when deprecated props are removed
+  const hasDeprecatedCustomActionButtons =
     showCustomActionButtons &&
     !!customActionButtons &&
     customActionButtons.length > 0;
 
-  const shouldRenderTempLanguageSwitcher =
+  // TODO: remove when deprecated props are removed
+  const hasDeprecatedLanguageSwitcher =
     !!languageOptions &&
     languageOptions.length > 0 &&
     !!currentLanguage &&
     !!onChange;
 
-  // This will render a temp panel component if deprecated props are used
-  const shouldRenderTempPanelSubComponent =
+  // This will render a temp deprecated panel component if deprecated props are used
+  // TODO: remove when deprecated props are removed
+  const shouldRenderDeprecatedPanel =
     !panel &&
-    (shouldRenderTempCustomActionButtons ||
-      shouldRenderTempLanguageSwitcher ||
+    (hasDeprecatedCustomActionButtons ||
+      hasDeprecatedLanguageSwitcher ||
       !!chromeTitle ||
       copyable);
 
-  const showPanel = !!panel || shouldRenderTempPanelSubComponent;
+  // TODO: remove when deprecated props are removed. Should only check panel
+  const showPanel = !!panel || shouldRenderDeprecatedPanel;
+
+  const showCopyButtonWithoutPanel =
+    !showPanel &&
+    copyButtonAppearance !== CopyButtonAppearance.None &&
+    ClipboardJS.isSupported();
 
   return (
     <CodeContextProvider
       darkMode={darkMode}
       contents={children}
       language={languageProp}
+      showPanel={showPanel}
     >
       <div className={wrapperStyle[theme]}>
         <div
@@ -213,11 +234,22 @@ function Code({
             {renderedSyntaxComponent}
           </pre>
 
+          {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
+          {showCopyButtonWithoutPanel && (
+            <CopyButton
+              className={getCopyButtonWithoutPanelStyles({
+                copyButtonAppearance,
+              })}
+              onCopy={onCopy}
+              contents={children}
+            />
+          )}
+
           {!!panel && panel}
 
           {/* if there are deprecated props then manually render the panel component */}
           {/* TODO: remove when deprecated props are removed, make ticket */}
-          {shouldRenderTempPanelSubComponent && (
+          {shouldRenderDeprecatedPanel && (
             <Panel
               showCustomActionButtons={showCustomActionButtons}
               customActionButtons={customActionButtons}

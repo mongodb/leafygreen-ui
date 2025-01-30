@@ -16,7 +16,7 @@ import {
   LanguageSwitcherWithDeprecatedPropsExample,
   LanguageSwitcherWithPanelExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
-import Code, { CodeProps, Language, Panel } from '.';
+import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
 
 const customActionButtons = [
   <IconButton onClick={() => {}} aria-label="label" key="1">
@@ -79,66 +79,19 @@ const meta: StoryMetaType<typeof Code> = {
         'showCustomButtons',
         'customActionButtons',
         'languageOptions',
+        'children',
       ],
     },
     generate: {
-      combineArgs: {
-        darkMode: [false, true],
-        expandable: [true, false],
-        showLineNumbers: [false, true],
-        language: ['js', languageOptions[0].displayName],
-        panel: [
-          undefined,
-          <Panel key={1} />,
-          <Panel title="Title" key={2} />,
-          <Panel
-            title="Title"
-            languageOptions={languageOptions}
-            onChange={() => {}}
-            key={3}
-          />,
-          <Panel
-            languageOptions={languageOptions}
-            onChange={() => {}}
-            key={4}
-          />,
-          <Panel
-            showCustomActionButtons
-            customActionButtons={customActionButtons}
-            key={5}
-          />,
-          <Panel
-            title="Title"
-            showCustomActionButtons
-            customActionButtons={customActionButtons}
-            key={6}
-          />,
-          <Panel
-            title="Title"
-            showCustomActionButtons
-            customActionButtons={customActionButtons}
-            languageOptions={languageOptions}
-            onChange={() => {}}
-            key={7}
-          />,
-        ],
-      },
-      excludeCombinations: [
-        {
-          language: 'js',
-          panel: <Panel />,
-        },
-        {
-          language: languageOptions[0].displayName,
-          panel: undefined,
-        },
-      ],
+      storyNames: ['WithPanel', 'WithoutPanel'],
     },
   },
   args: {
     language: 'js',
     baseFontSize: 14,
     children: shortJsSnippet,
+    copyButtonAppearance: CopyButtonAppearance.Hover,
+    chromeTitle: '',
   },
   argTypes: {
     copyable: { control: 'boolean' },
@@ -150,6 +103,12 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: storybookArgTypes.baseFontSize,
     language: {
       options: Object.values(Language),
+      control: {
+        type: 'select',
+      },
+    },
+    copyButtonAppearance: {
+      options: Object.values(CopyButtonAppearance),
       control: {
         type: 'select',
       },
@@ -192,6 +151,7 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   <LeafygreenProvider baseFontSize={baseFontSize}>
     <Code
       {...(args as CodeProps)}
+      copyButtonAppearance={undefined}
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       panel={
         <Panel
@@ -217,6 +177,18 @@ export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
     />
   </LeafygreenProvider>
 );
+WithLanguageSwitcher.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'chromeTitle',
+    ],
+  },
+};
 
 export const WithDeprecatedCustomActionProps: StoryType<
   typeof Code,
@@ -233,21 +205,18 @@ export const WithDeprecatedCustomActionProps: StoryType<
     </Code>
   </LeafygreenProvider>
 );
-
-export const WithDeprecatedCopyableProps: StoryType<
-  typeof Code,
-  FontSizeProps
-> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code
-      {...(args as CodeProps)}
-      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-      copyable
-    >
-      {jsSnippet}
-    </Code>
-  </LeafygreenProvider>
-);
+WithDeprecatedCustomActionProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'language',
+    ],
+  },
+};
 
 export const WithDeprecatedLanguageSwitcherProps: StoryType<
   typeof Code,
@@ -261,5 +230,91 @@ export const WithDeprecatedLanguageSwitcherProps: StoryType<
     />
   </LeafygreenProvider>
 );
+WithDeprecatedLanguageSwitcherProps.parameters = {
+  controls: {
+    exclude: [
+      'highlightLines',
+      'copyButtonAppearance',
+      'copyable',
+      'children',
+      'expandable',
+      'chromeTitle',
+      'language',
+    ],
+  },
+};
 
-export const Generated = () => {};
+export const WithPanel = () => {};
+WithPanel.parameters = {
+  generate: {
+    combineArgs: {
+      darkMode: [false, true],
+      expandable: [true, false],
+      showLineNumbers: [false, true],
+      language: ['js', languageOptions[0].displayName],
+      panel: [
+        <Panel key={1} />,
+        <Panel title="Title" key={2} />,
+        <Panel
+          title="Title"
+          languageOptions={languageOptions}
+          onChange={() => {}}
+          key={3}
+        />,
+        <Panel languageOptions={languageOptions} onChange={() => {}} key={4} />,
+        <Panel
+          showCustomActionButtons
+          customActionButtons={customActionButtons}
+          key={5}
+        />,
+        <Panel
+          title="Title"
+          showCustomActionButtons
+          customActionButtons={customActionButtons}
+          key={6}
+        />,
+        <Panel
+          title="Title"
+          showCustomActionButtons
+          customActionButtons={customActionButtons}
+          languageOptions={languageOptions}
+          onChange={() => {}}
+          key={7}
+        />,
+      ],
+    },
+    excludeCombinations: [
+      {
+        language: 'js',
+        panel: <Panel />,
+      },
+    ],
+  },
+};
+
+export const WithoutPanel: StoryType<typeof Code> = () => <></>;
+WithoutPanel.parameters = {
+  generate: {
+    args: {
+      language: languageOptions[0].displayName,
+    },
+    combineArgs: {
+      // @ts-expect-error - data-hover is not a valid prop
+      'data-hover': [false, true],
+      darkMode: [false, true],
+      expandable: [true, false],
+      copyButtonAppearance: [
+        CopyButtonAppearance.Hover,
+        CopyButtonAppearance.Persist,
+      ],
+      showLineNumbers: [false, true],
+    },
+    excludeCombinations: [
+      {
+        // @ts-expect-error - data-hover is not a valid prop
+        ['data-hover']: true,
+        copyButtonAppearance: CopyButtonAppearance.Persist,
+      },
+    ],
+  },
+};

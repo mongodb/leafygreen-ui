@@ -2,10 +2,15 @@ import facepaint from 'facepaint';
 import { transparentize } from 'polished';
 
 import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import {
+  createUniqueClassName,
+  getMobileMediaQuery,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  breakpoints,
   color,
   fontFamilies,
   spacing,
@@ -14,7 +19,9 @@ import {
 
 import { variantColors } from '../globalStyles';
 
-import { ScrollState } from './Code.types';
+import { CopyButtonAppearance, ScrollState } from './Code.types';
+
+const copyButtonWithoutPanelClassName = createUniqueClassName('copy_button');
 
 // We use max-device-width to select specifically for iOS devices
 const mq = facepaint([
@@ -84,6 +91,7 @@ export const getCodeWrapperStyles = ({
   cx(
     codeWrapperStyle,
     getCodeWrapperVariantStyle(theme),
+    codeWrapperHoverStyles,
     {
       [codeWrapperWithPanelStyles]: showPanel,
       [codeWrapperWithoutPanelStyles]: !showPanel,
@@ -99,6 +107,38 @@ export const getCodeWrapperStyles = ({
 
 export const getExpandedButtonStyles = ({ theme }: { theme: Theme }) =>
   cx(expandButtonStyle, getExpandButtonVariantStyle(theme));
+
+export const getCopyButtonWithoutPanelStyles = ({
+  copyButtonAppearance,
+}: {
+  copyButtonAppearance: CopyButtonAppearance;
+}) =>
+  cx(
+    copyButtonWithoutPanelClassName,
+    css`
+      position: absolute;
+      z-index: 1;
+      top: ${spacing[200]}px;
+      right: ${spacing[200]}px;
+      transition: opacity ${transitionDuration.default}ms ease-in-out;
+
+      // On hover or focus, the copy button should always be visible
+      &:hover,
+      &:focus-within {
+        opacity: 1;
+      }
+    `,
+    {
+      [css`
+        opacity: 0;
+
+        // On a mobile device, the copy button should always be visible
+        ${getMobileMediaQuery(breakpoints.Desktop)} {
+          opacity: 1;
+        }
+      `]: copyButtonAppearance === CopyButtonAppearance.Hover,
+    },
+  );
 
 export const contentWrapperStyles = css`
   position: relative;
@@ -189,6 +229,16 @@ export const codeWrapperSingleLineStyles = css`
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
+`;
+
+export const codeWrapperHoverStyles = css`
+  &:hover,
+  &[data-hover='true'] {
+    // On hover of the pre tag, the sibling copy button should be visible
+    & + .${copyButtonWithoutPanelClassName} {
+      opacity: 1;
+    }
+  }
 `;
 
 export function getExpandableCodeWrapperStyle(

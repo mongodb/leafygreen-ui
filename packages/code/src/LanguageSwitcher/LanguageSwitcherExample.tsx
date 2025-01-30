@@ -40,12 +40,11 @@ const snippetMap = {
 };
 
 export function LanguageSwitcherWithPanelExample({
-  darkMode,
   onChange,
   customActionButtons = [],
   showCustomActionButtons = false,
+  ...rest
 }: {
-  darkMode?: boolean;
   onChange?: Function;
   customActionButtons?: Array<React.ReactElement>;
   showCustomActionButtons?: boolean;
@@ -61,9 +60,8 @@ export function LanguageSwitcherWithPanelExample({
 
   return (
     <Code
+      {...rest}
       language={language.displayName}
-      lineNumberStart={1}
-      darkMode={darkMode}
       panel={
         <Panel
           languageOptions={languageOptions}
@@ -80,15 +78,12 @@ export function LanguageSwitcherWithPanelExample({
 }
 
 export function LanguageSwitcherWithDeprecatedPropsExample({
-  darkMode,
   onChange,
   customActionButtons = [],
-  showCustomActionButtons = false,
+  ...rest
 }: {
-  darkMode?: boolean;
   onChange?: Function;
   customActionButtons?: Array<React.ReactElement>;
-  showCustomActionButtons?: boolean;
 }) {
   const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
 
@@ -101,12 +96,10 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
 
   return (
     <Code
+      {...rest}
       language={language.displayName}
-      lineNumberStart={1}
-      darkMode={darkMode}
       languageOptions={languageOptions}
       customActionButtons={customActionButtons}
-      showCustomActionButtons={showCustomActionButtons}
       onChange={handleChange}
       chromeTitle="Title"
     >

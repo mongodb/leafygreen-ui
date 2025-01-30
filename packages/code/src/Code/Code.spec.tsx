@@ -105,6 +105,14 @@ jest.mock('clipboard', () => {
 });
 
 describe('packages/Code', () => {
+  // https://stackoverflow.com/a/69574825/13156339
+  Object.defineProperty(navigator, 'clipboard', {
+    value: {
+      // Provide mock implementation
+      writeText: jest.fn().mockReturnValueOnce(Promise.resolve()),
+    },
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility violations', async () => {
       const { container } = renderCode();
@@ -113,14 +121,8 @@ describe('packages/Code', () => {
     });
 
     describe('copy button', () => {
-      // TODO: tests are in copyButtonAppearance PR
-      // eslint-disable-next-line jest/no-disabled-tests
-      test.skip('announces copied to screenreaders when content is copied without a panel', () => {
-        Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-          spy.mockReturnValue(true);
-          renderCode();
-        });
-
+      test('announces copied to screenreaders when content is copied without a panel', () => {
+        renderCode();
         const copyIcon = screen.getByRole('button');
         userEvent.click(copyIcon);
         expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -269,7 +271,6 @@ describe('packages/Code', () => {
           },
         );
         expect(queryByTestId('lg-code-panel')).toBeNull();
-        expect(queryByTestId('lg-code-copy_button')).toBeNull();
       });
     });
 
@@ -336,12 +337,60 @@ describe('packages/Code', () => {
     });
 
     describe('renders a copy button', () => {
-      test.todo('when copyAppearance is persist');
-      test.todo('when copyAppearance is hover');
+      test('with default value of hover', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode();
+          },
+        );
+        expect(queryByTestId('lg-code-copy_button')).not.toBeNull();
+      });
+      test('when copyButtonAppearance is persist', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({ copyButtonAppearance: 'persist' });
+          },
+        );
+        expect(queryByTestId('lg-code-copy_button')).not.toBeNull();
+      });
+      test('when copyButtonAppearance is hover', () => {
+        const { queryByTestId } = Context.within(
+          Jest.spyContext(ClipboardJS, 'isSupported'),
+          spy => {
+            spy.mockReturnValue(true);
+            return renderCode({ copyButtonAppearance: 'hover' });
+          },
+        );
+        expect(queryByTestId('lg-code-copy_button')).not.toBeNull();
+      });
     });
 
     describe('does not renders a copy button', () => {
-      test.todo('when copyAppearance is none');
+      test('when copyButtonAppearance is none', () => {
+        const { queryByTestId } = renderCode({ copyButtonAppearance: 'none' });
+        expect(queryByTestId('lg-code-copy_button')).toBeNull();
+      });
+    });
+
+    // TODO: get this to work
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip('copies the correct text when copy button is clicked', () => {
+      const { queryByTestId } = Context.within(
+        Jest.spyContext(ClipboardJS, 'isSupported'),
+        spy => {
+          spy.mockReturnValue(true);
+          return render(<Code language="javascript">{codeSnippet}</Code>);
+        },
+      );
+
+      const copyButton = queryByTestId('lg-code-copy_button');
+      expect(copyButton).not.toBeNull();
+      userEvent.click(copyButton);
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(codeSnippet);
     });
   });
 
@@ -623,21 +672,39 @@ describe('packages/Code', () => {
       >
         snippet
       </Code>
-
       <Code language="javascript">snippet</Code>
-
       {/* @ts-expect-error - missing language prop */}
       <Code>snippet</Code>
-
       {/* @ts-expect-error - missing children */}
       <Code language="javascript"></Code>
-
       <Code
         language="javascript"
         showLineNumbers={true}
         onCopy={() => {}}
         darkMode={true}
         panel={<Panel />}
+      >
+        snippet
+      </Code>
+
+      {/* @ts-expect-error - cannot pass both panel and copyButtonAppearance */}
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        panel={<Panel />}
+        copyButtonAppearance="hover"
+      >
+        snippet
+      </Code>
+
+      <Code
+        language="javascript"
+        showLineNumbers={true}
+        onCopy={() => {}}
+        darkMode={true}
+        copyButtonAppearance="hover"
       >
         snippet
       </Code>
@@ -652,7 +719,6 @@ describe('packages/Code', () => {
       >
         snippet
       </Code>
-
       <Code
         language="javascript"
         showLineNumbers={true}
@@ -663,7 +729,6 @@ describe('packages/Code', () => {
       >
         snippet
       </Code>
-
       <Code
         language="javascript"
         showLineNumbers={true}

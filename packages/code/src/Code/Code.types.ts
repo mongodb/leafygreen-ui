@@ -11,6 +11,15 @@ export const ScrollState = {
 
 export type ScrollState = (typeof ScrollState)[keyof typeof ScrollState];
 
+export const CopyButtonAppearance = {
+  Hover: 'hover',
+  Persist: 'persist',
+  None: 'none',
+} as const;
+
+export type CopyButtonAppearance =
+  (typeof CopyButtonAppearance)[keyof typeof CopyButtonAppearance];
+
 export type DetailedElementProps<T> = React.DetailedHTMLProps<
   React.HTMLAttributes<T>,
   T
@@ -39,12 +48,6 @@ export type CodeProps = Omit<
    * @default `false`
    */
   darkMode?: boolean;
-
-  /**
-   * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button.
-   *
-   */
-  panel?: React.ReactNode;
 
   /**
    * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
@@ -101,4 +104,49 @@ export type CodeProps = Omit<
    * @deprecated
    */
   copyable?: boolean;
-};
+} & (
+    | {
+        /**
+         * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+         *
+         * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
+         *
+         * If `persist`, the copy button will always be visible.
+         *
+         * If `none`, the copy button will not be rendered.
+         *
+         * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+         *
+         * @default `hover`
+         */
+        copyButtonAppearance?: CopyButtonAppearance;
+
+        /**
+         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both.
+         *
+         */
+        panel?: never;
+      }
+    | {
+        /**
+         * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
+         *
+         * If `hover`, the copy button will only appear when the user hovers over the code block. On mobile devices, the copy button will always be visible.
+         *
+         * If `persist`, the copy button will always be visible.
+         *
+         * If `none`, the copy button will not be rendered.
+         *
+         * Note: 'panel' cannot be used with `copyButtonAppearance`. Either use `copyButtonAppearance` or `panel`, not both.
+         *
+         * @default `hover`
+         */
+        copyButtonAppearance?: never;
+
+        /**
+         * Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both.
+         *
+         */
+        panel?: React.ReactNode;
+      }
+  );
