@@ -124,18 +124,15 @@ interface FontSizeProps {
 }
 
 export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
-  baseFontSize,
   highlightLines,
   ...args
 }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code
-      {...(args as CodeProps)}
-      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-    >
-      {jsSnippet}
-    </Code>
-  </LeafygreenProvider>
+  <Code
+    {...(args as CodeProps)}
+    highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+  >
+    {jsSnippet}
+  </Code>
 );
 LiveExample.parameters = {
   chromatic: {
@@ -144,38 +141,32 @@ LiveExample.parameters = {
 };
 
 export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
-  baseFontSize,
   highlightLines,
   ...args
 }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code
-      {...(args as CodeProps)}
-      copyButtonAppearance={undefined}
-      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-      panel={
-        <Panel
-          customActionButtons={customActionButtons}
-          showCustomActionButtons
-        />
-      }
-    >
-      {jsSnippet}
-    </Code>
-  </LeafygreenProvider>
+  <Code
+    {...(args as CodeProps)}
+    copyButtonAppearance={undefined}
+    highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    panel={
+      <Panel
+        customActionButtons={customActionButtons}
+        showCustomActionButtons
+      />
+    }
+  >
+    {jsSnippet}
+  </Code>
 );
 
 export const WithLanguageSwitcher: StoryType<typeof Code, FontSizeProps> = ({
-  baseFontSize,
   ...args
 }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <LanguageSwitcherWithPanelExample
-      showCustomActionButtons={true}
-      customActionButtons={customActionButtons}
-      {...args}
-    />
-  </LeafygreenProvider>
+  <LanguageSwitcherWithPanelExample
+    showCustomActionButtons={true}
+    customActionButtons={customActionButtons}
+    {...args}
+  />
 );
 WithLanguageSwitcher.parameters = {
   controls: {
@@ -193,17 +184,15 @@ WithLanguageSwitcher.parameters = {
 export const WithDeprecatedCustomActionProps: StoryType<
   typeof Code,
   FontSizeProps
-> = ({ baseFontSize, highlightLines, ...args }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <Code
-      {...(args as CodeProps)}
-      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-      customActionButtons={customActionButtons}
-      showCustomActionButtons
-    >
-      {jsSnippet}
-    </Code>
-  </LeafygreenProvider>
+> = ({ highlightLines, ...args }: CodeProps) => (
+  <Code
+    {...(args as CodeProps)}
+    highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    customActionButtons={customActionButtons}
+    showCustomActionButtons
+  >
+    {jsSnippet}
+  </Code>
 );
 WithDeprecatedCustomActionProps.parameters = {
   controls: {
@@ -221,14 +210,12 @@ WithDeprecatedCustomActionProps.parameters = {
 export const WithDeprecatedLanguageSwitcherProps: StoryType<
   typeof Code,
   FontSizeProps
-> = ({ baseFontSize, ...args }: CodeProps & FontSizeProps) => (
-  <LeafygreenProvider baseFontSize={baseFontSize}>
-    <LanguageSwitcherWithDeprecatedPropsExample
-      showCustomActionButtons={true}
-      customActionButtons={customActionButtons}
-      {...args}
-    />
-  </LeafygreenProvider>
+> = ({ ...args }: CodeProps) => (
+  <LanguageSwitcherWithDeprecatedPropsExample
+    showCustomActionButtons={true}
+    customActionButtons={customActionButtons}
+    {...args}
+  />
 );
 WithDeprecatedLanguageSwitcherProps.parameters = {
   controls: {
