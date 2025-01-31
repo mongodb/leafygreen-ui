@@ -51,6 +51,9 @@
       "path": "../select"
     },
     {
+      "path": "../skeleton-loader"
+    },
+    {
       "path": "../tokens"
     },
     {

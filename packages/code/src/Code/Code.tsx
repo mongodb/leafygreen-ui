@@ -7,6 +7,7 @@ import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
+import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
@@ -20,7 +21,8 @@ import {
   getCodeWrapperStyles,
   getCopyButtonWithoutPanelStyles,
   getExpandedButtonStyles,
-  wrapperStyle,
+  getLoadingStyles,
+  getWrapperStyles,
 } from './Code.styles';
 import {
   CodeProps,
@@ -40,14 +42,15 @@ function getHorizontalScrollbarHeight(element: HTMLElement): number {
 }
 
 function Code({
-  children = '',
   language: languageProp,
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
   expandable = false,
-  copyButtonAppearance = CopyButtonAppearance.Hover,
+  isLoading = false,
   highlightLines = [],
+  copyButtonAppearance = CopyButtonAppearance.Hover,
+  children = '',
   className,
   onCopy,
   panel,
@@ -164,7 +167,8 @@ function Code({
   const showExpandButton = !!(
     expandable &&
     numOfLinesOfCode &&
-    numOfLinesOfCode > numOfCollapsedLinesOfCode
+    numOfLinesOfCode > numOfCollapsedLinesOfCode &&
+    !isLoading
   );
 
   // TODO: remove when deprecated props are removed
@@ -195,44 +199,58 @@ function Code({
   const showCopyButtonWithoutPanel =
     !showPanel &&
     copyButtonAppearance !== CopyButtonAppearance.None &&
-    ClipboardJS.isSupported();
+    ClipboardJS.isSupported() &&
+    !isLoading;
 
   return (
     <CodeContextProvider
       darkMode={darkMode}
       contents={children}
       language={languageProp}
+      isLoading={isLoading}
       showPanel={showPanel}
     >
-      <div className={wrapperStyle[theme]}>
+      {/* TODO: note in changeset that className was moved to the parent wrapper */}
+      <div className={getWrapperStyles({ theme, className })}>
         <div
           className={getCodeStyles({
             scrollState,
             theme,
             showPanel,
             showExpandButton,
+            isLoading,
           })}
         >
-          <pre
-            {...(rest as DetailedElementProps<HTMLPreElement>)}
-            className={getCodeWrapperStyles({
-              theme,
-              showPanel,
-              expanded,
-              codeHeight,
-              collapsedCodeHeight,
-              isMultiline,
-              showExpandButton,
-              className,
-            })}
-            onScroll={onScroll}
-            ref={scrollableElementRef}
-            // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={scrollState !== ScrollState.None ? 0 : -1}
-          >
-            {renderedSyntaxComponent}
-          </pre>
+          {!isLoading && (
+            <pre
+              data-testid={LGIDs.pre}
+              {...(rest as DetailedElementProps<HTMLPreElement>)}
+              className={getCodeWrapperStyles({
+                theme,
+                showPanel,
+                expanded,
+                codeHeight,
+                collapsedCodeHeight,
+                isMultiline,
+                showExpandButton,
+                className,
+              })}
+              onScroll={onScroll}
+              ref={scrollableElementRef}
+              // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              tabIndex={scrollState !== ScrollState.None ? 0 : -1}
+            >
+              {renderedSyntaxComponent}
+            </pre>
+          )}
+
+          {isLoading && (
+            <CodeSkeleton
+              data-testid={LGIDs.skeleton}
+              className={getLoadingStyles(theme)}
+            />
+          )}
 
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
           {showCopyButtonWithoutPanel && (

@@ -902,6 +902,9 @@ importers:
       '@leafygreen-ui/select':
         specifier: workspace:^
         version: link:../select
+      '@leafygreen-ui/skeleton-loader':
+        specifier: workspace:^
+        version: link:../skeleton-loader
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
