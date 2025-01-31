@@ -49,18 +49,18 @@ function ExampleComponent() {
 
 ## Properties
 
-| Prop       | Type        | Description                                        | Default |
-| ---------- | ----------- | -------------------------------------------------- | ------- |
-| `children` | `ReactNode` | Children that will be rendered inside the `Drawer` |         |
-| `open`     | `boolean`   | Determines if the `Drawer` is open or closed       | `false` |
-| `setOpen`  | `function`  | Callback to change the open state of the `Drawer`  |         |
-| `title`    | `ReactNode` | Title of the `Drawer`                              |         |
+| Prop                    | Type        | Description                                        | Default |
+| ----------------------- | ----------- | -------------------------------------------------- | ------- |
+| `children` _(optional)_ | `ReactNode` | Children that will be rendered inside the `Drawer` |         |
+| `open`                  | `boolean`   | Determines if the `Drawer` is open or closed       | `false` |
+| `setOpen`               | `function`  | Callback to change the open state of the `Drawer`  |         |
+| `title`                 | `ReactNode` | Title of the `Drawer`                              |         |
 
 # Test Harnesses
 
 ## getTestUtils()
 
-`getTestUtils()` is a util that allows consumers to reliably interact with `LG Drawer` in a product test suite. If the `Drawer` component cannot be found, an error will be thrown.
+`getTestUtils()` is a util that allows consumers to reliably interact with LG `Drawer` in a product test suite. If the `Drawer` component cannot be found, an error will be thrown.
 
 ### Usage
 
