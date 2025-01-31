@@ -7,6 +7,7 @@ import {
   type StoryType,
 } from '@lg-tools/storybook-utils';
 
+import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -83,7 +84,7 @@ const meta: StoryMetaType<typeof Code> = {
       ],
     },
     generate: {
-      storyNames: ['WithPanel', 'WithoutPanel'],
+      storyNames: ['WithPanel', 'WithoutPanel', 'Loading'],
     },
   },
   args: {
@@ -94,6 +95,7 @@ const meta: StoryMetaType<typeof Code> = {
     chromeTitle: '',
   },
   argTypes: {
+    isLoading: { control: 'boolean' },
     copyable: { control: 'boolean' },
     expandable: { control: 'boolean' },
     showLineNumbers: { control: 'boolean' },
@@ -130,6 +132,9 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
   <Code
     {...(args as CodeProps)}
     highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+    className={css`
+      width: 100%;
+    `}
   >
     {jsSnippet}
   </Code>
@@ -303,5 +308,33 @@ WithoutPanel.parameters = {
         copyButtonAppearance: CopyButtonAppearance.Persist,
       },
     ],
+  },
+};
+
+export const Loading = () => {};
+Loading.parameters = {
+  controls: {
+    exclude: /.*/g,
+  },
+  generate: {
+    combineArgs: {
+      darkMode: [false, true],
+      expandable: [true, false],
+      panel: [
+        undefined,
+        <Panel
+          title="Title"
+          showCustomActionButtons
+          customActionButtons={customActionButtons}
+          languageOptions={languageOptions}
+          onChange={() => {}}
+          key={7}
+        />,
+      ],
+    },
+    args: {
+      language: languageOptions[0].displayName,
+      isLoading: true,
+    },
   },
 };

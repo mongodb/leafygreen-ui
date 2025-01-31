@@ -17,7 +17,10 @@ export const getCopyButtonStyles = ({
   cx(
     css`
       align-self: center;
-      color: ${color[theme].icon.primary.default};
+
+      &[aria-disabled='false'] {
+        color: ${color[theme].icon.primary.default};
+      }
 
       div[role='tooltip'] svg {
         width: 26px;

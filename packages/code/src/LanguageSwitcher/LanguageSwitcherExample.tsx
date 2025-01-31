@@ -42,7 +42,7 @@ const snippetMap = {
 export function LanguageSwitcherWithPanelExample({
   onChange,
   customActionButtons = [],
-  showCustomActionButtons = false,
+  showCustomActionButtons = true,
   ...rest
 }: {
   onChange?: Function;

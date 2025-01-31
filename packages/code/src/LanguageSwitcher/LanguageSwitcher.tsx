@@ -4,6 +4,7 @@ import { usePrevious } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Option, RenderMode, Select, Size } from '@leafygreen-ui/select';
 
+import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
 import { LanguageOption } from '../Panel/Panel.types';
 
@@ -18,6 +19,7 @@ interface Props {
 function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
   const { darkMode } = useDarkMode();
   const previousLanguage = usePrevious(language);
+  const { isLoading } = useCodeContext();
 
   const handleChange = (val: string) => {
     if (val === '' && previousLanguage !== undefined) {
@@ -45,6 +47,7 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         renderMode={RenderMode.TopLayer}
         size={Size.XSmall}
         data-testid={LGIDs.select}
+        disabled={isLoading}
       >
         {languageOptions?.map(option => (
           <Option key={option?.displayName} value={option?.displayName}>

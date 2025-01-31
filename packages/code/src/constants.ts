@@ -9,4 +9,6 @@ export const LGIDs = {
   copyButton: `${LGID_ROOT}-copy_button`,
   copyTooltip: `${LGID_ROOT}-copy_tooltip`,
   expandButton: `${LGID_ROOT}-expand_button`,
+  skeleton: `${LGID_ROOT}-skeleton`,
+  pre: `${LGID_ROOT}-pre`,
 } as const;

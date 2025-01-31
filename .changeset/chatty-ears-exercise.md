@@ -1,6 +1,7 @@
 ---
 '@leafygreen-ui/code': major
 ---
+
 ## What's new?
 
 ### `panel`
@@ -49,6 +50,20 @@ e.g.
 </Code>
 ```
 
+### `isLoading`
+Adds a new prop, `isLoading`. This prop determines whether or not the loading skeleton will be rendered in place of the code block. If `true`, the language switcher and copy button will be disabled in the top panel.
+
+e.g.
+
+```js
+<Code
+  language="javascript"
+  isLoading
+>
+  {snippet}
+</Code>
+```
+
 
 ### `chromeTitle`
 
@@ -64,11 +79,7 @@ e.g.
 **After**:
 ```js
 <Code 
-  panel={
-    <Panel
-      title="Title"
-    />
-  }
+  panel={<Panel title="Title" />}
 >
  {snippet}
 </Code>
@@ -76,6 +87,11 @@ e.g.
 
 ### `baseFontSize`
 Adds `baseFontSize` prop, which allows you to override the `LeafyGreenProvider` value.
+
+## What's changed?
+
+The `className` prop is no longer applied to the `<pre>` tag. Instead it is applied to the parent `<div>` wrapper.
+
 
 ## Deprecated
 
@@ -92,16 +108,15 @@ Moving forward these props should be passed to the new sub-component, `<Panel />
 **Before**:
 ```js
 <Code
-  language={}
-  showLineNumbers={}
+  language="javascript"
+  showLineNumbers
   onCopy={() => {}}
-  darkMode={}
-  customActionButtons={}
-  showCustomActionButtons={}
-  chromeTitle={}
-  languageOptions={}
-  onChange={}
-  copyable={}
+  darkMode={true}
+  onChange={() => {}}
+  languageOptions={[]}
+  showCustomActionButtons
+  customActionButtons={[]}
+  chromeTitle='Title'
 >
   {snippet}
 </Code>
@@ -111,7 +126,7 @@ Moving forward these props should be passed to the new sub-component, `<Panel />
 ```js
 <Code
   language="javascript"
-  showLineNumbers={true}
+  showLineNumbers
   onCopy={() => {}}
   darkMode={true}
   // NEW PANEL PROP
