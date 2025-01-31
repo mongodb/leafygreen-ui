@@ -296,7 +296,7 @@ export function flattenNestedTree(
             }
           }
 
-          // If this entity has double brackets then remove them and add a special class to it
+          // If this entity has double brackets then remove them and add a special class to it e.g. 'testing }}'
           const cleanedEntity = entity.replace(' }}', '');
 
           return {
