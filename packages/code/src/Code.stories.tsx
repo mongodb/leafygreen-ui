@@ -36,6 +36,7 @@ const customActionButtons = [
 
 const jsSnippet = `
 import datetime from './';
+import shaneeza from './';
 
 const myVar = 42;
 
