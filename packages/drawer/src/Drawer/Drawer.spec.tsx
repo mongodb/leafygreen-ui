@@ -3,10 +3,11 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { getTestUtils } from '../utils';
+
 import { Drawer, DrawerProps } from '.';
 
 const drawerContent = 'Drawer content';
-const drawerTestId = 'drawer-test-id';
 
 const DrawerWrapper = ({
   open: initialOpen = false,
@@ -15,18 +16,21 @@ const DrawerWrapper = ({
   const [open, setOpen] = useState(initialOpen);
 
   return (
-    <Drawer data-testid={drawerTestId} {...props} open={open} setOpen={setOpen}>
+    <Drawer {...props} open={open} setOpen={setOpen}>
       {drawerContent}
     </Drawer>
   );
 };
 
 function renderDrawer(props: Partial<DrawerProps> = {}) {
-  return render(
+  const utils = render(
     <DrawerWrapper title="Drawer title" {...props}>
       {drawerContent}
     </DrawerWrapper>,
   );
+  const { getDrawer, ...testUtils } = getTestUtils();
+  const drawer = getDrawer();
+  return { ...utils, drawer, ...testUtils };
 }
 
 describe('packages/drawer', () => {
@@ -40,20 +44,17 @@ describe('packages/drawer', () => {
 
   describe('when the "open" prop is true', () => {
     test('renders content as expected', async () => {
-      const { getByTestId } = renderDrawer({ open: true });
-      const drawer = getByTestId(drawerTestId);
+      const { drawer } = renderDrawer({ open: true });
       expect(drawer).toHaveAttribute('aria-hidden', 'false');
     });
 
     test('uses "id" prop when set', () => {
-      const { getByTestId } = renderDrawer({ open: true, id: 'test-id' });
-      const drawer = getByTestId(drawerTestId);
+      const { drawer } = renderDrawer({ open: true, id: 'test-id' });
       expect(drawer).toHaveAttribute('id', 'test-id');
     });
 
     test('closes drawer when close button is clicked', async () => {
-      const { getByRole, getByTestId } = renderDrawer({ open: true });
-      const drawer = getByTestId(drawerTestId);
+      const { drawer, getByRole } = renderDrawer({ open: true });
       const closeButton = getByRole('button');
 
       userEvent.click(closeButton);
