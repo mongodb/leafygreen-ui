@@ -176,5 +176,3 @@ function Syntax({
 Syntax.displayName = 'Syntax';
 
 export default Syntax;
-
-export { hljs };
