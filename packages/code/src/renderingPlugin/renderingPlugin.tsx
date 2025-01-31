@@ -19,7 +19,7 @@ interface TokenProps {
 
 let count = 0;
 const prefix = 'lg-highlight-';
-let lastEntity;
+let lastStringEntity: string;
 
 export function generateKindClassName(...kinds: Array<any>): string {
   // console.log({ kinds });
@@ -274,30 +274,30 @@ export function flattenNestedTree(
             // Check it the entity is a bracket with no space after it
             const isOnlySingleBracket = entity === singleBracket;
 
-            console.log({ entity, isOnlySingleBracket, lastEntity });
+            console.log({ entity, isOnlySingleBracket, lastStringEntity });
 
             // If there is no space after it then remove it
             if (isOnlySingleBracket) {
               console.log({ entity });
               // save this entity as the last entity so that we can check if this directly follows another bracket
-              lastEntity = entity;
-              return;
+              lastStringEntity = entity;
+              return '';
             }
 
             // Check if the entity is a bracket with a space after it and if a empty bracket was the last entity before it e.g. "{{ "
             const isSingleBracketWithSpace =
               entity === singleBracketWithSpaceAfter &&
-              lastEntity === singleBracket;
+              lastStringEntity === singleBracket;
 
             // If the entity is a bracket with a space after it and a single bracket was the last entity before it then remove it
             if (isSingleBracketWithSpace) {
-              lastEntity = entity;
-              return;
+              lastStringEntity = entity;
+              return '';
             }
           }
 
           // If this entity has double brackets then remove them and add a special class to it
-          const cleanedEntity = entity.replaceAll(' }}', '');
+          const cleanedEntity = entity.replace(' }}', '');
 
           return {
             kind: generateKindClassName(`special ${prefix}special__${count++}`),
