@@ -23,10 +23,10 @@ import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { getCopyButtonStyles, tooltipStyles } from './CopyButton.styles';
+import { getCopyButtonStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
-function CopyButton({ onCopy, contents }: CopyProps) {
+function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const [copied, setCopied] = useState(false);
   /**
    * `CopyButton` controls `tooltipOpen` state because when `copied` state
@@ -37,7 +37,7 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
-  const { hasPanel, isLoading } = useCodeContext();
+  const { showPanel, isLoading } = useCodeContext();
 
   /**
    * toggles `tooltipOpen` state
@@ -126,26 +126,26 @@ function CopyButton({ onCopy, contents }: CopyProps) {
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
     'data-testid': LGIDs.copyButton,
-    className: getCopyButtonStyles({ theme, copied, hasPanel }),
+    className: getCopyButtonStyles({ theme, copied, showPanel, className }),
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onMouseEnter: handleMouseEnter,
     onMouseLeave: handleMouseLeave,
     ref: buttonRef,
     disabled: isLoading,
+    ...rest,
   };
 
   return (
     <Tooltip
       align={Align.Top}
-      className={tooltipStyles}
       data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
       setOpen={setTooltipOpen}
       trigger={
-        hasPanel ? (
+        showPanel ? (
           <IconButton {...sharedButtonProps}>
             {copied ? <CheckmarkIcon /> : <CopyIcon />}
             {copied && (

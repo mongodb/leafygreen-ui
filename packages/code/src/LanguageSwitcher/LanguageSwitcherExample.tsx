@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { LanguageOption } from '../Panel/Panel.types';
 import { Language } from '../types';
 import Code, { Panel } from '..';
-// import { hljs } from '../Syntax/Syntax';
 
 export const languageOptions = [
   {
@@ -59,14 +58,6 @@ export function LanguageSwitcherWithPanelExample({
 
   const languageIndex = language.language;
 
-  // hljs.addPlugin({
-  //   'before:highlight': results => {
-  //     console.log('🍓🍓🍓', { code: results.code });
-  //     // move the language from the result into the dataset
-  //     // el.dataset.language = result.language;
-  //   },
-  // });
-
   return (
     <Code
       {...rest}
@@ -80,7 +71,6 @@ export function LanguageSwitcherWithPanelExample({
           title="Title"
         />
       }
-      {...rest}
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>

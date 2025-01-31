@@ -21,8 +21,8 @@ const CodeContextProvider = ({
   contents,
   darkMode,
   language,
-  hasPanel,
   isLoading,
+  showPanel,
 }: PropsWithChildren<CodeProviderProps>) => {
   const CodeProvider = (CodeContext as React.Context<CodeProviderProps>)
     .Provider;
@@ -31,10 +31,10 @@ const CodeContextProvider = ({
     return {
       contents,
       language,
-      hasPanel,
+      showPanel,
       isLoading,
     };
-  }, [contents, language, hasPanel, isLoading]);
+  }, [contents, language, showPanel, isLoading]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
