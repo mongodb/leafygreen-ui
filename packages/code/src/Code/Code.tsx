@@ -54,7 +54,6 @@ function Code({
   className,
   onCopy,
   panel,
-  customHighlights,
   // Deprecated props
   copyable = false,
   showCustomActionButtons = false,

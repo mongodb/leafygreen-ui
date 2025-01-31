@@ -52,11 +52,11 @@ function initializeSyntaxHighlighting() {
     } else {
       hljs.registerLanguage(language, languageParsers[language]);
 
-      const kwds = ['shaneeza'];
+      // const kwds = ['shaneeza'];
 
       // hljs.getLanguage(language).keywords.custom = ['testing'];
-      const built_in = hljs.getLanguage(language);
-      console.log({ language, built_in });
+      // const built_in = hljs.getLanguage(language);
+      // console.log({ language, built_in });
 
       // hljs.getLanguage(language).keywords.built_in = [
       //   ...new Set([...built_in, ...kwds]),

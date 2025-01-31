@@ -132,6 +132,4 @@ export type CodeProps = Omit<
    * @deprecated
    */
   copyable?: boolean;
-
-  customHighlights?: object;
 };

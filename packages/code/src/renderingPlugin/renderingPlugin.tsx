@@ -17,9 +17,12 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
+let count = 0;
+const prefix = 'lg-highlight-';
+let lastEntity;
+
 export function generateKindClassName(...kinds: Array<any>): string {
-  const prefix = 'lg-highlight-';
-  console.log({ kinds });
+  // console.log({ kinds });
 
   return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
@@ -214,9 +217,7 @@ function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
   return false;
 }
 
-const testingObj = {
-  datetime: 'testing',
-};
+const bracketArray = ['}}', '{'];
 
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
 export function flattenNestedTree(
@@ -242,30 +243,84 @@ export function flattenNestedTree(
       (str): str is string => isString(str) && str.length > 0,
     );
 
-    console.log({ parentKinds });
+    // console.log({ parentKinds });
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
       console.log({ entity });
       if (isString(entity)) {
-        return parentKinds.length > 0
-          ? {
-              kind: generateKindClassName(
-                kind,
-                ...parentKinds,
-                ...childrenAsKeywords(entity),
-              ),
-              children: [entity],
-            }
-          : testingObj[entity.trim()]
-          ? {
-              kind: generateKindClassName(testingObj[entity.trim()]),
-              children: [entity],
-            }
-          : entity;
-        // : entity; // entity is basic text
+        if (parentKinds.length > 0) {
+          return {
+            kind: generateKindClassName(
+              kind,
+              ...parentKinds,
+              ...childrenAsKeywords(entity),
+            ),
+            children: [entity],
+          };
+        } else if (bracketArray.some(sub => entity.includes(sub))) {
+          // The plugin returns {{ testing }} like this:
+          // entity: "{"
+          // entity: "{ "
+          // entity: "testing }} "
 
-        // TODO: here, check if entity is a string, if its a string then check if its in the custom highlight obj, if it is then genereate a kindClassName.
+          if (entity.includes('{')) {
+            // This is a bracket that has no space after it, meaning there is a string directly after it e.g. "{{"
+            const singleBracket = '{';
+
+            // This is a bracket with a space after it and without a new line e.g. "{\n "
+            const singleBracketWithSpaceAfter = '{ ';
+
+            // Check it the entity is a bracket with no space after it
+            const isOnlySingleBracket = entity === singleBracket;
+
+            console.log({ entity, isOnlySingleBracket, lastEntity });
+
+            // If there is no space after it then remove it
+            if (isOnlySingleBracket) {
+              console.log({ entity });
+              // save this entity as the last entity so that we can check if this directly follows another bracket
+              lastEntity = entity;
+              return;
+            }
+
+            // Check if the entity is a bracket with a space after it and if a empty bracket was the last entity before it e.g. "{{ "
+            const isSingleBracketWithSpace =
+              entity === singleBracketWithSpaceAfter &&
+              lastEntity === singleBracket;
+
+            // If the entity is a bracket with a space after it and a single bracket was the last entity before it then remove it
+            if (isSingleBracketWithSpace) {
+              lastEntity = entity;
+              return;
+            }
+          }
+
+          // If this entity has double brackets then remove them and add a special class to it
+          const cleanedEntity = entity.replaceAll(' }}', '');
+
+          return {
+            kind: generateKindClassName(`special ${prefix}special__${count++}`),
+            children: [cleanedEntity],
+          };
+        } else {
+          return entity;
+        }
+        // return parentKinds.length > 0
+        //   ? {
+        //       kind: generateKindClassName(
+        //         kind,
+        //         ...parentKinds,
+        //         ...childrenAsKeywords(entity),
+        //       ),
+        //       children: [entity],
+        //     }
+        //   : bracketArray.some(sub => entity.includes(sub))
+        //   ? {
+        //       kind: generateKindClassName('special'),
+        //       children: [entity],
+        //     }
+        //   : entity;
       }
 
       // If this is a nested entity, then flat map it's children
@@ -462,5 +517,3 @@ const plugin: LeafyGreenHLJSPlugin = {
 };
 
 export default plugin;
-
-// TODO: maybe an object with key and value. If that key is found above then add this classname?

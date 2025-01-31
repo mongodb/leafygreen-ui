@@ -34,29 +34,45 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-const jsSnippet = `
-import datetime from './';
-import shaneeza from './';
+// const jsSnippet = `
+// import datetime from './';
+// import shaneeza from './';
 
-const myVar = 42;
+// const myVar = 42;
+
+// var myObj = {
+//   someProp: ['arr', 'ay'],
+//   regex: /([A-Z])\w+/
+// }
+
+// export default class myClass {
+//   constructor(){
+//     // access properties
+//     this.myProp = false
+//   }
+// }
+
+// function greeting(entity) {
+//   return \`Hello, \${entity}! Cras justo odio, dapibus ac {{facilisis}} in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+// }
+
+// console.log(greeting('World'));
+// `;
+
+const jsSnippet = `
+import {{ shaneeza }} from './';
+import {{ datetime }} from './';
 
 var myObj = {
   someProp: ['arr', 'ay'],
   regex: /([A-Z])\w+/
 }
 
-export default class myClass {
-  constructor(){
-    // access properties
-    this.myProp = false
+var myObj = {
+  someProp: ['arr', 'ay']
   }
-}
 
-function greeting(entity) {
-  return \`Hello, \${entity}! Cras justo odio, dapibus ac {{facilisis}} in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
-}
- 
-console.log(greeting('World'));
+const check = { hello }
 `;
 
 // > 5 lines to trigger expandable code block
