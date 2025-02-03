@@ -1093,8 +1093,7 @@ const {
 - Styled components
 - Sticky header
 - `useLeafyGreenTable`
-  - Only rows
-  - Rows and subrows
+  - [Rows and subrows](https://codesandbox.io/p/sandbox/table-example-v13-regular-table-w-rows-and-subrows-m5m55y)
   - Expanded content
   - [Row, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-k4nmqq)
   - With extra custom columns
@@ -1106,8 +1105,7 @@ const {
   - Disabled rows
   - With pagination
 - `useLeafyGreenVirtualTable`
-  - Only rows
-  - Rows and subrows
+  - [Rows and subrows](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-and-subrows-flxjfh)
   - Expanded content
   - [Rows, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-subrows-and-expanded-content-45lvd7)
   - With extra custom columns
