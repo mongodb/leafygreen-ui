@@ -20,11 +20,21 @@ import { BaseTabTitleProps } from './TabTitle.types';
 
 const TabTitle = InferredPolymorphic<BaseTabTitleProps, 'button'>(
   (
-    { children, className, disabled = false, name, onClick, ...rest },
+    {
+      children,
+      className,
+      disabled = false,
+      index: indexProp,
+      name,
+      onClick,
+      ...rest
+    },
     fwdRef,
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize();
-    const { index, ref, id } = useDescendant(TabDescendantsContext, fwdRef);
+    const { index, ref, id } = useDescendant(TabDescendantsContext, fwdRef, {
+      index: indexProp,
+    });
     const { tabPanelDescendants } = useTabPanelDescendantsContext();
     const { as, darkMode, selected, size } = useTabsContext();
     const { Component } = useInferredPolymorphic(as, rest, 'button');

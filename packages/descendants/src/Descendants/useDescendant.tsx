@@ -36,10 +36,10 @@ export const useDescendant = <T extends HTMLElement>(
   const { descendants, dispatch } = useContext(context);
   const id = useRef(genId());
 
-  // Find the element with this id in the descendants list
+  // Use explicit index if provided or find the element with this id in the descendants list
   const index = useMemo(() => {
-    return findDescendantIndexWithId(descendants, id.current);
-  }, [descendants]);
+    return props.index ?? findDescendantIndexWithId(descendants, id.current);
+  }, [descendants, props.index]);
 
   // On render, register the element as a descendant
   useIsomorphicLayoutEffect(() => {
