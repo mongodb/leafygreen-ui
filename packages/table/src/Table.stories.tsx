@@ -96,7 +96,26 @@ const Template: StoryFn<StoryTableProps> = args => {
         {data.map((row: AnyDict) => (
           <Row key={row.id}>
             {Object.keys(row).map((cellKey: string, index: number) => {
-              return <Cell key={`${cellKey}-${index}`}>{row[cellKey]}</Cell>;
+              return (
+                <Cell
+                  key={`${cellKey}-${index}`}
+                  overrideTruncation={index === 6}
+                >
+                  {index === 6 ? (
+                    <Tooltip
+                      trigger={
+                        <Button type="button" size="small">
+                          {row[cellKey]}
+                        </Button>
+                      }
+                    >
+                      {"I'm leafy, you're leafy"}
+                    </Tooltip>
+                  ) : (
+                    row[cellKey]
+                  )}
+                </Cell>
+              );
             })}
           </Row>
         ))}
@@ -491,6 +510,11 @@ export const WithButtons: StoryFn<StoryTableProps> = args => {
       </TableBody>
     </Table>
   );
+};
+WithButtons.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const NoTruncation = LiveExample.bind({});

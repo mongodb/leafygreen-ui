@@ -14,19 +14,36 @@ import { InternalCellProps } from '.';
 const InternalCellWithoutRT = forwardRef<
   HTMLTableCellElement,
   InternalCellProps
->(({ children, className, ...rest }: InternalCellProps, fwdRef) => {
-  const { shouldTruncate = true } = useTableContext();
+>(
+  (
+    {
+      children,
+      className,
+      overrideTruncation = false,
+      ...rest
+    }: InternalCellProps,
+    fwdRef,
+  ) => {
+    const { shouldTruncate = true } = useTableContext();
 
-  return (
-    <InternalCellBase
-      ref={fwdRef}
-      className={cx(getCellStyles(), className)}
-      {...rest}
-    >
-      <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
-    </InternalCellBase>
-  );
-});
+    return (
+      <InternalCellBase
+        ref={fwdRef}
+        className={cx(getCellStyles(), className)}
+        {...rest}
+      >
+        <div
+          className={getCellEllipsisStyles({
+            shouldTruncate,
+            overrideTruncation,
+          })}
+        >
+          {children}
+        </div>
+      </InternalCellBase>
+    );
+  },
+);
 
 InternalCellWithoutRT.displayName = 'InternalCellWithoutRT';
 

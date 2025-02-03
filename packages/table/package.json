@@ -31,7 +31,6 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
     "@tanstack/react-table": "^8.20.5",
@@ -46,7 +45,8 @@
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
-    "@leafygreen-ui/pagination": "workspace:^"
+    "@leafygreen-ui/pagination": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
