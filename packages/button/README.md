@@ -170,7 +170,7 @@ const { getButton, isDisabled } = getTestUtils();
 | `getButton`  | Returns the input node                | `HTMLButtonElement` |
 | `isDisabled` | Returns whether the input is disabled | `boolean`           |
 
-# Loading
+# Loading Props
 
 ## Props
 
