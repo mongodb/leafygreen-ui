@@ -31,6 +31,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
     "@tanstack/react-table": "^8.20.5",

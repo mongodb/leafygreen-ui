@@ -64,7 +64,7 @@ export const getCellContainerStyles = (align: Align = 'left') => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
-  overflow: hidden;
+  /* overflow: hidden; */
   justify-content: ${align};
   text-align: ${align};
 
@@ -77,7 +77,7 @@ export const getBaseCellStyles = (
   verticalAlignment: VerticalAlignment = VerticalAlignment.Top,
 ) => css`
   padding: 0 ${spacing[200]}px;
-  overflow: hidden;
+  /* overflow: hidden; */
   vertical-align: ${verticalAlignment};
 
   &:focus-visible {
@@ -95,11 +95,17 @@ export const cellInnerStyles = css`
   min-width: 100%;
 `;
 
-export const getCellEllipsisStyles = (shouldTruncate: boolean) =>
+export const getCellEllipsisStyles = ({
+  shouldTruncate,
+  overrideTruncation,
+}: {
+  shouldTruncate: boolean;
+  overrideTruncation: boolean;
+}) =>
   cx({
     [css`
       flex: 1;
-      overflow: hidden;
+      overflow: ${overrideTruncation ? 'unset' : 'hidden'};
       white-space: nowrap;
       text-overflow: ellipsis;
       contain: inline-size; // 🤯

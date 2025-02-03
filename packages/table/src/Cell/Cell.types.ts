@@ -26,6 +26,11 @@ interface BaseCellProps extends ComponentPropsWithRef<'td'> {
    * A `className` applied to the inner `div` of the Cell
    */
   contentClassName?: string;
+
+  /**
+   * If shouldTruncation={true} on `Table`, this prop will override truncation for this cell. This is helpful for cells that should never truncate, like buttons or icons since truncation hides hover/focus states.
+   */
+  overrideTruncation?: boolean;
 }
 
 export interface CellProps<T extends LGRowData> extends BaseCellProps {

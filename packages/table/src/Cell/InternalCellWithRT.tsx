@@ -24,6 +24,7 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
     contentClassName,
     align,
     cell,
+    overrideTruncation = false,
     ...rest
   }: InternalCellWithRTProps<T>,
   ref: ForwardedRef<HTMLTableCellElement>,
@@ -52,7 +53,14 @@ const InternalCellWithRTForwardRef = <T extends LGRowData>(
           disabled={disabled}
         />
       )}
-      <div className={getCellEllipsisStyles(shouldTruncate)}>{children}</div>
+      <div
+        className={getCellEllipsisStyles({
+          shouldTruncate,
+          overrideTruncation,
+        })}
+      >
+        {children}
+      </div>
     </InternalCellBase>
   );
 };

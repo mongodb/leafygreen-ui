@@ -11,6 +11,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
+import Tooltip from '@leafygreen-ui/tooltip';
 
 import { VerticalAlignment } from './Table/Table.types';
 import {
@@ -365,6 +366,131 @@ HundredsOfRows.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
+};
+
+export const WithButtons: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(300));
+
+  const columns = React.useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 90,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 120,
+        cell: _ => {
+          return (
+            <Tooltip trigger={<Button size="small">Button</Button>}>
+              {"I'm leafy, you're leafy"}
+            </Tooltip>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<any>({
+    data,
+    columns,
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <Table {...args} table={table} ref={tableContainerRef}>
+      <TableHead isSticky>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map((header, index) => {
+              return (
+                <HeaderCell
+                  key={header.id}
+                  header={header}
+                  className={cx({
+                    [css`
+                      // since the table is not fixed, the width is not respected. This prevents the width from getting any smaller.
+                      min-width: 120px;
+                    `]: index === 5,
+                  })}
+                >
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {rows.map((row: LeafyGreenTableRow<Person>) => {
+          const isExpandedContent = row.isExpandedContent ?? false;
+
+          return (
+            <Fragment key={row.id}>
+              {!isExpandedContent && (
+                <Row row={row}>
+                  {row.getVisibleCells().map((cell, index) => {
+                    return (
+                      <Cell
+                        key={cell.id}
+                        id={cell.id}
+                        cell={cell}
+                        overrideTruncation={index === 5}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                </Row>
+              )}
+              {isExpandedContent && <ExpandedContent row={row} />}
+            </Fragment>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
 };
 
 export const NoTruncation = LiveExample.bind({});

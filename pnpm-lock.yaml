@@ -2350,6 +2350,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
