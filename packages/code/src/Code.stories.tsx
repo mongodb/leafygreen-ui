@@ -60,6 +60,10 @@ const customActionButtons = [
 // `;
 
 const jsSnippet = `
+/** 
+ * comment 
+ */
+import ***shaneeza*** from './';
 import {{ shaneeza }} from './';
 import {{ datetime }} from './';
 

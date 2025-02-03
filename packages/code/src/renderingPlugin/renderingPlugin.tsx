@@ -427,6 +427,8 @@ export function treeToLines(
     }
   });
 
+  console.log('🤡🤡', { lines });
+
   return lines;
 }
 
