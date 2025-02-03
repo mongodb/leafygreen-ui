@@ -25,7 +25,11 @@ interface UseDescendantReturnObject<T extends HTMLElement> {
 }
 
 /**
- * Registers a component as a descendant of a given context, and calculates its index within the rendered descendant list.
+ * Registers a component as a descendant of a given context, and calculates its index within the
+ * rendered descendant list.
+ *
+ * Pass `props.index` to explicitly specify the index of the descendant in SSR environments. Doing
+ * so will override the DOM index order.
  */
 export const useDescendant = <T extends HTMLElement>(
   context: DescendantContextType<T>,
@@ -33,13 +37,17 @@ export const useDescendant = <T extends HTMLElement>(
   props?: ComponentProps<any>,
 ): UseDescendantReturnObject<T> => {
   const ref: React.RefObject<T> = useForwardedRef(fwdRef ?? null, null);
+  const propsWithDefault = props || {};
   const { descendants, dispatch } = useContext(context);
   const id = useRef(genId());
 
   // Use explicit index if provided or find the element with this id in the descendants list
   const index = useMemo(() => {
-    return props.index ?? findDescendantIndexWithId(descendants, id.current);
-  }, [descendants, props.index]);
+    return (
+      propsWithDefault?.index ??
+      findDescendantIndexWithId(descendants, id.current)
+    );
+  }, [descendants, propsWithDefault.index]);
 
   // On render, register the element as a descendant
   useIsomorphicLayoutEffect(() => {
