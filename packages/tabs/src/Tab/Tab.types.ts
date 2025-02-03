@@ -28,7 +28,7 @@ export interface TabProps extends HTMLElementProps<'div'> {
   href?: string;
 
   /**
-   * The index of the initially selected Tab is required in SSR environments to ensure
+   * The index of the Tab instance. The index of the initially selected Tab is required in SSR environments to ensure
    * the Tab is selected on initial render.
    */
   index?: number;
