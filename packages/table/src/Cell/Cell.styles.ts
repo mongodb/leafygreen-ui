@@ -64,7 +64,6 @@ export const getCellContainerStyles = (align: Align = 'left') => css`
   display: flex;
   align-items: center;
   min-height: ${standardCellHeight}px;
-  /* overflow: hidden; */
   justify-content: ${align};
   text-align: ${align};
 
@@ -77,7 +76,6 @@ export const getBaseCellStyles = (
   verticalAlignment: VerticalAlignment = VerticalAlignment.Top,
 ) => css`
   padding: 0 ${spacing[200]}px;
-  /* overflow: hidden; */
   vertical-align: ${verticalAlignment};
 
   &:focus-visible {
