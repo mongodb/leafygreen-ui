@@ -961,7 +961,7 @@ All HTML `tr` element props
 | Name                 | Description                                                                                                                                                                                                                | Type                     | Default |
 | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------- |
 | `cell`               | The cell object that is returned when mapping through a row passed from the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hook. **Required** if using the `useLeafyGreenTable` or `useLeafyGreenVirtualTable` hooks. | `LeafyGreenTableCell<T>` | -       |
-| `overrideTruncation` | If `shouldTruncation={true}` on `<Table>`, this prop will override truncation for this cell. This is helpful for cells that should never truncate, like buttons or icons since truncation hides hover/focus states.        | `boolean`                | `false` |
+| `overrideTruncation` | If `shouldTruncation={true}` on `<Table>`, this prop will override truncation for this cell. This is helpful for cells that should never truncate, like buttons or icons since truncation clips hover/focus states.        | `boolean`                | `false` |
 
 \+ other HTML `td` element props.
 

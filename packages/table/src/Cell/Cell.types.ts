@@ -28,7 +28,7 @@ interface BaseCellProps extends ComponentPropsWithRef<'td'> {
   contentClassName?: string;
 
   /**
-   * If shouldTruncation={true} on `Table`, this prop will override truncation for this cell. This is helpful for cells that should never truncate, like buttons or icons since truncation hides hover/focus states.
+   * If shouldTruncation={true} on `Table`, this prop will override truncation for this cell. This is helpful for cells that should never truncate, like buttons or icons since truncation clips hover/focus states.
    */
   overrideTruncation?: boolean;
 }
