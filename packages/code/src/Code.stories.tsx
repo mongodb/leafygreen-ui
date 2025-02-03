@@ -313,6 +313,7 @@ WithoutPanel.parameters = {
 
 export const Loading = () => {};
 Loading.parameters = {
+  chromatic: { delay: 2000 }, // 2-second delay
   controls: {
     exclude: /.*/g,
   },
