@@ -43,6 +43,7 @@ export interface WithUnitSelectProps {
    *
    */
   unit: string;
+
   /**
    * The options that appear in the select element attached to the right of the input.
    */
@@ -52,6 +53,11 @@ export interface WithUnitSelectProps {
    * Callback fired when the select value changes
    */
   onSelectChange: (unit: UnitOption) => void;
+
+  /**
+   * The className for the select component.
+   */
+  selectClassName?: string;
 }
 
 export interface WithoutUnitSelectProps {
@@ -62,6 +68,7 @@ export interface WithoutUnitSelectProps {
    *
    */
   unit?: string;
+
   /**
    * The options that appear in the select element attached to the right of the input.
    */
@@ -71,11 +78,28 @@ export interface WithoutUnitSelectProps {
    * Callback fired when the select value changes
    */
   onSelectChange?: never;
+
+  /**
+   * The className for the select component.
+   */
+  selectClassName?: never;
 }
 
 export type ConditionalUnitSelectProps =
   | WithUnitSelectProps
   | WithoutUnitSelectProps;
+
+export interface FormfieldProps {
+  /**
+   * The message shown below the input element if the value is invalid.
+   */
+  errorMessage?: React.ReactNode;
+
+  /**
+   * The message shown below the input element if the value is valid.
+   */
+  successMessage?: React.ReactNode;
+}
 
 export interface BaseNumberInputProps
   extends Omit<
@@ -123,16 +147,6 @@ export interface BaseNumberInputProps
   description?: string;
 
   /**
-   * The message shown below the input element if the value is invalid.
-   */
-  errorMessage?: React.ReactNode;
-
-  /**
-   * The message shown below the input element if the value is valid.
-   */
-  successMessage?: React.ReactNode;
-
-  /**
    * Determines the font size and padding.
    *
    * @default 'default'
@@ -143,13 +157,9 @@ export interface BaseNumberInputProps
    * The className for the input component.
    */
   inputClassName?: string;
-
-  /**
-   * The className for the select component.
-   */
-  selectClassName?: string;
 }
 
 export type NumberInputProps = BaseNumberInputProps &
+  FormfieldProps &
   ConditionalUnitSelectProps &
   AriaLabelPropsWithLabel;
