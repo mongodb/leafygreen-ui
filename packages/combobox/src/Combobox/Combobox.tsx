@@ -1211,6 +1211,7 @@ export function Combobox<M extends boolean>({
               )}
               {description && (
                 <Description
+                  as={typeof description === 'string' ? 'p' : 'div'}
                   darkMode={darkMode}
                   disabled={disabled}
                   className={cx({

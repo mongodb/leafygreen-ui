@@ -71,9 +71,10 @@ export const InputOptionContent = ({
         </div>
         {description && (
           <Description
+            as={typeof description === 'string' ? 'p' : 'div'}
+            className={cx(descriptionClassName, getDescriptionStyles())}
             darkMode={darkMode}
             disabled={disabled}
-            className={cx(descriptionClassName, getDescriptionStyles())}
           >
             {description}
           </Description>

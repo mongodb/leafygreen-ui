@@ -550,6 +550,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
               {description && (
                 <Description
+                  as={typeof description === 'string' ? 'p' : 'div'}
                   id={descriptionId}
                   darkMode={darkMode}
                   disabled={disabled}

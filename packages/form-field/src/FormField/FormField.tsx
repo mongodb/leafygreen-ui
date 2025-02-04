@@ -89,6 +89,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
+                  as={typeof description === 'string' ? 'p' : 'div'}
                   data-testid={LGIDS_FORM_FIELD.description}
                   className={fontStyles}
                   id={descriptionId}
