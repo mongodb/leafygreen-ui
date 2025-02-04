@@ -1,0 +1,1 @@
+export { getLGConfig } from './getLGConfig';
