@@ -1,5 +1,16 @@
 # @leafygreen-ui/tabs
 
+## 14.1.0
+
+### Minor Changes
+
+- 674d06888: [LG-4399](https://jira.mongodb.org/browse/LG-4399): Adds optional `index` prop to `Tab` component that is required in SSR environments to render selected `TabTitle` and `TabPanel` on initial render
+
+### Patch Changes
+
+- Updated dependencies [674d06888]
+  - @leafygreen-ui/descendants@2.1.0
+
 ## 14.0.2
 
 ### Patch Changes

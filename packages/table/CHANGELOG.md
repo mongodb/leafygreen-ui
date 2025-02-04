@@ -1,5 +1,12 @@
 # @leafygreen-ui/table
 
+## 13.0.2
+
+### Patch Changes
+
+- Updated dependencies [50ea705f9]
+  - @leafygreen-ui/checkbox@14.1.0
+
 ## 13.0.1
 
 ### Patch Changes
