@@ -1,1 +1,1 @@
-export { getLGConfig } from './getLGConfig';
+export { getLGConfig, type LGConfig } from './getLGConfig';

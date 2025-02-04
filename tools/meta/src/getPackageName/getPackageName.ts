@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import fse from 'fs-extra';
 
-import { getLGConfig } from './getLGConfig';
+import { getLGConfig } from '../getLGConfig';
 
 /**
  * Returns the full name of a package at a given directory
