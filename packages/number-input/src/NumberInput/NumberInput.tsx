@@ -104,7 +104,6 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               id={inputId}
               hasSelectOptions={renderSelectOnly}
               state={state}
-              errorMessage={errorMessage}
               aria-describedby={`${feedbackId} ${
                 description ? descriptionId : ''
               } ${renderSelectOnly ? selectId : ''}`}

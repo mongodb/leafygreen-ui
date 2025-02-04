@@ -1,6 +1,9 @@
 import { BaseNumberInputProps } from '../NumberInput/NumberInput.types';
 
-export interface InputProps extends Partial<BaseNumberInputProps> {
+export interface InputProps
+  extends Partial<
+    Omit<BaseNumberInputProps, 'inputClassName' | 'label' | 'description'>
+  > {
   /**
    * Determines input styles when the select is rendered.
    */
