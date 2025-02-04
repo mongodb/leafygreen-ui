@@ -19,7 +19,12 @@ const darkModeStyle = css`
   background-color: ${palette.black};
 `;
 
-const decorator: Decorator = (StoryFn: StoryFn, context: StoryContext<any>) => {
+const decorator: Decorator = (
+  StoryFn: StoryFn,
+  context: StoryContext<{
+    [x: string]: any;
+  }>,
+) => {
   const { darkMode, baseFontSize } = context.args;
 
   return (

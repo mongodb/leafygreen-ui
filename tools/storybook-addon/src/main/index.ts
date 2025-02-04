@@ -4,6 +4,7 @@
 
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import isRegExp from 'lodash/isRegExp';
+import path from 'path';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
 
 import { findStories } from './findStories';
@@ -18,6 +19,7 @@ export const stories: StorybookConfig['stories'] = findStories(
 );
 
 export const addons: StorybookConfig['addons'] = [
+  '@storybook/addon-webpack5-compiler-babel',
   '@storybook/addon-essentials', // actions, controls & docs
   '@storybook/addon-actions',
   '@storybook/addon-interactions',
@@ -106,6 +108,13 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
       Buffer: ['buffer', 'Buffer'],
     }),
   );
+
+  if (config.resolve) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': path.resolve(__dirname, '../src'),
+    };
+  }
 
   return config;
 };
