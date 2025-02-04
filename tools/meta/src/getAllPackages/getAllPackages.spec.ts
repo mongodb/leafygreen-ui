@@ -5,6 +5,8 @@ import { getAllPackages } from './getAllPackages';
 describe('tools/meta/getAllPackages', () => {
   beforeAll(() => {
     fsx.mkdirSync('./tmp/');
+  });
+  beforeEach(() => {
     jest.spyOn(process, 'cwd').mockReturnValue('./tmp');
   });
   afterEach(() => {
