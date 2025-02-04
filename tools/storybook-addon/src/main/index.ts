@@ -9,10 +9,9 @@ import { ProvidePlugin, RuleSetRule } from 'webpack';
 import { findStories } from './findStories';
 import { isRule } from './utils';
 
-export { managerHead } from './manager-head';
-export { previewHead } from './preview-head';
+export { default as managerHead } from './manager-head';
+export { default as previewHead } from './preview-head';
 
-// @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
   '../{packages,tools,charts,chat}/**/*.stor@(y|ies).@(js|ts)?(x)',
   '../{packages,tools,charts,chat}/*/node_modules',
@@ -20,8 +19,9 @@ export const stories: StorybookConfig['stories'] = findStories(
 
 export const addons: StorybookConfig['addons'] = [
   '@storybook/addon-essentials', // actions, controls & docs
-  '@storybook/addon-links',
+  '@storybook/addon-actions',
   '@storybook/addon-interactions',
+  '@storybook/addon-links',
   '@storybook/addon-a11y',
   'storybook-dark-mode',
 ];
@@ -112,6 +112,7 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
 
 export const typescript: StorybookConfig['typescript'] = {
   check: false,
+  reactDocgen: 'react-docgen',
 };
 
 export const docs: StorybookConfig['docs'] = {

@@ -7,7 +7,7 @@ import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
 } from '@lg-tools/storybook-utils';
-import { Preview } from '@storybook/react';
+import type { Preview, StoryContext, StoryFn } from '@storybook/react';
 
 import {
   Body,
@@ -21,44 +21,49 @@ import {
 
 import { darkTheme, lightTheme } from '../themes';
 
-const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' },
-  argTypes: {
-    // By default we set specific argTypes to `control: none`
-    ...storybookExcludedArgTypes,
-  },
-  controls: {
-    exclude: [...storybookExcludedControlParams],
-    expanded: true,
-    matchers: {
-      color: /.*(c|C)olor$/,
-      date: /Date$/,
-    },
-    sort: 'requiredFirst',
-  },
-  docs: {
-    components: {
-      h1: H1,
-      h2: H2,
-      h3: H3,
-      h4: Subtitle,
-      h5: Body,
-      p: Body,
-      a: Link,
-      code: InlineCode,
-    },
-    source: { type: 'code' },
-  },
-  darkMode: {
-    dark: { ...darkTheme },
-    light: { ...lightTheme },
-  },
-};
-
-const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
+// Define decorators directly without explicit type annotation
+const decorators = [
+  (Story: StoryFn, context: StoryContext<any>) =>
+    PropCombinations(Story, context),
+  (Story: StoryFn, context: StoryContext<any>) =>
+    ReactStrictMode(Story, context),
+  (Story: StoryFn, context: StoryContext<any>) =>
+    ComponentPreview(Story, context),
+];
 
 const preview: Preview = {
-  parameters,
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    argTypes: {
+      ...storybookExcludedArgTypes,
+    },
+    controls: {
+      exclude: [...storybookExcludedControlParams],
+      expanded: true,
+      matchers: {
+        color: /.*(c|C)olor$/,
+        date: /Date$/,
+      },
+      sort: 'requiredFirst',
+    },
+    docs: {
+      components: {
+        h1: H1,
+        h2: H2,
+        h3: H3,
+        h4: Subtitle,
+        h5: Body,
+        p: Body,
+        a: Link,
+        code: InlineCode,
+      },
+      source: { type: 'code' },
+    },
+    darkMode: {
+      dark: darkTheme,
+      light: lightTheme,
+    },
+  },
   decorators,
 };
 
