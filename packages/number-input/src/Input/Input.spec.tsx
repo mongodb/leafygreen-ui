@@ -112,10 +112,10 @@ describe('packages/number-input/input', () => {
       {/* @ts-expect-error - label is not a prop */}
       <Input label="label" />
 
-      {/* @ts-expect-error - label is not a prop */}
+      {/* @ts-expect-error - description is not a prop */}
       <Input description="description" />
 
-      {/* @ts-expect-error - label is not a prop */}
+      {/* @ts-expect-error - inputClassName is not a prop */}
       <Input inputClassName="inputClassName" />
 
       <Input
