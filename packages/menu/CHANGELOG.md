@@ -1,5 +1,11 @@
 # @leafygreen-ui/menu
 
+## 28.0.3
+
+### Patch Changes
+
+- 831718a41: Remove full `lodash` import to decrease bundle size
+
 ## 28.0.2
 
 ### Patch Changes

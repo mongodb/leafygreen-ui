@@ -1,5 +1,11 @@
 # @leafygreen-ui/combobox
 
+## 11.0.3
+
+### Patch Changes
+
+- 7485a000a: Fix option highlighting on re-open after selection
+
 ## 11.0.2
 
 ### Patch Changes
