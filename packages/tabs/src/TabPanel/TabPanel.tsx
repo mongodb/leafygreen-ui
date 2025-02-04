@@ -14,9 +14,12 @@ import { TabPanelProps } from './TabPanel.types';
 const TabPanel = ({
   children,
   disabled,
+  index: indexProp,
   ...rest
 }: PropsWithChildren<TabPanelProps>) => {
-  const { id, index, ref } = useDescendant(TabPanelDescendantsContext);
+  const { id, index, ref } = useDescendant(TabPanelDescendantsContext, null, {
+    index: indexProp,
+  });
   const { tabDescendants } = useTabDescendantsContext();
   const { forceRenderAllTabPanels, selected } = useTabsContext();
 
