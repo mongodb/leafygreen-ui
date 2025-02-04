@@ -1,5 +1,11 @@
 # @leafygreen-ui/toast
 
+## 7.0.3
+
+### Patch Changes
+
+- 64745ba45: [LG-4448](https://jira.mongodb.org/browse/LG-4448): update docs on interaction between `progress` and `timeout` props
+
 ## 7.0.2
 
 ### Patch Changes
