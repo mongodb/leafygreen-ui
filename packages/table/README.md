@@ -893,7 +893,7 @@ const columns = [
 
 ### Performance
 
-Performance maybe decrease for a few reasons:
+Performance may decrease for a few reasons:
 
 - Rendering hundreds of rows without a non-virtual table and applying CSS directly to a `<Cell />` or `<Row />` with `Emotion`. In this case, it is recommended to apply styles to the parent level component and target styles with `td`, `tr`, or a className.
 
@@ -924,7 +924,7 @@ Performance maybe decrease for a few reasons:
   ```
 
 - Table performs more efficiently in production compared to development
-- Table typically exhibit slower performance in a Storybook environment.
+- Table typically exhibits slower performance in a Storybook environment.
 
 ## Exports
 
