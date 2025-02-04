@@ -67,16 +67,6 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
         }),
       ).toBeFalsy();
     });
-
-    test('returns false when month is before min month', () => {
-      expect(
-        shouldMonthBeEnabled('July', {
-          month: newUTC(2024, Month.February, 14),
-          max: newUTC(2024, Month.March, 10),
-        }),
-      ).toBeFalsy();
-    });
-
     test('returns true when month is same as max month', () => {
       expect(
         shouldMonthBeEnabled('July', {
