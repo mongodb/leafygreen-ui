@@ -27,8 +27,14 @@ export const shouldMonthBeEnabled = (
 
   if (year && minYear && year < minYear) return false;
   if (year && maxYear && year > maxYear) return false;
-  if (min && monthIndex < min.getUTCMonth()) return false;
-  if (max && monthIndex > max.getUTCMonth()) return false;
+
+  if (month && min && year === minYear) {
+    if (monthIndex < min.getUTCMonth()) return false;
+  }
+
+  if (month && max && year === maxYear) {
+    if (monthIndex > max.getUTCMonth()) return false;
+  }
 
   return true;
 };
