@@ -10,7 +10,6 @@ import {
 import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
-import LeafygreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import {
   languageOptions,
@@ -313,7 +312,7 @@ WithoutPanel.parameters = {
 
 export const Loading = () => {};
 Loading.parameters = {
-  chromatic: { delay: 2000 }, // 2-second delay
+  chromatic: { delay: 5000 }, // 5-second delay
   controls: {
     exclude: /.*/g,
   },
