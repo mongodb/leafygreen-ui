@@ -7,7 +7,7 @@ import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
 } from '@lg-tools/storybook-utils';
-import type { Preview, StoryContext, StoryFn } from '@storybook/react';
+import type { Preview } from '@storybook/react';
 
 import {
   Body,
@@ -20,16 +20,6 @@ import {
 } from '@leafygreen-ui/typography';
 
 import { darkTheme, lightTheme } from '../themes';
-
-// Define decorators directly without explicit type annotation
-const decorators = [
-  (Story: StoryFn, context: StoryContext<any>) =>
-    PropCombinations(Story, context),
-  (Story: StoryFn, context: StoryContext<any>) =>
-    ReactStrictMode(Story, context),
-  (Story: StoryFn, context: StoryContext<any>) =>
-    ComponentPreview(Story, context),
-];
 
 const preview: Preview = {
   parameters: {
@@ -64,7 +54,7 @@ const preview: Preview = {
       light: lightTheme,
     },
   },
-  decorators,
+  decorators: [PropCombinations, ReactStrictMode, ComponentPreview],
 };
 
 export default preview;
