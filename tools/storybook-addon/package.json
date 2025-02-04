@@ -23,6 +23,8 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "dependencies": {
+    "@babel/core": "7.24.3",
+    "@babel/plugin-proposal-export-default-from": "7.24.1",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
