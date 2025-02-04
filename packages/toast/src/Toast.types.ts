@@ -66,9 +66,11 @@ export interface ToastProps
    *
    * If timeout is `null | 0`, the Toast will never dismiss automatically.
    *
-   * Note: Timeout timer will be paused when a user is interacting with a Toast
+   * Notes:
+   * - when `variant="progress"`, `timeout` timer will not start until progress is complete
+   * - `timeout` timer will be paused when a user is interacting with a Toast
    *
-   * @default 6_000
+   * @default 6000
    */
   timeout?: number | null;
   /**
