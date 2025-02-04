@@ -741,6 +741,37 @@ describe('packages/combobox', () => {
         expect(optionElements).toHaveLength(defaultOptions.length);
       });
 
+      test('First item is highlighted when re-opened after selection is made', async () => {
+        const initialValue = 'banana'; // Select an option that is not the first one
+        const { comboboxEl, getMenuElements } = renderCombobox('single', {
+          initialValue,
+        });
+
+        // Open the combobox
+        userEvent.click(comboboxEl);
+        let { optionElements } = getMenuElements();
+        expect(optionElements).toHaveLength(defaultOptions.length);
+
+        // Verify that the first item is highlighted
+        expect(
+          (optionElements as HTMLCollectionOf<HTMLLIElement>)[0],
+        ).toHaveAttribute('aria-selected', 'true');
+
+        // Click the same option again to close the menu
+        userEvent.click(
+          (optionElements as HTMLCollectionOf<HTMLLIElement>)[1], // Click the second option
+        );
+
+        // Open the combobox again
+        userEvent.click(comboboxEl);
+        optionElements = getMenuElements().optionElements;
+
+        // Verify that the first item is highlighted again
+        expect(
+          (optionElements as HTMLCollectionOf<HTMLLIElement>)[0],
+        ).toHaveAttribute('aria-selected', 'true');
+      });
+
       describe('Clickaway', () => {
         test('Menu closes on click-away', async () => {
           const { containerEl, openMenu } = renderCombobox(select);
