@@ -27,8 +27,10 @@ export const Description = Polymorphic<DescriptionProps>(
   }) => {
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
-    const as =
-      asProp ?? (['string', 'number'].includes(typeof children) ? 'p' : 'div');
+    const asDerivedFromChildren = ['string', 'number'].includes(typeof children)
+      ? 'p'
+      : 'div';
+    const as = asProp ?? asDerivedFromChildren;
     const { Component } = usePolymorphic(as);
 
     return (
