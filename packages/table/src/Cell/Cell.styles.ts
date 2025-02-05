@@ -101,7 +101,7 @@ export const getCellEllipsisStyles = (shouldTruncate: boolean) =>
       white-space: nowrap;
       text-overflow: ellipsis;
       contain: inline-size; // 🤯
-      // This a workaround to ensure interactive styles (e.g., hover and focus) are not clipped within cells because of overflow: hidden
+      // This is a workaround to ensure interactive styles (e.g., hover and focus) are not clipped within cells because of overflow: hidden
       margin: -${spacing[100]}px;
       padding: ${spacing[100]}px;
     `]: shouldTruncate,
