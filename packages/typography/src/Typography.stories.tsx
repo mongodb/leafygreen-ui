@@ -123,7 +123,7 @@ const TypographyDemoComponent = ({
         <div className={cx(displayBlock)}>
           <Label htmlFor="id">This is a label</Label>
           <Description>
-            This is the description for said label.{' '}
+            <span>This is the description for said label. </span>
             <Link>This is a test inline link.</Link>
           </Description>
         </div>

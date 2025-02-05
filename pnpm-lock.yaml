@@ -2390,6 +2390,9 @@ importers:
       '@leafygreen-ui/pagination':
         specifier: workspace:^
         version: link:../pagination
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
 
   packages/tabs:
     dependencies:

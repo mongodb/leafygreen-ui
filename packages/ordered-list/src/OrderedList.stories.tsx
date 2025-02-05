@@ -30,8 +30,10 @@ const meta: StoryMetaType<typeof OrderedList> = {
           title="Title"
           description={
             <>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna.{' '}
+              <span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna.{' '}
+              </span>
               <Link>Learn more.</Link>
             </>
           }
