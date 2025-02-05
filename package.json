@@ -76,6 +76,14 @@
       "jackspeak": "2.1.1"
     }
   },
+  "lg": {
+    "scopes": {
+      "@leafygreen-ui": "packages",
+      "@lg-charts": "charts",
+      "@lg-chat": "chat",
+      "@lg-tools": "tools"
+    }
+  },
   "keywords": [
     "mongodb",
     "ui",
