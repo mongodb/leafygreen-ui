@@ -1,5 +1,11 @@
 # @leafygreen-ui/number-input
 
+## 4.0.3
+
+### Patch Changes
+
+- 073721cce: Prevents `errorMessage` from being forwarded to the native `input` element and logging a warning. Also internally reorganizes types.
+
 ## 4.0.2
 
 ### Patch Changes
