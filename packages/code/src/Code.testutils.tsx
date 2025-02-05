@@ -14,7 +14,7 @@ const myVar = 42;
 
 var myObj = {
   someProp: ['arr', 'ay'],
-  regex: /([A-Z])\w+/
+  regex: /([A-Z])w+/
 }
 
 export default class myClass {

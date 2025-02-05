@@ -22,7 +22,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the expand button
    */
-  getExpandButton: () => ExpandedButtonUtils;
+  getExpandButton: () => ExpandButtonUtils;
 }
 
 export interface CopyButtonUtils {
@@ -59,7 +59,7 @@ export interface LanguageSwitcherUtils {
   getOptionByValue: (value: string) => HTMLLIElement | null;
 }
 
-export interface ExpandedButtonUtils {
+export interface ExpandButtonUtils {
   /**
    * Returns the expand button
    */
@@ -70,13 +70,3 @@ export interface ExpandedButtonUtils {
    */
   isExpanded: () => boolean;
 }
-
-/**
- * getLanguage
- * getLanguageSwitcherInput
- * getLanguageSwitcherOptions
- * getLanguageSwitcherOptionByValue
- * getIsLoading
- * getCopyButton
- * getIsExpanded
- */
