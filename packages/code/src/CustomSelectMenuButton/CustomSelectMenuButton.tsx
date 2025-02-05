@@ -8,9 +8,9 @@ import Button, { ButtonProps } from '@leafygreen-ui/button';
  * Passing down just the function which will be instantiated inside `Select`
  * @internal
  */
-export const CustomSelectMenuButton = React.forwardRef(
+export const CustomSelectMenuButton = React.forwardRef<HTMLButtonElement>(
   ({ children, ...props }: ButtonProps, ref) => (
-    <Button {...props} ref={ref}>
+    <Button {...props} as="button" ref={ref}>
       {children}
     </Button>
   ),

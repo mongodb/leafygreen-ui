@@ -27,7 +27,7 @@ import { UnitSelectButtonProps } from './UnitSelectButton.types';
  *
  * @internal
  */
-export const UnitSelectButton = React.forwardRef(
+export const UnitSelectButton = React.forwardRef<HTMLButtonElement>(
   (
     {
       className,
@@ -39,11 +39,7 @@ export const UnitSelectButton = React.forwardRef(
     forwardedRef,
   ) => {
     const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
-    const buttonRef: React.MutableRefObject<HTMLElement | null> =
-      useForwardedRef(
-        forwardedRef,
-        null,
-      ) as React.MutableRefObject<HTMLElement | null>;
+    const buttonRef = useForwardedRef(forwardedRef, null);
     const { theme } = useDarkMode();
 
     /**
@@ -97,6 +93,7 @@ export const UnitSelectButton = React.forwardRef(
         </Tooltip>
         <Button
           {...props}
+          as="button"
           className={cx(
             baseStyles,
             themeStyles[theme],
