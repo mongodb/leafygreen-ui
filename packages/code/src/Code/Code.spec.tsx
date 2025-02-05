@@ -132,7 +132,7 @@ describe('packages/Code', () => {
 
       describe('with panel slot', () => {
         test('language switcher is disabled', () => {
-          const { getCopyButton } = renderCode({
+          renderCode({
             isLoading: true,
             language: languageOptions[0].displayName,
             panel: (
@@ -140,15 +140,19 @@ describe('packages/Code', () => {
             ),
           });
 
+          const { getCopyButton } = getTestUtils();
+
           expect(getCopyButton().getButton()).toBeInTheDocument();
           expect(getCopyButton().isDisabled()).toBe(true);
         });
         test('copy button is disabled', () => {
-          const { getCopyButton } = renderCode({
+          renderCode({
             isLoading: true,
             language: languageOptions[0].displayName,
             panel: <Panel />,
           });
+
+          const { getCopyButton } = getTestUtils();
 
           expect(getCopyButton().getButton()).toBeInTheDocument();
           expect(getCopyButton().isDisabled()).toBe(true);
@@ -157,16 +161,15 @@ describe('packages/Code', () => {
 
       describe('without panel slot', () => {
         test('copy button is not rendered', () => {
-          const { getCopyButton } = Context.within(
-            Jest.spyContext(ClipboardJS, 'isSupported'),
-            spy => {
-              spy.mockReturnValue(true);
-              return renderCode({
-                isLoading: true,
-                copyable: false,
-              });
-            },
-          );
+          Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              isLoading: true,
+              copyable: false,
+            });
+          });
+
+          const { getCopyButton } = getTestUtils();
 
           expect(getCopyButton().getButton()).toBeNull();
         });
@@ -184,7 +187,7 @@ describe('packages/Code', () => {
 
       describe('with panel slot', () => {
         test('language switcher is enabled', () => {
-          const { getLanguageSwitcher } = renderCode({
+          renderCode({
             isLoading: false,
             language: languageOptions[0].displayName,
             panel: (
@@ -192,21 +195,22 @@ describe('packages/Code', () => {
             ),
           });
 
+          const { getLanguageSwitcher } = getTestUtils();
+
           expect(getLanguageSwitcher().getInput()).toBeInTheDocument();
           expect(getLanguageSwitcher().isDisabled()).toBe(false);
         });
         test('copy button is enabled', () => {
-          const { getCopyButton } = Context.within(
-            Jest.spyContext(ClipboardJS, 'isSupported'),
-            spy => {
-              spy.mockReturnValue(true);
-              return renderCode({
-                isLoading: false,
-                language: languageOptions[0].displayName,
-                panel: <Panel />,
-              });
-            },
-          );
+          Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              isLoading: false,
+              language: languageOptions[0].displayName,
+              panel: <Panel />,
+            });
+          });
+
+          const { getCopyButton } = getTestUtils();
 
           expect(getCopyButton().getButton()).toBeInTheDocument();
           expect(getCopyButton().isDisabled()).toBe(false);
@@ -215,15 +219,14 @@ describe('packages/Code', () => {
 
       describe('without panel slot', () => {
         test('copy button is enabled', () => {
-          const { getCopyButton } = Context.within(
-            Jest.spyContext(ClipboardJS, 'isSupported'),
-            spy => {
-              spy.mockReturnValue(true);
-              return renderCode({
-                isLoading: false,
-              });
-            },
-          );
+          Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+            spy.mockReturnValue(true);
+            return renderCode({
+              isLoading: false,
+            });
+          });
+
+          const { getCopyButton } = getTestUtils();
 
           expect(getCopyButton().getButton()).toBeInTheDocument();
           expect(getCopyButton().isDisabled()).toBe(false);
@@ -240,40 +243,35 @@ describe('packages/Code', () => {
 
     describe('renders a copy button', () => {
       test('with default value of hover', () => {
-        const { getCopyButton } = Context.within(
-          Jest.spyContext(ClipboardJS, 'isSupported'),
-          spy => {
-            spy.mockReturnValue(true);
-            return renderCode();
-          },
-        );
+        Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+          spy.mockReturnValue(true);
+          return renderCode();
+        });
+        const { getCopyButton } = getTestUtils();
         expect(getCopyButton().getButton()).not.toBeNull();
       });
       test('when copyButtonAppearance is persist', () => {
-        const { getCopyButton } = Context.within(
-          Jest.spyContext(ClipboardJS, 'isSupported'),
-          spy => {
-            spy.mockReturnValue(true);
-            return renderCode({ copyButtonAppearance: 'persist' });
-          },
-        );
+        Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+          spy.mockReturnValue(true);
+          return renderCode({ copyButtonAppearance: 'persist' });
+        });
+        const { getCopyButton } = getTestUtils();
         expect(getCopyButton().getButton()).not.toBeNull();
       });
       test('when copyButtonAppearance is hover', () => {
-        const { getCopyButton } = Context.within(
-          Jest.spyContext(ClipboardJS, 'isSupported'),
-          spy => {
-            spy.mockReturnValue(true);
-            return renderCode({ copyButtonAppearance: 'hover' });
-          },
-        );
+        Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+          spy.mockReturnValue(true);
+          return renderCode({ copyButtonAppearance: 'hover' });
+        });
+        const { getCopyButton } = getTestUtils();
         expect(getCopyButton().getButton()).not.toBeNull();
       });
     });
 
     describe('does not renders a copy button', () => {
       test('when copyButtonAppearance is none', () => {
-        const { getCopyButton } = renderCode({ copyButtonAppearance: 'none' });
+        renderCode({ copyButtonAppearance: 'none' });
+        const { getCopyButton } = getTestUtils();
         expect(getCopyButton().getButton()).toBeNull();
       });
     });
@@ -313,46 +311,51 @@ describe('packages/Code', () => {
 
     describe('language switcher', () => {
       test('renders when languageOptions, language, and onChange are defined', () => {
-        const { getLanguageSwitcher } = renderCode({
+        renderCode({
           language: languageOptions[0].displayName,
           panel: (
             <Panel onChange={() => {}} languageOptions={languageOptions} />
           ),
         });
+        const { getLanguageSwitcher } = getTestUtils();
         expect(getLanguageSwitcher().getInput()).toBeDefined();
       });
 
       test('does not render if the languageOptions is not defined', () => {
-        const { getLanguageSwitcher } = renderCode({
+        renderCode({
           language: languageOptions[0].displayName,
           // @ts-expect-error
           panel: <Panel onChange={() => {}} />,
         });
+        const { getLanguageSwitcher } = getTestUtils();
         expect(getLanguageSwitcher().getInput()).toBeNull();
       });
 
       test('does not render if onChange is not defined', () => {
-        const { getLanguageSwitcher } = renderCode({
+        renderCode({
           language: languageOptions[0].displayName,
           // @ts-expect-error - onChange is not defined
           panel: <Panel languageOptions={languageOptions} />,
         });
+        const { getLanguageSwitcher } = getTestUtils();
         expect(getLanguageSwitcher().getInput()).toBeNull();
       });
 
       test('does not render if languageOptions is an empty array', () => {
-        const { getLanguageSwitcher } = renderCode({
+        renderCode({
           language: languageOptions[0].displayName,
           panel: <Panel onChange={() => {}} languageOptions={[]} />,
         });
+        const { getLanguageSwitcher } = getTestUtils();
         expect(getLanguageSwitcher().getInput()).toBeNull();
       });
 
       test('does not render if langauage is a string', () => {
-        const { getLanguageSwitcher } = renderCode({
+        renderCode({
           language: 'javascript',
           panel: <Panel onChange={() => {}} languageOptions={[]} />,
         });
+        const { getLanguageSwitcher } = getTestUtils();
         expect(getLanguageSwitcher().getInput()).toBeNull();
       });
 
@@ -440,23 +443,26 @@ describe('packages/Code', () => {
     });
 
     test('a collapsed select is rendered, with an active state based on the language prop', () => {
-      const { getLanguageSwitcher } = renderCodeWithLanguageSwitcher();
+      renderCodeWithLanguageSwitcher({});
+      const { getLanguageSwitcher } = getTestUtils();
       expect(getLanguageSwitcher().getInput()).toBeInTheDocument();
       expect(getLanguageSwitcher().getInput()).toHaveTextContent('JavaScript');
     });
 
     test('clicking the collapsed select menu button opens a select', () => {
-      const { getLanguageSwitcher } = renderCodeWithLanguageSwitcher();
+      renderCodeWithLanguageSwitcher({});
+      const { getLanguageSwitcher } = getTestUtils();
       const trigger = getLanguageSwitcher().getInput();
-      userEvent.click(trigger);
+      userEvent.click(trigger!);
       expect(getLanguageSwitcher().getAllOptions()).toHaveLength(2);
     });
 
     test('options displayed in select are based on the languageOptions prop', () => {
-      const { getLanguageSwitcher } = renderCodeWithLanguageSwitcher();
+      renderCodeWithLanguageSwitcher({});
+      const { getLanguageSwitcher } = getTestUtils();
       const { getInput, getOptionByValue } = getLanguageSwitcher();
       const trigger = getInput();
-      userEvent.click(trigger);
+      userEvent.click(trigger!);
 
       ['JavaScript', 'Python'].forEach(lang => {
         expect(getOptionByValue(lang)).toBeInTheDocument();
@@ -465,9 +471,12 @@ describe('packages/Code', () => {
 
     test('onChange prop gets called when new language is selected', () => {
       const onChange = jest.fn();
-      const { getLanguageSwitcher } = renderCodeWithLanguageSwitcher({
-        onChange,
+      renderCodeWithLanguageSwitcher({
+        props: {
+          onChange,
+        },
       });
+      const { getLanguageSwitcher } = getTestUtils();
       const { getOptionByValue, getInput } = getLanguageSwitcher();
 
       const trigger = getInput();
@@ -479,13 +488,16 @@ describe('packages/Code', () => {
 
     test('onChange prop is called with an object that represents the newly selected language when called', () => {
       const onChange = jest.fn();
-      const { getLanguageSwitcher } = renderCodeWithLanguageSwitcher({
-        onChange,
+      renderCodeWithLanguageSwitcher({
+        props: {
+          onChange,
+        },
       });
+      const { getLanguageSwitcher } = getTestUtils();
       const { getOptionByValue, getInput } = getLanguageSwitcher();
 
       const trigger = getInput();
-      userEvent.click(trigger);
+      userEvent.click(trigger!);
 
       userEvent.click(getOptionByValue('Python')!);
 

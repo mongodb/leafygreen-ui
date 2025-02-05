@@ -71,7 +71,7 @@ export const getTestUtils = (
     const getButton = () => {
       const button = queryBySelector<HTMLButtonElement>(
         element,
-        `button[data-lgid=${LGIDs.copyButton}]`,
+        `[data-lgid=${LGIDs.copyButton}]`,
       );
 
       return button;
@@ -96,16 +96,12 @@ export const getTestUtils = (
       return button;
     };
 
-    const isCollapsed = () =>
-      !!getExpandButton()?.textContent?.includes('Click to expand');
-
     const isExpanded = () =>
       !!getExpandButton()?.textContent?.includes('Click to collapse');
 
     return {
       getButton: () => getExpandButton(),
       isExpanded: () => isExpanded(),
-      isCollapsed: () => isCollapsed(),
     };
   };
 

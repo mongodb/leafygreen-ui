@@ -4,12 +4,31 @@ import { render, RenderResult } from '@testing-library/react';
 import Code from './Code/Code';
 import { CodeProps } from './Code/Code.types';
 import { PanelProps } from './Panel/Panel.types';
-import { getTestUtils } from './utils/getTestUtils/getTestUtils';
-import { TestUtilsReturnType } from './utils/getTestUtils/getTestUtils.types';
 import { Panel } from './Panel';
 import { Language } from './types';
 
-const codeSnippet = 'const greeting = "Hello, world!";';
+const codeSnippet = `
+import datetime from './';
+
+const myVar = 42;
+
+var myObj = {
+  someProp: ['arr', 'ay'],
+  regex: /([A-Z])\w+/
+}
+
+export default class myClass {
+  constructor(){
+    // access properties
+    this.myProp = false
+  }
+}
+
+function greeting(entity) {
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+}
+ 
+console.log(greeting('World'));`;
 
 export const languageOptions = [
   {
@@ -22,28 +41,28 @@ export const languageOptions = [
   },
 ];
 
-export const renderCode = (
-  props: Partial<CodeProps> = {},
-): RenderResult & TestUtilsReturnType => {
+export const renderCode = (props: Partial<CodeProps> = {}): RenderResult => {
   const renderResults = render(
     <Code language={languageOptions[0].language} {...props}>
       {codeSnippet}
     </Code>,
   );
 
-  const testUtils = getTestUtils();
-
   return {
     ...renderResults,
-    ...testUtils,
   };
 };
 
-export const renderCodeWithLanguageSwitcher = (
-  props: Partial<PanelProps> = {},
-): RenderResult & TestUtilsReturnType => {
+export const renderCodeWithLanguageSwitcher = ({
+  props = {},
+  isLoading = false,
+}: {
+  props?: Partial<PanelProps>;
+  isLoading?: boolean;
+}): RenderResult => {
   const renderResults = render(
     <Code
+      isLoading={isLoading}
       language={languageOptions[0].displayName}
       panel={
         <Panel
@@ -57,10 +76,24 @@ export const renderCodeWithLanguageSwitcher = (
     </Code>,
   );
 
-  const testUtils = getTestUtils();
+  return {
+    ...renderResults,
+  };
+};
+
+export const renderMultipleCodes = (): RenderResult => {
+  const renderResults = render(
+    <>
+      <Code data-lgid="lg-code-1" language={languageOptions[0].language}>
+        {codeSnippet}
+      </Code>
+      <Code data-lgid="lg-code-2" language={languageOptions[1].language}>
+        {codeSnippet}
+      </Code>
+    </>,
+  );
 
   return {
     ...renderResults,
-    ...testUtils,
   };
 };

@@ -4,22 +4,10 @@ export interface TestUtilsReturnType {
    */
   getLanguage: () => string;
 
+  /**
+   * Returns the language switcher
+   */
   getLanguageSwitcher: () => LanguageSwitcherUtils;
-
-  // /**
-  //  * Returns the language switcher input
-  //  */
-  // getLanguageSwitcherInput: () => HTMLInputElement;
-
-  // /**
-  //  * Returns the language switcher options
-  //  */
-  // getAllLanguageSwitcherOptions: () => Array<HTMLLIElement>;
-
-  // /**
-  //  * Returns the language switcher option by value
-  //  */
-  // getLanguageSwitcherOptionByValue: (value: string) => HTMLLIElement | null;
 
   /**
    * Returns whether the code snippet is loading
@@ -81,11 +69,6 @@ export interface ExpandedButtonUtils {
    * Returns whether the code snippet is expanded
    */
   isExpanded: () => boolean;
-
-  /**
-   * Returns whether the code snippet is collapsed
-   */
-  isCollapsed: () => boolean;
 }
 
 /**
