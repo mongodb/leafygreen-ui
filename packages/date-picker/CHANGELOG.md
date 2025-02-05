@@ -1,5 +1,11 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.3
+
+### Patch Changes
+
+- f6ba9a91b: Fixes bug so that months after max, when min is in the same year, are properly disabled
+
 ## 3.0.2
 
 ### Patch Changes

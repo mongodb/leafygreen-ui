@@ -14,7 +14,7 @@ import {
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
 
-// FIXME:
+// TODO(LG-4803): Fix linting issues
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /**
@@ -143,18 +143,24 @@ export function useEchart({
     [echartsInstance],
   );
 
+  const enableZoom = withInstanceCheck(() => {
+    echartsInstance?.dispatchAction({
+      type: 'takeGlobalCursor',
+      key: 'dataZoomSelect',
+      dataZoomSelectActive: true,
+    });
+  });
+
+  const disableZoom = withInstanceCheck(() => {
+    echartsInstance?.dispatchAction({
+      type: 'takeGlobalCursor',
+      key: 'dataZoomSelect',
+      dataZoomSelectActive: false,
+    });
+  });
+
   const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
     withInstanceCheck(({ xAxis, yAxis }) => {
-      const enableZoom = withInstanceCheck(() => {
-        echartsInstance?.dispatchAction({
-          type: 'takeGlobalCursor',
-          key: 'dataZoomSelect',
-          dataZoomSelectActive: xAxis || yAxis,
-        });
-        // This will trigger a render so we need to remove the handler to prevent a loop
-        echartsInstance?.off('rendered', enableZoom);
-      });
-
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       const xAxisIndex: number | string = xAxis ? 0 : 'none';
       const yAxisIndex: number | string = yAxis ? 0 : 'none';
@@ -170,7 +176,6 @@ export function useEchart({
         },
       });
 
-      echartsInstance?.on('rendered', enableZoom);
       echartsInstance?.off('dataZoom', clearDataZoom); // prevent adding dupes
       echartsInstance?.on('dataZoom', clearDataZoom);
     }),
@@ -260,6 +265,10 @@ export function useEchart({
     });
   });
 
+  const resize = withInstanceCheck(() => {
+    echartsInstance?.resize();
+  });
+
   /**
    * CHART INITIALIZATION ---------------------
    * Sets up the echart instance on initial render or if the container changes.
@@ -267,8 +276,6 @@ export function useEchart({
    */
   useEffect(() => {
     setError(null);
-
-    let resizeCallback: () => void;
 
     initializeEcharts()
       .then(echartsCore => {
@@ -282,12 +289,6 @@ export function useEchart({
           });
           // Set the initial options on the instance
           newChart.setOption(options);
-
-          // Resize chart when window resizes because echarts don't be default
-          resizeCallback = () => {
-            newChart.resize();
-          };
-          window.addEventListener('resize', resizeCallback);
 
           setEchartsInstance(newChart);
           setReady(true);
@@ -304,7 +305,6 @@ export function useEchart({
       });
 
     return () => {
-      window.removeEventListener('resize', resizeCallback);
       activeHandlers.current.clear();
 
       if (echartsInstance) {
@@ -344,8 +344,11 @@ export function useEchart({
     removeSeries,
     addToGroup,
     removeFromGroup,
+    enableZoom,
+    disableZoom,
     setupZoomSelect,
     hideTooltip,
     error,
+    resize,
   };
 }

@@ -1,5 +1,11 @@
 # @lg-tools/lint
 
+## 2.0.3
+
+### Patch Changes
+
+- 23f6bc7fa: Fix eslint so errors properly propagate during CI lint check
+
 ## 2.0.2
 
 ### Patch Changes

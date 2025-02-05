@@ -1,5 +1,18 @@
 # @leafygreen-ui/table
 
+## 13.0.2
+
+### Patch Changes
+
+- Updated dependencies [50ea705f9]
+  - @leafygreen-ui/checkbox@14.1.0
+
+## 13.0.1
+
+### Patch Changes
+
+- 3c6278d95: Fix expanding when passing `state` to `useLeafyGreenTable`
+
 ## 13.0.0
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # @lg-charts/core
 
+## 0.12.1
+
+### Patch Changes
+
+- 19105f5f4: Fixes `Chart` not resizing when container dynamically changes
+- 0652ac97e: Removes spinner animation from `Chart` loading state
+
+## 0.12.0
+
+### Minor Changes
+
+- 540017283: Adds a loading state to the `Chart` component
+
+### Patch Changes
+
+- 86cb59d22: - Fixes series emphasis on line hover by de-emphasizing other lines.
+  - Cleans up mark base component types internally so position type can be determined by type prop.
+
 ## 0.11.1
 
 ### Patch Changes
