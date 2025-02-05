@@ -37,9 +37,7 @@ const OrderedListItem = React.forwardRef(
           <Body baseFontSize={16} className={titleStyles}>
             {title}
           </Body>
-          <Description as={typeof description === 'string' ? 'p' : 'div'}>
-            {description}
-          </Description>
+          <Description>{description}</Description>
         </div>
       </li>
     );

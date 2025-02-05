@@ -2,11 +2,7 @@ import React from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Polymorphic,
-  PolymorphicAs,
-  usePolymorphic,
-} from '@leafygreen-ui/polymorphic';
+import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { LGIDS_TYPOGRAPHY } from '../constants';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
@@ -20,7 +16,7 @@ import { DescriptionProps } from './Description.types';
 
 export const Description = Polymorphic<DescriptionProps>(
   ({
-    as = 'p' as PolymorphicAs,
+    as: asProp,
     baseFontSize: baseFontSizeOverride,
     children,
     className,
@@ -31,6 +27,8 @@ export const Description = Polymorphic<DescriptionProps>(
   }) => {
     const { theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
+    const as =
+      asProp ?? (['string', 'number'].includes(typeof children) ? 'p' : 'div');
     const { Component } = usePolymorphic(as);
 
     return (
