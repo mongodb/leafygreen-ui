@@ -17,7 +17,6 @@ export function getPackageName(dir: string) {
   }
 
   const { scopes } = getLGConfig();
-  console.log({ scopes });
   const splitPath = dir.split('/');
 
   const pkgName = splitPath[splitPath.length - 1];
