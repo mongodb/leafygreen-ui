@@ -16,9 +16,6 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../box"
-    },
-    {
       "path": "../emotion"
     },
     {
