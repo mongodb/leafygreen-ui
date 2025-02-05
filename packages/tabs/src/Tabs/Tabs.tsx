@@ -147,10 +147,11 @@ const Tabs = <SelectedType extends number | string>(
       return child;
     }
 
-    const { disabled, onClick, onKeyDown, name, ...rest } = child.props;
+    const { disabled, index, onClick, onKeyDown, name, ...rest } = child.props;
 
     const tabProps = {
       disabled,
+      index,
       name,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
@@ -173,12 +174,18 @@ const Tabs = <SelectedType extends number | string>(
       return child;
     }
 
-    const { children, disabled, 'data-testid': dataTestId } = child.props;
+    const {
+      children,
+      disabled,
+      'data-testid': dataTestId,
+      index,
+    } = child.props;
 
     return (
       <TabPanel
         data-testid={dataTestId ? `${dataTestId}-panel` : ''}
         disabled={disabled}
+        index={index}
       >
         {children}
       </TabPanel>

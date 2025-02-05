@@ -14,6 +14,12 @@ export type SeriesOption = EChartSeriesOption;
 export type ChartOptions = EChartOptions;
 export type ZoomSelectionEvent = EChartZoomSelectionEvent;
 
+export const ChartStates = {
+  Unset: 'unset',
+  Loading: 'loading',
+} as const;
+export type ChartStates = (typeof ChartStates)[keyof typeof ChartStates];
+
 export type ChartProps = HTMLElementProps<'div'> &
   DarkModeProps &
   PropsWithChildren<{
@@ -36,4 +42,9 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Charts with same groupID will have their tooltips synchronized.
      */
     groupId?: string;
+
+    /**
+     * Controls the current chart state.
+     */
+    chartState?: ChartStates;
   }>;

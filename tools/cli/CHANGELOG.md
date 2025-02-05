@@ -1,5 +1,12 @@
 # @lg-tools/cli
 
+## 0.7.7
+
+### Patch Changes
+
+- Updated dependencies [23f6bc7fa]
+  - @lg-tools/lint@2.0.3
+
 ## 0.7.6
 
 ### Patch Changes

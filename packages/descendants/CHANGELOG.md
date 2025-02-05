@@ -1,5 +1,11 @@
 # @leafygreen-ui/descendants
 
+## 2.1.0
+
+### Minor Changes
+
+- 674d06888: [LG-4399](https://jira.mongodb.org/browse/LG-4399): Enable passing component `index` prop for SSR support
+
 ## 2.0.2
 
 ### Patch Changes

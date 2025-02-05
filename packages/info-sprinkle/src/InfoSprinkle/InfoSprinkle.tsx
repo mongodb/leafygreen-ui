@@ -41,6 +41,7 @@ export const InfoSprinkle = React.forwardRef<
           <button
             data-testid="info-sprinkle-icon"
             aria-label="more info"
+            type="button"
             {...triggerProps}
             aria-disabled
             ref={forwardRef}

@@ -609,13 +609,12 @@ export function Combobox<M extends boolean>({
     ],
   );
 
-  // When the input value changes (or when the menu opens)
-  // Update the focused option
+  // Reset the highlighted option when the menu closes so that it opens to the first option
   useEffect(() => {
-    if (inputValue !== prevValue) {
+    if (!isOpen) {
       updateHighlightedOption('first');
     }
-  }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
+  }, [isOpen, updateHighlightedOption]);
 
   // When the focused option changes, update the menu scroll if necessary
   useAutoScroll(

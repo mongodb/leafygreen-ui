@@ -1,5 +1,18 @@
 # @leafygreen-ui/combobox
 
+## 11.0.4
+
+### Patch Changes
+
+- Updated dependencies [50ea705f9]
+  - @leafygreen-ui/checkbox@14.1.0
+
+## 11.0.3
+
+### Patch Changes
+
+- 7485a000a: Fix option highlighting on re-open after selection
+
 ## 11.0.2
 
 ### Patch Changes
