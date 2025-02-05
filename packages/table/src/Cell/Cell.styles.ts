@@ -93,19 +93,16 @@ export const cellInnerStyles = css`
   min-width: 100%;
 `;
 
-export const getCellEllipsisStyles = ({
-  shouldTruncate,
-  overrideTruncation,
-}: {
-  shouldTruncate: boolean;
-  overrideTruncation: boolean;
-}) =>
+export const getCellEllipsisStyles = (shouldTruncate: boolean) =>
   cx({
     [css`
       flex: 1;
-      overflow: ${overrideTruncation ? 'unset' : 'hidden'};
+      overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       contain: inline-size; // 🤯
+      // This a workaround to prevent interactive syles(e.g. hover and focus styles) from clipping because of overflow: hidden
+      margin: -${spacing[100]}px;
+      padding: ${spacing[100]}px;
     `]: shouldTruncate,
   });

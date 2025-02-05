@@ -799,25 +799,16 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
                       <Row row={row} virtualRow={virtualRow}>
                         {row
                           .getVisibleCells()
-                          .map(
-                            (
-                              cell: LeafyGreenTableCell<KitchenSink>,
-                              index: number,
-                            ) => {
-                              return (
-                                <Cell
-                                  key={cell.id}
-                                  cell={cell}
-                                  overrideTruncation={index === 5}
-                                >
-                                  {flexRender(
-                                    cell.column.columnDef.cell,
-                                    cell.getContext(),
-                                  )}
-                                </Cell>
-                              );
-                            },
-                          )}
+                          .map((cell: LeafyGreenTableCell<KitchenSink>) => {
+                            return (
+                              <Cell key={cell.id} cell={cell}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
                       </Row>
                     )}
                     {isExpandedContent && (

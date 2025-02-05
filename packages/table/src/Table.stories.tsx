@@ -97,10 +97,7 @@ const Template: StoryFn<StoryTableProps> = args => {
           <Row key={row.id}>
             {Object.keys(row).map((cellKey: string, index: number) => {
               return (
-                <Cell
-                  key={`${cellKey}-${index}`}
-                  overrideTruncation={index === 6}
-                >
+                <Cell key={`${cellKey}-${index}`}>
                   {index === 6 ? (
                     <Tooltip
                       trigger={
@@ -486,14 +483,9 @@ export const WithButtons: StoryFn<StoryTableProps> = args => {
             <Fragment key={row.id}>
               {!isExpandedContent && (
                 <Row row={row}>
-                  {row.getVisibleCells().map((cell, index) => {
+                  {row.getVisibleCells().map(cell => {
                     return (
-                      <Cell
-                        key={cell.id}
-                        id={cell.id}
-                        cell={cell}
-                        overrideTruncation={index === 5}
-                      >
+                      <Cell key={cell.id} id={cell.id} cell={cell}>
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),
