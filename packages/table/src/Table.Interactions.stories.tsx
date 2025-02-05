@@ -184,6 +184,7 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
+// TODO: fix this test https://jira.mongodb.org/browse/LG-4867
 export const StickyHeader = {
   render: (args: StoryTableProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {

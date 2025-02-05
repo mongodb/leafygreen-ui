@@ -8,9 +8,9 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
+import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
   KitchenSink,
@@ -727,20 +727,14 @@ export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
       {
         id: 'actions',
         header: '',
-        size: 120,
+        size: 150,
 
         cell: _ => {
           return (
             <div>
-              <IconButton aria-label="Download">
-                <Icon glyph="Download" />
-              </IconButton>
-              <IconButton aria-label="Export">
-                <Icon glyph="Export" />
-              </IconButton>
-              <IconButton aria-label="More Options">
-                <Icon glyph="Ellipsis" />
-              </IconButton>
+              <Tooltip trigger={<Button size="small">Button</Button>}>
+                {"I'm leafy, you're leafy"}
+              </Tooltip>
             </div>
           );
         },

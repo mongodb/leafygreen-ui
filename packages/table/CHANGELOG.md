@@ -1,5 +1,11 @@
 # @leafygreen-ui/table
 
+## 13.0.3
+
+### Patch Changes
+
+- 5b30db97c: Adds `css` to ensure interactive styles (e.g., hover and focus) are not clipped within cells.
+
 ## 13.0.2
 
 ### Patch Changes
