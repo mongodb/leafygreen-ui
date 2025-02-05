@@ -53,7 +53,7 @@ export interface LanguageSwitcherUtils {
   /**
    * Returns the language switcher input
    */
-  getInput: () => HTMLInputElement;
+  getInput: () => HTMLInputElement | null;
 
   /**
    * Returns if the language switcher is disabled

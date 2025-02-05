@@ -42,62 +42,6 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-const actionData = [
-  <IconButton
-    href="https://mongodb.design"
-    aria-label="label"
-    darkMode={true}
-    key="1"
-    target="_blank"
-  >
-    <Icon glyph="Code" />
-  </IconButton>,
-];
-
-// const languageOptions = [
-//   {
-//     displayName: 'JavaScript',
-//     language: Language.JavaScript,
-//   },
-//   {
-//     displayName: 'Python',
-//     language: Language.Python,
-//   },
-// ];
-
-// const renderCode = (props: Partial<CodeProps> = {}) => {
-//   const renderResults = render(
-//     <Code language={languageOptions[0].language} {...props}>
-//       {codeSnippet}
-//     </Code>,
-//   );
-
-//   return {
-//     ...renderResults,
-//   };
-// };
-
-// const renderCodeWithLanguageSwitcher = (props: Partial<PanelProps> = {}) => {
-//   const renderResults = render(
-//     <Code
-//       language={languageOptions[0].displayName}
-//       panel={
-//         <Panel
-//           onChange={() => {}}
-//           languageOptions={languageOptions}
-//           {...props}
-//         />
-//       }
-//     >
-//       {codeSnippet}
-//     </Code>,
-//   );
-
-//   return {
-//     ...renderResults,
-//   };
-// };
-
 jest.mock('clipboard', () => {
   const ClipboardJSOriginal = jest.requireActual('clipboard');
 
@@ -450,7 +394,10 @@ describe('packages/Code', () => {
       test('renders when custom action buttons are present and showCustomActionButtons is true', () => {
         const { queryByTestId } = renderCode({
           panel: (
-            <Panel showCustomActionButtons customActionButtons={actionData} />
+            <Panel
+              showCustomActionButtons
+              customActionButtons={customActionButtons}
+            />
           ),
         });
         expect(queryByTestId('lg-code-panel')).toBeDefined();
