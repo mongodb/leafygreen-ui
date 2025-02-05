@@ -54,6 +54,7 @@ function Code({
   className,
   onCopy,
   panel,
+  'data-lgid': dataLgId = LGIDs.root,
   // Deprecated props
   copyable = false,
   showCustomActionButtons = false,
@@ -211,7 +212,11 @@ function Code({
       showPanel={showPanel}
     >
       {/* TODO: note in changeset that className was moved to the parent wrapper */}
-      <div className={getWrapperStyles({ theme, className })}>
+      <div
+        className={getWrapperStyles({ theme, className })}
+        data-language={languageProp}
+        data-lgid={dataLgId}
+      >
         <div
           className={getCodeStyles({
             scrollState,
