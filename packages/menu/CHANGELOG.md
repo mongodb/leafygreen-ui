@@ -1,5 +1,12 @@
 # @leafygreen-ui/menu
 
+## 28.0.4
+
+### Patch Changes
+
+- Updated dependencies [674d06888]
+  - @leafygreen-ui/descendants@2.1.0
+
 ## 28.0.3
 
 ### Patch Changes

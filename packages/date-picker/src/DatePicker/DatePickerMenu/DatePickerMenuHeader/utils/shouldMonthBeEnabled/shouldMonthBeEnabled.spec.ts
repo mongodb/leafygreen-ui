@@ -67,7 +67,6 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
         }),
       ).toBeFalsy();
     });
-
     test('returns true when month is same as max month', () => {
       expect(
         shouldMonthBeEnabled('July', {
@@ -100,6 +99,28 @@ describe('packages/date-picker/menu/utils/shouldMonthBeEnabled', () => {
         shouldMonthBeEnabled('July', {
           month: newUTC(2026, Month.March, 10),
           max: newUTC(2025, Month.September, 10),
+        }),
+      ).toBeFalsy();
+    });
+  });
+
+  describe('when month, & min & max are the same year', () => {
+    test('returns false when month is before min month', () => {
+      expect(
+        shouldMonthBeEnabled('February', {
+          month: newUTC(2024, Month.February, 14),
+          min: newUTC(2024, Month.May, 10),
+          max: newUTC(2024, Month.June, 10),
+        }),
+      ).toBeFalsy();
+    });
+
+    test('returns false when month is after max month', () => {
+      expect(
+        shouldMonthBeEnabled('August', {
+          month: newUTC(2024, Month.August, 14),
+          min: newUTC(2024, Month.May, 10),
+          max: newUTC(2024, Month.June, 10),
         }),
       ).toBeFalsy();
     });
