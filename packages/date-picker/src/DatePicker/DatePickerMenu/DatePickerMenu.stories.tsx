@@ -2,7 +2,7 @@
 import React, { useRef, useState } from 'react';
 import { type StoryMetaType } from '@lg-tools/storybook-utils';
 import { Decorator, StoryFn, StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from '@storybook/test';
 import last from 'lodash/last';
 import omit from 'lodash/omit';
 import MockDate from 'mockdate';
