@@ -10,8 +10,6 @@ import { StoryFn } from '@storybook/react';
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
 import Tooltip from '@leafygreen-ui/tooltip';
 
 import {
