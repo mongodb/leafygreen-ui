@@ -1,5 +1,12 @@
 # @leafygreen-ui/ordered-list
 
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [674d06888]
+  - @leafygreen-ui/descendants@2.1.0
+
 ## 2.0.2
 
 ### Patch Changes

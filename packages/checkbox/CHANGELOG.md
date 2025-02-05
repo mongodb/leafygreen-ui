@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 14.1.0
+
+### Minor Changes
+
+- 50ea705f9: Allow defaultChecked to be used in Checkbox
+
 ## 14.0.2
 
 ### Patch Changes

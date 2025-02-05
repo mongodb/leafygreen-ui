@@ -96,4 +96,37 @@ describe('packages/number-input/input', () => {
       expect(input.getAttribute('aria-disabled')).toBe('true');
     });
   });
+
+  /* eslint-disable jest/no-disabled-tests */
+  test.skip('types behave as expected', () => {
+    <>
+      {/* @ts-expect-error - errorMessage is not a prop */}
+      <Input errorMessage="error" />
+
+      {/* @ts-expect-error - successMessage is not a prop */}
+      <Input successMessage="error" />
+
+      {/* @ts-expect-error - selectClassName is not a prop */}
+      <Input selectClassName="error" />
+
+      {/* @ts-expect-error - label is not a prop */}
+      <Input label="label" />
+
+      {/* @ts-expect-error - description is not a prop */}
+      <Input description="description" />
+
+      {/* @ts-expect-error - inputClassName is not a prop */}
+      <Input inputClassName="inputClassName" />
+
+      <Input
+        state="none"
+        value="value"
+        onChange={() => {}}
+        onBlur={() => {}}
+        id="id"
+        size="default"
+        disabled
+      />
+    </>;
+  });
 });

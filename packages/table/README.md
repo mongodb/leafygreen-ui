@@ -891,6 +891,41 @@ const columns = [
 
 **Limitations**: In `table-layout: fixed`, columns with `auto` widths do not support `min-width`, so they might shrink excessively on small viewports.
 
+### Performance
+
+Performance may decrease for a few reasons:
+
+- Rendering hundreds of rows without a non-virtual table and applying CSS directly to a `<Cell />` or `<Row />` with `Emotion`. In this case, it is recommended to apply styles to the parent level component and target styles with `td`, `tr`, or a className.
+
+  e.g.
+
+  ```js
+  <TableBody
+    className={css`
+      tr {
+        // add styles here
+      }
+    `}
+  ></TableBody>
+  ```
+
+  or
+
+  ```js
+
+  <TableBody className={css`
+    .class-name {
+      // add styles here
+    }
+  `}>
+    <Cell className='class-name'>
+  </TableBody>
+
+  ```
+
+- Table performs more efficiently in production compared to development
+- Table typically exhibits slower performance in a Storybook environment.
+
 ## Exports
 
 `@leafygreen-ui/table` exports:
@@ -1093,8 +1128,7 @@ const {
 - Styled components
 - Sticky header
 - `useLeafyGreenTable`
-  - Only rows
-  - Rows and subrows
+  - [Rows and subrows](https://codesandbox.io/p/sandbox/table-example-v13-regular-table-w-rows-and-subrows-m5m55y)
   - Expanded content
   - [Row, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-k4nmqq)
   - With extra custom columns
@@ -1106,8 +1140,7 @@ const {
   - Disabled rows
   - With pagination
 - `useLeafyGreenVirtualTable`
-  - Only rows
-  - Rows and subrows
+  - [Rows and subrows](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-and-subrows-flxjfh)
   - Expanded content
   - [Rows, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-subrows-and-expanded-content-45lvd7)
   - With extra custom columns

@@ -21,21 +21,16 @@ export const shouldMonthBeEnabled = (
 
   const { month, min, max } = context;
 
-  const year = context.month?.getUTCFullYear();
-  const minYear = context.min?.getUTCFullYear();
-  const maxYear = context.max?.getUTCFullYear();
+  const year = month?.getUTCFullYear();
+  const minYear = min?.getUTCFullYear();
+  const maxYear = max?.getUTCFullYear();
 
   if (year && minYear && year < minYear) return false;
   if (year && maxYear && year > maxYear) return false;
 
-  if (month && min && year === minYear) {
-    if (monthIndex < min.getUTCMonth()) return false;
-    return true;
-  }
-
-  if (month && max && year === maxYear) {
-    if (monthIndex > max.getUTCMonth()) return false;
-    return true;
+  if (month) {
+    if (min && year === minYear && monthIndex < min.getUTCMonth()) return false;
+    if (max && year === maxYear && monthIndex > max.getUTCMonth()) return false;
   }
 
   return true;
