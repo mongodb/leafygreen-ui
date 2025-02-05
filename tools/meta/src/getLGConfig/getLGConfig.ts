@@ -11,7 +11,7 @@ export const getLGConfig = (dir?: string): LGConfig => {
   const rootDir = dir ?? process.cwd();
   const packageJson = getPackageJson(rootDir);
 
-  // Check if an lg.json exists
+  // Check if an package.json exists
   if (!packageJson) {
     throw new Error(`\`package.json\` file not found`);
   }
