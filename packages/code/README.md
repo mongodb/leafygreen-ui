@@ -123,3 +123,155 @@ interface LanguageOption {
   image?: React.ReactElement;
 }
 ```
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with LG `Code` in a product test suite. If the `Code` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/code';
+
+const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Code`. It defaults to 'lg-code' if left empty.
+```
+
+#### Single `Code` component
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Code, { getTestUtils } from '@leafygreen-ui/code';
+
+...
+
+test('code', () => {
+  render(
+    <Code
+      language="javascript"
+      showLineNumbers={true}
+      onCopy={() => {}}
+      darkMode={true}
+      panel={
+        <Panel
+          onChange={() => {}}
+          languageOptions={languageOptions}
+          showCustomActionButtons
+          customActionButtons={customActionButtons}
+          title="Title"
+        />
+      }
+    >
+      {codeSnippet}
+    </Code>
+  );
+
+  const { getLanguage, getLanguageSwitcher, getIsLoading, getCopyButton, getExpandButton } = getTestUtils();
+  const { getInput, getAllOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcher();
+  const { getButton: getCopyButton, isDisabled: isCopyButtonDisabled } = getCopyButton();
+  const { getButton: getExpandButton, isExpanded} = getExpandButton();
+
+  expect(getLanguage()).toBe('javascript');
+  expect(getInput()).toBeInTheDocument();
+  expect(getAllOptions()).toHaveLength(2);
+  expect(getOptionByValue('js)).toBeInTheDocument();
+  expect(isLanguageSwitcherDisabled()).toBe(false);
+  expect(getIsLoading()).toBe(false);
+  expect(getCopyButton()).toBeInTheDocument();
+  expect(isCopyButtonDisabled()).toBe(false);
+  expect(getExpandButton()).toBeInTheDocument();
+  expect(isExpanded()).toBe(false);
+});
+```
+
+#### Multiple `Code` components
+
+When testing multiple `Code` components, it is recommended to add the custom `data-lgid` attribute to each `Code`.
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Tabs, Tab, getTestUtils } from '@leafygreen-ui/tabs';
+
+...
+
+test('tabs', () => {
+  render(
+    <>
+      <Code
+      language="javascript"
+      panel={<Panel/>}
+      data-lgid='lg-code-1'
+    >
+      {codeSnippet}
+    </Code>
+    <Code
+      language="python"
+      panel={<Panel/>}
+      data-lgid='lg-code-2'
+    >
+      {codeSnippet}
+    </Code>
+    </>
+  );
+
+  const testUtils1 = getTestUtils('lg-code-1'); // data-lgid
+  const testUtils2 = getTestUtils('lg-code-2'); // data-lgid
+
+  // First Code
+  expect(testUtils1.getLanguage()).toBe('javascript');
+
+  // Second Code
+  expect(testUtils2.getLanguage()).toBe('python');
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  getLanguage,
+  getLanguageSwitcher: {
+    getInput,
+    getAllOptions,
+    getOptionByValue,
+    isDisabled,
+  },
+  getIsLoading,
+  getCopyButton: { getButton, isDisabled },
+  getExpandButton: { getButton, isExpanded },
+} = getTestUtils();
+```
+
+| Util                    | Description                                              | Returns                 |
+| ----------------------- | -------------------------------------------------------- | ----------------------- |
+| `getLanguage()`         | Returns the current language of the code block           | `string`                |
+| `getLanguageSwitcher()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
+| `getIsLoading()`        | Returns whether the code block is in loading state       | `boolean`               |
+| `getCopyButton()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |
+| `getExpandButton()`     | Returns utils for interacting with the expand button     | `ExpandButtonUtils`     |
+
+### LanguageSwitcherUtils
+
+| Util                              | Description                                        | Returns                 |
+| --------------------------------- | -------------------------------------------------- | ----------------------- |
+| `getInput()`                      | Returns the input element of the language switcher | `HTMLElement`           |
+| `getAllOptions()`                 | Returns all options in the language switcher       | `Array<HTMLElement>`    |
+| `getOptionByValue(value: string)` | Returns the option element by its value            | `HTMLElement` \| `null` |
+| `isDisabled()`                    | Returns whether the language switcher is disabled  | `boolean`               |
+
+### CopyButtonUtils
+
+| Util           | Description                                 | Returns       |
+| -------------- | ------------------------------------------- | ------------- |
+| `getButton()`  | Returns the copy button element             | `HTMLElement` |
+| `isDisabled()` | Returns whether the copy button is disabled | `boolean`     |
+
+### ExpandButtonUtils
+
+| Util           | Description                                | Returns       |
+| -------------- | ------------------------------------------ | ------------- |
+| `getButton()`  | Returns the expand button element          | `HTMLElement` |
+| `isExpanded()` | Returns whether the code block is expanded | `boolean`     |
