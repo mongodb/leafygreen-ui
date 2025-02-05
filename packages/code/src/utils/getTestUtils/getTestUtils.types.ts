@@ -29,7 +29,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the copy button
    */
-  getCopyButton: () => CopyButtonUtils | null;
+  getCopyButton: () => CopyButtonUtils;
 
   /**
    * Returns the expand button
@@ -41,7 +41,7 @@ export interface CopyButtonUtils {
   /**
    * Returns the copy button
    */
-  getButton: () => HTMLButtonElement;
+  getButton: () => HTMLButtonElement | null;
 
   /**
    * Returns whether the copy button is disabled
@@ -75,7 +75,7 @@ export interface ExpandedButtonUtils {
   /**
    * Returns the expand button
    */
-  getButton: () => HTMLButtonElement;
+  getButton: () => HTMLButtonElement | null;
 
   /**
    * Returns whether the code snippet is expanded

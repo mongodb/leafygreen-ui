@@ -26,10 +26,6 @@ export const getTestUtils = (
         `[data-lgid=${LGIDs.select}] button`,
       );
 
-      if (!input) {
-        throw new Error('Unable to find language switcher input');
-      }
-
       return input;
     };
 
@@ -58,48 +54,11 @@ export const getTestUtils = (
 
     return {
       getInput: () => getInput(),
-      isDisabled: () => getInput().getAttribute('aria-disabled') === 'true',
+      isDisabled: () => getInput()?.getAttribute('aria-disabled') === 'true',
       getAllOptions: () => getAllOptions(),
       getOptionByValue: (value: string) => getOptionByValue(value),
     };
   };
-
-  // const getLanguageSwitcherInput = () => {
-  //   const input = queryBySelector<HTMLInputElement>(
-  //     element,
-  //     `[data-lgid=${LGIDs.select}] button`,
-  //   );
-
-  //   if (!input) {
-  //     throw new Error('Unable to find language switcher input');
-  //   }
-
-  //   return input;
-  // };
-
-  // const getAllLanguageSwitcherOptions = () => {
-  //   const options = element.querySelectorAll<HTMLLIElement>(
-  //     `[data-lgid=${LGIDs.select}] [role="option"] `,
-  //   );
-
-  //   if (!options) {
-  //     throw new Error('Unable to find language switcher options');
-  //   }
-
-  //   return Array.from(options);
-  // };
-
-  // const getLanguageSwitcherOptionByValue = (value: string) => {
-  //   if (!value) throw new Error('Value cannot be empty');
-
-  //   const allOptions = getAllLanguageSwitcherOptions();
-
-  //   const option = allOptions.find(node => node.textContent === value);
-
-  //   if (!option) return null;
-
-  //   return option;
-  // };
 
   const getIsLoading = () => {
     return !!queryBySelector<HTMLElement>(
@@ -112,18 +71,14 @@ export const getTestUtils = (
     const getButton = () => {
       const button = queryBySelector<HTMLButtonElement>(
         element,
-        `[data-lgid=${LGIDs.copyButton}]`,
+        `button[data-lgid=${LGIDs.copyButton}]`,
       );
-
-      if (!button) {
-        throw new Error('Unable to find copy button');
-      }
 
       return button;
     };
 
     const isDisabled = () =>
-      getButton().getAttribute('aria-disabled') === 'true';
+      getButton()?.getAttribute('aria-disabled') === 'true';
 
     return {
       getButton: () => getButton(),
@@ -137,10 +92,6 @@ export const getTestUtils = (
         element,
         `[data-lgid=${LGIDs.expandButton}]`,
       );
-
-      if (!button) {
-        throw new Error('Unable to find expand button');
-      }
 
       return button;
     };
@@ -166,15 +117,3 @@ export const getTestUtils = (
     getExpandButton,
   };
 };
-/**
- * getLanguage
- * getLanguageSwitcherInput
- * getAllLanguageSwitcherOptions
- * getLanguageSwitcherOptionByValue
- * getIsLoading
- * getCopyButton
- * getIsExpanded
- *
- * is input disabled
- * is copy button disabled
- */

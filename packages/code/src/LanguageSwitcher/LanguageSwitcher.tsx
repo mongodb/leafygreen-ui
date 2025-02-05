@@ -47,6 +47,7 @@ function LanguageSwitcher({ language, languageOptions, onChange }: Props) {
         renderMode={RenderMode.TopLayer}
         size={Size.XSmall}
         data-testid={LGIDs.select}
+        data-lgid={LGIDs.select}
         disabled={isLoading}
       >
         {languageOptions?.map(option => (
