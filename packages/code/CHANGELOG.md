@@ -1,5 +1,14 @@
 # @leafygreen-ui/code
 
+## 16.0.3
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/select@14.0.3
+  - @leafygreen-ui/tooltip@13.0.3
+  - @leafygreen-ui/button@22.0.2
+
 ## 16.0.2
 
 ### Patch Changes
