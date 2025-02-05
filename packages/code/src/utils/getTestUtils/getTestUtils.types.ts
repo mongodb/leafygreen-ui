@@ -4,20 +4,22 @@ export interface TestUtilsReturnType {
    */
   getLanguage: () => string;
 
-  /**
-   * Returns the language switcher input
-   */
-  getLanguageSwitcherInput: () => HTMLInputElement;
+  getLanguageSwitcher: () => LanguageSwitcherUtils;
 
-  /**
-   * Returns the language switcher options
-   */
-  getLanguageSwitcherOptions: () => Array<HTMLLIElement>;
+  // /**
+  //  * Returns the language switcher input
+  //  */
+  // getLanguageSwitcherInput: () => HTMLInputElement;
 
-  /**
-   * Returns the language switcher option by value
-   */
-  getLanguageSwitcherOptionByValue: (value: string) => HTMLLIElement;
+  // /**
+  //  * Returns the language switcher options
+  //  */
+  // getAllLanguageSwitcherOptions: () => Array<HTMLLIElement>;
+
+  // /**
+  //  * Returns the language switcher option by value
+  //  */
+  // getLanguageSwitcherOptionByValue: (value: string) => HTMLLIElement | null;
 
   /**
    * Returns whether the code snippet is loading
@@ -27,12 +29,63 @@ export interface TestUtilsReturnType {
   /**
    * Returns the copy button
    */
-  getCopyButton: () => HTMLButtonElement;
+  getCopyButton: () => CopyButtonUtils | null;
+
+  /**
+   * Returns the expand button
+   */
+  getExpandButton: () => ExpandedButtonUtils;
+}
+
+export interface CopyButtonUtils {
+  /**
+   * Returns the copy button
+   */
+  getButton: () => HTMLButtonElement;
+
+  /**
+   * Returns whether the copy button is disabled
+   */
+  isDisabled: () => boolean;
+}
+
+export interface LanguageSwitcherUtils {
+  /**
+   * Returns the language switcher input
+   */
+  getInput: () => HTMLInputElement;
+
+  /**
+   * Returns if the language switcher is disabled
+   */
+  isDisabled: () => boolean;
+
+  /**
+   * Returns the language switcher options
+   */
+  getAllOptions: () => Array<HTMLLIElement>;
+
+  /**
+   * Returns the language switcher option by value
+   */
+  getOptionByValue: (value: string) => HTMLLIElement | null;
+}
+
+export interface ExpandedButtonUtils {
+  /**
+   * Returns the expand button
+   */
+  getButton: () => HTMLButtonElement;
 
   /**
    * Returns whether the code snippet is expanded
    */
-  getIsExpanded: () => boolean;
+  isExpanded: () => boolean;
+
+  /**
+   * Returns whether the code snippet is collapsed
+   */
+  isCollapsed: () => boolean;
 }
 
 /**

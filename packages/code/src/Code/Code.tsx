@@ -253,6 +253,7 @@ function Code({
           {isLoading && (
             <CodeSkeleton
               data-testid={LGIDs.skeleton}
+              data-lgid={LGIDs.skeleton}
               className={getLoadingStyles(theme)}
             />
           )}
@@ -288,6 +289,7 @@ function Code({
               className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
               data-testid={LGIDs.expandButton}
+              data-lgid={LGIDs.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}
