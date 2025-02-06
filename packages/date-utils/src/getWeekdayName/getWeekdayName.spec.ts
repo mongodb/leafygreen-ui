@@ -1,5 +1,6 @@
-import { getWeekdayName } from '.';
 import { SupportedLocales } from '../types/locales';
+
+import { getWeekdayName } from '.';
 describe('packages/date-utils/getWeekdayName', () => {
   test('default (English)', () => {
     expect(getWeekdayName(0)).toEqual(

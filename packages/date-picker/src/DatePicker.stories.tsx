@@ -10,6 +10,7 @@ import {
   testLocales,
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
@@ -23,7 +24,6 @@ import {
 import { getProviderPropsFromStoryContext } from './shared/testutils/getProviderPropsFromStoryContext';
 import { AutoComplete, DatePickerState } from './shared/types';
 import { DatePicker } from './DatePicker';
-import { SupportedLocales } from '@leafygreen-ui/date-utils';
 
 const ProviderWrapper = (Story: StoryFn, ctx: any) => {
   const { leafyGreenProviderProps, datePickerProviderProps, storyProps } =

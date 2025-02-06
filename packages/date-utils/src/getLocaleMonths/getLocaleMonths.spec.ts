@@ -1,5 +1,6 @@
-import { getLocaleMonths } from '.';
 import { SupportedLocales } from '../types/locales';
+
+import { getLocaleMonths } from '.';
 
 describe('packages/date-utils/getLocaleMonths', () => {
   test('default (English)', () => {

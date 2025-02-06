@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
 import { getISODate, Month, newUTC } from '@leafygreen-ui/date-utils';
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import {
   mockTimeZone,
   testTimeZones,
@@ -38,7 +39,6 @@ import {
   RenderMenuResult,
 } from './DatePicker.testutils';
 import { DatePicker } from '.';
-import { SupportedLocales } from '@leafygreen-ui/date-utils';
 
 /**
  * There are HUNDREDS of tests for this component.

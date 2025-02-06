@@ -1,9 +1,9 @@
 import isNull from 'lodash/isNull';
 
 import { Month } from '../constants';
+import { SupportedLocales } from '../types/locales';
 
 import { getWeeksArray } from '.';
-import { SupportedLocales } from '../types/locales';
 
 describe('packages/date-utils/getWeeksArray', () => {
   test('starts the week on the correct day for the locale', () => {

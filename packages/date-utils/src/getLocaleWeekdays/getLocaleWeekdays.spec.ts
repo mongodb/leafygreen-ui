@@ -1,5 +1,6 @@
-import { getLocaleWeekdays } from '.';
 import { SupportedLocales } from '../types/locales';
+
+import { getLocaleWeekdays } from '.';
 
 describe('packages/date-utils/getLocaleWeekdays', () => {
   test('English (default)', () => {
