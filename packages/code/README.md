@@ -257,21 +257,21 @@ const {
 
 | Util                              | Description                                        | Returns                 |
 | --------------------------------- | -------------------------------------------------- | ----------------------- |
-| `getInput()`                      | Returns the input element of the language switcher | `HTMLElement`           |
+| `getInput()`                      | Returns the input element of the language switcher | `HTMLElement` \| `null` |
 | `getAllOptions()`                 | Returns all options in the language switcher       | `Array<HTMLElement>`    |
 | `getOptionByValue(value: string)` | Returns the option element by its value            | `HTMLElement` \| `null` |
 | `isDisabled()`                    | Returns whether the language switcher is disabled  | `boolean`               |
 
 ### CopyButtonUtils
 
-| Util           | Description                                 | Returns       |
-| -------------- | ------------------------------------------- | ------------- |
-| `getButton()`  | Returns the copy button element             | `HTMLElement` |
-| `isDisabled()` | Returns whether the copy button is disabled | `boolean`     |
+| Util           | Description                                 | Returns                 |
+| -------------- | ------------------------------------------- | ----------------------- |
+| `getButton()`  | Returns the copy button element             | `HTMLElement` \| `null` |
+| `isDisabled()` | Returns whether the copy button is disabled | `boolean`               |
 
 ### ExpandButtonUtils
 
-| Util           | Description                                | Returns       |
-| -------------- | ------------------------------------------ | ------------- |
-| `getButton()`  | Returns the expand button element          | `HTMLElement` |
-| `isExpanded()` | Returns whether the code block is expanded | `boolean`     |
+| Util           | Description                                | Returns                 |
+| -------------- | ------------------------------------------ | ----------------------- |
+| `getButton()`  | Returns the expand button element          | `HTMLElement` \| `null` |
+| `isExpanded()` | Returns whether the code block is expanded | `boolean`               |
