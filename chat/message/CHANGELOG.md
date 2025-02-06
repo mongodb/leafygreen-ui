@@ -1,5 +1,15 @@
 # @lg-chat/message
 
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+  - @lg-chat/lg-markdown@3.0.3
+  - @lg-chat/rich-links@2.0.3
+  - @leafygreen-ui/banner@9.0.3
+
 ## 5.0.2
 
 ### Patch Changes
