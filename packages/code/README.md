@@ -176,7 +176,7 @@ test('code', () => {
   expect(getLanguage()).toBe('javascript');
   expect(getInput()).toBeInTheDocument();
   expect(getAllOptions()).toHaveLength(2);
-  expect(getOptionByValue('js)).toBeInTheDocument();
+  expect(getOptionByValue('js')).toBeInTheDocument();
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
   expect(getCopyButton()).toBeInTheDocument();
