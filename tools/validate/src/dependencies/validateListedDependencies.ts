@@ -6,7 +6,7 @@ import path from 'path';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { globToRegex } from './utils/globToRegex';
-import { DepCheckFunctionProps, externalDependencies } from './config';
+import { DepCheckFunctionProps, getHoistedDependencies } from './config';
 import {
   isDependencyOnlyUsedInTestFile,
   sortDependenciesByUsage,
@@ -39,7 +39,7 @@ export function validateListedDependencies(
     const listedButOnlyUsedAsDev = listedDependencies.filter(
       listedDepName =>
         !importedPackagesInSourceFile.includes(listedDepName) &&
-        !externalDependencies.some(glob => {
+        !getHoistedDependencies().some(glob => {
           const regEx = globToRegex(glob);
           return regEx.test(listedDepName);
         }),

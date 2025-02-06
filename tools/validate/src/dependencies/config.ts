@@ -1,4 +1,6 @@
 import depcheck from 'depcheck';
+import fsx from 'fs-extra';
+import path from 'path';
 
 import { readPackageJson } from './utils';
 
@@ -42,35 +44,23 @@ export const ignoreFilePatterns: Array<RegExp> = [
 ];
 
 /**
+ * @returns an array of hoist patterns from the `.npmrc` file
+ */
+const getHoistPatterns = () => {
+  const npmrc = fsx.readFileSync(path.resolve(process.cwd(), '.npmrc'), 'utf8');
+  const hoistPatterns = npmrc.match(/(?<=public-hoist-pattern\[\]=).*/g);
+  return hoistPatterns;
+};
+
+/**
  * These are globally available dev dependencies.
  *
  * Packages that omit these dependencies will not be flagged for missing dependencies.
  *
  * Packages that list these dependencies will not be flagged for unused dependencies
  */
-export const externalDependencies = [
-  '@babel/*',
-  '@emotion/*',
-  '@leafygreen-ui/mongo-nav',
-  '@leafygreen-ui/testing-lib',
-  '@rollup/*',
-  '@storybook/*',
-  '@svgr/*',
-  '@testing-library/*',
-  '@types/*',
-  '@typescript-eslint/*',
-  'buffer',
-  'eslint*',
-  'jest',
-  'jest-*',
-  'jest-axe',
-  'prettier*',
-  'react-*',
-  'rollup*',
-  'storybook-*',
-  'typescript',
-  '*-loader',
-  '*-lint*',
+export const getHoistedDependencies = () => [
+  ...Array.from(getHoistPatterns() ?? []),
 ];
 
 /**
@@ -81,7 +71,7 @@ export const patternsToIgnore = [
   'tools/codemods/src/utils/transformations/*/tests',
 ];
 
-export const depcheckOptions: depcheck.Options = {
-  ignoreMatches: externalDependencies,
+export const getDepcheckOptions = (): depcheck.Options => ({
+  ignoreMatches: getHoistedDependencies(),
   ignorePatterns: patternsToIgnore,
-};
+});

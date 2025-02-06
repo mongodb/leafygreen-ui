@@ -15,16 +15,18 @@ export function logDependencyIssues(
     listedButOnlyUsedAsDev,
     isMissingPeers,
   }: DependencyIssues,
-  _verbose?: boolean,
+  verbose?: boolean,
 ) {
-  unusedDependencies.length > 0 &&
+  verbose &&
+    unusedDependencies.length > 0 &&
     console.log(
       `${chalk.green(pkg)} does not use ${chalk.blueBright(
         unusedDependencies.join(', '),
       )}`,
     );
 
-  unusedDevDependencies.length > 0 &&
+  verbose &&
+    unusedDevDependencies.length > 0 &&
     console.log(
       `${chalk.green(pkg)} does not use ${chalk.blueBright(
         unusedDevDependencies.join(', '),
@@ -54,11 +56,12 @@ export function logDependencyIssues(
       )}`,
     );
 
-  listedButOnlyUsedAsDev.length > 0 &&
+  verbose &&
+    listedButOnlyUsedAsDev.length > 0 &&
     console.log(
       `${chalk.green(
         pkg,
-      )} lists these as dependencies, but are only used in test files: ${chalk.yellowBright(
+      )} lists these as dependencies, but are only used in test files: ${chalk.blue(
         listedButOnlyUsedAsDev.join(', '),
       )}`,
     );
