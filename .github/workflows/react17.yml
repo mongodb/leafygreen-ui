@@ -25,7 +25,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'pnpm'
 
       - name: Install node-gyp
         run: pnpm add --global node-gyp
@@ -43,4 +42,4 @@ jobs:
         run: pnpm build
 
       - name: Run tests in React 17
-        run: pnpm run test --react17
+        run: pnpm run test --react17 --verbose
