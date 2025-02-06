@@ -384,7 +384,7 @@
 
 - 5249bd3d: Reduces the width and height of the calendar icon so that the focus/hover states do not excessively overflow the input container.
   When the `size` is `xsmall` the width and hight of the calendar icon will be `20px`. When the `size`is `small` the width and hight of the calendar icon will be 22px. The icon itself will remain the the same size.
-- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
+- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso-8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
 - Updated dependencies [5249bd3d]
   - @leafygreen-ui/form-field@0.3.2
 

@@ -38,11 +38,11 @@ export type BaseDatePickerProps = {
    * Defaults to the user’s browser preference (if available),
    * otherwise ISO-8601.
    *
-   * Currently only the following values are officially supported: 'en-US' | 'en-GB' | 'iso8601'
+   * Currently only the following values are officially supported: 'en-US' | 'en-GB' | 'iso-8601'
    * Other valid [Locale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale)
    * strings may work, however no assurances are made.
    *
-   * @default 'iso8601'
+   * @default 'iso-8601'
    */
   locale?: LocaleString;
 

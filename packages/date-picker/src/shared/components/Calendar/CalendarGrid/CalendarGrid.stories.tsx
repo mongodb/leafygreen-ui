@@ -7,6 +7,7 @@ import {
   isTodayTZ,
   Month,
   newUTC,
+  SupportedLocales,
   testLocales,
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
@@ -44,7 +45,7 @@ const meta: StoryMetaType<typeof CalendarGrid, SharedDatePickerContextProps> = {
   },
   decorators: [ProviderWrapper],
   args: {
-    locale: 'en-US',
+    locale: SupportedLocales.en_US,
     timeZone: 'UTC',
   },
   argTypes: {

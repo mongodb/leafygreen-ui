@@ -1,3 +1,5 @@
+import { SupportedLocales } from '../types/locales';
+
 export const testTimeZones = [
   { tz: 'Pacific/Honolulu', UTCOffset: -10 },
   { tz: 'America/Los_Angeles', UTCOffset: -8 },
@@ -25,10 +27,8 @@ export const testTimeZoneLabels = testTimeZones.map(({ tz }) => tz);
  * English-Maldives (week starts on Fri.)
  */
 export const testLocales = [
-  'iso8601',
+  ...Object.values(SupportedLocales),
   'de-DE', // German, Germany (uses `.` char separator)
-  'en-US', // English, US (week starts on Sun.)
-  'en-GB', // English, UK (week starts on Mon.)
   'en-MV', // English, Maldives (week starts on Fri.)
   'es-MX', // Spanish, Mexico
   'fa-AF', // Farsi, Afghanistan (week starts on Sat.)

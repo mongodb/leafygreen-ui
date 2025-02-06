@@ -9,7 +9,7 @@ export const getFormattedDateStringFromSegments = (
   const formatParts = getFormatParts(locale);
 
   // Note: looping through `formatParts`, instead of using `Intl.DateTimeFormat(locale).format(date)`
-  // since the locale `iso8601` does not return a valid formatter
+  // since the locale `iso-8601` does not return a valid formatter
   const formattedDate = formatParts?.reduce((dateString, part) => {
     if (part.type === 'literal') {
       return dateString + part.value;
