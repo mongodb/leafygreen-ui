@@ -46,7 +46,7 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-const TypographyDemoComponent = ({
+const LiveExample = ({
   baseFontSize,
   darkMode,
 }: {
@@ -132,9 +132,9 @@ const TypographyDemoComponent = ({
   );
 };
 
-const meta: StoryMetaType<typeof TypographyDemoComponent> = {
+const meta: StoryMetaType<typeof LiveExample> = {
   title: 'Components/Typography',
-  component: TypographyDemoComponent,
+  component: LiveExample,
   parameters: {
     default: 'AllTypography',
     generate: {
@@ -147,8 +147,9 @@ const meta: StoryMetaType<typeof TypographyDemoComponent> = {
 };
 export default meta;
 
-export const AllTypography: StoryType<typeof TypographyDemoComponent> =
-  TypographyDemoComponent.bind({});
+export const AllTypography: StoryType<typeof LiveExample> = LiveExample.bind(
+  {},
+);
 AllTypography.argTypes = {
   baseFontSize: {
     ...storybookArgTypes.baseFontSize,
