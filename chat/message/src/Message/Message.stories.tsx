@@ -8,6 +8,7 @@ import { StoryFn } from '@storybook/react';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Message, MessageSourceType } from '..';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 const MarkdownText = `
 # Heading 1
@@ -79,6 +80,21 @@ const meta: StoryMetaType<typeof Message> = {
   parameters: {
     default: null,
     exclude: ['children'],
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        isSender: [false, true],
+        sourceType: [MessageSourceType.Text, MessageSourceType.Markdown],
+        messageBody: [UserText, MarkdownText, MongoText],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <Instance glyph={context?.args.glyph} />
+          </LeafyGreenProvider>
+        );
+      },
+    },
   },
 };
 export default meta;
@@ -217,3 +233,5 @@ WithRichLinks.args = {
     },
   ],
 };
+
+export const Generated = () => {};
