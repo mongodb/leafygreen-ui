@@ -1,5 +1,12 @@
 # @leafygreen-ui/split-button
 
+## 4.1.3
+
+### Patch Changes
+
+- @leafygreen-ui/menu@28.0.5
+- @leafygreen-ui/button@22.0.2
+
 ## 4.1.2
 
 ### Patch Changes
