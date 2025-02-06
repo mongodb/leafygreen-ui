@@ -1122,6 +1122,9 @@ importers:
       polished:
         specifier: ^4.2.2
         version: 4.3.1
+      react-transition-group:
+        specifier: ^4.4.5
+        version: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       weekstart:
         specifier: ^2.0.0
         version: 2.0.0
