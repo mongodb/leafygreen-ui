@@ -46,7 +46,7 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-const TypographyDemoComponent = ({
+export const LiveExample = ({
   baseFontSize,
   darkMode,
 }: {
@@ -132,11 +132,13 @@ const TypographyDemoComponent = ({
   );
 };
 
-const meta: StoryMetaType<typeof TypographyDemoComponent> = {
+LiveExample.parameters = { chromatic: { disableSnapshot: true } };
+
+const meta: StoryMetaType<typeof LiveExample> = {
   title: 'Components/Typography',
-  component: TypographyDemoComponent,
+  component: LiveExample,
   parameters: {
-    default: 'AllTypography',
+    default: 'LiveExample',
     generate: {
       combineArgs: {
         darkMode: [false, true],
@@ -146,22 +148,6 @@ const meta: StoryMetaType<typeof TypographyDemoComponent> = {
   },
 };
 export default meta;
-
-export const AllTypography: StoryType<typeof TypographyDemoComponent> =
-  TypographyDemoComponent.bind({});
-AllTypography.argTypes = {
-  baseFontSize: {
-    ...storybookArgTypes.baseFontSize,
-    description:
-      'Storybook prop only. This font size is passed into the LeafygreenProvider.',
-  },
-  darkMode: storybookArgTypes.darkMode,
-};
-AllTypography.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-};
 
 export const StaticWidthTextStory = () => {
   const hoverBold = css`
