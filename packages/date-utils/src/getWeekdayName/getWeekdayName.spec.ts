@@ -1,4 +1,5 @@
 import { getWeekdayName } from '.';
+import { SupportedLocales } from '../types/locales';
 describe('packages/date-utils/getWeekdayName', () => {
   test('default (English)', () => {
     expect(getWeekdayName(0)).toEqual(
@@ -19,8 +20,8 @@ describe('packages/date-utils/getWeekdayName', () => {
     );
   });
 
-  test('iso8601', () => {
-    expect(getWeekdayName(0, 'iso8601')).toEqual(
+  test('iso-8601', () => {
+    expect(getWeekdayName(0, SupportedLocales.ISO_8601)).toEqual(
       expect.objectContaining({
         long: 'Sunday',
         short: 'Su',

@@ -1,4 +1,5 @@
 import { getLocaleWeekdays } from '.';
+import { SupportedLocales } from '../types/locales';
 
 describe('packages/date-utils/getLocaleWeekdays', () => {
   test('English (default)', () => {
@@ -9,9 +10,9 @@ describe('packages/date-utils/getLocaleWeekdays', () => {
     });
   });
 
-  test('iso8601', () => {
-    expect(getLocaleWeekdays('iso8601')).toHaveLength(7);
-    getLocaleWeekdays('iso8601').forEach(w => {
+  test('iso-8601', () => {
+    expect(getLocaleWeekdays(SupportedLocales.ISO_8601)).toHaveLength(7);
+    getLocaleWeekdays(SupportedLocales.ISO_8601).forEach(w => {
       expect(w).not.toBeUndefined();
       expect(w).not.toBeNull();
     });

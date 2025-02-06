@@ -7,6 +7,7 @@ import {
   isValidDate,
   Month,
   newUTC,
+  SupportedLocales,
   testLocales,
 } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
@@ -58,7 +59,7 @@ const meta: StoryMetaType<typeof DateInputBox, SharedDatePickerContextProps> = {
   },
   args: {
     label: 'Label',
-    locale: 'iso8601',
+    locale: SupportedLocales.ISO_8601,
     timeZone: 'Europe/London',
   },
   argTypes: {
@@ -119,7 +120,7 @@ export const Formats: StoryType<
 Formats.parameters = {
   generate: {
     combineArgs: {
-      locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+      locale: [...Object.values(SupportedLocales)],
     },
   },
 };

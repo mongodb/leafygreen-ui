@@ -16,6 +16,7 @@ import {
 } from '../DatePickerMenuSelect';
 
 import { shouldChevronBeDisabled } from './utils';
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 
 interface DatePickerMenuHeaderProps {
   setMonth: (newMonth: Date) => void;
@@ -39,7 +40,7 @@ export const DatePickerMenuHeader = forwardRef<
     setMonth(newMonth);
   };
 
-  const isIsoFormat = locale === 'iso8601';
+  const isIsoFormat = locale === SupportedLocales.ISO_8601;
 
   /**
    * If the month is not in range and is not the last valid month
