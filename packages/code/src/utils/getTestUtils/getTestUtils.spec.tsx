@@ -203,6 +203,7 @@ describe('packages/tabs/getTestUtils', () => {
         test('returns true', () => {
           renderCode({ expandable: true });
           const { getExpandButton } = getTestUtils();
+          // Code snippet is collapsed by default
           expect(getExpandButton().isExpanded()).toBe(false);
         });
 
