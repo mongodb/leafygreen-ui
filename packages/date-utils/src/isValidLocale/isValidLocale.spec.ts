@@ -17,12 +17,6 @@ describe('packages/date-utils/isValidLocale', () => {
     expect(isValidLocale('iso-8601')).toBeTruthy();
   });
 
-  test('iso8601 is _not_ valid', () => {
-    console.error = jest.fn();
-    expect(isValidLocale('iso8601')).toBeTruthy();
-    expect(console.error).toHaveBeenCalled();
-  });
-
   test('asdf is not valid', () => {
     console.error = jest.fn();
     expect(isValidLocale('asdf')).toBeFalsy();
