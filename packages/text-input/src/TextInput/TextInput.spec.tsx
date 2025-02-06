@@ -205,6 +205,18 @@ describe('packages/text-input', () => {
     });
   });
 
+  describe('readOnly', () => {
+    test('renders readOnly attribute when readOnly is present', () => {
+      const { textInput } = renderTextInput({ readOnly: true });
+      expect(textInput).toHaveAttribute('readonly');
+    });
+
+    test('does not render readOnly attribute when readOnly is not present', () => {
+      const { textInput } = renderTextInput();
+      expect(textInput).not.toHaveAttribute('readonly');
+    });
+  });
+
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
     test('TextInput throws error when no label is supplied', () => {

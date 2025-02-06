@@ -22,8 +22,8 @@ import { MessageLinks } from '../MessageLinks';
 
 import {
   avatarClassName,
-  baseStyles,
   desktopBaseStyles,
+  getBaseStyles,
   hiddenStyles,
   invisibleStyles,
   messageClassName,
@@ -102,7 +102,7 @@ export const Message = forwardRef(
       <LeafyGreenProvider darkMode={darkMode}>
         <div
           className={cx(
-            baseStyles,
+            getBaseStyles(theme),
             messageClassName,
             {
               [senderClassName]: isSender,

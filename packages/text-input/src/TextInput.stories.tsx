@@ -40,6 +40,7 @@ const meta: StoryMetaType<typeof TextInput> = {
     label: 'Label',
     description: 'This is a description',
     errorMessage: 'Invalid email',
+    readOnly: false,
   },
   argTypes: {
     darkMode: {
