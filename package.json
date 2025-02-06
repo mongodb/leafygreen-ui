@@ -77,6 +77,14 @@
       "@testing-library/user-event": "13.5.0"
     }
   },
+  "lg": {
+    "scopes": {
+      "@leafygreen-ui": "packages",
+      "@lg-charts": "charts",
+      "@lg-chat": "chat",
+      "@lg-tools": "tools"
+    }
+  },
   "keywords": [
     "mongodb",
     "ui",
