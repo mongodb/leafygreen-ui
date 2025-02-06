@@ -1,8 +1,8 @@
 import { InvalidDate } from './InvalidDate';
+import { SupportedLocales } from './locales';
 export type DateType = Date | InvalidDate | null;
 export type DateRangeType = [DateType, DateType];
-
-export type LocaleString = 'iso8601' | string;
+export type LocaleString = SupportedLocales | string;
 
 export interface MonthObject {
   /** The localized long-form month name (e.g. December, July) */
