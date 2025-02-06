@@ -56,6 +56,7 @@ function Panel({
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
       data-testid={LGIDs.panel}
+      data-lgid={LGIDs.panel}
       {...rest}
     >
       {hasTitle && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}

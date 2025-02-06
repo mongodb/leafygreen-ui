@@ -174,6 +174,7 @@ test('code', () => {
   const { getButton: getExpandButton, isExpanded} = getExpandButton();
 
   expect(getLanguage()).toBe('javascript');
+  expect(getTitle()).toBe('Title');
   expect(getInput()).toBeInTheDocument();
   expect(getAllOptions()).toHaveLength(2);
   expect(getOptionByValue('js')).toBeInTheDocument();
@@ -233,6 +234,7 @@ test('tabs', () => {
 ```tsx
 const {
   getLanguage,
+  getTitle,
   getLanguageSwitcher: {
     getInput,
     getAllOptions,
@@ -248,6 +250,7 @@ const {
 | Util                    | Description                                              | Returns                 |
 | ----------------------- | -------------------------------------------------------- | ----------------------- |
 | `getLanguage()`         | Returns the current language of the code block           | `string`                |
+| `getTitle()`            | Returns the title of the code block                      | `string` \| `null`      |
 | `getLanguageSwitcher()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
 | `getIsLoading()`        | Returns whether the code block is in loading state       | `boolean`               |
 | `getCopyButton()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |

@@ -19,6 +19,15 @@ export const getTestUtils = (
     return language;
   };
 
+  const getTitle = () => {
+    const title = queryBySelector<HTMLInputElement>(
+      element,
+      `[data-lgid=${LGIDs.panel}] p`,
+    );
+
+    return title?.textContent || null;
+  };
+
   const getLanguageSwitcher = () => {
     const getInput = () => {
       const input = queryBySelector<HTMLInputElement>(
@@ -107,11 +116,10 @@ export const getTestUtils = (
 
   return {
     getLanguage,
+    getTitle,
     getLanguageSwitcher,
     getIsLoading,
     getCopyButton,
     getExpandButton,
   };
 };
-
-// TODO: getTitle

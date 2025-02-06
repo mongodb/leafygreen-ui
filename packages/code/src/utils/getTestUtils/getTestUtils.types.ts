@@ -5,6 +5,11 @@ export interface TestUtilsReturnType {
   getLanguage: () => string;
 
   /**
+   * Returns the title of the code snippet
+   */
+  getTitle: () => string | null;
+
+  /**
    * Returns the language switcher
    */
   getLanguageSwitcher: () => LanguageSwitcherUtils;

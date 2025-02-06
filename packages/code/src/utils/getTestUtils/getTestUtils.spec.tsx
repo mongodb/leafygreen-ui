@@ -36,6 +36,29 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
+    describe('getTitle', () => {
+      describe('Without the panel', () => {
+        test('returns null', () => {
+          renderCode();
+          const { getTitle } = getTestUtils();
+          expect(getTitle()).toBeNull();
+        });
+      });
+      describe('With panel', () => {
+        test('returns null if there is no title prop', () => {
+          renderCodeWithLanguageSwitcher({});
+          const { getTitle } = getTestUtils();
+          expect(getTitle()).toBeNull();
+        });
+
+        test('returns the title', () => {
+          renderCodeWithLanguageSwitcher({ props: { title: 'Leafygreen' } });
+          const { getTitle } = getTestUtils();
+          expect(getTitle()).toBe('Leafygreen');
+        });
+      });
+    });
+
     describe('getLanguageSwitcher', () => {
       describe('getInput', () => {
         test('returns the language switcher', () => {
