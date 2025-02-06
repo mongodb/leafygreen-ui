@@ -170,6 +170,18 @@ describe('packages/text-area', () => {
     });
   });
 
+  describe('readOnly', () => {
+    test('renders readOnly attribute when readOnly is present', () => {
+      const { textArea } = renderTextArea({ readOnly: true });
+      expect(textArea).toHaveAttribute('readonly');
+    });
+
+    test('does not render readOnly attribute when readOnly is not present', () => {
+      const { textArea } = renderTextArea();
+      expect(textArea).not.toHaveAttribute('readonly');
+    });
+  });
+
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
     test('TextArea throws error when neither aria-labelledby or label is supplied', () => {
