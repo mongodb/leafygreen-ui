@@ -1,5 +1,4 @@
 import React from 'react';
-import { InferredPolymorphic } from '@leafygren-ui/polymorphic';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -15,7 +14,7 @@ const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
 
-function renderButton(props: InferredPolymorphic<ButtonProps, 'button'> = {}) {
+function renderButton(props: ButtonProps = {}) {
   const utils = render(<Button {...props} data-testid="button-id" />);
   const { getButton, isDisabled } = getTestUtils();
   const button = getButton();

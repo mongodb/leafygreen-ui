@@ -11,14 +11,14 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { ButtonContent } from '../ButtonContent/ButtonContent';
 import { LGIDS_BUTTON } from '../constants';
 import { ButtonClassName } from '../styles';
-import { ButtonProps, Size, Variant } from '../types';
+import { BaseButtonProps, Size, Variant } from '../types';
 
 import { getClassName } from './Button.styles';
 
 /**
  * Buttons allow users to take actions, and make choices, with a single tap.
  */
-export const Button = InferredPolymorphic<ButtonProps, 'button'>(
+export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
   (
     {
       variant = Variant.Default,
@@ -37,11 +37,11 @@ export const Button = InferredPolymorphic<ButtonProps, 'button'>(
       isLoading = false,
       loadingIndicator,
       loadingText,
-      ...rest
+      ...restProps
     },
     forwardRef,
   ) => {
-    const { Component } = useInferredPolymorphic(as, rest, 'button');
+    const { Component, rest } = useInferredPolymorphic(as, restProps, 'button');
     const { darkMode } = useDarkMode(darkModeProp);
 
     const isAnchor = Component === 'a';
@@ -64,8 +64,8 @@ export const Button = InferredPolymorphic<ButtonProps, 'button'>(
       onClick: isInteractive
         ? onClick
         : (e: React.MouseEvent) => e.preventDefault(),
-      href: isInteractive ? rest.href : undefined,
       ...rest,
+      href: isInteractive ? rest.href : undefined,
     } as const;
 
     const contentProps = {

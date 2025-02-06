@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button, { ButtonProps } from '@leafygreen-ui/button';
+import Button, { BaseButtonProps } from '@leafygreen-ui/button';
 
 /**
  * Custom language switcher button.
@@ -8,12 +8,13 @@ import Button, { ButtonProps } from '@leafygreen-ui/button';
  * Passing down just the function which will be instantiated inside `Select`
  * @internal
  */
-export const CustomSelectMenuButton = React.forwardRef<HTMLButtonElement>(
-  ({ children, ...props }: ButtonProps, ref) => (
-    <Button {...props} as="button" ref={ref}>
-      {children}
-    </Button>
-  ),
-);
+export const CustomSelectMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  BaseButtonProps
+>(({ children, ...props }, ref) => (
+  <Button {...props} ref={ref}>
+    {children}
+  </Button>
+));
 
 CustomSelectMenuButton.displayName = 'CustomSelectMenuButton';

@@ -107,9 +107,7 @@ export default function Copyable({
     }
 
     return () => clipboard.destroy();
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buttonRef, children, copied, portalContainer]);
+  }, [buttonRef, children, copied, onCopy, portalContainer]);
 
   return (
     <>
