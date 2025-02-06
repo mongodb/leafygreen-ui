@@ -1,5 +1,12 @@
 # @leafygreen-ui/tabs
 
+## 14.1.1
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+
 ## 14.1.0
 
 ### Minor Changes

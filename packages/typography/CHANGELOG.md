@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 20.1.0
+
+### Minor Changes
+
+- eb108e93b: [LG-4727](https://jira.mongodb.org/browse/LG-4727): `Description` component is now polymorphic and defaults to using a `<p>`. `children` will be typechecked and a `<p>` will be used if `children` is of type `string` or `number`. Otherwise, a `<div>` will be used.
+
 ## 20.0.2
 
 ### Patch Changes

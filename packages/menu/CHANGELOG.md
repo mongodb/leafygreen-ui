@@ -1,5 +1,14 @@
 # @leafygreen-ui/menu
 
+## 28.0.5
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/input-option@3.0.3
+  - @leafygreen-ui/typography@20.1.0
+
 ## 28.0.4
 
 ### Patch Changes

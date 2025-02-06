@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/lg-markdown",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "lg-chat LGMarkdown",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
