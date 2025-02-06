@@ -1,13 +1,13 @@
 /**
  * Returns whether the provided string is a valid Intl.Locale string
  */
-export function isValidLocale(str?: string): str is string {
-  if (!str) return false;
+export function isValidLocale(localeString?: string): localeString is string {
+  if (!localeString) return false;
 
   try {
-    new Intl.Locale(str);
+    new Intl.Locale(localeString);
   } catch (error) {
-    console.error(error, `Received ${str}`);
+    console.error({ localeString }, error);
     return false;
   }
 
