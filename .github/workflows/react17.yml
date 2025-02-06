@@ -42,4 +42,4 @@ jobs:
         run: pnpm build
 
       - name: Run tests in React 17
-        run: pnpm run test --react17 --verbose
+        run: pnpm run test --react17
