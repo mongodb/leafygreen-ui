@@ -2084,9 +2084,6 @@ importers:
 
   packages/segmented-control:
     dependencies:
-      '@leafygreen-ui/box':
-        specifier: workspace:^
-        version: link:../box
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
