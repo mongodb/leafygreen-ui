@@ -2105,6 +2105,9 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../polymorphic
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
