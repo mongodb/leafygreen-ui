@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Theme } from '@leafygreen-ui/lib';
 
-import { Size } from './SegmentedControl';
+// note: this cannot import from index file without causing circular dependency
+import { Size } from './SegmentedControl/SegmentedControl.types';
 
 interface SCContext {
   size: Size;
@@ -10,6 +11,7 @@ interface SCContext {
   name: string;
   followFocus: boolean;
 }
+
 export const SegmentedControlContext = React.createContext<SCContext>({
   size: Size.Default,
   theme: Theme.Light,
