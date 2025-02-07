@@ -26,7 +26,7 @@ console.log(chalk.bold.blue('Updating package.json with React 17 versions'));
 
 const r17packages = JSON.parse(r17packagesString);
 
-pkgJson.dependencies = {
+pkgJson.devDependencies = {
   ...pkgJson.devDependencies,
   ...r17packages.dependencies,
 };

@@ -7,28 +7,6 @@ export interface StoryArgType extends InputType {
    * Identify an arg to determine where the control is defined
    */
   displayedPlatforms?: 'storybookOnly' | 'websiteOnly';
-
-  /**
-   * Define the control type
-   *
-   * Avoid using this property to exclude a control.
-   * Use `parameters.controls.exclude` for this.
-   */
-  control?:
-    | string
-    | {
-        type: string;
-        [key: string]: any;
-      };
-
-  /**
-   * `defaultValue` is deprecated in Storybook 7.
-   *
-   * Use `args` instead
-   *
-   * @deprecated
-   */
-  defaultValue?: any;
 }
 
 export const storybookArgTypes: Record<string, StoryArgType> = {
@@ -66,27 +44,27 @@ export const storybookArgTypes: Record<string, StoryArgType> = {
  * for props we don't want to control in Storybook
  */
 export const storybookExcludedArgTypes: Record<string, StoryArgType> = {
-  'aria-controls': { control: 'none' },
-  'aria-describedby': { control: 'none' },
-  'aria-label': { control: 'none' },
-  'aria-labelledby': { control: 'none' },
-  'data-lgid': { control: 'none' },
-  className: { control: 'none' },
-  id: { control: 'none' },
-  onBlur: { control: 'none' },
-  onCancel: { control: 'none' },
-  onChange: { control: 'none' },
-  onClear: { control: 'none' },
-  onClick: { control: 'none' },
-  onClose: { control: 'none' },
-  onConfirm: { control: 'none' },
-  onDismiss: { control: 'none' },
-  onFilter: { control: 'none' },
-  onSubmit: { control: 'none' },
-  portalClassName: { control: 'none' },
-  portalContainer: { control: 'none' },
-  popoverZIndex: { control: 'none' },
-  ref: { control: 'none' },
-  scrollContainer: { control: 'none' },
-  usePortal: { control: 'none' },
+  'aria-controls': { control: false },
+  'aria-describedby': { control: false },
+  'aria-label': { control: false },
+  'aria-labelledby': { control: false },
+  'data-lgid': { control: false },
+  className: { control: false },
+  id: { control: false },
+  onBlur: { control: false },
+  onCancel: { control: false },
+  onChange: { control: false },
+  onClear: { control: false },
+  onClick: { control: false },
+  onClose: { control: false },
+  onConfirm: { control: false },
+  onDismiss: { control: false },
+  onFilter: { control: false },
+  onSubmit: { control: false },
+  portalClassName: { control: false },
+  portalContainer: { control: false },
+  popoverZIndex: { control: false },
+  ref: { control: false },
+  scrollContainer: { control: false },
+  usePortal: { control: false },
 } as const;

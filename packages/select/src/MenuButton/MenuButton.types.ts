@@ -15,7 +15,7 @@ export interface MenuButtonBaseProps
   state?: State;
   baseFontSize?: BaseFontSize;
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
-    React.RefAttributes<unknown>
+    React.RefAttributes<HTMLButtonElement>
   >;
   __INTERNAL__menuButtonSlotProps__?: Record<string, any>;
 }

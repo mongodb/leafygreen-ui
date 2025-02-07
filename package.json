@@ -48,9 +48,8 @@
     "@lg-tools/storybook-addon": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@lg-tools/test": "workspace:^",
-    "@storybook/react": "^7.6.20",
-    "@testing-library/react": "^12.0.0 || ^13.1.0 || ^14.0.0",
-    "@testing-library/react-hooks": ">=3.7.0",
+    "@storybook/react": "^8.5.3",
+    "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "^29.5.12",
     "@types/lodash": "^4.14.170",
@@ -65,15 +64,17 @@
     "prettier": "2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.6.20",
-    "ts-node":"10.9.2",
+    "storybook": "^8.5.3",
+    "ts-node": "10.9.2",
     "turbo": "^2.0.6",
     "typescript": "~4.9.0"
   },
   "pnpm": {
     "overrides": {
       "caniuse-lite": "^1.0.30001585",
-      "jackspeak": "2.1.1"
+      "jackspeak": "2.1.1",
+      "@testing-library/dom": "9.3.4",
+      "@testing-library/user-event": "13.5.0"
     }
   },
   "lg": {

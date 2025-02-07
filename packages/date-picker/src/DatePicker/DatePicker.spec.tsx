@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 import { addDays, subDays } from 'date-fns';
 
 import { getISODate, Month, newUTC } from '@leafygreen-ui/date-utils';
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import {
   mockTimeZone,
   testTimeZones,
@@ -1174,7 +1175,7 @@ describe('packages/date-picker', () => {
             test(`Tab order proceeds as expected`, async () => {
               const renderResult = renderDatePicker({
                 initialOpen: true,
-                locale: 'en-US',
+                locale: SupportedLocales.en_US,
               });
 
               for (const label of tabStops) {
@@ -1207,13 +1208,13 @@ describe('packages/date-picker', () => {
             });
           });
 
-          describe('when menu is open with iso8601 format', () => {
+          describe('when menu is open with iso-8601 format', () => {
             const tabStops = expectedTabStopLabels['openISOFormat'];
 
             test(`Tab order proceeds as expected`, async () => {
               const renderResult = renderDatePicker({
                 initialOpen: true,
-                locale: 'iso8601',
+                locale: SupportedLocales.ISO_8601,
               });
 
               for (const label of tabStops) {
@@ -1736,7 +1737,7 @@ describe('packages/date-picker', () => {
                   };
                   const expectedMessage = `Date must be before ${getFormattedDateString(
                     max,
-                    'iso8601',
+                    'iso-8601',
                   )}`;
 
                   let renderResult: RenderDatePickerResult;
@@ -2040,7 +2041,7 @@ describe('packages/date-picker', () => {
                   };
                   const expectedMessage = `Date must be before ${getFormattedDateString(
                     max,
-                    'iso8601',
+                    'iso-8601',
                   )}`;
 
                   let renderResult: RenderDatePickerResult;
@@ -2684,7 +2685,7 @@ describe('packages/date-picker', () => {
 
         describe('auto-formatting & auto-focus', () => {
           describe('for ISO format', () => {
-            const locale = 'iso8601';
+            const locale = SupportedLocales.ISO_8601;
 
             test('when year value is explicit, focus advances to month', () => {
               const { yearInput, monthInput } = renderDatePicker({
@@ -2755,7 +2756,7 @@ describe('packages/date-picker', () => {
           });
 
           describe('for en-US format', () => {
-            const locale = 'en-US';
+            const locale = SupportedLocales.en_US;
 
             test('when month value is explicit, focus advances to day', () => {
               const { monthInput, dayInput } = renderDatePicker({
@@ -3660,7 +3661,7 @@ describe('packages/date-picker', () => {
         initialValue={new Date()}
         handleValidation={() => {}}
         onChange={() => {}}
-        locale="iso8601"
+        locale={SupportedLocales.ISO_8601}
         timeZone="utc"
         baseFontSize={13}
         disabled={false}

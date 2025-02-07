@@ -1,3 +1,5 @@
+import { SupportedLocales } from '../types/locales';
+
 import { getLocaleMonths } from '.';
 
 describe('packages/date-utils/getLocaleMonths', () => {
@@ -8,9 +10,9 @@ describe('packages/date-utils/getLocaleMonths', () => {
       expect(mo).not.toBeNull();
     });
   });
-  test('iso8601', () => {
-    expect(getLocaleMonths('iso8601')).toHaveLength(12);
-    getLocaleMonths('iso8601').forEach(mo => {
+  test('iso-8601', () => {
+    expect(getLocaleMonths(SupportedLocales.ISO_8601)).toHaveLength(12);
+    getLocaleMonths(SupportedLocales.ISO_8601).forEach(mo => {
       expect(mo).not.toBeUndefined();
       expect(mo).not.toBeNull();
     });
