@@ -5,6 +5,6 @@ module.exports = {
   testTimeout: 60_000,
   testPathIgnorePatterns: [
     ...baseConfig.testPathIgnorePatterns,
-    'packages/combobox',
+    'packages/combobox', // Combobox tests are problematic in React 17
   ],
 };
