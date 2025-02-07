@@ -6,13 +6,13 @@ import {
   StoryType,
 } from '@lg-tools/storybook-utils';
 
+import { transitionDuration } from '@leafygreen-ui/tokens';
+
 import {
   SegmentedControl,
   SegmentedControlProps,
-} from '@leafygreen-ui/segmented-control';
-import { transitionDuration } from '@leafygreen-ui/tokens';
-
-import { Size } from './SegmentedControl/SegmentedControl.types';
+  Size,
+} from './SegmentedControl';
 import { TestChildren } from './SegmentedControl.testutils';
 
 interface LiveExampleProps {
