@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook-addon",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Storybook Addon for LeafyGreen UI Kit",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

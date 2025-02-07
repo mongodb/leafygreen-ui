@@ -1,5 +1,13 @@
 # @leafygreen-ui/tabs
 
+## 14.1.2
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/descendants@2.1.0
+
 ## 14.1.1
 
 ### Patch Changes

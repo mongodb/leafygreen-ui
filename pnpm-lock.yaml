@@ -725,9 +725,6 @@ importers:
 
   packages/button:
     dependencies:
-      '@leafygreen-ui/box':
-        specifier: workspace:^
-        version: link:../box
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -740,6 +737,9 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../polymorphic
       '@leafygreen-ui/ripple':
         specifier: workspace:^
         version: link:../ripple

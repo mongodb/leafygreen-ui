@@ -1,5 +1,11 @@
 # @lg-chat/chat-window
 
+## 3.0.4
+
+### Patch Changes
+
+- @lg-chat/title-bar@3.0.4
+
 ## 3.0.3
 
 ### Patch Changes

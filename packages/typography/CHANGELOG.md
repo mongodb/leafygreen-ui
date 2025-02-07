@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 20.1.1
+
+### Patch Changes
+
+- 4d932fe13: Change name of LiveExample to properly render on .design
+
 ## 20.1.0
 
 ### Minor Changes

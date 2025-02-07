@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/form-footer",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "leafyGreen UI Kit Form Footer",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

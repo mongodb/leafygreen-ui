@@ -1,5 +1,18 @@
 # @leafygreen-ui/guide-cue
 
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/tooltip@13.0.4
+  - @leafygreen-ui/button@22.0.2
+
 ## 7.0.3
 
 ### Patch Changes

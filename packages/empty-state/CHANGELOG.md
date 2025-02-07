@@ -1,5 +1,13 @@
 # @leafygreen-ui/empty-state
 
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/button@22.0.2
+
 ## 2.0.4
 
 ### Patch Changes

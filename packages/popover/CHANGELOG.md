@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 13.0.3
+
+### Patch Changes
+
+- d7a715090: Remove unused `@starting-style` rule from `Popover` styles
+
 ## 13.0.2
 
 ### Patch Changes

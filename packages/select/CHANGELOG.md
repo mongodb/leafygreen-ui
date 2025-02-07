@@ -1,5 +1,17 @@
 # @leafygreen-ui/select
 
+## 14.0.4
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/form-field@2.0.4
+  - @leafygreen-ui/input-option@3.0.4
+  - @leafygreen-ui/button@22.0.2
+
 ## 14.0.3
 
 ### Patch Changes

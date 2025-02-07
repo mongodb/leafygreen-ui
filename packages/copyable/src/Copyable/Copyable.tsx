@@ -55,7 +55,7 @@ export default function Copyable({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
-  const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
+  const [buttonRef, setButtonRef] = useState<HTMLButtonElement | null>(null);
   const codeRef = useRef<HTMLElement>(null);
 
   const { portalContainer } = usePopoverPortalContainer();
@@ -107,9 +107,7 @@ export default function Copyable({
     }
 
     return () => clipboard.destroy();
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [buttonRef, children, copied, portalContainer]);
+  }, [buttonRef, children, copied, onCopy, portalContainer]);
 
   return (
     <>
