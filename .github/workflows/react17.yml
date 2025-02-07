@@ -45,7 +45,7 @@ jobs:
         run: pnpm run test --react17
 
       - name: Upload pnpm-lock.yaml
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: pnpm-lock
           path: pnpm-lock.yaml
