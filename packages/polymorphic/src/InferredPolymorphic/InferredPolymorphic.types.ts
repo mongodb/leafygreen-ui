@@ -61,7 +61,7 @@ export type InferredAnchorProps = {
  */
 export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
   /**
-   *
+   * The element or component to render as
    */
   as?: TAsProp;
 } & Omit<PartialRequired<ComponentPropsWithRef<TAsProp>, 'href'>, 'as'>;
