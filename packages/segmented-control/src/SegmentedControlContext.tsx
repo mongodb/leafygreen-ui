@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Theme } from '@leafygreen-ui/lib';
 
-import { Size } from './SegmentedControl/SegmentedControl.types';
+import { Size } from './SegmentedControl';
 
 interface SCContext {
   size: Size;
