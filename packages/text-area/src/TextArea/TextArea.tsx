@@ -42,6 +42,7 @@ export const TextArea: TextArea = forwardRef<
   TextAreaProps
 >(function TextArea(
   {
+    readOnly,
     label,
     description,
     className,
@@ -120,6 +121,7 @@ export const TextArea: TextArea = forwardRef<
     label,
     state,
     successMessage,
+    readOnly,
     ...ariaProps,
   } as const;
 
