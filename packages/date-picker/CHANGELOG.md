@@ -1,5 +1,21 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.5
+
+### Patch Changes
+
+- 9a23b9765: Consumes `SupportedLocale` enum in tests, stories and internal checks
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+- Updated dependencies [9a23b9765]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+  - @leafygreen-ui/date-utils@0.2.0
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/form-field@2.0.4
+  - @leafygreen-ui/select@14.0.4
+
 ## 3.0.4
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon-button
 
+## 16.0.3
+
+### Patch Changes
+
+- 859e5b45f: [LG-2723](https://jira.mongodb.org/browse/LG-2723): Replace `@leafygreen-ui/box` with `@leafygreen-ui/polymorphic` and refactor `IconButton` internals.
+  - Exports `IconButtonProps` type
+
 ## 16.0.2
 
 ### Patch Changes

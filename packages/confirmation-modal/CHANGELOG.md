@@ -1,5 +1,15 @@
 # @leafygreen-ui/confirmation-modal
 
+## 6.0.4
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/modal@17.0.3
+  - @leafygreen-ui/text-input@14.0.4
+  - @leafygreen-ui/button@22.0.2
+
 ## 6.0.3
 
 ### Patch Changes

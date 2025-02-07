@@ -1,5 +1,11 @@
 # @lg-tools/storybook-decorators
 
+## 0.3.4
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.4
+
 ## 0.3.3
 
 ### Patch Changes
