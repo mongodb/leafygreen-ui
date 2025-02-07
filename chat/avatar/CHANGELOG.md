@@ -1,5 +1,11 @@
 # @lg-chat/avatar
 
+## 4.0.3
+
+### Patch Changes
+
+- 22d576394: Add `depreacted` flag. Use `Avatar` from `@leafygreen-ui/avatar` instead.
+
 ## 4.0.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lg-tools/storybook-utils
 
+## 0.2.0
+
+### Minor Changes
+
+- 5eb01750b: Upgrades to Storybook 8.5
+
 ## 0.1.3
 
 ### Patch Changes
