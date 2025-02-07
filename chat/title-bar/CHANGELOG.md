@@ -1,5 +1,12 @@
 # @lg-chat/title-bar
 
+## 3.0.5
+
+### Patch Changes
+
+- Updated dependencies [22d576394]
+  - @lg-chat/avatar@4.0.3
+
 ## 3.0.4
 
 ### Patch Changes
