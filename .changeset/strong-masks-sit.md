@@ -2,4 +2,4 @@
 '@lg-chat/avatar': patch
 ---
 
-Add `deepreacted` flag. Use `Avatar` from `@leafygreen-ui/avatar` instead.
+Add `depreacted` flag. Use `Avatar` from `@leafygreen-ui/avatar` instead.
