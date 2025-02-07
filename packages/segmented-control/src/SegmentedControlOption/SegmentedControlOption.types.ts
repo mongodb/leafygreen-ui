@@ -77,5 +77,5 @@ export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
   /**
    * @internal
    */
-  isfocusInComponent?: boolean;
+  isFocusInComponent?: boolean;
 }

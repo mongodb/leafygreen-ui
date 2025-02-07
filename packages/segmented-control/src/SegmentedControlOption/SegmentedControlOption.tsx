@@ -42,7 +42,7 @@ export const SegmentedControlOption = forwardRef<
       _index: index,
       _onClick,
       _onHover,
-      isfocusInComponent,
+      isFocusInComponent,
       glyph,
       ...rest
     }: SegmentedControlOptionProps,
@@ -71,8 +71,8 @@ export const SegmentedControlOption = forwardRef<
       if (didComponentMount.current) {
         // usingKeyboard: Returns if the keyboard is being used.
         // focused: Returns if this option should be the item in focus.
-        // isfocusInComponent: Returns if the focus should organically be this component. Without this check this component will hijack the focus if `usingKeyboard` is updated to true.
-        if (usingKeyboard && focused && isfocusInComponent) {
+        // isFocusInComponent: Returns if the focus should organically be this component. Without this check this component will hijack the focus if `usingKeyboard` is updated to true.
+        if (usingKeyboard && focused && isFocusInComponent) {
           // Respond in the DOM when this option is given focus via keyboard
           buttonRef?.current?.focus();
 
@@ -83,7 +83,7 @@ export const SegmentedControlOption = forwardRef<
         }
       }
       didComponentMount.current = true;
-    }, [focused, followFocus, usingKeyboard, isfocusInComponent]);
+    }, [focused, followFocus, usingKeyboard, isFocusInComponent]);
 
     useEffect(() => {
       // If consumer is not using Icon or Glyph component as the `glyph` show a warning
