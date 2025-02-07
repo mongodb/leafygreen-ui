@@ -45,6 +45,9 @@ export const getFormat = (
   return _format;
 };
 
+/**
+ * @deprecated Use `Avatar` from `@leafygreen-ui/avatar` instead.
+ */
 export const ChatAvatar = forwardRef(
   (
     {
