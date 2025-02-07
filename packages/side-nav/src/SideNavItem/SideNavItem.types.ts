@@ -1,6 +1,10 @@
 import { AriaCurrentValue } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 
-export interface SideNavItemProps {
+export interface BaseSideNavItemProps {
   /**
    * Whether or not the component should be rendered in an active state.
    *
@@ -33,11 +37,6 @@ export interface SideNavItemProps {
   children?: React.ReactNode;
 
   /**
-   * When provided, the component will be rendered as an anchor element with the passed href value.
-   */
-  href?: string;
-
-  /**
    * The event handler function for the 'onclick' event. Receives the associated `event` object as the first argument.
    */
   onClick?: React.MouseEventHandler;
@@ -56,3 +55,7 @@ export interface SideNavItemProps {
    */
   indentLevel?: number;
 }
+
+// External only
+export type SideNavItemProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, BaseSideNavItemProps>;
