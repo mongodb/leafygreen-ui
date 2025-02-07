@@ -1,5 +1,14 @@
 # @lg-charts/core
 
+## 0.12.3
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+
 ## 0.12.2
 
 ### Patch Changes

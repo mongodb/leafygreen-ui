@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-rating",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "lg-chat Message Rating",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
