@@ -2177,9 +2177,6 @@ importers:
       '@leafygreen-ui/a11y':
         specifier: workspace:^
         version: link:../a11y
-      '@leafygreen-ui/box':
-        specifier: workspace:^
-        version: link:../box
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -2198,6 +2195,9 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../polymorphic
       '@leafygreen-ui/portal':
         specifier: workspace:^
         version: link:../portal
