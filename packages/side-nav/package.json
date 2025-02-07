@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "workspace:^",
-    "@leafygreen-ui/box": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
