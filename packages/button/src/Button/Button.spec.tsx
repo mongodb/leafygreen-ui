@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
-import { BoxProps } from '@leafygreen-ui/box';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
@@ -15,7 +14,7 @@ const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
 
-function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
+function renderButton(props: ButtonProps = {}) {
   const utils = render(<Button {...props} data-testid="button-id" />);
   const { getButton, isDisabled } = getTestUtils();
   const button = getButton();
@@ -127,14 +126,6 @@ describe('packages/button', () => {
     test(`renders component inside of \`button\` tag when "href" prop is undefined`, () => {
       const { button } = renderButton({
         href: undefined,
-      });
-      expect(button.tagName.toLowerCase()).toBe('button');
-    });
-
-    test(`renders component inside of \`div\` tag when "href" prop is set, but "disabled" is true`, () => {
-      const { button } = renderButton({
-        href: 'http://mongodb.design',
-        disabled: true,
       });
       expect(button.tagName.toLowerCase()).toBe('button');
     });

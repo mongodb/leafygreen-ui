@@ -117,7 +117,7 @@ export interface BaseSelectProps
    * @internal
    */
   __INTERNAL__menuButtonSlot__?: React.ForwardRefExoticComponent<
-    React.RefAttributes<unknown>
+    React.RefAttributes<HTMLButtonElement>
   >;
 
   /**
