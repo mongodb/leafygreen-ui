@@ -11,7 +11,7 @@ import { glob } from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import sizes from 'rollup-plugin-sizes';
+import { bundleStats } from 'rollup-plugin-bundle-stats';
 
 const require = createRequire(import.meta.url);
 
@@ -142,7 +142,10 @@ const configForFormat = format => ({
 
     terser(),
 
-    sizes(),
+    bundleStats({
+      html: false,
+      json: false,
+    }),
   ],
   external,
   strictDeprecations: true,
