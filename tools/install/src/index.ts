@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { getPackageManager } from '@lg-tools/meta';
-import { spawn } from 'cross-spawn';
+import { sync as spawnSync } from 'cross-spawn';
 import fetch from 'node-fetch';
 export interface InstallCommandOptions {
   ignoreWorkspaceRootCheck: boolean;
@@ -56,12 +56,16 @@ export const installLeafyGreen = (
 
       const packagesToInstall = objects
         .filter(pkg => {
+          // TODO: also support other scopes
+          const isLG = pkg.package.name.startsWith('@leafygreen-ui');
+
           const pkgName = pkg.package.name.replace(
             '@' + pkg.package.scope + '/',
             '',
           );
 
           return (
+            isLG &&
             !pkg.flags?.deprecated &&
             (!packages.length || packages.includes(pkgName))
           );
@@ -72,7 +76,7 @@ export const installLeafyGreen = (
 
       verbose && console.log(packagesToInstall);
 
-      spawn(
+      spawnSync(
         pkgMgr,
         [
           pkgMgr === 'yarn' ? 'add' : 'install',
