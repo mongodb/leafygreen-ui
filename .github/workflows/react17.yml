@@ -29,10 +29,10 @@ jobs:
       - name: Install node-gyp
         run: pnpm add --global node-gyp
 
-      - name: Install package.json
+      - name: Install @lg-tools/test dependencies
         run: pnpm install --prefer-offline --filter="@lg-tools/test"
 
-      - name: Build CLI
+      - name: Build @lg-tools/test
         run: pnpm turbo run build tsc --filter="@lg-tools/test"
 
       - name: Install testing tools for React 17
