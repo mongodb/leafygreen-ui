@@ -96,25 +96,7 @@ const globals = id => {
   }
 };
 
-const external = [
-  '@faker-js/faker',
-  '@testing-library/react',
-  'chalk',
-  'clipboard',
-  'cross-spawn',
-  'focus-trap-react',
-  'fs-extra',
-  'highlightjs-graphql',
-  'polished',
-  'typescript',
-  /^@emotion\//,
-  /^@leafygreen-ui\//,
-  /^@lg-[a-z]+\//,
-  /^@storybook\//,
-  /^highlight/,
-  /^lodash\//,
-  /^react/,
-];
+const external = [/node_modules/];
 
 const moduleFormatToDirectory = {
   esm: 'dist/esm/',
