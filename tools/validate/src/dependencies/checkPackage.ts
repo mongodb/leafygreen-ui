@@ -4,7 +4,7 @@ import depcheck from 'depcheck';
 
 import { ValidateCommandOptions } from '../validate.types';
 
-import { depcheckOptions, DependencyIssues } from './config';
+import { DependencyIssues, getDepcheckOptions } from './config';
 import { fixDependencies } from './fixDependencyIssues';
 import { logDependencyIssues } from './logDependencyIssues';
 import { fixTSconfig, readPackageJson, sortDependenciesByUsage } from './utils';
@@ -16,7 +16,7 @@ export async function checkPackage(
   pkgPath: string,
   { fix, fixTsconfig, verbose }: Partial<ValidateCommandOptions>,
 ): Promise<boolean> {
-  const check = await depcheck(pkgPath, depcheckOptions);
+  const check = await depcheck(pkgPath, getDepcheckOptions());
   const pkgName = getPackageName(pkgPath);
 
   if (!pkgName) {

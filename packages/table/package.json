@@ -41,10 +41,11 @@
     "react-intersection-observer": "^8.25.1"
   },
   "devDependencies": {
+    "@emotion/styled": "^11.10.5",
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/code": "workspace:^",
-    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^"
   },

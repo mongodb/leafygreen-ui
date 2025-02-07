@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { ChangeEvent, ChangeEventHandler } from 'react';
-import { act } from 'react-test-renderer';
-import { render } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { useControlledValue } from './useControlledValue';
 

@@ -40,8 +40,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.0",
-    "@leafygreen-ui/button": "workspace:^",
-    "react-test-renderer": "^18.2.0"
+    "@leafygreen-ui/button": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toast",
   "repository": {
