@@ -149,6 +149,10 @@ const configForFormat = format => ({
   ],
   external,
   strictDeprecations: true,
+  treeshake: {
+    preset: 'recommended',
+    moduleSideEffects: false,
+  },
 });
 
 const esmConfig = configForFormat('esm');
