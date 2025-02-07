@@ -145,6 +145,7 @@ const configForFormat = format => ({
     bundleStats({
       html: false,
       json: false,
+      compare: false,
     }),
   ],
   external,
