@@ -23,12 +23,12 @@
   },
   "dependencies": {
     "@leafygreen-ui/a11y": "workspace:^",
-    "@leafygreen-ui/box": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/portal": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
