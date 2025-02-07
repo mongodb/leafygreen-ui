@@ -54,3 +54,4 @@ TODO.md
 
 # PR train config (https://github.com/realyze/pr-train)
 .pr-train.yml
+migration-storybook.log

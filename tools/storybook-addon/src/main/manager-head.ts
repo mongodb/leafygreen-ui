@@ -4,7 +4,7 @@ import { StorybookConfig } from '@storybook/react-webpack5';
  * The HTML header for the main Storybook UI
  * https://storybook.js.org/docs/react/api/main-config-manager-head
  */
-export const managerHead: StorybookConfig['managerHead'] = (head: string) => `
+export const managerHead: StorybookConfig['managerHead'] = (head?: string) => `
 ${head}
 <link rel="shortcut icon" href="./favicon.ico" />
 

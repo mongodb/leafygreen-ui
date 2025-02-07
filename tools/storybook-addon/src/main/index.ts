@@ -12,7 +12,6 @@ import { isRule } from './utils';
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-// @ts-expect-error https://github.com/storybookjs/storybook/issues/23624
 export const stories: StorybookConfig['stories'] = findStories(
   '../{packages,tools,charts,chat}/**/*.stor@(y|ies).@(js|ts)?(x)',
   '../{packages,tools,charts,chat}/*/node_modules',

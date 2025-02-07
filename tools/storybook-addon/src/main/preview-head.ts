@@ -4,7 +4,7 @@ import { StorybookConfig } from '@storybook/react-webpack5';
  * The HTML head for the Storybook preview iframe
  * https://storybook.js.org/docs/react/api/main-config-preview-head
  */
-export const previewHead: StorybookConfig['previewHead'] = (head: string) => `
+export const previewHead: StorybookConfig['previewHead'] = (head?: string) => `
 ${head}
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 

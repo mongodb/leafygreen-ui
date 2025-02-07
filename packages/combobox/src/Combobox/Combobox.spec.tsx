@@ -1328,16 +1328,16 @@ describe('packages/combobox', () => {
         );
         testSingleSelect(
           'When cursor is at the beginning of input, Left arrow does nothing',
-          () => {
+          async () => {
             const { inputEl } = renderCombobox(select);
             userEvent.type(inputEl, '{arrowleft}');
-            waitFor(() => expect(inputEl).toHaveFocus());
+            await waitFor(() => expect(inputEl).toHaveFocus());
           },
         );
-        test('If cursor is NOT at the beginning of input, Left arrow key moves cursor', () => {
+        test('If cursor is NOT at the beginning of input, Left arrow key moves cursor', async () => {
           const { inputEl } = renderCombobox(select);
           userEvent.type(inputEl, 'abc{arrowleft}');
-          waitFor(() => expect(inputEl).toHaveFocus());
+          await waitFor(() => expect(inputEl).toHaveFocus());
         });
 
         test('When focus is on clear button, Left arrow moves focus to input', async () => {
@@ -1357,8 +1357,8 @@ describe('packages/combobox', () => {
             const { queryChipsByIndex, inputEl } = renderCombobox(select, {
               initialValue,
             });
-            const secondChip = queryChipsByIndex(1);
             userEvent.type(inputEl, '{arrowleft}{arrowleft}');
+            const secondChip = queryChipsByIndex(1);
             expect(secondChip).toContainFocus();
           },
         );
@@ -1620,12 +1620,12 @@ describe('packages/combobox', () => {
      * onChange
      */
     describe('onChange', () => {
-      test('Selecting an option calls onChange callback', () => {
+      test('Selecting an option calls onChange callback', async () => {
         const onChange = jest.fn();
         const { openMenu } = renderCombobox(select, { onChange });
         const { optionElements } = openMenu();
         userEvent.click(optionElements![0]);
-        waitFor(() => {
+        await waitFor(() => {
           expect(onChange).toHaveBeenCalled();
         });
       });
