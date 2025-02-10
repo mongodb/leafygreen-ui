@@ -160,6 +160,25 @@ importers:
         specifier: ^4.0.9
         version: 4.0.9
 
+  charts/sortable-chart-container:
+    dependencies:
+      '@dnd-kit/core':
+        specifier: ^6.3.1
+        version: 6.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@dnd-kit/sortable':
+        specifier: ^10.0.0
+        version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      '@dnd-kit/utilities':
+        specifier: ^3.2.2
+        version: 3.2.2(react@18.2.0)
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: 4.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+    devDependencies:
+      '@lg-charts/core':
+        specifier: workspace:^
+        version: link:../core
+
   chat/avatar:
     dependencies:
       '@leafygreen-ui/avatar':
@@ -1500,9 +1519,9 @@ importers:
         specifier: workspace:^
         version: link:../tooltip
     devDependencies:
-      '@leafygreen-ui/typography':
+      '@lg-charts/core':
         specifier: workspace:^
-        version: link:../typography
+        version: link:../../charts/core
 
   packages/input-option:
     dependencies:
@@ -4702,6 +4721,17 @@ packages:
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
+
+  '@leafygreen-ui/hooks@8.3.4':
+    resolution: {integrity: sha512-Qbhn4RRCQo/t5BkfCkN4uCYtKJlysI1yrLuaeftf6Mj3oB92e7pPJibzWCVwy5WwNK3vAqB9YV5IM+zDzjJZJQ==}
+
+  '@leafygreen-ui/leafygreen-provider@4.0.2':
+    resolution: {integrity: sha512-dZ9wYv8Sj/8yTDOvx6q6XQZLzDsz5eWoUlDTfGxwMS+hyIrReiPkqZdE87sBVongcKVwD8OBlPdr+XGeoeaLBw==}
+
+  '@leafygreen-ui/lib@14.0.2':
+    resolution: {integrity: sha512-ZmyBeY1wj6cg9Tam0TaH6LejJKx+5uobeyCtwwdoNdMdqXOxcPOYWmUKLTjXh3P/TXVjXgYIpLiANUHN7OtMbw==}
+    peerDependencies:
+      react: ^17.0.0 || ^18.0.0
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -12174,6 +12204,27 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
 
   '@juggle/resize-observer@3.4.0': {}
+
+  '@leafygreen-ui/hooks@8.3.4(react@18.2.0)':
+    dependencies:
+      '@leafygreen-ui/lib': 14.0.2(react@18.2.0)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - react
+
+  '@leafygreen-ui/leafygreen-provider@4.0.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@leafygreen-ui/hooks': 8.3.4(react@18.2.0)
+      '@leafygreen-ui/lib': 14.0.2(react@18.2.0)
+      react-transition-group: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+    transitivePeerDependencies:
+      - react
+      - react-dom
+
+  '@leafygreen-ui/lib@14.0.2(react@18.2.0)':
+    dependencies:
+      lodash: 4.17.21
+      react: 18.2.0
 
   '@manypkg/find-root@1.1.0':
     dependencies:
