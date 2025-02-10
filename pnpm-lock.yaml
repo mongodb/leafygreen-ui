@@ -2441,6 +2441,9 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../icon-button
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
 
   packages/testing-lib:
     dependencies:

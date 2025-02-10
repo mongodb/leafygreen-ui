@@ -48,6 +48,7 @@
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/card": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
-    "@leafygreen-ui/icon-button": "workspace:^"
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^"
   }
 }
