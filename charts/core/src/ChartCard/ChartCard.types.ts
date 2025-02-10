@@ -27,4 +27,9 @@ export interface ChartCardProps extends Omit<HTMLElementProps<'div'>, 'title'> {
    * Content to be rendered to the right of the label.
    */
   headerContent?: React.ReactNode;
+
+  /**
+   * Unique identifier required for sorting with `SortableContainer`.
+   */
+  sortId?: string | number;
 }

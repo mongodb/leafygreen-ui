@@ -10,6 +10,9 @@ import {
 } from '@leafygreen-ui/tokens';
 
 export const getContainerStyles = (theme: Theme) => css`
+  background: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
   border: 1px solid
     ${color[theme].border[Variant.Disabled][InteractionState.Default]};
   border-radius: ${borderRadius[200]}px;
