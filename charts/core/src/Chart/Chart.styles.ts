@@ -2,7 +2,10 @@ import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
-export const chartContainerStyles = css`
+export const getChartContainerStyles = (theme: Theme) => css`
+  background: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
   display: grid;
   grid-template-areas:
     'chartHeader'
