@@ -1,7 +1,9 @@
 import React, { forwardRef, MouseEvent, useEffect, useState } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-import { cx } from '@leafygreen-ui/emotion';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { css, cx } from '@leafygreen-ui/emotion';
+import { useIdAllocator, useMergeRefs } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -33,6 +35,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
       defaultOpen = true,
       isOpen: isControlledOpen,
       onToggleButtonClick,
+      sortId = '',
       ...rest
     },
     forwardedRef,
@@ -46,6 +49,10 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
     const childrenId = useIdAllocator({
       prefix: 'expandable-chart-card-content',
     });
+
+    const { attributes, listeners, setNodeRef, transform, transition, items } =
+      useSortable({ id: sortId });
+    const isSortable = !!(items.length && sortId);
 
     // When the controlled prop changes, update the internal state
     useEffect(() => {
@@ -65,11 +72,20 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
       <div
         className={cx(getContainerStyles(theme), className, {
           [openContainerStyles]: isOpen,
+          [css`
+            transform: ${CSS.Transform.toString(transform)};
+            transition: ${transition};
+          `]: isSortable,
         })}
-        ref={forwardedRef}
+        ref={useMergeRefs([setNodeRef, forwardedRef])}
         {...rest}
       >
-        <div className={cx(headerStyles, className)} {...rest}>
+        <div
+          className={cx(headerStyles, className)}
+          {...attributes}
+          {...listeners}
+          {...rest}
+        >
           <div className={leftInnerContainerStyles}>
             <IconButton
               className={toggleButtonStyles}

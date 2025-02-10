@@ -6,8 +6,10 @@
  * and styling according to our design system's specs.
  */
 import React from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -17,10 +19,10 @@ import { Body } from '@leafygreen-ui/typography';
 import { ChartProvider } from '../ChartContext';
 
 import {
-  chartContainerStyles,
   chartHeaderContainerStyles,
   chartStyles,
   chartWrapperStyles,
+  getChartContainerStyles,
   getLoadingOverlayStyles,
   getLoadingTextStyles,
 } from './Chart.styles';
@@ -36,6 +38,7 @@ export function Chart({
   groupId,
   className,
   chartState = ChartStates.Unset,
+  sortId = '',
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -46,12 +49,27 @@ export function Chart({
     onZoomSelect,
     groupId,
   });
+  const { attributes, listeners, setNodeRef, transform, transition, items } =
+    useSortable({ id: sortId });
+  const isSortable = !!(items.length && sortId);
 
   return (
     <LeafyGreenProvider darkMode={darkModeProp}>
       <ChartProvider chart={chart}>
-        <div className={cx(chartContainerStyles, className)}>
-          <div className={chartHeaderContainerStyles}>
+        <div
+          ref={setNodeRef}
+          className={cx(getChartContainerStyles(theme), className, {
+            [css`
+              transform: ${CSS.Transform.toString(transform)};
+              transition: ${transition};
+            `]: isSortable,
+          })}
+        >
+          <div
+            className={chartHeaderContainerStyles}
+            {...attributes}
+            {...listeners}
+          >
             {/**
              * Children other than Header are not expected to be rendered to the DOM,
              * but are used to provide a more declarative API for adding functionality
