@@ -35,7 +35,6 @@ const InternalRowWithRT = <T extends LGRowData>({
 
   const isExpandable = row.getCanExpand();
   const depth = row.depth;
-  const hasSubRows = row.subRows.length > 0;
 
   const contextValues = useMemo(() => {
     return {
@@ -53,7 +52,7 @@ const InternalRowWithRT = <T extends LGRowData>({
         className={getRowWithRTStyles({
           className,
           isDisabled: disabled,
-          isExpanded: (isExpanded && hasSubRows) || isParentExpanded,
+          isExpanded: isExpanded || isParentExpanded,
           isOddVSRow,
           isSelected,
           isVirtualRow: !!virtualRow,
