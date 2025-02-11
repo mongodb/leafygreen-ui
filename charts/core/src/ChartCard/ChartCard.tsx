@@ -1,8 +1,7 @@
 import React, { forwardRef, MouseEvent, useEffect, useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useMergeRefs } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -13,14 +12,13 @@ import { Body } from '@leafygreen-ui/typography';
 import {
   childrenContainerStyles,
   getContainerStyles,
-  headerStyles,
+  getHeaderStyles,
   leftInnerContainerStyles,
-  openContainerStyles,
   openToggleIconStyles,
   toggleButtonStyles,
   toggleIconStyles,
 } from './ChartCard.styles';
-import { ChartCardProps } from './ChartCard.types';
+import { ChartCardProps, ChartCardStates } from './ChartCard.types';
 
 /**
  * Card component that contains charts and can expand and collapse.
@@ -35,6 +33,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
       defaultOpen = true,
       isOpen: isControlledOpen,
       onToggleButtonClick,
+      state = ChartCardStates.Unset,
       sortId = '',
       ...rest
     },
@@ -70,18 +69,20 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
 
     return (
       <div
-        className={cx(getContainerStyles(theme), className, {
-          [openContainerStyles]: isOpen,
-          [css`
-            transform: ${CSS.Transform.toString(transform)};
-            transition: ${transition};
-          `]: isSortable,
+        className={getContainerStyles({
+          theme,
+          transition,
+          transform,
+          isSortable,
+          isOpen,
+          state,
+          className,
         })}
         ref={useMergeRefs([setNodeRef, forwardedRef])}
         {...rest}
       >
         <div
-          className={cx(headerStyles, className)}
+          className={cx(getHeaderStyles(theme, state), className)}
           {...attributes}
           {...listeners}
           {...rest}
