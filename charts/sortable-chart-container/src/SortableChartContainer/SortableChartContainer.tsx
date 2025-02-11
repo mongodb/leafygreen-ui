@@ -27,7 +27,7 @@ const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
     styles: {
       active: {
-        opacity: '0.5',
+        opacity: '0.5', // Keeps placeholder component opaque while overlay drops into it
       },
     },
   }),
@@ -77,7 +77,6 @@ export function SortableChartContainer({
             return cloneElement(child as React.ReactElement, {
               key: sortId,
               state: activeId === sortId ? 'dragging' : 'unset',
-              // style: { opacity: sortId === activeId ? '0.5' : '1' },
             });
           })}
         </SortableContext>
