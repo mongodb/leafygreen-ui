@@ -27,7 +27,7 @@ const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
     styles: {
       active: {
-        opacity: '0.5', // Keeps placeholder component opaque while overlay drops into it
+        opacity: '0.3', // Keeps placeholder component opaque while overlay drops into it
       },
     },
   }),
