@@ -1,4 +1,5 @@
 import React, {
+  cloneElement,
   PropsWithChildren,
   ReactElement,
   useMemo,
@@ -6,7 +7,10 @@ import React, {
 } from 'react';
 import {
   closestCenter,
+  defaultDropAnimationSideEffects,
   DndContext,
+  DragOverlay,
+  DropAnimation,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -19,9 +23,20 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 
+const dropAnimation: DropAnimation = {
+  sideEffects: defaultDropAnimationSideEffects({
+    styles: {
+      active: {
+        opacity: '0.5',
+      },
+    },
+  }),
+};
+
 export function SortableChartContainer({
   children,
 }: PropsWithChildren<{}>): ReactElement {
+  const [activeId, setActiveId] = useState<string | null>(null);
   const [childrenArray, setChildrenArray] = useState(
     React.Children.toArray(children),
   );
@@ -50,17 +65,43 @@ export function SortableChartContainer({
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
         <SortableContext
           items={sortableIds}
           strategy={verticalListSortingStrategy}
         >
-          {childrenArray}
+          {childrenArray.map(child => {
+            const sortId = (child as React.ReactElement).props?.sortId;
+            return cloneElement(child as React.ReactElement, {
+              key: sortId,
+              state: activeId === sortId ? 'dragging' : 'unset',
+              // style: { opacity: sortId === activeId ? '0.5' : '1' },
+            });
+          })}
         </SortableContext>
+
+        <DragOverlay dropAnimation={dropAnimation}>
+          {activeId
+            ? cloneElement(
+                childrenArray.find(
+                  child =>
+                    (child as React.ReactElement).props.sortId === activeId,
+                ) as React.ReactElement,
+                {
+                  state: 'overlay',
+                },
+              )
+            : null}
+        </DragOverlay>
       </DndContext>
     </>
   );
+
+  function handleDragStart(event: any) {
+    setActiveId(event.active.id);
+  }
 
   function handleDragEnd(event: any) {
     const { active, over } = event;
@@ -77,5 +118,7 @@ export function SortableChartContainer({
         return arrayMove(currentChildren, oldIndex, newIndex);
       });
     }
+
+    setActiveId(null);
   }
 }

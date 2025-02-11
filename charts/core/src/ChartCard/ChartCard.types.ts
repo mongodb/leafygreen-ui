@@ -2,6 +2,14 @@ import { MouseEventHandler } from 'react';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
+export const ChartCardStates = {
+  Unset: 'unset',
+  Dragging: 'dragging',
+  Overlay: 'overlay',
+} as const;
+export type ChartCardStates =
+  (typeof ChartCardStates)[keyof typeof ChartCardStates];
+
 export interface ChartCardProps extends Omit<HTMLElementProps<'div'>, 'title'> {
   /**
    * The title of the card
@@ -27,6 +35,11 @@ export interface ChartCardProps extends Omit<HTMLElementProps<'div'>, 'title'> {
    * Content to be rendered to the right of the label.
    */
   headerContent?: React.ReactNode;
+
+  /**
+   * Controls the current chart card state.
+   */
+  state?: ChartCardStates;
 
   /**
    * Unique identifier required for sorting with `SortableContainer`.

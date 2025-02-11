@@ -7,9 +7,8 @@
  */
 import React from 'react';
 import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -19,10 +18,10 @@ import { Body } from '@leafygreen-ui/typography';
 import { ChartProvider } from '../ChartContext';
 
 import {
-  chartHeaderContainerStyles,
   chartStyles,
   chartWrapperStyles,
   getChartContainerStyles,
+  getChartHeaderContainerStyles,
   getLoadingOverlayStyles,
   getLoadingTextStyles,
 } from './Chart.styles';
@@ -37,7 +36,7 @@ export function Chart({
   onZoomSelect,
   groupId,
   className,
-  chartState = ChartStates.Unset,
+  state = ChartStates.Unset,
   sortId = '',
   ...rest
 }: ChartProps) {
@@ -58,15 +57,19 @@ export function Chart({
       <ChartProvider chart={chart}>
         <div
           ref={setNodeRef}
-          className={cx(getChartContainerStyles(theme), className, {
-            [css`
-              transform: ${CSS.Transform.toString(transform)};
-              transition: ${transition};
-            `]: isSortable,
-          })}
+          className={cx(
+            getChartContainerStyles({
+              theme,
+              transform,
+              transition,
+              isSortable,
+              state,
+            }),
+            className,
+          )}
         >
           <div
-            className={chartHeaderContainerStyles}
+            className={getChartHeaderContainerStyles(theme, state)}
             {...attributes}
             {...listeners}
           >
@@ -79,7 +82,7 @@ export function Chart({
             {children}
           </div>
           <div className={chartWrapperStyles}>
-            {chartState === ChartStates.Loading && (
+            {state === ChartStates.Loading && (
               <div className={getLoadingOverlayStyles(theme)}>
                 <Body
                   className={getLoadingTextStyles(theme)}
