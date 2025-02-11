@@ -1540,9 +1540,9 @@ importers:
         specifier: workspace:^
         version: link:../tooltip
     devDependencies:
-      '@lg-charts/core':
+      '@leafygreen-ui/typography':
         specifier: workspace:^
-        version: link:../../charts/core
+        version: link:../typography
 
   packages/input-option:
     dependencies:
