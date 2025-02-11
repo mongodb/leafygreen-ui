@@ -18,6 +18,7 @@ const BODY_1_HEIGHT = 44;
 const BODY_2_HEIGHT = 52;
 const MAX_WIDTH = 300;
 const SMALL_HEIGHT = 32;
+const TRANSITION_DURATION = transitionDuration.default;
 
 const baseStyles = css`
   font-family: ${fontFamilies.default};
@@ -28,12 +29,15 @@ const baseStyles = css`
   align-items: flex-start;
   justify-content: center;
   max-width: ${MAX_WIDTH}px;
+  width: min-content;
   padding: ${spacing[300]}px ${spacing[400]}px;
   background-color: transparent;
   border: 0;
   margin: 0;
   text-decoration: none;
-  transition: ${transitionDuration.default}ms color ease-in-out;
+  transition-property: color, font-weight;
+  transition-duration: ${TRANSITION_DURATION}ms;
+  transition-timing-function: ease-in-out;
 
   &:focus:not(:disabled) {
     outline: none;
@@ -60,7 +64,9 @@ const baseStyles = css`
     bottom: 0;
     height: 4px;
     border-radius: ${borderRadius[100]}px ${borderRadius[100]}px 0 0;
-    transition: all ${transitionDuration.default}ms ease-in-out;
+    transition-property: background-color, transform;
+    transition-duration: ${TRANSITION_DURATION}ms;
+    transition-timing-function: ease-in-out;
     background-color: transparent;
     transform: scaleX(0.8);
   }
