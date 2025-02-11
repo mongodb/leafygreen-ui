@@ -29,7 +29,7 @@ const getSortableContainerStyles = (
 `;
 
 const getDraggingContainerStyles = () => css`
-  opacity: 0.5;
+  opacity: 0.3;
 `;
 
 const getOverlayContainerStyles = (theme: Theme) => css`
