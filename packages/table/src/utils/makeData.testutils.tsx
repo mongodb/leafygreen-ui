@@ -58,8 +58,6 @@ export function makeData(
 
   const hasSubRows = !renderingExpandableRows && lens.length > 1;
 
-  console.log({ hasSubRows, lens });
-
   const makeDataLevel = (depth = 0): Array<Person> => {
     const len = lens[depth]!;
     return range(len).map((_, i): Person => {

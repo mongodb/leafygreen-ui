@@ -1,7 +1,7 @@
 {
-  "name": "@leafygreen-ui/dots",
+  "name": "@leafygreen-ui/gallery-indicator",
   "version": "4.0.5",
-  "description": "LeafyGreen UI Kit Dots",
+  "description": "LeafyGreen UI Kit Gallery Indicator",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -24,7 +24,7 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/info-sprinkle",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/gallery-indicator",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"

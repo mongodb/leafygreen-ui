@@ -13,11 +13,20 @@ export const getTestUtils = (
    */
   const element: HTMLElement = getByLgId!(lgId);
 
+  /**
+   * Returns a nodelist of all indicators/dots in the gallery indicator
+   */
   const getAllIndicators = () =>
     element.querySelectorAll<HTMLElement>(`[data-lgid=${LGIDS.indicator}]`);
 
+  /**
+   * Returns the number of indicators/dots in the gallery indicator
+   */
   const getIndicatorCount = () => getAllIndicators().length;
 
+  /**
+   * Returns the index of the active indicator
+   */
   const getActiveIndex = () =>
     Array.from(getAllIndicators()).findIndex(
       indicator => indicator.getAttribute('data-active') === 'true',

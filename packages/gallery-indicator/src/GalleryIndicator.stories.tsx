@@ -14,7 +14,7 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [...storybookExcludedControlParams, 'onClose', 'shouldClose'],
+      exclude: [...storybookExcludedControlParams],
     },
     generate: {
       combineArgs: {
