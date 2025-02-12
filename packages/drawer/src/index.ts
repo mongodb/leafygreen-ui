@@ -1,2 +1,2 @@
-export { Drawer, type DrawerProps, LGIDS_DRAWER } from './Drawer';
+export { Drawer, type DrawerProps, LGIDs } from './Drawer';
 export { getTestUtils } from './utils';

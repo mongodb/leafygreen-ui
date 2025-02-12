@@ -1,6 +1,6 @@
 const LGID_ROOT = 'lg-drawer';
 
-export const LGIDS_DRAWER = {
+export const LGIDs = {
   root: LGID_ROOT,
 } as const;
 
