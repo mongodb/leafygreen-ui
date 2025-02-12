@@ -33,6 +33,7 @@ For more details on how to use LeafyGreen `Table` v13, check out the [README](ht
 - Rows are memoized to increase performance.
 - `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
 - `virtualRow` is a required prop if using `useLeafyGreenVirtualTable`.
+- An expanded row will no longer be highlighted if the nested content **only** contains expandable content. However, the row will continue to be highlighted if the nested content includes a subrow.
 - Internally, we removed the mapping and flattening of `Row` children. Moving forward, consumers no longer need to explicitly render subrows and expanded content as children of `Row`. Instead, rows, subrows, and expanded content are returned as siblings within the row object.
 
   **Before**:
