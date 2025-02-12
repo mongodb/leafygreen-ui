@@ -253,12 +253,12 @@ const {
 
 ### LanguageSwitcherUtils
 
-| Util                              | Description                                       | Returns                       |
-| --------------------------------- | ------------------------------------------------- | ----------------------------- |
-| `getInput()`                      | Returns the language switcher trigger             | `HTMLButtonElement` \| `null` |
-| `getAllOptions()`                 | Returns all options in the language switcher      | `Array<HTMLElement>`          |
-| `getOptionByValue(value: string)` | Returns the option element by its value           | `HTMLElement` \| `null`       |
-| `isDisabled()`                    | Returns whether the language switcher is disabled | `boolean`                     |
+| Util                              | Description                                       | Returns                 |
+| --------------------------------- | ------------------------------------------------- | ----------------------- |
+| `getInput()`                      | Returns the language switcher trigger             | `HTMLButtonElement`     |
+| `getAllOptions()`                 | Returns all options in the language switcher      | `Array<HTMLElement>`    |
+| `getOptionByValue(value: string)` | Returns the option element by its value           | `HTMLElement` \| `null` |
+| `isDisabled()`                    | Returns whether the language switcher is disabled | `boolean`               |
 
 ### CopyButtonUtils
 

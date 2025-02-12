@@ -46,7 +46,7 @@ export interface LanguageSwitcherUtils {
   /**
    * Returns the language switcher trigger
    */
-  getInput: () => HTMLButtonElement | null;
+  getInput: () => HTMLButtonElement;
 
   /**
    * Returns if the language switcher is disabled
