@@ -2,7 +2,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the number of indicators/dots
    */
-  getIndicatorCount: () => number;
+  getIndicatorLength: () => number;
 
   /**
    * Returns the active indicator index

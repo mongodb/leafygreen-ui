@@ -9,12 +9,12 @@ import {
 import { getTestUtils } from './getTestUtils';
 
 function renderGalleryIndicator({
-  count = 4,
+  length = 4,
   activeIndex = 0,
   ...rest
 }: Partial<GalleryIndicatorProps>) {
   const utils = render(
-    <GalleryIndicator count={count} activeIndex={activeIndex} {...rest} />,
+    <GalleryIndicator length={length} activeIndex={activeIndex} {...rest} />,
   );
 
   return {
@@ -27,12 +27,12 @@ function renderMultipleGalleryIndicator() {
     <>
       <GalleryIndicator
         data-lgid="lg-gallery_indicator-1"
-        count={5}
+        length={5}
         activeIndex={0}
       />
       <GalleryIndicator
         data-lgid="lg-gallery_indicator-2"
-        count={4}
+        length={4}
         activeIndex={1}
       />
     </>,
@@ -60,12 +60,12 @@ describe('packages/tabs/getTestUtils', () => {
   });
 
   describe('single gallery indicator', () => {
-    describe('getIndicatorCount', () => {
+    describe('getIndicatorLength', () => {
       test('returns the correct number of indicators', () => {
         renderGalleryIndicator({});
-        const { getIndicatorCount } = getTestUtils();
-        const indicatorCount = getIndicatorCount();
-        expect(indicatorCount).toBe(4);
+        const { getIndicatorLength } = getTestUtils();
+        const indicatorlength = getIndicatorLength();
+        expect(indicatorlength).toBe(4);
       });
     });
 
@@ -85,8 +85,8 @@ describe('packages/tabs/getTestUtils', () => {
       const testUtils1 = getTestUtils('lg-gallery_indicator-1');
       const testUtils2 = getTestUtils('lg-gallery_indicator-2');
 
-      expect(testUtils1.getIndicatorCount()).toBe(5);
-      expect(testUtils2.getIndicatorCount()).toBe(4);
+      expect(testUtils1.getIndicatorLength()).toBe(5);
+      expect(testUtils2.getIndicatorLength()).toBe(4);
     });
 
     test('returns the correct active index for each gallery indicator', () => {

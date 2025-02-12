@@ -22,7 +22,7 @@ export const getTestUtils = (
   /**
    * Returns the number of indicators/dots in the gallery indicator
    */
-  const getIndicatorCount = () => getAllIndicators().length;
+  const getIndicatorLength = () => getAllIndicators().length;
 
   /**
    * Returns the index of the active indicator
@@ -33,7 +33,7 @@ export const getTestUtils = (
     );
 
   return {
-    getIndicatorCount: () => getIndicatorCount(),
+    getIndicatorLength: () => getIndicatorLength(),
     getActiveIndex: () => getActiveIndex(),
   };
 };

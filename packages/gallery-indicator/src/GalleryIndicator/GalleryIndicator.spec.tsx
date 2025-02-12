@@ -8,14 +8,14 @@ import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { GalleryIndicator, GalleryIndicatorProps } from '.';
 
 function renderGalleryIndicator({
-  count = 4,
+  length = 4,
   activeIndex = 0,
   ...props
 }: Partial<GalleryIndicatorProps>) {
   const utils = render(
     <GalleryIndicator
       data-testid={LGIDS.root}
-      count={count}
+      length={length}
       activeIndex={activeIndex}
       {...props}
     />,
@@ -40,13 +40,13 @@ describe('packages/gallery-indicator', () => {
 
   describe('GalleryIndicator', () => {
     test('renders the correct number of indicators', () => {
-      const { getIndicatorCount } = renderGalleryIndicator({ count: 4 });
-      expect(getIndicatorCount()).toBe(4);
+      const { getIndicatorLength } = renderGalleryIndicator({ length: 4 });
+      expect(getIndicatorLength()).toBe(4);
     });
 
     test('the correct indicator is active', () => {
       const { getActiveIndex } = renderGalleryIndicator({
-        count: 4,
+        length: 4,
         activeIndex: 2,
       });
       expect(getActiveIndex()).toBe(2);
@@ -56,16 +56,16 @@ describe('packages/gallery-indicator', () => {
   // eslint-disable-next-line jest/no-disabled-tests
   test.skip('types behave as expected', () => {
     <>
-      {/* @ts-expect-error missing count, activeIndex */}
+      {/* @ts-expect-error missing length, activeIndex */}
       <GalleryIndicator />
 
       {/* @ts-expect-error missing activeIndex */}
-      <GalleryIndicator count={1} />
+      <GalleryIndicator length={1} />
 
       {/* @ts-expect-error missing activeIndex */}
       <GalleryIndicator activeIndex={1} />
 
-      <GalleryIndicator activeIndex={1} count={4} />
+      <GalleryIndicator activeIndex={1} length={4} />
     </>;
   });
 });

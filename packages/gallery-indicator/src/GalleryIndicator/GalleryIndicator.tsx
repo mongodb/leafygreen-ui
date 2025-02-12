@@ -17,7 +17,7 @@ export const GalleryIndicator = React.forwardRef<
   (
     {
       darkMode: darkModeProp,
-      count,
+      length,
       activeIndex,
       className,
       'data-lgid': dataLgId = LGIDS.root,
@@ -33,7 +33,7 @@ export const GalleryIndicator = React.forwardRef<
         data-lgid={dataLgId}
         {...rest}
       >
-        {Array.from({ length: count }, (_, i) => {
+        {Array.from({ length: length }, (_, i) => {
           const isActive = i === activeIndex;
 
           return (

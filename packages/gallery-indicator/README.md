@@ -24,7 +24,7 @@ npm install @leafygreen-ui/gallery-indicator
 import { GalleryIndicator } from `@leafygreen-ui/gallery-indicator`;
 
 <GalleryIndicator
-  count={4}
+  length={4}
   activeIndex={0}
   darkMode
 />
@@ -35,7 +35,7 @@ import { GalleryIndicator } from `@leafygreen-ui/gallery-indicator`;
 
 | Prop          | Type      | Description                                          | Default |
 | ------------- | --------- | ---------------------------------------------------- | ------- |
-| `count`       | `number`  | The total number of dots to render                   |         |
+| `length`      | `number`  | The total number of dots to render                   |         |
 | `activeIndex` | `number`  | The index of the active dot                          |         |
 | `darkMode`    | `boolean` | Determines if the component will render in dark mode | `false` |
 
@@ -65,15 +65,15 @@ import { GalleryIndicator, getTestUtils } from '@leafygreen-ui/gallery-indicator
 test('Gallery Indicator', () => {
   render(
     <GalleryIndicator
-      count={4}
+      length={4}
       activeIndex={0}
       darkMode
     />
   );
 
-  const { getIndicatorCount, getActiveIndex } = getTestUtils();
+  const { getIndicatorlength, getActiveIndex } = getTestUtils();
 
-  expect(getIndicatorCount()).toBe(4);
+  expect(getIndicatorlength()).toBe(4);
   expect(getActiveIndex()).toBe(0);
 });
 ```
@@ -93,13 +93,13 @@ test('GalleryIndicator', () => {
   render(
     <>
       <GalleryIndicator
-        count={4}
+        length={4}
         activeIndex={0}
         darkMode
         data-lgid="gallery-indicator-abc"
       />
       <GalleryIndicator
-        count={5}
+        length={5}
         activeIndex={1}
         darkMode
         data-lgid="gallery-indicator-xyz"
@@ -111,11 +111,11 @@ test('GalleryIndicator', () => {
   const testUtils2 = getTestUtils('gallery-indicator-xy');
 
   // First GalleryIndicator
-  expect(testUtils1.getIndicatorCount()).toBe(4);
+  expect(testUtils1.getIndicatorlength()).toBe(4);
   expect(testUtils1.getActiveIndex()).toBe(1);
 
   // Second GalleryIndicator
-  expect(testUtils2.getIndicatorCount()).toBe(5);
+  expect(testUtils2.getIndicatorlength()).toBe(5);
   expect(testUtils2.getActiveIndex()).toBe(0);
 });
 ```
@@ -123,10 +123,10 @@ test('GalleryIndicator', () => {
 ### Test Utils
 
 ```tsx
-const { getIndicatorCount, getActiveIndex } = getTestUtils();
+const { getIndicatorlength, getActiveIndex } = getTestUtils();
 ```
 
-| Util                  | Description                           | Returns  |
-| --------------------- | ------------------------------------- | -------- |
-| `getIndicatorCount()` | Returns the number of indicators/dots | `number` |
-| `getActiveIndex()`    | Returns the active indicator index    | `number` |
+| Util                   | Description                           | Returns  |
+| ---------------------- | ------------------------------------- | -------- |
+| `getIndicatorlength()` | Returns the number of indicators/dots | `number` |
+| `getActiveIndex()`     | Returns the active indicator index    | `number` |

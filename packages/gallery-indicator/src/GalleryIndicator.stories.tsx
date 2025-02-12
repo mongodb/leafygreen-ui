@@ -25,7 +25,7 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
   },
   args: {
     activeIndex: 0,
-    count: 4,
+    length: 4,
     darkMode: false,
   },
   argTypes: {
