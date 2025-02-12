@@ -1,7 +1,13 @@
 import { css } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import {
+  breakpoints,
+  color,
+  InteractionState,
+  spacing,
+  Variant,
+} from '@leafygreen-ui/tokens';
 
 export const messageClassName = createUniqueClassName('lg-message');
 export const senderClassName = createUniqueClassName('lg-message');
@@ -9,11 +15,12 @@ export const avatarClassName = createUniqueClassName('lg-message-avatar');
 
 // Unless otherwise indicated, styles are defined as left-aligned and mobile-first by default
 
-export const baseStyles = css`
+export const getBaseStyles = (theme: Theme) => css`
   display: flex;
   gap: ${spacing[200]}px;
   align-items: flex-end;
   width: 100%;
+  color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 
   &:not(:last-child) {
     margin-bottom: ${spacing[3]}px;

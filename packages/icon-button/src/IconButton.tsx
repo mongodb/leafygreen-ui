@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
-import Box from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import {
   activeStyle,
@@ -19,9 +22,13 @@ import {
 } from './styles';
 import { AccessibleIconButtonProps, IconProps, Size } from './types';
 
-export const IconButton = React.forwardRef(
+export const IconButton = InferredPolymorphic<
+  AccessibleIconButtonProps,
+  'button'
+>(
   (
     {
+      as,
       size = Size.Default,
       darkMode: darkModeProp,
       disabled = false,
@@ -29,12 +36,13 @@ export const IconButton = React.forwardRef(
       tabIndex = 0,
       className,
       children,
-      ...rest
-    }: AccessibleIconButtonProps,
-    ref: React.Ref<any>,
+      ...restProps
+    },
+    ref,
   ) => {
+    const { Component, rest } = useInferredPolymorphic(as, restProps, 'button');
+
     const { theme } = useDarkMode(darkModeProp);
-    const isAnchor: boolean = typeof rest.href === 'string';
 
     // We do our own proptype validation here to ensure either 'aria-label' or 'aria-labelledby' are passed to the component.
     validateAriaLabelProps(rest, 'IconButton');
@@ -90,9 +98,9 @@ export const IconButton = React.forwardRef(
     };
 
     return (
-      <Box as={isAnchor ? 'a' : 'button'} {...iconButtonProps}>
+      <Component {...iconButtonProps}>
         <div className={iconStyle}>{processedChildren}</div>
-      </Box>
+      </Component>
     );
   },
 );

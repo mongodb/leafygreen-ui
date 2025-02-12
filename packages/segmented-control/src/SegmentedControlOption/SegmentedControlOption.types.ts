@@ -1,8 +1,10 @@
 import { ReactElement } from 'react';
 
 import { HTMLElementProps } from '@leafygreen-ui/lib';
+import { PolymorphicAs, PolymorphicProps } from '@leafygreen-ui/polymorphic';
 
-export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
+export interface BaseSegmentedControlOptionProps
+  extends HTMLElementProps<'div'> {
   /**
    * Can be text and/or an icon element
    */
@@ -23,13 +25,6 @@ export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
    * Toggles whether the option is disabled. Defaults to `false`
    */
   disabled?: boolean;
-
-  /**
-   * Render the option wrapped in another component. Typically used for router `Link` components.
-   *
-   * Default: `div`
-   */
-  as?: any;
 
   /**
    * Identifies the element(s) whose contents/presence is controlled by the segmented control.
@@ -77,5 +72,9 @@ export interface SegmentedControlOptionProps extends HTMLElementProps<'div'> {
   /**
    * @internal
    */
-  isfocusInComponent?: boolean;
+  isFocusInComponent?: boolean;
 }
+
+// External only
+export type SegmentedControlOptionProps<TAsProp extends PolymorphicAs = 'div'> =
+  PolymorphicProps<TAsProp, BaseSegmentedControlOptionProps>;

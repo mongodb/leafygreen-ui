@@ -10,6 +10,7 @@ import {
   testLocales,
   testTimeZoneLabels,
 } from '@leafygreen-ui/date-utils';
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';
@@ -57,7 +58,7 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
       combineArgs: {
         darkMode: [false, true],
         value: [newUTC(2023, Month.December, 26)],
-        locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        locale: [...Object.values(SupportedLocales)],
         timeZone: ['UTC', 'Europe/London', 'America/New_York', 'Asia/Seoul'],
         state: Object.values(DatePickerState),
         disabled: [false, true],
@@ -66,7 +67,7 @@ const meta: StoryMetaType<typeof DatePicker, SharedDatePickerContextProps> = {
     },
   },
   args: {
-    locale: 'iso8601',
+    locale: SupportedLocales.ISO_8601,
     label: 'Pick a date',
     description: 'description',
     errorMessage: 'Invalid date',

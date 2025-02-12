@@ -1,5 +1,26 @@
 # @leafygreen-ui/tabs
 
+## 14.1.3
+
+### Patch Changes
+
+- 3513d7f7a: [LG-4784](https://jira.mongodb.org/browse/LG-4784): fix `TabTitle` width such that if `Tooltip` instance is passed to `Tab.name`, it does not impact the width of the `TabTitle`
+
+## 14.1.2
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/descendants@2.1.0
+
+## 14.1.1
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+
 ## 14.1.0
 
 ### Minor Changes

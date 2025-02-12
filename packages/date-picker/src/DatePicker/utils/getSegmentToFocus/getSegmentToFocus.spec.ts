@@ -1,12 +1,14 @@
 import { createRef } from 'react';
 
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
+
 import { SegmentRefs } from '../../../shared/hooks';
 import { getFormatParts } from '../../../shared/utils';
 
 import { getSegmentToFocus } from '.';
 
 describe('packages/date-picker/utils/getSegmentToFocus', () => {
-  const formatParts = getFormatParts('iso8601');
+  const formatParts = getFormatParts(SupportedLocales.ISO_8601);
 
   test('if target is a segment, return target', () => {
     const target = document.createElement('input');

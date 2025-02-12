@@ -1,5 +1,21 @@
 # @leafygreen-ui/toast
 
+## 7.0.5
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+
+## 7.0.4
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+
 ## 7.0.3
 
 ### Patch Changes

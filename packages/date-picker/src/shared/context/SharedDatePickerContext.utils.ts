@@ -6,6 +6,7 @@ import {
   DateType,
   getISODate,
   isValidDate,
+  SupportedLocales,
   toDate,
 } from '@leafygreen-ui/date-utils';
 import { consoleOnce } from '@leafygreen-ui/lib';
@@ -71,7 +72,7 @@ export const defaultSharedDatePickerContext: SharedDatePickerContextProps = {
   ariaLabelledbyProp: '',
   label: '',
   description: '',
-  locale: 'iso8601',
+  locale: SupportedLocales.ISO_8601,
   timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   min: MIN_DATE,
   max: MAX_DATE,

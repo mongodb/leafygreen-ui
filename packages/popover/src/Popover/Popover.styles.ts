@@ -23,7 +23,7 @@ const basePopoverStyles = css`
   background-color: transparent;
   width: max-content;
 
-  transition-property: opacity, transform, overlay, display;
+  transition-property: opacity, transform, overlay;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   transition-behavior: allow-discrete;
@@ -32,17 +32,10 @@ const basePopoverStyles = css`
   transform: scale(${TRANSFORM_INITIAL_SCALE});
 
   &::backdrop {
-    transition-property: background, overlay, display;
+    transition-property: background, overlay;
     transition-duration: ${TRANSITION_DURATION}ms;
     transition-timing-function: ease-in-out;
     transition-behavior: allow-discrete;
-  }
-
-  @starting-style {
-    :popover-open {
-      opacity: 0;
-      transform: scale(${TRANSFORM_INITIAL_SCALE});
-    }
   }
 `;
 

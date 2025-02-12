@@ -1,8 +1,8 @@
 import fse from 'fs-extra';
 import path from 'path';
 
-import { getLGConfig } from './getLGConfig';
-import { getPackageName } from './getPackageName';
+import { getLGConfig } from '../getLGConfig';
+import { getPackageName } from '../getPackageName';
 
 /** @returns the absolute paths of all packages in the current repository */
 export const getAllPackages = () => {

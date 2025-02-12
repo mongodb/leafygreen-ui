@@ -1,0 +1,11 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "prebuild": {
+      "dependsOn": ["^tsc", "^prebuild"],
+      "inputs": ["src/glyphs/*.svg"],
+      "outputs": ["src/generated/*.tsx"]
+    }
+  }
+}

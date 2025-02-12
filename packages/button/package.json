@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/button",
-  "version": "22.0.2",
+  "version": "23.0.0",
   "description": "leafyGreen UI Kit Button",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,10 +22,10 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/box": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/ripple": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",

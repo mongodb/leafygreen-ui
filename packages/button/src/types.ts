@@ -1,6 +1,10 @@
 import React, { HTMLProps } from 'react';
 
 import { LgIdProps } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphicProps,
+  PolymorphicAs,
+} from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export const Variant = {
@@ -36,7 +40,7 @@ export const FontSize = {
 
 export type FontSize = (typeof FontSize)[keyof typeof FontSize];
 
-export interface ButtonProps extends LgIdProps {
+export interface BaseButtonProps extends LgIdProps {
   // Would prefer to use Pick<> to extract these properties, but they would not be correctly imported into Storybook otherwise.
   // https://github.com/storybookjs/storybook/issues/14798
 
@@ -114,11 +118,6 @@ export interface ButtonProps extends LgIdProps {
   rightGlyph?: React.ReactElement;
 
   /**
-   * A `href` prop that will make the Button render as an anchor tag.
-   */
-  href?: string;
-
-  /**
    * Indicates whether the Button is in a loading state
    */
   isLoading?: boolean;
@@ -132,21 +131,8 @@ export interface ButtonProps extends LgIdProps {
    * Visual indicator display to convey that component is loading.
    */
   loadingIndicator?: React.ReactElement;
-
-  /**
-   * The component or HTML Element that the button is rendered as.
-   *
-   * To use with NextJS Links, pass in a component that wraps the Link:
-   * ```js
-   * const Linker = ({ href, children, ...props }) => (
-   *  <NextLink href={href}>
-   *    <a {...props}>{children}</a>
-   *  </NextLink>
-   * );
-   * <Button as={Linker} />
-   * ```
-   * @type HTMLElement | React.Component
-   * @default button
-   */
-  as?: React.ElementType<any>;
 }
+
+// External only
+export type ButtonProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, BaseButtonProps>;

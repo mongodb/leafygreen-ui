@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 
-import { isValidJSON } from './getRootPackageJson';
+import { isValidJSON } from '../getRootPackageJson';
 
 /**
  * Returns the `package.json` data for a given directory.
