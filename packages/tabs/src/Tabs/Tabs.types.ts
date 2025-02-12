@@ -79,6 +79,16 @@ export interface TabsProps<SelectedType extends number | string>
    * @default 'default'
    */
   size?: Size;
+
+  /**
+   * Ref to the container that holds the list of tabs
+   */
+  tabListContainerRef?: React.RefObject<HTMLDivElement>;
+
+  /**
+   * Ref to the container that holds the tab panels
+   */
+  tabPanelsContainerRef?: React.RefObject<HTMLDivElement>;
 }
 
 type AriaLabels = 'aria-label' | 'aria-labelledby';

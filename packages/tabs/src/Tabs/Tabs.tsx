@@ -61,6 +61,8 @@ const Tabs = <SelectedType extends number | string>(
     selected: controlledSelected,
     setSelected: setControlledSelected,
     size = 'default',
+    tabListContainerRef,
+    tabPanelsContainerRef,
     'data-lgid': dataLgId = LGIDS_TABS.root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
@@ -210,10 +212,11 @@ const Tabs = <SelectedType extends number | string>(
             <div {...rest} className={className} data-lgid={dataLgId}>
               <div className={getTabContainerStyles(theme)} id={id}>
                 <div
+                  aria-orientation="horizontal"
                   className={tabListStyles}
                   data-lgid={LGIDS_TABS.tabList}
+                  ref={tabListContainerRef}
                   role="tablist"
-                  aria-orientation="horizontal"
                   {...accessibilityProps}
                 >
                   {renderedTabs}
@@ -227,6 +230,7 @@ const Tabs = <SelectedType extends number | string>(
               <div
                 className={tabPanelsElementClassName}
                 data-lgid={LGIDS_TABS.tabPanels}
+                ref={tabPanelsContainerRef}
               >
                 {renderedTabPanels}
               </div>
