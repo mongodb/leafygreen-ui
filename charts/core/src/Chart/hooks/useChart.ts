@@ -15,6 +15,7 @@ export function useChart({
   onZoomSelect,
   groupId,
   theme,
+  state,
 }: ChartHookProps): ChartInstance {
   const initialOptions = getDefaultChartOptions(theme);
 
@@ -157,5 +158,6 @@ export function useChart({
   return {
     ...echart,
     ref: chartRef,
+    state,
   };
 }
