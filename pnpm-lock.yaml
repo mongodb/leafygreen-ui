@@ -1324,6 +1324,27 @@ importers:
         specifier: ^4.2.2
         version: 4.3.1
 
+  packages/gallery-indicator:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   packages/guide-cue:
     dependencies:
       '@leafygreen-ui/a11y':
