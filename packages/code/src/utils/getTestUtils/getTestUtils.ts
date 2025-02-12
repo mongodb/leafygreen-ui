@@ -77,13 +77,15 @@ export const getTestUtils = (
       return button;
     };
 
-    const isExpanded = () =>
-      !!getExpandButton()?.textContent?.includes('Click to collapse');
-
     return {
       getButton: () => getExpandButton(),
-      isExpanded: () => isExpanded(),
     };
+  };
+
+  const getIsExpanded = () => {
+    const expandButton = getExpandButton().getButton();
+
+    return !!expandButton?.textContent?.includes('Click to collapse');
   };
 
   return {
@@ -93,5 +95,6 @@ export const getTestUtils = (
     getIsLoading,
     getCopyButton,
     getExpandButton,
+    getIsExpanded,
   };
 };

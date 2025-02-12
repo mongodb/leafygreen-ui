@@ -214,17 +214,17 @@ describe('packages/tabs/getTestUtils', () => {
       describe('isExpanded', () => {
         test('returns true', () => {
           renderCode({ expandable: true });
-          const { getExpandButton } = getTestUtils();
+          const { getIsExpanded } = getTestUtils();
           // Code snippet is collapsed by default
-          expect(getExpandButton().isExpanded()).toBe(false);
+          expect(getIsExpanded()).toBe(false);
         });
 
         test('returns false', () => {
           renderCode({ expandable: true });
-          const { getExpandButton } = getTestUtils();
+          const { getExpandButton, getIsExpanded } = getTestUtils();
           const expandButton = getExpandButton().getButton();
           userEvent.click(expandButton!);
-          expect(getExpandButton().isExpanded()).toBe(true);
+          expect(getIsExpanded()).toBe(true);
         });
       });
     });

@@ -28,6 +28,11 @@ export interface TestUtilsReturnType {
    * Returns the expand button
    */
   getExpandButton: () => ExpandButtonUtils;
+
+  /**
+   * Returns whether the code snippet is expanded
+   */
+  getIsExpanded: () => boolean;
 }
 
 export interface CopyButtonUtils {
@@ -69,9 +74,4 @@ export interface ExpandButtonUtils {
    * Returns the expand button
    */
   getButton: () => HTMLButtonElement | null;
-
-  /**
-   * Returns whether the code snippet is expanded
-   */
-  isExpanded: () => boolean;
 }

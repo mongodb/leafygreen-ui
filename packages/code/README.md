@@ -250,6 +250,7 @@ const {
 | `getIsLoading()`        | Returns whether the code block is in loading state       | `boolean`               |
 | `getCopyButton()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |
 | `getExpandButton()`     | Returns utils for interacting with the expand button     | `ExpandButtonUtils`     |
+| `getIsExpanded()`       | Returns whether the code block is expanded               | `boolean`               |
 
 ### LanguageSwitcherUtils
 
@@ -269,7 +270,6 @@ const {
 
 ### ExpandButtonUtils
 
-| Util           | Description                                | Returns                 |
-| -------------- | ------------------------------------------ | ----------------------- |
-| `getButton()`  | Returns the expand button element          | `HTMLElement` \| `null` |
-| `isExpanded()` | Returns whether the code block is expanded | `boolean`               |
+| Util          | Description                       | Returns                 |
+| ------------- | --------------------------------- | ----------------------- |
+| `getButton()` | Returns the expand button element | `HTMLElement` \| `null` |

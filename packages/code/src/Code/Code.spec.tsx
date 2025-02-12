@@ -605,12 +605,12 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButton, getIsExpanded } = getTestUtils();
 
       const actionButton = getExpandButton().getButton();
       userEvent.click(actionButton!);
       expect(actionButton).toHaveTextContent('Click to collapse');
-      expect(getExpandButton().isExpanded()).toBe(true);
+      expect(getIsExpanded()).toBe(true);
     });
 
     test('shows expand button again when collapse button is clicked', () => {
