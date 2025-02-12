@@ -1,5 +1,17 @@
 # @leafygreen-ui/pipeline
 
+## 7.0.4
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.4
+
+## 7.0.3
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.3
+
 ## 7.0.2
 
 ### Patch Changes

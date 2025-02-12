@@ -1,3 +1,5 @@
+import { SupportedLocales } from '../types/locales';
+
 import { getMonthName } from '.';
 
 describe('packages/date-utils/getMonthName', () => {
@@ -51,12 +53,12 @@ describe('packages/date-utils/getMonthName', () => {
     );
   });
 
-  test('iso8601', () => {
-    expect(getMonthName(0, 'iso8601')).toEqual(
+  test('iso-8601', () => {
+    expect(getMonthName(0, SupportedLocales.ISO_8601)).toEqual(
       expect.objectContaining({ long: 'January', short: 'Jan' }),
     );
 
-    expect(getMonthName(11, 'iso8601')).toEqual(
+    expect(getMonthName(11, SupportedLocales.ISO_8601)).toEqual(
       expect.objectContaining({ long: 'December', short: 'Dec' }),
     );
   });

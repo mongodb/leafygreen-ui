@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/marketing-modal",
-  "version": "5.0.2",
+  "version": "5.0.5",
   "description": "leafyGreen UI Kit Marketing Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

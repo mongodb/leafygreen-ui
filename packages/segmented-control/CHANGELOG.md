@@ -1,5 +1,26 @@
 # @leafygreen-ui/segmented-control
 
+## 10.0.5
+
+### Patch Changes
+
+- 7995d44d8: [LG-2725](https://jira.mongodb.org/browse/LG-2725): Replace `@leafygreen-ui/box` with `@leafygreen-ui/polymorphic` and refactor `SegmentedControlOption` internals.
+  - Exports `Size` enum
+
+## 10.0.4
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+
+## 10.0.3
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+
 ## 10.0.2
 
 ### Patch Changes

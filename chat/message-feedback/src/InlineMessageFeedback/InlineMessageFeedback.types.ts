@@ -1,6 +1,6 @@
 import { FormEventHandler, MouseEventHandler } from 'react';
 
-import { ButtonProps } from '@leafygreen-ui/button';
+import { BaseButtonProps } from '@leafygreen-ui/button';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { TextAreaProps } from '@leafygreen-ui/text-area';
 
@@ -23,7 +23,7 @@ export type InlineMessageFeedbackProps = Required<
     /**
      * Override props for the cancel Button
      */
-    cancelButtonProps?: ButtonProps;
+    cancelButtonProps?: BaseButtonProps;
 
     /**
      * Text displayed inside the submit Button
@@ -35,7 +35,7 @@ export type InlineMessageFeedbackProps = Required<
     /**
      * Override props for the submit Button
      */
-    submitButtonProps?: ButtonProps;
+    submitButtonProps?: BaseButtonProps;
 
     /**
      * Event handler called when the form is submitted

@@ -1,5 +1,23 @@
 # @leafygreen-ui/text-area
 
+## 10.0.4
+
+### Patch Changes
+
+- d0dffcbd5: Resolves the issue where the `readOnly` prop was not being forwarded to the `textarea` component. [LG-4866](https://jira.mongodb.org/browse/LG-4866)
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/form-field@2.0.4
+
+## 10.0.3
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/form-field@2.0.3
+  - @leafygreen-ui/typography@20.1.0
+
 ## 10.0.2
 
 ### Patch Changes

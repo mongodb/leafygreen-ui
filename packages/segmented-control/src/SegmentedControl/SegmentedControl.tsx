@@ -56,7 +56,7 @@ export const SegmentedControl = forwardRef<
   // TODO: log warning if defaultValue is set but does not match any child value
   const { usingKeyboard } = useUsingKeyboardContext();
   const segmentedContainerRef = useRef<null | HTMLDivElement>(null);
-  const [isfocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
+  const [isFocusInComponent, setIsfocusInComponent] = useState<boolean>(false);
 
   const { theme } = useDarkMode(darkModeProp);
 
@@ -179,7 +179,7 @@ export const SegmentedControl = forwardRef<
           _onClick: updateValue,
           _onHover,
           ref: getOptionRef(`${index}`),
-          isfocusInComponent,
+          isFocusInComponent,
         });
       }),
     [
@@ -192,7 +192,7 @@ export const SegmentedControl = forwardRef<
       ariaControls,
       updateValue,
       getOptionRef,
-      isfocusInComponent,
+      isFocusInComponent,
     ],
   );
 

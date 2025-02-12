@@ -1,5 +1,12 @@
 # @lg-tools/validate
 
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [dc54a4b84]
+  - @lg-tools/meta@0.4.0
+
 ## 0.4.2
 
 ### Patch Changes

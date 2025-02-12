@@ -1,10 +1,10 @@
-import { create } from '@storybook/theming';
+import { create, type ThemeVars } from '@storybook/theming';
 
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, fontFamilies, spacing } from '@leafygreen-ui/tokens';
 
-const createStorybookTheme = (theme: Theme) => {
+const createStorybookTheme = (theme: Theme): ThemeVars => {
   return create({
     base: theme,
     brandTitle: 'LeafyGreen UI',
