@@ -1,11 +1,11 @@
 import { getByLgId } from '@lg-tools/test-harnesses';
 
-import { LGIDS } from '../../constants';
+import { LGIDs } from '../../constants';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDS.root,
+  lgId: string = LGIDs.root,
 ): TestUtilsReturnType => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -17,7 +17,7 @@ export const getTestUtils = (
    * Returns a nodelist of all indicators/dots in the gallery indicator
    */
   const getAllIndicators = () =>
-    element.querySelectorAll<HTMLElement>(`[data-lgid=${LGIDS.indicator}]`);
+    element.querySelectorAll<HTMLElement>(`[data-lgid=${LGIDs.indicator}]`);
 
   /**
    * Returns the number of indicators/dots in the gallery indicator

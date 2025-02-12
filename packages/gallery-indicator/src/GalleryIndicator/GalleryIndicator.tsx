@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS } from '../constants';
+import { LGIDs } from '../constants';
 
 import {
   getGalleryIndicatorStyles,
@@ -20,7 +20,7 @@ export const GalleryIndicator = React.forwardRef<
       length,
       activeIndex,
       className,
-      'data-lgid': dataLgId = LGIDS.root,
+      'data-lgid': dataLgId = LGIDs.root,
       ...rest
     }: GalleryIndicatorProps,
     forwardRef,
@@ -39,8 +39,8 @@ export const GalleryIndicator = React.forwardRef<
           return (
             <li
               key={i}
-              data-testid={LGIDS.indicator}
-              data-lgid={LGIDS.indicator}
+              data-testid={LGIDs.indicator}
+              data-lgid={LGIDs.indicator}
               className={getIndicatorStyles({ theme, isActive })}
               data-active={isActive}
             />
