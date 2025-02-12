@@ -3,7 +3,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-const TRANSITION_DURATION = transitionDuration.slower;
+const TRANSITION_DURATION_SLOW = transitionDuration.slower;
+const TRANSITION_DURATION_DEFAULT = transitionDuration.default;
 const DOT_SIZE = 6;
 const ACTIVE_DOT_SIZE = 20;
 
@@ -42,8 +43,9 @@ export const getIndicatorStyles = ({
           ? palette.gray.light2
           : palette.gray.dark2};
         border-radius: 50%;
-        transition-property: background-color, width;
-        transition-duration: ${TRANSITION_DURATION}ms;
+        transition-property: background-color, width, border-radius;
+        transition-duration: ${TRANSITION_DURATION_SLOW}ms,
+          ${TRANSITION_DURATION_DEFAULT}ms, ${TRANSITION_DURATION_DEFAULT}ms;
         transition-timing-function: ease-in-out;
       }
     `,
