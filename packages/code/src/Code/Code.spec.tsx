@@ -195,10 +195,10 @@ describe('packages/Code', () => {
             ),
           });
 
-          const { getLanguageSwitcher } = getTestUtils();
+          const { getLanguageSwitcherUtils } = getTestUtils();
 
-          expect(getLanguageSwitcher().getInput()).toBeInTheDocument();
-          expect(getLanguageSwitcher().isDisabled()).toBe(false);
+          expect(getLanguageSwitcherUtils().getInput()).toBeInTheDocument();
+          expect(getLanguageSwitcherUtils().isDisabled()).toBe(false);
         });
         test('copy button is enabled', () => {
           Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
@@ -317,46 +317,86 @@ describe('packages/Code', () => {
             <Panel onChange={() => {}} languageOptions={languageOptions} />
           ),
         });
-        const { getLanguageSwitcher } = getTestUtils();
-        expect(getLanguageSwitcher().getInput()).toBeDefined();
+        const { getLanguageSwitcherUtils } = getTestUtils();
+        expect(getLanguageSwitcherUtils().getInput()).toBeDefined();
       });
 
-      test('does not render if the languageOptions is not defined', () => {
-        renderCode({
-          language: languageOptions[0].displayName,
-          // @ts-expect-error
-          panel: <Panel onChange={() => {}} />,
-        });
-        const { getLanguageSwitcher } = getTestUtils();
-        expect(getLanguageSwitcher().getInput()).toBeNull();
+      test('does not render and throws if the languageOptions is not defined', () => {
+        try {
+          renderCode({
+            language: languageOptions[0].displayName,
+            // @ts-expect-error
+            panel: <Panel onChange={() => {}} />,
+          });
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          const input = getLanguageSwitcherUtils().getInput();
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-code-select"\]/,
+            ),
+          );
+        }
       });
 
-      test('does not render if onChange is not defined', () => {
-        renderCode({
-          language: languageOptions[0].displayName,
-          // @ts-expect-error - onChange is not defined
-          panel: <Panel languageOptions={languageOptions} />,
-        });
-        const { getLanguageSwitcher } = getTestUtils();
-        expect(getLanguageSwitcher().getInput()).toBeNull();
+      test('does not render and throws if onChange is not defined', () => {
+        try {
+          renderCode({
+            language: languageOptions[0].displayName,
+            // @ts-expect-error - onChange is not defined
+            panel: <Panel languageOptions={languageOptions} />,
+          });
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          const input = getLanguageSwitcherUtils().getInput();
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-code-select"\]/,
+            ),
+          );
+        }
       });
 
-      test('does not render if languageOptions is an empty array', () => {
-        renderCode({
-          language: languageOptions[0].displayName,
-          panel: <Panel onChange={() => {}} languageOptions={[]} />,
-        });
-        const { getLanguageSwitcher } = getTestUtils();
-        expect(getLanguageSwitcher().getInput()).toBeNull();
+      test('does not render and throws if languageOptions is an empty array', () => {
+        try {
+          renderCode({
+            language: languageOptions[0].displayName,
+            panel: <Panel onChange={() => {}} languageOptions={[]} />,
+          });
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          const input = getLanguageSwitcherUtils().getInput();
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-code-select"\]/,
+            ),
+          );
+        }
       });
 
-      test('does not render if langauage is a string', () => {
-        renderCode({
-          language: 'javascript',
-          panel: <Panel onChange={() => {}} languageOptions={[]} />,
-        });
-        const { getLanguageSwitcher } = getTestUtils();
-        expect(getLanguageSwitcher().getInput()).toBeNull();
+      test('does not render and throws if langauage is a string', () => {
+        try {
+          renderCode({
+            language: 'javascript',
+            panel: <Panel onChange={() => {}} languageOptions={[]} />,
+          });
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          const input = getLanguageSwitcherUtils().getInput();
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-code-select"\]/,
+            ),
+          );
+        }
       });
 
       test('throws an error if language is not in languageOptions', () => {
@@ -444,23 +484,25 @@ describe('packages/Code', () => {
 
     test('a collapsed select is rendered, with an active state based on the language prop', () => {
       renderCodeWithLanguageSwitcher({});
-      const { getLanguageSwitcher } = getTestUtils();
-      expect(getLanguageSwitcher().getInput()).toBeInTheDocument();
-      expect(getLanguageSwitcher().getInput()).toHaveTextContent('JavaScript');
+      const { getLanguageSwitcherUtils } = getTestUtils();
+      expect(getLanguageSwitcherUtils().getInput()).toBeInTheDocument();
+      expect(getLanguageSwitcherUtils().getInput()).toHaveTextContent(
+        'JavaScript',
+      );
     });
 
     test('clicking the collapsed select menu button opens a select', () => {
       renderCodeWithLanguageSwitcher({});
-      const { getLanguageSwitcher } = getTestUtils();
-      const trigger = getLanguageSwitcher().getInput();
+      const { getLanguageSwitcherUtils } = getTestUtils();
+      const trigger = getLanguageSwitcherUtils().getInput();
       userEvent.click(trigger!);
-      expect(getLanguageSwitcher().getAllOptions()).toHaveLength(2);
+      expect(getLanguageSwitcherUtils().getAllOptions()).toHaveLength(2);
     });
 
     test('options displayed in select are based on the languageOptions prop', () => {
       renderCodeWithLanguageSwitcher({});
-      const { getLanguageSwitcher } = getTestUtils();
-      const { getInput, getOptionByValue } = getLanguageSwitcher();
+      const { getLanguageSwitcherUtils } = getTestUtils();
+      const { getInput, getOptionByValue } = getLanguageSwitcherUtils();
       const trigger = getInput();
       userEvent.click(trigger!);
 
@@ -476,8 +518,8 @@ describe('packages/Code', () => {
           onChange,
         },
       });
-      const { getLanguageSwitcher } = getTestUtils();
-      const { getOptionByValue, getInput } = getLanguageSwitcher();
+      const { getLanguageSwitcherUtils } = getTestUtils();
+      const { getOptionByValue, getInput } = getLanguageSwitcherUtils();
 
       const trigger = getInput();
       userEvent.click(trigger!);
@@ -493,8 +535,8 @@ describe('packages/Code', () => {
           onChange,
         },
       });
-      const { getLanguageSwitcher } = getTestUtils();
-      const { getOptionByValue, getInput } = getLanguageSwitcher();
+      const { getLanguageSwitcherUtils } = getTestUtils();
+      const { getOptionByValue, getInput } = getLanguageSwitcherUtils();
 
       const trigger = getInput();
       userEvent.click(trigger!);

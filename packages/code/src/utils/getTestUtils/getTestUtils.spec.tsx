@@ -59,59 +59,71 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
-    describe('getLanguageSwitcher', () => {
+    describe('getLanguageSwitcherUtils', () => {
       describe('getInput', () => {
         test('returns the language switcher', () => {
           renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcher } = getTestUtils();
-          expect(getLanguageSwitcher().getInput()).toBeInTheDocument();
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          expect(getLanguageSwitcherUtils().getInput()).toBeInTheDocument();
         });
 
-        test('returns null', () => {
-          renderCode();
-          const { getLanguageSwitcher } = getTestUtils();
-          expect(getLanguageSwitcher().getInput()).toBeNull();
+        test('throws error is the languageSwitcher cannot be found', () => {
+          try {
+            renderCode();
+            const { getLanguageSwitcherUtils } = getTestUtils();
+            const input = getLanguageSwitcherUtils().getInput();
+          } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty(
+              'message',
+              expect.stringMatching(
+                /Unable to find an element by: \[data-lgid="lg-code-select"\]/,
+              ),
+            );
+          }
         });
       });
 
       describe('isDisabled', () => {
         test('returns false', () => {
           renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcher } = getTestUtils();
-          expect(getLanguageSwitcher().isDisabled()).toBe(false);
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          expect(getLanguageSwitcherUtils().isDisabled()).toBe(false);
         });
 
         test('returns true', () => {
           renderCodeWithLanguageSwitcher({ isLoading: true });
-          const { getLanguageSwitcher } = getTestUtils();
-          expect(getLanguageSwitcher().isDisabled()).toBe(true);
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          expect(getLanguageSwitcherUtils().isDisabled()).toBe(true);
         });
       });
 
       describe('getAllOptions', () => {
         test('returns all options', () => {
           renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcher } = getTestUtils();
-          userEvent.click(getLanguageSwitcher().getInput()!);
-          expect(getLanguageSwitcher().getAllOptions()).toHaveLength(2);
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          userEvent.click(getLanguageSwitcherUtils().getInput()!);
+          expect(getLanguageSwitcherUtils().getAllOptions()).toHaveLength(2);
         });
       });
 
       describe('getOptionByValue', () => {
         test('returns the option', () => {
           renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcher } = getTestUtils();
-          userEvent.click(getLanguageSwitcher().getInput()!);
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          userEvent.click(getLanguageSwitcherUtils().getInput()!);
           expect(
-            getLanguageSwitcher().getOptionByValue('JavaScript'),
+            getLanguageSwitcherUtils().getOptionByValue('JavaScript'),
           ).toBeInTheDocument();
         });
 
         test('returns null', () => {
           renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcher } = getTestUtils();
-          userEvent.click(getLanguageSwitcher().getInput()!);
-          expect(getLanguageSwitcher().getOptionByValue('wrong')).toBeNull();
+          const { getLanguageSwitcherUtils } = getTestUtils();
+          userEvent.click(getLanguageSwitcherUtils().getInput()!);
+          expect(
+            getLanguageSwitcherUtils().getOptionByValue('wrong'),
+          ).toBeNull();
         });
       });
     });

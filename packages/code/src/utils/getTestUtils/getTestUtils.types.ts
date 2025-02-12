@@ -12,7 +12,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the language switcher
    */
-  getLanguageSwitcher: () => LanguageSwitcherUtils;
+  getLanguageSwitcherUtils: () => LanguageSwitcherUtils;
 
   /**
    * Returns whether the code snippet is loading
@@ -44,9 +44,9 @@ export interface CopyButtonUtils {
 
 export interface LanguageSwitcherUtils {
   /**
-   * Returns the language switcher input
+   * Returns the language switcher trigger
    */
-  getInput: () => HTMLInputElement | null;
+  getInput: () => HTMLButtonElement | null;
 
   /**
    * Returns if the language switcher is disabled
