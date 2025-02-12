@@ -4,6 +4,8 @@ import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 const TRANSITION_DURATION = transitionDuration.slower;
+const DOT_SIZE = 6;
+const ACTIVE_DOT_SIZE = 20;
 
 export const getGalleryIndicatorStyles = ({
   className,
@@ -34,8 +36,8 @@ export const getIndicatorStyles = ({
       &::after {
         content: '';
         display: block;
-        width: 6px;
-        height: 6px;
+        width: ${DOT_SIZE}px;
+        height: ${DOT_SIZE}px;
         background-color: ${theme === Theme.Light
           ? palette.gray.light2
           : palette.gray.dark2};
@@ -48,7 +50,7 @@ export const getIndicatorStyles = ({
     {
       [css`
         &::after {
-          width: 20px;
+          width: ${ACTIVE_DOT_SIZE}px;
           border-radius: 100px;
           background-color: ${color[theme].icon.secondary.default};
         }
