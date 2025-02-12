@@ -12,6 +12,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ChartStates } from '../Chart';
+import { ChartCardStates, useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
 import { SortDirection, SortKey, TooltipProps } from './Tooltip.types';
@@ -24,6 +25,7 @@ export function Tooltip({
 }: TooltipProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
+  const chartCardContext = useChartCardContext();
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -57,7 +59,9 @@ export function Tooltip({
         // Showing the tooltip in ChartStates.Dragging or ChartStates.Overlay causes issues with drag and drop
         show:
           chart.state !== ChartStates.Dragging &&
-          chart.state !== ChartStates.Overlay,
+          chart.state !== ChartStates.Overlay &&
+          chartCardContext?.state !== ChartCardStates.Dragging &&
+          chartCardContext?.state !== ChartCardStates.Overlay,
         showDelay: 0,
         textStyle: {
           fontFamily: fontFamilies.default,
