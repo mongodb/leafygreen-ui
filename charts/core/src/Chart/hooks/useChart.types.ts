@@ -3,6 +3,7 @@ import { RefCallback } from 'react';
 import { Theme } from '@leafygreen-ui/lib';
 
 import type { EChartsInstance, EChartZoomSelectionEvent } from '../../Echart';
+import { ChartStates } from '../Chart.types';
 
 export type ZoomSelect =
   | {
@@ -37,8 +38,15 @@ export interface ChartHookProps {
    * Callback to be called when a zoom selection is made.
    */
   onZoomSelect?: (e: EChartZoomSelectionEvent) => void;
+
+  /**
+   * Controls the current chart state.
+   */
+  state?: ChartStates;
 }
 
-export interface ChartInstance extends EChartsInstance {
+export interface ChartInstance
+  extends EChartsInstance,
+    Pick<ChartHookProps, 'state'> {
   ref: RefCallback<HTMLDivElement>;
 }
