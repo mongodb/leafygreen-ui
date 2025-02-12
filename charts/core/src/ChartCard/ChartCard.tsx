@@ -19,6 +19,7 @@ import {
   toggleIconStyles,
 } from './ChartCard.styles';
 import { ChartCardProps, ChartCardStates } from './ChartCard.types';
+import { ChartCardProvider } from './ChartCardContext';
 
 /**
  * Card component that contains charts and can expand and collapse.
@@ -68,59 +69,61 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
     }
 
     return (
-      <div
-        className={getContainerStyles({
-          theme,
-          transition,
-          transform,
-          isSortable,
-          isOpen,
-          state,
-          className,
-        })}
-        ref={useMergeRefs([setNodeRef, forwardedRef])}
-        {...rest}
-      >
+      <ChartCardProvider state={state}>
         <div
-          className={cx(getHeaderStyles(theme, state), className)}
-          {...attributes}
-          {...listeners}
+          className={getContainerStyles({
+            theme,
+            transition,
+            transform,
+            isSortable,
+            isOpen,
+            state,
+            className,
+          })}
+          ref={useMergeRefs([setNodeRef, forwardedRef])}
           {...rest}
         >
-          <div className={leftInnerContainerStyles}>
-            <IconButton
-              className={toggleButtonStyles}
-              id={toggleId}
-              aria-label="Toggle button"
-              aria-controls={childrenId}
-              aria-expanded={isOpen}
-              onClick={handleToggleButtonClick}
-            >
-              <Icon
-                glyph="ChevronDown"
-                className={cx(toggleIconStyles, {
-                  [openToggleIconStyles]: isOpen,
-                })}
-              />
-            </IconButton>
-            <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
-              {title}
-            </Body>
-          </div>
-          <div>{headerContent}</div>
-        </div>
-        <div className={childrenContainerStyles}>
           <div
-            role="region"
-            id={childrenId}
-            aria-labelledby={toggleId}
-            aria-hidden={!isOpen}
-            data-testid="lg-charts-core-chart_card-children"
+            className={cx(getHeaderStyles(theme, state), className)}
+            {...attributes}
+            {...listeners}
+            {...rest}
           >
-            {children}
+            <div className={leftInnerContainerStyles}>
+              <IconButton
+                className={toggleButtonStyles}
+                id={toggleId}
+                aria-label="Toggle button"
+                aria-controls={childrenId}
+                aria-expanded={isOpen}
+                onClick={handleToggleButtonClick}
+              >
+                <Icon
+                  glyph="ChevronDown"
+                  className={cx(toggleIconStyles, {
+                    [openToggleIconStyles]: isOpen,
+                  })}
+                />
+              </IconButton>
+              <Body weight="medium" baseFontSize={BaseFontSize.Body2}>
+                {title}
+              </Body>
+            </div>
+            <div>{headerContent}</div>
+          </div>
+          <div className={childrenContainerStyles}>
+            <div
+              role="region"
+              id={childrenId}
+              aria-labelledby={toggleId}
+              aria-hidden={!isOpen}
+              data-testid="lg-charts-core-chart_card-children"
+            >
+              {children}
+            </div>
           </div>
         </div>
-      </div>
+      </ChartCardProvider>
     );
   },
 );
