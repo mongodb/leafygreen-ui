@@ -31,6 +31,12 @@
       "path": "../lib"
     },
     {
+      "path": "../palette"
+    },
+    {
+      "path": "../tabs"
+    },
+    {
       "path": "../tokens"
     },
     {
