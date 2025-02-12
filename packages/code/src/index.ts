@@ -1,7 +1,7 @@
 import { Code, CopyButtonAppearance } from './Code';
 export { Code, CopyButtonAppearance };
 export type { CodeProps } from './Code/Code.types';
-export { LGIDs } from './constants';
+export { LGIDS } from './constants';
 export { variantColors } from './globalStyles';
 export { Panel } from './Panel';
 export type { LanguageOption } from './Panel/Panel.types';
