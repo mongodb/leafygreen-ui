@@ -142,7 +142,7 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
-    describe('getCopyButton', () => {
+    describe('getCopyButtonUtils', () => {
       describe('getButton', () => {
         describe('Without a panel', () => {
           test('returns the copy button', () => {
@@ -150,16 +150,16 @@ describe('packages/tabs/getTestUtils', () => {
               spy.mockReturnValue(true);
               return renderCode();
             });
-            const { getCopyButton } = getTestUtils();
-            expect(getCopyButton().getButton()).toBeInTheDocument();
+            const { getCopyButtonUtils } = getTestUtils();
+            expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
           });
           test('returns null', () => {
             Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
               spy.mockReturnValue(true);
               return renderCode({ copyButtonAppearance: 'none' });
             });
-            const { getCopyButton } = getTestUtils();
-            expect(getCopyButton().getButton()).toBeNull();
+            const { getCopyButtonUtils } = getTestUtils();
+            expect(getCopyButtonUtils().getButton()).toBeNull();
           });
         });
 
@@ -169,8 +169,8 @@ describe('packages/tabs/getTestUtils', () => {
               spy.mockReturnValue(true);
               return renderCodeWithLanguageSwitcher({});
             });
-            const { getCopyButton } = getTestUtils();
-            expect(getCopyButton().getButton()).toBeInTheDocument();
+            const { getCopyButtonUtils } = getTestUtils();
+            expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
           });
         });
       });
@@ -181,8 +181,8 @@ describe('packages/tabs/getTestUtils', () => {
             spy.mockReturnValue(true);
             return renderCodeWithLanguageSwitcher({ isLoading: true });
           });
-          const { getCopyButton } = getTestUtils();
-          expect(getCopyButton().isDisabled()).toBe(true);
+          const { getCopyButtonUtils } = getTestUtils();
+          expect(getCopyButtonUtils().isDisabled()).toBe(true);
         });
 
         test('returns false', () => {
@@ -190,24 +190,24 @@ describe('packages/tabs/getTestUtils', () => {
             spy.mockReturnValue(true);
             return renderCodeWithLanguageSwitcher({});
           });
-          const { getCopyButton } = getTestUtils();
-          expect(getCopyButton().isDisabled()).toBe(false);
+          const { getCopyButtonUtils } = getTestUtils();
+          expect(getCopyButtonUtils().isDisabled()).toBe(false);
         });
       });
     });
 
-    describe('getExpandButton', () => {
+    describe('getExpandButtonUtils', () => {
       describe('getButton', () => {
         test('return null', () => {
           renderCode();
-          const { getExpandButton } = getTestUtils();
-          expect(getExpandButton().getButton()).toBeNull();
+          const { getExpandButtonUtils } = getTestUtils();
+          expect(getExpandButtonUtils().getButton()).toBeNull();
         });
 
         test('returns the expand button', () => {
           renderCode({ expandable: true });
-          const { getExpandButton } = getTestUtils();
-          expect(getExpandButton().getButton()).toBeInTheDocument();
+          const { getExpandButtonUtils } = getTestUtils();
+          expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
         });
       });
 
@@ -221,8 +221,8 @@ describe('packages/tabs/getTestUtils', () => {
 
         test('returns false', () => {
           renderCode({ expandable: true });
-          const { getExpandButton, getIsExpanded } = getTestUtils();
-          const expandButton = getExpandButton().getButton();
+          const { getExpandButtonUtils, getIsExpanded } = getTestUtils();
+          const expandButton = getExpandButtonUtils().getButton();
           userEvent.click(expandButton!);
           expect(getIsExpanded()).toBe(true);
         });

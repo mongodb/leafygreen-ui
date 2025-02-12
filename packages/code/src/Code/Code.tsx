@@ -19,7 +19,7 @@ import { Language } from '../types';
 import {
   getCodeStyles,
   getCodeWrapperStyles,
-  getCopyButtonWithoutPanelStyles,
+  getCopyButtonUtilsWithoutPanelStyles,
   getExpandedButtonStyles,
   getLoadingStyles,
   getWrapperStyles,
@@ -261,7 +261,7 @@ function Code({
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
           {showCopyButtonWithoutPanel && (
             <CopyButton
-              className={getCopyButtonWithoutPanelStyles({
+              className={getCopyButtonUtilsWithoutPanelStyles({
                 copyButtonAppearance,
               })}
               onCopy={onCopy}

@@ -23,7 +23,7 @@ import { useCodeContext } from '../CodeContext/CodeContext';
 import { LGIDs } from '../constants';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
-import { getCopyButtonStyles } from './CopyButton.styles';
+import { getCopyButtonUtilsStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
 
 function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
@@ -127,7 +127,12 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
     'aria-label': COPY_TEXT,
     'data-testid': LGIDs.copyButton,
     'data-lgid': LGIDs.copyButton,
-    className: getCopyButtonStyles({ theme, copied, showPanel, className }),
+    className: getCopyButtonUtilsStyles({
+      theme,
+      copied,
+      showPanel,
+      className,
+    }),
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onMouseEnter: handleMouseEnter,

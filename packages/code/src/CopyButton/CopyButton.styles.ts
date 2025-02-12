@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, transitionDuration } from '@leafygreen-ui/tokens';
 
-export const getCopyButtonStyles = ({
+export const getCopyButtonUtilsStyles = ({
   theme,
   copied,
   showPanel,

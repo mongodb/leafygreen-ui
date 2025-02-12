@@ -140,10 +140,10 @@ describe('packages/Code', () => {
             ),
           });
 
-          const { getCopyButton } = getTestUtils();
+          const { getCopyButtonUtils } = getTestUtils();
 
-          expect(getCopyButton().getButton()).toBeInTheDocument();
-          expect(getCopyButton().isDisabled()).toBe(true);
+          expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+          expect(getCopyButtonUtils().isDisabled()).toBe(true);
         });
         test('copy button is disabled', () => {
           renderCode({
@@ -152,10 +152,10 @@ describe('packages/Code', () => {
             panel: <Panel />,
           });
 
-          const { getCopyButton } = getTestUtils();
+          const { getCopyButtonUtils } = getTestUtils();
 
-          expect(getCopyButton().getButton()).toBeInTheDocument();
-          expect(getCopyButton().isDisabled()).toBe(true);
+          expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+          expect(getCopyButtonUtils().isDisabled()).toBe(true);
         });
       });
 
@@ -169,9 +169,9 @@ describe('packages/Code', () => {
             });
           });
 
-          const { getCopyButton } = getTestUtils();
+          const { getCopyButtonUtils } = getTestUtils();
 
-          expect(getCopyButton().getButton()).toBeNull();
+          expect(getCopyButtonUtils().getButton()).toBeNull();
         });
       });
     });
@@ -210,10 +210,10 @@ describe('packages/Code', () => {
             });
           });
 
-          const { getCopyButton } = getTestUtils();
+          const { getCopyButtonUtils } = getTestUtils();
 
-          expect(getCopyButton().getButton()).toBeInTheDocument();
-          expect(getCopyButton().isDisabled()).toBe(false);
+          expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+          expect(getCopyButtonUtils().isDisabled()).toBe(false);
         });
       });
 
@@ -226,10 +226,10 @@ describe('packages/Code', () => {
             });
           });
 
-          const { getCopyButton } = getTestUtils();
+          const { getCopyButtonUtils } = getTestUtils();
 
-          expect(getCopyButton().getButton()).toBeInTheDocument();
-          expect(getCopyButton().isDisabled()).toBe(false);
+          expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+          expect(getCopyButtonUtils().isDisabled()).toBe(false);
         });
       });
     });
@@ -247,32 +247,32 @@ describe('packages/Code', () => {
           spy.mockReturnValue(true);
           return renderCode();
         });
-        const { getCopyButton } = getTestUtils();
-        expect(getCopyButton().getButton()).not.toBeNull();
+        const { getCopyButtonUtils } = getTestUtils();
+        expect(getCopyButtonUtils().getButton()).not.toBeNull();
       });
       test('when copyButtonAppearance is persist', () => {
         Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
           spy.mockReturnValue(true);
           return renderCode({ copyButtonAppearance: 'persist' });
         });
-        const { getCopyButton } = getTestUtils();
-        expect(getCopyButton().getButton()).not.toBeNull();
+        const { getCopyButtonUtils } = getTestUtils();
+        expect(getCopyButtonUtils().getButton()).not.toBeNull();
       });
       test('when copyButtonAppearance is hover', () => {
         Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
           spy.mockReturnValue(true);
           return renderCode({ copyButtonAppearance: 'hover' });
         });
-        const { getCopyButton } = getTestUtils();
-        expect(getCopyButton().getButton()).not.toBeNull();
+        const { getCopyButtonUtils } = getTestUtils();
+        expect(getCopyButtonUtils().getButton()).not.toBeNull();
       });
     });
 
     describe('does not renders a copy button', () => {
       test('when copyButtonAppearance is none', () => {
         renderCode({ copyButtonAppearance: 'none' });
-        const { getCopyButton } = getTestUtils();
-        expect(getCopyButton().getButton()).toBeNull();
+        const { getCopyButtonUtils } = getTestUtils();
+        expect(getCopyButtonUtils().getButton()).toBeNull();
       });
     });
 
@@ -564,9 +564,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      expect(getExpandButton().getButton()).toBeNull();
+      expect(getExpandButtonUtils().getButton()).toBeNull();
     });
 
     test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
@@ -576,9 +576,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      expect(getExpandButton().getButton()).toBeInTheDocument();
+      expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
     });
 
     test('shows correct number of lines of code on expand button', () => {
@@ -590,9 +590,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      const actionButton = getExpandButton().getButton();
+      const actionButton = getExpandButtonUtils().getButton();
       expect(actionButton).toHaveTextContent(
         `Click to expand (${lineCount} lines)`,
       );
@@ -605,9 +605,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton, getIsExpanded } = getTestUtils();
+      const { getExpandButtonUtils, getIsExpanded } = getTestUtils();
 
-      const actionButton = getExpandButton().getButton();
+      const actionButton = getExpandButtonUtils().getButton();
       userEvent.click(actionButton!);
       expect(actionButton).toHaveTextContent('Click to collapse');
       expect(getIsExpanded()).toBe(true);
@@ -622,9 +622,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      const actionButton = getExpandButton().getButton();
+      const actionButton = getExpandButtonUtils().getButton();
       userEvent.click(actionButton!); // Expand
       userEvent.click(actionButton!); // Collapse
 

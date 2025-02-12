@@ -163,10 +163,10 @@ test('code', () => {
     </Code>
   );
 
-  const { getLanguage, getLanguageSwitcher, getIsLoading, getCopyButton, getExpandButton } = getTestUtils();
-  const { getInput, getAllOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcher();
-  const { getButton: getCopyButton, isDisabled: isCopyButtonDisabled } = getCopyButton();
-  const { getButton: getExpandButton, isExpanded} = getExpandButton();
+  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButtonUtils } = getTestUtils();
+  const { getInput, getAllOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
+  const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
+  const { getButton: getExpandButtonUtils, isExpanded} = getExpandButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
   expect(getTitle()).toBe('Title');
@@ -175,9 +175,9 @@ test('code', () => {
   expect(getOptionByValue('js')).toBeInTheDocument();
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
-  expect(getCopyButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils()).toBeInTheDocument();
   expect(isCopyButtonDisabled()).toBe(false);
-  expect(getExpandButton()).toBeInTheDocument();
+  expect(getExpandButtonUtils()).toBeInTheDocument();
   expect(isExpanded()).toBe(false);
 });
 ```
@@ -230,27 +230,27 @@ test('code', () => {
 const {
   getLanguage,
   getTitle,
-  getLanguageSwitcher: {
+  getLanguageSwitcherUtils: {
     getInput,
     getAllOptions,
     getOptionByValue,
     isDisabled,
   },
   getIsLoading,
-  getCopyButton: { getButton, isDisabled },
-  getExpandButton: { getButton, isExpanded },
+  getCopyButtonUtils: { getButton, isDisabled },
+  getExpandButtonUtils: { getButton, isExpanded },
 } = getTestUtils();
 ```
 
-| Util                    | Description                                              | Returns                 |
-| ----------------------- | -------------------------------------------------------- | ----------------------- |
-| `getLanguage()`         | Returns the current language of the code block           | `string`                |
-| `getTitle()`            | Returns the title of the code block                      | `string` \| `null`      |
-| `getLanguageSwitcher()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
-| `getIsLoading()`        | Returns whether the code block is in loading state       | `boolean`               |
-| `getCopyButton()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |
-| `getExpandButton()`     | Returns utils for interacting with the expand button     | `ExpandButtonUtils`     |
-| `getIsExpanded()`       | Returns whether the code block is expanded               | `boolean`               |
+| Util                         | Description                                              | Returns                 |
+| ---------------------------- | -------------------------------------------------------- | ----------------------- |
+| `getLanguage()`              | Returns the current language of the code block           | `string`                |
+| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`      |
+| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
+| `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`               |
+| `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |
+| `getExpandButtonUtils()`     | Returns utils for interacting with the expand button     | `ExpandButtonUtils`     |
+| `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`               |
 
 ### LanguageSwitcherUtils
 

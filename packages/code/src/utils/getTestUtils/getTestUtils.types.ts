@@ -22,12 +22,12 @@ export interface TestUtilsReturnType {
   /**
    * Returns the copy button
    */
-  getCopyButton: () => CopyButtonUtils;
+  getCopyButtonUtils: () => CopyButtonUtils;
 
   /**
    * Returns the expand button
    */
-  getExpandButton: () => ExpandButtonUtils;
+  getExpandButtonUtils: () => ExpandButtonUtils;
 
   /**
    * Returns whether the code snippet is expanded
