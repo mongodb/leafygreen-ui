@@ -2,9 +2,10 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { GalleryIndicator, GalleryIndicatorProps } from '.';
 import { LGIDS } from '../constants';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
+
+import { GalleryIndicator, GalleryIndicatorProps } from '.';
 
 function renderGalleryIndicator({
   count = 4,

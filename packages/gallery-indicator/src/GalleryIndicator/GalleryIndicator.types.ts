@@ -1,5 +1,6 @@
-import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { ComponentPropsWithRef } from 'react';
+
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export interface GalleryIndicatorProps
   extends Omit<ComponentPropsWithRef<'ul'>, 'onClick'>,

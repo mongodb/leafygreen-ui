@@ -1,5 +1,7 @@
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import React from 'react';
+
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
 import { LGIDS } from '../constants';
 
 import {
