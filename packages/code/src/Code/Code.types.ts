@@ -1,4 +1,4 @@
-import { LgIdProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 import { LanguageOption } from '../Panel/Panel.types';
 import { SyntaxProps } from '../Syntax/Syntax.types';
@@ -28,7 +28,8 @@ export type DetailedElementProps<T> = React.DetailedHTMLProps<
 >;
 
 export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
-  LgIdProps & {
+  LgIdProps &
+  DarkModeProps & {
     /**
      * Makes code blocks longer than 5 lines long expandable
      *
@@ -41,13 +42,6 @@ export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
      *
      */
     onCopy?: Function;
-
-    /**
-     * Determines whether or not the syntax will be rendered in dark mode.
-     *
-     * @default `false`
-     */
-    darkMode?: boolean;
 
     /**
      * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.

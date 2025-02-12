@@ -151,15 +151,10 @@ test('code', () => {
   render(
     <Code
       language="javascript"
-      showLineNumbers={true}
-      onCopy={() => {}}
-      darkMode={true}
       panel={
         <Panel
           onChange={() => {}}
           languageOptions={languageOptions}
-          showCustomActionButtons
-          customActionButtons={customActionButtons}
           title="Title"
         />
       }
@@ -194,32 +189,32 @@ When testing multiple `Code` components, it is recommended to add the custom `da
 ```tsx
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Tabs, Tab, getTestUtils } from '@leafygreen-ui/tabs';
+import { Code, getTestUtils } from '@leafygreen-ui/code';
 
 ...
 
-test('tabs', () => {
+test('code', () => {
   render(
     <>
       <Code
-      language="javascript"
-      panel={<Panel/>}
-      data-lgid='lg-code-1'
-    >
+        language="javascript"
+        panel={<Panel/>}
+        data-lgid="lg-code-1"
+      >
       {codeSnippet}
-    </Code>
-    <Code
-      language="python"
-      panel={<Panel/>}
-      data-lgid='lg-code-2'
-    >
-      {codeSnippet}
-    </Code>
+      </Code>
+      <Code
+        language="python"
+        panel={<Panel/>}
+        data-lgid="lg-code-2"
+      >
+        {codeSnippet}
+      </Code>
     </>
   );
 
-  const testUtils1 = getTestUtils('lg-code-1'); // data-lgid
-  const testUtils2 = getTestUtils('lg-code-2'); // data-lgid
+  const testUtils1 = getTestUtils('lg-code-1');
+  const testUtils2 = getTestUtils('lg-code-2');
 
   // First Code
   expect(testUtils1.getLanguage()).toBe('javascript');
