@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { LGIDS } from '../constants';
+import { LGIDs } from '../constants';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 
 import { GalleryIndicator, GalleryIndicatorProps } from '.';
@@ -14,7 +14,7 @@ function renderGalleryIndicator({
 }: Partial<GalleryIndicatorProps>) {
   const utils = render(
     <GalleryIndicator
-      data-testid={LGIDS.root}
+      data-testid={LGIDs.root}
       length={length}
       activeIndex={activeIndex}
       {...props}
