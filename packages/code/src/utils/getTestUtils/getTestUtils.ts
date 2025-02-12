@@ -1,10 +1,10 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
+import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
+
 import { LGIDs } from '../../constants';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
-
-import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
 
 export const getTestUtils = (
   lgId: string = LGIDs.root,
