@@ -10,7 +10,7 @@ import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
-import { LGIDS, numOfCollapsedLinesOfCode } from '../constants';
+import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
@@ -54,7 +54,7 @@ function Code({
   className,
   onCopy,
   panel,
-  'data-lgid': dataLgId = LGIDS.root,
+  'data-lgid': dataLgId = LGIDs.root,
   // Deprecated props
   copyable = false,
   showCustomActionButtons = false,
@@ -228,7 +228,7 @@ function Code({
         >
           {!isLoading && (
             <pre
-              data-testid={LGIDS.pre}
+              data-testid={LGIDs.pre}
               {...(rest as DetailedElementProps<HTMLPreElement>)}
               className={getCodeWrapperStyles({
                 theme,
@@ -252,8 +252,8 @@ function Code({
 
           {isLoading && (
             <CodeSkeleton
-              data-testid={LGIDS.skeleton}
-              data-lgid={LGIDS.skeleton}
+              data-testid={LGIDs.skeleton}
+              data-lgid={LGIDs.skeleton}
               className={getLoadingStyles(theme)}
             />
           )}
@@ -288,8 +288,8 @@ function Code({
             <button
               className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
-              data-testid={LGIDS.expandButton}
-              data-lgid={LGIDS.expandButton}
+              data-testid={LGIDs.expandButton}
+              data-lgid={LGIDs.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}

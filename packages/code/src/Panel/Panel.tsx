@@ -7,7 +7,7 @@ import { isComponentType } from '@leafygreen-ui/lib';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useCodeContext } from '../CodeContext/CodeContext';
-import { LGIDS } from '../constants';
+import { LGIDs } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
@@ -55,8 +55,8 @@ function Panel({
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
-      data-testid={LGIDS.panel}
-      data-lgid={LGIDS.panel}
+      data-testid={LGIDs.panel}
+      data-lgid={LGIDs.panel}
       {...rest}
     >
       {hasTitle && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}

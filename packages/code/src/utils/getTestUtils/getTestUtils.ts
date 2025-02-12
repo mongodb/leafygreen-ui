@@ -2,12 +2,12 @@ import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
 
-import { LGIDS } from '../../constants';
+import { LGIDs } from '../../constants';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDS.root,
+  lgId: string = LGIDs.root,
 ): TestUtilsReturnType => {
   const element = getByLgId!(lgId);
 
@@ -24,14 +24,14 @@ export const getTestUtils = (
   const getTitle = () => {
     const title = queryBySelector<HTMLInputElement>(
       element,
-      `[data-lgid=${LGIDS.panel}] p`,
+      `[data-lgid=${LGIDs.panel}] p`,
     );
 
     return title?.textContent || null;
   };
 
   const getLanguageSwitcherUtils = () => {
-    const testUtils = getSelectTestUtils(LGIDS.select);
+    const testUtils = getSelectTestUtils(LGIDs.select);
 
     return {
       getInput: () => testUtils.getInput(),
@@ -44,7 +44,7 @@ export const getTestUtils = (
   const getIsLoading = () => {
     return !!queryBySelector<HTMLElement>(
       element,
-      `[data-lgid=${LGIDS.skeleton}]`,
+      `[data-lgid=${LGIDs.skeleton}]`,
     );
   };
 
@@ -52,7 +52,7 @@ export const getTestUtils = (
     const getButton = () => {
       const button = queryBySelector<HTMLButtonElement>(
         element,
-        `[data-lgid=${LGIDS.copyButton}]`,
+        `[data-lgid=${LGIDs.copyButton}]`,
       );
 
       return button;
@@ -71,7 +71,7 @@ export const getTestUtils = (
     const getExpandButtonUtils = () => {
       const button = queryBySelector<HTMLButtonElement>(
         element,
-        `[data-lgid=${LGIDS.expandButton}]`,
+        `[data-lgid=${LGIDs.expandButton}]`,
       );
 
       return button;

@@ -20,7 +20,7 @@ import Tooltip, {
 } from '@leafygreen-ui/tooltip';
 
 import { useCodeContext } from '../CodeContext/CodeContext';
-import { LGIDS } from '../constants';
+import { LGIDs } from '../constants';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonUtilsStyles } from './CopyButton.styles';
@@ -125,8 +125,8 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
-    'data-testid': LGIDS.copyButton,
-    'data-lgid': LGIDS.copyButton,
+    'data-testid': LGIDs.copyButton,
+    'data-lgid': LGIDs.copyButton,
     className: getCopyButtonUtilsStyles({
       theme,
       copied,
@@ -145,7 +145,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   return (
     <Tooltip
       align={Align.Top}
-      data-testid={LGIDS.copyTooltip}
+      data-testid={LGIDs.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}
