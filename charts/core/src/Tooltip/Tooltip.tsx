@@ -11,6 +11,7 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { ChartStates } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { SortDirection, SortKey, TooltipProps } from './Tooltip.types';
@@ -53,7 +54,10 @@ export function Tooltip({
           : undefined,
         order: getSortOrder(sortDirection, sortKey),
         padding: spacing[200],
-        show: true,
+        // Showing the tooltip in ChartStates.Dragging or ChartStates.Overlay causes issues with drag and drop
+        show:
+          chart.state !== ChartStates.Dragging &&
+          chart.state !== ChartStates.Overlay,
         showDelay: 0,
         textStyle: {
           fontFamily: fontFamilies.default,
@@ -77,7 +81,7 @@ export function Tooltip({
     };
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, theme, sortDirection, sortKey, valueFormatter]);
+  }, [chart.ready, chart.state, theme, sortDirection, sortKey, valueFormatter]);
 
   return null;
 }

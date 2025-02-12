@@ -47,6 +47,7 @@ export function Chart({
     zoomSelect,
     onZoomSelect,
     groupId,
+    state,
   });
   const { attributes, listeners, setNodeRef, transform, transition, items } =
     useSortable({ id: sortId });
