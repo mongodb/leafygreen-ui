@@ -195,6 +195,13 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
           showCustomActionButtons
         />
       }
+      //TODO: className is not working
+      className={css`
+        opacity: 0.5;
+        .lg-highlight-custom {
+          color: red;
+        }
+      `}
     >
       {jsSnippet}
     </Code>

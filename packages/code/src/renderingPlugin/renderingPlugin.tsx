@@ -255,7 +255,7 @@ export function flattenNestedTree(
               if (str.startsWith('_') && str.endsWith('_')) {
                 const removeUnderscores = str.slice(1, -1);
                 return {
-                  kind: generateKindClassName(`${prefix}-custom`),
+                  kind: generateKindClassName(`${prefix}custom`),
                   children: [removeUnderscores],
                 };
               }
