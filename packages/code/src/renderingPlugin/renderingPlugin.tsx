@@ -17,13 +17,9 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
-let count = 0;
 const prefix = 'lg-highlight-';
-let lastStringEntity: string;
 
 export function generateKindClassName(...kinds: Array<any>): string {
-  // console.log({ kinds });
-
   return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
@@ -32,8 +28,6 @@ export function generateKindClassName(...kinds: Array<any>): string {
       if (kind.startsWith(prefix)) {
         return kind;
       }
-
-      // console.log({ kind });
 
       const classes = kind
         .split('.')
@@ -158,28 +152,6 @@ function getHighlightedRowStyle(darkMode: boolean) {
   `;
 }
 
-const mergeAsterisks = arr => {
-  return arr.reduce((acc, curr, i, array) => {
-    if (
-      curr === '*' &&
-      array[i + 1] === '*' &&
-      array[i + 2] === '*' &&
-      typeof array[i + 3] === 'string' &&
-      array[i + 4] === '*' &&
-      array[i + 5] === '*' &&
-      array[i + 6] === '*'
-    ) {
-      // Push the transformed string
-      acc.push(`***${array[i + 3]}***`);
-      // Skip the next 6 elements
-      array.splice(i, 7);
-    } else {
-      acc.push(curr);
-    }
-    return acc;
-  }, []);
-};
-
 interface LineTableRowProps {
   lineNumber?: number;
   children: React.ReactNode;
@@ -197,6 +169,8 @@ export function LineTableRow({
   const highlightedNumberColor = darkMode
     ? palette.gray.light3
     : palette.yellow.dark2;
+
+  // console.log({ children });
 
   return (
     <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
@@ -239,23 +213,16 @@ function isFlattenedTokenObject(obj: TokenObject): obj is FlatTokenObject {
   return false;
 }
 
-const bracketArray = ['}}', '{'];
-
 // If an array of tokens contains an object with more than one children, this function will flatten that tree recursively.
 export function flattenNestedTree(
   children: TokenObject['children'] | TokenObject,
   kind?: string,
 ): Array<string | FlatTokenObject> {
-  // console.log({ typeOf: typeof children });
-
   if (typeof children === 'string') {
     return children;
   }
 
-  // console.log({ children, kind });
-
   if (isTokenObject(children)) {
-    console.log('isTokenObject', children);
     return flattenNestedTree(children.children, kind);
   }
 
@@ -265,11 +232,9 @@ export function flattenNestedTree(
       (str): str is string => isString(str) && str.length > 0,
     );
 
-    // console.log({ parentKinds });
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
-      // console.log({ entity });
       if (isString(entity)) {
         if (parentKinds.length > 0) {
           return {
@@ -280,71 +245,29 @@ export function flattenNestedTree(
             ),
             children: [entity],
           };
-        }
-        // } else if (bracketArray.some(sub => entity.includes(sub))) {
-        //   // The plugin returns {{ testing }} like this:
-        //   // entity: "{"
-        //   // entity: "{ "
-        //   // entity: "testing }} "
+        } else {
+          // Splits up the string by underscores
+          // E.g. "This is before _hi_ this is after" => ["This is before ", "_hi_", " this is after"]
+          const splitContentByUnderscore = entity.split(/(_\w+_)/);
 
-        //   if (entity.includes('{')) {
-        //     // This is a bracket that has no space after it, meaning there is a string directly after it e.g. "{{"
-        //     const singleBracket = '{';
+          // If the array is greater than one then there are underscores in the string and we want to return each item in the array as an entity.
+          if (splitContentByUnderscore.length > 1) {
+            return splitContentByUnderscore.map(str => {
+              // If the string starts and ends with an underscore, we want to remove them and return a new entity with a custom kind.
+              if (str.startsWith('_') && str.endsWith('_')) {
+                const removeUnderscores = str.slice(1, -1);
+                return {
+                  kind: generateKindClassName('lg-custom'),
+                  children: [removeUnderscores],
+                };
+              }
 
-        //     // This is a bracket with a space after it and without a new line e.g. "{\n "
-        //     const singleBracketWithSpaceAfter = '{ ';
+              return str;
+            });
+          }
 
-        //     // Check it the entity is a bracket with no space after it
-        //     const isOnlySingleBracket = entity === singleBracket;
-
-        //     // console.log({ entity, isOnlySingleBracket, lastStringEntity });
-
-        //     // If there is no space after it then remove it
-        //     if (isOnlySingleBracket) {
-        //       // console.log({ entity });
-        //       // save this entity as the last entity so that we can check if this directly follows another bracket
-        //       lastStringEntity = entity;
-        //       return '';
-        //     }
-
-        //     // Check if the entity is a bracket with a space after it and if a empty bracket was the last entity before it e.g. "{{ "
-        //     const isSingleBracketWithSpace =
-        //       entity === singleBracketWithSpaceAfter &&
-        //       lastStringEntity === singleBracket;
-
-        //     // If the entity is a bracket with a space after it and a single bracket was the last entity before it then remove it
-        //     if (isSingleBracketWithSpace) {
-        //       lastStringEntity = entity;
-        //       return '';
-        //     }
-        //   }
-
-        //   // If this entity has double brackets then remove them and add a special class to it e.g. 'testing }}'
-        //   const cleanedEntity = entity.replace(' }}', '');
-
-        //   return {
-        //     kind: generateKindClassName(`special ${prefix}special__${count++}`),
-        //     children: [cleanedEntity],
-        //   };
-        // }
-        else {
           return entity;
         }
-        // return parentKinds.length > 0
-        //   ? {
-        //       kind: generateKindClassName(
-        //         kind,
-        //         ...parentKinds,
-        //         ...childrenAsKeywords(entity),
-        //       ),
-        //       children: [entity],
-        //     }
-        //   : bracketArray.some(sub => entity.includes(sub))
-        //   ? {
-        //       kind: generateKindClassName('special'),
-        //       children: [entity],
-        //     }
-        //   : entity;
       }
 
       // If this is a nested entity, then flat map it's children
@@ -371,10 +294,6 @@ export function flattenNestedTree(
       return entity as FlatTokenObject;
     };
   }
-
-  // console.log({ children });
-
-  // console.log('💚', flatMap(children, flatMapTreeWithKinds(kind)));
 
   return flatMap(children, flatMapTreeWithKinds(kind));
 }
@@ -416,11 +335,7 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   };
 
-  console.log('🤡🤡🤡🤡', { children });
-
   flattenNestedTree(children).forEach(child => {
-    // console.log({ child });
-
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
       if (isString(child)) {
@@ -453,20 +368,7 @@ export function treeToLines(
     }
   });
 
-  // console.log('🤡🤡', { lines });
-
-  const mergedLines = lines.map(line => {
-    const mergedLine = mergeAsterisks(line);
-
-    console.log({ line, mergedLine });
-
-    return mergedLine;
-  });
-
-  // console.log('🌈🌈🌈🌈', { mergedLines });
-
-  // return lines;
-  return mergedLines;
+  return lines;
 }
 
 interface TableContentProps {
@@ -477,6 +379,8 @@ export function TableContent({ lines }: TableContentProps) {
   const { highlightLines, showLineNumbers, darkMode, lineNumberStart } =
     useSyntaxContext();
   const trimmedLines = [...lines];
+
+  // console.log({ trimmedLines });
 
   // Strip empty lines from the beginning of code blocks
   while (trimmedLines[0]?.length === 0) {
@@ -528,6 +432,8 @@ export function TableContent({ lines }: TableContentProps) {
           />
         );
 
+        // console.log({ processedLine });
+
         return (
           <LineTableRow
             key={currentLineNumber}
@@ -544,18 +450,10 @@ export function TableContent({ lines }: TableContentProps) {
 }
 
 const plugin: LeafyGreenHLJSPlugin = {
-  'before:highlight': function (result: LeafyGreenHighlightResult) {
-    console.log('🤡 before', { result });
-  },
   'after:highlight': function (result: LeafyGreenHighlightResult) {
-    // console.log('💚', { result });
-
     const { rootNode } = result._emitter;
-    // console.log(JSON.stringify(rootNode.children, null, 2));
-    console.log({ rootNode });
-    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
 
-    // console.log('💚💚💚', { result: result.react });
+    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
 

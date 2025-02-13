@@ -34,55 +34,37 @@ const customActionButtons = [
   </IconButton>,
 ];
 
-// const jsSnippet = `
-// import datetime from './';
-// import shaneeza from './';
-
-// const myVar = 42;
-
-// var myObj = {
-//   someProp: ['arr', 'ay'],
-//   regex: /([A-Z])\w+/
-// }
-
-// export default class myClass {
-//   constructor(){
-//     // access properties
-//     this.myProp = false
-//   }
-// }
-
-// function greeting(entity) {
-//   return \`Hello, \${entity}! Cras justo odio, dapibus ac {{facilisis}} in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
-// }
-
-// console.log(greeting('World'));
-// `;
-
 const jsSnippet = `
-/**
- * comment
- */
-_shaneeza_
-import shaneeza from './';
-import {{ shaneeza }} from './';
-import {{ datetime }} from './';
+import datetime from './';
+
+hello there _hi_ and ok this is _great_ yup
+
+const myVar = 42;
 
 var myObj = {
   someProp: ['arr', 'ay'],
   regex: /([A-Z])\w+/
 }
 
-var myObj = {
-  someProp: ['arr', 'ay']
+export default class myClass {
+  constructor(){
+    // access properties
+    this.myProp = false
   }
+}
 
-const check = { hello }
+function greeting(entity) {
+  return \`Hello, \${entity}! Cras justo odio, dapibus ac {{facilisis}} in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
+}
+
+console.log(greeting('World'));
 `;
 
-// const jsSnippet = `
-//  This is a ((( line ))) that i want to highlight
-// `;
+const jsCustomSnippet = `
+ This is a line where the word _highlight_ is considered a custom keyword and I can change the color with CSS.
+
+  This is another line with the word _password_ that I want to highlight.
+`;
 
 // > 5 lines to trigger expandable code block
 const shortJsSnippet = `
@@ -165,6 +147,29 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
       `}
     >
       {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+      `}
+    >
+      {jsCustomSnippet}
     </Code>
   </LeafygreenProvider>
 );

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { renderToString } from 'react-dom/server';
+// import { renderToString } from 'react-dom/server';
 import { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
@@ -52,16 +52,6 @@ function initializeSyntaxHighlighting() {
       hljsDefineGraphQL(hljs);
     } else {
       hljs.registerLanguage(language, languageParsers[language]);
-
-      // const kwds = ['shaneeza'];
-
-      // hljs.getLanguage(language).keywords.custom = ['testing'];
-      // const built_in = hljs.getLanguage(language);
-      // console.log({ language, built_in });
-
-      // hljs.getLanguage(language).keywords.built_in = [
-      //   ...new Set([...built_in, ...kwds]),
-      // ];
     }
   });
 
@@ -71,23 +61,6 @@ function initializeSyntaxHighlighting() {
   } as Partial<HLJSOptions>);
 
   hljs.addPlugin(renderingPlugin as HLJSPlugin);
-
-  // hljs.addPlugin({
-  //   'before:highlight': results => {
-  //     console.log('🍓🍓🍓', { code: results.code });
-  //     results.code = results.code.replace(
-  //       /datetime/g,
-  //       '<div class="highlighted">datetime</div>',
-  //     );
-  //   },
-  // });
-
-  // in after:highlight, the code is already a react component so I don't think I can modify it
-  // hljs.addPlugin({
-  //   'after:highlight': results => {
-  //     console.log('🍓🍓🍓', { results });
-  //   },
-  // });
 }
 
 const codeStyles = css`
@@ -133,12 +106,17 @@ function Syntax({
       highlightedContent.react
     );
 
-  const string = renderToString(content).replace(
-    /_shaneeza_/g,
-    '<span class="highlighted">shaneeza</span>',
-  );
+  /**
+   * This is a workaround to add a custom class to any word wrapped in a underscore. E.g. _highlight_
+   */
+  // const updatedStringWithCustomClass = renderToString(
+  //   content as ReactElement,
+  // ).replace(
+  //   /_(\w+)_/g,
+  //   (_, word) => `<span class="lg-highlight-custom">${word}</span>`,
+  // );
 
-  console.log({ beforeString: renderToString(content), string });
+  // console.log({ beforeString: renderToString(content), updatedStringWithCustomClass });
 
   const { theme, darkMode } = useDarkMode();
 
@@ -174,8 +152,10 @@ function Syntax({
             border-spacing: 0;
           `}
         >
-          {/* <tbody>{content}</tbody> */}
-          <tbody dangerouslySetInnerHTML={{ __html: string }} />
+          <tbody>{content}</tbody>
+          {/* <tbody
+            dangerouslySetInnerHTML={{ __html: updatedStringWithCustomClass }}
+          /> */}
         </table>
       </code>
     </SyntaxContext.Provider>
