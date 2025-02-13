@@ -77,45 +77,6 @@ export const LiveExample: StoryObj<DragDropContainerProps> = {
           </ChartCard>
           {renderChart('Chart 1')}
           {renderChart('Chart 2')}
-
-          {/* <Chart sortId="Chart 1">
-            <Header title="Chart 1" showDivider />
-            <Grid vertical={false} />
-            <Tooltip
-              sortDirection={SortDirection.Desc}
-              sortKey={SortKey.Value}
-            />
-            <XAxis type="value" />
-            <YAxis type="value" />
-            <Line
-              name="Chart1"
-              data={[
-                [0, 0],
-                [1, 1],
-                [2, 2],
-                [3, 3],
-              ]}
-            />
-          </Chart>
-          <Chart sortId="Chart 2">
-            <Header title="Chart 2" showDivider />
-            <Grid vertical={false} />
-            <Tooltip
-              sortDirection={SortDirection.Desc}
-              sortKey={SortKey.Value}
-            />
-            <XAxis type="value" />
-            <YAxis type="value" />
-            <Line
-              name="Chart2"
-              data={[
-                [0, 3],
-                [1, 2],
-                [2, 1],
-                [3, 0],
-              ]}
-            />
-          </Chart> */}
         </SortableChartContainer>
       </div>
     );
