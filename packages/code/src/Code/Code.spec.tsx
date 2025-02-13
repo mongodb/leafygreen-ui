@@ -329,7 +329,8 @@ describe('packages/Code', () => {
             panel: <Panel onChange={() => {}} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          const input = getLanguageSwitcherUtils().getInput();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -349,7 +350,8 @@ describe('packages/Code', () => {
             panel: <Panel languageOptions={languageOptions} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          const input = getLanguageSwitcherUtils().getInput();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -368,7 +370,8 @@ describe('packages/Code', () => {
             panel: <Panel onChange={() => {}} languageOptions={[]} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          const input = getLanguageSwitcherUtils().getInput();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
@@ -387,7 +390,8 @@ describe('packages/Code', () => {
             panel: <Panel onChange={() => {}} languageOptions={[]} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          const input = getLanguageSwitcherUtils().getInput();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
           expect(error).toHaveProperty(
