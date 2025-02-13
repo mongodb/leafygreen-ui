@@ -446,7 +446,7 @@ export function TableContent({ lines }: TableContentProps) {
 const plugin: LeafyGreenHLJSPlugin = {
   'after:highlight': function (result: LeafyGreenHighlightResult) {
     const { rootNode } = result._emitter;
-
+    // console.log(JSON.stringify(rootNode.children, null, 2));
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
