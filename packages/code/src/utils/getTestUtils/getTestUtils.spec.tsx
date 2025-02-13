@@ -15,7 +15,7 @@ describe('packages/tabs/getTestUtils', () => {
   test('throws error if Code is not found', () => {
     try {
       renderCode({ 'data-lgid': 'lg-different-id' });
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
       const _ = getTestUtils();
     } catch (error) {
       expect(error).toBeInstanceOf(Error);
