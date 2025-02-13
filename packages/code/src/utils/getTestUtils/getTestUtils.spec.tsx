@@ -99,12 +99,12 @@ describe('packages/tabs/getTestUtils', () => {
         });
       });
 
-      describe('getAllOptions', () => {
+      describe('getOptions', () => {
         test('returns all options', () => {
           renderCodeWithLanguageSwitcher({});
           const { getLanguageSwitcherUtils } = getTestUtils();
           userEvent.click(getLanguageSwitcherUtils().getInput()!);
-          expect(getLanguageSwitcherUtils().getAllOptions()).toHaveLength(2);
+          expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(2);
         });
       });
 

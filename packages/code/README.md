@@ -164,14 +164,14 @@ test('code', () => {
   );
 
   const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButtonUtils } = getTestUtils();
-  const { getInput, getAllOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
+  const { getInput, getOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
   const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
   const { getButton: getExpandButtonUtils, isExpanded} = getExpandButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
   expect(getTitle()).toBe('Title');
   expect(getInput()).toBeInTheDocument();
-  expect(getAllOptions()).toHaveLength(2);
+  expect(getOptions()).toHaveLength(2);
   expect(getOptionByValue('js')).toBeInTheDocument();
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
@@ -232,7 +232,7 @@ const {
   getTitle,
   getLanguageSwitcherUtils: {
     getInput,
-    getAllOptions,
+    getOptions,
     getOptionByValue,
     isDisabled,
   },
@@ -257,7 +257,7 @@ const {
 | Util                              | Description                                       | Returns                 |
 | --------------------------------- | ------------------------------------------------- | ----------------------- |
 | `getInput()`                      | Returns the language switcher trigger             | `HTMLButtonElement`     |
-| `getAllOptions()`                 | Returns all options in the language switcher      | `Array<HTMLElement>`    |
+| `getOptions()`                    | Returns all options in the language switcher      | `Array<HTMLElement>`    |
 | `getOptionByValue(value: string)` | Returns the option element by its value           | `HTMLElement` \| `null` |
 | `isDisabled()`                    | Returns whether the language switcher is disabled | `boolean`               |
 

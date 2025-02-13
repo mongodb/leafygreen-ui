@@ -329,7 +329,6 @@ describe('packages/Code', () => {
             panel: <Panel onChange={() => {}} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
@@ -350,7 +349,6 @@ describe('packages/Code', () => {
             panel: <Panel languageOptions={languageOptions} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
@@ -370,7 +368,6 @@ describe('packages/Code', () => {
             panel: <Panel onChange={() => {}} languageOptions={[]} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
@@ -390,7 +387,6 @@ describe('packages/Code', () => {
             panel: <Panel onChange={() => {}} languageOptions={[]} />,
           });
           const { getLanguageSwitcherUtils } = getTestUtils();
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const _ = getLanguageSwitcherUtils().getInput();
         } catch (error) {
           expect(error).toBeInstanceOf(Error);
@@ -500,7 +496,7 @@ describe('packages/Code', () => {
       const { getLanguageSwitcherUtils } = getTestUtils();
       const trigger = getLanguageSwitcherUtils().getInput();
       userEvent.click(trigger!);
-      expect(getLanguageSwitcherUtils().getAllOptions()).toHaveLength(2);
+      expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(2);
     });
 
     test('options displayed in select are based on the languageOptions prop', () => {

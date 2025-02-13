@@ -36,7 +36,7 @@ export const getTestUtils = (
     return {
       getInput: () => testUtils.getInput(),
       isDisabled: () => testUtils.isDisabled(),
-      getAllOptions: () => testUtils.getOptions(),
+      getOptions: () => testUtils.getOptions(),
       getOptionByValue: (value: string) => testUtils.getOptionByValue(value),
     };
   };

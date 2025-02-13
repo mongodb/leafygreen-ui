@@ -1,3 +1,5 @@
+import { GetTestUtilsReturnType } from '@leafygreen-ui/select';
+
 export interface TestUtilsReturnType {
   /**
    * Returns the language of the code snippet
@@ -47,27 +49,32 @@ export interface CopyButtonUtils {
   isDisabled: () => boolean;
 }
 
-export interface LanguageSwitcherUtils {
-  /**
-   * Returns the language switcher trigger
-   */
-  getInput: () => HTMLButtonElement;
+// export interface LanguageSwitcherUtils {
+//   /**
+//    * Returns the language switcher trigger
+//    */
+//   getInput: () => HTMLButtonElement;
 
-  /**
-   * Returns if the language switcher is disabled
-   */
-  isDisabled: () => boolean;
+//   /**
+//    * Returns if the language switcher is disabled
+//    */
+//   isDisabled: () => boolean;
 
-  /**
-   * Returns the language switcher options
-   */
-  getAllOptions: () => Array<HTMLLIElement>;
+//   /**
+//    * Returns the language switcher options
+//    */
+//   getAllOptions: () => Array<HTMLLIElement>;
 
-  /**
-   * Returns the language switcher option by value
-   */
-  getOptionByValue: (value: string) => HTMLLIElement | null;
-}
+//   /**
+//    * Returns the language switcher option by value
+//    */
+//   getOptionByValue: (value: string) => HTMLLIElement | null;
+// }
+
+export type LanguageSwitcherUtils = Pick<
+  GetTestUtilsReturnType,
+  'getInput' | 'isDisabled' | 'getOptions' | 'getOptionByValue'
+>;
 
 export interface ExpandButtonUtils {
   /**
