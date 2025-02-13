@@ -19,8 +19,8 @@ jest.mock('clipboard', () => {
 describe('CopyButton', () => {
   const contents = 'Lorem ipsum';
   const testIds = {
-    copyButton: 'code_copy-button',
-    tooltip: 'code_copy-button_tooltip',
+    copyButton: 'lg-code-copy_button',
+    tooltip: 'lg-code-copy_tooltip',
   };
 
   const renderCopyButton = ({ onCopy }: Pick<CopyProps, 'onCopy'>) => {
