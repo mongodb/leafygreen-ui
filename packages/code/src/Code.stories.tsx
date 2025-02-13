@@ -60,10 +60,11 @@ const customActionButtons = [
 // `;
 
 const jsSnippet = `
-/** 
- * comment 
+/**
+ * comment
  */
-import ***shaneeza*** from './';
+_shaneeza_
+import shaneeza from './';
 import {{ shaneeza }} from './';
 import {{ datetime }} from './';
 
@@ -78,6 +79,10 @@ var myObj = {
 
 const check = { hello }
 `;
+
+// const jsSnippet = `
+//  This is a ((( line ))) that i want to highlight
+// `;
 
 // > 5 lines to trigger expandable code block
 const shortJsSnippet = `

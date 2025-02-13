@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { renderToString } from 'react-dom/server';
 import { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
@@ -132,6 +133,13 @@ function Syntax({
       highlightedContent.react
     );
 
+  const string = renderToString(content).replace(
+    /_shaneeza_/g,
+    '<span class="highlighted">shaneeza</span>',
+  );
+
+  console.log({ beforeString: renderToString(content), string });
+
   const { theme, darkMode } = useDarkMode();
 
   const baseFontSize = useBaseFontSize();
@@ -166,7 +174,8 @@ function Syntax({
             border-spacing: 0;
           `}
         >
-          <tbody>{content}</tbody>
+          {/* <tbody>{content}</tbody> */}
+          <tbody dangerouslySetInnerHTML={{ __html: string }} />
         </table>
       </code>
     </SyntaxContext.Provider>

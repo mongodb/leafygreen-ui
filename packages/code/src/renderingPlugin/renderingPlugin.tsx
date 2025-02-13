@@ -158,6 +158,28 @@ function getHighlightedRowStyle(darkMode: boolean) {
   `;
 }
 
+const mergeAsterisks = arr => {
+  return arr.reduce((acc, curr, i, array) => {
+    if (
+      curr === '*' &&
+      array[i + 1] === '*' &&
+      array[i + 2] === '*' &&
+      typeof array[i + 3] === 'string' &&
+      array[i + 4] === '*' &&
+      array[i + 5] === '*' &&
+      array[i + 6] === '*'
+    ) {
+      // Push the transformed string
+      acc.push(`***${array[i + 3]}***`);
+      // Skip the next 6 elements
+      array.splice(i, 7);
+    } else {
+      acc.push(curr);
+    }
+    return acc;
+  }, []);
+};
+
 interface LineTableRowProps {
   lineNumber?: number;
   children: React.ReactNode;
@@ -247,7 +269,7 @@ export function flattenNestedTree(
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
-      console.log({ entity });
+      // console.log({ entity });
       if (isString(entity)) {
         if (parentKinds.length > 0) {
           return {
@@ -258,52 +280,54 @@ export function flattenNestedTree(
             ),
             children: [entity],
           };
-        } else if (bracketArray.some(sub => entity.includes(sub))) {
-          // The plugin returns {{ testing }} like this:
-          // entity: "{"
-          // entity: "{ "
-          // entity: "testing }} "
+        }
+        // } else if (bracketArray.some(sub => entity.includes(sub))) {
+        //   // The plugin returns {{ testing }} like this:
+        //   // entity: "{"
+        //   // entity: "{ "
+        //   // entity: "testing }} "
 
-          if (entity.includes('{')) {
-            // This is a bracket that has no space after it, meaning there is a string directly after it e.g. "{{"
-            const singleBracket = '{';
+        //   if (entity.includes('{')) {
+        //     // This is a bracket that has no space after it, meaning there is a string directly after it e.g. "{{"
+        //     const singleBracket = '{';
 
-            // This is a bracket with a space after it and without a new line e.g. "{\n "
-            const singleBracketWithSpaceAfter = '{ ';
+        //     // This is a bracket with a space after it and without a new line e.g. "{\n "
+        //     const singleBracketWithSpaceAfter = '{ ';
 
-            // Check it the entity is a bracket with no space after it
-            const isOnlySingleBracket = entity === singleBracket;
+        //     // Check it the entity is a bracket with no space after it
+        //     const isOnlySingleBracket = entity === singleBracket;
 
-            console.log({ entity, isOnlySingleBracket, lastStringEntity });
+        //     // console.log({ entity, isOnlySingleBracket, lastStringEntity });
 
-            // If there is no space after it then remove it
-            if (isOnlySingleBracket) {
-              console.log({ entity });
-              // save this entity as the last entity so that we can check if this directly follows another bracket
-              lastStringEntity = entity;
-              return '';
-            }
+        //     // If there is no space after it then remove it
+        //     if (isOnlySingleBracket) {
+        //       // console.log({ entity });
+        //       // save this entity as the last entity so that we can check if this directly follows another bracket
+        //       lastStringEntity = entity;
+        //       return '';
+        //     }
 
-            // Check if the entity is a bracket with a space after it and if a empty bracket was the last entity before it e.g. "{{ "
-            const isSingleBracketWithSpace =
-              entity === singleBracketWithSpaceAfter &&
-              lastStringEntity === singleBracket;
+        //     // Check if the entity is a bracket with a space after it and if a empty bracket was the last entity before it e.g. "{{ "
+        //     const isSingleBracketWithSpace =
+        //       entity === singleBracketWithSpaceAfter &&
+        //       lastStringEntity === singleBracket;
 
-            // If the entity is a bracket with a space after it and a single bracket was the last entity before it then remove it
-            if (isSingleBracketWithSpace) {
-              lastStringEntity = entity;
-              return '';
-            }
-          }
+        //     // If the entity is a bracket with a space after it and a single bracket was the last entity before it then remove it
+        //     if (isSingleBracketWithSpace) {
+        //       lastStringEntity = entity;
+        //       return '';
+        //     }
+        //   }
 
-          // If this entity has double brackets then remove them and add a special class to it e.g. 'testing }}'
-          const cleanedEntity = entity.replace(' }}', '');
+        //   // If this entity has double brackets then remove them and add a special class to it e.g. 'testing }}'
+        //   const cleanedEntity = entity.replace(' }}', '');
 
-          return {
-            kind: generateKindClassName(`special ${prefix}special__${count++}`),
-            children: [cleanedEntity],
-          };
-        } else {
+        //   return {
+        //     kind: generateKindClassName(`special ${prefix}special__${count++}`),
+        //     children: [cleanedEntity],
+        //   };
+        // }
+        else {
           return entity;
         }
         // return parentKinds.length > 0
@@ -392,8 +416,10 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   };
 
+  console.log('🤡🤡🤡🤡', { children });
+
   flattenNestedTree(children).forEach(child => {
-    console.log({ child });
+    // console.log({ child });
 
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
@@ -427,9 +453,20 @@ export function treeToLines(
     }
   });
 
-  console.log('🤡🤡', { lines });
+  // console.log('🤡🤡', { lines });
 
-  return lines;
+  const mergedLines = lines.map(line => {
+    const mergedLine = mergeAsterisks(line);
+
+    console.log({ line, mergedLine });
+
+    return mergedLine;
+  });
+
+  // console.log('🌈🌈🌈🌈', { mergedLines });
+
+  // return lines;
+  return mergedLines;
 }
 
 interface TableContentProps {
@@ -507,11 +544,15 @@ export function TableContent({ lines }: TableContentProps) {
 }
 
 const plugin: LeafyGreenHLJSPlugin = {
+  'before:highlight': function (result: LeafyGreenHighlightResult) {
+    console.log('🤡 before', { result });
+  },
   'after:highlight': function (result: LeafyGreenHighlightResult) {
     // console.log('💚', { result });
 
     const { rootNode } = result._emitter;
     // console.log(JSON.stringify(rootNode.children, null, 2));
+    console.log({ rootNode });
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
 
     // console.log('💚💚💚', { result: result.react });
