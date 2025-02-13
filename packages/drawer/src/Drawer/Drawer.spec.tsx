@@ -3,9 +3,9 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getTestUtils } from '../utils';
+import { getLgIds, getTestUtils } from '../utils';
 
-import { Drawer, DrawerProps, LGIDs } from '.';
+import { Drawer, DrawerProps } from '.';
 
 const drawerContent = 'Drawer content';
 
@@ -52,8 +52,9 @@ describe('packages/drawer', () => {
       });
 
       test('close button is not rendered when onClose is not provided', () => {
+        const lgIds = getLgIds();
         const { queryByTestId } = renderDrawer({ open: true });
-        expect(queryByTestId(LGIDs.closeButton)).toBeNull();
+        expect(queryByTestId(lgIds.closeButton)).not.toBeInTheDocument();
       });
 
       test('calls onClose when close button is clicked', () => {

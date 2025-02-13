@@ -11,8 +11,8 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DrawerContext } from '../DrawerContext';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
-import { LGIDs } from './Drawer.constants';
 import {
   getChildrenContainerStyles,
   getDrawerStyles,
@@ -25,7 +25,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     {
       children,
       className,
-      'data-lgid': dataLgId = LGIDs.root,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       id: idProp,
       onClose,
       open = false,
@@ -38,6 +38,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const [hasTabs, setHasTabs] = useState(false);
 
+    const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
@@ -55,7 +56,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             aria-hidden={!open}
             aria-labelledby={titleId}
             className={getDrawerStyles({ className, open, theme })}
-            data-lgid={dataLgId}
+            data-lgid={lgIds.root}
             id={id}
             ref={fwdRef}
             role="dialog"
@@ -79,8 +80,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               {showCloseButton && (
                 <IconButton
                   aria-label="Close drawer"
-                  data-lgid={LGIDs.closeButton}
-                  data-testid={LGIDs.closeButton}
+                  data-lgid={lgIds.closeButton}
+                  data-testid={lgIds.closeButton}
                   onClick={onClose}
                 >
                   <XIcon />
