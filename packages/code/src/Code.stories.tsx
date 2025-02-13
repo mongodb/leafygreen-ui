@@ -144,6 +144,10 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       className={css`
         width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
       `}
     >
       {jsSnippet}
@@ -167,6 +171,10 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       className={css`
         width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
       `}
     >
       {jsCustomSnippet}
@@ -195,13 +203,6 @@ export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
           showCustomActionButtons
         />
       }
-      //TODO: className is not working
-      className={css`
-        opacity: 0.5;
-        .lg-highlight-custom {
-          color: red;
-        }
-      `}
     >
       {jsSnippet}
     </Code>
