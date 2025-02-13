@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-// import { renderToString } from 'react-dom/server';
 import { HLJSOptions, HLJSPlugin } from 'highlight.js';
 import hljs from 'highlight.js/lib/core'; // Skip highlight's auto-registering
 import hljsDefineGraphQL from 'highlightjs-graphql';
@@ -106,18 +105,6 @@ function Syntax({
       highlightedContent.react
     );
 
-  /**
-   * This is a workaround to add a custom class to any word wrapped in a underscore. E.g. _highlight_
-   */
-  // const updatedStringWithCustomClass = renderToString(
-  //   content as ReactElement,
-  // ).replace(
-  //   /_(\w+)_/g,
-  //   (_, word) => `<span class="lg-highlight-custom">${word}</span>`,
-  // );
-
-  // console.log({ beforeString: renderToString(content), updatedStringWithCustomClass });
-
   const { theme, darkMode } = useDarkMode();
 
   const baseFontSize = useBaseFontSize();
@@ -153,9 +140,6 @@ function Syntax({
           `}
         >
           <tbody>{content}</tbody>
-          {/* <tbody
-            dangerouslySetInnerHTML={{ __html: updatedStringWithCustomClass }}
-          /> */}
         </table>
       </code>
     </SyntaxContext.Provider>
