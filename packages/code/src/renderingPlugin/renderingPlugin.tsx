@@ -170,8 +170,6 @@ export function LineTableRow({
     ? palette.gray.light3
     : palette.yellow.dark2;
 
-  // console.log({ children });
-
   return (
     <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
       {lineNumber && (
@@ -257,7 +255,7 @@ export function flattenNestedTree(
               if (str.startsWith('_') && str.endsWith('_')) {
                 const removeUnderscores = str.slice(1, -1);
                 return {
-                  kind: generateKindClassName('lg-custom'),
+                  kind: generateKindClassName(`${prefix}-custom`),
                   children: [removeUnderscores],
                 };
               }
@@ -380,8 +378,6 @@ export function TableContent({ lines }: TableContentProps) {
     useSyntaxContext();
   const trimmedLines = [...lines];
 
-  // console.log({ trimmedLines });
-
   // Strip empty lines from the beginning of code blocks
   while (trimmedLines[0]?.length === 0) {
     trimmedLines.shift();
@@ -431,8 +427,6 @@ export function TableContent({ lines }: TableContentProps) {
             `}
           />
         );
-
-        // console.log({ processedLine });
 
         return (
           <LineTableRow
