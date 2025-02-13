@@ -262,7 +262,7 @@ const {
 
 ### CopyButtonUtils
 
-| Util           | Description                                 | Returns                 |
-| -------------- | ------------------------------------------- | ----------------------- |
-| `getButton()`  | Returns the copy button element             | `HTMLElement` \| `null` |
-| `isDisabled()` | Returns whether the copy button is disabled | `boolean`               |
+| Util           | Description                                 | Returns       |
+| -------------- | ------------------------------------------- | ------------- |
+| `getButton()`  | Returns the copy button element             | `HTMLElement` |
+| `isDisabled()` | Returns whether the copy button is disabled | `boolean`     |
