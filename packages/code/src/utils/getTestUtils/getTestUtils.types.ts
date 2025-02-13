@@ -1,4 +1,5 @@
-import { GetTestUtilsReturnType } from '@leafygreen-ui/select';
+import { GetTestUtilsReturnType as GetSelectTestUtilsReturnType } from '@leafygreen-ui/select';
+import { GetTestUtilsReturnType as GetButtonTestUtilsReturnType } from '@leafygreen-ui/button';
 
 export interface TestUtilsReturnType {
   /**
@@ -29,7 +30,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the expand button
    */
-  getExpandButtonUtils: () => ExpandButtonUtils;
+  getExpandButton: GetButtonTestUtilsReturnType<HTMLButtonElement>['getButton'];
 
   /**
    * Returns whether the code snippet is expanded
@@ -37,48 +38,9 @@ export interface TestUtilsReturnType {
   getIsExpanded: () => boolean;
 }
 
-export interface CopyButtonUtils {
-  /**
-   * Returns the copy button
-   */
-  getButton: () => HTMLButtonElement | null;
-
-  /**
-   * Returns whether the copy button is disabled
-   */
-  isDisabled: () => boolean;
-}
-
-// export interface LanguageSwitcherUtils {
-//   /**
-//    * Returns the language switcher trigger
-//    */
-//   getInput: () => HTMLButtonElement;
-
-//   /**
-//    * Returns if the language switcher is disabled
-//    */
-//   isDisabled: () => boolean;
-
-//   /**
-//    * Returns the language switcher options
-//    */
-//   getAllOptions: () => Array<HTMLLIElement>;
-
-//   /**
-//    * Returns the language switcher option by value
-//    */
-//   getOptionByValue: (value: string) => HTMLLIElement | null;
-// }
+export type CopyButtonUtils = GetButtonTestUtilsReturnType<HTMLButtonElement>;
 
 export type LanguageSwitcherUtils = Pick<
-  GetTestUtilsReturnType,
+  GetSelectTestUtilsReturnType,
   'getInput' | 'isDisabled' | 'getOptions' | 'getOptionByValue'
 >;
-
-export interface ExpandButtonUtils {
-  /**
-   * Returns the expand button
-   */
-  getButton: () => HTMLButtonElement | null;
-}

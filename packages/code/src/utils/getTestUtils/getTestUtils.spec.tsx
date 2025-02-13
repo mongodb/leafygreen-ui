@@ -72,7 +72,7 @@ describe('packages/tabs/getTestUtils', () => {
           try {
             renderCode();
             const { getLanguageSwitcherUtils } = getTestUtils();
-            const input = getLanguageSwitcherUtils().getInput();
+            const _ = getLanguageSwitcherUtils().getInput();
           } catch (error) {
             expect(error).toBeInstanceOf(Error);
             expect(error).toHaveProperty(
@@ -154,13 +154,27 @@ describe('packages/tabs/getTestUtils', () => {
             const { getCopyButtonUtils } = getTestUtils();
             expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
           });
-          test('returns null', () => {
-            Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-              spy.mockReturnValue(true);
-              return renderCode({ copyButtonAppearance: 'none' });
-            });
-            const { getCopyButtonUtils } = getTestUtils();
-            expect(getCopyButtonUtils().getButton()).toBeNull();
+
+          test('throws error is the expand button cannot be found', () => {
+            try {
+              Context.within(
+                Jest.spyContext(ClipboardJS, 'isSupported'),
+                spy => {
+                  spy.mockReturnValue(true);
+                  return renderCode({ copyButtonAppearance: 'none' });
+                },
+              );
+              const { getExpandButton } = getTestUtils();
+              const _ = getExpandButton();
+            } catch (error) {
+              expect(error).toBeInstanceOf(Error);
+              expect(error).toHaveProperty(
+                'message',
+                expect.stringMatching(
+                  /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+                ),
+              );
+            }
           });
         });
 
@@ -197,18 +211,28 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
-    describe('getExpandButtonUtils', () => {
+    describe('getExpandButton', () => {
       describe('getButton', () => {
-        test('return null', () => {
-          renderCode();
-          const { getExpandButtonUtils } = getTestUtils();
-          expect(getExpandButtonUtils().getButton()).toBeNull();
+        test('throws error is the expand button cannot be found', () => {
+          try {
+            renderCode();
+            const { getExpandButton } = getTestUtils();
+            const _ = getExpandButton();
+          } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty(
+              'message',
+              expect.stringMatching(
+                /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+              ),
+            );
+          }
         });
 
         test('returns the expand button', () => {
           renderCode({ expandable: true });
-          const { getExpandButtonUtils } = getTestUtils();
-          expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
+          const { getExpandButton } = getTestUtils();
+          expect(getExpandButton()).toBeInTheDocument();
         });
       });
 
@@ -222,8 +246,8 @@ describe('packages/tabs/getTestUtils', () => {
 
         test('returns false', () => {
           renderCode({ expandable: true });
-          const { getExpandButtonUtils, getIsExpanded } = getTestUtils();
-          const expandButton = getExpandButtonUtils().getButton();
+          const { getExpandButton, getIsExpanded } = getTestUtils();
+          const expandButton = getExpandButton();
           userEvent.click(expandButton!);
           expect(getIsExpanded()).toBe(true);
         });

@@ -1,6 +1,7 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
+import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
 
 import { LGIDs } from '../../constants';
 
@@ -49,43 +50,26 @@ export const getTestUtils = (
   };
 
   const getCopyButtonUtils = () => {
-    const getButton = () => {
-      const button = queryBySelector<HTMLButtonElement>(
-        element,
-        `[data-lgid=${LGIDs.copyButton}]`,
-      );
-
-      return button;
-    };
-
-    const isDisabled = () =>
-      getButton()?.getAttribute('aria-disabled') === 'true';
+    const testUtils = getButtonTestUtils(LGIDs.copyButton);
 
     return {
-      getButton: () => getButton(),
-      isDisabled: () => isDisabled(),
+      getButton: () => testUtils.getButton() as HTMLButtonElement,
+      isDisabled: () => testUtils.isDisabled(),
     };
   };
 
-  const getExpandButtonUtils = () => {
-    const getExpandButtonUtils = () => {
-      const button = queryBySelector<HTMLButtonElement>(
-        element,
-        `[data-lgid=${LGIDs.expandButton}]`,
-      );
-
-      return button;
-    };
-
-    return {
-      getButton: () => getExpandButtonUtils(),
-    };
+  const getExpandButton = () => {
+    const { getButton } = getButtonTestUtils(LGIDs.expandButton);
+    return getButton() as HTMLButtonElement;
   };
 
   const getIsExpanded = () => {
-    const expandButton = getExpandButtonUtils().getButton();
+    const button = queryBySelector<HTMLButtonElement>(
+      element,
+      `[data-lgid=${LGIDs.expandButton}]`,
+    );
 
-    return !!expandButton?.textContent?.includes('Click to collapse');
+    return !!button?.textContent?.includes('Click to collapse');
   };
 
   return {
@@ -94,7 +78,7 @@ export const getTestUtils = (
     getLanguageSwitcherUtils,
     getIsLoading,
     getCopyButtonUtils,
-    getExpandButtonUtils,
+    getExpandButton,
     getIsExpanded,
   };
 };

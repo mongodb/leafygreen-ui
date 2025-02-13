@@ -160,18 +160,26 @@ describe('packages/Code', () => {
       });
 
       describe('without panel slot', () => {
-        test('copy button is not rendered', () => {
-          Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-            spy.mockReturnValue(true);
-            return renderCode({
-              isLoading: true,
-              copyable: false,
+        test('throws error and copy button is not rendered', () => {
+          try {
+            Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
+              spy.mockReturnValue(true);
+              return renderCode({
+                isLoading: true,
+                copyable: false,
+              });
             });
-          });
-
-          const { getCopyButtonUtils } = getTestUtils();
-
-          expect(getCopyButtonUtils().getButton()).toBeNull();
+            const { getCopyButtonUtils } = getTestUtils();
+            const _ = getCopyButtonUtils().getButton();
+          } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty(
+              'message',
+              expect.stringMatching(
+                /Unable to find an element by: \[data-lgid="lg-code-copy_button"\]/,
+              ),
+            );
+          }
         });
       });
     });
@@ -268,11 +276,21 @@ describe('packages/Code', () => {
       });
     });
 
-    describe('does not renders a copy button', () => {
+    describe('throws error', () => {
       test('when copyButtonAppearance is none', () => {
-        renderCode({ copyButtonAppearance: 'none' });
-        const { getCopyButtonUtils } = getTestUtils();
-        expect(getCopyButtonUtils().getButton()).toBeNull();
+        try {
+          renderCode({ copyButtonAppearance: 'none' });
+          const { getCopyButtonUtils } = getTestUtils();
+          const _ = getCopyButtonUtils().getButton();
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-code-copy_button"\]/,
+            ),
+          );
+        }
       });
     });
 
@@ -557,16 +575,24 @@ describe('packages/Code', () => {
         (_, i) => `const greeting${i} = "Hello, world! ${i}";`,
       ).join('\n');
 
-    test(`shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
-      render(
-        <Code expandable={true} language="javascript">
-          {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
-        </Code>,
-      );
-
-      const { getExpandButtonUtils } = getTestUtils();
-
-      expect(getExpandButtonUtils().getButton()).toBeNull();
+    test(`throws error and shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
+      try {
+        render(
+          <Code expandable={true} language="javascript">
+            {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
+          </Code>,
+        );
+        const { getExpandButton } = getTestUtils();
+        const _ = getExpandButton();
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error).toHaveProperty(
+          'message',
+          expect.stringMatching(
+            /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+          ),
+        );
+      }
     });
 
     test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
@@ -576,9 +602,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButtonUtils } = getTestUtils();
+      const { getExpandButton } = getTestUtils();
 
-      expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
+      expect(getExpandButton()).toBeInTheDocument();
     });
 
     test('shows correct number of lines of code on expand button', () => {
@@ -590,9 +616,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButtonUtils } = getTestUtils();
+      const { getExpandButton } = getTestUtils();
 
-      const actionButton = getExpandButtonUtils().getButton();
+      const actionButton = getExpandButton();
       expect(actionButton).toHaveTextContent(
         `Click to expand (${lineCount} lines)`,
       );
@@ -605,9 +631,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButtonUtils, getIsExpanded } = getTestUtils();
+      const { getExpandButton, getIsExpanded } = getTestUtils();
 
-      const actionButton = getExpandButtonUtils().getButton();
+      const actionButton = getExpandButton();
       userEvent.click(actionButton!);
       expect(actionButton).toHaveTextContent('Click to collapse');
       expect(getIsExpanded()).toBe(true);
@@ -622,9 +648,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButtonUtils } = getTestUtils();
+      const { getExpandButton } = getTestUtils();
 
-      const actionButton = getExpandButtonUtils().getButton();
+      const actionButton = getExpandButton();
       userEvent.click(actionButton!); // Expand
       userEvent.click(actionButton!); // Collapse
 
