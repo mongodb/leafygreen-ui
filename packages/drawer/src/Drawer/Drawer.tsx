@@ -27,8 +27,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       className,
       'data-lgid': dataLgId = LGIDs.root,
       id: idProp,
+      onClose,
       open = false,
-      setOpen,
       title,
       ...rest
     },
@@ -43,6 +43,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     // Track when element is no longer visible to add shadow below drawer header
     const { ref: interceptRef, inView: isInterceptInView } = useInView();
+
+    const showCloseButton = !!onClose;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -74,12 +76,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               >
                 {title}
               </Body>
-              <IconButton
-                aria-label="Close drawer"
-                onClick={() => setOpen?.(false)}
-              >
+              {showCloseButton && (
+              <IconButton aria-label="Close drawer" onClick={onClose}>
                 <XIcon />
               </IconButton>
+            )}
             </div>
             <div className={getChildrenContainerStyles({ hasTabs })}>
               {/* Empty span element used to track if children container has scrolled down */}
