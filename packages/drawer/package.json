@@ -16,6 +16,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
@@ -31,8 +32,7 @@
 
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2",
-    "@leafygreen-ui/button": "workspace:^"
+    "@faker-js/faker": "^8.0.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
