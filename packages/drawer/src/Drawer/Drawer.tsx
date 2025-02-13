@@ -9,7 +9,7 @@ import LeafyGreenProvider, {
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { LGIDS_DRAWER } from './Drawer.constants';
+import { LGIDs } from './Drawer.constants';
 import { getDrawerStyles, getHeaderStyles } from './Drawer.styles';
 import { DrawerProps } from './Drawer.types';
 
@@ -18,7 +18,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     {
       children,
       className,
-      'data-lgid': dataLgId = LGIDS_DRAWER.root,
+      'data-lgid': dataLgId = LGIDs.root,
       id: idProp,
       open = false,
       setOpen,
