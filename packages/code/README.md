@@ -163,10 +163,9 @@ test('code', () => {
     </Code>
   );
 
-  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButtonUtils } = getTestUtils();
+  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButton } = getTestUtils();
   const { getInput, getOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
   const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
-  const { getButton: getExpandButtonUtils, isExpanded} = getExpandButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
   expect(getTitle()).toBe('Title');
@@ -177,7 +176,7 @@ test('code', () => {
   expect(getIsLoading()).toBe(false);
   expect(getCopyButtonUtils()).toBeInTheDocument();
   expect(isCopyButtonDisabled()).toBe(false);
-  expect(getExpandButtonUtils()).toBeInTheDocument();
+  expect(getExpandButton()).toBeInTheDocument();
   expect(isExpanded()).toBe(false);
 });
 ```
@@ -238,7 +237,7 @@ const {
   },
   getIsLoading,
   getCopyButtonUtils: { getButton, isDisabled },
-  getExpandButtonUtils: { getButton, isExpanded },
+  getExpandButton,,
 } = getTestUtils();
 ```
 
@@ -249,7 +248,7 @@ const {
 | `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
 | `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`               |
 | `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |
-| `getExpandButtonUtils()`     | Returns utils for interacting with the expand button     | `ExpandButtonUtils`     |
+| `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`     |
 | `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`               |
 
 ### LanguageSwitcherUtils
@@ -267,9 +266,3 @@ const {
 | -------------- | ------------------------------------------- | ----------------------- |
 | `getButton()`  | Returns the copy button element             | `HTMLElement` \| `null` |
 | `isDisabled()` | Returns whether the copy button is disabled | `boolean`               |
-
-### ExpandButtonUtils
-
-| Util          | Description                       | Returns                 |
-| ------------- | --------------------------------- | ----------------------- |
-| `getButton()` | Returns the expand button element | `HTMLElement` \| `null` |
