@@ -26,7 +26,8 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2"
+    "polished": "^4.2.2",
+    "react-intersection-observer": "^8.25.1"
 
   },
   "devDependencies": {

@@ -68,7 +68,7 @@ function ExampleComponent() {
 
 Refer to the [props table in @leafygreen-ui/tabs README.md](https://github.com/mongodb/leafygreen-ui/blob/main/packages/tabs/README.md#properties) for a full list of props that can be passed to `DrawerTabs` instances.
 
-`size` and `tabPanelsContainerRef` props are fixed to ensure proper UI within the `Drawer`.
+`size` prop is fixed to ensure proper UI within the `Drawer`.
 
 # Test Harnesses
 

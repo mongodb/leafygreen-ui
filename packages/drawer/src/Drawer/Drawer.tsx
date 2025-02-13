@@ -1,4 +1,5 @@
 import React, { forwardRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
@@ -12,7 +13,6 @@ import { Body } from '@leafygreen-ui/typography';
 import { DrawerContext } from '../DrawerContext';
 
 import { LGIDs } from './Drawer.constants';
-import { useScrollShadowTop } from './Drawer.hooks';
 import {
   getChildrenContainerStyles,
   getDrawerStyles,
@@ -41,7 +41,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
-    const { hasShadowTop, scrollContainerRef } = useScrollShadowTop();
+    // Track when element is no longer visible to add shadow below drawer header
+    const { ref: interceptRef, inView: isInterceptInView } = useInView();
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -58,7 +59,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             role="dialog"
             {...rest}
           >
-            <div className={getHeaderStyles({ hasShadowTop, hasTabs, theme })}>
+            <div
+              className={getHeaderStyles({
+                hasShadowTop: !isInterceptInView,
+                hasTabs,
+                theme,
+              })}
+            >
               <Body
                 as={typeof title === 'string' ? 'h2' : 'div'}
                 baseFontSize={BaseFontSize.Body2}
@@ -74,10 +81,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 <XIcon />
               </IconButton>
             </div>
-            <div
-              className={getChildrenContainerStyles({ hasTabs })}
-              ref={scrollContainerRef}
-            >
+            <div className={getChildrenContainerStyles({ hasTabs })}>
+              {/* Empty span element used to track if children container has scrolled down */}
+              {!hasTabs && <span ref={interceptRef} />}
               {children}
             </div>
           </div>

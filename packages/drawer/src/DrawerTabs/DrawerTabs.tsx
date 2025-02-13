@@ -1,10 +1,10 @@
 import React from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size, Tabs } from '@leafygreen-ui/tabs';
 
-import { useScrollShadowTop } from '../Drawer';
 import { useDrawerContext } from '../DrawerContext';
 
 import { getDrawerTabsStyles } from './DrawerTabs.styles';
@@ -18,7 +18,8 @@ export const DrawerTabs = ({
   const { theme } = useDarkMode();
   const { registerTabs } = useDrawerContext();
 
-  const { hasShadowTop, scrollContainerRef } = useScrollShadowTop();
+  // Track when element is no longer visible to add shadow below drawer header
+  const { ref: interceptRef, inView: isInterceptInView } = useInView();
 
   useIsomorphicLayoutEffect(() => {
     registerTabs();
@@ -27,11 +28,17 @@ export const DrawerTabs = ({
   return (
     <Tabs
       aria-label="Drawer tabs"
+      className={getDrawerTabsStyles({
+        className,
+        hasShadowTop: !isInterceptInView,
+        theme,
+      })}
       {...rest}
-      className={getDrawerTabsStyles({ className, hasShadowTop, theme })}
+      // DrawerTabs is locked to the small size variant
       size={Size.Small}
-      tabPanelsContainerRef={scrollContainerRef}
     >
+      {/* Empty span element used to track if tab panel container has scrolled down */}
+      <span ref={interceptRef} />
       {children}
     </Tabs>
   );
