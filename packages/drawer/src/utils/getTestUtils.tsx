@@ -1,11 +1,11 @@
 import { getByLgId } from '@lg-tools/test-harnesses';
 
-import { LGIDS_DRAWER } from '../Drawer';
+import { LGIDs } from '../Drawer';
 
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
-  lgId: string = LGIDS_DRAWER.root,
+  lgId: string = LGIDs.root,
 ): GetTestUtilsReturnType<T> => {
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
