@@ -77,10 +77,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 {title}
               </Body>
               {showCloseButton && (
-              <IconButton aria-label="Close drawer" onClick={onClose}>
-                <XIcon />
-              </IconButton>
-            )}
+                <IconButton
+                  aria-label="Close drawer"
+                  data-lgid={LGIDs.closeButton}
+                  data-testid={LGIDs.closeButton}
+                  onClick={onClose}
+                >
+                  <XIcon />
+                </IconButton>
+              )}
             </div>
             <div className={getChildrenContainerStyles({ hasTabs })}>
               {/* Empty span element used to track if children container has scrolled down */}

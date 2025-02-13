@@ -1,5 +1,7 @@
 import { getByLgId } from '@lg-tools/test-harnesses';
 
+import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
+
 import { LGIDs } from '../Drawer';
 
 import { GetTestUtilsReturnType } from './getTestUtils.types';
@@ -14,6 +16,12 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   const element: T = getByLgId!(lgId);
 
   /**
+   * Returns the button test utils for the close button.
+   */
+  const getCloseButtonUtils = () =>
+    getButtonTestUtils<HTMLButtonElement>(LGIDs.closeButton);
+
+  /**
    * Returns the aria-hidden attribute on the drawer.
    */
   const isDrawerOpen = () => {
@@ -21,6 +29,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   };
 
   return {
+    getCloseButtonUtils,
     getDrawer: () => element,
     isOpen: () => isDrawerOpen(),
   };
