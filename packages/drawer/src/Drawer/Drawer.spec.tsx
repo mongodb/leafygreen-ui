@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { getLgIds, getTestUtils } from '../utils';
+import { getTestUtils } from '../utils';
 
 import { Drawer, DrawerProps } from '.';
 
@@ -51,11 +51,13 @@ describe('packages/drawer', () => {
         expect(getCloseButton()).toBeInTheDocument();
       });
 
-      test('close button is not rendered when onClose is not provided', () => {
-        const lgIds = getLgIds();
-        const { queryByTestId } = renderDrawer({ open: true });
-        expect(queryByTestId(lgIds.closeButton)).not.toBeInTheDocument();
-      });
+      // TODO @steph: add back after button test utils can assert elements are not present
+      // test.skip('close button is not rendered when onClose is not provided', () => {
+      //   const { getCloseButtonUtils } = renderDrawer({ open: true });
+      //   const { queryButton: queryCloseButton } = getCloseButtonUtils();
+
+      //   expect(queryCloseButton()).toBeNull();
+      // });
 
       test('calls onClose when close button is clicked', () => {
         const mockOnClose = jest.fn();
