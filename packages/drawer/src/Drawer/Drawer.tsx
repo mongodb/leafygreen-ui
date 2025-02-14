@@ -1,4 +1,5 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import XIcon from '@leafygreen-ui/icon/dist/X';
@@ -9,8 +10,14 @@ import LeafyGreenProvider, {
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { DrawerContext } from '../DrawerContext';
+
 import { LGIDs } from './Drawer.constants';
-import { getDrawerStyles, getHeaderStyles } from './Drawer.styles';
+import {
+  getChildrenContainerStyles,
+  getDrawerStyles,
+  getHeaderStyles,
+} from './Drawer.styles';
 import { DrawerProps } from './Drawer.types';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
@@ -29,39 +36,58 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   ) => {
     const { darkMode, theme } = useDarkMode();
 
+    const [hasTabs, setHasTabs] = useState(false);
+
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
+    // Track when element is no longer visible to add shadow below drawer header
+    const { ref: interceptRef, inView: isInterceptInView } = useInView();
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <div
-          aria-hidden={!open}
-          aria-labelledby={titleId}
-          className={getDrawerStyles({ className, open, theme })}
-          data-lgid={dataLgId}
-          id={id}
-          ref={fwdRef}
-          role="dialog"
-          {...rest}
+        <DrawerContext.Provider
+          value={{ registerTabs: () => setHasTabs(true) }}
         >
-          <div className={getHeaderStyles(theme)}>
-            <Body
-              as={typeof title === 'string' ? 'h2' : 'div'}
-              baseFontSize={BaseFontSize.Body2}
-              id={titleId}
-              weight="medium"
+          <div
+            aria-hidden={!open}
+            aria-labelledby={titleId}
+            className={getDrawerStyles({ className, open, theme })}
+            data-lgid={dataLgId}
+            id={id}
+            ref={fwdRef}
+            role="dialog"
+            {...rest}
+          >
+            <div
+              className={getHeaderStyles({
+                hasShadowTop: !isInterceptInView,
+                hasTabs,
+                theme,
+              })}
             >
-              {title}
-            </Body>
-            <IconButton
-              aria-label="Close drawer"
-              onClick={() => setOpen?.(false)}
-            >
-              <XIcon />
-            </IconButton>
+              <Body
+                as={typeof title === 'string' ? 'h2' : 'div'}
+                baseFontSize={BaseFontSize.Body2}
+                id={titleId}
+                weight="medium"
+              >
+                {title}
+              </Body>
+              <IconButton
+                aria-label="Close drawer"
+                onClick={() => setOpen?.(false)}
+              >
+                <XIcon />
+              </IconButton>
+            </div>
+            <div className={getChildrenContainerStyles({ hasTabs })}>
+              {/* Empty span element used to track if children container has scrolled down */}
+              {!hasTabs && <span ref={interceptRef} />}
+              {children}
+            </div>
           </div>
-          {children}
-        </div>
+        </DrawerContext.Provider>
       </LeafyGreenProvider>
     );
   },
