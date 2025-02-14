@@ -1,8 +1,11 @@
+import { transparentize } from 'polished';
+
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, transitionDuration } from '@leafygreen-ui/tokens';
+import { palette } from '@leafygreen-ui/palette';
+import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { PANEL_WIDTH } from './Drawer.constants';
+import { HEADER_HEIGHT, PANEL_WIDTH } from './Drawer.constants';
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   height: 100%;
@@ -44,11 +47,52 @@ export const getDrawerStyles = ({
     className,
   );
 
-export const getHeaderStyles = (theme: Theme) => css`
-  height: 48px;
-  padding: 16px;
+const getBaseHeaderStyles = ({
+  hasTabs,
+  theme,
+}: {
+  hasTabs: boolean;
+  theme: Theme;
+}) => css`
+  height: ${HEADER_HEIGHT}px;
+  padding: ${spacing[400]}px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${color[theme].border.secondary.default};
+  border-bottom: ${hasTabs
+    ? 'none'
+    : `1px solid ${color[theme].border.secondary.default}`};
+  transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
 `;
+
+export const getShadowTopStyles = ({ theme }: { theme: Theme }) => css`
+  box-shadow: ${theme === Theme.Light
+    ? `0px 10px 20px -10px ${transparentize(0.8, palette.black)}`
+    : '0px 6px 30px -10px rgba(0, 0, 0, 0.5)'};
+`;
+
+export const getHeaderStyles = ({
+  hasShadowTop,
+  hasTabs,
+  theme,
+}: {
+  hasShadowTop: boolean;
+  hasTabs: boolean;
+  theme: Theme;
+}) =>
+  cx(getBaseHeaderStyles({ hasTabs, theme }), {
+    [getShadowTopStyles({ theme })]: hasShadowTop && !hasTabs,
+  });
+
+const baseChildrenContainerStyles = css`
+  height: calc(100% - ${HEADER_HEIGHT}px);
+`;
+
+export const scrollContainerStyles = css`
+  padding: ${spacing[400]}px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+`;
+
+export const getChildrenContainerStyles = ({ hasTabs }: { hasTabs: boolean }) =>
+  cx(baseChildrenContainerStyles, { [scrollContainerStyles]: !hasTabs });
