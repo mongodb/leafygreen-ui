@@ -5,28 +5,56 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { HEADER_HEIGHT, PANEL_WIDTH } from './Drawer.constants';
+import {
+  HEADER_HEIGHT,
+  MOBILE_BREAKPOINT,
+  PANEL_WIDTH,
+} from './Drawer.constants';
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
-  height: 100%;
-  width: ${PANEL_WIDTH}px;
-  position: fixed;
-  top: 0;
-  right: 0;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   transition: transform ${transitionDuration.slower}ms ease-in-out;
+  width: 100%;
+  position: fixed;
+
+  max-width: ${PANEL_WIDTH}px;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: unset;
+  right: 0;
   box-shadow: ${open && theme === Theme.Light
     ? `-10px 0 10px -10px rgba(0,0,0,0.3)`
     : 'initial'};
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    max-width: 100%;
+    height: 50vh;
+    top: unset;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: ${open && theme === Theme.Light
+      ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
+      : 'initial'};
+  }
 `;
 
 const drawerOpenStyles = css`
   transform: translateX(0);
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    transform: translateY(0);
+  }
 `;
 
 const drawerClosedStyles = css`
   transform: translateX(100%);
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    transform: translateY(100%);
+  }
 `;
 
 export const getDrawerStyles = ({
