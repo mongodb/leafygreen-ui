@@ -3,14 +3,15 @@ import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
 
-import { LGIDs } from '../../constants';
-
 import { TestUtilsReturnType } from './getTestUtils.types';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
 export const getTestUtils = (
-  lgId: string = LGIDs.root,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
-  const element = getByLgId!(lgId);
+  const lgIds = getLgIds(lgId);
+
+  const element = getByLgId!(lgIds.root);
 
   const getLanguage = () => {
     const language = element.getAttribute('data-language');
@@ -25,14 +26,14 @@ export const getTestUtils = (
   const getTitle = () => {
     const title = queryBySelector<HTMLInputElement>(
       element,
-      `[data-lgid=${LGIDs.panel}] p`,
+      `[data-lgid=${lgIds.panel}] p`,
     );
 
     return title?.textContent || null;
   };
 
   const getLanguageSwitcherUtils = () => {
-    const testUtils = getSelectTestUtils(LGIDs.select);
+    const testUtils = getSelectTestUtils(lgIds.select);
 
     return {
       getInput: () => testUtils.getInput(),
@@ -45,12 +46,12 @@ export const getTestUtils = (
   const getIsLoading = () => {
     return !!queryBySelector<HTMLElement>(
       element,
-      `[data-lgid=${LGIDs.skeleton}]`,
+      `[data-lgid=${lgIds.skeleton}]`,
     );
   };
 
   const getCopyButtonUtils = () => {
-    const testUtils = getButtonTestUtils(LGIDs.copyButton);
+    const testUtils = getButtonTestUtils(lgIds.copyButton);
 
     return {
       getButton: () => testUtils.getButton() as HTMLButtonElement,
@@ -59,14 +60,14 @@ export const getTestUtils = (
   };
 
   const getExpandButton = () => {
-    const { getButton } = getButtonTestUtils(LGIDs.expandButton);
+    const { getButton } = getButtonTestUtils(lgIds.expandButton);
     return getButton() as HTMLButtonElement;
   };
 
   const getIsExpanded = () => {
     const button = queryBySelector<HTMLButtonElement>(
       element,
-      `[data-lgid=${LGIDs.expandButton}]`,
+      `[data-lgid=${lgIds.expandButton}]`,
     );
 
     return !!button?.textContent?.includes('Click to collapse');

@@ -23,6 +23,7 @@ const CodeContextProvider = ({
   language,
   isLoading,
   showPanel,
+  lgids,
 }: PropsWithChildren<CodeProviderProps>) => {
   const CodeProvider = (CodeContext as React.Context<CodeProviderProps>)
     .Provider;
@@ -33,6 +34,7 @@ const CodeContextProvider = ({
       language,
       showPanel,
       isLoading,
+      lgids,
     };
   }, [contents, language, showPanel, isLoading]);
 
