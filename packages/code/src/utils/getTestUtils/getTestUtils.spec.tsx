@@ -262,8 +262,25 @@ describe('packages/tabs/getTestUtils', () => {
       const testUtils1 = getTestUtils('lg-code-1');
       const testUtils2 = getTestUtils('lg-code-2');
 
-      expect(testUtils1.getLanguage()).toBe('javascript');
-      expect(testUtils2.getLanguage()).toBe('python');
+      expect(testUtils1.getLanguage()).toBe('JavaScript');
+      expect(testUtils2.getLanguage()).toBe('Python');
+    });
+
+    test('returns the corresponding language switcher', () => {
+      renderMultipleCodes();
+
+      const testUtils1 = getTestUtils('lg-code-1');
+      const testUtils2 = getTestUtils('lg-code-2');
+
+      const firstLanguageSwitcher = testUtils1
+        .getLanguageSwitcherUtils()
+        .getInput();
+      const secondLanguageSwitcher = testUtils2
+        .getLanguageSwitcherUtils()
+        .getInput();
+
+      expect(firstLanguageSwitcher.textContent).toBe('JavaScript');
+      expect(secondLanguageSwitcher.textContent).toBe('Python');
     });
   });
 });

@@ -84,10 +84,18 @@ export const renderCodeWithLanguageSwitcher = ({
 export const renderMultipleCodes = (): RenderResult => {
   const renderResults = render(
     <>
-      <Code data-lgid="lg-code-1" language={languageOptions[0].language}>
+      <Code
+        data-lgid="lg-code-1"
+        language={languageOptions[0].displayName}
+        panel={<Panel onChange={() => {}} languageOptions={languageOptions} />}
+      >
         {codeSnippet}
       </Code>
-      <Code data-lgid="lg-code-2" language={languageOptions[1].language}>
+      <Code
+        data-lgid="lg-code-2"
+        language={languageOptions[1].displayName}
+        panel={<Panel onChange={() => {}} languageOptions={languageOptions} />}
+      >
         {codeSnippet}
       </Code>
     </>,
