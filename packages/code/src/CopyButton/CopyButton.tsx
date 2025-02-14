@@ -21,7 +21,6 @@ import Tooltip, {
 
 import { useCodeContext } from '../CodeContext/CodeContext';
 
-// import { LGIDs } from '../constants';
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
