@@ -31,8 +31,7 @@ describe('packages/tabs/getTestUtils', () => {
   describe('single Code', () => {
     describe('getLanguage', () => {
       test('returns the language', () => {
-        renderCode();
-        const { getLanguage } = getTestUtils();
+        const { getLanguage } = renderCode();
         expect(getLanguage()).toBe('javascript');
       });
     });
@@ -40,21 +39,20 @@ describe('packages/tabs/getTestUtils', () => {
     describe('getTitle', () => {
       describe('Without the panel', () => {
         test('returns null', () => {
-          renderCode();
-          const { getTitle } = getTestUtils();
+          const { getTitle } = renderCode();
           expect(getTitle()).toBeNull();
         });
       });
       describe('With panel', () => {
         test('returns null if there is no title prop', () => {
-          renderCodeWithLanguageSwitcher({});
-          const { getTitle } = getTestUtils();
+          const { getTitle } = renderCodeWithLanguageSwitcher({});
           expect(getTitle()).toBeNull();
         });
 
         test('returns the title', () => {
-          renderCodeWithLanguageSwitcher({ props: { title: 'Leafygreen' } });
-          const { getTitle } = getTestUtils();
+          const { getTitle } = renderCodeWithLanguageSwitcher({
+            props: { title: 'Leafygreen' },
+          });
           expect(getTitle()).toBe('Leafygreen');
         });
       });
@@ -63,15 +61,16 @@ describe('packages/tabs/getTestUtils', () => {
     describe('getLanguageSwitcherUtils', () => {
       describe('getInput', () => {
         test('returns the language switcher', () => {
-          renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcherUtils } = getTestUtils();
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher(
+            {},
+          );
+
           expect(getLanguageSwitcherUtils().getInput()).toBeInTheDocument();
         });
 
         test('throws error is the languageSwitcher cannot be found', () => {
           try {
-            renderCode();
-            const { getLanguageSwitcherUtils } = getTestUtils();
+            const { getLanguageSwitcherUtils } = renderCode();
             const _ = getLanguageSwitcherUtils().getInput();
           } catch (error) {
             expect(error).toBeInstanceOf(Error);
@@ -87,22 +86,25 @@ describe('packages/tabs/getTestUtils', () => {
 
       describe('isDisabled', () => {
         test('returns false', () => {
-          renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcherUtils } = getTestUtils();
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher(
+            {},
+          );
           expect(getLanguageSwitcherUtils().isDisabled()).toBe(false);
         });
 
         test('returns true', () => {
-          renderCodeWithLanguageSwitcher({ isLoading: true });
-          const { getLanguageSwitcherUtils } = getTestUtils();
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher({
+            isLoading: true,
+          });
           expect(getLanguageSwitcherUtils().isDisabled()).toBe(true);
         });
       });
 
       describe('getOptions', () => {
         test('returns all options', () => {
-          renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcherUtils } = getTestUtils();
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher(
+            {},
+          );
           userEvent.click(getLanguageSwitcherUtils().getInput()!);
           expect(getLanguageSwitcherUtils().getOptions()).toHaveLength(2);
         });
@@ -110,8 +112,9 @@ describe('packages/tabs/getTestUtils', () => {
 
       describe('getOptionByValue', () => {
         test('returns the option', () => {
-          renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcherUtils } = getTestUtils();
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher(
+            {},
+          );
           userEvent.click(getLanguageSwitcherUtils().getInput()!);
           expect(
             getLanguageSwitcherUtils().getOptionByValue('JavaScript'),
@@ -119,8 +122,9 @@ describe('packages/tabs/getTestUtils', () => {
         });
 
         test('returns null', () => {
-          renderCodeWithLanguageSwitcher({});
-          const { getLanguageSwitcherUtils } = getTestUtils();
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher(
+            {},
+          );
           userEvent.click(getLanguageSwitcherUtils().getInput()!);
           expect(
             getLanguageSwitcherUtils().getOptionByValue('wrong'),
@@ -131,14 +135,12 @@ describe('packages/tabs/getTestUtils', () => {
 
     describe('getIsLoading', () => {
       test('returns false', () => {
-        renderCode();
-        const { getIsLoading } = getTestUtils();
+        const { getIsLoading } = renderCode();
         expect(getIsLoading()).toBe(false);
       });
 
       test('returns true', () => {
-        renderCode({ isLoading: true });
-        const { getIsLoading } = getTestUtils();
+        const { getIsLoading } = renderCode({ isLoading: true });
         expect(getIsLoading()).toBe(true);
       });
     });
@@ -147,24 +149,25 @@ describe('packages/tabs/getTestUtils', () => {
       describe('getButton', () => {
         describe('Without a panel', () => {
           test('returns the copy button', () => {
-            Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-              spy.mockReturnValue(true);
-              return renderCode();
-            });
-            const { getCopyButtonUtils } = getTestUtils();
+            const { getCopyButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCode();
+              },
+            );
             expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
           });
 
           test('throws error is the expand button cannot be found', () => {
             try {
-              Context.within(
+              const { getExpandButton } = Context.within(
                 Jest.spyContext(ClipboardJS, 'isSupported'),
                 spy => {
                   spy.mockReturnValue(true);
                   return renderCode({ copyButtonAppearance: 'none' });
                 },
               );
-              const { getExpandButton } = getTestUtils();
               const _ = getExpandButton();
             } catch (error) {
               expect(error).toBeInstanceOf(Error);
@@ -180,11 +183,13 @@ describe('packages/tabs/getTestUtils', () => {
 
         describe('With a panel', () => {
           test('returns the copy button', () => {
-            Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-              spy.mockReturnValue(true);
-              return renderCodeWithLanguageSwitcher({});
-            });
-            const { getCopyButtonUtils } = getTestUtils();
+            const { getCopyButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCodeWithLanguageSwitcher({});
+              },
+            );
             expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
           });
         });
@@ -192,20 +197,24 @@ describe('packages/tabs/getTestUtils', () => {
 
       describe('isDisabled', () => {
         test('returns true', () => {
-          Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-            spy.mockReturnValue(true);
-            return renderCodeWithLanguageSwitcher({ isLoading: true });
-          });
-          const { getCopyButtonUtils } = getTestUtils();
+          const { getCopyButtonUtils } = Context.within(
+            Jest.spyContext(ClipboardJS, 'isSupported'),
+            spy => {
+              spy.mockReturnValue(true);
+              return renderCodeWithLanguageSwitcher({ isLoading: true });
+            },
+          );
           expect(getCopyButtonUtils().isDisabled()).toBe(true);
         });
 
         test('returns false', () => {
-          Context.within(Jest.spyContext(ClipboardJS, 'isSupported'), spy => {
-            spy.mockReturnValue(true);
-            return renderCodeWithLanguageSwitcher({});
-          });
-          const { getCopyButtonUtils } = getTestUtils();
+          const { getCopyButtonUtils } = Context.within(
+            Jest.spyContext(ClipboardJS, 'isSupported'),
+            spy => {
+              spy.mockReturnValue(true);
+              return renderCodeWithLanguageSwitcher({});
+            },
+          );
           expect(getCopyButtonUtils().isDisabled()).toBe(false);
         });
       });
@@ -215,8 +224,7 @@ describe('packages/tabs/getTestUtils', () => {
       describe('getButton', () => {
         test('throws error is the expand button cannot be found', () => {
           try {
-            renderCode();
-            const { getExpandButton } = getTestUtils();
+            const { getExpandButton } = renderCode();
             const _ = getExpandButton();
           } catch (error) {
             expect(error).toBeInstanceOf(Error);
@@ -230,23 +238,22 @@ describe('packages/tabs/getTestUtils', () => {
         });
 
         test('returns the expand button', () => {
-          renderCode({ expandable: true });
-          const { getExpandButton } = getTestUtils();
+          const { getExpandButton } = renderCode({ expandable: true });
           expect(getExpandButton()).toBeInTheDocument();
         });
       });
 
       describe('isExpanded', () => {
         test('returns true', () => {
-          renderCode({ expandable: true });
-          const { getIsExpanded } = getTestUtils();
+          const { getIsExpanded } = renderCode({ expandable: true });
           // Code snippet is collapsed by default
           expect(getIsExpanded()).toBe(false);
         });
 
         test('returns false', () => {
-          renderCode({ expandable: true });
-          const { getExpandButton, getIsExpanded } = getTestUtils();
+          const { getExpandButton, getIsExpanded } = renderCode({
+            expandable: true,
+          });
           const expandButton = getExpandButton();
           userEvent.click(expandButton!);
           expect(getIsExpanded()).toBe(true);

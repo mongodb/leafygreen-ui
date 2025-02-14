@@ -6,6 +6,7 @@ import { CodeProps } from './Code/Code.types';
 import { PanelProps } from './Panel/Panel.types';
 import { Panel } from './Panel';
 import { Language } from './types';
+import { getTestUtils, TestUtilsReturnType } from './utils';
 
 const codeSnippet = `
 import datetime from './';
@@ -41,15 +42,20 @@ export const languageOptions = [
   },
 ];
 
-export const renderCode = (props: Partial<CodeProps> = {}): RenderResult => {
+export const renderCode = (
+  props: Partial<CodeProps> = {},
+): RenderResult & TestUtilsReturnType => {
   const renderResults = render(
     <Code language={languageOptions[0].language} {...props}>
       {codeSnippet}
     </Code>,
   );
 
+  const testUtils = getTestUtils();
+
   return {
     ...renderResults,
+    ...testUtils,
   };
 };
 
@@ -59,7 +65,7 @@ export const renderCodeWithLanguageSwitcher = ({
 }: {
   props?: Partial<PanelProps>;
   isLoading?: boolean;
-}): RenderResult => {
+}): RenderResult & TestUtilsReturnType => {
   const renderResults = render(
     <Code
       isLoading={isLoading}
@@ -76,8 +82,11 @@ export const renderCodeWithLanguageSwitcher = ({
     </Code>,
   );
 
+  const testUtils = getTestUtils();
+
   return {
     ...renderResults,
+    ...testUtils,
   };
 };
 
