@@ -135,7 +135,7 @@ interface LanguageOption {
 ```tsx
 import { getTestUtils } from '@leafygreen-ui/code';
 
-const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Code`. It defaults to 'lg-code' if left empty.
+const utils = getTestUtils(lgId?: `lg-${string}`); // lgId refers to the custom `data-lgid` attribute passed to `Code`. It defaults to 'lg-code' if left empty.
 ```
 
 #### Single `Code` component

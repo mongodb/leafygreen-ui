@@ -3,8 +3,9 @@ import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select';
 
-import { TestUtilsReturnType } from './getTestUtils.types';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
+
+import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
   lgId: `lg-${string}` = DEFAULT_LGID_ROOT,

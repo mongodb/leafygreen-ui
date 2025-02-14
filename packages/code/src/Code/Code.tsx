@@ -15,6 +15,7 @@ import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import {
   getCodeStyles,
@@ -30,7 +31,6 @@ import {
   DetailedElementProps,
   ScrollState,
 } from './Code.types';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 //TODO: move to utils
 export function hasMultipleLines(string: string): boolean {
