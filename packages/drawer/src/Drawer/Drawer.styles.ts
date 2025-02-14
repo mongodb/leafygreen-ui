@@ -32,9 +32,7 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
     max-width: 100%;
     height: 50vh;
     top: unset;
-    bottom: 0;
     left: 0;
-    right: 0;
     box-shadow: ${open && theme === Theme.Light
       ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
       : 'initial'};
