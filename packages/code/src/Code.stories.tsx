@@ -61,9 +61,17 @@ console.log(greeting('World'));
 `;
 
 const jsCustomSnippet = `
- This is a line where the word _highlight_ is considered a custom keyword and I can change the color with CSS.
+hi _hi_  _--hi_
 
-  This is another line with the word _password_ that I want to highlight.
+hi {{hi}} {{--hi}}
+
+hi ~~hi~~  ~~--hi~~
+
+whats up yall
+
+const hey hey
+
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" ~~--api~~ 1 ~~--username~~ elmo
 `;
 
 // > 5 lines to trigger expandable code block

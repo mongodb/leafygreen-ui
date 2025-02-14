@@ -103,6 +103,7 @@ function Syntax({
       />
     ) : (
       highlightedContent.react
+      // highlightedContent.string
     );
 
   const { theme, darkMode } = useDarkMode();
@@ -140,6 +141,11 @@ function Syntax({
           `}
         >
           <tbody>{content}</tbody>
+          {/* {language === Language.None ? (
+            <tbody>{content}</tbody>
+          ) : (
+            <tbody dangerouslySetInnerHTML={{ __html: content }} />
+          )} */}
         </table>
       </code>
     </SyntaxContext.Provider>

@@ -1,5 +1,6 @@
 import React from 'react';
 import flatMap from 'lodash/flatMap';
+// import ReactDOMServer from 'react-dom/server';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
@@ -170,6 +171,33 @@ export function LineTableRow({
     ? palette.gray.light3
     : palette.yellow.dark2;
 
+  // const childrenToHtmlString = children => {
+  //   return ReactDOMServer.renderToStaticMarkup(<>{children}</>);
+  // };
+
+  // console.log({ children, string: childrenToHtmlString(children) });
+
+  // const mergeStringsIntoString = children => {
+  //   const childArray = React.Children.toArray(children); // Ensure it's an array
+
+  //   return childArray.reduce((acc, child) => {
+  //     const lastItem = acc[acc.length - 1];
+
+  //     if (typeof child === 'string') {
+  //       if (typeof lastItem === 'string') {
+  //         acc[acc.length - 1] = lastItem + child; // Merge consecutive strings
+  //       } else {
+  //         acc.push(child);
+  //       }
+  //     } else {
+  //       acc.push(child); // Keep React elements untouched
+  //     }
+
+  //     return acc;
+  //   }, []);
+  // };
+
+  // console.log({ mergeStringsIntoString: mergeStringsIntoString(children) });
   return (
     <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
       {lineNumber && (
@@ -190,6 +218,10 @@ export function LineTableRow({
       )}
 
       <td className={cellStyle}>{children}</td>
+      {/* <td
+        className={cellStyle}
+        dangerouslySetInnerHTML={{ __html: childrenToHtmlString(children) }}
+      /> */}
     </tr>
   );
 }
@@ -233,39 +265,52 @@ export function flattenNestedTree(
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
+      console.log({ entity });
       if (isString(entity)) {
-        if (parentKinds.length > 0) {
-          return {
-            kind: generateKindClassName(
-              kind,
-              ...parentKinds,
-              ...childrenAsKeywords(entity),
-            ),
-            children: [entity],
-          };
-        } else {
-          // Splits up the string by underscores
-          // E.g. "This is before _hi_ this is after" => ["This is before ", "_hi_", " this is after"]
-          const splitContentByUnderscore = entity.split(/(_\w+_)/);
+        // if (parentKinds.length > 0) {
+        //   return {
+        //     kind: generateKindClassName(
+        //       kind,
+        //       ...parentKinds,
+        //       ...childrenAsKeywords(entity),
+        //     ),
+        //     children: [entity],
+        //   };
+        // } else {
+        //   // Splits up the string by underscores
+        //   // E.g. "This is before _hi_ this is after" => ["This is before ", "_hi_", " this is after"]
+        //   const splitContentByUnderscore = entity.split(/(~~[\w-]+~~)/);
 
-          // If the array is greater than one then there are underscores in the string and we want to return each item in the array as an entity.
-          if (splitContentByUnderscore.length > 1) {
-            return splitContentByUnderscore.map(str => {
-              // If the string starts and ends with an underscore, we want to remove them and return a new entity with a custom kind.
-              if (str.startsWith('_') && str.endsWith('_')) {
-                const removeUnderscores = str.slice(1, -1);
-                return {
-                  kind: generateKindClassName(`${prefix}custom`),
-                  children: [removeUnderscores],
-                };
-              }
+        //   console.log({ entity, splitContentByUnderscore });
 
-              return str;
-            });
-          }
+        //   // If the array is greater than one then there are underscores in the string and we want to return each item in the array as an entity.
+        //   if (splitContentByUnderscore.length > 1) {
+        //     return splitContentByUnderscore.map(str => {
+        //       // If the string starts and ends with an underscore, we want to remove them and return a new entity with a custom kind.
+        //       if (str.startsWith('~~') && str.endsWith('~~')) {
+        //         const removeUnderscores = str.slice(2, -2);
+        //         return {
+        //           kind: generateKindClassName(`${prefix}custom`),
+        //           children: [removeUnderscores],
+        //         };
+        //       }
 
-          return entity;
-        }
+        //       return str;
+        //     });
+        //   }
+
+        //   return entity;
+        // }
+        return parentKinds.length > 0
+          ? {
+              kind: generateKindClassName(
+                kind,
+                ...parentKinds,
+                ...childrenAsKeywords(entity),
+              ),
+              children: [entity],
+            }
+          : entity; // entity is basic text
       }
 
       // If this is a nested entity, then flat map it's children
@@ -323,6 +368,8 @@ export function treeToLines(
   const lines: LineDefinition = [];
   let currentLineIndex = 0;
 
+  // console.log({ children });
+
   // Create a new line, if no lines exist yet
   if (lines[currentLineIndex] == null) {
     lines[currentLineIndex] = [];
@@ -333,7 +380,11 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   };
 
+  console.log({ flatArray: flattenNestedTree(children) });
+
   flattenNestedTree(children).forEach(child => {
+    // console.log({ child });
+
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
       if (isString(child)) {
@@ -410,14 +461,65 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
+        const mergeStringsIntoString = children => {
+          return children.reduce((acc, child) => {
+            const lastItem = acc[acc.length - 1];
+
+            if (typeof child === 'string') {
+              if (typeof lastItem === 'string') {
+                acc[acc.length - 1] = lastItem + child; // Merge consecutive strings
+              } else {
+                acc.push(child);
+              }
+            } else {
+              acc.push(child); // Keep React elements untouched
+            }
+
+            return acc;
+          }, []);
+        };
+
+        const mergedLines = mergeStringsIntoString(line);
+
+        const newLines = mergedLines.map((line, index) => {
+          if (typeof line === 'string') {
+            const splitContentByUnderscore = line.split(/(~~[\w-]+~~)/);
+
+            if (splitContentByUnderscore.length > 1) {
+              return splitContentByUnderscore.map(str => {
+                // If the string starts and ends with an underscore, we want to remove them and return a new entity with a custom kind.
+                if (str.startsWith('~~') && str.endsWith('~~')) {
+                  const removeUnderscores = str.slice(2, -2);
+                  return {
+                    kind: generateKindClassName(`${prefix}custom`),
+                    children: [removeUnderscores],
+                  };
+                }
+
+                return str;
+              });
+            }
+          }
+
+          return line;
+        });
+
+        // TODO: if any merged line is a string, we need to split it by the special character and add a kind. This would avoid turning the component into a string.
+
+        console.log({
+          line,
+          mergedLines,
+          newLines,
+        });
+
         let displayLineNumber;
 
         if (showLineNumbers) {
           displayLineNumber = currentLineNumber;
         }
 
-        const processedLine = line?.length ? (
-          line.map(processToken)
+        const processedLine = newLines?.length ? (
+          newLines.map(processToken)
         ) : (
           // We create placeholder content when a line break appears to preserve the line break's height
           // It needs to be inline-block for the table row to not collapse.
@@ -427,6 +529,8 @@ export function TableContent({ lines }: TableContentProps) {
             `}
           />
         );
+
+        // console.log({ processedLine });
 
         return (
           <LineTableRow
@@ -446,8 +550,25 @@ export function TableContent({ lines }: TableContentProps) {
 const plugin: LeafyGreenHLJSPlugin = {
   'after:highlight': function (result: LeafyGreenHighlightResult) {
     const { rootNode } = result._emitter;
-    // console.log(JSON.stringify(rootNode.children, null, 2));
+    // console.log(JSON.stringify(treeToLines(rootNode.children), null, 2));
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+
+    // const transformUnderscoreWords = htmlString => {
+    //   // console.log({ htmlString });
+    //   // return htmlString.replace(
+    //   //   /~~([-\w]+)~~/g,
+    //   //   `<span class=${prefix}custom>$1</span>`,
+    //   // );
+    //   return htmlString;
+    // };
+
+    // // Example usage:
+    // const string = ReactDOMServer.renderToStaticMarkup(result.react);
+
+    // // console.log({ string });
+    // const transformedString = transformUnderscoreWords(string);
+
+    // result.string = transformedString;
   },
 };
 
