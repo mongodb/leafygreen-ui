@@ -8,14 +8,18 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 import { getShadowTopStyles, scrollContainerStyles } from '../Drawer';
 
+import { TAB_LIST_HEIGHT } from './DrawerTabs.constants';
+
 const baseDrawerTabsStyles = css`
   height: 100%;
 
   .${tabListElementClassName} {
+    height: ${TAB_LIST_HEIGHT}px;
     padding: 0 ${spacing[400]}px 0 ${spacing[200]}px;
   }
 
   .${tabPanelsElementClassName} {
+    height: calc(100% - ${TAB_LIST_HEIGHT}px);
     ${scrollContainerStyles}
   }
 `;

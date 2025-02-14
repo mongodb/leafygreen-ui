@@ -5,7 +5,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { PANEL_WIDTH } from './Drawer.constants';
+import { HEADER_HEIGHT, PANEL_WIDTH } from './Drawer.constants';
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   height: 100%;
@@ -54,7 +54,7 @@ const getBaseHeaderStyles = ({
   hasTabs: boolean;
   theme: Theme;
 }) => css`
-  height: 48px;
+  height: ${HEADER_HEIGHT}px;
   padding: ${spacing[400]}px;
   display: flex;
   justify-content: space-between;
@@ -85,11 +85,10 @@ export const getHeaderStyles = ({
   });
 
 const baseChildrenContainerStyles = css`
-  height: 100%;
+  height: calc(100% - ${HEADER_HEIGHT}px);
 `;
 
 export const scrollContainerStyles = css`
-  height: 100%;
   padding: ${spacing[400]}px;
   overflow-y: auto;
   overscroll-behavior: contain;
