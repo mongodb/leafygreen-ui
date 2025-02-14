@@ -1,3 +1,4 @@
 export { Drawer } from './Drawer';
 export { LGIDs } from './Drawer.constants';
+export { getShadowTopStyles, scrollContainerStyles } from './Drawer.styles';
 export { type DrawerProps } from './Drawer.types';

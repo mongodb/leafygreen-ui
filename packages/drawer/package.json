@@ -21,13 +21,17 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/tabs": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
-    "polished": "^4.2.2"
+    "polished": "^4.2.2",
+    "react-intersection-observer": "^8.25.1"
 
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@leafygreen-ui/button": "workspace:^"
   },
   "peerDependencies": {
