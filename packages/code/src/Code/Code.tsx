@@ -74,6 +74,8 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
 
+  console.log({ className });
+
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
 
@@ -233,7 +235,6 @@ function Code({
                 collapsedCodeHeight,
                 isMultiline,
                 showExpandButton,
-                className,
               })}
               onScroll={onScroll}
               ref={scrollableElementRef}

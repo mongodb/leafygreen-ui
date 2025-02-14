@@ -37,6 +37,8 @@ const customActionButtons = [
 const jsSnippet = `
 import datetime from './';
 
+hello there _hi_ and ok this is _great_ yup
+
 const myVar = 42;
 
 var myObj = {
@@ -54,8 +56,22 @@ export default class myClass {
 function greeting(entity) {
   return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
- 
+
 console.log(greeting('World'));
+`;
+
+const jsCustomSnippet = `
+hi _hi_  _--hi_
+
+hi {{hi}} {{--hi}}
+
+hi ~~hi~~  ~~--hi~~
+
+whats up yall
+
+const hey hey
+
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" ~~--api~~ 1 ~~--username~~ elmo
 `;
 
 // > 5 lines to trigger expandable code block
@@ -136,9 +152,40 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
       highlightLines={highlightLines ? [6, [10, 15]] : undefined}
       className={css`
         width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
       `}
     >
       {jsSnippet}
+    </Code>
+  </LeafygreenProvider>
+);
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <LeafygreenProvider baseFontSize={baseFontSize}>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
+      `}
+    >
+      {jsCustomSnippet}
     </Code>
   </LeafygreenProvider>
 );
