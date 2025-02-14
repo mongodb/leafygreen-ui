@@ -7,4 +7,4 @@ import {
 export type SelectElements = FormElements<HTMLButtonElement> & DropdownElements;
 export type SelectUtils = Omit<FormUtils, 'isValid' | 'isOptional'>;
 
-export type TestUtilsReturnType = SelectElements & SelectUtils;
+export type GetTestUtilsReturnType = SelectElements & SelectUtils;
