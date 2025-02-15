@@ -41,7 +41,7 @@ function ExampleComponent() {
       <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
         Open Drawer
       </Button>
-      <Drawer open={open} setOpen={setOpen} title="Drawer Title">
+      <Drawer open={open} onClose={() => setOpen(false)} title="Drawer Title">
         <DrawerTabs>
           <Tab name="Tab 1">Tab 1 content</Tab>
           <Tab name="Tab 2">Tab 2 content</Tab>
@@ -57,12 +57,12 @@ function ExampleComponent() {
 
 ### Drawer
 
-| Prop                    | Type        | Description                                        | Default |
-| ----------------------- | ----------- | -------------------------------------------------- | ------- |
-| `children` _(optional)_ | `ReactNode` | Children that will be rendered inside the `Drawer` |         |
-| `open`                  | `boolean`   | Determines if the `Drawer` is open or closed       | `false` |
-| `setOpen`               | `function`  | Callback to change the open state of the `Drawer`  |         |
-| `title`                 | `ReactNode` | Title of the `Drawer`                              |         |
+| Prop                    | Type                                         | Description                                                                                                     | Default |
+| ----------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------- |
+| `children` _(optional)_ | `React.ReactNode`                            | Children that will be rendered inside the `Drawer`                                                              |         |
+| `onClose` _(optional)_  | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header |         |
+| `open` _(optional)_     | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                    | `false` |
+| `title`                 | `React.ReactNode`                            | Title of the `Drawer`                                                                                           |         |
 
 ### DrawerTabs
 
@@ -93,10 +93,15 @@ import { Drawer, getTestUtils } from '@leafygreen-ui/drawer';
 ...
 
 test('drawer', () => {
-  render(<Drawer title="Drawer Title">Drawer content goes here.</Drawer>);
-  const { getDrawer } = getTestUtils();
+  render(
+    <Drawer open={open} onClose={() => setOpen(false)} title="Drawer Title">
+      Drawer content goes here.
+    </Drawer>
+  );
+  const { getCloseButtonUtils, getDrawer } = getTestUtils();
 
   expect(getDrawer()).toBeInTheDocument();
+  expect(getCloseButtonUtils().getButton()).toBeInTheDocument();
 });
 ```
 
@@ -136,10 +141,11 @@ test('Drawer', () => {
 ### Test Utils
 
 ```tsx
-const { getDrawer, isOpen } = getTestUtils();
+const { getCloseButtonUtils, getDrawer, isOpen } = getTestUtils();
 ```
 
-| Util        | Description                          | Returns          |
-| ----------- | ------------------------------------ | ---------------- |
-| `getDrawer` | Returns the drawer node              | `HTMLDivElement` |
-| `isOpen`    | Returns whether the drawer is hidden | `boolean`        |
+| Util                  | Description                                        | Returns                                                                                                                  |
+| --------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `getCloseButtonUtils` | Returns the button test utils for the close button | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getDrawer`           | Returns the drawer node                            | `HTMLDivElement`                                                                                                         |
+| `isOpen`              | Returns whether the drawer is hidden               | `boolean`                                                                                                                |
