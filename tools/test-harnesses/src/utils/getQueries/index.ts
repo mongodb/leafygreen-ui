@@ -32,5 +32,5 @@ function getBaseQueries() {
   } as const;
 }
 
-const lgQueries = getBaseQueries();
-export { lgQueries };
+const { findByLgId, getByLgId, queryByLgId } = getBaseQueries();
+export { findByLgId, getByLgId, queryByLgId };

@@ -1,9 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { lgQueries } from '../../utils/getQueries';
-
-const { getByLgId } = lgQueries;
+import { getByLgId } from '../../utils/getQueries';
 
 describe('getByLgId', () => {
   test('gets element with id', () => {

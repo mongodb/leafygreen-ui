@@ -1,4 +1,2 @@
-import { lgQueries } from './getQueries';
-const { findByLgId, getByLgId } = lgQueries;
-export { findByLgId, getByLgId };
+export * from './getQueries';
 export { queryBySelector } from './queryBySelector';
