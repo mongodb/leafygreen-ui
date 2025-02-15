@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
@@ -9,24 +9,11 @@ import { Drawer, DrawerProps } from '.';
 
 const drawerContent = 'Drawer content';
 
-const DrawerWrapper = ({
-  open: initialOpen = false,
-  ...props
-}: DrawerProps) => {
-  const [open, setOpen] = useState(initialOpen);
-
-  return (
-    <Drawer {...props} open={open} setOpen={setOpen}>
-      {drawerContent}
-    </Drawer>
-  );
-};
-
 function renderDrawer(props: Partial<DrawerProps> = {}) {
   const utils = render(
-    <DrawerWrapper title="Drawer title" {...props}>
+    <Drawer title="Drawer title" {...props}>
       {drawerContent}
-    </DrawerWrapper>,
+    </Drawer>,
   );
   const { getDrawer, ...testUtils } = getTestUtils();
   const drawer = getDrawer();
@@ -53,12 +40,39 @@ describe('packages/drawer', () => {
       expect(drawer).toHaveAttribute('id', 'test-id');
     });
 
-    test('closes drawer when close button is clicked', async () => {
-      const { drawer, getByRole } = renderDrawer({ open: true });
-      const closeButton = getByRole('button');
+    describe('onClose', () => {
+      test('close button is rendered when onClose is provided', () => {
+        const { getCloseButtonUtils } = renderDrawer({
+          open: true,
+          onClose: jest.fn(),
+        });
+        const { getButton: getCloseButton } = getCloseButtonUtils();
 
-      userEvent.click(closeButton);
-      expect(drawer).toHaveAttribute('aria-hidden', 'true');
+        expect(getCloseButton()).toBeInTheDocument();
+      });
+
+      // TODO @steph: add back after button test utils can assert elements are not present
+      // test.skip('close button is not rendered when onClose is not provided', () => {
+      //   const { getCloseButtonUtils } = renderDrawer({ open: true });
+      //   const { queryButton: queryCloseButton } = getCloseButtonUtils();
+
+      //   expect(queryCloseButton()).toBeNull();
+      // });
+
+      test('calls onClose when close button is clicked', () => {
+        const mockOnClose = jest.fn();
+        const { getCloseButtonUtils } = renderDrawer({
+          open: true,
+          onClose: mockOnClose,
+        });
+        const { getButton: getCloseButton } = getCloseButtonUtils();
+        const closeButton = getCloseButton();
+
+        expect(closeButton).toBeInTheDocument();
+
+        userEvent.click(closeButton);
+        expect(mockOnClose).toHaveBeenCalledTimes(1);
+      });
     });
   });
 });

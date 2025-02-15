@@ -11,8 +11,8 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DrawerContext } from '../DrawerContext';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
-import { LGIDs } from './Drawer.constants';
 import {
   getChildrenContainerStyles,
   getDrawerStyles,
@@ -25,10 +25,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     {
       children,
       className,
-      'data-lgid': dataLgId = LGIDs.root,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       id: idProp,
+      onClose,
       open = false,
-      setOpen,
       title,
       ...rest
     },
@@ -38,11 +38,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const [hasTabs, setHasTabs] = useState(false);
 
+    const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
     // Track when element is no longer visible to add shadow below drawer header
     const { ref: interceptRef, inView: isInterceptInView } = useInView();
+
+    const showCloseButton = !!onClose;
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -53,7 +56,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             aria-hidden={!open}
             aria-labelledby={titleId}
             className={getDrawerStyles({ className, open, theme })}
-            data-lgid={dataLgId}
+            data-lgid={lgIds.root}
             id={id}
             ref={fwdRef}
             role="dialog"
@@ -74,12 +77,15 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               >
                 {title}
               </Body>
-              <IconButton
-                aria-label="Close drawer"
-                onClick={() => setOpen?.(false)}
-              >
-                <XIcon />
-              </IconButton>
+              {showCloseButton && (
+                <IconButton
+                  aria-label="Close drawer"
+                  data-lgid={lgIds.closeButton}
+                  onClick={onClose}
+                >
+                  <XIcon />
+                </IconButton>
+              )}
             </div>
             <div className={getChildrenContainerStyles({ hasTabs })}>
               {/* Empty span element used to track if children container has scrolled down */}

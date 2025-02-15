@@ -13,9 +13,9 @@ export interface DrawerProps
   open?: boolean;
 
   /**
-   * Callback to change the open state of the Drawer
+   * Event handler called on close button click. If provided, a close button will be rendered in the Drawer header.
    */
-  setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose?: React.MouseEventHandler<HTMLButtonElement>;
 
   /**
    * Title of the Drawer

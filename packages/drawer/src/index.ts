@@ -1,3 +1,3 @@
-export { Drawer, type DrawerProps, LGIDs } from './Drawer';
+export { Drawer, type DrawerProps } from './Drawer';
 export { DrawerTabs, type DrawerTabsProps } from './DrawerTabs';
-export { getTestUtils } from './utils';
+export { getLgIds, getTestUtils, type GetTestUtilsReturnType } from './utils';

@@ -10,4 +10,4 @@ Stub for Drawer changeset
 
 #### Test Harnesses
 - Exports `getTestUtils`, a util to reliably interact with LG `Drawer` component instances in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/drawer#test-harnesses)
-- Exports the constant, `LGIDS_DRAWER`, which stores `data-lgid` values.
+- Exports `getLgIds`, a util to instantiate an object of `data-lgid` values for a given LG `Drawer` component instance.
