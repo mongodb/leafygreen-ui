@@ -53,12 +53,13 @@ export default {
 
 const LiveExampleComponent = args => {
   const [open, setOpen] = useState(false);
+
   return (
     <div>
       <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
         Open Drawer
       </Button>
-      <Drawer {...args} open={open} setOpen={setOpen} />
+      <Drawer {...args} open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };

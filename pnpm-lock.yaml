@@ -1202,6 +1202,9 @@ importers:
 
   packages/drawer:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1245,9 +1248,6 @@ importers:
       '@faker-js/faker':
         specifier: ^8.0.2
         version: 8.0.2
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
 
   packages/emotion:
     dependencies:
