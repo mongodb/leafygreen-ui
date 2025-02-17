@@ -443,6 +443,7 @@ export const ColumnVisibility: StoryFn<StoryTableProps> = args => {
             key={column.id}
             onChange={column.getToggleVisibilityHandler()}
             checked={column.getIsVisible()}
+            data-testid={`lg-column-visibility-${column.id}`}
           />
         );
       })}
@@ -470,7 +471,7 @@ export const ColumnVisibility: StoryFn<StoryTableProps> = args => {
               <Row key={row.id} row={row}>
                 {row.getVisibleCells().map(cell => {
                   return (
-                    <Cell key={cell.id}>
+                    <Cell key={cell.id} cell={cell}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
@@ -485,6 +486,12 @@ export const ColumnVisibility: StoryFn<StoryTableProps> = args => {
       </Table>
     </div>
   );
+};
+
+ColumnVisibility.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const WithButtons: StoryFn<StoryTableProps> = args => {

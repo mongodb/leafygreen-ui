@@ -8,7 +8,7 @@ import useLeafyGreenTable, {
 } from '../useLeafyGreenTable';
 import {
   ColumnDef,
-  ExpandedState,
+  // ExpandedState,
   LeafyGreenVirtualItem,
   SortingState,
   useLeafyGreenVirtualTable,
@@ -98,7 +98,17 @@ export interface TestTableWithHookProps {
   stateProps?: any;
   additionalData?: Array<Person>;
   hasData?: boolean;
+  hasToggleCheckboxes?: boolean;
 }
+
+const defaultColumnVisibility = {
+  id: true,
+  firstName: true,
+  lastName: true,
+  age: true,
+  visits: true,
+  status: true,
+};
 
 /**
  * A useLeafyGreenTable hook call utilized across different test suites to simplify test `render`s' markup
@@ -118,19 +128,20 @@ export const useTestHookCall = ({
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [expanded, setExpanded] = React.useState<ExpandedState>({});
+  // const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table: LeafyGreenTable<Person> = useLeafyGreenTable({
     data,
     columns,
+    initialState: { columnVisibility: defaultColumnVisibility },
     state: {
       sorting,
-      expanded,
+      // expanded,
       rowSelection,
     },
     onSortingChange: setSorting,
-    onExpandedChange: setExpanded,
+    // onExpandedChange: setExpanded,
     onRowSelectionChange: setRowSelection,
     ...hookProps,
   });

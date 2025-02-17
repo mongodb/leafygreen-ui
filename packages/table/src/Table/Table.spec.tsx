@@ -25,14 +25,32 @@ import {
 } from '../utils/testHookCalls.testutils';
 
 import Table from '.';
-function TableWithHook(props: TestTableWithHookProps) {
+import Checkbox from '@leafygreen-ui/checkbox';
+function TableWithHook({
+  hasToggleCheckboxes = false,
+  ...props
+}: TestTableWithHookProps) {
   const { table, rowSelection } = useTestHookCall(props);
   const { rows } = table.getRowModel();
+
   return (
     <>
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
+      {hasToggleCheckboxes &&
+        table.getAllColumns().map(column => {
+          if (!column.getCanHide()) return null;
+          return (
+            <Checkbox
+              label={column.id}
+              key={column.id}
+              onChange={column.getToggleVisibilityHandler()}
+              checked={column.getIsVisible()}
+              data-testid={`lg-column-visibility-${column.id}`}
+            />
+          );
+        })}
       <Table table={table}>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -203,6 +221,37 @@ describe('packages/table/Table', () => {
       expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent(initialFirstId!);
+    });
+  });
+
+  describe('column visibility', () => {
+    test('renders the correct cells in a row by default', () => {
+      render(<TableWithHook hasToggleCheckboxes />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells().length).toEqual(6);
+    });
+
+    test('renders the correct cells after toggling a cells visibility to hidden', () => {
+      const { getByTestId } = render(<TableWithHook hasToggleCheckboxes />);
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+      userEvent.click(
+        getByTestId('lg-column-visibility-id'),
+        {},
+        { skipPointerEventsCheck: true },
+      );
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(5);
+    });
+
+    test('renders the correct cells after toggling a cells visibility back to visible', () => {
+      const { getByTestId } = render(<TableWithHook hasToggleCheckboxes />);
+      const { getRowByIndex } = getTestUtils();
+      const toggleIdCheckbox = getByTestId('lg-column-visibility-id');
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+      userEvent.click(toggleIdCheckbox, {}, { skipPointerEventsCheck: true });
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(5);
+      userEvent.click(toggleIdCheckbox, {}, { skipPointerEventsCheck: true });
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
     });
   });
 
