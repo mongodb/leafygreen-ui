@@ -1,6 +1,5 @@
 import React from 'react';
 import flatMap from 'lodash/flatMap';
-// import ReactDOMServer from 'react-dom/server';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
@@ -218,10 +217,6 @@ export function LineTableRow({
       )}
 
       <td className={cellStyle}>{children}</td>
-      {/* <td
-        className={cellStyle}
-        dangerouslySetInnerHTML={{ __html: childrenToHtmlString(children) }}
-      /> */}
     </tr>
   );
 }
@@ -461,6 +456,7 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
+        // Merge consecutive strings into a single string
         const mergeStringsIntoString = children => {
           return children.reduce((acc, child) => {
             const lastItem = acc[acc.length - 1];
@@ -481,7 +477,8 @@ export function TableContent({ lines }: TableContentProps) {
 
         const mergedLines = mergeStringsIntoString(line);
 
-        const newLines = mergedLines.map((line, index) => {
+        // Maps over the merged lines and checks if the line contains underscores. If it does, it splits the line by underscores and returns a new entity with a custom kind.
+        const newLines = mergedLines.map(line => {
           if (typeof line === 'string') {
             const splitContentByUnderscore = line.split(/(~~[\w-]+~~)/);
 
@@ -503,8 +500,6 @@ export function TableContent({ lines }: TableContentProps) {
 
           return line;
         });
-
-        // TODO: if any merged line is a string, we need to split it by the special character and add a kind. This would avoid turning the component into a string.
 
         console.log({
           line,
@@ -530,8 +525,6 @@ export function TableContent({ lines }: TableContentProps) {
           />
         );
 
-        // console.log({ processedLine });
-
         return (
           <LineTableRow
             key={currentLineNumber}
@@ -552,23 +545,6 @@ const plugin: LeafyGreenHLJSPlugin = {
     const { rootNode } = result._emitter;
     // console.log(JSON.stringify(treeToLines(rootNode.children), null, 2));
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
-
-    // const transformUnderscoreWords = htmlString => {
-    //   // console.log({ htmlString });
-    //   // return htmlString.replace(
-    //   //   /~~([-\w]+)~~/g,
-    //   //   `<span class=${prefix}custom>$1</span>`,
-    //   // );
-    //   return htmlString;
-    // };
-
-    // // Example usage:
-    // const string = ReactDOMServer.renderToStaticMarkup(result.react);
-
-    // // console.log({ string });
-    // const transformedString = transformUnderscoreWords(string);
-
-    // result.string = transformedString;
   },
 };
 
