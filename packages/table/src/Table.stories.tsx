@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useState, useRef } from 'react';
+import React, { Fragment, useMemo, useState, useEffect } from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -252,7 +252,14 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
 
 export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(200));
+  const [data] = useState(() => makeKitchenSinkData(400));
+
+  const startTime = performance.now(); // Capture start time
+
+  useEffect(() => {
+    const endTime = performance.now();
+    console.log(`Table rendered in ${endTime - startTime} ms`);
+  }, []); // Runs after the first render
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
