@@ -8,7 +8,6 @@ import useLeafyGreenTable, {
 } from '../useLeafyGreenTable';
 import {
   ColumnDef,
-  // ExpandedState,
   LeafyGreenVirtualItem,
   SortingState,
   useLeafyGreenVirtualTable,
@@ -128,7 +127,6 @@ export const useTestHookCall = ({
   );
   const [columns] = useState(() => getDefaultTestColumns(columnProps ?? {}));
   const [sorting, setSorting] = useState<SortingState>([]);
-  // const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table: LeafyGreenTable<Person> = useLeafyGreenTable({
@@ -137,11 +135,9 @@ export const useTestHookCall = ({
     initialState: { columnVisibility: defaultColumnVisibility },
     state: {
       sorting,
-      // expanded,
       rowSelection,
     },
     onSortingChange: setSorting,
-    // onExpandedChange: setExpanded,
     onRowSelectionChange: setRowSelection,
     ...hookProps,
   });
