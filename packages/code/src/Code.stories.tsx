@@ -60,18 +60,26 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
+// const jsCustomSnippet = `
+// hi _hi_  _--hi_
+
+// hi {{hi}} {{--hi}}
+
+// hi ~~hi~~  ~~--hi~~
+
+// whats up yall
+
+// const hey hey
+
+// mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" ~~--api~~ 1 ~~--username~~ elmo
+// `;
+
 const jsCustomSnippet = `
-hi _hi_  _--hi_
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username elmo
 
-hi {{hi}} {{--hi}}
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username elmo
 
-hi ~~hi~~  ~~--hi~~
-
-whats up yall
-
-const hey hey
-
-mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" ~~--api~~ 1 ~~--username~~ elmo
+testing this line
 `;
 
 // > 5 lines to trigger expandable code block
@@ -184,6 +192,10 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
           color: red;
         }
       `}
+      customKeywordObject={{
+        testing: 'custom',
+        '--api': 'custom',
+      }}
     >
       {jsCustomSnippet}
     </Code>

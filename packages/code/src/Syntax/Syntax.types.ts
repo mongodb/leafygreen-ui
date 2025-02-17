@@ -32,4 +32,6 @@ export interface SyntaxProps extends ComponentPropsWithoutRef<'code'> {
    * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
    */
   highlightLines?: LineHighlightingDefinition;
+
+  customKeywordObject?: Record<string, string>;
 }

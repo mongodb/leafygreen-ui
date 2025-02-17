@@ -111,6 +111,8 @@ export type CodeProps = Omit<
    * @deprecated
    */
   copyable?: boolean;
+
+  customKeywordObject?: Record<string, string>;
 } & (
     | {
         /**

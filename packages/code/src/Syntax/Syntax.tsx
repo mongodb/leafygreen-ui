@@ -36,7 +36,9 @@ function filterSupportedLanguages(
 
 let syntaxHighlightingInitialized = false;
 
-function initializeSyntaxHighlighting() {
+function initializeSyntaxHighlighting(
+  customKeywordObject?: Record<string, string>,
+) {
   syntaxHighlightingInitialized = true;
 
   injectGlobalStyles();
@@ -59,7 +61,7 @@ function initializeSyntaxHighlighting() {
     tabReplace: '  ',
   } as Partial<HLJSOptions>);
 
-  hljs.addPlugin(renderingPlugin as HLJSPlugin);
+  hljs.addPlugin(renderingPlugin({ customKeywordObject }) as HLJSPlugin);
 }
 
 const codeStyles = css`
@@ -77,10 +79,11 @@ function Syntax({
   lineNumberStart,
   highlightLines = [],
   className,
+  customKeywordObject,
   ...rest
 }: SyntaxProps) {
   if (!syntaxHighlightingInitialized) {
-    initializeSyntaxHighlighting();
+    initializeSyntaxHighlighting(customKeywordObject);
   }
 
   const highlightedContent: LeafyGreenHighlightResult | null = useMemo(() => {

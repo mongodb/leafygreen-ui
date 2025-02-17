@@ -19,6 +19,8 @@ interface TokenProps {
 
 const prefix = 'lg-highlight-';
 
+let customKeyWords: Record<string, string> = {};
+
 export function generateKindClassName(...kinds: Array<any>): string {
   return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
@@ -260,42 +262,36 @@ export function flattenNestedTree(
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
-      console.log({ entity });
+      // console.log({ entity });
       if (isString(entity)) {
-        // if (parentKinds.length > 0) {
-        //   return {
-        //     kind: generateKindClassName(
-        //       kind,
-        //       ...parentKinds,
-        //       ...childrenAsKeywords(entity),
-        //     ),
-        //     children: [entity],
-        //   };
-        // } else {
-        //   // Splits up the string by underscores
-        //   // E.g. "This is before _hi_ this is after" => ["This is before ", "_hi_", " this is after"]
-        //   const splitContentByUnderscore = entity.split(/(~~[\w-]+~~)/);
+        // const keyword = Object.keys(customKeyWords).find(key =>
+        //   entity.includes(key),
+        // );
+        // if (keyword) {
+        //   // Do some logic if entity contains one of the keys in customKeyWords
+        //   const splitContentByKeyword = entity.split(
+        //     new RegExp(`(${keyword})`, 'g'),
+        //   );
 
-        //   console.log({ entity, splitContentByUnderscore });
+        //   console.log(`Entity contains custom keyword: ${keyword}`, {
+        //     splitContentByKeyword,
+        //   });
 
-        //   // If the array is greater than one then there are underscores in the string and we want to return each item in the array as an entity.
-        //   if (splitContentByUnderscore.length > 1) {
-        //     return splitContentByUnderscore.map(str => {
-        //       // If the string starts and ends with an underscore, we want to remove them and return a new entity with a custom kind.
-        //       if (str.startsWith('~~') && str.endsWith('~~')) {
-        //         const removeUnderscores = str.slice(2, -2);
-        //         return {
-        //           kind: generateKindClassName(`${prefix}custom`),
-        //           children: [removeUnderscores],
-        //         };
-        //       }
+        //   return splitContentByKeyword.map(str => {
+        //     if (str === keyword) {
+        //       console.log({ str, keyword });
+        //       return {
+        //         kind: generateKindClassName(
+        //           `${prefix}${customKeyWords[keyword]}`,
+        //         ),
+        //         children: [str],
+        //       };
+        //     }
 
-        //       return str;
-        //     });
-        //   }
-
-        //   return entity;
+        //     return str;
+        //   });
         // }
+
         return parentKinds.length > 0
           ? {
               kind: generateKindClassName(
@@ -475,31 +471,48 @@ export function TableContent({ lines }: TableContentProps) {
           }, []);
         };
 
+        // TODO: only do if the customKeyWords object is not empty
+
         const mergedLines = mergeStringsIntoString(line);
 
-        // Maps over the merged lines and checks if the line contains underscores. If it does, it splits the line by underscores and returns a new entity with a custom kind.
-        const newLines = mergedLines.map(line => {
-          if (typeof line === 'string') {
-            const splitContentByUnderscore = line.split(/(~~[\w-]+~~)/);
+        // Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
+        const newLines = mergedLines
+          .map(line => {
+            if (typeof line === 'string') {
+              const keyword = Object.keys(customKeyWords).find(key =>
+                line.includes(key),
+              );
 
-            if (splitContentByUnderscore.length > 1) {
-              return splitContentByUnderscore.map(str => {
-                // If the string starts and ends with an underscore, we want to remove them and return a new entity with a custom kind.
-                if (str.startsWith('~~') && str.endsWith('~~')) {
-                  const removeUnderscores = str.slice(2, -2);
-                  return {
-                    kind: generateKindClassName(`${prefix}custom`),
-                    children: [removeUnderscores],
-                  };
-                }
+              if (keyword) {
+                // If the keyword is found, we split the line by the keyword
+                const splitContentByKeyword = line.split(
+                  new RegExp(`(${keyword})`, 'g'),
+                );
 
-                return str;
-              });
+                console.log(`🤡Entity contains custom keyword: ${keyword}`, {
+                  splitContentByKeyword,
+                });
+
+                return splitContentByKeyword.map(str => {
+                  // If the string is the keyword, we return a new entity with a custom kind
+                  if (str === keyword) {
+                    console.log({ str, keyword });
+                    return {
+                      kind: generateKindClassName(
+                        `${prefix}${customKeyWords[keyword]}`,
+                      ),
+                      children: [str],
+                    };
+                  }
+
+                  return str;
+                });
+              }
             }
-          }
 
-          return line;
-        });
+            return line;
+          })
+          .flat();
 
         console.log({
           line,
@@ -540,12 +553,31 @@ export function TableContent({ lines }: TableContentProps) {
   );
 }
 
-const plugin: LeafyGreenHLJSPlugin = {
-  'after:highlight': function (result: LeafyGreenHighlightResult) {
-    const { rootNode } = result._emitter;
-    // console.log(JSON.stringify(treeToLines(rootNode.children), null, 2));
-    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
-  },
+// const plugin: LeafyGreenHLJSPlugin = {
+//   'after:highlight': function (result: LeafyGreenHighlightResult) {
+//     const { rootNode } = result._emitter;
+//     // console.log(JSON.stringify(treeToLines(rootNode.children), null, 2));
+//     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+//   },
+// };
+
+// export default plugin;
+
+const plugin = ({
+  customKeywordObject = {},
+}: {
+  customKeywordObject?: Record<string, string>;
+}): LeafyGreenHLJSPlugin => {
+  customKeyWords = customKeywordObject;
+
+  console.log({ customKeyWords, customKeywordObject });
+
+  return {
+    'after:highlight': function (result: LeafyGreenHighlightResult) {
+      const { rootNode } = result._emitter;
+      result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+    },
+  };
 };
 
 export default plugin;
