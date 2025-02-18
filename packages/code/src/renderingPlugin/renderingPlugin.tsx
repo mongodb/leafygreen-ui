@@ -452,8 +452,12 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
+        if (customKeyWords) {
+        }
+
         // TODO: only do if the customKeyWords object is not empty
 
+        // TODO: move this logic to a separate function
         // Merge consecutive strings into a single string. E.g. ['hello', 'world', {}] => ['hello world', {}]
         const mergeStringsIntoString = children => {
           return children.reduce((acc, child) => {
@@ -475,8 +479,9 @@ export function TableContent({ lines }: TableContentProps) {
 
         const mergedLines = mergeStringsIntoString(line);
 
+        // TODO: move this logic to a separate function
         // Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
-        const newLines = mergedLines
+        const mergedLinesWithKeywords = mergedLines
           .map(line => {
             if (typeof line === 'string') {
               const keyword = Object.keys(customKeyWords).find(key =>
@@ -517,7 +522,7 @@ export function TableContent({ lines }: TableContentProps) {
         console.log({
           line,
           mergedLines,
-          newLines,
+          mergedLinesWithKeywords,
         });
 
         let displayLineNumber;
@@ -526,8 +531,8 @@ export function TableContent({ lines }: TableContentProps) {
           displayLineNumber = currentLineNumber;
         }
 
-        const processedLine = newLines?.length ? (
-          newLines.map(processToken)
+        const processedLine = mergedLinesWithKeywords?.length ? (
+          mergedLinesWithKeywords.map(processToken)
         ) : (
           // We create placeholder content when a line break appears to preserve the line break's height
           // It needs to be inline-block for the table row to not collapse.

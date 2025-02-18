@@ -37,8 +37,6 @@ const customActionButtons = [
 const jsSnippet = `
 import datetime from './';
 
-hello there _hi_ and ok this is _great_ yup
-
 const myVar = 42;
 
 var myObj = {
@@ -60,26 +58,12 @@ function greeting(entity) {
 console.log(greeting('World'));
 `;
 
-// const jsCustomSnippet = `
-// hi _hi_  _--hi_
-
-// hi {{hi}} {{--hi}}
-
-// hi ~~hi~~  ~~--hi~~
-
-// whats up yall
-
-// const hey hey
-
-// mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" ~~--api~~ 1 ~~--username~~ elmo
-// `;
-
 const jsCustomSnippet = `
 mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username elmo
 
 mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username elmo
 
-testing this line
+testing a line
 `;
 
 // > 5 lines to trigger expandable code block
