@@ -13,8 +13,9 @@ import { Panel } from '../Panel';
 import { PanelProps } from '../Panel/Panel.types';
 import { Language } from '../types';
 
-import Code, { hasMultipleLines } from './Code';
+import Code from './Code';
 import { CodeProps } from './Code.types';
+import { hasMultipleLines } from './utils';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 
