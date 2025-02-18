@@ -30,16 +30,7 @@ import {
   DetailedElementProps,
   ScrollState,
 } from './Code.types';
-
-//TODO: move to utils
-export function hasMultipleLines(string: string): boolean {
-  return string.trim().includes('\n');
-}
-
-//TODO: move to utils
-function getHorizontalScrollbarHeight(element: HTMLElement): number {
-  return element.offsetHeight - element.clientHeight;
-}
+import { getHorizontalScrollbarHeight, hasMultipleLines } from './utils';
 
 function Code({
   language: languageProp,
@@ -86,7 +77,6 @@ function Code({
     }
   }, []);
 
-  //TODO: move to utils
   function setExpandableState() {
     if (!expandable || !scrollableElementRef.current) return;
 
@@ -135,7 +125,6 @@ function Code({
     </Syntax>
   );
 
-  //TODO: move to utils
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
