@@ -211,12 +211,15 @@ const lineWithKeywords = (line: (string | FlatTokenObject)[]) => {
           'g',
         );
 
+        // Return unchanged if no keywords found
         if (!keywordPattern.test(segment)) {
-          return segment; // Return unchanged if no keywords found
+          return segment;
         }
 
+        // Split the line by the keywords
         const splitContentByKeywords = segment.split(keywordPattern);
 
+        // Map over the split content and return a new entity with a custom kind if the keyword is found
         return splitContentByKeywords.map(str =>
           customKeyWords[str]
             ? {
