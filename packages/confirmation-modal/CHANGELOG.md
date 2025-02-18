@@ -1,5 +1,17 @@
 # @leafygreen-ui/confirmation-modal
 
+## 7.0.0
+
+### Major Changes
+
+- 1501381ee: As part of refactor work for [LG-2719](https://jira.mongodb.org/browse/LG-2719), the `*ButtonProps` props in these components no longer allow specifying `as` or `href` as keys.
+
+### Patch Changes
+
+- Updated dependencies [1501381ee]
+  - @leafygreen-ui/button@23.0.0
+  - @leafygreen-ui/modal@17.0.3
+
 ## 6.0.4
 
 ### Patch Changes

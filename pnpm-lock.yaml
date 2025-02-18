@@ -1324,6 +1324,27 @@ importers:
         specifier: ^4.2.2
         version: 4.3.1
 
+  packages/gallery-indicator:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   packages/guide-cue:
     dependencies:
       '@leafygreen-ui/a11y':
@@ -2083,9 +2104,6 @@ importers:
 
   packages/segmented-control:
     dependencies:
-      '@leafygreen-ui/box':
-        specifier: workspace:^
-        version: link:../box
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -2104,6 +2122,9 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
+      '@leafygreen-ui/polymorphic':
+        specifier: workspace:^
+        version: link:../polymorphic
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
@@ -2441,6 +2462,9 @@ importers:
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../icon-button
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
 
   packages/testing-lib:
     dependencies:
