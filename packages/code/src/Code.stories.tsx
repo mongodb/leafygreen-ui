@@ -312,7 +312,7 @@ WithoutPanel.parameters = {
 
 export const Loading = () => {};
 Loading.parameters = {
-  chromatic: { viewports: [1500] },
+  // chromatic: { viewports: [1500] },
   controls: {
     exclude: /.*/g,
   },
@@ -340,7 +340,7 @@ Loading.parameters = {
       return (
         <div
           className={css`
-            width: 400px;
+            width: 350px;
           `}
         >
           <Instance />
