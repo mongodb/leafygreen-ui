@@ -194,7 +194,7 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
       `}
       customKeywordObject={{
         testing: 'custom',
-        '--api': 'custom',
+        api: 'custom',
       }}
     >
       {jsCustomSnippet}
