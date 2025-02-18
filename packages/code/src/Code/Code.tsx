@@ -75,8 +75,6 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useBaseFontSize();
 
-  console.log({ className });
-
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
 

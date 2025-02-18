@@ -63,7 +63,7 @@ mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username elmo
 
 mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username elmo
 
-testing a line
+testing a line api and testing username
 `;
 
 // > 5 lines to trigger expandable code block
@@ -179,6 +179,7 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
       customKeywordObject={{
         testing: 'custom',
         api: 'custom',
+        username: 'custom',
       }}
     >
       {jsCustomSnippet}

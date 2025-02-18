@@ -159,49 +159,54 @@ function getHighlightedRowStyle(darkMode: boolean) {
 /**
  * Merge consecutive strings into a single string.
  *
- * E.g. ['hello', 'world', 'hi', {}] => ['hello world hi', {}]
+ * E.g. ['_', 'hello ', 'world ', 'hi', {}, 'bye'] => ['_hello world hi', {}, 'bye']
  */
-const mergeStringsIntoString = children => {
-  return children.reduce((acc, child) => {
-    const lastItem = acc[acc.length - 1];
+const mergeStringsIntoString = (children: (string | FlatTokenObject)[]) => {
+  return children.reduce(
+    (acc: (string | FlatTokenObject)[], child: string | FlatTokenObject) => {
+      const lastItem = acc[acc.length - 1];
 
-    if (typeof child === 'string') {
-      if (typeof lastItem === 'string') {
-        acc[acc.length - 1] = lastItem + child;
+      if (typeof child === 'string') {
+        if (typeof lastItem === 'string') {
+          acc[acc.length - 1] = lastItem + child;
+        } else {
+          acc.push(child);
+        }
       } else {
         acc.push(child);
       }
-    } else {
-      acc.push(child);
-    }
 
-    return acc;
-  }, []);
+      return acc;
+    },
+    [],
+  );
 };
 
 /**
  * Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
  *
- * E.g. ['hello world hi'] => ['hello', { kind: 'lg-highlight-custom', children: ['world'] }, 'hi']
+ * E.g.
+ *
+ * keywords: { '_hello': 'custom' }
+ *
+ * ['_hello world hi', {}, 'bye'] => [{ kind: 'lg-highlight-custom', children: ['_hello'] }, 'world ', 'hi', {}, 'bye']
  */
-const lineWithKeywords = line => {
+const lineWithKeywords = (line: (string | FlatTokenObject)[]) => {
   const mergedLines = mergeStringsIntoString(line);
 
   return mergedLines
-    .map(segment => {
+    .map((segment: string | FlatTokenObject) => {
       if (typeof segment === 'string') {
         const keyword = Object.keys(customKeyWords).find(key =>
           segment.includes(key),
         );
 
+        console.log({ segment, keyword });
+
         if (keyword) {
           const splitContentByKeyword = segment.split(
             new RegExp(`(${keyword})`, 'g'),
           );
-
-          console.log(`🤡Entity contains custom keyword: ${keyword}`, {
-            splitContentByKeyword,
-          });
 
           return splitContentByKeyword.map(str =>
             str === keyword
@@ -370,8 +375,6 @@ export function treeToLines(
   const lines: LineDefinition = [];
   let currentLineIndex = 0;
 
-  // console.log({ children });
-
   // Create a new line, if no lines exist yet
   if (lines[currentLineIndex] == null) {
     lines[currentLineIndex] = [];
@@ -382,11 +385,7 @@ export function treeToLines(
     lines[currentLineIndex] = [];
   };
 
-  console.log({ flatArray: flattenNestedTree(children) });
-
   flattenNestedTree(children).forEach(child => {
-    // console.log({ child });
-
     // If the current element includes a line break, we need to handle it differently
     if (containsLineBreak(child)) {
       if (isString(child)) {
@@ -469,11 +468,7 @@ export function TableContent({ lines }: TableContentProps) {
           mappedLine = lineWithKeywords(line);
         }
 
-        let displayLineNumber;
-
-        if (showLineNumbers) {
-          displayLineNumber = currentLineNumber;
-        }
+        let displayLineNumber = showLineNumbers ? currentLineNumber : undefined;
 
         const processedLine = mappedLine?.length ? (
           mappedLine.map(processToken)
@@ -508,8 +503,6 @@ const plugin = ({
   customKeywordObject?: Record<string, string>;
 }): LeafyGreenHLJSPlugin => {
   customKeyWords = customKeywordObject;
-
-  console.log({ customKeyWords, customKeywordObject });
 
   return {
     'after:highlight': function (result: LeafyGreenHighlightResult) {
