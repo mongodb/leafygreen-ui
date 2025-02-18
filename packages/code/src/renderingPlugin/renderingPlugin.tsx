@@ -478,7 +478,9 @@ export function TableContent({ lines }: TableContentProps) {
           mappedLine = lineWithKeywords(line);
         }
 
-        const displayLineNumber = showLineNumbers ? currentLineNumber : undefined;
+        const displayLineNumber = showLineNumbers
+          ? currentLineNumber
+          : undefined;
 
         const processedLine = mappedLine?.length ? (
           mappedLine.map(processToken)
