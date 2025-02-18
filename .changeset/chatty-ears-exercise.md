@@ -90,6 +90,8 @@ Exports `getTestUtils`, a util to reliably interact with LG `Code` in a product 
 
 Exports `getLgIds`, a util to instantiate an object of `data-lgid` values for a given LG `Code` component instance.
 
+### `baseFontSize`
+Adds `baseFontSize` prop, which allows you to override the `LeafyGreenProvider` value.
 
 ## What's changed?
 

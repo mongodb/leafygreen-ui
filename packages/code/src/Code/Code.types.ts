@@ -1,4 +1,5 @@
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { LanguageOption } from '../Panel/Panel.types';
 import { SyntaxProps } from '../Syntax/Syntax.types';
@@ -105,6 +106,13 @@ export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
      * @deprecated
      */
     copyable?: boolean;
+
+    /**
+     * Determines the base font-size of the component
+     *
+     * @default 13
+     */
+    baseFontSize?: BaseFontSize;
   } & (
     | {
         /**
