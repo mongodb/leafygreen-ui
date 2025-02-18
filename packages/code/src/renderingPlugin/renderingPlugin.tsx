@@ -452,7 +452,9 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
-        // Merge consecutive strings into a single string
+        // TODO: only do if the customKeyWords object is not empty
+
+        // Merge consecutive strings into a single string. E.g. ['hello', 'world', {}] => ['hello world', {}]
         const mergeStringsIntoString = children => {
           return children.reduce((acc, child) => {
             const lastItem = acc[acc.length - 1];
@@ -470,8 +472,6 @@ export function TableContent({ lines }: TableContentProps) {
             return acc;
           }, []);
         };
-
-        // TODO: only do if the customKeyWords object is not empty
 
         const mergedLines = mergeStringsIntoString(line);
 
