@@ -114,13 +114,19 @@ export type CodeProps = Omit<
    */
   copyable?: boolean;
 
-  customKeywordObject?: Record<string, string>;
   /**
    * Determines the base font-size of the component
    *
    * @default 13
    */
   baseFontSize?: BaseFontSize;
+
+  /**
+   * Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword.
+   *
+   * E.g. `{ customKeywordObject: { 'keyword': 'className' } }`
+   */
+  customKeywordObject?: Record<string, string>;
 } & (
     | {
         /**
