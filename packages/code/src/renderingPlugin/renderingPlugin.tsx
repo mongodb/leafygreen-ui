@@ -154,6 +154,72 @@ function getHighlightedRowStyle(darkMode: boolean) {
   `;
 }
 
+// Helper functions
+
+/**
+ * Merge consecutive strings into a single string.
+ *
+ * E.g. ['hello', 'world', 'hi', {}] => ['hello world hi', {}]
+ */
+const mergeStringsIntoString = children => {
+  return children.reduce((acc, child) => {
+    const lastItem = acc[acc.length - 1];
+
+    if (typeof child === 'string') {
+      if (typeof lastItem === 'string') {
+        acc[acc.length - 1] = lastItem + child;
+      } else {
+        acc.push(child);
+      }
+    } else {
+      acc.push(child);
+    }
+
+    return acc;
+  }, []);
+};
+
+/**
+ * Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
+ *
+ * E.g. ['hello world hi'] => ['hello', { kind: 'lg-highlight-custom', children: ['world'] }, 'hi']
+ */
+const lineWithKeywords = line => {
+  const mergedLines = mergeStringsIntoString(line);
+
+  return mergedLines
+    .map(segment => {
+      if (typeof segment === 'string') {
+        const keyword = Object.keys(customKeyWords).find(key =>
+          segment.includes(key),
+        );
+
+        if (keyword) {
+          const splitContentByKeyword = segment.split(
+            new RegExp(`(${keyword})`, 'g'),
+          );
+
+          console.log(`🤡Entity contains custom keyword: ${keyword}`, {
+            splitContentByKeyword,
+          });
+
+          return splitContentByKeyword.map(str =>
+            str === keyword
+              ? {
+                  kind: generateKindClassName(
+                    `${prefix}${customKeyWords[keyword]}`,
+                  ),
+                  children: [str],
+                }
+              : str,
+          );
+        }
+      }
+      return segment;
+    })
+    .flat();
+};
+
 interface LineTableRowProps {
   lineNumber?: number;
   children: React.ReactNode;
@@ -172,33 +238,6 @@ export function LineTableRow({
     ? palette.gray.light3
     : palette.yellow.dark2;
 
-  // const childrenToHtmlString = children => {
-  //   return ReactDOMServer.renderToStaticMarkup(<>{children}</>);
-  // };
-
-  // console.log({ children, string: childrenToHtmlString(children) });
-
-  // const mergeStringsIntoString = children => {
-  //   const childArray = React.Children.toArray(children); // Ensure it's an array
-
-  //   return childArray.reduce((acc, child) => {
-  //     const lastItem = acc[acc.length - 1];
-
-  //     if (typeof child === 'string') {
-  //       if (typeof lastItem === 'string') {
-  //         acc[acc.length - 1] = lastItem + child; // Merge consecutive strings
-  //       } else {
-  //         acc.push(child);
-  //       }
-  //     } else {
-  //       acc.push(child); // Keep React elements untouched
-  //     }
-
-  //     return acc;
-  //   }, []);
-  // };
-
-  // console.log({ mergeStringsIntoString: mergeStringsIntoString(children) });
   return (
     <tr className={cx({ [getHighlightedRowStyle(darkMode)]: highlighted })}>
       {lineNumber && (
@@ -264,34 +303,6 @@ export function flattenNestedTree(
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
       // console.log({ entity });
       if (isString(entity)) {
-        // const keyword = Object.keys(customKeyWords).find(key =>
-        //   entity.includes(key),
-        // );
-        // if (keyword) {
-        //   // Do some logic if entity contains one of the keys in customKeyWords
-        //   const splitContentByKeyword = entity.split(
-        //     new RegExp(`(${keyword})`, 'g'),
-        //   );
-
-        //   console.log(`Entity contains custom keyword: ${keyword}`, {
-        //     splitContentByKeyword,
-        //   });
-
-        //   return splitContentByKeyword.map(str => {
-        //     if (str === keyword) {
-        //       console.log({ str, keyword });
-        //       return {
-        //         kind: generateKindClassName(
-        //           `${prefix}${customKeyWords[keyword]}`,
-        //         ),
-        //         children: [str],
-        //       };
-        //     }
-
-        //     return str;
-        //   });
-        // }
-
         return parentKinds.length > 0
           ? {
               kind: generateKindClassName(
@@ -452,78 +463,11 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
-        if (customKeyWords) {
+        let mappedLine = line;
+
+        if (Object.keys(customKeyWords).length > 0) {
+          mappedLine = lineWithKeywords(line);
         }
-
-        // TODO: only do if the customKeyWords object is not empty
-
-        // TODO: move this logic to a separate function
-        // Merge consecutive strings into a single string. E.g. ['hello', 'world', {}] => ['hello world', {}]
-        const mergeStringsIntoString = children => {
-          return children.reduce((acc, child) => {
-            const lastItem = acc[acc.length - 1];
-
-            if (typeof child === 'string') {
-              if (typeof lastItem === 'string') {
-                acc[acc.length - 1] = lastItem + child; // Merge consecutive strings
-              } else {
-                acc.push(child);
-              }
-            } else {
-              acc.push(child); // Keep React elements untouched
-            }
-
-            return acc;
-          }, []);
-        };
-
-        const mergedLines = mergeStringsIntoString(line);
-
-        // TODO: move this logic to a separate function
-        // Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
-        const mergedLinesWithKeywords = mergedLines
-          .map(line => {
-            if (typeof line === 'string') {
-              const keyword = Object.keys(customKeyWords).find(key =>
-                line.includes(key),
-              );
-
-              if (keyword) {
-                // If the keyword is found, we split the line by the keyword
-                const splitContentByKeyword = line.split(
-                  new RegExp(`(${keyword})`, 'g'),
-                );
-
-                console.log(`🤡Entity contains custom keyword: ${keyword}`, {
-                  splitContentByKeyword,
-                });
-
-                return splitContentByKeyword.map(str => {
-                  // If the string is the keyword, we return a new entity with a custom kind
-                  if (str === keyword) {
-                    console.log({ str, keyword });
-                    return {
-                      kind: generateKindClassName(
-                        `${prefix}${customKeyWords[keyword]}`,
-                      ),
-                      children: [str],
-                    };
-                  }
-
-                  return str;
-                });
-              }
-            }
-
-            return line;
-          })
-          .flat();
-
-        console.log({
-          line,
-          mergedLines,
-          mergedLinesWithKeywords,
-        });
 
         let displayLineNumber;
 
@@ -531,8 +475,8 @@ export function TableContent({ lines }: TableContentProps) {
           displayLineNumber = currentLineNumber;
         }
 
-        const processedLine = mergedLinesWithKeywords?.length ? (
-          mergedLinesWithKeywords.map(processToken)
+        const processedLine = mappedLine?.length ? (
+          mappedLine.map(processToken)
         ) : (
           // We create placeholder content when a line break appears to preserve the line break's height
           // It needs to be inline-block for the table row to not collapse.
@@ -557,16 +501,6 @@ export function TableContent({ lines }: TableContentProps) {
     </>
   );
 }
-
-// const plugin: LeafyGreenHLJSPlugin = {
-//   'after:highlight': function (result: LeafyGreenHighlightResult) {
-//     const { rootNode } = result._emitter;
-//     // console.log(JSON.stringify(treeToLines(rootNode.children), null, 2));
-//     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
-//   },
-// };
-
-// export default plugin;
 
 const plugin = ({
   customKeywordObject = {},
