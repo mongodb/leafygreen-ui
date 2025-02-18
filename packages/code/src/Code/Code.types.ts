@@ -124,7 +124,7 @@ export type CodeProps = Omit<
   /**
    * Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword.
    *
-   * E.g. `{ customKeywordObject: { 'keyword': 'className' } }`
+   * E.g. `customKeywordObject: {{'keyword': 'className' }}`
    */
   customKeywordObject?: Record<string, string>;
 } & (
