@@ -164,9 +164,9 @@ function getHighlightedRowStyle(darkMode: boolean) {
  * ['_', 'hello ', 'world ', 'hi', {}, 'bye ', '_', 'hello '] => ['_hello world hi', {}, 'bye _hello']
  * ```
  */
-const mergeStringsIntoString = (children: (string | FlatTokenObject)[]) => {
+const mergeStringsIntoString = (children: Array<string | FlatTokenObject>) => {
   return children.reduce(
-    (acc: (string | FlatTokenObject)[], child: string | FlatTokenObject) => {
+    (acc: Array<string | FlatTokenObject>, child: string | FlatTokenObject) => {
       const lastItem = acc[acc.length - 1];
 
       if (typeof child === 'string') {
@@ -198,7 +198,7 @@ const mergeStringsIntoString = (children: (string | FlatTokenObject)[]) => {
  * ['_hello world hi', {}, 'bye _hello'] => [{ kind: 'lg-highlight-custom', children: ['_hello'] }, 'world ', 'hi', {}, 'bye', { kind: 'lg-highlight-custom', children: ['_hello'] }]
  * ```
  */
-const lineWithKeywords = (line: (string | FlatTokenObject)[]) => {
+const lineWithKeywords = (line: Array<string | FlatTokenObject>) => {
   const mergedLines = mergeStringsIntoString(line);
 
   return mergedLines
@@ -229,6 +229,7 @@ const lineWithKeywords = (line: (string | FlatTokenObject)[]) => {
             : str,
         );
       }
+
       return segment;
     })
     .flat();
@@ -477,7 +478,7 @@ export function TableContent({ lines }: TableContentProps) {
           mappedLine = lineWithKeywords(line);
         }
 
-        let displayLineNumber = showLineNumbers ? currentLineNumber : undefined;
+        const displayLineNumber = showLineNumbers ? currentLineNumber : undefined;
 
         const processedLine = mappedLine?.length ? (
           mappedLine.map(processToken)
