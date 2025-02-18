@@ -313,6 +313,7 @@ WithoutPanel.parameters = {
 export const Loading = () => {};
 Loading.parameters = {
   // chromatic: { delay: 5000 }, // 5-second delay
+  chromatic: { viewports: [1500] },
   controls: {
     exclude: /.*/g,
   },
@@ -340,7 +341,7 @@ Loading.parameters = {
       return (
         <div
           className={css`
-            width: 500px;
+            width: 400px;
           `}
         >
           <Instance />
