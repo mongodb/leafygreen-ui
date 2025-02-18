@@ -30,16 +30,7 @@ import {
   DetailedElementProps,
   ScrollState,
 } from './Code.types';
-
-//TODO: move to utils
-export function hasMultipleLines(string: string): boolean {
-  return string.trim().includes('\n');
-}
-
-//TODO: move to utils
-function getHorizontalScrollbarHeight(element: HTMLElement): number {
-  return element.offsetHeight - element.clientHeight;
-}
+import { getHorizontalScrollbarHeight, hasMultipleLines } from './utils';
 
 function Code({
   language: languageProp,
@@ -86,7 +77,6 @@ function Code({
     }
   }, []);
 
-  //TODO: move to utils
   function setExpandableState() {
     if (!expandable || !scrollableElementRef.current) return;
 
@@ -135,7 +125,6 @@ function Code({
     </Syntax>
   );
 
-  //TODO: move to utils
   function handleScroll(e: React.UIEvent) {
     const { scrollWidth, clientWidth: elementWidth } = e.target as HTMLElement;
     const isScrollable = scrollWidth > elementWidth;
@@ -172,13 +161,13 @@ function Code({
     !isLoading
   );
 
-  // TODO: remove when deprecated props are removed
+  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
   const hasDeprecatedCustomActionButtons =
     showCustomActionButtons &&
     !!customActionButtons &&
     customActionButtons.length > 0;
 
-  // TODO: remove when deprecated props are removed
+  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
   const hasDeprecatedLanguageSwitcher =
     !!languageOptions &&
     languageOptions.length > 0 &&
@@ -186,7 +175,7 @@ function Code({
     !!onChange;
 
   // This will render a temp deprecated panel component if deprecated props are used
-  // TODO: remove when deprecated props are removed
+  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
   const shouldRenderDeprecatedPanel =
     !panel &&
     (hasDeprecatedCustomActionButtons ||
@@ -194,7 +183,7 @@ function Code({
       !!chromeTitle ||
       copyable);
 
-  // TODO: remove when deprecated props are removed. Should only check panel
+  // TODO: remove when deprecated props are removed. Should only check panel https://jira.mongodb.org/browse/LG-4909
   const showPanel = !!panel || shouldRenderDeprecatedPanel;
 
   const showCopyButtonWithoutPanel =
@@ -211,7 +200,6 @@ function Code({
       isLoading={isLoading}
       showPanel={showPanel}
     >
-      {/* TODO: note in changeset that className was moved to the parent wrapper */}
       <div className={getWrapperStyles({ theme, className })}>
         <div
           className={getCodeStyles({
@@ -267,7 +255,7 @@ function Code({
           {!!panel && panel}
 
           {/* if there are deprecated props then manually render the panel component */}
-          {/* TODO: remove when deprecated props are removed, make ticket */}
+          {/* TODO: remove when deprecated props are removed, https://jira.mongodb.org/browse/LG-4909 */}
           {shouldRenderDeprecatedPanel && (
             <Panel
               showCustomActionButtons={showCustomActionButtons}
