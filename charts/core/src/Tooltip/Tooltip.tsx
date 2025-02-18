@@ -29,7 +29,9 @@ export function Tooltip({
 
     chart.updateOptions({
       tooltip: {
-        show: true,
+        axisPointer: {
+          z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
+        },
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
             InteractionState.Default
@@ -51,6 +53,7 @@ export function Tooltip({
           : undefined,
         order: getSortOrder(sortDirection, sortKey),
         padding: spacing[200],
+        show: true,
         showDelay: 0,
         textStyle: {
           fontFamily: fontFamilies.default,

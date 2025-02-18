@@ -1,5 +1,39 @@
 # @lg-chat/fixed-chat-window
 
+## 3.0.6
+
+### Patch Changes
+
+- @lg-chat/chat-window@3.0.5
+- @lg-chat/title-bar@3.0.5
+- @leafygreen-ui/popover@13.0.3
+
+## 3.0.5
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/popover@13.0.3
+  - @lg-chat/title-bar@3.0.4
+  - @lg-chat/chat-window@3.0.4
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+  - @lg-chat/title-bar@3.0.3
+  - @lg-chat/chat-window@3.0.3
+
+## 3.0.3
+
+### Patch Changes
+
+- 5f9bef735: [LG-4759](https://jira.mongodb.org/browse/LG-4759): The `@leafygreen-ui/popover` dependency was inadvertently bumped to v12+ which led to a regression in the scroll to end on initial render. This change forward-fixes the regression by rendering the `FixedChatWindow` with `renderMode="portal"` instead of `renderMode="top-layer"`.
+
 ## 3.0.2
 
 ### Patch Changes

@@ -1,5 +1,8 @@
 # Avatar
 
+🚨 **DEPRECATION NOTICE:** This package is deprecated and will no longer receive updates.  
+Please use `Avatar` from `@leafygreen-ui/avatar` instead.
+
 ## Installation
 
 ### Yarn

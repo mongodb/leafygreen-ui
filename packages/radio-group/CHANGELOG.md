@@ -1,5 +1,19 @@
 # @leafygreen-ui/radio-group
 
+## 12.0.4
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+
+## 12.0.3
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+
 ## 12.0.2
 
 ### Patch Changes

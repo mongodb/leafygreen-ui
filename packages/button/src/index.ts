@@ -1,4 +1,4 @@
 export { Button as default } from './Button';
-export type { ButtonProps } from './types';
+export type { BaseButtonProps, ButtonProps } from './types';
 export { FontSize, Size, Variant } from './types';
 export { getTestUtils } from './utils';

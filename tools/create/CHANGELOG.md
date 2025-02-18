@@ -1,5 +1,12 @@
 # @lg-tools/create
 
+## 0.2.13
+
+### Patch Changes
+
+- Updated dependencies [dc54a4b84]
+  - @lg-tools/meta@0.4.0
+
 ## 0.2.12
 
 ### Patch Changes

@@ -24,6 +24,8 @@ export const validateBuilds = ({
 }: Partial<ValidateCommandOptions>) => {
   const packagePaths = getAllPackages();
 
+  verbose && console.log(chalk.gray('Validating builds...'));
+
   return new Promise<void>((resolve, reject) => {
     console.log(`Validating builds for ${packagePaths.length} packages...`);
 
@@ -71,9 +73,7 @@ export const validateBuilds = ({
         });
 
       if (
-        ![umdExists, esmExists, tsExists, isCJSValid, isESMValid].every(
-          x => x == true,
-        )
+        ![umdExists, esmExists, tsExists, isCJSValid, isESMValid].every(Boolean)
       ) {
         const errorMsg: Array<string> = [
           chalk.red.bold(`Error in package \`${pkgName}\`:`),

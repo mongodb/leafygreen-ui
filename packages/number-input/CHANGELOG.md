@@ -1,5 +1,44 @@
 # @leafygreen-ui/number-input
 
+## 4.0.6
+
+### Patch Changes
+
+- Updated dependencies [1501381ee]
+  - @leafygreen-ui/button@23.0.0
+  - @leafygreen-ui/form-field@2.0.4
+  - @leafygreen-ui/select@14.0.5
+  - @leafygreen-ui/tooltip@13.0.4
+
+## 4.0.5
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/form-field@2.0.4
+  - @leafygreen-ui/select@14.0.4
+  - @leafygreen-ui/tooltip@13.0.4
+  - @leafygreen-ui/button@22.0.2
+
+## 4.0.4
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/form-field@2.0.3
+  - @leafygreen-ui/select@14.0.3
+  - @leafygreen-ui/typography@20.1.0
+  - @leafygreen-ui/tooltip@13.0.3
+  - @leafygreen-ui/button@22.0.2
+
+## 4.0.3
+
+### Patch Changes
+
+- 073721cce: Prevents `errorMessage` from being forwarded to the native `input` element and logging a warning. Also internally reorganizes types.
+
 ## 4.0.2
 
 ### Patch Changes

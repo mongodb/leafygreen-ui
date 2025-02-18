@@ -6,8 +6,8 @@ import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
@@ -55,6 +55,7 @@ function Code({
   onCopy,
   panel,
   customKeywordObject,
+  baseFontSize: baseFontSizeProp,
   // Deprecated props
   copyable = false,
   showCustomActionButtons = false,
@@ -73,7 +74,7 @@ function Code({
   const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>(0);
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize = useBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;

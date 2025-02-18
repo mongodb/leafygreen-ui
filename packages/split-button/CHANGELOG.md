@@ -1,5 +1,49 @@
 # @leafygreen-ui/split-button
 
+## 4.1.5
+
+### Patch Changes
+
+- Updated dependencies [1501381ee]
+  - @leafygreen-ui/button@23.0.0
+  - @leafygreen-ui/menu@28.0.6
+  - @leafygreen-ui/popover@13.0.3
+
+## 4.1.4
+
+### Patch Changes
+
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/menu@28.0.6
+  - @leafygreen-ui/button@22.0.2
+
+## 4.1.3
+
+### Patch Changes
+
+- @leafygreen-ui/menu@28.0.5
+- @leafygreen-ui/button@22.0.2
+
+## 4.1.2
+
+### Patch Changes
+
+- @leafygreen-ui/menu@28.0.4
+
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [831718a41]
+  - @leafygreen-ui/menu@28.0.3
+
+## 4.1.0
+
+### Minor Changes
+
+- cc9874a9c: Update `data-testid` and `data-lgid` attributes on SplitButton's button, trigger and menu elements.
+
 ## 4.0.2
 
 ### Patch Changes

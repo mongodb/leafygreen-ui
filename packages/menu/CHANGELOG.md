@@ -1,5 +1,40 @@
 # @leafygreen-ui/menu
 
+## 28.0.6
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/input-option@3.0.4
+  - @leafygreen-ui/descendants@2.1.0
+
+## 28.0.5
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/input-option@3.0.3
+  - @leafygreen-ui/typography@20.1.0
+
+## 28.0.4
+
+### Patch Changes
+
+- Updated dependencies [674d06888]
+  - @leafygreen-ui/descendants@2.1.0
+
+## 28.0.3
+
+### Patch Changes
+
+- 831718a41: Remove full `lodash` import to decrease bundle size
+
 ## 28.0.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/date-utils
 
+## 0.2.0
+
+### Minor Changes
+
+- 9a23b9765: Creates `SupportedLocales` enum to ensure consistent locale information
+
 ## 0.1.5
 
 ### Patch Changes

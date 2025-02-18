@@ -3,7 +3,7 @@ import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Month, newUTC } from '@leafygreen-ui/date-utils';
+import { Month, newUTC, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 import {
   SharedDatePickerProvider,
@@ -55,7 +55,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   const onSegmentChange = jest.fn<DateInputSegmentChangeEventHandler>();
 
   const testContext: Partial<SharedDatePickerProviderProps> = {
-    locale: 'iso8601',
+    locale: SupportedLocales.ISO_8601,
     timeZone: 'UTC',
   };
 
@@ -75,9 +75,9 @@ describe('packages/date-picker/shared/date-input-box', () => {
     });
 
     describe('renders segments in the correct order', () => {
-      test('iso8601', () => {
+      test('iso-8601', () => {
         const { getAllByRole } = renderDateInputBox(undefined, {
-          locale: 'iso8601',
+          locale: SupportedLocales.ISO_8601,
         });
         const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'year');
@@ -87,7 +87,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
 
       test('en-US', () => {
         const { getAllByRole } = renderDateInputBox(undefined, {
-          locale: 'en-US',
+          locale: SupportedLocales.en_US,
         });
         const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'month');
@@ -95,9 +95,9 @@ describe('packages/date-picker/shared/date-input-box', () => {
         expect(segments[2]).toHaveAttribute('aria-label', 'year');
       });
 
-      test('en-UK', () => {
+      test('en-GB', () => {
         const { getAllByRole } = renderDateInputBox(undefined, {
-          locale: 'en-UK',
+          locale: SupportedLocales.en_GB,
         });
         const segments = getAllByRole('spinbutton');
         expect(segments[0]).toHaveAttribute('aria-label', 'day');
@@ -382,7 +382,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
   describe('Mouse interaction', () => {
     test('click on segment focuses it', () => {
       const { dayInput } = renderDateInputBox(undefined, {
-        locale: 'iso8601',
+        locale: SupportedLocales.ISO_8601,
       });
       userEvent.click(dayInput);
       expect(dayInput).toHaveFocus();
@@ -393,7 +393,7 @@ describe('packages/date-picker/shared/date-input-box', () => {
     test('Tab moves focus to next segment', () => {
       const { dayInput, monthInput, yearInput } = renderDateInputBox(
         undefined,
-        { locale: 'iso8601' },
+        { locale: SupportedLocales.ISO_8601 },
       );
       userEvent.click(yearInput);
       userEvent.tab();

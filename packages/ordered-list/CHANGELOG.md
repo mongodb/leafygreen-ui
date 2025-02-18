@@ -1,5 +1,34 @@
 # @leafygreen-ui/ordered-list
 
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/descendants@2.1.0
+
+## 2.0.4
+
+### Patch Changes
+
+- eb108e93b: [LG-4727](https://jira.mongodb.org/browse/LG-4727): The `description` props in these packages were previously wrapped in a `<p>`. However, in cases where a `ReactNode` was passed to the `description` prop, it would lead to a browser error. According to the HTML spec, `<p>` cannot contain block-level elements: https://www.w3.org/TR/html401/struct/text.html#h-9.3.1
+
+  The latest version of `@leafygreen-ui/typography` will typecheck `description` to ensure the proper element is used.
+
+  - If a `description` of type `string` or `number` is used, it will continue to be wrapped in a `<p>`
+  - All other types of `description` will be wrapped in a `<div>`
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+
+## 2.0.3
+
+### Patch Changes
+
+- Updated dependencies [674d06888]
+  - @leafygreen-ui/descendants@2.1.0
+
 ## 2.0.2
 
 ### Patch Changes

@@ -3,10 +3,8 @@ import {
   storybookExcludedControlParams,
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
-import { expect } from '@storybook/jest';
 import { StoryFn } from '@storybook/react';
-import { waitFor } from '@storybook/test';
-import { within } from '@storybook/testing-library';
+import { expect, waitFor, within } from '@storybook/test';
 
 import Badge from '@leafygreen-ui/badge';
 import { css } from '@leafygreen-ui/emotion';
@@ -186,6 +184,7 @@ const Template: StoryFn<StoryTableProps> = args => {
   );
 };
 
+// TODO: fix this test https://jira.mongodb.org/browse/LG-4867
 export const StickyHeader = {
   render: (args: StoryTableProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {

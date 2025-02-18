@@ -7,7 +7,12 @@ export const defaultLineOptions: Omit<SeriesOption, 'name' | 'data'> = {
   clip: false,
   symbolSize: 7,
   emphasis: {
-    disabled: true,
+    focus: 'series',
+  },
+  blur: {
+    lineStyle: {
+      opacity: 0.5,
+    },
   },
   lineStyle: {
     width: 1,

@@ -1,5 +1,23 @@
 # @leafygreen-ui/info-sprinkle
 
+## 4.0.5
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.4
+
+## 4.0.4
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.3
+
+## 4.0.3
+
+### Patch Changes
+
+- 78efdc99a: The `trigger` associated with the `InfoSprinkle` component was previously a `<button>` element using the default `type="submit"`. When an `InfoSprinkle` instance was used in a `<form>` element, clicking would unexpectedly submit form data to the server. The `<button>` element now uses `type="button"` to prevent this behavior.
+
 ## 4.0.2
 
 ### Patch Changes

@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  storybookArgTypes,
-  type StoryMetaType,
-  type StoryType,
-} from '@lg-tools/storybook-utils';
+import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
@@ -46,7 +42,7 @@ const displayFlex = css`
   gap: 8px;
 `;
 
-const TypographyDemoComponent = ({
+export const LiveExample = ({
   baseFontSize,
   darkMode,
 }: {
@@ -123,7 +119,7 @@ const TypographyDemoComponent = ({
         <div className={cx(displayBlock)}>
           <Label htmlFor="id">This is a label</Label>
           <Description>
-            This is the description for said label.{' '}
+            <span>This is the description for said label. </span>
             <Link>This is a test inline link.</Link>
           </Description>
         </div>
@@ -132,11 +128,13 @@ const TypographyDemoComponent = ({
   );
 };
 
-const meta: StoryMetaType<typeof TypographyDemoComponent> = {
+LiveExample.parameters = { chromatic: { disableSnapshot: true } };
+
+const meta: StoryMetaType<typeof LiveExample> = {
   title: 'Components/Typography',
-  component: TypographyDemoComponent,
+  component: LiveExample,
   parameters: {
-    default: 'AllTypography',
+    default: 'LiveExample',
     generate: {
       combineArgs: {
         darkMode: [false, true],
@@ -146,22 +144,6 @@ const meta: StoryMetaType<typeof TypographyDemoComponent> = {
   },
 };
 export default meta;
-
-export const AllTypography: StoryType<typeof TypographyDemoComponent> =
-  TypographyDemoComponent.bind({});
-AllTypography.argTypes = {
-  baseFontSize: {
-    ...storybookArgTypes.baseFontSize,
-    description:
-      'Storybook prop only. This font size is passed into the LeafygreenProvider.',
-  },
-  darkMode: storybookArgTypes.darkMode,
-};
-AllTypography.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-};
 
 export const StaticWidthTextStory = () => {
   const hoverBold = css`

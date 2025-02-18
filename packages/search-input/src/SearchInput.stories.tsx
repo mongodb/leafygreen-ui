@@ -6,7 +6,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from '@storybook/test';
 import kebabCase from 'lodash/kebabCase';
 import startCase from 'lodash/startCase';
 

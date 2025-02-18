@@ -1,2 +1,6 @@
 export { BaseEventMarker } from './BaseEventMarker';
-export { BaseEventMarkerProps, EventLevel } from './BaseEventMarker.types';
+export {
+  type BaseEventMarkerLineProps,
+  type BaseEventMarkerPointProps,
+  EventLevel,
+} from './BaseEventMarker.types';

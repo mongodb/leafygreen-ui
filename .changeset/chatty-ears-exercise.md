@@ -85,6 +85,9 @@ e.g.
 </Code>
 ```
 
+### `baseFontSize`
+Adds `baseFontSize` prop, which allows you to override the `LeafyGreenProvider` value.
+
 ## What's changed?
 
 The `className` prop is no longer applied to the `<pre>` tag. Instead it is applied to the parent `<div>` wrapper.

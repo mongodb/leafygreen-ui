@@ -1,5 +1,33 @@
 # @lg-tools/storybook-addon
 
+## 0.3.0
+
+### Minor Changes
+
+- 5eb01750b: Upgrades to Storybook 8.5
+
+### Patch Changes
+
+- Updated dependencies [5eb01750b]
+  - @lg-tools/storybook-decorators@0.4.0
+  - @lg-tools/storybook-utils@0.2.0
+
+## 0.2.10
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @lg-tools/storybook-decorators@0.3.4
+
+## 0.2.9
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+  - @lg-tools/storybook-decorators@0.3.3
+
 ## 0.2.8
 
 ### Patch Changes

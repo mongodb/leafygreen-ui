@@ -43,5 +43,8 @@ export type FixedChatWindowProps = DarkModeProps &
     /**
      * Props passed to the ChatWindow Popover
      */
-    popoverProps?: PopoverProps;
+    popoverProps?: Omit<
+      PopoverProps,
+      'dismissMode' | 'onToggle' | 'renderMode'
+    >;
   }>;

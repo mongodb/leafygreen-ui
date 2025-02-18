@@ -1,6 +1,7 @@
 import React, { forwardRef, MouseEventHandler } from 'react';
 
 import { isSameUTCMonth, setUTCMonth } from '@leafygreen-ui/date-utils';
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 
@@ -39,7 +40,7 @@ export const DatePickerMenuHeader = forwardRef<
     setMonth(newMonth);
   };
 
-  const isIsoFormat = locale === 'iso8601';
+  const isIsoFormat = locale === SupportedLocales.ISO_8601;
 
   /**
    * If the month is not in range and is not the last valid month

@@ -1,5 +1,28 @@
 # @lg-tools/storybook-decorators
 
+## 0.4.0
+
+### Minor Changes
+
+- 5eb01750b: Upgrades to Storybook 8.5
+
+### Patch Changes
+
+- Updated dependencies [5eb01750b]
+  - @lg-tools/storybook-utils@0.2.0
+
+## 0.3.4
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.4
+
+## 0.3.3
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.3
+
 ## 0.3.2
 
 ### Patch Changes

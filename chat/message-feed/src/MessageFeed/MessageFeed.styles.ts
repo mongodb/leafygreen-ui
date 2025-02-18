@@ -3,13 +3,14 @@ import { avatarSizes, Size } from '@lg-chat/avatar';
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { borderRadius, breakpoints, spacing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
   height: 500px;
   width: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 export const themeStyles: Record<Theme, string> = {
@@ -30,7 +31,6 @@ export const messageFeedStyles = css`
   scroll-behavior: smooth;
   position: relative;
   padding: ${spacing[3]}px ${spacing[5]}px ${spacing[2]}px;
-  z-index: 2;
 `;
 
 export const messageFeedThemeStyles: Record<Theme, string> = {
@@ -103,4 +103,14 @@ export const disclaimerTextStyles = css`
   text-align: center;
   margin-top: ${spacing[4]}px;
   margin-bottom: ${spacing[6]}px;
+`;
+
+export const scrollButtonContainerStyles = css`
+  position: absolute;
+  bottom: ${spacing[400]}px;
+`;
+
+export const scrollButtonStyles = css`
+  box-shadow: 0 ${spacing[50]}px ${spacing[100]}px rgba(0, 0, 0, 0.2);
+  border-radius: ${borderRadius[400]}px;
 `;

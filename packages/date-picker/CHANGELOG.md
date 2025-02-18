@@ -1,5 +1,45 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.6
+
+### Patch Changes
+
+- @leafygreen-ui/form-field@2.0.4
+- @leafygreen-ui/popover@13.0.3
+- @leafygreen-ui/select@14.0.5
+
+## 3.0.5
+
+### Patch Changes
+
+- 9a23b9765: Consumes `SupportedLocale` enum in tests, stories and internal checks
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+- Updated dependencies [9a23b9765]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+  - @leafygreen-ui/date-utils@0.2.0
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/form-field@2.0.4
+  - @leafygreen-ui/select@14.0.4
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/form-field@2.0.3
+  - @leafygreen-ui/select@14.0.3
+  - @leafygreen-ui/typography@20.1.0
+
+## 3.0.3
+
+### Patch Changes
+
+- f6ba9a91b: Fixes bug so that months after max, when min is in the same year, are properly disabled
+
 ## 3.0.2
 
 ### Patch Changes
@@ -368,7 +408,7 @@
 
 - 5249bd3d: Reduces the width and height of the calendar icon so that the focus/hover states do not excessively overflow the input container.
   When the `size` is `xsmall` the width and hight of the calendar icon will be `20px`. When the `size`is `small` the width and hight of the calendar icon will be 22px. The icon itself will remain the the same size.
-- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
+- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso-8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
 - Updated dependencies [5249bd3d]
   - @leafygreen-ui/form-field@0.3.2
 

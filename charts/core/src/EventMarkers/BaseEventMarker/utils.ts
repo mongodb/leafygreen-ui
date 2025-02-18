@@ -67,6 +67,7 @@ export function getMarkConfig({
           },
         ],
         emphasis: {
+          focus: 'series', // Allows other markers and series to be de-emphasized on this marker over
           label: {
             show: true,
           },
@@ -102,6 +103,7 @@ export function getMarkConfig({
           },
         ],
         emphasis: {
+          focus: 'series', // Allows other markers and series to be de-emphasized on this marker over
           label: {
             show: true,
           },
