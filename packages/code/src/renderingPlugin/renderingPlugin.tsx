@@ -159,7 +159,10 @@ function getHighlightedRowStyle(darkMode: boolean) {
 /**
  * Merge consecutive strings into a single string.
  *
- * E.g. ['_', 'hello ', 'world ', 'hi', {}, 'bye'] => ['_hello world hi', {}, 'bye']
+ * E.g.
+ * ```js
+ * ['_', 'hello ', 'world ', 'hi', {}, 'bye ', '_', 'hello '] => ['_hello world hi', {}, 'bye _hello']
+ * ```
  */
 const mergeStringsIntoString = (children: (string | FlatTokenObject)[]) => {
   return children.reduce(
@@ -187,9 +190,13 @@ const mergeStringsIntoString = (children: (string | FlatTokenObject)[]) => {
  *
  * E.g.
  *
+ * ```js
  * keywords: { '_hello': 'custom' }
+ * ```
  *
- * ['_hello world hi', {}, 'bye'] => [{ kind: 'lg-highlight-custom', children: ['_hello'] }, 'world ', 'hi', {}, 'bye']
+ * ```js
+ * ['_hello world hi', {}, 'bye _hello'] => [{ kind: 'lg-highlight-custom', children: ['_hello'] }, 'world ', 'hi', {}, 'bye', { kind: 'lg-highlight-custom', children: ['_hello'] }]
+ * ```
  */
 const lineWithKeywords = (line: (string | FlatTokenObject)[]) => {
   const mergedLines = mergeStringsIntoString(line);
@@ -197,28 +204,27 @@ const lineWithKeywords = (line: (string | FlatTokenObject)[]) => {
   return mergedLines
     .map((segment: string | FlatTokenObject) => {
       if (typeof segment === 'string') {
-        const keyword = Object.keys(customKeyWords).find(key =>
-          segment.includes(key),
+        // Creates a regex pattern to match all keywords
+        // E.g. /(testing|api|username)/g
+        const keywordPattern = new RegExp(
+          `(${Object.keys(customKeyWords).join('|')})`,
+          'g',
         );
 
-        console.log({ segment, keyword });
-
-        if (keyword) {
-          const splitContentByKeyword = segment.split(
-            new RegExp(`(${keyword})`, 'g'),
-          );
-
-          return splitContentByKeyword.map(str =>
-            str === keyword
-              ? {
-                  kind: generateKindClassName(
-                    `${prefix}${customKeyWords[keyword]}`,
-                  ),
-                  children: [str],
-                }
-              : str,
-          );
+        if (!keywordPattern.test(segment)) {
+          return segment; // Return unchanged if no keywords found
         }
+
+        const splitContentByKeywords = segment.split(keywordPattern);
+
+        return splitContentByKeywords.map(str =>
+          customKeyWords[str]
+            ? {
+                kind: generateKindClassName(`${prefix}${customKeyWords[str]}`),
+                children: [str],
+              }
+            : str,
+        );
       }
       return segment;
     })
