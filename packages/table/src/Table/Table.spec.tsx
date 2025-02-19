@@ -5,6 +5,7 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import Checkbox from '@leafygreen-ui/checkbox';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Cell, HeaderCell } from '../Cell';
@@ -25,7 +26,6 @@ import {
 } from '../utils/testHookCalls.testutils';
 
 import Table from '.';
-import Checkbox from '@leafygreen-ui/checkbox';
 function TableWithHook({
   hasToggleCheckboxes = false,
   ...props

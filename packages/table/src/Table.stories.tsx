@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useState, useEffect } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -7,12 +7,12 @@ import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
+import Checkbox from '@leafygreen-ui/checkbox';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import Pagination, { PaginationProps } from '@leafygreen-ui/pagination';
 import Tooltip from '@leafygreen-ui/tooltip';
-import Checkbox from '@leafygreen-ui/checkbox';
 
 import { VerticalAlignment } from './Table/Table.types';
 import {
@@ -258,8 +258,9 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
 
   useEffect(() => {
     const endTime = performance.now();
+    // eslint-disable-next-line no-console
     console.log(`Table rendered in ${endTime - startTime} ms`);
-  }, []); // Runs after the first render
+  }, [startTime]); // Runs after the first render
 
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
