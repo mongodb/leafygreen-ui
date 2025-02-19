@@ -53,8 +53,20 @@ export default class myClass {
 function greeting(entity) {
   return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
- 
+
 console.log(greeting('World'));
+`;
+
+const jsCustomSnippet = `
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username elmo
+
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username elmo
+
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/testing" api 1 username elmo
+
+testing a line api and testing username
+
+testingalineapiandtestingusername
 `;
 
 // > 5 lines to trigger expandable code block
@@ -80,6 +92,7 @@ const meta: StoryMetaType<typeof Code> = {
         'customActionButtons',
         'languageOptions',
         'children',
+        'customKeywordObject',
       ],
     },
     generate: {
@@ -133,10 +146,59 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
     highlightLines={highlightLines ? [6, [10, 15]] : undefined}
     className={css`
       width: 100%;
+
+      .lg-highlight-custom {
+        color: red;
+      }
     `}
   >
     {jsSnippet}
   </Code>
+);
+LiveExample.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <div>
+    <pre>
+      customKeywordObject={' '}
+      {JSON.stringify(
+        {
+          testing: 'custom',
+          api: 'custom',
+          username: 'custom',
+        },
+        null,
+        2,
+      )}
+    </pre>
+    <br></br>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
+      `}
+      customKeywordObject={{
+        testing: 'custom',
+        api: 'custom',
+        username: 'custom',
+      }}
+    >
+      {jsCustomSnippet}
+    </Code>
+  </div>
 );
 LiveExample.parameters = {
   chromatic: {

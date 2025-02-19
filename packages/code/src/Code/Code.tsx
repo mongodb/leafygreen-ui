@@ -45,6 +45,7 @@ function Code({
   className,
   onCopy,
   panel,
+  customKeywordObject,
   baseFontSize: baseFontSizeProp,
   // Deprecated props
   copyable = false,
@@ -120,6 +121,7 @@ function Code({
       lineNumberStart={lineNumberStart}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
+      customKeywordObject={customKeywordObject}
     >
       {children}
     </Syntax>
@@ -222,7 +224,6 @@ function Code({
                 collapsedCodeHeight,
                 isMultiline,
                 showExpandButton,
-                className,
               })}
               onScroll={onScroll}
               ref={scrollableElementRef}

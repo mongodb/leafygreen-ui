@@ -17,8 +17,11 @@ interface TokenProps {
   children: React.ReactNode;
 }
 
+const prefix = 'lg-highlight-';
+
+let customKeyWords: Record<string, string> = {};
+
 export function generateKindClassName(...kinds: Array<any>): string {
-  const prefix = 'lg-highlight-';
   return kinds
     .filter((str): str is string => isString(str) && str.length > 0)
     .map(kind => {
@@ -151,6 +154,87 @@ function getHighlightedRowStyle(darkMode: boolean) {
   `;
 }
 
+// Helper functions
+
+/**
+ * Merge consecutive strings into a single string.
+ *
+ * E.g.
+ * ```js
+ * ['_', 'hello ', 'world ', 'hi', {}, 'bye ', '_', 'hello '] => ['_hello world hi', {}, 'bye _hello']
+ * ```
+ */
+const mergeStringsIntoString = (children: Array<string | FlatTokenObject>) => {
+  return children.reduce(
+    (acc: Array<string | FlatTokenObject>, child: string | FlatTokenObject) => {
+      const lastItem = acc[acc.length - 1];
+
+      if (typeof child === 'string') {
+        if (typeof lastItem === 'string') {
+          acc[acc.length - 1] = lastItem + child;
+        } else {
+          acc.push(child);
+        }
+      } else {
+        acc.push(child);
+      }
+
+      return acc;
+    },
+    [],
+  );
+};
+
+/**
+ * Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
+ *
+ * E.g.
+ *
+ * ```js
+ * keywords: { '_hello': 'custom' }
+ * ```
+ *
+ * ```js
+ * ['_hello world hi', {}, 'bye _hello'] => [{ kind: 'lg-highlight-custom', children: ['_hello'] }, 'world ', 'hi', {}, 'bye', { kind: 'lg-highlight-custom', children: ['_hello'] }]
+ * ```
+ */
+const lineWithKeywords = (line: Array<string | FlatTokenObject>) => {
+  const mergedLines = mergeStringsIntoString(line);
+
+  return mergedLines
+    .map((segment: string | FlatTokenObject) => {
+      if (typeof segment === 'string') {
+        // Creates a regex pattern to match all keywords
+        // E.g. /(testing|api|username)/g
+        const keywordPattern = new RegExp(
+          `(${Object.keys(customKeyWords).join('|')})`,
+          'g',
+        );
+
+        // Return unchanged if no keywords found
+        if (!keywordPattern.test(segment)) {
+          return segment;
+        }
+
+        // Split the line by the keywords
+        const splitContentByKeywords = segment.split(keywordPattern);
+
+        // Map over the split content and return a new entity with a custom kind if the keyword is found
+        return splitContentByKeywords.map(str =>
+          customKeyWords[str]
+            ? {
+                kind: generateKindClassName(`${prefix}${customKeyWords[str]}`),
+                children: [str],
+              }
+            : str,
+        );
+      }
+
+      return segment;
+    })
+    .flat();
+};
+
 interface LineTableRowProps {
   lineNumber?: number;
   children: React.ReactNode;
@@ -228,9 +312,11 @@ export function flattenNestedTree(
     parentKinds = parentKinds.filter(
       (str): str is string => isString(str) && str.length > 0,
     );
+
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
+      // console.log({ entity });
       if (isString(entity)) {
         return parentKinds.length > 0
           ? {
@@ -386,14 +472,18 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
-        let displayLineNumber;
+        let mappedLine = line;
 
-        if (showLineNumbers) {
-          displayLineNumber = currentLineNumber;
+        if (Object.keys(customKeyWords).length > 0) {
+          mappedLine = lineWithKeywords(line);
         }
 
-        const processedLine = line?.length ? (
-          line.map(processToken)
+        const displayLineNumber = showLineNumbers
+          ? currentLineNumber
+          : undefined;
+
+        const processedLine = mappedLine?.length ? (
+          mappedLine.map(processToken)
         ) : (
           // We create placeholder content when a line break appears to preserve the line break's height
           // It needs to be inline-block for the table row to not collapse.
@@ -419,12 +509,19 @@ export function TableContent({ lines }: TableContentProps) {
   );
 }
 
-const plugin: LeafyGreenHLJSPlugin = {
-  'after:highlight': function (result: LeafyGreenHighlightResult) {
-    const { rootNode } = result._emitter;
-    // console.log(JSON.stringify(rootNode.children, null, 2));
-    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
-  },
+const plugin = ({
+  customKeywordObject = {},
+}: {
+  customKeywordObject?: Record<string, string>;
+}): LeafyGreenHLJSPlugin => {
+  customKeyWords = customKeywordObject;
+
+  return {
+    'after:highlight': function (result: LeafyGreenHighlightResult) {
+      const { rootNode } = result._emitter;
+      result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+    },
+  };
 };
 
 export default plugin;
