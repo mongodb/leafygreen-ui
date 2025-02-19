@@ -38,8 +38,6 @@ export interface TestUtilsReturnType {
   getIsExpanded: () => boolean;
 }
 
-// export type CopyButtonUtils = GetButtonTestUtilsReturnType<HTMLButtonElement>;
-
 export type LanguageSwitcherUtils = Pick<
   GetSelectTestUtilsReturnType,
   | 'getInput'
