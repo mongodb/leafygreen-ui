@@ -20,7 +20,7 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 import {
   getCodeStyles,
   getCodeWrapperStyles,
-  getCopyButtonUtilsWithoutPanelStyles,
+  getCopyButtonWithoutPanelStyles,
   getExpandedButtonStyles,
   getLoadingStyles,
   getWrapperStyles,
@@ -265,7 +265,7 @@ function Code({
           {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
           {showCopyButtonWithoutPanel && (
             <CopyButton
-              className={getCopyButtonUtilsWithoutPanelStyles({
+              className={getCopyButtonWithoutPanelStyles({
                 copyButtonAppearance,
               })}
               onCopy={onCopy}

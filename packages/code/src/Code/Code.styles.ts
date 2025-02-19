@@ -110,7 +110,7 @@ export const getCodeWrapperStyles = ({
 export const getExpandedButtonStyles = ({ theme }: { theme: Theme }) =>
   cx(expandButtonStyle, getExpandButtonUtilsVariantStyle(theme));
 
-export const getCopyButtonUtilsWithoutPanelStyles = ({
+export const getCopyButtonWithoutPanelStyles = ({
   copyButtonAppearance,
 }: {
   copyButtonAppearance: CopyButtonAppearance;
