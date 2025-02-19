@@ -41,6 +41,7 @@ export const getTestUtils = (
       isDisabled: () => testUtils.isDisabled(),
       getOptions: () => testUtils.getOptions(),
       getOptionByValue: (value: string) => testUtils.getOptionByValue(value),
+      getInputValue: () => testUtils.getInputValue(),
     };
   };
 
@@ -51,14 +52,8 @@ export const getTestUtils = (
     );
   };
 
-  const getCopyButtonUtils = () => {
-    const testUtils = getButtonTestUtils(lgIds.copyButton);
-
-    return {
-      getButton: () => testUtils.getButton() as HTMLButtonElement,
-      isDisabled: () => testUtils.isDisabled(),
-    };
-  };
+  const getCopyButtonUtils = () =>
+    getButtonTestUtils<HTMLButtonElement>(lgIds.copyButton);
 
   const getExpandButton = () => {
     const { getButton } = getButtonTestUtils(lgIds.expandButton);

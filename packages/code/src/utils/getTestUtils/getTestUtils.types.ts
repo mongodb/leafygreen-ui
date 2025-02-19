@@ -25,7 +25,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the copy button
    */
-  getCopyButtonUtils: () => CopyButtonUtils;
+  getCopyButtonUtils: () => GetButtonTestUtilsReturnType<HTMLButtonElement>;
 
   /**
    * Returns the expand button
@@ -38,9 +38,13 @@ export interface TestUtilsReturnType {
   getIsExpanded: () => boolean;
 }
 
-export type CopyButtonUtils = GetButtonTestUtilsReturnType<HTMLButtonElement>;
+// export type CopyButtonUtils = GetButtonTestUtilsReturnType<HTMLButtonElement>;
 
 export type LanguageSwitcherUtils = Pick<
   GetSelectTestUtilsReturnType,
-  'getInput' | 'isDisabled' | 'getOptions' | 'getOptionByValue'
+  | 'getInput'
+  | 'isDisabled'
+  | 'getOptions'
+  | 'getOptionByValue'
+  | 'getInputValue'
 >;

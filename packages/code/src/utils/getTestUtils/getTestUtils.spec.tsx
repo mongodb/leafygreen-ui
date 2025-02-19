@@ -131,6 +131,16 @@ describe('packages/tabs/getTestUtils', () => {
           ).toBeNull();
         });
       });
+
+      describe('getInputValue', () => {
+        test('returns the value', () => {
+          const { getLanguageSwitcherUtils } = renderCodeWithLanguageSwitcher(
+            {},
+          );
+          userEvent.click(getLanguageSwitcherUtils().getInput()!);
+          expect(getLanguageSwitcherUtils().getInputValue()).toBe('JavaScript');
+        });
+      });
     });
 
     describe('getIsLoading', () => {
@@ -221,43 +231,41 @@ describe('packages/tabs/getTestUtils', () => {
     });
 
     describe('getExpandButton', () => {
-      describe('getButton', () => {
-        test('throws error is the expand button cannot be found', () => {
-          try {
-            const { getExpandButton } = renderCode();
-            const _ = getExpandButton();
-          } catch (error) {
-            expect(error).toBeInstanceOf(Error);
-            expect(error).toHaveProperty(
-              'message',
-              expect.stringMatching(
-                /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
-              ),
-            );
-          }
-        });
-
-        test('returns the expand button', () => {
-          const { getExpandButton } = renderCode({ expandable: true });
-          expect(getExpandButton()).toBeInTheDocument();
-        });
+      test('throws error is the expand button cannot be found', () => {
+        try {
+          const { getExpandButton } = renderCode();
+          const _ = getExpandButton();
+        } catch (error) {
+          expect(error).toBeInstanceOf(Error);
+          expect(error).toHaveProperty(
+            'message',
+            expect.stringMatching(
+              /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+            ),
+          );
+        }
       });
 
-      describe('isExpanded', () => {
-        test('returns true', () => {
-          const { getIsExpanded } = renderCode({ expandable: true });
-          // Code snippet is collapsed by default
-          expect(getIsExpanded()).toBe(false);
-        });
+      test('returns the expand button', () => {
+        const { getExpandButton } = renderCode({ expandable: true });
+        expect(getExpandButton()).toBeInTheDocument();
+      });
+    });
 
-        test('returns false', () => {
-          const { getExpandButton, getIsExpanded } = renderCode({
-            expandable: true,
-          });
-          const expandButton = getExpandButton();
-          userEvent.click(expandButton!);
-          expect(getIsExpanded()).toBe(true);
+    describe('isExpanded', () => {
+      test('returns true', () => {
+        const { getIsExpanded } = renderCode({ expandable: true });
+        // Code snippet is collapsed by default
+        expect(getIsExpanded()).toBe(false);
+      });
+
+      test('returns false', () => {
+        const { getExpandButton, getIsExpanded } = renderCode({
+          expandable: true,
         });
+        const expandButton = getExpandButton();
+        userEvent.click(expandButton!);
+        expect(getIsExpanded()).toBe(true);
       });
     });
   });

@@ -165,7 +165,7 @@ test('code', () => {
   );
 
   const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButton } = getTestUtils();
-  const { getInput, getOptions, getOptionByValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
+  const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
   const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
@@ -173,6 +173,7 @@ test('code', () => {
   expect(getInput()).toBeInTheDocument();
   expect(getOptions()).toHaveLength(2);
   expect(getOptionByValue('js')).toBeInTheDocument();
+  expect(getInputValue()).toBe('javascript');
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
   expect(getCopyButtonUtils()).toBeInTheDocument();
@@ -242,28 +243,22 @@ const {
 } = getTestUtils();
 ```
 
-| Util                         | Description                                              | Returns                 |
-| ---------------------------- | -------------------------------------------------------- | ----------------------- |
-| `getLanguage()`              | Returns the current language of the code block           | `string`                |
-| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`      |
-| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
-| `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`               |
-| `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | `CopyButtonUtils`       |
-| `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`     |
-| `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`               |
+| Util                         | Description                                              | Returns                                                                                                                  |
+| ---------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `getLanguage()`              | Returns the current language of the code block           | `string`                                                                                                                 |
+| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
+| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
+| `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
+| `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`                                                                                                      |
+| `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
 
 ### LanguageSwitcherUtils
 
 | Util                              | Description                                       | Returns                 |
 | --------------------------------- | ------------------------------------------------- | ----------------------- |
 | `getInput()`                      | Returns the language switcher trigger             | `HTMLButtonElement`     |
+| `getInputValue()`                 | Returns the language switcher input value         | `string`                |
 | `getOptions()`                    | Returns all options in the language switcher      | `Array<HTMLElement>`    |
 | `getOptionByValue(value: string)` | Returns the option element by its value           | `HTMLElement` \| `null` |
 | `isDisabled()`                    | Returns whether the language switcher is disabled | `boolean`               |
-
-### CopyButtonUtils
-
-| Util           | Description                                 | Returns       |
-| -------------- | ------------------------------------------- | ------------- |
-| `getButton()`  | Returns the copy button element             | `HTMLElement` |
-| `isDisabled()` | Returns whether the copy button is disabled | `boolean`     |
