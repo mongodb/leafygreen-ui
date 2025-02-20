@@ -85,6 +85,11 @@ e.g.
 </Code>
 ```
 
+### Test Harnesses
+Exports `getTestUtils`, a util to reliably interact with LG `Code` in a product test suite. For more details, check out the [README](https://github.com/mongodb/leafygreen-ui/tree/main/packages/code#test-harnesses) [LG-4799](https://jira.mongodb.org/browse/LG-4799)
+
+Exports `getLgIds`, a util to instantiate an object of `data-lgid` values for a given LG `Code` component instance.
+
 ### `baseFontSize`
 Adds `baseFontSize` prop, which allows you to override the `LeafyGreenProvider` value.
 

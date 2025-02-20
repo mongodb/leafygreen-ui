@@ -10,11 +10,12 @@ import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import CodeContextProvider from '../CodeContext/CodeContext';
-import { LGIDs, numOfCollapsedLinesOfCode } from '../constants';
+import { numOfCollapsedLinesOfCode } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import {
   getCodeStyles,
@@ -45,6 +46,7 @@ function Code({
   className,
   onCopy,
   panel,
+  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   baseFontSize: baseFontSizeProp,
   // Deprecated props
   copyable = false,
@@ -65,6 +67,8 @@ function Code({
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
+  const lgIds = getLgIds(dataLgId);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -199,8 +203,13 @@ function Code({
       language={languageProp}
       isLoading={isLoading}
       showPanel={showPanel}
+      lgids={lgIds}
     >
-      <div className={getWrapperStyles({ theme, className })}>
+      <div
+        className={getWrapperStyles({ theme, className })}
+        data-language={languageProp}
+        data-lgid={dataLgId}
+      >
         <div
           className={getCodeStyles({
             scrollState,
@@ -212,7 +221,7 @@ function Code({
         >
           {!isLoading && (
             <pre
-              data-testid={LGIDs.pre}
+              data-testid={lgIds.pre}
               {...(rest as DetailedElementProps<HTMLPreElement>)}
               className={getCodeWrapperStyles({
                 theme,
@@ -236,7 +245,8 @@ function Code({
 
           {isLoading && (
             <CodeSkeleton
-              data-testid={LGIDs.skeleton}
+              data-testid={lgIds.skeleton}
+              data-lgid={lgIds.skeleton}
               className={getLoadingStyles(theme)}
             />
           )}
@@ -271,7 +281,8 @@ function Code({
             <button
               className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
-              data-testid={LGIDs.expandButton}
+              data-testid={lgIds.expandButton}
+              data-lgid={lgIds.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}

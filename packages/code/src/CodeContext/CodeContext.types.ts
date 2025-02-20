@@ -2,6 +2,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { LanguageOption } from '../Panel/Panel.types';
 import { Language } from '../types';
+import { GetLgIdsReturnType } from '../utils';
 
 export type CodeProviderProps = DarkModeProps & {
   /**
@@ -23,4 +24,9 @@ export type CodeProviderProps = DarkModeProps & {
    * Whether the loading skeleton should be shown.
    */
   isLoading: boolean;
+
+  /**
+   * LGIDs for the code snippet.
+   */
+  lgids: GetLgIdsReturnType;
 };
