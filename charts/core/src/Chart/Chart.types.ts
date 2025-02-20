@@ -49,4 +49,9 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Controls the current chart state.
      */
     state?: ChartStates;
+
+    /**
+     * Unique identifier when using with `DragContext`.
+     */
+    dragId?: string | number;
   }>;

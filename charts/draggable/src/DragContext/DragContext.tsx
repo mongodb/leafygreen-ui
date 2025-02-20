@@ -2,21 +2,17 @@ import React, {
   cloneElement,
   PropsWithChildren,
   ReactElement,
+  useMemo,
   useState,
 } from 'react';
 import {
   closestCenter,
   defaultDropAnimationSideEffects,
   DndContext,
-  DragEndEvent,
-  DragMoveEvent,
-  DragOverEvent,
   DragOverlay,
-  DragStartEvent,
   DropAnimation,
   KeyboardSensor,
   PointerSensor,
-  UniqueIdentifier,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
@@ -38,13 +34,12 @@ const dropAnimation: DropAnimation = {
 
 export function DragContext({
   children,
-  items,
   onDragEnd,
 }: PropsWithChildren<{
-  items: Array<UniqueIdentifier>;
   onDragEnd?(event: { active: string; over: string }): void;
 }>): ReactElement {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const childrenArray = React.Children.toArray(children);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -53,13 +48,36 @@ export function DragContext({
     }),
   );
 
-  const childrenElements = React.Children.toArray(children).map(child => {
-    const key = (child as React.ReactElement).props?.key;
-    return cloneElement(child as React.ReactElement, {
-      key,
-      state: activeId === key ? 'dragging' : 'unset',
-    });
-  });
+  const items = useMemo(() => {
+    return childrenArray.map(
+      child => (child as React.ReactElement).props.dragId,
+    );
+  }, [childrenArray]);
+
+  const childrenElements = useMemo(
+    () =>
+      childrenArray.map(child => {
+        const dragId = (child as React.ReactElement).props?.dragId;
+        return cloneElement(child as React.ReactElement, {
+          key: dragId,
+          state: activeId === dragId ? 'dragging' : 'unset',
+        });
+      }),
+    [activeId, childrenArray],
+  );
+
+  const activeElement = useMemo(() => {
+    return activeId && childrenArray.length
+      ? cloneElement(
+          childrenArray.find(
+            child => (child as React.ReactElement).props.dragId === activeId,
+          ) as React.ReactElement,
+          {
+            state: 'overlay',
+          },
+        )
+      : null;
+  }, [activeId, childrenArray]);
 
   function handleDragStart(event: any) {
     setActiveId(event.active.id);
@@ -83,18 +101,7 @@ export function DragContext({
           {childrenElements}
         </SortableContext>
 
-        <DragOverlay dropAnimation={dropAnimation}>
-          {activeId
-            ? cloneElement(
-                React.Children.toArray(children).find(
-                  child => (child as React.ReactElement).props.id === activeId,
-                ) as React.ReactElement,
-                {
-                  state: 'overlay',
-                },
-              )
-            : null}
-        </DragOverlay>
+        <DragOverlay dropAnimation={dropAnimation}>{activeElement}</DragOverlay>
       </DndContext>
     </>
   );
