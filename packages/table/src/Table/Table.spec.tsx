@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { flexRender } from '@tanstack/react-table';
-import { render } from '@testing-library/react';
+import { flexRender, HeaderGroup } from '@tanstack/react-table';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -12,65 +12,68 @@ import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
-  LeafyGreenTableCell,
+  LeafyGreenTable,
   LeafyGreenTableRow,
 } from '../useLeafyGreenTable';
 import useLeafyGreenVirtualTable from '../useLeafyGreenVirtualTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
+  getDefaultTestColumns,
   getDefaultTestData,
   TestTableWithHookProps,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
 
 import Table from '.';
-function TableWithHook(props: TestTableWithHookProps) {
+
+const RenderTable = ({ table }: { table: LeafyGreenTable<any> }) => {
+  return (
+    <Table table={table}>
+      <TableHead isSticky>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <Cell key={cell.id} cell={cell}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                );
+              })}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+};
+
+function TableWithHook({ ...props }: TestTableWithHookProps) {
   const { table, rowSelection } = useTestHookCall(props);
-  const { rows } = table.getRowModel();
+
   return (
     <>
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <Table table={table}>
-        <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell data-cellid={cell.id} key={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
+      <RenderTable table={table} />
     </>
   );
 }
@@ -203,6 +206,91 @@ describe('packages/table/Table', () => {
       expect(getByLabelText('Unsorted Icon')).toBeInTheDocument();
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent(initialFirstId!);
+    });
+  });
+
+  describe('column visibility', () => {
+    test('renders the correct cells in a row by default', () => {
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const tableResult = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      const table = tableResult.result.current;
+      render(<RenderTable table={table} />);
+
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+    });
+
+    test('renders the correct cells after toggling a cells visibility to hidden', () => {
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const tableResult = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      const table = tableResult.result.current;
+      const { rerender: rerenderTable } = render(<RenderTable table={table} />);
+
+      const { getRowByIndex } = getTestUtils();
+      const allRowCells = () => getRowByIndex(0)?.getAllCells();
+
+      expect(allRowCells()).toHaveLength(6);
+
+      const columnToHide = table.getAllColumns()[0];
+
+      // Toggle the visibility of the first column to hidden
+      act(() => columnToHide.toggleVisibility());
+      tableResult.rerender();
+      rerenderTable(<RenderTable table={table} />);
+
+      expect(allRowCells()).toHaveLength(5);
+    });
+
+    test('renders the correct cells after toggling a cells visibility back to visible', () => {
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const tableResult = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      const table = tableResult.result.current;
+      const { rerender: rerenderTable } = render(<RenderTable table={table} />);
+
+      const { getRowByIndex } = getTestUtils();
+      const allRowCells = () => getRowByIndex(0)?.getAllCells();
+
+      expect(allRowCells()).toHaveLength(6);
+
+      const columnToHide = table.getAllColumns()[0];
+
+      // Toggle the visibility of the first column to hidden
+      act(() => columnToHide.toggleVisibility());
+      tableResult.rerender();
+      rerenderTable(<RenderTable table={table} />);
+
+      expect(allRowCells()).toHaveLength(5);
+
+      // Toggle the visibility of the first column back to visible
+      act(() => columnToHide.toggleVisibility());
+      tableResult.rerender();
+      rerenderTable(<RenderTable table={table} />);
+
+      expect(allRowCells()).toHaveLength(6);
     });
   });
 
