@@ -49,9 +49,4 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Controls the current chart state.
      */
     state?: ChartStates;
-
-    /**
-     * Unique identifier required for sorting with `SortableContainer`.
-     */
-    sortId?: string | number;
   }>;

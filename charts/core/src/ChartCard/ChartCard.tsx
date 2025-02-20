@@ -35,7 +35,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
       isOpen: isControlledOpen,
       onToggleButtonClick,
       state = ChartCardStates.Unset,
-      sortId = '',
+      id = '',
       ...rest
     },
     forwardedRef,
@@ -51,8 +51,8 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
     });
 
     const { attributes, listeners, setNodeRef, transform, transition, items } =
-      useSortable({ id: sortId });
-    const isSortable = !!(items.length && sortId);
+      useSortable({ id });
+    const isSortable = !!(items.length && id);
 
     // When the controlled prop changes, update the internal state
     useEffect(() => {
@@ -81,6 +81,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
             className,
           })}
           ref={useMergeRefs([setNodeRef, forwardedRef])}
+          id={id}
           {...rest}
         >
           <div
