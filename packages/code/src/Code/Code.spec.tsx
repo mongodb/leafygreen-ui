@@ -17,7 +17,9 @@ import { numOfCollapsedLinesOfCode } from '../constants';
 import { Panel } from '../Panel';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 
-import Code, { hasMultipleLines } from './Code';
+import Code from './Code';
+import { CodeProps } from './Code.types';
+import { hasMultipleLines } from './utils';
 
 const codeSnippet = 'const greeting = "Hello, world!";';
 
