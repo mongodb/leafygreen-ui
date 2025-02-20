@@ -40,4 +40,9 @@ export interface ChartCardProps extends Omit<HTMLElementProps<'div'>, 'title'> {
    * Controls the current chart card state.
    */
   state?: ChartCardStates;
+
+  /**
+   * Unique identifier when using with `DragContext`.
+   */
+  dragId?: string | number;
 }

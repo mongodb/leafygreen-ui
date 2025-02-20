@@ -19,7 +19,7 @@ const getBaseContainerStyles = (theme: Theme) => css`
   width: 100%;
 `;
 
-const getSortableContainerStyles = (
+const getDraggableContainerStyles = (
   transform: Transform | null,
   transition?: string,
 ) => css`
@@ -43,19 +43,21 @@ export const getChartContainerStyles = ({
   theme,
   transform,
   transition,
-  isSortable,
+  isDraggable,
   state,
 }: {
   theme: Theme;
   transform: Transform | null;
   transition?: string;
-  isSortable: boolean;
+  isDraggable: boolean;
   state: ChartStates;
 }) =>
   cx(getBaseContainerStyles(theme), {
-    [getSortableContainerStyles(transform, transition)]: isSortable,
-    [getDraggingContainerStyles()]: state === ChartStates.Dragging,
-    [getOverlayContainerStyles(theme)]: state === ChartStates.Overlay,
+    [getDraggableContainerStyles(transform, transition)]: isDraggable,
+    [getDraggingContainerStyles()]:
+      isDraggable && state === ChartStates.Dragging,
+    [getOverlayContainerStyles(theme)]:
+      isDraggable && state === ChartStates.Overlay,
   });
 
 export const getChartHeaderContainerStyles = (

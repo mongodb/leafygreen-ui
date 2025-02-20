@@ -27,29 +27,6 @@ export default {
   },
 };
 
-interface DragDropContainerProps {}
-
-const renderChart = (id: string, sortable = true) => {
-  return (
-    <Chart id={sortable ? id : undefined} key={id}>
-      <Header title={id} showDivider />
-      <Grid vertical={false} />
-      <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
-      <XAxis type="value" />
-      <YAxis type="value" />
-      <Line
-        name="Line 1"
-        data={[
-          [0, 0],
-          [1, 1],
-          [2, 2],
-          [3, 3],
-        ]}
-      />
-    </Chart>
-  );
-};
-
 function Example() {
   type CardId = string;
   const [cards, setCards] = useState<Array<CardId>>(['1', '2']);
@@ -97,21 +74,40 @@ function Example() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-      <DragContext items={cards} onDragEnd={handleCardDragEnd}>
-        {cards.map(card => (
+      <DragContext onDragEnd={handleCardDragEnd}>
+        {cards.map(cardId => (
           <ChartCard
-            title={card}
-            id={card}
-            key={card}
+            title={cardId}
+            dragId={cardId}
+            key={cardId}
             style={{ marginBottom: 16 }}
           >
             <DragContext
-              items={charts[card]}
               onDragEnd={({ active, over }) => {
-                handleChartDragEnd({ container: card, active, over });
+                handleChartDragEnd({ container: cardId, active, over });
               }}
             >
-              {charts[card].map(chart => renderChart(chart))}
+              {charts[cardId].map(chartId => (
+                <Chart key={chartId} dragId={chartId}>
+                  <Header title={chartId} showDivider />
+                  <Grid vertical={false} />
+                  <Tooltip
+                    sortDirection={SortDirection.Desc}
+                    sortKey={SortKey.Value}
+                  />
+                  <XAxis type="value" />
+                  <YAxis type="value" />
+                  <Line
+                    name="Line 1"
+                    data={[
+                      [0, 0],
+                      [1, 1],
+                      [2, 2],
+                      [3, 3],
+                    ]}
+                  />
+                </Chart>
+              ))}
             </DragContext>
           </ChartCard>
         ))}
@@ -120,6 +116,6 @@ function Example() {
   );
 }
 
-export const LiveExample: StoryObj<DragDropContainerProps> = {
+export const LiveExample: StoryObj<{}> = {
   render: () => <Example />,
 };
