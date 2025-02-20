@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { lgQueries } from '../../utils/getQueries';
-const { findByLgId, getByLgId } = lgQueries;
+import { findByLgId, getByLgId } from '../../utils/getQueries';
 
 const TestComponent = () => {
   const [open, setOpen] = useState(false);
