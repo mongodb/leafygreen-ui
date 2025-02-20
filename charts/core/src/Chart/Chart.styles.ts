@@ -25,7 +25,7 @@ const getDraggableContainerStyles = (
 ) => css`
   transform: ${CSS.Transform.toString(transform)};
   transition: ${transition};
-  cursor: move;
+  /* cursor: move; */
 `;
 
 const getDraggingContainerStyles = () => css`
@@ -60,15 +60,28 @@ export const getChartContainerStyles = ({
       isDraggable && state === ChartStates.Overlay,
   });
 
-export const getChartHeaderContainerStyles = (
-  theme: Theme,
-  state: ChartStates,
-) => css`
-  grid-area: chartHeader;
-  background: ${state === ChartStates.Overlay
-    ? color[theme].background[Variant.Primary][InteractionState.Hover]
-    : 'none'};
-`;
+export const getChartHeaderContainerStyles = ({
+  theme,
+  state,
+  isDraggable,
+}: {
+  theme: Theme;
+  state: ChartStates;
+  isDraggable: boolean;
+}) =>
+  cx(
+    css`
+      grid-area: chartHeader;
+      background: ${state === ChartStates.Overlay
+        ? color[theme].background[Variant.Primary][InteractionState.Hover]
+        : 'none'};
+    `,
+    {
+      [css`
+        cursor: move;
+      `]: isDraggable,
+    },
+  );
 
 export const chartWrapperStyles = css`
   position: relative;

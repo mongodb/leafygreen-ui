@@ -57,7 +57,7 @@ export function Chart({
     <LeafyGreenProvider darkMode={darkModeProp}>
       <ChartProvider chart={chart}>
         <div
-          ref={setNodeRef}
+          ref={isDraggable ? setNodeRef : null}
           className={cx(
             getChartContainerStyles({
               theme,
@@ -70,7 +70,11 @@ export function Chart({
           )}
         >
           <div
-            className={getChartHeaderContainerStyles(theme, state)}
+            className={getChartHeaderContainerStyles({
+              theme,
+              state,
+              isDraggable,
+            })}
             {...attributes}
             {...listeners}
           >

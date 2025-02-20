@@ -33,7 +33,6 @@ const getSortableContainerStyles = (
 ) => css`
   transform: ${CSS.Transform.toString(transform)};
   transition: ${transition};
-  cursor: move;
 `;
 
 const getDraggingContainerStyles = () => css`
@@ -48,7 +47,7 @@ export const getContainerStyles = ({
   theme,
   transition,
   transform,
-  isSortable,
+  isDraggable,
   isOpen,
   state,
   className,
@@ -56,7 +55,7 @@ export const getContainerStyles = ({
   theme: Theme;
   transition?: string;
   transform: Transform | null;
-  isSortable: boolean;
+  isDraggable: boolean;
   isOpen: boolean;
   state: ChartCardStates;
   className?: string;
@@ -65,9 +64,11 @@ export const getContainerStyles = ({
     getBaseContainerStyles(theme),
     {
       [openContainerStyles]: isOpen,
-      [getSortableContainerStyles(transform, transition)]: isSortable,
-      [getDraggingContainerStyles()]: state === ChartCardStates.Dragging,
-      [getOverlayContainerStyles()]: state === ChartCardStates.Overlay,
+      [getSortableContainerStyles(transform, transition)]: isDraggable,
+      [getDraggingContainerStyles()]:
+        isDraggable && state === ChartCardStates.Dragging,
+      [getOverlayContainerStyles()]:
+        isDraggable && state === ChartCardStates.Overlay,
     },
     className,
   );
@@ -76,16 +77,35 @@ export const openContainerStyles = css`
   grid-template-rows: 40px 1fr;
 `;
 
-export const getHeaderStyles = (theme: Theme, state: ChartCardStates) => css`
-  width: 100%;
-  height: 100%;
-  padding: ${spacing[150]}px ${spacing[300]}px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  background: ${state === ChartCardStates.Overlay
-    ? color[theme].background[Variant.Primary][InteractionState.Hover]
-    : 'none'};
-`;
+export const getHeaderStyles = ({
+  theme,
+  state,
+  isDraggable,
+  className,
+}: {
+  theme: Theme;
+  state: ChartCardStates;
+  isDraggable: boolean;
+  className?: string;
+}) =>
+  cx(
+    css`
+      width: 100%;
+      height: 100%;
+      padding: ${spacing[150]}px ${spacing[300]}px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      background: ${state === ChartCardStates.Overlay
+        ? color[theme].background[Variant.Primary][InteractionState.Hover]
+        : 'none'};
+    `,
+    {
+      [css`
+        cursor: move;
+      `]: isDraggable,
+    },
+    className,
+  );
 
 export const childrenContainerStyles = css`
   overflow: hidden;

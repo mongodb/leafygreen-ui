@@ -52,7 +52,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
 
     const { attributes, listeners, setNodeRef, transform, transition, items } =
       useSortable({ id: dragId });
-    const isSortable = !!(items.length && dragId);
+    const isDraggable = !!(items.length && dragId);
 
     // When the controlled prop changes, update the internal state
     useEffect(() => {
@@ -75,7 +75,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
             theme,
             transition,
             transform,
-            isSortable,
+            isDraggable,
             isOpen,
             state,
             className,
@@ -84,7 +84,12 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
           {...rest}
         >
           <div
-            className={cx(getHeaderStyles(theme, state), className)}
+            className={getHeaderStyles({
+              theme,
+              state,
+              isDraggable,
+              className,
+            })}
             {...attributes}
             {...listeners}
             {...rest}
