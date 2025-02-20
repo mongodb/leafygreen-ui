@@ -3,14 +3,14 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import ClipboardJS from 'clipboard';
 
-import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
+
+import CodeContextProvider from '../CodeContext/CodeContext';
+import { getLgIds } from '../utils';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import CopyButton from './CopyButton';
 import { CopyProps } from './CopyButton.types';
-import CodeContextProvider from '../CodeContext/CodeContext';
-import { getLgIds } from '../utils';
 
 jest.mock('clipboard', () => {
   return jest.fn().mockImplementation(() => ({
@@ -191,4 +191,7 @@ describe('CopyButton', () => {
       },
     );
   });
+
+  // TODO: get this to work https://jira.mongodb.org/browse/LG-4760
+  test.todo('copies the correct text when copy button is clicked');
 });

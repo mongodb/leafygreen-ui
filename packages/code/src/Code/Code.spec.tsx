@@ -18,10 +18,7 @@ import { Panel } from '../Panel';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 
 import Code from './Code';
-import { CodeProps } from './Code.types';
 import { hasMultipleLines } from './utils';
-
-const codeSnippet = 'const greeting = "Hello, world!";';
 
 const customActionButtons = [
   <IconButton
@@ -303,23 +300,6 @@ describe('packages/Code', () => {
           );
         }
       });
-    });
-
-    // TODO: get this to work https://jira.mongodb.org/browse/LG-4760
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip('copies the correct text when copy button is clicked', () => {
-      const { queryByTestId } = Context.within(
-        Jest.spyContext(ClipboardJS, 'isSupported'),
-        spy => {
-          spy.mockReturnValue(true);
-          return render(<Code language="javascript">{codeSnippet}</Code>);
-        },
-      );
-
-      const copyButton = queryByTestId('lg-code-copy_button');
-      expect(copyButton).not.toBeNull();
-      userEvent.click(copyButton);
-      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(codeSnippet);
     });
   });
 
