@@ -37,7 +37,7 @@ export function Chart({
   groupId,
   className,
   state = ChartStates.Unset,
-  sortId = '',
+  id = '',
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -50,14 +50,15 @@ export function Chart({
     state,
   });
   const { attributes, listeners, setNodeRef, transform, transition, items } =
-    useSortable({ id: sortId });
-  const isSortable = !!(items.length && sortId);
+    useSortable({ id });
+  const isSortable = !!(items.length && id);
 
   return (
     <LeafyGreenProvider darkMode={darkModeProp}>
       <ChartProvider chart={chart}>
         <div
           ref={setNodeRef}
+          id={id}
           className={cx(
             getChartContainerStyles({
               theme,
