@@ -64,6 +64,7 @@ const RenderTable = ({ table }: { table: LeafyGreenTable<any> }) => {
     </Table>
   );
 };
+
 function TableWithHook({ ...props }: TestTableWithHookProps) {
   const { table, rowSelection } = useTestHookCall(props);
 
