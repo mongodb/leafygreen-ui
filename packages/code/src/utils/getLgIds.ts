@@ -10,6 +10,7 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
     expandButton: `${root}-expand_button`,
     skeleton: `${root}-skeleton`,
     pre: `${root}-pre`,
+    title: `${root}-title`,
   } as const;
   return ids;
 };

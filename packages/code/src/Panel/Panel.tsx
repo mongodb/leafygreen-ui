@@ -58,7 +58,15 @@ function Panel({
       data-lgid={lgids.panel}
       {...rest}
     >
-      {hasTitle && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}
+      {hasTitle && (
+        <Body
+          data-testid={lgids.title}
+          data-lgid={lgids.title}
+          className={getPanelTitleStyles(theme)}
+        >
+          {title}
+        </Body>
+      )}
 
       <div className={panelLeftStyles}>
         {shouldRenderLanguageSwitcher && (
