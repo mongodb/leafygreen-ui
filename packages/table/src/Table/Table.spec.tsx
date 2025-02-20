@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { flexRender } from '@tanstack/react-table';
-import { render } from '@testing-library/react';
+import { flexRender, HeaderGroup } from '@tanstack/react-table';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import Checkbox from '@leafygreen-ui/checkbox';
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Cell, HeaderCell } from '../Cell';
@@ -13,82 +12,67 @@ import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
-  LeafyGreenTableCell,
+  LeafyGreenTable,
   LeafyGreenTableRow,
 } from '../useLeafyGreenTable';
 import useLeafyGreenVirtualTable from '../useLeafyGreenVirtualTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
+  getDefaultTestColumns,
   getDefaultTestData,
   TestTableWithHookProps,
   useTestHookCall,
 } from '../utils/testHookCalls.testutils';
 
 import Table from '.';
-function TableWithHook({
-  hasToggleCheckboxes = false,
-  ...props
-}: TestTableWithHookProps) {
+
+const RenderTable = ({ table }: { table: LeafyGreenTable<any> }) => {
+  return (
+    <Table table={table}>
+      <TableHead isSticky>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <Cell key={cell.id} cell={cell}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </Cell>
+                );
+              })}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+};
+function TableWithHook({ ...props }: TestTableWithHookProps) {
   const { table, rowSelection } = useTestHookCall(props);
-  const { rows } = table.getRowModel();
 
   return (
     <>
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      {hasToggleCheckboxes &&
-        table.getAllColumns().map(column => {
-          if (!column.getCanHide()) return null;
-          return (
-            <Checkbox
-              label={column.id}
-              key={column.id}
-              onChange={column.getToggleVisibilityHandler()}
-              checked={column.getIsVisible()}
-              data-testid={`lg-column-visibility-${column.id}`}
-            />
-          );
-        })}
-      <Table table={table}>
-        <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell data-cellid={cell.id} key={cell.id} cell={cell}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
+      <RenderTable table={table} />
     </>
   );
 }
@@ -226,32 +210,86 @@ describe('packages/table/Table', () => {
 
   describe('column visibility', () => {
     test('renders the correct cells in a row by default', () => {
-      render(<TableWithHook hasToggleCheckboxes />);
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const tableResult = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      const table = tableResult.result.current;
+      render(<RenderTable table={table} />);
+
       const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getAllCells().length).toEqual(6);
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
     });
 
     test('renders the correct cells after toggling a cells visibility to hidden', () => {
-      const { getByTestId } = render(<TableWithHook hasToggleCheckboxes />);
-      const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
-      userEvent.click(
-        getByTestId('lg-column-visibility-id'),
-        {},
-        { skipPointerEventsCheck: true },
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const tableResult = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
       );
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(5);
+
+      const table = tableResult.result.current;
+      const { rerender: rerenderTable } = render(<RenderTable table={table} />);
+
+      const { getRowByIndex } = getTestUtils();
+      const allRowCells = () => getRowByIndex(0)?.getAllCells();
+
+      expect(allRowCells()).toHaveLength(6);
+
+      const columnToHide = table.getAllColumns()[0];
+
+      // Toggle the visibility of the first column to hidden
+      act(() => columnToHide.toggleVisibility());
+      tableResult.rerender();
+      rerenderTable(<RenderTable table={table} />);
+
+      expect(allRowCells()).toHaveLength(5);
     });
 
     test('renders the correct cells after toggling a cells visibility back to visible', () => {
-      const { getByTestId } = render(<TableWithHook hasToggleCheckboxes />);
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const tableResult = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      const table = tableResult.result.current;
+      const { rerender: rerenderTable } = render(<RenderTable table={table} />);
+
       const { getRowByIndex } = getTestUtils();
-      const toggleIdCheckbox = getByTestId('lg-column-visibility-id');
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
-      userEvent.click(toggleIdCheckbox, {}, { skipPointerEventsCheck: true });
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(5);
-      userEvent.click(toggleIdCheckbox, {}, { skipPointerEventsCheck: true });
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+      const allRowCells = () => getRowByIndex(0)?.getAllCells();
+
+      expect(allRowCells()).toHaveLength(6);
+
+      const columnToHide = table.getAllColumns()[0];
+
+      // Toggle the visibility of the first column to hidden
+      act(() => columnToHide.toggleVisibility());
+      tableResult.rerender();
+      rerenderTable(<RenderTable table={table} />);
+
+      expect(allRowCells()).toHaveLength(5);
+
+      // Toggle the visibility of the first column back to visible
+      act(() => columnToHide.toggleVisibility());
+      tableResult.rerender();
+      rerenderTable(<RenderTable table={table} />);
+
+      expect(allRowCells()).toHaveLength(6);
     });
   });
 
