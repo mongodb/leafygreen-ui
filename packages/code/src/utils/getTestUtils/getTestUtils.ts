@@ -12,6 +12,7 @@ export const getTestUtils = (
 ): TestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
 
+  // TODO: update this to use query/find/get
   const element = getByLgId!(lgIds.root);
 
   const getLanguage = () => {
@@ -24,7 +25,7 @@ export const getTestUtils = (
     return language;
   };
 
-  const getTitle = () => {
+  const queryTitle = () => {
     const title = queryBySelector<HTMLInputElement>(
       element,
       `[data-lgid=${lgIds.title}]`,
@@ -69,13 +70,19 @@ export const getTestUtils = (
     return !!button?.textContent?.includes('Click to collapse');
   };
 
+  const queryPanel = () => {
+    return queryBySelector<HTMLElement>(element, `[data-lgid=${lgIds.panel}]`);
+  };
+
+  // update to use query/find/get
   return {
     getLanguage,
-    getTitle,
+    queryTitle,
     getLanguageSwitcherUtils,
     getIsLoading,
     getCopyButtonUtils,
     getExpandButton,
     getIsExpanded,
+    queryPanel,
   };
 };

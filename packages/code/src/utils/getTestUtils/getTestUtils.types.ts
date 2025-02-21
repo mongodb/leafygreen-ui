@@ -10,7 +10,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the title of the code snippet
    */
-  getTitle: () => string | null;
+  queryTitle: () => string | null;
 
   /**
    * Returns the language switcher
@@ -36,6 +36,11 @@ export interface TestUtilsReturnType {
    * Returns whether the code snippet is expanded
    */
   getIsExpanded: () => boolean;
+
+  /**
+   * Returns the panel
+   */
+  queryPanel: () => HTMLElement | null;
 }
 
 export type LanguageSwitcherUtils = Pick<

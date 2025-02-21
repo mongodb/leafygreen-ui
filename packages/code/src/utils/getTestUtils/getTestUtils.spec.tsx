@@ -36,24 +36,24 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
-    describe('getTitle', () => {
+    describe('queryTitle', () => {
       describe('Without the panel', () => {
         test('returns null', () => {
-          const { getTitle } = renderCode();
-          expect(getTitle()).toBeNull();
+          const { queryTitle } = renderCode();
+          expect(queryTitle()).toBeNull();
         });
       });
       describe('With panel', () => {
         test('returns null if there is no title prop', () => {
-          const { getTitle } = renderCodeWithLanguageSwitcher({});
-          expect(getTitle()).toBeNull();
+          const { queryTitle } = renderCodeWithLanguageSwitcher({});
+          expect(queryTitle()).toBeNull();
         });
 
         test('returns the title', () => {
-          const { getTitle } = renderCodeWithLanguageSwitcher({
+          const { queryTitle } = renderCodeWithLanguageSwitcher({
             props: { title: 'Leafygreen' },
           });
-          expect(getTitle()).toBe('Leafygreen');
+          expect(queryTitle()).toBe('Leafygreen');
         });
       });
     });
@@ -266,6 +266,18 @@ describe('packages/tabs/getTestUtils', () => {
         const expandButton = getExpandButton();
         userEvent.click(expandButton!);
         expect(getIsExpanded()).toBe(true);
+      });
+    });
+
+    describe('queryPanel', () => {
+      test('returns the panel', () => {
+        const { queryPanel } = renderCodeWithLanguageSwitcher({});
+        expect(queryPanel()).toBeInTheDocument();
+      });
+
+      test('returns null', () => {
+        const { queryPanel } = renderCode({});
+        expect(queryPanel()).toBeNull();
       });
     });
   });

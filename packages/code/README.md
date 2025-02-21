@@ -169,7 +169,7 @@ test('code', () => {
   const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
-  expect(getTitle()).toBe('Title');
+  expect(queryTitle()).toBe('Title');
   expect(getInput()).toBeInTheDocument();
   expect(getOptions()).toHaveLength(2);
   expect(getOptionByValue('js')).toBeInTheDocument();
@@ -230,7 +230,7 @@ test('code', () => {
 ```tsx
 const {
   getLanguage,
-  getTitle,
+  queryTitle,
   getLanguageSwitcherUtils: {
     getInput,
     getOptions,
@@ -239,19 +239,21 @@ const {
   },
   getIsLoading,
   getCopyButtonUtils: { getButton, isDisabled },
-  getExpandButton,,
+  getExpandButton,
+  queryPanel,
 } = getTestUtils();
 ```
 
 | Util                         | Description                                              | Returns                                                                                                                  |
 | ---------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `getLanguage()`              | Returns the current language of the code block           | `string`                                                                                                                 |
-| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
 | `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
 | `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
 | `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
 | `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`                                                                                                      |
 | `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
+| `queryTitle()`               | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
+| `queryPanel()`               | Returns the panel element                                | `HTMLElement` \| `null`                                                                                                  |
 
 ### LanguageSwitcherUtils
 

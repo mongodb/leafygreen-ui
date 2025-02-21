@@ -54,14 +54,14 @@ function Panel({
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
-      data-testid={lgids.panel}
       data-lgid={lgids.panel}
+      data-testid={lgids.panel}
       {...rest}
     >
       {hasTitle && (
         <Body
-          data-testid={lgids.title}
           data-lgid={lgids.title}
+          data-testid={lgids.title}
           className={getPanelTitleStyles(theme)}
         >
           {title}

@@ -242,8 +242,8 @@ describe('packages/Code', () => {
 
   describe('Without panel slot', () => {
     test('does not render a panel', () => {
-      const { queryByTestId } = renderCode();
-      expect(queryByTestId('lg-code-panel')).toBeNull();
+      const { queryTitle } = renderCode();
+      expect(queryTitle()).toBeNull();
     });
 
     describe('renders a copy button', () => {
@@ -306,15 +306,15 @@ describe('packages/Code', () => {
   describe('With panel slot', () => {
     describe('renders', () => {
       test('panel with only the copy button when no props are passed', () => {
-        const { queryByTestId } = renderCode({ panel: <Panel /> });
-        expect(queryByTestId('lg-code-panel')).toBeDefined();
+        const { queryTitle } = renderCode({ panel: <Panel /> });
+        expect(queryTitle()).toBeDefined();
       });
 
       test('panel with only the copy button when onCopy is passed', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           panel: <Panel onCopy={() => {}} />,
         });
-        expect(queryByTestId('lg-code-panel')).toBeDefined();
+        expect(queryTitle()).toBeDefined();
       });
     });
 
@@ -439,7 +439,7 @@ describe('packages/Code', () => {
       });
 
       test('renders when custom action buttons are present and showCustomActionButtons is true', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           panel: (
             <Panel
               showCustomActionButtons
@@ -447,7 +447,7 @@ describe('packages/Code', () => {
             />
           ),
         });
-        expect(queryByTestId('lg-code-panel')).toBeDefined();
+        expect(queryTitle()).toBeDefined();
       });
       test('only renders IconButton elements', () => {
         const { queryAllByTestId } = renderCode({
@@ -644,64 +644,64 @@ describe('packages/Code', () => {
   describe('Deprecated props', () => {
     describe('custom action buttons', () => {
       test('does not renders a panel with custom action buttons when only customActionButtons is passed', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           customActionButtons,
         });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
       test('does not renders a panel with custom action buttons when only showCustomActionButtons is true', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           showCustomActionButtons: true,
         });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
       test('renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed', () => {
-        const { getByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           showCustomActionButtons: true,
           customActionButtons,
         });
-        expect(getByTestId('lg-code-panel')).toBeDefined();
+        expect(queryTitle()).toBeDefined();
       });
     });
 
     describe('language switcher', () => {
       test('renders a panel when only language, onChange, and languageOptions are defined', () => {
-        const { getByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           language: languageOptions[0].displayName,
           languageOptions,
           onChange: () => {},
         });
-        expect(getByTestId('lg-code-panel')).toBeDefined();
+        expect(queryTitle()).toBeDefined();
       });
       test('does not render a panel when language and onChange are defined but languageOptions is not defined', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           language: languageOptions[0].displayName,
           onChange: () => {},
         });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
       test('does not render a panel when language and languageOptions are defined but onChange is not defined', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           language: languageOptions[0].displayName,
           languageOptions,
         });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
       test('does not render a panel when languageOptions is an empty array', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           language: languageOptions[0].displayName,
           languageOptions: [],
           onChange: () => {},
         });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
       test('does not render a panel if language is a string', () => {
-        const { queryByTestId } = renderCode({
+        const { queryTitle } = renderCode({
           language: 'javascript',
           languageOptions: [],
           onChange: () => {},
         });
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
       test('throws an error if language is not in languageOptions', () => {
         try {
@@ -745,7 +745,7 @@ describe('packages/Code', () => {
         expect(getByTestId('lg-code-copy_button')).toBeDefined();
       });
       test('does not render a panel with a copy button when copyable is false', () => {
-        const { queryByTestId } = Context.within(
+        const { queryTitle } = Context.within(
           Jest.spyContext(ClipboardJS, 'isSupported'),
           spy => {
             spy.mockReturnValue(true);
@@ -754,7 +754,7 @@ describe('packages/Code', () => {
             });
           },
         );
-        expect(queryByTestId('lg-code-panel')).toBeNull();
+        expect(queryTitle()).toBeNull();
       });
     });
 
