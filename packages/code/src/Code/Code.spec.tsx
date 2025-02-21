@@ -242,8 +242,8 @@ describe('packages/Code', () => {
 
   describe('Without panel slot', () => {
     test('does not render a panel', () => {
-      const { queryTitle } = renderCode();
-      expect(queryTitle()).toBeNull();
+      const { queryPanel } = renderCode();
+      expect(queryPanel()).toBeNull();
     });
 
     describe('renders a copy button', () => {
@@ -306,15 +306,15 @@ describe('packages/Code', () => {
   describe('With panel slot', () => {
     describe('renders', () => {
       test('panel with only the copy button when no props are passed', () => {
-        const { queryTitle } = renderCode({ panel: <Panel /> });
-        expect(queryTitle()).toBeDefined();
+        const { queryPanel } = renderCode({ panel: <Panel /> });
+        expect(queryPanel()).toBeDefined();
       });
 
       test('panel with only the copy button when onCopy is passed', () => {
-        const { queryTitle } = renderCode({
+        const { queryPanel } = renderCode({
           panel: <Panel onCopy={() => {}} />,
         });
-        expect(queryTitle()).toBeDefined();
+        expect(queryPanel()).toBeDefined();
       });
     });
 
@@ -439,7 +439,7 @@ describe('packages/Code', () => {
       });
 
       test('renders when custom action buttons are present and showCustomActionButtons is true', () => {
-        const { queryTitle } = renderCode({
+        const { queryPanel } = renderCode({
           panel: (
             <Panel
               showCustomActionButtons
@@ -447,7 +447,7 @@ describe('packages/Code', () => {
             />
           ),
         });
-        expect(queryTitle()).toBeDefined();
+        expect(queryPanel()).toBeDefined();
       });
       test('only renders IconButton elements', () => {
         const { queryAllByTestId } = renderCode({
@@ -634,64 +634,64 @@ describe('packages/Code', () => {
   describe('Deprecated props', () => {
     describe('custom action buttons', () => {
       test('does not renders a panel with custom action buttons when only customActionButtons is passed', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           customActionButtons,
         });
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
       test('does not renders a panel with custom action buttons when only showCustomActionButtons is true', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           showCustomActionButtons: true,
         });
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
       test('renders a panel with with custom action buttons when showCustomActionButtons is true and customActionButtons is passed', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           showCustomActionButtons: true,
           customActionButtons,
         });
-        expect(queryTitle()).toBeDefined();
+        expect(getTitle()).toBeDefined();
       });
     });
 
     describe('language switcher', () => {
       test('renders a panel when only language, onChange, and languageOptions are defined', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           language: languageOptions[0].displayName,
           languageOptions,
           onChange: () => {},
         });
-        expect(queryTitle()).toBeDefined();
+        expect(getTitle()).toBeDefined();
       });
       test('does not render a panel when language and onChange are defined but languageOptions is not defined', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           language: languageOptions[0].displayName,
           onChange: () => {},
         });
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
       test('does not render a panel when language and languageOptions are defined but onChange is not defined', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           language: languageOptions[0].displayName,
           languageOptions,
         });
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
       test('does not render a panel when languageOptions is an empty array', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           language: languageOptions[0].displayName,
           languageOptions: [],
           onChange: () => {},
         });
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
       test('does not render a panel if language is a string', () => {
-        const { queryTitle } = renderCode({
+        const { getTitle } = renderCode({
           language: 'javascript',
           languageOptions: [],
           onChange: () => {},
         });
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
       test('throws an error if language is not in languageOptions', () => {
         try {
@@ -735,7 +735,7 @@ describe('packages/Code', () => {
         expect(getByTestId('lg-code-copy_button')).toBeDefined();
       });
       test('does not render a panel with a copy button when copyable is false', () => {
-        const { queryTitle } = Context.within(
+        const { getTitle } = Context.within(
           Jest.spyContext(ClipboardJS, 'isSupported'),
           spy => {
             spy.mockReturnValue(true);
@@ -744,7 +744,7 @@ describe('packages/Code', () => {
             });
           },
         );
-        expect(queryTitle()).toBeNull();
+        expect(getTitle()).toBeNull();
       });
     });
 

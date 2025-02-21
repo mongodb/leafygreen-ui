@@ -25,7 +25,7 @@ export const getTestUtils = (
     return language;
   };
 
-  const queryTitle = () => {
+  const getTitle = () => {
     const title = queryBySelector<HTMLInputElement>(
       element,
       `[data-lgid=${lgIds.title}]`,
@@ -86,7 +86,7 @@ export const getTestUtils = (
     getCopyButtonUtils,
     getExpandButtonUtils,
     getIsExpanded,
-    queryTitle,
+    getTitle,
     queryPanel,
   };
 };

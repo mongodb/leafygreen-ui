@@ -36,24 +36,24 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
-    describe('queryTitle', () => {
+    describe('getTitle', () => {
       describe('Without the panel', () => {
         test('returns null', () => {
-          const { queryTitle } = renderCode();
-          expect(queryTitle()).toBeNull();
+          const { getTitle } = renderCode();
+          expect(getTitle()).toBeNull();
         });
       });
       describe('With panel', () => {
         test('returns null if there is no title prop', () => {
-          const { queryTitle } = renderCodeWithLanguageSwitcher({});
-          expect(queryTitle()).toBeNull();
+          const { getTitle } = renderCodeWithLanguageSwitcher({});
+          expect(getTitle()).toBeNull();
         });
 
         test('returns the title', () => {
-          const { queryTitle } = renderCodeWithLanguageSwitcher({
+          const { getTitle } = renderCodeWithLanguageSwitcher({
             props: { title: 'Leafygreen' },
           });
-          expect(queryTitle()).toBe('Leafygreen');
+          expect(getTitle()).toBe('Leafygreen');
         });
       });
     });

@@ -170,7 +170,7 @@ test('code', () => {
   const { getButton, queryButton, findButton } = getExpandButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
-  expect(queryTitle()).toBe('Title');
+  expect(getTitle()).toBe('Title');
   expect(getInput()).toBeInTheDocument();
   expect(getOptions()).toHaveLength(2);
   expect(getOptionByValue('js')).toBeInTheDocument();
@@ -236,7 +236,7 @@ test('code', () => {
 const {
   getLanguage,
   getIsLoading,
-  queryTitle,
+  getTitle,
   queryPanel,
   getLanguageSwitcherUtils: {
     getInput,
@@ -257,7 +257,7 @@ const {
 | `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
 | `getExpandButton()`          | Returns utils for interacting with the expand button     | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
 | `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
-| `queryTitle()`               | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
+| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
 | `queryPanel()`               | Returns the panel element                                | `HTMLElement` \| `null`                                                                                                  |
 
 ### LanguageSwitcherUtils

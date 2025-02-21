@@ -10,7 +10,7 @@ export interface TestUtilsReturnType {
   /**
    * Returns the title of the code snippet
    */
-  queryTitle: () => string | null;
+  getTitle: () => string | null;
 
   /**
    * Returns the language switcher
