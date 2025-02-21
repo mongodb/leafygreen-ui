@@ -36,7 +36,7 @@ export interface SyntaxProps extends ComponentPropsWithoutRef<'code'> {
   /**
    * Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword.
    *
-   * E.g. `customKeywordObject: {{ 'keyword': 'className' }}`
+   * E.g. `customKeywords: {{ 'keyword': 'className' }}`
    */
-  customKeywordObject?: Record<string, string>;
+  customKeywords?: Record<string, string>;
 }

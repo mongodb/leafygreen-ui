@@ -11,74 +11,29 @@ import {
   TokenObject,
 } from '../highlight';
 import { useSyntaxContext } from '../Syntax/SyntaxContext';
-
-interface TokenProps {
-  kind?: string;
-  children: React.ReactNode;
-}
-
-const prefix = 'lg-highlight-';
+import {
+  TokenProps,
+  FlatTokenObject,
+  TreeItem,
+  LineDefinition,
+  LineTableRowProps,
+  TableContentProps,
+} from './renderingPlugin.types';
+import {
+  childrenAsKeywords,
+  isArray,
+  isNumber,
+  isObject,
+  isString,
+  isTokenObject,
+} from './utils/helpers';
+import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
+import { lineWithKeywords } from './utils/lineWithKeywords/lineWithKeywords';
 
 let customKeyWords: Record<string, string> = {};
 
-export function generateKindClassName(...kinds: Array<any>): string {
-  return kinds
-    .filter((str): str is string => isString(str) && str.length > 0)
-    .map(kind => {
-      // Sometimes, a kind will have run through this function before.
-      // This ensures we don't duplicate prefixes.
-      if (kind.startsWith(prefix)) {
-        return kind;
-      }
-
-      const classes = kind
-        .split('.')
-        .map(k => `${prefix}${k}`)
-        .join(' ');
-
-      return classes;
-    })
-    .join(' ');
-}
-
-function childrenAsKeywords(...children: Array<string>) {
-  const keywords = ['function', 'class'];
-  return children.filter(child => keywords.includes(child));
-}
-
 function Token({ kind, children }: TokenProps) {
   return <span className={kind}>{children}</span>;
-}
-
-type TreeItem =
-  | null
-  | undefined
-  | string
-  | Array<string | TokenObject>
-  | TokenObject;
-
-function isArray(item: any): item is Array<any> {
-  return item != null && item instanceof Array;
-}
-
-function isObject(item: any): item is object {
-  return item != null && typeof item === 'object' && !(item instanceof Array);
-}
-
-function isString(item: any): item is string {
-  return item != null && typeof item === 'string';
-}
-
-function isNumber(item: any): item is number {
-  return item != null && typeof item === 'number';
-}
-
-function isTokenObject(item: any): item is TokenObject {
-  if (item == null || typeof item !== 'object') {
-    return false;
-  }
-
-  return typeof item.kind === 'string' && item.children instanceof Array;
 }
 
 export function processToken(token: TreeItem, key?: number): React.ReactNode {
@@ -154,94 +109,6 @@ function getHighlightedRowStyle(darkMode: boolean) {
   `;
 }
 
-// Helper functions
-
-/**
- * Merge consecutive strings into a single string.
- *
- * E.g.
- * ```js
- * ['_', 'hello ', 'world ', 'hi', {}, 'bye ', '_', 'hello '] => ['_hello world hi', {}, 'bye _hello']
- * ```
- */
-const mergeStringsIntoString = (children: Array<string | FlatTokenObject>) => {
-  return children.reduce(
-    (acc: Array<string | FlatTokenObject>, child: string | FlatTokenObject) => {
-      const lastItem = acc[acc.length - 1];
-
-      if (typeof child === 'string') {
-        if (typeof lastItem === 'string') {
-          acc[acc.length - 1] = lastItem + child;
-        } else {
-          acc.push(child);
-        }
-      } else {
-        acc.push(child);
-      }
-
-      return acc;
-    },
-    [],
-  );
-};
-
-/**
- * Maps over the merged lines and checks if the line contains any of the keywords. If it does, it splits the line by the keyword and returns a new entity with a custom kind.
- *
- * E.g.
- *
- * ```js
- * keywords: { '_hello': 'custom' }
- * ```
- *
- * ```js
- * ['_hello world hi', {}, 'bye _hello'] => [{ kind: 'lg-highlight-custom', children: ['_hello'] }, 'world ', 'hi', {}, 'bye', { kind: 'lg-highlight-custom', children: ['_hello'] }]
- * ```
- */
-const lineWithKeywords = (line: Array<string | FlatTokenObject>) => {
-  const mergedLines = mergeStringsIntoString(line);
-
-  return mergedLines
-    .map((segment: string | FlatTokenObject) => {
-      if (typeof segment === 'string') {
-        // Creates a regex pattern to match all keywords
-        // E.g. /(testing|api|username)/g
-        const keywordPattern = new RegExp(
-          `(${Object.keys(customKeyWords).join('|')})`,
-          'g',
-        );
-
-        // Return unchanged if no keywords found
-        if (!keywordPattern.test(segment)) {
-          return segment;
-        }
-
-        // Split the line by the keywords
-        const splitContentByKeywords = segment.split(keywordPattern);
-
-        // Map over the split content and return a new entity with a custom kind if the keyword is found
-        return splitContentByKeywords.map(str =>
-          customKeyWords[str]
-            ? {
-                kind: generateKindClassName(`${prefix}${customKeyWords[str]}`),
-                children: [str],
-              }
-            : str,
-        );
-      }
-
-      return segment;
-    })
-    .flat();
-};
-
-interface LineTableRowProps {
-  lineNumber?: number;
-  children: React.ReactNode;
-  highlighted?: boolean;
-  darkMode: boolean;
-}
-
 export function LineTableRow({
   lineNumber,
   highlighted,
@@ -275,11 +142,6 @@ export function LineTableRow({
       <td className={cellStyle}>{children}</td>
     </tr>
   );
-}
-
-interface FlatTokenObject {
-  kind: string;
-  children: Array<string>;
 }
 
 // Check if object is a TokenObject which has an array with a single string element within it.
@@ -316,15 +178,14 @@ export function flattenNestedTree(
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
-      // console.log({ entity });
       if (isString(entity)) {
         return parentKinds.length > 0
           ? {
-              kind: generateKindClassName(
+              kind: generateKindClassName([
                 kind,
                 ...parentKinds,
                 ...childrenAsKeywords(entity),
-              ),
+              ]),
               children: [entity],
             }
           : entity; // entity is basic text
@@ -341,12 +202,12 @@ export function flattenNestedTree(
 
       if (isFlattenedTokenObject(entity)) {
         return {
-          kind: generateKindClassName(
+          kind: generateKindClassName([
             kind,
             entity.kind,
             ...parentKinds,
             ...childrenAsKeywords(...entity.children),
-          ),
+          ]),
           children: entity.children,
         };
       }
@@ -376,8 +237,6 @@ function containsLineBreak(token: TreeItem): boolean {
 
   return false;
 }
-
-type LineDefinition = Array<Array<string | FlatTokenObject>>;
 
 export function treeToLines(
   children: Array<string | TokenObject>,
@@ -431,10 +290,6 @@ export function treeToLines(
   return lines;
 }
 
-interface TableContentProps {
-  lines: LineDefinition;
-}
-
 export function TableContent({ lines }: TableContentProps) {
   const { highlightLines, showLineNumbers, darkMode, lineNumberStart } =
     useSyntaxContext();
@@ -475,7 +330,7 @@ export function TableContent({ lines }: TableContentProps) {
         let mappedLine = line;
 
         if (Object.keys(customKeyWords).length > 0) {
-          mappedLine = lineWithKeywords(line);
+          mappedLine = lineWithKeywords(line, customKeyWords);
         }
 
         const displayLineNumber = showLineNumbers
@@ -510,11 +365,11 @@ export function TableContent({ lines }: TableContentProps) {
 }
 
 const plugin = ({
-  customKeywordObject = {},
+  customKeywords = {},
 }: {
-  customKeywordObject?: Record<string, string>;
+  customKeywords?: Record<string, string>;
 }): LeafyGreenHLJSPlugin => {
-  customKeyWords = customKeywordObject;
+  customKeyWords = customKeywords;
 
   return {
     'after:highlight': function (result: LeafyGreenHighlightResult) {

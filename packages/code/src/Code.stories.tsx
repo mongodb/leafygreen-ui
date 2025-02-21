@@ -92,7 +92,7 @@ const meta: StoryMetaType<typeof Code> = {
         'customActionButtons',
         'languageOptions',
         'children',
-        'customKeywordObject',
+        'customKeywords',
       ],
     },
     generate: {
@@ -168,7 +168,7 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
 }: CodeProps & FontSizeProps) => (
   <div>
     <pre>
-      customKeywordObject={' '}
+      customKeywords={' '}
       {JSON.stringify(
         {
           testing: 'custom',
@@ -190,7 +190,7 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
           color: red;
         }
       `}
-      customKeywordObject={{
+      customKeywords={{
         testing: 'custom',
         api: 'custom',
         username: 'custom',
@@ -200,9 +200,11 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
     </Code>
   </div>
 );
-LiveExample.parameters = {
-  chromatic: {
-    disableSnapshot: true,
+CustomWord.args = {
+  customKeywords: {
+    testing: 'custom',
+    api: 'custom',
+    username: 'custom',
   },
 };
 

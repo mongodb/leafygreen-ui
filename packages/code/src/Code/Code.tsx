@@ -54,7 +54,7 @@ function Code({
   className,
   onCopy,
   panel,
-  customKeywordObject,
+  customKeywords,
   baseFontSize: baseFontSizeProp,
   // Deprecated props
   copyable = false,
@@ -131,7 +131,7 @@ function Code({
       lineNumberStart={lineNumberStart}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
-      customKeywordObject={customKeywordObject}
+      customKeywords={customKeywords}
     >
       {children}
     </Syntax>
