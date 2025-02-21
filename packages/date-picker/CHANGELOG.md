@@ -1,5 +1,26 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.7
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/a11y@2.0.3
+  - @leafygreen-ui/date-utils@0.2.1
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/form-field@2.0.5
+  - @leafygreen-ui/hooks@8.3.5
+  - @leafygreen-ui/icon@13.1.3
+  - @leafygreen-ui/icon-button@16.0.4
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/popover@13.0.4
+  - @leafygreen-ui/select@14.0.6
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+
 ## 3.0.6
 
 ### Patch Changes

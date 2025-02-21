@@ -1,5 +1,16 @@
 # @lg-tools/test
 
+## 0.4.15
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/testing-lib@0.7.3
+  - @lg-tools/meta@0.4.1
+  - @lg-tools/build@0.7.3
+
 ## 0.4.14
 
 ### Patch Changes

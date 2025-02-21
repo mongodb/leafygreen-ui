@@ -1,5 +1,15 @@
 # @lg-tools/test-harnesses
 
+## 0.2.0
+
+### Minor Changes
+
+- 3111a76f3: Export `queryByLgId` util in addition to the already exported `findByLgId` and `getByLgId` utils
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+
 ## 0.1.4
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/install",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "LeafyGreen UI Kit Install",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
