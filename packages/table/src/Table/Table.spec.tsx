@@ -27,7 +27,7 @@ import {
 
 import Table from '.';
 
-const RenderTable = ({ table }: { table: LeafyGreenTable<any> }) => {
+const TableWrapper = ({ table }: { table: LeafyGreenTable<any> }) => {
   return (
     <Table table={table}>
       <TableHead isSticky>
@@ -73,7 +73,7 @@ function TableWithHook({ ...props }: TestTableWithHookProps) {
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <RenderTable table={table} />
+      <TableWrapper table={table} />
     </>
   );
 }
@@ -214,15 +214,15 @@ describe('packages/table/Table', () => {
       const data = getDefaultTestData({}) || [];
       const columns = getDefaultTestColumns({}) || [];
 
-      const tableResult = renderHook(() =>
+      const { result } = renderHook(() =>
         useLeafyGreenTable<any>({
           data,
           columns,
         }),
       );
 
-      const table = tableResult.result.current;
-      render(<RenderTable table={table} />);
+      const table = result.current;
+      render(<TableWrapper table={table} />);
 
       const { getRowByIndex } = getTestUtils();
       expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
@@ -232,15 +232,17 @@ describe('packages/table/Table', () => {
       const data = getDefaultTestData({}) || [];
       const columns = getDefaultTestColumns({}) || [];
 
-      const tableResult = renderHook(() =>
+      const { rerender: rerenderHook, result } = renderHook(() =>
         useLeafyGreenTable<any>({
           data,
           columns,
         }),
       );
 
-      const table = tableResult.result.current;
-      const { rerender: rerenderTable } = render(<RenderTable table={table} />);
+      const table = result.current;
+      const { rerender: rerenderTable } = render(
+        <TableWrapper table={table} />,
+      );
 
       const { getRowByIndex } = getTestUtils();
       const allRowCells = () => getRowByIndex(0)?.getAllCells();
@@ -251,8 +253,8 @@ describe('packages/table/Table', () => {
 
       // Toggle the visibility of the first column to hidden
       act(() => columnToHide.toggleVisibility());
-      tableResult.rerender();
-      rerenderTable(<RenderTable table={table} />);
+      rerenderHook();
+      rerenderTable(<TableWrapper table={table} />);
 
       expect(allRowCells()).toHaveLength(5);
     });
@@ -261,15 +263,17 @@ describe('packages/table/Table', () => {
       const data = getDefaultTestData({}) || [];
       const columns = getDefaultTestColumns({}) || [];
 
-      const tableResult = renderHook(() =>
+      const { rerender: rerenderHook, result } = renderHook(() =>
         useLeafyGreenTable<any>({
           data,
           columns,
         }),
       );
 
-      const table = tableResult.result.current;
-      const { rerender: rerenderTable } = render(<RenderTable table={table} />);
+      const table = result.current;
+      const { rerender: rerenderTable } = render(
+        <TableWrapper table={table} />,
+      );
 
       const { getRowByIndex } = getTestUtils();
       const allRowCells = () => getRowByIndex(0)?.getAllCells();
@@ -280,15 +284,15 @@ describe('packages/table/Table', () => {
 
       // Toggle the visibility of the first column to hidden
       act(() => columnToHide.toggleVisibility());
-      tableResult.rerender();
-      rerenderTable(<RenderTable table={table} />);
+      rerenderHook();
+      rerenderTable(<TableWrapper table={table} />);
 
       expect(allRowCells()).toHaveLength(5);
 
       // Toggle the visibility of the first column back to visible
       act(() => columnToHide.toggleVisibility());
-      tableResult.rerender();
-      rerenderTable(<RenderTable table={table} />);
+      rerenderHook();
+      rerenderTable(<TableWrapper table={table} />);
 
       expect(allRowCells()).toHaveLength(6);
     });
