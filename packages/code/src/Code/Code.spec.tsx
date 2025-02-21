@@ -305,12 +305,12 @@ describe('packages/Code', () => {
 
   describe('With panel slot', () => {
     describe('renders', () => {
-      test('panel with only the copy button when no props are passed', () => {
+      test('panel when no props are passed', () => {
         const { queryPanel } = renderCode({ panel: <Panel /> });
         expect(queryPanel()).toBeDefined();
       });
 
-      test('panel with only the copy button when onCopy is passed', () => {
+      test('panel when onCopy is passed', () => {
         const { queryPanel } = renderCode({
           panel: <Panel onCopy={() => {}} />,
         });
