@@ -169,22 +169,22 @@ describe('packages/tabs/getTestUtils', () => {
             expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
           });
 
-          test('throws error is the expand button cannot be found', () => {
+          test('throws error is the copy button cannot be found', () => {
             try {
-              const { getExpandButton } = Context.within(
+              const { getCopyButtonUtils } = Context.within(
                 Jest.spyContext(ClipboardJS, 'isSupported'),
                 spy => {
                   spy.mockReturnValue(true);
                   return renderCode({ copyButtonAppearance: 'none' });
                 },
               );
-              const _ = getExpandButton();
+              const _ = getCopyButtonUtils().getButton();
             } catch (error) {
               expect(error).toBeInstanceOf(Error);
               expect(error).toHaveProperty(
                 'message',
                 expect.stringMatching(
-                  /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+                  /Unable to find an element by: \[data-lgid="lg-code-copy_button"\]/,
                 ),
               );
             }
@@ -201,6 +201,92 @@ describe('packages/tabs/getTestUtils', () => {
               },
             );
             expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('queryButton', () => {
+        describe('Without a panel', () => {
+          test('returns the copy button', () => {
+            const { getCopyButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCode();
+              },
+            );
+            expect(getCopyButtonUtils().queryButton()).toBeInTheDocument();
+          });
+
+          test('returns null when copyButtonAppearance is none', () => {
+            const { getCopyButtonUtils } = renderCode({
+              copyButtonAppearance: 'none',
+            });
+            expect(getCopyButtonUtils().queryButton()).toBeNull();
+          });
+        });
+
+        describe('With a panel', () => {
+          test('returns the copy button', () => {
+            const { getCopyButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCodeWithLanguageSwitcher({});
+              },
+            );
+            expect(getCopyButtonUtils().queryButton()).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('findButton', () => {
+        describe('Without a panel', () => {
+          test('returns the copy button', async () => {
+            const { getCopyButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCode();
+              },
+            );
+            const button = await getCopyButtonUtils().findButton();
+            expect(button).toBeInTheDocument();
+          });
+
+          test('throws error is the copy button cannot be found', async () => {
+            try {
+              const { getCopyButtonUtils } = Context.within(
+                Jest.spyContext(ClipboardJS, 'isSupported'),
+                spy => {
+                  spy.mockReturnValue(true);
+                  return renderCode({ copyButtonAppearance: 'none' });
+                },
+              );
+              const _ = await getCopyButtonUtils().findButton();
+            } catch (error) {
+              expect(error).toBeInstanceOf(Error);
+              expect(error).toHaveProperty(
+                'message',
+                expect.stringMatching(
+                  /Unable to find an element by: \[data-lgid="lg-code-copy_button"\]/,
+                ),
+              );
+            }
+          });
+        });
+
+        describe('With a panel', () => {
+          test('returns the copy button', async () => {
+            const { getCopyButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCodeWithLanguageSwitcher({});
+              },
+            );
+            const button = await getCopyButtonUtils().findButton();
+            expect(button).toBeInTheDocument();
           });
         });
       });
@@ -230,25 +316,74 @@ describe('packages/tabs/getTestUtils', () => {
       });
     });
 
-    describe('getExpandButton', () => {
-      test('throws error is the expand button cannot be found', () => {
-        try {
-          const { getExpandButton } = renderCode();
-          const _ = getExpandButton();
-        } catch (error) {
-          expect(error).toBeInstanceOf(Error);
-          expect(error).toHaveProperty(
-            'message',
-            expect.stringMatching(
-              /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
-            ),
-          );
-        }
+    describe('getExpandButtonUtils', () => {
+      describe('queryButton', () => {
+        test('returns null', () => {
+          const { getExpandButtonUtils } = renderCode();
+          expect(getExpandButtonUtils().queryButton()).toBeNull();
+        });
+
+        test('returns the expand button', () => {
+          const { getExpandButtonUtils } = renderCode({ expandable: true });
+          expect(getExpandButtonUtils().queryButton()).toBeInTheDocument();
+        });
       });
 
-      test('returns the expand button', () => {
-        const { getExpandButton } = renderCode({ expandable: true });
-        expect(getExpandButton()).toBeInTheDocument();
+      describe('findButton', () => {
+        test('throws error is the expand button cannot be found', async () => {
+          try {
+            const { getExpandButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCode();
+              },
+            );
+            const _ = await getExpandButtonUtils().findButton();
+          } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty(
+              'message',
+              expect.stringMatching(
+                /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+              ),
+            );
+          }
+        });
+
+        test('returns the expand button', async () => {
+          const { getExpandButtonUtils } = renderCode({ expandable: true });
+          const button = await getExpandButtonUtils().findButton();
+          expect(button).toBeInTheDocument();
+        });
+      });
+
+      describe('getButton', () => {
+        test('throws error is the expand button cannot be found', () => {
+          try {
+            const { getExpandButtonUtils } = Context.within(
+              Jest.spyContext(ClipboardJS, 'isSupported'),
+              spy => {
+                spy.mockReturnValue(true);
+                return renderCode();
+              },
+            );
+            const _ = getExpandButtonUtils().getButton();
+          } catch (error) {
+            expect(error).toBeInstanceOf(Error);
+            expect(error).toHaveProperty(
+              'message',
+              expect.stringMatching(
+                /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
+              ),
+            );
+          }
+        });
+
+        test('returns the expand button', () => {
+          const { getExpandButtonUtils } = renderCode({ expandable: true });
+          expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
+        });
       });
     });
 
@@ -260,12 +395,24 @@ describe('packages/tabs/getTestUtils', () => {
       });
 
       test('returns false', () => {
-        const { getExpandButton, getIsExpanded } = renderCode({
+        const { getExpandButtonUtils, getIsExpanded } = renderCode({
           expandable: true,
         });
-        const expandButton = getExpandButton();
+        const expandButton = getExpandButtonUtils().getButton();
         userEvent.click(expandButton!);
         expect(getIsExpanded()).toBe(true);
+      });
+    });
+
+    describe('queryPanel', () => {
+      test('returns the panel', () => {
+        const { queryPanel } = renderCodeWithLanguageSwitcher({});
+        expect(queryPanel()).toBeInTheDocument();
+      });
+
+      test('returns null', () => {
+        const { queryPanel } = renderCode({});
+        expect(queryPanel()).toBeNull();
       });
     });
   });
