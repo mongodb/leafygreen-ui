@@ -1,11 +1,16 @@
 import facepaint from 'facepaint';
 import { transparentize } from 'polished';
 
-import { css } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
+import {
+  createUniqueClassName,
+  getMobileMediaQuery,
+  Theme,
+} from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   BaseFontSize,
+  breakpoints,
   color,
   fontFamilies,
   spacing,
@@ -14,7 +19,9 @@ import {
 
 import { variantColors } from '../globalStyles';
 
-import { ScrollState } from './Code.types';
+import { CopyButtonAppearance, ScrollState } from './Code.types';
+
+const copyButtonWithoutPanelClassName = createUniqueClassName('copy_button');
 
 // We use max-device-width to select specifically for iOS devices
 const mq = facepaint([
@@ -26,51 +33,152 @@ const singleLineComponentHeight = 36;
 const lineHeight = 24;
 const codeWrappingVerticalPadding = spacing[200];
 
-export const wrapperStyle: Record<Theme, string> = {
-  [Theme.Light]: css`
-    border: 1px solid ${variantColors[Theme.Light][1]};
-    border-radius: 12px;
-    overflow: hidden;
-  `,
-  [Theme.Dark]: css`
-    border: 1px solid ${variantColors[Theme.Dark][1]};
-    border-radius: 12px;
-    overflow: hidden;
-  `,
-};
+export const getWrapperStyles = ({
+  theme,
+  className,
+}: {
+  theme: Theme;
+  className?: string;
+}) =>
+  cx(
+    css`
+      border: 1px solid ${variantColors[theme][1]};
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+    `,
+    className,
+  );
+
+export const getCodeStyles = ({
+  scrollState,
+  theme,
+  showPanel,
+  showExpandButton,
+  isLoading,
+}: {
+  scrollState: ScrollState;
+  theme: Theme;
+  showPanel: boolean;
+  showExpandButton: boolean;
+  isLoading: boolean;
+}) =>
+  cx(contentWrapperStyles, baseScrollShadowStyles, {
+    [getScrollShadow(scrollState, theme)]: !isLoading,
+    [codeWithPanelStyles]: showPanel,
+    [codeWithoutPanelStyles]: !showPanel,
+    [expandableContentWithPanelStyles]: showExpandButton && showPanel,
+    [expandableContentWithoutPanelStyles]: showExpandButton && !showPanel,
+  });
+
+export const getCodeWrapperStyles = ({
+  theme,
+  showPanel,
+  expanded,
+  codeHeight,
+  collapsedCodeHeight,
+  isMultiline,
+  showExpandButton,
+  className,
+}: {
+  theme: Theme;
+  showPanel: boolean;
+  expanded: boolean;
+  codeHeight: number;
+  collapsedCodeHeight: number;
+  isMultiline: boolean;
+  showExpandButton: boolean;
+  className?: string;
+}) =>
+  cx(
+    codeWrapperStyle,
+    getCodeWrapperVariantStyle(theme),
+    codeWrapperHoverStyles,
+    {
+      [codeWrapperWithPanelStyles]: showPanel,
+      [codeWrapperWithoutPanelStyles]: !showPanel,
+      [codeWrapperSingleLineStyles]: !isMultiline,
+      [getExpandableCodeWrapperStyle(
+        expanded,
+        codeHeight,
+        collapsedCodeHeight,
+      )]: showExpandButton,
+    },
+    className,
+  );
+
+export const getExpandedButtonStyles = ({ theme }: { theme: Theme }) =>
+  cx(expandButtonStyle, getExpandButtonUtilsVariantStyle(theme));
+
+export const getCopyButtonWithoutPanelStyles = ({
+  copyButtonAppearance,
+}: {
+  copyButtonAppearance: CopyButtonAppearance;
+}) =>
+  cx(
+    copyButtonWithoutPanelClassName,
+    css`
+      position: absolute;
+      z-index: 1;
+      top: ${spacing[200]}px;
+      right: ${spacing[200]}px;
+      transition: opacity ${transitionDuration.default}ms ease-in-out;
+
+      // On hover or focus, the copy button should always be visible
+      &:hover,
+      &:focus-within {
+        opacity: 1;
+      }
+    `,
+    {
+      [css`
+        opacity: 0;
+
+        // On a mobile device, the copy button should always be visible
+        ${getMobileMediaQuery(breakpoints.Desktop)} {
+          opacity: 1;
+        }
+      `]: copyButtonAppearance === CopyButtonAppearance.Hover,
+    },
+  );
 
 export const contentWrapperStyles = css`
   position: relative;
   display: grid;
-  grid-template-areas: 'code panel';
-  grid-template-columns: auto 38px;
   border-radius: inherit;
   z-index: 0; // new stacking context
+  grid-template-areas:
+    'panel'
+    'code';
 `;
 
-export const contentWrapperStylesNoPanel = css`
+export const codeWithoutPanelStyles = css`
   // No panel, all code
   grid-template-areas: 'code code';
+
+  &:after {
+    grid-column: -1; // Placed on the right edge
+  }
 `;
 
-export const contentWrapperStyleWithPicker = css`
+export const codeWithPanelStyles = css`
   grid-template-areas:
     'panel'
     'code';
   grid-template-columns: unset;
+
+  &:before,
+  &:after {
+    grid-row: 2; // Placed on the top under the Picker Panel
+  }
 `;
 
-export const expandableContentWrapperStyle = css`
-  grid-template-areas: 'code panel' 'expandButton expandButton';
-  grid-template-rows: auto 28px;
-`;
-
-export const expandableContentWrapperStyleNoPanel = css`
+export const expandableContentWithoutPanelStyles = css`
   grid-template-areas: 'code code' 'expandButton expandButton';
   grid-template-rows: auto 28px;
 `;
 
-export const expandableContentWrapperStyleWithPicker = css`
+export const expandableContentWithPanelStyles = css`
   grid-template-areas:
     'panel'
     'code'
@@ -105,24 +213,34 @@ export const codeWrapperStyle = css`
   }
 `;
 
-export const codeWrapperStyleNoPanel = css`
+export const codeWrapperWithoutPanelStyles = css`
   border-left: 0;
   border-radius: inherit;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 `;
-export const codeWrapperStyleWithLanguagePicker = css`
+export const codeWrapperWithPanelStyles = css`
   border-left: 0;
   border-radius: inherit;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 `;
 
-export const singleLineCodeWrapperStyle = css`
+export const codeWrapperSingleLineStyles = css`
   display: flex;
   align-items: center;
   padding-top: ${(singleLineComponentHeight - lineHeight) / 2}px;
   padding-bottom: ${(singleLineComponentHeight - lineHeight) / 2}px;
+`;
+
+export const codeWrapperHoverStyles = css`
+  &:hover,
+  &[data-hover='true'] {
+    // On hover of the pre tag, the sibling copy button should be visible
+    & + .${copyButtonWithoutPanelClassName} {
+      opacity: 1;
+    }
+  }
 `;
 
 export function getExpandableCodeWrapperStyle(
@@ -136,11 +254,6 @@ export function getExpandableCodeWrapperStyle(
     transition: max-height ${transitionDuration.slower}ms ease-in-out;
   `;
 }
-
-export const panelStyles = css`
-  z-index: 2; // Above the shadows
-  grid-area: panel;
-`;
 
 export function getCodeWrapperVariantStyle(theme: Theme): string {
   const colors = variantColors[theme];
@@ -175,7 +288,7 @@ export const expandButtonStyle = css`
   }
 `;
 
-export function getExpandButtonVariantStyle(theme: Theme): string {
+export function getExpandButtonUtilsVariantStyle(theme: Theme): string {
   const colors = variantColors[theme];
 
   return css`
@@ -216,19 +329,6 @@ export const baseScrollShadowStyles = css`
   }
 `;
 
-export const scrollShadowStylesNoPanel = css`
-  &:after {
-    grid-column: -1; // Placed on the right edge
-  }
-`;
-
-export const scrollShadowStylesWithPicker = css`
-  &:before,
-  &:after {
-    grid-row: 2; // Placed on the top under the Picker Panel
-  }
-`;
-
 export function getScrollShadow(
   scrollState: ScrollState,
   theme: Theme,
@@ -260,3 +360,11 @@ export function getScrollShadow(
     }
   `;
 }
+
+export const getLoadingStyles = (theme: Theme) =>
+  cx(css`
+    grid-area: code;
+    padding-block: ${spacing[400]}px 80px;
+    padding-inline: ${spacing[400]}px 28px;
+    background-color: ${variantColors[theme][0]};
+  `);
