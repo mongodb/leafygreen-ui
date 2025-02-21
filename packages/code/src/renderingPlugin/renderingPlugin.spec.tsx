@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
+import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
 import {
   flattenNestedTree,
   LineTableRow,
   processToken,
   treeToLines,
 } from './renderingPlugin';
-import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
 
 describe('processToken()', () => {
   test('when passed `null`, it returns `null`', () => {
