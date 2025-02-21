@@ -46,6 +46,7 @@ function Code({
   className,
   onCopy,
   panel,
+  customKeywords,
   'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   baseFontSize: baseFontSizeProp,
   // Deprecated props
@@ -124,6 +125,7 @@ function Code({
       lineNumberStart={lineNumberStart}
       language={highlightLanguage as Language}
       highlightLines={highlightLines}
+      customKeywords={customKeywords}
     >
       {children}
     </Syntax>
@@ -231,7 +233,6 @@ function Code({
                 collapsedCodeHeight,
                 isMultiline,
                 showExpandButton,
-                className,
               })}
               onScroll={onScroll}
               ref={scrollableElementRef}

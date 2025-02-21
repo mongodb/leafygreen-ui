@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
+import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
 import {
   flattenNestedTree,
-  generateKindClassName,
   LineTableRow,
   processToken,
   treeToLines,
@@ -158,41 +158,6 @@ const sampleChildren: Array<string | TokenObject> = [
   ';\n',
 ];
 
-describe('generateKindClassName()', () => {
-  test('when passed nothing, returns an empty string', () => {
-    const kindClassName = generateKindClassName() as any;
-
-    expect(typeof kindClassName === 'string').toBeTruthy();
-    expect(kindClassName.length).toBe(0);
-  });
-
-  test('when passed an empty string, returns an empty string', () => {
-    const kindClassName = generateKindClassName('') as any;
-
-    expect(typeof kindClassName === 'string').toBeTruthy();
-    expect(kindClassName.length).toBe(0);
-  });
-
-  test('when passed a single argument, returns a string of the appropriate className', () => {
-    const kind = 'string';
-    const kindClassName = generateKindClassName(kind) as any;
-
-    expect(typeof kindClassName === 'string').toBeTruthy();
-    expect(kindClassName).toEqual(`lg-highlight-${kind}`);
-  });
-
-  test('when passed multiple arguments, returns a string containing the appropriate classNames', () => {
-    const kind1 = 'string';
-    const kind2 = 'function';
-    const kindClassName = generateKindClassName(kind1, kind2) as any;
-
-    expect(typeof kindClassName === 'string').toBeTruthy();
-    expect(kindClassName).toEqual(
-      `lg-highlight-${kind1} lg-highlight-${kind2}`,
-    );
-  });
-});
-
 describe('flattenNestedTree()', () => {
   test('when passed an array of strings, returns an array of strings', () => {
     const flattenedArray = flattenNestedTree(['test1', 'test2']);
@@ -211,13 +176,13 @@ describe('flattenNestedTree()', () => {
     expect(typeof modifiedObj1 === 'object').toBeTruthy();
     expect((modifiedObj1 as any).children[0]).toEqual('obj1');
     expect((modifiedObj1 as any).kind).toEqual(
-      generateKindClassName(obj1.kind),
+      generateKindClassName([obj1.kind]),
     );
 
     expect(typeof modifiedObj2 === 'object').toBeTruthy();
     expect((modifiedObj2 as any).children[0]).toEqual('obj2');
     expect((modifiedObj2 as any).kind).toEqual(
-      generateKindClassName(obj2.kind),
+      generateKindClassName([obj2.kind]),
     );
   });
 
@@ -228,7 +193,9 @@ describe('flattenNestedTree()', () => {
     });
 
     expect(item1).toEqual('hello');
-    expect((item2 as TokenObject).kind).toEqual(generateKindClassName('test2'));
+    expect((item2 as TokenObject).kind).toEqual(
+      generateKindClassName(['test2']),
+    );
     expect((item2 as TokenObject).children[0]).toEqual('world');
 
     expect(true).toBeTruthy();
@@ -257,21 +224,21 @@ describe('flattenNestedTree()', () => {
     ]);
 
     expect((obj1 as any).children[0]).toEqual(tokenChildren[0]);
-    expect((obj1 as any).kind).toEqual(generateKindClassName(tokenKind[0]));
+    expect((obj1 as any).kind).toEqual(generateKindClassName([tokenKind[0]]));
 
     expect((obj2 as any).children[0]).toEqual(tokenChildren[1]);
 
     // order of classes doesn't matter
     expect([
-      generateKindClassName(tokenKind[0], tokenKind[1]),
-      generateKindClassName(tokenKind[1], tokenKind[0]),
+      generateKindClassName([tokenKind[0], tokenKind[1]]),
+      generateKindClassName([tokenKind[1], tokenKind[0]]),
     ]).toContain((obj2 as any).kind);
 
     expect((obj3 as any).children[0]).toEqual(tokenChildren[2]);
 
     expect([
-      generateKindClassName(tokenKind[0], tokenKind[1], tokenKind[2]),
-      generateKindClassName(tokenKind[2], tokenKind[1], tokenKind[0]),
+      generateKindClassName([tokenKind[0], tokenKind[1], tokenKind[2]]),
+      generateKindClassName([tokenKind[2], tokenKind[1], tokenKind[0]]),
       // add other permutations if this test is failing
     ]).toContain((obj3 as any).kind);
   });
