@@ -36,6 +36,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
     "@types/facepaint": "^1.2.1",
     "@types/highlight.js": "^10.1.0",
     "clipboard": "^2.0.6",

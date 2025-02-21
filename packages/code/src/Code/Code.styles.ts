@@ -108,7 +108,7 @@ export const getCodeWrapperStyles = ({
   );
 
 export const getExpandedButtonStyles = ({ theme }: { theme: Theme }) =>
-  cx(expandButtonStyle, getExpandButtonVariantStyle(theme));
+  cx(expandButtonStyle, getExpandButtonUtilsVariantStyle(theme));
 
 export const getCopyButtonWithoutPanelStyles = ({
   copyButtonAppearance,
@@ -288,7 +288,7 @@ export const expandButtonStyle = css`
   }
 `;
 
-export function getExpandButtonVariantStyle(theme: Theme): string {
+export function getExpandButtonUtilsVariantStyle(theme: Theme): string {
   const colors = variantColors[theme];
 
   return css`

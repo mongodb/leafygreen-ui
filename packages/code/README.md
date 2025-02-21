@@ -125,3 +125,141 @@ interface LanguageOption {
   image?: React.ReactElement;
 }
 ```
+
+# Test Harnesses
+
+## getTestUtils()
+
+`getTestUtils()` is a util that allows consumers to reliably interact with LG `Code` in a product test suite. If the `Code` component cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/code';
+
+const utils = getTestUtils(lgId?: `lg-${string}`); // lgId refers to the custom `data-lgid` attribute passed to `Code`. It defaults to 'lg-code' if left empty.
+```
+
+#### Single `Code` component
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Code, { getTestUtils } from '@leafygreen-ui/code';
+
+...
+
+test('code', () => {
+  render(
+    <Code
+      language="javascript"
+      panel={
+        <Panel
+          onChange={() => {}}
+          languageOptions={languageOptions}
+          title="Title"
+        />
+      }
+    >
+      {codeSnippet}
+    </Code>
+  );
+
+  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButton } = getTestUtils();
+  const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
+  const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
+
+  expect(getLanguage()).toBe('javascript');
+  expect(getTitle()).toBe('Title');
+  expect(getInput()).toBeInTheDocument();
+  expect(getOptions()).toHaveLength(2);
+  expect(getOptionByValue('js')).toBeInTheDocument();
+  expect(getInputValue()).toBe('javascript');
+  expect(isLanguageSwitcherDisabled()).toBe(false);
+  expect(getIsLoading()).toBe(false);
+  expect(getCopyButtonUtils()).toBeInTheDocument();
+  expect(isCopyButtonDisabled()).toBe(false);
+  expect(getExpandButton()).toBeInTheDocument();
+  expect(isExpanded()).toBe(false);
+});
+```
+
+#### Multiple `Code` components
+
+When testing multiple `Code` components, it is recommended to add the custom `data-lgid` attribute to each `Code`.
+
+```tsx
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Code, getTestUtils } from '@leafygreen-ui/code';
+
+...
+
+test('code', () => {
+  render(
+    <>
+      <Code
+        language="javascript"
+        panel={<Panel/>}
+        data-lgid="lg-code-1"
+      >
+      {codeSnippet}
+      </Code>
+      <Code
+        language="python"
+        panel={<Panel/>}
+        data-lgid="lg-code-2"
+      >
+        {codeSnippet}
+      </Code>
+    </>
+  );
+
+  const testUtils1 = getTestUtils('lg-code-1');
+  const testUtils2 = getTestUtils('lg-code-2');
+
+  // First Code
+  expect(testUtils1.getLanguage()).toBe('javascript');
+
+  // Second Code
+  expect(testUtils2.getLanguage()).toBe('python');
+});
+```
+
+### Test Utils
+
+```tsx
+const {
+  getLanguage,
+  getTitle,
+  getLanguageSwitcherUtils: {
+    getInput,
+    getOptions,
+    getOptionByValue,
+    isDisabled,
+  },
+  getIsLoading,
+  getCopyButtonUtils: { getButton, isDisabled },
+  getExpandButton,,
+} = getTestUtils();
+```
+
+| Util                         | Description                                              | Returns                                                                                                                  |
+| ---------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `getLanguage()`              | Returns the current language of the code block           | `string`                                                                                                                 |
+| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
+| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
+| `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
+| `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`                                                                                                      |
+| `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
+
+### LanguageSwitcherUtils
+
+| Util                              | Description                                       | Returns                 |
+| --------------------------------- | ------------------------------------------------- | ----------------------- |
+| `getInput()`                      | Returns the language switcher trigger             | `HTMLButtonElement`     |
+| `getInputValue()`                 | Returns the language switcher input value         | `string`                |
+| `getOptions()`                    | Returns all options in the language switcher      | `Array<HTMLElement>`    |
+| `getOptionByValue(value: string)` | Returns the option element by its value           | `HTMLElement` \| `null` |
+| `isDisabled()`                    | Returns whether the language switcher is disabled | `boolean`               |

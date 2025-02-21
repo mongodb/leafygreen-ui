@@ -7,5 +7,11 @@ export type { LanguageOption } from './Panel/Panel.types';
 export type { SyntaxProps } from './Syntax/Syntax.types';
 export type { LineHighlightingDefinition } from './types';
 export { Language } from './types';
+export {
+  getLgIds,
+  type GetLgIdsReturnType,
+  getTestUtils,
+  type TestUtilsReturnType,
+} from './utils';
 
 export default Code;

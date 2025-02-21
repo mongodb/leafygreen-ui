@@ -1,3 +1,4 @@
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { LanguageOption } from '../Panel/Panel.types';
@@ -27,107 +28,99 @@ export type DetailedElementProps<T> = React.DetailedHTMLProps<
   T
 >;
 
-export type CodeProps = Omit<
-  SyntaxProps,
-  'onCopy' | 'language' | 'onChange'
-> & {
-  /**
-   * Makes code blocks longer than 5 lines long expandable
-   *
-   * @default `false`
-   */
-  expandable?: boolean;
+export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
+  LgIdProps &
+  DarkModeProps & {
+    /**
+     * Makes code blocks longer than 5 lines long expandable
+     *
+     * @default `false`
+     */
+    expandable?: boolean;
 
-  /**
-   * Callback fired when Code is copied via the copy button.
-   *
-   */
-  onCopy?: Function;
+    /**
+     * Callback fired when Code is copied via the copy button.
+     *
+     */
+    onCopy?: Function;
 
-  /**
-   * Determines whether or not the syntax will be rendered in dark mode.
-   *
-   * @default `false`
-   */
-  darkMode?: boolean;
+    /**
+     * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
+     */
 
-  /**
-   * The language to format the code. See {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/code/src/languages.ts | SupportedLanguages}.
-   */
+    language: Language | LanguageOption['displayName'];
 
-  language: Language | LanguageOption['displayName'];
+    /**
+     * Determines whether or not the loading skeleton will be rendered in place of the code block.
+     *
+     * @default `false`
+     */
+    isLoading?: boolean;
 
-  /**
-   * Determines whether or not the loading skeleton will be rendered in place of the code block.
-   *
-   * @default `false`
-   */
-  isLoading?: boolean;
+    /**
+     * Custom action buttons. Should be an array of `IconButton`.
+     *
+     * @type <IconButton />[]
+     * use `<Panel customActionButtons={} />` instead
+     *
+     * @deprecated
+     */
+    customActionButtons?: Array<React.ReactElement>;
 
-  /**
-   * Custom action buttons. Should be an array of `IconButton`.
-   *
-   * @type <IconButton />[]
-   * use `<Panel customActionButtons={} />` instead
-   *
-   * @deprecated
-   */
-  customActionButtons?: Array<React.ReactElement>;
+    /**
+     * When true, custom action buttons will be shown.
+     *
+     * Use `panel={<Panel showCustomActionButtons={} />}` instead
+     *
+     *@deprecated
+     */
+    showCustomActionButtons?: boolean;
 
-  /**
-   * When true, custom action buttons will be shown.
-   *
-   * Use `panel={<Panel showCustomActionButtons={} />}` instead
-   *
-   *@deprecated
-   */
-  showCustomActionButtons?: boolean;
+    /**
+     * Renders a file name or other descriptor for a block of code
+     *
+     * Use `panel={<Panel title={} />}` instead
+     *
+     * @deprecated
+     */
+    chromeTitle?: string;
 
-  /**
-   * Renders a file name or other descriptor for a block of code
-   *
-   * Use `panel={<Panel title={} />}` instead
-   *
-   * @deprecated
-   */
-  chromeTitle?: string;
+    /**
+     * use `panel={<Panel languageOptions={} />}` instead
+     * @deprecated
+     */
+    languageOptions?: Array<LanguageOption>;
 
-  /**
-   * use `panel={<Panel languageOptions={} />}` instead
-   * @deprecated
-   */
-  languageOptions?: Array<LanguageOption>;
+    /**
+     * use `panel={<Panel onChange={}/>}` instead
+     * @deprecated
+     */
+    onChange?: (arg0: LanguageOption) => void;
 
-  /**
-   * use `panel={<Panel onChange={}/>}` instead
-   * @deprecated
-   */
-  onChange?: (arg0: LanguageOption) => void;
+    /**
+     * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
+     *
+     * Use `panel={<Panel />}` or `copyButtonAppearance` instead
+     *
+     * @default `false`
+     * @deprecated
+     */
+    copyable?: boolean;
 
-  /**
-   * When true, allows the code block to be copied to the user's clipboard by clicking the rendered copy button.
-   *
-   * Use `panel={<Panel />}` or `copyButtonAppearance` instead
-   *
-   * @default `false`
-   * @deprecated
-   */
-  copyable?: boolean;
+    /**
+     * Determines the base font-size of the component
+     *
+     * @default 13
+     */
+    baseFontSize?: BaseFontSize;
 
-  /**
-   * Determines the base font-size of the component
-   *
-   * @default 13
-   */
-  baseFontSize?: BaseFontSize;
-
-  /**
-   * Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword.
-   *
-   * E.g. `customKeywords: {{'keyword': 'className' }}`
-   */
-  customKeywords?: Record<string, string>;
-} & (
+    /**
+     * Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword.
+     *
+     * E.g. `customKeywords: {{'keyword': 'className' }}`
+     */
+    customKeywords?: Record<string, string>;
+  } & (
     | {
         /**
          * Determines the appearance of the copy button without a panel. The copy button allows the code block to be copied to the user's clipboard by clicking the button.
