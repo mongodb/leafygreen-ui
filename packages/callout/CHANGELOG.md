@@ -1,5 +1,19 @@
 # @leafygreen-ui/callout
 
+## 11.0.5
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/icon@13.1.3
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+
 ## 11.0.4
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @leafygreen-ui/ripple
 
+## 1.1.16
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/tokens@2.11.4
+
 ## 1.1.15
 
 ### Patch Changes

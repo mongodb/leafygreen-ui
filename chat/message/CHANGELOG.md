@@ -1,5 +1,23 @@
 # @lg-chat/message
 
+## 5.0.6
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @lg-chat/leafygreen-chat-provider@3.0.2
+  - @lg-chat/lg-markdown@3.0.6
+  - @lg-chat/rich-links@2.0.5
+  - @leafygreen-ui/banner@9.0.5
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.6
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+
 ## 5.0.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 4.1.4
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+
 ## 4.1.3
 
 ### Patch Changes

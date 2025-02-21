@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.0.10
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+
 ## 4.0.9
 
 ### Patch Changes

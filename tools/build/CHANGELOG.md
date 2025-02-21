@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.7.3
+
+### Patch Changes
+
+- 541e12e75: Updates Rollup config to enable tree-shaking
+
 ## 0.7.2
 
 ### Patch Changes
