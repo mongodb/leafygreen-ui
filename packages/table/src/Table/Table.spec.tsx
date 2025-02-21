@@ -227,8 +227,7 @@ describe('packages/table/Table', () => {
         }),
       );
 
-      const table = result.current;
-      render(<TableWrapper table={table} />);
+      render(<TableWrapper table={result.current} />);
 
       const { getRowByIndex } = getTestUtils();
       expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
@@ -260,7 +259,7 @@ describe('packages/table/Table', () => {
       // Toggle the visibility of the first column to hidden
       act(() => columnToHide.toggleVisibility());
       rerenderHook();
-      rerenderTable(<TableWrapper table={table} />);
+      rerenderTable(<TableWrapper table={result.current} />);
 
       expect(allRowCells()).toHaveLength(5);
     });
@@ -276,7 +275,7 @@ describe('packages/table/Table', () => {
         }),
       );
 
-      const table = result.current;
+      let table = result.current;
       const { rerender: rerenderTable } = render(
         <TableWrapper table={table} />,
       );
@@ -286,19 +285,18 @@ describe('packages/table/Table', () => {
 
       expect(allRowCells()).toHaveLength(6);
 
-      const columnToHide = table.getAllColumns()[0];
-
       // Toggle the visibility of the first column to hidden
-      act(() => columnToHide.toggleVisibility());
+      act(() => table.getAllColumns()[0].toggleVisibility());
       rerenderHook();
+      table = result.current;
       rerenderTable(<TableWrapper table={table} />);
 
       expect(allRowCells()).toHaveLength(5);
 
       // Toggle the visibility of the first column back to visible
-      act(() => columnToHide.toggleVisibility());
+      act(() => table.getAllColumns()[0].toggleVisibility());
       rerenderHook();
-      rerenderTable(<TableWrapper table={table} />);
+      rerenderTable(<TableWrapper table={result.current} />);
 
       expect(allRowCells()).toHaveLength(6);
     });
