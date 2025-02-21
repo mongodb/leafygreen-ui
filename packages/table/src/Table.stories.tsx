@@ -252,7 +252,7 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
 
 export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
-  const [data] = useState(() => makeKitchenSinkData(400));
+  const [data] = useState(() => makeKitchenSinkData(200));
 
   const startTime = performance.now(); // Capture start time
 
