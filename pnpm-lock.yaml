@@ -2781,15 +2781,15 @@ importers:
       rollup:
         specifier: 4.16.1
         version: 4.16.1
+      rollup-plugin-bundle-stats:
+        specifier: ^4.18.2
+        version: 4.18.2(core-js@3.40.0)(rollup@4.16.1)
       rollup-plugin-node-externals:
         specifier: 7.1.1
         version: 7.1.1(rollup@4.16.1)
       rollup-plugin-polyfill-node:
         specifier: 0.13.0
         version: 0.13.0(rollup@4.16.1)
-      rollup-plugin-sizes:
-        specifier: 1.0.6
-        version: 1.0.6(rollup@4.16.1)
       turbo:
         specifier: ^2.0.6
         version: 2.0.6
@@ -4082,6 +4082,30 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@bundle-stats/cli-utils@4.18.2':
+    resolution: {integrity: sha512-gDTI6RP3i9MMIdWrftIAe2zJDrwzFMaHO3wHxioMYkxBrCZWSepD8SQW6ulyw8zKZGoMd/CzZ1DHnfLfbYqJ/A==}
+    engines: {node: '>= 14.0'}
+
+  '@bundle-stats/html-templates@4.18.2':
+    resolution: {integrity: sha512-aaFwXyMF4aFd/0vN1JYQ2kWuwZ3KkH6sMT+aFLz1KkfMmB1YQJKs0o5UIrdAIYwto+UMBQhC7b2ml9wzlo9X/Q==}
+
+  '@bundle-stats/plugin-webpack-filter@4.18.2':
+    resolution: {integrity: sha512-O67gP6NoRg3LsHX/MWxQzvHjmzUZraPOM3zgLoPLaN7Q9uurD6hHH7ZDb/IBscpQRXgDJrBz3ZKhZeu1T2bfOQ==}
+    engines: {node: '>= 14.0'}
+    peerDependencies:
+      core-js: ^3.0.0
+
+  '@bundle-stats/plugin-webpack-validate@4.18.2':
+    resolution: {integrity: sha512-LkcSTK9Yx5scYMWUr6ntggzHaJUhBhn5GnV6bp/a+lDdg36XP5o+hFPBJnLRiZ1P6D1BtkOYWyXdW8ax2OqBeQ==}
+    engines: {node: '>= 14.0'}
+
+  '@bundle-stats/utils@4.18.2':
+    resolution: {integrity: sha512-mQeGPxST7tfWgx015UtMnC/XeXQ7v7Ng5nXiIs268naKznHjDz6C5iaS7hXQ3QQNo7fDdJiOaV7nsSZBL4WRQA==}
+    engines: {node: '>= 14.0'}
+    peerDependencies:
+      core-js: ^3.0.0
+      lodash: ^4.0.0
 
   '@changesets/apply-release-plan@6.1.4':
     resolution: {integrity: sha512-FMpKF1fRlJyCZVYHr3CbinpZZ+6MwvOtWUuO8uo+svcATEoc1zRDcj23pAurJ2TZ/uVz1wFHH6K3NlACy0PLew==}
@@ -6549,6 +6573,9 @@ packages:
   core-js-compat@3.36.1:
     resolution: {integrity: sha512-Dk997v9ZCt3X/npqzyGdTlq6t7lDBhZwGvV94PKzDArjp7BTRm7WlDAXYd/OWdeFHO8OChQYRJNJvUCqCbrtKA==}
 
+  core-js@3.40.0:
+    resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
+
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -7236,10 +7263,6 @@ packages:
   filenamify@4.3.0:
     resolution: {integrity: sha512-hcFKyUG57yWGAzu1CMt/dPzYZuv+jAJUT85bL8mrXvNe6hWj6yEHEc4EdcgiA6Z3oi1/9wXJdZPXF2dZNgwgOg==}
     engines: {node: '>=8'}
-
-  filesize@9.0.11:
-    resolution: {integrity: sha512-gTAiTtI0STpKa5xesyTA9hA3LX4ga8sm2nWRcffEa1L/5vQwb4mj2MdzMkoHoGv4QzfDshQZuYscQSf8c4TKOA==}
-    engines: {node: '>= 0.4.0'}
 
   fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
@@ -8598,9 +8621,6 @@ packages:
   mockdate@3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
 
-  module-details-from-path@1.0.3:
-    resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
-
   moo-color@1.0.3:
     resolution: {integrity: sha512-i/+ZKXMDf6aqYtBhuOcej71YSlbjT3wCO/4H1j8rPvxDJEifdwgg5MaFyu6iYAT8GBZJg2z0dkgK4YMzvURALQ==}
 
@@ -9396,6 +9416,12 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
+  rollup-plugin-bundle-stats@4.18.2:
+    resolution: {integrity: sha512-P07u6pncUY7DoA+CapDgubEFmyIUDQxaPcWlxopXf6RYkWMvwO9y8I29yqqmyvk8DXlUUgFM9Vc0UJ7FoMZC7w==}
+    engines: {node: '>= 16.0'}
+    peerDependencies:
+      rollup: ^3.0.0 || ^4.0.0
+
   rollup-plugin-node-externals@7.1.1:
     resolution: {integrity: sha512-rnIUt0zYdV05muRetoxOiFiKxrrfiyXuM/CgI+akv6NExBTaIiPkH2rCSE9JUCsjta1MXzQVAldpe5tJEszlwQ==}
     engines: {node: '>= 21 || ^20.6.0 || ^18.19.0'}
@@ -9407,10 +9433,17 @@ packages:
     peerDependencies:
       rollup: ^1.20.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
 
-  rollup-plugin-sizes@1.0.6:
-    resolution: {integrity: sha512-TQlfd2Ef+1BQjsDIuXyoBPAFFJfA9q4DXSCT5/jsUEtsyn99CzwGH98StQOg+sriq9+j8VgCxPO4yodMbvynPg==}
+  rollup-plugin-stats@1.3.2:
+    resolution: {integrity: sha512-VVCNU//OBzroB73gPmGJIm6xkoi25t2MsPoV6LsWUt4BVXbnrKpYAY3CwwnAfiWzM2KL4PN3SeFe/jZ9Ky7WRQ==}
+    engines: {node: '>=18'}
     peerDependencies:
-      rollup: ^2 || ^3 || ^4
+      rollup: ^3.0.0 || ^4.0.0
+
+  rollup-plugin-webpack-stats@2.0.1:
+    resolution: {integrity: sha512-1JALgjz4RDe14SowXJxAsQqJxGnj6JF4TIRo0FistxspFr3TyYIWCpO8B5qaes7vfdKxSNTowJtuQTOlZOobMA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      rollup: ^3.0.0 || ^4.0.0
 
   rollup@4.16.1:
     resolution: {integrity: sha512-5CaD3MPDlPKfhqzRvWXK96G6ELJfPZNb3LHiZxTHgDdC6jvwfGz2E8nY+9g1ONk4ttHsK1WaFP19Js4PSr1E3g==}
@@ -9491,6 +9524,9 @@ packages:
 
   serialize-javascript@6.0.1:
     resolution: {integrity: sha512-owoXEFjWRllis8/M1Q+Cw5k8ZH40e3zhp/ovX+Xr/vi1qj6QesbyXXViFbpNvWvPNAD62SutwEXavefrLJWj7w==}
+
+  serialize-query-params@2.0.2:
+    resolution: {integrity: sha512-1chMo1dST4pFA9RDXAtF0Rbjaut4is7bzFbI1Z26IuMub68pNCILku85aYmeFhvnY//BXUPUhoRMjYcsT93J/Q==}
 
   set-blocking@2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
@@ -9630,6 +9666,15 @@ packages:
   stream-browserify@3.0.0:
     resolution: {integrity: sha512-H73RAHsVBapbim0tU2JwwOiXUj+fikfiaoYAKHF3VJfA0pe2BCzkhAHBlLG6REzE+2WNZcxOXjK7lkso+9euLA==}
 
+  stream-chain@2.2.5:
+    resolution: {integrity: sha512-1TJmBx6aSWqZ4tx7aTpBDXK0/e2hhcNSTV8+CbFJtDjbb+I1mZ8lHit0Grw9GRT+6JbIrrDd8esncgBi8aBXGA==}
+
+  stream-chain@3.4.0:
+    resolution: {integrity: sha512-cyDiaDqAfgmeiv0PWFXCg9oKNVYNzYxHK9j5CMsYMHZDk+/yYcSV+CXQZliZ0U4mNU8DLqiVNZXUfs8BqhgwMw==}
+
+  stream-json@1.9.1:
+    resolution: {integrity: sha512-uWkjJ+2Nt/LO9Z/JyKZbMusL8Dkh97uUBTv3AJQ74y07lVahLY4eEFsPsE97pxYBwr8nnjMAIch5eqI0gPShyw==}
+
   stream-transform@2.1.3:
     resolution: {integrity: sha512-9GHUiM5hMiCi6Y03jD2ARC1ettBXkQBoQAe7nJsPknnI0ow10aXjTnew8QtYQmLjzn974BnmWEAJgCY6ZP1DeQ==}
 
@@ -9740,6 +9785,10 @@ packages:
 
   stylis@4.2.0:
     resolution: {integrity: sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==}
+
+  superstruct@2.0.2:
+    resolution: {integrity: sha512-uV+TFRZdXsqXTL2pRvujROjdZQ4RAlBUS5BTh9IGm+jTqQntYThciG/qu57Gs69yjnVUSqdxF9YLmSnpupBW9A==}
+    engines: {node: '>=14.0.0'}
 
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
@@ -11403,6 +11452,37 @@ snapshots:
       to-fast-properties: 2.0.0
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@bundle-stats/cli-utils@4.18.2(core-js@3.40.0)':
+    dependencies:
+      '@bundle-stats/html-templates': 4.18.2
+      '@bundle-stats/plugin-webpack-filter': 4.18.2(core-js@3.40.0)
+      '@bundle-stats/utils': 4.18.2(core-js@3.40.0)(lodash@4.17.21)
+      find-cache-dir: 3.3.2
+      lodash: 4.17.21
+      stream-chain: 3.4.0
+      stream-json: 1.9.1
+    transitivePeerDependencies:
+      - core-js
+
+  '@bundle-stats/html-templates@4.18.2': {}
+
+  '@bundle-stats/plugin-webpack-filter@4.18.2(core-js@3.40.0)':
+    dependencies:
+      core-js: 3.40.0
+
+  '@bundle-stats/plugin-webpack-validate@4.18.2':
+    dependencies:
+      lodash: 4.17.21
+      superstruct: 2.0.2
+
+  '@bundle-stats/utils@4.18.2(core-js@3.40.0)(lodash@4.17.21)':
+    dependencies:
+      '@bundle-stats/plugin-webpack-filter': 4.18.2(core-js@3.40.0)
+      '@bundle-stats/plugin-webpack-validate': 4.18.2
+      core-js: 3.40.0
+      lodash: 4.17.21
+      serialize-query-params: 2.0.2
 
   '@changesets/apply-release-plan@6.1.4':
     dependencies:
@@ -14205,6 +14285,8 @@ snapshots:
     dependencies:
       browserslist: 4.23.0
 
+  core-js@3.40.0: {}
+
   core-util-is@1.0.3: {}
 
   cosmiconfig@7.1.0:
@@ -15103,8 +15185,6 @@ snapshots:
       filename-reserved-regex: 2.0.0
       strip-outer: 1.0.1
       trim-repeated: 1.0.0
-
-  filesize@9.0.11: {}
 
   fill-range@7.0.1:
     dependencies:
@@ -17062,8 +17142,6 @@ snapshots:
 
   mockdate@3.0.5: {}
 
-  module-details-from-path@1.0.3: {}
-
   moo-color@1.0.3:
     dependencies:
       color-name: 1.1.4
@@ -17960,6 +18038,14 @@ snapshots:
     dependencies:
       glob: 7.2.3
 
+  rollup-plugin-bundle-stats@4.18.2(core-js@3.40.0)(rollup@4.16.1):
+    dependencies:
+      '@bundle-stats/cli-utils': 4.18.2(core-js@3.40.0)
+      rollup: 4.16.1
+      rollup-plugin-webpack-stats: 2.0.1(rollup@4.16.1)
+    transitivePeerDependencies:
+      - core-js
+
   rollup-plugin-node-externals@7.1.1(rollup@4.16.1):
     dependencies:
       rollup: 4.16.1
@@ -17969,11 +18055,14 @@ snapshots:
       '@rollup/plugin-inject': 5.0.5(rollup@4.16.1)
       rollup: 4.16.1
 
-  rollup-plugin-sizes@1.0.6(rollup@4.16.1):
+  rollup-plugin-stats@1.3.2(rollup@4.16.1):
     dependencies:
-      filesize: 9.0.11
-      module-details-from-path: 1.0.3
       rollup: 4.16.1
+
+  rollup-plugin-webpack-stats@2.0.1(rollup@4.16.1):
+    dependencies:
+      rollup: 4.16.1
+      rollup-plugin-stats: 1.3.2(rollup@4.16.1)
 
   rollup@4.16.1:
     dependencies:
@@ -18094,6 +18183,8 @@ snapshots:
   serialize-javascript@6.0.1:
     dependencies:
       randombytes: 2.1.0
+
+  serialize-query-params@2.0.2: {}
 
   set-blocking@2.0.0: {}
 
@@ -18247,6 +18338,14 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 3.6.2
 
+  stream-chain@2.2.5: {}
+
+  stream-chain@3.4.0: {}
+
+  stream-json@1.9.1:
+    dependencies:
+      stream-chain: 2.2.5
+
   stream-transform@2.1.3:
     dependencies:
       mixme: 0.5.9
@@ -18367,6 +18466,8 @@ snapshots:
       '@babel/core': 7.24.3
 
   stylis@4.2.0: {}
+
+  superstruct@2.0.2: {}
 
   supports-color@5.5.0:
     dependencies:
