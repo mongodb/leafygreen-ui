@@ -24,6 +24,7 @@ import { useCodeContext } from '../CodeContext/CodeContext';
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
+import { getLgIds } from '../utils';
 
 function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const [copied, setCopied] = useState(false);
@@ -36,7 +37,9 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { theme } = useDarkMode();
   const { portalContainer } = usePopoverPortalContainer();
-  const { showPanel, isLoading, lgids } = useCodeContext();
+  const { showPanel, isLoading } = useCodeContext();
+
+  const lgids = getLgIds();
 
   /**
    * toggles `tooltipOpen` state

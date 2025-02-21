@@ -164,9 +164,10 @@ test('code', () => {
     </Code>
   );
 
-  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButton } = getTestUtils();
+  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButtonUtils } = getTestUtils();
   const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
-  const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
+  const { getButton, queryButton, findButton, isDisabled } = getCopyButtonUtils();
+  const { getButton, queryButton, findButton } = getExpandButtonUtils();
 
   expect(getLanguage()).toBe('javascript');
   expect(queryTitle()).toBe('Title');
@@ -176,9 +177,13 @@ test('code', () => {
   expect(getInputValue()).toBe('javascript');
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
-  expect(getCopyButtonUtils()).toBeInTheDocument();
-  expect(isCopyButtonDisabled()).toBe(false);
-  expect(getExpandButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().findButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().queryButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().isDisabled()).toBe(false);
+  expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
+  expect(getExpandButtonUtils().findButton()).toBeInTheDocument();
+  expect(getExpandButtonUtils().queryButton()).toBeInTheDocument();
   expect(isExpanded()).toBe(false);
 });
 ```
@@ -230,17 +235,17 @@ test('code', () => {
 ```tsx
 const {
   getLanguage,
+  getIsLoading,
   queryTitle,
+  queryPanel,
   getLanguageSwitcherUtils: {
     getInput,
     getOptions,
     getOptionByValue,
     isDisabled,
   },
-  getIsLoading,
-  getCopyButtonUtils: { getButton, isDisabled },
-  getExpandButton,
-  queryPanel,
+  getCopyButtonUtils: { getButton, queryButton, findButton, isDisabled },
+  getExpandButtonUtils: { getButton, queryButton, findButton },
 } = getTestUtils();
 ```
 
@@ -250,7 +255,7 @@ const {
 | `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
 | `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
 | `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`                                                                                                      |
+| `getExpandButton()`          | Returns utils for interacting with the expand button     | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
 | `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
 | `queryTitle()`               | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
 | `queryPanel()`               | Returns the panel element                                | `HTMLElement` \| `null`                                                                                                  |

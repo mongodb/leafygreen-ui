@@ -23,14 +23,17 @@ export interface TestUtilsReturnType {
   getIsLoading: () => boolean;
 
   /**
-   * Returns the copy button
+   * Returns utils for interacting with the copy button
    */
   getCopyButtonUtils: () => GetButtonTestUtilsReturnType<HTMLButtonElement>;
 
   /**
-   * Returns the expand button
+   * Returns utils for interacting with the expand button
    */
-  getExpandButton: GetButtonTestUtilsReturnType<HTMLButtonElement>['getButton'];
+  getExpandButtonUtils: () => Omit<
+    GetButtonTestUtilsReturnType<HTMLButtonElement>,
+    'isDisabled'
+  >;
 
   /**
    * Returns whether the code snippet is expanded

@@ -56,9 +56,14 @@ export const getTestUtils = (
   const getCopyButtonUtils = () =>
     getButtonTestUtils<HTMLButtonElement>(lgIds.copyButton);
 
-  const getExpandButton = () => {
-    const { getButton } = getButtonTestUtils(lgIds.expandButton);
-    return getButton() as HTMLButtonElement;
+  const getExpandButtonUtils = () => {
+    const { queryButton, getButton, findButton } =
+      getButtonTestUtils<HTMLButtonElement>(lgIds.expandButton);
+    return {
+      getButton: () => getButton(),
+      queryButton: () => queryButton(),
+      findButton: () => findButton(),
+    };
   };
 
   const getIsExpanded = () => {
@@ -74,15 +79,14 @@ export const getTestUtils = (
     return queryBySelector<HTMLElement>(element, `[data-lgid=${lgIds.panel}]`);
   };
 
-  // update to use query/find/get
   return {
     getLanguage,
-    queryTitle,
     getLanguageSwitcherUtils,
     getIsLoading,
     getCopyButtonUtils,
-    getExpandButton,
+    getExpandButtonUtils,
     getIsExpanded,
+    queryTitle,
     queryPanel,
   };
 };

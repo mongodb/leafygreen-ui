@@ -17,6 +17,7 @@ import {
   panelLeftStyles,
 } from './Panel.styles';
 import { PanelProps } from './Panel.types';
+import { getLgIds } from '../utils';
 
 function Panel({
   languageOptions,
@@ -29,7 +30,9 @@ function Panel({
   ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
-  const { contents, language, lgids } = useCodeContext();
+  const { contents, language } = useCodeContext();
+
+  const lgids = getLgIds();
 
   const hasTitle = !!title;
 

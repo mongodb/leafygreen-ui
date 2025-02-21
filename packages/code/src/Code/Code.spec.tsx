@@ -556,24 +556,14 @@ describe('packages/Code', () => {
         (_, i) => `const greeting${i} = "Hello, world! ${i}";`,
       ).join('\n');
 
-    test(`throws error and shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
-      try {
-        render(
-          <Code expandable={true} language="javascript">
-            {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
-          </Code>,
-        );
-        const { getExpandButton } = getTestUtils();
-        const _ = getExpandButton();
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-        expect(error).toHaveProperty(
-          'message',
-          expect.stringMatching(
-            /Unable to find an element by: \[data-lgid="lg-code-expand_button"\]/,
-          ),
-        );
-      }
+    test(`returns null and shows no expand button when <= ${numOfCollapsedLinesOfCode} lines of code`, () => {
+      render(
+        <Code expandable={true} language="javascript">
+          {getCodeSnippet(numOfCollapsedLinesOfCode - 1)}
+        </Code>,
+      );
+      const { getExpandButtonUtils } = getTestUtils();
+      expect(getExpandButtonUtils().queryButton()).toBeNull();
     });
 
     test(`shows expand button when > ${numOfCollapsedLinesOfCode} lines of code`, () => {
@@ -583,9 +573,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      expect(getExpandButton()).toBeInTheDocument();
+      expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
     });
 
     test('shows correct number of lines of code on expand button', () => {
@@ -597,9 +587,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      const actionButton = getExpandButton();
+      const actionButton = getExpandButtonUtils().getButton();
       expect(actionButton).toHaveTextContent(
         `Click to expand (${lineCount} lines)`,
       );
@@ -612,9 +602,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton, getIsExpanded } = getTestUtils();
+      const { getExpandButtonUtils, getIsExpanded } = getTestUtils();
 
-      const actionButton = getExpandButton();
+      const actionButton = getExpandButtonUtils().getButton();
       userEvent.click(actionButton!);
       expect(actionButton).toHaveTextContent('Click to collapse');
       expect(getIsExpanded()).toBe(true);
@@ -629,9 +619,9 @@ describe('packages/Code', () => {
         </Code>,
       );
 
-      const { getExpandButton } = getTestUtils();
+      const { getExpandButtonUtils } = getTestUtils();
 
-      const actionButton = getExpandButton();
+      const actionButton = getExpandButtonUtils().getButton();
       userEvent.click(actionButton!); // Expand
       userEvent.click(actionButton!); // Collapse
 
