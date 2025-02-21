@@ -12,7 +12,6 @@ export const getTestUtils = (
 ): TestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
 
-  // TODO: update this to use query/find/get
   const element = getByLgId!(lgIds.root);
 
   const getLanguage = () => {

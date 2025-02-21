@@ -218,7 +218,7 @@ describe('packages/tabs/getTestUtils', () => {
             expect(getCopyButtonUtils().queryButton()).toBeInTheDocument();
           });
 
-          test('returns null', () => {
+          test('returns null when copyButtonAppearance is none', () => {
             const { getCopyButtonUtils } = renderCode({
               copyButtonAppearance: 'none',
             });
@@ -330,7 +330,7 @@ describe('packages/tabs/getTestUtils', () => {
       });
 
       describe('findButton', () => {
-        test('throws error is the copy button cannot be found', async () => {
+        test('throws error is the expand button cannot be found', async () => {
           try {
             const { getExpandButtonUtils } = Context.within(
               Jest.spyContext(ClipboardJS, 'isSupported'),
@@ -359,7 +359,7 @@ describe('packages/tabs/getTestUtils', () => {
       });
 
       describe('getButton', () => {
-        test('throws error is the copy button cannot be found', () => {
+        test('throws error is the expand button cannot be found', () => {
           try {
             const { getExpandButtonUtils } = Context.within(
               Jest.spyContext(ClipboardJS, 'isSupported'),
