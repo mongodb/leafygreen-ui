@@ -19,7 +19,7 @@
     "build:tsc": "turbo run tsc",
     "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
-    "clean": "npm-run-all --parallel clean:*",
+    "clean": "npx npm-run-all --parallel clean:*",
     "clean:builds": "pnpm recursive exec -- rm -rf ./{dist,tsconfig.tsbuildinfo,stories.js}",
     "clean:cache": "pnpm recursive exec -- rm -rf ./.turbo; rm -rf .turbo/cache",
     "clean:modules": "pnpm recursive exec -- rm -rf node_modules; rm -rf node_modules",

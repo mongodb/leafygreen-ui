@@ -1380,76 +1380,82 @@ describe('packages/combobox', () => {
       });
 
       describe('Right arrow key', () => {
-        test('Does nothing when focus is on clear button', () => {
+        test('Does nothing when focus is on clear button', async () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
           const { inputEl, clearButtonEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, '{arrowright}{arrowright}');
-          expect(clearButtonEl).toHaveFocus();
+          await waitFor(() => expect(clearButtonEl).toHaveFocus());
         });
 
-        test('Focuses clear button when cursor is at the end of input', () => {
+        test('Focuses clear button when cursor is at the end of input', async () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
           const { inputEl, clearButtonEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, '{arrowright}');
-          expect(clearButtonEl).toHaveFocus();
+          await waitFor(() => expect(clearButtonEl).toHaveFocus());
         });
 
-        test('Moves cursor when cursor is NOT at the end of input', () => {
+        test('Moves cursor when cursor is NOT at the end of input', async () => {
           const initialValue =
             select === 'multiple' ? ['apple', 'banana', 'carrot'] : 'apple';
           const { inputEl } = renderCombobox(select, {
             initialValue,
           });
           userEvent.type(inputEl, 'abc{arrowleft}{arrowright}');
-          expect(inputEl).toHaveFocus();
-        });
-
-        // FIXME: act warning
-        testMultiSelect('Focuses input when focus is on last chip', () => {
-          const initialValue = ['apple', 'banana'];
-          const { inputEl } = renderCombobox(select, {
-            initialValue,
-          });
-          userEvent.type(
-            inputEl!,
-            'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
-          );
-          expect(inputEl!).toHaveFocus();
-          // This behavior passes in the browser, but not in jest
-          // expect(inputEl!.selectionStart).toEqual(0);
-        });
-
-        // FIXME: act warning
-        testMultiSelect('Focuses input when focus is on only chip', () => {
-          const initialValue = ['apple'];
-          const { inputEl } = renderCombobox(select, {
-            initialValue,
-          });
-          userEvent.type(
-            inputEl!,
-            'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
-          );
-          expect(inputEl!).toHaveFocus();
-          // expect(inputEl!.selectionStart).toEqual(0);
+          await waitFor(() => expect(inputEl).toHaveFocus());
         });
 
         // FIXME: act warning
         testMultiSelect(
+          'Focuses input when focus is on last chip',
+          async () => {
+            const initialValue = ['apple', 'banana'];
+            const { inputEl } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(
+              inputEl!,
+              'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
+            );
+            await waitFor(() => expect(inputEl!).toHaveFocus());
+            // This behavior passes in the browser, but not in jest
+            // expect(inputEl!.selectionStart).toEqual(0);
+          },
+        );
+
+        // FIXME: act warning
+        testMultiSelect(
+          'Focuses input when focus is on only chip',
+          async () => {
+            const initialValue = ['apple'];
+            const { inputEl } = renderCombobox(select, {
+              initialValue,
+            });
+            userEvent.type(
+              inputEl!,
+              'abc{arrowleft}{arrowleft}{arrowleft}{arrowleft}{arrowright}',
+            );
+            await waitFor(() => expect(inputEl!).toHaveFocus());
+            // expect(inputEl!.selectionStart).toEqual(0);
+          },
+        );
+
+        // FIXME: act warning
+        testMultiSelect(
           'Focuses next chip when focus is on an inner chip',
-          () => {
+          async () => {
             const initialValue = ['apple', 'banana', 'carrot'];
             const { inputEl, queryChipsByIndex } = renderCombobox(select, {
               initialValue,
             });
             userEvent.type(inputEl!, '{arrowleft}{arrowleft}{arrowright}');
             const lastChip = queryChipsByIndex('last');
-            expect(lastChip!).toContainFocus();
+            await waitFor(() => expect(lastChip).toContainFocus());
           },
         );
       });

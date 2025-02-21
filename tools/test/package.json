@@ -18,17 +18,12 @@
     "@emotion/react": "11.11.1",
     "@emotion/server": "11.11.0",
     "@leafygreen-ui/testing-lib": "workspace:^",
-    "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "@testing-library/dom": "9.3.1",
     "@testing-library/jest-dom": "5.17.0",
     "@testing-library/react": "14.0.0",
     "@testing-library/react-hooks": "8.0.1",
     "@testing-library/user-event": "13.5.0",
-    "@types/cross-spawn": "6.0.2",
-    "@types/fs-extra": "11.0.1",
-    "@types/jest": "29.5.12",
-    "@types/jest-axe": "3.5.5",
     "babel-jest": "29.7.0",
     "chalk": "4.1.2",
     "cross-spawn": "7.0.3",
@@ -40,6 +35,13 @@
     "jest-junit": "16.0.0",
     "react-test-renderer": "18.2.0",
     "regenerator-runtime": "0.14.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@types/cross-spawn": "6.0.2",
+    "@types/fs-extra": "11.0.1",
+    "@types/jest": "29.5.12",
+    "@types/jest-axe": "3.5.5"
   },
   "peerDependencies": {
     "@babel/core": "^7.23.2"
