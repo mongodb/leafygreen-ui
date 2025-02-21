@@ -15,7 +15,7 @@ import { isString } from '../helpers';
  */
 
 export function generateKindClassName(
-  kinds: Array<any>,
+  kinds: Array<any> = [],
   prefix = 'lg-highlight-',
 ): string {
   return kinds

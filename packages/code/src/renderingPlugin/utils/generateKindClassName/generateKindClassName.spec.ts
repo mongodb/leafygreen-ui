@@ -7,6 +7,25 @@ describe('generateKindClassName', () => {
     );
   });
 
+  test('when passed a single argument, returns a string of the appropriate className', () => {
+    const kind = 'string';
+    const kindClassName = generateKindClassName([kind]) as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName).toEqual(`lg-highlight-${kind}`);
+  });
+
+  test('when passed multiple arguments, returns a string containing the appropriate classNames', () => {
+    const kind1 = 'string';
+    const kind2 = 'function';
+    const kindClassName = generateKindClassName([kind1, kind2]) as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName).toEqual(
+      `lg-highlight-${kind1} lg-highlight-${kind2}`,
+    );
+  });
+
   test('handles kinds with dots by splitting them', () => {
     expect(generateKindClassName(['class.name'])).toBe(
       'lg-highlight-class lg-highlight-name',
@@ -31,6 +50,17 @@ describe('generateKindClassName', () => {
 
   test('handles empty array', () => {
     expect(generateKindClassName([])).toBe('');
+  });
+
+  test('when passed an empty string, returns an empty string', () => {
+    const kindClassName = generateKindClassName(['']) as any;
+
+    expect(typeof kindClassName === 'string').toBeTruthy();
+    expect(kindClassName.length).toBe(0);
+  });
+
+  test('handles no parameters', () => {
+    expect(generateKindClassName()).toBe('');
   });
 
   test('handles multiple dots in kind', () => {
