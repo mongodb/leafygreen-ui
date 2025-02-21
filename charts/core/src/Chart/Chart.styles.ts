@@ -25,7 +25,6 @@ const getDraggableContainerStyles = (
 ) => css`
   transform: ${CSS.Transform.toString(transform)};
   transition: ${transition};
-  /* cursor: move; */
 `;
 
 const getDraggingContainerStyles = () => css`
