@@ -13,6 +13,7 @@ import TableBody from '../TableBody';
 import TableHead from '../TableHead';
 import useLeafyGreenTable, {
   LeafyGreenTable,
+  LeafyGreenTableCell,
   LeafyGreenTableRow,
 } from '../useLeafyGreenTable';
 import useLeafyGreenVirtualTable from '../useLeafyGreenVirtualTable';
@@ -50,13 +51,18 @@ const TableWrapper = ({ table }: { table: LeafyGreenTable<any> }) => {
         {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
           return (
             <Row key={row.id} row={row}>
-              {row.getVisibleCells().map(cell => {
-                return (
-                  <Cell key={cell.id} cell={cell}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </Cell>
-                );
-              })}
+              {row
+                .getVisibleCells()
+                .map((cell: LeafyGreenTableCell<Person>) => {
+                  return (
+                    <Cell key={cell.id} cell={cell}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
             </Row>
           );
         })}
