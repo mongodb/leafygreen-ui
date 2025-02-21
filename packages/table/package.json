@@ -46,7 +46,8 @@
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
-    "@leafygreen-ui/tooltip": "workspace:^"
+    "@leafygreen-ui/tooltip": "workspace:^",
+    "@emotion/styled": "^11.14.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
