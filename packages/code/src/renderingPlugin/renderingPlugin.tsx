@@ -11,14 +11,8 @@ import {
   TokenObject,
 } from '../highlight';
 import { useSyntaxContext } from '../Syntax/SyntaxContext';
-import {
-  TokenProps,
-  FlatTokenObject,
-  TreeItem,
-  LineDefinition,
-  LineTableRowProps,
-  TableContentProps,
-} from './renderingPlugin.types';
+
+import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
 import {
   childrenAsKeywords,
   isArray,
@@ -27,8 +21,15 @@ import {
   isString,
   isTokenObject,
 } from './utils/helpers';
-import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
 import { lineWithKeywords } from './utils/lineWithKeywords/lineWithKeywords';
+import {
+  FlatTokenObject,
+  LineDefinition,
+  LineTableRowProps,
+  TableContentProps,
+  TokenProps,
+  TreeItem,
+} from './renderingPlugin.types';
 
 let customKeyWords: Record<string, string> = {};
 
