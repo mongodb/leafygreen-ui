@@ -80,7 +80,13 @@ export const MemoizedInternalRowWithRT = React.memo(
     const { children: prevChildren, ...restPrevProps } = prevProps;
     const { children: nextChildren, ...restNextProps } = nextProps;
 
-    const propsAreEqual = isEqual(restPrevProps, restNextProps);
+    // This allows us to rerender if the child(cell) count changes. E.g. column visibility changes
+    const prevChildrenCount = React.Children.count(prevChildren);
+    const nextChildrenCount = React.Children.count(nextChildren);
+
+    const propsAreEqual =
+      isEqual(restPrevProps, restNextProps) &&
+      prevChildrenCount === nextChildrenCount;
 
     return propsAreEqual;
   },

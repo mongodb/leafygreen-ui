@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import {
   storybookExcludedControlParams,
   StoryMetaType,
@@ -7,6 +7,7 @@ import { StoryFn } from '@storybook/react';
 
 import Badge from '@leafygreen-ui/badge';
 import Button from '@leafygreen-ui/button';
+import Checkbox from '@leafygreen-ui/checkbox';
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -253,6 +254,14 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const [data] = useState(() => makeKitchenSinkData(200));
 
+  const startTime = performance.now(); // Capture start time
+
+  useEffect(() => {
+    const endTime = performance.now();
+    // eslint-disable-next-line no-console
+    console.log(`Table rendered in ${endTime - startTime} ms`);
+  }, [startTime]); // Runs after the first render
+
   const columns = React.useMemo<Array<LGColumnDef<Person>>>(
     () => [
       {
@@ -379,6 +388,115 @@ export const HundredsOfRows: StoryFn<StoryTableProps> = args => {
 };
 
 HundredsOfRows.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
+const defaultColumnVisibility = {
+  firstName: true,
+  lastName: true,
+  age: false,
+  status: false,
+};
+
+export const ColumnVisibility: StoryFn<StoryTableProps> = args => {
+  const [data] = useState(() => makeData(false, 10));
+
+  const columns = useMemo<Array<LGColumnDef<Person>>>(
+    () => [
+      {
+        id: 'firstName',
+        accessorFn: entry => entry.firstName,
+        enableSorting: true,
+        enableHiding: true,
+      },
+      {
+        id: 'lastName',
+        accessorFn: entry => entry.lastName,
+        enableSorting: true,
+        enableHiding: true,
+      },
+      {
+        id: 'age',
+        accessorFn: entry => entry.age,
+        enableSorting: true,
+        enableHiding: true,
+      },
+      {
+        id: 'status',
+        accessorFn: entry => entry.status,
+        enableSorting: true,
+        enableHiding: true,
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenTable<any>({
+    data,
+    columns,
+    initialState: { columnVisibility: defaultColumnVisibility },
+  });
+
+  const { rows } = table.getRowModel();
+
+  return (
+    <div>
+      {table.getAllColumns().map(column => {
+        if (!column.getCanHide()) return null;
+        return (
+          <Checkbox
+            label={column.id}
+            key={column.id}
+            onChange={column.getToggleVisibilityHandler()}
+            checked={column.getIsVisible()}
+            data-testid={`lg-column-visibility-${column.id}`}
+          />
+        );
+      })}
+
+      <Table {...args} table={table}>
+        <TableHead isSticky>
+          {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+            <HeaderRow key={headerGroup.id}>
+              {headerGroup.headers.map(header => {
+                return (
+                  <HeaderCell key={header.id} header={header}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                  </HeaderCell>
+                );
+              })}
+            </HeaderRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map((row: LeafyGreenTableRow<Person>) => {
+            return (
+              <Row key={row.id} row={row}>
+                {row.getVisibleCells().map(cell => {
+                  return (
+                    <Cell key={cell.id} cell={cell}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+              </Row>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
+ColumnVisibility.parameters = {
   chromatic: {
     disableSnapshot: true,
   },
