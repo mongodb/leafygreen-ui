@@ -200,13 +200,6 @@ export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
     </Code>
   </div>
 );
-CustomWord.args = {
-  customKeywords: {
-    testing: 'custom',
-    api: 'custom',
-    username: 'custom',
-  },
-};
 
 export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   highlightLines,
