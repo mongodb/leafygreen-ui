@@ -1,5 +1,13 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.6
+
+### Patch Changes
+
+- @leafygreen-ui/form-field@2.0.4
+- @leafygreen-ui/popover@13.0.3
+- @leafygreen-ui/select@14.0.5
+
 ## 3.0.5
 
 ### Patch Changes

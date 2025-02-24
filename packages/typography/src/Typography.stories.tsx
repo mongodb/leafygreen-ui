@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  storybookArgTypes,
-  type StoryMetaType,
-  type StoryType,
-} from '@lg-tools/storybook-utils';
+import { type StoryMetaType } from '@lg-tools/storybook-utils';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
