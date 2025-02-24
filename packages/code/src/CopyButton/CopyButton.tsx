@@ -20,11 +20,11 @@ import Tooltip, {
 } from '@leafygreen-ui/tooltip';
 
 import { useCodeContext } from '../CodeContext/CodeContext';
+import { getLgIds } from '../utils';
 
 import { COPIED_SUCCESS_DURATION, COPIED_TEXT, COPY_TEXT } from './constants';
 import { getCopyButtonStyles } from './CopyButton.styles';
 import { CopyProps } from './CopyButton.types';
-import { getLgIds } from '../utils';
 
 function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const [copied, setCopied] = useState(false);

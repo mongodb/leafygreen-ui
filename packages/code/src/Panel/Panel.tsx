@@ -9,6 +9,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { useCodeContext } from '../CodeContext/CodeContext';
 import CopyButton from '../CopyButton/CopyButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import { getLgIds } from '../utils';
 
 import {
   getBasePanelStyle,
@@ -17,7 +18,6 @@ import {
   panelLeftStyles,
 } from './Panel.styles';
 import { PanelProps } from './Panel.types';
-import { getLgIds } from '../utils';
 
 function Panel({
   languageOptions,
