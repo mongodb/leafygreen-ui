@@ -51,13 +51,12 @@ describe('packages/drawer', () => {
         expect(getCloseButton()).toBeInTheDocument();
       });
 
-      // TODO @steph: add back after button test utils can assert elements are not present
-      // test.skip('close button is not rendered when onClose is not provided', () => {
-      //   const { getCloseButtonUtils } = renderDrawer({ open: true });
-      //   const { queryButton: queryCloseButton } = getCloseButtonUtils();
+      test('close button is not rendered when onClose is not provided', () => {
+        const { getCloseButtonUtils } = renderDrawer({ open: true });
+        const { queryButton: queryCloseButton } = getCloseButtonUtils();
 
-      //   expect(queryCloseButton()).toBeNull();
-      // });
+        expect(queryCloseButton()).toBeNull();
+      });
 
       test('calls onClose when close button is clicked', () => {
         const mockOnClose = jest.fn();
