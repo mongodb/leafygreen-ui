@@ -1470,6 +1470,15 @@ importers:
         specifier: ^4.2.2
         version: 4.3.1
 
+  packages/illustration:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+
   packages/info-sprinkle:
     dependencies:
       '@leafygreen-ui/emotion':
