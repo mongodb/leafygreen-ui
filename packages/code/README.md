@@ -255,7 +255,7 @@ const {
 | `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
 | `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
 | `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getExpandButton()`          | Returns utils for interacting with the expand button     | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getExpandButtonUtils()`     | Returns utils for interacting with the expand button     | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
 | `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
 | `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
 | `queryPanel()`               | Returns the panel element                                | `HTMLElement` \| `null`                                                                                                  |
