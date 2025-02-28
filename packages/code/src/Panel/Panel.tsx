@@ -9,6 +9,7 @@ import { Body } from '@leafygreen-ui/typography';
 import { useCodeContext } from '../CodeContext/CodeContext';
 import CopyButton from '../CopyButton/CopyButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import { getLgIds } from '../utils';
 
 import {
   getBasePanelStyle,
@@ -29,7 +30,9 @@ function Panel({
   ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
-  const { contents, language, lgids } = useCodeContext();
+  const { contents, language } = useCodeContext();
+
+  const lgids = getLgIds();
 
   const hasTitle = !!title;
 
@@ -54,11 +57,19 @@ function Panel({
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
-      data-testid={lgids.panel}
       data-lgid={lgids.panel}
+      data-testid={lgids.panel}
       {...rest}
     >
-      {hasTitle && <Body className={getPanelTitleStyles(theme)}>{title}</Body>}
+      {hasTitle && (
+        <Body
+          data-lgid={lgids.title}
+          data-testid={lgids.title}
+          className={getPanelTitleStyles(theme)}
+        >
+          {title}
+        </Body>
+      )}
 
       <div className={panelLeftStyles}>
         {shouldRenderLanguageSwitcher && (
