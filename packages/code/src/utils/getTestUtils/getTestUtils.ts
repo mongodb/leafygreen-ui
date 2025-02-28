@@ -59,9 +59,9 @@ export const getTestUtils = (
     const { queryButton, getButton, findButton } =
       getButtonTestUtils<HTMLButtonElement>(lgIds.expandButton);
     return {
-      getButton: () => getButton(),
-      queryButton: () => queryButton(),
-      findButton: () => findButton(),
+      getButton,
+      queryButton,
+      findButton,
     };
   };
 
