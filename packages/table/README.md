@@ -1124,12 +1124,12 @@ const {
 
 # Examples (WIP)
 
-- Basic
+- [Basic](https://codesandbox.io/p/sandbox/table-example-v13-basic-table-r3xmx2)
 - Styled components
-- Sticky header
+- [Sticky header](https://codesandbox.io/p/sandbox/table-example-v13-basic-table-r3xmx2)
 - `useLeafyGreenTable`
   - [Rows and subrows](https://codesandbox.io/p/sandbox/table-example-v13-regular-table-w-rows-and-subrows-m5m55y)
-  - Expanded content
+  - [Expanded content](https://codesandbox.io/p/sandbox/25qjt8)
   - [Row, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-k4nmqq)
   - With extra custom columns
   - No Truncation

@@ -190,6 +190,10 @@ export const LiveExample: StoryFn<SearchInputProps> = (
     console.log('Storybook: handleChange', { value });
     args.onChange?.(e);
 
+    console.log({
+      data: data.filter(datum => datum.name.includes(kebabCase(value))),
+    });
+
     setSearchResults(
       data.filter(datum => datum.name.includes(kebabCase(value))),
     );
