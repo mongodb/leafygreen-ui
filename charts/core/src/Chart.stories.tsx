@@ -105,8 +105,10 @@ export const LiveExample: StoryObj<{
     renderGrid: true,
     renderXAxis: true,
     xAxisType: 'time',
+    xAxisLabel: 'Time',
     renderYAxis: true,
     yAxisType: 'value',
+    yAxisLabel: 'Value',
     renderTooltip: true,
     tooltipSortDirection: SortDirection.Desc,
     tooltipSortKey: SortKey.Value,
@@ -602,8 +604,8 @@ export const DarkMode: StoryObj<{}> = {
         />
         <Grid />
         <Tooltip />
-        <XAxis type="time" />
-        <YAxis type="value" />
+        <XAxis type="time" label="Time" />
+        <YAxis type="value" label="Value" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
         <EventMarkerLine
           position={new Date('2024-01-01T00:20:00').getTime()}
@@ -655,8 +657,8 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
           />
           <Grid />
           <Tooltip />
-          <XAxis type="time" />
-          <YAxis type="value" />
+          <XAxis type="time" label="Time" />
+          <YAxis type="value" label="Value" />
           <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
           <EventMarkerLine
             position={new Date('2024-01-01T00:20:00').getTime()}
@@ -718,11 +720,37 @@ export const WithXAxis: StoryObj<{}> = {
   },
 };
 
+export const WithXAxisWithLabel: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <XAxis type="time" label="Time" />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
 export const WithYAxis: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
         <YAxis type="value" />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithYAxisWithLabel: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <YAxis type="value" label="value" />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
