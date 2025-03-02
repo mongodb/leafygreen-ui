@@ -97,7 +97,7 @@ export const LiveExample: StoryObj<{
     data: lineData,
     chartState: 'unset',
     horizontalGridLines: true,
-    verticalGridLines: false,
+    verticalGridLines: true,
     renderGrid: true,
     renderXAxis: true,
     xAxisType: 'time',
