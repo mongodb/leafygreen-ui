@@ -1,6 +1,7 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
+import { userEvent, within } from '@storybook/test';
 
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
@@ -28,7 +29,35 @@ import {
   YAxisProps,
 } from '.';
 
-interface StorybookProps {
+const lineData = makeLineData(5);
+
+export default {
+  title: 'Charts/Core',
+  component: Chart,
+  parameters: {
+    default: 'LiveExample',
+  },
+  argTypes: {
+    darkMode: storybookArgTypes.darkMode,
+    chartState: {
+      table: {
+        disable: true,
+      },
+    },
+    key: {
+      table: {
+        disable: true,
+      },
+    },
+    ref: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+};
+
+export const LiveExample: StoryObj<{
   data: Array<LineProps>;
   chartState: ChartProps['chartState'];
   verticalGridLines: boolean;
@@ -67,55 +96,42 @@ interface StorybookProps {
   thresholdLineLabel: ThresholdLineProps['label'];
   thresholdLineValue: ThresholdLineProps['value'];
   thresholdLinePosition: ThresholdLineProps['position'];
-}
-
-const defaultArgs: Omit<
-  StorybookProps,
-  | 'xAxisFormatter'
-  | 'xAxisLabel'
-  | 'yAxisFormatter'
-  | 'yAxisLabel'
-  | 'tooltipValueFormatter'
-> = {
-  data: makeLineData(5),
-  chartState: 'unset',
-  horizontalGridLines: true,
-  verticalGridLines: false,
-  renderGrid: true,
-  renderXAxis: true,
-  xAxisType: 'time',
-  renderYAxis: true,
-  yAxisType: 'value',
-  renderTooltip: true,
-  tooltipSortDirection: SortDirection.Desc,
-  tooltipSortKey: SortKey.Value,
-  renderHeader: true,
-  headerTitle: 'LeafyGreen Chart Header',
-  headerShowDivider: true,
-  zoomSelectXAxis: true,
-  zoomSelectYAxis: true,
-  zoomSelectCallback: () => {},
-  renderEventMarkerLine: true,
-  eventMarkerLineMessage: 'Event marker line message',
-  eventMarkerLineLabel: 'Event marker line label',
-  eventMarkerLineLevel: 'warning',
-  eventMarkerLinePosition: new Date('2024-01-01T00:20:00').getTime(),
-  renderEventMarkerPoint: true,
-  eventMarkerPointMessage: 'Event marker point message',
-  eventMarkerPointLabel: 'Event marker point label',
-  eventMarkerPointLevel: 'warning',
-  eventMarkerPointXPosition: new Date('2024-01-01T00:37:00').getTime(),
-  eventMarkerPointYPosition: 699,
-  renderThresholdLine: true,
-  thresholdLineLabel: 'Cluster Limit',
-  thresholdLineValue: '1400',
-  thresholdLinePosition: 1400,
-};
-
-export default {
-  title: 'Charts/Chart',
-  component: Chart,
-  args: defaultArgs,
+}> = {
+  args: {
+    data: lineData,
+    chartState: 'unset',
+    horizontalGridLines: true,
+    verticalGridLines: false,
+    renderGrid: true,
+    renderXAxis: true,
+    xAxisType: 'time',
+    renderYAxis: true,
+    yAxisType: 'value',
+    renderTooltip: true,
+    tooltipSortDirection: SortDirection.Desc,
+    tooltipSortKey: SortKey.Value,
+    renderHeader: true,
+    headerTitle: 'LeafyGreen Chart Header',
+    headerShowDivider: true,
+    zoomSelectXAxis: true,
+    zoomSelectYAxis: true,
+    zoomSelectCallback: () => {},
+    renderEventMarkerLine: true,
+    eventMarkerLineMessage: 'Event marker line message',
+    eventMarkerLineLabel: 'Event marker line label',
+    eventMarkerLineLevel: 'warning',
+    eventMarkerLinePosition: new Date('2024-01-01T00:20:00').getTime(),
+    renderEventMarkerPoint: true,
+    eventMarkerPointMessage: 'Event marker point message',
+    eventMarkerPointLabel: 'Event marker point label',
+    eventMarkerPointLevel: 'warning',
+    eventMarkerPointXPosition: new Date('2024-01-01T00:41:00').getTime(),
+    eventMarkerPointYPosition: 739,
+    renderThresholdLine: true,
+    thresholdLineLabel: 'Cluster Limit',
+    thresholdLineValue: '1400',
+    thresholdLinePosition: 1400,
+  },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     data: {
@@ -434,117 +450,6 @@ export default {
       },
     },
   },
-};
-
-export const LiveExample: StoryObj<StorybookProps> = {
-  render: ({
-    data,
-    chartState,
-    verticalGridLines,
-    horizontalGridLines,
-    renderGrid,
-    renderXAxis,
-    renderYAxis,
-    xAxisType,
-    xAxisFormatter,
-    yAxisType,
-    yAxisFormatter,
-    xAxisLabel,
-    yAxisLabel,
-    renderTooltip,
-    tooltipSortDirection,
-    tooltipSortKey,
-    tooltipValueFormatter,
-    renderHeader,
-    headerTitle,
-    headerShowDivider,
-    zoomSelectXAxis,
-    zoomSelectYAxis,
-    zoomSelectCallback,
-    renderEventMarkerLine,
-    eventMarkerLineMessage,
-    eventMarkerLineLabel,
-    eventMarkerLineLevel,
-    eventMarkerLinePosition,
-    renderEventMarkerPoint,
-    eventMarkerPointMessage,
-    eventMarkerPointLabel,
-    eventMarkerPointLevel,
-    eventMarkerPointXPosition,
-    eventMarkerPointYPosition,
-    renderThresholdLine,
-    thresholdLineLabel,
-    thresholdLineValue,
-    thresholdLinePosition,
-  }) => {
-    return (
-      <Chart
-        zoomSelect={{
-          xAxis: zoomSelectXAxis,
-          yAxis: zoomSelectYAxis,
-        }}
-        onZoomSelect={zoomSelectCallback}
-        chartState={chartState}
-      >
-        {renderHeader && (
-          <Header title={headerTitle} showDivider={headerShowDivider} />
-        )}
-        {renderGrid && (
-          <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
-        )}
-        {renderTooltip && (
-          <Tooltip
-            sortDirection={tooltipSortDirection}
-            sortKey={tooltipSortKey}
-            valueFormatter={tooltipValueFormatter}
-          />
-        )}
-        {renderXAxis && (
-          <XAxis
-            type={xAxisType}
-            formatter={xAxisFormatter}
-            label={xAxisLabel}
-          />
-        )}
-        {renderYAxis && (
-          <YAxis
-            type={yAxisType}
-            formatter={yAxisFormatter}
-            label={yAxisLabel}
-          />
-        )}
-        {data.map(({ name, data }) => (
-          <Line name={name} data={data} key={name} />
-        ))}
-        {renderEventMarkerPoint && (
-          <EventMarkerPoint
-            label={eventMarkerPointLabel}
-            message={eventMarkerPointMessage}
-            position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
-            level={eventMarkerPointLevel}
-          />
-        )}
-        {renderEventMarkerLine && (
-          <EventMarkerLine
-            position={eventMarkerLinePosition}
-            label={eventMarkerLineLabel}
-            message={eventMarkerLineMessage}
-            level={eventMarkerLineLevel}
-          />
-        )}
-        {renderThresholdLine && (
-          <ThresholdLine
-            position={thresholdLinePosition}
-            label={thresholdLineLabel}
-            value={thresholdLineValue}
-          />
-        )}
-      </Chart>
-    );
-  },
-};
-
-export const WithHeaderContent: StoryObj<StorybookProps> = {
   render: ({
     data,
     chartState,
@@ -665,333 +570,442 @@ export const WithHeaderContent: StoryObj<StorybookProps> = {
   },
 };
 
-export const WithSameGroupIds: StoryObj<StorybookProps> = {
-  render: ({
-    data,
-    chartState,
-    verticalGridLines,
-    horizontalGridLines,
-    renderGrid,
-    renderXAxis,
-    renderYAxis,
-    xAxisType,
-    xAxisFormatter,
-    yAxisType,
-    yAxisFormatter,
-    xAxisLabel,
-    yAxisLabel,
-    renderTooltip,
-    tooltipSortDirection,
-    tooltipSortKey,
-    tooltipValueFormatter,
-    renderHeader,
-    headerTitle,
-    headerShowDivider,
-    zoomSelectXAxis,
-    zoomSelectYAxis,
-    zoomSelectCallback,
-    renderEventMarkerLine,
-    eventMarkerLineMessage,
-    eventMarkerLineLabel,
-    eventMarkerLineLevel,
-    eventMarkerLinePosition,
-    renderEventMarkerPoint,
-    eventMarkerPointMessage,
-    eventMarkerPointLabel,
-    eventMarkerPointLevel,
-    eventMarkerPointXPosition,
-    eventMarkerPointYPosition,
-    renderThresholdLine,
-    thresholdLineLabel,
-    thresholdLineValue,
-    thresholdLinePosition,
-  }) => {
+/**
+ * Explicitly testing dark mode regression since generated isn't possible given composibility
+ */
+export const DarkMode: StoryObj<{}> = {
+  args: {
+    darkMode: true,
+  },
+  render: () => {
     return (
-      <div
-        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+        chartState="unset"
       >
+        <Header
+          title="Header"
+          showDivider
+          headerContent={
+            <div style={{ display: 'flex', justifyContent: 'right' }}>
+              <IconButton aria-label="FullScreen">
+                <Icon glyph="FullScreenEnter" />
+              </IconButton>
+              <IconButton aria-label="Close">
+                <Icon glyph="X" />
+              </IconButton>
+            </div>
+          }
+        />
+        <Grid />
+        <Tooltip />
+        <XAxis type="time" />
+        <YAxis type="value" />
+        <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="warning"
+        />
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
+  args: {
+    containerWidth: 500,
+  },
+  render: ({ containerWidth }) => {
+    return (
+      <div style={{ width: containerWidth, overflow: 'hidden' }}>
         <Chart
-          groupId="group1"
           zoomSelect={{
-            xAxis: zoomSelectXAxis,
-            yAxis: zoomSelectYAxis,
+            xAxis: true,
+            yAxis: true,
           }}
-          onZoomSelect={zoomSelectCallback}
-          chartState={chartState}
+          chartState="unset"
         >
-          {renderHeader && (
-            <Header title={headerTitle} showDivider={headerShowDivider} />
-          )}
-          {renderGrid && (
-            <Grid
-              vertical={verticalGridLines}
-              horizontal={horizontalGridLines}
-            />
-          )}
-          {renderTooltip && (
-            <Tooltip
-              sortDirection={tooltipSortDirection}
-              sortKey={tooltipSortKey}
-              valueFormatter={tooltipValueFormatter}
-            />
-          )}
-          {renderXAxis && (
-            <XAxis
-              type={xAxisType}
-              formatter={xAxisFormatter}
-              label={xAxisLabel}
-            />
-          )}
-          {renderYAxis && (
-            <YAxis
-              type={yAxisType}
-              formatter={yAxisFormatter}
-              label={yAxisLabel}
-            />
-          )}
-          {data.map(({ name, data }) => (
+          <Header
+            title="Header"
+            showDivider
+            headerContent={
+              <div style={{ display: 'flex', justifyContent: 'right' }}>
+                <IconButton aria-label="FullScreen">
+                  <Icon glyph="FullScreenEnter" />
+                </IconButton>
+                <IconButton aria-label="Close">
+                  <Icon glyph="X" />
+                </IconButton>
+              </div>
+            }
+          />
+          <Grid />
+          <Tooltip />
+          <XAxis type="time" />
+          <YAxis type="value" />
+          <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+          <EventMarkerLine
+            position={new Date('2024-01-01T00:20:00').getTime()}
+            label="Event marker line label"
+            message="Event marker line message"
+            level="warning"
+          />
+          <EventMarkerPoint
+            label="Event marker point label"
+            message="Event marker point message"
+            position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+            level="warning"
+          />
+          {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
-          {renderEventMarkerPoint && (
-            <EventMarkerPoint
-              label={eventMarkerPointLabel}
-              message={eventMarkerPointMessage}
-              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
-              level={eventMarkerPointLevel}
-            />
-          )}
-          {renderEventMarkerLine && (
-            <EventMarkerLine
-              position={eventMarkerLinePosition}
-              label={eventMarkerLineLabel}
-              message={eventMarkerLineMessage}
-              level={eventMarkerLineLevel}
-            />
-          )}
-          {renderThresholdLine && (
-            <ThresholdLine
-              position={thresholdLinePosition}
-              label={thresholdLineLabel}
-              value={thresholdLineValue}
-            />
-          )}
-        </Chart>
-        <Chart
-          groupId="group1"
-          zoomSelect={{
-            xAxis: zoomSelectXAxis,
-            yAxis: zoomSelectYAxis,
-          }}
-          onZoomSelect={zoomSelectCallback}
-          chartState={chartState}
-        >
-          {renderHeader && (
-            <Header title={headerTitle} showDivider={headerShowDivider} />
-          )}
-          {renderGrid && (
-            <Grid
-              vertical={verticalGridLines}
-              horizontal={horizontalGridLines}
-            />
-          )}
-          {renderTooltip && (
-            <Tooltip
-              sortDirection={tooltipSortDirection}
-              sortKey={tooltipSortKey}
-              valueFormatter={tooltipValueFormatter}
-            />
-          )}
-          {renderXAxis && (
-            <XAxis
-              type={xAxisType}
-              formatter={xAxisFormatter}
-              label={xAxisLabel}
-            />
-          )}
-          {renderYAxis && (
-            <YAxis
-              type={yAxisType}
-              formatter={yAxisFormatter}
-              label={yAxisLabel}
-            />
-          )}
-          {data.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-          {renderEventMarkerPoint && (
-            <EventMarkerPoint
-              label={eventMarkerPointLabel}
-              message={eventMarkerPointMessage}
-              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
-              level={eventMarkerPointLevel}
-            />
-          )}
-          {renderEventMarkerLine && (
-            <EventMarkerLine
-              position={eventMarkerLinePosition}
-              label={eventMarkerLineLabel}
-              message={eventMarkerLineMessage}
-              level={eventMarkerLineLevel}
-            />
-          )}
-          {renderThresholdLine && (
-            <ThresholdLine
-              position={thresholdLinePosition}
-              label={thresholdLineLabel}
-              value={thresholdLineValue}
-            />
-          )}
         </Chart>
       </div>
     );
   },
 };
 
-export const ResizingWithContainer: StoryObj<
-  StorybookProps & { containerWidth: number }
-> = {
-  args: {
-    containerWidth: 500,
-  },
-  argTypes: {
-    containerWidth: {
-      control: 'number',
-      description: 'Width of the container',
-      name: 'Width',
-      table: {
-        category: 'Container',
-      },
-    },
-    // Hide other controls
-    data: { table: { disable: true } },
-    horizontalGridLines: { table: { disable: true } },
-    verticalGridLines: { table: { disable: true } },
-    renderGrid: { table: { disable: true } },
-    renderXAxis: { table: { disable: true } },
-    xAxisType: { table: { disable: true } },
-    xAxisFormatter: { table: { disable: true } },
-    xAxisLabel: { table: { disable: true } },
-    renderYAxis: { table: { disable: true } },
-    yAxisType: { table: { disable: true } },
-    yAxisFormatter: { table: { disable: true } },
-    yAxisLabel: { table: { disable: true } },
-    renderTooltip: { table: { disable: true } },
-    tooltipSortDirection: { table: { disable: true } },
-    tooltipSortKey: { table: { disable: true } },
-    tooltipValueFormatter: { table: { disable: true } },
-    renderHeader: { table: { disable: true } },
-    headerTitle: { table: { disable: true } },
-    headerShowDivider: { table: { disable: true } },
-    zoomSelectXAxis: { table: { disable: true } },
-    zoomSelectYAxis: { table: { disable: true } },
-    zoomSelectCallback: { table: { disable: true } },
-    renderEventMarkerLine: { table: { disable: true } },
-    eventMarkerLineMessage: { table: { disable: true } },
-    eventMarkerLineLabel: { table: { disable: true } },
-    eventMarkerLineLevel: { table: { disable: true } },
-    eventMarkerLinePosition: { table: { disable: true } },
-    renderEventMarkerPoint: { table: { disable: true } },
-    eventMarkerPointMessage: { table: { disable: true } },
-    eventMarkerPointLabel: { table: { disable: true } },
-    eventMarkerPointLevel: { table: { disable: true } },
-    eventMarkerPointXPosition: { table: { disable: true } },
-    eventMarkerPointYPosition: { table: { disable: true } },
-    renderThresholdLine: { table: { disable: true } },
-    thresholdLineLabel: { table: { disable: true } },
-    thresholdLineValue: { table: { disable: true } },
-    thresholdLinePosition: { table: { disable: true } },
-  },
-  render: ({ containerWidth }) => {
-    const {
-      data,
-      verticalGridLines,
-      horizontalGridLines,
-      renderGrid,
-      renderXAxis,
-      renderYAxis,
-      xAxisType,
-      yAxisType,
-      renderTooltip,
-      tooltipSortDirection,
-      tooltipSortKey,
-      renderHeader,
-      headerTitle,
-      headerShowDivider,
-      zoomSelectXAxis,
-      zoomSelectYAxis,
-      zoomSelectCallback,
-      renderEventMarkerLine,
-      eventMarkerLineMessage,
-      eventMarkerLineLabel,
-      eventMarkerLineLevel,
-      eventMarkerLinePosition,
-      renderEventMarkerPoint,
-      eventMarkerPointMessage,
-      eventMarkerPointLabel,
-      eventMarkerPointLevel,
-      eventMarkerPointXPosition,
-      eventMarkerPointYPosition,
-      renderThresholdLine,
-      thresholdLineLabel,
-      thresholdLineValue,
-      thresholdLinePosition,
-    } = defaultArgs;
-
+export const Base: StoryObj<{}> = {
+  render: () => {
     return (
-      <div style={{ width: containerWidth, overflow: 'hidden' }}>
-        <Chart
-          zoomSelect={{
-            xAxis: zoomSelectXAxis,
-            yAxis: zoomSelectYAxis,
-          }}
-          onZoomSelect={zoomSelectCallback}
-        >
-          {renderHeader && (
-            <Header title={headerTitle} showDivider={headerShowDivider} />
-          )}
-          {renderGrid && (
-            <Grid
-              vertical={verticalGridLines}
-              horizontal={horizontalGridLines}
-            />
-          )}
-          {renderTooltip && (
-            <Tooltip
-              sortDirection={tooltipSortDirection}
-              sortKey={tooltipSortKey}
-              valueFormatter={() => ''}
-            />
-          )}
-          {renderXAxis && <XAxis type={xAxisType} formatter={() => ''} />}
-          {renderYAxis && <YAxis type={yAxisType} formatter={() => ''} />}
-          {data.map(({ name, data }) => (
+      <Chart>
+        <Tooltip />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithTooltip: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Tooltip />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const chart = await canvas.findByTestId('lg-charts-core-chart-echart');
+    await userEvent.hover(chart);
+  },
+};
+
+export const WithTooltipDarkMode: StoryObj<{}> = {
+  args: {
+    darkMode: true,
+  },
+  render: () => {
+    return (
+      <Chart>
+        <Tooltip />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const chart = await canvas.findByTestId('lg-charts-core-chart-echart');
+    await userEvent.hover(chart);
+  },
+};
+
+export const WithXAxis: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <XAxis type="time" />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithYAxis: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <YAxis type="value" />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithGrid: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Grid />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithVerticalGrid: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Grid horizontal={false} />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHorizontalGrid: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Grid vertical={false} />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHeader: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Header title="Header" />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHeaderAndDivider: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Header title="Header" showDivider />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithHeaderContent: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <Header
+          title="Header"
+          showDivider
+          headerContent={
+            <div style={{ display: 'flex', justifyContent: 'right' }}>
+              <IconButton aria-label="FullScreen">
+                <Icon glyph="FullScreenEnter" />
+              </IconButton>
+              <IconButton aria-label="Close">
+                <Icon glyph="X" />
+              </IconButton>
+            </div>
+          }
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithThresholdLine: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithInfoEventMarkerPoint: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+          level="info"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithWarningEventMarkerPoint: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithInfoEventMarkerLine: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="info"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithWarningEventMarkerLine: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart>
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithZoom: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+      >
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithXAxisZoom: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+        }}
+      >
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithYAxisZoom: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          yAxis: true,
+        }}
+      >
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const SyncedByGroupID: StoryObj<{}> = {
+  render: () => {
+    return (
+      <div
+        style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
+      >
+        <Chart groupId="group1">
+          <Tooltip />
+          {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
-          {renderEventMarkerPoint && (
-            <EventMarkerPoint
-              label={eventMarkerPointLabel}
-              message={eventMarkerPointMessage}
-              position={[eventMarkerPointXPosition, eventMarkerPointYPosition]}
-              level={eventMarkerPointLevel}
-            />
-          )}
-          {renderEventMarkerLine && (
-            <EventMarkerLine
-              position={eventMarkerLinePosition}
-              label={eventMarkerLineLabel}
-              message={eventMarkerLineMessage}
-              level={eventMarkerLineLevel}
-            />
-          )}
-          {renderThresholdLine && (
-            <ThresholdLine
-              position={thresholdLinePosition}
-              label={thresholdLineLabel}
-              value={thresholdLineValue}
-            />
-          )}
+        </Chart>
+        <Chart groupId="group1">
+          <Tooltip />
+          {lineData.map(({ name, data }) => (
+            <Line name={name} data={data} key={name} />
+          ))}
         </Chart>
       </div>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const charts = await canvas.findAllByTestId('lg-charts-core-chart-echart');
+    await userEvent.hover(charts[0]);
   },
 };
