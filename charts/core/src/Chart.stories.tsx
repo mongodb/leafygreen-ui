@@ -34,6 +34,7 @@ export default {
   parameters: {
     default: 'LiveExample',
   },
+
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     chartState: {
@@ -124,8 +125,8 @@ export const LiveExample: StoryObj<{
     eventMarkerPointMessage: 'Event marker point message',
     eventMarkerPointLabel: 'Event marker point label',
     eventMarkerPointLevel: 'warning',
-    eventMarkerPointXPosition: new Date('2024-01-01T00:41:00').getTime(),
-    eventMarkerPointYPosition: 813,
+    eventMarkerPointXPosition: new Date('2024-01-01T00:38:00').getTime(),
+    eventMarkerPointYPosition: 2015,
     renderThresholdLine: true,
     thresholdLineLabel: 'Cluster Limit',
     thresholdLineValue: '1400',
@@ -618,7 +619,59 @@ export const DarkMode: StoryObj<{}> = {
         <EventMarkerPoint
           label="Event marker point label"
           message="Event marker point message"
-          position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const Loading: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+        chartState="loading"
+      >
+        <Header
+          title="Header"
+          showDivider
+          headerContent={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+                color: 'white',
+              }}
+            >
+              Header Content
+            </div>
+          }
+        />
+        <Grid />
+        <Tooltip />
+        <XAxis type="time" label="X-Axis Label" />
+        <YAxis type="value" label="Y-Axis Label" />
+        <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="warning"
+        />
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
         {lineData.map(({ name, data }) => (
@@ -673,7 +726,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
           <EventMarkerPoint
             label="Event marker point label"
             message="Event marker point message"
-            position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
+            position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
             level="warning"
           />
           {lineData.map(({ name, data }) => (
@@ -876,7 +929,7 @@ export const WithInfoEventMarkerPoint: StoryObj<{}> = {
         <EventMarkerPoint
           label="Event marker point label"
           message="Event marker point message"
-          position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="info"
         />
         {lineData.map(({ name, data }) => (
@@ -894,7 +947,7 @@ export const WithWarningEventMarkerPoint: StoryObj<{}> = {
         <EventMarkerPoint
           label="Event marker point label"
           message="Event marker point message"
-          position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
           level="warning"
         />
         {lineData.map(({ name, data }) => (
