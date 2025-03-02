@@ -977,9 +977,4 @@ export const SyncedByGroupID: StoryObj<{}> = {
       </div>
     );
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const charts = await canvas.findAllByTestId('lg-charts-core-chart-echart');
-    await userEvent.hover(charts[0]);
-  },
 };
