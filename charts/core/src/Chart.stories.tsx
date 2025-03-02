@@ -1,10 +1,6 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/test';
-
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
 
 import { ChartProps } from './Chart/Chart.types';
 import { HeaderProps } from './Header/Header.types';
@@ -105,10 +101,10 @@ export const LiveExample: StoryObj<{
     renderGrid: true,
     renderXAxis: true,
     xAxisType: 'time',
-    xAxisLabel: 'Time',
+    xAxisLabel: 'X-Axis Label',
     renderYAxis: true,
     yAxisType: 'value',
-    yAxisLabel: 'Value',
+    yAxisLabel: 'Y-Axis Label',
     renderTooltip: true,
     tooltipSortDirection: SortDirection.Desc,
     tooltipSortKey: SortKey.Value,
@@ -609,8 +605,8 @@ export const DarkMode: StoryObj<{}> = {
         />
         <Grid />
         <Tooltip />
-        <XAxis type="time" label="Time" />
-        <YAxis type="value" label="Value" />
+        <XAxis type="time" label="X-Axis Label" />
+        <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
         <EventMarkerLine
           position={new Date('2024-01-01T00:20:00').getTime()}
@@ -664,8 +660,8 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
           />
           <Grid />
           <Tooltip />
-          <XAxis type="time" label="Time" />
-          <YAxis type="value" label="Value" />
+          <XAxis type="time" label="X-Axis Label" />
+          <YAxis type="value" label="Y-Axis Label" />
           <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
           <EventMarkerLine
             position={new Date('2024-01-01T00:20:00').getTime()}
@@ -731,7 +727,7 @@ export const WithXAxisWithLabel: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <XAxis type="time" label="Time" />
+        <XAxis type="time" label="X-Axis Label" />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -757,7 +753,7 @@ export const WithYAxisWithLabel: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <YAxis type="value" label="value" />
+        <YAxis type="value" label="Y-Axis Label" />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -847,12 +843,7 @@ export const WithHeaderContent: StoryObj<{}> = {
                 height: '100%',
               }}
             >
-              <IconButton aria-label="FullScreen">
-                <Icon glyph="FullScreenEnter" />
-              </IconButton>
-              <IconButton aria-label="Close">
-                <Icon glyph="X" />
-              </IconButton>
+              Header Content{' '}
             </div>
           }
         />
