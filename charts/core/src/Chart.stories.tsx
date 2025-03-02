@@ -679,7 +679,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
   },
 };
 
-export const Base: StoryObj<{}> = {
+export const Basic: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
