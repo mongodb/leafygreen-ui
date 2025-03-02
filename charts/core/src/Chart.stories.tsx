@@ -25,7 +25,8 @@ import {
   YAxisProps,
 } from '.';
 
-const lineData = makeLineData(5);
+const numOfLineColors = 15;
+const lineData = makeLineData(numOfLineColors);
 
 export default {
   title: 'Charts/Core',
