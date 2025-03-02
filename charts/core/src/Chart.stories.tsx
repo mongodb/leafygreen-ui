@@ -703,32 +703,6 @@ export const WithTooltip: StoryObj<{}> = {
       </Chart>
     );
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const chart = await canvas.findByTestId('lg-charts-core-chart-echart');
-    await userEvent.hover(chart);
-  },
-};
-
-export const WithTooltipDarkMode: StoryObj<{}> = {
-  args: {
-    darkMode: true,
-  },
-  render: () => {
-    return (
-      <Chart>
-        <Tooltip />
-        {lineData.map(({ name, data }) => (
-          <Line name={name} data={data} key={name} />
-        ))}
-      </Chart>
-    );
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    const chart = await canvas.findByTestId('lg-charts-core-chart-echart');
-    await userEvent.hover(chart);
-  },
 };
 
 export const WithXAxis: StoryObj<{}> = {
