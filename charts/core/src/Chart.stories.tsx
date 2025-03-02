@@ -506,13 +506,15 @@ export const LiveExample: StoryObj<{
             title={headerTitle}
             showDivider={headerShowDivider}
             headerContent={
-              <div style={{ display: 'flex', justifyContent: 'right' }}>
-                <IconButton aria-label="FullScreen">
-                  <Icon glyph="FullScreenEnter" />
-                </IconButton>
-                <IconButton aria-label="Close">
-                  <Icon glyph="X" />
-                </IconButton>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'right',
+                  alignItems: 'center',
+                  height: '100%',
+                }}
+              >
+                Header Content
               </div>
             }
           />
@@ -592,13 +594,16 @@ export const DarkMode: StoryObj<{}> = {
           title="Header"
           showDivider
           headerContent={
-            <div style={{ display: 'flex', justifyContent: 'right' }}>
-              <IconButton aria-label="FullScreen">
-                <Icon glyph="FullScreenEnter" />
-              </IconButton>
-              <IconButton aria-label="Close">
-                <Icon glyph="X" />
-              </IconButton>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+                color: 'white',
+              }}
+            >
+              Header Content
             </div>
           }
         />
@@ -645,13 +650,15 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
             title="Header"
             showDivider
             headerContent={
-              <div style={{ display: 'flex', justifyContent: 'right' }}>
-                <IconButton aria-label="FullScreen">
-                  <Icon glyph="FullScreenEnter" />
-                </IconButton>
-                <IconButton aria-label="Close">
-                  <Icon glyph="X" />
-                </IconButton>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'right',
+                  alignItems: 'center',
+                  height: '100%',
+                }}
+              >
+                Header Content
               </div>
             }
           />
@@ -832,7 +839,14 @@ export const WithHeaderContent: StoryObj<{}> = {
           title="Header"
           showDivider
           headerContent={
-            <div style={{ display: 'flex', justifyContent: 'right' }}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+              }}
+            >
               <IconButton aria-label="FullScreen">
                 <Icon glyph="FullScreenEnter" />
               </IconButton>
