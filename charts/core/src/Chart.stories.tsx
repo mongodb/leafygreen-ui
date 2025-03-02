@@ -124,7 +124,7 @@ export const LiveExample: StoryObj<{
     eventMarkerPointLabel: 'Event marker point label',
     eventMarkerPointLevel: 'warning',
     eventMarkerPointXPosition: new Date('2024-01-01T00:41:00').getTime(),
-    eventMarkerPointYPosition: 739,
+    eventMarkerPointYPosition: 813,
     renderThresholdLine: true,
     thresholdLineLabel: 'Cluster Limit',
     thresholdLineValue: '1400',
@@ -617,7 +617,7 @@ export const DarkMode: StoryObj<{}> = {
         <EventMarkerPoint
           label="Event marker point label"
           message="Event marker point message"
-          position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+          position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
           level="warning"
         />
         {lineData.map(({ name, data }) => (
@@ -672,7 +672,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
           <EventMarkerPoint
             label="Event marker point label"
             message="Event marker point message"
-            position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+            position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
             level="warning"
           />
           {lineData.map(({ name, data }) => (
@@ -875,7 +875,7 @@ export const WithInfoEventMarkerPoint: StoryObj<{}> = {
         <EventMarkerPoint
           label="Event marker point label"
           message="Event marker point message"
-          position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+          position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
           level="info"
         />
         {lineData.map(({ name, data }) => (
@@ -893,7 +893,7 @@ export const WithWarningEventMarkerPoint: StoryObj<{}> = {
         <EventMarkerPoint
           label="Event marker point label"
           message="Event marker point message"
-          position={[new Date('2024-01-01T00:41:00').getTime(), 739]}
+          position={[new Date('2024-01-01T00:41:00').getTime(), 813]}
           level="warning"
         />
         {lineData.map(({ name, data }) => (
