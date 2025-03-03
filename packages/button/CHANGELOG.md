@@ -1,5 +1,25 @@
 # @leafygreen-ui/button
 
+## 23.1.0
+
+### Minor Changes
+
+- 3111a76f3: Exports `getLgIds` util and `GetTestUtilsReturnType` type. Also updates `getTestUtils` so that it doesn't throw if button element is not found and adds `findButton` and `queryButton` to button test utils.
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+- Updated dependencies [3111a76f3]
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.6
+  - @leafygreen-ui/ripple@1.1.16
+  - @leafygreen-ui/tokens@2.11.4
+  - @lg-tools/test-harnesses@0.2.0
+
 ## 23.0.0
 
 ### Major Changes

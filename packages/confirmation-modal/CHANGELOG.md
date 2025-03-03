@@ -1,5 +1,23 @@
 # @leafygreen-ui/confirmation-modal
 
+## 7.0.1
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+- Updated dependencies [3111a76f3]
+  - @leafygreen-ui/button@23.1.0
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/icon@13.1.3
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/modal@17.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/text-input@14.0.5
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+
 ## 7.0.0
 
 ### Major Changes
