@@ -29,7 +29,7 @@
     "prepublishOnly": "pnpm run build && turbo run docs",
     "publish": "pnpm changeset publish --public",
     "slackbot": "lg slackbot release",
-    "start": "npx storybook dev -p 9001 --no-version-updates",
+    "start": "npx storybook dev -p 9001 --no-version-updates --no-open",
     "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
