@@ -37,7 +37,7 @@ export default {
 
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    chartState: {
+    state: {
       table: {
         disable: true,
       },
@@ -97,7 +97,7 @@ export const LiveExample: StoryObj<{
 }> = {
   args: {
     data: lineData,
-    chartState: 'unset',
+    state: 'unset',
     horizontalGridLines: true,
     verticalGridLines: true,
     renderGrid: true,
@@ -586,7 +586,7 @@ export const DarkMode: StoryObj<{}> = {
           xAxis: true,
           yAxis: true,
         }}
-        chartState="unset"
+        state="unset"
       >
         <Header
           title="Header"
@@ -638,7 +638,7 @@ export const Loading: StoryObj<{}> = {
           xAxis: true,
           yAxis: true,
         }}
-        chartState="loading"
+        state="loading"
       >
         <Header
           title="Header"
@@ -694,7 +694,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
             xAxis: true,
             yAxis: true,
           }}
-          chartState="unset"
+          state="unset"
         >
           <Header
             title="Header"
