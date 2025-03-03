@@ -1,4 +1,6 @@
-import { css } from '@leafygreen-ui/emotion';
+import { CSS, Transform } from '@dnd-kit/utilities';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
   borderRadius,
@@ -9,7 +11,12 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-export const getContainerStyles = (theme: Theme) => css`
+import { ChartCardStates } from './ChartCard.types';
+
+const getBaseContainerStyles = (theme: Theme) => css`
+  background: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
   border: 1px solid
     ${color[theme].border[Variant.Disabled][InteractionState.Default]};
   border-radius: ${borderRadius[200]}px;
@@ -20,16 +27,85 @@ export const getContainerStyles = (theme: Theme) => css`
   transition: grid-template-rows ${transitionDuration.slower}ms ease-in-out;
 `;
 
+const getSortableContainerStyles = (
+  transform: Transform | null,
+  transition?: string,
+) => css`
+  transform: ${CSS.Transform.toString(transform)};
+  transition: ${transition};
+`;
+
+const getDraggingContainerStyles = () => css`
+  opacity: 0.3;
+`;
+
+const getOverlayContainerStyles = () => css`
+  box-shadow: 0 18px 18px -15px rgba(0, 30, 43, 0.2);
+`;
+
+export const getContainerStyles = ({
+  theme,
+  transition,
+  transform,
+  isDraggable,
+  isOpen,
+  state,
+  className,
+}: {
+  theme: Theme;
+  transition?: string;
+  transform: Transform | null;
+  isDraggable: boolean;
+  isOpen: boolean;
+  state: ChartCardStates;
+  className?: string;
+}) =>
+  cx(
+    getBaseContainerStyles(theme),
+    {
+      [openContainerStyles]: isOpen,
+      [getSortableContainerStyles(transform, transition)]: isDraggable,
+      [getDraggingContainerStyles()]:
+        isDraggable && state === ChartCardStates.Dragging,
+      [getOverlayContainerStyles()]:
+        isDraggable && state === ChartCardStates.Overlay,
+    },
+    className,
+  );
+
 export const openContainerStyles = css`
   grid-template-rows: 40px 1fr;
 `;
 
-export const headerStyles = css`
-  width: 100%;
-  padding: ${spacing[150]}px ${spacing[300]}px;
-  display: grid;
-  grid-template-columns: auto 1fr;
-`;
+export const getHeaderStyles = ({
+  theme,
+  state,
+  isDraggable,
+  className,
+}: {
+  theme: Theme;
+  state: ChartCardStates;
+  isDraggable: boolean;
+  className?: string;
+}) =>
+  cx(
+    css`
+      width: 100%;
+      height: 100%;
+      padding: ${spacing[150]}px ${spacing[300]}px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      background: ${state === ChartCardStates.Overlay
+        ? color[theme].background[Variant.Primary][InteractionState.Hover]
+        : 'none'};
+    `,
+    {
+      [css`
+        cursor: move;
+      `]: isDraggable,
+    },
+    className,
+  );
 
 export const childrenContainerStyles = css`
   overflow: hidden;

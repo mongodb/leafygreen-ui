@@ -57,7 +57,7 @@ export default {
 
 export const LiveExample: StoryObj<{
   data: Array<LineProps>;
-  chartState: ChartProps['chartState'];
+  state: ChartProps['state'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -141,7 +141,7 @@ export const LiveExample: StoryObj<{
         category: 'Chart',
       },
     },
-    chartState: {
+    state: {
       control: 'select',
       options: ['unset', 'loading'],
       description: 'The state of the chart',
@@ -452,7 +452,7 @@ export const LiveExample: StoryObj<{
   },
   render: ({
     data,
-    chartState,
+    state,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -497,7 +497,7 @@ export const LiveExample: StoryObj<{
           yAxis: zoomSelectYAxis,
         }}
         onZoomSelect={zoomSelectCallback}
-        chartState={chartState}
+        state={state}
       >
         {renderHeader && (
           <Header

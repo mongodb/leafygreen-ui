@@ -6,6 +6,7 @@
  * and styling according to our design system's specs.
  */
 import React from 'react';
+import { useSortable } from '@dnd-kit/sortable';
 
 import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
@@ -17,10 +18,10 @@ import { Body } from '@leafygreen-ui/typography';
 import { ChartProvider } from '../ChartContext';
 
 import {
-  chartContainerStyles,
-  chartHeaderContainerStyles,
   chartStyles,
   chartWrapperStyles,
+  getChartContainerStyles,
+  getChartHeaderContainerStyles,
   getLoadingOverlayStyles,
   getLoadingTextStyles,
 } from './Chart.styles';
@@ -35,7 +36,8 @@ export function Chart({
   onZoomSelect,
   groupId,
   className,
-  chartState = ChartStates.Unset,
+  state = ChartStates.Unset,
+  dragId = '',
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -45,13 +47,37 @@ export function Chart({
     zoomSelect,
     onZoomSelect,
     groupId,
+    state,
   });
+  const { attributes, listeners, setNodeRef, transform, transition, items } =
+    useSortable({ id: dragId });
+  const isDraggable = !!(items.length && dragId);
 
   return (
     <LeafyGreenProvider darkMode={darkModeProp}>
       <ChartProvider chart={chart}>
-        <div className={cx(chartContainerStyles, className)}>
-          <div className={chartHeaderContainerStyles}>
+        <div
+          ref={isDraggable ? setNodeRef : null}
+          className={cx(
+            getChartContainerStyles({
+              theme,
+              transform,
+              transition,
+              isDraggable,
+              state,
+            }),
+            className,
+          )}
+        >
+          <div
+            className={getChartHeaderContainerStyles({
+              theme,
+              state,
+              isDraggable,
+            })}
+            {...attributes}
+            {...listeners}
+          >
             {/**
              * Children other than Header are not expected to be rendered to the DOM,
              * but are used to provide a more declarative API for adding functionality
@@ -61,7 +87,7 @@ export function Chart({
             {children}
           </div>
           <div className={chartWrapperStyles}>
-            {chartState === ChartStates.Loading && (
+            {state === ChartStates.Loading && (
               <div className={getLoadingOverlayStyles(theme)}>
                 <Body
                   className={getLoadingTextStyles(theme)}
