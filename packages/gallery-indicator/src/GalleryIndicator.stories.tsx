@@ -33,12 +33,13 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
     activeIndex: {
       control: {
         type: 'range',
+        max: 10,
       },
     },
     length: {
       control: {
         type: 'range',
-        max: 100,
+        max: 10,
       },
     },
   },
