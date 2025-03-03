@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from '@lg-charts/core';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, Matcher, render, screen } from '@testing-library/react';
 
 import { DragProvider } from './DragProvider';
 
@@ -36,6 +36,13 @@ function renderChart(dragId: string) {
   );
 }
 
+async function clickAndDragByTestId(id: Matcher) {
+  const header = screen.getByTestId(id);
+  fireEvent.mouseDown(header, { clientX: 0, clientY: 0 });
+  fireEvent.mouseMove(header, { clientX: 100, clientY: 100 });
+  fireEvent.mouseUp(header);
+}
+
 describe('@lg-charts/drag-provider', () => {
   test('should call `onDragEnd` when child `Chart` is dragged ', () => {
     const onDragEnd = jest.fn();
@@ -46,32 +53,49 @@ describe('@lg-charts/drag-provider', () => {
       </DragProvider>,
     );
 
-    const header = screen.getByTestId('chart-1-header');
-    fireEvent.mouseDown(header, { clientX: 0, clientY: 0 });
-    fireEvent.mouseMove(header, { clientX: 100, clientY: 100 });
-    fireEvent.mouseUp(header);
-
+    clickAndDragByTestId('chart-1-header');
     expect(onDragEnd).toHaveBeenCalled();
   });
 
-  // test('should call `onDragEnd` when child `ChartCard` is dragged ', () => {
-  //   const onDragEnd = jest.fn();
+  test('should call `onDragEnd` when child `ChartCard` is dragged ', () => {
+    const onDragEnd = jest.fn();
 
-  //   render(
-  //     <DragProvider onDragEnd={onDragEnd}>
-  //       <ChartCard title="chart-card-1" />
-  //     </DragProvider>,
-  //   );
+    render(
+      <DragProvider onDragEnd={onDragEnd}>
+        <ChartCard title="chart-card-1" />
+      </DragProvider>,
+    );
 
-  //   const header = screen.getByTestId('lg-charts-core-chart_card-header');
-  //   fireEvent.mouseDown(header, { clientX: 0, clientY: 0 });
-  //   fireEvent.mouseMove(header, { clientX: 100, clientY: 100 });
-  //   fireEvent.mouseUp(header);
+    clickAndDragByTestId('lg-charts-core-chart_card-header');
+    expect(onDragEnd).toHaveBeenCalled();
+  });
 
-  //   expect(onDragEnd).toHaveBeenCalled();
-  // });
+  test('should not call `onDragEnd` when toggle button clicked on `ChartCard`', () => {
+    const onDragEnd = jest.fn();
 
-  // test('should not call `onDragEnd` when toggle button clicked on `ChartCard`', () => {});
+    render(
+      <DragProvider onDragEnd={onDragEnd}>
+        <ChartCard title="chart-card-1" />
+      </DragProvider>,
+    );
 
-  // test('should not call `onDragEnd` when header content is clicked on `ChartCard`', () => {});
+    clickAndDragByTestId('lg-charts-core-chart_card-toggle-button');
+    expect(onDragEnd).not.toHaveBeenCalled();
+  });
+
+  test('should not call `onDragEnd` when header content is clicked on `ChartCard`', () => {
+    const onDragEnd = jest.fn();
+
+    render(
+      <DragProvider onDragEnd={onDragEnd}>
+        <ChartCard
+          title="chart-card-1"
+          headerContent={<div data-testid="header-content">Header Content</div>}
+        />
+      </DragProvider>,
+    );
+
+    clickAndDragByTestId('header-content');
+    expect(onDragEnd).not.toHaveBeenCalled();
+  });
 });

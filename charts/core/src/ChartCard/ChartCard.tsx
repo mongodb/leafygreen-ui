@@ -123,6 +123,7 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
                 aria-controls={childrenId}
                 aria-expanded={isOpen}
                 onClick={handleToggleButtonClick}
+                data-testid="lg-charts-core-chart_card-toggle-button"
                 data-no-dnd={true}
               >
                 <Icon
