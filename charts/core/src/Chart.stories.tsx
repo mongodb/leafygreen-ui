@@ -742,7 +742,6 @@ export const Basic: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Tooltip />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
