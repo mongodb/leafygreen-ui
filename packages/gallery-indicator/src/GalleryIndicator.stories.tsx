@@ -30,6 +30,18 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    activeIndex: {
+      control: {
+        type: 'range',
+        max: 10,
+      },
+    },
+    length: {
+      control: {
+        type: 'range',
+        max: 10,
+      },
+    },
   },
 };
 
