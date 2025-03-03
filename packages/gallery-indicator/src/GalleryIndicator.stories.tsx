@@ -35,6 +35,12 @@ const meta: StoryMetaType<typeof GalleryIndicator> = {
         type: 'range',
       },
     },
+    length: {
+      control: {
+        type: 'range',
+        max: 100,
+      },
+    },
   },
 };
 
