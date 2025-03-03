@@ -13,6 +13,7 @@ export default {
       combineArgs: {
         darkMode: [false, true],
         isOpen: [false, true],
+        state: ['unset', 'overlay'],
       },
     },
   },

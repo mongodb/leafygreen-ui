@@ -630,7 +630,7 @@ export const DarkMode: StoryObj<{}> = {
   },
 };
 
-export const Loading: StoryObj<{}> = {
+export const LoadingState: StoryObj<{}> = {
   render: () => {
     return (
       <Chart
@@ -650,7 +650,59 @@ export const Loading: StoryObj<{}> = {
                 justifyContent: 'right',
                 alignItems: 'center',
                 height: '100%',
-                color: 'white',
+                color: 'black',
+              }}
+            >
+              Header Content
+            </div>
+          }
+        />
+        <Grid />
+        <Tooltip />
+        <XAxis type="time" label="X-Axis Label" />
+        <YAxis type="value" label="Y-Axis Label" />
+        <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="warning"
+        />
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const OverlayState: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+        state="overlay"
+      >
+        <Header
+          title="Header"
+          showDivider
+          headerContent={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+                color: 'black',
               }}
             >
               Header Content
