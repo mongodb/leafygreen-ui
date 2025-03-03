@@ -1141,7 +1141,7 @@ const {
   - With pagination
 - `useLeafyGreenVirtualTable`
   - [Rows and subrows](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-and-subrows-flxjfh)
-  - Expanded content
+  - [Expanded content](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-expanded-content-25qjt8)
   - [Rows, subrows, and expanded content](https://codesandbox.io/p/sandbox/table-example-v13-virtual-table-w-rows-subrows-and-expanded-content-45lvd7)
   - With extra custom columns
   - No Truncation
