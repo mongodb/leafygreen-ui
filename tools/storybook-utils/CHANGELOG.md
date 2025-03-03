@@ -1,5 +1,11 @@
 # @lg-tools/storybook-utils
 
+## 0.2.1
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+
 ## 0.2.0
 
 ### Minor Changes

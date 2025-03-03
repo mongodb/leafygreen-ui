@@ -1,5 +1,18 @@
 # @leafygreen-ui/popover
 
+## 13.0.4
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/hooks@8.3.5
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/portal@6.0.3
+  - @leafygreen-ui/tokens@2.11.4
+
 ## 13.0.3
 
 ### Patch Changes

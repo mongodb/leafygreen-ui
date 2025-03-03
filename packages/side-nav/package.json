@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/side-nav",
-  "version": "16.0.5",
+  "version": "16.0.6",
   "description": "leafyGreen UI Kit Side Nav",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
