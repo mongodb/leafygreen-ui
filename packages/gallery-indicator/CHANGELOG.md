@@ -1,5 +1,11 @@
 # @leafygreen-ui/gallery-indicator
 
+## 1.0.2
+
+### Patch Changes
+
+- 6c3869289: Updates storybook argType to render properly on .design
+
 ## 1.0.1
 
 ### Patch Changes
