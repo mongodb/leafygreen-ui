@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -50,6 +49,7 @@ function Checkbox({
   id: idProp,
   indeterminate: indeterminateProp,
   label = '',
+  defaultChecked = false,
   onClick: onClickProp,
   onChange: onChangeProp,
   name,
@@ -59,7 +59,7 @@ function Checkbox({
   const { darkMode, theme } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = React.useState(defaultChecked);
   const isChecked = React.useMemo(
     () => (checkedProp != null ? checkedProp : checked),
     [checkedProp, checked],
@@ -179,18 +179,5 @@ function Checkbox({
 }
 
 Checkbox.displayName = 'Checkbox';
-
-Checkbox.propTypes = {
-  darkMode: PropTypes.bool,
-  description: PropTypes.string,
-  checked: PropTypes.bool,
-  label: PropTypes.node,
-  disabled: PropTypes.bool,
-  indeterminate: PropTypes.bool,
-  className: PropTypes.string,
-  onChange: PropTypes.func,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  animate: PropTypes.bool,
-};
 
 export default Checkbox;

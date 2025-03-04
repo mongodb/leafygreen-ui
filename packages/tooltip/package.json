@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "12.0.0",
+  "version": "13.0.5",
   "description": "LeafyGreen UI Kit Tooltip",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,23 +22,22 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "^21.3.0",
-    "@lg-tools/storybook-utils": "^0.1.1"
+    "@leafygreen-ui/button": "workspace:^"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/hooks": "^8.3.0",
-    "@leafygreen-ui/icon": "^12.5.0",
-    "@leafygreen-ui/lib": "^13.8.1",
-    "@leafygreen-ui/palette": "^4.0.9",
-    "@leafygreen-ui/popover": "^12.0.0",
-    "@leafygreen-ui/tokens": "^2.8.0",
-    "@leafygreen-ui/typography": "^19.0.0",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "^3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tooltip",
   "repository": {

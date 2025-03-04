@@ -1,5 +1,129 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.7
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/a11y@2.0.3
+  - @leafygreen-ui/date-utils@0.2.1
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/form-field@2.0.5
+  - @leafygreen-ui/hooks@8.3.5
+  - @leafygreen-ui/icon@13.1.3
+  - @leafygreen-ui/icon-button@16.0.4
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/popover@13.0.4
+  - @leafygreen-ui/select@14.0.6
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+
+## 3.0.6
+
+### Patch Changes
+
+- @leafygreen-ui/form-field@2.0.4
+- @leafygreen-ui/popover@13.0.3
+- @leafygreen-ui/select@14.0.5
+
+## 3.0.5
+
+### Patch Changes
+
+- 9a23b9765: Consumes `SupportedLocale` enum in tests, stories and internal checks
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+- Updated dependencies [9a23b9765]
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+  - @leafygreen-ui/date-utils@0.2.0
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/form-field@2.0.4
+  - @leafygreen-ui/select@14.0.4
+
+## 3.0.4
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/form-field@2.0.3
+  - @leafygreen-ui/select@14.0.3
+  - @leafygreen-ui/typography@20.1.0
+
+## 3.0.3
+
+### Patch Changes
+
+- f6ba9a91b: Fixes bug so that months after max, when min is in the same year, are properly disabled
+
+## 3.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/a11y@2.0.2
+  - @leafygreen-ui/date-utils@0.1.5
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/form-field@2.0.2
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/icon@13.1.2
+  - @leafygreen-ui/icon-button@16.0.2
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/popover@13.0.2
+  - @leafygreen-ui/select@14.0.2
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+
+## 3.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @leafygreen-ui/icon-button@16.0.1
+  - @leafygreen-ui/date-utils@0.1.4
+  - @leafygreen-ui/form-field@2.0.1
+  - @leafygreen-ui/typography@20.0.1
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/popover@13.0.1
+  - @leafygreen-ui/select@14.0.1
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/hooks@8.3.3
+  - @leafygreen-ui/a11y@2.0.1
+  - @leafygreen-ui/icon@13.1.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 3.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/icon-button@16.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/select@14.0.0
+  - @leafygreen-ui/a11y@2.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/form-field@2.0.0
+  - @leafygreen-ui/date-utils@0.1.3
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 2.0.0
 
 ### Major Changes
@@ -305,7 +429,7 @@
 
 - 5249bd3d: Reduces the width and height of the calendar icon so that the focus/hover states do not excessively overflow the input container.
   When the `size` is `xsmall` the width and hight of the calendar icon will be `20px`. When the `size`is `small` the width and hight of the calendar icon will be 22px. The icon itself will remain the the same size.
-- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
+- 253ef4e4: Rearranges the placement of the year select to come before the month select when the `locale` is `iso-8601`. [LG-3839](https://jira.mongodb.org/browse/LG-3839)
 - Updated dependencies [5249bd3d]
   - @leafygreen-ui/form-field@0.3.2
 

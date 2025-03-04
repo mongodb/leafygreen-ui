@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import React from 'react';
+import React, { Fragment } from 'react';
 import { flexRender } from '@tanstack/react-table';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -25,9 +24,8 @@ import { getTestUtils } from './getTestUtils';
 function TableWithHook(props: TestTableWithHookProps) {
   // @ts-ignore
   const { ['data-lgid']: dataLgId, isDisabled = false, ...rest } = props;
-  const { containerRef, table, rowSelection } = useTestHookCall({
+  const { table, rowSelection } = useTestHookCall({
     rowProps: {
-      // eslint-disable-next-line react/display-name
       renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
         return <>Expandable content test</>;
       },
@@ -40,7 +38,7 @@ function TableWithHook(props: TestTableWithHookProps) {
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <Table table={table} ref={containerRef} data-lgid={dataLgId}>
+      <Table table={table} data-lgid={dataLgId}>
         <TableHead>
           {table.getHeaderGroups().map(headerGroup => (
             <HeaderRow key={headerGroup.id}>
@@ -59,24 +57,32 @@ function TableWithHook(props: TestTableWithHookProps) {
         </TableHead>
         <TableBody>
           {rows.map((row: LeafyGreenTableRow<Person>) => {
+            const isExpandedContent = row.isExpandedContent ?? false;
             return (
-              <Row key={row.id} row={row} disabled={isDisabled}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell data-cellid={cell.id} key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                {row.original.renderExpandedContent && (
-                  <ExpandedContent row={row} />
+              <Fragment key={row.id}>
+                {!isExpandedContent && (
+                  <Row row={row} disabled={isDisabled}>
+                    {row
+                      .getVisibleCells()
+                      .map((cell: LeafyGreenTableCell<Person>) => {
+                        return (
+                          <Cell
+                            data-cellid={cell.id}
+                            key={cell.id}
+                            id={cell.id}
+                            cell={cell}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </Cell>
+                        );
+                      })}
+                  </Row>
                 )}
-              </Row>
+                {isExpandedContent && <ExpandedContent row={row} />}
+              </Fragment>
             );
           })}
         </TableBody>

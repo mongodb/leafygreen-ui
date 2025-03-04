@@ -5,7 +5,6 @@ import { act, renderHook, renderHookServer } from '@leafygreen-ui/testing-lib';
 import {
   useEventListener,
   useIdAllocator,
-  useMergeRefs,
   useObjectDependency,
   usePoller,
   usePrevious,
@@ -94,41 +93,6 @@ describe('packages/hooks', () => {
     });
   });
 
-  describe('useMergeRefs', () => {
-    test('should merge refs', () => {
-      const callbackRefMockFunc = jest.fn();
-      const callbackRef: React.SetStateAction<HTMLElement | null> = element =>
-        callbackRefMockFunc(element);
-      const mutableRef: React.MutableRefObject<HTMLElement | null> = {
-        current: null,
-      };
-
-      const {
-        result: { current: mergedCallbackRef },
-      } = renderHook(() => useMergeRefs([callbackRef, mutableRef]));
-
-      expect(mergedCallbackRef).toBeInstanceOf(Function);
-      expect(callbackRefMockFunc).not.toHaveBeenCalled();
-      expect(mutableRef.current).toBe(null);
-
-      const element = document.createElement('div');
-      mergedCallbackRef?.(element);
-
-      expect(callbackRefMockFunc).toHaveBeenCalledTimes(1);
-      expect(callbackRefMockFunc).toHaveBeenCalledWith(element);
-      expect(mutableRef.current).toBe(element);
-    });
-
-    test('should return null when all refs are null or undefined', () => {
-      const ref1 = null;
-      const ref2 = undefined;
-
-      const { result } = renderHook(() => useMergeRefs([ref1, ref2]));
-
-      expect(result.current).toBe(null);
-    });
-  });
-
   // Difficult to test a hook that measures changes to the DOM without having access to the DOM
   describe.skip('useMutationObserver', () => {}); //eslint-disable-line jest/no-disabled-tests
 
@@ -149,7 +113,7 @@ describe('packages/hooks', () => {
     });
 
     test('responds to updates in window size', async () => {
-      const { result, rerender } = renderHook(() => useViewportSize());
+      const { result } = renderHook(() => useViewportSize());
 
       const mutableWindow: { -readonly [K in keyof Window]: Window[K] } =
         window;

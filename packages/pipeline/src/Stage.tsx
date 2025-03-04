@@ -1,6 +1,5 @@
 import React, { forwardRef, ReactElement, Ref, useContext } from 'react';
 import { useInView } from 'react-intersection-observer';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 
@@ -81,14 +80,5 @@ const Stage = forwardRef(
 );
 
 Stage.displayName = 'Stage';
-
-Stage.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  threshold: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.arrayOf(PropTypes.number.isRequired),
-  ]),
-};
 
 export default Stage;

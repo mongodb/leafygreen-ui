@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/date-picker.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/date-picker/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/date-picker/live-example/)
 
 ## Installation
 
@@ -30,7 +30,7 @@ const [date, setDate] = useState<Date>();
   value={date}
   max={new Date("2026-12-26")}
   onDateChange={setDate}
-  locale="iso8601"
+  locale="iso-8601"
   timeZone="utc"
 />;
 ```
@@ -41,7 +41,7 @@ const [date, setDate] = useState<Date>();
 | ------------------ | --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | `label`            | `ReactNode`                                         | Label shown above the date picker.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |           |
 | `description`      | `ReactNode`                                         | A description for the date picker. It's recommended to set a meaningful time zone representation as the description. (e.g. "Coordinated Universal Time")                                                                                                                                                                                                                                                                                                                                                                    |           |
-| `locale`           | `'iso8601'`\| `'string'`                            | Sets the _presentation format_ for the displayed date, and localizes month & weekday labels. Defaults to the user’s browser preference (if available), otherwise ISO-8601.                                                                                                                                                                                                                                                                                                                                                  | `iso8601` |
+| `locale`           | `'iso-8601'`\| `'string'`                           | Sets the _presentation format_ for the displayed date, and localizes month & weekday labels. Defaults to the user’s browser preference (if available), otherwise ISO-8601.                                                                                                                                                                                                                                                                                                                                                  | `iso8601` |
 | `timeZone`         | `string`                                            | A valid IANA timezone string, or UTC offset, used to calculate initial values. Defaults to the user’s browser settings.                                                                                                                                                                                                                                                                                                                                                                                                     |
 | `min`              | `Date`                                              | The earliest date accepted, in UTC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |           |
 | `max`              | `Date`                                              | The latest date accepted, in UTC                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |           |

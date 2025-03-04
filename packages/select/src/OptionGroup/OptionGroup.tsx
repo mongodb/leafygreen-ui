@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
@@ -48,21 +47,6 @@ export function OptionGroup(_: OptionGroupProps): JSX.Element {
 }
 
 OptionGroup.displayName = 'OptionGroup';
-
-OptionGroup.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(
-      PropTypes.oneOfType([
-        PropTypes.oneOf([false, null, undefined, '']),
-        PropTypes.element,
-      ]),
-    ),
-  ]).isRequired,
-  className: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-};
 
 export type OptionGroupElement = React.ReactComponentElement<
   typeof OptionGroup

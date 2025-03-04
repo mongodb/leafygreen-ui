@@ -1,5 +1,6 @@
 #! /usr/bin/env node
-/* eslint-disable no-console */
+
+import chalk from 'chalk';
 import { spawn } from 'cross-spawn';
 
 import { getConfigFile } from './utils/getConfigFile';
@@ -50,9 +51,13 @@ export const test = (
     watch ? '--watch' : '',
     verbose ? '--verbose' : '',
     ...(ci ? ciFlags : []),
-    '--silent',
+    `--silent="${String(!verbose)}"`,
     ...passThroughOptions,
   ].filter(v => v !== '');
+
+  verbose &&
+    // eslint-disable-next-line no-console
+    console.log(chalk.gray(`Running jest with args: ${commandArgs.join(' ')}`));
 
   spawn(jestBinary, commandArgs, {
     env: {

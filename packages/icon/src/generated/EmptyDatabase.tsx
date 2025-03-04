@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 99fe50793d0baea49d6702e32f29adaf
+* @checksum 7cd8c24f9dc6de3061a2db397e90e1b9
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const EmptyDatabase = ({
 };
 EmptyDatabase.displayName = 'EmptyDatabase';
 EmptyDatabase.isGlyph = true;
-EmptyDatabase.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default EmptyDatabase;

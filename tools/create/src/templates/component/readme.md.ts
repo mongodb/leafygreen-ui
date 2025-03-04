@@ -7,9 +7,15 @@ export const readMe = ({
 # ${packageNameTitle}
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/${packageNameKebab}.svg)
-#### [View on MongoDB.design](https://www.mongodb.design/component/${packageNameKebab}/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/${packageNameKebab}/live-example/)
 
 ## Installation
+
+### PNPM
+
+\`\`\`shell
+pnpm add @leafygreen-ui/${packageNameKebab}
+\`\`\`
 
 ### Yarn
 

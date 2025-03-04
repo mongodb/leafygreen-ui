@@ -14,7 +14,7 @@ interface InstanceContext {
 }
 
 export type InstanceDecorator<
-  T extends React.ElementType = React.ElementType<any>,
+  _T extends React.ElementType = React.ElementType<any>,
 > = (Instance: StoryFn, context?: InstanceContext) => JSX.Element;
 
 export interface GeneratedStoryConfig<

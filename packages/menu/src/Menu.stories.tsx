@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/display-name */
+
 import React, { useState } from 'react';
 import {
   storybookArgTypes,
@@ -7,7 +7,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryObj } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -111,6 +111,8 @@ export default {
     },
     darkMode: storybookArgTypes.darkMode,
     renderDarkMenu: {
+      description:
+        'Whether the menu should always render dark, regardless of the theme context',
       control: 'boolean',
     },
   },

@@ -1,11 +1,23 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { Fragment, useCallback, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import Badge from '@leafygreen-ui/badge';
+import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import Tooltip from '@leafygreen-ui/tooltip';
 
-import { makeData, Person } from '../utils/makeData.testutils';
+import {
+  KitchenSink,
+  makeData,
+  makeKitchenSinkData,
+  Person,
+} from '../utils/makeData.testutils';
 import {
   Cell,
   type ColumnDef,
@@ -16,16 +28,18 @@ import {
   type HeaderGroup,
   HeaderRow,
   type LeafyGreenTableCell,
-  type LeafyGreenTableRow,
+  type LeafyGreenVirtualItem,
+  LGColumnDef,
   Row,
   type SortingState,
   Table,
   TableBody,
   TableHead,
   type TableProps,
-  useLeafyGreenTable,
-  type VirtualItem,
+  useLeafyGreenVirtualTable,
 } from '..';
+
+import { VerticalAlignment } from './Table.types';
 
 type StoryTableProps = TableProps<unknown>;
 
@@ -36,11 +50,26 @@ const meta: StoryMetaType<typeof Table> = {
     children: { control: 'none' },
     darkMode: storybookArgTypes.darkMode,
     ref: { control: 'none' },
+    shouldAlternateRowColor: { control: 'boolean', defaultValue: false },
+    shouldTruncate: { control: 'boolean', defaultValue: true },
+    verticalAlignment: {
+      control: { type: 'radio' },
+      options: VerticalAlignment,
+      defaultValue: VerticalAlignment.Top,
+    },
+  },
+  args: {
+    verticalAlignment: VerticalAlignment.Top,
+    shouldTruncate: true,
+    shouldAlternateRowColor: false,
   },
   parameters: {
     default: 'Basic',
     chromatic: {
       disableSnapshot: true,
+    },
+    controls: {
+      exclude: [...storybookExcludedControlParams, 'children'],
     },
     docs: {
       source: { type: 'code' },
@@ -51,18 +80,19 @@ export default meta;
 
 const virtualScrollingContainerHeight = css`
   max-height: calc(100vh - 200px);
+  width: 100%;
 `;
 
-const basicColumnDefs: Array<ColumnDef<Person>> = [
+const basicColumnDefs: Array<LGColumnDef<Person>> = [
   {
     accessorKey: 'index',
     header: 'index',
-    size: 10,
+    size: 40,
   },
   {
     accessorKey: 'id',
     header: 'ID',
-    size: 45,
+    size: 60,
   },
   {
     accessorKey: 'firstName',
@@ -79,6 +109,7 @@ const basicColumnDefs: Array<ColumnDef<Person>> = [
     accessorKey: 'age',
     header: () => 'Age',
     size: 50,
+    align: 'center',
   },
   {
     accessorKey: 'visits',
@@ -98,20 +129,18 @@ export const Basic: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
-    useVirtualScrolling: true,
   });
-
-  const { rows } = table.getRowModel();
 
   return (
     <>
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table?.virtualRows?.length} virtual rows</p>
+        <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
+        <p>{table?.virtual.getTotalSize()} virtual rows</p>
       </div>
 
       <Table
@@ -137,25 +166,27 @@ export const Basic: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
-              return (
-                <Row key={row.id}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const cells = row.getVisibleCells();
+                return (
+                  <Row key={virtualRow.key} virtualRow={virtualRow} row={row}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
         </TableBody>
       </Table>
     </>
@@ -168,14 +199,11 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
-    useVirtualScrolling: true,
   });
-
-  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -206,64 +234,28 @@ export const NestedRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                  {row.subRows &&
-                    row.subRows.map((subRow: LeafyGreenTableRow<Person>) => (
-                      <Row key={subRow.id} row={subRow} virtualRow={virtualRow}>
-                        {subRow
-                          .getVisibleCells()
-                          .map((cell: LeafyGreenTableCell<Person>) => {
-                            return (
-                              <Cell key={cell.id}>
-                                {flexRender(
-                                  cell.column.columnDef.cell,
-                                  cell.getContext(),
-                                )}
-                              </Cell>
-                            );
-                          })}
-                        {subRow.subRows &&
-                          subRow.subRows.map(subSubRow => (
-                            <Row
-                              key={subSubRow.id}
-                              row={subSubRow}
-                              virtualRow={virtualRow}
-                            >
-                              {subSubRow
-                                .getVisibleCells()
-                                .map((cell: LeafyGreenTableCell<Person>) => {
-                                  return (
-                                    <Cell key={cell.id}>
-                                      {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext(),
-                                      )}
-                                    </Cell>
-                                  );
-                                })}
-                            </Row>
-                          ))}
-                      </Row>
-                    ))}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
         </TableBody>
       </Table>
     </>
@@ -292,20 +284,20 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
         accessorFn: row => row.lastName,
         id: 'lastName',
         cell: info => info.getValue(),
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Last Name</span>,
         enableSorting: true,
       },
       {
         accessorKey: 'age',
-        // eslint-disable-next-line react/display-name
+
         header: () => 'Age',
         size: 50,
         enableSorting: true,
       },
       {
         accessorKey: 'visits',
-        // eslint-disable-next-line react/display-name
+
         header: () => <span>Visits</span>,
         size: 50,
       },
@@ -318,7 +310,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
     [],
   );
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -326,10 +318,7 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
       sorting,
     },
     onSortingChange: setSorting,
-    useVirtualScrolling: true,
   });
-
-  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -360,26 +349,28 @@ export const SortableRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
         </TableBody>
       </Table>
     </>
@@ -393,7 +384,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -402,10 +393,7 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
     },
     onRowSelectionChange: setRowSelection,
     hasSelectableRows: true,
-    useVirtualScrolling: true,
   });
-
-  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -435,26 +423,28 @@ export const SelectableRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const cells = row.getVisibleCells();
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+                return (
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
         </TableBody>
       </Table>
     </>
@@ -468,7 +458,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
 
   const columns = useMemo(() => basicColumnDefs, []);
 
-  const table = useLeafyGreenTable<Person>({
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
@@ -476,10 +466,7 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
       expanded,
     },
     onExpandedChange: setExpanded,
-    useVirtualScrolling: true,
   });
-
-  const { rows } = table.getRowModel();
 
   return (
     <>
@@ -510,29 +497,37 @@ export const ExpandableContent: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const isExpandedContent = row.isExpandedContent ?? false;
 
-              return (
-                <Row key={row.id} row={row} virtualRow={virtualRow}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                  {row.original.renderExpandedContent && (
-                    <ExpandedContent row={row} />
-                  )}
-                </Row>
-              );
-            })}
+                return (
+                  <Fragment key={virtualRow.key}>
+                    {!isExpandedContent && (
+                      <Row row={row} virtualRow={virtualRow}>
+                        {row
+                          .getVisibleCells()
+                          .map((cell: LeafyGreenTableCell<Person>) => {
+                            return (
+                              <Cell key={cell.id} cell={cell}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                      </Row>
+                    )}
+                    {isExpandedContent && (
+                      <ExpandedContent row={row} virtualRow={virtualRow} />
+                    )}
+                  </Fragment>
+                );
+              })}
         </TableBody>
       </Table>
     </>
@@ -544,30 +539,83 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
   const data = React.useMemo(() => {
     return makeData(false, 10_000).map(d => ({
       ...d,
-      id: faker.string.uuid() + '--' + faker.string.uuid(),
+      id:
+        faker.string.uuid() +
+        '--' +
+        faker.string.uuid() +
+        '--' +
+        faker.string.uuid() +
+        '--' +
+        faker.string.uuid(),
     }));
   }, []);
 
-  const columns = useMemo(() => basicColumnDefs, []);
-  const estimateSize = useCallback(() => 100, []);
+  const columnDefs: Array<LGColumnDef<Person>> = [
+    {
+      accessorKey: 'index',
+      header: 'index',
+      size: 90,
+    },
+    {
+      accessorKey: 'id',
+      header: 'ID',
+      // This makes the width auto
+      size: NaN,
+    },
+    {
+      accessorKey: 'firstName',
+      header: 'First Name',
+      cell: info => info.getValue(),
+      size: 120,
+    },
+    {
+      accessorFn: row => row.lastName,
+      id: 'lastName',
+      cell: info => info.getValue(),
+      header: () => <span>Last Name</span>,
+      size: 120,
+    },
+    {
+      accessorKey: 'age',
+      header: () => 'Age',
+      size: 50,
+      align: 'center',
+    },
+    {
+      accessorKey: 'visits',
+      header: () => <span>Visits</span>,
+      size: 50,
+    },
+    {
+      accessorKey: 'status',
+      header: 'Status',
+      size: 110,
+    },
+  ];
 
-  const table = useLeafyGreenTable<Person>({
+  // FIXME:
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const columns = useMemo(() => columnDefs, []);
+  const estimateSize = useCallback(() => 68, []);
+
+  const table = useLeafyGreenVirtualTable<Person>({
     containerRef: tableContainerRef,
     data,
     columns,
-    useVirtualScrolling: true,
     virtualizerOptions: {
       estimateSize,
     },
   });
 
-  const { rows } = table.getRowModel();
-
   return (
-    <>
+    <div
+      className={css`
+        width: 100%;
+      `}
+    >
       <div>
         <p>{table.getRowModel().rows.length} total rows</p>
-        <p>{table?.virtualRows?.length} virtual rows</p>
+        <p>{table?.virtual.getVirtualItems().length} virtual rows</p>
       </div>
 
       <Table
@@ -593,36 +641,187 @@ export const TallRows: StoryFn<StoryTableProps> = args => {
           ))}
         </TableHead>
         <TableBody>
-          {table.virtualRows &&
-            table.virtualRows.map((virtualRow: VirtualItem) => {
-              const row = rows[virtualRow.index];
-              const cells = row.getVisibleCells();
-              return (
-                <Row key={row.id}>
-                  {cells.map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell
-                        key={cell.id}
-                        className={css`
-                          padding-block: 4px;
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<Person>) => {
+                const row = virtualRow.row;
+                const cells = row.getVisibleCells();
+                return (
+                  <Row key={virtualRow.key} row={row} virtualRow={virtualRow}>
+                    {cells.map((cell: LeafyGreenTableCell<Person>) => {
+                      return (
+                        <Cell
+                          key={cell.id}
+                          className={css`
+                            padding-block: 4px;
 
-                          & > div {
-                            max-height: unset;
-                          }
-                        `}
-                      >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-                </Row>
-              );
-            })}
+                            & > div {
+                              max-height: unset;
+                            }
+                          `}
+                          cell={cell}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
         </TableBody>
       </Table>
-    </>
+    </div>
   );
+};
+
+export const WithLeafyGreenComponents: StoryFn<StoryTableProps> = args => {
+  const tableContainerRef = React.useRef<HTMLDivElement>(null);
+  const [data] = useState(() => makeKitchenSinkData(10_000));
+
+  const columns = React.useMemo<Array<LGColumnDef<KitchenSink>>>(
+    () => [
+      {
+        accessorKey: 'dateCreated',
+        header: 'Date Created',
+        enableSorting: true,
+        cell: info =>
+          (info.getValue() as Date).toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          }),
+        size: 180,
+      },
+      {
+        accessorKey: 'clusterType',
+        header: 'Cluster Type',
+        // This makes the size auto
+        size: NaN,
+      },
+      {
+        accessorKey: 'frequency',
+        header: 'Frequency',
+        align: 'center',
+        size: 140,
+      },
+      {
+        accessorKey: 'encryptorEnabled',
+        header: 'Encryptor',
+
+        cell: info => (
+          <Badge variant={info.getValue() ? 'green' : 'red'}>
+            {info.getValue() ? 'Enabled' : 'Not enabled'}
+          </Badge>
+        ),
+      },
+      {
+        accessorKey: 'mdbVersion',
+        header: 'MongoDB Version',
+        enableSorting: true,
+        size: 120,
+      },
+      {
+        id: 'actions',
+        header: '',
+        size: 150,
+
+        cell: _ => {
+          return (
+            <div>
+              <Tooltip trigger={<Button size="small">Button</Button>}>
+                {"I'm leafy, you're leafy"}
+              </Tooltip>
+            </div>
+          );
+        },
+      },
+    ],
+    [],
+  );
+
+  const table = useLeafyGreenVirtualTable<KitchenSink>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+  });
+
+  return (
+    <div
+      className={css`
+        width: 100%;
+      `}
+    >
+      <div>
+        <p>{table.getRowModel().rows.length} total rows</p>
+      </div>
+
+      <Table
+        {...args}
+        table={table}
+        ref={tableContainerRef}
+        className={virtualScrollingContainerHeight}
+      >
+        <TableHead isSticky>
+          {table
+            .getHeaderGroups()
+            .map((headerGroup: HeaderGroup<KitchenSink>) => (
+              <HeaderRow key={headerGroup.id}>
+                {headerGroup.headers.map(header => {
+                  return (
+                    <HeaderCell key={header.id} header={header}>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                    </HeaderCell>
+                  );
+                })}
+              </HeaderRow>
+            ))}
+        </TableHead>
+        <TableBody>
+          {table.virtual.getVirtualItems() &&
+            table.virtual
+              .getVirtualItems()
+              .map((virtualRow: LeafyGreenVirtualItem<KitchenSink>) => {
+                const row = virtualRow.row;
+                const isExpandedContent = row.isExpandedContent ?? false;
+
+                return (
+                  <Fragment key={virtualRow.key}>
+                    {!isExpandedContent && (
+                      <Row row={row} virtualRow={virtualRow}>
+                        {row
+                          .getVisibleCells()
+                          .map((cell: LeafyGreenTableCell<KitchenSink>) => {
+                            return (
+                              <Cell key={cell.id} cell={cell}>
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext(),
+                                )}
+                              </Cell>
+                            );
+                          })}
+                      </Row>
+                    )}
+                    {isExpandedContent && (
+                      <ExpandedContent row={row} virtualRow={virtualRow} />
+                    )}
+                  </Fragment>
+                );
+              })}
+        </TableBody>
+      </Table>
+    </div>
+  );
+};
+
+export const NoTruncation = WithLeafyGreenComponents.bind({});
+NoTruncation.args = {
+  shouldTruncate: false,
 };

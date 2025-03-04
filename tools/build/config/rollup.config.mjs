@@ -11,7 +11,7 @@ import { glob } from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import sizes from 'rollup-plugin-sizes';
+import { bundleStats } from 'rollup-plugin-bundle-stats';
 
 const require = createRequire(import.meta.url);
 
@@ -82,7 +82,6 @@ const globalsMap = {
   polished: 'polished',
   react: 'React',
   'react-dom': 'ReactDOM',
-  'prop-types': 'PropTypes',
   lodash: '_',
   ...lgGlobals,
   ...iconGlobals,
@@ -97,26 +96,7 @@ const globals = id => {
   }
 };
 
-const external = [
-  '@faker-js/faker',
-  '@testing-library/react',
-  'chalk',
-  'clipboard',
-  'cross-spawn',
-  'focus-trap-react',
-  'fs-extra',
-  'highlightjs-graphql',
-  'polished',
-  'prop-types',
-  'typescript',
-  /^@emotion\//,
-  /^@leafygreen-ui\//,
-  /^@lg-[a-z]+\//,
-  /^@storybook\//,
-  /^highlight/,
-  /^lodash\//,
-  /^react/,
-];
+const external = [/node_modules/];
 
 const moduleFormatToDirectory = {
   esm: 'dist/esm/',
@@ -162,10 +142,18 @@ const configForFormat = format => ({
 
     terser(),
 
-    sizes(),
+    bundleStats({
+      html: false,
+      json: false,
+      compare: false,
+    }),
   ],
   external,
   strictDeprecations: true,
+  treeshake: {
+    preset: 'recommended',
+    moduleSideEffects: false,
+  },
 });
 
 const esmConfig = configForFormat('esm');

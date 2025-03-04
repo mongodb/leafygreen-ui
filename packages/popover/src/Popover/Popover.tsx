@@ -1,7 +1,6 @@
 import React, { forwardRef, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
 import { autoUpdate, flip, offset, useFloating } from '@floating-ui/react';
-import PropTypes from 'prop-types';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { usePopoverContext } from '@leafygreen-ui/leafygreen-provider';
@@ -49,7 +48,7 @@ import {
  * @param props.spacing The spacing (in pixels) between the reference element, and the popover.
  * @param props.align Alignment of Popover component relative to another element: `top`, `bottom`, `left`, `right`, `center-horizontal`, `center-vertical`.
  * @param props.justify Justification of Popover component relative to another element: `start`, `middle`, `end`.
- * @param props.adjustOnMutation Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
+ * @param props.adjustOnMutation: Should the Popover auto adjust its content when the DOM changes (using MutationObserver).
  * @param props.children Content to appear inside of Popover container.
  * @param props.className Classname applied to Popover container.
  * @param props.popoverZIndex Number that controls the z-index of the popover element directly.
@@ -64,6 +63,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
   (
     {
       active = false,
+      // FIXME:
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       adjustOnMutation = false,
       align = Align.Bottom,
       children,
@@ -241,7 +242,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                     transformAlign,
                   })}
                   // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
-                  // eslint-disable-next-line react/no-unknown-property
+
                   popover={
                     renderMode === RenderMode.TopLayer ? dismissMode : undefined
                   }
@@ -264,24 +265,3 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
 );
 
 Popover.displayName = 'Popover';
-
-Popover.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  active: PropTypes.bool,
-  className: PropTypes.string,
-  align: PropTypes.oneOf(Object.values(Align)),
-  justify: PropTypes.oneOf(Object.values(Justify)),
-  /// @ts-expect-error Types of property '[nominalTypeHack]' are incompatible.
-  refEl: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-  /// @ts-ignore Types of property '[nominalTypeHack]' are incompatible. - error only in R18
-  portalClassName: PropTypes.string,
-  spacing: PropTypes.number,
-  adjustOnMutation: PropTypes.bool,
-};

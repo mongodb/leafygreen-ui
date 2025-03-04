@@ -1,5 +1,443 @@
 # @leafygreen-ui/table
 
+## 13.0.6
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- e1ca36863: Fixes bug where table rows were not re-rendering when column visiibility was toggled. [LG-4901](https://jira.mongodb.org/browse/LG-4901)
+- Updated dependencies [541e12e75]
+- Updated dependencies [3111a76f3]
+  - @leafygreen-ui/checkbox@14.1.3
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/hooks@8.3.5
+  - @leafygreen-ui/icon@13.1.3
+  - @leafygreen-ui/icon-button@16.0.4
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.6
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+  - @lg-tools/test-harnesses@0.2.0
+
+## 13.0.5
+
+### Patch Changes
+
+- Updated dependencies [4d932fe13]
+- Updated dependencies [859e5b45f]
+  - @leafygreen-ui/typography@20.1.1
+  - @leafygreen-ui/icon-button@16.0.3
+  - @leafygreen-ui/checkbox@14.1.2
+
+## 13.0.4
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+  - @leafygreen-ui/checkbox@14.1.1
+
+## 13.0.3
+
+### Patch Changes
+
+- 5b30db97c: Adds `css` to ensure interactive styles (e.g., hover and focus) are not clipped within cells.
+
+## 13.0.2
+
+### Patch Changes
+
+- Updated dependencies [50ea705f9]
+  - @leafygreen-ui/checkbox@14.1.0
+
+## 13.0.1
+
+### Patch Changes
+
+- 3c6278d95: Fix expanding when passing `state` to `useLeafyGreenTable`
+
+## 13.0.0
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/checkbox@14.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/icon@13.1.2
+  - @leafygreen-ui/icon-button@16.0.2
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/polymorphic@2.0.5
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+  - @lg-tools/test-harnesses@0.1.4
+
+## 13.0.0-rc.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @leafygreen-ui/icon-button@16.0.1
+  - @leafygreen-ui/polymorphic@2.0.4
+  - @lg-tools/test-harnesses@0.1.3
+  - @leafygreen-ui/typography@20.0.1
+  - @leafygreen-ui/checkbox@14.0.1
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/hooks@8.3.3
+  - @leafygreen-ui/icon@13.1.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 13.0.0-rc.0
+
+### Major Changes
+
+- c448abe5c: Table v13 brings performance optimizations when working with large datasets and offers greater flexibility.
+
+  For more details on how to use LeafyGreen `Table` v13, check out the [README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/table/README.md).
+
+  ## What's new?
+
+  - All LeafyGreen table children components can accept a `forwardRef`
+  - All LeafyGreen table components support `styled-components`
+  - `shouldTruncate`: Rows now support multiline text. By default, text truncation is enabled but can be disabled using the `shouldTruncate` prop on `<Table>`. When `shouldTruncate` is `true`, all rows will display a single line of text. When `false`, rows with long text will display all lines of the content. Additionally, when truncation is disabled, text is top-aligned by default.
+  - `verticalAlignment`: If text truncation is disabled, you can change the text alignment to `middle` or `top` using the new `verticalAlignment` prop.
+
+    ```
+      <Table
+        table={table}
+        shouldTruncate={false}
+        verticalAlignment="middle"
+      >
+        ...
+      </Table>
+    ```
+
+  ## What changed?
+
+  ### Table V10 and V11 Adapter
+
+  - These have been removed in this version.
+
+  ### `Row` component
+
+  - Row transitions were removed to increase performance.
+  - Rows are memoized to increase performance.
+  - `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
+  - `virtualRow` is a required prop if using `useLeafyGreenVirtualTable`.
+  - An expanded row will no longer be highlighted if the nested content **only** contains expandable content. However, the row will continue to be highlighted if the nested content includes a subrow.
+  - Internally, we removed the mapping and flattening of `Row` children. Moving forward, consumers no longer need to explicitly render subrows and expanded content as children of `Row`. Instead, rows, subrows, and expanded content are returned as siblings within the row object.
+
+    **Before**:
+
+    Manually rendering subrows with a `row.subRows` check
+
+    ```
+    {rows.map((row: LeafyGreenTableRow<Person>) => {
+      return (
+        <Row key={row.id} row={row}>
+          {row
+            .getVisibleCells()
+            .map((cell: LeafyGreenTableCell<Person>) => {
+              return (
+                <Cell key={cell.id}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext(),
+                  )}
+                </Cell>
+              );
+            })}
+            // Checking for subrows
+            {row.subRows &&
+              row.subRows.map(subRow => (
+                <Row key={subRow.id} row={subRow}>
+                  {subRow.getVisibleCells().map(cell => {
+                    return (
+                      <Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Cell>
+                    );
+                  })}
+                  // Checking for subrows
+                  {subRow.subRows &&
+                    subRow.subRows.map(subSubRow => (
+                      <Row key={subSubRow.id} row={subSubRow}>
+                        {subSubRow.getVisibleCells().map(cell => {
+                          return (
+                            <Cell key={cell.id}>
+                              {flexRender(
+                                cell.column.columnDef.cell,
+                                cell.getContext(),
+                              )}
+                            </Cell>
+                          );
+                        })}
+                      </Row>
+                    ))}
+                </Row>
+              ))}
+          </Row>
+        );
+      })}
+    ```
+
+    **After**:
+
+    This will render both rows and subrows. No extra checks are needed.
+
+    ```
+    {rows.map((row: LeafyGreenTableRow<Person>) => {
+      return (
+        <Row row={row} key={row.id}>
+          {row
+            .getVisibleCells()
+            .map((cell: LeafyGreenTableCell<Person>) => {
+              return (
+                <Cell key={cell.id} cell={cell}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext(),
+                  )}
+                </Cell>
+              );
+            })}
+        </Row>
+      );
+    })}
+    ```
+
+  ### `ExpandedContent` component
+
+  - `row` is a required prop if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`.
+  - `virtualRow` is a required prop if using `useLeafyGreenVirtualTable`.
+  - Expanded content is included in the row object as a sibling of its parent row. You will need to check if a row is expanded content using `row.isExpandedContent`.
+
+    **Before**:
+
+    Expanded content is rendered as a child of `Row` and we check for `row.original.renderExpandedContent`
+
+    ```
+    {rows.map((row: LeafyGreenTableRow<Person>) => {
+      return (
+        <Row key={row.id} row={row}>
+          {row
+            .getVisibleCells()
+            .map((cell: LeafyGreenTableCell<Person>) => {
+              return (
+                <Cell key={cell.id}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext(),
+                  )}
+                </Cell>
+              );
+            })}
+          // renders expanded content
+          {row.original.renderExpandedContent && (
+            <ExpandedContent row={row} />
+          )}
+        </Row>
+      );
+    })}
+    ```
+
+    **After**:
+
+    Expanded content is rendered as a sibling of `Row`. Instead of checking for `row.original.renderExpandedContent`, we check for `row.isExpandedContent`.
+
+    ```
+    {rows.map((row: LeafyGreenTableRow<Person>) => {
+      const isExpandedContent = row.isExpandedContent ?? false;
+
+      return (
+        <Fragment key={row.id}>
+          {!isExpandedContent && (
+            <Row row={row}>
+              {row.getVisibleCells().map(cell => {
+                return (
+                  <Cell key={cell.id} id={cell.id} cell={cell}>
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext(),
+                    )}
+                  </Cell>
+                );
+              })}
+            </Row>
+          )}
+          // renders expanded content
+          {isExpandedContent && <ExpandedContent row={row} />}
+        </Fragment>
+      );
+    })}
+    ```
+
+  ### `Cell` component
+
+  - `cell` is a new required prop on `Cell` if using `useLeafyGreenTable` or `useLeafyGreenVirtualTable`. This is needed for styling purposes.
+  - Removes `overflow` prop. Instead use `shouldTruncate` on `<Table>`
+
+  ### `HeaderCell` component
+
+  - Removes `sortState` prop. It was never used in the component.
+  - Removes `cellIndex` prop.
+
+  ### `Table` component
+
+  - Removes `disableAnimations` prop.
+
+  ### `useLeafyGreenTable` hook
+
+  `useLeafyGreenTable` will no longer accept `useVirtualScrolling` and `virtualizerOptions`. To use a virtual table, use the new hook, [`useLeafyGreenVirtualTable`](#useleafygreenvirtualtable-hook), which extends `useLeafyGreenTable`.
+
+  **Before**:
+
+  ```
+  const table = useLeafyGreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    useVirtualScrolling: true,
+    virtualizerOptions: {
+      estimateSize,
+    },
+  });
+  ```
+
+  **After**:
+
+  ```
+  const table = useLeafyGreenTable<Person>({
+    data,
+    columns,
+  });
+  ```
+
+  ### `useLeafyGreenVirtualTable` hook
+
+  To implement a virtual table, use the `useLeafyGreenVirtualTable` hook. This hook extends the functionality of `useLeafyGreenTable`.
+
+  We have upgraded to the latest version of TanStack's `react-virtual` package. As a result, some properties and instances returned from `useLeafyGreenVirtualTable` may differ slightly from those returned by `useLeafyGreenTable` in versions 11 and 12. For a complete list of properties and methods, refer to TanStack's [documentation](https://tanstack.com/virtual/v3/docs/api/virtualizer#virtualizer-instance).
+
+  **Before**:
+
+  You map through virtrual rows with `table.virtualRows` and get the corresponding row with `rows[virtualRow.index]`
+
+  ```
+  const table = useLeafyGreenTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    useVirtualScrolling: true,
+    virtualizerOptions: {
+      estimateSize,
+    },
+  });
+
+  const { rows } = table.getRowModel();
+
+  <TableBody>
+    {table.virtualRows &&
+      table.virtualRows.map((virtualRow: VirtualItem) => {
+        const row = rows[virtualRow.index];
+        const cells = row.getVisibleCells();
+        return (
+          <Row key={row.id}>
+            {cells.map((cell: LeafyGreenTableCell<Person>) => {
+              return (
+                <Cell key={cell.id}>
+                  {flexRender(
+                    cell.column.columnDef.cell,
+                    cell.getContext(),
+                  )}
+                </Cell>
+              );
+            })}
+          </Row>
+        );
+      })}
+  </TableBody>
+  ```
+
+  **After**:
+
+  You map through virtual rows with `table.virtual.getVirtualItems()` and get the corresponding row with `virtualRow.row`.
+
+  ```
+  const table = useLeafyGreenVirtualTable<Person>({
+    containerRef: tableContainerRef,
+    data,
+    columns,
+    virtualizerOptions: {
+      estimateSize,
+    },
+  });
+
+   <TableBody>
+    {table.virtual.getVirtualItems() &&
+      table.virtual
+        .getVirtualItems()
+        .map(
+          (
+            virtualRow: LeafyGreenVirtualItem<KitchenSink>,
+          ) => {
+            const row = virtualRow.row;
+            const isExpandedContent = row.isExpandedContent ?? false;
+
+            return (
+              <Fragment key={virtualRow.key}>
+                {!isExpandedContent && (
+                  <Row
+                    row={row}
+                    virtualRow={virtualRow}
+                  >
+                    {row
+                      .getVisibleCells()
+                      .map((cell: LeafyGreenTableCell<KitchenSink>) => {
+                        return (
+                          <Cell key={cell.id} cell={cell}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )}
+                          </Cell>
+                        );
+                      })}
+                  </Row>
+                )}
+                {isExpandedContent && (
+                  <ExpandedContent row={row} virtualRow={virtualRow} />
+                )}
+              </Fragment>
+            );
+          },
+        )}
+  </TableBody>
+  ```
+
+## 13.0.0-beta.1
+
+### Patch Changes
+
+- Add `react-keyed-flatten-children` to fix install error
+
+## 13.0.0-beta.0
+
+### Major Changes
+
+- First beta pre-release of Table v13. This release is a WIP and should not be used in production.
+
 ## 12.7.0
 
 ### Minor Changes

@@ -15,6 +15,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Menu as LGMenu } from '@leafygreen-ui/menu';
 
+import { LGIDs } from '../constants';
 import { MenuItemType } from '../SplitButton';
 
 import {
@@ -58,9 +59,7 @@ export const Menu = ({
 
   const handleTriggerClick: MouseEventHandler = e => {
     onTriggerClick?.(e);
-    if (typeof controlledOpen !== 'boolean') {
-      setOpen(o => !o);
-    }
+    setOpen(o => !o);
   };
 
   const handleClose = useCallback(() => {
@@ -81,7 +80,10 @@ export const Menu = ({
   useBackdropClick(handleClose, [buttonRef, menuRef], open);
 
   const renderMenuItems = useMemo(() => {
-    const onMenuItemClick = (e: MouseEvent, menuItem: MenuItemType) => {
+    const onMenuItemClick = (
+      e: MouseEvent<HTMLAnchorElement & HTMLButtonElement>,
+      menuItem: MenuItemType,
+    ) => {
       handleClose();
       menuItem.props.onClick?.(e);
       onChange?.(e);
@@ -92,7 +94,8 @@ export const Menu = ({
         return React.cloneElement(menuItem, {
           active: false,
           key: `menuItem-${menuItem.key}`,
-          onClick: (e: MouseEvent) => onMenuItemClick(e, menuItem),
+          onClick: (e: MouseEvent<HTMLAnchorElement & HTMLButtonElement>) =>
+            onMenuItemClick(e, menuItem),
         });
       } else {
         console.warn(
@@ -117,13 +120,14 @@ export const Menu = ({
 
   return (
     <LGMenu
-      data-testid="lg-split-button-menu"
       align={align}
       justify={justify}
       id={id}
       open={open}
       ref={menuRef}
       portalRef={portalRef}
+      data-testid={LGIDs.menu}
+      data-lgid={LGIDs.menu}
       {...rest}
       trigger={
         <Button
@@ -142,6 +146,8 @@ export const Menu = ({
           ref={buttonRef}
           aria-expanded={open}
           aria-haspopup={true}
+          data-testid={LGIDs.trigger}
+          data-lgid={LGIDs.trigger}
         />
       }
     >

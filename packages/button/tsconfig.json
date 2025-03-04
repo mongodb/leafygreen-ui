@@ -16,9 +16,6 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../box"
-    },
-    {
       "path": "../emotion"
     },
     {
@@ -31,6 +28,9 @@
       "path": "../palette"
     },
     {
+      "path": "../polymorphic"
+    },
+    {
       "path": "../ripple"
     },
     {
@@ -38,6 +38,9 @@
     },
     {
       "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../../tools/test-harnesses"
     }
   ]
 }

@@ -1,11 +1,13 @@
-import React, { forwardRef, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
+import React, { useMemo, useRef } from 'react';
 
-import Box, { ExtendableBox } from '@leafygreen-ui/box';
 import { cx } from '@leafygreen-ui/emotion';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
 import { AriaCurrentValue, isComponentType } from '@leafygreen-ui/lib';
+import {
+  InferredPolymorphic,
+  useInferredPolymorphic,
+} from '@leafygreen-ui/polymorphic';
 
 import { AccessibleGlyph } from '../AccessibleGlyph';
 import {
@@ -30,7 +32,7 @@ import {
   sideNavItemClassName,
   themeStyle,
 } from './SideNavItem.styles';
-import { SideNavItemProps } from './SideNavItem.types';
+import { BaseSideNavItemProps } from './SideNavItem.types';
 
 /**
  * TODO: TSDoc
@@ -55,157 +57,151 @@ import { SideNavItemProps } from './SideNavItem.types';
  @param props.as When provided, the component will be rendered as the component or html tag indicated
  *  by this prop. Other additional props will be spread on the anchor element.
  */
-const SideNavItem: ExtendableBox<
-  SideNavItemProps & { ref?: React.Ref<any> },
-  'button'
-> = forwardRef((props: SideNavItemProps, forwardedRef) => {
-  const {
-    active = false,
-    disabled = false,
-    ariaCurrentValue = AriaCurrentValue.Page,
-    indentLevel = 1,
-    className,
-    children,
-    onClick: onClickProp,
-    glyph,
-    ...rest
-  } = props;
-  const { usingKeyboard } = useUsingKeyboardContext();
-  const { baseFontSize, theme, darkMode } = useSideNavContext();
-  const hasNestedChildren = useRef(false);
+const SideNavItem = InferredPolymorphic<BaseSideNavItemProps, 'button'>(
+  (props, forwardedRef) => {
+    const {
+      as,
+      active = false,
+      disabled = false,
+      ariaCurrentValue = AriaCurrentValue.Page,
+      indentLevel = 1,
+      className,
+      children,
+      onClick: onClickProp,
+      glyph,
+      ...restProps
+    } = props;
+    const { Component, rest } = useInferredPolymorphic(as, restProps, 'button');
+    const { usingKeyboard } = useUsingKeyboardContext();
+    const { baseFontSize, theme, darkMode } = useSideNavContext();
+    const hasNestedChildren = useRef(false);
 
-  const onClick = disabled
-    ? (e: React.MouseEvent) => {
-        e.nativeEvent.stopImmediatePropagation();
-        e.preventDefault();
-      }
-    : (e: React.MouseEvent) => {
-        onClickProp?.(e);
-      };
-
-  const accessibleGlyph =
-    glyph && isComponentGlyph(glyph)
-      ? React.cloneElement(glyph, { 'aria-hidden': true })
-      : null;
-
-  const { hasNestedItems, renderedNestedItems } = useMemo(() => {
-    const renderedNestedItems: Array<React.ReactElement> = [];
-    let hasNestedItems = false; // Whether this item has nested descendants
-
-    React.Children.forEach(children, (child, index) => {
-      if (
-        (child != null && isComponentType(child, 'SideNavItem')) ||
-        isComponentType(child, 'SideNavGroup')
-      ) {
-        hasNestedItems = true;
-        if (active || hasActiveNestedItems(children)) {
-          renderedNestedItems.push(
-            React.cloneElement(child, {
-              indentLevel: indentLevel + 1,
-              key: index,
-            }),
-          );
+    const onClick = disabled
+      ? (e: React.MouseEvent) => {
+          e.nativeEvent.stopImmediatePropagation();
+          e.preventDefault();
         }
-      }
-    });
+      : (e: React.MouseEvent) => {
+          onClickProp?.(e);
+        };
 
-    // Recursive function to determine if a SideNavItem has an active descendant
-    function hasActiveNestedItems(children: React.ReactNode): boolean {
-      let hasActiveDescendant = false;
+    const accessibleGlyph =
+      glyph && isComponentGlyph(glyph)
+        ? React.cloneElement(glyph, { 'aria-hidden': true })
+        : null;
 
-      React.Children.forEach(children, child => {
-        if (hasActiveDescendant) return;
-        else if (isComponentType(child, 'SideNavItem') && child.props.active) {
-          hasActiveDescendant = true;
-        } else if (
-          (child as React.ReactElement)?.props?.children &&
-          typeof (child as React.ReactElement).props.children == 'object'
+    const { hasNestedItems, renderedNestedItems } = useMemo(() => {
+      const renderedNestedItems: Array<React.ReactElement> = [];
+      let hasNestedItems = false; // Whether this item has nested descendants
+
+      React.Children.forEach(children, (child, index) => {
+        if (
+          (child != null && isComponentType(child, 'SideNavItem')) ||
+          isComponentType(child, 'SideNavGroup')
         ) {
-          hasActiveDescendant = hasActiveNestedItems(
-            (child as React.ReactElement).props.children,
-          );
+          hasNestedItems = true;
+          if (active || hasActiveNestedItems(children)) {
+            renderedNestedItems.push(
+              React.cloneElement(child, {
+                indentLevel: indentLevel + 1,
+                key: index,
+              }),
+            );
+          }
         }
       });
-      return hasActiveDescendant;
-    }
 
-    return { hasNestedItems, renderedNestedItems };
-  }, [children, active, indentLevel]);
+      // Recursive function to determine if a SideNavItem has an active descendant
+      function hasActiveNestedItems(children: React.ReactNode): boolean {
+        let hasActiveDescendant = false;
 
-  const renderedChildren = useMemo(() => {
-    const renderedChildren: Array<React.ReactNode> = [];
-
-    React.Children.forEach(children, child => {
-      if (!child) {
-        return null;
+        React.Children.forEach(children, child => {
+          if (hasActiveDescendant) return;
+          else if (
+            isComponentType(child, 'SideNavItem') &&
+            child.props.active
+          ) {
+            hasActiveDescendant = true;
+          } else if (
+            (child as React.ReactElement)?.props?.children &&
+            typeof (child as React.ReactElement).props.children == 'object'
+          ) {
+            hasActiveDescendant = hasActiveNestedItems(
+              (child as React.ReactElement).props.children,
+            );
+          }
+        });
+        return hasActiveDescendant;
       }
 
-      if (
-        isComponentType(child, 'SideNavItem') ||
-        isComponentType(child, 'SideNavGroup')
-      ) {
-        return null;
-      }
+      return { hasNestedItems, renderedNestedItems };
+    }, [children, active, indentLevel]);
 
-      renderedChildren.push(child);
-    });
+    const renderedChildren = useMemo(() => {
+      const renderedChildren: Array<React.ReactNode> = [];
 
-    return renderedChildren;
-  }, [children]);
+      React.Children.forEach(children, child => {
+        if (!child) {
+          return null;
+        }
 
-  return (
-    <li className={liStyle}>
-      <Box
-        as={props.href ? 'a' : 'button'}
-        {...rest}
-        className={cx(
-          sideNavItemClassName,
-          baseStyle,
-          themeStyle[theme],
-          typographyStyle[baseFontSize],
-          {
-            [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
-            [disabledStyle]: disabled,
-            [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard,
-            [cx(focusedDisabledStyle, focusedDisabledThemeStyle[theme])]:
-              usingKeyboard && disabled,
-            [nestedChildrenStyles]: hasNestedChildren.current,
-            [getIndentLevelStyle(indentLevel, darkMode)]: indentLevel > 1,
-          },
-          className,
+        if (
+          isComponentType(child, 'SideNavItem') ||
+          isComponentType(child, 'SideNavGroup')
+        ) {
+          return null;
+        }
+
+        renderedChildren.push(child);
+      });
+
+      return renderedChildren;
+    }, [children]);
+
+    return (
+      <li className={liStyle}>
+        <Component
+          {...rest}
+          className={cx(
+            sideNavItemClassName,
+            baseStyle,
+            themeStyle[theme],
+            typographyStyle[baseFontSize],
+            {
+              [cx(activeBaseStyle, activeThemeStyle[theme])]: active,
+              [disabledStyle]: disabled,
+              [cx(focusedStyle, focusedThemeStyle[theme])]: usingKeyboard,
+              [cx(focusedDisabledStyle, focusedDisabledThemeStyle[theme])]:
+                usingKeyboard && disabled,
+              [nestedChildrenStyles]: hasNestedChildren.current,
+              [getIndentLevelStyle(indentLevel, darkMode)]: indentLevel > 1,
+            },
+            className,
+          )}
+          aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
+          aria-disabled={disabled}
+          ref={forwardedRef}
+          onClick={onClick}
+        >
+          {accessibleGlyph && (
+            <AccessibleGlyph
+              isActiveGroup={active}
+              accessibleGlyph={accessibleGlyph}
+              className={glyphWrapperStyle}
+            />
+          )}
+
+          {renderedChildren}
+        </Component>
+
+        {hasNestedItems && (
+          <ul className={nestedUlStyle}>{renderedNestedItems}</ul>
         )}
-        aria-current={active ? ariaCurrentValue : AriaCurrentValue.Unset}
-        aria-disabled={disabled}
-        ref={forwardedRef}
-        onClick={onClick}
-      >
-        {accessibleGlyph && (
-          <AccessibleGlyph
-            isActiveGroup={active}
-            accessibleGlyph={accessibleGlyph}
-            className={glyphWrapperStyle}
-          />
-        )}
-
-        {renderedChildren}
-      </Box>
-
-      {hasNestedItems && (
-        <ul className={nestedUlStyle}>{renderedNestedItems}</ul>
-      )}
-    </li>
-  );
-});
+      </li>
+    );
+  },
+);
 
 SideNavItem.displayName = 'SideNavItem';
-
-SideNavItem.propTypes = {
-  active: PropTypes.bool,
-  disabled: PropTypes.bool,
-  className: PropTypes.string,
-  ariaCurrentValue: PropTypes.oneOf(Object.values(AriaCurrentValue)),
-  children: PropTypes.node,
-  href: PropTypes.string,
-};
 
 export default SideNavItem;

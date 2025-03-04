@@ -1,7 +1,6 @@
-import { isValidLocale } from '@leafygreen-ui/date-utils';
+import { isValidLocale, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 const now = new Date();
-const ISO = 'iso8601';
 const IsoFormatParts: Array<Intl.DateTimeFormatPart> = [
   { type: 'year', value: '' },
   { type: 'literal', value: '-' },
@@ -27,7 +26,7 @@ export const getFormatter = (locale: string) => {
 export const getFormatParts = (
   locale: string,
 ): Array<Intl.DateTimeFormatPart> | undefined => {
-  if (locale === ISO) {
+  if (locale === SupportedLocales.ISO_8601) {
     return IsoFormatParts;
   }
 

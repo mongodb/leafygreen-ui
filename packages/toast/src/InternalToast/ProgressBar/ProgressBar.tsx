@@ -1,6 +1,5 @@
 import React from 'react';
 import clamp from 'lodash/clamp';
-import PropTypes from 'prop-types';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
@@ -50,9 +49,5 @@ function ToastProgressBar({ progress, theme }: ProgressBarProps) {
 }
 
 ToastProgressBar.displayName = 'ToastProgressBar';
-
-ToastProgressBar.propTypes = {
-  progress: PropTypes.number,
-};
 
 export default ToastProgressBar;

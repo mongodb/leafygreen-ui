@@ -1,5 +1,132 @@
 # @leafygreen-ui/split-button
 
+## 4.1.6
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+- Updated dependencies [3111a76f3]
+  - @leafygreen-ui/button@23.1.0
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/hooks@8.3.5
+  - @leafygreen-ui/icon@13.1.3
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/menu@28.0.7
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.6
+  - @leafygreen-ui/popover@13.0.4
+  - @leafygreen-ui/tokens@2.11.4
+
+## 4.1.5
+
+### Patch Changes
+
+- Updated dependencies [1501381ee]
+  - @leafygreen-ui/button@23.0.0
+  - @leafygreen-ui/menu@28.0.6
+  - @leafygreen-ui/popover@13.0.3
+
+## 4.1.4
+
+### Patch Changes
+
+- Updated dependencies [d7a715090]
+  - @leafygreen-ui/popover@13.0.3
+  - @leafygreen-ui/menu@28.0.6
+  - @leafygreen-ui/button@22.0.2
+
+## 4.1.3
+
+### Patch Changes
+
+- @leafygreen-ui/menu@28.0.5
+- @leafygreen-ui/button@22.0.2
+
+## 4.1.2
+
+### Patch Changes
+
+- @leafygreen-ui/menu@28.0.4
+
+## 4.1.1
+
+### Patch Changes
+
+- Updated dependencies [831718a41]
+  - @leafygreen-ui/menu@28.0.3
+
+## 4.1.0
+
+### Minor Changes
+
+- cc9874a9c: Update `data-testid` and `data-lgid` attributes on SplitButton's button, trigger and menu elements.
+
+## 4.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/button@22.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/hooks@8.3.4
+  - @leafygreen-ui/icon@13.1.2
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/menu@28.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/polymorphic@2.0.5
+  - @leafygreen-ui/popover@13.0.2
+  - @leafygreen-ui/tokens@2.11.3
+
+## 4.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @leafygreen-ui/polymorphic@2.0.4
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/popover@13.0.1
+  - @leafygreen-ui/button@22.0.1
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/hooks@8.3.3
+  - @leafygreen-ui/icon@13.1.1
+  - @leafygreen-ui/menu@28.0.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 4.0.0
+
+### Major Changes
+
+- f5d842764: Update types to reflect what is actually being passed through to the underlying `Menu`
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- a3d63cb95: Export prop types for components already wrapped in polymorphic types
+- Updated dependencies [a3d63cb95]
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/menu@28.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/popover@13.0.0
+  - @leafygreen-ui/button@22.0.0
+  - @leafygreen-ui/icon@13.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/hooks@8.3.2
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
+## 3.0.1
+
+### Patch Changes
+
+- 5f9185bee: Fix passing `renderDarkMenu` to the underlying `Menu`
+- 4245d16d1: Fix using `SplitButton` as a managed component by calling the `setOpen` function passed as prop when clicking the trigger.
+
 ## 3.0.0
 
 ### Major Changes

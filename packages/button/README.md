@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/button.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/button/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/button/live-example/)
 
 ## Installation
 
@@ -169,3 +169,43 @@ const { getButton, isDisabled } = getTestUtils();
 | ------------ | ------------------------------------- | ------------------- |
 | `getButton`  | Returns the input node                | `HTMLButtonElement` |
 | `isDisabled` | Returns whether the input is disabled | `boolean`           |
+
+# Loading Props
+
+## Props
+
+### isLoading
+
+When `isLoading` is `true`, it should always be coupled with `loadingText` and/or `loadingIndicator`. By itself, setting the `isLoading` prop to `true` simply makes the Button un-clickable, and hides the otherwise rendered content from the Button.
+
+### loadingIndicator
+
+The `loadingIndicator` prop expects a `React.ReactNode` that will be rendered within the button. Usually, this will be a `Spinner` from the LeafyGreen `@leafygreen-ui/loading-indicator` package.
+
+### loadingText
+
+The `loadingText` property determines what text content will be rendered inside of the Button, when `isLoading` is true.
+
+## Examples
+
+### Kitchen Sink
+
+```js
+<Button
+  isLoading={true}
+  loadingIndicator={<Spinner />}
+  loadingText="loading..."
+/>
+```
+
+### Just text
+
+```js
+<Button isLoading={true} loadingText="loading..." />
+```
+
+### Just indicator
+
+```js
+<Button isLoading={true} loadingIndicator={<Spinner />} />
+```

@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/test-harnesses",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Test harnesses for LeafyGreen repositories",
   "license": "Apache-2.0",
   "main": "dist/index.js",

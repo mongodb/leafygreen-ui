@@ -1,5 +1,30 @@
 # @lg-tools/build
 
+## 0.7.3
+
+### Patch Changes
+
+- 541e12e75: Updates Rollup config to enable tree-shaking
+
+## 0.7.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
+## 0.7.1
+
+### Patch Changes
+
+- 79c88b5b1: Fixes `tsdoc` build to only look at a package's `/src`
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+
+## 0.7.0
+
+### Minor Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
 ## 0.6.0
 
 ### Minor Changes

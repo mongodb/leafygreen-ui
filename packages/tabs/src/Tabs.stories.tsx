@@ -15,6 +15,7 @@ import SaveIcon from '@leafygreen-ui/icon/dist/Save';
 import IconButton from '@leafygreen-ui/icon-button';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
 import { Size, Tab, Tabs, TabsProps } from './';
@@ -183,6 +184,59 @@ WithInlineChildren.args = {
 };
 WithInlineChildren.argTypes = {
   inlineChildren: { control: 'none' },
+};
+
+export const WithTooltip: StoryFn<TabsProps<string>> = ({
+  baseFontSize,
+  ...props
+}: TabsProps<string>) => (
+  <LeafyGreenProvider baseFontSize={baseFontSize === 16 ? 16 : 14}>
+    <Tabs
+      className={css`
+        max-width: 66vw;
+      `}
+      aria-label="Tabs example with Tooltip"
+      {...props}
+    >
+      <Tab key="Tab 1" name="Tab 1">
+        <CardWithMargin>
+          <Subtitle>Tab 1 Content</Subtitle>
+          <Body>{Lipsum}</Body>
+        </CardWithMargin>
+      </Tab>
+      <Tab
+        key="Tab 2"
+        name={
+          <Tooltip justify="middle" trigger={<div>Tab 2</div>}>
+            I am a tooltip!
+          </Tooltip>
+        }
+        disabled
+      >
+        <CardWithMargin>
+          <Subtitle>Tab 2 Content</Subtitle>
+          <Body>{Lipsum}</Body>
+        </CardWithMargin>
+      </Tab>
+      <Tab key="Tab 3" name="Tab 3">
+        <CardWithMargin>
+          <Subtitle>Tab 3 Content</Subtitle>
+          <Body>{Lipsum}</Body>
+        </CardWithMargin>
+      </Tab>
+    </Tabs>
+  </LeafyGreenProvider>
+);
+WithTooltip.parameters = {
+  chromatic: { disableSnapshot: true },
+  controls: {
+    exclude: [
+      ...defaultExcludedControls,
+      'as',
+      'forceRenderAllTabPanels',
+      'selected',
+    ],
+  },
 };
 
 export const Generated = () => {};

@@ -1,17 +1,26 @@
 import React from 'react';
-import { flexRender } from '@tanstack/react-table';
-import { render } from '@testing-library/react';
+import styled from '@emotion/styled';
+import { flexRender, HeaderGroup } from '@tanstack/react-table';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
-import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafyGreenTable';
+import useLeafyGreenTable, {
+  LeafyGreenTable,
+  LeafyGreenTableCell,
+  LeafyGreenTableRow,
+} from '../useLeafyGreenTable';
+import useLeafyGreenVirtualTable from '../useLeafyGreenVirtualTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
+  getDefaultTestColumns,
   getDefaultTestData,
   TestTableWithHookProps,
   useTestHookCall,
@@ -19,52 +28,58 @@ import {
 
 import Table from '.';
 
-function TableWithHook(props: TestTableWithHookProps) {
-  const { containerRef, table, rowSelection } = useTestHookCall(props);
-  const { rows } = table.getRowModel();
+const TableWrapper = ({ table }: { table: LeafyGreenTable<any> }) => {
+  return (
+    <Table table={table}>
+      <TableHead isSticky>
+        {table.getHeaderGroups().map((headerGroup: HeaderGroup<Person>) => (
+          <HeaderRow key={headerGroup.id}>
+            {headerGroup.headers.map(header => {
+              return (
+                <HeaderCell key={header.id} header={header}>
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
+                </HeaderCell>
+              );
+            })}
+          </HeaderRow>
+        ))}
+      </TableHead>
+      <TableBody>
+        {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
+          return (
+            <Row key={row.id} row={row}>
+              {row
+                .getVisibleCells()
+                .map((cell: LeafyGreenTableCell<Person>) => {
+                  return (
+                    <Cell key={cell.id} cell={cell}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </Cell>
+                  );
+                })}
+            </Row>
+          );
+        })}
+      </TableBody>
+    </Table>
+  );
+};
+
+function TableWithHook({ ...props }: TestTableWithHookProps) {
+  const { table, rowSelection } = useTestHookCall(props);
+
   return (
     <>
       <div data-testid="row-selection-value">
         {JSON.stringify(rowSelection)}
       </div>
-      <Table table={table} ref={containerRef}>
-        <TableHead>
-          {table.getHeaderGroups().map(headerGroup => (
-            <HeaderRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <HeaderCell key={header.id} header={header}>
-                    {flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
-                  </HeaderCell>
-                );
-              })}
-            </HeaderRow>
-          ))}
-        </TableHead>
-        <TableBody>
-          {rows.map((row: LeafyGreenTableRow<Person>) => {
-            return (
-              <Row key={row.id} row={row}>
-                {row
-                  .getVisibleCells()
-                  .map((cell: LeafyGreenTableCell<Person>) => {
-                    return (
-                      <Cell data-cellid={cell.id} key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </Cell>
-                    );
-                  })}
-              </Row>
-            );
-          })}
-        </TableBody>
-      </Table>
+      <TableWrapper table={table} />
     </>
   );
 }
@@ -79,13 +94,23 @@ describe('packages/table/Table', () => {
   });
 
   describe('selectable rows', () => {
-    test('renders checkboxes', async () => {
+    test('renders checkboxes with select all checkbox ', async () => {
       const { getAllByRole } = render(
         <TableWithHook hookProps={{ hasSelectableRows: true }} />,
       );
       const data = getDefaultTestData({});
       // +1 for the header row checkbox
       expect(getAllByRole('checkbox').length).toBe(data.length + 1);
+    });
+
+    test('renders checkboxes without select all checkbox ', async () => {
+      const { getAllByRole } = render(
+        <TableWithHook
+          hookProps={{ hasSelectableRows: true, allowSelectAll: false }}
+        />,
+      );
+      const data = getDefaultTestData({});
+      expect(getAllByRole('checkbox').length).toBe(data.length);
     });
 
     test('clicking checkbox adds row index to rowSelection state', async () => {
@@ -188,5 +213,181 @@ describe('packages/table/Table', () => {
       const firstCell = getRowByIndex(0)?.getAllCells()[0];
       expect(firstCell).toHaveTextContent(initialFirstId!);
     });
+  });
+
+  describe('column visibility', () => {
+    test('renders the correct cells in a row by default', () => {
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const { result } = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      render(<TableWrapper table={result.current} />);
+
+      const { getRowByIndex } = getTestUtils();
+      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
+    });
+
+    test('renders the correct cells after toggling a cells visibility to hidden', () => {
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const { rerender: rerenderHook, result } = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      const table = result.current;
+      const { rerender: rerenderTable } = render(
+        <TableWrapper table={table} />,
+      );
+
+      const { getRowByIndex } = getTestUtils();
+      const allRowCells = () => getRowByIndex(0)?.getAllCells();
+
+      expect(allRowCells()).toHaveLength(6);
+
+      const columnToHide = table.getAllColumns()[0];
+
+      // Toggle the visibility of the first column to hidden
+      act(() => columnToHide.toggleVisibility());
+      rerenderHook();
+      rerenderTable(<TableWrapper table={result.current} />);
+
+      expect(allRowCells()).toHaveLength(5);
+    });
+
+    test('renders the correct cells after toggling a cells visibility back to visible', () => {
+      const data = getDefaultTestData({}) || [];
+      const columns = getDefaultTestColumns({}) || [];
+
+      const { rerender: rerenderHook, result } = renderHook(() =>
+        useLeafyGreenTable<any>({
+          data,
+          columns,
+        }),
+      );
+
+      let table = result.current;
+      const { rerender: rerenderTable } = render(
+        <TableWrapper table={table} />,
+      );
+
+      const { getRowByIndex } = getTestUtils();
+      const allRowCells = () => getRowByIndex(0)?.getAllCells();
+
+      expect(allRowCells()).toHaveLength(6);
+
+      // Toggle the visibility of the first column to hidden
+      act(() => table.getAllColumns()[0].toggleVisibility());
+      rerenderHook();
+      table = result.current;
+      rerenderTable(<TableWrapper table={table} />);
+
+      expect(allRowCells()).toHaveLength(5);
+
+      // Toggle the visibility of the first column back to visible
+      act(() => table.getAllColumns()[0].toggleVisibility());
+      rerenderHook();
+      rerenderTable(<TableWrapper table={result.current} />);
+
+      expect(allRowCells()).toHaveLength(6);
+    });
+  });
+
+  test('Accepts a ref', () => {
+    const ref = React.createRef<HTMLTableElement>();
+    render(<Table ref={ref}>Hello</Table>);
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const StyledTable = styled(Table)`
+        table {
+          color: #69ffc6;
+        }
+      `;
+
+      const { getByTestId } = render(
+        <StyledTable data-testid="styled">Some text</StyledTable>,
+      );
+
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const StyledTable = styled(Table)<StyledProps>`
+        table {
+          color: ${props => props.color};
+        }
+      `;
+
+      const { getByTestId } = render(
+        <StyledTable data-testid="styled" color="#69ffc6">
+          Some text
+        </StyledTable>,
+      );
+
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
+    });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const ref = React.createRef<HTMLTableElement>();
+
+    const { result: tableResults } = renderHook(() =>
+      useLeafyGreenTable<any>({
+        data: [],
+        columns: [
+          {
+            accessorKey: 'id',
+            size: 700,
+          },
+        ],
+      }),
+    );
+
+    const { result: virtualTableResults } = renderHook(() =>
+      useLeafyGreenVirtualTable<any>({
+        containerRef: React.createRef<HTMLDivElement>(),
+        data: [],
+        columns: [
+          {
+            accessorKey: 'id',
+            size: 700,
+          },
+        ],
+      }),
+    );
+
+    <>
+      <Table />
+      <Table ref={ref} />
+      <Table
+        ref={ref}
+        shouldAlternateRowColor={true}
+        darkMode={true}
+        shouldTruncate={true}
+        verticalAlignment="top"
+        baseFontSize={13}
+      />
+      <Table table={tableResults.current} />
+      <Table table={virtualTableResults.current} />
+    </>;
   });
 });

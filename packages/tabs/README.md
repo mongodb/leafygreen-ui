@@ -2,7 +2,7 @@
 
 ![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/tabs.svg)
 
-#### [View on MongoDB.design](https://www.mongodb.design/component/tabs/example/)
+#### [View on MongoDB.design](https://www.mongodb.design/component/tabs/live-example/)
 
 ## Installation
 
@@ -36,13 +36,13 @@ const [selected, setSelected] = useState(0)
 
 | Prop           | Type                     | Description                                                                                                                                                                                                                                                                                                    | Default     |
 | -------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `as`           | `React.ElementType`      | Sets the root element of all `<Tab />` components in `<Tabs />`. For example, setting as to `Link` will render each tab as a `<Link />` component rather than as a button.                                                                                                                                     | `button`    |
+| `baseFontSize` | `13` \| `16`             | Determines `font-size` for Tabs Component                                                                                                                                                                                                                                                                      | `13`        |
+| `children`     | `node`                   | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                                                                                            |             |
+| `className`    | `string`                 | Adds a className to the root element.                                                                                                                                                                                                                                                                          |             |
+| `darkMode`     | `boolean`                | Determines whether or not the component will appear in DarkMode                                                                                                                                                                                                                                                | `false`     |
 | `selected`     | `'number'` \| `'string'` | Index or name of the Tab that should appear active. If using the name, pass the text content from the `Tab` `name` prop. If selected is undefined, the `<Tabs />` component will behave as an uncontrolled component. If selected is passed a string or number that cannot be found, nothing will be selected. |             |
 | `setSelected`  | `function`               | A callback that receives the index or name of the tab a user is switching to when clicking, or via keyboard navigation. Usually this is used to set the selected prop to the correct index or name. The function is only invoked if the selected prop is set.                                                  |             |
-| `as`           | `React.ElementType`      | Sets the root element of all `<Tab />` components in `<Tabs />`. For example, setting as to `Link` will render each tab as a `<Link />` component rather than as a button.                                                                                                                                     | `button`    |
-| `className`    | `string`                 | Adds a className to the root element.                                                                                                                                                                                                                                                                          |             |
-| `children`     | `node`                   | `<Tab />` components that will be supplied to `<Tabs />` component.                                                                                                                                                                                                                                            |             |
-| `darkMode`     | `boolean`                | Determines whether or not the component will appear in DarkMode                                                                                                                                                                                                                                                | `false`     |
-| `baseFontSize` | `13` \| `16`             | Determines `font-size` for Tabs Component                                                                                                                                                                                                                                                                      | `13`        |
 | `size`         | `'small'` \| `'default'` | Determines `size` for Tabs Component                                                                                                                                                                                                                                                                           | `'default'` |
 
 _Any other properties supplied will be spread on the root element._
@@ -51,16 +51,17 @@ _Any other properties supplied will be spread on the root element._
 
 ## Properties
 
-| Prop              | Type                                               | Description                                                                                                               | Default |
-| ----------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `name` (Required) | `string`, `ReactNode`                              | String that will appear in the list of tabs.                                                                              |         |
-| `disabled`        | `boolean`                                          | Indicates whether or not the `<Tab />` can be clicked by a user.                                                          | `false` |
-| `default`         | `boolean`                                          | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default. |         |
-| `className`       | `string`                                           | Adds a className to the root element.                                                                                     |         |
-| `href`            | `string`                                           | Destination when Tab's `name` in the list should be rendered as an `a` tag.                                               |         |
-| `to`              | `string`                                           | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                             |         |
-| `children`        | `node`                                             | Content that appears inside the `<Tab />` component                                                                       |         |
-| ...               | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                        |         |
+| Prop              | Type                                               | Description                                                                                                                                             | Default |
+| ----------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `children`        | `node`                                             | Content that appears inside the `<Tab />` component                                                                                                     |         |
+| `className`       | `string`                                           | Adds a className to the root element.                                                                                                                   |         |
+| `default`         | `boolean`                                          | Should be supplied when using the uncontrolled `<Tabs />` component. This determines which tab will be active by default.                               |         |
+| `disabled`        | `boolean`                                          | Indicates whether or not the `<Tab />` can be clicked by a user.                                                                                        | `false` |
+| `index`           | `number`                                           | The index of the Tab instance. The index of the initially selected Tab is required in SSR environments to ensure the Tab is selected on initial render. |         |
+| `href`            | `string`                                           | Destination when Tab's `name` in the list should be rendered as an `a` tag.                                                                             |         |
+| `name` (Required) | `string`, `ReactNode`                              | String that will appear in the list of tabs.                                                                                                            |         |
+| `to`              | `string`                                           | Destination when Tab's `name` in the list should be rendered as a `Link` tag.                                                                           |         |
+| ...               | native attributes of component passed to `as` prop | Any other props will be spread on the root element                                                                                                      |         |
 
 # Test Harnesses
 

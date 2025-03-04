@@ -12,10 +12,7 @@ interface BuildOptions {
 
 const validSteps = ['build', 'tsc', 'docs'];
 
-export function build(
-  packages: Array<string>,
-  { only, verbose }: BuildOptions,
-) {
+export function build(packages: Array<string>, { only }: BuildOptions) {
   console.log({ packages, only });
 
   const steps = only ? only.filter(s => validSteps.includes(s)) : validSteps;

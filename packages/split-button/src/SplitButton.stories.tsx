@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-console */
-/* eslint-disable react/display-name */
+
 import React, { MouseEvent, useRef } from 'react';
 import {
   storybookArgTypes,
@@ -89,6 +89,11 @@ const meta: StoryMetaType<typeof SplitButton> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    renderDarkMenu: {
+      description:
+        'Whether the menu should always render dark, regardless of the theme context',
+      control: 'boolean',
+    },
     disabled: {
       control: 'boolean',
     },

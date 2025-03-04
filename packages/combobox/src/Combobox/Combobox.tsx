@@ -18,7 +18,6 @@ import isEqual from 'lodash/isEqual';
 import isNull from 'lodash/isNull';
 import isString from 'lodash/isString';
 import isUndefined from 'lodash/isUndefined';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { DEFAULT_MESSAGES, FormFieldFeedback } from '@leafygreen-ui/form-field';
@@ -56,10 +55,7 @@ import {
   getNullSelection,
   onChangeType,
   Overflow,
-  SearchState,
   SelectValueType,
-  State,
-  TruncationLocation,
 } from '../types';
 import {
   checkScrollPosition,
@@ -613,13 +609,12 @@ export function Combobox<M extends boolean>({
     ],
   );
 
-  // When the input value changes (or when the menu opens)
-  // Update the focused option
+  // Reset the highlighted option when the menu closes so that it opens to the first option
   useEffect(() => {
-    if (inputValue !== prevValue) {
+    if (!isOpen) {
       updateHighlightedOption('first');
     }
-  }, [inputValue, isOpen, prevValue, updateHighlightedOption]);
+  }, [isOpen, updateHighlightedOption]);
 
   // When the focused option changes, update the menu scroll if necessary
   useAutoScroll(
@@ -1228,8 +1223,6 @@ export function Combobox<M extends boolean>({
             </div>
           )}
 
-          {/* Disable eslint: onClick sets focus. Key events would already have focus */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div
             ref={comboboxRef}
             role="combobox"
@@ -1394,55 +1387,6 @@ export function Combobox<M extends boolean>({
     if (comboboxRef.current?.contains(element)) return ComboboxElement.Combobox;
   }
 }
-
-Combobox.propTypes = {
-  // Multiselect props
-  multiselect: PropTypes.bool,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  initialValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  overflow: PropTypes.oneOf(Object.values(Overflow)),
-
-  // Standard Props
-  darkMode: PropTypes.bool,
-  label: PropTypes.string,
-  'aria-label': PropTypes.string,
-  children: PropTypes.node,
-  onChange: PropTypes.func,
-  chipCharacterLimit: PropTypes.number,
-  chipTruncationLocation: PropTypes.oneOf(Object.values(TruncationLocation)),
-  onClear: PropTypes.func,
-  onFilter: PropTypes.func,
-  clearable: PropTypes.bool,
-  searchLoadingMessage: PropTypes.string,
-  searchErrorMessage: PropTypes.string,
-  searchEmptyMessage: PropTypes.string,
-  searchState: PropTypes.oneOf(Object.values(SearchState)),
-  errorMessage: PropTypes.string,
-  state: PropTypes.oneOf(Object.values(State)),
-  size: PropTypes.oneOf(Object.values(ComboboxSize)),
-  disabled: PropTypes.bool,
-  description: PropTypes.string,
-  placeholder: PropTypes.string,
-  filteredOptions: PropTypes.arrayOf(PropTypes.string),
-  // Popover Props
-  popoverZIndex: PropTypes.number,
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-  scrollContainer: PropTypes.elementType,
-  portalContainer: PropTypes.elementType,
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  portalClassName: PropTypes.string,
-};
 
 /**
  * Why'd you have to go and make things so complicated?

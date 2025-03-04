@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum 504e5bfe3a90cb5edeec0c13ecb639b9
+* @checksum b9c96303a02437d2f63447480cf7cb0e
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const NavCollapse = ({
 };
 NavCollapse.displayName = 'NavCollapse';
 NavCollapse.isGlyph = true;
-NavCollapse.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default NavCollapse;

@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { useInitDescendants } from '@leafygreen-ui/descendants';
@@ -148,10 +147,11 @@ const Tabs = <SelectedType extends number | string>(
       return child;
     }
 
-    const { disabled, onClick, onKeyDown, name, ...rest } = child.props;
+    const { disabled, index, onClick, onKeyDown, name, ...rest } = child.props;
 
     const tabProps = {
       disabled,
+      index,
       name,
       onKeyDown: (event: KeyboardEvent) => {
         onKeyDown?.(event);
@@ -174,12 +174,18 @@ const Tabs = <SelectedType extends number | string>(
       return child;
     }
 
-    const { children, disabled, 'data-testid': dataTestId } = child.props;
+    const {
+      children,
+      disabled,
+      'data-testid': dataTestId,
+      index,
+    } = child.props;
 
     return (
       <TabPanel
         data-testid={dataTestId ? `${dataTestId}-panel` : ''}
         disabled={disabled}
+        index={index}
       >
         {children}
       </TabPanel>
@@ -233,11 +239,5 @@ const Tabs = <SelectedType extends number | string>(
 };
 
 Tabs.displayName = 'Tabs';
-
-Tabs.propTypes = {
-  children: PropTypes.node,
-  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  className: PropTypes.string,
-};
 
 export default Tabs;

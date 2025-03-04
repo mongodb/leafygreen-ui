@@ -1,5 +1,4 @@
 import React from 'react';
-import propTypes from 'prop-types';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
@@ -46,10 +45,5 @@ const OrderedListItem = React.forwardRef(
 );
 
 OrderedListItem.displayName = 'OrderedListItem';
-
-OrderedListItem.propTypes = {
-  title: propTypes.node,
-  description: propTypes.node,
-};
 
 export { OrderedListItem };

@@ -1,7 +1,8 @@
 import React from 'react';
 
 import Icon from '@leafygreen-ui/icon';
-import { SegmentedControlOption } from '@leafygreen-ui/segmented-control';
+
+import { SegmentedControlOption } from './SegmentedControlOption';
 
 export const TestChildren = {
   Basic: [

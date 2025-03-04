@@ -1,5 +1,100 @@
 # @lg-chat/message
 
+## 5.0.6
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @lg-chat/leafygreen-chat-provider@3.0.2
+  - @lg-chat/lg-markdown@3.0.6
+  - @lg-chat/rich-links@2.0.5
+  - @leafygreen-ui/banner@9.0.5
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.6
+  - @leafygreen-ui/tokens@2.11.4
+  - @leafygreen-ui/typography@20.1.2
+
+## 5.0.5
+
+### Patch Changes
+
+- @lg-chat/lg-markdown@3.0.5
+
+## 5.0.4
+
+### Patch Changes
+
+- 796ca2765: - Properly sets dark mode font color when `sourceType` is `text`
+  - Adds generated story to test both light and dark modes
+- Updated dependencies [4d932fe13]
+  - @leafygreen-ui/typography@20.1.1
+  - @lg-chat/lg-markdown@3.0.4
+  - @lg-chat/rich-links@2.0.4
+  - @leafygreen-ui/banner@9.0.4
+
+## 5.0.3
+
+### Patch Changes
+
+- Updated dependencies [eb108e93b]
+  - @leafygreen-ui/typography@20.1.0
+  - @lg-chat/lg-markdown@3.0.3
+  - @lg-chat/rich-links@2.0.3
+  - @leafygreen-ui/banner@9.0.3
+
+## 5.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-chat/leafygreen-chat-provider@3.0.1
+  - @lg-chat/lg-markdown@3.0.2
+  - @lg-chat/rich-links@2.0.2
+  - @leafygreen-ui/banner@9.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/polymorphic@2.0.5
+  - @leafygreen-ui/tokens@2.11.3
+  - @leafygreen-ui/typography@20.0.2
+
+## 5.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @leafygreen-ui/polymorphic@2.0.4
+  - @leafygreen-ui/typography@20.0.1
+  - @lg-chat/lg-markdown@3.0.1
+  - @leafygreen-ui/palette@4.1.2
+  - @lg-chat/rich-links@2.0.1
+  - @leafygreen-ui/banner@9.0.1
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/lib@14.0.1
+
+## 5.0.0
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @lg-chat/leafygreen-chat-provider@3.0.0
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/typography@20.0.0
+  - @leafygreen-ui/banner@9.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @lg-chat/rich-links@2.0.0
+  - @lg-chat/lg-markdown@3.0.0
+  - @leafygreen-ui/polymorphic@2.0.3
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 4.3.0
 
 ### Minor Changes

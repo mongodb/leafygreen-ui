@@ -5,7 +5,7 @@ import {
   StoryMetaType,
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
-import { userEvent, within } from '@storybook/testing-library';
+import { userEvent, within } from '@storybook/test';
 
 import { css, cx } from '@leafygreen-ui/emotion';
 import BeakerIcon from '@leafygreen-ui/icon/dist/Beaker';

@@ -3,24 +3,33 @@ import { PropsWithChildren } from 'react';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { TableProps } from '../Table/Table.types';
-import {
-  LeafyGreenTable,
-  LeafyGreenTableRow,
-  LGRowData,
-} from '../useLeafyGreenTable';
+import { LGRowData } from '../useLeafyGreenTable';
+import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable';
 
-export type TableContextValues<T extends LGRowData> = PropsWithChildren<
-  Pick<TableProps<T>, 'table' | 'shouldAlternateRowColor' | 'disableAnimations'>
+interface BaseTableContextValue<T extends LGRowData> {
+  /**
+   * Whether the table is using virtual scrolling
+   */
+  isVirtual?: boolean;
+
+  /**
+   * Whether rows in the table are selectable
+   */
+  isSelectable?: boolean;
+
+  /**
+   * Available [properties and methods](https://tanstack.com/virtual/latest/docs/api/virtualizer#virtualizer-instance) returned from the Virtualizer instance.
+   */
+  virtualTable?: LeafyGreenVirtualTable<T>['virtual'];
+}
+
+type PartialTableProps<T extends LGRowData> = Pick<
+  TableProps<T>,
+  'shouldAlternateRowColor' | 'shouldTruncate' | 'verticalAlignment'
+>;
+
+export type TableProviderProps<T extends LGRowData> = PropsWithChildren<
+  PartialTableProps<T>
 > &
-  DarkModeProps & {
-    /** returns the table row object with the provided `id` */
-    getRowById?: (id?: string) => LeafyGreenTableRow<T> | undefined;
-
-    /** returns the parent table row object for the provided `id` if it is nested */
-    getParentRow?: (id?: string) => LeafyGreenTableRow<T> | undefined;
-
-    /**
-     * The `useLeafyGreenTable` return value
-     */
-    table?: LeafyGreenTable<T>;
-  };
+  DarkModeProps &
+  BaseTableContextValue<T>;

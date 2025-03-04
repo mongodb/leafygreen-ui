@@ -3,7 +3,11 @@
   "editor.formatOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "prettier.configPath": "node_modules/@lg-tools/lint/config/prettier.config.js",
-  "eslint.lintTask.options": "--config ./tools/lint/eslint.config.mjs",
+  "eslint.nodePath": "tools/lint/node_modules/eslint",
+  "eslint.options": {
+    "overrideConfigFile": "./eslint.config.mjs"
+  },
+  "eslint.enable": true,
   "eslint.useFlatConfig": true,
   "eslint.lintTask.enable": true,
   "eslint.format.enable": true,

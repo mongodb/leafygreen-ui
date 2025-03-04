@@ -110,11 +110,9 @@ const meta: StoryMetaType<typeof FeaturesEmptyState> = {
 export default meta;
 
 const Template: StoryFn<FeaturesEmptyStateProps> = props => {
-  // eslint-disable-next-line react/prop-types
   const theme = props.darkMode ? Theme.Dark : Theme.Light;
 
   // replace graphic props with appropriate graphic for theme
-  // eslint-disable-next-line react/prop-types
   const features = props.features.map((feature, index) => {
     return {
       ...feature,

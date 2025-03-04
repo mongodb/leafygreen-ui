@@ -1,5 +1,4 @@
 import React, { useCallback, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import {
   getDescendantById,
@@ -290,29 +289,5 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 });
 
 Menu.displayName = 'Menu';
-
-Menu.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
-  align: PropTypes.oneOf(Object.values(Align)),
-  justify: PropTypes.oneOf(Object.values(Justify)),
-  refEl: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  portalRef: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  renderMode: PropTypes.oneOf(Object.values(RenderMode)),
-  trigger: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-  darkMode: PropTypes.bool,
-} as any;
 
 export default Menu;

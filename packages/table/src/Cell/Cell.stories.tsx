@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react/display-name */
-/* eslint-disable react/prop-types*/
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 
@@ -10,7 +7,7 @@ import InternalRowBase from '../Row/InternalRowBase';
 import Table from '../Table';
 import TableBody from '../TableBody';
 
-import InternalCell from './InternalCell';
+import InternalCell from './InternalCellBase';
 
 const meta: StoryMetaType<typeof InternalCell> = {
   title: 'Components/Table/Cell',
@@ -20,11 +17,9 @@ const meta: StoryMetaType<typeof InternalCell> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        depth: [0, 1],
         align: ['left', 'center', 'right'],
       },
       args: {
-        cellIndex: 0,
         children: 'Cell content',
       },
       decorator: (Instance, ctx) => {

@@ -26,7 +26,6 @@ const meta: StoryMetaType<typeof Box, BoxProps> = {
 };
 export default meta;
 
-// eslint-disable-next-line react/prop-types
 const Template: StoryFn<BoxProps> = ({ as, ...args }: BoxProps) => (
   <Box as={(as ? as : 'div') as keyof JSX.IntrinsicElements} {...args} />
 );

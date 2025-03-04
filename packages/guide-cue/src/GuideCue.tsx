@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
-import PropTypes from 'prop-types';
 
 import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
@@ -174,47 +173,5 @@ function GuideCue({
 }
 
 GuideCue.displayName = 'GuideCue';
-GuideCue.propTypes = {
-  children: PropTypes.node,
-  darkMode: PropTypes.bool,
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-  refEl: PropTypes.shape({
-    current:
-      typeof window !== 'undefined'
-        ? PropTypes.instanceOf(Element)
-        : PropTypes.any,
-  }),
-  numberOfSteps: PropTypes.number.isRequired,
-  currentStep: function (props: { [x: string]: any }, propName: string) {
-    // if numberOfSteps > 1 and currentStep is not a number then throw error
-    if (props['numberOfSteps'] > 1 && typeof props[propName] !== 'number') {
-      return new Error(
-        '`currentStep` prop of type `number` is required if numberOfSteps > 1',
-      );
-    }
-
-    // if numberOfSteps <= 1 && currentStep prop exist and it is not a number make sure its a number
-    if (
-      props['numberOfSteps'] <= 1 &&
-      props[propName] !== undefined &&
-      typeof props[propName] !== 'number'
-    ) {
-      return new Error(
-        `'currentStep' prop is invalid. Type '${typeof props[
-          propName
-        ]}' supplied to 'currentStep', expected 'number'`,
-      );
-    }
-  },
-  title: PropTypes.string,
-  tooltipClassName: PropTypes.string,
-  buttonText: PropTypes.string,
-  onDismiss: PropTypes.func,
-  onPrimaryButtonClick: PropTypes.func,
-  tooltipAlign: PropTypes.oneOf(Object.values(TooltipAlign)),
-  tooltipJustify: PropTypes.oneOf(Object.values(TooltipJustify)),
-  beaconAlign: PropTypes.oneOf(Object.values(Align)),
-};
 
 export default GuideCue;

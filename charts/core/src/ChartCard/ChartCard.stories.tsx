@@ -2,29 +2,35 @@ import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
-import { Combobox, ComboboxOption } from '@leafygreen-ui/combobox';
-import Icon from '@leafygreen-ui/icon';
-import IconButton from '@leafygreen-ui/icon-button';
-
 import { HeaderProps } from '../Header/Header.types';
-import { makeLineData } from '../testUtils';
-import { SortDirection, SortKey } from '../Tooltip/Tooltip.types';
-import {
-  Chart,
-  ChartCard,
-  Grid,
-  Header,
-  Line,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from '..';
+import { ChartCard } from '..';
 
 export default {
   title: 'Charts/ChartCard',
   component: ChartCard,
+  parameters: {
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        isOpen: [false, true],
+      },
+    },
+  },
   args: {
     chartCardTitle: 'LeafyGreen ChartCard',
+    headerContent: (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'right',
+          alignItems: 'center',
+          height: '100%',
+        }}
+      >
+        Header Content
+      </div>
+    ),
+    children: <div style={{ height: '300px' }}></div>,
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -32,8 +38,25 @@ export default {
       control: 'text',
       description: 'ChartCard title',
       name: 'Title',
+    },
+    children: {
       table: {
-        category: 'ChartCard',
+        disable: true,
+      },
+    },
+    defaultOpen: {
+      table: {
+        disable: true,
+      },
+    },
+    headerContent: {
+      table: {
+        disable: true,
+      },
+    },
+    isOpen: {
+      table: {
+        disable: true,
       },
     },
   },
@@ -41,89 +64,18 @@ export default {
 
 interface ChartCardProps {
   chartCardTitle: HeaderProps['title'];
+  children: React.ReactNode;
+  headerContent: React.ReactNode;
 }
 
-export const Basic: StoryObj<ChartCardProps> = {
-  render: ({ chartCardTitle }) => {
-    return <ChartCard title={chartCardTitle}></ChartCard>;
-  },
-};
-
-export const WithHeaderContent: StoryObj<ChartCardProps> = {
-  render: ({ chartCardTitle }) => {
+export const LiveExample: StoryObj<ChartCardProps> = {
+  render: ({ chartCardTitle, children, headerContent }) => {
     return (
-      <ChartCard
-        title={chartCardTitle}
-        headerContent={
-          <div style={{ display: 'flex', justifyContent: 'right' }}>
-            <Combobox
-              multiselect
-              label=""
-              initialValue={['User', 'Kernal']}
-              size="small"
-              style={{ maxWidth: '300px', marginRight: '8px' }}
-            >
-              <ComboboxOption value="User" />
-              <ComboboxOption value="Kernal" />
-              <ComboboxOption value="Other" />
-            </Combobox>
-            <IconButton aria-label="FullScreen">
-              <Icon glyph="FullScreenEnter" />
-            </IconButton>
-            <IconButton aria-label="Close">
-              <Icon glyph="X" />
-            </IconButton>
-          </div>
-        }
-      ></ChartCard>
-    );
-  },
-};
-
-export const ContainingChart: StoryObj<ChartCardProps> = {
-  render: ({ chartCardTitle }) => {
-    return (
-      <ChartCard title={chartCardTitle}>
-        <Chart>
-          <Header title="Chart 1" showDivider />
-          <Grid vertical={false} />
-          <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
-          <XAxis type="time" />
-          <YAxis type="value" />
-          {makeLineData(20).map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
+      <ChartCard title={chartCardTitle} headerContent={headerContent}>
+        {children}
       </ChartCard>
     );
   },
 };
 
-export const ContainingMultiCharts: StoryObj<ChartCardProps> = {
-  render: ({ chartCardTitle }) => {
-    return (
-      <ChartCard title={chartCardTitle}>
-        <Chart>
-          <Header title="Chart 1" showDivider />
-          <Grid vertical={false} />
-          <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
-          <XAxis type="time" />
-          <YAxis type="value" />
-          {makeLineData(20).map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart>
-          <Header title="Chart 2" showDivider />
-          <Grid vertical={false} />
-          <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
-          <XAxis type="time" />
-          <YAxis type="value" />
-          {makeLineData(20).map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-      </ChartCard>
-    );
-  },
-};
+export const Generated = () => {};

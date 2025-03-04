@@ -1,5 +1,87 @@
 # @lg-tools/storybook-decorators
 
+## 0.4.1
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/banner@9.0.5
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.11.4
+  - @lg-tools/storybook-utils@0.2.1
+  - @lg-tools/build@0.7.3
+
+## 0.4.0
+
+### Minor Changes
+
+- 5eb01750b: Upgrades to Storybook 8.5
+
+### Patch Changes
+
+- Updated dependencies [5eb01750b]
+  - @lg-tools/storybook-utils@0.2.0
+
+## 0.3.4
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.4
+
+## 0.3.3
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.3
+
+## 0.3.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/banner@9.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/tokens@2.11.3
+  - @lg-tools/build@0.7.2
+  - @lg-tools/storybook-utils@0.1.3
+
+## 0.3.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @lg-tools/storybook-utils@0.1.2
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/banner@9.0.1
+  - @leafygreen-ui/tokens@2.11.2
+
+## 0.3.0
+
+### Minor Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/banner@9.0.0
+  - @lg-tools/build@0.7.0
+  - @leafygreen-ui/tokens@2.11.1
+
+## 0.2.12
+
+### Patch Changes
+
+- 7a83cd4c6: Removes `overflow: auto` from `rootStyles`.
+
 ## 0.2.11
 
 ### Patch Changes

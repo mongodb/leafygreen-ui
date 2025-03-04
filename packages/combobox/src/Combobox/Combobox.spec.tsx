@@ -741,6 +741,37 @@ describe('packages/combobox', () => {
         expect(optionElements).toHaveLength(defaultOptions.length);
       });
 
+      test('First item is highlighted when re-opened after selection is made', async () => {
+        const initialValue = 'banana'; // Select an option that is not the first one
+        const { comboboxEl, getMenuElements } = renderCombobox('single', {
+          initialValue,
+        });
+
+        // Open the combobox
+        userEvent.click(comboboxEl);
+        let { optionElements } = getMenuElements();
+        expect(optionElements).toHaveLength(defaultOptions.length);
+
+        // Verify that the first item is highlighted
+        expect(
+          (optionElements as HTMLCollectionOf<HTMLLIElement>)[0],
+        ).toHaveAttribute('aria-selected', 'true');
+
+        // Click the same option again to close the menu
+        userEvent.click(
+          (optionElements as HTMLCollectionOf<HTMLLIElement>)[1], // Click the second option
+        );
+
+        // Open the combobox again
+        userEvent.click(comboboxEl);
+        optionElements = getMenuElements().optionElements;
+
+        // Verify that the first item is highlighted again
+        expect(
+          (optionElements as HTMLCollectionOf<HTMLLIElement>)[0],
+        ).toHaveAttribute('aria-selected', 'true');
+      });
+
       describe('Clickaway', () => {
         test('Menu closes on click-away', async () => {
           const { containerEl, openMenu } = renderCombobox(select);
@@ -1297,16 +1328,16 @@ describe('packages/combobox', () => {
         );
         testSingleSelect(
           'When cursor is at the beginning of input, Left arrow does nothing',
-          () => {
+          async () => {
             const { inputEl } = renderCombobox(select);
             userEvent.type(inputEl, '{arrowleft}');
-            waitFor(() => expect(inputEl).toHaveFocus());
+            await waitFor(() => expect(inputEl).toHaveFocus());
           },
         );
-        test('If cursor is NOT at the beginning of input, Left arrow key moves cursor', () => {
+        test('If cursor is NOT at the beginning of input, Left arrow key moves cursor', async () => {
           const { inputEl } = renderCombobox(select);
           userEvent.type(inputEl, 'abc{arrowleft}');
-          waitFor(() => expect(inputEl).toHaveFocus());
+          await waitFor(() => expect(inputEl).toHaveFocus());
         });
 
         test('When focus is on clear button, Left arrow moves focus to input', async () => {
@@ -1326,8 +1357,8 @@ describe('packages/combobox', () => {
             const { queryChipsByIndex, inputEl } = renderCombobox(select, {
               initialValue,
             });
-            const secondChip = queryChipsByIndex(1);
             userEvent.type(inputEl, '{arrowleft}{arrowleft}');
+            const secondChip = queryChipsByIndex(1);
             expect(secondChip).toContainFocus();
           },
         );
@@ -1589,12 +1620,12 @@ describe('packages/combobox', () => {
      * onChange
      */
     describe('onChange', () => {
-      test('Selecting an option calls onChange callback', () => {
+      test('Selecting an option calls onChange callback', async () => {
         const onChange = jest.fn();
         const { openMenu } = renderCombobox(select, { onChange });
         const { optionElements } = openMenu();
         userEvent.click(optionElements![0]);
-        waitFor(() => {
+        await waitFor(() => {
           expect(onChange).toHaveBeenCalled();
         });
       });

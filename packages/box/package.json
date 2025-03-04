@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/box",
-  "version": "3.1.9",
+  "version": "4.0.3",
   "description": "leafyGreen UI Kit Box",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +30,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
-  }
+  "devDependencies": {}
 }

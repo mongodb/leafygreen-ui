@@ -1,8 +1,8 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
@@ -50,7 +50,7 @@ const meta: StoryMetaType<
       combineArgs: {
         darkMode: [false, true],
         value: [null, new Date('1993-12-26')],
-        locale: ['iso8601', 'en-US', 'en-UK', 'de-DE'],
+        locale: [...Object.values(SupportedLocales)],
         size: Object.values(Size),
       },
       decorator: ProviderWrapper,
@@ -58,7 +58,7 @@ const meta: StoryMetaType<
   },
   args: {
     label: 'Label',
-    locale: 'en-UK',
+    locale: SupportedLocales.en_GB,
     timeZone: 'Europe/London',
   },
   argTypes: {

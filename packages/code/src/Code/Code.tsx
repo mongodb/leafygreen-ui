@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import debounce from 'lodash/debounce';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
@@ -293,25 +292,5 @@ function Code({
 }
 
 Code.displayName = 'Code';
-
-Code.propTypes = {
-  children: PropTypes.string.isRequired,
-  language: PropTypes.oneOfType([
-    PropTypes.oneOf(Object.values(Language)),
-    PropTypes.string,
-  ]),
-  darkMode: PropTypes.bool,
-  className: PropTypes.string,
-  showLineNumbers: PropTypes.bool,
-  lineNumberStart: PropTypes.number,
-  showWindowChrome: PropTypes.bool,
-  chromeTitle: PropTypes.string,
-  highlightLines: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.number),
-      PropTypes.number,
-    ]),
-  ),
-};
 
 export default Code;

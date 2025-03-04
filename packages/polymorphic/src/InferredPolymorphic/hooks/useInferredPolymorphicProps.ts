@@ -23,7 +23,9 @@ export function useInferredPolymorphicProps<
   rest?: R,
   defaultAs?: D,
 ): {
+  /** The element or component to render as */
   as: PolymorphicAs;
+  /** The URL that the hyperlink points to */
   href?: string;
 } & ComponentPropsWithoutRef<PolymorphicAs> {
   const href = rest?.href;

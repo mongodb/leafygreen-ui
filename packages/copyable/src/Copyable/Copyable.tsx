@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
-import PropTypes from 'prop-types';
 
 import Button from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
@@ -56,7 +55,7 @@ export default function Copyable({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const [copied, setCopied] = useState(false);
   const [showCopyButton, setShowCopyButton] = useState(false);
-  const [buttonRef, setButtonRef] = useState<HTMLButtonElement>();
+  const [buttonRef, setButtonRef] = useState<HTMLButtonElement | null>(null);
   const codeRef = useRef<HTMLElement>(null);
 
   const { portalContainer } = usePopoverPortalContainer();
@@ -108,7 +107,7 @@ export default function Copyable({
     }
 
     return () => clipboard.destroy();
-  }, [buttonRef, children, copied, portalContainer]);
+  }, [buttonRef, children, copied, onCopy, portalContainer]);
 
   return (
     <>
@@ -200,13 +199,3 @@ export default function Copyable({
 }
 
 Copyable.displayName = 'Copyable';
-
-Copyable.propTypes = {
-  darkMode: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(Size)),
-  children: PropTypes.string.isRequired,
-  label: PropTypes.string,
-  description: PropTypes.string,
-  className: PropTypes.string,
-  copyable: PropTypes.bool,
-};

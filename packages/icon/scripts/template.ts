@@ -50,7 +50,6 @@ module.exports = function template(
 
   return typeScriptTpl(`
     %%imports%%
-    import PropTypes from 'prop-types';
     import { css, cx } from '@leafygreen-ui/emotion';
     import { generateAccessibleProps, sizeMap } from '../glyphCommon';
     import { LGGlyph } from '../types';
@@ -83,12 +82,6 @@ module.exports = function template(
     ${componentName}.displayName = '${componentName}';
 
     ${componentName}.isGlyph = true;
-
-    ${componentName}.propTypes = {
-        fill: PropTypes.string,
-        size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        className: PropTypes.string,
-    };
 
     %%exports%%
   `)({

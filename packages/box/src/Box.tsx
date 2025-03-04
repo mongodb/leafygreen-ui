@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 type Override<T, U> = Omit<T, keyof U> & U;
 type Override2<T, U, V> = Override<Override<T, U>, V>;
@@ -98,16 +97,6 @@ InlineBox.displayName = 'InlineBox';
 const Box = React.forwardRef(InlineBox) as typeof InlineBox;
 
 Box.displayName = 'Box';
-
-// @ts-expect-error
-Box.propTypes = {
-  as: PropTypes.oneOfType([
-    PropTypes.elementType,
-    PropTypes.element,
-    PropTypes.func,
-  ]),
-  href: PropTypes.string,
-};
 
 export default Box;
 

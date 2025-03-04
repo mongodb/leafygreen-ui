@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 import NextLink from 'next/link';
 
-import { BoxProps } from '@leafygreen-ui/box';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
 import { ButtonProps } from '../types';
@@ -15,7 +14,7 @@ const className = 'test-button-class';
 const title = 'Test button title';
 const child = 'Button child';
 
-function renderButton(props: BoxProps<'button', ButtonProps> = {}) {
+function renderButton(props: ButtonProps = {}) {
   const utils = render(<Button {...props} data-testid="button-id" />);
   const { getButton, isDisabled } = getTestUtils();
   const button = getButton();
@@ -131,14 +130,6 @@ describe('packages/button', () => {
       expect(button.tagName.toLowerCase()).toBe('button');
     });
 
-    test(`renders component inside of \`div\` tag when "href" prop is set, but "disabled" is true`, () => {
-      const { button } = renderButton({
-        href: 'http://mongodb.design',
-        disabled: true,
-      });
-      expect(button.tagName.toLowerCase()).toBe('button');
-    });
-
     test(`renders a button as another HTML element if the "as" prop is set`, () => {
       const { container, button } = renderButton({
         as: 'div',
@@ -148,7 +139,6 @@ describe('packages/button', () => {
     });
 
     test(`renders a when passing in a NextJS Link wrapper`, () => {
-      // eslint-disable-next-line react/prop-types
       const Linker = ({ href, children, ...props }: any) => (
         <NextLink href={href} {...props}>
           {children}
@@ -165,7 +155,6 @@ describe('packages/button', () => {
     });
 
     test(`renders a when passing in a legacy NextJS Link wrapper`, () => {
-      // eslint-disable-next-line react/prop-types
       const Linker = ({ href, children, ...props }: any) => (
         <NextLink legacyBehavior href={href}>
           <a {...props}>{children}</a>
@@ -299,7 +288,7 @@ describe('packages/button', () => {
     });
   });
 
-  /* eslint-disable jest/no-disabled-tests, jest/expect-expect*/
+  /* eslint-disable jest/no-disabled-tests*/
   describe.skip('types behave as expected', () => {
     test('does not throw an error when no children are passed to the component', () => {
       <Button onClick={() => {}} />;

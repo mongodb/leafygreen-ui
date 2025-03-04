@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import styled from '@emotion/styled';
 import { flexRender } from '@tanstack/react-table';
-import { getAllByRole } from '@testing-library/dom';
-import { fireEvent, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Cell } from '../Cell';
 import { Row } from '../Row';
@@ -9,15 +12,17 @@ import TableBody from '../TableBody';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
-import { useTestHookCall } from '../utils/testHookCalls.testutils';
+import {
+  useMockTestRowData,
+  useTestHookCall,
+} from '../utils/testHookCalls.testutils';
 import { Table } from '..';
 
 import ExpandedContent from './ExpandedContent';
 
 const RowWithExpandableContent = args => {
-  const { containerRef, table } = useTestHookCall({
+  const { table } = useTestHookCall({
     rowProps: {
-      // eslint-disable-next-line react/display-name
       renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
         return <>Expandable content test</>;
       },
@@ -25,7 +30,7 @@ const RowWithExpandableContent = args => {
   });
 
   return (
-    <div ref={containerRef}>
+    <div>
       <Table table={table} {...args}>
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
@@ -38,22 +43,25 @@ const RowWithExpandableContent = args => {
         </thead>
         <TableBody>
           {table.getRowModel().rows.map((row: LeafyGreenTableRow<Person>) => {
+            const isExpandedContent = row.isExpandedContent ?? false;
             return (
-              <Row key={row.id} row={row}>
-                {row.getVisibleCells().map(cell => {
-                  return (
-                    <Cell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </Cell>
-                  );
-                })}
-                {row.original.renderExpandedContent && (
-                  <ExpandedContent row={row} />
+              <Fragment key={row.id}>
+                {!isExpandedContent && (
+                  <Row row={row}>
+                    {row.getVisibleCells().map(cell => {
+                      return (
+                        <Cell key={cell.id} cell={cell}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </Cell>
+                      );
+                    })}
+                  </Row>
                 )}
-              </Row>
+                {isExpandedContent && <ExpandedContent row={row} />}
+              </Fragment>
             );
           })}
         </TableBody>
@@ -76,42 +84,100 @@ describe('packages/table/Row/ExpandableContent', () => {
       'Expand row',
     );
   });
-  test('rows with expandable content render rows as tbody elements', async () => {
-    const { getAllByRole } = render(<RowWithExpandableContent />);
-    expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
-  });
-  // eslint-disable-next-line jest/no-disabled-tests
-  test.skip('clicking expand icon button renders collapse button and expanded content', async () => {
-    const { getByLabelText, queryByText } = render(
-      <RowWithExpandableContent />,
-    );
-    const expandIconButton = getByLabelText('Expand row');
+
+  test('clicking expand icon button renders collapse button and expanded content', async () => {
+    const { queryByText } = render(<RowWithExpandableContent />);
+    const { getRowByIndex } = getTestUtils();
+
+    const toggleRowButton = getRowByIndex(0)?.getExpandButton();
+    expect(toggleRowButton).toHaveAttribute('aria-label', 'Expand row');
     expect(queryByText('Expandable content test')).not.toBeInTheDocument();
-    fireEvent.click(expandIconButton);
-    const collapseIconButton = getByLabelText('collapse row');
-    expect(collapseIconButton).toBeInTheDocument();
+
+    userEvent.click(toggleRowButton!);
+    expect(toggleRowButton).toHaveAttribute('aria-label', 'Collapse row');
     expect(queryByText('Expandable content test')).toBeInTheDocument();
   });
 
-  describe('disabled animations', () => {
-    test('renders the correct number of cell children with disabled animations', () => {
-      render(<RowWithExpandableContent disableAnimations />);
-      const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getAllCells()).toHaveLength(6);
-    });
-    test('rows with expandable content render expand icon button with disabled animations', async () => {
-      render(<RowWithExpandableContent disableAnimations />);
-      const { getRowByIndex } = getTestUtils();
-      expect(getRowByIndex(0)?.getExpandButton()).toHaveAttribute(
-        'aria-label',
-        'Expand row',
+  test('Accepts a ref', () => {
+    const ref = React.createRef<HTMLTableRowElement>();
+
+    const rowObj = {
+      id: '1',
+      getVisibleCells: () => ({
+        length: 1,
+      }),
+      original: {
+        renderExpandedContent: (_: LeafyGreenTableRow<Person>) => {
+          return <>Hello</>;
+        },
+      },
+    };
+    render(
+      // @ts-expect-error - dummy row data is missing properties
+      <ExpandedContent row={rowObj} ref={ref}>
+        Hello
+      </ExpandedContent>,
+    );
+
+    expect(ref.current).toBeInTheDocument();
+    expect(ref.current!.textContent).toBe('Hello');
+  });
+
+  describe('styled', () => {
+    test('works with `styled`', () => {
+      const { result } = renderHook(() => useMockTestRowData());
+      const mockRow = result.current.firstRow;
+
+      const StyledExpandedContent = styled(ExpandedContent)`
+        color: #69ffc6;
+      ` as typeof ExpandedContent;
+
+      const { getByTestId } = render(
+        <StyledExpandedContent row={mockRow} data-testid="styled" />,
       );
+
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
-    test('rows with expandable content render rows as tbody elements with disabled animations', async () => {
-      const { getAllByRole } = render(
-        <RowWithExpandableContent disableAnimations />,
+
+    test('works with `styled` props', () => {
+      // We need to define the additional props that styled should expect
+      interface StyledProps {
+        color?: string;
+      }
+      const { result } = renderHook(() => useMockTestRowData());
+      const mockRow = result.current.firstRow;
+
+      const StyledExpandedContent = styled(ExpandedContent)<StyledProps>`
+        color: ${props => props.color};
+      ` as typeof ExpandedContent;
+
+      const { getByTestId } = render(
+        <StyledExpandedContent
+          data-testid="styled"
+          row={mockRow}
+          color="#69ffc6"
+        />,
       );
-      expect(getAllByRole('rowgroup').length).toBe(4); // 1 for thead, 3 for tbody
+
+      expect(getByTestId('styled')).toHaveStyle(`color: #69ffc6;`);
     });
+  });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types behave as expected', () => {
+    const { result } = renderHook(() => useMockTestRowData());
+    const { firstRow, firstVirtualRow } = result.current;
+    const ref = React.createRef<HTMLTableRowElement>();
+
+    <>
+      {/* @ts-expect-error - row is missing */}
+      <ExpandedContent />
+
+      <ExpandedContent row={firstRow} />
+      <ExpandedContent row={firstRow} ref={ref} />
+
+      <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} />
+      <ExpandedContent row={firstRow} virtualRow={firstVirtualRow} ref={ref} />
+    </>;
   });
 });

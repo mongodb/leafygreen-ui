@@ -16,21 +16,43 @@ export type HrefLike = string | NodeUrlLike;
 /** Either an anchor tag, or a component that accepts an `href` */
 export type AnchorLike =
   | 'a'
-  | ComponentType<{ href: string }>
-  | ComponentType<{ href: NodeUrlLike }>;
+  | ComponentType<{
+      /**
+       * The URL that the hyperlink points to
+       */
+      href: string;
+    }>
+  | ComponentType<{
+      /**
+       * The URL object for the hyperlink
+       */
+      href: NodeUrlLike;
+    }>;
 
 /**
  * Wrapping props in this type ensures that if `href` is defined,
  * the `as` type can only be `AnchorLike`, and all anchor props are accepted
  */
 export interface AnchorLikeProps<TAsProp extends AnchorLike | undefined> {
+  /**
+   * The URL that the hyperlink points to or a URL object
+   */
   href: string | NodeUrlLike;
+  /**
+   * The element or component to render as
+   */
   as?: TAsProp extends undefined ? 'a' : TAsProp;
 }
 
 /** Anchor props where `href` is required */
 export type InferredAnchorProps = {
+  /**
+   * The URL that the hyperlink points to
+   */
   href: string;
+  /**
+   * The element or component to render as
+   */
   as?: 'a';
 } & ComponentPropsWithRef<'a'>;
 
@@ -38,6 +60,9 @@ export type InferredAnchorProps = {
  * Union of {@link AnchorLikeProps} and {@link InheritedProps}
  */
 export type InheritedExplicitAnchorLikeProps<TAsProp extends AnchorLike> = {
+  /**
+   * The element or component to render as
+   */
   as?: TAsProp;
 } & Omit<PartialRequired<ComponentPropsWithRef<TAsProp>, 'href'>, 'as'>;
 

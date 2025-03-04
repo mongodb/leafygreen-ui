@@ -98,21 +98,25 @@ const unsetAxisOptions = {
  * </Chart>
  */
 export function XAxis({ type, label, formatter }: XAxisProps) {
-  const { updateChartOptions } = useChartContext();
+  const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    updateChartOptions(getOptions({ type, label, formatter, theme }));
+    if (!chart.ready) return;
+
+    chart.updateOptions(getOptions({ type, label, formatter, theme }));
 
     return () => {
       /**
        * Hides the axis when the component is unmounted.
-       */
-      updateChartOptions({
+       */ chart.updateOptions;
+      chart.updateOptions({
         xAxis: unsetAxisOptions,
       });
     };
-  }, [type, label, formatter, theme, updateChartOptions]);
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type, label, formatter, theme, chart.ready]);
 
   return null;
 }

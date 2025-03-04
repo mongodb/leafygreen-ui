@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useEscapeKey, useMergeRefs } from '@leafygreen-ui/hooks';
@@ -11,7 +10,7 @@ import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import CloseButton from '../CloseButton';
 
 import { modalStyles } from './Modal.styles';
-import { CloseIconColor, ModalProps, ModalSize } from './Modal.types';
+import { ModalProps, ModalSize } from './Modal.types';
 
 /**
  *
@@ -117,16 +116,5 @@ const Modal = React.forwardRef(
 );
 
 Modal.displayName = 'Modal';
-
-Modal.propTypes = {
-  open: PropTypes.bool,
-  size: PropTypes.oneOf(Object.values(ModalSize)),
-  children: PropTypes.node,
-  shouldClose: PropTypes.func,
-  className: PropTypes.string,
-  setOpen: PropTypes.func,
-  darkMode: PropTypes.bool,
-  closeIconColor: PropTypes.oneOf(Object.values(CloseIconColor)),
-};
 
 export default Modal;

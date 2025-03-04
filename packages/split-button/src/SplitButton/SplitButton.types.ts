@@ -1,7 +1,7 @@
 import { MouseEventHandler, ReactElement } from 'react';
 
 import {
-  type ButtonProps as ImportedButtonProps,
+  type BaseButtonProps,
   Variant as ButtonVariants,
 } from '@leafygreen-ui/button';
 import { DarkModeProps } from '@leafygreen-ui/lib';
@@ -46,25 +46,25 @@ export const Justify = {
 
 export type Justify = (typeof Justify)[keyof typeof Justify];
 
-// TODO: remove `href` and `as` when Button is updated to use `InferredPolymorphic`
-// https://jira.mongodb.org/browse/LG-3260
-type ButtonProps = Omit<
-  ImportedButtonProps,
-  'rightGlyph' | 'href' | 'as' | 'variant'
->;
+type ButtonProps = Omit<BaseButtonProps, 'rightGlyph' | 'variant'>;
 
-export type SelectedMenuProps = Omit<
+export type SelectedMenuProps = Pick<
   ImportedMenuProps,
-  | 'children'
-  | 'trigger'
-  | 'shouldClose'
   | 'darkMode'
-  | 'onClick'
+  | 'maxHeight'
+  | 'adjustOnMutation'
+  | 'popoverZIndex'
+  | 'renderDarkMenu'
+  | 'renderMode'
+  | 'portalClassName'
+  | 'portalContainer'
+  | 'portalRef'
+  | 'scrollContainer'
   | 'align'
   | 'justify'
-  | 'className'
-  | 'refEl'
-  | 'spacing'
+  | 'id'
+  | 'open'
+  | 'setOpen'
 >;
 
 export interface MenuProps extends SelectedMenuProps {
@@ -115,7 +115,7 @@ export interface MenuProps extends SelectedMenuProps {
   onChange?: MouseEventHandler;
 }
 
-export interface SplitButtonProps
+export interface InternalSplitButtonProps
   extends DarkModeProps,
     ButtonProps,
     MenuProps {
@@ -130,4 +130,13 @@ export interface SplitButtonProps
    * The text that will appear inside of the primary button.
    */
   label: string;
+
+  /**
+   * A test id put onto the root element.
+   */
+  'data-testid'?: string;
 }
+
+// External only
+export type SplitButtonProps<TAsProp extends PolymorphicAs = 'button'> =
+  InferredPolymorphicProps<TAsProp, InternalSplitButtonProps>;

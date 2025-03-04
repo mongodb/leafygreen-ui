@@ -5,6 +5,7 @@ import { WithMessageRating as MessageFeedbackStory } from '@lg-chat/message-feed
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
 import { Message, MessageSourceType } from '..';
@@ -79,6 +80,21 @@ const meta: StoryMetaType<typeof Message> = {
   parameters: {
     default: null,
     exclude: ['children'],
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        isSender: [false, true],
+        sourceType: [MessageSourceType.Text, MessageSourceType.Markdown],
+        messageBody: [UserText, MarkdownText, MongoText],
+      },
+      decorator: (Instance, context) => {
+        return (
+          <LeafyGreenProvider darkMode={context?.args.darkMode}>
+            <Instance glyph={context?.args.glyph} />
+          </LeafyGreenProvider>
+        );
+      },
+    },
   },
 };
 export default meta;
@@ -217,3 +233,5 @@ WithRichLinks.args = {
     },
   ],
 };
+
+export const Generated = () => {};

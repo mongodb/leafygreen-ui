@@ -15,12 +15,10 @@
     "../../typings/*",
     "typings/**/*"
   ],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
       "path": "../a11y"
-    },
-    {
-      "path": "../box"
     },
     {
       "path": "../emotion"
@@ -33,6 +31,9 @@
     },
     {
       "path": "../palette"
+    },
+    {
+      "path": "../polymorphic"
     },
     {
       "path": "../tokens"

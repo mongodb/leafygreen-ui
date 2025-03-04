@@ -49,6 +49,7 @@ const meta: StoryMetaType<typeof TextArea> = {
     errorMessage: 'This is an error message',
     disabled: false,
     placeholder: 'Placeholder',
+    readOnly: false,
   },
 };
 export default meta;

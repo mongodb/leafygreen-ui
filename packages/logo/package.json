@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/logo",
-  "version": "9.2.0",
+  "version": "10.0.3",
   "description": "LeafyGreen UI Kit Logos",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,9 +22,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/emotion": "^4.0.8",
-    "@leafygreen-ui/lib": "^13.4.0",
-    "@leafygreen-ui/palette": "^4.0.10"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/palette": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/logo",
   "repository": {
@@ -34,7 +34,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {
-    "@lg-tools/storybook-utils": "^0.1.0"
-  }
+  "devDependencies": {}
 }

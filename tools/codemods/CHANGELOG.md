@@ -1,5 +1,30 @@
 # @lg-tools/codemods
 
+## 0.1.3
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @lg-tools/build@0.7.3
+
+## 0.1.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @lg-tools/build@0.7.2
+
+## 0.1.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [79c88b5b1]
+- Updated dependencies [53c67fba6]
+  - @lg-tools/build@0.7.1
+
 ## 0.1.0
 
 ### Minor Changes

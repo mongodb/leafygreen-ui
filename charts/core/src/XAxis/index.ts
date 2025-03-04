@@ -1,2 +1,2 @@
 export { XAxis } from './XAxis';
-export { XAxisProps } from './XAxis.types';
+export type { XAxisProps, XAxisType } from './XAxis.types';

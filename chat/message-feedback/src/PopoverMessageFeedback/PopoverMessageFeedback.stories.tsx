@@ -1,7 +1,6 @@
 import React, { ChangeEventHandler, useRef, useState } from 'react';
 import { MessageRating, MessageRatingValue } from '@lg-chat/message-rating';
-import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { storybookArgTypes, StoryType } from '@lg-tools/storybook-utils';
 
 import { PopoverMessageFeedback } from '.';
 
@@ -19,7 +18,7 @@ export default {
   },
 };
 
-const Template: StoryFn<typeof PopoverMessageFeedback> = args => {
+const Template: StoryType<typeof PopoverMessageFeedback> = args => {
   const triggerRef = useRef(null);
   const [isActive, setIsActive] = useState<boolean>(false);
   const closePopover = () => setIsActive(false);

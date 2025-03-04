@@ -1,5 +1,29 @@
 # @leafygreen-ui/ripple
 
+## 1.1.16
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/tokens@2.11.4
+
+## 1.1.15
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/tokens@2.11.3
+
+## 1.1.14
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/tokens@2.11.2
+
 ## 1.1.13
 
 ### Patch Changes

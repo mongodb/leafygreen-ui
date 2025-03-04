@@ -1,236 +1,161 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import * as echarts from 'echarts';
-import debounce from 'lodash.debounce';
+import { RefCallback, useCallback, useEffect, useRef, useState } from 'react';
 
-import { ChartOptions, SeriesOption } from '../../Chart/Chart.types';
-import { chartSeriesColors } from '../chartSeriesColors';
+import { useEchart } from '../../Echart';
+import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
 
-import { addSeries, removeSeries, updateOptions } from './updateUtils';
-import { ChartHookProps, ZoomSelectionEvent } from './useChart.types';
+import type { ChartHookProps, ChartInstance } from './useChart.types';
 
-/**
- * Creates a generic Apache ECharts options object with default values for those not set
- * that are in line with the designs and needs of the design system.
- */
+// TODO(LG-4803): Fix linting issues
+/* eslint-disable react-hooks/exhaustive-deps */
+
 export function useChart({
-  theme,
-  onChartReady,
+  onChartReady = () => {},
   zoomSelect,
   onZoomSelect,
   groupId,
-}: ChartHookProps) {
-  const chartRef = useRef(null);
-  const chartInstanceRef = useRef<echarts.EChartsType | undefined>();
-  const [chartOptions, setChartOptions] = useState(
-    getDefaultChartOptions(theme),
-  );
-
-  function handleDataZoom(params: any) {
-    if (onZoomSelect) {
-      if (zoomSelect?.xAxis && zoomSelect?.yAxis) {
-        if (params.batch) {
-          const { startValue: xStart, endValue: xEnd } = params.batch[0];
-          const { startValue: yStart, endValue: yEnd } = params.batch[1];
-          onZoomSelect({
-            xAxis: { startValue: xStart, endValue: xEnd },
-            yAxis: { startValue: yStart, endValue: yEnd },
-          });
-        }
-      } else if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-        const axis = zoomSelect?.xAxis ? 'xAxis' : 'yAxis';
-        const zoomEventResponse: ZoomSelectionEvent = {};
-
-        if (params.startValue && params.endValue) {
-          zoomEventResponse[axis] = {
-            startValue: params.startValue,
-            endValue: params.endValue,
-          };
-          onZoomSelect(zoomEventResponse);
-        } else if (params.batch) {
-          const { startValue, endValue } = params.batch[0];
-          zoomEventResponse[axis] = {
-            startValue,
-            endValue,
-          };
-          onZoomSelect(zoomEventResponse);
-        }
-      } else {
-        console.error(
-          'zoomSelect configuration provided without any axes props. Either xAxis or yAxis must be set.',
-        );
-      }
-    }
-
-    /**
-     * If start is not 0% or end is not 100%, that means that the 'dataZoom'
-     * event was triggered by an actual zoom. Since we don't want to actually
-     * zoom on the current data, but rather provide the new values to the passed
-     * in handler, we dispatch an action to essentially override the zoom.
-     */
-    const isZoomed = params?.start !== 0 || params?.end !== 100;
-
-    if (chartInstanceRef.current && isZoomed) {
-      chartInstanceRef.current.dispatchAction({
-        type: 'dataZoom',
-        start: 0, // percentage of starting position
-        end: 100, // percentage of ending position
-      });
-    }
-  }
+  theme,
+}: ChartHookProps): ChartInstance {
+  const initialOptions = getDefaultChartOptions(theme);
 
   /**
-   * Meant to be called once on initial render
+   * It is necessary for `useEchart` to know when the container exists
+   * in order to instantiate the chart. Since this happens only on first render,
+   * we use a container element stored in state and a ref callback so that the
+   * element only gets populated after render.
    */
-  function onInitialRender() {
-    if (!chartInstanceRef.current) {
-      return;
-    }
+  const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  const chartRef: RefCallback<HTMLDivElement> = useCallback(node => {
+    setContainer(node);
+  }, []);
+  const echart = useEchart({
+    container,
+    initialOptions,
+    theme,
+  });
 
-    const chartInstance = chartInstanceRef.current;
-
-    if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-      /**
-       * Zooming is built into echart via the toolbar. By default, a user
-       * has to click the "dataZoom" button to enable zooming. We however hide
-       * this button and want it turned on by default. This is done by dispatching
-       * an action to enable the "dataZoomSelect" feature, as if it were clicked.
-       */
-      chartInstance.dispatchAction({
-        type: 'takeGlobalCursor',
-        key: 'dataZoomSelect',
-        dataZoomSelectActive: true,
-      });
-
-      chartInstance.on('dataZoom', handleDataZoom);
-    }
-
-    if (onChartReady) {
+  useEffect(() => {
+    if (echart.ready) {
       onChartReady();
     }
+  }, [echart.ready]);
 
-    /**
-     * This is only done on initial render because what's inside itself
-     * triggers a render which creates an infinite loop if not removed.
-     */
-    chartInstance.off('rendered', onInitialRender);
+  useEffect(() => {
+    if (echart.ready) {
+      if (groupId) {
+        echart.addToGroup(groupId);
+      }
+
+      return () => {
+        echart.removeFromGroup();
+      };
+    }
+  }, [echart.ready, groupId]);
+
+  // SETUP AND ENABLE ZOOM
+  useEffect(() => {
+    if (echart.ready) {
+      echart.setupZoomSelect({
+        xAxis: zoomSelect?.xAxis,
+        yAxis: zoomSelect?.yAxis,
+      });
+
+      if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
+        function enableZoomOnRender() {
+          echart.enableZoom();
+          /**
+           * Enabling zoom triggers a render, so once we enable it, we want to
+           * remove the handler or else there will be an infinite loop of
+           * render -> enable -> render -> etc.
+           */
+          echart?.off('rendered', enableZoomOnRender);
+        }
+
+        echart?.on('rendered', enableZoomOnRender);
+      }
+    }
+  }, [echart.ready, zoomSelect]);
+
+  useEffect(() => {
+    if (echart.ready && onZoomSelect) {
+      echart.on(EChartEvents.ZoomSelect, zoomEventResponse => {
+        onZoomSelect(zoomEventResponse);
+      });
+    }
+  }, [echart.ready, onZoomSelect]);
+
+  function hideTooltip() {
+    echart.hideTooltip();
   }
 
-  // Initialize the chart
+  // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
   useEffect(() => {
-    const chartInstance = echarts.init(chartRef.current);
-    chartInstanceRef.current = chartInstance;
-    chartInstance.setOption(chartOptions);
+    if (echart.ready) {
+      echart.on('mouseover', e => {
+        if (e.componentType === 'markPoint') {
+          hideTooltip();
+          echart.on('mousemove', hideTooltip);
+        }
+      });
 
-    // Connects a chart to a group which allows for synchronized tooltips
-    if (groupId) {
-      chartInstance.group = groupId;
-      echarts.connect(groupId);
+      // Stop hiding once the mouse leaves the `EventMarkerPoint`
+      echart.on('mouseout', e => {
+        if (e.componentType === 'markPoint') {
+          echart.off('mousemove', hideTooltip);
+        }
+      });
     }
+  }, [echart, echart.ready]);
 
-    // ECharts does not automatically resize when the window resizes.
-    const resizeHandler = () => {
-      chartInstance.resize();
-    };
-    window.addEventListener('resize', resizeHandler);
+  const initialRenderRef = useRef(true);
 
-    chartInstance.on('rendered', onInitialRender);
+  const handleResize = useCallback(() => {
+    if (echart.ready) {
+      // Skip the first resize event, as it's triggered by the initial render
+      if (initialRenderRef.current) {
+        initialRenderRef.current = false;
+        return;
+      }
 
-    return () => {
-      window.removeEventListener('resize', resizeHandler);
-      chartInstance.dispose();
-    };
-  }, [chartOptions, onChartReady, zoomSelect]);
-
-  // Set which axis zoom is enabled on
-  useEffect(() => {
-    // `0` index enables zoom on that index, `'none'` disables zoom on that index
-    let xAxisIndex: number | string = 0;
-    let yAxisIndex: number | string = 0;
-
-    if (!zoomSelect?.xAxis) {
-      xAxisIndex = 'none';
-    }
-
-    if (!zoomSelect?.yAxis) {
-      yAxisIndex = 'none';
-    }
-
-    updateChartOptions({
-      toolbox: {
-        feature: {
-          dataZoom: {
-            xAxisIndex,
-            yAxisIndex,
-          },
-        },
-      },
-    });
-  }, [zoomSelect]);
-
-  const updateChartRef = useMemo(
-    () =>
-      debounce((chartOptions: Partial<ChartOptions>) => {
+      if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
         /**
-         * The second argument is `true` to merge the new options with the existing ones.
-         * This is needed to ensure that series get removed properly.
-         * See issue: https://github.com/apache/echarts/issues/6202
-         * */
-        chartInstanceRef.current?.setOption(chartOptions, true);
-      }, 50),
-    [],
-  );
+         * If the chart has been resized, the chart appears to reset zoom, which
+         * disables it. We need to re-enable it after the resize however, doing so
+         * immediately doesn't work. To work around this, we listen for the `finished`
+         * event, which is triggered after the chart has been rendered, and then
+         * execute the re-enable zoom logic after all tasks on the queue have been
+         * processed.
+         *
+         * TODO(LG-4818): Investigate why this is necessary
+         */
+        function reEnableZoom() {
+          function reEnableZoomCallback() {
+            echart.enableZoom();
+            echart.off('finished', reEnableZoom);
+          }
+          setTimeout(reEnableZoomCallback, 0);
+        }
 
-  const addChartSeries = useCallback(
-    (data: SeriesOption) => {
-      setChartOptions(currentOptions => {
-        const updatedOptions = addSeries(currentOptions, data);
-        updateChartRef(updatedOptions);
-        return updatedOptions;
-      });
-    },
-    [updateChartRef],
-  );
+        echart.on('finished', reEnableZoom);
+      }
 
-  const removeChartSeries = useCallback(
-    (name: string) => {
-      setChartOptions(currentOptions => {
-        const updatedOptions = removeSeries(currentOptions, name);
-        updateChartRef(updatedOptions);
-        return updatedOptions;
-      });
-    },
-    [updateChartRef],
-  );
-
-  const updateChartOptions = useCallback(
-    (options: Omit<Partial<ChartOptions>, 'series'>) => {
-      setChartOptions(currentOptions => {
-        const updatedOptions = updateOptions(currentOptions, options);
-        updateChartRef(updatedOptions);
-        return updatedOptions;
-      });
-    },
-    [updateChartRef],
-  );
+      echart.resize();
+    }
+  }, [echart.ready, initialRenderRef, zoomSelect]);
 
   useEffect(() => {
-    setChartOptions(currentOptions => {
-      const updatedOptions = {
-        ...currentOptions,
-        color: chartSeriesColors[theme],
+    if (echart.ready && container) {
+      const resizeObserver = new ResizeObserver(handleResize);
+      resizeObserver.observe(container);
+
+      return () => {
+        resizeObserver.disconnect();
       };
-      updateChartRef(updatedOptions);
-      return updatedOptions;
-    });
-  }, [theme]);
+    }
+  }, [echart.ready, container, handleResize]);
 
   return {
-    chartOptions,
-    updateChartOptions,
-    addChartSeries,
-    removeChartSeries,
-    chartRef,
-    chartInstanceRef,
+    ...echart,
+    ref: chartRef,
   };
 }

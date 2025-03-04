@@ -21,13 +21,30 @@ npm install @lg-charts/core
 ## Basic Chart Example
 
 ```js
-import { Chart, Line, Grid, XAxis, YAxis } from '@lg-charts/core';
+import { Chart, Line, Grid, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
 
-<Chart onZoomSelect={handleZoom}>
+<Chart onZoomSelect={handleZoom} chartState={ChartStates.Unset}>
   <Header title="My Chart" />
   <Grid vertical={false}>
   <XAxis type="time" />
   <YAxis type="value" formatter={(value) => `${value}GB`} />
+  <EventMarkerPoint
+    label='2024/01/04 (value 3)'
+    message='Critical event occurred'
+    position={[new Date(2020, 01, 04), 3]}
+    level='warning'
+  />
+  <EventMarkerLine
+    label='2024/01/02'
+    message='Something happened of note'
+    position={new Date(2020, 01, 02)}
+    level='info'
+  />
+  <ThresholdLine
+    position={3}
+    label='Value Limit'
+    value='3'
+  />
   <Line
     name="Series 1"
     data={[
@@ -86,8 +103,9 @@ Chart container component.
 
 | Name                        | Description                                                                     | Type                                   | Default                          |
 | --------------------------- | ------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
+| `chartState` _(optional)_   | The state of the chart.                                                         | `ChartStates ('unset \| 'loading')`    | `'unset'`                        |
 | `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts.   | `string`                               |                                  |
-| `onChartReady`              | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
+| `onChartReady` _(optional)_ | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
 | `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if `zoomSelect` is enabled. | `(e: ZoomSelectionEvent) => void`      |                                  |
 | `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis.             | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |
 
@@ -187,3 +205,41 @@ Renders a tooltip onto the chart.
 | `sortDirection` _(optional)_  | What direction to sort tooltip values in.           | `'asc' \| 'desc'`                     | `'desc'`  |
 | `sortKey` _(optional)_        | Whether to sort by name or value.                   | `'name' \| 'value'`                   | `'value'` |
 | `valueFormatter` _(optional)_ | Callback function for formatting each value string. | `(value: number \| string) => string` |           |
+
+### `EventMarkerLine`
+
+Renders a vertical line marker at a specific point on the x-axis to annotate an event.
+
+#### Props
+
+| Name                 | Description                                                 | Type                  | Default     |
+| -------------------- | ----------------------------------------------------------- | --------------------- | ----------- |
+| `position`           | Position along the x-axis where the line should be placed.  | `string \| number`    |             |
+| `message`            | Additional message text shown in the tooltip when hovering. | `string`              |             |
+| `label` _(optional)_ | Label text shown in the tooltip when hovering.              | `string`              |             |
+| `level` _(optional)_ | Visual style of the marker indicating its severity.         | `'warning' \| 'info'` | `'warning'` |
+
+### `EventMarkerPoint`
+
+Renders a point marker at specific coordinates to annotate an event.
+
+#### Props
+
+| Name                 | Description                                                 | Type                                   | Default     |
+| -------------------- | ----------------------------------------------------------- | -------------------------------------- | ----------- |
+| `position`           | Coordinates where the point should be placed [x, y].        | `[string \| number, string \| number]` |             |
+| `message`            | Additional message text shown in the tooltip when hovering. | `string`                               |             |
+| `label` _(optional)_ | Label text shown in the tooltip when hovering.              | `string`                               |             |
+| `level` _(optional)_ | Visual style of the marker indicating its severity.         | `'warning' \| 'info'`                  | `'warning'` |
+
+### `ThresholdLine`
+
+Renders a horizontal dashed line at a specific value on the y-axis to indicate a threshold.
+
+#### Props
+
+| Name                 | Description                                                    | Type     | Default |
+| -------------------- | -------------------------------------------------------------- | -------- | ------- |
+| `position`           | Position along the y-axis where the line should be placed.     | `number` |         |
+| `value`              | Value text shown after the label in the tooltip when hovering. | `string` |         |
+| `label` _(optional)_ | Label text shown in the tooltip when hovering.                 | `string` |         |

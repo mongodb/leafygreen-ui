@@ -1,5 +1,42 @@
 # @leafygreen-ui/date-utils
 
+## 0.2.1
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+  - @leafygreen-ui/lib@14.0.3
+
+## 0.2.0
+
+### Minor Changes
+
+- 9a23b9765: Creates `SupportedLocales` enum to ensure consistent locale information
+
+## 0.1.5
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/lib@14.0.2
+
+## 0.1.4
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/lib@14.0.1
+
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/lib@14.0.0
+
 ## 0.1.2
 
 ### Patch Changes

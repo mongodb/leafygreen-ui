@@ -1,5 +1,76 @@
 # @leafygreen-ui/button
 
+## 23.1.0
+
+### Minor Changes
+
+- 3111a76f3: Exports `getLgIds` util and `GetTestUtilsReturnType` type. Also updates `getTestUtils` so that it doesn't throw if button element is not found and adds `findButton` and `queryButton` to button test utils.
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+- Updated dependencies [541e12e75]
+- Updated dependencies [3111a76f3]
+  - @leafygreen-ui/emotion@4.0.10
+  - @leafygreen-ui/leafygreen-provider@4.0.3
+  - @leafygreen-ui/lib@14.0.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.6
+  - @leafygreen-ui/ripple@1.1.16
+  - @leafygreen-ui/tokens@2.11.4
+  - @lg-tools/test-harnesses@0.2.0
+
+## 23.0.0
+
+### Major Changes
+
+- 1501381ee: [LG-2719](https://jira.mongodb.org/browse/LG-2719): Replace `@leafygreen-ui/box` with `@leafygreen-ui/polymorphic` and refactor `Button` internals.
+  - This is a major change because previously, `Button` instances intended to be rendered as an `<a>` that were also `disabled` were forcibly being rendered as a `<button>` to avoid incorrectly passing the `disabled` attribute to an `<a>`. From [v20.0.0](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/CHANGELOG.md#2000), the `Button` component switched to using the `aria-disabled` attribute instead of the `disabled` attribute which removed the need to forcibly render disabled `Button` instances as a `<button>`. Instead, they will now render as an `<a>`.
+  - Exports `BaseButtonProps` type
+
+## 22.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+- Updated dependencies [e1955dd36]
+  - @leafygreen-ui/box@4.0.2
+  - @leafygreen-ui/emotion@4.0.9
+  - @leafygreen-ui/leafygreen-provider@4.0.2
+  - @leafygreen-ui/lib@14.0.2
+  - @leafygreen-ui/palette@4.1.3
+  - @leafygreen-ui/ripple@1.1.15
+  - @leafygreen-ui/tokens@2.11.3
+  - @lg-tools/test-harnesses@0.1.4
+
+## 22.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+- Updated dependencies [53c67fba6]
+  - @leafygreen-ui/leafygreen-provider@4.0.1
+  - @lg-tools/test-harnesses@0.1.3
+  - @leafygreen-ui/palette@4.1.2
+  - @leafygreen-ui/ripple@1.1.14
+  - @leafygreen-ui/tokens@2.11.2
+  - @leafygreen-ui/box@4.0.1
+  - @leafygreen-ui/lib@14.0.1
+
+## 22.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
+### Patch Changes
+
+- Updated dependencies [274d7e1a7]
+  - @leafygreen-ui/leafygreen-provider@4.0.0
+  - @leafygreen-ui/box@4.0.0
+  - @leafygreen-ui/lib@14.0.0
+  - @leafygreen-ui/tokens@2.11.1
+
 ## 21.3.0
 
 ### Minor Changes

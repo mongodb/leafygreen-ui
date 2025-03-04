@@ -1,40 +1,24 @@
 import { PropsWithChildren } from 'react';
-import type { XAXisComponentOption, YAXisComponentOption } from 'echarts';
-import type { LineSeriesOption } from 'echarts/charts';
-import type {
-  DatasetComponentOption,
-  GridComponentOption,
-  LegendComponentOption,
-  TitleComponentOption,
-  ToolboxComponentOption,
-  TooltipComponentOption,
-} from 'echarts/components';
-import type { ComposeOption } from 'echarts/core';
 
 import { DarkModeProps, type HTMLElementProps } from '@leafygreen-ui/lib';
 
-import { ZoomSelect, ZoomSelectionEvent } from './hooks/useChart.types';
+import {
+  EChartOptions,
+  EChartSeriesOption,
+  EChartZoomSelectionEvent,
+} from '../Echart';
 
-type RequiredSeriesProps = 'type' | 'name' | 'data';
-export type SeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
-  Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
+import { ZoomSelect } from './hooks/useChart.types';
 
-/**
- * TODO: This might need to be improved. `ComposeOption` appears to make most base option
- * keys "Arrayable". This is making it difficult to properly test partial options on
- * methods like updateUtils > updateOptions(), since something like `options.grid` could be
- * an array even if an object.
- */
-export type ChartOptions = ComposeOption<
-  | TooltipComponentOption
-  | GridComponentOption
-  | DatasetComponentOption
-  | TitleComponentOption
-  | LegendComponentOption
-  | ToolboxComponentOption
-  | XAXisComponentOption
-  | YAXisComponentOption
-> & { series?: Array<SeriesOption> };
+export type SeriesOption = EChartSeriesOption;
+export type ChartOptions = EChartOptions;
+export type ZoomSelectionEvent = EChartZoomSelectionEvent;
+
+export const ChartStates = {
+  Unset: 'unset',
+  Loading: 'loading',
+} as const;
+export type ChartStates = (typeof ChartStates)[keyof typeof ChartStates];
 
 export type ChartProps = HTMLElementProps<'div'> &
   DarkModeProps &
@@ -58,10 +42,9 @@ export type ChartProps = HTMLElementProps<'div'> &
      * Charts with same groupID will have their tooltips synchronized.
      */
     groupId?: string;
-  }>;
 
-export const ChartActionType = {
-  addChartSeries: 'addChartSeries',
-  removeChartSeries: 'removeChartSeries',
-  updateOptions: 'updateOptions',
-} as const;
+    /**
+     * Controls the current chart state.
+     */
+    chartState?: ChartStates;
+  }>;

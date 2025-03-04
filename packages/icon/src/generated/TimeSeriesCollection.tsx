@@ -2,10 +2,9 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum eb21ab4a59db092f9712c4b770656db0
+* @checksum 097dd7fcff90cb1126dd2958d6c3d477
 */
 import * as React from "react";
-import PropTypes from 'prop-types';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { generateAccessibleProps, sizeMap } from '../glyphCommon';
 import { LGGlyph } from '../types';
@@ -37,9 +36,4 @@ const TimeSeriesCollection = ({
 };
 TimeSeriesCollection.displayName = 'TimeSeriesCollection';
 TimeSeriesCollection.isGlyph = true;
-TimeSeriesCollection.propTypes = {
-  fill: PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string
-};
 export default TimeSeriesCollection;

@@ -1,50 +1,61 @@
-import React, { Fragment, useMemo } from 'react';
-
-import { Polymorph } from '@leafygreen-ui/polymorphic';
+import React, { forwardRef, useRef } from 'react';
 
 import { useTableContext } from '../TableContext';
 
+import { useVirtualScrollPadding } from './utils/useVirtualScrollPadding';
+import { paddingBottomStyles, paddingTopStyles } from './TableBody.styles';
 import { TableBodyProps } from './TableBody.types';
 
-const TableBody = ({ children, ...rest }: TableBodyProps) => {
-  let paddingTop = 0;
-  let paddingBottom = 0;
+const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(
+  ({ children, ...rest }: TableBodyProps, fwdRef) => {
+    const { isVirtual, virtualTable } = useTableContext();
 
-  const { table } = useTableContext();
-  const areSomeRowsExpandable = table?.getCanSomeRowsExpand();
+    const { paddingTop, paddingBottom } = useVirtualScrollPadding(
+      isVirtual,
+      virtualTable,
+    );
 
-  const bodyAs = useMemo(
-    () => (areSomeRowsExpandable ? Fragment : 'tbody'),
-    [areSomeRowsExpandable],
-  );
+    const topRef = useRef<HTMLTableCellElement | null>(null);
+    const bottomRef = useRef<HTMLTableCellElement | null>(null);
 
-  if (table && table.virtualRows) {
-    const { virtualRows, totalSize } = table;
-    paddingTop = virtualRows.length > 0 ? virtualRows?.[0]?.start || 0 : 0;
-    paddingBottom =
-      virtualRows.length > 0
-        ? totalSize - (virtualRows?.[virtualRows.length - 1]?.end || 0)
-        : 0;
-  }
+    if (isVirtual) {
+      topRef.current &&
+        topRef.current.style.setProperty(
+          '--virtual-padding-top',
+          `${paddingTop}px`,
+        );
+      bottomRef.current &&
+        bottomRef.current.style.setProperty(
+          '--virtual-padding-bottom',
+          `${paddingBottom}px`,
+        );
+    }
 
-  return (
-    <Polymorph as={bodyAs} {...rest}>
-      {/* As the user scrolls down, the paddingTop grows bigger, creating the effect of virtual scrolling */}
-      {paddingTop > 0 && (
-        <tr aria-hidden>
-          <td style={{ height: `${paddingTop}px` }} />
-        </tr>
-      )}
-      {children}
-      {/* As the user scrolls down, the paddingBottom gets smaller, creating the effect of virtual scrolling */}
-      {paddingBottom > 0 && (
-        <tr aria-hidden>
-          <td style={{ height: `${paddingBottom}px` }} />
-        </tr>
-      )}
-    </Polymorph>
-  );
-};
+    return (
+      <>
+        {/* As the user scrolls down, the paddingTop grows bigger, creating the effect of virtual scrolling */}
+        {paddingTop > 0 && (
+          <tbody>
+            <tr aria-hidden>
+              <td ref={topRef} className={paddingTopStyles} />
+            </tr>
+          </tbody>
+        )}
+        <tbody ref={fwdRef} {...rest}>
+          {children}
+        </tbody>
+        {/* As the user scrolls down, the paddingBottom gets smaller, creating the effect of virtual scrolling */}
+        {paddingBottom > 0 && (
+          <tbody>
+            <tr aria-hidden>
+              <td ref={bottomRef} className={paddingBottomStyles} />
+            </tr>
+          </tbody>
+        )}
+      </>
+    );
+  },
+);
 
 TableBody.displayName = 'TableBody';
 

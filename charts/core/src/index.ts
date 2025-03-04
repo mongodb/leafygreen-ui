@@ -1,8 +1,21 @@
-export { Chart, type ChartOptions, type SeriesOption } from './Chart';
-export { ChartCard } from './ChartCard';
-export { Grid } from './Grid';
-export { Header } from './Header';
-export { Line } from './Line';
-export { Tooltip } from './Tooltip';
-export { XAxis, type XAxisProps } from './XAxis';
-export { YAxis, type YAxisProps } from './YAxis';
+export { Chart, type ChartStates } from './Chart';
+export { ChartCard, type ChartCardProps } from './ChartCard';
+export {
+  EventMarkerLine,
+  type EventMarkerLineProps,
+  EventMarkerPoint,
+  type EventMarkerPointProps,
+} from './EventMarkers';
+export { Grid, type GridProps } from './Grid';
+export { Header, type HeaderProps } from './Header';
+export { Line, type LineProps } from './Line';
+export { ThresholdLine, type ThresholdLineProps } from './ThresholdLine';
+export {
+  SortDirection,
+  SortKey,
+  SortOrder,
+  Tooltip,
+  type TooltipProps,
+} from './Tooltip';
+export { XAxis, type XAxisProps, type XAxisType } from './XAxis';
+export { YAxis, type YAxisProps, type YAxisType } from './YAxis';

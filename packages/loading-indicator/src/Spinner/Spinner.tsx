@@ -1,6 +1,5 @@
 import React from 'react';
 import Lottie from 'react-lottie-player';
-import PropTypes from 'prop-types';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -79,11 +78,6 @@ const Spinner = ({
       )}
     </div>
   );
-};
-
-Spinner.propTypes = {
-  darkMode: PropTypes.bool,
-  description: PropTypes.string,
 };
 
 export default Spinner;

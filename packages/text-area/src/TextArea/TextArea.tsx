@@ -1,5 +1,4 @@
 import React, { forwardRef, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
@@ -43,6 +42,7 @@ export const TextArea: TextArea = forwardRef<
   TextAreaProps
 >(function TextArea(
   {
+    readOnly,
     label,
     description,
     className,
@@ -121,6 +121,7 @@ export const TextArea: TextArea = forwardRef<
     label,
     state,
     successMessage,
+    readOnly,
     ...ariaProps,
   } as const;
 
@@ -144,13 +145,3 @@ export const TextArea: TextArea = forwardRef<
 });
 
 TextArea.displayName = 'TextArea';
-
-TextArea.propTypes = {
-  id: PropTypes.string,
-  darkMode: PropTypes.bool,
-  label: PropTypes.string,
-  description: PropTypes.string,
-  errorMessage: PropTypes.string,
-  successMessage: PropTypes.string,
-  state: PropTypes.oneOf(Object.values(State)),
-};

@@ -3,16 +3,16 @@ import {
   storybookArgTypes,
   storybookExcludedControlParams,
   StoryMetaType,
+  StoryType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+
+import { transitionDuration } from '@leafygreen-ui/tokens';
 
 import {
   SegmentedControl,
   SegmentedControlProps,
-} from '@leafygreen-ui/segmented-control';
-import { transitionDuration } from '@leafygreen-ui/tokens';
-
-import { Size } from './SegmentedControl/SegmentedControl.types';
+  Size,
+} from './SegmentedControl';
 import { TestChildren } from './SegmentedControl.testutils';
 
 interface LiveExampleProps {
@@ -75,9 +75,9 @@ const meta: StoryMetaType<typeof SegmentedControl> = {
 };
 export default meta;
 
-export const LiveExample: StoryFn<SegmentedControlProps & LiveExampleProps> = (
-  args: SegmentedControlProps & LiveExampleProps,
-) => (
+export const LiveExample: StoryType<
+  SegmentedControlProps & LiveExampleProps
+> = (args: SegmentedControlProps & LiveExampleProps) => (
   <SegmentedControl {...args}>
     {TestChildren[args.childrenOptions]}
   </SegmentedControl>

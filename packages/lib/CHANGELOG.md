@@ -1,5 +1,29 @@
 # @leafygreen-ui/lib
 
+## 14.0.3
+
+### Patch Changes
+
+- 541e12e75: Updates builds to leverage Rollup tree shaking. (see [`tools/build/config/rollup.config.mjs`](https://github.com/mongodb/leafygreen-ui/blob/main/tools/build/config/rollup.config.mjs))
+
+## 14.0.2
+
+### Patch Changes
+
+- e1955dd36: Fixes broken patch build
+
+## 14.0.1
+
+### Patch Changes
+
+- 53c67fba6: [LG-4650](https://jira.mongodb.org/browse/LG-4650): migrates from `yarn` to `pnpm`
+
+## 14.0.0
+
+### Major Changes
+
+- 274d7e1a7: Removes prop-types from LeafyGreen UI
+
 ## 13.8.2
 
 ### Patch Changes

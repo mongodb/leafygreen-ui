@@ -1,5 +1,4 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import PropTypes from 'prop-types';
 
 import {
   PortalContextProvider,
@@ -44,5 +43,3 @@ export const PopoverPropsProvider = ({
 };
 
 PopoverPropsProvider.displayName = 'PopoverPropsProvider';
-
-PopoverPropsProvider.propTypes = { children: PropTypes.node };

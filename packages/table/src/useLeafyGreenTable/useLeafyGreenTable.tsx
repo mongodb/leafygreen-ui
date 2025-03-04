@@ -1,6 +1,11 @@
-import React from 'react';
-import { useVirtual } from 'react-virtual';
-import { useReactTable } from '@tanstack/react-table';
+import React, { useState } from 'react';
+import {
+  ExpandedState,
+  getExpandedRowModel,
+  RowModel,
+  Table,
+  useReactTable,
+} from '@tanstack/react-table';
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -8,24 +13,24 @@ import {
 } from '@tanstack/react-table';
 import omit from 'lodash/omit';
 
+import { spacing } from '@leafygreen-ui/tokens';
+
 import { TableHeaderCheckbox } from './TableHeaderCheckbox';
 import { TableRowCheckbox } from './TableRowCheckbox';
 import { LeafyGreenTableOptions, LGRowData } from './useLeafyGreenTable.types';
 import { LeafyGreenTable, LGColumnDef, LGTableDataType } from '.';
 
-const CHECKBOX_WIDTH = 14;
+const CHECKBOX_WIDTH = spacing[1000];
 
 function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
-  containerRef,
   data,
   columns: columnsProp,
   hasSelectableRows,
   withPagination = false,
-  useVirtualScrolling = false,
   allowSelectAll = true,
-  virtualizerOptions,
   ...rest
 }: LeafyGreenTableOptions<T, V>): LeafyGreenTable<T> {
+  const [expanded, setExpanded] = useState<ExpandedState>({});
   /**
    * A `ColumnDef` object injected into `useReactTable`'s `columns` option when the user is using selectable rows.
    */
@@ -40,22 +45,54 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     () => columnsProp.some(propCol => !!propCol.enableSorting),
     [columnsProp],
   );
+
   const selectColumnConfig = allowSelectAll
     ? baseSelectColumnConfig
     : omit(baseSelectColumnConfig, 'header');
+
   const columns = React.useMemo<Array<LGColumnDef<T, V>>>(
     () => [
       ...(hasSelectableRows ? [selectColumnConfig as LGColumnDef<T, V>] : []),
-      ...columnsProp.map(propColumn => {
-        return {
-          ...propColumn,
-          align: propColumn.align ?? 'left',
-          enableSorting: propColumn.enableSorting ?? false,
-        } as LGColumnDef<T, V>;
-      }),
+      ...columnsProp,
     ],
     [columnsProp, hasSelectableRows, selectColumnConfig],
   );
+
+  /**
+   *  Custom getExpandedRowModel that manipulates rows to include expandedContent.
+   */
+  function getLGExpandedRowModel<TData extends LGTableDataType<T>>() {
+    return (table: Table<TData>) => {
+      const baseExpandedRowModel = getExpandedRowModel<TData>()(table);
+
+      // Return a function that computes the custom RowModel
+      return () => {
+        // Get the default expanded row model by invoking baseExpandedRowModel
+        const rowModel = baseExpandedRowModel();
+        const modifiedRows = [...rowModel.rows];
+
+        for (let i = 0; i < modifiedRows.length; i++) {
+          if (
+            modifiedRows[i].original.renderExpandedContent &&
+            modifiedRows[i].getIsExpanded()
+          ) {
+            const expandedData = {
+              ...modifiedRows[i],
+              id: `${modifiedRows[i].id}-expandedContent`,
+              isExpandedContent: true,
+            };
+            modifiedRows.splice(i + 1, 0, expandedData);
+            i++; // Increment index to skip the newly added item
+          }
+        }
+
+        return {
+          ...rowModel,
+          rows: modifiedRows,
+        } as RowModel<TData>;
+      };
+    };
+  }
 
   const table = useReactTable<LGTableDataType<T>>({
     data,
@@ -69,24 +106,17 @@ function useLeafyGreenTable<T extends LGRowData, V extends unknown = unknown>({
     getSubRows: row => row.subRows,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: withPagination ? getPaginationRowModel() : undefined,
+    onExpandedChange: setExpanded,
+    getExpandedRowModel: getLGExpandedRowModel(),
     ...rest,
-  });
-
-  const { rows } = table.getRowModel();
-  const _rowVirtualizer = useVirtual({
-    parentRef: containerRef,
-    size: rows.length,
-    overscan: 30,
-    ...virtualizerOptions,
+    state: {
+      expanded,
+      ...rest.state,
+    },
   });
 
   return {
     ...table,
-    ...(useVirtualScrolling && {
-      virtualRows: _rowVirtualizer.virtualItems,
-      totalSize: _rowVirtualizer.totalSize,
-      scrollToIndex: _rowVirtualizer.scrollToIndex,
-    }),
     hasSelectableRows,
   } as LeafyGreenTable<T>;
 }

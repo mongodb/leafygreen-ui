@@ -1,10 +1,12 @@
-import { ButtonProps, type Variant } from '@leafygreen-ui/button';
+import { BaseButtonProps, type Variant } from '@leafygreen-ui/button';
 import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
 
 import { PrimaryButtonProps } from './PrimaryButton';
 
-type ButtonPropsOmittingVariant = Omit<ButtonProps, 'variant'>;
-type ButtonPropsWithRequiredChildren = Required<Pick<ButtonProps, 'children'>>;
+type ButtonPropsOmittingVariant = Omit<BaseButtonProps, 'variant'>;
+type ButtonPropsWithRequiredChildren = Required<
+  Pick<BaseButtonProps, 'children'>
+>;
 
 export type CustomCancelButtonProps = ButtonPropsOmittingVariant;
 export type CustomBackButtonProps = ButtonPropsOmittingVariant & {
