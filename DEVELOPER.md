@@ -115,15 +115,29 @@ You should expect to see the following line in that file. (if not you can add it
 Ensure all packages are built, then navigate to some package and manually publish:
 
 ```bash
-yarn build;
+pnpm build;
 cd packages/<package-name>;
-npm publish;
+pnpm publish;
 ```
 
-To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `npm publish` command. This command should echo:
+To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `pnpm publish` command. This command should echo:
 
 ```
 npm notice Publishing to http://localhost:4873
+```
+
+If you do not see the line above, make sure you are using the correct node version.
+
+If you do see the line above but you also get the warning:
+
+```
+npm WARN This command requires you to be logged in to http://localhost:4873 (dry-run)
+```
+
+run the following command:
+
+```
+npm adduser --registry http://localhost:4873
 ```
 
 #### 5. Install in an external project
