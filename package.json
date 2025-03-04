@@ -33,6 +33,7 @@
     "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
     "unlink": "lg unlink",
+    "update-readme": "npx ts-node scripts/update-readme.ts",
     "validate": "lg validate",
     "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm run storybook build --test'"
   },
