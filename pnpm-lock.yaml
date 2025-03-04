@@ -1721,6 +1721,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
       focus-trap:
         specifier: 6.9.4
         version: 6.9.4
