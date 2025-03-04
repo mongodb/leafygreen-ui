@@ -15,6 +15,7 @@ import { DisplayMode } from './Drawer.types';
 const drawerTransitionDuration = transitionDuration.slower;
 
 const getBaseStyles = ({ theme }: { theme: Theme }) => css`
+  all: unset;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   width: 100%;

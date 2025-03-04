@@ -14,7 +14,7 @@ export const DisplayMode = {
 export type DisplayMode = (typeof DisplayMode)[keyof typeof DisplayMode];
 
 export interface DrawerProps
-  extends Omit<HTMLElementProps<'div'>, 'title'>,
+  extends Omit<HTMLElementProps<'dialog' | 'div'>, 'title'>,
     DarkModeProps,
     LgIdProps {
   /**
