@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
   storybookArgTypes,
@@ -65,52 +65,72 @@ export default {
   },
 } satisfies StoryMetaType<typeof Drawer>;
 
-const LiveExampleComponent = args => {
-  const [open, setOpen] = useState(false);
+const LongContent = () => {
+  const paragraphs = useMemo(() => {
+    return faker.lorem
+      .paragraphs(20, '\n')
+      .split('\n')
+      .map((p, i) => <Body key={i}>{p}</Body>);
+  }, []);
 
   return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${spacing[100]}px;
+      `}
+    >
+      {paragraphs}
+    </div>
+  );
+};
+
+const TemplateComponent: StoryFn<DrawerProps> = ({
+  displayMode,
+  ...rest
+}: DrawerProps) => {
+  const [open, setOpen] = useState(true);
+
+  const renderTrigger = () => (
+    <Button onClick={() => setOpen(prevOpen => !prevOpen)}>Open Drawer</Button>
+  );
+
+  const renderDrawer = () => (
+    <Drawer
+      {...rest}
+      displayMode={displayMode}
+      open={open}
+      onClose={() => setOpen(false)}
+    />
+  );
+
+  return displayMode === DisplayMode.Embedded ? (
+    <EmbeddedDrawerLayout isDrawerOpen={open}>
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+          overflow: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: ${spacing[200]}px;
+        `}
+      >
+        {renderTrigger()}
+        <LongContent />
+      </main>
+      {renderDrawer()}
+    </EmbeddedDrawerLayout>
+  ) : (
     <div>
-      <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-        Open Drawer
-      </Button>
-      <Drawer {...args} open={open} onClose={() => setOpen(false)} />
+      {renderTrigger()}
+      {renderDrawer()}
     </div>
   );
 };
 
 export const LiveExample: StoryObj<DrawerProps> = {
-  render: LiveExampleComponent,
-  parameters: {
-    chromatic: {
-      disableSnapshot: true,
-    },
-  },
-};
-
-const TemplateComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
-  const [open, setOpen] = useState(true);
-  return (
-    <div>
-      <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-        Open Drawer
-      </Button>
-      <Drawer {...args} open={open} onClose={() => setOpen(false)} />
-    </div>
-  );
-};
-
-const LongContent = () => (
-  <>
-    {faker.lorem
-      .paragraphs(20, '\n')
-      .split('\n')
-      .map((p, i) => (
-        <Body key={i}>{p}</Body>
-      ))}
-  </>
-);
-
-export const Scroll: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,
@@ -118,9 +138,6 @@ export const Scroll: StoryObj<DrawerProps> = {
   parameters: {
     chromatic: {
       disableSnapshot: true,
-    },
-    controls: {
-      exclude: defaultExcludedControls,
     },
   },
 };
@@ -181,31 +198,10 @@ export const DarkModeOverlay: StoryObj<DrawerProps> = {
   },
 };
 
-const EmbeddedExample: StoryFn<DrawerProps> = (args: DrawerProps) => {
-  const [open, setOpen] = useState(true);
-  return (
-    <EmbeddedDrawerLayout isDrawerOpen={open}>
-      <main
-        className={css`
-          padding: ${spacing[400]}px;
-          overflow: auto;
-        `}
-      >
-        <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-          Open Drawer
-        </Button>
-        <LongContent />
-      </main>
-      <Drawer {...args} open={open} onClose={() => setOpen(false)}>
-        <LongContent />
-      </Drawer>
-    </EmbeddedDrawerLayout>
-  );
-};
-
 export const LightModeEmbedded: StoryObj<DrawerProps> = {
-  render: EmbeddedExample,
+  render: TemplateComponent,
   args: {
+    children: <LongContent />,
     darkMode: false,
     displayMode: DisplayMode.Embedded,
     open: true,
@@ -218,8 +214,9 @@ export const LightModeEmbedded: StoryObj<DrawerProps> = {
 };
 
 export const DarkModeEmbedded: StoryObj<DrawerProps> = {
-  render: EmbeddedExample,
+  render: TemplateComponent,
   args: {
+    children: <LongContent />,
     darkMode: true,
     displayMode: DisplayMode.Embedded,
     open: true,
