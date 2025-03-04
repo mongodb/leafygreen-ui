@@ -12,7 +12,7 @@ import {
 } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
 
-const openTransitionDuration = transitionDuration.slowest;
+const drawerTransitionDuration = transitionDuration.slower;
 
 const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
@@ -28,18 +28,29 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   }
 `;
 
-const overlayOpenStyles = css`
+const getOverlayOpenStyles = (theme: Theme) => css`
+  box-shadow: ${theme === Theme.Light
+    ? `-10px 0 10px -10px rgba(0, 0, 0, 0.3)`
+    : 'initial'};
+  opacity: 1;
   transform: translateX(0);
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    box-shadow: ${theme === Theme.Light
+      ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
+      : 'initial'};
     transform: translateY(0);
   }
 `;
 
 const overlayClosedStyles = css`
+  box-shadow: 'initial';
+  opacity: 0;
   transform: translateX(100%);
+  pointer-events: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    box-shadow: 'initial';
     transform: translateY(100%);
   }
 `;
@@ -51,21 +62,19 @@ const getOverlayStyles = ({ open, theme }: { open: boolean; theme: Theme }) =>
       top: 0;
       bottom: 0;
       right: 0;
-      box-shadow: ${open && theme === Theme.Light
-        ? `-10px 0 10px -10px rgba(0,0,0,0.3)`
-        : 'initial'};
-      transition: transform ${openTransitionDuration}ms ease-in-out;
+      transition: transform ${drawerTransitionDuration}ms ease-in-out,
+        box-shadow ${drawerTransitionDuration}ms ease-in-out
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`},
+        opacity ${drawerTransitionDuration}ms ease-in-out
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         top: unset;
         left: 0;
-        box-shadow: ${open && theme === Theme.Light
-          ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
-          : 'initial'};
       }
     `,
     {
-      [overlayOpenStyles]: open,
+      [getOverlayOpenStyles(theme)]: open,
       [overlayClosedStyles]: !open,
     },
   );

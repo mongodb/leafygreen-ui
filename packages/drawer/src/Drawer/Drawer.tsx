@@ -44,7 +44,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
     // Track when element is no longer visible to add shadow below drawer header
-    const { ref: interceptRef, inView: isInterceptInView } = useInView();
+    const { ref: interceptRef, inView: isInterceptInView } = useInView({
+      initialInView: true,
+      fallbackInView: true,
+    });
 
     const showCloseButton = !!onClose;
 

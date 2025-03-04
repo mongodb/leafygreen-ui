@@ -184,24 +184,22 @@ export const DarkModeOverlay: StoryObj<DrawerProps> = {
 const PersistentExample: StoryFn<DrawerProps> = (args: DrawerProps) => {
   const [open, setOpen] = useState(true);
   return (
-    <div>
-      <PersistentDrawerLayout isDrawerOpen={open}>
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-          `}
-        >
-          <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-            Open Drawer
-          </Button>
-          <LongContent />
-        </main>
-        <Drawer {...args} open={open} onClose={() => setOpen(false)}>
-          <LongContent />
-        </Drawer>
-      </PersistentDrawerLayout>
-    </div>
+    <PersistentDrawerLayout isDrawerOpen={open}>
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+          overflow: auto;
+        `}
+      >
+        <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+          Open Drawer
+        </Button>
+        <LongContent />
+      </main>
+      <Drawer {...args} open={open} onClose={() => setOpen(false)}>
+        <LongContent />
+      </Drawer>
+    </PersistentDrawerLayout>
   );
 };
 
