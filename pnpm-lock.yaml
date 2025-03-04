@@ -1694,6 +1694,9 @@ importers:
 
   packages/modal:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1715,21 +1718,12 @@ importers:
       '@leafygreen-ui/palette':
         specifier: workspace:^
         version: link:../palette
-      '@leafygreen-ui/portal':
-        specifier: workspace:^
-        version: link:../portal
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
-      focus-trap:
-        specifier: 6.9.4
-        version: 6.9.4
-      focus-trap-react:
-        specifier: ^9.0.2
-        version: 9.0.2(prop-types@15.8.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       polished:
         specifier: ^4.2.2
         version: 4.3.1
@@ -1740,9 +1734,6 @@ importers:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
-      '@leafygreen-ui/button':
-        specifier: workspace:^
-        version: link:../button
       '@leafygreen-ui/code':
         specifier: workspace:^
         version: link:../code
