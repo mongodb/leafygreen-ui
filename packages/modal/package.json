@@ -30,6 +30,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/portal": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "focus-trap": "6.9.4",
     "focus-trap-react": "^9.0.2",
     "polished": "^4.2.2",

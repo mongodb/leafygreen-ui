@@ -17,6 +17,9 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../button"
+    },
+    {
       "path": "../emotion"
     },
     {
@@ -39,6 +42,9 @@
     },
     {
       "path": "../tokens"
+    },
+    {
+      "path": "../tooltip"
     },
     {
       "path": "../leafygreen-provider"

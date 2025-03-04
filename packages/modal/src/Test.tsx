@@ -2,8 +2,8 @@ import React from 'react';
 
 import Button from '@leafygreen-ui/button';
 import Tooltip from '@leafygreen-ui/tooltip';
-import { ModalProps } from './Modal.types';
-import Modal from './Modal';
+
+import Modal, { ModalProps } from './Modal';
 
 export function TooltipTrigger(args: ModalProps) {
   const [open, setOpen] = React.useState(false);
