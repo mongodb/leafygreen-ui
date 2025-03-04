@@ -191,7 +191,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm changeset version
+          version: pnpm changeset version && pnpm run update-readme
           publish: pnpm publish -r --no-git-checks
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
