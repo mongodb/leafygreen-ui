@@ -1,5 +1,5 @@
-import { createGlyphComponent } from '../createGlyphComponent';
 import { LGGlyph } from '../types';
+import { createGlyphComponent } from '../createGlyphComponent';
 
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
@@ -125,6 +125,7 @@ import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
 import Return from './Return.svg';
 import Revert from './Revert.svg';
+import SMS from './SMS.svg';
 import Save from './Save.svg';
 import SearchIndex from './SearchIndex.svg';
 import Secondary from './Secondary.svg';
@@ -132,7 +133,6 @@ import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
-import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Sparkle from './Sparkle.svg';
@@ -232,10 +232,10 @@ const _glyphs = {
   Federation,
   File,
   Filter,
-  FullScreenEnter,
-  FullScreenExit,
   Folder,
   Format,
+  FullScreenEnter,
+  FullScreenExit,
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
@@ -291,14 +291,14 @@ const _glyphs = {
   Resize,
   Return,
   Revert,
+  SMS,
   Save,
-  Serverless,
-  ShardedCluster,
   SearchIndex,
   Secondary,
+  Serverless,
   Settings,
+  ShardedCluster,
   Shell,
-  SMS,
   SortAscending,
   SortDescending,
   Sparkle,
@@ -332,7 +332,7 @@ const _glyphs = {
   Write,
   X,
   XWithCircle,
-} as const;
+};
 
 export type GlyphName = keyof typeof _glyphs;
 
