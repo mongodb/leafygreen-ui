@@ -79,7 +79,7 @@ const Modal = React.forwardRef(
     useEffect(() => {
       if (open && localRef.current != null) {
         localRef.current.appendChild(portalContainer.current);
-        portalContainer.current.id = 'test';
+        portalContainer.current.id = 'lg--modal-dialog-portal';
 
         // Expose the portal container via the ref
         if (portalRef) {
