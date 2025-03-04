@@ -18,7 +18,7 @@ import {
   getDrawerStyles,
   getHeaderStyles,
 } from './Drawer.styles';
-import { DrawerProps } from './Drawer.types';
+import { DisplayMode, DrawerProps } from './Drawer.types';
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   (
@@ -26,6 +26,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       children,
       className,
       'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      displayMode = DisplayMode.Overlay,
       id: idProp,
       onClose,
       open = false,
@@ -42,8 +43,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
-    // Track when element is no longer visible to add shadow below drawer header
-    const { ref: interceptRef, inView: isInterceptInView } = useInView();
+    // Track when intercept <span> element is no longer visible to add shadow below drawer header
+    const { ref: interceptRef, inView: isInterceptInView } = useInView({
+      initialInView: true,
+      fallbackInView: true,
+    });
 
     const showCloseButton = !!onClose;
 
@@ -55,7 +59,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           <div
             aria-hidden={!open}
             aria-labelledby={titleId}
-            className={getDrawerStyles({ className, open, theme })}
+            className={getDrawerStyles({ className, displayMode, open, theme })}
             data-lgid={lgIds.root}
             id={id}
             ref={fwdRef}
@@ -64,7 +68,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           >
             <div
               className={getHeaderStyles({
-                hasShadowTop: !isInterceptInView,
+                hasShadowTop: !hasTabs && !isInterceptInView,
                 hasTabs,
                 theme,
               })}

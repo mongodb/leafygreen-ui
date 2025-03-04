@@ -1,18 +1,30 @@
 import React, { useState } from 'react';
 import { faker } from '@faker-js/faker';
-import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
+import {
+  storybookArgTypes,
+  storybookExcludedControlParams,
+  StoryMetaType,
+} from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 import { Tab } from '@leafygreen-ui/tabs';
+import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerTabs } from './DrawerTabs';
-import { Drawer, DrawerProps } from '.';
+import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
+
+const defaultExcludedControls = [
+  ...storybookExcludedControlParams,
+  'children',
+  'open',
+];
 
 export default {
   title: 'Components/Drawer',
@@ -21,7 +33,10 @@ export default {
     StoryFn => (
       <div
         className={css`
+          margin: -100px;
           height: 100vh;
+          display: flex;
+          align-items: center;
         `}
       >
         <StoryFn />
@@ -31,20 +46,19 @@ export default {
   parameters: {
     default: 'LiveExample',
     controls: {
-      exclude: [],
-    },
-    generate: {
-      storyNames: ['LightMode', 'DarkMode'],
-      combineArgs: {
-        title: ['Drawer Title'],
-      },
+      exclude: defaultExcludedControls,
     },
   },
   args: {
+    displayMode: DisplayMode.Overlay,
     title: 'Drawer Title',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    displayMode: {
+      options: Object.values(DisplayMode),
+      control: { type: 'radio' },
+    },
     title: {
       control: 'text',
     },
@@ -80,7 +94,7 @@ const TemplateComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
       <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
         Open Drawer
       </Button>
-      <Drawer {...args} open={open} setOpen={setOpen} />
+      <Drawer {...args} open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };
@@ -100,6 +114,14 @@ export const Scroll: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+    controls: {
+      exclude: defaultExcludedControls,
+    },
   },
 };
 
@@ -122,18 +144,89 @@ export const WithTabs: StoryObj<DrawerProps> = {
   },
 };
 
-export const LightMode: StoryObj<DrawerProps> = {
-  render: () => <></>,
+const snapshotStoryExcludedControlParams = [
+  ...defaultExcludedControls,
+  'darkMode',
+  'displayMode',
+  'title',
+];
+
+export const LightModeOverlay: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
   args: {
+    children: <LongContent />,
     darkMode: false,
+    displayMode: DisplayMode.Overlay,
     open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
   },
 };
 
-export const DarkMode: StoryObj<DrawerProps> = {
-  render: () => <></>,
+export const DarkModeOverlay: StoryObj<DrawerProps> = {
+  render: TemplateComponent,
+  args: {
+    children: <LongContent />,
+    darkMode: true,
+    displayMode: DisplayMode.Overlay,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+const EmbeddedExample: StoryFn<DrawerProps> = (args: DrawerProps) => {
+  const [open, setOpen] = useState(true);
+  return (
+    <EmbeddedDrawerLayout isDrawerOpen={open}>
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+          overflow: auto;
+        `}
+      >
+        <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+          Open Drawer
+        </Button>
+        <LongContent />
+      </main>
+      <Drawer {...args} open={open} onClose={() => setOpen(false)}>
+        <LongContent />
+      </Drawer>
+    </EmbeddedDrawerLayout>
+  );
+};
+
+export const LightModeEmbedded: StoryObj<DrawerProps> = {
+  render: EmbeddedExample,
+  args: {
+    darkMode: false,
+    displayMode: DisplayMode.Embedded,
+    open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
+  },
+};
+
+export const DarkModeEmbedded: StoryObj<DrawerProps> = {
+  render: EmbeddedExample,
   args: {
     darkMode: true,
+    displayMode: DisplayMode.Embedded,
     open: true,
+  },
+  parameters: {
+    controls: {
+      exclude: snapshotStoryExcludedControlParams,
+    },
   },
 };
