@@ -10,66 +10,131 @@ import {
   MOBILE_BREAKPOINT,
   PANEL_WIDTH,
 } from './Drawer.constants';
+import { DisplayMode } from './Drawer.types';
 
-const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
+const drawerTransitionDuration = transitionDuration.slower;
+
+const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
-  transition: transform ${transitionDuration.slower}ms ease-in-out;
   width: 100%;
-  position: fixed;
-
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
-  top: 0;
-  bottom: 0;
-  left: unset;
-  right: 0;
-  box-shadow: ${open && theme === Theme.Light
-    ? `-10px 0 10px -10px rgba(0,0,0,0.3)`
-    : 'initial'};
+  overflow: auto;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
     height: 50vh;
-    top: unset;
-    left: 0;
-    box-shadow: ${open && theme === Theme.Light
-      ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
-      : 'initial'};
   }
 `;
 
-const drawerOpenStyles = css`
+const getOverlayOpenStyles = (theme: Theme) => css`
+  box-shadow: ${theme === Theme.Light
+    ? `-10px 0 10px -10px rgba(0, 0, 0, 0.3)`
+    : 'initial'};
+  opacity: 1;
   transform: translateX(0);
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    box-shadow: ${theme === Theme.Light
+      ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
+      : 'initial'};
     transform: translateY(0);
   }
 `;
 
-const drawerClosedStyles = css`
+const overlayClosedStyles = css`
+  box-shadow: 'initial';
+  opacity: 0;
   transform: translateX(100%);
+  pointer-events: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    box-shadow: 'initial';
     transform: translateY(100%);
   }
 `;
 
+const getOverlayStyles = ({ open, theme }: { open: boolean; theme: Theme }) =>
+  cx(
+    css`
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      transition: transform ${drawerTransitionDuration}ms ease-in-out,
+        box-shadow ${drawerTransitionDuration}ms ease-in-out
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`},
+        opacity ${drawerTransitionDuration}ms ease-in-out
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
+
+      @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+        top: unset;
+        left: 0;
+      }
+    `,
+    {
+      [getOverlayOpenStyles(theme)]: open,
+      [overlayClosedStyles]: !open,
+    },
+  );
+
+const embeddedOpenStyles = css`
+  width: 100%;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    height: 50vh;
+  }
+`;
+
+const embeddedClosedStyles = css`
+  width: 0;
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    width: 100%;
+    height: 0;
+  }
+`;
+
+const getEmbeddedStyles = ({ open }: { open: boolean }) =>
+  cx(
+    css`
+      position: relative;
+    `,
+    {
+      [embeddedOpenStyles]: open,
+      [embeddedClosedStyles]: !open,
+    },
+  );
+
+const getDisplayModeStyles = ({
+  displayMode,
+  open,
+  theme,
+}: {
+  displayMode: DisplayMode;
+  open: boolean;
+  theme: Theme;
+}) =>
+  cx({
+    [getOverlayStyles({ open, theme })]: displayMode === DisplayMode.Overlay,
+    [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
+  });
+
 export const getDrawerStyles = ({
   className,
+  displayMode,
   open,
   theme,
 }: {
   className?: string;
+  displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
 }) =>
   cx(
-    getBaseStyles({ open, theme }),
-    {
-      [drawerOpenStyles]: open,
-      [drawerClosedStyles]: !open,
-    },
+    getBaseStyles({ theme }),
+    getDisplayModeStyles({ displayMode, open, theme }),
     className,
   );
 
@@ -107,7 +172,7 @@ export const getHeaderStyles = ({
   theme: Theme;
 }) =>
   cx(getBaseHeaderStyles({ hasTabs, theme }), {
-    [getShadowTopStyles({ theme })]: hasShadowTop && !hasTabs,
+    [getShadowTopStyles({ theme })]: hasShadowTop,
   });
 
 const baseChildrenContainerStyles = css`

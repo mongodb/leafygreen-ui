@@ -18,8 +18,10 @@ export const DrawerTabs = ({
   const { theme } = useDarkMode();
   const { registerTabs } = useDrawerContext();
 
-  // Track when element is no longer visible to add shadow below drawer header
-  const { ref: interceptRef, inView: isInterceptInView } = useInView();
+  // Track when intercept <span> element is no longer visible to add shadow below drawer header
+  const { ref: interceptRef, inView: isInterceptInView } = useInView({
+    fallbackInView: true,
+  });
 
   useIsomorphicLayoutEffect(() => {
     registerTabs();
