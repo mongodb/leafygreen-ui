@@ -7,7 +7,7 @@ import {
 } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-interface InternalCheckboxProps extends HTMLElementProps<'input'> {
+export interface InternalCheckboxProps extends HTMLElementProps<'input'> {
   /**
    * Base font size of the component. Only effective when `size == 'default'`
    */
