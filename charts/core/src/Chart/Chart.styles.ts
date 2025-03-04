@@ -53,10 +53,8 @@ export const getChartContainerStyles = ({
 }) =>
   cx(getBaseContainerStyles(theme), {
     [getDraggableContainerStyles(transform, transition)]: isDraggable,
-    [getDraggingContainerStyles()]:
-      isDraggable && state === ChartStates.Dragging,
-    [getOverlayContainerStyles(theme)]:
-      isDraggable && state === ChartStates.Overlay,
+    [getDraggingContainerStyles()]: state === ChartStates.Dragging,
+    [getOverlayContainerStyles(theme)]: state === ChartStates.Overlay,
   });
 
 export const getChartHeaderContainerStyles = ({

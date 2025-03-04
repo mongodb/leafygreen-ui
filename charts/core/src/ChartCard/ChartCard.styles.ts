@@ -65,10 +65,8 @@ export const getContainerStyles = ({
     {
       [openContainerStyles]: isOpen,
       [getSortableContainerStyles(transform, transition)]: isDraggable,
-      [getDraggingContainerStyles()]:
-        isDraggable && state === ChartCardStates.Dragging,
-      [getOverlayContainerStyles()]:
-        isDraggable && state === ChartCardStates.Overlay,
+      [getDraggingContainerStyles()]: state === ChartCardStates.Dragging,
+      [getOverlayContainerStyles()]: state === ChartCardStates.Overlay,
     },
     className,
   );
