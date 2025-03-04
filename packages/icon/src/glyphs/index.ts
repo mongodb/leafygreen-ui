@@ -354,7 +354,7 @@ const _glyphs = {
   Write,
   X,
   XWithCircle,
-};
+} as const;
 
 export type GlyphName = keyof typeof _glyphs;
 

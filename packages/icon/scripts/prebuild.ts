@@ -102,7 +102,7 @@ async function indexTemplate(svgFiles: Array<FileObject>) {
     // Glyphs
     ${imports}
 
-    const _glyphs = ${_glyphs}
+    const _glyphs = ${_glyphs} as const;
 
     export type GlyphName = keyof typeof _glyphs;
     
