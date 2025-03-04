@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/gallery-indicator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "LeafyGreen UI Kit Gallery Indicator",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
