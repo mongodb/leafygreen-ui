@@ -134,7 +134,7 @@ If you do see the line above but you also get the warning:
 npm WARN This command requires you to be logged in to http://localhost:4873 (dry-run)
 ```
 
-run the following command:
+run the following command to [genereate a token in your npmrc file](https://verdaccio.org/docs/authentication/):
 
 ```
 npm adduser --registry http://localhost:4873
