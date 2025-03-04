@@ -1,123 +1,74 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import ClipboardJS from 'clipboard';
 import debounce from 'lodash/debounce';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useIsomorphicLayoutEffect } from '@leafygreen-ui/hooks';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
 import ChevronUp from '@leafygreen-ui/icon/dist/ChevronUp';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
-import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
-import { isComponentType } from '@leafygreen-ui/lib';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { CodeSkeleton } from '@leafygreen-ui/skeleton-loader';
+import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
+import CodeContextProvider from '../CodeContext/CodeContext';
 import { numOfCollapsedLinesOfCode } from '../constants';
+import CopyButton from '../CopyButton/CopyButton';
 import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
-import { CodeProps, Language } from '../types';
-import { WindowChrome } from '../WindowChrome';
+import { Language } from '../types';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import {
-  baseScrollShadowStyles,
-  codeWrapperStyle,
-  codeWrapperStyleNoPanel,
-  codeWrapperStyleWithLanguagePicker,
-  contentWrapperStyles,
-  contentWrapperStylesNoPanel,
-  contentWrapperStyleWithPicker,
-  expandableContentWrapperStyle,
-  expandableContentWrapperStyleNoPanel,
-  expandableContentWrapperStyleWithPicker,
-  expandButtonStyle,
-  getCodeWrapperVariantStyle,
-  getExpandableCodeWrapperStyle,
-  getExpandButtonVariantStyle,
-  getScrollShadow,
-  panelStyles,
-  scrollShadowStylesNoPanel,
-  scrollShadowStylesWithPicker,
-  singleLineCodeWrapperStyle,
-  wrapperStyle,
+  getCodeStyles,
+  getCodeWrapperStyles,
+  getCopyButtonWithoutPanelStyles,
+  getExpandedButtonStyles,
+  getLoadingStyles,
+  getWrapperStyles,
 } from './Code.styles';
-import { DetailedElementProps, ScrollState } from './Code.types';
+import {
+  CodeProps,
+  CopyButtonAppearance,
+  DetailedElementProps,
+  ScrollState,
+} from './Code.types';
+import { getHorizontalScrollbarHeight, hasMultipleLines } from './utils';
 
-export function hasMultipleLines(string: string): boolean {
-  return string.trim().includes('\n');
-}
-
-function getHorizontalScrollbarHeight(element: HTMLElement): number {
-  return element.offsetHeight - element.clientHeight;
-}
-
-/**
- *
- * React Component that outputs single-line and multi-line code blocks.
- *
- * @param props.children The string to be formatted.
- * @param props.className An additional CSS class added to the root element of Code.
- * @param props.language The language used for syntax highlighting.
- * @param props.darkMode Determines if the code block will be rendered in dark mode. Default: `false`
- * @param props.showLineNumbers When true, shows line numbers in preformatted code blocks. Default: `false`
- * @param props.lineNumberStart Specifies the numbering of the first line in the block. Default: 1
- * @param props.copyable When true, allows the code block to be copied to the user's clipboard. Default: `true`
- * @param props.onCopy Callback fired when Code is copied
- * @param props.expandable When true, allows the code block to be expanded and collapsed when there are more than 5 lined of code. Default: `false`
- */
 function Code({
-  children = '',
-  className,
   language: languageProp,
   darkMode: darkModeProp,
   showLineNumbers = false,
   lineNumberStart = 1,
-  showWindowChrome = false,
-  chromeTitle = '',
-  copyable = true,
   expandable = false,
-  onCopy,
+  isLoading = false,
   highlightLines = [],
-  languageOptions,
-  onChange,
-  customActionButtons = [],
+  copyButtonAppearance = CopyButtonAppearance.Hover,
+  children = '',
+  className,
+  onCopy,
+  panel,
+  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+  baseFontSize: baseFontSizeProp,
+  // Deprecated props
+  copyable = false,
   showCustomActionButtons = false,
+  languageOptions = [],
+  customActionButtons,
+  chromeTitle,
+  onChange,
+  // rest
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
   const [scrollState, setScrollState] = useState<ScrollState>(ScrollState.None);
-  const [showCopyBar, setShowCopyBar] = useState(false);
   const [expanded, setExpanded] = useState(!expandable);
   const [numOfLinesOfCode, setNumOfLinesOfCode] = useState<number>();
-  const [codeHeight, setCodeHeight] = useState<number>();
-  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>();
+  const [codeHeight, setCodeHeight] = useState<number>(0);
+  const [collapsedCodeHeight, setCollapsedCodeHeight] = useState<number>(0);
   const isMultiline = useMemo(() => hasMultipleLines(children), [children]);
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const baseFontSize = useBaseFontSize();
+  const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-  const filteredCustomActionIconButtons = customActionButtons.filter(
-    (item: React.ReactElement) => isComponentType(item, 'IconButton') === true,
-  );
-
-  const showCustomActionsInPanel =
-    showCustomActionButtons && !!filteredCustomActionIconButtons.length;
-
-  const currentLanguage = languageOptions?.find(
-    option => option.displayName === languageProp,
-  );
-
-  const showPanel =
-    !showWindowChrome &&
-    (copyable || !!currentLanguage || showCustomActionsInPanel);
-
-  const highlightLanguage = currentLanguage
-    ? currentLanguage.language
-    : languageProp;
-
-  const showLanguagePicker = !!currentLanguage;
-
-  useEffect(() => {
-    setShowCopyBar(copyable && ClipboardJS.isSupported());
-  }, [copyable, showWindowChrome]);
+  const lgIds = getLgIds(dataLgId);
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -158,6 +109,14 @@ function Code({
     scrollableElementRef,
     baseFontSize, // will cause changes in code height
   ]);
+
+  const currentLanguage = languageOptions?.find(
+    option => option.displayName === languageProp,
+  );
+
+  const highlightLanguage = currentLanguage
+    ? currentLanguage.language
+    : languageProp;
 
   const renderedSyntaxComponent = (
     <Syntax
@@ -202,83 +161,128 @@ function Code({
   const showExpandButton = !!(
     expandable &&
     numOfLinesOfCode &&
-    numOfLinesOfCode > numOfCollapsedLinesOfCode
+    numOfLinesOfCode > numOfCollapsedLinesOfCode &&
+    !isLoading
   );
 
+  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
+  const hasDeprecatedCustomActionButtons =
+    showCustomActionButtons &&
+    !!customActionButtons &&
+    customActionButtons.length > 0;
+
+  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
+  const hasDeprecatedLanguageSwitcher =
+    !!languageOptions &&
+    languageOptions.length > 0 &&
+    !!currentLanguage &&
+    !!onChange;
+
+  // This will render a temp deprecated panel component if deprecated props are used
+  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
+  const shouldRenderDeprecatedPanel =
+    !panel &&
+    (hasDeprecatedCustomActionButtons ||
+      hasDeprecatedLanguageSwitcher ||
+      !!chromeTitle ||
+      copyable);
+
+  // TODO: remove when deprecated props are removed. Should only check panel https://jira.mongodb.org/browse/LG-4909
+  const showPanel = !!panel || shouldRenderDeprecatedPanel;
+
+  const showCopyButtonWithoutPanel =
+    !showPanel &&
+    copyButtonAppearance !== CopyButtonAppearance.None &&
+    ClipboardJS.isSupported() &&
+    !isLoading;
+
   return (
-    <LeafyGreenProvider darkMode={darkMode}>
-      <div className={wrapperStyle[theme]}>
-        {showWindowChrome && <WindowChrome chromeTitle={chromeTitle} />}
-
+    <CodeContextProvider
+      darkMode={darkMode}
+      contents={children}
+      language={languageProp}
+      isLoading={isLoading}
+      showPanel={showPanel}
+      lgids={lgIds}
+    >
+      <div
+        className={getWrapperStyles({ theme, className })}
+        data-language={languageProp}
+        data-lgid={dataLgId}
+      >
         <div
-          className={cx(
-            contentWrapperStyles,
-            baseScrollShadowStyles,
-            getScrollShadow(scrollState, theme),
-            {
-              [contentWrapperStyleWithPicker]: showLanguagePicker,
-              [scrollShadowStylesWithPicker]: showLanguagePicker,
-              [contentWrapperStylesNoPanel]: !showPanel,
-              [scrollShadowStylesNoPanel]: !showPanel,
-              [expandableContentWrapperStyle]: showExpandButton,
-              [expandableContentWrapperStyleWithPicker]:
-                showExpandButton && showLanguagePicker,
-              [expandableContentWrapperStyleNoPanel]:
-                showExpandButton && !showPanel,
-            },
-          )}
+          className={getCodeStyles({
+            scrollState,
+            theme,
+            showPanel,
+            showExpandButton,
+            isLoading,
+          })}
         >
-          <pre
-            {...(rest as DetailedElementProps<HTMLPreElement>)}
-            className={cx(
-              codeWrapperStyle,
-              getCodeWrapperVariantStyle(theme),
-              {
-                [codeWrapperStyleWithLanguagePicker]: showLanguagePicker,
-                [codeWrapperStyleNoPanel]: !showPanel,
-                [singleLineCodeWrapperStyle]: !isMultiline,
-                [getExpandableCodeWrapperStyle(
-                  expanded,
-                  codeHeight as number,
-                  collapsedCodeHeight as number,
-                )]: showExpandButton,
-              },
-              className,
-            )}
-            onScroll={onScroll}
-            ref={scrollableElementRef}
-            // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={scrollState !== ScrollState.None ? 0 : -1}
-          >
-            {renderedSyntaxComponent}
-          </pre>
+          {!isLoading && (
+            <pre
+              data-testid={lgIds.pre}
+              {...(rest as DetailedElementProps<HTMLPreElement>)}
+              className={getCodeWrapperStyles({
+                theme,
+                showPanel,
+                expanded,
+                codeHeight,
+                collapsedCodeHeight,
+                isMultiline,
+                showExpandButton,
+                className,
+              })}
+              onScroll={onScroll}
+              ref={scrollableElementRef}
+              // Adds to Tab order when content is scrollable, otherwise overflowing content is inaccessible via keyboard navigation
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              tabIndex={scrollState !== ScrollState.None ? 0 : -1}
+            >
+              {renderedSyntaxComponent}
+            </pre>
+          )}
 
-          {/* Can make this a more robust check in the future */}
-          {/* Right now the panel will only be rendered with copyable or a language switcher */}
-          {showPanel && (
-            <Panel
-              className={cx(panelStyles)}
-              language={currentLanguage}
-              languageOptions={languageOptions}
-              onChange={onChange}
-              contents={children}
+          {isLoading && (
+            <CodeSkeleton
+              data-testid={lgIds.skeleton}
+              data-lgid={lgIds.skeleton}
+              className={getLoadingStyles(theme)}
+            />
+          )}
+
+          {/* This div is below the pre tag so that we can target it using the css sibiling selector when the pre tag is hovered */}
+          {showCopyButtonWithoutPanel && (
+            <CopyButton
+              className={getCopyButtonWithoutPanelStyles({
+                copyButtonAppearance,
+              })}
               onCopy={onCopy}
-              showCopyButton={showCopyBar}
-              isMultiline={isMultiline}
-              customActionButtons={filteredCustomActionIconButtons}
-              showCustomActionButtons={showCustomActionsInPanel}
+              contents={children}
+            />
+          )}
+
+          {!!panel && panel}
+
+          {/* if there are deprecated props then manually render the panel component */}
+          {/* TODO: remove when deprecated props are removed, https://jira.mongodb.org/browse/LG-4909 */}
+          {shouldRenderDeprecatedPanel && (
+            <Panel
+              showCustomActionButtons={showCustomActionButtons}
+              customActionButtons={customActionButtons}
+              title={chromeTitle}
+              languageOptions={languageOptions || []} // Empty array as default
+              onChange={onChange || (() => {})} // No-op function as default
+              onCopy={onCopy}
             />
           )}
 
           {showExpandButton && (
             <button
-              className={cx(
-                expandButtonStyle,
-                getExpandButtonVariantStyle(theme),
-              )}
+              className={getExpandedButtonStyles({ theme })}
               onClick={handleExpandButtonClick}
-              data-testid="lg-code-expand_button"
+              data-testid={lgIds.expandButton}
+              data-lgid={lgIds.expandButton}
             >
               {expanded ? <ChevronUp /> : <ChevronDown />}
               Click to{' '}
@@ -287,7 +291,7 @@ function Code({
           )}
         </div>
       </div>
-    </LeafyGreenProvider>
+    </CodeContextProvider>
   );
 }
 

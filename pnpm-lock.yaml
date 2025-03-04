@@ -907,12 +907,21 @@ importers:
       '@leafygreen-ui/select':
         specifier: workspace:^
         version: link:../select
+      '@leafygreen-ui/skeleton-loader':
+        specifier: workspace:^
+        version: link:../skeleton-loader
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
       '@types/facepaint':
         specifier: ^1.2.1
         version: 1.2.2
