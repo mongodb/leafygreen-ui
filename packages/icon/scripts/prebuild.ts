@@ -96,8 +96,8 @@ async function indexTemplate(svgFiles: Array<FileObject>) {
   }`;
 
   return `
-    import { LGGlyph } from '../types';
     import { createGlyphComponent } from '../createGlyphComponent';
+    import { LGGlyph } from '../types';
 
     // Glyphs
     ${imports}

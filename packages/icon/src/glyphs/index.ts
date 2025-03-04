@@ -1,5 +1,5 @@
-import { LGGlyph } from '../types';
 import { createGlyphComponent } from '../createGlyphComponent';
+import { LGGlyph } from '../types';
 
 // Glyphs
 import ActivityFeed from './ActivityFeed.svg';
@@ -133,7 +133,6 @@ import Resize from './Resize.svg';
 import Return from './Return.svg';
 import Revert from './Revert.svg';
 import Router from './Router.svg';
-import SMS from './SMS.svg';
 import Save from './Save.svg';
 import SearchIndex from './SearchIndex.svg';
 import Secondary from './Secondary.svg';
@@ -142,6 +141,7 @@ import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
 import Shirt from './Shirt.svg';
+import SMS from './SMS.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Sparkle from './Sparkle.svg';
