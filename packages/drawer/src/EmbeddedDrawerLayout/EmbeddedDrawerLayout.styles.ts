@@ -23,7 +23,7 @@ const drawerOpenStyles = css`
   }
 `;
 
-export const getPersistentDrawerLayoutStyles = ({
+export const getEmbeddedDrawerLayoutStyles = ({
   className,
   isDrawerOpen,
 }: {

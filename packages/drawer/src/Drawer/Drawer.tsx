@@ -43,7 +43,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
-    // Track when element is no longer visible to add shadow below drawer header
+    // Track when intercept <span> element is no longer visible to add shadow below drawer header
     const { ref: interceptRef, inView: isInterceptInView } = useInView({
       initialInView: true,
       fallbackInView: true,

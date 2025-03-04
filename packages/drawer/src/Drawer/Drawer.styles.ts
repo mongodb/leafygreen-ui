@@ -79,7 +79,7 @@ const getOverlayStyles = ({ open, theme }: { open: boolean; theme: Theme }) =>
     },
   );
 
-const persistentOpenStyles = css`
+const embeddedOpenStyles = css`
   width: 100%;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -87,7 +87,7 @@ const persistentOpenStyles = css`
   }
 `;
 
-const persistentClosedStyles = css`
+const embeddedClosedStyles = css`
   width: 0;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -96,14 +96,14 @@ const persistentClosedStyles = css`
   }
 `;
 
-const getPersistentStyles = ({ open }: { open: boolean }) =>
+const getEmbeddedStyles = ({ open }: { open: boolean }) =>
   cx(
     css`
       position: relative;
     `,
     {
-      [persistentOpenStyles]: open,
-      [persistentClosedStyles]: !open,
+      [embeddedOpenStyles]: open,
+      [embeddedClosedStyles]: !open,
     },
   );
 
@@ -118,7 +118,7 @@ const getDisplayModeStyles = ({
 }) =>
   cx({
     [getOverlayStyles({ open, theme })]: displayMode === DisplayMode.Overlay,
-    [getPersistentStyles({ open })]: displayMode === DisplayMode.Persistent,
+    [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({

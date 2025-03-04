@@ -15,7 +15,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerTabs } from './DrawerTabs';
-import { PersistentDrawerLayout } from './PersistentDrawerLayout';
+import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -181,10 +181,10 @@ export const DarkModeOverlay: StoryObj<DrawerProps> = {
   },
 };
 
-const PersistentExample: StoryFn<DrawerProps> = (args: DrawerProps) => {
+const EmbeddedExample: StoryFn<DrawerProps> = (args: DrawerProps) => {
   const [open, setOpen] = useState(true);
   return (
-    <PersistentDrawerLayout isDrawerOpen={open}>
+    <EmbeddedDrawerLayout isDrawerOpen={open}>
       <main
         className={css`
           padding: ${spacing[400]}px;
@@ -199,15 +199,15 @@ const PersistentExample: StoryFn<DrawerProps> = (args: DrawerProps) => {
       <Drawer {...args} open={open} onClose={() => setOpen(false)}>
         <LongContent />
       </Drawer>
-    </PersistentDrawerLayout>
+    </EmbeddedDrawerLayout>
   );
 };
 
-export const LightModePersistent: StoryObj<DrawerProps> = {
-  render: PersistentExample,
+export const LightModeEmbedded: StoryObj<DrawerProps> = {
+  render: EmbeddedExample,
   args: {
     darkMode: false,
-    displayMode: DisplayMode.Persistent,
+    displayMode: DisplayMode.Embedded,
     open: true,
   },
   parameters: {
@@ -217,11 +217,11 @@ export const LightModePersistent: StoryObj<DrawerProps> = {
   },
 };
 
-export const DarkModePersistent: StoryObj<DrawerProps> = {
-  render: PersistentExample,
+export const DarkModeEmbedded: StoryObj<DrawerProps> = {
+  render: EmbeddedExample,
   args: {
     darkMode: true,
-    displayMode: DisplayMode.Persistent,
+    displayMode: DisplayMode.Embedded,
     open: true,
   },
   parameters: {

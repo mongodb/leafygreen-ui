@@ -1,6 +1,6 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface PersistentDrawerLayoutProps extends HTMLElementProps<'div'> {
+export interface EmbeddedDrawerLayoutProps extends HTMLElementProps<'div'> {
   /**
    * Determines if the Drawer instance is open or closed
    */
