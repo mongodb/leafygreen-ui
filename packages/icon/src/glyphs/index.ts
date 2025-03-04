@@ -5,6 +5,7 @@ import { createGlyphComponent } from '../createGlyphComponent';
 import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
 import AllProducts from './AllProducts.svg';
+import AnalyticsNode from './AnalyticsNode.svg';
 import Apps from './Apps.svg';
 import Array from './Array.svg';
 import ArrowDown from './ArrowDown.svg';
@@ -41,6 +42,7 @@ import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
 import Coin from './Coin.svg';
 import Colon from './Colon.svg';
+import Config from './Config.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
@@ -70,10 +72,12 @@ import Folder from './Folder.svg';
 import Format from './Format.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
+import Function from './Function.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import Hash from './Hash.svg';
+import HiddenSecondaryNode from './HiddenSecondaryNode.svg';
 import Highlight from './Highlight.svg';
 import Home from './Home.svg';
 import HorizontalDrag from './HorizontalDrag.svg';
@@ -103,7 +107,10 @@ import NavExpand from './NavExpand.svg';
 import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
+import NumberedList from './NumberedList.svg';
 import OpenNewTab from './OpenNewTab.svg';
+import OutlineFavorite from './OutlineFavorite.svg';
+import Package from './Package.svg';
 import Pause from './Pause.svg';
 import Pending from './Pending.svg';
 import Person from './Person.svg';
@@ -125,6 +132,7 @@ import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
 import Return from './Return.svg';
 import Revert from './Revert.svg';
+import Router from './Router.svg';
 import SMS from './SMS.svg';
 import Save from './Save.svg';
 import SearchIndex from './SearchIndex.svg';
@@ -133,6 +141,7 @@ import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
+import Shirt from './Shirt.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Sparkle from './Sparkle.svg';
@@ -146,6 +155,7 @@ import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
 import Tag from './Tag.svg';
+import TemporaryTable from './TemporaryTable.svg';
 import ThumbsDown from './ThumbsDown.svg';
 import ThumbsUp from './ThumbsUp.svg';
 import TimeSeries from './TimeSeries.svg';
@@ -158,6 +168,7 @@ import Unsorted from './Unsorted.svg';
 import UpDownCarets from './UpDownCarets.svg';
 import Upload from './Upload.svg';
 import VerticalEllipsis from './VerticalEllipsis.svg';
+import View from './View.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
@@ -171,6 +182,7 @@ const _glyphs = {
   ActivityFeed,
   AddFile,
   AllProducts,
+  AnalyticsNode,
   Apps,
   Array,
   ArrowDown,
@@ -207,6 +219,7 @@ const _glyphs = {
   CodeBlock,
   Coin,
   Colon,
+  Config,
   Connect,
   Copy,
   CreditCard,
@@ -236,10 +249,12 @@ const _glyphs = {
   Format,
   FullScreenEnter,
   FullScreenExit,
+  Function,
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
   Hash,
+  HiddenSecondaryNode,
   Highlight,
   Home,
   HorizontalDrag,
@@ -269,7 +284,10 @@ const _glyphs = {
   NoFilter,
   NotAllowed,
   Note,
+  NumberedList,
   OpenNewTab,
+  OutlineFavorite,
+  Package,
   Pause,
   Pending,
   Person,
@@ -291,6 +309,7 @@ const _glyphs = {
   Resize,
   Return,
   Revert,
+  Router,
   SMS,
   Save,
   SearchIndex,
@@ -299,6 +318,7 @@ const _glyphs = {
   Settings,
   ShardedCluster,
   Shell,
+  Shirt,
   SortAscending,
   SortDescending,
   Sparkle,
@@ -312,6 +332,7 @@ const _glyphs = {
   Sweep,
   Table,
   Tag,
+  TemporaryTable,
   ThumbsDown,
   ThumbsUp,
   TimeSeries,
@@ -324,6 +345,7 @@ const _glyphs = {
   UpDownCarets,
   Upload,
   VerticalEllipsis,
+  View,
   Visibility,
   VisibilityOff,
   Warning,
