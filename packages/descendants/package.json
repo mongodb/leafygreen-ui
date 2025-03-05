@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/descendants",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "LeafyGreen UI Kit Descendants",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

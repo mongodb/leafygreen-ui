@@ -1,5 +1,16 @@
 # @leafygreen-ui/popover
 
+## 13.0.5
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/portal@6.0.4
+  - @leafygreen-ui/tokens@2.11.5
+
 ## 13.0.4
 
 ### Patch Changes
