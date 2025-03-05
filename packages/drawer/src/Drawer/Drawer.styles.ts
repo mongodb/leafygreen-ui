@@ -12,7 +12,7 @@ import {
 } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
 
-const drawerTransitionDuration = transitionDuration.slower;
+export const drawerTransitionDuration = transitionDuration.slower;
 
 const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
@@ -56,10 +56,19 @@ const overlayClosedStyles = css`
   }
 `;
 
-const getOverlayStyles = ({ open, theme }: { open: boolean; theme: Theme }) =>
+const getOverlayStyles = ({
+  open,
+  theme,
+  zIndex,
+}: {
+  open: boolean;
+  theme: Theme;
+  zIndex: number;
+}) =>
   cx(
     css`
       position: fixed;
+      z-index: ${zIndex};
       top: 0;
       bottom: 0;
       right: 0;
@@ -112,13 +121,16 @@ const getDisplayModeStyles = ({
   displayMode,
   open,
   theme,
+  zIndex,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
+  zIndex: number;
 }) =>
   cx({
-    [getOverlayStyles({ open, theme })]: displayMode === DisplayMode.Overlay,
+    [getOverlayStyles({ open, theme, zIndex })]:
+      displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
@@ -127,15 +139,17 @@ export const getDrawerStyles = ({
   displayMode,
   open,
   theme,
+  zIndex,
 }: {
   className?: string;
   displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
+  zIndex: number;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, theme }),
+    getDisplayModeStyles({ displayMode, open, theme, zIndex }),
     className,
   );
 

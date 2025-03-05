@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
@@ -16,9 +16,11 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DrawerContext } from '../DrawerContext';
+import { useDrawerStackContext } from '../DrawerStackContext';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import {
+  drawerTransitionDuration,
   getChildrenContainerStyles,
   getDrawerStyles,
   getHeaderStyles,
@@ -44,6 +46,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
+    const { registerDrawer, unregisterDrawer, getDrawerIndex } =
+      useDrawerStackContext();
+
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
@@ -60,6 +65,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     const showCloseButton = !!onClose;
+    const zIndex = getDrawerIndex(id);
 
     useIsomorphicLayoutEffect(() => {
       const drawerElement = ref.current;
@@ -75,6 +81,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [ref, open]);
 
+    useEffect(() => {
+      if (open) {
+        registerDrawer(id);
+      } else {
+        setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
+      }
+    }, [id, open, registerDrawer, unregisterDrawer]);
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <DrawerContext.Provider
@@ -83,7 +97,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           <Component
             aria-hidden={!open}
             aria-labelledby={titleId}
-            className={getDrawerStyles({ className, displayMode, open, theme })}
+            className={getDrawerStyles({
+              className,
+              displayMode,
+              open,
+              theme,
+              zIndex,
+            })}
             data-lgid={lgIds.root}
             id={id}
             ref={drawerRef}

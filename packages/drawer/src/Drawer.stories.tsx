@@ -14,6 +14,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
+import { DrawerStackProvider } from './DrawerStackContext';
 import { DrawerTabs } from './DrawerTabs';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
@@ -106,27 +107,31 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
   );
 
   return displayMode === DisplayMode.Embedded ? (
-    <EmbeddedDrawerLayout isDrawerOpen={open}>
-      <main
-        className={css`
-          padding: ${spacing[400]}px;
-          overflow: auto;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          gap: ${spacing[200]}px;
-        `}
-      >
-        {renderTrigger()}
-        <LongContent />
-      </main>
-      {renderDrawer()}
-    </EmbeddedDrawerLayout>
+    <DrawerStackProvider>
+      <EmbeddedDrawerLayout isDrawerOpen={open}>
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: ${spacing[200]}px;
+          `}
+        >
+          {renderTrigger()}
+          <LongContent />
+        </main>
+        {renderDrawer()}
+      </EmbeddedDrawerLayout>
+    </DrawerStackProvider>
   ) : (
-    <div>
-      {renderTrigger()}
-      {renderDrawer()}
-    </div>
+    <DrawerStackProvider>
+      <div>
+        {renderTrigger()}
+        {renderDrawer()}
+      </div>
+    </DrawerStackProvider>
   );
 };
 
@@ -138,6 +143,73 @@ export const LiveExample: StoryObj<DrawerProps> = {
   parameters: {
     chromatic: {
       disableSnapshot: true,
+    },
+  },
+};
+
+const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+  const [openA, setOpenA] = useState(false);
+  const [openB, setOpenB] = useState(false);
+  const [openC, setOpenC] = useState(false);
+
+  return (
+    <DrawerStackProvider>
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+          gap: ${spacing[400]}px;
+        `}
+      >
+        <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
+          Open Drawer A
+        </Button>
+        <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
+          Open Drawer B
+        </Button>
+        <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
+          Open Drawer C
+        </Button>
+        <Drawer
+          {...args}
+          open={openA}
+          onClose={() => setOpenA(false)}
+          title="Drawer A"
+        >
+          <LongContent />
+        </Drawer>
+        <Drawer
+          {...args}
+          open={openB}
+          onClose={() => setOpenB(false)}
+          title="Drawer B"
+        >
+          <LongContent />
+        </Drawer>
+        <Drawer
+          {...args}
+          open={openC}
+          onClose={() => setOpenC(false)}
+          title="Drawer C"
+        >
+          <LongContent />
+        </Drawer>
+      </div>
+    </DrawerStackProvider>
+  );
+};
+
+export const MultipleDrawers: StoryObj<DrawerProps> = {
+  render: MultipleDrawersComponent,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+    controls: {
+      exclude: defaultExcludedControls,
     },
   },
 };
