@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/fixed-chat-window",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "LeafyGreen UI Kit Fixed Chat Window",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

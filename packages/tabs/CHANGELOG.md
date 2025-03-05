@@ -1,5 +1,20 @@
 # @leafygreen-ui/tabs
 
+## 14.1.5
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/a11y@2.0.4
+  - @leafygreen-ui/descendants@2.1.2
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.7
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 14.1.4
 
 ### Patch Changes

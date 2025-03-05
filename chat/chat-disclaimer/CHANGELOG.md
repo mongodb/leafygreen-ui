@@ -1,5 +1,15 @@
 # @lg-chat/chat-disclaimer
 
+## 3.0.10
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/marketing-modal@5.0.7
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 3.0.9
 
 ### Patch Changes

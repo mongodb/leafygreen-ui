@@ -37,6 +37,9 @@ const storyRootStyles = css`
   display: flex;
   gap: 48px;
   align-items: end;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px 0;
 `;
 
 const displayOptionContainerStyles = css`

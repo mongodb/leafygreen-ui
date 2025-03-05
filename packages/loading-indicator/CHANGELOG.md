@@ -1,5 +1,17 @@
 # @leafygreen-ui/loading-indicator
 
+## 3.0.6
+
+### Patch Changes
+
+- 635383bce: Updates story so that indicators wrap on smaller screens
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 3.0.5
 
 ### Patch Changes
