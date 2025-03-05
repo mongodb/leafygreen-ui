@@ -1,10 +1,12 @@
-import { createGlyphComponent } from '../createGlyphComponent';
-import { LGGlyph } from '../types';
 
-// Glyphs
-import ActivityFeed from './ActivityFeed.svg';
+    import { createGlyphComponent } from '../createGlyphComponent';
+    import { LGGlyph } from '../types';
+
+    // Glyphs
+    import ActivityFeed from './ActivityFeed.svg';
 import AddFile from './AddFile.svg';
 import AllProducts from './AllProducts.svg';
+import AnalyticsNode from './AnalyticsNode.svg';
 import Apps from './Apps.svg';
 import Array from './Array.svg';
 import ArrowDown from './ArrowDown.svg';
@@ -41,6 +43,7 @@ import Code from './Code.svg';
 import CodeBlock from './CodeBlock.svg';
 import Coin from './Coin.svg';
 import Colon from './Colon.svg';
+import Config from './Config.svg';
 import Connect from './Connect.svg';
 import Copy from './Copy.svg';
 import CreditCard from './CreditCard.svg';
@@ -70,10 +73,12 @@ import Folder from './Folder.svg';
 import Format from './Format.svg';
 import FullScreenEnter from './FullScreenEnter.svg';
 import FullScreenExit from './FullScreenExit.svg';
+import Function from './Function.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
 import Hash from './Hash.svg';
+import HiddenSecondaryNode from './HiddenSecondaryNode.svg';
 import Highlight from './Highlight.svg';
 import Home from './Home.svg';
 import HorizontalDrag from './HorizontalDrag.svg';
@@ -103,7 +108,10 @@ import NavExpand from './NavExpand.svg';
 import NoFilter from './NoFilter.svg';
 import NotAllowed from './NotAllowed.svg';
 import Note from './Note.svg';
+import NumberedList from './NumberedList.svg';
 import OpenNewTab from './OpenNewTab.svg';
+import OutlineFavorite from './OutlineFavorite.svg';
+import Package from './Package.svg';
 import Pause from './Pause.svg';
 import Pending from './Pending.svg';
 import Person from './Person.svg';
@@ -125,6 +133,8 @@ import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
 import Return from './Return.svg';
 import Revert from './Revert.svg';
+import Router from './Router.svg';
+import SMS from './SMS.svg';
 import Save from './Save.svg';
 import SearchIndex from './SearchIndex.svg';
 import Secondary from './Secondary.svg';
@@ -132,7 +142,7 @@ import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
 import ShardedCluster from './ShardedCluster.svg';
 import Shell from './Shell.svg';
-import SMS from './SMS.svg';
+import Shirt from './Shirt.svg';
 import SortAscending from './SortAscending.svg';
 import SortDescending from './SortDescending.svg';
 import Sparkle from './Sparkle.svg';
@@ -146,6 +156,7 @@ import Support from './Support.svg';
 import Sweep from './Sweep.svg';
 import Table from './Table.svg';
 import Tag from './Tag.svg';
+import TemporaryTable from './TemporaryTable.svg';
 import ThumbsDown from './ThumbsDown.svg';
 import ThumbsUp from './ThumbsUp.svg';
 import TimeSeries from './TimeSeries.svg';
@@ -158,6 +169,7 @@ import Unsorted from './Unsorted.svg';
 import UpDownCarets from './UpDownCarets.svg';
 import Upload from './Upload.svg';
 import VerticalEllipsis from './VerticalEllipsis.svg';
+import View from './View.svg';
 import Visibility from './Visibility.svg';
 import VisibilityOff from './VisibilityOff.svg';
 import Warning from './Warning.svg';
@@ -167,179 +179,191 @@ import Write from './Write.svg';
 import X from './X.svg';
 import XWithCircle from './XWithCircle.svg';
 
-const _glyphs = {
-  ActivityFeed,
-  AddFile,
-  AllProducts,
-  Apps,
-  Array,
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUp,
-  Beaker,
-  Bell,
-  Biometric,
-  Boolean,
-  Building,
-  Bulb,
-  Calendar,
-  Camera,
-  Cap,
-  CaretDown,
-  CaretLeft,
-  CaretRight,
-  CaretUp,
-  ChartFilled,
-  Charts,
-  Checkmark,
-  CheckmarkWithCircle,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Circle,
-  Clock,
-  ClockWithArrow,
-  Clone,
-  Cloud,
-  Code,
-  CodeBlock,
-  Coin,
-  Colon,
-  Connect,
-  Copy,
-  CreditCard,
-  CurlyBraces,
-  Cursor,
-  Dashboard,
-  Database,
-  Diagram,
-  Diagram2,
-  Diagram3,
-  Disconnect,
-  Download,
-  Drag,
-  Edit,
-  Ellipsis,
-  Email,
-  EmptyDatabase,
-  EmptyFolder,
-  Eraser,
-  Escalation,
-  Export,
-  Favorite,
-  Federation,
-  File,
-  Filter,
-  FullScreenEnter,
-  FullScreenExit,
-  Folder,
-  Format,
-  Gauge,
-  GlobeAmericas,
-  GovernmentBuilding,
-  Hash,
-  Highlight,
-  Home,
-  HorizontalDrag,
-  Import,
-  ImportantWithCircle,
-  InfoWithCircle,
-  InternalEmployee,
-  InviteUser,
-  Key,
-  Laptop,
-  LightningBolt,
-  Link,
-  List,
-  Lock,
-  LogIn,
-  LogOut,
-  MagnifyingGlass,
-  Megaphone,
-  Menu,
-  Minus,
-  Mobile,
-  Moon,
-  MultiDirectionArrow,
-  MultiLayers,
-  NavCollapse,
-  NavExpand,
-  NoFilter,
-  NotAllowed,
-  Note,
-  OpenNewTab,
-  Pause,
-  Pending,
-  Person,
-  PersonGroup,
-  PersonWithLock,
-  Pin,
-  Play,
-  Plus,
-  PlusWithCircle,
-  Primary,
-  Project,
-  QuestionMarkWithCircle,
-  Read,
-  Recommended,
-  Redo,
-  Refresh,
-  Relationship,
-  ReplicaSet,
-  Resize,
-  Return,
-  Revert,
-  Save,
-  Serverless,
-  ShardedCluster,
-  SearchIndex,
-  Secondary,
-  Settings,
-  Shell,
-  SMS,
-  SortAscending,
-  SortDescending,
-  Sparkle,
-  SplitHorizontal,
-  SplitVertical,
-  Stitch,
-  Stop,
-  String,
-  Sun,
-  Support,
-  Sweep,
-  Table,
-  Tag,
-  ThumbsDown,
-  ThumbsUp,
-  TimeSeries,
-  TimeSeriesCollection,
-  Trash,
-  Undo,
-  University,
-  Unlock,
-  Unsorted,
-  UpDownCarets,
-  Upload,
-  VerticalEllipsis,
-  Visibility,
-  VisibilityOff,
-  Warning,
-  Wizard,
-  Wrench,
-  Write,
-  X,
-  XWithCircle,
-} as const;
+    const _glyphs = {
+    ActivityFeed,
+AddFile,
+AllProducts,
+AnalyticsNode,
+Apps,
+Array,
+ArrowDown,
+ArrowLeft,
+ArrowRight,
+ArrowUp,
+Beaker,
+Bell,
+Biometric,
+Boolean,
+Building,
+Bulb,
+Calendar,
+Camera,
+Cap,
+CaretDown,
+CaretLeft,
+CaretRight,
+CaretUp,
+ChartFilled,
+Charts,
+Checkmark,
+CheckmarkWithCircle,
+ChevronDown,
+ChevronLeft,
+ChevronRight,
+ChevronUp,
+Circle,
+Clock,
+ClockWithArrow,
+Clone,
+Cloud,
+Code,
+CodeBlock,
+Coin,
+Colon,
+Config,
+Connect,
+Copy,
+CreditCard,
+CurlyBraces,
+Cursor,
+Dashboard,
+Database,
+Diagram,
+Diagram2,
+Diagram3,
+Disconnect,
+Download,
+Drag,
+Edit,
+Ellipsis,
+Email,
+EmptyDatabase,
+EmptyFolder,
+Eraser,
+Escalation,
+Export,
+Favorite,
+Federation,
+File,
+Filter,
+Folder,
+Format,
+FullScreenEnter,
+FullScreenExit,
+Function,
+Gauge,
+GlobeAmericas,
+GovernmentBuilding,
+Hash,
+HiddenSecondaryNode,
+Highlight,
+Home,
+HorizontalDrag,
+Import,
+ImportantWithCircle,
+InfoWithCircle,
+InternalEmployee,
+InviteUser,
+Key,
+Laptop,
+LightningBolt,
+Link,
+List,
+Lock,
+LogIn,
+LogOut,
+MagnifyingGlass,
+Megaphone,
+Menu,
+Minus,
+Mobile,
+Moon,
+MultiDirectionArrow,
+MultiLayers,
+NavCollapse,
+NavExpand,
+NoFilter,
+NotAllowed,
+Note,
+NumberedList,
+OpenNewTab,
+OutlineFavorite,
+Package,
+Pause,
+Pending,
+Person,
+PersonGroup,
+PersonWithLock,
+Pin,
+Play,
+Plus,
+PlusWithCircle,
+Primary,
+Project,
+QuestionMarkWithCircle,
+Read,
+Recommended,
+Redo,
+Refresh,
+Relationship,
+ReplicaSet,
+Resize,
+Return,
+Revert,
+Router,
+SMS,
+Save,
+SearchIndex,
+Secondary,
+Serverless,
+Settings,
+ShardedCluster,
+Shell,
+Shirt,
+SortAscending,
+SortDescending,
+Sparkle,
+SplitHorizontal,
+SplitVertical,
+Stitch,
+Stop,
+String,
+Sun,
+Support,
+Sweep,
+Table,
+Tag,
+TemporaryTable,
+ThumbsDown,
+ThumbsUp,
+TimeSeries,
+TimeSeriesCollection,
+Trash,
+Undo,
+University,
+Unlock,
+Unsorted,
+UpDownCarets,
+Upload,
+VerticalEllipsis,
+View,
+Visibility,
+VisibilityOff,
+Warning,
+Wizard,
+Wrench,
+Write,
+X,
+XWithCircle
+  } as const;
 
-export type GlyphName = keyof typeof _glyphs;
-
-const glyphKeys = Object.keys(_glyphs) as Array<GlyphName>;
-
-export const glyphs = glyphKeys.reduce((acc, name) => {
-  acc[name] = createGlyphComponent(name, _glyphs[name]);
-
-  return acc;
-}, {} as Record<GlyphName, LGGlyph.Component>);
+    export type GlyphName = keyof typeof _glyphs;
+    
+    const glyphKeys = Object.keys(_glyphs) as Array<GlyphName>;
+    
+    export const glyphs = glyphKeys.reduce((acc, name) => {
+      acc[name] = createGlyphComponent(name, _glyphs[name]);
+    
+      return acc;
+    }, {} as Record<GlyphName, LGGlyph.Component>);
+  

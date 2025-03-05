@@ -9,9 +9,9 @@ import {
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { ButtonContent } from '../ButtonContent/ButtonContent';
-import { LGIDS_BUTTON } from '../constants';
 import { ButtonClassName } from '../styles';
 import { BaseButtonProps, Size, Variant } from '../types';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { getClassName } from './Button.styles';
 
@@ -24,7 +24,7 @@ export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
       variant = Variant.Default,
       size = Size.Default,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = LGIDS_BUTTON.root,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,
@@ -46,6 +46,7 @@ export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
 
     const isAnchor = Component === 'a';
     const isInteractive = !(disabled || isLoading);
+    const lgIds = getLgIds(dataLgId);
 
     const buttonStyles = getClassName({
       variant,
@@ -56,7 +57,7 @@ export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
     });
 
     const buttonProps = {
-      'data-lgid': dataLgId,
+      'data-lgid': lgIds.root,
       type: isAnchor ? undefined : type || 'button',
       className: cx(ButtonClassName, buttonStyles, className),
       ref: forwardRef,

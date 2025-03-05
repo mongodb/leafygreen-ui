@@ -146,10 +146,6 @@ export const LiveExample: StoryType<typeof Code, FontSizeProps> = ({
     highlightLines={highlightLines ? [6, [10, 15]] : undefined}
     className={css`
       width: 100%;
-
-      .lg-highlight-custom {
-        color: red;
-      }
     `}
   >
     {jsSnippet}

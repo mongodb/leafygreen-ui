@@ -27,7 +27,7 @@ export const getTestUtils = (
   const getTitle = () => {
     const title = queryBySelector<HTMLInputElement>(
       element,
-      `[data-lgid=${lgIds.panel}] p`,
+      `[data-lgid=${lgIds.title}]`,
     );
 
     return title?.textContent || null;
@@ -55,9 +55,14 @@ export const getTestUtils = (
   const getCopyButtonUtils = () =>
     getButtonTestUtils<HTMLButtonElement>(lgIds.copyButton);
 
-  const getExpandButton = () => {
-    const { getButton } = getButtonTestUtils(lgIds.expandButton);
-    return getButton() as HTMLButtonElement;
+  const getExpandButtonUtils = () => {
+    const { queryButton, getButton, findButton } =
+      getButtonTestUtils<HTMLButtonElement>(lgIds.expandButton);
+    return {
+      getButton,
+      queryButton,
+      findButton,
+    };
   };
 
   const getIsExpanded = () => {
@@ -69,13 +74,18 @@ export const getTestUtils = (
     return !!button?.textContent?.includes('Click to collapse');
   };
 
+  const queryPanel = () => {
+    return queryBySelector<HTMLElement>(element, `[data-lgid=${lgIds.panel}]`);
+  };
+
   return {
     getLanguage,
-    getTitle,
     getLanguageSwitcherUtils,
     getIsLoading,
     getCopyButtonUtils,
-    getExpandButton,
+    getExpandButtonUtils,
     getIsExpanded,
+    getTitle,
+    queryPanel,
   };
 };

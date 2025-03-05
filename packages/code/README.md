@@ -100,7 +100,10 @@ const SomeComponentWithoutPanel = () => (
 | `panel`                                  | `React.ReactNode`                                                                                                                                                                                                                                                         | Slot to pass the `<Panel/>` sub-component which will render the top panel with a language switcher, custom action buttons, and copy button. If no props are passed to the panel sub-component, the panel will render with only the copy button. **_Note: `copyButtonAppearance` cannot be used with `panel`. Either use `copyButtonAppearance` or `panel`, not both._**                                                                                                                                                                           | ``      |
 | `isLoading`                              | `boolean`                                                                                                                                                                                                                                                                 | Determines whether or not the loading skeleton will be rendered in place of the code block. If`true`, the language switcher and copy button will be disabled in the top panel.                                                                                                                                                                                                                                                                                                                                                                    | `false` |
 | `baseFontSize`                           | `'13'` \| `'16'`                                                                                                                                                                                                                                                          | Determines the base font-size of the component                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `13`    |
+<<<<<<< HEAD
 | `customKeywords`                         | `Record<string, string>`                                                                                                                                                                                                                                                  | Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword. E.g. `customKeywords: {{ 'keyword': 'className' }}`                                                                                                                                                                                                                                                                                                                                   | `{}`    |
+=======
+>>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
 | `copyable` (`Deprecated`)                | `boolean`                                                                                                                                                                                                                                                                 | When true, allows the code block to be copied to the user's clipboard. **_Note:_** `@deprecated` - use `<Panel  />` or `copyButtonAppearance`                                                                                                                                                                                                                                                                                                                                                                                                     | `false` |
 | `chromeTitle`(`Deprecated`)              | `string`                                                                                                                                                                                                                                                                  | Shows a filename-like title in the window chrome frame.**NOTE:** While you can set this prop if `showWindowChrome` is `false`, it will not be displayed unless the `showWindowChrome` prop is `true`. **_Note:_** `@deprecated` - use `panel={<Panel title={} />}`                                                                                                                                                                                                                                                                                | `''`    |
 | `showCustomActionButtons` (`Deprecated`) | `boolean`                                                                                                                                                                                                                                                                 | Shows custom action buttons in the panel if set to `true` and there is at least one item in `customActionButtons`. **_Note:_** `@deprecated` - use `<Panel showCustomActionButtons={} />`                                                                                                                                                                                                                                                                                                                                                         | `false` |
@@ -165,9 +168,16 @@ test('code', () => {
     </Code>
   );
 
+<<<<<<< HEAD
   const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButton } = getTestUtils();
   const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
   const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
+=======
+  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButtonUtils } = getTestUtils();
+  const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
+  const { getButton, queryButton, findButton, isDisabled } = getCopyButtonUtils();
+  const { getButton, queryButton, findButton } = getExpandButtonUtils();
+>>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
 
   expect(getLanguage()).toBe('javascript');
   expect(getTitle()).toBe('Title');
@@ -177,9 +187,19 @@ test('code', () => {
   expect(getInputValue()).toBe('javascript');
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
+<<<<<<< HEAD
   expect(getCopyButtonUtils()).toBeInTheDocument();
   expect(isCopyButtonDisabled()).toBe(false);
   expect(getExpandButton()).toBeInTheDocument();
+=======
+  expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().findButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().queryButton()).toBeInTheDocument();
+  expect(getCopyButtonUtils().isDisabled()).toBe(false);
+  expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
+  expect(getExpandButtonUtils().findButton()).toBeInTheDocument();
+  expect(getExpandButtonUtils().queryButton()).toBeInTheDocument();
+>>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
   expect(isExpanded()).toBe(false);
 });
 ```
@@ -231,28 +251,49 @@ test('code', () => {
 ```tsx
 const {
   getLanguage,
+<<<<<<< HEAD
   getTitle,
+=======
+  getIsLoading,
+  getTitle,
+  queryPanel,
+>>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
   getLanguageSwitcherUtils: {
     getInput,
     getOptions,
     getOptionByValue,
     isDisabled,
   },
+<<<<<<< HEAD
   getIsLoading,
   getCopyButtonUtils: { getButton, isDisabled },
   getExpandButton,,
+=======
+  getCopyButtonUtils: { getButton, queryButton, findButton, isDisabled },
+  getExpandButtonUtils: { getButton, queryButton, findButton },
+>>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
 } = getTestUtils();
 ```
 
 | Util                         | Description                                              | Returns                                                                                                                  |
 | ---------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `getLanguage()`              | Returns the current language of the code block           | `string`                                                                                                                 |
+<<<<<<< HEAD
 | `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
 | `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
 | `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
 | `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
 | `getExpandButton()`          | Returns the expand button                                | `HTMLButtonElement`                                                                                                      |
 | `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
+=======
+| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
+| `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
+| `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getExpandButtonUtils()`     | Returns utils for interacting with the expand button     | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
+| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
+| `queryPanel()`               | Returns the panel element                                | `HTMLElement` \| `null`                                                                                                  |
+>>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
 
 ### LanguageSwitcherUtils
 

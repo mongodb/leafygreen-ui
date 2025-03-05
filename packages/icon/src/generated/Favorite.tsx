@@ -2,7 +2,7 @@
 * This is a generated file. Do not modify it manually.
 *
 * @script ./node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts
-* @checksum d0fee67eb9c556c5a5a9ad6ed6f08360
+* @checksum f2ea49b0083f7cba90c80e8f911214fd
 */
 import * as React from "react";
 import { css, cx } from '@leafygreen-ui/emotion';
@@ -32,7 +32,7 @@ const Favorite = ({
   });
   return <svg className={cx({
     [fillStyle]: fill != null
-  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M7.53834 1.10997C7.70914 0.699319 8.29086 0.699318 8.46166 1.10996L9.99874 4.80556C10.0707 4.97868 10.2336 5.09696 10.4204 5.11194L14.4102 5.4318C14.8535 5.46734 15.0332 6.02059 14.6955 6.30993L11.6557 8.91378C11.5133 9.03576 11.4512 9.22715 11.4947 9.40952L12.4234 13.3028C12.5265 13.7354 12.0559 14.0773 11.6764 13.8455L8.26063 11.7592C8.10062 11.6615 7.89938 11.6615 7.73937 11.7592L4.32363 13.8455C3.94408 14.0773 3.47345 13.7354 3.57665 13.3028L4.50534 9.40952C4.54884 9.22715 4.48665 9.03576 4.34426 8.91378L1.30453 6.30993C0.966758 6.02059 1.14652 5.46734 1.58985 5.4318L5.57955 5.11194C5.76645 5.09696 5.92925 4.97868 6.00126 4.80556L7.53834 1.10997Z" fill={'currentColor'} /></svg>;
+  }, noFlexShrink, className)} height={typeof size === 'number' ? size : sizeMap[size]} width={typeof size === 'number' ? size : sizeMap[size]} role={role} {...accessibleProps} {...props} viewBox="0 0 16 16"><path d="M7.53827 1.55798C7.70907 1.14734 8.2908 1.14734 8.46159 1.55798L9.99868 5.25357C10.0706 5.42669 10.2334 5.54498 10.4203 5.55996L14.41 5.87981C14.8534 5.91535 15.0331 6.46861 14.6954 6.75794L11.6556 9.3618C11.5132 9.48377 11.4511 9.67516 11.4946 9.85754L12.4232 13.7508C12.5264 14.1834 12.0558 14.5253 11.6763 14.2935L8.26056 12.2072C8.10055 12.1095 7.89931 12.1095 7.73931 12.2072L4.32356 14.2935C3.94401 14.5253 3.47339 14.1834 3.57658 13.7508L4.50527 9.85754C4.54877 9.67516 4.48659 9.48377 4.34419 9.3618L1.30446 6.75794C0.96669 6.46861 1.14645 5.91535 1.58978 5.87981L5.57948 5.55996C5.76638 5.54498 5.92918 5.42669 6.00119 5.25357L7.53827 1.55798Z" fill={'currentColor'} /></svg>;
 };
 Favorite.displayName = 'Favorite';
 Favorite.isGlyph = true;

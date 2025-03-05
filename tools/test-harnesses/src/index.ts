@@ -4,4 +4,4 @@ export {
   type FormElements,
   type FormUtils,
 } from './types';
-export { findByLgId, getByLgId, queryBySelector } from './utils';
+export * from './utils';
