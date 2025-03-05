@@ -1,9 +1,10 @@
 import React from 'react';
 import { renderAsyncTest } from '@lg-tools/test-harnesses';
-import { render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { Drawer } from '../Drawer';
+import { DrawerStackProvider } from '../DrawerStackContext';
 
 import { getTestUtils } from './getTestUtils';
 
@@ -12,40 +13,70 @@ const drawerTest = {
   title: 'Drawer title',
 } as const;
 
-const renderDrawerAsync = () =>
-  renderAsyncTest(
-    <Drawer title={drawerTest.title}>{drawerTest.content}</Drawer>,
+const renderDrawerAsync = () => {
+  return renderAsyncTest(
+    <DrawerStackProvider>
+      <Drawer title={drawerTest.title} open>
+        {drawerTest.content}
+      </Drawer>
+    </DrawerStackProvider>,
     render,
   );
+};
 
-function renderDrawer(props = {}) {
+const renderDrawer = (props = {}) => {
   render(
-    <Drawer title={drawerTest.title} {...props}>
-      {drawerTest.content}
-    </Drawer>,
+    <DrawerStackProvider>
+      <Drawer title={drawerTest.title} {...props}>
+        {drawerTest.content}
+      </Drawer>
+    </DrawerStackProvider>,
   );
-}
+};
 
-describe('packages/Drawer/getTestUtils', () => {
-  describe('renders properly', () => {
-    test('throws error if LG Drawer is not found', () => {
-      renderDrawer();
+const renderMultipleDrawers = () => {
+  render(
+    <DrawerStackProvider>
+      <Drawer data-lgid="lg-drawer-1" title={`${drawerTest.title} 1`} open>
+        {drawerTest.content}
+      </Drawer>
+      <Drawer data-lgid="lg-drawer-2" title={`${drawerTest.title} 2`} open>
+        {drawerTest.content}
+      </Drawer>
+      <Drawer data-lgid="lg-drawer-3" title={`${drawerTest.title} 3`}>
+        {drawerTest.content}
+      </Drawer>
+    </DrawerStackProvider>,
+  );
+};
 
-      try {
-        const _utils = getTestUtils();
-      } catch (error) {
-        expect(error).toBeInstanceOf(Error);
-        expect(error).toHaveProperty(
-          'message',
-          expect.stringMatching(
-            /Unable to find an element by: \[data-lgid="lg-Drawer"\]/,
-          ),
-        );
-      }
+describe('packages/drawer/getTestUtils', () => {
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
     });
   });
 
-  describe('single Drawer', () => {
+  describe('single drawer', () => {
+    test('findDrawer', async () => {
+      const { openButton } = renderDrawerAsync();
+
+      userEvent.click(openButton);
+
+      const { findDrawer } = getTestUtils();
+      const drawer = await findDrawer();
+
+      expect(drawer).toBeInTheDocument();
+    });
+
     test('getDrawer', () => {
       renderDrawer();
       const { getDrawer } = getTestUtils();
@@ -53,48 +84,58 @@ describe('packages/Drawer/getTestUtils', () => {
       expect(getDrawer()).toBeInTheDocument();
     });
 
-    describe('isOpen', () => {
-      test('to be true when drawer is open', () => {
-        renderDrawer({ open: true });
-        const { isOpen } = getTestUtils();
+    test('queryDrawer', () => {
+      render(<div />);
+      const { queryDrawer } = getTestUtils();
 
-        expect(isOpen()).toBeTruthy();
+      expect(queryDrawer()).toBeNull();
+    });
+
+    test('isOpen', () => {
+      renderDrawer({ open: true });
+      const { isOpen } = getTestUtils();
+
+      expect(isOpen()).toBeTruthy();
+    });
+
+    describe('getCloseButtonUtils', () => {
+      test('getButton', () => {
+        renderDrawer({ open: true, onClose: jest.fn() });
+        const { getCloseButtonUtils } = getTestUtils();
+        const { getButton } = getCloseButtonUtils();
+
+        expect(getButton()).toBeInTheDocument();
       });
 
-      test('to be false when drawer is open', () => {
-        renderDrawer({ open: false });
-        const { isOpen } = getTestUtils();
+      test('queryButton', () => {
+        renderDrawer({ open: true });
+        const { getCloseButtonUtils } = getTestUtils();
+        const { queryButton } = getCloseButtonUtils();
 
-        expect(isOpen()).toBeFalsy();
+        expect(queryButton()).toBeNull();
       });
     });
   });
 
-  describe('async component', () => {
-    test('find LG Drawer after awaiting an async component', async () => {
-      const { openButton, findByTestId, asyncTestComponentId } =
-        renderDrawerAsync();
+  describe('multiple drawer instances', () => {
+    test('getDrawer', () => {
+      renderMultipleDrawers();
+      const utilsOne = getTestUtils('lg-drawer-1');
+      const utilsTwo = getTestUtils('lg-drawer-2');
 
-      userEvent.click(openButton);
-
-      const asyncComponent = await findByTestId(asyncTestComponentId);
-      expect(asyncComponent).toBeInTheDocument();
-
-      // After awaiting asyncComponent, look for Drawer
-      const { getDrawer } = getTestUtils();
-      expect(getDrawer()).toBeInTheDocument();
+      expect(utilsOne.getDrawer()).toBeInTheDocument();
+      expect(utilsTwo.getDrawer()).toBeInTheDocument();
     });
 
-    test('find LG Drawer after awaiting getTestUtils', async () => {
-      const { openButton } = renderDrawerAsync();
+    test('isOpen', () => {
+      renderMultipleDrawers();
+      const utilsOne = getTestUtils('lg-drawer-1');
+      const utilsTwo = getTestUtils('lg-drawer-2');
+      const utilsThree = getTestUtils('lg-drawer-3');
 
-      userEvent.click(openButton);
-
-      // awaiting getTestUtils
-      await waitFor(() => {
-        const { getDrawer } = getTestUtils();
-        expect(getDrawer()).toBeInTheDocument();
-      });
+      expect(utilsOne.isOpen()).toBeTruthy();
+      expect(utilsTwo.isOpen()).toBeTruthy();
+      expect(utilsThree.isOpen()).toBeFalsy();
     });
   });
 });

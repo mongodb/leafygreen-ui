@@ -34,25 +34,25 @@ const getOverlayOpenStyles = (theme: Theme) => css`
     ? `-10px 0 10px -10px rgba(0, 0, 0, 0.3)`
     : 'initial'};
   opacity: 1;
-  transform: translateX(0);
+  transform: translate3d(0, 0, 0);
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     box-shadow: ${theme === Theme.Light
       ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
       : 'initial'};
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 `;
 
 const overlayClosedStyles = css`
   box-shadow: 'initial';
   opacity: 0;
-  transform: translateX(100%);
+  transform: translate3d(100%, 0, 0);
   pointer-events: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     box-shadow: 'initial';
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
   }
 `;
 

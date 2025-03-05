@@ -1,4 +1,4 @@
-import { getByLgId } from '@lg-tools/test-harnesses';
+import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
 
@@ -11,10 +11,22 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   const lgIds = getLgIds(lgId);
 
   /**
-   * Queries the DOM for the element using the `data-lgid` data attribute.
-   * Will throw if no element is found.
+   * @returns a promise that resolves to the element using the `data-lgid` data attribute.
+   * The promise is rejected if no elements match or if more than one match is found.
    */
-  const element: T = getByLgId!(lgIds.root);
+  const findDrawer = () => findByLgId!<T>(lgIds.root);
+
+  /**
+   * @returns the element using the `data-lgid` data attribute.
+   * Will throw if no elements match or if more than one match is found.
+   */
+  const getDrawer = () => getByLgId!<T>(lgIds.root);
+
+  /**
+   * @returns the element using the `data-lgid` data attribute or `null` if no elements match.
+   * Will throw if more than one match is found.
+   */
+  const queryDrawer = () => queryByLgId!<T>(lgIds.root);
 
   /**
    * Returns the button test utils for the close button.
@@ -25,13 +37,27 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   /**
    * Returns the aria-hidden attribute on the drawer.
    */
-  const isDrawerOpen = () => {
-    return element.getAttribute('aria-hidden') === 'false';
+  const isOpen = () => {
+    const element = getDrawer();
+
+    const isAriaVisible = element.getAttribute('aria-hidden') === 'false';
+    const { display, opacity, transform, visibility } =
+      window.getComputedStyle(element);
+
+    const isCSSVisible =
+      display !== 'none' &&
+      opacity === '1' &&
+      transform === 'translate3d(0, 0, 0)' &&
+      visibility !== 'hidden';
+
+    return isAriaVisible && isCSSVisible;
   };
 
   return {
+    findDrawer,
+    getDrawer,
+    queryDrawer,
     getCloseButtonUtils,
-    getDrawer: () => element,
-    isOpen: () => isDrawerOpen(),
+    isOpen,
   };
 };

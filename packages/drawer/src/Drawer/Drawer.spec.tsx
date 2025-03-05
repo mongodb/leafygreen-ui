@@ -3,17 +3,23 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { DrawerStackProvider } from '../DrawerStackContext';
 import { getTestUtils } from '../utils';
 
-import { Drawer, DrawerProps } from '.';
+import { DisplayMode, Drawer, DrawerProps } from '.';
 
-const drawerContent = 'Drawer content';
+const drawerTest = {
+  content: 'Drawer content',
+  title: 'Drawer title',
+} as const;
 
 function renderDrawer(props: Partial<DrawerProps> = {}) {
   const utils = render(
-    <Drawer title="Drawer title" {...props}>
-      {drawerContent}
-    </Drawer>,
+    <DrawerStackProvider>
+      <Drawer title={drawerTest.title} {...props}>
+        {drawerTest.content}
+      </Drawer>
+    </DrawerStackProvider>,
   );
   const { getDrawer, ...testUtils } = getTestUtils();
   const drawer = getDrawer();
@@ -21,6 +27,20 @@ function renderDrawer(props: Partial<DrawerProps> = {}) {
 }
 
 describe('packages/drawer', () => {
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderDrawer({ open: true });
@@ -29,10 +49,30 @@ describe('packages/drawer', () => {
     });
   });
 
+  describe('displayMode prop', () => {
+    test('renders as dialog when "displayMode" is "overlay"', () => {
+      const { drawer } = renderDrawer({
+        open: true,
+        displayMode: DisplayMode.Overlay,
+      });
+      expect(drawer.tagName).toBe('DIALOG');
+    });
+
+    test('renders as div when "displayMode" is "embedded"', () => {
+      const { drawer } = renderDrawer({
+        open: true,
+        displayMode: DisplayMode.Embedded,
+      });
+      expect(drawer.tagName).toBe('DIV');
+    });
+  });
+
   describe('when the "open" prop is true', () => {
     test('renders content as expected', async () => {
-      const { drawer } = renderDrawer({ open: true });
-      expect(drawer).toHaveAttribute('aria-hidden', 'false');
+      const { getByText, isOpen } = renderDrawer({ open: true });
+      expect(isOpen()).toBeTruthy();
+      expect(getByText(drawerTest.content)).toBeVisible();
+      expect(getByText(drawerTest.title)).toBeVisible();
     });
 
     test('uses "id" prop when set', () => {
@@ -73,5 +113,10 @@ describe('packages/drawer', () => {
         expect(mockOnClose).toHaveBeenCalledTimes(1);
       });
     });
+  });
+
+  test('when the "open" prop is false, does not render content', () => {
+    const { isOpen } = renderDrawer();
+    expect(isOpen()).toBeFalsy();
   });
 });
