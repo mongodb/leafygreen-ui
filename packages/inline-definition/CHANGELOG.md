@@ -1,5 +1,16 @@
 # @leafygreen-ui/inline-definition
 
+## 8.0.6
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/tooltip@13.0.6
+
 ## 8.0.5
 
 ### Patch Changes

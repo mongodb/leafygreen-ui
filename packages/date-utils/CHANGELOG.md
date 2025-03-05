@@ -1,5 +1,12 @@
 # @leafygreen-ui/date-utils
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+
 ## 0.2.1
 
 ### Patch Changes
