@@ -75,4 +75,9 @@ export interface ModalProps extends HTMLElementProps<'div'>, DarkModeProps {
    * @default 'default'
    */
   closeIconColor?: CloseIconColor;
+
+  /**
+   * LeafyGreen data attribute
+   */
+  'data-lgid'?: string;
 }

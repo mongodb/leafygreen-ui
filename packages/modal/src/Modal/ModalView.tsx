@@ -53,6 +53,7 @@ const ModalView = React.forwardRef(
       className,
       contentClassName,
       initialFocus,
+      'data-lgid': dataLgId = LGIDS_MODAL.root,
       ...rest
     }: ModalProps,
     forwardedRef: ForwardedRef,
@@ -126,6 +127,7 @@ const ModalView = React.forwardRef(
                   >
                     <div
                       data-testid={LGIDS_MODAL.root}
+                      data-lgid={dataLgId}
                       aria-modal="true"
                       role="dialog"
                       tabIndex={-1}
