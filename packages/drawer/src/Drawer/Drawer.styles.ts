@@ -34,13 +34,13 @@ const getOverlayOpenStyles = (theme: Theme) => css`
     ? `-10px 0 10px -10px rgba(0, 0, 0, 0.3)`
     : 'initial'};
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     box-shadow: ${theme === Theme.Light
       ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
       : 'initial'};
-    transform: translate3d(0, 0, 0);
+    transform: none;
   }
 `;
 

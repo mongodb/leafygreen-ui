@@ -35,7 +35,8 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     getButtonTestUtils<HTMLButtonElement>(lgIds.closeButton);
 
   /**
-   * Returns the aria-hidden attribute on the drawer.
+   * Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS
+   * properties for `display`, `opacity`, `transform`, and `visibility`
    */
   const isOpen = () => {
     const element = getDrawer();
@@ -47,7 +48,7 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     const isCSSVisible =
       display !== 'none' &&
       opacity === '1' &&
-      transform === 'translate3d(0, 0, 0)' &&
+      transform === 'none' &&
       visibility !== 'hidden';
 
     return isAriaVisible && isCSSVisible;
