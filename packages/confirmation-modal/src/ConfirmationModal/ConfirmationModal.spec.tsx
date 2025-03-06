@@ -8,7 +8,7 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { LGIDS_MODAL } from '@leafygreen-ui/modal';
+import { getLgIds } from '@leafygreen-ui/modal';
 
 import { LGIDS_CONFIRMATION_MODAL } from '../constants';
 import ConfirmationModal from '..';
@@ -258,7 +258,7 @@ describe('packages/confirmation-modal', () => {
     const buttonClickCases = [
       { testCase: 'on cancel', testId: LGIDS_CONFIRMATION_MODAL.cancel },
       { testCase: 'on confirm', testId: LGIDS_CONFIRMATION_MODAL.confirm },
-      { testCase: 'on modal close', testId: LGIDS_MODAL.close },
+      { testCase: 'on modal close', testId: getLgIds().close },
     ];
 
     describe.each(requiredInputTextCases)(
