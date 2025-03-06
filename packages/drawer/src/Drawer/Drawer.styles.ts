@@ -12,9 +12,10 @@ import {
 } from './Drawer.constants';
 import { DisplayMode } from './Drawer.types';
 
-const drawerTransitionDuration = transitionDuration.slower;
+export const drawerTransitionDuration = transitionDuration.slower;
 
 const getBaseStyles = ({ theme }: { theme: Theme }) => css`
+  all: unset;
   background-color: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
   width: 100%;
@@ -33,32 +34,41 @@ const getOverlayOpenStyles = (theme: Theme) => css`
     ? `-10px 0 10px -10px rgba(0, 0, 0, 0.3)`
     : 'initial'};
   opacity: 1;
-  transform: translateX(0);
+  transform: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     box-shadow: ${theme === Theme.Light
       ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
       : 'initial'};
-    transform: translateY(0);
+    transform: none;
   }
 `;
 
 const overlayClosedStyles = css`
   box-shadow: 'initial';
   opacity: 0;
-  transform: translateX(100%);
+  transform: translate3d(100%, 0, 0);
   pointer-events: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     box-shadow: 'initial';
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
   }
 `;
 
-const getOverlayStyles = ({ open, theme }: { open: boolean; theme: Theme }) =>
+const getOverlayStyles = ({
+  open,
+  theme,
+  zIndex,
+}: {
+  open: boolean;
+  theme: Theme;
+  zIndex: number;
+}) =>
   cx(
     css`
       position: fixed;
+      z-index: ${zIndex};
       top: 0;
       bottom: 0;
       right: 0;
@@ -111,13 +121,16 @@ const getDisplayModeStyles = ({
   displayMode,
   open,
   theme,
+  zIndex,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
+  zIndex: number;
 }) =>
   cx({
-    [getOverlayStyles({ open, theme })]: displayMode === DisplayMode.Overlay,
+    [getOverlayStyles({ open, theme, zIndex })]:
+      displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
@@ -126,15 +139,17 @@ export const getDrawerStyles = ({
   displayMode,
   open,
   theme,
+  zIndex,
 }: {
   className?: string;
   displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
+  zIndex: number;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, theme }),
+    getDisplayModeStyles({ displayMode, open, theme, zIndex }),
     className,
   );
 
