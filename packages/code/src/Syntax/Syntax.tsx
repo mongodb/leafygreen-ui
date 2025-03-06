@@ -34,7 +34,7 @@ function filterSupportedLanguages(
   return language !== 'cs' && language !== 'js' && language !== 'ts';
 }
 
-// Prevent this from initializing multiple times when there are multiple codes on the page
+// This prevents the highlight plugin initializing multiple times when there are multiple `<Code>` components on the page
 let syntaxHighlightingInitialized = false;
 
 function initializeSyntaxHighlighting() {
@@ -115,7 +115,6 @@ function Syntax({
     line-height: ${typeScale.lineHeight}px;
   `;
 
-  // TODO: ADD CUSTOM KEYWORD OBJ HERE
   return (
     <SyntaxContext.Provider
       value={{
