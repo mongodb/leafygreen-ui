@@ -4,8 +4,8 @@ import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
 /**
  * Options to control how the drawer element is displayed
- * @param Embedded will display a drawer that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap an embedded drawer within the `EmbeddedDrawerLayout` container
- * @param Overlay will display a drawer that takes up the full viewport height and elevated above main page content
+ * @param Embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap an embedded drawer within the `EmbeddedDrawerLayout` container
+ * @param Overlay will display a drawer as a `<dialog>` element that takes up the full viewport height and elevated above main page content
  */
 export const DisplayMode = {
   Embedded: 'embedded',
@@ -14,14 +14,14 @@ export const DisplayMode = {
 export type DisplayMode = (typeof DisplayMode)[keyof typeof DisplayMode];
 
 export interface DrawerProps
-  extends Omit<HTMLElementProps<'div'>, 'title'>,
+  extends Omit<HTMLElementProps<'dialog' | 'div'>, 'title'>,
     DarkModeProps,
     LgIdProps {
   /**
    * Options to display the drawer element
    * @defaultValue 'overlay'
-   * @param embedded will display a drawer that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap a embedded drawer the `EmbeddedDrawerLayout` container
-   * @param overlay will display a drawer that takes up the full viewport height and elevated above main page content
+   * @param embedded will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap a embedded drawer the `EmbeddedDrawerLayout` container
+   * @param overlay will display a drawer as a `<dialog>` element that takes up the full viewport height and elevated above main page content
    */
   displayMode?: DisplayMode;
 
