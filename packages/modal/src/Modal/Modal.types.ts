@@ -1,6 +1,6 @@
 import { SetStateAction } from 'react';
 
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export const CloseIconColor = {
   Default: 'default',
@@ -24,7 +24,10 @@ export type ForwardedRef =
   | null
   | undefined;
 
-export interface ModalProps extends HTMLElementProps<'div'>, DarkModeProps {
+export interface ModalProps
+  extends HTMLElementProps<'div'>,
+    DarkModeProps,
+    LgIdProps {
   /**
    * Content that will appear inside of the Modal component.
    */
@@ -75,9 +78,4 @@ export interface ModalProps extends HTMLElementProps<'div'>, DarkModeProps {
    * @default 'default'
    */
   closeIconColor?: CloseIconColor;
-
-  /**
-   * LeafyGreen data attribute
-   */
-  'data-lgid'?: string;
 }

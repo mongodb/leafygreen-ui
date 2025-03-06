@@ -1,6 +1,10 @@
-const LGID_ROOT = 'lg-modal';
+import { LgIdProps } from '@leafygreen-ui/lib';
 
-export const LGIDS_MODAL = {
-  root: LGID_ROOT,
-  close: `${LGID_ROOT}-close_button`,
-} as const;
+export const DEFAULT_LGID_ROOT: LgIdProps['data-lgid'] = 'lg-modal';
+
+export const getLgIds = (root = DEFAULT_LGID_ROOT) => {
+  return {
+    root,
+    close: `${root}-close`,
+  } as const;
+};

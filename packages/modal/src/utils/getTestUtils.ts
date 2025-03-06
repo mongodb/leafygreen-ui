@@ -1,17 +1,11 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
-import { LGIDS_MODAL } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../constants';
 
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
-export const getLgIds = (root: `lg-${string}` = LGIDS_MODAL.root) => {
-  return {
-    root,
-  } as const;
-};
-
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
-  lgId: `lg-${string}` = LGIDS_MODAL.root,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType<T> => {
   const lgIds = getLgIds(lgId);
 

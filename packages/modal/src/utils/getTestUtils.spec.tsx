@@ -21,10 +21,10 @@ function renderModal(props = {}) {
 function renderMultipleModals() {
   render(
     <>
-      <Modal data-lgid="lg-Modal-1" open>
+      <Modal data-lgid="lg-modal-1" open>
         Test Content 1
       </Modal>
-      <Modal data-lgid="lg-Modal-2" open>
+      <Modal data-lgid="lg-modal-2" open>
         Test Content 2
       </Modal>
     </>,

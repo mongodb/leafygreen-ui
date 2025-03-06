@@ -7,4 +7,4 @@ export {
   ModalSize,
   ModalView,
 } from './Modal';
-export * from './utils';
+export { getTestUtils } from './utils';
