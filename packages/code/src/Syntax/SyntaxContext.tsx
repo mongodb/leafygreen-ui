@@ -7,11 +7,13 @@ interface SyntaxContext {
   showLineNumbers?: boolean;
   darkMode: boolean;
   lineNumberStart?: number;
+  customKeywords?: { [key: string]: string };
 }
 
 export const SyntaxContext = createContext<SyntaxContext>({
   highlightLines: [],
   darkMode: false,
+  customKeywords: {},
 });
 
 export function useSyntaxContext() {
