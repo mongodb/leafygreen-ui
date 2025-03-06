@@ -38,5 +38,5 @@ export interface SyntaxProps extends ComponentPropsWithoutRef<'code'> {
    *
    * E.g. `customKeywords: {{ 'keyword': 'className' }}`
    */
-  customKeywords?: Record<string, string>;
+  customKeywords?: { [key: string]: string };
 }

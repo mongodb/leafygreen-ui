@@ -31,8 +31,6 @@ import {
   TreeItem,
 } from './renderingPlugin.types';
 
-let customKeyWords: Record<string, string> = {};
-
 function Token({ kind, children }: TokenProps) {
   return <span className={kind}>{children}</span>;
 }
@@ -292,8 +290,13 @@ export function treeToLines(
 }
 
 export function TableContent({ lines }: TableContentProps) {
-  const { highlightLines, showLineNumbers, darkMode, lineNumberStart } =
-    useSyntaxContext();
+  const {
+    highlightLines,
+    showLineNumbers,
+    darkMode,
+    lineNumberStart,
+    customKeywords = {},
+  } = useSyntaxContext();
   const trimmedLines = [...lines];
 
   // Strip empty lines from the beginning of code blocks
@@ -330,8 +333,8 @@ export function TableContent({ lines }: TableContentProps) {
 
         let mappedLine = line;
 
-        if (Object.keys(customKeyWords).length > 0) {
-          mappedLine = lineWithKeywords(line, customKeyWords);
+        if (Object.keys(customKeywords).length > 0) {
+          mappedLine = lineWithKeywords(line, customKeywords);
         }
 
         const displayLineNumber = showLineNumbers
@@ -365,19 +368,11 @@ export function TableContent({ lines }: TableContentProps) {
   );
 }
 
-const plugin = ({
-  customKeywords = {},
-}: {
-  customKeywords?: Record<string, string>;
-}): LeafyGreenHLJSPlugin => {
-  customKeyWords = customKeywords;
-
-  return {
-    'after:highlight': function (result: LeafyGreenHighlightResult) {
-      const { rootNode } = result._emitter;
-      result.react = <TableContent lines={treeToLines(rootNode.children)} />;
-    },
-  };
+const plugin: LeafyGreenHLJSPlugin = {
+  'after:highlight': function (result: LeafyGreenHighlightResult) {
+    const { rootNode } = result._emitter;
+    result.react = <TableContent lines={treeToLines(rootNode.children)} />;
+  },
 };
 
 export default plugin;

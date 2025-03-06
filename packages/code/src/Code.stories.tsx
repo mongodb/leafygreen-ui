@@ -58,14 +58,13 @@ console.log(greeting('World'));
 `;
 
 const jsCustomSnippet = `
-mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username elmo
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username aang
 
-mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username elmo
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username aang
 
-mongosh "mongodb+srv://cluster0.abcde.mongodb.net/testing" api 1 username elmo
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/testing" api 1 username aang
 
 testing a line api and testing username
-
 testingalineapiandtestingusername
 `;
 
@@ -237,6 +236,42 @@ WithLanguageSwitcher.parameters = {
     ],
   },
 };
+
+export const Multiple: StoryType<typeof Code, FontSizeProps> = ({
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <div>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+      `}
+    >
+      {jsSnippet}
+    </Code>
+    <br />
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
+      `}
+      customKeywords={{
+        testing: 'custom',
+        api: 'custom',
+        username: 'custom',
+      }}
+    >
+      {jsCustomSnippet}
+    </Code>
+  </div>
+);
 
 export const WithDeprecatedCustomActionProps: StoryType<
   typeof Code,

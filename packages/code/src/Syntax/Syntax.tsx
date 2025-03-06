@@ -34,9 +34,10 @@ function filterSupportedLanguages(
   return language !== 'cs' && language !== 'js' && language !== 'ts';
 }
 
+// Prevent this from initializing multiple times when there are multiple codes on the page
 let syntaxHighlightingInitialized = false;
 
-function initializeSyntaxHighlighting(customKeywords?: Record<string, string>) {
+function initializeSyntaxHighlighting() {
   syntaxHighlightingInitialized = true;
 
   injectGlobalStyles();
@@ -59,7 +60,7 @@ function initializeSyntaxHighlighting(customKeywords?: Record<string, string>) {
     tabReplace: '  ',
   } as Partial<HLJSOptions>);
 
-  hljs.addPlugin(renderingPlugin({ customKeywords }) as HLJSPlugin);
+  hljs.addPlugin(renderingPlugin as HLJSPlugin);
 }
 
 const codeStyles = css`
@@ -77,12 +78,10 @@ function Syntax({
   lineNumberStart,
   highlightLines = [],
   className,
-  customKeywords,
+  customKeywords = {},
   ...rest
 }: SyntaxProps) {
-  if (!syntaxHighlightingInitialized) {
-    initializeSyntaxHighlighting(customKeywords);
-  }
+  if (!syntaxHighlightingInitialized) initializeSyntaxHighlighting();
 
   const highlightedContent: LeafyGreenHighlightResult | null = useMemo(() => {
     if (language === Language.None) {
@@ -116,6 +115,7 @@ function Syntax({
     line-height: ${typeScale.lineHeight}px;
   `;
 
+  // TODO: ADD CUSTOM KEYWORD OBJ HERE
   return (
     <SyntaxContext.Provider
       value={{
@@ -123,6 +123,7 @@ function Syntax({
         showLineNumbers,
         lineNumberStart,
         darkMode,
+        customKeywords,
       }}
     >
       <code

@@ -120,7 +120,7 @@ export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
      * E.g. `customKeywords: {{'password': 'custom' }}`
      * Renders as `<span className="lg-highlight-custom">password</span>`
      */
-    customKeywords?: Record<string, string>;
+    customKeywords?: { [key: string]: string };
   } & (
     | {
         /**
