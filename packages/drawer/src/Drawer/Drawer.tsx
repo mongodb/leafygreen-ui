@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { usePrefersReducedMotion } from '@leafygreen-ui/a11y';
 import {
   useIdAllocator,
   useIsomorphicLayoutEffect,
@@ -64,6 +65,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       fallbackInView: true,
     });
 
+    const prefersReducedMotion = usePrefersReducedMotion();
+
     const showCloseButton = !!onClose;
     const zIndex = getDrawerIndex(id);
 
@@ -85,9 +88,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       if (open) {
         registerDrawer(id);
       } else {
-        setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
+        setTimeout(
+          () => unregisterDrawer(id),
+          prefersReducedMotion ? 0 : drawerTransitionDuration,
+        );
       }
-    }, [id, open, registerDrawer, unregisterDrawer]);
+    }, [id, open, prefersReducedMotion, registerDrawer, unregisterDrawer]);
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -101,6 +107,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               className,
               displayMode,
               open,
+              prefersReducedMotion,
               theme,
               zIndex,
             })}

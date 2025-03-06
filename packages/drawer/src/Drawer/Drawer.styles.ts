@@ -58,25 +58,31 @@ const overlayClosedStyles = css`
 
 const getOverlayStyles = ({
   open,
+  prefersReducedMotion,
   theme,
   zIndex,
 }: {
   open: boolean;
+  prefersReducedMotion: boolean;
   theme: Theme;
   zIndex: number;
-}) =>
-  cx(
+}) => {
+  const preferredDrawerTransitionDuration = prefersReducedMotion
+    ? 0
+    : drawerTransitionDuration;
+
+  return cx(
     css`
       position: fixed;
       z-index: ${zIndex};
       top: 0;
       bottom: 0;
       right: 0;
-      transition: transform ${drawerTransitionDuration}ms ease-in-out,
-        box-shadow ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`},
-        opacity ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
+      transition: transform ${preferredDrawerTransitionDuration}ms ease-in-out,
+        box-shadow ${preferredDrawerTransitionDuration}ms ease-in-out
+          ${open ? '0ms' : `${preferredDrawerTransitionDuration}ms`},
+        opacity ${preferredDrawerTransitionDuration}ms ease-in-out
+          ${open ? '0ms' : `${preferredDrawerTransitionDuration}ms`};
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         top: unset;
@@ -88,6 +94,7 @@ const getOverlayStyles = ({
       [overlayClosedStyles]: !open,
     },
   );
+};
 
 const embeddedOpenStyles = css`
   width: 100%;
@@ -120,16 +127,18 @@ const getEmbeddedStyles = ({ open }: { open: boolean }) =>
 const getDisplayModeStyles = ({
   displayMode,
   open,
+  prefersReducedMotion,
   theme,
   zIndex,
 }: {
   displayMode: DisplayMode;
   open: boolean;
+  prefersReducedMotion: boolean;
   theme: Theme;
   zIndex: number;
 }) =>
   cx({
-    [getOverlayStyles({ open, theme, zIndex })]:
+    [getOverlayStyles({ open, prefersReducedMotion, theme, zIndex })]:
       displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
@@ -138,18 +147,26 @@ export const getDrawerStyles = ({
   className,
   displayMode,
   open,
+  prefersReducedMotion,
   theme,
   zIndex,
 }: {
   className?: string;
   displayMode: DisplayMode;
   open: boolean;
+  prefersReducedMotion: boolean;
   theme: Theme;
   zIndex: number;
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, theme, zIndex }),
+    getDisplayModeStyles({
+      displayMode,
+      open,
+      prefersReducedMotion,
+      theme,
+      zIndex,
+    }),
     className,
   );
 
