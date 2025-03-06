@@ -17,7 +17,8 @@ import renderingPlugin, {
   TableContent,
 } from '../renderingPlugin/renderingPlugin';
 import { SyntaxContext } from '../Syntax/SyntaxContext';
-import { Language, SyntaxProps } from '../types';
+import { Language } from '../types';
+import { SyntaxProps } from '..';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,

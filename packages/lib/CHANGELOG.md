@@ -1,5 +1,11 @@
 # @leafygreen-ui/lib
 
+## 14.1.0
+
+### Minor Changes
+
+- 0e4c5099b: Adds `getMobileMediaQuery` helper. This helper targets a specified screen size with no pointer, or a coarse pointer and no hover capability
+
 ## 14.0.3
 
 ### Patch Changes
