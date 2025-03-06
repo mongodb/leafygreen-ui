@@ -165,16 +165,10 @@ test('code', () => {
     </Code>
   );
 
-<<<<<<< HEAD
-  const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButton } = getTestUtils();
-  const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
-  const { getButton: getCopyButtonUtils, isDisabled: isCopyButtonDisabled } = getCopyButtonUtils();
-=======
   const { getLanguage, getLanguageSwitcherUtils, getIsLoading, getCopyButtonUtils, getExpandButtonUtils } = getTestUtils();
   const { getInput, getOptions, getOptionByValue, getInputValue, isDisabled: isLanguageSwitcherDisabled } = getLanguageSwitcherUtils();
   const { getButton, queryButton, findButton, isDisabled } = getCopyButtonUtils();
   const { getButton, queryButton, findButton } = getExpandButtonUtils();
->>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
 
   expect(getLanguage()).toBe('javascript');
   expect(getTitle()).toBe('Title');
@@ -184,11 +178,6 @@ test('code', () => {
   expect(getInputValue()).toBe('javascript');
   expect(isLanguageSwitcherDisabled()).toBe(false);
   expect(getIsLoading()).toBe(false);
-<<<<<<< HEAD
-  expect(getCopyButtonUtils()).toBeInTheDocument();
-  expect(isCopyButtonDisabled()).toBe(false);
-  expect(getExpandButton()).toBeInTheDocument();
-=======
   expect(getCopyButtonUtils().getButton()).toBeInTheDocument();
   expect(getCopyButtonUtils().findButton()).toBeInTheDocument();
   expect(getCopyButtonUtils().queryButton()).toBeInTheDocument();
@@ -196,7 +185,6 @@ test('code', () => {
   expect(getExpandButtonUtils().getButton()).toBeInTheDocument();
   expect(getExpandButtonUtils().findButton()).toBeInTheDocument();
   expect(getExpandButtonUtils().queryButton()).toBeInTheDocument();
->>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
   expect(isExpanded()).toBe(false);
 });
 ```
@@ -248,51 +236,30 @@ test('code', () => {
 ```tsx
 const {
   getLanguage,
-<<<<<<< HEAD
-  getTitle,
-=======
   getIsLoading,
   getTitle,
   queryPanel,
->>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
   getLanguageSwitcherUtils: {
     getInput,
     getOptions,
     getOptionByValue,
     isDisabled,
   },
-<<<<<<< HEAD
-  getIsLoading,
-  getCopyButtonUtils: { getButton, isDisabled },
-  getExpandButton,,
-=======
   getCopyButtonUtils: { getButton, queryButton, findButton, isDisabled },
   getExpandButtonUtils: { getButton, queryButton, findButton },
->>>>>>> 02f5278c1099cef3c148ec5259b392dbf02911d2
 } = getTestUtils();
 ```
 
-| Util            | Description                                    | Returns  |
-| --------------- | ---------------------------------------------- | -------- |
-| `getLanguage()` | Returns the current language of the code block | `string` |
-
-<<<<<<< HEAD
-| `getTitle()` | Returns the title of the code block | `string` \| `null` |
-| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
-| `getIsLoading()` | Returns whether the code block is in loading state | `boolean` |
-| `getCopyButtonUtils()` | Returns utils for interacting with the copy button | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getExpandButton()` | Returns the expand button | `HTMLButtonElement` |
-| `getIsExpanded()` | Returns whether the code block is expanded | `boolean` |
-=======
-| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils` |
-| `getIsLoading()` | Returns whether the code block is in loading state | `boolean` |
-| `getCopyButtonUtils()` | Returns utils for interacting with the copy button | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getExpandButtonUtils()` | Returns utils for interacting with the expand button | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
-| `getIsExpanded()` | Returns whether the code block is expanded | `boolean` |
-| `getTitle()` | Returns the title of the code block | `string` \| `null` |
-| `queryPanel()` | Returns the panel element | `HTMLElement` \| `null` |
-
-> > > > > > > 02f5278c1099cef3c148ec5259b392dbf02911d2
+| Util                         | Description                                              | Returns                                                                                                                  |
+| ---------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `getLanguage()`              | Returns the current language of the code block           | `string`                                                                                                                 |
+| `getLanguageSwitcherUtils()` | Returns utils for interacting with the language switcher | `LanguageSwitcherUtils`                                                                                                  |
+| `getIsLoading()`             | Returns whether the code block is in loading state       | `boolean`                                                                                                                |
+| `getCopyButtonUtils()`       | Returns utils for interacting with the copy button       | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getExpandButtonUtils()`     | Returns utils for interacting with the expand button     | [Button test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/button/README.md#test-utils) |
+| `getIsExpanded()`            | Returns whether the code block is expanded               | `boolean`                                                                                                                |
+| `getTitle()`                 | Returns the title of the code block                      | `string` \| `null`                                                                                                       |
+| `queryPanel()`               | Returns the panel element                                | `HTMLElement` \| `null`                                                                                                  |
 
 ### LanguageSwitcherUtils
 
