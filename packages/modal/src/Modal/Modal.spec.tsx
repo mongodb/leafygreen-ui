@@ -9,6 +9,7 @@ import { axe } from 'jest-axe';
 
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
+import { getTestUtils } from '../utils/getTestUtils';
 import ModalView from '..';
 
 const modalContent = 'Modal Content';
@@ -34,7 +35,9 @@ const ModalWrapper = ({
 function renderModal(
   props: Partial<React.ComponentProps<typeof ModalView>> = {},
 ) {
-  return render(<ModalWrapper {...props}>{modalContent}</ModalWrapper>);
+  const utils = render(<ModalWrapper {...props}>{modalContent}</ModalWrapper>);
+  const { getModal, findModal, queryModal } = getTestUtils();
+  return { ...utils, getModal, findModal, queryModal };
 }
 
 describe('packages/modal', () => {
@@ -48,9 +51,8 @@ describe('packages/modal', () => {
 
   describe('when the "open" prop is true', () => {
     test('renders modal to the DOM', () => {
-      const { getByRole } = renderModal({ open: true });
-      const modal = getByRole('dialog');
-
+      const { getModal } = renderModal({ open: true });
+      const modal = getModal();
       expect(modal).toBeVisible();
     });
 
@@ -70,8 +72,8 @@ describe('packages/modal', () => {
     });
 
     test('closes modal when button is clicked', async () => {
-      const { getByRole } = renderModal({ open: true });
-      const modal = getByRole('dialog');
+      const { getByRole, getModal } = renderModal({ open: true });
+      const modal = getModal();
       const button = getByRole('button');
 
       userEvent.click(button);
@@ -81,9 +83,10 @@ describe('packages/modal', () => {
     });
 
     test('closes modal when escape key is pressed', async () => {
-      const { getByRole } = renderModal({ open: true });
+      const { getModal } = renderModal({ open: true });
 
-      const modal = getByRole('dialog');
+      const modal = getModal();
+
       userEvent.type(modal, '{esc}');
 
       await waitForElementToBeRemoved(modal);
@@ -91,12 +94,12 @@ describe('packages/modal', () => {
     });
 
     test('when "shouldClose" prop returns false', async () => {
-      const { getByRole } = renderModal({
+      const { getModal } = renderModal({
         open: true,
         shouldClose: () => false,
       });
 
-      const modal = getByRole('dialog');
+      const modal = getModal();
       userEvent.type(modal, '{esc}');
 
       await expectElementToNotBeRemoved(modal);
@@ -105,12 +108,12 @@ describe('packages/modal', () => {
     });
 
     test('when "shouldClose" returns true', async () => {
-      const { getByRole } = renderModal({
+      const { getModal } = renderModal({
         open: true,
         shouldClose: () => true,
       });
 
-      const modal = getByRole('dialog');
+      const modal = getModal();
       userEvent.type(modal, '{esc}');
 
       await waitForElementToBeRemoved(modal);
@@ -118,11 +121,11 @@ describe('packages/modal', () => {
     });
 
     test('backdrop click should do nothing', async () => {
-      const { getByRole } = renderModal({
+      const { getModal } = renderModal({
         open: true,
       });
 
-      const modal = getByRole('dialog');
+      const modal = getModal();
       userEvent.click(modal.parentElement!);
 
       await expectElementToNotBeRemoved(modal);
@@ -162,8 +165,8 @@ describe('packages/modal', () => {
 
   describe('when "open" prop is false', () => {
     test('does not render to the DOM', () => {
-      const { queryByRole } = renderModal({ open: false });
-      const modal = queryByRole('dialog');
+      const { queryModal } = renderModal({ open: false });
+      const modal = queryModal();
       expect(modal).not.toBeInTheDocument();
     });
   });

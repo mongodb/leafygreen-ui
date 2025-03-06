@@ -14,7 +14,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
 
-import { LGIDS_MODAL } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../constants';
 
 import {
   backdropBaseStyle,
@@ -53,6 +53,7 @@ const ModalView = React.forwardRef(
       className,
       contentClassName,
       initialFocus,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     }: ModalProps,
     forwardedRef: ForwardedRef,
@@ -75,6 +76,7 @@ const ModalView = React.forwardRef(
 
     const id = useIdAllocator({ prefix: 'modal', id: idProp });
     const closeId = useIdAllocator({ prefix: 'modal' });
+    const lgIds = getLgIds(dataLgId);
 
     useEscapeKey(handleClose, { enabled: open && !isPopoverOpen });
 
@@ -125,7 +127,8 @@ const ModalView = React.forwardRef(
                     ref={el => setScrollContainerRef(el)}
                   >
                     <div
-                      data-testid={LGIDS_MODAL.root}
+                      data-testid={lgIds.root}
+                      data-lgid={lgIds.root}
                       aria-modal="true"
                       role="dialog"
                       tabIndex={-1}
@@ -148,7 +151,7 @@ const ModalView = React.forwardRef(
                         {children}
                         <IconButton
                           id={closeId}
-                          data-testid={LGIDS_MODAL.close}
+                          data-testid={lgIds.close}
                           onClick={handleClose}
                           aria-label="Close modal"
                           className={cx(
