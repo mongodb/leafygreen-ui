@@ -1,5 +1,11 @@
 # @leafygreen-ui/modal
 
+## 17.1.0
+
+### Minor Changes
+
+- 16690369f: Adds `getTestUtils` to Modal package
+
 ## 17.0.5
 
 ### Patch Changes
