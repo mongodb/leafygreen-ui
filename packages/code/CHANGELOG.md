@@ -1,5 +1,23 @@
 # @leafygreen-ui/code
 
+## 17.1.0
+
+### Minor Changes
+
+- 526da3348: Adds the `customKeywords` prop, which allows you to wrap custom keywords in a specified className for CSS customization. Reserved keywords will be ignored.
+
+  E.g.
+
+  ```js
+  <Code customKeywords={{ password: 'custom' }}>{snippet}</Code>
+  ```
+
+  Renders as
+
+  ```html
+  <span className="lg-highlight-custom">password</span>
+  ```
+
 ## 17.0.0
 
 ### Major Changes

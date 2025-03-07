@@ -1756,6 +1756,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
       focus-trap:
         specifier: 6.9.4
         version: 6.9.4

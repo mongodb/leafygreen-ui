@@ -113,6 +113,14 @@ export type CodeProps = Omit<SyntaxProps, 'onCopy' | 'language' | 'onChange'> &
      * @default 13
      */
     baseFontSize?: BaseFontSize;
+
+    /**
+     * Custom keywords to be wrapped in the className of your choice in the code block. The key is the keyword to be wrapped in the custom `<span>`, and the value is the classname to be applied to the keyword. You can then use CSS to style the keyword.
+     *
+     * E.g. `customKeywords: {{'password': 'custom' }}`
+     * Renders as `<span className="lg-highlight-custom">password</span>`
+     */
+    customKeywords?: { [key: string]: string };
   } & (
     | {
         /**

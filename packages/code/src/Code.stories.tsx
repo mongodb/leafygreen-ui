@@ -53,8 +53,19 @@ export default class myClass {
 function greeting(entity) {
   return \`Hello, \${entity}! Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper.\`;
 }
- 
+
 console.log(greeting('World'));
+`;
+
+const jsCustomSnippet = `
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" --api 1 --username aang
+
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/test" api 1 username aang
+
+mongosh "mongodb+srv://cluster0.abcde.mongodb.net/testing" api 1 username aang
+
+testing a line api and testing username
+testingalineapiandtestingusername
 `;
 
 // > 5 lines to trigger expandable code block
@@ -80,6 +91,7 @@ const meta: StoryMetaType<typeof Code> = {
         'customActionButtons',
         'languageOptions',
         'children',
+        'customKeywords',
       ],
     },
     generate: {
@@ -144,6 +156,46 @@ LiveExample.parameters = {
   },
 };
 
+export const CustomWord: StoryType<typeof Code, FontSizeProps> = ({
+  baseFontSize,
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <div>
+    <pre>
+      customKeywords={' '}
+      {JSON.stringify(
+        {
+          testing: 'custom',
+          api: 'custom',
+          username: 'custom',
+        },
+        null,
+        2,
+      )}
+    </pre>
+    <br></br>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
+      `}
+      customKeywords={{
+        testing: 'custom',
+        api: 'custom',
+        username: 'custom',
+      }}
+    >
+      {jsCustomSnippet}
+    </Code>
+  </div>
+);
+
 export const WithCustomActions: StoryType<typeof Code, FontSizeProps> = ({
   highlightLines,
   ...args
@@ -184,6 +236,42 @@ WithLanguageSwitcher.parameters = {
     ],
   },
 };
+
+export const Multiple: StoryType<typeof Code, FontSizeProps> = ({
+  highlightLines,
+  ...args
+}: CodeProps & FontSizeProps) => (
+  <div>
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+      `}
+    >
+      {jsSnippet}
+    </Code>
+    <br />
+    <Code
+      {...(args as CodeProps)}
+      highlightLines={highlightLines ? [6, [10, 15]] : undefined}
+      className={css`
+        width: 100%;
+
+        .lg-highlight-custom {
+          color: red;
+        }
+      `}
+      customKeywords={{
+        testing: 'custom',
+        api: 'custom',
+        username: 'custom',
+      }}
+    >
+      {jsCustomSnippet}
+    </Code>
+  </div>
+);
 
 export const WithDeprecatedCustomActionProps: StoryType<
   typeof Code,

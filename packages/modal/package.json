@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/modal",
-  "version": "17.0.5",
+  "version": "17.1.0",
   "description": "LeafyGreen UI Kit Modal",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,6 +30,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/portal": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/test-harnesses": "workspace:^",
     "focus-trap": "6.9.4",
     "focus-trap-react": "^9.0.2",
     "polished": "^4.2.2",

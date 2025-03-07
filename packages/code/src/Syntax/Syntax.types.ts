@@ -32,4 +32,11 @@ export interface SyntaxProps extends ComponentPropsWithoutRef<'code'> {
    * An array of lines to highlight. The array can only contain numbers corresponding to the line numbers to highlight, and / or tuples representing a range (e.g. `[6, 10]`);
    */
   highlightLines?: LineHighlightingDefinition;
+
+  /**
+   * Custom keywords to be highlighted in the code block. The key is the keyword to be highlighted, and the value is the classname to be applied to the keyword.
+   *
+   * E.g. `customKeywords: {{ 'keyword': 'className' }}`
+   */
+  customKeywords?: { [key: string]: string };
 }
