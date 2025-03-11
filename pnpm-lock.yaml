@@ -108,8 +108,6 @@ importers:
         specifier: ~4.9.0
         version: 4.9.5
 
-  charts/child-state-update-provider: {}
-
   charts/core:
     dependencies:
       '@dnd-kit/sortable':
