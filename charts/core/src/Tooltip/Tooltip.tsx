@@ -1,21 +1,29 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { renderToString } from 'react-dom/server';
+import { TopLevelFormatterParams } from 'echarts/types/dist/shared';
 
-import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+// import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
-  color,
-  fontFamilies,
-  fontWeights,
-  InteractionState,
+  // color,
+  // fontFamilies,
+  // fontWeights,
+  // InteractionState,
   spacing,
-  Variant,
+  // Variant,
 } from '@leafygreen-ui/tokens';
 
 import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
-import { SortDirection, SortKey, TooltipProps } from './Tooltip.types';
-import { getSortOrder, shouldShowTooltip } from './utils';
+import {
+  AxisFormatterCallbackParams,
+  SortDirection,
+  SortKey,
+  TooltipProps,
+} from './Tooltip.types';
+// import { getSortOrder } from './utils';
+import { TooltipContent } from './TooltipContent';
 
 export function Tooltip({
   sortDirection = SortDirection.Desc,
@@ -23,8 +31,7 @@ export function Tooltip({
   valueFormatter,
 }: TooltipProps) {
   const { chart } = useChartContext();
-  const { theme } = useDarkMode();
-  const chartCardContext = useChartCardContext();
+  // const { theme } = useDarkMode();
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -34,42 +41,33 @@ export function Tooltip({
         axisPointer: {
           z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
         },
-        backgroundColor:
-          color[theme].background[Variant.InversePrimary][
-            InteractionState.Default
-          ],
+        show: true,
+        trigger: 'axis',
+        backgroundColor: '#001E2B',
         borderRadius: borderRadius[200],
-        borderWidth: 0,
+        padding: spacing[150],
+        enterable: false,
         confine: true,
         appendTo: 'body',
-        enterable: false,
-        hideDelay: 0,
-        valueFormatter: valueFormatter
-          ? (value: any) => {
-              if (typeof value === 'number' || typeof value === 'string') {
-                return valueFormatter(value);
-              }
-
-              return '';
-            }
-          : undefined,
-        order: getSortOrder(sortDirection, sortKey),
-        padding: spacing[200],
-        show: shouldShowTooltip({
-          chartState: chart.state,
-          chartCardState: chartCardContext?.state,
-        }),
         showDelay: 0,
-        textStyle: {
-          fontFamily: fontFamilies.default,
-          fontWeight: fontWeights.regular,
-          fontSize: 12,
-          lineHeight: 20,
-          color:
-            color[theme].text[Variant.InversePrimary][InteractionState.Default],
-        },
+        hideDelay: 0,
         transitionDuration: 0,
-        trigger: 'axis',
+        formatter: (params: TopLevelFormatterParams) => {
+          /**
+           * Since the formatter trigger is set to 'axis', the params will be an array of objects.
+           * Additionally, it should contain axis related data.
+           * See https://echarts.apache.org/en/option.html#tooltip.formatter for more info.
+           */
+          const paramsArr = params as AxisFormatterCallbackParams;
+
+          return renderToString(
+            <TooltipContent
+              params={paramsArr}
+              sortDirection={sortDirection}
+              sortValue={'name'}
+            />,
+          );
+        },
       },
     });
 
@@ -82,7 +80,7 @@ export function Tooltip({
     };
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, chart.state, theme, sortDirection, sortKey, valueFormatter]);
+  }, [chart.ready, chart.state, sortDirection, sortKey, valueFormatter]);
 
   return null;
 }

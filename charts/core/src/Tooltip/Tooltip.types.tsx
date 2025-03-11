@@ -1,3 +1,5 @@
+import { CallbackDataParams } from 'echarts/types/dist/shared';
+
 /**
  * Direction tooltip values can be sorted
  */
@@ -32,3 +34,14 @@ export interface TooltipProps {
   sortKey?: SortKey;
   valueFormatter?: (value: number | string) => string;
 }
+
+export type AxisFormatterCallbackParams = Array<
+  CallbackDataParams & {
+    axisDim: string;
+    axisId: string;
+    axisIndex: number;
+    axisType: string;
+    axisValue: string | number;
+    axisValueLabel: string | number;
+  }
+>;
