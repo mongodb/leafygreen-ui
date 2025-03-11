@@ -80,6 +80,10 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
 
     return (
       <ChartCardProvider state={state}>
+        {/*
+          data attributes used by DragProvider to determine open/closed states
+          when a ChartCard is picked up, and it's overlay is rendered
+        */}
         <div
           className={getContainerStyles({
             theme,

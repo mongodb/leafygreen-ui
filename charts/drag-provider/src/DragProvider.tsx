@@ -23,6 +23,15 @@ import {
 
 import { DragProviderProps } from './DragProvider.types';
 
+/**
+ * ChartCards in particular have open and closed states. Since these states
+ * are stored internal to those components, we need some way to determine
+ * if a particular card is open or closed when it is being dragged and we need
+ * to render it's overlay.
+ *
+ * This function finds the open state of a drag element based on data attributes
+ * added to the element.
+ */
 function findDragElementOpenState(
   elem: HTMLElement,
   dragId: string,
