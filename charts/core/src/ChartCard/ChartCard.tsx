@@ -1,13 +1,12 @@
 import React, { forwardRef, MouseEvent, useEffect, useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
-import { useChildStateUpdateContext } from '@lg-charts/child-state-update-provider';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator, useMergeRefs } from '@leafygreen-ui/hooks';
 import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { BaseFontSize, transitionDuration } from '@leafygreen-ui/tokens';
+import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import {
@@ -64,15 +63,6 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
         },
       });
     const isDraggable = !!(items.length && dragId);
-    const { updateChildState } = useChildStateUpdateContext();
-
-    useEffect(() => {
-      if (isDraggable && updateChildState) {
-        setTimeout(() => {
-          updateChildState(dragId, { isOpen });
-        }, transitionDuration.slower); // Update after transition to prevent re-render before animation
-      }
-    }, [updateChildState, isOpen, isDraggable, dragId]);
 
     // When the controlled prop changes, update the internal state
     useEffect(() => {
@@ -101,6 +91,8 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
             className,
           })}
           ref={useMergeRefs([setNodeRef, forwardedRef])}
+          data-drag-id={dragId}
+          data-is-open={isOpen}
           {...rest}
         >
           <div

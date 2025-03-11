@@ -3,6 +3,7 @@ import React, {
   type MouseEvent,
   ReactElement,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {
@@ -19,9 +20,17 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useChildStateUpdateContext } from '@lg-charts/child-state-update-provider';
 
 import { DragProviderProps } from '../DragProvider.types';
+
+function findDragElementOpenState(
+  elem: HTMLElement,
+  dragId: string,
+): boolean | null {
+  const dragElement = elem.querySelector(`[data-drag-id="${dragId}"]`);
+  const isOpen = dragElement?.getAttribute('data-is-open');
+  return typeof isOpen === 'string' ? isOpen === 'true' : null;
+}
 
 const dropAnimation: DropAnimation = {
   sideEffects: defaultDropAnimationSideEffects({
@@ -66,9 +75,9 @@ export function DndKitProvider({
   onDragEnd,
 }: DragProviderProps): ReactElement {
   const [activeId, setActiveId] = useState<string | null>(null); // which element is 'picked up'
-  const { childStateUpdates } = useChildStateUpdateContext();
   const childrenArray = React.Children.toArray(children);
   const sensors = useSensors(useSensor(MouseSensor));
+  const childrenRef = useRef<null | HTMLDivElement>(null);
 
   /**
    * List of child IDs that will be sortable. This is passed to SortableContext
@@ -89,6 +98,7 @@ export function DndKitProvider({
     () =>
       childrenArray.map(child => {
         const dragId = (child as React.ReactElement).props?.dragId;
+
         return cloneElement(
           child as React.ReactElement,
           dragId
@@ -116,18 +126,18 @@ export function DndKitProvider({
       child => (child as React.ReactElement).props.dragId === activeId,
     ) as React.ReactElement;
 
-    return cloneElement(elem, {
+    const overlayProps: { state: string; isOpen?: boolean } = {
       state: 'overlay',
-      /**
-       * If a child's state updates internally and it triggers a visual change,
-       * such as when an uncontrolled `ChartCard` opens or closes, we have no
-       * way of knowing about this change. So we register those changes from
-       * `ChartCard` and apply them here so that the "picked up" component
-       * always matches the underlying.
-       */
-      ...childStateUpdates[activeId],
-    });
-  }, [activeId, childStateUpdates, childrenArray]);
+    };
+
+    const openState = findDragElementOpenState(childrenRef.current!, activeId);
+
+    if (openState !== null) {
+      overlayProps.isOpen = openState;
+    }
+
+    return cloneElement(elem, overlayProps);
+  }, [activeId, childrenArray]);
 
   function handleDragStart(event: any) {
     setActiveId(event.active.id);
@@ -147,7 +157,7 @@ export function DndKitProvider({
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        {childrenElements}
+        <div ref={childrenRef}>{childrenElements}</div>
       </SortableContext>
       <DragOverlay dropAnimation={dropAnimation}>{activeElement}</DragOverlay>
     </DndContext>
