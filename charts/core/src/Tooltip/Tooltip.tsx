@@ -2,15 +2,15 @@ import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 import { TopLevelFormatterParams } from 'echarts/types/dist/shared';
 
-// import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
-  // color,
+  color,
   // fontFamilies,
   // fontWeights,
-  // InteractionState,
+  InteractionState,
   spacing,
-  // Variant,
+  Variant,
 } from '@leafygreen-ui/tokens';
 
 import { useChartCardContext } from '../ChartCard';
@@ -31,7 +31,7 @@ export function Tooltip({
   valueFormatter,
 }: TooltipProps) {
   const { chart } = useChartContext();
-  // const { theme } = useDarkMode();
+  const { theme } = useDarkMode();
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -43,9 +43,12 @@ export function Tooltip({
         },
         show: true,
         trigger: 'axis',
-        backgroundColor: '#001E2B',
+        backgroundColor:
+          color[theme].background[Variant.InversePrimary][
+            InteractionState.Default
+          ],
         borderRadius: borderRadius[200],
-        padding: spacing[150],
+        padding: spacing[200],
         enterable: false,
         confine: true,
         appendTo: 'body',
@@ -60,11 +63,13 @@ export function Tooltip({
            */
           const paramsArr = params as AxisFormatterCallbackParams;
 
+          console.log(paramsArr);
+
           return renderToString(
             <TooltipContent
               params={paramsArr}
               sortDirection={sortDirection}
-              sortValue={'name'}
+              sortValue={sortKey}
             />,
           );
         },

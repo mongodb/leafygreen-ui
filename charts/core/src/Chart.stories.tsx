@@ -847,6 +847,12 @@ export const WithTooltip: StoryObj<{}> = {
     return (
       <Chart>
         <Tooltip />
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="info"
+        />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
