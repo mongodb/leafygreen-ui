@@ -145,9 +145,6 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
-      '@lg-charts/child-state-update-provider':
-        specifier: workspace:^
-        version: link:../child-state-update-provider
       echarts:
         specifier: ^5.5.1
         version: 5.5.1
@@ -176,9 +173,6 @@ importers:
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: 4.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@lg-charts/child-state-update-provider':
-        specifier: workspace:^
-        version: link:../child-state-update-provider
 
   chat/avatar:
     dependencies:

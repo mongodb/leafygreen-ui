@@ -23,8 +23,7 @@
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
-    "@dnd-kit/sortable": "^10.0.0",
-    "@lg-charts/child-state-update-provider": "workspace:^"
+    "@dnd-kit/sortable": "^10.0.0"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

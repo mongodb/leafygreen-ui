@@ -25,7 +25,6 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
-    "@lg-charts/child-state-update-provider": "workspace:^",
     "echarts": "^5.5.1",
     "lodash.debounce": "^4.0.8"
   },
