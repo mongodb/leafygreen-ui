@@ -39,6 +39,7 @@ const getDraggingContainerStyles = () => css`
   opacity: 0.3;
 `;
 
+// TODO: This should be a token once we audit our shadows
 const getOverlayContainerStyles = () => css`
   box-shadow: 0 18px 18px -15px rgba(0, 30, 43, 0.2);
 `;
@@ -93,14 +94,17 @@ export const getHeaderStyles = ({
       padding: ${spacing[150]}px ${spacing[300]}px;
       display: grid;
       grid-template-columns: 1fr auto;
-      background: ${state === ChartCardStates.Overlay
-        ? color[theme].background[Variant.Primary][InteractionState.Hover]
-        : 'none'};
+      background: 'none';
     `,
     {
       [css`
         cursor: move;
       `]: isDraggable,
+      [css`
+        background: ${color[theme].background[Variant.Primary][
+          InteractionState.Hover
+        ]};
+      `]: state === ChartCardStates.Overlay,
     },
     className,
   );

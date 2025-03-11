@@ -19,6 +19,12 @@ const getBaseContainerStyles = (theme: Theme) => css`
   width: 100%;
 `;
 
+/**
+ * The CSS helper is a helper for generating CSS transform strings, and is
+ * equivalent to manually constructing the string as such:
+ *
+ * CSS.Translate.toString(transform) === `translate3d(${translate.x}, ${translate.y}, 0)`
+ */
 const getDraggableContainerStyles = (
   transform: Transform | null,
   transition?: string,
@@ -31,6 +37,7 @@ const getDraggingContainerStyles = () => css`
   opacity: 0.3;
 `;
 
+// TODO: This should be a token once we audit our shadows
 const getOverlayContainerStyles = (theme: Theme) => css`
   box-shadow: 0 18px 18px -15px rgba(0, 30, 43, 0.2);
   border: 1px solid

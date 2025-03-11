@@ -1,3 +1,6 @@
+import { ChartStates } from '../Chart';
+import { ChartCardStates } from '../ChartCard';
+
 import { SortDirection, SortKey, SortOrder } from './Tooltip.types';
 
 /**
@@ -17,4 +20,22 @@ export function getSortOrder(
   }
 
   return sortOrder;
+}
+
+/**
+ * Determines if the tooltip should be shown based on the chart and chart card state
+ */
+export function shouldShowTooltip({
+  chartState,
+  chartCardState,
+}: {
+  chartState?: ChartStates;
+  chartCardState?: ChartCardStates;
+}) {
+  return (
+    chartState !== ChartStates.Dragging &&
+    chartState !== ChartStates.Overlay &&
+    chartCardState !== ChartCardStates.Dragging &&
+    chartCardState !== ChartCardStates.Overlay
+  );
 }

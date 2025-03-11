@@ -11,12 +11,11 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { ChartStates } from '../Chart';
-import { ChartCardStates, useChartCardContext } from '../ChartCard';
+import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
 import { SortDirection, SortKey, TooltipProps } from './Tooltip.types';
-import { getSortOrder } from './utils';
+import { getSortOrder, shouldShowTooltip } from './utils';
 
 export function Tooltip({
   sortDirection = SortDirection.Desc,
@@ -57,11 +56,10 @@ export function Tooltip({
         order: getSortOrder(sortDirection, sortKey),
         padding: spacing[200],
         // Showing the tooltip in ChartStates.Dragging or ChartStates.Overlay causes issues with drag and drop
-        show:
-          chart.state !== ChartStates.Dragging &&
-          chart.state !== ChartStates.Overlay &&
-          chartCardContext?.state !== ChartCardStates.Dragging &&
-          chartCardContext?.state !== ChartCardStates.Overlay,
+        show: shouldShowTooltip({
+          chartState: chart.state,
+          chartCardState: chartCardContext?.state,
+        }),
         showDelay: 0,
         textStyle: {
           fontFamily: fontFamilies.default,
