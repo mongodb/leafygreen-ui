@@ -55,7 +55,6 @@ export function Tooltip({
           : undefined,
         order: getSortOrder(sortDirection, sortKey),
         padding: spacing[200],
-        // Showing the tooltip in ChartStates.Dragging or ChartStates.Overlay causes issues with drag and drop
         show: shouldShowTooltip({
           chartState: chart.state,
           chartCardState: chartCardContext?.state,
