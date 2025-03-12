@@ -8,7 +8,7 @@
     "emitDeclarationOnly": true,
     "importHelpers": false,
     "composite": true,
-    "target": "ES6",
+    "target": "ES2017",
     "jsx": "react",
     "allowJs": false,
     "pretty": true,

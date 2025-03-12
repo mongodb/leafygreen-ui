@@ -31,6 +31,8 @@ export async function moveTarget({
   x?: number;
   y?: number;
 }) {
+  // FIXME:
+  // @ts-expect-error Types & Transpiled code for userEvent resolved from different packages
   await userEvent.pointer([
     { keys: '[MouseLeft>]', target },
     { coords: { x: 0, y: 0 } },
