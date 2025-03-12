@@ -20,6 +20,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import { type ChartCardProps, type ChartProps } from '@lg-charts/core';
 
 import { DragProviderProps } from './DragProvider.types';
 
@@ -136,14 +137,14 @@ export function DragProvider({
       child => (child as React.ReactElement).props.dragId === activeId,
     ) as React.ReactElement;
 
-    const overlayProps: { state: string; isOpen?: boolean } = {
+    const overlayProps: Partial<ChartCardProps> | Partial<ChartProps> = {
       state: 'overlay',
     };
 
     const openState = findDragElementOpenState(childrenRef.current!, activeId);
 
     if (openState !== null) {
-      overlayProps.isOpen = openState;
+      (overlayProps as Partial<ChartCardProps>).isOpen = openState;
     }
 
     return cloneElement(elem, overlayProps);

@@ -171,6 +171,9 @@ importers:
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: 4.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@lg-charts/core':
+        specifier: workspace:^
+        version: link:../core
 
   chat/avatar:
     dependencies:
