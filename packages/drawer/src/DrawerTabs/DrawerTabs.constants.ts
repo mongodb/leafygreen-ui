@@ -1,1 +1,1 @@
-export const TAB_LIST_HEIGHT = 32;
+export const TAB_CONTAINER_HEIGHT = 35;

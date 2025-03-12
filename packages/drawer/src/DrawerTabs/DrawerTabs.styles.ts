@@ -1,32 +1,46 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
+  tabContainerClassName,
   tabListElementClassName,
   tabPanelsElementClassName,
 } from '@leafygreen-ui/tabs';
-import { spacing } from '@leafygreen-ui/tokens';
+import { addOverflowShadow, color, Side, spacing } from '@leafygreen-ui/tokens';
 
-import { getShadowTopStyles, scrollContainerStyles } from '../Drawer';
+import { TAB_CONTAINER_HEIGHT } from './DrawerTabs.constants';
 
-import { TAB_LIST_HEIGHT } from './DrawerTabs.constants';
-
-const baseDrawerTabsStyles = css`
+const getBaseDrawerTabsStyles = (theme: Theme) => css`
+  display: flex;
+  flex-direction: column;
   height: 100%;
 
+  .${tabContainerClassName} {
+    height: ${TAB_CONTAINER_HEIGHT}px;
+    padding-right: ${spacing[400]}px;
+  }
+
   .${tabListElementClassName} {
-    height: ${TAB_LIST_HEIGHT}px;
-    padding: 0 ${spacing[400]}px 0 ${spacing[200]}px;
+    background-color: ${color[theme].background.primary.default};
+    padding-left: ${spacing[200]}px;
+    position: absolute;
   }
 
   .${tabPanelsElementClassName} {
-    height: calc(100% - ${TAB_LIST_HEIGHT}px);
-    ${scrollContainerStyles}
+    height: 100%;
+    padding: ${spacing[400]}px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 `;
 
 const getTabListShadowTopStyles = ({ theme }: { theme: Theme }) => css`
-  .${tabListElementClassName} {
-    ${getShadowTopStyles({ theme })}
+  .${tabContainerClassName} {
+    ${addOverflowShadow({
+      isInside: false,
+      side: Side.Bottom,
+      theme,
+    })}
+    z-index: 0;
   }
 `;
 
@@ -40,7 +54,7 @@ export const getDrawerTabsStyles = ({
   theme: Theme;
 }) =>
   cx(
-    baseDrawerTabsStyles,
+    getBaseDrawerTabsStyles(theme),
     {
       [getTabListShadowTopStyles({ theme })]: hasShadowTop,
     },

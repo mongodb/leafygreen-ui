@@ -24,6 +24,8 @@ import {
   getChildrenContainerStyles,
   getDrawerStyles,
   getHeaderStyles,
+  getInnerChildrenContainerStyles,
+  getInnerContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
@@ -46,7 +48,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
-    const { registerDrawer, unregisterDrawer, getDrawerIndex } =
+    const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
 
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
@@ -110,34 +112,47 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             {...rest}
           >
             <div
-              className={getHeaderStyles({
-                hasShadowTop: !hasTabs && !isInterceptInView,
-                hasTabs,
+              className={getInnerContainerStyles({
+                displayMode,
                 theme,
               })}
             >
-              <Body
-                as={typeof title === 'string' ? 'h2' : 'div'}
-                baseFontSize={BaseFontSize.Body2}
-                id={titleId}
-                weight="medium"
+              <div
+                className={getHeaderStyles({
+                  hasTabs,
+                  theme,
+                })}
               >
-                {title}
-              </Body>
-              {showCloseButton && (
-                <IconButton
-                  aria-label="Close drawer"
-                  data-lgid={lgIds.closeButton}
-                  onClick={onClose}
+                <Body
+                  as={typeof title === 'string' ? 'h2' : 'div'}
+                  baseFontSize={BaseFontSize.Body2}
+                  id={titleId}
+                  weight="medium"
                 >
-                  <XIcon />
-                </IconButton>
-              )}
-            </div>
-            <div className={getChildrenContainerStyles({ hasTabs })}>
-              {/* Empty span element used to track if children container has scrolled down */}
-              {!hasTabs && <span ref={interceptRef} />}
-              {children}
+                  {title}
+                </Body>
+                {showCloseButton && (
+                  <IconButton
+                    aria-label="Close drawer"
+                    data-lgid={lgIds.closeButton}
+                    onClick={onClose}
+                  >
+                    <XIcon />
+                  </IconButton>
+                )}
+              </div>
+              <div
+                className={getChildrenContainerStyles({
+                  hasShadowTop: !hasTabs && !isInterceptInView,
+                  theme,
+                })}
+              >
+                <div className={getInnerChildrenContainerStyles({ hasTabs })}>
+                  {/* Empty span element used to track if children container has scrolled down */}
+                  {!hasTabs && <span ref={interceptRef} />}
+                  {children}
+                </div>
+              </div>
             </div>
           </Component>
         </DrawerContext.Provider>

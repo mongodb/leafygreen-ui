@@ -2,13 +2,14 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { color, spacing } from '@leafygreen-ui/tokens';
 
+export const tabContainerClassName = createUniqueClassName('tab-container');
 export const tabListElementClassName = createUniqueClassName('tab-list');
 export const inlineChildrenContainerClassName = createUniqueClassName(
   'tabs-inline_children',
 );
 export const tabPanelsElementClassName = createUniqueClassName('tab-panels');
 
-export const getTabContainerStyles = (theme: Theme) => css`
+const getBaseTabContainerStyles = (theme: Theme) => css`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -20,6 +21,9 @@ export const getTabContainerStyles = (theme: Theme) => css`
     rgb(255 255 255 / 0%) 1px
   );
 `;
+
+export const getTabContainerStyles = (theme: Theme) =>
+  cx(getBaseTabContainerStyles(theme), tabContainerClassName);
 
 const baseTabListStyles = css`
   list-style: none;

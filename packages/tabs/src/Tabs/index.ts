@@ -1,6 +1,7 @@
 export { default } from './Tabs';
 export {
   inlineChildrenContainerClassName,
+  tabContainerClassName,
   tabListElementClassName,
   tabPanelsElementClassName,
 } from './Tabs.styles';

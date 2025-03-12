@@ -12,7 +12,7 @@ export { default as fontFamilies } from './fontFamilies';
 export { default as fontWeights } from './fontWeights';
 export { default as hoverRing } from './hoverRing';
 export { Mode } from './mode';
-export { shadow } from './shadow';
+export { addOverflowShadow, shadow, Side } from './shadows';
 export { Size } from './size';
 export { default as spacing } from './spacing';
 export { default as transitionDuration } from './transitions';

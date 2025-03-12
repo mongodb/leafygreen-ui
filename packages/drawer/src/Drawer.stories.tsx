@@ -167,9 +167,6 @@ const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
           Open Drawer B
         </Button>
-        <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
-          Open Drawer C
-        </Button>
         <Drawer
           {...args}
           open={openA}
@@ -184,6 +181,9 @@ const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
           onClose={() => setOpenB(false)}
           title="Drawer B"
         >
+          <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
+            Open Drawer C
+          </Button>
           <LongContent />
         </Drawer>
         <Drawer

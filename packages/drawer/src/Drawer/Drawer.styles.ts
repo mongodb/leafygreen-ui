@@ -1,9 +1,12 @@
-import { transparentize } from 'polished';
-
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { palette } from '@leafygreen-ui/palette';
-import { color, spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  addOverflowShadow,
+  color,
+  Side,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
 
 import {
   HEADER_HEIGHT,
@@ -21,7 +24,6 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
-  overflow: auto;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
@@ -29,40 +31,30 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   }
 `;
 
-const getOverlayOpenStyles = (theme: Theme) => css`
-  box-shadow: ${theme === Theme.Light
-    ? `-10px 0 10px -10px rgba(0, 0, 0, 0.3)`
-    : 'initial'};
+const overlayOpenStyles = css`
   opacity: 1;
   transform: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    box-shadow: ${theme === Theme.Light
-      ? `0 -10px 10px -10px rgba(0, 0, 0, 0.3)`
-      : 'initial'};
     transform: none;
   }
 `;
 
 const overlayClosedStyles = css`
-  box-shadow: 'initial';
   opacity: 0;
   transform: translate3d(100%, 0, 0);
   pointer-events: none;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    box-shadow: 'initial';
     transform: translate3d(0, 100%, 0);
   }
 `;
 
 const getOverlayStyles = ({
   open,
-  theme,
   zIndex,
 }: {
   open: boolean;
-  theme: Theme;
   zIndex: number;
 }) =>
   cx(
@@ -72,9 +64,8 @@ const getOverlayStyles = ({
       top: 0;
       bottom: 0;
       right: 0;
+      overflow: visible;
       transition: transform ${drawerTransitionDuration}ms ease-in-out,
-        box-shadow ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`},
         opacity ${drawerTransitionDuration}ms ease-in-out
           ${open ? '0ms' : `${drawerTransitionDuration}ms`};
 
@@ -84,7 +75,7 @@ const getOverlayStyles = ({
       }
     `,
     {
-      [getOverlayOpenStyles(theme)]: open,
+      [overlayOpenStyles]: open,
       [overlayClosedStyles]: !open,
     },
   );
@@ -110,6 +101,7 @@ const getEmbeddedStyles = ({ open }: { open: boolean }) =>
   cx(
     css`
       position: relative;
+      overflow: auto;
     `,
     {
       [embeddedOpenStyles]: open,
@@ -120,17 +112,14 @@ const getEmbeddedStyles = ({ open }: { open: boolean }) =>
 const getDisplayModeStyles = ({
   displayMode,
   open,
-  theme,
   zIndex,
 }: {
   displayMode: DisplayMode;
   open: boolean;
-  theme: Theme;
   zIndex: number;
 }) =>
   cx({
-    [getOverlayStyles({ open, theme, zIndex })]:
-      displayMode === DisplayMode.Overlay,
+    [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
@@ -149,11 +138,38 @@ export const getDrawerStyles = ({
 }) =>
   cx(
     getBaseStyles({ theme }),
-    getDisplayModeStyles({ displayMode, open, theme, zIndex }),
+    getDisplayModeStyles({ displayMode, open, zIndex }),
     className,
   );
 
-const getBaseHeaderStyles = ({
+const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: ${color[theme].background.primary.default};
+`;
+
+const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
+  ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
+
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
+  }
+`;
+
+export const getInnerContainerStyles = ({
+  displayMode,
+  theme,
+}: {
+  displayMode: DisplayMode;
+  theme: Theme;
+}) =>
+  cx(getBaseInnerContainerStyles({ theme }), {
+    [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
+  });
+
+export const getHeaderStyles = ({
   hasTabs,
   theme,
 }: {
@@ -171,34 +187,38 @@ const getBaseHeaderStyles = ({
   transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
 `;
 
-export const getShadowTopStyles = ({ theme }: { theme: Theme }) => css`
-  box-shadow: ${theme === Theme.Light
-    ? `0px 10px 20px -10px ${transparentize(0.8, palette.black)}`
-    : '0px 6px 30px -10px rgba(0, 0, 0, 0.5)'};
+const baseChildrenContainerStyles = css`
+  height: 100%;
+  overflow: hidden;
 `;
 
-export const getHeaderStyles = ({
+export const getChildrenContainerStyles = ({
   hasShadowTop,
-  hasTabs,
   theme,
 }: {
   hasShadowTop: boolean;
-  hasTabs: boolean;
   theme: Theme;
 }) =>
-  cx(getBaseHeaderStyles({ hasTabs, theme }), {
-    [getShadowTopStyles({ theme })]: hasShadowTop,
+  cx(baseChildrenContainerStyles, {
+    [addOverflowShadow({ isInside: true, side: Side.Top, theme })]:
+      hasShadowTop,
   });
 
-const baseChildrenContainerStyles = css`
-  height: calc(100% - ${HEADER_HEIGHT}px);
+const baseInnerChildrenContainerStyles = css`
+  height: 100%;
 `;
 
-export const scrollContainerStyles = css`
+const scrollContainerStyles = css`
   padding: ${spacing[400]}px;
   overflow-y: auto;
   overscroll-behavior: contain;
 `;
 
-export const getChildrenContainerStyles = ({ hasTabs }: { hasTabs: boolean }) =>
-  cx(baseChildrenContainerStyles, { [scrollContainerStyles]: !hasTabs });
+export const getInnerChildrenContainerStyles = ({
+  hasTabs,
+}: {
+  hasTabs: boolean;
+}) =>
+  cx(baseInnerChildrenContainerStyles, {
+    [scrollContainerStyles]: !hasTabs,
+  });
