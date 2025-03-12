@@ -42,7 +42,6 @@ const getPositionStyles = (
   const commonStyles = `
     content: '';
     position: absolute;
-    margin: auto;
     border-radius: 40%;
     z-index: ${isInside ? 'initial' : -1};
   `;
@@ -56,6 +55,7 @@ const getPositionStyles = (
         right: 0;
         width: 96%;
         height: ${SHORT_SIDE_SIZE}px;
+        margin: 0 auto;
         box-shadow: 0 ${
           isInside ? '' : '-'
         }${shadowOffsetVal}px ${BLUR_RADIUS}px ${shadowColor};
@@ -68,6 +68,7 @@ const getPositionStyles = (
         left: ${sidePosition};
         width: ${SHORT_SIDE_SIZE}px;
         height: 96%;
+        margin: auto 0;
         box-shadow: ${
           isInside ? '' : '-'
         }${shadowOffsetVal}px 0 ${BLUR_RADIUS}px ${shadowColor};
@@ -80,6 +81,7 @@ const getPositionStyles = (
         right: ${sidePosition};
         width: ${SHORT_SIDE_SIZE}px;
         height: 96%;
+        margin: auto 0;
         box-shadow: ${
           isInside ? '-' : ''
         }${shadowOffsetVal}px 0 ${BLUR_RADIUS}px ${shadowColor};
@@ -92,6 +94,7 @@ const getPositionStyles = (
         right: 0;
         width: 96%;
         height: ${SHORT_SIDE_SIZE}px;
+        margin: 0 auto;
         box-shadow: 0 ${
           isInside ? '-' : ''
         }${shadowOffsetVal}px ${BLUR_RADIUS}px ${shadowColor};
