@@ -48,7 +48,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { Component } = usePolymorphic<'dialog' | 'div'>(
       displayMode === DisplayMode.Overlay ? 'dialog' : 'div',
     );
-    const { registerDrawer, unregisterDrawer, getDrawerIndex } =
+    const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
 
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);

@@ -19,24 +19,6 @@ export const DrawerStackProvider = ({
 }) => {
   const [stack, setStack] = useState<Array<string>>([]);
 
-  const registerDrawer = useCallback(
-    (id: string) => {
-      if (stack.includes(id)) {
-        return;
-      }
-
-      setStack(prev => [...prev, id]);
-    },
-    [setStack, stack],
-  );
-
-  const unregisterDrawer = useCallback(
-    (id: string) => {
-      setStack(prev => prev.filter(item => item !== id));
-    },
-    [setStack],
-  );
-
   const getDrawerIndex = useCallback(
     (id: string) => {
       return stack.indexOf(id);
@@ -44,9 +26,29 @@ export const DrawerStackProvider = ({
     [stack],
   );
 
+  const registerDrawer = useCallback(
+    (id: string) => {
+      setStack(prev => {
+        if (prev.includes(id)) return prev;
+        return [...prev, id];
+      });
+    },
+    [setStack],
+  );
+
+  const unregisterDrawer = useCallback(
+    (id: string) => {
+      setStack(prev => {
+        if (!prev.includes(id)) return prev;
+        return prev.filter(item => item !== id);
+      });
+    },
+    [setStack],
+  );
+
   const value = useMemo(
-    () => ({ registerDrawer, unregisterDrawer, getDrawerIndex }),
-    [registerDrawer, unregisterDrawer, getDrawerIndex],
+    () => ({ getDrawerIndex, registerDrawer, unregisterDrawer }),
+    [getDrawerIndex, registerDrawer, unregisterDrawer],
   );
 
   return (
