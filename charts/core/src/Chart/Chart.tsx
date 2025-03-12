@@ -75,6 +75,7 @@ export function Chart({
               state,
               isDraggable,
             })}
+            data-testid="lg-charts-core-chart-header"
             {...attributes}
             {...listeners}
           >
