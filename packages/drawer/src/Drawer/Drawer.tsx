@@ -119,7 +119,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             >
               <div
                 className={getHeaderStyles({
-                  hasShadowTop: !hasTabs && !isInterceptInView,
                   hasTabs,
                   theme,
                 })}

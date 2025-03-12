@@ -169,7 +169,7 @@ export const getInnerContainerStyles = ({
     [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
   });
 
-const getBaseHeaderStyles = ({
+export const getHeaderStyles = ({
   hasTabs,
   theme,
 }: {
@@ -186,20 +186,6 @@ const getBaseHeaderStyles = ({
     : `1px solid ${color[theme].border.secondary.default}`};
   transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
 `;
-
-export const getHeaderStyles = ({
-  hasShadowTop,
-  hasTabs,
-  theme,
-}: {
-  hasShadowTop: boolean;
-  hasTabs: boolean;
-  theme: Theme;
-}) =>
-  cx(getBaseHeaderStyles({ hasTabs, theme }), {
-    [addOverflowShadow({ isInside: false, side: Side.Bottom, theme })]:
-      hasShadowTop,
-  });
 
 const baseChildrenContainerStyles = css`
   height: 100%;

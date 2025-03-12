@@ -25,13 +25,6 @@ const shadowOffset: Record<Theme, number> = {
   [Theme.Dark]: 16,
 };
 
-const getPseudoElement = (side: Side, isInside: boolean) => {
-  if ((side === Side.Right || side === Side.Bottom) && !isInside)
-    return ':after';
-  if ((side === Side.Top || side === Side.Left) && isInside) return ':before';
-  return !isInside ? '::before' : '::after';
-};
-
 const getPositionStyles = (
   side: Side,
   isInside: boolean,
@@ -113,7 +106,8 @@ export const addOverflowShadow = ({
   side: Side;
   theme: Theme;
 }) => {
-  const pseudoElement = getPseudoElement(side, isInside);
+  const pseudoElement =
+    side === Side.Top || side === Side.Left ? '::before' : '::after';
   const shadowColor = transparentize(0.7, shadowThemeColor[theme]);
   const shadowOffsetVal = shadowOffset[theme];
 
