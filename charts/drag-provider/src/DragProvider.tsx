@@ -81,6 +81,7 @@ MouseSensor.activators = [
 
 export function DragProvider({
   children,
+  onDragStart,
   onDragEnd,
 }: DragProviderProps): ReactElement {
   const [activeId, setActiveId] = useState<string | null>(null); // which element is 'picked up'
@@ -150,6 +151,7 @@ export function DragProvider({
 
   function handleDragStart(event: any) {
     setActiveId(event.active.id);
+    onDragStart?.({ active: event.active.id });
   }
 
   function handleDragEnd(event: any) {

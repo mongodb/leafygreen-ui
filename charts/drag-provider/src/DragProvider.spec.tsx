@@ -44,6 +44,21 @@ async function clickAndDragByTestId(id: Matcher) {
 }
 
 describe('@lg-charts/drag-provider', () => {
+  test('should call `onDragStart` when child `Chart` is dragged ', () => {
+    const onDragStart = jest.fn();
+
+    render(
+      <DragProvider onDragStart={onDragStart}>
+        {renderChart('chart-1')}
+      </DragProvider>,
+    );
+
+    const header = screen.getByTestId('chart-1-header');
+    fireEvent.mouseDown(header, { clientX: 0, clientY: 0 });
+
+    expect(onDragStart).toHaveBeenCalled();
+  });
+
   test('should call `onDragEnd` when child `Chart` is dragged ', () => {
     const onDragEnd = jest.fn();
 
