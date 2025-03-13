@@ -16,7 +16,6 @@ import type { StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
 
 import { DragProvider } from './DragProvider';
-import { DragProvider } from './DragProvider';
 import {
   DragChartProps,
   LiveExampleComponent,
