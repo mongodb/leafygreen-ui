@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Chart,
   ChartCard,
@@ -20,7 +20,7 @@ import { DragProvider } from './DragProvider';
 /******************************************************
  * TYPES
  */
-export interface DragChartProps {
+interface DragChartProps {
   isOpen: boolean;
   onChartReady: () => void;
   onDragStart: () => void;
@@ -30,7 +30,7 @@ export interface DragChartProps {
 /******************************************************
  * UTILS
  */
-export async function moveTarget({
+async function moveTarget({
   target,
   x = 310,
   y = 50,
@@ -48,7 +48,7 @@ export async function moveTarget({
   ]);
 }
 
-export function renderChart(id: string, onChartReady?: () => void) {
+function renderChart(id: string, onChartReady?: () => void) {
   return (
     <Chart
       key={id}
@@ -74,7 +74,7 @@ export function renderChart(id: string, onChartReady?: () => void) {
   );
 }
 
-export function renderChartCard({
+function renderChartCard({
   isOpen,
   onChartReady,
   onDragEnd,
@@ -106,7 +106,7 @@ function arrayMove(arr: Array<string>, value1: string, value2: string) {
   return updated;
 }
 
-export function LiveExampleComponent() {
+function LiveExampleComponent() {
   type CardId = string;
   const [cards, setCards] = useState<Array<CardId>>(['1', '2']);
   const [charts, setCharts] = useState<Record<CardId, Array<string>>>({
