@@ -2,9 +2,9 @@ import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { TooltipDataList } from '../TooltipDataList';
+import { TooltipSeriesList } from '../TooltipSeriesList';
 
-import { getContainerStyles } from './TooltipContent.styles';
+import { getContainerStyles, headerValueStyles } from './TooltipContent.styles';
 import { TooltipContentProps } from './TooltipContent.types';
 
 function formatDate(dateTimeStamp: number) {
@@ -50,33 +50,14 @@ export function TooltipContent({
    */
   return (
     <div className={getContainerStyles(theme)}>
-      <div
-        style={{
-          textAlign: 'left',
-          display: 'block',
-          marginBottom: '8px',
-        }}
-      >
-        {axisValueLabel}
-      </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto auto',
-          rowGap: '8px',
-          columnGap: '24px',
-        }}
-      >
-        {
-          <TooltipDataList
-            params={params}
-            seriesValueFormatter={seriesValueFormatter}
-            seriesNameFormatter={seriesNameFormatter}
-            sortDirection={sortDirection}
-            sortValue={sortValue}
-          />
-        }
-      </div>
+      <div className={headerValueStyles}>{axisValueLabel}</div>
+      <TooltipSeriesList
+        params={params}
+        seriesValueFormatter={seriesValueFormatter}
+        seriesNameFormatter={seriesNameFormatter}
+        sortDirection={sortDirection}
+        sortValue={sortValue}
+      />
     </div>
   );
 }
