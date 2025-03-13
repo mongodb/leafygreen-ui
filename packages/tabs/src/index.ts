@@ -3,6 +3,7 @@ export { default as Tab } from './Tab';
 export {
   inlineChildrenContainerClassName,
   Size,
+  tabContainerClassName,
   tabListElementClassName,
   tabPanelsElementClassName,
   default as Tabs,
