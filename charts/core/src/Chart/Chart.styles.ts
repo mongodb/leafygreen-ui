@@ -1,8 +1,15 @@
-import { css } from '@leafygreen-ui/emotion';
+import { CSS, Transform } from '@dnd-kit/utilities';
+
+import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
-export const chartContainerStyles = css`
+import { ChartStates } from './Chart.types';
+
+const getBaseContainerStyles = (theme: Theme) => css`
+  background: ${color[theme].background[Variant.Primary][
+    InteractionState.Default
+  ]};
   display: grid;
   grid-template-areas:
     'chartHeader'
@@ -12,9 +19,73 @@ export const chartContainerStyles = css`
   width: 100%;
 `;
 
-export const chartHeaderContainerStyles = css`
-  grid-area: chartHeader;
+/**
+ * The CSS helper is a helper for generating CSS transform strings, and is
+ * equivalent to manually constructing the string as such:
+ *
+ * CSS.Translate.toString(transform) === `translate3d(${translate.x}, ${translate.y}, 0)`
+ */
+const getDraggableContainerStyles = (
+  transform: Transform | null,
+  transition?: string,
+) => css`
+  transform: ${CSS.Transform.toString(transform)};
+  transition: ${transition};
 `;
+
+const getDraggingContainerStyles = () => css`
+  opacity: 0.3;
+`;
+
+// TODO: This should be a token once we audit our shadows
+const getOverlayContainerStyles = (theme: Theme) => css`
+  box-shadow: 0 18px 18px -15px rgba(0, 30, 43, 0.2);
+  border: 1px solid
+    ${color[theme].border[Variant.Disabled][InteractionState.Default]};
+  border-top: none; // border-top is already applied to the header
+`;
+
+export const getChartContainerStyles = ({
+  theme,
+  transform,
+  transition,
+  isDraggable,
+  state,
+}: {
+  theme: Theme;
+  transform: Transform | null;
+  transition?: string;
+  isDraggable: boolean;
+  state: ChartStates;
+}) =>
+  cx(getBaseContainerStyles(theme), {
+    [getDraggableContainerStyles(transform, transition)]: isDraggable,
+    [getDraggingContainerStyles()]: state === ChartStates.Dragging,
+    [getOverlayContainerStyles(theme)]: state === ChartStates.Overlay,
+  });
+
+export const getChartHeaderContainerStyles = ({
+  theme,
+  state,
+  isDraggable,
+}: {
+  theme: Theme;
+  state: ChartStates;
+  isDraggable: boolean;
+}) =>
+  cx(
+    css`
+      grid-area: chartHeader;
+      background: ${state === ChartStates.Overlay
+        ? color[theme].background[Variant.Primary][InteractionState.Hover]
+        : 'none'};
+    `,
+    {
+      [css`
+        cursor: move;
+      `]: isDraggable,
+    },
+  );
 
 export const chartWrapperStyles = css`
   position: relative;
