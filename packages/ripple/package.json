@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/ripple",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "leafyGreen UI Kit Ripple",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

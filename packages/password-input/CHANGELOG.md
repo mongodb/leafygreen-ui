@@ -1,5 +1,15 @@
 # @leafygreen-ui/password-input
 
+## 3.0.7
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/form-field@2.0.7
+  - @leafygreen-ui/icon-button@16.0.6
+  - @leafygreen-ui/typography@20.1.4
+
 ## 3.0.6
 
 ### Patch Changes

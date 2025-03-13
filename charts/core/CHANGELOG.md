@@ -1,5 +1,20 @@
 # @lg-charts/core
 
+## 0.13.0
+
+### Minor Changes
+
+- 4ab9d6729: - Adds drag functionality to both `Chart` and `ChartCard` components
+  - Adds `dragId` prop to `Chart` and `ChartCard` components for indicating that they are meant to be draggable
+  - Adds `overlay` and `draggable` states for properly styling draggable `Chart` and `ChartCard` components
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/icon-button@16.0.6
+  - @leafygreen-ui/typography@20.1.4
+
 ## 0.12.5
 
 ### Patch Changes

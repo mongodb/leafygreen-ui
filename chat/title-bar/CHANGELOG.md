@@ -1,5 +1,16 @@
 # @lg-chat/title-bar
 
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @lg-chat/avatar@4.0.6
+  - @leafygreen-ui/badge@9.0.5
+  - @leafygreen-ui/icon-button@16.0.6
+  - @leafygreen-ui/typography@20.1.4
+
 ## 3.0.7
 
 ### Patch Changes

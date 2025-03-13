@@ -1,5 +1,12 @@
 # @leafygreen-ui/toggle
 
+## 11.0.5
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+
 ## 11.0.4
 
 ### Patch Changes

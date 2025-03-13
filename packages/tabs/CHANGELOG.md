@@ -1,5 +1,18 @@
 # @leafygreen-ui/tabs
 
+## 14.2.0
+
+### Minor Changes
+
+- 4b362e136: Exports `tabContainerClassName` to customize styling
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/typography@20.1.4
+  - @leafygreen-ui/descendants@2.1.2
+
 ## 14.1.5
 
 ### Patch Changes
