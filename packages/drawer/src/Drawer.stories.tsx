@@ -57,11 +57,13 @@ export default {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     displayMode: {
+      control: 'radio',
+      description: 'Options to control how the drawer element is displayed',
       options: Object.values(DisplayMode),
-      control: { type: 'radio' },
     },
     title: {
       control: 'text',
+      description: 'Title of the Drawer',
     },
   },
 } satisfies StoryMetaType<typeof Drawer>;
@@ -94,7 +96,9 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
   const [open, setOpen] = useState(true);
 
   const renderTrigger = () => (
-    <Button onClick={() => setOpen(prevOpen => !prevOpen)}>Open Drawer</Button>
+    <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+      Toggle Drawer
+    </Button>
   );
 
   const renderDrawer = () => (
@@ -162,10 +166,10 @@ const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         `}
       >
         <Button onClick={() => setOpenA(prevOpen => !prevOpen)}>
-          Open Drawer A
+          Toggle Drawer A
         </Button>
         <Button onClick={() => setOpenB(prevOpen => !prevOpen)}>
-          Open Drawer B
+          Toggle Drawer B
         </Button>
         <Drawer
           {...args}
@@ -182,7 +186,7 @@ const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
           title="Drawer B"
         >
           <Button onClick={() => setOpenC(prevOpen => !prevOpen)}>
-            Open Drawer C
+            Toggle Drawer C
           </Button>
           <LongContent />
         </Drawer>
