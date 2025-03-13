@@ -1,7 +1,11 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
-import { AxisFormatterCallbackParams } from './Tooltip.types';
-import { TooltipDataList } from './TooltipDataList';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+
+import { TooltipDataList } from '../TooltipDataList';
+
+import { getContainerStyles } from './TooltipContent.styles';
+import { TooltipContentProps } from './TooltipContent.types';
 
 function formatDate(dateTimeStamp: number) {
   const date = new Date(dateTimeStamp);
@@ -24,13 +28,9 @@ export function TooltipContent({
   seriesNameFormatter,
   sortDirection,
   sortValue,
-}: {
-  params: AxisFormatterCallbackParams;
-  sortDirection?: 'asc' | 'desc';
-  sortValue?: 'name' | 'value';
-  seriesValueFormatter?: (value: string | number | Date) => string | ReactNode;
-  seriesNameFormatter?: (seriesName: string) => string | ReactNode;
-}) {
+}: TooltipContentProps) {
+  const { theme } = useDarkMode();
+
   if (
     params.length === 0 ||
     !Array.isArray(params[0].data) ||
@@ -49,15 +49,7 @@ export function TooltipContent({
    * that doesn't have access to the emotion cache. So we need to use inline styles.
    */
   return (
-    <div
-      style={{
-        color: 'white',
-        padding: '12px',
-        borderRadius: '5px',
-        fontFamily: 'Euclid Circular A Light, sans-serif',
-        fontWeight: 'lighter',
-      }}
-    >
+    <div className={getContainerStyles(theme)}>
       <div
         style={{
           textAlign: 'left',
