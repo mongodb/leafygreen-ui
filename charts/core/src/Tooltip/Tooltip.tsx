@@ -47,14 +47,14 @@ export function Tooltip({
           color[theme].background[Variant.InversePrimary][
             InteractionState.Default
           ],
-        borderRadius: borderRadius[200],
-        padding: spacing[200],
+        borderWidth: 0,
         enterable: false,
         confine: true,
         appendTo: 'body',
         showDelay: 0,
         hideDelay: 0,
         transitionDuration: 0,
+        padding: 0,
         formatter: (params: TopLevelFormatterParams) => {
           /**
            * Since the formatter trigger is set to 'axis', the params will be an array of objects.
@@ -62,8 +62,6 @@ export function Tooltip({
            * See https://echarts.apache.org/en/option.html#tooltip.formatter for more info.
            */
           const paramsArr = params as AxisFormatterCallbackParams;
-
-          console.log(paramsArr);
 
           return renderToString(
             <TooltipContent
