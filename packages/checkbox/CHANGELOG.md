@@ -1,5 +1,13 @@
 # @leafygreen-ui/checkbox
 
+## 15.0.1
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/typography@20.1.4
+
 ## 15.0.0
 
 ### Major Changes

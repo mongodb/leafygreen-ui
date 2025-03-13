@@ -1,5 +1,15 @@
 # @leafygreen-ui/guide-cue
 
+## 7.0.8
+
+### Patch Changes
+
+- @leafygreen-ui/button@23.1.2
+- @leafygreen-ui/icon-button@16.0.6
+- @leafygreen-ui/popover@13.0.6
+- @leafygreen-ui/tooltip@13.0.7
+- @leafygreen-ui/typography@20.1.4
+
 ## 7.0.7
 
 ### Patch Changes

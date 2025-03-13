@@ -1,5 +1,13 @@
 # @leafygreen-ui/modal
 
+## 17.1.1
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/icon-button@16.0.6
+
 ## 17.1.0
 
 ### Minor Changes

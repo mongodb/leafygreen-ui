@@ -1,5 +1,15 @@
 # @leafygreen-ui/split-button
 
+## 4.1.8
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/button@23.1.2
+  - @leafygreen-ui/menu@28.0.9
+  - @leafygreen-ui/popover@13.0.6
+
 ## 4.1.7
 
 ### Patch Changes

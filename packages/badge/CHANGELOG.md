@@ -1,5 +1,12 @@
 # @leafygreen-ui/badge
 
+## 9.0.5
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+
 ## 9.0.4
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @leafygreen-ui/button
 
+## 23.1.2
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/ripple@1.1.18
+
 ## 23.1.1
 
 ### Patch Changes

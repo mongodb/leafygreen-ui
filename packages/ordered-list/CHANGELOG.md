@@ -1,5 +1,14 @@
 # @leafygreen-ui/ordered-list
 
+## 2.0.8
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/typography@20.1.4
+  - @leafygreen-ui/descendants@2.1.2
+
 ## 2.0.7
 
 ### Patch Changes

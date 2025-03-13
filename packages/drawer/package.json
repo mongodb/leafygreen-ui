@@ -1,7 +1,6 @@
-  
 {
   "name": "@leafygreen-ui/drawer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "LeafyGreen UI Kit Drawer",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -30,7 +29,6 @@
     "@lg-tools/test-harnesses": "workspace:^",
     "polished": "^4.2.2",
     "react-intersection-observer": "^8.25.1"
-
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2"
