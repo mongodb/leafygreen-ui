@@ -8,12 +8,14 @@ import { palette } from '@leafygreen-ui/palette';
 
 import { Mode } from './mode';
 import {
+  addOverflowShadow,
   borderRadius,
   color,
   focusRing,
   fontFamilies,
   hoverRing,
   shadow,
+  Side,
   spacing,
   transitionDuration,
   typeScales,
@@ -82,6 +84,78 @@ function SpacingBlock({ space }: { space: keyof typeof spacing }) {
     </div>
   );
 }
+
+export const OverflowShadows = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${spacing[400]}px;
+      `}
+    >
+      {Object.values(Theme).map((theme: Theme) => {
+        const isDarkMode = theme === Theme.Dark;
+        const backgroundColor = isDarkMode ? palette.gray.dark4 : palette.white;
+        return (
+          <div
+            className={css`
+              padding: 24px;
+              color: ${color[theme].text.primary.default};
+              background-color: ${backgroundColor};
+              border: 1px solid ${color[theme].border.secondary.default};
+              z-index: -1;
+            `}
+            key={theme}
+          >
+            <div
+              className={css`
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: ${spacing[400]}px;
+              `}
+            >
+              {Object.values(Side).map(side => (
+                <div
+                  key={`inside-${side}`}
+                  className={css`
+                    position: relative;
+                    width: 150px;
+                    height: 150px;
+                    background-color: ${backgroundColor};
+                    border: 1px solid ${color[theme].border.secondary.default};
+                    margin: ${spacing[400]}px;
+                    padding: ${spacing[400]}px;
+                    overflow: hidden;
+                    ${addOverflowShadow({ isInside: true, side, theme })}
+                  `}
+                >
+                  Inside {side} shadow
+                </div>
+              ))}
+              {Object.values(Side).map(side => (
+                <div
+                  key={`outside-${side}`}
+                  className={css`
+                    width: 150px;
+                    height: 150px;
+                    background-color: ${backgroundColor};
+                    border: 1px solid ${color[theme].border.secondary.default};
+                    margin: ${spacing[400]}px;
+                    padding: ${spacing[400]}px;
+                    ${addOverflowShadow({ isInside: false, side, theme })}
+                  `}
+                >
+                  Outside {side} shadow
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 export const Shadow = () => (
   <div

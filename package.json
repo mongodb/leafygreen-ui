@@ -64,6 +64,7 @@
     "prettier": "2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "stream": "^0.0.3",
     "storybook": "^8.5.3",
     "ts-node": "10.9.2",
     "turbo": "^2.0.6",
