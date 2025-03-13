@@ -3,15 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { TopLevelFormatterParams } from 'echarts/types/dist/shared';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  borderRadius,
-  color,
-  // fontFamilies,
-  // fontWeights,
-  InteractionState,
-  spacing,
-  Variant,
-} from '@leafygreen-ui/tokens';
+import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
@@ -22,7 +14,6 @@ import {
   SortKey,
   TooltipProps,
 } from './Tooltip.types';
-// import { getSortOrder } from './utils';
 import { TooltipContent } from './TooltipContent';
 
 export function Tooltip({
@@ -43,6 +34,7 @@ export function Tooltip({
         },
         show: true,
         trigger: 'axis',
+        // Still adding background color to prevent peak of color at corners
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
             InteractionState.Default
@@ -57,9 +49,11 @@ export function Tooltip({
         padding: 0,
         formatter: (params: TopLevelFormatterParams) => {
           /**
-           * Since the formatter trigger is set to 'axis', the params will be an array of objects.
-           * Additionally, it should contain axis related data.
-           * See https://echarts.apache.org/en/option.html#tooltip.formatter for more info.
+           * Since the formatter trigger is set to 'axis', the params will be
+           * an array of objects. Additionally, it should contain axis related
+           * data.
+           * See https://echarts.apache.org/en/option.html#tooltip.formatter
+           * for more info.
            */
           const paramsArr = params as AxisFormatterCallbackParams;
 
@@ -83,7 +77,7 @@ export function Tooltip({
     };
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, chart.state, sortDirection, sortKey, valueFormatter]);
+  }, [chart.ready, sortDirection, sortKey, theme, valueFormatter]);
 
   return null;
 }

@@ -25,3 +25,7 @@ export const getContainerStyles = (theme: Theme) => css`
   line-height: 20px;
   font-weight: ${fontWeights.regular};
 `;
+
+export const headerValueStyles = css`
+  margin-bottom: ${spacing[100]}px;
+`;
