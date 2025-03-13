@@ -14,7 +14,6 @@ import {
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 import { expect, fn, userEvent, waitFor, within } from '@storybook/test';
-import { userEvent } from '@storybook/test';
 
 import { DragProvider } from './DragProvider';
 import { DragProvider } from './DragProvider';
