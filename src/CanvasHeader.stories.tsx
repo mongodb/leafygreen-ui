@@ -87,8 +87,8 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
   },
   args: {
     backLink: <BackLink href="/home">Back to Cluster</BackLink>,
-    pageTitle: 'Page title',
-    resourceName: testResourceNames.long,
+    pageTitle: 'Cluster Shards',
+    resourceName: testResourceNames.normal,
     darkMode: false,
     resourceIcon: <Icon glyph={'ShardedCluster'} />,
     actions: (
@@ -124,7 +124,15 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
 export default meta;
 
 const Template: StoryFn<typeof CanvasHeader> = props => (
-  <CanvasHeader {...props} />
+  <div
+    className={css`
+      min-width: 50vw;
+      position: relative;
+      z-index: 0;
+    `}
+  >
+    <CanvasHeader {...props} />
+  </div>
 );
 
 export const LiveExample = Template.bind({});

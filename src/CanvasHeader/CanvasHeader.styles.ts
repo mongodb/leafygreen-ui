@@ -4,15 +4,11 @@ import { color, spacing } from '@leafygreen-ui/tokens';
 
 export const canvasHeaderClassname = createUniqueClassName('canvas-header');
 
-export const canvasHeaderBaseStyles = (theme: Theme) => css`
+export const canvasHeaderBaseStyles = css`
   display: flex;
   flex-direction: column;
   gap: ${spacing[100]}px;
   margin-block: ${spacing[400]}px;
-  // May need to add a prop that defines
-  // the background color token ('primary' | 'secondary')
-  // if this component is used with multiple canvas bg colors
-  background-color: ${color[theme].background.primary.default};
 `;
 
 export const titleWrapperStyles = css`

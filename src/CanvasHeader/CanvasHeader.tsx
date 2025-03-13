@@ -43,7 +43,7 @@ export const CanvasHeader = React.forwardRef<HTMLDivElement, CanvasHeaderProps>(
           data-testid={LGIDS.root}
           className={cx(
             canvasHeaderClassname,
-            canvasHeaderBaseStyles(theme),
+            canvasHeaderBaseStyles,
             className,
           )}
           {...rest}

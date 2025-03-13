@@ -18,7 +18,6 @@ import {
   getResourceCopyIconWrapperStyles,
   getResourceNameButtonStyles,
   getResourceNameStyles,
-  inlineContainerStyles,
   resourceBadgeStyles,
   resourceBaseStyles,
   resourceCopiedStyles,
@@ -39,6 +38,7 @@ export const Resource = React.forwardRef<HTMLDivElement, ResourceProps>(
     const [copied, setCopied] = useState(false);
     const { theme } = useDarkMode();
     const timerRef = useRef<NodeJS.Timeout | null>(null);
+    const copyIconRef = useRef<HTMLSpanElement | null>(null);
 
     useEffect(() => {
       // Clear the timeout when the component unmounts
@@ -68,44 +68,36 @@ export const Resource = React.forwardRef<HTMLDivElement, ResourceProps>(
     return (
       <div ref={forwardRef} className={resourceBaseStyles}>
         {!!resourceIcon && (
-          <div className={resourceIconBaseStyles}>{resourceIcon}</div>
+          <span className={resourceIconBaseStyles}>{resourceIcon}</span>
         )}
-        <span className={inlineContainerStyles}>
-          <span
-            className={cx(
-              resourceNameButtonClassName,
-              getResourceNameButtonStyles(theme),
-            )}
-            role="button"
-            tabIndex={0}
-            aria-label="Copy resource name to clipboard"
-            onClick={handleClick}
-            onKeyDown={handleKeyDown}
-            data-testid={LGIDS.resourceName}
-          >
-            <span className={getResourceNameStyles(theme)}>{resourceName}</span>
-            <span
-              className={cx(getResourceCopyIconWrapperStyles(theme), {
-                [resourceCopiedStyles]: copied, // show the icon until the tooltip goes away
-              })}
-            >
-              <Tooltip
-                open={copied}
-                justify={Justify.Middle}
-                trigger={
-                  <span>
-                    <Icon glyph={'Copy'} />
-                  </span>
-                }
-              >
-                Copied!
-              </Tooltip>
-            </span>
-          </span>
-          {resourceBadges && (
-            <span className={resourceBadgeStyles}>{resourceBadges}</span>
+        <span
+          className={cx(
+            resourceNameButtonClassName,
+            getResourceNameButtonStyles(theme),
           )}
+          role="button"
+          tabIndex={0}
+          aria-label="Copy resource name to clipboard"
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          data-testid={LGIDS.resourceName}
+        >
+          <span className={getResourceNameStyles(theme)}>{resourceName}</span>
+          <span
+            ref={copyIconRef}
+            className={cx(getResourceCopyIconWrapperStyles(theme), {
+              [resourceCopiedStyles]: copied, // show the icon until the tooltip goes away
+            })}
+          >
+            <Icon glyph={'Copy'} />
+          </span>
+          <Tooltip open={copied} justify={Justify.Middle} refEl={copyIconRef}>
+            Copied!
+          </Tooltip>
         </span>
+        {resourceBadges && (
+          <span className={resourceBadgeStyles}>{resourceBadges}</span>
+        )}
       </div>
     );
   },

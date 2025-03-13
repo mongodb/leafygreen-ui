@@ -16,23 +16,20 @@ export const resourceNameButtonClassName = createUniqueClassName(
 );
 
 export const resourceBaseStyles = css`
-  display: flex;
-  gap: ${spacing[200]}px;
-`;
-
-export const resourceIconBaseStyles = css`
-  line-height: ${typeScales.body2.lineHeight}px;
-  color: ${palette.gray.base};
-
-  svg {
-    vertical-align: middle;
-  }
-`;
-
-export const inlineContainerStyles = css`
   line-break: anywhere;
   position: relative;
   display: inline;
+`;
+
+export const resourceIconBaseStyles = css`
+  display: inline-block;
+  color: ${palette.gray.base};
+  padding-right: ${spacing[200]}px;
+
+  svg {
+    position: relative;
+    top: 2px;
+  }
 `;
 
 export const getResourceNameButtonStyles = (theme: Theme) => css`
