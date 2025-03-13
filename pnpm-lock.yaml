@@ -153,9 +153,6 @@ importers:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
-      '@leafygreen-ui/combobox':
-        specifier: workspace:^
-        version: link:../../packages/combobox
       '@types/lodash.debounce':
         specifier: ^4.0.9
         version: 4.0.9
@@ -170,7 +167,7 @@ importers:
         version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
-        version: 4.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: link:../../packages/leafygreen-provider
       '@lg-charts/core':
         specifier: workspace:^
         version: link:../core
@@ -4818,17 +4815,6 @@ packages:
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-
-  '@leafygreen-ui/hooks@8.3.6':
-    resolution: {integrity: sha512-6Sgo0irgcsmvWbV29OeJXdlEehTu5ZokONkyl3Op5jb3d3HSoaESk86w3qL3XP2vMmfn6KxE8vp5dC2nlBII+A==}
-
-  '@leafygreen-ui/leafygreen-provider@4.0.4':
-    resolution: {integrity: sha512-SVrnn/Cb7mlTBZhx1GNHLrOAU8JIBFHaUPvgYvPbA5LMqurQhuTfBOJACNhxTP6OKlSdfdhuQ3NaVg3WSJ8OCA==}
-
-  '@leafygreen-ui/lib@14.1.0':
-    resolution: {integrity: sha512-5UqSGClJ6RB+joiq2qftXr+Brq7ivp8E5ztob/nRlWmfOetvZoL/f7RPFmXY0N4u4zrkARxctxPAnbPWqwU8Bg==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -12408,27 +12394,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
 
   '@juggle/resize-observer@3.4.0': {}
-
-  '@leafygreen-ui/hooks@8.3.6(react@18.2.0)':
-    dependencies:
-      '@leafygreen-ui/lib': 14.1.0(react@18.2.0)
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - react
-
-  '@leafygreen-ui/leafygreen-provider@4.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@leafygreen-ui/hooks': 8.3.6(react@18.2.0)
-      '@leafygreen-ui/lib': 14.1.0(react@18.2.0)
-      react-transition-group: 4.4.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-    transitivePeerDependencies:
-      - react
-      - react-dom
-
-  '@leafygreen-ui/lib@14.1.0(react@18.2.0)':
-    dependencies:
-      lodash: 4.17.21
-      react: 18.2.0
 
   '@manypkg/find-root@1.1.0':
     dependencies:
