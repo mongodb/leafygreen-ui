@@ -1,5 +1,12 @@
 # @lg-charts/drag-provider
 
+## 0.1.1
+
+### Patch Changes
+
+- 3c08f9724: Updates docs to provide more clarity on usage.
+  Add documentation on `onDragStart` callback.
+
 ## 0.1.0
 
 ### Minor Changes
