@@ -139,7 +139,7 @@ export interface BaseNumberInputProps
    *
    * Optional if `aria-labelledby` is provided
    */
-  label?: string;
+  label?: React.ReactNode;
 
   /**
    * Text that gives more detail about the requirements for the input.
