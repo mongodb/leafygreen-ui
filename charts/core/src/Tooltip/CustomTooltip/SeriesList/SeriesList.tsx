@@ -55,14 +55,7 @@ export function SeriesList({
   });
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'auto auto',
-        rowGap: '8px',
-        columnGap: '24px',
-      }}
-    >
+    <>
       {data.map(({ seriesName, data, color }) => (
         <SeriesListItem
           key={seriesName}
@@ -73,6 +66,6 @@ export function SeriesList({
           seriesNameFormatter={seriesNameFormatter}
         />
       ))}
-    </div>
+    </>
   );
 }
