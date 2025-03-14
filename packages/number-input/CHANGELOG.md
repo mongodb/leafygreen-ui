@@ -1,5 +1,11 @@
 # @leafygreen-ui/number-input
 
+## 4.1.0
+
+### Minor Changes
+
+- 8a75859c6: Label now accepts type `React.ReactNode` not just a `string`
+
 ## 4.0.9
 
 ### Patch Changes
