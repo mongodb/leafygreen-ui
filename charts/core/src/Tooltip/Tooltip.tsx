@@ -47,19 +47,19 @@ export function Tooltip({
         hideDelay: 0,
         transitionDuration: 0,
         padding: 0,
-        formatter: (params: TopLevelFormatterParams) => {
+        formatter: (seriesData: TopLevelFormatterParams) => {
           /**
-           * Since the formatter trigger is set to 'axis', the params will be
+           * Since the formatter trigger is set to 'axis', the seriesData will be
            * an array of objects. Additionally, it should contain axis related
            * data.
            * See https://echarts.apache.org/en/option.html#tooltip.formatter
            * for more info.
            */
-          const paramsArr = params as Array<CallbackSeriesDataPoint>;
+          const seriesDataArr = seriesData as Array<CallbackSeriesDataPoint>;
 
           return renderToString(
             <CustomTooltip
-              params={paramsArr}
+              seriesData={seriesDataArr}
               sortDirection={sortDirection}
               sortValue={sortKey}
             />,
