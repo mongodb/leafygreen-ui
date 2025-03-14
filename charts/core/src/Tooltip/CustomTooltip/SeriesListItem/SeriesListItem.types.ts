@@ -1,3 +1,4 @@
+import { CallbackSeriesDataPoint } from '../../Tooltip.types';
 import { SeriesListProps } from '../SeriesList/SeriesList.types';
 
 export interface SeriesListItemProps
@@ -5,7 +6,7 @@ export interface SeriesListItemProps
     SeriesListProps,
     'seriesValueFormatter' | 'seriesNameFormatter'
   > {
-  seriesName?: string;
-  data: [string | number, string | number | Date];
-  color: string;
+  seriesName?: CallbackSeriesDataPoint['seriesName'];
+  data: CallbackSeriesDataPoint['data'];
+  color: CallbackSeriesDataPoint['color'];
 }

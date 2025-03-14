@@ -20,16 +20,14 @@ export const SeriesListItem = ({
 
   let value: string | ReactNode = '';
 
-  if (Array.isArray(data) && data[1]) {
-    if (seriesValueFormatter) {
-      value = seriesValueFormatter(data[1]);
+  if (seriesValueFormatter) {
+    value = seriesValueFormatter(data[1]);
+  } else {
+    // default value formatting
+    if (data[1] instanceof Date) {
+      value = data[1].toLocaleDateString();
     } else {
-      // default value formatting
-      if (data[1] instanceof Date) {
-        value = data[1].toLocaleDateString();
-      } else {
-        value = data[1];
-      }
+      value = data[1];
     }
   }
 

@@ -10,7 +10,7 @@ import { useChartContext } from '../ChartContext';
 
 import { CustomTooltip } from './CustomTooltip';
 import {
-  AxisFormatterCallbackParams,
+  CallbackSeriesDataPoint,
   SortDirection,
   SortKey,
   TooltipProps,
@@ -55,7 +55,7 @@ export function Tooltip({
            * See https://echarts.apache.org/en/option.html#tooltip.formatter
            * for more info.
            */
-          const paramsArr = params as AxisFormatterCallbackParams;
+          const paramsArr = params as Array<CallbackSeriesDataPoint>;
 
           return renderToString(
             <CustomTooltip

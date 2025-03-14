@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 
-import { AxisFormatterCallbackParams } from '../../Tooltip.types';
+import { CallbackSeriesDataPoint } from '../../Tooltip.types';
 
 export interface SeriesListProps {
-  params: AxisFormatterCallbackParams;
+  params: Array<CallbackSeriesDataPoint>;
   seriesValueFormatter?: (value: string | number | Date) => string | ReactNode;
   seriesNameFormatter?: (seriesName: string) => string | ReactNode;
   sortDirection?: 'asc' | 'desc';
