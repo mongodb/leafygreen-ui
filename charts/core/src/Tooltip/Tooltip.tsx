@@ -19,7 +19,8 @@ import {
 export function Tooltip({
   sortDirection = SortDirection.Desc,
   sortKey = SortKey.Value,
-  valueFormatter,
+  seriesValueFormatter,
+  seriesNameFormatter,
 }: TooltipProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
@@ -62,6 +63,8 @@ export function Tooltip({
               seriesData={seriesDataArr}
               sortDirection={sortDirection}
               sortValue={sortKey}
+              seriesValueFormatter={seriesValueFormatter}
+              seriesNameFormatter={seriesNameFormatter}
             />,
           );
         },
@@ -77,7 +80,7 @@ export function Tooltip({
     };
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, sortDirection, sortKey, theme, valueFormatter]);
+  }, [chart.ready, sortDirection, sortKey, theme, seriesValueFormatter]);
 
   return null;
 }

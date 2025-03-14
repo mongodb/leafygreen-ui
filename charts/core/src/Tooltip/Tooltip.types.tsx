@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 
 /**
@@ -32,7 +33,8 @@ export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 export interface TooltipProps {
   sortDirection?: SortDirection;
   sortKey?: SortKey;
-  valueFormatter?: (value: number | string) => string;
+  seriesValueFormatter?: (value: number | string) => ReactNode | string;
+  seriesNameFormatter?: (value: number | string) => ReactNode | string;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {
