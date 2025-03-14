@@ -1,16 +1,8 @@
 import React from 'react';
 
-import { css } from '@leafygreen-ui/emotion';
+import { getColorDotStyle } from './SeriesListItemColorDot.styles';
+import { SeriesListItemColorDotProps } from './SeriesListItemColorDot.types';
 
-const getColorDotStyle = (color: string) => css`
-  display: inline-block;
-  margin-right: 5px;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-  background-color: ${color};
-`;
-
-export function SeriesListItemColorDot({ color }: { color: string }) {
+export function SeriesListItemColorDot({ color }: SeriesListItemColorDotProps) {
   return <span className={getColorDotStyle(color)}></span>;
 }

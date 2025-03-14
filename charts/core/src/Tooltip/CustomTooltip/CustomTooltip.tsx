@@ -29,11 +29,7 @@ export function CustomTooltip({
 }: CustomTooltipProps) {
   const { theme } = useDarkMode();
 
-  if (
-    params.length === 0 ||
-    !Array.isArray(params[0].data) ||
-    !params[0].data[0]
-  ) {
+  if (params.length === 0 || !params[0].data[0]) {
     return null;
   }
 

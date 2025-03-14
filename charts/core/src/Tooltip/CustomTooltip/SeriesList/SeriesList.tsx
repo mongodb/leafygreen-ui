@@ -60,8 +60,8 @@ export function SeriesList({
         <SeriesListItem
           key={seriesName}
           seriesName={seriesName}
-          data={data as [string | number, string | number | Date]}
-          color={color as string}
+          data={data}
+          color={color}
           seriesValueFormatter={seriesValueFormatter}
           seriesNameFormatter={seriesNameFormatter}
         />

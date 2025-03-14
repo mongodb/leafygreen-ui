@@ -35,13 +35,20 @@ export interface TooltipProps {
   valueFormatter?: (value: number | string) => string;
 }
 
-export type AxisFormatterCallbackParams = Array<
-  CallbackDataParams & {
-    axisDim: string;
-    axisId: string;
-    axisIndex: number;
-    axisType: string;
-    axisValue: string | number;
-    axisValueLabel: string | number;
-  }
->;
+export interface CallbackSeriesDataPoint extends CallbackDataParams {
+  axisDim: string;
+  axisId: string;
+  axisIndex: number;
+  axisType: string;
+  axisValue: string | number;
+  axisValueLabel: string | number;
+  /**
+   * Narrowing to array because the type of data we accept is always a tuple
+   * whereas echarts accepts more
+   */
+  data: [string | number, string | number | Date];
+  /**
+   * Echarts returns a custom color type which doesn't map to string but is one
+   */
+  color: string;
+}
