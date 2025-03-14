@@ -34,8 +34,8 @@ export default {
     StoryFn => (
       <div
         className={css`
-          margin: -100px;
-          height: 100vh;
+          height: 100%;
+          width: 100%;
           display: flex;
           align-items: center;
         `}
@@ -91,9 +91,12 @@ const LongContent = () => {
 
 const TemplateComponent: StoryFn<DrawerProps> = ({
   displayMode,
+  initialOpen,
   ...rest
-}: DrawerProps) => {
-  const [open, setOpen] = useState(true);
+}: DrawerProps & {
+  initialOpen?: boolean;
+}) => {
+  const [open, setOpen] = useState(initialOpen ?? true);
 
   const renderTrigger = () => (
     <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
@@ -112,7 +115,12 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
 
   return displayMode === DisplayMode.Embedded ? (
     <DrawerStackProvider>
-      <EmbeddedDrawerLayout isDrawerOpen={open}>
+      <EmbeddedDrawerLayout
+        className={css`
+          height: 500px;
+        `}
+        isDrawerOpen={open}
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -143,10 +151,14 @@ export const LiveExample: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,
+    initialOpen: false,
   },
   parameters: {
     chromatic: {
       disableSnapshot: true,
+    },
+    controls: {
+      exclude: [...defaultExcludedControls, 'initialOpen'],
     },
   },
 };
