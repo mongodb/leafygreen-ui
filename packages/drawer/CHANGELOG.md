@@ -1,5 +1,11 @@
 # @leafygreen-ui/drawer
 
+## 1.1.0
+
+### Minor Changes
+
+- 8e710ad9d: Update styles of `Drawer` and live example story
+
 ## 1.0.0
 
 ### Major Changes
