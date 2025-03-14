@@ -14,7 +14,6 @@ function formatDate(dateTimeStamp: number) {
   const formattedHour = String(date.getHours()).padStart(2, '0');
   const formattedMinute = String(date.getMinutes()).padStart(2, '0');
   const formattedSecond = String(date.getSeconds()).padStart(2, '0');
-
   const formattedDate = `${formattedYear}/${formattedMonth}/${formattedDay}`;
   const formattedTime = `${formattedHour}:${formattedMinute}:${formattedSecond}`;
 
@@ -43,10 +42,6 @@ export function CustomTooltip({
       ? formatDate(params[0].axisValue as number) // Should be num since axisType is time
       : params[0].axisValueLabel;
 
-  /**
-   * Styles can't rely on emotion because this component is rendered in a different context
-   * that doesn't have access to the emotion cache. So we need to use inline styles.
-   */
   return (
     <div className={getContainerStyles(theme)}>
       <div className={headerValueStyles}>{axisValueLabel}</div>
