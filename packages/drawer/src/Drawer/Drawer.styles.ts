@@ -17,10 +17,12 @@ import { DisplayMode } from './Drawer.types';
 
 export const drawerTransitionDuration = transitionDuration.slower;
 
-const getBaseStyles = ({ theme }: { theme: Theme }) => css`
+const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
   background-color: ${color[theme].background.primary.default};
-  border: 1px solid ${color[theme].border.secondary.default};
+  border: ${open
+    ? `1px solid ${color[theme].border.secondary.default}`
+    : 'none'};
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
@@ -137,7 +139,7 @@ export const getDrawerStyles = ({
   zIndex: number;
 }) =>
   cx(
-    getBaseStyles({ theme }),
+    getBaseStyles({ open, theme }),
     getDisplayModeStyles({ displayMode, open, zIndex }),
     className,
   );

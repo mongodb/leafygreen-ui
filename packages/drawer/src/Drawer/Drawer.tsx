@@ -67,7 +67,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     });
 
     const showCloseButton = !!onClose;
-    const zIndex = getDrawerIndex(id);
+    const drawerIndex = getDrawerIndex(id);
 
     useIsomorphicLayoutEffect(() => {
       const drawerElement = ref.current;
@@ -104,7 +104,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               displayMode,
               open,
               theme,
-              zIndex,
+              zIndex: 1000 + drawerIndex,
             })}
             data-lgid={lgIds.root}
             id={id}
