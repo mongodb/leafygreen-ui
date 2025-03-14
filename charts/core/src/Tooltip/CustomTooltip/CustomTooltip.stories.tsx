@@ -1,13 +1,13 @@
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
-import { TooltipContent } from './TooltipContent';
-import { sampleTooltipParams } from './TooltipContent.testUtils';
-import { TooltipContentProps } from './TooltipContent.types';
+import { CustomTooltip } from './CustomTooltip';
+import { sampleTooltipParams } from './CustomTooltip.testUtils';
+import { CustomTooltipProps } from './CustomTooltip.types';
 
 export default {
   title: 'Charts/Tooltip',
-  component: TooltipContent,
+  component: CustomTooltip,
   args: {
     params: sampleTooltipParams,
     sortDirection: 'desc',
@@ -18,4 +18,4 @@ export default {
   },
 };
 
-export const Default: StoryObj<TooltipContentProps> = {};
+export const Default: StoryObj<CustomTooltipProps> = {};

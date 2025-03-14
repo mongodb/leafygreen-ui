@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react';
 
-import { TooltipSeriesListItemProps } from './TooltipSeriesListItem.types';
+import { SeriesListItemProps } from './SeriesListItem.types';
 
-export const TooltipSeriesListItem = ({
+export const SeriesListItem = ({
   seriesName,
   data,
   color,
   seriesNameFormatter,
   seriesValueFormatter,
-}: TooltipSeriesListItemProps) => {
+}: SeriesListItemProps) => {
   let name: string | ReactNode = seriesName;
 
   if (seriesName && seriesNameFormatter) {
