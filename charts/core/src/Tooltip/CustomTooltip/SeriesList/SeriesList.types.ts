@@ -1,11 +1,10 @@
-import { ReactNode } from 'react';
-
 import { CallbackSeriesDataPoint } from '../../Tooltip.types';
+import { CustomTooltipProps } from '../CustomTooltip.types';
 
 export interface SeriesListProps {
   seriesData: Array<CallbackSeriesDataPoint>;
-  seriesValueFormatter?: (value: string | number | Date) => string | ReactNode;
-  seriesNameFormatter?: (seriesName: string) => string | ReactNode;
+  seriesValueFormatter?: CustomTooltipProps['seriesValueFormatter'];
+  seriesNameFormatter?: CustomTooltipProps['seriesNameFormatter'];
   sortDirection?: 'asc' | 'desc';
   sortValue?: 'name' | 'value';
 }
