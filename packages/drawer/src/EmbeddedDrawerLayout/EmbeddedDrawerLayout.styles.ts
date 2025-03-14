@@ -3,7 +3,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { MOBILE_BREAKPOINT, PANEL_WIDTH } from '../Drawer';
 
 const baseStyles = css`
-  height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: auto 0;
