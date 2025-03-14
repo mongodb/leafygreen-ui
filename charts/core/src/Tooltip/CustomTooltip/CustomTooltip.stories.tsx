@@ -9,7 +9,7 @@ export default {
   title: 'Charts/Tooltip',
   component: CustomTooltip,
   args: {
-    params: sampleTooltipParams,
+    seriesData: sampleTooltipParams,
     sortDirection: 'desc',
     sortKey: 'value',
   },

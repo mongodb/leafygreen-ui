@@ -5,13 +5,13 @@ import { SeriesListItem } from '../SeriesListItem';
 import { SeriesListProps } from './SeriesList.types';
 
 export function SeriesList({
-  params,
+  seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
   sortDirection = 'asc',
   sortValue = 'value',
 }: SeriesListProps) {
-  const data = [...params];
+  const data = [...seriesData];
 
   data.sort((a, b) => {
     if (sortValue === 'value') {

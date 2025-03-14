@@ -21,7 +21,7 @@ function formatDate(dateTimeStamp: number) {
 }
 
 export function CustomTooltip({
-  params,
+  seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
   sortDirection,
@@ -29,20 +29,20 @@ export function CustomTooltip({
 }: CustomTooltipProps) {
   const { theme } = useDarkMode();
 
-  if (params.length === 0 || !params[0].data[0]) {
+  if (seriesData.length === 0 || !seriesData[0].data[0]) {
     return null;
   }
 
   const axisValueLabel =
-    params[0].axisType === 'xAxis.time'
-      ? formatDate(params[0].axisValue as number) // Should be num since axisType is time
-      : params[0].axisValueLabel;
+    seriesData[0].axisType === 'xAxis.time'
+      ? formatDate(seriesData[0].axisValue as number) // Should be num since axisType is time
+      : seriesData[0].axisValueLabel;
 
   return (
     <div className={getContainerStyles(theme)}>
       <div className={getHeaderStyles(theme)}>{axisValueLabel}</div>
       <SeriesList
-        params={params}
+        seriesData={seriesData}
         seriesValueFormatter={seriesValueFormatter}
         seriesNameFormatter={seriesNameFormatter}
         sortDirection={sortDirection}

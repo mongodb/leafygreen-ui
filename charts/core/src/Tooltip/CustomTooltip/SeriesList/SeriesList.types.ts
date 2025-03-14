@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { CallbackSeriesDataPoint } from '../../Tooltip.types';
 
 export interface SeriesListProps {
-  params: Array<CallbackSeriesDataPoint>;
+  seriesData: Array<CallbackSeriesDataPoint>;
   seriesValueFormatter?: (value: string | number | Date) => string | ReactNode;
   seriesNameFormatter?: (seriesName: string) => string | ReactNode;
   sortDirection?: 'asc' | 'desc';
