@@ -8,13 +8,13 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
+import { CustomTooltip } from './CustomTooltip';
 import {
   AxisFormatterCallbackParams,
   SortDirection,
   SortKey,
   TooltipProps,
 } from './Tooltip.types';
-import { TooltipContent } from './TooltipContent';
 
 export function Tooltip({
   sortDirection = SortDirection.Desc,
@@ -58,7 +58,7 @@ export function Tooltip({
           const paramsArr = params as AxisFormatterCallbackParams;
 
           return renderToString(
-            <TooltipContent
+            <CustomTooltip
               params={paramsArr}
               sortDirection={sortDirection}
               sortValue={sortKey}

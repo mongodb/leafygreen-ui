@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { TooltipSeriesListItem } from '../TooltipSeriesListItem';
+import { SeriesListItem } from '../SeriesListItem';
 
-import { TooltipSeriesListProps } from './TooltipSeriesList.types';
+import { SeriesListProps } from './SeriesList.types';
 
-export function TooltipSeriesList({
+export function SeriesList({
   params,
   seriesValueFormatter,
   seriesNameFormatter,
   sortDirection = 'asc',
   sortValue = 'value',
-}: TooltipSeriesListProps) {
+}: SeriesListProps) {
   const data = [...params];
 
   data.sort((a, b) => {
@@ -64,7 +64,7 @@ export function TooltipSeriesList({
       }}
     >
       {data.map(({ seriesName, data, color }) => (
-        <TooltipSeriesListItem
+        <SeriesListItem
           key={seriesName}
           seriesName={seriesName}
           data={data as [string | number, string | number | Date]}

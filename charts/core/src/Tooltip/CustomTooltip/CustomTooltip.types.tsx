@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { AxisFormatterCallbackParams } from '../Tooltip.types';
 
-export interface TooltipContentProps {
+export interface CustomTooltipProps {
   params: AxisFormatterCallbackParams;
   sortDirection?: 'asc' | 'desc';
   sortValue?: 'name' | 'value';

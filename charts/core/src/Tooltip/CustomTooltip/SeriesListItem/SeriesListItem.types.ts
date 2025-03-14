@@ -1,8 +1,8 @@
-import { TooltipSeriesListProps } from '../TooltipSeriesList/TooltipSeriesList.types';
+import { SeriesListProps } from '../SeriesList/SeriesList.types';
 
-export interface TooltipSeriesListItemProps
+export interface SeriesListItemProps
   extends Pick<
-    TooltipSeriesListProps,
+    SeriesListProps,
     'seriesValueFormatter' | 'seriesNameFormatter'
   > {
   seriesName?: string;
