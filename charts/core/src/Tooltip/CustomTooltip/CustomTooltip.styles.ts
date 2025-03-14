@@ -15,9 +15,7 @@ export const getContainerStyles = (theme: Theme) => css`
   background: ${color[theme].background[Variant.InversePrimary][
     InteractionState.Default
   ]};
-  color: ${color[theme].text[Variant.InverseSecondary][
-    InteractionState.Default
-  ]};
+  color: ${color[theme].text[Variant.InversePrimary][InteractionState.Default]};
   padding: ${spacing[150]}px;
   border-radius: ${borderRadius[150]}px;
   font-family: ${fontFamilies.default};
@@ -26,6 +24,9 @@ export const getContainerStyles = (theme: Theme) => css`
   font-weight: ${fontWeights.regular};
 `;
 
-export const headerValueStyles = css`
+export const getHeaderStyles = (theme: Theme) => css`
+  color: ${color[theme].text[Variant.InverseSecondary][
+    InteractionState.Default
+  ]};
   margin-bottom: ${spacing[100]}px;
 `;

@@ -1,5 +1,8 @@
 import React, { ReactNode } from 'react';
 
+import { SeriesListItemColorDot } from '../SeriesListItemColorDot';
+
+import { containerStyle, nameStyle, valueStyle } from './SeriesListItem.styles';
 import { SeriesListItemProps } from './SeriesListItem.types';
 
 export const SeriesListItem = ({
@@ -31,33 +34,12 @@ export const SeriesListItem = ({
   }
 
   return (
-    <>
-      <div
-        style={{
-          textAlign: 'left',
-        }}
-      >
-        <span
-          style={{
-            display: 'inline-block',
-            marginRight: '5px',
-            borderRadius: '50%',
-            width: '10px',
-            height: '10px',
-            backgroundColor: color,
-          }}
-        ></span>
+    <div className={containerStyle}>
+      <div className={nameStyle}>
+        <SeriesListItemColorDot color={color} />
         {name}
       </div>
-      <div
-        style={{
-          textAlign: 'right',
-          fontFamily: 'Euclid Circular A, sans-serif',
-          fontWeight: 'bold',
-        }}
-      >
-        {value}
-      </div>
-    </>
+      <div className={valueStyle}>{value}</div>
+    </div>
   );
 };
