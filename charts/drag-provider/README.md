@@ -1,23 +1,32 @@
 # DragProvider
 
-Provides draggable functionality for `Chart` and `ChartCard` components.
-Enables drag on any first descendant `Chart` or `ChartCard` with a `dragId` prop. Providers can be nested to create nested drag
-containers.
+Provides drag and drop functionality for chart components.
+
+`DragProvider` creates a draggable context around charts components. Any child `Chart` or `ChartCard` with a `dragId` prop, will automatically become draggable
+and droppable within that context.
+
+`DragProvider` contexts are also nestable, providing better control of where a child component can be dropped.
 
 ![npm (scoped)](https://img.shields.io/npm/v/@lg-charts/drag-provider.svg)
 
 ## Installation
 
-### Yarn
+### PNPM
 
 ```shell
-yarn add @lg-charts/drag-provider
+pnpm add @lg-charts/drag-provider
 ```
 
 ### NPM
 
 ```shell
 npm install @lg-charts/drag-provider
+```
+
+### Yarn
+
+```shell
+yarn add @lg-charts/drag-provider
 ```
 
 ## Basic Chart Example
@@ -50,9 +59,10 @@ function ChartPage() {
 
 ## Props
 
-| Name                     | Description                                    | Type                                         | Default     |
-| ------------------------ | ---------------------------------------------- | -------------------------------------------- | ----------- |
-| `onDragEnd` (_optional_) | Callback that will fire on the `dragend` event | `({ active: string; over: string }) => void` | `undefined` |
+| Name                       | Description                                      | Type                                         | Default     |
+| -------------------------- | ------------------------------------------------ | -------------------------------------------- | ----------- |
+| `onDragStart` (_optional_) | Callback that will fire on the `dragstart` event | `({ active: string }) => void`               | `undefined` |
+| `onDragEnd` (_optional_)   | Callback that will fire on the `dragend` event   | `({ active: string; over: string }) => void` | `undefined` |
 
 ### Callback Arguments
 
