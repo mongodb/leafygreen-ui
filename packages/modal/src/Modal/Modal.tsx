@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
-import { useEscapeKey, useMergeRefs } from '@leafygreen-ui/hooks';
+import {
+  useEscapeKey,
+  useIdAllocator,
+  useMergeRefs,
+} from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -34,6 +38,7 @@ const Modal = React.forwardRef(
       closeIconColor,
       contentClassName,
       darkMode: darkModeProp,
+      id: idProp,
       open,
       setOpen,
       shouldClose = () => true,
@@ -46,6 +51,7 @@ const Modal = React.forwardRef(
   ) => {
     const { theme } = useDarkMode(darkModeProp);
     const localRef = useRef<HTMLDialogElement>(null);
+    const id = useIdAllocator({ prefix: 'modal', id: idProp });
     const lgIds = getLgIds(dataLgId);
     const portalContainer = useRef<HTMLDivElement>(
       document.createElement('div'),
@@ -100,9 +106,12 @@ const Modal = React.forwardRef(
 
     return (
       <PopoverProvider>
-        <LeafyGreenProvider>
+        <LeafyGreenProvider
+          popoverPortalContainer={{ portalContainer: portalContainer.current }}
+        >
           <dialog
             {...rest}
+            id={id}
             data-testid={lgIds.root}
             data-lgid={lgIds.root}
             ref={mergedRef}

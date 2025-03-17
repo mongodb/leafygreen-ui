@@ -52,7 +52,7 @@ Example:
 </Modal>
 ```
 
-Fallback:
+Escape Hatch:
 If for some reason you must use a Portal with an element rendered inside of a Modal component, you can access the Modal's DOM structure by passing a ref to the `portalRef` property in the Modal component. We will set the current value of your ref to an element inside of the Modal itself.
 
 Example:

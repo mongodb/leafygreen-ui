@@ -16,7 +16,7 @@ export default function CloseButton({
   handleClose,
 }: CloseButtonProps) {
   const { theme } = useDarkMode();
-  const closeId = useIdAllocator({ prefix: 'modal' });
+  const closeId = useIdAllocator({ prefix: 'modal-close-button' });
   const lgIds = getLgIds();
 
   return (
