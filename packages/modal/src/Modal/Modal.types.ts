@@ -25,7 +25,7 @@ export type ForwardedRef =
   | undefined;
 
 export interface ModalProps
-  extends HTMLElementProps<'div'>,
+  extends HTMLElementProps<'dialog'>,
     DarkModeProps,
     LgIdProps {
   /**

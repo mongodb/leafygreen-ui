@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useEscapeKey, useMergeRefs } from '@leafygreen-ui/hooks';
@@ -8,6 +8,7 @@ import LeafyGreenProvider, {
 import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 
 import CloseButton from '../CloseButton';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../constants';
 
 import { modalStyles } from './Modal.styles';
 import { ModalProps, ModalSize } from './Modal.types';
@@ -38,31 +39,33 @@ const Modal = React.forwardRef(
       shouldClose = () => true,
       size: sizeProp = ModalSize.Default,
       portalRef,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     }: ModalProps,
     forwardRef: React.Ref<HTMLDialogElement>,
   ) => {
     const { theme } = useDarkMode(darkModeProp);
     const localRef = useRef<HTMLDialogElement>(null);
+    const lgIds = getLgIds(dataLgId);
     const portalContainer = useRef<HTMLDivElement>(
       document.createElement('div'),
     );
 
     const mergedRef = useMergeRefs<HTMLDialogElement>([localRef, forwardRef]);
 
-    const consumerSetClose = () => {
+    const consumerSetClose = useCallback(() => {
       if (shouldClose() && setOpen) {
         setOpen(false);
       }
-    };
+    }, [shouldClose, setOpen]);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
       if (shouldClose() && localRef.current != null) {
         localRef.current?.close();
 
         consumerSetClose();
       }
-    };
+    }, [shouldClose, consumerSetClose]);
 
     useEffect(() => {
       if (localRef.current != null) {
@@ -100,6 +103,8 @@ const Modal = React.forwardRef(
         <LeafyGreenProvider>
           <dialog
             {...rest}
+            data-testid={lgIds.root}
+            data-lgid={lgIds.root}
             ref={mergedRef}
             className={cx(modalStyles(theme, size), contentClassName)}
           >

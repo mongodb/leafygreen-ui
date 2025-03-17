@@ -17,11 +17,13 @@ export default function CloseButton({
 }: CloseButtonProps) {
   const { theme } = useDarkMode();
   const closeId = useIdAllocator({ prefix: 'modal' });
+  const lgIds = getLgIds();
 
   return (
     <IconButton
       id={closeId}
-      data-testid={getLgIds().close}
+      data-testid={lgIds.close}
+      data-lgid={lgIds.close}
       onClick={handleClose}
       aria-label="Close modal"
       className={closeButtonStyles(theme, closeIconColor)}

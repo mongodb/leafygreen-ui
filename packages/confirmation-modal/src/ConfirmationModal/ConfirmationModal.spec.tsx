@@ -17,10 +17,12 @@ const WrappedModal = ({
   return (
     <ConfirmationModal
       title="Title text"
-      buttonText="Confirm"
+      confirmButtonProps={{
+        onClick: () => setOpen(false),
+        children: 'Confirm',
+      }}
+      cancelButtonProps={{ onClick: () => setOpen(false) }}
       open={open}
-      onConfirm={() => setOpen(false)}
-      onCancel={() => setOpen(false)}
       {...props}
     >
       {props.children ?? 'Content text'}

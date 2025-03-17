@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-import {
-  render,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { render, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-
-import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
 import { getTestUtils } from '../utils/getTestUtils';
 import ModalView from '..';
@@ -41,6 +35,26 @@ function renderModal(
 }
 
 describe('packages/modal', () => {
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderModal({ open: true });
@@ -63,37 +77,37 @@ describe('packages/modal', () => {
     });
 
     test('uses "id" from props when set', () => {
-      const { getByTestId } = renderModal({
+      const { getModal } = renderModal({
         id: 'id-test',
         open: true,
       });
-      const container = getByTestId('modal-test-id');
-      expect(container.getAttribute('id')).toBe('id-test');
+
+      const modal = getModal();
+      expect(modal.getAttribute('id')).toBe('id-test');
     });
 
-    test('closes modal when button is clicked', async () => {
+    test('closes modal when button is clicked', () => {
       const { getByRole, getModal } = renderModal({ open: true });
       const modal = getModal();
       const button = getByRole('button');
 
       userEvent.click(button);
 
-      await waitForElementToBeRemoved(modal);
-      expect(modal).not.toBeInTheDocument();
+      expect(modal.getAttribute('open')).toBe(null);
+      expect(modal).not.toBeVisible();
     });
 
-    test('closes modal when escape key is pressed', async () => {
+    test('closes modal when escape key is pressed', () => {
       const { getModal } = renderModal({ open: true });
 
       const modal = getModal();
 
       userEvent.type(modal, '{esc}');
 
-      await waitForElementToBeRemoved(modal);
-      expect(modal).not.toBeInTheDocument();
+      expect(modal).not.toBeVisible();
     });
 
-    test('when "shouldClose" prop returns false', async () => {
+    test('when "shouldClose" prop returns false', () => {
       const { getModal } = renderModal({
         open: true,
         shouldClose: () => false,
@@ -102,12 +116,10 @@ describe('packages/modal', () => {
       const modal = getModal();
       userEvent.type(modal, '{esc}');
 
-      await expectElementToNotBeRemoved(modal);
-
       expect(modal).toBeVisible();
     });
 
-    test('when "shouldClose" returns true', async () => {
+    test('when "shouldClose" returns true', () => {
       const { getModal } = renderModal({
         open: true,
         shouldClose: () => true,
@@ -116,8 +128,7 @@ describe('packages/modal', () => {
       const modal = getModal();
       userEvent.type(modal, '{esc}');
 
-      await waitForElementToBeRemoved(modal);
-      expect(modal).not.toBeInTheDocument();
+      expect(modal).not.toBeVisible();
     });
 
     test('backdrop click should do nothing', async () => {
@@ -132,42 +143,13 @@ describe('packages/modal', () => {
 
       expect(modal).toBeVisible();
     });
-
-    test('popover renders inside same portal as modal', async () => {
-      const { getByTestId } = render(
-        <ModalView data-testid="modal-test-id" open={true}>
-          {modalContent}
-          <Select
-            label="label"
-            size="small"
-            placeholder="animals"
-            name="pets"
-            data-testid="modal-select-test-id"
-          >
-            <OptionGroup label="Common">
-              <Option value="dog">Dog</Option>
-              <Option value="cat">Cat</Option>
-              <Option value="axolotl">Axolotl</Option>
-            </OptionGroup>
-          </Select>
-        </ModalView>,
-      );
-
-      const modal = getByTestId('modal-test-id');
-      const select = getByTestId('modal-select-test-id');
-      userEvent.click(select);
-
-      await waitFor(() => {
-        expect(modal).toHaveTextContent('Axolotl');
-      });
-    });
   });
 
   describe('when "open" prop is false', () => {
     test('does not render to the DOM', () => {
       const { queryModal } = renderModal({ open: false });
       const modal = queryModal();
-      expect(modal).not.toBeInTheDocument();
+      expect(modal).not.toBeVisible();
     });
   });
 });

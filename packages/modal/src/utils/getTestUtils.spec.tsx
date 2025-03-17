@@ -32,6 +32,26 @@ function renderMultipleModals() {
 }
 
 describe('packages/modal/getTestUtils', () => {
+  beforeAll(() => {
+    HTMLDialogElement.prototype.show = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.showModal = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = true;
+    });
+
+    HTMLDialogElement.prototype.close = jest.fn(function mock(
+      this: HTMLDialogElement,
+    ) {
+      this.open = false;
+    });
+  });
+
   describe('renders properly', () => {
     test('throws error if LG Modal is not found', () => {
       render(<Modal>Click me</Modal>);
