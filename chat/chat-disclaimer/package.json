@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-disclaimer",
-  "version": "3.0.9",
+  "version": "3.0.12",
   "description": "LeafyGreen UI Kit Chat Disclaimer",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

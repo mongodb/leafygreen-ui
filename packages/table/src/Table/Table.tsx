@@ -27,7 +27,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       className,
       verticalAlignment = VerticalAlignment.Top,
       shouldAlternateRowColor = false,
-      shouldTruncate = true,
+      shouldTruncate = false,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
       'data-lgid': lgidProp = LGIDS.root,

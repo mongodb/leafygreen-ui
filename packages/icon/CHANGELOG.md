@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon
 
+## 13.2.0
+
+### Minor Changes
+
+- a2fd85b23: - Adds `'AnalyticsNode'`, `'Config'`, `'Function'`, `'HiddenSecondaryNode'`, `'NumberedList'`, `'OutlineFavorite'`, `'Package'`, `'Router'`, `'Shirt'`, `'TemporaryTable'`, and `'View'`glyphs
+  - Updates `'Circle'`, `'Download'`, `'Favorite'` glyphs
+  - Adds generating `index.ts` file to prebuild script
+
 ## 13.1.3
 
 ### Patch Changes

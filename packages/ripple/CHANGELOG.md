@@ -1,5 +1,18 @@
 # @leafygreen-ui/ripple
 
+## 1.1.18
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+
+## 1.1.17
+
+### Patch Changes
+
+- @leafygreen-ui/tokens@2.11.5
+
 ## 1.1.16
 
 ### Patch Changes

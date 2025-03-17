@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message-prompts",
-  "version": "3.0.5",
+  "version": "3.0.7",
   "description": "LeafyGreen UI Kit Message Prompts",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

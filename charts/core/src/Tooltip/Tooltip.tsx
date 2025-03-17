@@ -11,10 +11,11 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
 import { SortDirection, SortKey, TooltipProps } from './Tooltip.types';
-import { getSortOrder } from './utils';
+import { getSortOrder, shouldShowTooltip } from './utils';
 
 export function Tooltip({
   sortDirection = SortDirection.Desc,
@@ -23,6 +24,7 @@ export function Tooltip({
 }: TooltipProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
+  const chartCardContext = useChartCardContext();
 
   useEffect(() => {
     if (!chart.ready) return;
@@ -53,7 +55,10 @@ export function Tooltip({
           : undefined,
         order: getSortOrder(sortDirection, sortKey),
         padding: spacing[200],
-        show: true,
+        show: shouldShowTooltip({
+          chartState: chart.state,
+          chartCardState: chartCardContext?.state,
+        }),
         showDelay: 0,
         textStyle: {
           fontFamily: fontFamilies.default,
@@ -77,7 +82,7 @@ export function Tooltip({
     };
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, theme, sortDirection, sortKey, valueFormatter]);
+  }, [chart.ready, chart.state, theme, sortDirection, sortKey, valueFormatter]);
 
   return null;
 }

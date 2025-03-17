@@ -17,7 +17,8 @@ import renderingPlugin, {
   TableContent,
 } from '../renderingPlugin/renderingPlugin';
 import { SyntaxContext } from '../Syntax/SyntaxContext';
-import { Language, SyntaxProps } from '../types';
+import { Language } from '../types';
+import { SyntaxProps } from '..';
 
 type FilteredSupportedLanguagesEnum = Omit<
   typeof SupportedLanguages,
@@ -33,6 +34,7 @@ function filterSupportedLanguages(
   return language !== 'cs' && language !== 'js' && language !== 'ts';
 }
 
+// This prevents the highlight plugin initializing multiple times when there are multiple `<Code>` components on the page
 let syntaxHighlightingInitialized = false;
 
 function initializeSyntaxHighlighting() {
@@ -76,11 +78,10 @@ function Syntax({
   lineNumberStart,
   highlightLines = [],
   className,
+  customKeywords = {},
   ...rest
 }: SyntaxProps) {
-  if (!syntaxHighlightingInitialized) {
-    initializeSyntaxHighlighting();
-  }
+  if (!syntaxHighlightingInitialized) initializeSyntaxHighlighting();
 
   const highlightedContent: LeafyGreenHighlightResult | null = useMemo(() => {
     if (language === Language.None) {
@@ -121,6 +122,7 @@ function Syntax({
         showLineNumbers,
         lineNumberStart,
         darkMode,
+        customKeywords,
       }}
     >
       <code

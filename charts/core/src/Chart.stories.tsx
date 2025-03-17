@@ -37,7 +37,7 @@ export default {
 
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-    chartState: {
+    state: {
       table: {
         disable: true,
       },
@@ -57,7 +57,7 @@ export default {
 
 export const LiveExample: StoryObj<{
   data: Array<LineProps>;
-  chartState: ChartProps['chartState'];
+  state: ChartProps['state'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -97,7 +97,7 @@ export const LiveExample: StoryObj<{
 }> = {
   args: {
     data: lineData,
-    chartState: 'unset',
+    state: 'unset',
     horizontalGridLines: true,
     verticalGridLines: true,
     renderGrid: true,
@@ -141,7 +141,7 @@ export const LiveExample: StoryObj<{
         category: 'Chart',
       },
     },
-    chartState: {
+    state: {
       control: 'select',
       options: ['unset', 'loading'],
       description: 'The state of the chart',
@@ -452,7 +452,7 @@ export const LiveExample: StoryObj<{
   },
   render: ({
     data,
-    chartState,
+    state,
     verticalGridLines,
     horizontalGridLines,
     renderGrid,
@@ -497,7 +497,7 @@ export const LiveExample: StoryObj<{
           yAxis: zoomSelectYAxis,
         }}
         onZoomSelect={zoomSelectCallback}
-        chartState={chartState}
+        state={state}
       >
         {renderHeader && (
           <Header
@@ -586,7 +586,7 @@ export const DarkMode: StoryObj<{}> = {
           xAxis: true,
           yAxis: true,
         }}
-        chartState="unset"
+        state="unset"
       >
         <Header
           title="Header"
@@ -630,7 +630,7 @@ export const DarkMode: StoryObj<{}> = {
   },
 };
 
-export const Loading: StoryObj<{}> = {
+export const LoadingState: StoryObj<{}> = {
   render: () => {
     return (
       <Chart
@@ -638,7 +638,7 @@ export const Loading: StoryObj<{}> = {
           xAxis: true,
           yAxis: true,
         }}
-        chartState="loading"
+        state="loading"
       >
         <Header
           title="Header"
@@ -650,7 +650,99 @@ export const Loading: StoryObj<{}> = {
                 justifyContent: 'right',
                 alignItems: 'center',
                 height: '100%',
-                color: 'white',
+                color: 'black',
+              }}
+            >
+              Header Content
+            </div>
+          }
+        />
+        <Grid />
+        <Tooltip />
+        <XAxis type="time" label="X-Axis Label" />
+        <YAxis type="value" label="Y-Axis Label" />
+        <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="warning"
+        />
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const OverlayState: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart state="overlay">
+        <Header
+          title="Header"
+          showDivider
+          headerContent={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+                color: 'black',
+              }}
+            >
+              Header Content
+            </div>
+          }
+        />
+        <Grid />
+        <Tooltip />
+        <XAxis type="time" label="X-Axis Label" />
+        <YAxis type="value" label="Y-Axis Label" />
+        <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
+        <EventMarkerLine
+          position={new Date('2024-01-01T00:20:00').getTime()}
+          label="Event marker line label"
+          message="Event marker line message"
+          level="warning"
+        />
+        <EventMarkerPoint
+          label="Event marker point label"
+          message="Event marker point message"
+          position={[new Date('2024-01-01T00:38:00').getTime(), 2015]}
+          level="warning"
+        />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const DraggingState: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart state="dragging">
+        <Header
+          title="Header"
+          showDivider
+          headerContent={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                height: '100%',
+                color: 'black',
               }}
             >
               Header Content
@@ -694,7 +786,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
             xAxis: true,
             yAxis: true,
           }}
-          chartState="unset"
+          state="unset"
         >
           <Header
             title="Header"

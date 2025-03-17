@@ -1,5 +1,26 @@
 # @leafygreen-ui/text-input
 
+## 14.0.7
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/form-field@2.0.7
+  - @leafygreen-ui/typography@20.1.4
+
+## 14.0.6
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/form-field@2.0.6
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 14.0.5
 
 ### Patch Changes

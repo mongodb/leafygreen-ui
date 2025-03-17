@@ -1,5 +1,37 @@
 # @leafygreen-ui/table
 
+## 13.1.1
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/checkbox@15.0.1
+  - @leafygreen-ui/icon-button@16.0.6
+  - @leafygreen-ui/typography@20.1.4
+
+## 13.1.0
+
+### Minor Changes
+
+- 02f5278c1: Changes the default of `shouldTruncate` to `false`. [LG-4937](https://jira.mongodb.org/browse/LG-4937)
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+- Updated dependencies [a2fd85b23]
+- Updated dependencies [afc60c65e]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/icon@13.2.0
+  - @leafygreen-ui/checkbox@15.0.0
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/icon-button@16.0.5
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.7
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 13.0.6
 
 ### Patch Changes

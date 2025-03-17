@@ -1,5 +1,5 @@
-export { Chart, type ChartStates } from './Chart';
-export { ChartCard, type ChartCardProps } from './ChartCard';
+export { Chart, type ChartProps, ChartStates } from './Chart';
+export { ChartCard, type ChartCardProps, ChartCardStates } from './ChartCard';
 export {
   EventMarkerLine,
   type EventMarkerLineProps,

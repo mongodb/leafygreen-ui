@@ -1,5 +1,32 @@
 # @leafygreen-ui/password-input
 
+## 3.0.7
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/form-field@2.0.7
+  - @leafygreen-ui/icon-button@16.0.6
+  - @leafygreen-ui/typography@20.1.4
+
+## 3.0.6
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+- Updated dependencies [a2fd85b23]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/icon@13.2.0
+  - @leafygreen-ui/a11y@2.0.4
+  - @leafygreen-ui/form-field@2.0.6
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/icon-button@16.0.5
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 3.0.5
 
 ### Patch Changes

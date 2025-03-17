@@ -1,5 +1,40 @@
 # @leafygreen-ui/combobox
 
+## 11.0.9
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/checkbox@15.0.1
+  - @leafygreen-ui/chip@3.0.7
+  - @leafygreen-ui/form-field@2.0.7
+  - @leafygreen-ui/icon-button@16.0.6
+  - @leafygreen-ui/input-option@3.0.7
+  - @leafygreen-ui/popover@13.0.6
+  - @leafygreen-ui/typography@20.1.4
+
+## 11.0.8
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+- Updated dependencies [a2fd85b23]
+- Updated dependencies [afc60c65e]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/icon@13.2.0
+  - @leafygreen-ui/checkbox@15.0.0
+  - @leafygreen-ui/chip@3.0.6
+  - @leafygreen-ui/form-field@2.0.6
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/icon-button@16.0.5
+  - @leafygreen-ui/input-option@3.0.6
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/popover@13.0.5
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/typography@20.1.3
+
 ## 11.0.7
 
 ### Patch Changes

@@ -5,7 +5,7 @@ import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS_MODAL } from '../constants';
+import { getLgIds } from '../constants';
 import { CloseIconColor } from '../Modal/Modal.types';
 
 import { closeButtonStyles } from './CloseButton.styles';
@@ -21,7 +21,7 @@ export default function CloseButton({
   return (
     <IconButton
       id={closeId}
-      data-testid={LGIDS_MODAL.close}
+      data-testid={getLgIds().close}
       onClick={handleClose}
       aria-label="Close modal"
       className={closeButtonStyles(theme, closeIconColor)}

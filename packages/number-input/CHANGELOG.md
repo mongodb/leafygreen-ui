@@ -1,5 +1,44 @@
 # @leafygreen-ui/number-input
 
+## 4.1.0
+
+### Minor Changes
+
+- 8a75859c6: Label now accepts type `React.ReactNode` not just a `string`
+
+## 4.0.9
+
+### Patch Changes
+
+- Updated dependencies [4b362e136]
+  - @leafygreen-ui/tokens@2.12.0
+  - @leafygreen-ui/button@23.1.2
+  - @leafygreen-ui/form-field@2.0.7
+  - @leafygreen-ui/select@14.1.1
+  - @leafygreen-ui/tooltip@13.0.7
+  - @leafygreen-ui/typography@20.1.4
+
+## 4.0.8
+
+### Patch Changes
+
+- Updated dependencies [0e4c5099b]
+- Updated dependencies [a2fd85b23]
+- Updated dependencies [0e4c5099b]
+- Updated dependencies [0e4c5099b]
+  - @leafygreen-ui/lib@14.1.0
+  - @leafygreen-ui/icon@13.2.0
+  - @leafygreen-ui/select@14.1.0
+  - @leafygreen-ui/a11y@2.0.4
+  - @leafygreen-ui/button@23.1.1
+  - @leafygreen-ui/form-field@2.0.6
+  - @leafygreen-ui/hooks@8.3.6
+  - @leafygreen-ui/leafygreen-provider@4.0.4
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.11.5
+  - @leafygreen-ui/tooltip@13.0.6
+  - @leafygreen-ui/typography@20.1.3
+
 ## 4.0.7
 
 ### Patch Changes

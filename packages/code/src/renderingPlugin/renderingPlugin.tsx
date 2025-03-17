@@ -12,70 +12,27 @@ import {
 } from '../highlight';
 import { useSyntaxContext } from '../Syntax/SyntaxContext';
 
-interface TokenProps {
-  kind?: string;
-  children: React.ReactNode;
-}
-
-export function generateKindClassName(...kinds: Array<any>): string {
-  const prefix = 'lg-highlight-';
-  return kinds
-    .filter((str): str is string => isString(str) && str.length > 0)
-    .map(kind => {
-      // Sometimes, a kind will have run through this function before.
-      // This ensures we don't duplicate prefixes.
-      if (kind.startsWith(prefix)) {
-        return kind;
-      }
-
-      const classes = kind
-        .split('.')
-        .map(k => `${prefix}${k}`)
-        .join(' ');
-
-      return classes;
-    })
-    .join(' ');
-}
-
-function childrenAsKeywords(...children: Array<string>) {
-  const keywords = ['function', 'class'];
-  return children.filter(child => keywords.includes(child));
-}
+import { generateKindClassName } from './utils/generateKindClassName/generateKindClassName';
+import {
+  childrenAsKeywords,
+  isArray,
+  isNumber,
+  isObject,
+  isString,
+  isTokenObject,
+} from './utils/helpers';
+import { lineWithKeywords } from './utils/lineWithKeywords/lineWithKeywords';
+import {
+  FlatTokenObject,
+  LineDefinition,
+  LineTableRowProps,
+  TableContentProps,
+  TokenProps,
+  TreeItem,
+} from './renderingPlugin.types';
 
 function Token({ kind, children }: TokenProps) {
   return <span className={kind}>{children}</span>;
-}
-
-type TreeItem =
-  | null
-  | undefined
-  | string
-  | Array<string | TokenObject>
-  | TokenObject;
-
-function isArray(item: any): item is Array<any> {
-  return item != null && item instanceof Array;
-}
-
-function isObject(item: any): item is object {
-  return item != null && typeof item === 'object' && !(item instanceof Array);
-}
-
-function isString(item: any): item is string {
-  return item != null && typeof item === 'string';
-}
-
-function isNumber(item: any): item is number {
-  return item != null && typeof item === 'number';
-}
-
-function isTokenObject(item: any): item is TokenObject {
-  if (item == null || typeof item !== 'object') {
-    return false;
-  }
-
-  return typeof item.kind === 'string' && item.children instanceof Array;
 }
 
 export function processToken(token: TreeItem, key?: number): React.ReactNode {
@@ -105,7 +62,7 @@ export function processToken(token: TreeItem, key?: number): React.ReactNode {
 const cellStyle = css`
   border-spacing: 0;
   vertical-align: top;
-  padding: 0 ${spacing[3]}px;
+  padding: 0 ${spacing[300]}px;
 `;
 
 function getHighlightedRowStyle(darkMode: boolean) {
@@ -151,13 +108,6 @@ function getHighlightedRowStyle(darkMode: boolean) {
   `;
 }
 
-interface LineTableRowProps {
-  lineNumber?: number;
-  children: React.ReactNode;
-  highlighted?: boolean;
-  darkMode: boolean;
-}
-
 export function LineTableRow({
   lineNumber,
   highlighted,
@@ -178,7 +128,7 @@ export function LineTableRow({
             css`
               user-select: none;
               text-align: right;
-              padding-left: ${spacing[3] - 1}px;
+              padding-left: ${spacing[400]}px;
               padding-right: 0;
               color: ${highlighted ? highlightedNumberColor : numberColor};
             `,
@@ -191,11 +141,6 @@ export function LineTableRow({
       <td className={cellStyle}>{children}</td>
     </tr>
   );
-}
-
-interface FlatTokenObject {
-  kind: string;
-  children: Array<string>;
 }
 
 // Check if object is a TokenObject which has an array with a single string element within it.
@@ -228,17 +173,18 @@ export function flattenNestedTree(
     parentKinds = parentKinds.filter(
       (str): str is string => isString(str) && str.length > 0,
     );
+
     return function (
       entity: string | TokenObject,
     ): string | FlatTokenObject | Array<string | FlatTokenObject> {
       if (isString(entity)) {
         return parentKinds.length > 0
           ? {
-              kind: generateKindClassName(
+              kind: generateKindClassName([
                 kind,
                 ...parentKinds,
                 ...childrenAsKeywords(entity),
-              ),
+              ]),
               children: [entity],
             }
           : entity; // entity is basic text
@@ -255,12 +201,12 @@ export function flattenNestedTree(
 
       if (isFlattenedTokenObject(entity)) {
         return {
-          kind: generateKindClassName(
+          kind: generateKindClassName([
             kind,
             entity.kind,
             ...parentKinds,
             ...childrenAsKeywords(...entity.children),
-          ),
+          ]),
           children: entity.children,
         };
       }
@@ -290,8 +236,6 @@ function containsLineBreak(token: TreeItem): boolean {
 
   return false;
 }
-
-type LineDefinition = Array<Array<string | FlatTokenObject>>;
 
 export function treeToLines(
   children: Array<string | TokenObject>,
@@ -345,13 +289,14 @@ export function treeToLines(
   return lines;
 }
 
-interface TableContentProps {
-  lines: LineDefinition;
-}
-
 export function TableContent({ lines }: TableContentProps) {
-  const { highlightLines, showLineNumbers, darkMode, lineNumberStart } =
-    useSyntaxContext();
+  const {
+    highlightLines,
+    showLineNumbers,
+    darkMode,
+    lineNumberStart,
+    customKeywords = {},
+  } = useSyntaxContext();
   const trimmedLines = [...lines];
 
   // Strip empty lines from the beginning of code blocks
@@ -386,14 +331,18 @@ export function TableContent({ lines }: TableContentProps) {
         const currentLineNumber = index + (lineNumberStart ?? 1);
         const highlightLine = lineShouldHighlight(currentLineNumber);
 
-        let displayLineNumber;
+        let mappedLine = line;
 
-        if (showLineNumbers) {
-          displayLineNumber = currentLineNumber;
+        if (Object.keys(customKeywords).length > 0) {
+          mappedLine = lineWithKeywords(line, customKeywords);
         }
 
-        const processedLine = line?.length ? (
-          line.map(processToken)
+        const displayLineNumber = showLineNumbers
+          ? currentLineNumber
+          : undefined;
+
+        const processedLine = mappedLine?.length ? (
+          mappedLine.map(processToken)
         ) : (
           // We create placeholder content when a line break appears to preserve the line break's height
           // It needs to be inline-block for the table row to not collapse.
@@ -422,7 +371,6 @@ export function TableContent({ lines }: TableContentProps) {
 const plugin: LeafyGreenHLJSPlugin = {
   'after:highlight': function (result: LeafyGreenHighlightResult) {
     const { rootNode } = result._emitter;
-    // console.log(JSON.stringify(rootNode.children, null, 2));
     result.react = <TableContent lines={treeToLines(rootNode.children)} />;
   },
 };
