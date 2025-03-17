@@ -5,7 +5,6 @@ import { TopLevelFormatterParams } from 'echarts/types/dist/shared';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
-import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
 import { CustomTooltip } from './CustomTooltip';

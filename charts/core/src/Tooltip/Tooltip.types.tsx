@@ -33,8 +33,8 @@ export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 export interface TooltipProps {
   sortDirection?: SortDirection;
   sortKey?: SortKey;
-  seriesValueFormatter?: (value: number | string) => ReactNode | string;
-  seriesNameFormatter?: (value: number | string) => ReactNode | string;
+  seriesValueFormatter?: (value: number | string | Date) => ReactNode | string;
+  seriesNameFormatter?: (value: number | string | Date) => ReactNode | string;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {
