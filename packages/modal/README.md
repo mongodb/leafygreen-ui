@@ -39,10 +39,10 @@ function ExampleComponent() {
 
 ## Notes
 
-Portaled Elements within a Modal
+Popover Elements within a Modal
 
 Recommended Approach: `renderMode="top-layer"`
-When using any LeafyGreen components that wrap a Portal or Popover component, we recommend setting the `renderMode` prop to the value "top-layer". This is the browser's default way of handling hierarchy, without worrying about the DOM or z-index collisions.
+When using any LeafyGreen components that wrap a LeafyGreen `Popover`, we recommend setting the `renderMode` prop to the value "top-layer". This is the browser's default way of handling hierarchy, without worrying about the DOM or z-index collisions.
 
 Example:
 
