@@ -61,12 +61,6 @@ export interface ModalProps
   shouldClose?: () => boolean;
 
   /**
-   * className applied to overlay div.
-   * Disclaimer: This prop may be deprecated in future versions of Modal
-   */
-  contentClassName?: string;
-
-  /**
    * Determines the color of the close icon.
    * @default 'default'
    */

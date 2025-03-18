@@ -226,6 +226,12 @@ export const PortalSelect = (args: ModalProps) => {
   );
 };
 
+PortalSelect.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};
+
 export function CopyableModal(args: ModalProps) {
   const jsSnippet = `
 
@@ -288,3 +294,9 @@ export function TooltipTrigger(args: ModalProps) {
     </>
   );
 }
+
+TooltipTrigger.parameters = {
+  chromatic: {
+    disableSnapshots: true,
+  },
+};

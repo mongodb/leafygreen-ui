@@ -1807,9 +1807,6 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
-      '@leafygreen-ui/tooltip':
-        specifier: workspace:^
-        version: link:../tooltip
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
@@ -1832,6 +1829,9 @@ importers:
       '@leafygreen-ui/select':
         specifier: workspace:^
         version: link:../select
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography

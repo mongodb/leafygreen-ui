@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import {
   useEscapeKey,
   useIdAllocator,
@@ -36,7 +35,6 @@ const Modal = React.forwardRef(
     {
       children,
       closeIconColor,
-      contentClassName,
       darkMode: darkModeProp,
       id: idProp,
       open,
@@ -107,7 +105,10 @@ const Modal = React.forwardRef(
     return (
       <PopoverProvider>
         <LeafyGreenProvider
-          popoverPortalContainer={{ portalContainer: portalContainer.current }}
+          popoverPortalContainer={{
+            portalContainer: portalContainer.current,
+            scrollContainer: portalContainer.current,
+          }}
         >
           <dialog
             {...rest}
@@ -115,7 +116,7 @@ const Modal = React.forwardRef(
             data-testid={lgIds.root}
             data-lgid={lgIds.root}
             ref={mergedRef}
-            className={cx(modalStyles(theme, size), contentClassName)}
+            className={modalStyles(theme, size)}
           >
             {children}
             <CloseButton

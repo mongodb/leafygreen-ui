@@ -97,7 +97,7 @@ export const ConfirmationModal = React.forwardRef(
     return (
       <Modal
         {...modalProps}
-        contentClassName={baseModalStyle}
+        className={baseModalStyle}
         setOpen={handleCancel}
         darkMode={darkMode}
         ref={forwardRef}

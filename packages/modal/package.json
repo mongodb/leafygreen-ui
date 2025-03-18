@@ -30,7 +30,6 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/tooltip": "workspace:^",
     "@lg-tools/test-harnesses": "workspace:^",
     "polished": "^4.2.2",
     "react-transition-group": "^4.4.5"
@@ -40,6 +39,7 @@
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/copyable": "workspace:^",
     "@leafygreen-ui/select": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
