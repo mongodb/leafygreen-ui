@@ -66,7 +66,7 @@ const dialogContentStyle = (theme: Theme) => css`
 `;
 
 // breakpoints for different screen sizes
-export const large = `${breakpoints.Desktop + 1}px`; // laptops/desktop screens, from 1025px and above
+const large = `${breakpoints.Desktop + 1}px`; // laptops/desktop screens, from 1025px and above
 
 const sizeStyles: Record<ModalSize, string> = {
   small: css`
