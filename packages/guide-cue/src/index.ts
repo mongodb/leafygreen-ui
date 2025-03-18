@@ -1,2 +1,6 @@
-export { default as GuideCue } from './GuideCue';
-export { type GuideCueProps, TooltipAlign, TooltipJustify } from './types';
+export {
+  default as GuideCue,
+  type GuideCueProps,
+  TooltipAlign,
+  TooltipJustify,
+} from './GuideCue';

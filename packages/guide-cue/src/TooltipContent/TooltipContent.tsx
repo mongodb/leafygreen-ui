@@ -11,6 +11,8 @@ import { Theme } from '@leafygreen-ui/lib';
 import Tooltip, { RenderMode } from '@leafygreen-ui/tooltip';
 import { Body, Disclaimer } from '@leafygreen-ui/typography';
 
+import { GuideCueProps } from '../GuideCue/GuideCue.types';
+
 import {
   bodyThemeStyles,
   bodyTitleStyles,
@@ -22,8 +24,7 @@ import {
   stepStyles,
   tooltipMultistepStyles,
   tooltipStyles,
-} from './styles';
-import { GuideCueProps } from './types';
+} from './TooltipContent.styles';
 
 const ariaLabelledby = 'guide-cue-label';
 const ariaDescribedby = 'guide-cue-desc';
