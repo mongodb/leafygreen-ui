@@ -4,7 +4,7 @@ import { axe } from 'jest-axe';
 
 import EllipsisIcon from '@leafygreen-ui/icon/dist/Ellipsis';
 
-import IconButton from '.';
+import IconButton from '..';
 
 const onClick = jest.fn();
 const className = 'test-icon-button-class';
