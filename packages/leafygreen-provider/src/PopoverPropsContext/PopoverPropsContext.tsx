@@ -3,7 +3,7 @@ import React, { createContext, PropsWithChildren, useContext } from 'react';
 import {
   PortalContextProvider,
   usePopoverPortalContainer,
-} from '../PortalContext';
+} from '../PortalContext/PortalContext';
 
 import { PopoverPropsProviderProps } from './PopoverPropsContext.types';
 

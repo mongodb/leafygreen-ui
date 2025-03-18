@@ -1,8 +1,8 @@
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import { MigrationContextType } from './MigrationContext';
-import { PortalContextValues } from './PortalContext';
-import { TypographyProviderProps } from './TypographyContext';
+import { MigrationContextType } from '../MigrationContext';
+import { PortalContextValues } from '../PortalContext';
+import { TypographyProviderProps } from '../TypographyContext';
 
 export type LeafyGreenProviderProps = {
   /**

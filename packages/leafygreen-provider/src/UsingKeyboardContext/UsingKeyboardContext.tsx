@@ -32,7 +32,9 @@ interface UsingKeyboardProviderProps {
   children?: React.ReactNode;
 }
 
-function UsingKeyboardProvider({ children }: UsingKeyboardProviderProps) {
+export function UsingKeyboardProvider({
+  children,
+}: UsingKeyboardProviderProps) {
   // Initialize `usingKeyboard` to true
   // Defaulting to true allows autofocus to display a focus state.
   const [usingKeyboard, setUsingKeyboard] = useState(
