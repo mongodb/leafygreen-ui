@@ -3,11 +3,8 @@ import React from 'react';
 import ChevronRight from '@leafygreen-ui/icon/dist/ChevronRight';
 import { palette } from '@leafygreen-ui/palette';
 
-import { tooltipTextStyles } from './styles';
-
-export interface TooltipTextProps {
-  hiddenStages: Array<string | null>;
-}
+import { tooltipTextStyles } from './TooltipText.styles';
+import { TooltipTextProps } from './TooltipText.types';
 
 /**
  * # TooltipText
@@ -27,7 +24,7 @@ export interface TooltipTextProps {
  * ```
  * @internal
  */
-const TooltipText = ({ hiddenStages }: TooltipTextProps) => {
+export const TooltipText = ({ hiddenStages }: TooltipTextProps) => {
   return (
     <div className={tooltipTextStyles}>
       {hiddenStages.map((hiddenStage: string | null, index: number) => {

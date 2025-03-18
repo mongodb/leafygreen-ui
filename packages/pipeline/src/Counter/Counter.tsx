@@ -2,7 +2,10 @@ import React, { forwardRef, ReactElement, Ref, useContext } from 'react';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import PipelineContext from './PipelineContext';
+import PipelineContext from '../PipelineContext';
+import { SegmentL, SegmentM, SegmentS, SegmentXs } from '../svgs';
+import { CounterProps, Size } from '../types';
+
 import {
   counterBaseStyles,
   counterSizeStyles,
@@ -11,9 +14,7 @@ import {
   counterThemeStyles,
   svgLayer1Styles,
   svgLayer2Styles,
-} from './styles';
-import { SegmentL, SegmentM, SegmentS, SegmentXs } from './svgs';
-import { CounterProps, Size } from './types';
+} from './Counter.styles';
 
 const segments: Record<Size, React.ComponentType<any>> = {
   [Size.XSmall]: SegmentXs,
@@ -33,7 +34,7 @@ const segments: Record<Size, React.ComponentType<any>> = {
  * @internal
  * @param props.className Classname applied to Counter content container.
  */
-const Counter = forwardRef(
+export const Counter = forwardRef(
   (
     { className = '', children, ...rest }: CounterProps,
     ref: Ref<HTMLDivElement>,

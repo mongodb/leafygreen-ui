@@ -13,18 +13,19 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 import Tooltip, { Align, Justify, RenderMode } from '@leafygreen-ui/tooltip';
 
-import Counter from './Counter';
-import { PipelineContext } from './PipelineContext';
-import Stage from './Stage';
+import { Counter } from '../Counter';
+import { PipelineContext } from '../PipelineContext';
+import { Stage } from '../Stage';
+import { TooltipText } from '../TooltipText';
+import { PipelineProps, Size } from '../types';
+
 import {
   basePipelineListStyles,
   basePipelineStyles,
   baseSizeStyles,
   counterVisibleStyles,
   tooltipStyles,
-} from './styles';
-import TooltipText from './TooltipText';
-import { PipelineProps, Size } from './types';
+} from './Pipeline.styles';
 
 /**
  *

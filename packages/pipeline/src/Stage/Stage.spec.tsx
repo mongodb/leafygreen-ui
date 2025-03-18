@@ -1,10 +1,11 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 
-import { mockIsIntersecting } from './mocks/IntersectionObserver';
-import Pipeline from './Pipeline';
-import Stage from './Stage';
-import { Size } from './types';
+import { mockIsIntersecting } from '../mocks/IntersectionObserver';
+import Pipeline from '../Pipeline/Pipeline';
+import { Size } from '../types';
+
+import { Stage } from './Stage';
 
 const className = 'test-stage-class';
 const parentElement = document.createElement('div');
