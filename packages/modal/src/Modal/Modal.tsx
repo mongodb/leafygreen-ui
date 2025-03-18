@@ -75,9 +75,7 @@ const Modal = React.forwardRef(
       if (localRef.current != null) {
         if (open) {
           localRef.current?.showModal();
-        }
-
-        if (!open) {
+        } else {
           handleClose();
         }
       }
