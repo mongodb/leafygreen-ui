@@ -12,6 +12,7 @@ import {
 
 export const getContainerStyles = (theme: Theme) => css`
   width: 261px;
+  overflow-y: auto;
   background: ${color[theme].background[Variant.InversePrimary][
     InteractionState.Default
   ]};
