@@ -14,7 +14,7 @@ import Code from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
-import { breakpoints, spacing } from '@leafygreen-ui/tokens';
+import { spacing } from '@leafygreen-ui/tokens';
 import Tooltip from '@leafygreen-ui/tooltip';
 import { Body, H3, Subtitle } from '@leafygreen-ui/typography';
 
@@ -93,7 +93,7 @@ const Template: StoryFn<ModalProps> = (args: ModalProps) => {
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args} />
@@ -136,7 +136,7 @@ export const DefaultSelect = (args: ModalProps) => {
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args}>
@@ -189,7 +189,7 @@ export const PortalSelect = (args: ModalProps) => {
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args} portalRef={portalRef}>
@@ -261,7 +261,7 @@ console.log(greeting('World'));
     <div
       className={css`
         height: 100vh;
-        min-height: ${breakpoints.Desktop};
+        min-height: 1024px;
       `}
     >
       <Modal {...args}>
