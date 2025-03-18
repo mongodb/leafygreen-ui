@@ -1,4 +1,4 @@
 export {
   useUsingKeyboardContext,
-  default as UsingKeyboardProvider,
+  UsingKeyboardProvider,
 } from './UsingKeyboardContext';

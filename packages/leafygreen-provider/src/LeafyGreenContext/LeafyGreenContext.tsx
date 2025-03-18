@@ -8,9 +8,7 @@ import {
   PortalContextProvider,
   usePopoverPortalContainer,
 } from '../PortalContext/PortalContext';
-import TypographyProvider, {
-  useBaseFontSize,
-} from '../TypographyContext/TypographyContext';
+import { TypographyProvider, useBaseFontSize } from '../TypographyContext';
 import { UsingKeyboardProvider } from '../UsingKeyboardContext';
 
 import { LeafyGreenProviderProps } from './LeafyGreenContext.types';

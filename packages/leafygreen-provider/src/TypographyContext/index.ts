@@ -1,1 +1,5 @@
-export { TypographyProviderProps,useBaseFontSize } from './TypographyContext';
+export {
+  TypographyProvider,
+  TypographyProviderProps,
+  useBaseFontSize,
+} from './TypographyContext';
