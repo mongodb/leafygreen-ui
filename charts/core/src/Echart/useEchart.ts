@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { colors } from '@lg-charts/colors';
 import type { EChartsType } from 'echarts/core';
 import debounce from 'lodash.debounce';
 
-import { chartSeriesColors } from '../Chart/chartSeriesColors';
 import * as updateUtils from '../Chart/hooks/updateUtils';
 
 import {
@@ -325,7 +325,7 @@ export function useEchart({
       setOptions(currentOptions => {
         const updatedOptions = {
           ...currentOptions,
-          color: chartSeriesColors[theme],
+          color: colors[theme],
         };
         setEchartOptions(updatedOptions);
         return updatedOptions;
