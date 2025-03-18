@@ -1,5 +1,14 @@
 # @leafygreen-ui/inline-definition
 
+## 8.0.8
+
+### Patch Changes
+
+- 702938a7b: Reorganizes files internally. No external changes.
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/tooltip@13.0.8
+
 ## 8.0.7
 
 ### Patch Changes

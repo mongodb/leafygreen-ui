@@ -1,5 +1,11 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 4.0.5
+
+### Patch Changes
+
+- 16dda633f: Reorganizes files internally
+
 ## 4.0.4
 
 ### Patch Changes

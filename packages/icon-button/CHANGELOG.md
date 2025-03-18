@@ -1,5 +1,13 @@
 # @leafygreen-ui/icon-button
 
+## 16.0.7
+
+### Patch Changes
+
+- b75c9b896: Reorganizes files internally. No externally-facing changes
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+
 ## 16.0.6
 
 ### Patch Changes

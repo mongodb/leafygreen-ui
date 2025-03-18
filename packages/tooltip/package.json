@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/tooltip",
-  "version": "13.0.7",
+  "version": "13.0.8",
   "description": "LeafyGreen UI Kit Tooltip",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
