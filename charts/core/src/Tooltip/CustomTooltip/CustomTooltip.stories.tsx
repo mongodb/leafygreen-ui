@@ -18,10 +18,38 @@ export default {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    seriesNameFormatter: {
+      table: {
+        disable: true,
+      },
+    },
+    seriesValueFormatter: {
+      table: {
+        disable: true,
+      },
+    },
+  },
+  parameters: {
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+      },
+    },
   },
 };
 
-export const Default: StoryObj<CustomTooltipProps> = {};
+export const Default: StoryObj<CustomTooltipProps> = {
+  args: {
+    seriesData: sampleTooltipParams.map((series, idx) => ({
+      ...series,
+      seriesName: 'Series ' + (idx + 1),
+    })),
+  },
+};
+
+export const Generated = () => {};
+
+export const LongSeriesNames: StoryObj<CustomTooltipProps> = {};
 
 export const CustomFormats: StoryObj<CustomTooltipProps> = {
   args: {

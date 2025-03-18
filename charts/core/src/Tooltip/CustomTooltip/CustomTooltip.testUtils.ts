@@ -1,4 +1,6 @@
-export const sampleTooltipParams = [
+import { CallbackSeriesDataPoint } from '../Tooltip.types';
+
+export const sampleTooltipParams: Array<CallbackSeriesDataPoint> = [
   {
     componentType: 'series',
     componentSubType: 'line',

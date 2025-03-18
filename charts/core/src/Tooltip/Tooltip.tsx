@@ -61,7 +61,7 @@ export function Tooltip({
             <CustomTooltip
               seriesData={seriesDataArr}
               sortDirection={sortDirection}
-              sortValue={sortKey}
+              sortKey={sortKey}
               seriesValueFormatter={seriesValueFormatter}
               seriesNameFormatter={seriesNameFormatter}
             />,
