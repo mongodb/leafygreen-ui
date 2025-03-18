@@ -1,7 +1,7 @@
+export { IconButton as default } from './IconButton';
 export {
   type AccessibleIconButtonProps,
   type BaseIconButtonProps,
-  default,
   type IconButtonProps,
   Size,
-} from './IconButton';
+} from './IconButton.types';
