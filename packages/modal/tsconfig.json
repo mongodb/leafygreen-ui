@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../*/src"]
+    "@leafygreen-ui/*": ["../*/src"]
     }
   },
   "include": [
