@@ -108,6 +108,25 @@ importers:
         specifier: ~4.9.0
         version: 4.9.5
 
+  charts/colors:
+    dependencies:
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
+    devDependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+
   charts/core:
     dependencies:
       '@leafygreen-ui/emotion':
