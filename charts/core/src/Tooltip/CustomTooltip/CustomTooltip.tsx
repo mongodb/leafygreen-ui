@@ -28,8 +28,9 @@ export function CustomTooltip({
   seriesNameFormatter,
   sortDirection = SortDirection.Desc,
   sortKey = SortKey.Value,
+  darkMode,
 }: CustomTooltipProps) {
-  const { theme } = useDarkMode();
+  const { theme } = useDarkMode(darkMode);
 
   if (seriesData.length === 0 || !seriesData[0].data[0]) {
     return null;
