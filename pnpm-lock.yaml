@@ -156,6 +156,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
+      '@lg-charts/colors':
+        specifier: workspace:^
+        version: link:../colors
       echarts:
         specifier: ^5.5.1
         version: 5.5.1
