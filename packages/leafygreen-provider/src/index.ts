@@ -1,7 +1,4 @@
-export {
-  useDarkMode,
-  useDarkModeContext,
-} from './DarkModeContext/DarkModeContext';
+export { useDarkMode, useDarkModeContext } from './DarkModeContext';
 export { default, type LeafyGreenProviderProps } from './LeafyGreenContext';
 export { useMigrationContext } from './MigrationContext';
 export {
@@ -20,6 +17,6 @@ export {
   type PortalContextInterface,
   PortalContextProvider,
   usePopoverPortalContainer,
-} from './PortalContext/PortalContext';
-export { useBaseFontSize } from './TypographyContext/TypographyContext';
+} from './PortalContext';
+export { useBaseFontSize } from './TypographyContext';
 export { useUsingKeyboardContext } from './UsingKeyboardContext';
