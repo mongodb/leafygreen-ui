@@ -4,9 +4,10 @@ import { axe } from 'jest-axe';
 
 import { typeIs } from '@leafygreen-ui/lib';
 
+import { Stage } from '../Stage';
+import { Size } from '../types';
+
 import Pipeline from './Pipeline';
-import Stage from './Stage';
-import { Size } from './types';
 
 const className = 'test-pipeline-class';
 const stages = ['$group', '$match', '$limit'];

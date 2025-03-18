@@ -1,0 +1,1 @@
+export { TooltipText } from './TooltipText';

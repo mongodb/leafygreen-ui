@@ -3,7 +3,9 @@ import { useInView } from 'react-intersection-observer';
 
 import { cx } from '@leafygreen-ui/emotion';
 
-import PipelineContext from './PipelineContext';
+import PipelineContext from '../PipelineContext';
+import { Size, StageProps } from '../types';
+
 import {
   stageBaseStyles,
   stageSvgSizeStyles,
@@ -11,8 +13,7 @@ import {
   stageTextSizeStyles,
   stageTextStyles,
   stageTextThemeStyles,
-} from './styles';
-import { Size, StageProps } from './types';
+} from './Stage.styles';
 
 /**
  * # Stage
@@ -31,7 +32,7 @@ import { Size, StageProps } from './types';
  * @param props.className Classname applied to Stage content container.
  * @param props.threshold Either a single number or an array of numbers which indicate at what percentage of the target's visibility the observer's callback should be executed.
  */
-const Stage = forwardRef(
+export const Stage = forwardRef(
   (
     { children, className = '', threshold = 0.8, ...rest }: StageProps,
     ref: Ref<HTMLLIElement>,

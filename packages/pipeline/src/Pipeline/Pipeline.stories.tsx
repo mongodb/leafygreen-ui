@@ -6,9 +6,9 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Stage from './Stage';
-import { Size } from './types';
-import { Pipeline, PipelineProps } from '.';
+import { Stage } from '../Stage';
+import { Size } from '../types';
+import { Pipeline, PipelineProps } from '..';
 
 const meta: StoryMetaType<typeof Pipeline> = {
   title: 'Components/Pipeline',

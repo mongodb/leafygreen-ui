@@ -4,7 +4,7 @@ import {
   svgInnerClassName,
   svgInnerOutlineClassName,
   svgOuterOutlineClassName,
-} from '../styles';
+} from '../Counter/Counter.styles';
 
 /**
  * @internal
