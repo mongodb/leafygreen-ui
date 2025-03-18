@@ -4,7 +4,7 @@ import { axe } from 'jest-axe';
 
 import { typeIs } from '@leafygreen-ui/lib';
 
-import { RadioBox } from './RadioBox';
+import { RadioBox } from '../RadioBox';
 import { RadioBoxGroup } from './RadioBoxGroup';
 
 const className = 'test-radio-box-class';

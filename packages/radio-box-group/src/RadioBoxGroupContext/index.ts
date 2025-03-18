@@ -1,6 +1,6 @@
 import { ChangeEventHandler, createContext, useContext } from 'react';
 
-import { Size } from './types';
+import { Size } from '../types';
 
 export interface RadioBoxGroupContext {
   value: string | number | undefined;
