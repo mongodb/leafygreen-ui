@@ -1,6 +1,8 @@
-export { useDarkMode, useDarkModeContext } from './DarkModeContext';
-export { default } from './LeafyGreenContext';
-export { type LeafyGreenProviderProps } from './LeafyGreenContext.types';
+export {
+  useDarkMode,
+  useDarkModeContext,
+} from './DarkModeContext/DarkModeContext';
+export { default, type LeafyGreenProviderProps } from './LeafyGreenContext';
 export { useMigrationContext } from './MigrationContext';
 export {
   PopoverContext,
@@ -18,6 +20,6 @@ export {
   type PortalContextInterface,
   PortalContextProvider,
   usePopoverPortalContainer,
-} from './PortalContext';
-export { useBaseFontSize } from './TypographyContext';
+} from './PortalContext/PortalContext';
+export { useBaseFontSize } from './TypographyContext/TypographyContext';
 export { useUsingKeyboardContext } from './UsingKeyboardContext';

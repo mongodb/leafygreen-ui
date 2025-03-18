@@ -1,12 +1,13 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 
-import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
 import LeafyGreenProvider, {
   useBaseFontSize,
   useDarkMode,
   usePopoverPortalContainer,
-} from '.';
+} from '..';
+
+import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
 
 afterAll(cleanup);
 
