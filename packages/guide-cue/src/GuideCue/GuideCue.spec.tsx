@@ -8,8 +8,9 @@ import {
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { timeout1 } from './styles';
-import { GuideCue } from '.';
+import { GuideCue } from '..';
+
+import { timeout1 } from './GuideCue.styles';
 
 // TODO: maybe add globally
 async function expectElementToNotBeRemoved(element: HTMLElement) {

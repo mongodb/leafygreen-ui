@@ -10,9 +10,10 @@ import Popover, {
   RenderMode,
 } from '@leafygreen-ui/popover';
 
-import { beaconStyles, timeout1, timeout2 } from './styles';
-import TooltipContent from './TooltipContent';
-import { GuideCueProps, TooltipAlign, TooltipJustify } from './types';
+import TooltipContent from '../TooltipContent';
+
+import { beaconStyles, timeout1, timeout2 } from './GuideCue.styles';
+import { GuideCueProps, TooltipAlign, TooltipJustify } from './GuideCue.types';
 
 function GuideCue({
   open,
