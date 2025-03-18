@@ -13,7 +13,7 @@
     "docs": "lg build-tsdoc"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",
