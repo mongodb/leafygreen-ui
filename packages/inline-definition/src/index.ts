@@ -1,2 +1,1 @@
-export { default } from './InlineDefinition';
-export { type InlineDefinitionProps } from './InlineDefinition/InlineDefinition.types';
+export { default, InlineDefinitionProps } from './InlineDefinition';
