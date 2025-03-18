@@ -4,7 +4,10 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { RadioBoxGroupContext, useRadioBoxGroupContext } from '../context';
+import {
+  RadioBoxGroupContext,
+  useRadioBoxGroupContext,
+} from '../RadioBoxGroupContext';
 import { RadioBoxProps, Size } from '../types';
 
 import {
