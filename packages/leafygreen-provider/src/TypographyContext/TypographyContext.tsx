@@ -15,7 +15,7 @@ export function useBaseFontSize() {
   return useContext(BaseFontSizeContext);
 }
 
-function TypographyProvider({
+export function TypographyProvider({
   children,
   baseFontSize = 14,
 }: PropsWithChildren<TypographyProviderProps>) {

@@ -1,14 +1,17 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 
-import DarkModeProvider, { useDarkModeContext } from './DarkModeContext';
-import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
-import { MigrationProvider, useMigrationContext } from './MigrationContext';
+import DarkModeProvider, {
+  useDarkModeContext,
+} from '../DarkModeContext/DarkModeContext';
+import { MigrationProvider, useMigrationContext } from '../MigrationContext';
 import {
   PortalContextProvider,
   usePopoverPortalContainer,
-} from './PortalContext';
-import TypographyProvider, { useBaseFontSize } from './TypographyContext';
-import UsingKeyboardProvider from './UsingKeyboardContext';
+} from '../PortalContext/PortalContext';
+import { TypographyProvider, useBaseFontSize } from '../TypographyContext';
+import { UsingKeyboardProvider } from '../UsingKeyboardContext';
+
+import { LeafyGreenProviderProps } from './LeafyGreenContext.types';
 
 function LeafyGreenProvider({
   children,
