@@ -5,6 +5,5 @@ export interface SeriesListProps {
   seriesData: Array<CallbackSeriesDataPoint>;
   seriesValueFormatter?: CustomTooltipProps['seriesValueFormatter'];
   seriesNameFormatter?: CustomTooltipProps['seriesNameFormatter'];
-  sortDirection: CustomTooltipProps['sortDirection'];
-  sortKey: CustomTooltipProps['sortKey'];
+  sort: CustomTooltipProps['sort'];
 }

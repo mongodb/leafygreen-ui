@@ -4,8 +4,7 @@ import { CallbackSeriesDataPoint, TooltipProps } from '../Tooltip.types';
 
 export interface CustomTooltipProps extends DarkModeProps {
   seriesData: Array<CallbackSeriesDataPoint>;
-  sortDirection?: 'asc' | 'desc';
-  sortKey?: 'name' | 'value';
+  sort?: TooltipProps['sort'];
   seriesValueFormatter?: TooltipProps['seriesValueFormatter'];
   seriesNameFormatter?: TooltipProps['seriesNameFormatter'];
 }

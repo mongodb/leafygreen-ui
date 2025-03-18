@@ -8,18 +8,12 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 import { useChartContext } from '../ChartContext';
 
 import { CustomTooltip } from './CustomTooltip';
-import {
-  CallbackSeriesDataPoint,
-  SortDirection,
-  SortKey,
-  TooltipProps,
-} from './Tooltip.types';
+import { CallbackSeriesDataPoint, TooltipProps } from './Tooltip.types';
 
 export function Tooltip({
-  sortDirection = SortDirection.Desc,
-  sortKey = SortKey.Value,
   seriesValueFormatter,
   seriesNameFormatter,
+  sort,
 }: TooltipProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
@@ -60,8 +54,7 @@ export function Tooltip({
           return renderToString(
             <CustomTooltip
               seriesData={seriesDataArr}
-              sortDirection={sortDirection}
-              sortKey={sortKey}
+              sort={sort}
               seriesValueFormatter={seriesValueFormatter}
               seriesNameFormatter={seriesNameFormatter}
             />,
@@ -79,7 +72,7 @@ export function Tooltip({
     };
     // FIXME:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, sortDirection, sortKey, theme, seriesValueFormatter]);
+  }, [chart.ready, sort, theme, seriesValueFormatter]);
 
   return null;
 }

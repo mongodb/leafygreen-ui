@@ -2,8 +2,6 @@ import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { SortDirection, SortKey } from '../Tooltip.types';
-
 import { getContainerStyles, getHeaderStyles } from './CustomTooltip.styles';
 import { CustomTooltipProps } from './CustomTooltip.types';
 import { SeriesList } from './SeriesList';
@@ -26,8 +24,7 @@ export function CustomTooltip({
   seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
-  sortDirection = SortDirection.Desc,
-  sortKey = SortKey.Value,
+  sort,
   darkMode,
 }: CustomTooltipProps) {
   const { theme } = useDarkMode(darkMode);
@@ -48,8 +45,7 @@ export function CustomTooltip({
         seriesData={seriesData}
         seriesValueFormatter={seriesValueFormatter}
         seriesNameFormatter={seriesNameFormatter}
-        sortDirection={sortDirection}
-        sortKey={sortKey}
+        sort={sort}
       />
     </div>
   );

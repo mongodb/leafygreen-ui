@@ -1,21 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { SeriesListItem } from '../SeriesListItem';
 
 import { SeriesListProps } from './SeriesList.types';
-import { sortSeriesData } from './SeriesList.utils';
+
+function descendingCompareFn(
+  valueA: string | number | Date,
+  valueB: string | number | Date,
+) {
+  if (valueA < valueB) {
+    return 1;
+  }
+
+  if (valueA > valueB) {
+    return -1;
+  }
+
+  return 0;
+}
 
 export function SeriesList({
   seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
-  sortDirection,
-  sortKey,
+  sort,
 }: SeriesListProps) {
   return (
     <>
-      {sortSeriesData({ seriesData: seriesData, sortDirection, sortKey }).map(
-        ({ seriesName, data, color }) => (
+      {seriesData
+        .sort((a, b) => {
+          const valueA = a.data[1];
+          const valueB = b.data[1];
+
+          if (sort) {
+            return sort(
+              { name: a.data[0], value: valueA },
+              { name: b.data[0], value: valueB },
+            );
+          }
+
+          return descendingCompareFn(valueA, valueB);
+        })
+        .map(({ seriesName, data, color }) => (
           <SeriesListItem
             key={seriesName}
             seriesName={seriesName}
@@ -24,8 +50,7 @@ export function SeriesList({
             seriesValueFormatter={seriesValueFormatter}
             seriesNameFormatter={seriesNameFormatter}
           />
-        ),
-      )}
+        ))}
     </>
   );
 }

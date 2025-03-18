@@ -30,9 +30,13 @@ export const SortOrder = {
 } as const;
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
 
+interface SeriesInfo {
+  name: string | number;
+  value: string | number | Date;
+}
+
 export interface TooltipProps {
-  sortDirection?: SortDirection;
-  sortKey?: SortKey;
+  sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: number | string | Date) => ReactNode | string;
   seriesNameFormatter?: (value: number | string | Date) => ReactNode | string;
 }

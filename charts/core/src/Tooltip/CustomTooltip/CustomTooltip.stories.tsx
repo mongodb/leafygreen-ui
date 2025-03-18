@@ -13,8 +13,6 @@ export default {
   component: CustomTooltip,
   args: {
     seriesData: sampleTooltipParams,
-    sortDirection: 'desc',
-    sortKey: 'value',
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
