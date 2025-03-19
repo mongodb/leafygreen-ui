@@ -1,5 +1,18 @@
 # @leafygreen-ui/menu
 
+## 28.0.10
+
+### Patch Changes
+
+- Updated dependencies [b75c9b896]
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/icon-button@16.0.7
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/descendants@2.1.3
+  - @leafygreen-ui/input-option@3.0.8
+  - @leafygreen-ui/popover@13.0.7
+  - @leafygreen-ui/typography@20.1.5
+
 ## 28.0.9
 
 ### Patch Changes

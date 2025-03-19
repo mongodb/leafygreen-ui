@@ -1,5 +1,12 @@
 # @leafygreen-ui/badge
 
+## 9.0.6
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+
 ## 9.0.5
 
 ### Patch Changes

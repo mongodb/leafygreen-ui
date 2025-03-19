@@ -1,5 +1,21 @@
 # @lg-charts/core
 
+## 0.14.0
+
+### Minor Changes
+
+- 97731d4a5: [LG-4981](https://jira.mongodb.org/browse/LG-4981): break out `chartSeriesColors` into `@lg-charts/colors` package
+
+### Patch Changes
+
+- Updated dependencies [b75c9b896]
+- Updated dependencies [97731d4a5]
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/icon-button@16.0.7
+  - @lg-charts/colors@0.2.0
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/typography@20.1.5
+
 ## 0.13.0
 
 ### Minor Changes

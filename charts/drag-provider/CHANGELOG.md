@@ -1,5 +1,14 @@
 # @lg-charts/drag-provider
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [97731d4a5]
+- Updated dependencies [16dda633f]
+  - @lg-charts/core@0.14.0
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+
 ## 0.1.1
 
 ### Patch Changes

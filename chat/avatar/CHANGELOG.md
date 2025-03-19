@@ -1,5 +1,13 @@
 # @lg-chat/avatar
 
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/avatar@2.0.6
+
 ## 4.0.6
 
 ### Patch Changes
