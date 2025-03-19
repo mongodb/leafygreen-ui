@@ -4,7 +4,7 @@ import type { StoryObj } from '@storybook/react';
 
 import { ChartProps } from './Chart/Chart.types';
 import { HeaderProps } from './Header/Header.types';
-import { SortDirection, SortKey, TooltipProps } from './Tooltip/Tooltip.types';
+import { TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
@@ -70,9 +70,7 @@ export const LiveExample: StoryObj<{
   yAxisFormatter: YAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
   renderTooltip: boolean;
-  tooltipSortDirection: TooltipProps['sortDirection'];
-  tooltipSortKey: TooltipProps['sortKey'];
-  tooltipValueFormatter: TooltipProps['valueFormatter'];
+  tooltipSeriesValueFormatter: TooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
   headerTitle: HeaderProps['title'];
   headerShowDivider: HeaderProps['showDivider'];
@@ -108,8 +106,6 @@ export const LiveExample: StoryObj<{
     yAxisType: 'value',
     yAxisLabel: 'Y-Axis Label',
     renderTooltip: true,
-    tooltipSortDirection: SortDirection.Desc,
-    tooltipSortKey: SortKey.Value,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
     headerShowDivider: true,
@@ -252,27 +248,9 @@ export const LiveExample: StoryObj<{
         category: 'Tooltip',
       },
     },
-    tooltipSortDirection: {
-      control: 'select',
-      options: SortDirection,
-      description: 'Direction to sort tooltip values',
-      name: 'SortDirection',
-      table: {
-        category: 'Tooltip',
-      },
-    },
-    tooltipSortKey: {
-      control: 'select',
-      options: SortKey,
-      description: 'Which key to sort tooltip values by',
-      name: 'SortKey',
-      table: {
-        category: 'Tooltip',
-      },
-    },
-    tooltipValueFormatter: {
-      description: 'Tooltip value formatter',
-      name: 'ValueFormatter',
+    tooltipSeriesValueFormatter: {
+      description: 'Tooltip series value formatter',
+      name: 'SeriesValueFormatter',
       table: {
         disable: true,
       },
@@ -465,9 +443,7 @@ export const LiveExample: StoryObj<{
     xAxisLabel,
     yAxisLabel,
     renderTooltip,
-    tooltipSortDirection,
-    tooltipSortKey,
-    tooltipValueFormatter,
+    tooltipSeriesValueFormatter,
     renderHeader,
     headerTitle,
     headerShowDivider,
@@ -521,11 +497,7 @@ export const LiveExample: StoryObj<{
           <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
         )}
         {renderTooltip && (
-          <Tooltip
-            sortDirection={tooltipSortDirection}
-            sortKey={tooltipSortKey}
-            valueFormatter={tooltipValueFormatter}
-          />
+          <Tooltip seriesValueFormatter={tooltipSeriesValueFormatter} />
         )}
         {renderXAxis && (
           <XAxis

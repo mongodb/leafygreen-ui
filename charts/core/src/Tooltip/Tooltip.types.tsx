@@ -1,35 +1,6 @@
 import { ReactNode } from 'react';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 
-/**
- * Direction tooltip values can be sorted
- */
-export const SortDirection = {
-  Asc: 'asc',
-  Desc: 'desc',
-} as const;
-export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
-
-/**
- * Key by which tooltip values can be sorted
- */
-export const SortKey = {
-  Name: 'name',
-  Value: 'value',
-} as const;
-export type SortKey = (typeof SortKey)[keyof typeof SortKey];
-
-/**
- * Echart order config types
- */
-export const SortOrder = {
-  ValueDesc: 'valueDesc',
-  ValueAsc: 'valueAsc',
-  SeriesDesc: 'seriesDesc',
-  SeriesAsc: 'seriesAsc',
-} as const;
-export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
-
 interface SeriesInfo {
   name: string | number;
   value: string | number | Date;
