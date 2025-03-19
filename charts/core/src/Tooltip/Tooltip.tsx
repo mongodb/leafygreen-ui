@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
-import { TopLevelFormatterParams } from 'echarts/types/dist/shared';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
