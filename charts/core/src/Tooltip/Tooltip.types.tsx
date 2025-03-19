@@ -1,9 +1,15 @@
 import { ReactNode } from 'react';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 
+/**
+ * This is the data type used by `CallbackDataParams` but it's not exported.
+ * Reimplementing to narrow down the `data` type to be more specific to our use case.
+ */
+export type OptionDataValue = string | number | Date;
+
 interface SeriesInfo {
-  name: string | number;
-  value: string | number | Date;
+  name: OptionDataValue;
+  value: OptionDataValue;
 }
 
 export interface TooltipProps {
@@ -13,17 +19,17 @@ export interface TooltipProps {
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {
+  /**
+   * Adding axis info because it's not included in the CallbackDataParams type
+   * but is provided in the formatter callback arg because our trigger is 'axis'.
+   */
   axisDim: string;
   axisId: string;
   axisIndex: number;
   axisType: string;
   axisValue: string | number;
   axisValueLabel: string | number;
-  /**
-   * Narrowing to array because the type of data we accept is always a tuple
-   * whereas echarts accepts more
-   */
-  data: [string | number, string | number | Date];
+  data: Array<OptionDataValue>;
   /**
    * Echarts returns a custom color type which doesn't map to string but is one
    */

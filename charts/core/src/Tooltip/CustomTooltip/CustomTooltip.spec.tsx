@@ -12,7 +12,6 @@ const baseSeriesData = {
   seriesIndex: 0,
   seriesId: '\u0000cluster2-shard-00-00-stuvwx3456.mongodb.net:27017\u00000',
   dataIndex: 18,
-  value: ['2024-01-01T05:18:00.000Z', 1294],
   color: '#016BF8',
   dimensionNames: ['x', 'y'],
   encode: {

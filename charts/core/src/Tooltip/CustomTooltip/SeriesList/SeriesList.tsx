@@ -1,13 +1,11 @@
 import React from 'react';
 
+import { OptionDataValue } from '../../Tooltip.types';
 import { SeriesListItem } from '../SeriesListItem';
 
 import { SeriesListProps } from './SeriesList.types';
 
-function descendingCompareFn(
-  valueA: string | number | Date,
-  valueB: string | number | Date,
-) {
+function descendingCompareFn(valueA: OptionDataValue, valueB: OptionDataValue) {
   if (valueA < valueB) {
     return 1;
   }
