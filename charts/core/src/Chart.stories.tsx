@@ -56,8 +56,13 @@ export default {
 };
 
 export const LiveExample: StoryObj<{
+  darkMode: boolean;
   data: Array<LineProps>;
   state: ChartProps['state'];
+  zoomSelect: ChartProps['zoomSelect'];
+  onZoomSelect: ChartProps['onZoomSelect'];
+  onChartReady: ChartProps['onChartReady'];
+  groupId: ChartProps['groupId'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
