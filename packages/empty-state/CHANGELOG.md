@@ -1,5 +1,15 @@
 # @leafygreen-ui/empty-state
 
+## 2.0.10
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/badge@9.0.6
+  - @leafygreen-ui/button@23.1.3
+  - @leafygreen-ui/typography@20.1.5
+
 ## 2.0.9
 
 ### Patch Changes

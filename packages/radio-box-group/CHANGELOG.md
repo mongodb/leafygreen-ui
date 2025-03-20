@@ -1,5 +1,13 @@
 # @leafygreen-ui/radio-box-group
 
+## 14.0.6
+
+### Patch Changes
+
+- 1396591e5: Reorganizes files internally. No externally-facing changes.
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+
 ## 14.0.5
 
 ### Patch Changes
