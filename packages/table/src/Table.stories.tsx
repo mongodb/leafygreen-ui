@@ -192,6 +192,10 @@ export const LiveExample: StoryFn<StoryTableProps> = args => {
     columns,
   });
 
+  useEffect(() => {
+    console.log('🧚🏽‍♀️');
+  }, [table]);
+
   const { rows } = table.getRowModel();
 
   return (
