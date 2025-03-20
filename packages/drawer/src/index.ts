@@ -1,3 +1,8 @@
 export { DisplayMode, Drawer, type DrawerProps } from './Drawer';
-export { DrawerTabs, type DrawerTabsProps } from './DrawerTabs';
+export {
+  DrawerStackContext,
+  DrawerStackContextType,
+  DrawerStackProvider,
+  useDrawerStackContext,
+} from './DrawerStackContext';
 export { getLgIds, getTestUtils, type GetTestUtilsReturnType } from './utils';
