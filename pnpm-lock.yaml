@@ -226,6 +226,12 @@ importers:
         specifier: workspace:^
         version: link:../../packages/icon
 
+  charts/series-provider:
+    dependencies:
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
+
   chat/avatar:
     dependencies:
       '@leafygreen-ui/avatar':
