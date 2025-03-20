@@ -1,3 +1,5 @@
+import { colors as chartColors } from '@lg-charts/colors';
+
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
@@ -8,7 +10,6 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ChartOptions } from '../Chart.types';
-import { chartSeriesColors } from '../chartSeriesColors';
 
 const commonAxisOptions = {
   /**
@@ -43,7 +44,7 @@ export const getDefaultChartOptions = (
     show: false, // Title is rendered in custom header instead
   },
 
-  color: chartSeriesColors[theme],
+  color: chartColors[theme],
 
   /**
    * Though there's a Grid component that will render the grid lines, this allows the box

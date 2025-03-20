@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/core",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "lg-charts Core Chart Components",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -25,6 +25,7 @@
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
+    "@lg-charts/colors": "workspace:^",
     "echarts": "^5.5.1",
     "lodash.debounce": "^4.0.8"
   },

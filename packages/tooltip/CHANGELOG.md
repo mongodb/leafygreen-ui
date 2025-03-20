@@ -1,5 +1,14 @@
 # @leafygreen-ui/tooltip
 
+## 13.0.8
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/popover@13.0.7
+  - @leafygreen-ui/typography@20.1.5
+
 ## 13.0.7
 
 ### Patch Changes
