@@ -154,6 +154,12 @@ function ExampleComponent() {
 | `open` _(optional)_        | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                 | `false`     |
 | `title`                    | `React.ReactNode`                            | Title of the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                        |             |
 
+### EmbeddedDrawerLayout
+
+| Prop           | Type      | Description                                           | Default |
+| -------------- | --------- | ----------------------------------------------------- | ------- |
+| `isDrawerOpen` | `boolean` | Determines if the `Drawer` instance is open or closed |         |
+
 # Test Harnesses
 
 ## getTestUtils()
