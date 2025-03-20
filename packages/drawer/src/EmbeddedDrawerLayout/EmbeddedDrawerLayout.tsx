@@ -9,11 +9,11 @@ export const EmbeddedDrawerLayout = forwardRef<
 >(
   (
     { children, className, isDrawerOpen }: EmbeddedDrawerLayoutProps,
-    forwardRef,
+    forwardedRef,
   ) => {
     return (
       <div
-        ref={forwardRef}
+        ref={forwardedRef}
         className={getEmbeddedDrawerLayoutStyles({ className, isDrawerOpen })}
       >
         {children}
