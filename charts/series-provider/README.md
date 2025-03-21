@@ -45,9 +45,9 @@ const App = () => (
 
 ## Props
 
-| Name     | Description                                                                       | Type                           | Default |
-| -------- | --------------------------------------------------------------------------------- | ------------------------------ | ------- |
-| `series` | An array of id strings representing the data series to be displayed in the legend | `({ active: string }) => void` |         |
+| Name     | Description                                                                       | Type            | Default |
+| -------- | --------------------------------------------------------------------------------- | --------------- | ------- |
+| `series` | An array of id strings representing the data series to be displayed in the legend | `Array<string>` |         |
 
 ## `useSeriesContext`
 
