@@ -201,6 +201,31 @@ importers:
         specifier: 8.5.3
         version: 8.5.3(storybook@8.5.3(prettier@2.8.8))
 
+  charts/legend:
+    dependencies:
+      '@leafygreen-ui/checkbox':
+        specifier: workspace:^
+        version: link:../../packages/checkbox
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+    devDependencies:
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
+
   chat/avatar:
     dependencies:
       '@leafygreen-ui/avatar':
