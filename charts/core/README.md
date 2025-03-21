@@ -200,11 +200,13 @@ Renders a tooltip onto the chart.
 
 #### Props
 
-| Name                          | Description                                         | Type                                  | Default   |
-| ----------------------------- | --------------------------------------------------- | ------------------------------------- | --------- |
-| `sortDirection` _(optional)_  | What direction to sort tooltip values in.           | `'asc' \| 'desc'`                     | `'desc'`  |
-| `sortKey` _(optional)_        | Whether to sort by name or value.                   | `'name' \| 'value'`                   | `'value'` |
-| `valueFormatter` _(optional)_ | Callback function for formatting each value string. | `(value: number \| string) => string` |           |
+| Name                                | Description                                                                                            | Type                                                   | Default   |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ | --------- |
+| `sort` _(optional)_                 | Custom sort function, used to sort list of series. List will be sorted descending by value by default. | `(seriesA: SeriesInfo, seriesB: SeriesInfo) => number` | `'value'` |
+| `seriesNameFormatter` _(optional)_  | Callback function for formatting each name string.                                                     | `(value: number \| string) => string \| ReactNode`     |           |
+| `seriesValueFormatter` _(optional)_ | Callback function for formatting each value string.                                                    | `(value: number \| string) => string \| ReactNode`     |           |
+
+Note: `SeriesInfo` is of type `{ name: string | number; value: string | number | Date; }`
 
 ### `EventMarkerLine`
 
