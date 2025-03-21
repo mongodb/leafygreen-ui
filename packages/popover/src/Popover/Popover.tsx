@@ -80,6 +80,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       /** top layer props */
       dismissMode = DismissMode.Auto,
       onToggle,
+      onBeforeToggle,
       /** portal props */
       usePortal,
       portalClassName,
@@ -98,6 +99,7 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       spacing = spacingToken[100],
       ...restProps
     } = usePopoverProps(rest);
+
     const { setIsPopoverOpen } = usePopoverContext();
 
     /**
@@ -177,6 +179,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       if (renderMode === RenderMode.TopLayer) {
         // @ts-expect-error - `toggle` event not supported pre-typescript v5
         elements.floating?.addEventListener('toggle', onToggle);
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        elements.floating?.addEventListener('beforetoggle', onBeforeToggle);
         // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
         elements.floating?.showPopover?.();
       }
@@ -195,6 +199,8 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       if (renderMode === RenderMode.TopLayer) {
         // @ts-expect-error - `toggle` event not supported pre-typescript v5
         elements.floating?.removeEventListener('toggle', onToggle);
+        // @ts-expect-error - `toggle` event not supported pre-typescript v5
+        elements.floating?.removeEventListener('beforetoggle', onBeforeToggle);
         // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
         elements.floating?.hidePopover?.();
       }
@@ -242,7 +248,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
                     transformAlign,
                   })}
                   // @ts-expect-error - `popover` attribute is not typed in current version of `@types/react` https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69670
-
                   popover={
                     renderMode === RenderMode.TopLayer ? dismissMode : undefined
                   }

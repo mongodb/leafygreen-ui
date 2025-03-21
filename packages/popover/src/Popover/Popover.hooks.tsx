@@ -27,6 +27,7 @@ export function usePopoverProps({
   renderMode: renderModeProp,
   dismissMode,
   onToggle,
+  onBeforeToggle,
   portalClassName,
   portalContainer,
   portalRef,
@@ -66,6 +67,7 @@ export function usePopoverProps({
     ? {
         dismissMode: dismissMode || context.dismissMode,
         onToggle: onToggle || context.onToggle,
+        onBeforeToggle: onBeforeToggle,
       }
     : {};
 

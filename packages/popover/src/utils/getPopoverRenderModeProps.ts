@@ -11,6 +11,7 @@ import {
 export const getPopoverRenderModeProps = ({
   dismissMode,
   onToggle,
+  onBeforeToggle,
   portalClassName,
   portalContainer,
   portalRef,
@@ -34,6 +35,7 @@ export const getPopoverRenderModeProps = ({
   return {
     dismissMode,
     onToggle,
+    onBeforeToggle,
     renderMode,
   };
 };

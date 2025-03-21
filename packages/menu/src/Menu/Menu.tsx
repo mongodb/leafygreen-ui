@@ -78,7 +78,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
 
-  const popoverRef = useRef<HTMLUListElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
   const defaultTriggerRef = useRef<HTMLElement>(null);
   const triggerRef = refEl ?? defaultTriggerRef;
   const keyboardUsedRef = useRef<boolean>(false);
@@ -199,6 +199,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           onEntered={handlePopoverOpen}
           data-testid={LGIDs.root}
           data-lgid={LGIDs.root}
+          ref={popoverRef}
           {...popoverProps}
         >
           <div
@@ -225,7 +226,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}
-              ref={popoverRef}
             >
               {children}
             </ul>
@@ -244,16 +244,11 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         keyboardUsedRef.current = true;
       }
 
-      setOpen((curr: boolean) => !curr);
+      setOpen(curr => !curr);
 
       if (trigger && typeof trigger !== 'function') {
         trigger.props?.onClick?.(event);
       }
-
-      // We stop the native event from bubbling, but allow the React.Synthetic event to bubble
-      // This way click handlers on parent components will still fire,
-      // but this click event won't propagate up to the document and immediately close the menu.
-      event?.nativeEvent?.stopPropagation?.();
     };
 
     if (typeof trigger === 'function') {
