@@ -1,5 +1,25 @@
 # @leafygreen-ui/drawer
 
+## 2.0.0
+
+### Major Changes
+
+- afd111570: - `DrawerTabs` has been deprecated and is no longer available for use. Stay tuned for an updated way to leverage information architecture within a `Drawer` component.
+  - Adds missing exports for `DrawerStackProvider` and `useDrawerStackContext`.
+  - Fixes missing ref error in console by adding missing ref in `EmbeddedDrawerLayout`.
+
+## 1.1.1
+
+### Patch Changes
+
+- Updated dependencies [b75c9b896]
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/icon-button@16.0.7
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/tabs@14.2.1
+  - @leafygreen-ui/button@23.1.3
+  - @leafygreen-ui/typography@20.1.5
+
 ## 1.1.0
 
 ### Minor Changes

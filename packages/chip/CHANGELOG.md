@@ -1,5 +1,14 @@
 # @leafygreen-ui/chip
 
+## 3.0.8
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+- Updated dependencies [702938a7b]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+  - @leafygreen-ui/inline-definition@8.0.8
+
 ## 3.0.7
 
 ### Patch Changes

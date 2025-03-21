@@ -1,5 +1,12 @@
 # @leafygreen-ui/typography
 
+## 20.1.5
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+
 ## 20.1.4
 
 ### Patch Changes

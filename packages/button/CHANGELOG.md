@@ -1,5 +1,12 @@
 # @leafygreen-ui/button
 
+## 23.1.3
+
+### Patch Changes
+
+- Updated dependencies [16dda633f]
+  - @leafygreen-ui/leafygreen-provider@4.0.5
+
 ## 23.1.2
 
 ### Patch Changes
