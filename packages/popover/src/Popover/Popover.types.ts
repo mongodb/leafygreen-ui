@@ -134,9 +134,14 @@ export interface RenderInlineProps {
   dismissMode?: never;
 
   /**
-   * A callback function that is called when the visibility of a popover element rendered in the top layer is toggled
+   * When `renderMode="top-layer"`, this callback function is called when the visibility of a popover element is toggled
    */
   onToggle?: never;
+
+  /**
+   * When `renderMode="top-layer"`, this callback function is called just before the visibility of a popover element is toggled
+   */
+  onBeforeToggle?: never;
 
   /**
    * When `renderMode="portal"`, it specifies a class name to apply to the portal element
@@ -186,6 +191,11 @@ export interface RenderPortalProps {
   onToggle?: never;
 
   /**
+   * When `renderMode="top-layer"`, this callback function is called just before the visibility of a popover element is toggled
+   */
+  onBeforeToggle?: never;
+
+  /**
    * When `renderMode="portal"`, it specifies a class name to apply to the portal element
    * @deprecated
    */
@@ -231,6 +241,14 @@ export interface RenderTopLayerProps {
    * A callback function that is called when the visibility of a popover element rendered in the top layer is toggled
    */
   onToggle?: (e: ToggleEvent) => void;
+
+  /**
+   * A callback function that is called before the visibility of a popover element rendered in the top layer is toggled.
+   * Use this to prevent the popover from toggling if needed.
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforetoggle_event
+   */
+  onBeforeToggle?: (e: ToggleEvent) => void;
 
   /**
    * When `renderMode="portal"`, it specifies a class name to apply to the portal element
@@ -379,6 +397,7 @@ export interface UseContentNodeReturnObj {
 export interface GetPopoverRenderModeProps {
   dismissMode?: DismissMode;
   onToggle?: (e: ToggleEvent) => void;
+  onBeforeToggle?: (e: ToggleEvent) => void;
   portalClassName?: string;
   portalContainer?: HTMLElement | null;
   portalRef?: React.MutableRefObject<HTMLElement | null>;
