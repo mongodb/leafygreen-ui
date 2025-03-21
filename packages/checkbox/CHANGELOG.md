@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 15.1.0
+
+### Minor Changes
+
+- ba3308947: Export `checkWrapperClassName`
+
 ## 15.0.2
 
 ### Patch Changes
