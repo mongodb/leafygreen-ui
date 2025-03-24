@@ -9,13 +9,11 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { Tab } from '@leafygreen-ui/tabs';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { DrawerTabs } from './DrawerTabs';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
@@ -227,25 +225,6 @@ export const MultipleDrawers: StoryObj<DrawerProps> = {
     controls: {
       exclude: defaultExcludedControls,
     },
-  },
-};
-
-export const WithTabs: StoryObj<DrawerProps> = {
-  render: TemplateComponent,
-  args: {
-    children: (
-      <DrawerTabs>
-        <Tab name="Tab 1">
-          <LongContent />
-        </Tab>
-        <Tab name="Tab 2">
-          <LongContent />
-        </Tab>
-        <Tab name="Tab 3">
-          <LongContent />
-        </Tab>
-      </DrawerTabs>
-    ),
   },
 };
 

@@ -6,12 +6,20 @@ import { EmbeddedDrawerLayoutProps } from './EmbeddedDrawerLayout.types';
 export const EmbeddedDrawerLayout = forwardRef<
   HTMLDivElement,
   EmbeddedDrawerLayoutProps
->(({ children, className, isDrawerOpen }) => {
-  return (
-    <div className={getEmbeddedDrawerLayoutStyles({ className, isDrawerOpen })}>
-      {children}
-    </div>
-  );
-});
+>(
+  (
+    { children, className, isDrawerOpen }: EmbeddedDrawerLayoutProps,
+    forwardedRef,
+  ) => {
+    return (
+      <div
+        ref={forwardedRef}
+        className={getEmbeddedDrawerLayoutStyles({ className, isDrawerOpen })}
+      >
+        {children}
+      </div>
+    );
+  },
+);
 
 EmbeddedDrawerLayout.displayName = 'EmbeddedDrawerLayout';
