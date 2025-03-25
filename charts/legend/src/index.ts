@@ -1,1 +1,1 @@
-export { LegendCheckbox, type LegendCheckboxProps } from './LegendCheckbox';
+export { Legend, type LegendProps } from './Legend';
