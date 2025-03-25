@@ -1,3 +1,5 @@
+import { SeriesName } from '@lg-charts/series-provider';
+
 import { CheckboxProps } from '@leafygreen-ui/checkbox';
 import { Either } from '@leafygreen-ui/lib';
 
@@ -18,7 +20,7 @@ type BaseLegendCheckboxProps = Either<
 
 export type LegendCheckboxProps = BaseLegendCheckboxProps & {
   /**
-   * The color of the checkbox
+   * The name of the series that the checkbox controls.
    */
-  color?: string;
+  name?: SeriesName;
 };
