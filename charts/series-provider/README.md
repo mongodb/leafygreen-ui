@@ -31,23 +31,28 @@ import { Chart, ChartCard } from '@lg-charts/core';
 import { Legend } from '@lg-charts/legend';
 import { SeriesProvider } from '@lg-charts/series-provider';
 
-const App = () => (
-  <SeriesProvider>
-    <Legend>
-    <Chart />
-    <ChartCard>
-      <Chart />
-      <Chart />
-    </ChartCard>
-  </SeriesProvider>
-);
+const App = () => {
+  const lineData = getLineData();
+  const series = lineData.map(({ name }) => name);
+
+  return (
+    <SeriesProvider series={series}>
+      <Legend series={series}>
+      <Chart>
+        {lineData.map(({ data, name }) => (
+          <Line key={name} data={data} name={name} />
+        ))}
+      </Chart>
+    </SeriesProvider>
+  );
+};
 ```
 
 ## Props
 
-| Name     | Description                                                                       | Type            | Default |
-| -------- | --------------------------------------------------------------------------------- | --------------- | ------- |
-| `series` | An array of id strings representing the data series to be displayed in the legend | `Array<string>` |         |
+| Name     | Description                                                                                               | Type            | Default |
+| -------- | --------------------------------------------------------------------------------------------------------- | --------------- | ------- |
+| `series` | An array of series names representing the data series to be displayed in the descendant charts components | `Array<string>` |         |
 
 ## `useSeriesContext`
 
@@ -60,7 +65,7 @@ import { useSeriesContext } from '@leafygreen-ui/series-provider';
 
 const ChartComponent = () => {
   const {
-    checkedState,
+    getSeriesIndex,
     isChecked,
     isSelectAllChecked,
     isSelectAllIndeterminate,
@@ -68,6 +73,6 @@ const ChartComponent = () => {
     toggleSelectAll,
   } = useSeriesContext();
 
-  // Use the series context data in your component
+  // Use the series context data
 };
 ```

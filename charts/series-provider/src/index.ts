@@ -3,4 +3,4 @@ export {
   SeriesProvider,
   useSeriesContext,
 } from './SeriesContext';
-export { type SeriesProviderProps } from './SeriesContext.types';
+export type { SeriesName, SeriesProviderProps } from './SeriesContext.types';
