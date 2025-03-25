@@ -20,13 +20,16 @@
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/tokens": "workspace:^"
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-charts/colors": "workspace:^",
+    "@lg-charts/series-provider": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
-    "@leafygreen-ui/icon": "workspace:^"
+    "@leafygreen-ui/icon": "workspace:^",
+    "@lg-charts/core": "workspace:^"
   },
   "repository": {
     "type": "git",

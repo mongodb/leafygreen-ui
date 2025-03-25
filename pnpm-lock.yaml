@@ -224,10 +224,19 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@lg-charts/colors':
+        specifier: workspace:^
+        version: link:../colors
+      '@lg-charts/series-provider':
+        specifier: workspace:^
+        version: link:../series-provider
     devDependencies:
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../../packages/icon
+      '@lg-charts/core':
+        specifier: workspace:^
+        version: link:../core
 
   charts/series-provider:
     dependencies:
