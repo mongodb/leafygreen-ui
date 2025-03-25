@@ -26,7 +26,7 @@ npm install @leafygreen-ui/drawer
 
 ## Example
 
-### Single Overlay Drawer (with DrawerTabs)
+### Single Overlay Drawer
 
 ```tsx
 import React, { useState } from 'react';
@@ -36,9 +36,7 @@ import {
   DisplayMode,
   Drawer,
   DrawerStackProvider,
-  DrawerTabs,
 } from '@leafygreen-ui/drawer';
-import { Tab } from '@leafygreen-ui/tabs';
 
 function ExampleComponent() {
   const [open, setOpen] = useState(false);
@@ -54,11 +52,7 @@ function ExampleComponent() {
         open={open}
         title="Drawer Title"
       >
-        <DrawerTabs>
-          <Tab name="Tab 1">Tab 1 content</Tab>
-          <Tab name="Tab 2">Tab 2 content</Tab>
-          <Tab name="Tab 3">Tab 3 content</Tab>
-        </DrawerTabs>
+        content
       </Drawer>
     </DrawerStackProvider>
   );
@@ -76,7 +70,6 @@ import {
   Drawer,
   DrawerStackProvider,
 } from '@leafygreen-ui/drawer';
-import { Tab } from '@leafygreen-ui/tabs';
 
 function ExampleComponent() {
   const [openA, setOpenA] = useState(false);
@@ -121,10 +114,8 @@ import {
   DisplayMode,
   Drawer,
   DrawerStackProvider,
-  DrawerTabs,
   EmbeddedDrawerLayout,
 } from '@leafygreen-ui/drawer';
-import { Tab } from '@leafygreen-ui/tabs';
 
 function ExampleComponent() {
   const [open, setOpen] = useState(false);
@@ -162,12 +153,6 @@ function ExampleComponent() {
 | `onClose` _(optional)_     | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header                                                                                                                                                                                                                                                                                                                                              |             |
 | `open` _(optional)_        | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                 | `false`     |
 | `title`                    | `React.ReactNode`                            | Title of the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                        |             |
-
-### DrawerTabs
-
-Refer to the [props table in @leafygreen-ui/tabs README.md](https://github.com/mongodb/leafygreen-ui/blob/main/packages/tabs/README.md#properties) for a full list of props that can be passed to `DrawerTabs` instances.
-
-`size` prop is fixed to ensure proper UI within the `Drawer`.
 
 ### EmbeddedDrawerLayout
 

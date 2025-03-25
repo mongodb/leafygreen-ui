@@ -1,5 +1,11 @@
 # @lg-charts/drag-provider
 
+## 0.1.3
+
+### Patch Changes
+
+- @lg-charts/core@0.14.1
+
 ## 0.1.2
 
 ### Patch Changes

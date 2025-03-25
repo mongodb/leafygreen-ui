@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/colors",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "lg-charts colors",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -12,7 +12,7 @@
     "docs": "lg build-tsdoc"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",
