@@ -123,7 +123,8 @@ const meta: StoryMetaType<typeof CanvasHeader> = {
 };
 export default meta;
 
-const Template: StoryFn<typeof CanvasHeader> = props => (
+// Creating an explicit story so that it works on .design
+export const LiveExample: StoryFn<typeof CanvasHeader> = props => (
   <div
     className={css`
       min-width: 50vw;
@@ -131,11 +132,30 @@ const Template: StoryFn<typeof CanvasHeader> = props => (
       z-index: 0;
     `}
   >
-    <CanvasHeader {...props} />
+    <CanvasHeader
+      {...props}
+      backLink={<BackLink href="/home">Back to Cluster</BackLink>}
+      actions={
+        <Button variant="primary" leftGlyph={<Icon glyph={'InviteUser'} />}>
+          Invite user
+        </Button>
+      }
+      badges={
+        <>
+          <Badge variant="green">Enabled</Badge>
+          <Badge variant="blue">In Dev Mode</Badge>
+        </>
+      }
+      resourceIcon={<Icon glyph={'ShardedCluster'} />}
+      resourceBadges={
+        <>
+          <Badge variant="green">Ready</Badge>
+          <Badge variant="lightgray">Queryable</Badge>
+        </>
+      }
+    />
   </div>
 );
-
-export const LiveExample = Template.bind({});
 LiveExample.parameters = {
   chromatic: {
     disableSnapshot: true,
