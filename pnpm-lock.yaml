@@ -168,6 +168,9 @@ importers:
       '@lg-charts/colors':
         specifier: workspace:^
         version: link:../colors
+      '@lg-charts/series-provider':
+        specifier: workspace:^
+        version: link:../series-provider
       echarts:
         specifier: ^5.5.1
         version: 5.5.1

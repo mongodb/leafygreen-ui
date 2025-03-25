@@ -26,6 +26,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-charts/colors": "workspace:^",
+    "@lg-charts/series-provider": "workspace:^",
     "echarts": "^5.5.1",
     "lodash.debounce": "^4.0.8"
   },
