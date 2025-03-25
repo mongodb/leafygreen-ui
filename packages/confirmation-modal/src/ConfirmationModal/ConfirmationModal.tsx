@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
 import Button from '@leafygreen-ui/button';
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Modal, { Footer } from '@leafygreen-ui/modal';
@@ -125,7 +125,11 @@ export const ConfirmationModal = React.forwardRef(
           {children}
           {textEntryConfirmation}
         </div>
-        <Footer>
+        <Footer
+          className={css`
+            padding-bottom: 0;
+          `}
+        >
           <Button
             {...confirmButtonProps}
             data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
