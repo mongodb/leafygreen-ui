@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
+import { cx } from '@leafygreen-ui/emotion';
 import {
   useEscapeKey,
   useIdAllocator,
@@ -34,6 +35,7 @@ const Modal = React.forwardRef(
   (
     {
       children,
+      className,
       closeIconColor,
       darkMode: darkModeProp,
       id: idProp,
@@ -114,7 +116,7 @@ const Modal = React.forwardRef(
             data-testid={lgIds.root}
             data-lgid={lgIds.root}
             ref={mergedRef}
-            className={modalStyles(theme, size)}
+            className={cx(modalStyles(theme, size), className)}
           >
             {children}
             <CloseButton

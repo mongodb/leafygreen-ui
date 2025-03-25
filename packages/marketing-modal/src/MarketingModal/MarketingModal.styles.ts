@@ -9,7 +9,7 @@ export const titleStyle = css`
 
 export const baseModalStyle = css`
   width: 600px;
-  padding: initial;
+  padding: unset;
   overflow: hidden;
 `;
 
