@@ -1,5 +1,15 @@
 # @lg-private/canvas-header
 
+## 3.0.1
+
+### Patch Changes
+
+- 1916bd3: Removes background color from canvas header.
+
+  Fixes "Copied" tooltip alignment.
+
+- f66e884: Updates `LiveExample` story so it displays correctly on .design
+
 ## 3.0.0
 
 ### Major Changes
