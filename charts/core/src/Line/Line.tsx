@@ -15,7 +15,7 @@ export function Line({ name, data }: LineProps) {
   const { getSeriesIndex, isChecked } = useSeriesContext();
 
   const themedColors = colors[theme];
-  const colorIndex = getSeriesIndex(name) % themedColors.length;
+  const colorIndex = getSeriesIndex(name) % themedColors.length; // loop through colors if more lines than available colors
   const color = themedColors[colorIndex];
   const isVisible = isChecked(name);
 

@@ -32,7 +32,7 @@ import { Legend } from '@lg-charts/legend';
 import { SeriesProvider } from '@lg-charts/series-provider';
 
 const App = () => {
-  const lineData = getLineData();
+  const lineData = getLineData(); // use a fetch endpoint or pass down line data
   const series = lineData.map(({name}) => name);
 
   return (

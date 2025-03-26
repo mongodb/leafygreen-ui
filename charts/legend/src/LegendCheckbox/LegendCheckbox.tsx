@@ -14,7 +14,7 @@ export const LegendCheckbox = forwardRef<HTMLInputElement, LegendCheckboxProps>(
     const { getSeriesIndex } = useSeriesContext();
 
     const themedColors = colors[theme];
-    const colorIndex = name ? getSeriesIndex(name) % themedColors.length : -1;
+    const colorIndex = name ? getSeriesIndex(name) % themedColors.length : -1; // loop through colors if more checkboxes than available colors
     const checkboxColor = themedColors[colorIndex];
     const showFilled = !!(rest.checked || rest.indeterminate);
 
