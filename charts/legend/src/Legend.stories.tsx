@@ -15,7 +15,7 @@ import { makeLineData } from '../../core/src/testUtils';
 
 import { Legend, LegendProps } from '.';
 
-const lineData = makeLineData(5);
+const lineData = makeLineData(15);
 
 const defaultExcludedControls = [
   ...storybookExcludedControlParams,
@@ -46,12 +46,19 @@ export default {
 const TemplateComponent: StoryFn<LegendProps> = ({ ...props }) => {
   return (
     <SeriesProvider series={lineData.map(({ name }) => name)}>
-      <Chart>
+      <div
+        className={css`
+          display: flex;
+          flex-direction: column;
+        `}
+      >
         <Legend {...props} series={lineData.map(({ name }) => name)} />
-        {lineData.map(({ data, name }) => (
-          <Line key={name} data={data} name={name} />
-        ))}
-      </Chart>
+        <Chart>
+          {lineData.map(({ data, name }) => (
+            <Line key={name} data={data} name={name} />
+          ))}
+        </Chart>
+      </div>
     </SeriesProvider>
   );
 };
