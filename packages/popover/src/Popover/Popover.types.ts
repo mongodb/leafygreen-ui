@@ -275,16 +275,17 @@ export interface RenderTopLayerProps {
   scrollContainer?: never;
 }
 
-export type PopoverRenderModeProps =
-  | RenderInlineProps
-  | RenderPortalProps
-  | RenderTopLayerProps;
+export type PopoverRenderModeProps<R extends RenderMode = RenderMode> =
+  R extends 'inline'
+    ? RenderInlineProps
+    : R extends 'portal'
+    ? RenderPortalProps
+    : R extends 'top-layer'
+    ? RenderTopLayerProps
+    : never;
 
-/**
- * Base popover props.
- * Use these props to extend popover behavior
- */
-export type PopoverProps = {
+/** Base popover props */
+export interface BasePopoverProps {
   /**
    * Content that will appear inside of the popover component.
    */
@@ -347,7 +348,14 @@ export type PopoverProps = {
    * default: `4`
    */
   spacing?: number;
-} & PopoverRenderModeProps &
+}
+
+/**
+ * Full Popover Props
+ * Use these props to extend popover behavior
+ */
+export type PopoverProps = BasePopoverProps &
+  PopoverRenderModeProps &
   TransitionLifecycleCallbacks;
 
 /** Props used by the popover component */
@@ -392,15 +400,4 @@ export interface UseContentNodeReturnObj {
    * Dispatch method to attach `contentNode` to the `ContentWrapper`
    */
   setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
-}
-
-export interface GetPopoverRenderModeProps {
-  dismissMode?: DismissMode;
-  onToggle?: (e: ToggleEvent) => void;
-  onBeforeToggle?: (e: ToggleEvent) => void;
-  portalClassName?: string;
-  portalContainer?: HTMLElement | null;
-  portalRef?: React.MutableRefObject<HTMLElement | null>;
-  renderMode: RenderMode;
-  scrollContainer?: HTMLElement | null;
 }
