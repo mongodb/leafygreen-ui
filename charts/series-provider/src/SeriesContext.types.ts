@@ -1,13 +1,15 @@
+export type SeriesName = string;
+
 export interface SeriesContextType {
   /**
-   * A set of id strings representing the data series that should be visible.
+   * Util to get the index of a series in the `series` prop.
    */
-  checkedState: Set<string>;
+  getSeriesIndex: (name: SeriesName) => number;
 
   /**
    * Util to check if a series is checked.
    */
-  isChecked: (id: string) => boolean;
+  isChecked: (name: SeriesName) => boolean;
 
   /**
    * Util to check if all series are checked.
@@ -20,9 +22,9 @@ export interface SeriesContextType {
   isSelectAllIndeterminate: () => boolean;
 
   /**
-   * A callback function to toggle the checked state of a series.
+   * A callback function to toggle the checked state of a series of a given name.
    */
-  toggleSeries: (id: string) => void;
+  toggleSeries: (name: SeriesName) => void;
 
   /**
    * A callback function to toggle the checked state of all series.
@@ -32,7 +34,7 @@ export interface SeriesContextType {
 
 export interface SeriesProviderProps {
   /**
-   * An array of id strings representing the data series to be displayed in the legend.
+   * An array of series names representing the data series to be displayed in descendant charts components.
    */
-  series: Array<string>;
+  series: Array<SeriesName>;
 }

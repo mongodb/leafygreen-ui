@@ -33,7 +33,7 @@ const checkIconColor: Record<Theme, Record<'default' | 'disabled', string>> = {
     disabled: palette.gray.light3,
   },
   [Theme.Dark]: {
-    default: palette.white,
+    default: palette.black,
     disabled: palette.gray.dark1,
   },
 };

@@ -19,6 +19,9 @@
       "path": "../colors"
     },
     {
+      "path": "../series-provider"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {
