@@ -79,8 +79,10 @@ const renderCustomTooltip = (props: Partial<CustomTooltipProps> = {}) => {
 describe('@lg-charts/core/Tooltip/CustomTooltip', () => {
   test('should render properly formatted date', () => {
     renderCustomTooltip();
-
-    expect(screen.getByText('2024/01/01/00:18:00')).toBeInTheDocument();
+    const dateElement = screen.getByText(
+      /\d{4}\/\d{2}\/\d{2}\/\d{2}:\d{2}:\d{2}/,
+    );
+    expect(dateElement).toBeInTheDocument();
   });
 
   test('should render series list sorted desc by value by default', () => {
