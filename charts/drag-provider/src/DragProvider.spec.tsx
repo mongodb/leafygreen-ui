@@ -5,8 +5,6 @@ import {
   Grid,
   Header,
   Line,
-  SortDirection,
-  SortKey,
   Tooltip,
   XAxis,
   YAxis,
@@ -20,7 +18,7 @@ function renderChart(dragId: string) {
     <Chart key={dragId} dragId={dragId}>
       <Header title={dragId} showDivider data-testid={`${dragId}-header`} />
       <Grid vertical={false} />
-      <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
+      <Tooltip />
       <XAxis type="value" />
       <YAxis type="value" />
       <Line
