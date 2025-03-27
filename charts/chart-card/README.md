@@ -26,25 +26,11 @@ npm install @lg-charts/legend
 
 ```js
 import { ChartCard } from '@lg-charts/chart-card';
-import { Chart, Line, XAxis, YAxis } from '@lg-charts/core';
+import { Chart } from '@lg-charts/core';
 
 <ChartCard title="My Group of Charts">
-  <Chart groupId="group1">
-    <XAxis type="time" />
-    <YAxis type="value" formatter={(value) => `${value}GB`} />
-    <Line
-      name="Series 1"
-      data={seriesData}
-    />
-  </Chart>
-  <Chart groupId="group1">
-    <XAxis type="time" />
-    <YAxis type="value" formatter={(value) => `${value}GB`} />
-    <Line
-      name="Series 1"
-      data={seriesData}
-    />
-  </Chart>
+  <Chart />
+  <Chart />
 <ChartCard>;
 ```
 
