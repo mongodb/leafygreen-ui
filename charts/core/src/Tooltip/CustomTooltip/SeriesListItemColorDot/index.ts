@@ -1,0 +1,1 @@
+export { SeriesListItemColorDot } from './SeriesListItemColorDot';
