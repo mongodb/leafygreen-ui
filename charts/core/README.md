@@ -200,11 +200,11 @@ Renders a tooltip onto the chart.
 
 #### Props
 
-| Name                                | Description                                                                                            | Type                                                   | Default   |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ | --------- |
-| `sort` _(optional)_                 | Custom sort function, used to sort list of series. List will be sorted descending by value by default. | `(seriesA: SeriesInfo, seriesB: SeriesInfo) => number` | `'value'` |
-| `seriesNameFormatter` _(optional)_  | Callback function for formatting each name string.                                                     | `(value: number \| string) => string \| ReactNode`     |           |
-| `seriesValueFormatter` _(optional)_ | Callback function for formatting each value string.                                                    | `(value: number \| string) => string \| ReactNode`     |           |
+| Name                                | Description                                                                                            | Type                                                       | Default   |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- | --------- |
+| `sort` _(optional)_                 | Custom sort function, used to sort list of series. List will be sorted descending by value by default. | `(seriesA: SeriesInfo, seriesB: SeriesInfo) => number`     | `'value'` |
+| `seriesNameFormatter` _(optional)_  | Callback function for formatting each name string.                                                     | `(value: number \| string \| Date) => string \| ReactNode` |           |
+| `seriesValueFormatter` _(optional)_ | Callback function for formatting each value string.                                                    | `(value: number \| string \| Date) => string \| ReactNode` |           |
 
 Note: `SeriesInfo` is of type `{ name: string | number; value: string | number | Date; }`
 

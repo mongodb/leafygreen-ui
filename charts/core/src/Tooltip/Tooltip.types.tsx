@@ -14,8 +14,8 @@ interface SeriesInfo {
 
 export interface TooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
-  seriesValueFormatter?: (value: number | string | Date) => ReactNode | string;
-  seriesNameFormatter?: (value: number | string | Date) => ReactNode | string;
+  seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
+  seriesNameFormatter?: (name: OptionDataValue) => ReactNode;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {

@@ -4,7 +4,6 @@ import { fontFamilies, fontWeights, spacing } from '@leafygreen-ui/tokens';
 export const containerStyle = css`
   display: grid;
   grid-template-columns: 1fr auto;
-  /* justify-content: space-between; */
   margin-bottom: ${spacing[100]}px;
   gap: ${spacing[500]}px;
 `;

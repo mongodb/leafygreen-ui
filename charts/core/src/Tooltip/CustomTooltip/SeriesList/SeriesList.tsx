@@ -27,13 +27,13 @@ export function SeriesList({
     <>
       {seriesData
         .sort((a, b) => {
-          const valueA = a.data[1];
-          const valueB = b.data[1];
+          const [nameA, valueA] = a.data;
+          const [nameB, valueB] = b.data;
 
           if (sort) {
             return sort(
-              { name: a.data[0], value: valueA },
-              { name: b.data[0], value: valueB },
+              { name: nameA, value: valueA },
+              { name: nameB, value: valueB },
             );
           }
 
