@@ -11,7 +11,12 @@ import { ChatWindow } from '@lg-chat/chat-window';
 
 import { cx } from '@leafygreen-ui/emotion';
 import ChevronDown from '@leafygreen-ui/icon/dist/ChevronDown';
-import Popover, { Align, Justify, RenderMode } from '@leafygreen-ui/popover';
+import Popover, {
+  Align,
+  getPopoverRenderModeProps,
+  Justify,
+  RenderMode,
+} from '@leafygreen-ui/popover';
 
 import { ChatTrigger } from '../ChatTrigger/ChatTrigger';
 
@@ -62,8 +67,10 @@ export const FixedChatWindow = forwardRef(
         <Popover
           justify={Justify.End}
           align={Align.Top}
-          renderMode={RenderMode.Portal}
-          {...popoverProps}
+          {...getPopoverRenderModeProps({
+            renderMode: RenderMode.Portal,
+            ...popoverProps,
+          })}
           active={open ?? localOpen}
         >
           <Transition nodeRef={chatWindowRef} in timeout={100}>
