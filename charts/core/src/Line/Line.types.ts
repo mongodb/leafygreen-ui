@@ -1,3 +1,5 @@
+import { SeriesName } from '@lg-charts/series-provider';
+
 type XValue = string | number | Date;
 type YValue = string | number | Date;
 
@@ -5,7 +7,7 @@ export interface LineProps {
   /**
    * Series name used for displaying in tooltip and filtering with the legend.
    */
-  name: string;
+  name: SeriesName;
 
   /**
    * Data array of the series. Data is represented by a two-dimensional array where

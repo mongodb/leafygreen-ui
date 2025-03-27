@@ -22,16 +22,19 @@ export function Line({ name, data }: LineProps) {
   useEffect(() => {
     if (!chart.ready) return;
 
-    chart.addSeries({
-      ...defaultLineOptions,
-      name,
-      data,
-      lineStyle: {
-        ...defaultLineOptions.lineStyle,
-        color,
-        opacity: isVisible ? 1 : 0,
-      },
-    });
+    if (isVisible) {
+      chart.addSeries({
+        ...defaultLineOptions,
+        name,
+        data,
+        lineStyle: {
+          ...defaultLineOptions.lineStyle,
+          color,
+        },
+      });
+    } else {
+      chart.removeSeries(name);
+    }
 
     return () => {
       /**
