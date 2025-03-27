@@ -1,7 +1,7 @@
 {
-  "name": "@lg-charts/core",
-  "version": "0.14.1",
-  "description": "lg-charts Core Chart Components",
+  "name": "@lg-charts/chart-card",
+  "version": "0.1.0",
+  "description": "lg-charts ChartCard",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
@@ -18,21 +18,16 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
-    "@lg-charts/chart-card": "workspace:^",
-    "@lg-charts/colors": "workspace:^",
-    "echarts": "^5.5.1",
-    "lodash.debounce": "^4.0.8"
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
-  },
-  "devDependencies": {
-    "@faker-js/faker": "8.0.2",
-    "@types/lodash.debounce": "^4.0.9"
   },
   "repository": {
     "type": "git",

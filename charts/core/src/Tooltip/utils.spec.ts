@@ -1,5 +1,6 @@
+import { ChartCardStates } from '@lg-charts/chart-card';
+
 import { ChartStates } from '../Chart';
-import { ChartCardStates } from '../ChartCard';
 
 import { SortDirection, SortKey, SortOrder } from './Tooltip.types';
 import { getSortOrder, shouldShowTooltip } from './utils';
