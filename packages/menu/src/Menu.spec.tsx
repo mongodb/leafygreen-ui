@@ -188,25 +188,30 @@ describe('packages/menu', () => {
     });
 
     test("Clicking a button outside the menu fires that button's handlers, and sets focus to the button", async () => {
+      const otherButtonHandler = jest.fn();
       const { getByTestId, findByTestId } = render(
         <>
           <Menu trigger={defaultTrigger} data-testid={menuTestId}>
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
-          <Button data-testid="outside-button">Outside Button</Button>
+          <Button data-testid="outside-button" onClick={otherButtonHandler}>
+            Outside Button
+          </Button>
         </>,
       );
       const button = getByTestId('outside-button');
       const trigger = getByTestId(menuTriggerTestId);
       userEvent.click(trigger);
 
-      const menuEl = findByTestId(menuTestId);
+      const menuEl = await findByTestId(menuTestId);
 
       userEvent.click(button);
       await waitForElementToBeRemoved(menuEl);
-
-      expect(button).toHaveFocus();
+      await waitFor(() => {
+        expect(otherButtonHandler).toHaveBeenCalled();
+        expect(button).toHaveFocus();
+      });
     });
 
     test('Click handlers on parent elements fire (propagation is not stopped)', async () => {
