@@ -7,7 +7,12 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isDefined, keyMap, Theme } from '@leafygreen-ui/lib';
+import {
+  getClosestFocusableElement,
+  isDefined,
+  keyMap,
+  Theme,
+} from '@leafygreen-ui/lib';
 import Popover, {
   Align,
   DismissMode,
@@ -89,12 +94,28 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
-  const handleClose = useCallback(() => {
-    if (shouldClose()) {
-      keyboardUsedRef.current = false;
-      setOpen(false);
-    }
-  }, [setOpen, shouldClose]);
+
+  const handleClose = useCallback(
+    (event?: MouseEvent | React.MouseEvent) => {
+      if (event) {
+        const closestFocusableElement = getClosestFocusableElement(
+          event.target as HTMLElement,
+        );
+
+        if (closestFocusableElement === document.body) {
+          triggerRef.current?.focus();
+        } else {
+          closestFocusableElement.focus();
+        }
+      }
+
+      if (shouldClose()) {
+        keyboardUsedRef.current = false;
+        setOpen(false);
+      }
+    },
+    [setOpen, shouldClose, triggerRef],
+  );
 
   const maxMenuHeightValue = useMenuHeight({
     refEl: triggerRef,
@@ -102,7 +123,10 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     maxHeight,
   });
 
-  useBackdropClick(handleClose, [popoverRef, triggerRef], open);
+  useBackdropClick(handleClose, [popoverRef, triggerRef], {
+    enabled: open,
+    allowPropagation: true,
+  });
 
   const { getDescendants, Provider: MenuDescendantsProvider } =
     useInitDescendants(MenuDescendantsContext);
