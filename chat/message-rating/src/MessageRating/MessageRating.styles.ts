@@ -4,7 +4,7 @@ import { palette } from '@leafygreen-ui/palette';
 export const baseStyles = css`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 `;
 
 export const buttonContainerStyles = css`
