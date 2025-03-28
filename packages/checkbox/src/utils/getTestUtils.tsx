@@ -6,7 +6,7 @@ import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
 import { CheckboxTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = DEFAULT_LGID_ROOT,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): CheckboxTestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
   /**
