@@ -4,6 +4,7 @@ import { Size } from '@leafygreen-ui/tokens';
 
 import { FormFieldState } from '../FormField/FormField.types';
 import { FormFieldInputElementProps } from '../FormField/useFormFieldProps';
+import { getLgIds, GetLgIdsReturnType } from '../utils/getLgIds';
 
 export interface FormFieldContextProps {
   disabled: boolean;
@@ -11,12 +12,17 @@ export interface FormFieldContextProps {
   state: FormFieldState;
   inputProps?: FormFieldInputElementProps;
   optional?: boolean;
+  /**
+   * LGIDs for the code snippet.
+   */
+  lgIds: GetLgIdsReturnType;
 }
 
 export const defaultFormFieldContext = {
   disabled: false,
   size: Size.Default,
   state: FormFieldState.None,
+  lgIds: getLgIds(),
 };
 
 export const FormFieldContext = React.createContext<FormFieldContextProps>(

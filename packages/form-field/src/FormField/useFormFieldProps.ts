@@ -1,6 +1,6 @@
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
-import { LGIDS_FORM_FIELD } from '../constants';
+import { useFormFieldContext } from '../FormFieldContext';
 
 import { FormFieldProps, FormFieldState } from './FormField.types';
 
@@ -30,12 +30,13 @@ export const useFormFieldProps = ({
   disabled,
   ...rest
 }: Partial<FormFieldProps>): FormFieldElementProps => {
-  const labelId = useIdAllocator({ prefix: LGIDS_FORM_FIELD.label });
+  const { lgIds } = useFormFieldContext();
+  const labelId = useIdAllocator({ prefix: lgIds.label });
   const descriptionId = useIdAllocator({
-    prefix: LGIDS_FORM_FIELD.description,
+    prefix: lgIds.description,
   });
-  const feedbackId = useIdAllocator({ prefix: LGIDS_FORM_FIELD.feedback });
-  const generatedInputId = useIdAllocator({ prefix: LGIDS_FORM_FIELD.input });
+  const feedbackId = useIdAllocator({ prefix: lgIds.feedback });
+  const generatedInputId = useIdAllocator({ prefix: lgIds.input });
   const inputId = id ?? generatedInputId;
 
   const hasError = state === FormFieldState.Error;

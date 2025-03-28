@@ -3,7 +3,6 @@ import React, { forwardRef } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { LGIDS_FORM_FIELD } from '../constants';
 import { FormFieldState } from '../FormField/FormField.types';
 import { useFormFieldContext } from '../FormFieldContext/FormFieldContext';
 
@@ -30,7 +29,7 @@ export const FormFieldInputContainer = forwardRef<
     fwdRef,
   ) => {
     const { theme } = useDarkMode();
-    const { disabled, size, state, inputProps, optional } =
+    const { disabled, size, state, inputProps, optional, lgIds } =
       useFormFieldContext();
 
     const renderedChildren = React.cloneElement(children, {
@@ -59,8 +58,8 @@ export const FormFieldInputContainer = forwardRef<
           <div className={additionalChildrenWrapperStyles}>
             {showOptionalText && (
               <div
-                data-lgid={LGIDS_FORM_FIELD.optional}
-                data-testid={LGIDS_FORM_FIELD.optional}
+                data-lgid={lgIds.optional}
+                data-testid={lgIds.optional}
                 className={getOptionalTextStyle(theme)}
               >
                 <p>Optional</p>
@@ -75,8 +74,8 @@ export const FormFieldInputContainer = forwardRef<
                   contentEnd.props.className,
                 ),
                 disabled,
-                ['data-lgid']: LGIDS_FORM_FIELD.contentEnd,
-                ['data-testid']: LGIDS_FORM_FIELD.contentEnd,
+                ['data-lgid']: lgIds.contentEnd,
+                ['data-testid']: lgIds.contentEnd,
               })}
           </div>
         )}

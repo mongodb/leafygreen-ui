@@ -1,4 +1,4 @@
-import { DarkModeProps, HTMLElementProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, HTMLElementProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 export const FormFieldState = {
@@ -53,7 +53,8 @@ type AriaLabelProps =
 
 export type FormFieldProps = Omit<HTMLElementProps<'div'>, 'children'> &
   AriaLabelProps &
-  DarkModeProps & {
+  DarkModeProps &
+  LgIdProps & {
     /**
      * `FormFieldInputContainer` component, or other custom input component
      */

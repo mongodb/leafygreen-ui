@@ -9,9 +9,10 @@ import {
   useUpdatedBaseFontSize,
 } from '@leafygreen-ui/typography';
 
-import { DEFAULT_MESSAGES, LGIDS_FORM_FIELD } from '../constants';
+import { DEFAULT_MESSAGES } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 import { FormFieldFeedback } from '../FormFieldFeedback';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import {
   getFontSizeStyles,
@@ -45,15 +46,24 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       darkMode,
       optional,
       id,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     }: FormFieldProps,
     fwdRef,
   ) => {
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const fontStyles = getFontSizeStyles({ baseFontSize, size });
+    const lgIds = getLgIds(dataLgId);
 
     const { labelId, descriptionId, feedbackId, inputId, inputProps } =
-      useFormFieldProps({ label, description, state, id, disabled, ...rest });
+      useFormFieldProps({
+        label,
+        description,
+        state,
+        id,
+        disabled,
+        ...rest,
+      });
 
     const formFieldFeedbackProps = {
       baseFontSize,
@@ -65,12 +75,19 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       successMessage,
     } as const;
 
+    console.log({ lgIds });
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <FormFieldProvider
-          value={{ disabled, size, state, inputProps, optional }}
+          value={{ disabled, size, state, inputProps, optional, lgIds }}
         >
-          <div className={cx(fontStyles, className)} ref={fwdRef} {...rest}>
+          <div
+            className={cx(fontStyles, className)}
+            ref={fwdRef}
+            data-lgid={lgIds.root}
+            {...rest}
+          >
             <div
               className={cx(textContainerStyle, {
                 [marginBottom]: !!(label || description),
@@ -78,7 +95,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             >
               {label && (
                 <Label
-                  data-testid={LGIDS_FORM_FIELD.label}
+                  data-testid={lgIds.label}
                   className={fontStyles}
                   htmlFor={inputId}
                   id={labelId}
@@ -89,7 +106,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
-                  data-testid={LGIDS_FORM_FIELD.description}
+                  data-testid={lgIds.description}
                   className={fontStyles}
                   id={descriptionId}
                   disabled={disabled}

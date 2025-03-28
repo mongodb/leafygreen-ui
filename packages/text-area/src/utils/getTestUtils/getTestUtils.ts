@@ -1,11 +1,13 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
+import { getLgIds as getLGFormFieldIds } from '@leafygreen-ui/form-field';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
 import { LGIDS_TEXT_AREA } from '../../constants';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
+
+const lgFormFieldIds = getLGFormFieldIds(LGIDS_TEXT_AREA.root);
 
 export const getTestUtils = (
   lgId: string = LGIDS_TEXT_AREA.root,
@@ -45,7 +47,7 @@ export const getTestUtils = (
    */
   const getErrorMessage = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid="${LGIDS_FORM_FIELD.errorMessage}"]`,
+    `[data-lgid="${lgFormFieldIds.errorMessage}"]`,
   );
 
   /**
