@@ -20,7 +20,8 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { type ChartCardProps, type ChartProps } from '@lg-charts/core';
+import { type ChartCardProps } from '@lg-charts/chart-card';
+import { type ChartProps } from '@lg-charts/core';
 
 import { DragProviderProps } from './DragProvider.types';
 

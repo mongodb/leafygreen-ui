@@ -1,7 +1,7 @@
 import React from 'react';
+import { ChartCard } from '@lg-charts/chart-card';
 import {
   Chart,
-  ChartCard,
   Grid,
   Header,
   Line,

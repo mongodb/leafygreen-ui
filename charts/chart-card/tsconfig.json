@@ -16,19 +16,16 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../colors"
-    },
-    {
-      "path": "../series-provider"
-    },
-    {
-      "path": "../../packages/checkbox"
-    },
-    {
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/hooks"
+    },
+    {
       "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/icon-button"
     },
     {
       "path": "../../packages/leafygreen-provider"
@@ -41,6 +38,9 @@
     },
     {
       "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
     }
   ]
 }

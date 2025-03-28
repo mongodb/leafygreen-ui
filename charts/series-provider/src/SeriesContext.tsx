@@ -7,10 +7,14 @@ import React, {
   useState,
 } from 'react';
 
-import { SeriesContextType, SeriesProviderProps } from './SeriesContext.types';
+import {
+  SeriesContextType,
+  SeriesName,
+  SeriesProviderProps,
+} from './SeriesContext.types';
 
 export const SeriesContext = createContext<SeriesContextType>({
-  checkedState: new Set(),
+  getSeriesIndex: () => -1,
   isChecked: () => true,
   isSelectAllChecked: () => true,
   isSelectAllIndeterminate: () => false,
@@ -22,12 +26,17 @@ export const SeriesProvider = ({
   children,
   series,
 }: PropsWithChildren<SeriesProviderProps>) => {
-  const [checkedState, setCheckedState] = useState<Set<string>>(
+  const [checkedState, setCheckedState] = useState<Set<SeriesName>>(
     () => new Set(series),
   );
 
+  const getSeriesIndex = useCallback(
+    (name: SeriesName) => series.indexOf(name),
+    [series],
+  );
+
   const isChecked = useCallback(
-    (id: string) => checkedState.has(id),
+    (name: SeriesName) => checkedState.has(name),
     [checkedState],
   );
 
@@ -41,14 +50,14 @@ export const SeriesProvider = ({
     [checkedState, series],
   );
 
-  const toggleSeries = useCallback((id: string) => {
+  const toggleSeries = useCallback((name: SeriesName) => {
     setCheckedState(prev => {
       const newSet = new Set(prev);
 
-      if (newSet.has(id)) {
-        newSet.delete(id);
+      if (newSet.has(name)) {
+        newSet.delete(name);
       } else {
-        newSet.add(id);
+        newSet.add(name);
       }
 
       return newSet;
@@ -57,14 +66,16 @@ export const SeriesProvider = ({
 
   const toggleSelectAll = useCallback(() => {
     setCheckedState(() => {
-      const newSet = isSelectAllChecked() ? new Set<string>() : new Set(series);
+      const newSet = isSelectAllChecked()
+        ? new Set<SeriesName>()
+        : new Set(series);
       return newSet;
     });
   }, [isSelectAllChecked, series]);
 
   const value = useMemo(
     () => ({
-      checkedState,
+      getSeriesIndex,
       isChecked,
       isSelectAllChecked,
       isSelectAllIndeterminate,
@@ -72,7 +83,7 @@ export const SeriesProvider = ({
       toggleSelectAll,
     }),
     [
-      checkedState,
+      getSeriesIndex,
       isChecked,
       isSelectAllChecked,
       isSelectAllIndeterminate,

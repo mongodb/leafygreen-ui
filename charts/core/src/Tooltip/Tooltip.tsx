@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useChartCardContext } from '@lg-charts/chart-card';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
@@ -11,7 +12,6 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { useChartCardContext } from '../ChartCard';
 import { useChartContext } from '../ChartContext';
 
 import { SortDirection, SortKey, TooltipProps } from './Tooltip.types';
