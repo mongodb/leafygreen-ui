@@ -13,7 +13,7 @@ import {
 } from '@leafygreen-ui/typography';
 
 import { Check } from '../Check';
-import { LGIDS_CHECKBOX } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import {
   checkWrapperClassName,
@@ -45,7 +45,7 @@ const Checkbox = React.forwardRef(
       checked: checkedProp,
       className,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = LGIDS_CHECKBOX.root,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       description,
       disabled = false,
       id: idProp,
@@ -62,6 +62,8 @@ const Checkbox = React.forwardRef(
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
+
+    const lgIds = getLgIds(dataLgId);
 
     const [checked, setChecked] = React.useState(defaultChecked);
     const isChecked = React.useMemo(
@@ -124,7 +126,7 @@ const Checkbox = React.forwardRef(
             },
             className,
           )}
-          data-lgid={dataLgId}
+          data-lgid={lgIds.root}
           style={style}
         >
           <Label
