@@ -1,0 +1,1 @@
+export { getLgIds } from './getLgIds';
