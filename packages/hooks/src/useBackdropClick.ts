@@ -1,4 +1,32 @@
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import useEventListener from './useEventListener';
+
+interface UseBackdropClickOptions {
+  /**
+   * Whether the callback is enabled.
+   * It's recommended to set this to `false` when not in use,
+   * and toggle to `true` when the main elements (menu, tooltip, etc) are visible
+   *
+   * @default true
+   */
+  enabled: boolean;
+
+  /**
+   * Allows the event to bubble other elements.
+   * When false, this ensures that only the `callback` is fired
+   * when the backdrop is clicked,
+   * (i.e. no other click event handlers are fired),
+   * and that the clicked element does not receive focus.
+   *
+   * To allow the event to propagate, set this to `true`,
+   * and ensure that you are correctly detecting whether the click target should receive focus,
+   * or whether focus should return to the popover trigger.
+   *
+   * @default false
+   */
+  allowPropagation: boolean;
+}
 
 /**
  * Fires a callback when any element(s)
@@ -9,7 +37,11 @@ import useEventListener from './useEventListener';
  */
 export function useBackdropClick(
   /**
-   * Function called when any element other than those provided is clicked
+   * Function called when any element
+   * _other than_ those provided is clicked.
+   *
+   * Callback is fired on the `click` event's capture phase,
+   * (i.e. before a click handler on the target element is fired)
    */
   callback: Function,
 
@@ -20,12 +52,11 @@ export function useBackdropClick(
     | React.RefObject<HTMLElement>
     | Array<React.RefObject<HTMLElement>>,
 
-  /**
-   * Whether the callback is enabled.
-   * It's recommended to set this to `false` when not in use,
-   * and toggle to `true` when the main elements (menu, tooltip, etc) are visible
-   */
-  enabled = true,
+  /** Additional options for the hook. See {@link UseBackdropClickOptions} */
+  options: boolean | UseBackdropClickOptions = {
+    enabled: true,
+    allowPropagation: false,
+  },
 ): void {
   /**
    * We add two event handlers to the document to handle the backdrop click behavior.
@@ -42,12 +73,28 @@ export function useBackdropClick(
    * 5. Then we call the callback (typically fires `closeMenu`, setting `isOpen = false`, and rerender the component)
    */
 
+  // TODO: Remove this in a major version
+  // To avoid a breaking change, we allow the `options` argument to be a boolean
+  // If it is a boolean, we assume that it is the `enabled` option
+  const { enabled, allowPropagation } =
+    typeof options === 'boolean'
+      ? { enabled: options, allowPropagation: false }
+      : options;
+
+  if (typeof options === 'boolean') {
+    consoleOnce.warn(
+      "useBackdropClick: The 'enabled' boolean argument is deprecated. Please use the 'options' object argument instead.",
+    );
+  }
+
   useEventListener(
     'mousedown',
-    (mousedown: MouseEvent) => {
+    mousedown => {
       if (!doesComponentContainEventTarget(mousedown)) {
-        mousedown.preventDefault(); // Prevent focus from being applied to body
-        mousedown.stopPropagation(); // Stop any other mousedown events from firing
+        if (!allowPropagation) {
+          mousedown.preventDefault(); // Prevent focus from being applied to body
+          mousedown.stopPropagation(); // Stop any other mousedown events from firing
+        }
       }
     },
     {
@@ -57,10 +104,12 @@ export function useBackdropClick(
 
   useEventListener(
     'click',
-    (click: MouseEvent) => {
+    click => {
       if (!doesComponentContainEventTarget(click)) {
-        click.stopPropagation(); // Stop any other click events from firing
-        callback();
+        if (!allowPropagation) {
+          click.stopPropagation(); // Stop any other click events from firing
+        }
+        callback(click);
       }
     },
     {
