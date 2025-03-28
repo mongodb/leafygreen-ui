@@ -102,7 +102,6 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: 14,
     children: shortJsSnippet,
     copyButtonAppearance: CopyButtonAppearance.Hover,
-    chromeTitle: '',
   },
   argTypes: {
     isLoading: { control: 'boolean' },
@@ -231,7 +230,6 @@ WithLanguageSwitcher.parameters = {
       'copyable',
       'children',
       'expandable',
-      'chromeTitle',
     ],
   },
 };
