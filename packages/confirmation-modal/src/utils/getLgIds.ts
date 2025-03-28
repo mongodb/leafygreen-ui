@@ -3,10 +3,10 @@ export const DEFAULT_LGID_ROOT = 'lg-confirmation_modal';
 export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
-    input: `${DEFAULT_LGID_ROOT}-confirmation_input`,
-    title: `${DEFAULT_LGID_ROOT}-title`,
-    confirm: `${DEFAULT_LGID_ROOT}-footer-confirm_button`,
-    cancel: `${DEFAULT_LGID_ROOT}-footer-cancel_button`,
+    input: `${root}-confirmation_input`,
+    title: `${root}-title`,
+    confirm: `${root}-footer-confirm_button`,
+    cancel: `${root}-footer-cancel_button`,
   } as const;
   return ids;
 };
