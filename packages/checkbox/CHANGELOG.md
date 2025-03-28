@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 15.2.0
+
+### Minor Changes
+
+- 206278b0f: Update checkbox icon color in dark mode from white to black
+
 ## 15.1.0
 
 ### Minor Changes
