@@ -134,14 +134,9 @@ export interface RenderInlineProps {
   dismissMode?: never;
 
   /**
-   * When `renderMode="top-layer"`, this callback function is called when the visibility of a popover element is toggled
+   * A callback function that is called when the visibility of a popover element rendered in the top layer is toggled
    */
   onToggle?: never;
-
-  /**
-   * When `renderMode="top-layer"`, this callback function is called just before the visibility of a popover element is toggled
-   */
-  onBeforeToggle?: never;
 
   /**
    * When `renderMode="portal"`, it specifies a class name to apply to the portal element
@@ -191,11 +186,6 @@ export interface RenderPortalProps {
   onToggle?: never;
 
   /**
-   * When `renderMode="top-layer"`, this callback function is called just before the visibility of a popover element is toggled
-   */
-  onBeforeToggle?: never;
-
-  /**
    * When `renderMode="portal"`, it specifies a class name to apply to the portal element
    * @deprecated
    */
@@ -243,14 +233,6 @@ export interface RenderTopLayerProps {
   onToggle?: (e: ToggleEvent) => void;
 
   /**
-   * A callback function that is called before the visibility of a popover element rendered in the top layer is toggled.
-   * Use this to prevent the popover from toggling if needed.
-   *
-   * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/beforetoggle_event
-   */
-  onBeforeToggle?: (e: ToggleEvent) => void;
-
-  /**
    * When `renderMode="portal"`, it specifies a class name to apply to the portal element
    * @deprecated
    */
@@ -275,17 +257,16 @@ export interface RenderTopLayerProps {
   scrollContainer?: never;
 }
 
-export type PopoverRenderModeProps<R extends RenderMode = RenderMode> =
-  R extends 'inline'
-    ? RenderInlineProps
-    : R extends 'portal'
-    ? RenderPortalProps
-    : R extends 'top-layer'
-    ? RenderTopLayerProps
-    : never;
+export type PopoverRenderModeProps =
+  | RenderInlineProps
+  | RenderPortalProps
+  | RenderTopLayerProps;
 
-/** Base popover props */
-export interface BasePopoverProps {
+/**
+ * Base popover props.
+ * Use these props to extend popover behavior
+ */
+export type PopoverProps = {
   /**
    * Content that will appear inside of the popover component.
    */
@@ -348,14 +329,7 @@ export interface BasePopoverProps {
    * default: `4`
    */
   spacing?: number;
-}
-
-/**
- * Full Popover Props
- * Use these props to extend popover behavior
- */
-export type PopoverProps = BasePopoverProps &
-  PopoverRenderModeProps &
+} & PopoverRenderModeProps &
   TransitionLifecycleCallbacks;
 
 /** Props used by the popover component */
@@ -400,4 +374,14 @@ export interface UseContentNodeReturnObj {
    * Dispatch method to attach `contentNode` to the `ContentWrapper`
    */
   setContentNode: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+}
+
+export interface GetPopoverRenderModeProps {
+  dismissMode?: DismissMode;
+  onToggle?: (e: ToggleEvent) => void;
+  portalClassName?: string;
+  portalContainer?: HTMLElement | null;
+  portalRef?: React.MutableRefObject<HTMLElement | null>;
+  renderMode: RenderMode;
+  scrollContainer?: HTMLElement | null;
 }

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useRef, useState } from 'react';
 import {
   storybookExcludedControlParams,
@@ -178,49 +177,38 @@ export const LiveExample: StoryFn<PopoverStoryProps> = ({
   const [active, setActive] = useState<boolean>(false);
 
   const handleClick = () => {
-    console.log('Button clicked');
     setActive(active => !active);
   };
 
   const handleToggle = (e: ToggleEvent) => {
-    console.log('Toggle event', e);
     onToggle?.(e);
     const newActive = e.newState === 'open';
     setActive(newActive);
   };
 
-  const handleBeforeToggle = (e: ToggleEvent) => {
-    console.log('handleBeforeToggle', e);
-    // e.preventDefault();
-  };
-
-  const popoverProps = getPopoverRenderModeProps({
-    dismissMode,
-    onToggle: handleToggle,
-    onBeforeToggle: handleBeforeToggle,
-    portalClassName,
-    portalContainer,
-    portalRef,
-    renderMode,
-    scrollContainer,
+  const popoverProps = {
+    active,
+    refEl: buttonRef,
+    ...getPopoverRenderModeProps({
+      dismissMode,
+      onToggle: handleToggle,
+      portalClassName,
+      portalContainer,
+      portalRef,
+      renderMode,
+      scrollContainer,
+    }),
     ...rest,
-  });
+  };
 
   return (
     <div className={containerStyles}>
       <Button onClick={handleClick} ref={buttonRef}>
         {buttonText}
       </Button>
-      <Popover active={active} refEl={buttonRef} {...popoverProps}>
+      <Popover {...popoverProps}>
         <div className={popoverStyle}>Popover content</div>
       </Popover>
-      <Button
-        onClick={() => {
-          console.log('Other button clicked');
-        }}
-      >
-        Other button
-      </Button>
     </div>
   );
 };
@@ -232,26 +220,26 @@ LiveExample.parameters = {
 
 const PortalPopoverInScrollableContainer = ({
   buttonText,
-  ...rest
+  ...props
 }: PopoverStoryProps) => {
+  const { dismissMode, onToggle, renderMode, ...rest } = props;
   const [active, setActive] = useState<boolean>(false);
   const portalRef = useRef<HTMLElement | null>(null);
   const scrollContainer = useRef<HTMLDivElement | null>(null);
-
-  const popoverProps = getPopoverRenderModeProps({
-    renderMode: RenderMode.Portal,
-    portalRef: portalRef,
-    portalContainer: scrollContainer.current,
-    scrollContainer: scrollContainer.current,
-    ...rest,
-  });
 
   return (
     <div className={scrollableOuterStyles}>
       <div className={scrollableInnerStyles} ref={scrollContainer}>
         <Button onClick={() => setActive(active => !active)}>
           {buttonText}
-          <Popover active={active} {...popoverProps}>
+          <Popover
+            {...rest}
+            active={active}
+            renderMode={RenderMode.Portal}
+            portalContainer={scrollContainer.current}
+            portalRef={portalRef}
+            scrollContainer={scrollContainer.current}
+          >
             <div className={popoverStyle}>Popover content</div>
           </Popover>
         </Button>
@@ -276,9 +264,6 @@ export const RenderModePortalInScrollableContainer = {
     className: { control: 'none' },
     active: { control: 'none' },
   },
-  args: {
-    renderMode: RenderMode.Portal,
-  },
 };
 
 const InlinePopover = ({ buttonText, ...props }: PopoverStoryProps) => {
@@ -295,17 +280,17 @@ const InlinePopover = ({ buttonText, ...props }: PopoverStoryProps) => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [active, setActive] = useState<boolean>(false);
 
-  const popoverProps = getPopoverRenderModeProps({
-    renderMode: RenderMode.Inline,
-    ...rest,
-  });
-
   return (
     <div className={containerStyles}>
       <Button onClick={() => setActive(active => !active)} ref={buttonRef}>
         {buttonText}
       </Button>
-      <Popover active={active} refEl={buttonRef} {...popoverProps}>
+      <Popover
+        {...rest}
+        active={active}
+        refEl={buttonRef}
+        renderMode={RenderMode.Inline}
+      >
         <div className={popoverStyle}>Popover content</div>
       </Popover>
     </div>
@@ -327,9 +312,6 @@ export const RenderModeInline = {
     refEl: { control: 'none' },
     className: { control: 'none' },
     active: { control: 'none' },
-  },
-  args: {
-    renderMode: RenderMode.Inline,
   },
 };
 

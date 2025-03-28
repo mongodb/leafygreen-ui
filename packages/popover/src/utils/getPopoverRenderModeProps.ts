@@ -1,42 +1,24 @@
-import { PopoverRenderModeProps, RenderMode } from '../Popover';
 import {
-  BasePopoverProps,
-  DismissMode,
-  ToggleEvent,
-} from '../Popover/Popover.types';
-
-/**
- *
- */
-export type GetPopoverRenderModePropsArgs<R extends RenderMode = RenderMode> =
-  Partial<BasePopoverProps> & {
-    dismissMode?: DismissMode;
-    onToggle?: (e: ToggleEvent) => void;
-    onBeforeToggle?: (e: ToggleEvent) => void;
-    portalClassName?: string;
-    portalContainer?: HTMLElement | null;
-    portalRef?: React.MutableRefObject<HTMLElement | null>;
-    renderMode: R;
-    scrollContainer?: HTMLElement | null;
-  };
+  GetPopoverRenderModeProps,
+  PopoverRenderModeProps,
+  RenderMode,
+} from '../Popover';
 
 /**
  * Util function that returns relevant properties based on the `renderMode` prop
  * @internal
  */
-export const getPopoverRenderModeProps = <R extends RenderMode>({
+export const getPopoverRenderModeProps = ({
   dismissMode,
   onToggle,
-  onBeforeToggle,
   portalClassName,
   portalContainer,
   portalRef,
   renderMode,
   scrollContainer,
-  ...rest
-}: GetPopoverRenderModePropsArgs<R>): PopoverRenderModeProps<R> => {
+}: GetPopoverRenderModeProps): PopoverRenderModeProps => {
   if (renderMode === RenderMode.Inline) {
-    return { renderMode, ...rest } as PopoverRenderModeProps<R>;
+    return { renderMode };
   }
 
   if (renderMode === RenderMode.Portal) {
@@ -46,15 +28,12 @@ export const getPopoverRenderModeProps = <R extends RenderMode>({
       portalContainer,
       portalRef,
       scrollContainer,
-      ...rest,
-    } as PopoverRenderModeProps<R>;
+    };
   }
 
   return {
     dismissMode,
     onToggle,
-    onBeforeToggle,
     renderMode,
-    ...rest,
-  } as PopoverRenderModeProps<R>;
+  };
 };

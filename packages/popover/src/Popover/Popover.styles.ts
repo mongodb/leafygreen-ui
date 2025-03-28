@@ -23,7 +23,7 @@ const basePopoverStyles = css`
   background-color: transparent;
   width: max-content;
 
-  transition-property: opacity, transform, overlay, display;
+  transition-property: opacity, transform, overlay;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   transition-behavior: allow-discrete;
@@ -32,7 +32,7 @@ const basePopoverStyles = css`
   transform: scale(${TRANSFORM_INITIAL_SCALE});
 
   &::backdrop {
-    transition-property: background-color, overlay, display;
+    transition-property: background, overlay;
     transition-duration: ${TRANSITION_DURATION}ms;
     transition-timing-function: ease-in-out;
     transition-behavior: allow-discrete;
@@ -153,6 +153,12 @@ const getClosedStyles = (spacing: number, transformAlign: TransformAlign) => {
 const baseOpenStyles = css`
   opacity: 1;
   pointer-events: initial;
+
+  &:popover-open {
+    opacity: 1;
+
+    pointer-events: initial;
+  }
 `;
 
 const getOpenStyles = (transformAlign: TransformAlign) => {
@@ -163,6 +169,10 @@ const getOpenStyles = (transformAlign: TransformAlign) => {
         baseOpenStyles,
         css`
           transform: translateY(0) scale(1);
+
+          &:popover-open {
+            transform: translateY(0) scale(1);
+          }
         `,
       );
     case TransformAlign.Left:
@@ -171,6 +181,10 @@ const getOpenStyles = (transformAlign: TransformAlign) => {
         baseOpenStyles,
         css`
           transform: translateX(0) scale(1);
+
+          &:popover-open {
+            transform: translateX(0) scale(1);
+          }
         `,
       );
     case TransformAlign.Center:
@@ -179,6 +193,10 @@ const getOpenStyles = (transformAlign: TransformAlign) => {
         baseOpenStyles,
         css`
           transform: scale(1);
+
+          &:popover-open {
+            transform: scale(1);
+          }
         `,
       );
   }
