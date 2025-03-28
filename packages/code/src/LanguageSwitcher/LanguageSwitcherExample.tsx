@@ -98,10 +98,14 @@ export function LanguageSwitcherWithDeprecatedPropsExample({
     <Code
       {...rest}
       language={language.displayName}
-      languageOptions={languageOptions}
-      customActionButtons={customActionButtons}
-      onChange={handleChange}
-      chromeTitle="Title"
+      panel={
+        <Panel
+          languageOptions={languageOptions}
+          customActionButtons={customActionButtons}
+          onChange={handleChange}
+          title="Title"
+        />
+      }
     >
       {snippetMap[languageIndex as 'javascript' | 'python']}
     </Code>
