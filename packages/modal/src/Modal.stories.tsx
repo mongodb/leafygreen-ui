@@ -207,10 +207,7 @@ console.log(greeting('World'));
           <div>Modal Content goes here.</div>
           <Copyable>Hello world in a modal</Copyable>
 
-          <Code
-            language="javascript"
-            panel={<Panel onCopy={() => console.log('copied')} />}
-          >
+          <Code language="javascript" panel={<Panel onCopy={() => {}} />}>
             {jsSnippet}
           </Code>
         </div>
