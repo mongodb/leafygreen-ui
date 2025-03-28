@@ -9,7 +9,6 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType } from '@leafygreen-ui/lib';
 
-import { LGIDS_FORM_FOOTER } from './constants';
 import {
   bannerStyle,
   contentStyle,
@@ -19,6 +18,7 @@ import {
 } from './FormFooter.styles';
 import { FormFooterProps } from './FormFooter.types';
 import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
+import { DEFAULT_LGID_ROOT, getLgIds } from './utils';
 
 export default function FormFooter({
   primaryButton,
@@ -29,17 +29,19 @@ export default function FormFooter({
   contentClassName,
   className,
   darkMode: darkModeProp,
+  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const showBackButton = backButtonProps;
   const showCancelButton = cancelButtonProps;
   const showDeprecatedPrimaryButton = primaryButton;
+  const lgIds = getLgIds(dataLgId);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <footer
-        data-testid={LGIDS_FORM_FOOTER.root}
+        data-testid={lgIds.root}
         className={cx(footerBaseStyle, footerThemeStyle[theme], className)}
         {...rest}
       >
@@ -47,10 +49,8 @@ export default function FormFooter({
           {showBackButton && (
             <Button
               variant={ButtonVariant.Default}
-              leftGlyph={
-                <ArrowLeftIcon data-testid={LGIDS_FORM_FOOTER.backButtonIcon} />
-              }
-              data-testid={LGIDS_FORM_FOOTER.backButton}
+              leftGlyph={<ArrowLeftIcon data-testid={lgIds.backButtonIcon} />}
+              data-testid={lgIds.backButton}
               {...backButtonProps}
             >
               {backButtonProps?.children || 'Back'}
@@ -64,7 +64,7 @@ export default function FormFooter({
             )}
             {showCancelButton && (
               <Button
-                data-testid={LGIDS_FORM_FOOTER.cancelButton}
+                data-testid={lgIds.cancelButton}
                 {...cancelButtonProps}
                 variant={ButtonVariant.Default}
               >
@@ -74,18 +74,18 @@ export default function FormFooter({
             {showDeprecatedPrimaryButton ? (
               isComponentType(primaryButton as React.ReactElement, 'Button') ? (
                 React.cloneElement(primaryButton as React.ReactElement, {
-                  ['data-testid']: LGIDS_FORM_FOOTER.primaryButton,
+                  ['data-testid']: lgIds.primaryButton,
                 })
               ) : (
                 <PrimaryButton
-                  data-testid={LGIDS_FORM_FOOTER.primaryButton}
+                  data-testid={lgIds.primaryButton}
                   {...(primaryButton as PrimaryButtonProps)}
                 />
               )
             ) : (
               <Button
                 variant={ButtonVariant.Primary}
-                data-testid={LGIDS_FORM_FOOTER.primaryButton}
+                data-testid={lgIds.primaryButton}
                 {...primaryButtonProps}
               />
             )}

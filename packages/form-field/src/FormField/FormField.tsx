@@ -75,8 +75,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       successMessage,
     } as const;
 
-    console.log({ lgIds });
-
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <FormFieldProvider
