@@ -1,5 +1,22 @@
 # @lg-charts/core
 
+## 0.15.0
+
+### Minor Changes
+
+- 7e3909a12: Moves `ChartCard` component into separate package and updates downstream dependencies
+- 206278b0f: Updates `Line` component styling of color and visibility based on checked state managed in `SeriesProvider`
+
+### Patch Changes
+
+- Updated dependencies [7e3909a12]
+- Updated dependencies [7e3909a12]
+- Updated dependencies [206278b0f]
+- Updated dependencies [206278b0f]
+  - @lg-charts/chart-card@0.2.0
+  - @lg-charts/colors@0.2.2
+  - @lg-charts/series-provider@0.2.0
+
 ## 0.14.1
 
 ### Patch Changes
