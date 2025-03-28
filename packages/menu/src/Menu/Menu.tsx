@@ -97,6 +97,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
 
   const handleClose = useCallback(
     (event?: MouseEvent | React.MouseEvent) => {
+      // TODO: move this logic to useBackdropClick
       // In the case of backdrop click events,
       // if the click occurred on an element that is focusable,
       // then we want to focus that element,
