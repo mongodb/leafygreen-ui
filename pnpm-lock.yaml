@@ -111,26 +111,7 @@ importers:
         specifier: ~4.9.0
         version: 4.9.5
 
-  charts/colors:
-    dependencies:
-      '@leafygreen-ui/leafygreen-provider':
-        specifier: workspace:^
-        version: link:../../packages/leafygreen-provider
-      '@leafygreen-ui/lib':
-        specifier: workspace:^
-        version: link:../../packages/lib
-      '@leafygreen-ui/palette':
-        specifier: workspace:^
-        version: link:../../packages/palette
-    devDependencies:
-      '@leafygreen-ui/emotion':
-        specifier: workspace:^
-        version: link:../../packages/emotion
-      '@leafygreen-ui/tokens':
-        specifier: workspace:^
-        version: link:../../packages/tokens
-
-  charts/core:
+  charts/chart-card:
     dependencies:
       '@dnd-kit/sortable':
         specifier: ^10.0.0
@@ -165,6 +146,55 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
+
+  charts/colors:
+    dependencies:
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
+    devDependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+
+  charts/core:
+    dependencies:
+      '@dnd-kit/sortable':
+        specifier: ^10.0.0
+        version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      '@dnd-kit/utilities':
+        specifier: ^3.2.2
+        version: 3.2.2(react@18.2.0)
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../../packages/emotion
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../../packages/leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../../packages/lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../../packages/palette
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../../packages/tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../../packages/typography
+      '@lg-charts/chart-card':
+        specifier: workspace:^
+        version: link:../chart-card
       '@lg-charts/colors':
         specifier: workspace:^
         version: link:../colors
@@ -196,6 +226,9 @@ importers:
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../../packages/leafygreen-provider
+      '@lg-charts/chart-card':
+        specifier: workspace:^
+        version: link:../chart-card
       '@lg-charts/core':
         specifier: workspace:^
         version: link:../core

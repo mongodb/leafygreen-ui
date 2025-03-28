@@ -1,12 +1,12 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
-    "compilerOptions": {
+   "compilerOptions": {
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
+      "@leafygreen-ui/icon/dist/*": ["../../icon/src/generated/*"],
       "@leafygreen-ui/*": ["../../packages/*/src"]
     }
   },
@@ -16,26 +16,23 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../chart-card"
-    },
-    {
-      "path": "../colors"
-    },
-    {
-      "path": "../series-provider"
-    },
-    {
       "path": "../../packages/emotion"
     },
     {
+      "path": "../../packages/hooks"
+    },
+    {
+      "path": "../../packages/icon"
+    },
+    {
+      "path": "../../packages/icon-button"
+    },
+    {
       "path": "../../packages/leafygreen-provider"
-    }, 
+    },
     {
       "path": "../../packages/lib"
     },
-    {
-      "path": "../../packages/loading-indicator"
-    }, 
     {
       "path": "../../packages/palette"
     },
