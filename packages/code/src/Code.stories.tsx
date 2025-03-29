@@ -13,7 +13,6 @@ import IconButton from '@leafygreen-ui/icon-button';
 
 import {
   languageOptions,
-  LanguageSwitcherWithDeprecatedPropsExample,
   LanguageSwitcherWithPanelExample,
 } from './LanguageSwitcher/LanguageSwitcherExample';
 import Code, { CodeProps, CopyButtonAppearance, Language, Panel } from '.';
@@ -103,7 +102,6 @@ const meta: StoryMetaType<typeof Code> = {
     baseFontSize: 14,
     children: shortJsSnippet,
     copyButtonAppearance: CopyButtonAppearance.Hover,
-    chromeTitle: '',
   },
   argTypes: {
     isLoading: { control: 'boolean' },
@@ -232,7 +230,6 @@ WithLanguageSwitcher.parameters = {
       'copyable',
       'children',
       'expandable',
-      'chromeTitle',
     ],
   },
 };
@@ -272,56 +269,6 @@ export const Multiple: StoryType<typeof Code, FontSizeProps> = ({
     </Code>
   </div>
 );
-
-export const WithDeprecatedCustomActionProps: StoryType<
-  typeof Code,
-  FontSizeProps
-> = ({ highlightLines, ...args }: CodeProps) => (
-  <Code
-    {...(args as CodeProps)}
-    highlightLines={highlightLines ? [6, [10, 15]] : undefined}
-    customActionButtons={customActionButtons}
-    showCustomActionButtons
-  >
-    {jsSnippet}
-  </Code>
-);
-WithDeprecatedCustomActionProps.parameters = {
-  controls: {
-    exclude: [
-      'highlightLines',
-      'copyButtonAppearance',
-      'copyable',
-      'children',
-      'expandable',
-      'language',
-    ],
-  },
-};
-
-export const WithDeprecatedLanguageSwitcherProps: StoryType<
-  typeof Code,
-  FontSizeProps
-> = ({ ...args }: CodeProps) => (
-  <LanguageSwitcherWithDeprecatedPropsExample
-    showCustomActionButtons={true}
-    customActionButtons={customActionButtons}
-    {...args}
-  />
-);
-WithDeprecatedLanguageSwitcherProps.parameters = {
-  controls: {
-    exclude: [
-      'highlightLines',
-      'copyButtonAppearance',
-      'copyable',
-      'children',
-      'expandable',
-      'chromeTitle',
-      'language',
-    ],
-  },
-};
 
 export const WithPanel = () => {};
 WithPanel.parameters = {
