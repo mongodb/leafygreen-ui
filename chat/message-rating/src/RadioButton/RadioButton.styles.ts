@@ -28,7 +28,7 @@ export const checkedStyles: Record<Theme, string> = {
 export const baseStyles = css`
   overflow: hidden; // for ripple
   display: flex;
-  height: 28px;
+  height: 22px; // Matches X-Small Button height
   justify-content: center;
   align-items: center;
   gap: 6px;
@@ -70,7 +70,7 @@ export const labelStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px 12px;
+  padding: 4px 8px;
   height: 100%;
   cursor: pointer;
 `;
