@@ -24,19 +24,36 @@ npm install @lg-charts/legend
 
 ## Example
 
-TODO @steph: add example when adding `Legend` component
+To use the `Legend`, ensure your `Legend` instance and corresponding chart components are wrapped in a `SeriesProvider` instance.
+
+```tsx
+import { Chart, ChartCard } from '@lg-charts/core';
+import { Legend } from '@lg-charts/legend';
+import { SeriesProvider } from '@lg-charts/series-provider';
+
+const App = () => {
+  const lineData = getLineData(); // use a fetch endpoint or pass down line data
+  const series = lineData.map(({name}) => name);
+
+  return (
+    <SeriesProvider series={series}>
+      <Legend series={series}>
+      <Chart>
+        {lineData.map(({ data, name }) => (
+          <Line key={name} data={data} name={name} />
+        ))}
+      </Chart>
+    </SeriesProvider>
+  );
+};
+```
 
 ## Properties
 
-### LegendCheckbox
+### Legend
 
-The `LegendCheckbox` component is a customized checkbox component used within the charts legend. It extends the base `Checkbox` component from `@leafygreen-ui/checkbox` with additional props and styles.
-
-Refer to the [props table in @leafygreen-ui/checkbox README.md](https://github.com/mongodb/leafygreen-ui/blob/main/packages/checkbox/README.md#properties) for a full list of props that can be passed to the `LegendCheckbox`.
-
-Note: the following `Checkbox` component props are omitted: `animate`, `baseFontSize`, `bold`, `description`, and `disabled`.
-
-| Prop                 | Type              | Description                                     | Default |
-| -------------------- | ----------------- | ----------------------------------------------- | ------- |
-| `color` _(optional)_ | `string`          | The color of the checkbox.                      |         |
-| `label`              | `React.ReactNode` | The label text to display next to the checkbox. |         |
+| Prop                               | Type                                | Description                                                                                          | Default |
+| ---------------------------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------- | ------- |
+| `series`                           | `Array<string>`                     | An array of series names representing the data series to be displayed in the legend.                 |         |
+| `seriesNameFormatter` _(optional)_ | `(name: string) => React.ReactNode` | A function that formats the series name. The function is called with the series name as an argument. |         |
+| `showSelectAll` _(optional)_       | `boolean`                           | Determines whether or not to show the select all checkbox.                                           | `true`  |

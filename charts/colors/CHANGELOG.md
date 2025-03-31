@@ -1,5 +1,11 @@
 # @lg-charts/colors
 
+## 0.2.2
+
+### Patch Changes
+
+- 206278b0f: Update charts color palette
+
 ## 0.2.1
 
 ### Patch Changes

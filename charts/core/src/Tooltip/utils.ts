@@ -1,5 +1,6 @@
+import { ChartCardStates } from '@lg-charts/chart-card';
+
 import { ChartStates } from '../Chart';
-import { ChartCardStates } from '../ChartCard';
 
 /**
  * Determines if the tooltip should be shown based on the chart and chart card state

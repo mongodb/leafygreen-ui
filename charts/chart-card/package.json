@@ -1,48 +1,39 @@
 {
-  "name": "@leafygreen-ui/checkbox",
-  "version": "15.2.0",
-  "description": "LeafyGreen UI Kit Checkbox",
+  "name": "@lg-charts/chart-card",
+  "version": "0.2.0",
+  "description": "lg-charts ChartCard",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "license": "Apache-2.0",
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",
     "docs": "lg build-tsdoc"
   },
-  "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@leafygreen-ui/a11y": "workspace:^",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^",
-    "@lg-tools/test-harnesses": "workspace:^",
-    "react-transition-group": "^4.4.5"
+    "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
-  "gitHead": "dd71a2d404218ccec2e657df9c0263dc1c15b9e0",
-  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/checkbox",
   "repository": {
     "type": "git",
     "url": "https://github.com/mongodb/leafygreen-ui"
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
-  },
-  "devDependencies": {}
+  }
 }

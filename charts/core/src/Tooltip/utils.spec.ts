@@ -1,5 +1,6 @@
+import { ChartCardStates } from '@lg-charts/chart-card';
+
 import { ChartStates } from '../Chart';
-import { ChartCardStates } from '../ChartCard';
 
 import { shouldShowTooltip } from './utils';
 

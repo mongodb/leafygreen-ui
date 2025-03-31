@@ -1,5 +1,12 @@
 # @leafygreen-ui/combobox
 
+## 11.0.12
+
+### Patch Changes
+
+- Updated dependencies [206278b0f]
+  - @leafygreen-ui/checkbox@15.2.0
+
 ## 11.0.11
 
 ### Patch Changes

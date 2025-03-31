@@ -6,7 +6,7 @@ import { SeriesProvider, useSeriesContext } from './SeriesContext';
 
 const TestComponent = () => {
   const {
-    checkedState,
+    getSeriesIndex,
     isChecked,
     isSelectAllChecked,
     isSelectAllIndeterminate,
@@ -16,8 +16,10 @@ const TestComponent = () => {
 
   return (
     <div>
-      <div data-testid="checkedState">{Array.from(checkedState).join(',')}</div>
-      <div data-testid="isChecked">{isChecked('test-id').toString()}</div>
+      <div data-testid="getSeriesIndex">
+        {getSeriesIndex('Test series').toString()}
+      </div>
+      <div data-testid="isChecked">{isChecked('Test series').toString()}</div>
       <div data-testid="isSelectAllChecked">
         {isSelectAllChecked().toString()}
       </div>
@@ -26,7 +28,7 @@ const TestComponent = () => {
       </div>
       <button
         data-testid="toggleSeries"
-        onClick={() => toggleSeries('test-id')}
+        onClick={() => toggleSeries('Test series')}
       >
         Toggle Series
       </button>
@@ -44,7 +46,7 @@ const renderTestComponentWithProvider = (series: Array<string>) => {
     </SeriesProvider>,
   );
 
-  const checkedStateEl = utils.getByTestId('checkedState');
+  const getSeriesIndexEl = utils.getByTestId('getSeriesIndex');
   const isCheckedEl = utils.getByTestId('isChecked');
   const isSelectAllCheckedEl = utils.getByTestId('isSelectAllChecked');
   const isSelectAllIndeterminateEl = utils.getByTestId(
@@ -55,7 +57,7 @@ const renderTestComponentWithProvider = (series: Array<string>) => {
 
   return {
     ...utils,
-    checkedStateEl,
+    getSeriesIndexEl,
     isCheckedEl,
     isSelectAllCheckedEl,
     isSelectAllIndeterminateEl,
@@ -67,13 +69,13 @@ const renderTestComponentWithProvider = (series: Array<string>) => {
 describe('SeriesContext', () => {
   test('provides the correct initial context values', () => {
     const {
-      checkedStateEl,
+      getSeriesIndexEl,
       isCheckedEl,
       isSelectAllCheckedEl,
       isSelectAllIndeterminateEl,
-    } = renderTestComponentWithProvider(['test-id']);
+    } = renderTestComponentWithProvider(['Test series']);
 
-    expect(checkedStateEl.textContent).toBe('test-id');
+    expect(getSeriesIndexEl.textContent).toBe('0');
     expect(isCheckedEl.textContent).toBe('true');
     expect(isSelectAllCheckedEl.textContent).toBe('true');
     expect(isSelectAllIndeterminateEl.textContent).toBe('false');
@@ -81,21 +83,18 @@ describe('SeriesContext', () => {
 
   test('toggles series correctly', () => {
     const {
-      checkedStateEl,
       isCheckedEl,
       isSelectAllCheckedEl,
       isSelectAllIndeterminateEl,
       toggleSeriesButton,
-    } = renderTestComponentWithProvider(['test-id']);
+    } = renderTestComponentWithProvider(['Test series']);
 
     userEvent.click(toggleSeriesButton);
-    expect(checkedStateEl.textContent).toBe('');
     expect(isCheckedEl.textContent).toBe('false');
     expect(isSelectAllCheckedEl.textContent).toBe('false');
     expect(isSelectAllIndeterminateEl.textContent).toBe('false');
 
     userEvent.click(toggleSeriesButton);
-    expect(checkedStateEl.textContent).toBe('test-id');
     expect(isCheckedEl.textContent).toBe('true');
     expect(isSelectAllCheckedEl.textContent).toBe('true');
     expect(isSelectAllIndeterminateEl.textContent).toBe('false');
@@ -103,29 +102,24 @@ describe('SeriesContext', () => {
 
   test('toggles select all correctly', () => {
     const {
-      checkedStateEl,
       isSelectAllCheckedEl,
       isSelectAllIndeterminateEl,
       toggleSeriesButton,
       toggleSelectAllButton,
-    } = renderTestComponentWithProvider(['test-id', 'test-id-2']);
+    } = renderTestComponentWithProvider(['Test series', 'Test series 2']);
 
-    expect(checkedStateEl.textContent).toBe('test-id,test-id-2');
     expect(isSelectAllCheckedEl.textContent).toBe('true');
     expect(isSelectAllIndeterminateEl.textContent).toBe('false');
 
     userEvent.click(toggleSelectAllButton);
-    expect(checkedStateEl.textContent).toBe('');
     expect(isSelectAllCheckedEl.textContent).toBe('false');
     expect(isSelectAllIndeterminateEl.textContent).toBe('false');
 
     userEvent.click(toggleSeriesButton);
-    expect(checkedStateEl.textContent).toBe('test-id');
     expect(isSelectAllCheckedEl.textContent).toBe('false');
     expect(isSelectAllIndeterminateEl.textContent).toBe('true');
 
     userEvent.click(toggleSelectAllButton);
-    expect(checkedStateEl.textContent).toBe('test-id,test-id-2');
     expect(isSelectAllCheckedEl.textContent).toBe('true');
     expect(isSelectAllIndeterminateEl.textContent).toBe('false');
   });
