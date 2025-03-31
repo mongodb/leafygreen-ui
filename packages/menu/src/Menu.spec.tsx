@@ -13,10 +13,12 @@ import { Optional } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
-import { LGIDs } from './constants';
+import { getLgIds } from './utils';
+
 import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
+const lgIds = getLgIds();
 const menuTestId = 'menu-test-id';
 const menuTriggerTestId = 'menu-trigger';
 const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
@@ -441,7 +443,7 @@ describe('packages/menu', () => {
       await openMenu({ withKeyboard: true });
       await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
 
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
       await waitForTransition();
       await waitFor(() => {
         expect(onEntered).toHaveBeenCalled();
@@ -470,7 +472,7 @@ describe('packages/menu', () => {
       userEvent.keyboard('{arrowdown}');
       expect(queryByTestId('item-a')).toHaveFocus();
 
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
       await waitForTransition();
 
       await waitFor(() => {
@@ -504,7 +506,7 @@ describe('packages/menu', () => {
       expect(queryByTestId('item-c')).toHaveFocus();
 
       // Open the submenu
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
 
       await waitForTransition();
       await waitFor(() => {
@@ -535,7 +537,7 @@ describe('packages/menu', () => {
       expect(queryByTestId('item-c')).toHaveFocus();
 
       // Close the submenu
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
 
       await waitForTransition();
       await waitFor(() => {

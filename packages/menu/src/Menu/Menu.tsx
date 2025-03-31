@@ -16,12 +16,12 @@ import Popover, {
   RenderMode,
 } from '@leafygreen-ui/popover';
 
-import { LGIDs } from '../constants';
 import { useHighlightReducer } from '../HighlightReducer';
 import {
   MenuContext,
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { useMenuHeight } from './utils/useMenuHeight';
 import {
@@ -62,6 +62,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
     renderDarkMenu = true,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
     children,
     className,
     refEl,
@@ -77,6 +78,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   forwardRef,
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+  const lgIds = getLgIds(dataLgId);
 
   const popoverRef = useRef<HTMLUListElement | null>(null);
   const defaultTriggerRef = useRef<HTMLElement>(null);
@@ -187,6 +189,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           setHighlight,
           moveHighlight,
           renderDarkMenu,
+          lgIds,
         }}
       >
         <Popover
@@ -197,8 +200,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
-          data-testid={LGIDs.root}
-          data-lgid={LGIDs.root}
+          data-testid={lgIds.root}
+          data-lgid={lgIds.root}
           {...popoverProps}
         >
           <div

@@ -1,4 +1,3 @@
-export { LGIDs } from './constants';
 export { FocusableMenuItem } from './FocusableMenuItem';
 export { Menu, type MenuProps } from './Menu';
 export {
@@ -25,3 +24,4 @@ export {
   type SubMenuProps,
   subMenuToggleClassName,
 } from './SubMenu';
+export { DEFAULT_LGID_ROOT, getLgIds } from './utils';

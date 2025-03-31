@@ -4,12 +4,15 @@ import userEvent from '@testing-library/user-event';
 
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
-import { LGIDs } from '../constants';
+import { getLgIds } from '../utils';
+
 import { MenuItem, SubMenu, SubMenuProps } from '..';
 
 const subMenuTestId = 'sub-menu-1-id';
 const menuItem1Id = 'menu-item-1-id';
 const menuItem2Id = 'menu-item-2-id';
+
+const lgids = getLgIds();
 
 const renderSubMenu = (props: Partial<SubMenuProps> = {}) => {
   const utils = render(
@@ -33,7 +36,7 @@ describe('packages/sub-menu', () => {
     test('submenu toggle button is not a child of the submenu button', () => {
       const { getByTestId } = renderSubMenu();
       const subMenu = getByTestId(subMenuTestId);
-      const toggle = getByTestId(LGIDs.submenuToggle);
+      const toggle = getByTestId(lgids.submenuToggle);
       expect(subMenu.contains(toggle)).toBe(false);
     });
 
@@ -146,7 +149,7 @@ describe('packages/sub-menu', () => {
 
       test('clicking the submenu toggle button opens it', async () => {
         const { getByTestId, queryByTestId } = renderSubMenu();
-        const toggle = getByTestId(LGIDs.submenuToggle);
+        const toggle = getByTestId(lgids.submenuToggle);
         userEvent.click(toggle);
 
         await waitFor(() => {
@@ -158,7 +161,7 @@ describe('packages/sub-menu', () => {
         const { getByTestId, queryByTestId } = renderSubMenu({
           initialOpen: true,
         });
-        const toggle = getByTestId(LGIDs.submenuToggle);
+        const toggle = getByTestId(lgids.submenuToggle);
         userEvent.click(toggle);
 
         await waitFor(() => {
