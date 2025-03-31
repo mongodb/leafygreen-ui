@@ -93,7 +93,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             >
               {label && (
                 <Label
-                  data-testid={lgIds.root}
                   data-lgid={lgIds.root}
                   className={fontStyles}
                   htmlFor={inputId}
@@ -105,7 +104,6 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
               )}
               {description && (
                 <Description
-                  data-testid={lgIds.root}
                   data-lgid={lgIds.root}
                   className={fontStyles}
                   id={descriptionId}

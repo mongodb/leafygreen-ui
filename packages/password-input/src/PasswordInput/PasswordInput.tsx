@@ -121,6 +121,8 @@ export const PasswordInput = React.forwardRef<
               })}
               htmlFor={inputId}
               disabled={disabled}
+              data-lgid={lgIds.root}
+              data-testid={lgIds.root}
             >
               {label}
             </Label>

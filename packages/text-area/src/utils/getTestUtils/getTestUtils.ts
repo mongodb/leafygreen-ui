@@ -1,7 +1,7 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { getLgIds as getLGFormFieldIds } from '@leafygreen-ui/form-field';
-import { getLgIds as getLGTypographyLgIds } from '@leafygreen-ui/typography';
+import { getLgIds as getLgFormFieldIds } from '@leafygreen-ui/form-field';
+import { getLgIds as getLgTypographyLgIds } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
@@ -11,8 +11,8 @@ export const getTestUtils = (
   lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
-  const lgFormFieldIds = getLGFormFieldIds(lgIds.root);
-  const typographyLgIds = getLGTypographyLgIds(lgIds.root);
+  const lgFormFieldIds = getLgFormFieldIds(lgIds.root);
+  const typographyLgIds = getLgTypographyLgIds(lgIds.root);
 
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
