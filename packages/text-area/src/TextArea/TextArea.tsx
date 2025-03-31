@@ -1,11 +1,15 @@
 import React, { forwardRef, useState } from 'react';
 
-import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
+import {
+  FormField,
+  FormFieldInputContainer,
+  getLgIds,
+} from '@leafygreen-ui/form-field';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { LGIDS_TEXT_AREA } from '../constants';
+import { DEFAULT_LGID_ROOT } from '../utils';
 
 import { textAreaContainerStyles, textAreaStyles } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
@@ -60,7 +64,7 @@ export const TextArea: TextArea = forwardRef<
     'aria-labelledby': ariaLabelledby,
     'aria-invalid': ariaInvalid,
     baseFontSize: baseFontSizeProp,
-    'data-lgid': dataLgId = LGIDS_TEXT_AREA.root,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
     defaultValue = '',
     ...rest
   }: TextAreaProps,
@@ -73,6 +77,8 @@ export const TextArea: TextArea = forwardRef<
   const isControlled = typeof controlledValue === 'string';
   const [uncontrolledValue, setValue] = useState(defaultValue);
   const value = isControlled ? controlledValue : uncontrolledValue;
+
+  const lgIds = getLgIds(dataLgId);
 
   // Validation
   const validation = useValidation<HTMLTextAreaElement>(handleValidation);
@@ -113,7 +119,7 @@ export const TextArea: TextArea = forwardRef<
     baseFontSize,
     className,
     darkMode,
-    'data-lgid': dataLgId,
+    'data-lgid': lgIds.root,
     description,
     disabled,
     errorMessage,

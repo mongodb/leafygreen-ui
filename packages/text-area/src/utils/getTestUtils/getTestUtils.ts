@@ -3,20 +3,21 @@ import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 import { getLgIds as getLGFormFieldIds } from '@leafygreen-ui/form-field';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
-import { LGIDS_TEXT_AREA } from '../../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
-const lgFormFieldIds = getLGFormFieldIds(LGIDS_TEXT_AREA.root);
-
 export const getTestUtils = (
-  lgId: string = LGIDS_TEXT_AREA.root,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+  const lgFormFieldIds = getLGFormFieldIds(lgIds.root);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element = getByLgId!(lgId);
+  const element = getByLgId!(lgIds.root);
 
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
