@@ -12,4 +12,9 @@ export {
   Size,
   State,
 } from './Select';
-export { getTestUtils, type GetTestUtilsReturnType } from './utils';
+export {
+  getTestUtils,
+  type GetTestUtilsReturnType,
+  getLgIds,
+  DEFAULT_LGID_ROOT,
+} from './utils';

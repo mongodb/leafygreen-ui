@@ -4,9 +4,8 @@ import { getLgIds as getLGFormFieldIds } from '@leafygreen-ui/form-field';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
-import { LGIDS_SELECT } from '../../constants';
-
 import { GetTestUtilsReturnType } from './getTestUtils.types';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
 export function waitForSelectTransitionDuration() {
   return new Promise(res => setTimeout(res, transitionDuration.slower));
@@ -15,13 +14,15 @@ export function waitForSelectTransitionDuration() {
 const lgFormFieldIds = getLGFormFieldIds();
 
 export const getTestUtils = (
-  lgId: string = LGIDS_SELECT.root,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element = getByLgId!(lgId);
+  const element = getByLgId!(lgIds.root);
 
   /**
    * Queries the `element` for the label element. Will return `null` if the label is not found.
@@ -74,7 +75,7 @@ export const getTestUtils = (
   const getSelectValue = () => {
     const selectTriggerTextContainer = queryBySelector<HTMLDivElement>(
       getSelectTrigger,
-      `[data-lgid=${LGIDS_SELECT.buttonText}]`,
+      `[data-lgid=${lgIds.buttonText}]`,
     ) as HTMLDivElement;
     return selectTriggerTextContainer.textContent || '';
   };
@@ -95,7 +96,7 @@ export const getTestUtils = (
   const getPopover = () =>
     queryBySelector<HTMLDivElement>(
       document.body,
-      `[data-lgid=${LGIDS_SELECT.popover}]`,
+      `[data-lgid=${lgIds.popover}]`,
     );
 
   const getAllOptions = (): Array<HTMLLIElement> => {
@@ -104,7 +105,7 @@ export const getTestUtils = (
 
     if (!popover)
       throw new Error(
-        `Unable to find an element by: [data-lgid=${LGIDS_SELECT.popover}]`,
+        `Unable to find an element by: [data-lgid=${lgIds.popover}]`,
       );
 
     // Find all options

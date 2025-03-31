@@ -6,7 +6,6 @@ import { useAvailableSpace } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import Popover, { Align, Justify } from '@leafygreen-ui/popover';
 
-import { LGIDS_SELECT } from '../constants';
 import { DropdownWidthBasis } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
@@ -38,7 +37,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
     forwardedRef,
   ) {
     const { theme } = useDarkMode();
-    const { size, disabled, open } = useContext(SelectContext);
+    const { size, disabled, open, lgIds } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 
@@ -72,7 +71,7 @@ const ListMenu = React.forwardRef<HTMLUListElement, ListMenuProps>(
         {/* Keyboard events handled in Select component through event listener hook */}
         {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
         <ul
-          data-lgid={LGIDS_SELECT.popover}
+          data-lgid={lgIds.popover}
           aria-labelledby={labelId}
           role="listbox"
           ref={ref}

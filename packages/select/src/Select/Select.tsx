@@ -23,12 +23,12 @@ import { getPopoverRenderModeProps } from '@leafygreen-ui/popover';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Description, Label } from '@leafygreen-ui/typography';
 
-import { LGIDS_SELECT } from '../constants';
 import ListMenu from '../ListMenu';
 import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
+
 import {
   convertToInternalElements,
   getOptionValue,
@@ -39,6 +39,8 @@ import {
   traverseSelectChildren,
   useStateRef,
 } from '../utils/utils';
+
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import {
   labelDescriptionContainerStyle,
@@ -74,7 +76,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
-      'data-lgid': dataLgId = LGIDS_SELECT.root,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,
@@ -116,6 +118,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const { darkMode } = useDarkMode(darkModeProp);
 
+    const lgIds = getLgIds(dataLgId);
+
     const descriptionId = `${id}-description`;
     const menuId = `${id}-menu`;
 
@@ -127,8 +131,8 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
     const listMenuRef = useStateRef<HTMLUListElement | null>(null);
 
     const providerData = useMemo(() => {
-      return { size, open, disabled };
-    }, [size, open, disabled]);
+      return { size, open, disabled, lgIds };
+    }, [size, open, disabled, lgIds]);
 
     useEffect(() => {
       if (value !== undefined && onChange === undefined && readOnly !== true) {
@@ -514,7 +518,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
         <div
           ref={containerRef}
           className={cx(wrapperStyle, className)}
-          data-lgid={dataLgId}
+          data-lgid={lgIds.root}
         >
           {(label || description) && (
             <div className={labelDescriptionContainerStyle}>

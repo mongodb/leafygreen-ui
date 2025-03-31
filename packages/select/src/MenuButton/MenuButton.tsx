@@ -6,7 +6,6 @@ import CaretDownIcon from '@leafygreen-ui/icon/dist/CaretDown';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Theme } from '@leafygreen-ui/lib';
 
-import { LGIDS_SELECT } from '../constants';
 import { State } from '../Select/Select.types';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
@@ -49,7 +48,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     forwardedRef,
   ) {
     const { theme } = useDarkMode();
-    const { open, size, disabled } = useContext(SelectContext);
+    const { open, size, disabled, lgIds } = useContext(SelectContext);
 
     const ref = useForwardedRef(forwardedRef, null);
 
@@ -119,7 +118,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
       >
         <div className={menuButtonTextWrapperStyle}>
           <div
-            data-lgid={LGIDS_SELECT.buttonText}
+            data-lgid={lgIds.buttonText}
             className={cx(menuButtonTextClassName, menuButtonTextStyle)}
           >
             {text}
