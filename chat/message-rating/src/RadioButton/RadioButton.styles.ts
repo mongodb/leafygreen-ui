@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { focusRing, hoverRing } from '@leafygreen-ui/tokens';
+import { focusRing, hoverRing, spacing } from '@leafygreen-ui/tokens';
 
 export const checkedStyles: Record<Theme, string> = {
   [Theme.Dark]: css`
@@ -28,10 +28,10 @@ export const checkedStyles: Record<Theme, string> = {
 export const baseStyles = css`
   overflow: hidden; // for ripple
   display: flex;
-  height: 28px;
+  height: 22px; // Matches X-Small Button height
   justify-content: center;
   align-items: center;
-  gap: 6px;
+  gap: ${spacing[150]}px;
   flex-shrink: 0;
   align-self: stretch;
   border-radius: 6px;
@@ -70,7 +70,7 @@ export const labelStyles = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px 12px;
+  padding: ${spacing[100]}px ${spacing[200]}px;
   height: 100%;
   cursor: pointer;
 `;
