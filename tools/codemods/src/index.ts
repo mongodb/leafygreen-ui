@@ -46,6 +46,15 @@ export const migrator = async (
     return;
   }
 
+  // Check if a valid codemod name is provided
+  if (!codemod || codemod.trim() === '') {
+    console.error(chalk.red('Error: No codemod specified'));
+    console.log(
+      chalk.yellow('Use the --list option to see available codemods.'),
+    );
+    process.exit(1);
+  }
+
   let _files = files;
   // Gets the path of the codemod e.g: /Users/.../leafygreen-ui/tools/codemods/dist/codemod/[codemod]/transform.js
   const codemodFile = path.join(

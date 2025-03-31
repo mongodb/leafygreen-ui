@@ -172,7 +172,7 @@ cli
   .command('codemod')
   .description('Runs codemod transformations to upgrade LG components')
   .argument(
-    '<codemod>',
+    '[codemod]',
     'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
   )
   .argument(
