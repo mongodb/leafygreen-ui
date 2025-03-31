@@ -74,6 +74,7 @@ export function useBackdropClick(
    */
 
   // TODO: Remove this in a major version
+  // https://jira.mongodb.org/browse/LG-5012
   // To avoid a breaking change, we allow the `options` argument to be a boolean
   // If it is a boolean, we assume that it is the `enabled` option
   const { enabled, allowPropagation } =
