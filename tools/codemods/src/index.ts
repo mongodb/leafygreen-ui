@@ -6,6 +6,7 @@ import * as jscodeshift from 'jscodeshift/src/Runner';
 import path from 'path';
 
 import { checkGitStatus } from './utils/checkGitStatus';
+import { getAvailableCodemods } from './utils/getAvailableCodemods';
 import { LGPackage } from './types';
 
 export interface MigrateOptions {
@@ -14,6 +15,7 @@ export interface MigrateOptions {
   force?: boolean;
   ignore?: Array<string>;
   packages?: Array<LGPackage>;
+  list?: boolean;
 }
 
 export const migrator = async (
@@ -21,6 +23,29 @@ export const migrator = async (
   files?: string | Array<string>,
   options: MigrateOptions = {},
 ) => {
+  if (options.list || codemod === 'list') {
+    // If list option is true, (or the provided codemod name is "list")
+    // show available codemods and exit
+    const codemods = await getAvailableCodemods();
+
+    if (codemods.length === 0) {
+      console.log(chalk.yellow('No codemods found'));
+    } else {
+      console.log(chalk.greenBright('Available codemods:'));
+      codemods.forEach(cm => {
+        console.log(`- ${chalk.cyan(cm)}`);
+      });
+      console.log(
+        `\nFor more details visit: `,
+        chalk.gray(
+          '\nhttps://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
+        ),
+      );
+    }
+
+    return;
+  }
+
   let _files = files;
   // Gets the path of the codemod e.g: /Users/.../leafygreen-ui/tools/codemods/dist/codemod/[codemod]/transform.js
   const codemodFile = path.join(

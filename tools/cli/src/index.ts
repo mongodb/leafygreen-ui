@@ -179,6 +179,7 @@ cli
     '[path]',
     'Files or directory to transform. Can be a glob like like src/**.test.js',
   )
+  .option('--list', 'List all available codemods', false)
   .option(
     '-i, --ignore <items...>',
     'Glob patterns to ignore. E.g. -i **/node_modules/** **/.next/**',
