@@ -524,6 +524,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
             <div className={labelDescriptionContainerStyle}>
               {label && (
                 <Label
+                  data-lgid={lgIds.root}
                   htmlFor={menuButtonId}
                   id={labelId}
                   darkMode={darkMode}
@@ -554,6 +555,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
               {description && (
                 <Description
+                  data-lgid={lgIds.root}
                   id={descriptionId}
                   darkMode={darkMode}
                   disabled={disabled}

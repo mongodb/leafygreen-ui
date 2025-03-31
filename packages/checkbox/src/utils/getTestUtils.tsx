@@ -1,6 +1,6 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
+import { getLgIds as getLGTypographyLgIds } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
 import { CheckboxTestUtilsReturnType } from './getTestUtils.types';
@@ -9,6 +9,7 @@ export const getTestUtils = (
   lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): CheckboxTestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
+  const typographyLgIds = getLGTypographyLgIds(lgIds.root);
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
@@ -20,7 +21,7 @@ export const getTestUtils = (
    */
   const getLabel = queryBySelector<HTMLLabelElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
+    `[data-lgid=${typographyLgIds.label}]`,
   );
 
   /**
@@ -28,7 +29,7 @@ export const getTestUtils = (
    */
   const getDescription = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
+    `[data-lgid=${typographyLgIds.description}]`,
   );
 
   /**

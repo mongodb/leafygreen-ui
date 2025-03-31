@@ -2,7 +2,7 @@ import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { getLgIds as getLGFormFieldIds } from '@leafygreen-ui/form-field';
 import { transitionDuration } from '@leafygreen-ui/tokens';
-import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
+import { getLgIds as getLGTypographyLgIds } from '@leafygreen-ui/typography';
 
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
@@ -17,6 +17,7 @@ export const getTestUtils = (
   lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
+  const typographyLgIds = getLGTypographyLgIds(lgIds.root);
 
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
@@ -29,7 +30,7 @@ export const getTestUtils = (
    */
   const getLabel = queryBySelector<HTMLLabelElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.label}]`,
+    `[data-lgid=${typographyLgIds.label}]`,
   );
 
   /**
@@ -37,7 +38,7 @@ export const getTestUtils = (
    */
   const getDescription = queryBySelector<HTMLElement>(
     element,
-    `[data-lgid=${LGIDS_TYPOGRAPHY.description}]`,
+    `[data-lgid=${typographyLgIds.description}]`,
   );
 
   /**

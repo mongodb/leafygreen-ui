@@ -36,3 +36,4 @@ export { default as Subtitle } from './Subtitle/Subtitle';
 export type { SubtitleProps } from './Subtitle/Subtitle.types';
 export { StaticWidthText } from './utils/StaticWidthText';
 export { useUpdatedBaseFontSize } from './utils/useUpdatedBaseFontSize';
+export { getLgIds } from './utils';

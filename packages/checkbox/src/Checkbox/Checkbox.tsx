@@ -136,6 +136,7 @@ const Checkbox = React.forwardRef(
             className={cx(labelStyle, labelHoverStyle[theme], {
               [disabledLabelStyle]: disabled,
             })}
+            data-lgid={lgIds.root}
           >
             <input
               {...rest}
@@ -180,7 +181,11 @@ const Checkbox = React.forwardRef(
           </Label>
 
           {description && (
-            <Description className={descriptionStyle} disabled={disabled}>
+            <Description
+              className={descriptionStyle}
+              disabled={disabled}
+              data-lgid={lgIds.root}
+            >
               {description}
             </Description>
           )}
