@@ -15,7 +15,6 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { Menu as LGMenu } from '@leafygreen-ui/menu';
 
-import { LGIDs } from '../constants';
 import { MenuItemType } from '../SplitButton';
 
 import {
@@ -29,6 +28,7 @@ import { MenuProps } from './Menu.types';
  * @internal
  */
 export const Menu = ({
+  lgIds,
   variant,
   disabled,
   align,
@@ -126,8 +126,7 @@ export const Menu = ({
       open={open}
       ref={menuRef}
       portalRef={portalRef}
-      data-testid={LGIDs.menu}
-      data-lgid={LGIDs.menu}
+      data-lgid={lgIds.menu}
       {...rest}
       trigger={
         <Button
@@ -146,8 +145,8 @@ export const Menu = ({
           ref={buttonRef}
           aria-expanded={open}
           aria-haspopup={true}
-          data-testid={LGIDs.trigger}
-          data-lgid={LGIDs.trigger}
+          data-testid={lgIds.trigger}
+          data-lgid={lgIds.trigger}
         />
       }
     >

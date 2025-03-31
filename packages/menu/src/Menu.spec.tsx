@@ -19,7 +19,7 @@ import { MenuProps } from './Menu';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const lgIds = getLgIds();
-const menuTestId = 'menu-test-id';
+const menuTestId = lgIds.menu;
 const menuTriggerTestId = 'menu-trigger';
 const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
 const defaultChildren = (
@@ -46,7 +46,7 @@ function renderMenu(
   const renderResult = render(
     <>
       <div data-testid="backdrop" />
-      <Menu trigger={trigger} {...rest} data-testid={menuTestId}>
+      <Menu trigger={trigger} {...rest}>
         {children}
       </Menu>
     </>,
@@ -64,7 +64,7 @@ function renderMenu(
     menuEl: HTMLElement | null;
     menuItemElements: Array<HTMLElement | null>;
   }> {
-    const menuEl = await renderResult.findByTestId(menuTestId);
+    const menuEl = await renderResult.findByTestId(lgIds.root);
     const menuItemElements = await within(menuEl).findAllByRole('menuitem');
 
     return {
@@ -109,7 +109,7 @@ describe('packages/menu', () => {
       const setOpen = jest.fn();
       test('menu renders', () => {
         const { getByTestId } = renderMenu({ open: true, setOpen });
-        const menu = getByTestId(menuTestId);
+        const menu = getByTestId(lgIds.root);
         expect(menu).toBeInTheDocument();
       });
 
@@ -201,7 +201,7 @@ describe('packages/menu', () => {
       const button = getByTestId('menu-trigger');
 
       userEvent.click(button);
-      const menu = getByTestId(menuTestId);
+      const menu = getByTestId(lgIds.root);
       await waitFor(() => {
         expect(menu).toBeInTheDocument();
         expect(parentHandler).toHaveBeenCalled();

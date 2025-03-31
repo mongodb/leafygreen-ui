@@ -200,8 +200,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
-          data-testid={lgIds.root}
-          data-lgid={lgIds.root}
           {...popoverProps}
         >
           <div
@@ -225,6 +223,8 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
             {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events*/}
             <ul
               {...rest}
+              data-testid={lgIds.root}
+              data-lgid={lgIds.root}
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}

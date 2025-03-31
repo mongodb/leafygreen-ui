@@ -12,7 +12,6 @@ import {
 } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
 
-import { LGIDs } from '../constants';
 import { Menu } from '../Menu';
 
 import {
@@ -26,6 +25,8 @@ import {
   Justify,
   Variant,
 } from './SplitButton.types';
+
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 export const SplitButton = InferredPolymorphic<
   InternalSplitButtonProps,
@@ -59,13 +60,14 @@ export const SplitButton = InferredPolymorphic<
       triggerAriaLabel,
       onChange,
       renderDarkMenu,
-      'data-testid': testId = LGIDs.root,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ...rest
     },
     ref: React.Ref<any>,
   ) => {
     const { Component } = useInferredPolymorphic(as, rest, 'button');
     const { darkMode, theme } = useDarkMode(darkModeProp);
+    const lgIds = getLgIds(dataLgId);
     const containerRef = useForwardedRef(ref, null);
     const menuId = useIdAllocator({ prefix: 'lg-split-button-menu' });
 
@@ -87,8 +89,8 @@ export const SplitButton = InferredPolymorphic<
       <div
         className={cx(buttonContainerStyles, className)}
         ref={containerRef}
-        data-testid={testId}
-        data-lgid={LGIDs.root}
+        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
       >
         <LeafyGreenProvider darkMode={darkMode}>
           <Button
@@ -98,8 +100,8 @@ export const SplitButton = InferredPolymorphic<
             className={cx(buttonBaseStyles, {
               [buttonThemeStyles(theme, variant)]: !disabled,
             })}
-            data-testid={LGIDs.button}
-            data-lgid={LGIDs.button}
+            data-testid={lgIds.button}
+            data-lgid={lgIds.button}
             {...rest}
           >
             {label}
@@ -126,6 +128,7 @@ export const SplitButton = InferredPolymorphic<
             triggerAriaLabel={triggerAriaLabel}
             onChange={onChange}
             renderDarkMenu={renderDarkMenu}
+            lgIds={lgIds}
           />
         </LeafyGreenProvider>
       </div>

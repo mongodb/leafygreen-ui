@@ -11,14 +11,17 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { Optional } from '@leafygreen-ui/lib';
-import { MenuItem } from '@leafygreen-ui/menu';
+import { MenuItem, getLgIds as getMenuLgIds } from '@leafygreen-ui/menu';
 import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
+
+import { getLgIds } from '../utils/getLgIds';
 
 import { MenuItemsType, SplitButtonProps } from './SplitButton.types';
 import { SplitButton } from '.';
 
-const menuTestId = 'lg-split_button-menu';
+const lgIds = getLgIds();
+const menuLgIds = getMenuLgIds(lgIds.menu);
 
 const getMenuItems = (): MenuItemsType => {
   return [
@@ -44,12 +47,10 @@ type RenderSplitButtonProps = Optional<
 >;
 
 function renderSplitButton(props: RenderSplitButtonProps = {}) {
-  const renderResult = render(
-    <SplitButton data-testid="split-button" {...defaultProps} {...props} />,
-  );
-  const wrapper = renderResult.getByTestId('split-button');
-  const primaryButton = renderResult.getByTestId('lg-split_button-button');
-  const menuTrigger = renderResult.getByTestId('lg-split_button-trigger');
+  const renderResult = render(<SplitButton {...defaultProps} {...props} />);
+  const wrapper = renderResult.getByTestId(lgIds.root);
+  const primaryButton = renderResult.getByTestId(lgIds.button);
+  const menuTrigger = renderResult.getByTestId(lgIds.trigger);
 
   /**
    * Since menu elements won't exist until component is interacted with,
@@ -61,7 +62,7 @@ function renderSplitButton(props: RenderSplitButtonProps = {}) {
     menuEl: HTMLElement | null;
     menuItemElements: Array<HTMLElement | null>;
   }> {
-    const menuEl = await renderResult.findByTestId(menuTestId);
+    const menuEl = await renderResult.findByTestId(menuLgIds.root);
     const menuItemElements = await within(menuEl).findAllByRole('menuitem');
 
     return {
@@ -183,7 +184,7 @@ describe('packages/split-button', () => {
 
       userEvent.click(menuTrigger);
 
-      const menu = getByTestId(menuTestId);
+      const menu = getByTestId(menuLgIds.root);
       expect(menu).toBeInTheDocument();
     });
 
@@ -194,7 +195,8 @@ describe('packages/split-button', () => {
 
       userEvent.click(menuTrigger);
 
-      const menu = queryByTestId(menuTestId);
+      console.log('😈😈', { menu: menuLgIds.root });
+      const menu = queryByTestId(menuLgIds.root);
       expect(menu).not.toBeInTheDocument();
     });
 
@@ -203,7 +205,7 @@ describe('packages/split-button', () => {
 
       userEvent.click(menuTrigger);
 
-      const menu = getByTestId(menuTestId);
+      const menu = getByTestId(menuLgIds.root);
       expect(menu.childElementCount).toEqual(4);
     });
 
@@ -239,7 +241,7 @@ describe('packages/split-button', () => {
 
       userEvent.click(menuTrigger);
 
-      const menu = getByTestId(menuTestId);
+      const menu = getByTestId(menuLgIds.root);
       const options = globalGetAllByRole(menu, 'menuitem');
       userEvent.click(options[0]);
       expect(onChange).toHaveBeenCalledTimes(1);

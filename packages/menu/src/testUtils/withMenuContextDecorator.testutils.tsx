@@ -9,6 +9,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { Menu } from '../Menu';
 import { MenuContext } from '../MenuContext';
 import { MenuItem } from '../MenuItem';
+import { getLgIds } from '../utils';
 
 /**
  * Implements a MenuContext wrapper around each `MenuItem`, `SubMenu` or `MenuGroup`
@@ -22,6 +23,7 @@ export const withMenuContext =
         highlight,
         moveHighlight,
         setHighlight,
+        lgIds,
       },
     } = ctx ?? {
       args: {
@@ -30,6 +32,7 @@ export const withMenuContext =
         highlight: undefined,
         moveHighlight: noop,
         setHighlight: noop,
+        lgIds: getLgIds(),
       },
     };
 
@@ -50,6 +53,7 @@ export const withMenuContext =
             highlight,
             moveHighlight,
             setHighlight,
+            lgIds,
           }}
         >
           <Instance />
