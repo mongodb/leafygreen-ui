@@ -9,8 +9,10 @@ const focusableSelectors = [
   '*[tabindex]',
 ] as const;
 
+const focusableSelectorString = focusableSelectors.join(', ');
+
 /**
- * Crawls up the DOM tree to find the closest focusable element.
+ * Crawls up the DOM tree (using `el.closest`) to find the closest focusable element.
  * Returns the element itself if it is focusable.
  * If no focusable element is found, it returns the body element.
  *
@@ -18,15 +20,8 @@ const focusableSelectors = [
  * after an event, such as a click or key press.
  */
 export const getClosestFocusableElement = (el: HTMLElement): HTMLElement => {
-  // check if the element is focusable
-  if (el.matches(focusableSelectors.join(','))) {
-    return el;
-  }
-
-  // check if the element has a parent
-  if (el.parentElement) {
-    return getClosestFocusableElement(el.parentElement);
-  }
-
-  return document.body;
+  const focusableElement = el.closest(
+    focusableSelectorString,
+  ) as HTMLElement | null;
+  return focusableElement ?? document.body;
 };

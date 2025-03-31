@@ -13,7 +13,7 @@ interface UseBackdropClickOptions {
   enabled: boolean;
 
   /**
-   * Allows the event to bubble other elements.
+   * Allows the event to bubble up to other elements.
    * When false, this ensures that only the `callback` is fired
    * when the backdrop is clicked,
    * (i.e. no other click event handlers are fired),
