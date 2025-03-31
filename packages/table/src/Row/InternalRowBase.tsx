@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS } from '../constants';
+import { useTableContext } from '../TableContext';
 
 import { getRowBaseStyles } from './Row.styles';
 import { InternalRowBaseProps } from './Row.types';
@@ -15,11 +15,12 @@ const InternalRowBase = forwardRef<HTMLTableRowElement, InternalRowBaseProps>(
   ({ className, onClick, ...rest }: InternalRowBaseProps, forwardedRef) => {
     const { theme } = useDarkMode();
     const { disabled } = useRowContext();
+    const { lgIds } = useTableContext();
 
     return (
       <tr
         ref={forwardedRef}
-        data-lgid={LGIDS.row}
+        data-lgid={lgIds.row}
         onClick={onClick}
         aria-disabled={disabled}
         tabIndex={onClick ? 0 : undefined}

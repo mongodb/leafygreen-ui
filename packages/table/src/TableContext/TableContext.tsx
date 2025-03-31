@@ -8,12 +8,13 @@ import React, {
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { LGRowData } from '../useLeafyGreenTable';
+import { getLgIds } from '../utils';
 
 import { type TableProviderProps } from './TableContext.types';
 
-export const TableContext = createContext<
-  Partial<TableProviderProps<LGRowData>>
->({});
+export const TableContext = createContext<TableProviderProps<LGRowData>>({
+  lgIds: getLgIds(),
+});
 
 export const useTableContext = <T extends LGRowData>() =>
   useContext<TableProviderProps<T>>(
@@ -29,7 +30,8 @@ const TableContextProvider = <T extends LGRowData>({
   shouldTruncate,
   virtualTable,
   verticalAlignment,
-}: PropsWithChildren<Partial<TableProviderProps<T>>>) => {
+  lgIds,
+}: PropsWithChildren<TableProviderProps<T>>) => {
   /** The appropriately typed context provider */
   const TableProvider = (TableContext as React.Context<TableProviderProps<T>>)
     .Provider;
@@ -43,6 +45,7 @@ const TableContextProvider = <T extends LGRowData>({
       shouldTruncate,
       verticalAlignment,
       virtualTable,
+      lgIds,
     };
   }, [
     shouldAlternateRowColor,
@@ -52,6 +55,7 @@ const TableContextProvider = <T extends LGRowData>({
     shouldTruncate,
     verticalAlignment,
     virtualTable,
+    lgIds,
   ]);
 
   return (

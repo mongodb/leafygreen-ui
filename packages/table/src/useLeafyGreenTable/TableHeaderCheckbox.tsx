@@ -5,8 +5,8 @@ import Checkbox from '@leafygreen-ui/checkbox';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS } from '../constants';
 import { useRowContext } from '../Row/RowContext';
+import { useTableContext } from '../TableContext';
 
 import { disabledTableRowCheckStyles } from './useLeafyGreenTable.styles';
 import { LGRowData, LGTableDataType } from '.';
@@ -18,6 +18,7 @@ export const TableHeaderCheckbox = <T extends LGRowData>({
 }) => {
   const { theme } = useDarkMode();
   const { disabled: rowIsDisabled } = useRowContext();
+  const { lgIds } = useTableContext();
   return (
     <Checkbox
       className={cx({
@@ -28,7 +29,7 @@ export const TableHeaderCheckbox = <T extends LGRowData>({
       indeterminate={table.getIsSomeRowsSelected()}
       onChange={table.getToggleAllRowsSelectedHandler()}
       aria-label="Select all rows"
-      data-lgid={LGIDS.selectAllCheckbox}
+      data-lgid={lgIds.selectAllCheckbox}
     />
   );
 };
