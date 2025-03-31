@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/chart-card",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "lg-charts ChartCard",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
