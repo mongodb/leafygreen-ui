@@ -10,7 +10,6 @@ import { isComponentType, keyMap } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { LGIDS_TABS } from '../constants';
 import {
   TabDescendantsContext,
   TabPanelDescendantsContext,
@@ -18,7 +17,12 @@ import {
 } from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
-import { getEnabledIndices, getSelectedIndex } from '../utils';
+import {
+  DEFAULT_LGID_ROOT,
+  getEnabledIndices,
+  getLgIds,
+  getSelectedIndex,
+} from '../utils';
 
 import {
   getTabContainerStyles,
@@ -61,7 +65,7 @@ const Tabs = <SelectedType extends number | string>(
     selected: controlledSelected,
     setSelected: setControlledSelected,
     size = 'default',
-    'data-lgid': dataLgId = LGIDS_TABS.root,
+    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest
@@ -70,6 +74,8 @@ const Tabs = <SelectedType extends number | string>(
   const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const id = useIdAllocator({ prefix: rest.id || 'tabs' });
+
+  const lgIds = getLgIds(dataLgId);
 
   const { descendants: tabDescendants, Provider: TabDescendantsProvider } =
     useInitDescendants(TabDescendantsContext);
@@ -207,11 +213,11 @@ const Tabs = <SelectedType extends number | string>(
               size,
             }}
           >
-            <div {...rest} className={className} data-lgid={dataLgId}>
+            <div {...rest} className={className} data-lgid={lgIds.root}>
               <div className={getTabContainerStyles(theme)} id={id}>
                 <div
                   className={tabListStyles}
-                  data-lgid={LGIDS_TABS.tabList}
+                  data-lgid={lgIds.tabList}
                   role="tablist"
                   aria-orientation="horizontal"
                   {...accessibilityProps}
@@ -226,7 +232,7 @@ const Tabs = <SelectedType extends number | string>(
               </div>
               <div
                 className={tabPanelsElementClassName}
-                data-lgid={LGIDS_TABS.tabPanels}
+                data-lgid={lgIds.tabPanels}
               >
                 {renderedTabPanels}
               </div>
