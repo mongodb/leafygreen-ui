@@ -1383,6 +1383,10 @@ importers:
       '@emotion/server':
         specifier: ^11.4.0
         version: 11.11.0(@emotion/css@11.11.2)
+    devDependencies:
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../../tools/meta
 
   packages/empty-state:
     dependencies:
