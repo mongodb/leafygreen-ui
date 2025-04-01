@@ -31,6 +31,10 @@ export function Line({ name, data }: LineProps) {
           ...defaultLineOptions.lineStyle,
           color,
         },
+        itemStyle: {
+          ...defaultLineOptions.itemStyle,
+          color,
+        },
       });
     } else {
       chart.removeSeries(name);
