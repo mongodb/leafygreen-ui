@@ -67,7 +67,7 @@ export const migrator = async (
   try {
     if (!fse.existsSync(codemodFile)) {
       throw new Error(
-        `No codemod found for ${codemod}. The list of codemods can be found here: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1`,
+        `No codemod found named "${codemod}". Use --list to see available codemods.`,
       );
     }
 
