@@ -151,8 +151,6 @@ describe('packages/Code', () => {
                 spy.mockReturnValue(true);
                 return renderCode({
                   isLoading: true,
-                  // @ts-expect-error
-                  copyable: false,
                 });
               },
             );
