@@ -9,12 +9,13 @@ import { writeFiles } from './utils/writeFiles';
 import { CreatePackageOptions } from './create.types';
 import { component, componentIndex, spec, styles, types } from './templates';
 
-interface CreateComponentArgs {
+interface CreateComponentArgs
+  extends Omit<CreatePackageOptions, 'scope' | 'directory'> {
   name: string;
   parent: Required<CreatePackageOptions>['parent'];
 }
 
-export function createSubComponent({ name, parent }: CreateComponentArgs) {
+export function createSubComponent({ name, parent, dry }: CreateComponentArgs) {
   const { packageNamePascal: parentNamePascal } = getNameVariants(parent);
   const { packageNameKebab, packageNamePascal } = getNameVariants(name);
 
@@ -66,7 +67,8 @@ export function createSubComponent({ name, parent }: CreateComponentArgs) {
       ],
       {
         dir: subComponentDir,
-        packageNamePascal,
+        name,
+        dry,
       },
     );
   });

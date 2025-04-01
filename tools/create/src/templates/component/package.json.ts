@@ -34,7 +34,7 @@ export const pkgJson = ({
     "url": "https://github.com/mongodb/leafygreen-ui"
   },
   "bugs": {
-    "url": "https://jira.mongodb.org/projects/PD/summary"
+    "url": "https://jira.mongodb.org/projects/LG/summary"
   }
 }
 `;
