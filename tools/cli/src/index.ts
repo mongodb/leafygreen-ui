@@ -172,13 +172,14 @@ cli
   .command('codemod')
   .description('Runs codemod transformations to upgrade LG components')
   .argument(
-    '<codemod>',
+    '[codemod]',
     'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
   )
   .argument(
     '[path]',
     'Files or directory to transform. Can be a glob like like src/**.test.js',
   )
+  .option('--list', 'List all available codemods', false)
   .option(
     '-i, --ignore <items...>',
     'Glob patterns to ignore. E.g. -i **/node_modules/** **/.next/**',
