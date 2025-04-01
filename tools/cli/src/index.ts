@@ -36,6 +36,16 @@ cli
     '-p, --parent [parent]',
     'Creates a sub-component to the provided parent',
   )
+  .option(
+    '-v, --verbose',
+    'Prints additional information to the console',
+    false,
+  )
+  .option(
+    '-d, --dry',
+    'Run without making any changes to the filesystem',
+    false,
+  )
   .action(createPackage);
 
 /** Install */
