@@ -5,7 +5,7 @@
     "prebuild": {
       "dependsOn": ["^tsc", "^prebuild"],
       "inputs": ["src/glyphs/*.svg"],
-      "outputs": ["src/generated/*.tsx"]
+      "outputs": ["src/generated/*.tsx", "src/glyphs/index.ts"]
     }
   }
 }
