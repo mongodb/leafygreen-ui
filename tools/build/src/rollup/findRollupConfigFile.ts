@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-import { getWorkspaceRoot } from '@lg-tools/meta';
 import chalk from 'chalk';
+import { sync as spawnSync } from 'cross-spawn';
 import fse from 'fs-extra';
 import path from 'path';
 
@@ -9,7 +9,7 @@ export const findRollupConfigFile = (
   options?: { verbose?: boolean },
 ) => {
   const packageDir = process.cwd();
-  const workspaceRoot = getWorkspaceRoot();
+  const workspaceRoot = getRepositoryRoot();
 
   const packageRollupConfigPath = path.join(packageDir, 'rollup.config.mjs');
   const repoRollupConfigPath = path.join(workspaceRoot, 'rollup.config.mjs');
@@ -41,4 +41,19 @@ export const findRollupConfigFile = (
   }
 
   return defaultRollupConfigPath;
+};
+
+// redeclaring `getRepositoryRoot` to avoid circular dependency with `@lg-tools/meta`
+export const getRepositoryRoot = (): string => {
+  try {
+    const result = spawnSync('git', ['rev-parse', '--show-toplevel'], {
+      stdio: 'pipe',
+    });
+
+    const { stdout } = result;
+    return stdout.toString().trim();
+  } catch (err) {
+    console.error(err);
+    return '';
+  }
 };
