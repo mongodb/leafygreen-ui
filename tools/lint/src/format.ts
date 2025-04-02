@@ -37,7 +37,7 @@ export async function formatESLint(
   fileContent: string,
   filePath: string,
 ): Promise<string> {
-  const eslint = createESLintInstance(true);
+  const eslint = createESLintInstance({ fix: true });
   const [result] = await eslint.lintText(fileContent, { filePath });
   const output = result.output;
 

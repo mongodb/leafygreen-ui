@@ -14,10 +14,10 @@ export const eslintConfigPath = path.resolve(
 export const esLintExtensions = ['ts', 'tsx'];
 
 // Create an instance of ESLint with the configuration passed to the function
-export function createESLintInstance(fix: boolean): ESLint {
+export function createESLintInstance(options: Partial<ESLint.Options>): ESLint {
   return new ESLint({
     overrideConfigFile: eslintConfigPath,
-    fix,
+    ...options,
   });
 }
 

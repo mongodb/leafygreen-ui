@@ -25,7 +25,7 @@ export async function runESLint(
   const filePaths = options?.filePaths || allFilePaths;
   const fix = options?.fix || false;
 
-  const eslint = createESLintInstance(fix);
+  const eslint = createESLintInstance({ fix });
   const results = await eslint.lintFiles(filePaths);
 
   if (fix) {
