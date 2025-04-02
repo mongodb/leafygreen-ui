@@ -14,18 +14,13 @@ import { svgrTemplate } from './svgrTemplate';
 
 const program = new Command()
   .description('Process SVG files and generate React components')
-  .argument('[filenames...]', 'SVG files to process')
   .option('-o, --outDir <path>', 'Output directory for built SVG components')
   .option('-v, --verbose', 'Enable verbose output', false)
   .parse();
 
 const options = program.opts() as PrebuildOptions;
-const input = program.args;
 
-async function buildSvgFiles(
-  inputFiles: Array<string>,
-  options: PrebuildOptions,
-): Promise<void> {
+async function buildSvgFiles(options: PrebuildOptions): Promise<void> {
   const svgFiles: Array<FileObject> = await getSVGFiles(options);
   const outputDir = await createOutputDirectory(options);
   const processFile = makeFileProcessor(outputDir, options);
@@ -159,4 +154,4 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
   };
 }
 
-buildSvgFiles(input, options);
+buildSvgFiles(options);
