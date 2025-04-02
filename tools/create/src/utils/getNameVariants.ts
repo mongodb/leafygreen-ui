@@ -3,12 +3,7 @@ import kebabCase from 'lodash/kebabCase';
 import startCase from 'lodash/startCase';
 
 export function getNameVariants(name: string) {
-  // eslint-disable-next-line prefer-const
-  let [_scope, component] = name.split('/');
-
-  if (!component) {
-    component = name;
-  }
+  const component = name.split('/')[1] ?? name;
 
   // Construct all required parameters
   const packageNameKebab = kebabCase(component);
