@@ -1,87 +1,90 @@
+/* eslint-disable no-console */
 // @ts-expect-error - no types in svgr v5.5
 import { default as svgr } from '@svgr/core';
+import { Command } from 'commander';
 import { createHash } from 'crypto';
 import fs from 'fs';
-import meow from 'meow';
 import path from 'path';
 import { promisify } from 'util';
 
 import svgrrc from '../.svgrrc';
 
 import { indexTemplate } from './indexTemplate';
-import { FileObject, Flags } from './prebuild.types';
+import { FileObject, PrebuildOptions } from './prebuild.types';
 import { svgrTemplate } from './svgrTemplate';
 
-const usageString = `
-Usage
-  $ ts-node ./prebuild.ts <filename(s)>
+const program = new Command()
+  .description('Process SVG files and generate React components')
+  .argument('[filenames...]', 'SVG files to process')
+  .option('-o, --outDir <path>', 'Output directory for built SVG components')
+  .option('-v, --verbose', 'Enable verbose output', false)
+  .parse();
 
-Options
-  --outDir, -o  Output directory for built SVG components
-`;
-
-const cliConfig = {
-  flags: {
-    outDir: {
-      type: 'string',
-      alias: 'o',
-    },
-  },
-} satisfies meow.Options<meow.AnyFlags>;
-
-const cli = meow(usageString, cliConfig);
+const options = program.opts() as PrebuildOptions;
+const input = program.args;
 
 async function buildSvgFiles(
-  input: Array<string>,
-  flags: Flags,
+  inputFiles: Array<string>,
+  options: PrebuildOptions,
 ): Promise<void> {
-  const svgFiles: Array<FileObject> = await (async () => {
-    if (input?.length) {
-      const filteredSvgFiles = input.filter(filterSvgFiles);
-
-      return filteredSvgFiles.map(filePath => ({
-        name: path.basename(filePath, '.svg'),
-        path: path.resolve(process.cwd(), filePath),
-      }));
-    }
-
-    const glyphsDir: string = path.resolve(__dirname, '..', 'src', 'glyphs');
-    const svgFiles = await promisify(fs.readdir)(glyphsDir);
-    const filteredSvgFiles = svgFiles.filter(filterSvgFiles);
-
-    return filteredSvgFiles.map((fileName: string) => ({
-      name: fileName.replace('.svg', ''),
-      path: path.resolve(glyphsDir, fileName),
-    }));
-  })();
-
-  const outputDir = await createOutputDirectory(flags);
-
-  await Promise.all(svgFiles.map(processFile(outputDir)));
-
+  const svgFiles: Array<FileObject> = await getSVGFiles(options);
+  const outputDir = await createOutputDirectory(options);
+  const processFile = makeFileProcessor(outputDir, options);
+  options?.verbose && console.log('Processing SVG files...\n');
+  await Promise.all(svgFiles.map(processFile));
   await createIndexFile(svgFiles);
 }
 
+/**
+ * Get all SVG files from the glyphs directory
+ */
+async function getSVGFiles(
+  options?: PrebuildOptions,
+): Promise<Array<FileObject>> {
+  const glyphsDir = path.resolve(__dirname, '..', 'src', 'glyphs');
+  const filePaths = fs.readdirSync(glyphsDir);
+  const svgFilePaths = filePaths.filter(filterSvgFiles);
+
+  options?.verbose &&
+    console.log(svgFilePaths.length, `SVG files found in ${glyphsDir}`);
+
+  const svgFiles = svgFilePaths.map((fileName: string) => ({
+    name: fileName.replace('.svg', ''),
+    path: path.resolve(glyphsDir, fileName),
+  }));
+
+  return svgFiles;
+}
+
+/**
+ * Filter function to check if a string contains '.svg'
+ */
 function filterSvgFiles(str: string): boolean {
   return str.includes('.svg');
 }
 
-async function createOutputDirectory(flags: Flags) {
-  let outputDir = path.resolve(__dirname, '..', 'src/generated');
+/**
+ * Create the output directory if it doesn't exist
+ */
+async function createOutputDirectory(options: PrebuildOptions) {
+  const outputDir = options.outDir
+    ? path.resolve(process.cwd(), options.outDir)
+    : path.resolve(__dirname, '..', 'src/generated');
 
-  if (flags.outDir) {
-    outputDir = path.resolve(process.cwd(), flags.outDir);
-  }
-
-  const outputDirectoryExists = await promisify(fs.exists)(outputDir);
+  const outputDirectoryExists = fs.existsSync(outputDir);
 
   if (!outputDirectoryExists) {
-    await promisify(fs.mkdir)(outputDir, { recursive: true });
+    options.verbose && console.log(`Creating directory: ${outputDir}`);
+    fs.mkdirSync(outputDir, { recursive: true });
   }
 
+  options.verbose && console.log(`Using output directory: ${outputDir}`);
   return outputDir;
 }
 
+/**
+ * Create the index file for the generated components
+ */
 async function createIndexFile(svgFiles: Array<FileObject>) {
   const indexPath = path.resolve(__dirname, '..', 'src/glyphs', 'index.ts');
 
@@ -90,6 +93,9 @@ async function createIndexFile(svgFiles: Array<FileObject>) {
   await promisify(fs.writeFile)(indexPath, indexContent, { encoding: 'utf8' });
 }
 
+/**
+ * Annotate the generated file with script and checksum information
+ */
 function annotateFileContent(
   script: string,
   checksum: string,
@@ -104,14 +110,17 @@ function annotateFileContent(
 ${moduleCode}`;
 }
 
-function processFile(outputDir: string) {
+/**
+ * Returns an async function that processes a single SVG file
+ */
+function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
   return async (file: FileObject) => {
-    const fileContent = await promisify(fs.readFile)(file.path, {
+    const svgContent = fs.readFileSync(file.path, {
       encoding: 'utf8',
     });
 
-    const moduleCode = await svgr(
-      fileContent,
+    const processedSVGR = await svgr(
+      svgContent,
       {
         ...svgrrc,
         template: svgrTemplate,
@@ -121,20 +130,30 @@ function processFile(outputDir: string) {
       },
     );
 
-    const script =
-      './node_modules/.bin/ts-node packages/icon/scripts/prebuild.ts';
+    const scriptPath = path.relative(
+      path.resolve(__dirname, '../../..'),
+      __filename,
+    );
 
     const checksum = createHash('md5')
-      .update(script)
-      .update(fileContent)
-      .update(moduleCode)
+      .update(scriptPath)
+      .update(svgContent)
+      .update(processedSVGR)
       .digest('hex');
 
-    await promisify(fs.writeFile)(
-      path.resolve(outputDir, `${file.name}.tsx`),
-      annotateFileContent(script, checksum, moduleCode),
+    const outfileContent = annotateFileContent(
+      scriptPath,
+      checksum,
+      processedSVGR,
     );
+    const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
+
+    options?.verbose && console.log(`Processed ${file.name}.svg`);
+    options?.verbose && console.log(`Checksum: ${checksum}`);
+    options?.verbose && console.log(`Writing to ${outfilePath}\n`);
+
+    fs.writeFileSync(outfilePath, outfileContent);
   };
 }
 
-buildSvgFiles(cli.input, cli.flags);
+buildSvgFiles(input, options);
