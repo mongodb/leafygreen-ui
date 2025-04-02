@@ -128,10 +128,9 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
       },
     );
 
-    const scriptPath = path.relative(
-      path.resolve(__dirname, process.cwd()),
-      __filename,
-    );
+    const scriptPath =
+      'packages/icon/' +
+      path.relative(path.resolve(__dirname, process.cwd()), __filename);
 
     const checksum = createHash('md5')
       .update(fs.readFileSync(__filename))
