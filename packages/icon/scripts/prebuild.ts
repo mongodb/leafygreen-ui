@@ -3,12 +3,12 @@ import { formatLG } from '@lg-tools/lint';
 // @ts-expect-error - no types in svgr v5.5
 import { default as svgr } from '@svgr/core';
 import { Command } from 'commander';
-import { createHash } from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
 import svgrrc from '../.svgrrc';
 
+import { getChecksum } from './checksum';
 import { indexTemplate } from './indexTemplate';
 import { FileObject, PrebuildOptions } from './prebuild.types';
 import { svgrTemplate } from './svgrTemplate';
@@ -132,11 +132,7 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
       'packages/icon/' +
       path.relative(path.resolve(__dirname, process.cwd()), __filename);
 
-    const checksum = createHash('md5')
-      .update(fs.readFileSync(__filename))
-      .update(svgContent)
-      .update(processedSVGR)
-      .digest('hex');
+    const checksum = getChecksum(svgContent, processedSVGR);
 
     const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
     const annotatedFileContent = annotateFileContent(
