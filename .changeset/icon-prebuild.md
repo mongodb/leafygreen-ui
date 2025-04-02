@@ -8,3 +8,4 @@
   - replaces `meow` with `commander`
   - adds `verbose` logging flag
   - removes unused `[inputFiles]` argument
+  - uses `prebuild.ts` script contents to generate svgr checksum
