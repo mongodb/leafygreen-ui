@@ -1,7 +1,7 @@
 import { eslint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
-import { prettier } from './prettier';
+import { runPrettier } from './prettier';
 
 const isTrue = (test: any) => !!test;
 
@@ -15,7 +15,7 @@ export const lint = (options: LintCommandOptions) => {
   }
 
   if (!eslintOnly && !pkgJsonOnly) {
-    linters.push(prettier({ fix, verbose }));
+    linters.push(runPrettier({ fix, verbose }));
   }
 
   if (!prettierOnly && !eslintOnly) {
