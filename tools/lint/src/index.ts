@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { eslint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
@@ -7,6 +8,10 @@ const isTrue = (test: any) => !!test;
 
 export const lint = (options: LintCommandOptions) => {
   const { fix, prettierOnly, eslintOnly, pkgJsonOnly, verbose } = options;
+
+  if (verbose) {
+    console.log('Linting with options:', options);
+  }
 
   const linters: Array<Promise<unknown>> = [];
 

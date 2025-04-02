@@ -12,12 +12,14 @@ const prettierConfigPath = path.resolve(
  */
 export async function LGFormat(
   fileContent: string,
+  filepath: string,
   _parser?: BuiltInParserName,
 ) {
   const prettierConfig = await prettierAPI.resolveConfig(prettierConfigPath);
 
   const formatted = await prettierAPI.format(fileContent, {
     ...prettierConfig,
+    filepath,
     // parser: parser || defaultParser,
   });
 
