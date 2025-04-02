@@ -3179,9 +3179,6 @@ importers:
       chalk:
         specifier: 4.1.2
         version: 4.1.2
-      cli-progress:
-        specifier: ^3.12.0
-        version: 3.12.0
       cross-spawn:
         specifier: 7.0.3
         version: 7.0.3
@@ -6752,10 +6749,6 @@ packages:
   clean-css@5.3.2:
     resolution: {integrity: sha512-JVJbM+f3d3Q704rF4bqQ5UUyTtuJ0JRKNbTKVEeujCCBoMdkEi+V+e8oktO9qGQNSvHrFTM6JZRXrUvGR1czww==}
     engines: {node: '>= 10.0'}
-
-  cli-progress@3.12.0:
-    resolution: {integrity: sha512-tRkV3HJ1ASwm19THiiLIXLO7Im7wlTuKnvkYaTkyoAPefqjNg7W7DHKUlGRxy9vxDvbyCYQkQozvptuMkGCg8A==}
-    engines: {node: '>=4'}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -14591,10 +14584,6 @@ snapshots:
   clean-css@5.3.2:
     dependencies:
       source-map: 0.6.1
-
-  cli-progress@3.12.0:
-    dependencies:
-      string-width: 4.2.3
 
   client-only@0.0.1: {}
 
