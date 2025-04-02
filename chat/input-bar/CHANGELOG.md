@@ -1,5 +1,27 @@
 # @lg-chat/input-bar
 
+## 7.0.10
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/popover@13.0.8
+  - @leafygreen-ui/search-input@5.0.9
+  - @leafygreen-ui/badge@9.0.7
+  - @leafygreen-ui/button@23.1.4
+  - @leafygreen-ui/icon@13.2.1
+  - @leafygreen-ui/input-option@3.0.9
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.8
+  - @leafygreen-ui/tokens@2.12.1
+  - @leafygreen-ui/typography@20.1.6
+
 ## 7.0.9
 
 ### Patch Changes

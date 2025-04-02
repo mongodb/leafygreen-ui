@@ -1,5 +1,14 @@
 # @leafygreen-ui/leafygreen-provider
 
+## 4.0.6
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [30b13adec]
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/lib@14.2.0
+
 ## 4.0.5
 
 ### Patch Changes

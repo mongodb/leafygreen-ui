@@ -1,5 +1,32 @@
 # @leafygreen-ui/menu
 
+## 29.0.0
+
+### Major Changes
+
+- 30b13adec: - Re-enables native event propagation on trigger clicks. Previously this was done to prevent errors caused by different event handling in React vs Backbone.
+  - Adds logic when the menu closes to check if the click occurred on an element that is focusable. If it is then we want to focus that element, otherwise we want to focus the menu trigger.
+  - Moves `popoverRef` from the `ul` to the root popover `div`
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @leafygreen-ui/descendants@2.1.4
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/popover@13.0.8
+  - @leafygreen-ui/icon@13.2.1
+  - @leafygreen-ui/icon-button@16.0.8
+  - @leafygreen-ui/input-option@3.0.9
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/polymorphic@2.0.8
+  - @leafygreen-ui/tokens@2.12.1
+  - @leafygreen-ui/typography@20.1.6
+
 ## 28.0.10
 
 ### Patch Changes
