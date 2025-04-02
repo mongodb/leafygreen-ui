@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon
 
+## 13.2.1
+
+### Patch Changes
+
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/emotion@4.1.0
+
 ## 13.2.0
 
 ### Minor Changes

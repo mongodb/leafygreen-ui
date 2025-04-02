@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/title-bar",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "description": "lg-chat Title Bar",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
