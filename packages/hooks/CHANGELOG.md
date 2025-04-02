@@ -1,5 +1,17 @@
 # @leafygreen-ui/hooks
 
+## 8.4.0
+
+### Minor Changes
+
+- 30b13adec: - Updates 3rd argument in `useBackdropClick` to accept an options object. Retains (but deprecates) boolean-only functionality.
+  - Adds `options.allowPropagation` to allow or disallow the click event to bubble up to other elements.
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+  - @leafygreen-ui/lib@14.2.0
+
 ## 8.3.6
 
 ### Patch Changes

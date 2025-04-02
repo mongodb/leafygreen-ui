@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/drag-provider",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "lg-charts DragProvider Component",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

@@ -1,5 +1,13 @@
 # @lg-charts/drag-provider
 
+## 0.2.1
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.1
+- @leafygreen-ui/leafygreen-provider@4.0.6
+- @lg-charts/core@0.15.1
+
 ## 0.2.0
 
 ### Minor Changes

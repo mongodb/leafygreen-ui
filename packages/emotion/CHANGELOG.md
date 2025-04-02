@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.1.0
+
+### Minor Changes
+
+- 78a36d6bb: Adds `nonce` property to debug and ensure consistent versions
+
 ## 4.0.10
 
 ### Patch Changes
