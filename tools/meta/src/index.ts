@@ -7,5 +7,5 @@ export {
   type SupportedPackageManager,
 } from './getPackageManager';
 export { getPackageName } from './getPackageName';
+export { getRepositoryRoot } from './getRepositoryRoot';
 export { getRootPackageJson, isValidJSON } from './getRootPackageJson';
-export { getWorkspaceRoot } from './getWorkspaceRoot';

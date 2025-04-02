@@ -1,6 +1,6 @@
 import { sync as spawnSync } from 'cross-spawn';
 
-export const getWorkspaceRoot = (): string => {
+export const getRepositoryRoot = (): string => {
   try {
     const result = spawnSync('git', ['rev-parse', '--show-toplevel'], {
       stdio: 'pipe',
