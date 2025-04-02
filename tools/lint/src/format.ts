@@ -1,22 +1,38 @@
-import path from 'path';
 import prettierAPI from 'prettier';
 
-const prettierConfigPath = path.resolve(
-  __dirname,
-  '../config/prettier.config.js',
-);
-// const defaultParser: BuiltInParserName = 'typescript'; // Default parser
+import { createESLintInstance, prettierConfigPath } from './config';
 
 /**
- * Format a file using the LeafyGreen Prettier config
+ * Formats a block of code using Prettier & ESLint
  */
 export async function formatLG(fileContent: string, filepath: string) {
+  const linted = await formatESLint(fileContent, filepath);
+  const prettified = await formatPrettier(linted, filepath);
+  return prettified;
+}
+
+/**
+ * Formats a block of code using Prettier
+ */
+export async function formatPrettier(fileContent: string, filepath: string) {
   const prettierConfig = await prettierAPI.resolveConfig(prettierConfigPath);
 
-  const formatted = prettierAPI.format(fileContent, {
+  const prettified = prettierAPI.format(fileContent, {
     ...prettierConfig,
     filepath,
   });
 
-  return formatted;
+  return prettified;
+}
+
+/**
+ * Formats a block of code using ESLint
+ */
+export async function formatESLint(fileContent: string, filePath: string) {
+  const eslint = createESLintInstance(true);
+  const results = await eslint.lintText(fileContent, { filePath });
+  const formatter = await eslint.loadFormatter('prettier');
+  const resultText = formatter.format(results);
+
+  return resultText;
 }

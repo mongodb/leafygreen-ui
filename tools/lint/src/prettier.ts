@@ -6,19 +6,24 @@ import glob from 'glob';
 import path from 'path';
 import prettierAPI from 'prettier';
 
-import { esLintExtensions } from './eslint';
-import { formatLG } from './format';
+import {
+  prettierConfigPath,
+  prettierExtensions,
+  prettierIgnorePath,
+} from './config';
+import { formatPrettier } from './format';
 import { LintFn } from './lint.types';
 
 const rootDir = process.cwd();
-const prettierConfigPath = path.resolve(
-  __dirname,
-  '../config/prettier.config.js',
-);
-const prettierIgnorePath = path.resolve(process.cwd(), '.prettierignore');
 
-/** prettify all eslint extensions, plus some others */
-const prettierExtensions = [...esLintExtensions, 'mjs', 'json', 'md', 'yml'];
+const progressBar = new Progress.SingleBar(
+  {
+    format: `${chalk.magenta.bold(
+      'Prettier {bar}',
+    )} | {percentage}% | {value}/{total} | {filename}`,
+  },
+  Progress.Presets.shades_classic,
+);
 
 /** Use Prettier Node API */
 export const runPrettier: LintFn = async ({ fix, verbose }) => {
@@ -46,15 +51,6 @@ export const runPrettier: LintFn = async ({ fix, verbose }) => {
     });
 
     let success = true;
-    const progressBar = new Progress.SingleBar(
-      {
-        format: `${chalk.magenta.bold(
-          'Prettier {bar}',
-        )} | {percentage}% | {value}/{total} | {filename}`,
-      },
-      Progress.Presets.shades_classic,
-    );
-
     progressBar?.start(files.length, 0, {
       filename: '',
     });
@@ -70,7 +66,7 @@ export const runPrettier: LintFn = async ({ fix, verbose }) => {
 
         if (fix) {
           // Format and write the file
-          const formatted = await formatLG(fileContent, filePath);
+          const formatted = await formatPrettier(fileContent, filePath);
 
           if (formatted !== fileContent) {
             await fs.writeFile(filePath, formatted, 'utf8');

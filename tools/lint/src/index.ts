@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { eslint } from './eslint';
+import { runESLint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
 import { runPrettier } from './prettier';
@@ -17,7 +17,7 @@ export const lint = (options: LintCommandOptions) => {
   const linters: Array<Promise<unknown>> = [];
 
   if (!prettierOnly && !pkgJsonOnly) {
-    linters.push(eslint({ fix, verbose }));
+    linters.push(runESLint({ fix, verbose }));
   }
 
   if (!eslintOnly && !pkgJsonOnly) {

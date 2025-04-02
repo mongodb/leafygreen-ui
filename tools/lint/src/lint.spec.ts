@@ -2,7 +2,7 @@
 import child_process, { ChildProcess } from 'child_process';
 import path from 'path';
 
-import { eslint } from './eslint';
+import { runESLint } from './eslint';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
 import { prettier } from './prettier';
 import { lint } from '.';
@@ -33,28 +33,28 @@ describe.skip('tools/lint', () => {
     test('runs with no options', () => {
       lint(defaultArgs);
 
-      expect(eslint).toHaveBeenCalled();
+      expect(runESLint).toHaveBeenCalled();
       expect(prettier).toHaveBeenCalled();
       expect(npmPkgJsonLint).toHaveBeenCalled();
     });
 
     test('runs with --eslintOnly flag', () => {
       lint({ ...defaultArgs, eslintOnly: true });
-      expect(eslint).toHaveBeenCalled();
+      expect(runESLint).toHaveBeenCalled();
       expect(prettier).not.toHaveBeenCalled();
       expect(npmPkgJsonLint).not.toHaveBeenCalled();
     });
 
     test('runs with --prettierOnly flag', () => {
       lint({ ...defaultArgs, prettierOnly: true });
-      expect(eslint).not.toHaveBeenCalled();
+      expect(runESLint).not.toHaveBeenCalled();
       expect(prettier).toHaveBeenCalled();
       expect(npmPkgJsonLint).not.toHaveBeenCalled();
     });
 
     test('runs with --pkgJsonOnly flag', () => {
       lint({ ...defaultArgs, pkgJsonOnly: true });
-      expect(eslint).not.toHaveBeenCalled();
+      expect(runESLint).not.toHaveBeenCalled();
       expect(prettier).not.toHaveBeenCalled();
       expect(npmPkgJsonLint).toHaveBeenCalled();
     });
@@ -62,7 +62,7 @@ describe.skip('tools/lint', () => {
 
   describe.skip('eslint', () => {
     test('Runs eslint command', () => {
-      eslint(defaultArgs);
+      runESLint(defaultArgs);
       const eslintConfigPath = path.resolve(
         __dirname,
         '../config/eslint.config.js',
