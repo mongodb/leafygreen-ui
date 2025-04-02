@@ -5,7 +5,6 @@ import { Command } from 'commander';
 import { createHash } from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { promisify } from 'util';
 
 import svgrrc from '../.svgrrc';
 
@@ -32,7 +31,7 @@ async function buildSvgFiles(
   const processFile = makeFileProcessor(outputDir, options);
   options?.verbose && console.log('Processing SVG files...\n');
   await Promise.all(svgFiles.map(processFile));
-  await createIndexFile(svgFiles);
+  await createIndexFile(svgFiles, options);
 }
 
 /**
@@ -85,12 +84,14 @@ async function createOutputDirectory(options: PrebuildOptions) {
 /**
  * Create the index file for the generated components
  */
-async function createIndexFile(svgFiles: Array<FileObject>) {
+async function createIndexFile(
+  svgFiles: Array<FileObject>,
+  options?: PrebuildOptions,
+) {
   const indexPath = path.resolve(__dirname, '..', 'src/glyphs', 'index.ts');
-
+  options?.verbose && console.log('Writing index file...', indexPath);
   const indexContent = await indexTemplate(svgFiles);
-
-  await promisify(fs.writeFile)(indexPath, indexContent, { encoding: 'utf8' });
+  fs.writeFileSync(indexPath, indexContent, { encoding: 'utf8' });
 }
 
 /**
@@ -148,9 +149,11 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
     );
     const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
 
-    options?.verbose && console.log(`Processed ${file.name}.svg`);
-    options?.verbose && console.log(`Checksum: ${checksum}`);
-    options?.verbose && console.log(`Writing to ${outfilePath}\n`);
+    if (options?.verbose) {
+      console.log(`Processed ${file.name}.svg`);
+      console.log(`Checksum: ${checksum}`);
+      console.log(`Writing to ${outfilePath}\n`);
+    }
 
     fs.writeFileSync(outfilePath, outfileContent);
   };
