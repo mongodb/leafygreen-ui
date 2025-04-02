@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { type SeriesName } from '@lg-charts/series-provider';
-import { CallbackDataParams } from 'echarts/types/dist/shared';
+import { type CallbackDataParams } from 'echarts/types/dist/shared';
 
 /**
  * This is the data type used by `CallbackDataParams` but it's not exported.

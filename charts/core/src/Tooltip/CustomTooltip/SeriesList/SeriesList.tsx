@@ -1,4 +1,5 @@
 import React from 'react';
+import { SeriesName } from '@lg-charts/series-provider';
 
 import { OptionDataValue } from '../../Tooltip.types';
 import { SeriesListItem } from '../SeriesListItem';
@@ -32,8 +33,8 @@ export function SeriesList({
 
           if (sort) {
             return sort(
-              { name: nameA, value: valueA },
-              { name: nameB, value: valueB },
+              { name: nameA as SeriesName, value: valueA },
+              { name: nameB as SeriesName, value: valueB },
             );
           }
 
