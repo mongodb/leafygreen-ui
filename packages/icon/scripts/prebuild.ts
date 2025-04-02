@@ -8,16 +8,9 @@ import { promisify } from 'util';
 
 import svgrrc from '../.svgrrc';
 
-import { template } from './template';
-
-interface Flags {
-  outDir?: string;
-}
-
-interface FileObject {
-  name: string;
-  path: string;
-}
+import { indexTemplate } from './indexTemplate';
+import { FileObject, Flags } from './prebuild.types';
+import { svgrTemplate } from './svgrTemplate';
 
 const usageString = `
 Usage
@@ -89,36 +82,6 @@ async function createOutputDirectory(flags: Flags) {
   return outputDir;
 }
 
-async function indexTemplate(svgFiles: Array<FileObject>) {
-  const imports = svgFiles
-    .map(({ name }) => `import ${name} from './${name}.svg';`)
-    .join('\n');
-
-  const _glyphs = `{
-    ${svgFiles.map(({ name }) => `${name}`).join(',\n')}
-  }`;
-
-  return `
-    import { createGlyphComponent } from '../createGlyphComponent';
-    import { LGGlyph } from '../types';
-
-    // Glyphs
-    ${imports}
-
-    const _glyphs = ${_glyphs} as const;
-
-    export type GlyphName = keyof typeof _glyphs;
-    
-    const glyphKeys = Object.keys(_glyphs) as Array<GlyphName>;
-    
-    export const glyphs = glyphKeys.reduce((acc, name) => {
-      acc[name] = createGlyphComponent(name, _glyphs[name]);
-    
-      return acc;
-    }, {} as Record<GlyphName, LGGlyph.Component>);
-  `;
-}
-
 async function createIndexFile(svgFiles: Array<FileObject>) {
   const indexPath = path.resolve(__dirname, '..', 'src/glyphs', 'index.ts');
 
@@ -151,7 +114,7 @@ function processFile(outputDir: string) {
       fileContent,
       {
         ...svgrrc,
-        template,
+        template: svgrTemplate,
       },
       {
         componentName: file.name,
