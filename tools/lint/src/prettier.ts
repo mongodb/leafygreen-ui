@@ -1,9 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import Progress from 'cli-progress';
 import fs from 'fs/promises';
 import glob from 'glob';
-import path from 'path';
 import prettierAPI from 'prettier';
 
 import {
@@ -15,15 +13,6 @@ import { formatPrettier } from './format';
 import { LintFn } from './lint.types';
 
 const rootDir = process.cwd();
-
-const progressBar = new Progress.SingleBar(
-  {
-    format: `${chalk.magenta.bold(
-      'Prettier {bar}',
-    )} | {percentage}% | {value}/{total} | {filename}`,
-  },
-  Progress.Presets.shades_classic,
-);
 
 /** Use Prettier Node API */
 export const runPrettier: LintFn = async ({ fix, verbose }) => {
@@ -51,9 +40,6 @@ export const runPrettier: LintFn = async ({ fix, verbose }) => {
     });
 
     let success = true;
-    progressBar?.start(files.length, 0, {
-      filename: '',
-    });
 
     // Process all files
     for (const filePath of files) {
@@ -84,17 +70,11 @@ export const runPrettier: LintFn = async ({ fix, verbose }) => {
             success = false;
           }
         }
-
-        progressBar?.increment({
-          filename: path.relative(rootDir, filePath),
-        });
       } catch (err) {
         console.error(`Error processing ${filePath}:`, err);
         success = false;
       }
     }
-
-    progressBar?.stop();
 
     verbose &&
       success &&
