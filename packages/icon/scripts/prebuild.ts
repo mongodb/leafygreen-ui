@@ -1,11 +1,14 @@
-const { createHash } = require('crypto');
-const fs = require('fs');
-const path = require('path');
-const { promisify } = require('util');
-const { default: svgr } = require('@svgr/core');
-const meow = require('meow');
-const template = require('./template');
-const svgrrc = require('../.svgrrc');
+// @ts-expect-error - no types in svgr v5.5
+import { default as svgr } from '@svgr/core';
+import { createHash } from 'crypto';
+import fs from 'fs';
+import meow from 'meow';
+import path from 'path';
+import { promisify } from 'util';
+
+import svgrrc from '../.svgrrc';
+
+import { template } from './template';
 
 interface Flags {
   outDir?: string;
@@ -31,7 +34,7 @@ const cliConfig = {
       alias: 'o',
     },
   },
-};
+} satisfies meow.Options<meow.AnyFlags>;
 
 const cli = meow(usageString, cliConfig);
 

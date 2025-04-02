@@ -19,7 +19,7 @@ interface ASTParts extends Record<string, any> {
   props: string;
 }
 
-module.exports = function template(
+export function template(
   { template }: BabelAPI,
   { state: { componentName } }: SVGROptions,
   { imports, jsx, exports }: ASTParts,
@@ -89,4 +89,4 @@ module.exports = function template(
     jsx: jsx,
     exports: exports,
   });
-};
+}
