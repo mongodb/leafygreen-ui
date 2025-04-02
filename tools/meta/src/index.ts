@@ -8,3 +8,4 @@ export {
 } from './getPackageManager';
 export { getPackageName } from './getPackageName';
 export { getRootPackageJson, isValidJSON } from './getRootPackageJson';
+export { getWorkspaceRoot } from './getWorkspaceRoot';

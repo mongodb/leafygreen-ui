@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import fse from 'fs-extra';
-import path from 'path';
 import rollup, { type MergedRollupOptions } from 'rollup';
 import {
   type BatchWarnings,
   type LoadConfigFile,
 } from 'rollup/dist/loadConfigFile';
 // @ts-expect-error - type declaration incorrectly defined
-import { loadConfigFile } from 'rollup/loadConfigFile';
+import { loadConfigFile as _loadConfigFile } from 'rollup/loadConfigFile';
+
+import { findRollupConfigFile } from './findRollupConfigFile';
+
+const loadConfigFile = _loadConfigFile as LoadConfigFile;
 
 interface BuildPackageOptions {
   /**
@@ -25,11 +27,6 @@ interface BuildPackageOptions {
  */
 export function buildPackage({ direct, verbose }: BuildPackageOptions) {
   const packageDir = process.cwd();
-  const localRollupConfigPath = path.join(packageDir, 'rollup.config.mjs');
-  const defaultRollupConfigPath = path.join(
-    __dirname, // __dirname is `dist`
-    '../config/rollup.config.mjs',
-  );
 
   const splitPath = packageDir.split('/');
   const packageName = splitPath[splitPath.length - 1];
@@ -44,21 +41,10 @@ export function buildPackage({ direct, verbose }: BuildPackageOptions) {
 
   // If there is a local rollup config defined, use that
   // Otherwise use the default one
-  const rollupConfigPath = fse.existsSync(localRollupConfigPath)
-    ? localRollupConfigPath
-    : defaultRollupConfigPath;
-
-  if (fse.existsSync(localRollupConfigPath)) {
-    console.log(
-      chalk.bgGray(
-        `Building ${chalk.bold(packageName)} using local rollup config:`,
-        localRollupConfigPath,
-      ),
-    );
-  }
+  const rollupConfigPath = findRollupConfigFile(packageName, { verbose });
 
   // load the rollup config file, and run rollup
-  (loadConfigFile as LoadConfigFile)(rollupConfigPath, {}).then(
+  loadConfigFile(rollupConfigPath, {}).then(
     async ({
       options,
       warnings,
