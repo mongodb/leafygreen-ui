@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { formatLG } from '@lg-tools/lint';
 // @ts-expect-error - no types in svgr v5.5
 import { default as svgr } from '@svgr/core';
 import { Command } from 'commander';
@@ -86,7 +87,8 @@ async function createIndexFile(
   const indexPath = path.resolve(__dirname, '..', 'src/glyphs', 'index.ts');
   options?.verbose && console.log('Writing index file...', indexPath);
   const indexContent = await indexTemplate(svgFiles);
-  fs.writeFileSync(indexPath, indexContent, { encoding: 'utf8' });
+  const formattedIndexContent = await formatLG(indexContent, indexPath);
+  fs.writeFileSync(indexPath, formattedIndexContent, { encoding: 'utf8' });
 }
 
 /**
@@ -127,22 +129,22 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
     );
 
     const scriptPath = path.relative(
-      path.resolve(__dirname, '../../..'),
+      path.resolve(__dirname, process.cwd()),
       __filename,
     );
 
     const checksum = createHash('md5')
-      .update(scriptPath)
+      .update(fs.readFileSync(__filename))
       .update(svgContent)
       .update(processedSVGR)
       .digest('hex');
 
-    const outfileContent = annotateFileContent(
+    const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
+    const annotatedFileContent = annotateFileContent(
       scriptPath,
       checksum,
       processedSVGR,
     );
-    const outfilePath = path.resolve(outputDir, `${file.name}.tsx`);
 
     if (options?.verbose) {
       console.log(`Processed ${file.name}.svg`);
@@ -150,7 +152,8 @@ function makeFileProcessor(outputDir: string, options?: PrebuildOptions) {
       console.log(`Writing to ${outfilePath}\n`);
     }
 
-    fs.writeFileSync(outfilePath, outfileContent);
+    // We intentionally don't format the generated .tsx files
+    fs.writeFileSync(outfilePath, annotatedFileContent);
   };
 }
 
