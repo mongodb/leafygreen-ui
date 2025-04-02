@@ -26,15 +26,25 @@ cli
   .argument('<name>', 'The name of the package')
   .option(
     '-s, --scope [scope]',
-    'The npm scope of the new package. Defaults to the first entry in lg.config.json scopes',
+    `The npm scope of the new package. Valid scopes are defined in the \`package.json\` \`"lg.scopes"\` property. Defaults to the first entry in \`lg.scopes\`. The directory is determined by the mapping defined in \`lg.scopes\``,
   )
   .option(
     '-d, --directory [directory]',
-    'The directory to write the new package. Defaults to the first entry in lg.config.json scopes',
+    `The directory to write the new package. Defaults to mapped directory of \`--scope\``,
   )
   .option(
     '-p, --parent [parent]',
-    'Creates a sub-component to the provided parent',
+    'Identifies the parent component of the new component. Creates a sub-component to the provided parent.',
+  )
+  .option(
+    '-v, --verbose',
+    'Prints additional information to the console',
+    false,
+  )
+  .option(
+    '-d, --dry',
+    'Run without making any changes to the filesystem',
+    false,
   )
   .action(createPackage);
 
@@ -172,13 +182,14 @@ cli
   .command('codemod')
   .description('Runs codemod transformations to upgrade LG components')
   .argument(
-    '<codemod>',
+    '[codemod]',
     'One of the codemods from: https://github.com/mongodb/leafygreen-ui/blob/main/tools/codemods/README.md#codemods-1',
   )
   .argument(
     '[path]',
     'Files or directory to transform. Can be a glob like like src/**.test.js',
   )
+  .option('--list', 'List all available codemods', false)
   .option(
     '-i, --ignore <items...>',
     'Glob patterns to ignore. E.g. -i **/node_modules/** **/.next/**',

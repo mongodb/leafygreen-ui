@@ -7,7 +7,12 @@ import {
 import { css, cx } from '@leafygreen-ui/emotion';
 import { useBackdropClick, useEventListener } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { isDefined, keyMap, Theme } from '@leafygreen-ui/lib';
+import {
+  getClosestFocusableElement,
+  isDefined,
+  keyMap,
+  Theme,
+} from '@leafygreen-ui/lib';
 import Popover, {
   Align,
   DismissMode,
@@ -80,7 +85,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const lgIds = getLgIds(dataLgId);
 
-  const popoverRef = useRef<HTMLUListElement | null>(null);
+  const popoverRef = useRef<HTMLDivElement | null>(null);
   const defaultTriggerRef = useRef<HTMLElement>(null);
   const triggerRef = refEl ?? defaultTriggerRef;
   const keyboardUsedRef = useRef<boolean>(false);
@@ -91,12 +96,34 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     (typeof controlledOpen === 'boolean' && controlledSetOpen) ||
     uncontrolledSetOpen;
   const open = controlledOpen ?? uncontrolledOpen;
-  const handleClose = useCallback(() => {
-    if (shouldClose()) {
-      keyboardUsedRef.current = false;
-      setOpen(false);
-    }
-  }, [setOpen, shouldClose]);
+
+  const handleClose = useCallback(
+    (event?: MouseEvent | React.MouseEvent) => {
+      // TODO: move this logic to useBackdropClick
+      // https://jira.mongodb.org/browse/LG-5012
+      // In the case of backdrop click events,
+      // if the click occurred on an element that is focusable,
+      // then we want to focus that element,
+      // otherwise we want to focus the menu trigger
+      if (event && event.type === 'click') {
+        const closestFocusableElement = getClosestFocusableElement(
+          event.target as HTMLElement,
+        );
+
+        if (closestFocusableElement === document.body) {
+          triggerRef.current?.focus();
+        } else {
+          closestFocusableElement.focus();
+        }
+      }
+
+      if (shouldClose()) {
+        keyboardUsedRef.current = false;
+        setOpen(false);
+      }
+    },
+    [setOpen, shouldClose, triggerRef],
+  );
 
   const maxMenuHeightValue = useMenuHeight({
     refEl: triggerRef,
@@ -104,7 +131,10 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     maxHeight,
   });
 
-  useBackdropClick(handleClose, [popoverRef, triggerRef], open);
+  useBackdropClick(handleClose, [popoverRef, triggerRef], {
+    enabled: open,
+    allowPropagation: true,
+  });
 
   const { getDescendants, Provider: MenuDescendantsProvider } =
     useInitDescendants(MenuDescendantsContext);
@@ -200,6 +230,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
           refEl={triggerRef}
           adjustOnMutation={adjustOnMutation}
           onEntered={handlePopoverOpen}
+          ref={popoverRef}
           {...popoverProps}
         >
           <div
@@ -228,7 +259,6 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
               className={scrollContainerStyle}
               role="menu"
               onClick={e => e.stopPropagation()}
-              ref={popoverRef}
             >
               {children}
             </ul>
@@ -247,16 +277,11 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
         keyboardUsedRef.current = true;
       }
 
-      setOpen((curr: boolean) => !curr);
+      setOpen(curr => !curr);
 
       if (trigger && typeof trigger !== 'function') {
         trigger.props?.onClick?.(event);
       }
-
-      // We stop the native event from bubbling, but allow the React.Synthetic event to bubble
-      // This way click handlers on parent components will still fire,
-      // but this click event won't propagate up to the document and immediately close the menu.
-      event?.nativeEvent?.stopPropagation?.();
     };
 
     if (typeof trigger === 'function') {

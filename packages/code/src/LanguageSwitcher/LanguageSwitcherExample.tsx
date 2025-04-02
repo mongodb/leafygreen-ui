@@ -76,34 +76,3 @@ export function LanguageSwitcherWithPanelExample({
     </Code>
   );
 }
-
-export function LanguageSwitcherWithDeprecatedPropsExample({
-  onChange,
-  customActionButtons = [],
-  ...rest
-}: {
-  onChange?: Function;
-  customActionButtons?: Array<React.ReactElement>;
-}) {
-  const [language, setLanguage] = useState<LanguageOption>(languageOptions[0]);
-
-  const handleChange = (languageObject: LanguageOption) => {
-    setLanguage(languageObject);
-    onChange?.(languageObject);
-  };
-
-  const languageIndex = language.language;
-
-  return (
-    <Code
-      {...rest}
-      language={language.displayName}
-      languageOptions={languageOptions}
-      customActionButtons={customActionButtons}
-      onChange={handleChange}
-      chromeTitle="Title"
-    >
-      {snippetMap[languageIndex as 'javascript' | 'python']}
-    </Code>
-  );
-}

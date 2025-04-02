@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
+import { ChartCard } from '@lg-charts/chart-card';
 import {
   Chart,
-  ChartCard,
   Grid,
   Header,
   Line,
-  SortDirection,
-  SortKey,
   Tooltip,
   XAxis,
   YAxis,
@@ -58,7 +56,7 @@ function renderChart(id: string, onChartReady?: () => void) {
     >
       <Header title={id} showDivider />
       <Grid vertical={false} />
-      <Tooltip sortDirection={SortDirection.Desc} sortKey={SortKey.Value} />
+      <Tooltip />
       <XAxis type="value" />
       <YAxis type="value" />
       <Line

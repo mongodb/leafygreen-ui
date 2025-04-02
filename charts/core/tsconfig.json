@@ -16,6 +16,9 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../chart-card"
+    },
+    {
       "path": "../colors"
     },
     {
@@ -26,9 +29,6 @@
     },
     {
       "path": "../../packages/icon"
-    }, 
-    {
-      "path": "../../packages/icon-button"
     }, 
     {
       "path": "../../packages/leafygreen-provider"

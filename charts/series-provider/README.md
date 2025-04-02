@@ -27,7 +27,8 @@ npm install @lg-charts/series-provider
 To use the `SeriesContext`, wrap your chart components with the `SeriesProvider` component. This will provide the necessary context for managing series data.
 
 ```tsx
-import { Chart, ChartCard } from '@lg-charts/core';
+import { ChartCard } from '@lg-charts/chart-card';
+import { Chart } from '@lg-charts/core';
 import { Legend } from '@lg-charts/legend';
 import { SeriesProvider } from '@lg-charts/series-provider';
 

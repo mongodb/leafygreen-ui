@@ -1,34 +1,39 @@
-/**
- * Direction tooltip values can be sorted
- */
-export const SortDirection = {
-  Asc: 'asc',
-  Desc: 'desc',
-} as const;
-export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
+import { ReactNode } from 'react';
+import { type SeriesName } from '@lg-charts/series-provider';
+import { type CallbackDataParams } from 'echarts/types/dist/shared';
 
 /**
- * Key by which tooltip values can be sorted
+ * This is the data type used by `CallbackDataParams` but it's not exported.
+ * Reimplementing to narrow down the `data` type to be more specific to our use case.
  */
-export const SortKey = {
-  Name: 'name',
-  Value: 'value',
-} as const;
-export type SortKey = (typeof SortKey)[keyof typeof SortKey];
+export type OptionDataValue = string | number | Date;
 
-/**
- * Echart order config types
- */
-export const SortOrder = {
-  ValueDesc: 'valueDesc',
-  ValueAsc: 'valueAsc',
-  SeriesDesc: 'seriesDesc',
-  SeriesAsc: 'seriesAsc',
-} as const;
-export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export interface SeriesInfo {
+  name: SeriesName;
+  value: OptionDataValue;
+}
 
 export interface TooltipProps {
-  sortDirection?: SortDirection;
-  sortKey?: SortKey;
-  valueFormatter?: (value: number | string) => string;
+  sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
+  seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
+  seriesNameFormatter?: (name: SeriesName) => ReactNode;
+  headerFormatter?: (value: number | string) => ReactNode;
+}
+
+export interface CallbackSeriesDataPoint extends CallbackDataParams {
+  /**
+   * Adding axis info because it's not included in the CallbackDataParams type
+   * but is provided in the formatter callback arg because our trigger is 'axis'.
+   */
+  axisDim: string;
+  axisId: string;
+  axisIndex: number;
+  axisType: string;
+  axisValue: string | number;
+  axisValueLabel: string | number;
+  data: Array<OptionDataValue>;
+  /**
+   * Echarts returns a custom color type which doesn't map to string but is one
+   */
+  color: string;
 }

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/checkbox",
-  "version": "15.1.0",
+  "version": "15.2.1",
   "description": "LeafyGreen UI Kit Checkbox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

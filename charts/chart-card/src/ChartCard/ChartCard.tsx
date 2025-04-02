@@ -109,7 +109,6 @@ export const ChartCard = forwardRef<HTMLDivElement, ChartCardProps>(
             data-testid="lg-charts-core-chart_card-header"
             {...attributes}
             {...listeners}
-            {...rest}
           >
             <div className={leftInnerContainerStyles}>
               <IconButton

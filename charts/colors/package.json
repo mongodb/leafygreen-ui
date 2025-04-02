@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/colors",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "description": "lg-charts colors",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

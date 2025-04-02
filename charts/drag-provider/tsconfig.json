@@ -16,6 +16,12 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../chart-card"
+    },
+    {
+      "path": "../core"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {

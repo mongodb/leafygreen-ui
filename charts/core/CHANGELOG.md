@@ -1,5 +1,38 @@
 # @lg-charts/core
 
+## 0.15.1
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @lg-charts/chart-card@0.2.1
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @lg-charts/colors@0.2.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.1
+  - @leafygreen-ui/typography@20.1.6
+  - @lg-charts/series-provider@0.2.1
+
+## 0.15.0
+
+### Minor Changes
+
+- 7e3909a12: Moves `ChartCard` component into separate package and updates downstream dependencies
+- 206278b0f: Updates `Line` component styling of color and visibility based on checked state managed in `SeriesProvider`
+
+### Patch Changes
+
+- Updated dependencies [7e3909a12]
+- Updated dependencies [7e3909a12]
+- Updated dependencies [206278b0f]
+- Updated dependencies [206278b0f]
+  - @lg-charts/chart-card@0.2.0
+  - @lg-charts/colors@0.2.2
+  - @lg-charts/series-provider@0.2.0
+
 ## 0.14.1
 
 ### Patch Changes

@@ -9,6 +9,7 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import Button from '@leafygreen-ui/button';
 import { Optional } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
@@ -175,8 +176,8 @@ describe('packages/menu', () => {
       expect(menuEl).toBeInTheDocument();
     });
 
-    test('Clicking outside the menu closes the menu', async () => {
-      const { openMenu, backdropEl } = renderMenu({});
+    test('Clicking outside the menu closes the menu, and keeps focus on the menu trigger', async () => {
+      const { openMenu, backdropEl, triggerEl } = renderMenu({});
       const { menuEl } = await openMenu();
 
       expect(menuEl).toBeInTheDocument();
@@ -185,6 +186,34 @@ describe('packages/menu', () => {
       await waitForElementToBeRemoved(menuEl);
 
       expect(menuEl).not.toBeInTheDocument();
+      expect(triggerEl).toHaveFocus();
+    });
+
+    test("Clicking a button outside the menu fires that button's handlers, and sets focus to the button", async () => {
+      const otherButtonHandler = jest.fn();
+      const { getByTestId, findByTestId } = render(
+        <>
+          <Menu trigger={defaultTrigger} data-testid={menuTestId}>
+            <MenuItem>Item A</MenuItem>
+            <MenuItem>Item B</MenuItem>
+          </Menu>
+          <Button data-testid="outside-button" onClick={otherButtonHandler}>
+            Outside Button
+          </Button>
+        </>,
+      );
+      const button = getByTestId('outside-button');
+      const trigger = getByTestId(menuTriggerTestId);
+      userEvent.click(trigger);
+
+      const menuEl = await findByTestId(menuTestId);
+
+      userEvent.click(button);
+      await waitForElementToBeRemoved(menuEl);
+      await waitFor(() => {
+        expect(otherButtonHandler).toHaveBeenCalled();
+        expect(button).toHaveFocus();
+      });
     });
 
     test('Click handlers on parent elements fire (propagation is not stopped)', async () => {

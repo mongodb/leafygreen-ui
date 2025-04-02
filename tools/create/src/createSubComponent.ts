@@ -9,19 +9,25 @@ import { writeFiles } from './utils/writeFiles';
 import { CreatePackageOptions } from './create.types';
 import { component, componentIndex, spec, styles, types } from './templates';
 
-interface CreateComponentArgs {
+interface CreateComponentArgs
+  extends Omit<CreatePackageOptions, 'scope' | 'directory'> {
   name: string;
   parent: Required<CreatePackageOptions>['parent'];
 }
 
-export function createSubComponent({ name, parent }: CreateComponentArgs) {
-  const { packageNamePascal: parentNamePascal } = getNameVariants(parent);
+export function createSubComponent({
+  name,
+  parent,
+  dry,
+  verbose,
+}: CreateComponentArgs) {
+  const { packageNameKebab: parentNameKebab } = getNameVariants(parent);
   const { packageNameKebab, packageNamePascal } = getNameVariants(name);
 
   console.log(
     chalk.green(
       `Creating sub-component ${chalk.bold(
-        parentNamePascal + '/' + packageNamePascal,
+        parentNameKebab + '/' + packageNamePascal,
       )}`,
     ),
   );
@@ -34,40 +40,39 @@ export function createSubComponent({ name, parent }: CreateComponentArgs) {
   }
 
   const subComponentDir = path.resolve(parentDir, 'src', packageNamePascal);
+  const doesSubComponentDirExist = fse.existsSync(subComponentDir);
 
-  fse.mkdir(subComponentDir, { recursive: true }, err => {
-    if (err) {
-      console.log(`Package ${packageNameKebab} already exists`);
-      return;
-    }
+  if (doesSubComponentDirExist) {
+    throw new Error(`Sub-component ${packageNameKebab} already exists`);
+  }
 
-    writeFiles(
-      [
-        {
-          name: `index.ts`,
-          contents: componentIndex({ packageNamePascal }),
-        },
-        {
-          name: `${packageNamePascal}.tsx`,
-          contents: component({ packageNamePascal }),
-        },
-        {
-          name: `${packageNamePascal}.spec.tsx`,
-          contents: spec({ packageNamePascal, packageNameKebab }),
-        },
-        {
-          name: `${packageNamePascal}.types.ts`,
-          contents: types({ packageNamePascal }),
-        },
-        {
-          name: `${packageNamePascal}.styles.ts`,
-          contents: styles,
-        },
-      ],
-      {
-        dir: subComponentDir,
-        packageNamePascal,
-      },
-    );
+  const filesToWrite = [
+    {
+      name: `index.ts`,
+      contents: componentIndex({ packageNamePascal }),
+    },
+    {
+      name: `${packageNamePascal}.tsx`,
+      contents: component({ packageNamePascal }),
+    },
+    {
+      name: `${packageNamePascal}.spec.tsx`,
+      contents: spec({ packageNamePascal, packageNameKebab }),
+    },
+    {
+      name: `${packageNamePascal}.types.ts`,
+      contents: types({ packageNamePascal }),
+    },
+    {
+      name: `${packageNamePascal}.styles.ts`,
+      contents: styles,
+    },
+  ];
+
+  writeFiles(filesToWrite, {
+    dir: subComponentDir,
+    name,
+    dry,
+    verbose,
   });
 }
