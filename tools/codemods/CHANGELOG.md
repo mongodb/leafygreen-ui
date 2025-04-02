@@ -1,5 +1,11 @@
 # @lg-tools/codemods
 
+## 0.1.4
+
+### Patch Changes
+
+- c7ab79f57: Adds `--list` flag to `codemods` cli, which lists out all valid codemod names.
+
 ## 0.1.3
 
 ### Patch Changes

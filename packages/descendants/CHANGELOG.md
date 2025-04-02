@@ -1,5 +1,15 @@
 # @leafygreen-ui/descendants
 
+## 2.1.4
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [30b13adec]
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+
 ## 2.1.3
 
 ### Patch Changes

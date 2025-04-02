@@ -162,7 +162,7 @@ describe('packages/tabs/getTestUtils', () => {
             const { getCopyButtonUtils } = Context.within(
               Jest.spyContext(ClipboardJS, 'isSupported'),
               spy => {
-                spy.mockReturnValue(true);
+                spy.mockImplementation(() => true);
                 return renderCode();
               },
             );

@@ -1,5 +1,31 @@
 # @leafygreen-ui/code
 
+## 18.0.0
+
+### Major Changes
+
+- b175dcf79: The following props are deprecated and have been removed: `copyable`, `showCustomActionButtons`, `languageOptions`, `customActionButtons`, `chromeTitle`, `onChange`. Please use the Panel component instead.
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @leafygreen-ui/a11y@2.0.5
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/select@14.1.3
+  - @leafygreen-ui/tooltip@13.0.9
+  - @leafygreen-ui/button@23.1.4
+  - @leafygreen-ui/icon@13.2.1
+  - @leafygreen-ui/icon-button@16.0.8
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/skeleton-loader@2.0.9
+  - @leafygreen-ui/tokens@2.12.1
+  - @leafygreen-ui/typography@20.1.6
+
 ## 17.1.2
 
 ### Patch Changes
