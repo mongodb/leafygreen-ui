@@ -14,9 +14,7 @@ import nodePolyfills from 'rollup-plugin-polyfill-node';
 import { bundleStats } from 'rollup-plugin-bundle-stats';
 
 const require = createRequire(import.meta.url);
-
 const storyGlob = 'src/*.stor{y,ies}.tsx';
-
 const extensions = ['.ts', '.tsx'];
 
 const {
@@ -112,6 +110,7 @@ const configForFormat = format => ({
     sourcemap: true,
     globals,
     interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
+    validate: true,
   },
   plugins: [
     nodePolyfills(),
