@@ -75,7 +75,7 @@ describe('packages/Code', () => {
       });
 
       test('announces copied to screenreaders when content is copied in the panel', () => {
-        renderCode();
+        renderCode({ panel: <Panel /> });
         const copyIcon = screen.getByRole('button');
         userEvent.click(copyIcon);
         expect(screen.getByRole('alert')).toBeInTheDocument();
@@ -198,6 +198,12 @@ describe('packages/Code', () => {
               return renderCode({
                 isLoading: false,
                 language: languageOptions[0].displayName,
+                panel: (
+                  <Panel
+                    onChange={() => {}}
+                    languageOptions={languageOptions}
+                  />
+                ),
               });
             },
           );
