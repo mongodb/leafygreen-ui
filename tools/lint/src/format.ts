@@ -38,7 +38,8 @@ export async function formatESLint(
   filePath: string,
 ): Promise<string> {
   const eslint = createESLintInstance(true);
-  const [{ output }] = await eslint.lintText(fileContent, { filePath });
+  const [result] = await eslint.lintText(fileContent, { filePath });
+  const output = result.output;
 
   if (!output) {
     throw new Error('No output from ESLint');
