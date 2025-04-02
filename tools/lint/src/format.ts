@@ -1,5 +1,5 @@
 import path from 'path';
-import prettierAPI, { BuiltInParserName } from 'prettier';
+import prettierAPI from 'prettier';
 
 const prettierConfigPath = path.resolve(
   __dirname,
@@ -10,17 +10,12 @@ const prettierConfigPath = path.resolve(
 /**
  * Format a file using the LeafyGreen Prettier config
  */
-export async function LGFormat(
-  fileContent: string,
-  filepath: string,
-  _parser?: BuiltInParserName,
-) {
+export async function formatLG(fileContent: string, filepath: string) {
   const prettierConfig = await prettierAPI.resolveConfig(prettierConfigPath);
 
-  const formatted = await prettierAPI.format(fileContent, {
+  const formatted = prettierAPI.format(fileContent, {
     ...prettierConfig,
     filepath,
-    // parser: parser || defaultParser,
   });
 
   return formatted;

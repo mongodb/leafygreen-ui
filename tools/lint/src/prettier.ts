@@ -7,7 +7,7 @@ import path from 'path';
 import prettierAPI from 'prettier';
 
 import { esLintExtensions } from './eslint';
-import { LGFormat } from './format';
+import { formatLG } from './format';
 import { LintFn } from './lint.types';
 
 const rootDir = process.cwd();
@@ -70,7 +70,7 @@ export const runPrettier: LintFn = async ({ fix, verbose }) => {
 
         if (fix) {
           // Format and write the file
-          const formatted = await LGFormat(fileContent, filePath);
+          const formatted = await formatLG(fileContent, filePath);
 
           if (formatted !== fileContent) {
             await fs.writeFile(filePath, formatted, 'utf8');

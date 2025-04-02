@@ -3,6 +3,7 @@ import { eslint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
 import { runPrettier } from './prettier';
+export { formatLG } from './format';
 
 const isTrue = (test: any) => !!test;
 
