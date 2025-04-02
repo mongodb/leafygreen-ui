@@ -34,9 +34,6 @@
       "path": "../../packages/lib"
     },
     {
-      "path": "../../packages/palette"
-    },
-    {
       "path": "../../packages/tokens"
     },
     {
