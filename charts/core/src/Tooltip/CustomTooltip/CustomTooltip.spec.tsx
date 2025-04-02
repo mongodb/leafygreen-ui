@@ -125,4 +125,12 @@ describe('@lg-charts/core/Tooltip/CustomTooltip', () => {
     expect(screen.getByText('$200')).toBeInTheDocument();
     expect(screen.getByText('$300')).toBeInTheDocument();
   });
+
+  test('should render custom axis value with axisValueFormatter', () => {
+    renderCustomTooltip({
+      axisValueFormatter: () => `Axis Value: test`,
+    });
+
+    expect(screen.getByText('Axis Value: test')).toBeInTheDocument();
+  });
 });
