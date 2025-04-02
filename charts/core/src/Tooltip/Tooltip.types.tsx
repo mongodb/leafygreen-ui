@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { type SeriesName } from '@lg-charts/series-provider';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 
 /**
@@ -8,14 +9,15 @@ import { CallbackDataParams } from 'echarts/types/dist/shared';
 export type OptionDataValue = string | number | Date;
 
 interface SeriesInfo {
-  name: OptionDataValue;
+  name: SeriesName;
   value: OptionDataValue;
 }
 
 export interface TooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
-  seriesNameFormatter?: (name: OptionDataValue) => ReactNode;
+  seriesNameFormatter?: (name: SeriesName) => ReactNode;
+  axisValueFormatter?: (value: number | string) => ReactNode;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {

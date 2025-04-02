@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
@@ -24,6 +24,7 @@ export function CustomTooltip({
   seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
+  axisValueFormatter,
   sort,
   darkMode,
 }: CustomTooltipProps) {
@@ -33,10 +34,20 @@ export function CustomTooltip({
     return null;
   }
 
-  const axisValueLabel =
-    seriesData[0].axisType === 'xAxis.time'
-      ? formatDate(seriesData[0].axisValue as number) // Should be num since axisType is time
-      : seriesData[0].axisValueLabel;
+  let axisValueLabel: ReactNode;
+
+  if (axisValueFormatter) {
+    axisValueLabel = axisValueFormatter(
+      seriesData[0].axisType === 'xAxis.time'
+        ? (seriesData[0].axisValue as number) // Should be num since axisType is time
+        : seriesData[0].axisValueLabel,
+    );
+  } else {
+    axisValueLabel =
+      seriesData[0].axisType === 'xAxis.time'
+        ? formatDate(seriesData[0].axisValue as number) // Should be num since axisType is time
+        : seriesData[0].axisValueLabel;
+  }
 
   return (
     <div className={getContainerStyles(theme)}>
