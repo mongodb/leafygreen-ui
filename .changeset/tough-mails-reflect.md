@@ -3,6 +3,7 @@
 ---
 
 Makes various improvements to the `Tooltip` component
+- Adds `headerFormatter` prop to allow formatting of header in Tooltip.
 - Adds `seriesNameFormatter` prop to allow formatting of series names.
 - Updates prop `valueFormatter` to `seriesValueFormatter`, which can now return a `ReactNode` in addition to a string.
 - Makes multiple style improvements.
