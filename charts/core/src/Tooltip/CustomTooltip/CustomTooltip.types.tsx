@@ -7,5 +7,5 @@ export interface CustomTooltipProps extends DarkModeProps {
   sort?: TooltipProps['sort'];
   seriesValueFormatter?: TooltipProps['seriesValueFormatter'];
   seriesNameFormatter?: TooltipProps['seriesNameFormatter'];
-  axisValueFormatter?: TooltipProps['axisValueFormatter'];
+  headerFormatter?: TooltipProps['headerFormatter'];
 }

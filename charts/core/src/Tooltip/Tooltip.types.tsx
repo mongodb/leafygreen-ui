@@ -8,7 +8,7 @@ import { type CallbackDataParams } from 'echarts/types/dist/shared';
  */
 export type OptionDataValue = string | number | Date;
 
-interface SeriesInfo {
+export interface SeriesInfo {
   name: SeriesName;
   value: OptionDataValue;
 }
@@ -17,7 +17,7 @@ export interface TooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
   seriesNameFormatter?: (name: SeriesName) => ReactNode;
-  axisValueFormatter?: (value: number | string) => ReactNode;
+  headerFormatter?: (value: number | string) => ReactNode;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {

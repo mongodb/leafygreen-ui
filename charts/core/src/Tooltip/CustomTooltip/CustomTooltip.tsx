@@ -24,7 +24,7 @@ export function CustomTooltip({
   seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
-  axisValueFormatter,
+  headerFormatter,
   sort,
   darkMode,
 }: CustomTooltipProps) {
@@ -36,8 +36,8 @@ export function CustomTooltip({
 
   let axisValueLabel: ReactNode;
 
-  if (axisValueFormatter) {
-    axisValueLabel = axisValueFormatter(
+  if (headerFormatter) {
+    axisValueLabel = headerFormatter(
       seriesData[0].axisType === 'xAxis.time'
         ? (seriesData[0].axisValue as number) // Should be num since axisType is time
         : seriesData[0].axisValueLabel,
