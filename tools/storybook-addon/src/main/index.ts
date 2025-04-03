@@ -12,10 +12,10 @@ import { isRule } from './utils';
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-import {getLGConfig} from '@lg-tools/meta';
+import { getLGConfig } from '@lg-tools/meta';
 
-const {scopes} = getLGConfig();
-const directories = Object.values(scopes)
+const { scopes } = getLGConfig();
+const directories = Object.values(scopes);
 
 export const stories: StorybookConfig['stories'] = findStories(
   `../{${directories.join(',')}}/**/*.stor@(y|ies).@(js|ts)?(x)`,
