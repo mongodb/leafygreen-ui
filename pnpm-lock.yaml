@@ -2136,9 +2136,6 @@ importers:
       '@emotion/styled':
         specifier: ^11.10.5
         version: 11.11.0(@emotion/react@11.11.1(@types/react@18.2.23)(react@18.2.0))(@types/react@18.2.23)(react@18.2.0)
-      next:
-        specifier: ^13.1.6
-        version: 13.4.13(@babel/core@7.24.3)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.64.2)
 
   packages/popover:
     dependencies:
