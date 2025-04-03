@@ -4,9 +4,9 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { ChartOptions } from '../../Chart';
-import { GridProps } from '../Grid.types';
+import { ChartGridProps } from '../ChartGrid.types';
 
-export const useGridOptions = ({ horizontal, vertical }: GridProps) => {
+export const useGridOptions = ({ horizontal, vertical }: ChartGridProps) => {
   const [options, setOptions] = useState<Partial<ChartOptions>>({});
   const { theme } = useDarkMode();
 

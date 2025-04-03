@@ -10,12 +10,12 @@ import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
+  ChartGrid,
   ChartHeader,
   EventMarkerLine,
   EventMarkerLineProps,
   EventMarkerPoint,
   EventMarkerPointProps,
-  Grid,
   Line,
   ThresholdLine,
   Tooltip,
@@ -150,13 +150,12 @@ export const LiveExample: StoryObj<{
         category: 'Chart',
       },
     },
+    category: 'Chart',
     verticalGridLines: {
       control: 'boolean',
       description: 'Show vertical grid lines',
       name: 'Vertical',
-      table: {
-        category: 'Grid',
-      },
+      table: {},
     },
     horizontalGridLines: {
       control: 'boolean',
@@ -499,7 +498,10 @@ export const LiveExample: StoryObj<{
           />
         )}
         {renderGrid && (
-          <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+          <ChartGrid
+            vertical={verticalGridLines}
+            horizontal={horizontalGridLines}
+          />
         )}
         {renderTooltip && (
           <Tooltip seriesValueFormatter={tooltipSeriesValueFormatter} />
@@ -582,7 +584,7 @@ export const DarkMode: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
+        <ChartGrid />
         <Tooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
@@ -634,7 +636,7 @@ export const LoadingState: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
+        <ChartGrid />
         <Tooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
@@ -680,7 +682,7 @@ export const OverlayState: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
+        <ChartGrid />
         <Tooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
@@ -726,7 +728,7 @@ export const DraggingState: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
+        <ChartGrid />
         <Tooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
@@ -781,7 +783,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
               </div>
             }
           />
-          <Grid />
+          <ChartGrid />
           <Tooltip />
           <XAxis type="time" label="X-Axis Label" />
           <YAxis type="value" label="Y-Axis Label" />
@@ -888,7 +890,7 @@ export const WithGrid: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Grid />
+        <ChartGrid />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -901,7 +903,7 @@ export const WithVerticalGrid: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Grid horizontal={false} />
+        <ChartGrid horizontal={false} />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -914,7 +916,7 @@ export const WithHorizontalGrid: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Grid vertical={false} />
+        <ChartGrid vertical={false} />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}

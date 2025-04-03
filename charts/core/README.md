@@ -21,11 +21,11 @@ npm install @lg-charts/core
 ## Basic Chart Example
 
 ```js
-import { Chart, ChartHeader, Line, Grid, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
+import { Chart, ChartGrid, ChartHeader, Line, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
 
 <Chart onZoomSelect={handleZoom} state={ChartStates.Unset}>
   <ChartHeader title="My Chart" />
-  <Grid vertical={false}>
+  <ChartGrid vertical={false}>
   <XAxis type="time" />
   <YAxis type="value" formatter={(value) => `${value}GB`} />
   <EventMarkerPoint
@@ -120,7 +120,7 @@ Component for rendering a header in a chart.
 | `showDivider` _(optional)_   | When true, renders a dividing line on top of header. Useful when stacking charts, such as in a `ChartGroup`.                                          | `boolean`         |         |
 | `headerContent` _(optional)_ | Content that will be rendered to the right of the title. Useful for adding components such as `IconButton`'s that control functionality in the chart. | `React.ReactNode` |         |
 
-### `Grid`
+### `ChartGrid`
 
 Component that displays grid lines on the chart.
 
