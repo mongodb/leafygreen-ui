@@ -12,9 +12,14 @@ import { isRule } from './utils';
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
+import {getLGConfig} from '@lg-tools/meta';
+
+const {scopes} = getLGConfig();
+const directories = Object.values(scopes)
+
 export const stories: StorybookConfig['stories'] = findStories(
-  '../{packages,tools,charts,chat}/**/*.stor@(y|ies).@(js|ts)?(x)',
-  '../{packages,tools,charts,chat}/*/node_modules',
+  `../{${directories.join(',')}}/**/*.stor@(y|ies).@(js|ts)?(x)`,
+  `../{${directories.join(',')}}/*/node_modules`,
 );
 
 export const addons: StorybookConfig['addons'] = [
