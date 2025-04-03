@@ -80,7 +80,7 @@ export function Chart({
             {...listeners}
           >
             {/**
-             * Children other than Header are not expected to be rendered to the DOM,
+             * Children other than ChartHeader are not expected to be rendered to the DOM,
              * but are used to provide a more declarative API for adding functionality
              * to the chart canvas. They have access to the ChartContext and can be
              * used to add components like Line, Grid, etc.

@@ -3,19 +3,19 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
 import { ChartProps } from './Chart/Chart.types';
-import { HeaderProps } from './Header/Header.types';
+import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { TooltipProps } from './Tooltip/Tooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
+  ChartHeader,
   EventMarkerLine,
   EventMarkerLineProps,
   EventMarkerPoint,
   EventMarkerPointProps,
   Grid,
-  Header,
   Line,
   ThresholdLine,
   Tooltip,
@@ -77,8 +77,8 @@ export const LiveExample: StoryObj<{
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: TooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
-  headerTitle: HeaderProps['title'];
-  headerShowDivider: HeaderProps['showDivider'];
+  headerTitle: ChartHeaderProps['title'];
+  headerShowDivider: ChartHeaderProps['showDivider'];
   zoomSelectXAxis: boolean;
   zoomSelectYAxis: boolean;
   zoomSelectCallback;
@@ -481,7 +481,7 @@ export const LiveExample: StoryObj<{
         state={state}
       >
         {renderHeader && (
-          <Header
+          <ChartHeader
             title={headerTitle}
             showDivider={headerShowDivider}
             headerContent={
@@ -565,7 +565,7 @@ export const DarkMode: StoryObj<{}> = {
         }}
         state="unset"
       >
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -617,7 +617,7 @@ export const LoadingState: StoryObj<{}> = {
         }}
         state="loading"
       >
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -663,7 +663,7 @@ export const OverlayState: StoryObj<{}> = {
   render: () => {
     return (
       <Chart state="overlay">
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -709,7 +709,7 @@ export const DraggingState: StoryObj<{}> = {
   render: () => {
     return (
       <Chart state="dragging">
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -765,7 +765,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
           }}
           state="unset"
         >
-          <Header
+          <ChartHeader
             title="Header"
             showDivider
             headerContent={
@@ -927,7 +927,7 @@ export const WithHeader: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Header title="Header" />
+        <ChartHeader title="Header" />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -940,7 +940,7 @@ export const WithHeaderAndDivider: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Header title="Header" showDivider />
+        <ChartHeader title="Header" showDivider />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -953,7 +953,7 @@ export const WithHeaderContent: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -1054,6 +1054,23 @@ export const WithWarningEventMarkerLine: StoryObj<{}> = {
           message="Event marker line message"
           level="warning"
         />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
+export const WithZoomAndTooltip: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+      >
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}

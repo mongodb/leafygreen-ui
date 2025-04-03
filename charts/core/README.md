@@ -21,10 +21,10 @@ npm install @lg-charts/core
 ## Basic Chart Example
 
 ```js
-import { Chart, Line, Grid, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
+import { Chart, ChartHeader, Line, Grid, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
 
 <Chart onZoomSelect={handleZoom} state={ChartStates.Unset}>
-  <Header title="My Chart" />
+  <ChartHeader title="My Chart" />
   <Grid vertical={false}>
   <XAxis type="time" />
   <YAxis type="value" formatter={(value) => `${value}GB`} />
@@ -108,7 +108,7 @@ Component that takes in data points and renders a single line on the chart.
 | `name` | Unique name used to identify the series. **Important note:** If two lines have the same name, only one will be rendered. | `string`                                                      |         |
 | `data` | Data array of tuples that represent x and y coordinates in the series.                                                   | `Array<[string \| number \| Date, string \| number \| Date]>` |         |
 
-### `Header`
+### `ChartHeader`
 
 Component for rendering a header in a chart.
 
