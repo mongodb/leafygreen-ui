@@ -141,11 +141,7 @@ const configForFormat = format => ({
 
     terser(),
 
-    bundleStats({
-      html: false,
-      json: false,
-      compare: false,
-    }),
+
   ],
   external,
   strictDeprecations: true,

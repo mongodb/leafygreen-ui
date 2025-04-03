@@ -11,6 +11,7 @@ import { loadConfigFile as _loadConfigFile } from 'rollup/loadConfigFile';
 import { findRollupConfigFile } from './findRollupConfigFile';
 
 const loadConfigFile = _loadConfigFile as LoadConfigFile;
+import { bundleStats } from 'rollup-plugin-bundle-stats';
 
 interface BuildPackageOptions {
   /**
@@ -64,10 +65,25 @@ export function buildPackage({ direct, verbose }: BuildPackageOptions) {
       }
 
       for (const optionsObj of options) {
-        const bundle = await rollup.rollup({
+
+        const config: MergedRollupOptions = {
           ...optionsObj,
           logLevel: verbose ? 'debug' : 'warn',
-        });
+        }
+
+        // Log the bundle stats in verbose mode
+        if (verbose) {
+          config.plugins.push(
+            bundleStats({
+              html: false,
+              json: false,
+              compare: false,
+            })
+          )
+        }
+
+        const bundle = await rollup.rollup(config);
+
         verbose &&
           console.log(
             `${chalk.bold(optionsObj.input)} > ${chalk.bold(
