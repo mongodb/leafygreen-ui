@@ -140,8 +140,6 @@ const configForFormat = format => ({
     svgr(),
 
     terser(),
-
-
   ],
   external,
   strictDeprecations: true,
