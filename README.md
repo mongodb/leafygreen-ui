@@ -190,6 +190,11 @@ import Button from '@leafygreen-ui/button';
    brew install asdf
    ```
 
+   ```bash
+   echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH";' >> ~/.zshrc;
+   source ~/.zshrc;
+   ```
+
 3. Use `asdf` to ensure your tools are up to date
 
    ```bash
