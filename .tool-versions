@@ -1,2 +1,4 @@
+# these should match the versions listed in package.json "engines"
+
 nodejs 18.20.8
 pnpm 9.15.6
