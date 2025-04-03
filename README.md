@@ -171,28 +171,32 @@ import Button from '@leafygreen-ui/button';
 
 ### Setup
 
-1. Node >= 18.0.0 required.
-
-   via [homebrew](https://brew.sh/) with `brew install node`
-
-   via [nodejs installer](https://nodejs.org/en/)
-
-2. Install PNPM >= 9.15.0.
-
-   [PNPM Installation documentation](https://pnpm.io/installation)
-
-3. Clone the repository.
+1. Clone the repository.
 
    ```bash
    # Navigate to the directory you'd like to clone the repository into
-   $ cd ~/my/repositories
+   cd ~/my/repositories
 
    # Clone the repository.
 
    # We recommend installing using the SSH address rather than the HTTPS one to make authentication easier for you. To set up SSH authentication with GitHub, see their guide: https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account
    ```
 
-4. Install dependencies and link packages.
+2. Install `asdf` to manage tooling versions
+
+   With Homebrew:
+
+   ```bash
+   brew install asdf
+   ```
+
+3. Use `asdf` to ensure your tools are up to date
+
+   ```bash
+   asdf install
+   ```
+
+4. Install dependencies and build packages.
    ```ts
    pnpm run init
    ```
