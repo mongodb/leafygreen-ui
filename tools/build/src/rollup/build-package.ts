@@ -65,11 +65,10 @@ export function buildPackage({ direct, verbose }: BuildPackageOptions) {
       }
 
       for (const optionsObj of options) {
-
         const config: MergedRollupOptions = {
           ...optionsObj,
           logLevel: verbose ? 'debug' : 'warn',
-        }
+        };
 
         // Log the bundle stats in verbose mode
         if (verbose) {
@@ -78,8 +77,8 @@ export function buildPackage({ direct, verbose }: BuildPackageOptions) {
               html: false,
               json: false,
               compare: false,
-            })
-          )
+            }),
+          );
         }
 
         const bundle = await rollup.rollup(config);
