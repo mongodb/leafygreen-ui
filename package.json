@@ -34,6 +34,8 @@
     "test": "lg test",
     "unlink": "lg unlink",
     "validate": "lg validate",
+    "preversion": "turbo run prebuild",
+    "version": "pnpm changeset version",
     "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm run storybook build --test'"
   },
   "devDependencies": {
