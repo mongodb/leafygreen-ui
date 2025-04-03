@@ -7,9 +7,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "bin": {
-    "lg-update": "./bin/index.js"
-  },
   "scripts": {
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"

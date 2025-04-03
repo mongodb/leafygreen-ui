@@ -28,6 +28,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
     "@lg-tools/storybook-decorators": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@mdx-js/react": "2.3.0",
