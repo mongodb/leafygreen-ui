@@ -2,7 +2,6 @@ import {
   MenuProps as SBMenuProps,
   SplitButtonProps,
 } from '../SplitButton/SplitButton.types';
-
 import { type GetLgIdsReturnType } from '../utils';
 
 export type MenuProps = Required<

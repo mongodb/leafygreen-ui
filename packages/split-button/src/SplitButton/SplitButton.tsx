@@ -13,6 +13,7 @@ import {
 import { RenderMode } from '@leafygreen-ui/popover';
 
 import { Menu } from '../Menu';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import {
   buttonBaseStyles,
@@ -25,8 +26,6 @@ import {
   Justify,
   Variant,
 } from './SplitButton.types';
-
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 export const SplitButton = InferredPolymorphic<
   InternalSplitButtonProps,

@@ -4,8 +4,9 @@ import { getLgIds as getLgFormFieldIds } from '@leafygreen-ui/form-field';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { getLgIds as getLgTypographyLgIds } from '@leafygreen-ui/typography';
 
-import { GetTestUtilsReturnType } from './getTestUtils.types';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
+
+import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export function waitForSelectTransitionDuration() {
   return new Promise(res => setTimeout(res, transitionDuration.slower));

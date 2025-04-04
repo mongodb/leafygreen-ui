@@ -13,8 +13,8 @@ export {
   State,
 } from './Select';
 export {
+  DEFAULT_LGID_ROOT,
+  getLgIds,
   getTestUtils,
   type GetTestUtilsReturnType,
-  getLgIds,
-  DEFAULT_LGID_ROOT,
 } from './utils';

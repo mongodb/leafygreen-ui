@@ -11,7 +11,7 @@ import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { Optional } from '@leafygreen-ui/lib';
-import { MenuItem, getLgIds as getMenuLgIds } from '@leafygreen-ui/menu';
+import { getLgIds as getMenuLgIds,MenuItem } from '@leafygreen-ui/menu';
 import { InferredPolymorphicPropsWithRef } from '@leafygreen-ui/polymorphic';
 import { RenderMode } from '@leafygreen-ui/popover';
 

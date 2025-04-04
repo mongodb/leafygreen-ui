@@ -4,6 +4,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
+import { getLgIds } from '../utils';
+import { DEFAULT_LGID_ROOT } from '../utils/getLgIds';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
@@ -12,8 +14,6 @@ import {
   getDisabledDescriptionColorStyle,
 } from './Description.styles';
 import { DescriptionProps } from './Description.types';
-import { getLgIds } from '../utils';
-import { DEFAULT_LGID_ROOT } from '../utils/getLgIds';
 
 export const Description = Polymorphic<DescriptionProps>(
   ({

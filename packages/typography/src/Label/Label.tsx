@@ -8,6 +8,8 @@ import {
   usePolymorphic,
 } from '@leafygreen-ui/polymorphic';
 
+import { getLgIds } from '../utils';
+import { DEFAULT_LGID_ROOT } from '../utils/getLgIds';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
@@ -16,8 +18,6 @@ import {
   labelTypeScaleStyles,
 } from './Label.styles';
 import { BaseLabelProps } from './Label.types';
-import { getLgIds } from '../utils';
-import { DEFAULT_LGID_ROOT } from '../utils/getLgIds';
 
 export const Label = Polymorphic<BaseLabelProps>(
   ({

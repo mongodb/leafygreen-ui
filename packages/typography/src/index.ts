@@ -34,6 +34,6 @@ export type { OverlineProps } from './Overline/Overline.types';
 export { bodyTypeScaleStyles } from './styles';
 export { default as Subtitle } from './Subtitle/Subtitle';
 export type { SubtitleProps } from './Subtitle/Subtitle.types';
+export { getLgIds } from './utils';
 export { StaticWidthText } from './utils/StaticWidthText';
 export { useUpdatedBaseFontSize } from './utils/useUpdatedBaseFontSize';
-export { getLgIds } from './utils';

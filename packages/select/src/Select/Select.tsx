@@ -28,7 +28,7 @@ import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
-
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -39,8 +39,6 @@ import {
   traverseSelectChildren,
   useStateRef,
 } from '../utils/utils';
-
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import {
   labelDescriptionContainerStyle,

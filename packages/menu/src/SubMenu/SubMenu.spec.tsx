@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
 import { getLgIds } from '../utils';
-
 import { MenuItem, SubMenu, SubMenuProps } from '..';
 
 const subMenuTestId = 'sub-menu-1-id';
