@@ -28,8 +28,11 @@ export function downlevelDts(options?: DownlevelDtsOptions): void {
   const typesDirPath = path.resolve(packageDir, 'dist');
 
   // Default output directory
-  const defaultOutDir = `dist/ts${target}`;
-  const outputDirPath = path.resolve(packageDir, outDir ?? defaultOutDir);
+  const defaultOutDir = `ts${target}`;
+  const outputDirPath = path.resolve(
+    packageDir,
+    `dist/${outDir ?? defaultOutDir}`,
+  );
 
   // Ensure types directory exists
   if (!fse.existsSync(typesDirPath)) {
@@ -39,37 +42,26 @@ export function downlevelDts(options?: DownlevelDtsOptions): void {
 
   verbose &&
     console.log(
-      chalk.blue(`Downleveling TypeScript declarations to TS ${target}`),
+      chalk.blue.bold(`Downleveling TypeScript declarations to TS ${target}`),
     );
   verbose && console.log(chalk.gray(`Input: ${typesDirPath}`));
   verbose && console.log(chalk.gray(`Output: ${outputDirPath}`));
 
   try {
-    // Ensure downlevel-dts is installed
-    verbose && console.log(chalk.blueBright('Checking for downlevel-dts...'));
-
-    const checkResult = checkForDownlevelDts();
-
-    if (checkResult.status !== 0) {
-      verbose &&
-        console.log(chalk.yellow('downlevel-dts not found, installing...'));
-
-      const installResult = installDownlevelDts();
-
-      if (installResult.status !== 0) {
-        throw new Error(
-          `Failed to install downlevel-dts, exit code: ${installResult.status}`,
-        );
-      }
-    }
-
     // Run downlevel-dts
-    const args = ['downlevel-dts', typesDirPath, outputDirPath, '--to', target];
+    const args = [
+      'exec',
+      'downlevel-dts',
+      typesDirPath,
+      outputDirPath,
+      '--to',
+      target,
+    ];
 
-    verbose && console.log(chalk.gray(`Running: npx ${args.join(' ')}`));
+    verbose && console.log(chalk.gray(`Running: pnpm ${args.join(' ')}`));
 
-    const result = spawnSync('npx', args, {
-      stdio: verbose ? 'inherit' : 'pipe',
+    const result = spawnSync('pnpm', args, {
+      stdio: verbose ? 'inherit' : 'ignore',
     });
 
     if (result.status !== 0) {
@@ -84,13 +76,5 @@ export function downlevelDts(options?: DownlevelDtsOptions): void {
     );
   } catch (error: any) {
     throw new Error(`Error downleveling declarations: ${error.message}`);
-  }
-
-  function checkForDownlevelDts() {
-    return spawnSync('npx', ['--no-install', 'downlevel-dts', '--version']);
-  }
-
-  function installDownlevelDts() {
-    return spawnSync('npm', ['install', '--no-save', 'downlevel-dts']);
   }
 }
