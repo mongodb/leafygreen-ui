@@ -1,5 +1,21 @@
 # @leafygreen-ui/icon
 
+## 13.2.2
+
+### Patch Changes
+
+- 2ab660926: - Updates `prebuild` script
+  - updates to ESM module
+  - runs `ESLint` and `Prettier` on generated `glyphs/icon.ts` file
+  - replaces `meow` with `commander`
+  - adds `verbose` logging flag
+  - removes unused `[inputFiles]` argument
+  - uses `prebuild.ts` script contents to generate svgr checksum
+- fd1696643: - Adds `glyphs/index.ts` to prebuild cache `turbo.json`
+  - Removes reference path `"@leafygreen-ui/icon/dist/*"` from `tsconfig.json`
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 13.2.1
 
 ### Patch Changes

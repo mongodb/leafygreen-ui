@@ -1,5 +1,14 @@
 # @lg-tools/test
 
+## 0.4.16
+
+### Patch Changes
+
+- Updated dependencies [fd1696643]
+  - @lg-tools/build@0.7.4
+  - @leafygreen-ui/testing-lib@0.7.4
+  - @lg-tools/meta@0.4.2
+
 ## 0.4.15
 
 ### Patch Changes
