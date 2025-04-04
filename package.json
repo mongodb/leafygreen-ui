@@ -72,10 +72,11 @@
   },
   "pnpm": {
     "overrides": {
+      "@testing-library/dom": "9.3.4",
+      "@testing-library/user-event": "13.5.0",
       "caniuse-lite": "^1.0.30001585",
       "jackspeak": "2.1.1",
-      "@testing-library/dom": "9.3.4",
-      "@testing-library/user-event": "13.5.0"
+      "typescript": "~5.0.4"
     }
   },
   "lg": {

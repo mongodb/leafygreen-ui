@@ -33,7 +33,8 @@ export function buildTypescript(
     process.exit(1);
   }
 
-  verbose && console.log(chalk.blue.bold('Building TypeScript'));
+  verbose &&
+    console.log(chalk.blue.bold(`Building TypeScript (v${ts.version})`));
 
   // Any additional options passed in via the CLI
   const cliCompilerOptions = parsePassThruOptions(passThru);
