@@ -32,19 +32,19 @@
     "@lg-tools/storybook-decorators": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@mdx-js/react": "2.3.0",
-    "@storybook/addon-a11y": "8.5.3",
-    "@storybook/addon-essentials": "8.5.3",
-    "@storybook/addon-interactions": "8.5.3",
-    "@storybook/addon-links": "8.5.3",
-    "@storybook/addon-mdx-gfm": "8.5.3",
-    "@storybook/components": "8.5.3",
-    "@storybook/core-events": "8.5.3",
-    "@storybook/manager-api": "8.5.3",
-    "@storybook/preview-api": "8.5.3",
-    "@storybook/react": "8.5.3",
-    "@storybook/react-webpack5": "8.5.3",
-    "@storybook/test": "8.5.3",
-    "@storybook/theming": "8.5.3",
+    "@storybook/addon-a11y": "8.6.12",
+    "@storybook/addon-essentials": "8.6.12",
+    "@storybook/addon-interactions": "8.6.12",
+    "@storybook/addon-links": "8.6.12",
+    "@storybook/addon-mdx-gfm": "8.6.12",
+    "@storybook/components": "8.6.12",
+    "@storybook/core-events": "8.6.12",
+    "@storybook/manager-api": "8.6.12",
+    "@storybook/preview-api": "8.6.12",
+    "@storybook/react": "8.6.12",
+    "@storybook/react-webpack5": "8.6.12",
+    "@storybook/test": "8.6.12",
+    "@storybook/theming": "8.6.12",
     "@svgr/webpack": "8.0.1",
     "babel-loader": "9.2.1",
     "buffer": "6.0.3",
@@ -61,8 +61,9 @@
     "webpack": "5.88.0"
   },
   "peerDependencies": {
+    "@storybook/react": "^8.6.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
-    "storybook": "^8.5.3"
+    "storybook": "^8.6.0"
   }
 }
