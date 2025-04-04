@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import chalk from 'chalk';
 import { runESLint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
@@ -31,13 +32,14 @@ export const lint = (options: LintCommandOptions) => {
   Promise.all(linters)
     .then(results => {
       if (results.every(isTrue)) {
+        console.log(chalk.green('All linters passed'));
         process.exit(0);
       }
 
       const total = results.length;
       const successes = results.filter(isTrue).length;
-      verbose && console.error(`${successes} of ${total} linters passing`);
-
+      console.error(chalk.red(`${successes} of ${total} linters passing`));
+      verbose && console.log(results);
       process.exit(1);
     })
     .catch(err => {
