@@ -10,7 +10,7 @@
   "module": "dist/esm/index.js",
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "tsc": "lg-internal-build-ts"
   },
   "publishConfig": {
     "access": "public"
