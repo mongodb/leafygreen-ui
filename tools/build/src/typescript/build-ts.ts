@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import ts from 'typescript';
+import { parsePassThruOptions } from './parsePAssThruOptions';
 import { reportTypescriptDiagnostic } from './report-ts-diagnostic';
 
 /**
@@ -50,10 +51,16 @@ export function buildTypescript(
     process.exit(1);
   }
 
+  // Any additional options passed in via the CLI
+  const cliCompilerOptions = parsePassThruOptions(passThru);
+
   // Create the program
   const program = ts.createProgram({
     rootNames: parsedConfig.fileNames,
-    options: parsedConfig.options,
+    options: {
+      ...parsedConfig.options,
+      ...cliCompilerOptions,
+    },
     projectReferences: parsedConfig.projectReferences,
   });
 
