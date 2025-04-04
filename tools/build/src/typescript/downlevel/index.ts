@@ -14,7 +14,6 @@ interface DownlevelCommandOptions {
  */
 export function runTypescriptDownlevel({ verbose }: DownlevelCommandOptions) {
   const packageDir = process.cwd();
-  verbose && console.log(chalk.blue.bold('Building TypeScript for production'));
 
   const packageJson = fse.readJSONSync(
     path.join(packageDir, 'package.json'),
@@ -24,6 +23,7 @@ export function runTypescriptDownlevel({ verbose }: DownlevelCommandOptions) {
   const downlevelVersions = getTypeVersions(typesVersions);
 
   if (downlevelVersions) {
+    verbose && console.log(chalk.blue.bold('Downleveling TypeScript'));
     downlevelVersions.forEach(target => {
       downlevelDts({ verbose, target });
     });

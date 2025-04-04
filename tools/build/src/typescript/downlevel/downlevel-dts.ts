@@ -40,10 +40,9 @@ export function downlevelDts(options?: DownlevelDtsOptions): void {
     process.exit(1);
   }
 
-  verbose &&
-    console.log(
-      chalk.blue.bold(`Downleveling TypeScript declarations to TS ${target}`),
-    );
+  console.log(
+    chalk.blue.bold(`Downleveling TypeScript declarations to TS ${target}`),
+  );
   verbose && console.log(chalk.gray(`Input: ${typesDirPath}`));
   verbose && console.log(chalk.gray(`Output: ${outputDirPath}`));
 
