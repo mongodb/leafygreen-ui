@@ -155,7 +155,7 @@ Renders a y-axis.
 | `label` _(optional)_     | Label name to be rendered on the axis.        | `string`                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | `(value: string, index: number) => string` |         |
 
-### `Tooltip`
+### `ChartTooltip`
 
 Renders a tooltip onto the chart.
 

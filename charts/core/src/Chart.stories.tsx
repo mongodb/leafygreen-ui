@@ -4,7 +4,7 @@ import type { StoryObj } from '@storybook/react';
 
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
-import { TooltipProps } from './Tooltip/Tooltip.types';
+import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
@@ -12,13 +12,13 @@ import {
   Chart,
   ChartGrid,
   ChartHeader,
+  ChartTooltip,
   EventMarkerLine,
   EventMarkerLineProps,
   EventMarkerPoint,
   EventMarkerPointProps,
   Line,
   ThresholdLine,
-  Tooltip,
   XAxis,
   XAxisProps,
   YAxis,
@@ -75,7 +75,7 @@ export const LiveExample: StoryObj<{
   yAxisFormatter: YAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
   renderTooltip: boolean;
-  tooltipSeriesValueFormatter: TooltipProps['seriesValueFormatter'];
+  tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
   headerTitle: ChartHeaderProps['title'];
   headerShowDivider: ChartHeaderProps['showDivider'];
@@ -504,7 +504,7 @@ export const LiveExample: StoryObj<{
           />
         )}
         {renderTooltip && (
-          <Tooltip seriesValueFormatter={tooltipSeriesValueFormatter} />
+          <ChartTooltip seriesValueFormatter={tooltipSeriesValueFormatter} />
         )}
         {renderXAxis && (
           <XAxis
@@ -585,7 +585,7 @@ export const DarkMode: StoryObj<{}> = {
           }
         />
         <ChartGrid />
-        <Tooltip />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -637,7 +637,7 @@ export const LoadingState: StoryObj<{}> = {
           }
         />
         <ChartGrid />
-        <Tooltip />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -683,7 +683,7 @@ export const OverlayState: StoryObj<{}> = {
           }
         />
         <ChartGrid />
-        <Tooltip />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -729,7 +729,7 @@ export const DraggingState: StoryObj<{}> = {
           }
         />
         <ChartGrid />
-        <Tooltip />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -784,7 +784,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
             }
           />
           <ChartGrid />
-          <Tooltip />
+          <ChartTooltip />
           <XAxis type="time" label="X-Axis Label" />
           <YAxis type="value" label="Y-Axis Label" />
           <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -825,7 +825,7 @@ export const WithTooltip: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Tooltip />
+        <ChartTooltip />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -1137,13 +1137,13 @@ export const SyncedByGroupID: StoryObj<{}> = {
         style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
       >
         <Chart groupId="group1">
-          <Tooltip />
+          <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
         <Chart groupId="group1">
-          <Tooltip />
+          <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
