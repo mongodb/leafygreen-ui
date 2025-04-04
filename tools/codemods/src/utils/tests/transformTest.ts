@@ -4,7 +4,6 @@
 import fs from 'fs';
 import jscodeshift, { type FileInfo } from 'jscodeshift';
 import path from 'path';
-// @ts-expect-error - no prettier types
 import prettier from 'prettier';
 
 interface ParserExtensionMap {
