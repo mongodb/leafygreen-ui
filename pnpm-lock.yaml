@@ -137,9 +137,6 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../../packages/lib
-      '@leafygreen-ui/palette':
-        specifier: workspace:^
-        version: link:../../packages/palette
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
@@ -211,6 +208,9 @@ importers:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
       '@types/lodash.debounce':
         specifier: ^4.0.9
         version: 4.0.9
@@ -3291,6 +3291,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../meta
       '@lg-tools/storybook-decorators':
         specifier: workspace:^
         version: link:../storybook-decorators

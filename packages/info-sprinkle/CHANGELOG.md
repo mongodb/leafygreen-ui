@@ -1,5 +1,19 @@
 # @leafygreen-ui/info-sprinkle
 
+## 4.0.10
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/tooltip@13.0.9
+  - @leafygreen-ui/icon@13.2.1
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.1
+
 ## 4.0.9
 
 ### Patch Changes

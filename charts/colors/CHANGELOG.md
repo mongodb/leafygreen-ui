@@ -1,5 +1,14 @@
 # @lg-charts/colors
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/palette@4.1.4
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "11.0.12",
+  "version": "11.0.13",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
