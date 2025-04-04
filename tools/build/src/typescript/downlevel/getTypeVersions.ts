@@ -3,7 +3,7 @@
  * and returns an array of version numbers without the 'ts' prefix.
  * @returns
  */
-const getTypeVersions = (typesVersions?: {
+export const getTypeVersions = (typesVersions?: {
   [target: string]: {
     [files: string]: string[];
   };

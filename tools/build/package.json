@@ -7,13 +7,14 @@
     "access": "public"
   },
   "bin": {
-    "lg-internal-build-package": "./bin/build-package.js"
+    "lg-internal-build-package": "./bin/build-package.js",
+    "lg-internal-build-ts": "./bin/build-ts.sh"
   },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "rollup -c ./config/rollup.config.mjs",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "scripts/build.sh",
+    "tsc": "scripts/build-ts.sh" 
   },
   "dependencies": {
     "@babel/core": "7.24.3",

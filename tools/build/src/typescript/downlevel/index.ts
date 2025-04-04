@@ -3,6 +3,7 @@ import path from 'path';
 import fse from 'fs-extra';
 
 import { downlevelDts } from './downlevel-dts';
+import { getTypeVersions } from './getTypeVersions';
 
 interface DownlevelCommandOptions {
   verbose?: boolean;
