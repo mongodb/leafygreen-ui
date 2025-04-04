@@ -26,7 +26,7 @@
     "fix": "lg lint --fix",
     "link": "lg link",
     "lint": "lg lint",
-    "prepublishOnly": "pnpm run build && turbo run docs",
+    "prepublishOnly": "pnpm run build && pnpm run build:ts --downlevel && turbo run docs",
     "publish": "pnpm changeset publish --public",
     "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates --no-open",
