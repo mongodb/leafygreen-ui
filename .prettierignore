@@ -1,12 +1,12 @@
-node_modules/
-dist/
+node_modules/*
+dist/*
 package.json
 packages/icon/src/glyphs/*.svg
 packages/icon/src/generated/*.tsx
-storybook-static
+storybook-static/*
 .changeset/
 **/package.json
 **/tsconfig.json
 **/tsdoc.json
 packages/**/stories.js*
-.turbo
+.turbo/*
