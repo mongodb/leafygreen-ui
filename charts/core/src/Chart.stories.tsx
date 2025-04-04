@@ -3,22 +3,22 @@ import { storybookArgTypes } from '@lg-tools/storybook-utils';
 import type { StoryObj } from '@storybook/react';
 
 import { ChartProps } from './Chart/Chart.types';
-import { HeaderProps } from './Header/Header.types';
-import { TooltipProps } from './Tooltip/Tooltip.types';
+import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
+import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
 import { LineProps } from './Line';
 import { makeLineData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
+  ChartGrid,
+  ChartHeader,
+  ChartTooltip,
   EventMarkerLine,
   EventMarkerLineProps,
   EventMarkerPoint,
   EventMarkerPointProps,
-  Grid,
-  Header,
   Line,
   ThresholdLine,
-  Tooltip,
   XAxis,
   XAxisProps,
   YAxis,
@@ -75,10 +75,10 @@ export const LiveExample: StoryObj<{
   yAxisFormatter: YAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
   renderTooltip: boolean;
-  tooltipSeriesValueFormatter: TooltipProps['seriesValueFormatter'];
+  tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
-  headerTitle: HeaderProps['title'];
-  headerShowDivider: HeaderProps['showDivider'];
+  headerTitle: ChartHeaderProps['title'];
+  headerShowDivider: ChartHeaderProps['showDivider'];
   zoomSelectXAxis: boolean;
   zoomSelectYAxis: boolean;
   zoomSelectCallback;
@@ -150,13 +150,12 @@ export const LiveExample: StoryObj<{
         category: 'Chart',
       },
     },
+    category: 'Chart',
     verticalGridLines: {
       control: 'boolean',
       description: 'Show vertical grid lines',
       name: 'Vertical',
-      table: {
-        category: 'Grid',
-      },
+      table: {},
     },
     horizontalGridLines: {
       control: 'boolean',
@@ -481,7 +480,7 @@ export const LiveExample: StoryObj<{
         state={state}
       >
         {renderHeader && (
-          <Header
+          <ChartHeader
             title={headerTitle}
             showDivider={headerShowDivider}
             headerContent={
@@ -499,10 +498,13 @@ export const LiveExample: StoryObj<{
           />
         )}
         {renderGrid && (
-          <Grid vertical={verticalGridLines} horizontal={horizontalGridLines} />
+          <ChartGrid
+            vertical={verticalGridLines}
+            horizontal={horizontalGridLines}
+          />
         )}
         {renderTooltip && (
-          <Tooltip seriesValueFormatter={tooltipSeriesValueFormatter} />
+          <ChartTooltip seriesValueFormatter={tooltipSeriesValueFormatter} />
         )}
         {renderXAxis && (
           <XAxis
@@ -565,7 +567,7 @@ export const DarkMode: StoryObj<{}> = {
         }}
         state="unset"
       >
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -582,8 +584,8 @@ export const DarkMode: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
-        <Tooltip />
+        <ChartGrid />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -617,7 +619,7 @@ export const LoadingState: StoryObj<{}> = {
         }}
         state="loading"
       >
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -634,8 +636,8 @@ export const LoadingState: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
-        <Tooltip />
+        <ChartGrid />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -663,7 +665,7 @@ export const OverlayState: StoryObj<{}> = {
   render: () => {
     return (
       <Chart state="overlay">
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -680,8 +682,8 @@ export const OverlayState: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
-        <Tooltip />
+        <ChartGrid />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -709,7 +711,7 @@ export const DraggingState: StoryObj<{}> = {
   render: () => {
     return (
       <Chart state="dragging">
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -726,8 +728,8 @@ export const DraggingState: StoryObj<{}> = {
             </div>
           }
         />
-        <Grid />
-        <Tooltip />
+        <ChartGrid />
+        <ChartTooltip />
         <XAxis type="time" label="X-Axis Label" />
         <YAxis type="value" label="Y-Axis Label" />
         <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -765,7 +767,7 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
           }}
           state="unset"
         >
-          <Header
+          <ChartHeader
             title="Header"
             showDivider
             headerContent={
@@ -781,8 +783,8 @@ export const ResizingWithContainer: StoryObj<{ containerWidth: number }> = {
               </div>
             }
           />
-          <Grid />
-          <Tooltip />
+          <ChartGrid />
+          <ChartTooltip />
           <XAxis type="time" label="X-Axis Label" />
           <YAxis type="value" label="Y-Axis Label" />
           <ThresholdLine position={1300} label="Cluster Limit" value="1300" />
@@ -823,7 +825,7 @@ export const WithTooltip: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Tooltip />
+        <ChartTooltip />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -888,7 +890,7 @@ export const WithGrid: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Grid />
+        <ChartGrid />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -901,7 +903,7 @@ export const WithVerticalGrid: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Grid horizontal={false} />
+        <ChartGrid horizontal={false} />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -914,7 +916,7 @@ export const WithHorizontalGrid: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Grid vertical={false} />
+        <ChartGrid vertical={false} />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -927,7 +929,7 @@ export const WithHeader: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Header title="Header" />
+        <ChartHeader title="Header" />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -940,7 +942,7 @@ export const WithHeaderAndDivider: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Header title="Header" showDivider />
+        <ChartHeader title="Header" showDivider />
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}
@@ -953,7 +955,7 @@ export const WithHeaderContent: StoryObj<{}> = {
   render: () => {
     return (
       <Chart>
-        <Header
+        <ChartHeader
           title="Header"
           showDivider
           headerContent={
@@ -1062,6 +1064,23 @@ export const WithWarningEventMarkerLine: StoryObj<{}> = {
   },
 };
 
+export const WithZoomAndTooltip: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+      >
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
 export const WithZoom: StoryObj<{}> = {
   render: () => {
     return (
@@ -1118,13 +1137,13 @@ export const SyncedByGroupID: StoryObj<{}> = {
         style={{ display: 'grid', gridTemplateColumns: '1fr', width: '100%' }}
       >
         <Chart groupId="group1">
-          <Tooltip />
+          <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
         <Chart groupId="group1">
-          <Tooltip />
+          <ChartTooltip />
           {lineData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}

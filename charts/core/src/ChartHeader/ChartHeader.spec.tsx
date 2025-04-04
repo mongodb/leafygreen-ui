@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { Header } from './Header';
+import { ChartHeader } from './ChartHeader';
 
 const defaultContentTestId = 'header-content';
 
@@ -11,23 +11,23 @@ const defaultProps = {
   headerContent: <div data-testid={defaultContentTestId}></div>,
 };
 
-const renderHeader = () => render(<Header {...defaultProps} />);
+const renderChartHeader = () => render(<ChartHeader {...defaultProps} />);
 
-describe('@lg-charts/core/src/Header/Header', () => {
+describe('@lg-charts/core/src/ChartHeader/ChartHeader', () => {
   test('does not have basic accessibility issues', async () => {
-    const { container } = renderHeader();
+    const { container } = renderChartHeader();
     const results = await axe(container);
 
     expect(results).toHaveNoViolations();
   });
 
   test('should display title value', () => {
-    renderHeader();
+    renderChartHeader();
     expect(screen.getByText(defaultProps.title)).toBeInTheDocument();
   });
 
   test('render component passed to headerContent', () => {
-    renderHeader();
+    renderChartHeader();
     expect(screen.getByTestId(defaultContentTestId)).toBeInTheDocument();
   });
 });

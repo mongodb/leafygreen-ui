@@ -9,7 +9,7 @@ import { sampleTooltipParams } from './CustomTooltip.testUtils';
 import { CustomTooltipProps } from './CustomTooltip.types';
 
 export default {
-  title: 'Charts/Tooltip',
+  title: 'Charts/ChartTooltip',
   component: CustomTooltip,
   args: {
     seriesData: sampleTooltipParams,

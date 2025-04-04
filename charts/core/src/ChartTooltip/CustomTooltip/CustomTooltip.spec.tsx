@@ -76,7 +76,7 @@ const renderCustomTooltip = (props: Partial<CustomTooltipProps> = {}) => {
   return render(<CustomTooltip {...defaultProps} {...props} />);
 };
 
-describe('@lg-charts/core/Tooltip/CustomTooltip', () => {
+describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
   test('should render properly formatted date', () => {
     renderCustomTooltip();
     const dateElement = screen.getByText(

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { ChartCard } from '@lg-charts/chart-card';
 import {
   Chart,
-  Grid,
-  Header,
+  ChartGrid,
+  ChartHeader,
+  ChartTooltip,
   Line,
-  Tooltip,
   XAxis,
   YAxis,
 } from '@lg-charts/core';
@@ -54,9 +54,9 @@ function renderChart(id: string, onChartReady?: () => void) {
       onChartReady={onChartReady}
       style={{ width: '100%', height: '100%' }}
     >
-      <Header title={id} showDivider />
-      <Grid vertical={false} />
-      <Tooltip />
+      <ChartHeader title={id} showDivider />
+      <ChartGrid vertical={false} />
+      <ChartTooltip />
       <XAxis type="value" />
       <YAxis type="value" />
       <Line

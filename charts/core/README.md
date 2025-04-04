@@ -21,11 +21,11 @@ npm install @lg-charts/core
 ## Basic Chart Example
 
 ```js
-import { Chart, Line, Grid, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
+import { Chart, ChartGrid, ChartHeader, Line, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
 
 <Chart onZoomSelect={handleZoom} state={ChartStates.Unset}>
-  <Header title="My Chart" />
-  <Grid vertical={false}>
+  <ChartHeader title="My Chart" />
+  <ChartGrid vertical={false}>
   <XAxis type="time" />
   <YAxis type="value" formatter={(value) => `${value}GB`} />
   <EventMarkerPoint
@@ -108,7 +108,7 @@ Component that takes in data points and renders a single line on the chart.
 | `name` | Unique name used to identify the series. **Important note:** If two lines have the same name, only one will be rendered. | `string`                                                      |         |
 | `data` | Data array of tuples that represent x and y coordinates in the series.                                                   | `Array<[string \| number \| Date, string \| number \| Date]>` |         |
 
-### `Header`
+### `ChartHeader`
 
 Component for rendering a header in a chart.
 
@@ -120,7 +120,7 @@ Component for rendering a header in a chart.
 | `showDivider` _(optional)_   | When true, renders a dividing line on top of header. Useful when stacking charts, such as in a `ChartGroup`.                                          | `boolean`         |         |
 | `headerContent` _(optional)_ | Content that will be rendered to the right of the title. Useful for adding components such as `IconButton`'s that control functionality in the chart. | `React.ReactNode` |         |
 
-### `Grid`
+### `ChartGrid`
 
 Component that displays grid lines on the chart.
 
@@ -155,7 +155,7 @@ Renders a y-axis.
 | `label` _(optional)_     | Label name to be rendered on the axis.        | `string`                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | `(value: string, index: number) => string` |         |
 
-### `Tooltip`
+### `ChartTooltip`
 
 Renders a tooltip onto the chart.
 

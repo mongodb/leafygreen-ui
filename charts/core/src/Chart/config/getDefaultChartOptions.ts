@@ -47,7 +47,7 @@ export const getDefaultChartOptions = (
   color: chartColors[theme],
 
   /**
-   * Though there's a Grid component that will render the grid lines, this allows the box
+   * Though there's a ChartGrid component that will render the grid lines, this allows the box
    * that contains the chart to to show with proper dimensions by default.
    */
   grid: {

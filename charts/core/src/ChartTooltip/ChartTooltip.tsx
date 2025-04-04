@@ -6,14 +6,17 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { useChartContext } from '../ChartContext';
 
+import {
+  CallbackSeriesDataPoint,
+  ChartTooltipProps,
+} from './ChartTooltip.types';
 import { CustomTooltip } from './CustomTooltip';
-import { CallbackSeriesDataPoint, TooltipProps } from './Tooltip.types';
 
-export function Tooltip({
+export function ChartTooltip({
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
-}: TooltipProps) {
+}: ChartTooltipProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
