@@ -3224,6 +3224,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@types/cross-spawn':
+        specifier: 6.0.2
+        version: 6.0.2
       '@types/fs-extra':
         specifier: 11.0.1
         version: 11.0.1
@@ -13553,7 +13556,7 @@ snapshots:
 
   '@types/cross-spawn@6.0.2':
     dependencies:
-      '@types/node': 20.4.8
+      '@types/node': 20.17.12
 
   '@types/debug@4.1.8':
     dependencies:
