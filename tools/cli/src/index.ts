@@ -217,6 +217,11 @@ cli
   .command('build-package')
   .description('Builds a package')
   .option('-v --verbose', 'Prints additional information to the console', false)
+  .option(
+    '-p --production',
+    'Whether to build for production. This builds all TS downlevel targets',
+    false,
+  )
   .action(buildPackage);
 cli
   .command('build-ts')
