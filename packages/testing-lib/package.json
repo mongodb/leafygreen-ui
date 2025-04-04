@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "tsc": "lg-internal-build-ts"
   },
   "license": "Apache-2.0",
   "publishConfig": {
