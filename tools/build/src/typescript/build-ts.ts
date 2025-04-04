@@ -3,15 +3,26 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import ts from 'typescript';
-import { parsePassThruOptions } from './parsePAssThruOptions';
-import { reportTypescriptDiagnostic } from './report-ts-diagnostic';
+import { parsePassThruOptions } from './parsePassThruOptions';
+
+interface BuildTypescriptOptions {
+  /** Whether to print verbose output*/
+  verbose?: boolean;
+
+  /**
+   * Whether to build for production
+   *
+   * This builds all TS downlevel targets
+   */
+  production?: boolean;
+}
 
 /**
  * Builds Typescript definitions for the current directory
  */
 export function buildTypescript(
   passThru?: Array<string>,
-  options?: Record<string, any>,
+  options?: BuildTypescriptOptions,
 ) {
   const { verbose } = options ?? { verbose: false };
   const packageDir = process.cwd();
@@ -22,64 +33,64 @@ export function buildTypescript(
     process.exit(1);
   }
 
-  verbose && console.log(chalk.blue('Building TypeScript'));
-
-  // Read tsconfig.json
-  const configFile = ts.readConfigFile(tsConfigPath, ts.sys.readFile);
-
-  if (configFile.error) {
-    reportTypescriptDiagnostic(configFile.error);
-    process.exit(1);
-  }
-  verbose &&
-    console.log(
-      chalk.blue('  Loaded tsconfig.json: '),
-      chalk.white(tsConfigPath),
-      '\n',
-      chalk.gray(JSON.stringify(configFile, null, 2)),
-    );
-
-  // Parse the config
-  const parsedConfig = ts.parseJsonConfigFileContent(
-    configFile.config,
-    ts.sys,
-    path.dirname(tsConfigPath),
-  );
-
-  if (parsedConfig.errors.length > 0) {
-    parsedConfig.errors.forEach(reportTypescriptDiagnostic);
-    process.exit(1);
-  }
+  verbose && console.log(chalk.blue.bold('Building TypeScript'));
+  verbose && console.log(chalk.gray(JSON.stringify(options, null, 2)));
 
   // Any additional options passed in via the CLI
   const cliCompilerOptions = parsePassThruOptions(passThru);
 
-  // Create the program
-  const program = ts.createProgram({
-    rootNames: parsedConfig.fileNames,
-    options: {
-      ...parsedConfig.options,
-      ...cliCompilerOptions,
-    },
-    projectReferences: parsedConfig.projectReferences,
+  // Create a Solution Builder Host to properly handle --build functionality
+  const buildHost = ts.createSolutionBuilderHost(
+    ts.sys, // system
+    ts.createEmitAndSemanticDiagnosticsBuilderProgram, // createProgram
+    reportTypescriptDiagnostic, // reportDiagnostic
+    reportTypescriptDiagnostic, // reportSolutionBuilderStatus
+    verbose ? message => console.log(chalk.gray(message)) : undefined, // reportErrorSummary
+  );
+
+  // Create a Solution Builder (equivalent to tsc --build)
+  const builder = ts.createSolutionBuilder(buildHost, [tsConfigPath], {
+    ...cliCompilerOptions,
+    verbose: verbose,
   });
 
-  // Emit output
-  const emitResult = program.emit();
-
-  // Report diagnostics
-  const allDiagnostics = ts
-    .getPreEmitDiagnostics(program)
-    .concat(emitResult.diagnostics);
-
-  if (verbose && allDiagnostics.length > 0) {
-    allDiagnostics.forEach(reportTypescriptDiagnostic);
-  }
+  // Build the project
+  const exitStatus = builder.build();
 
   // Exit with appropriate code
-  const hasErrors = allDiagnostics.some(
-    diagnostic => diagnostic.category === ts.DiagnosticCategory.Error,
-  );
-  const exitCode = emitResult.emitSkipped || hasErrors ? 1 : 0;
-  process.exit(exitCode);
+  process.exit(exitStatus);
+
+  /**
+   * Helper function to report diagnostic messages
+   */
+  function reportTypescriptDiagnostic(diagnostic: ts.Diagnostic): void {
+    const msg = ts.flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+
+    const isError = diagnostic.category === ts.DiagnosticCategory.Error;
+    const isWarning = diagnostic.category === ts.DiagnosticCategory.Warning;
+
+    // Only show non-errors in verbose
+    if (!verbose && !(isError || isWarning)) {
+      return;
+    }
+
+    let message = msg;
+
+    if (diagnostic.file && diagnostic.start !== undefined) {
+      const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(
+        diagnostic.start,
+      );
+      const l = line + 1;
+      const c = character + 1;
+      message = `${diagnostic.file.fileName} (${l},${c}): ${msg}`;
+    }
+
+    const msgColor = isError
+      ? chalk.red
+      : isWarning
+      ? chalk.yellow
+      : chalk.gray;
+
+    console.log(msgColor(message));
+  }
 }
