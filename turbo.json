@@ -7,11 +7,15 @@
     "build": {
       "dependsOn": ["^build", "prebuild", "^prebuild"],
       "inputs": ["$TURBO_DEFAULT$", "!**/*.stories.{tsx,jsx,mdx}"],
-      "outputs": ["dist/**", "stories.js"]
+      "outputs": ["dist/**/*.js", "dist/**/*.js.map", "stories.js"]
     },
     "tsc": {
-      "dependsOn": ["^tsc", "prebuild"],
-      "outputs": ["dist/**", "tsconfig.tsbuildinfo"]
+      "dependsOn": ["^tsc", "prebuild", "^prebuild"],
+      "outputs": [
+        "dist/**/*.d.ts",
+        "dist/**/*.d.ts.map",
+        "tsconfig.tsbuildinfo"
+      ]
     },
     "docs": {
       "dependsOn": ["^tsc"],

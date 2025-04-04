@@ -3282,6 +3282,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../meta
       '@lg-tools/storybook-decorators':
         specifier: workspace:^
         version: link:../storybook-decorators
