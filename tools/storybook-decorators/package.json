@@ -21,7 +21,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
-    "@storybook/react": "^8.5.3",
+    "@storybook/react": "8.6.12",
     "lodash": "4.17.21"
   },
   "peerDependencies": {
