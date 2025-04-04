@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
+
 import { runESLint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
