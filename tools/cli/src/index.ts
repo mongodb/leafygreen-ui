@@ -217,11 +217,6 @@ cli
   .command('build-package')
   .description('Builds a package')
   .option('-v --verbose', 'Prints additional information to the console', false)
-  .option(
-    '-p --production',
-    'Whether to build for production. This builds all TS downlevel targets',
-    false,
-  )
   .action(buildPackage);
 cli
   .command('build-ts')
@@ -229,8 +224,8 @@ cli
   .argument('[pass-through...]', 'Pass-through options for `tsc`')
   .option('-v --verbose', 'Prints additional information to the console', false)
   .option(
-    '-p --production',
-    'Whether to build for production. This builds all TS downlevel targets',
+    '--downlevel',
+    'Builds all TS downlevel targets based on the typesVersions field in package.json',
     false,
   )
   .allowUnknownOption(true)

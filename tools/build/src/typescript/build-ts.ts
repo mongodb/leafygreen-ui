@@ -3,19 +3,18 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import ts from 'typescript';
-import { downlevelDts } from './downlevel-dts';
 import { makeTypescriptDiagnosticReporter } from './makeTypescriptDiagnosticReporter';
 import { parsePassThruOptions } from './parsePassThruOptions';
+import { runTypescriptDownlevel } from './downlevel';
 
 interface BuildTypescriptOptions {
   /** Whether to print verbose output*/
   verbose?: boolean;
 
   /**
-   * Whether to build for production
-   * This builds all TS downlevel targets
+   * Builds all TS downlevel targets based on the typesVersions field in package.json
    */
-  production?: boolean;
+  downlevel?: boolean;
 }
 
 /**
@@ -58,61 +57,12 @@ export function buildTypescript(
   // Build the project
   const exitStatus = builder.build();
 
-  if (options?.production) {
-    verbose &&
-      console.log(chalk.blue.bold('Building TypeScript for production'));
-
-    const packageJson = fse.readJSONSync(
-      path.join(packageDir, 'package.json'),
-      'utf-8',
-    );
-    const typesVersions = packageJson?.typesVersions;
-    const downlevelVersions = getTypeVersions(typesVersions);
-
-    if (downlevelVersions) {
-      downlevelVersions.forEach(target => {
-        downlevelDts({ verbose, target });
-      });
-    } else {
-      verbose &&
-        console.log(chalk.yellow('No typesVersions found in package.json'));
-    }
+  if (options?.downlevel) {
+    runTypescriptDownlevel({
+      verbose,
+    });
   }
 
   // Exit with appropriate code
   process.exit(exitStatus);
 }
-
-/**
- * Extracts TypeScript versions from the typesVersions field in package.json
- * and returns an array of version numbers without the 'ts' prefix.
- * @returns
- */
-const getTypeVersions = (typesVersions?: {
-  [target: string]: {
-    [files: string]: string[];
-  };
-}): Array<string> | undefined => {
-  if (!typesVersions || typeof typesVersions !== 'object') return;
-
-  const versions: Array<string> = [];
-
-  Object.entries(typesVersions).forEach(([_versionRange, pathMappings]) => {
-    // Get the output directory from the path mappings
-    // Typical format is { '*': ['ts3.4/*'] }
-    if (!pathMappings || typeof pathMappings !== 'object') return;
-
-    const wildcardMapping = pathMappings['*'];
-    if (!Array.isArray(wildcardMapping) || wildcardMapping.length === 0) return;
-
-    // Extract outputDir from format like 'ts3.4/*'
-    const outputDirMatch = wildcardMapping[0].match(/^ts([\d.]+)\/\*/);
-    if (!outputDirMatch || !outputDirMatch[1]) return;
-
-    // Get just the version number without the 'ts' prefix
-    const versionNumber = outputDirMatch[1];
-    versions.push(versionNumber);
-  });
-
-  return versions;
-};
