@@ -1,5 +1,11 @@
 # @leafygreen-ui/polymorphic
 
+## 2.0.9
+
+### Patch Changes
+
+- e874aeaf9: Removes NextJS dev dependency
+
 ## 2.0.8
 
 ### Patch Changes

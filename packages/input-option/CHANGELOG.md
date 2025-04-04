@@ -1,5 +1,18 @@
 # @leafygreen-ui/input-option
 
+## 3.0.10
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+- Updated dependencies [e874aeaf9]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/polymorphic@2.0.9
+  - @leafygreen-ui/a11y@2.0.6
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+  - @leafygreen-ui/typography@20.1.7
+
 ## 3.0.9
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/emotion
 
+## 4.1.1
+
+### Patch Changes
+
+- f2ed4b037: Fixes auto-version script to bump `version.ts` on package release
+
 ## 4.1.0
 
 ### Minor Changes

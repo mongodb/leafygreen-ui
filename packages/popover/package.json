@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "13.0.8",
+  "version": "13.0.9",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

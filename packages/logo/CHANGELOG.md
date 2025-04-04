@@ -1,5 +1,13 @@
 # @leafygreen-ui/logo
 
+## 10.0.6
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/palette@4.1.4
+
 ## 10.0.5
 
 ### Patch Changes

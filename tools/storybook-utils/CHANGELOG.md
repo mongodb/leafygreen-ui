@@ -1,5 +1,11 @@
 # @lg-tools/storybook-utils
 
+## 0.2.2
+
+### Patch Changes
+
+- 963cda31d: Upgrade to Storybook 8.6
+
 ## 0.2.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/testing-lib
 
+## 0.7.4
+
+### Patch Changes
+
+- Updated dependencies [fd1696643]
+  - @lg-tools/build@0.7.4
+
 ## 0.7.3
 
 ### Patch Changes
