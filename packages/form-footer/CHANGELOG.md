@@ -1,5 +1,19 @@
 # @leafygreen-ui/form-footer
 
+## 6.0.5
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/banner@9.0.9
+  - @leafygreen-ui/button@23.1.4
+  - @leafygreen-ui/icon@13.2.1
+  - @leafygreen-ui/palette@4.1.4
+
 ## 6.0.4
 
 ### Patch Changes

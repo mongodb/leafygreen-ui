@@ -1,5 +1,21 @@
 # @lg-charts/core
 
+## 0.15.1
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @lg-charts/chart-card@0.2.1
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @lg-charts/colors@0.2.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.1
+  - @leafygreen-ui/typography@20.1.6
+  - @lg-charts/series-provider@0.2.1
+
 ## 0.15.0
 
 ### Minor Changes

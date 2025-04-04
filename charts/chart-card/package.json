@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/chart-card",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "lg-charts ChartCard",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -22,7 +22,6 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
-    "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^"
   },

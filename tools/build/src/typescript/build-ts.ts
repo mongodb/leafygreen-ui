@@ -20,7 +20,8 @@ export function buildTypescript(
     process.exit(1);
   }
 
-  verbose && console.log(chalk.gray('Building TypeScript'));
+  verbose && console.log(chalk.blue('Building TypeScript'));
+  verbose && console.log(chalk.gray(tsConfigPath));
 
   spawn('tsc', ['--build', tsConfigPath, ...(passThru ?? [''])], {
     cwd: packageDir,

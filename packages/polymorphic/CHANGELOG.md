@@ -1,5 +1,12 @@
 # @leafygreen-ui/polymorphic
 
+## 2.0.8
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+  - @leafygreen-ui/lib@14.2.0
+
 ## 2.0.7
 
 ### Patch Changes

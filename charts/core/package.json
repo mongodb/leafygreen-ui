@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/core",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "lg-charts Core Chart Components",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
+    "@leafygreen-ui/icon": "workspace:^",
     "@types/lodash.debounce": "^4.0.9"
   },
   "repository": {

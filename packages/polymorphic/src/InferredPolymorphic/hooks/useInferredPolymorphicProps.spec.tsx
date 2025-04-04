@@ -1,5 +1,4 @@
 import React from 'react';
-import NextLink from 'next/link';
 
 import { PolymorphicAs } from '../../Polymorphic';
 import { NodeUrlLike } from '../../utils/Polymorphic.utils';
@@ -69,14 +68,6 @@ describe('packages/polymorphic/useInferredPolymorphicProps', () => {
       expect(as).toBe(TestArbitraryComponent);
       expect(rest.href).toBeUndefined();
       expect(rest.someProp).toBe('foo');
-    });
-
-    test('as NextLink', () => {
-      const { as, ...rest } = useInferredPolymorphicProps(NextLink, {
-        href: 'foo',
-      });
-      expect(as).toBe(NextLink);
-      expect(rest.href).toBe('foo');
     });
   });
 
