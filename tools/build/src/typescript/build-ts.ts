@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import ts from 'typescript';
+import { downlevelDts } from './downlevel-dts';
 import { makeTypescriptDiagnosticReporter } from './makeTypescriptDiagnosticReporter';
 import { parsePassThruOptions } from './parsePassThruOptions';
 
@@ -58,6 +59,13 @@ export function buildTypescript(
 
   // Build the project
   const exitStatus = builder.build();
+
+  if (options?.production) {
+    verbose &&
+      console.log(chalk.blue.bold('Building TypeScript for production'));
+    downlevelDts({ verbose, target: '3.4' });
+    downlevelDts({ verbose, target: '4.9' });
+  }
 
   // Exit with appropriate code
   process.exit(exitStatus);
