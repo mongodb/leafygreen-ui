@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { createHash } from 'crypto';
 import fs from 'fs';
 import { axe } from 'jest-axe';
 import path from 'path';
 import { toJson } from 'xml2json';
 
 import { typeIs } from '@leafygreen-ui/lib';
+
+import { getChecksum } from '../scripts/checksum';
 
 import EditIcon from './generated/Edit';
 import { Size } from './glyphCommon';
@@ -300,11 +301,7 @@ describe('Generated glyphs', () => {
             generatedFileContents,
           )!;
 
-        const expectedChecksum = createHash('md5')
-          .update(script)
-          .update(svgFileContents)
-          .update(checkedContents)
-          .digest('hex');
+        const expectedChecksum = getChecksum(svgFileContents, checkedContents);
 
         try {
           expect(checksum).toEqual(expectedChecksum);
