@@ -2,10 +2,10 @@ import React from 'react';
 import { ChartCard } from '@lg-charts/chart-card';
 import {
   Chart,
-  Grid,
-  Header,
+  ChartGrid,
+  ChartHeader,
+  ChartTooltip,
   Line,
-  Tooltip,
   XAxis,
   YAxis,
 } from '@lg-charts/core';
@@ -16,9 +16,13 @@ import { DragProvider } from './DragProvider';
 function renderChart(dragId: string) {
   return (
     <Chart key={dragId} dragId={dragId}>
-      <Header title={dragId} showDivider data-testid={`${dragId}-header`} />
-      <Grid vertical={false} />
-      <Tooltip />
+      <ChartHeader
+        title={dragId}
+        showDivider
+        data-testid={`${dragId}-header`}
+      />
+      <ChartGrid vertical={false} />
+      <ChartTooltip />
       <XAxis type="value" />
       <YAxis type="value" />
       <Line
