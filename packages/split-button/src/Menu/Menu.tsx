@@ -127,6 +127,7 @@ export const Menu = ({
       ref={menuRef}
       portalRef={portalRef}
       data-lgid={lgIds.menu}
+      data-testid={lgIds.menu}
       {...rest}
       trigger={
         <Button

@@ -13,7 +13,7 @@ export interface FormFieldContextProps {
   inputProps?: FormFieldInputElementProps;
   optional?: boolean;
   /**
-   * LGIDs for the code snippet.
+   * LGIDs for form field components
    */
   lgIds: GetLgIdsReturnType;
 }
