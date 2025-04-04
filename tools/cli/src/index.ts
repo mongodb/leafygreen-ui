@@ -222,8 +222,12 @@ cli
   .command('build-ts')
   .description("Builds a package's TypeScript definitions")
   .argument('[pass-through...]', 'Pass-through options for `tsc`')
-  .passThroughOptions(true) // allows passing flags to the `tsc` CLI
   .option('-v --verbose', 'Prints additional information to the console', false)
+  .option(
+    '-p --production',
+    'Whether to build for production. This builds all TS downlevel targets',
+    false,
+  )
   .allowUnknownOption(true)
   .action(buildTypescript);
 cli
