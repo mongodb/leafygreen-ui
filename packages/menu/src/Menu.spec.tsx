@@ -14,13 +14,11 @@ import { Optional } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
-import { getLgIds } from './utils';
-
 import { MenuProps } from './Menu';
+import { getLgIds } from './utils';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
 const lgIds = getLgIds();
-const menuTestId = lgIds.menu;
 const menuTriggerTestId = 'menu-trigger';
 const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
 const defaultChildren = (
@@ -193,7 +191,7 @@ describe('packages/menu', () => {
       const otherButtonHandler = jest.fn();
       const { getByTestId, findByTestId } = render(
         <>
-          <Menu trigger={defaultTrigger} data-testid={menuTestId}>
+          <Menu trigger={defaultTrigger}>
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
@@ -206,7 +204,7 @@ describe('packages/menu', () => {
       const trigger = getByTestId(menuTriggerTestId);
       userEvent.click(trigger);
 
-      const menuEl = await findByTestId(menuTestId);
+      const menuEl = await findByTestId(lgIds.root);
 
       userEvent.click(button);
       await waitForElementToBeRemoved(menuEl);
@@ -221,7 +219,7 @@ describe('packages/menu', () => {
       const { getByTestId } = render(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div data-testid="parent" onClick={parentHandler}>
-          <Menu trigger={defaultTrigger} data-testid={menuTestId}>
+          <Menu trigger={defaultTrigger}>
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
