@@ -12,7 +12,6 @@ export const titleStyle = css`
 
 export const baseModalStyle = css`
   width: 600px;
-  padding: initial;
   letter-spacing: 0;
 `;
 
@@ -26,12 +25,8 @@ export const contentDarkModeStyles = css`
 `;
 
 export const contentVariantStyles: Record<Variant, string> = {
-  [Variant.Default]: css`
-    padding: 40px 36px 0px;
-  `,
-  [Variant.Danger]: css`
-    padding: 40px 36px 0px 78px;
-  `,
+  [Variant.Default]: css``,
+  [Variant.Danger]: css``,
 };
 
 export const textEntryInputStyle = css`
