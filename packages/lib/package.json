@@ -6,7 +6,7 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": {
+    "<4.0": {
       "*": [
         "dist/ts3.4/*"
       ]
