@@ -14,11 +14,11 @@ import { Optional } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { waitForTransition } from '@leafygreen-ui/testing-lib';
 
-import { LGIDs } from './constants';
 import { MenuProps } from './Menu';
+import { getLgIds } from './utils';
 import { Menu, MenuItem, MenuSeparator, SubMenu } from '.';
 
-const menuTestId = 'menu-test-id';
+const lgIds = getLgIds();
 const menuTriggerTestId = 'menu-trigger';
 const defaultTrigger = <button data-testid={menuTriggerTestId}>trigger</button>;
 const defaultChildren = (
@@ -45,7 +45,7 @@ function renderMenu(
   const renderResult = render(
     <>
       <div data-testid="backdrop" />
-      <Menu trigger={trigger} {...rest} data-testid={menuTestId}>
+      <Menu trigger={trigger} {...rest}>
         {children}
       </Menu>
     </>,
@@ -63,7 +63,7 @@ function renderMenu(
     menuEl: HTMLElement | null;
     menuItemElements: Array<HTMLElement | null>;
   }> {
-    const menuEl = await renderResult.findByTestId(menuTestId);
+    const menuEl = await renderResult.findByTestId(lgIds.root);
     const menuItemElements = await within(menuEl).findAllByRole('menuitem');
 
     return {
@@ -108,7 +108,7 @@ describe('packages/menu', () => {
       const setOpen = jest.fn();
       test('menu renders', () => {
         const { getByTestId } = renderMenu({ open: true, setOpen });
-        const menu = getByTestId(menuTestId);
+        const menu = getByTestId(lgIds.root);
         expect(menu).toBeInTheDocument();
       });
 
@@ -191,7 +191,7 @@ describe('packages/menu', () => {
       const otherButtonHandler = jest.fn();
       const { getByTestId, findByTestId } = render(
         <>
-          <Menu trigger={defaultTrigger} data-testid={menuTestId}>
+          <Menu trigger={defaultTrigger}>
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
@@ -204,7 +204,7 @@ describe('packages/menu', () => {
       const trigger = getByTestId(menuTriggerTestId);
       userEvent.click(trigger);
 
-      const menuEl = await findByTestId(menuTestId);
+      const menuEl = await findByTestId(lgIds.root);
 
       userEvent.click(button);
       await waitForElementToBeRemoved(menuEl);
@@ -219,7 +219,7 @@ describe('packages/menu', () => {
       const { getByTestId } = render(
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div data-testid="parent" onClick={parentHandler}>
-          <Menu trigger={defaultTrigger} data-testid={menuTestId}>
+          <Menu trigger={defaultTrigger}>
             <MenuItem>Item A</MenuItem>
             <MenuItem>Item B</MenuItem>
           </Menu>
@@ -228,7 +228,7 @@ describe('packages/menu', () => {
       const button = getByTestId('menu-trigger');
 
       userEvent.click(button);
-      const menu = getByTestId(menuTestId);
+      const menu = getByTestId(lgIds.root);
       await waitFor(() => {
         expect(menu).toBeInTheDocument();
         expect(parentHandler).toHaveBeenCalled();
@@ -470,7 +470,7 @@ describe('packages/menu', () => {
       await openMenu({ withKeyboard: true });
       await waitFor(() => expect(queryByTestId('submenu')).toHaveFocus());
 
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
       await waitForTransition();
       await waitFor(() => {
         expect(onEntered).toHaveBeenCalled();
@@ -499,7 +499,7 @@ describe('packages/menu', () => {
       userEvent.keyboard('{arrowdown}');
       expect(queryByTestId('item-a')).toHaveFocus();
 
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
       await waitForTransition();
 
       await waitFor(() => {
@@ -533,7 +533,7 @@ describe('packages/menu', () => {
       expect(queryByTestId('item-c')).toHaveFocus();
 
       // Open the submenu
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
 
       await waitForTransition();
       await waitFor(() => {
@@ -564,7 +564,7 @@ describe('packages/menu', () => {
       expect(queryByTestId('item-c')).toHaveFocus();
 
       // Close the submenu
-      userEvent.click(getByTestId(LGIDs.submenuToggle)!);
+      userEvent.click(getByTestId(lgIds.submenuToggle)!);
 
       await waitForTransition();
       await waitFor(() => {

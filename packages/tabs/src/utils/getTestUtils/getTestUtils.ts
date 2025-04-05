@@ -1,12 +1,13 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS_TABS } from '../../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDS_TABS.root,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
@@ -20,7 +21,7 @@ export const getTestUtils = (
   const getAllTabsInTabList = (): Array<HTMLElement> => {
     const tabList = queryBySelector<HTMLElement>(
       element,
-      `[data-lgid=${LGIDS_TABS.tabList}]`,
+      `[data-lgid=${lgIds.tabList}]`,
     );
 
     if (!tabList) {
@@ -61,7 +62,7 @@ export const getTestUtils = (
   const getAllTabPanelsInDOM = () => {
     const tabPanels = queryBySelector<HTMLElement>(
       element,
-      `[data-lgid=${LGIDS_TABS.tabPanels}]`,
+      `[data-lgid=${lgIds.tabPanels}]`,
     );
 
     if (!tabPanels) {

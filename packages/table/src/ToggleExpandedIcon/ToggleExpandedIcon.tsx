@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS } from '../constants';
+import { useTableContext } from '../TableContext';
 
 import {
   iconButtonTransitionStyles,
@@ -24,6 +24,7 @@ const ToggleExpandedIcon = ({
   ...rest
 }: ToggleExpandedIconProps) => {
   const { theme } = useDarkMode();
+  const { lgIds } = useTableContext();
 
   return (
     <IconButton
@@ -36,7 +37,7 @@ const ToggleExpandedIcon = ({
         },
         iconButtonTransitionStyles,
       )}
-      data-lgid={LGIDS.expandButton}
+      data-lgid={lgIds.expandButton}
       {...rest}
     >
       <Icon
