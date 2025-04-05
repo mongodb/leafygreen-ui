@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "lg-internal-build-ts"
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "@lg-tools/build": "workspace:^",

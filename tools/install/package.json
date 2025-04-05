@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "npx ts-node ./scripts/writePackageNames.ts",
     "build": "lg-internal-build-package",
-    "tsc": "lg-internal-build-ts"
+    "tsc": "tsc --build tsconfig.json"
   },
   "publishConfig": {
     "access": "public"
