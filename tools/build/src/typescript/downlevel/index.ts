@@ -15,21 +15,22 @@ interface DownlevelCommandOptions {
  */
 export function runTypescriptDownlevel({ verbose }: DownlevelCommandOptions) {
   const packageDir = process.cwd();
+  console.log('\nRunning TypeScript downleveling...', packageDir);
 
-  const packageJson = fse.readJSONSync(
-    path.join(packageDir, 'package.json'),
-    'utf-8',
-  );
+  const packageJsonPath = path.join(packageDir, 'package.json');
+  const packageJson = fse.readJSONSync(packageJsonPath, 'utf-8');
   const typesVersions = packageJson?.typesVersions;
   const downlevelVersions = getTypeVersions(typesVersions);
 
-  if (downlevelVersions) {
-    verbose && console.log(chalk.blue.bold('Downleveling TypeScript'));
+  if (downlevelVersions && downlevelVersions?.length > 0) {
     downlevelVersions.forEach(target => {
       downlevelDts({ verbose, target });
     });
   } else {
     verbose &&
-      console.log(chalk.yellow('No typesVersions found in package.json'));
+      console.log(chalk.yellow('No typesVersions found in package.json'), {
+        typesVersions,
+        downlevelVersions,
+      });
   }
 }

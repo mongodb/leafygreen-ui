@@ -8,13 +8,13 @@
   },
   "bin": {
     "lg-internal-build-package": "./bin/build-package.js",
-    "lg-internal-build-ts": "./bin/build-ts.sh"
+    "lg-ts-downlevel": "./bin/ts-downlevel.js"
   },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "scripts/build.sh",
-    "tsc": "scripts/build-ts.sh" 
+    "build": "rollup -c ./config/rollup.config.mjs",
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "@babel/core": "7.24.3",

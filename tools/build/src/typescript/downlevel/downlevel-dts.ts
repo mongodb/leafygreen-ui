@@ -2,14 +2,15 @@
 import chalk from 'chalk';
 import path from 'path';
 import fse from 'fs-extra';
-import { sync as spawnSync } from 'cross-spawn';
+// @ts-ignore - ironically, this package doesn't have types
+import { main as downlevel } from 'downlevel-dts';
 
 interface DownlevelDtsOptions {
   /** Whether to print verbose output */
   verbose?: boolean;
 
   /** Target TypeScript version for output */
-  target?: string;
+  target?: `${number}.${number}`;
 
   /** Directory to output downleveled declaration files */
   outDir?: string;
@@ -20,7 +21,9 @@ interface DownlevelDtsOptions {
  *
  * @param options Configuration options
  */
-export function downlevelDts(options?: DownlevelDtsOptions): void {
+export async function downlevelDts(
+  options?: DownlevelDtsOptions,
+): Promise<void> {
   const { verbose, target = '3.4', outDir } = options ?? {};
   const packageDir = process.cwd();
 
@@ -47,25 +50,8 @@ export function downlevelDts(options?: DownlevelDtsOptions): void {
   verbose && console.log(chalk.gray(`Output: ${outputDirPath}`));
 
   try {
-    // Run downlevel-dts
-    const args = [
-      'exec',
-      'downlevel-dts',
-      typesDirPath,
-      outputDirPath,
-      '--to',
-      target,
-    ];
-
-    verbose && console.log(chalk.gray(`Running: pnpm ${args.join(' ')}`));
-
-    const result = spawnSync('pnpm', args, {
-      stdio: verbose ? 'inherit' : 'ignore',
-    });
-
-    if (result.status !== 0) {
-      throw new Error(`downlevel-dts failed with exit code: ${result.status}`);
-    }
+    const semverTarget = target + '.0';
+    downlevel(typesDirPath, outputDirPath, semverTarget);
 
     console.log(
       verbose &&
@@ -74,6 +60,9 @@ export function downlevelDts(options?: DownlevelDtsOptions): void {
         ),
     );
   } catch (error: any) {
-    throw new Error(`Error downleveling declarations: ${error.message}`);
+    console.error(
+      chalk.red(`Error downleveling declarations: ${error.message}`),
+    );
+    process.exit(1);
   }
 }

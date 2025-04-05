@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 /**
  * Extracts TypeScript versions from the typesVersions field in package.json
  * and returns an array of version numbers without the 'ts' prefix.
@@ -7,10 +9,10 @@ export const getTypeVersions = (typesVersions?: {
   [target: string]: {
     [files: string]: string[];
   };
-}): Array<string> | undefined => {
+}): Array<`${number}.${number}`> | undefined => {
   if (!typesVersions || typeof typesVersions !== 'object') return;
 
-  const versions: Array<string> = [];
+  const versions: Array<`${number}.${number}`> = [];
 
   Object.entries(typesVersions).forEach(([_versionRange, pathMappings]) => {
     // Get the output directory from the path mappings
@@ -21,11 +23,25 @@ export const getTypeVersions = (typesVersions?: {
     if (!Array.isArray(wildcardMapping) || wildcardMapping.length === 0) return;
 
     // Extract outputDir from format like 'ts3.4/*'
-    const outputDirMatch = wildcardMapping[0].match(/^ts([\d.]+)\/\*/);
+    const outputDirMatch = wildcardMapping[0].match(/^dist\/ts([\d.]+)\/\*/);
     if (!outputDirMatch || !outputDirMatch[1]) return;
 
     // Get just the version number without the 'ts' prefix
-    const versionNumber = outputDirMatch[1];
+    const versionNumber = outputDirMatch[1] as `${number}.${number}`;
+    // Check if the version number is valid
+    if (!/^\d+\.\d+$/.test(versionNumber)) {
+      console.log(
+        chalk.red(
+          `Invalid TS version number format in directory${outputDirMatch[0]}. Expected format is 'dist/tsX.Y/*'`,
+        ),
+      );
+      return;
+    }
+
+    // check if the version number is already in the array
+    if (versions.includes(versionNumber)) return;
+
+    // Add the version number to the array
     versions.push(versionNumber);
   });
 
