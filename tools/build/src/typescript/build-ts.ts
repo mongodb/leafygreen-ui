@@ -35,6 +35,8 @@ export function buildTypescript(
 
   verbose &&
     console.log(chalk.blue.bold(`Building TypeScript (v${ts.version})`));
+  verbose && console.log(chalk.blue('Building TypeScript'));
+  verbose && console.log(chalk.gray(tsConfigPath));
 
   // Any additional options passed in via the CLI
   const cliCompilerOptions = parsePassThruOptions(passThru);
