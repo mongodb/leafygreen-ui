@@ -8,12 +8,7 @@
   "typesVersions": {
     "<3.9": {
       "*": [
-        "dist/ts3.4/*"
-      ]
-    },
-    "<5.0": {
-      "*": [
-        "dist/ts4.9/*"
+        "ts3.4/*"
       ]
     }
   },
@@ -35,8 +30,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@emotion/styled": "^11.10.5",
-    "next": "^13.1.6"
+    "@emotion/styled": "^11.10.5"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",

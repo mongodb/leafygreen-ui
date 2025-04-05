@@ -8,7 +8,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "lg-internal-build-ts",
+    "tsc": "tsc --build tsconfig.json",
     "upgrade": "npx storybook@latest upgrade --config-dir ."
   },
   "publishConfig": {
@@ -28,6 +28,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
     "@lg-tools/storybook-decorators": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@mdx-js/react": "2.3.0",

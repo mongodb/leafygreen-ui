@@ -8,12 +8,7 @@
   "typesVersions": {
     "<3.9": {
       "*": [
-        "dist/ts3.4/*"
-      ]
-    },
-    "<5.0": {
-      "*": [
-        "dist/ts4.9/*"
+        "ts3.4/*"
       ]
     }
   },
@@ -30,7 +25,7 @@
   },
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "lg-internal-build-ts"
+    "tsc": "tsc --build tsconfig.json"
   },
   "license": "Apache-2.0",
   "publishConfig": {

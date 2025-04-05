@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "lg-internal-build-ts"
+    "tsc": "tsc --build tsconfig.json"
   },
   "dependencies": {
     "@babel/core": "7.23.2",
@@ -40,6 +40,6 @@
     "prettier": "2.8.8"
   },
   "peerDependencies": {
-    "typescript": "~5.0.0"
+    "typescript": "~4.9.0"
   }
 }

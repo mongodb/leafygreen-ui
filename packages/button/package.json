@@ -8,12 +8,7 @@
   "typesVersions": {
     "<3.9": {
       "*": [
-        "dist/ts3.4/*"
-      ]
-    },
-    "<5.0": {
-      "*": [
-        "dist/ts4.9/*"
+        "ts3.4/*"
       ]
     }
   },
@@ -37,7 +32,6 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "next": "^13.0.5",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/loading-indicator": "workspace:^"
   },
