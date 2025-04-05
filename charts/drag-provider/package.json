@@ -32,5 +32,17 @@
   },
   "devDependencies": {
     "@storybook/test": "8.5.3"
+  },
+  "typesVersions": {
+    "<4.0": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    },
+    "<5.0": {
+      "*": [
+        "dist/ts4.9/*"
+      ]
+    }
   }
 }
