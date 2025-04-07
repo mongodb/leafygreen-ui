@@ -35,6 +35,8 @@
     "test": "lg test",
     "unlink": "lg unlink",
     "validate": "lg validate",
+    "version": "pnpm changeset version",
+    "postversion": "turbo run prebuild",
     "watch": "npx nodemon --watch packages/ -e tsx,ts --exec 'pnpm run storybook build --test'"
   },
   "devDependencies": {
@@ -49,7 +51,7 @@
     "@lg-tools/storybook-addon": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@lg-tools/test": "workspace:^",
-    "@storybook/react": "^8.5.3",
+    "@storybook/react": "^8.6.12",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "13.5.0",
     "@types/jest": "^29.5.12",
@@ -65,7 +67,7 @@
     "prettier": "2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^8.5.3",
+    "storybook": "^8.6.12",
     "stream": "^0.0.3",
     "ts-node": "10.9.2",
     "turbo": "^2.0.6",
