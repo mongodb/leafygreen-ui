@@ -15,10 +15,11 @@ export const esLintExtensions = ['ts', 'tsx'];
 
 // Create an instance of ESLint with the configuration passed to the function
 export function createESLintInstance(options: Partial<ESLint.Options>): ESLint {
-  return new ESLint({
+  const eslint = new ESLint({
     overrideConfigFile: eslintConfigPath,
     ...options,
   });
+  return eslint;
 }
 
 /*******************

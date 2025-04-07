@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
