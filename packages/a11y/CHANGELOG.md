@@ -1,5 +1,13 @@
 # @leafygreen-ui/a11y
 
+## 2.0.6
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/hooks@8.4.0
+
 ## 2.0.5
 
 ### Patch Changes

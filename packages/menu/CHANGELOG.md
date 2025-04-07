@@ -1,5 +1,25 @@
 # @leafygreen-ui/menu
 
+## 29.0.1
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+- Updated dependencies [2ab660926]
+- Updated dependencies [fd1696643]
+- Updated dependencies [e874aeaf9]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/icon@13.2.2
+  - @leafygreen-ui/polymorphic@2.0.9
+  - @leafygreen-ui/descendants@2.1.4
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/icon-button@16.0.9
+  - @leafygreen-ui/input-option@3.0.10
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/popover@13.0.9
+  - @leafygreen-ui/tokens@2.12.2
+  - @leafygreen-ui/typography@20.1.7
+
 ## 29.0.0
 
 ### Major Changes
