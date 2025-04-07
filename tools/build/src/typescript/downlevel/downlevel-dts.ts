@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
-import path from 'path';
-import fse from 'fs-extra';
 // @ts-ignore - ironically, this package doesn't have types
 import { main as downlevel } from 'downlevel-dts';
+import fse from 'fs-extra';
+import path from 'path';
 
 interface DownlevelDtsOptions {
   /** Whether to print verbose output */

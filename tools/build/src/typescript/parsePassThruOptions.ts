@@ -8,11 +8,13 @@ export function parsePassThruOptions(
   return passThru?.reduce((acc, arg) => {
     const [_key, value] = arg.split('=');
     const key = _key.replace(/^-+/, '');
+
     if (value) {
       acc[key] = value;
     } else {
       acc[key] = true;
     }
+
     return acc;
   }, {} as Record<string, string | boolean>);
 }

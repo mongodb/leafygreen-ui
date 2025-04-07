@@ -7,7 +7,7 @@ import chalk from 'chalk';
  */
 export const getTypeVersions = (typesVersions?: {
   [target: string]: {
-    [files: string]: string[];
+    [files: string]: Array<string>;
   };
 }): Array<`${number}.${number}`> | undefined => {
   if (!typesVersions || typeof typesVersions !== 'object') return;
@@ -28,6 +28,7 @@ export const getTypeVersions = (typesVersions?: {
 
     // Get just the version number without the 'ts' prefix
     const versionNumber = outputDirMatch[1] as `${number}.${number}`;
+
     // Check if the version number is valid
     if (!/^\d+\.\d+$/.test(versionNumber)) {
       console.log(

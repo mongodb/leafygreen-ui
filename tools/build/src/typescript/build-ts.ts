@@ -3,9 +3,10 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 import ts from 'typescript';
+
+import { runTypescriptDownlevel } from './downlevel';
 import { makeTypescriptDiagnosticReporter } from './makeTypescriptDiagnosticReporter';
 import { parsePassThruOptions } from './parsePassThruOptions';
-import { runTypescriptDownlevel } from './downlevel';
 
 interface BuildTypescriptOptions {
   /** Whether to print verbose output*/

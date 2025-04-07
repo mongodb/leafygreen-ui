@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import path from 'path';
 import fse from 'fs-extra';
+import path from 'path';
 
 import { downlevelDts } from './downlevel-dts';
 import { getTypeVersions } from './getTypeVersions';
