@@ -74,3 +74,8 @@ export const warningIconThemeStyle: Record<Theme, string> = {
     background: ${palette.red.dark2};
   `,
 };
+
+export const footerStyle = css`
+  margin-top: 24px;
+  padding: 0;
+`;
