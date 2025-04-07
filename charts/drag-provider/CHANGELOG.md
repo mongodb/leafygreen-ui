@@ -1,5 +1,27 @@
 # @lg-charts/drag-provider
 
+## 0.2.1
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.1
+- @leafygreen-ui/leafygreen-provider@4.0.6
+- @lg-charts/core@0.15.1
+
+## 0.2.0
+
+### Minor Changes
+
+- 7e3909a12: Moves `ChartCard` component into separate package and updates downstream dependencies
+
+### Patch Changes
+
+- Updated dependencies [7e3909a12]
+- Updated dependencies [7e3909a12]
+- Updated dependencies [206278b0f]
+  - @lg-charts/chart-card@0.2.0
+  - @lg-charts/core@0.15.0
+
 ## 0.1.3
 
 ### Patch Changes

@@ -10,7 +10,7 @@ import {
 import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import Code from '@leafygreen-ui/code';
+import Code, { Panel } from '@leafygreen-ui/code';
 import Copyable from '@leafygreen-ui/copyable';
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
@@ -269,7 +269,7 @@ console.log(greeting('World'));
           <div>Modal Content goes here.</div>
           <Copyable>Hello world in a modal</Copyable>
 
-          <Code copyable={true} language="javascript">
+          <Code language="javascript" panel={<Panel onCopy={() => {}} />}>
             {jsSnippet}
           </Code>
         </div>

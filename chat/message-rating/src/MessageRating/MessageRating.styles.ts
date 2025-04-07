@@ -1,16 +1,17 @@
 import { css } from '@leafygreen-ui/emotion';
 import { palette } from '@leafygreen-ui/palette';
+import { spacing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: ${spacing[200]}px;
 `;
 
 export const buttonContainerStyles = css`
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: ${spacing[100]}px;
 `;
 
 export const getIconFill = (darkMode: boolean, isSelected: boolean) => {

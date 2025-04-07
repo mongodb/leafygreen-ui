@@ -16,16 +16,19 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../chart-card"
+    },
+    {
       "path": "../colors"
+    },
+    {
+      "path": "../series-provider"
     },
     {
       "path": "../../packages/emotion"
     },
     {
       "path": "../../packages/icon"
-    }, 
-    {
-      "path": "../../packages/icon-button"
     }, 
     {
       "path": "../../packages/leafygreen-provider"

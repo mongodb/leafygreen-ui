@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/chip",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "LeafyGreen UI Kit Chip",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

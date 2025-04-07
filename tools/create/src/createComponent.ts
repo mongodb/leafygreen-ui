@@ -20,7 +20,8 @@ import {
 } from './templates';
 
 interface CreateComponentArgs
-  extends Pick<Required<CreatePackageOptions>, 'scope' | 'directory'> {
+  extends Pick<Required<CreatePackageOptions>, 'scope' | 'directory'>,
+    Omit<CreatePackageOptions, 'scope' | 'directory'> {
   name: string;
 }
 
@@ -28,6 +29,8 @@ export function createComponent({
   name,
   scope,
   directory,
+  dry,
+  verbose,
 }: CreateComponentArgs) {
   const rootDir = process.cwd();
 
@@ -42,66 +45,64 @@ export function createComponent({
 
   // Create the appropriate directory
   const packageDir = path.resolve(rootDir, directory, packageNameKebab);
+  const doesPackageDirExist = fse.existsSync(packageDir);
 
-  // Create the package directories
-  fse.mkdir(packageDir, { recursive: true }, err => {
-    if (err) {
-      console.log(`Package ${packageNameKebab} already exists`);
-      return;
-    }
+  if (doesPackageDirExist) {
+    throw new Error(`Package ${packageNameKebab} already exists`);
+  }
 
-    // Write the appropriate files for each template
-    writeFiles(
-      [
-        {
-          name: 'package.json',
-          contents: pkgJson({
-            scope,
-            packageNameKebab,
-            packageNameTitle,
-          }),
-        },
-        {
-          name: 'tsconfig.json',
-          contents: tsConfig,
-        },
-        {
-          name: 'README.md',
-          contents: readMe({ packageNameKebab, packageNameTitle }),
-        },
-        {
-          name: 'src/index.ts',
-          contents: index({ packageNamePascal }),
-        },
-        {
-          name: `src/${packageNamePascal}.stories.tsx`,
-          contents: story({ packageNamePascal }),
-        },
-        {
-          name: `src/${packageNamePascal}/index.ts`,
-          contents: componentIndex({ packageNamePascal }),
-        },
-        {
-          name: `src/${packageNamePascal}/${packageNamePascal}.tsx`,
-          contents: component({ packageNamePascal }),
-        },
-        {
-          name: `src/${packageNamePascal}/${packageNamePascal}.spec.tsx`,
-          contents: spec({ packageNamePascal, packageNameKebab }),
-        },
-        {
-          name: `src/${packageNamePascal}/${packageNamePascal}.types.ts`,
-          contents: types({ packageNamePascal }),
-        },
-        {
-          name: `src/${packageNamePascal}/${packageNamePascal}.styles.ts`,
-          contents: styles,
-        },
-      ],
-      {
-        dir: packageDir,
-        packageNamePascal,
-      },
-    );
+  const filesToWrite = [
+    {
+      name: 'package.json',
+      contents: pkgJson({
+        scope,
+        packageNameKebab,
+        packageNameTitle,
+      }),
+    },
+    {
+      name: 'tsconfig.json',
+      contents: tsConfig(scope),
+    },
+    {
+      name: 'README.md',
+      contents: readMe({ packageNameKebab, packageNameTitle }),
+    },
+    {
+      name: 'src/index.ts',
+      contents: index({ packageNamePascal }),
+    },
+    {
+      name: `src/${packageNamePascal}.stories.tsx`,
+      contents: story({ packageNamePascal }),
+    },
+    {
+      name: `src/${packageNamePascal}/index.ts`,
+      contents: componentIndex({ packageNamePascal }),
+    },
+    {
+      name: `src/${packageNamePascal}/${packageNamePascal}.tsx`,
+      contents: component({ packageNamePascal }),
+    },
+    {
+      name: `src/${packageNamePascal}/${packageNamePascal}.spec.tsx`,
+      contents: spec({ packageNamePascal, packageNameKebab }),
+    },
+    {
+      name: `src/${packageNamePascal}/${packageNamePascal}.types.ts`,
+      contents: types({ packageNamePascal }),
+    },
+    {
+      name: `src/${packageNamePascal}/${packageNamePascal}.styles.ts`,
+      contents: styles,
+    },
+  ];
+
+  writeFiles(filesToWrite, {
+    dir: packageDir,
+    name,
+    scope,
+    dry,
+    verbose,
   });
 }

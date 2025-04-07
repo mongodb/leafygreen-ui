@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook-decorators",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "Storybook decorators used in LeafyGreen repos",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -21,7 +21,7 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
-    "@storybook/react": "^8.5.3",
+    "@storybook/react": "8.6.12",
     "lodash": "4.17.21"
   },
   "peerDependencies": {

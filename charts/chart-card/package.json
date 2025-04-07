@@ -1,0 +1,38 @@
+{
+  "name": "@lg-charts/chart-card",
+  "version": "0.2.1",
+  "description": "lg-charts ChartCard",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
+  },
+  "peerDependencies": {
+    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/PD/summary"
+  }
+}

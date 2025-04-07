@@ -2,7 +2,6 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import NextLink from 'next/link';
 
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 
@@ -136,38 +135,6 @@ describe('packages/button', () => {
       });
       expect(container.querySelector('button')).not.toBeInTheDocument();
       expect(button.tagName.toLowerCase()).toBe('div');
-    });
-
-    test(`renders a when passing in a NextJS Link wrapper`, () => {
-      const Linker = ({ href, children, ...props }: any) => (
-        <NextLink href={href} {...props}>
-          {children}
-        </NextLink>
-      );
-
-      const { container, button } = renderButton({
-        href: 'https://mongodb.design',
-        as: Linker,
-      });
-
-      expect(container.querySelector('button')).not.toBeInTheDocument();
-      expect(button.tagName.toLowerCase()).toBe('a');
-    });
-
-    test(`renders a when passing in a legacy NextJS Link wrapper`, () => {
-      const Linker = ({ href, children, ...props }: any) => (
-        <NextLink legacyBehavior href={href}>
-          <a {...props}>{children}</a>
-        </NextLink>
-      );
-
-      const { container, button } = renderButton({
-        href: 'https://mongodb.design',
-        as: Linker,
-      });
-
-      expect(container.querySelector('button')).not.toBeInTheDocument();
-      expect(button.tagName.toLowerCase()).toBe('a');
     });
 
     test(`does not render the disabled attribute for a disabled link`, () => {

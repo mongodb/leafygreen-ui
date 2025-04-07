@@ -3,20 +3,20 @@ import { palette } from '@leafygreen-ui/palette';
 
 export const colors = {
   [Theme.Dark]: [
+    palette.blue.base,
+    palette.green.dark1,
+    '#D68000',
+    palette.red.base,
+    palette.purple.base,
     palette.blue.light1,
     palette.green.base,
     palette.yellow.base,
     palette.red.light1,
-    palette.purple.base,
+    palette.purple.light2,
     palette.blue.light2,
     palette.green.light1,
     palette.yellow.light2,
     palette.red.light2,
-    palette.purple.light2,
-    palette.blue.light3,
-    palette.green.light2,
-    palette.yellow.light3,
-    palette.red.light3,
     palette.purple.light3,
   ],
   // non-palette values used for a11y

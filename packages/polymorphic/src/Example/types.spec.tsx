@@ -8,7 +8,6 @@
 /* eslint-disable jest/no-disabled-tests */
 
 import React from 'react';
-import NextLink from 'next/link';
 
 import { WrapperProps } from '../utils/Polymorphic.testutils';
 
@@ -86,7 +85,6 @@ describe('Typescript types', () => {
       <ButtonLikeWrapper href=".design" />
 
       <AnchorLikeWrapper href=".design" />
-      <NextLink href=".design" />
     </>
   })
 
@@ -308,7 +306,7 @@ describe('Typescript types', () => {
       <ExampleInferred as={ButtonLikeWrapper} href=".design" />
 
       <ExampleInferred as={AnchorLikeWrapper} href=".design" />
-      <ExampleInferred as={NextLink} href=".design" />
+
       {/** @ts-expect-error TODO: href is not valid on an empty component. See {@link InferredPolymorphicProps} */}
       <ExampleInferred as={() => <></>} />
       {/** TODO: ts-expect-error href is not valid on an empty component. See {@link InferredPolymorphicProps}*/}
@@ -359,7 +357,7 @@ describe('Typescript types', () => {
       <ExampleInferredDefaultButton as={ButtonLikeWrapper} href=".design" />
 
       <ExampleInferredDefaultButton as={AnchorLikeWrapper} href=".design" />
-      <ExampleInferredDefaultButton as={NextLink} href=".design" />
+
       {/** @ts-expect-error TODO: href is not valid on an empty component. See {@link InferredPolymorphicProps} */}
       <ExampleInferredDefaultButton as={() => <></>} />
       {/** TODO: ts-expect-error href is not valid on an empty component. See {@link InferredPolymorphicProps}*/}

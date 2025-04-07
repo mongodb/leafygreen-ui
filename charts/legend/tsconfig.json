@@ -16,6 +16,12 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../colors"
+    },
+    {
+      "path": "../series-provider"
+    },
+    {
       "path": "../../packages/checkbox"
     },
     {

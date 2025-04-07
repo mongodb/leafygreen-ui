@@ -2,7 +2,6 @@ import React from 'react';
 import styled, { StyledComponent } from '@emotion/styled';
 import { parseTSDoc } from '@lg-tools/build/src/tsdoc/tsdocParser';
 import { render } from '@testing-library/react';
-import NextLink from 'next/link';
 
 import {
   InferredPolymorphic,
@@ -166,41 +165,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
         expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
       });
     });
-
-    describe('NextJS', () => {
-      test('control', () => {
-        const { getByText } = render(
-          <NextLink href="mongodb.design" data-testid="next" target="_blank">
-            Content
-          </NextLink>,
-        );
-
-        const link = getByText('Content');
-        expect(link).toBeInTheDocument();
-        expect(link.tagName.toLowerCase()).toBe('a');
-        expect(link.getAttribute('href')).toContain('mongodb.design');
-        expect(link).toHaveAttribute('target');
-      });
-
-      test('Works with NextLink', () => {
-        const { getByText } = render(
-          <ExampleInferred
-            as={NextLink}
-            href="mongodb.design"
-            data-testid="next"
-            target="_blank"
-          >
-            Content
-          </ExampleInferred>,
-        );
-
-        const link = getByText('Content');
-        expect(link).toBeInTheDocument();
-        expect(link.tagName.toLowerCase()).toBe('a');
-        expect(link.getAttribute('href')).toContain('mongodb.design');
-        expect(link).toHaveAttribute('target');
-      });
-    });
   });
 
   describe.each([
@@ -347,41 +311,6 @@ describe('Polymorphic/Example Higher-order Components', () => {
           expect(getByTestId('styled').tagName.toLowerCase()).toBe('span');
           expect(getByTestId('styled')).toHaveStyle(`color: #ff69b4;`);
           expect(getByTestId('styled')).toHaveStyle(`font-size: 16px;`);
-        });
-      });
-
-      describe('NextJS', () => {
-        test('control', () => {
-          const { getByText } = render(
-            <NextLink href="mongodb.design" data-testid="next" target="_blank">
-              Content
-            </NextLink>,
-          );
-
-          const link = getByText('Content');
-          expect(link).toBeInTheDocument();
-          expect(link.tagName.toLowerCase()).toBe('a');
-          expect(link.getAttribute('href')).toContain('mongodb.design');
-          expect(link).toHaveAttribute('target');
-        });
-
-        test('Works with NextLink', () => {
-          const { getByText } = render(
-            <ExampleComponent
-              as={NextLink}
-              href="mongodb.design"
-              data-testid="next"
-              target="_blank"
-            >
-              Content
-            </ExampleComponent>,
-          );
-
-          const link = getByText('Content');
-          expect(link).toBeInTheDocument();
-          expect(link.tagName.toLowerCase()).toBe('a');
-          expect(link.getAttribute('href')).toContain('mongodb.design');
-          expect(link).toHaveAttribute('target');
         });
       });
     });

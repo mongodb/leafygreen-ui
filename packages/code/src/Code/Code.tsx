@@ -12,7 +12,6 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import CodeContextProvider from '../CodeContext/CodeContext';
 import { numOfCollapsedLinesOfCode } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
-import { Panel } from '../Panel';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
@@ -49,14 +48,6 @@ function Code({
   customKeywords,
   'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   baseFontSize: baseFontSizeProp,
-  // Deprecated props
-  copyable = false,
-  showCustomActionButtons = false,
-  languageOptions = [],
-  customActionButtons,
-  chromeTitle,
-  onChange,
-  // rest
   ...rest
 }: CodeProps) {
   const scrollableElementRef = useRef<HTMLPreElement>(null);
@@ -70,6 +61,27 @@ function Code({
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
   const lgIds = getLgIds(dataLgId);
+
+  const showPanel = !!panel;
+
+  if (
+    // @ts-expect-error detecting deprecated props
+    rest.copyable ||
+    // @ts-expect-error detecting deprecated props
+    rest.showCustomActionButtons ||
+    // @ts-expect-error detecting deprecated props
+    rest.languageOptions ||
+    // @ts-expect-error detecting deprecated props
+    rest.customActionButtons ||
+    // @ts-expect-error detecting deprecated props
+    rest.chromeTitle ||
+    // @ts-expect-error detecting deprecated props
+    rest.onChange
+  ) {
+    console.warn(
+      'The following props are deprecated and have been removed: copyable, showCustomActionButtons, languageOptions, customActionButtons, chromeTitle, onChange. Please use the Panel component instead.',
+    );
+  }
 
   useIsomorphicLayoutEffect(() => {
     const scrollableElement = scrollableElementRef.current;
@@ -111,19 +123,11 @@ function Code({
     baseFontSize, // will cause changes in code height
   ]);
 
-  const currentLanguage = languageOptions?.find(
-    option => option.displayName === languageProp,
-  );
-
-  const highlightLanguage = currentLanguage
-    ? currentLanguage.language
-    : languageProp;
-
   const renderedSyntaxComponent = (
     <Syntax
       showLineNumbers={showLineNumbers}
       lineNumberStart={lineNumberStart}
-      language={highlightLanguage as Language}
+      language={languageProp as Language}
       highlightLines={highlightLines}
       customKeywords={customKeywords}
     >
@@ -166,31 +170,6 @@ function Code({
     numOfLinesOfCode > numOfCollapsedLinesOfCode &&
     !isLoading
   );
-
-  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
-  const hasDeprecatedCustomActionButtons =
-    showCustomActionButtons &&
-    !!customActionButtons &&
-    customActionButtons.length > 0;
-
-  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
-  const hasDeprecatedLanguageSwitcher =
-    !!languageOptions &&
-    languageOptions.length > 0 &&
-    !!currentLanguage &&
-    !!onChange;
-
-  // This will render a temp deprecated panel component if deprecated props are used
-  // TODO: remove when deprecated props are removed https://jira.mongodb.org/browse/LG-4909
-  const shouldRenderDeprecatedPanel =
-    !panel &&
-    (hasDeprecatedCustomActionButtons ||
-      hasDeprecatedLanguageSwitcher ||
-      !!chromeTitle ||
-      copyable);
-
-  // TODO: remove when deprecated props are removed. Should only check panel https://jira.mongodb.org/browse/LG-4909
-  const showPanel = !!panel || shouldRenderDeprecatedPanel;
 
   const showCopyButtonWithoutPanel =
     !showPanel &&
@@ -264,19 +243,6 @@ function Code({
           )}
 
           {!!panel && panel}
-
-          {/* if there are deprecated props then manually render the panel component */}
-          {/* TODO: remove when deprecated props are removed, https://jira.mongodb.org/browse/LG-4909 */}
-          {shouldRenderDeprecatedPanel && (
-            <Panel
-              showCustomActionButtons={showCustomActionButtons}
-              customActionButtons={customActionButtons}
-              title={chromeTitle}
-              languageOptions={languageOptions || []} // Empty array as default
-              onChange={onChange || (() => {})} // No-op function as default
-              onCopy={onCopy}
-            />
-          )}
 
           {showExpandButton && (
             <button

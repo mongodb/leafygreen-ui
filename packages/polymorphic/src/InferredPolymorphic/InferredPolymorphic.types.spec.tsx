@@ -8,7 +8,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests, padding-line-between-statements */
 
 import React, { MouseEventHandler } from 'react';
-import NextLink from 'next/link';
 
 import {
   PolymorphicAs,
@@ -47,7 +46,6 @@ describe.skip('Inferred Polymorphic types', () => {
     // @ts-expect-error - not assignable to AnchorLike
     TestArbitraryComponent satisfies AnchorLike;
     TestNodeURLAnchorLike satisfies AnchorLike;
-    NextLink satisfies AnchorLike;
   });
 
   test('AnchorLikeProps', () => {
@@ -103,20 +101,6 @@ describe.skip('Inferred Polymorphic types', () => {
         href: {
           hostname: 'mongodb.design',
         } as NodeUrlLike,
-      };
-    }
-
-    // NextLink
-    {
-      const _N: AnchorLikeProps<typeof NextLink> = {
-        as: NextLink,
-        href: '',
-      };
-      const _N2: AnchorLikeProps<typeof NextLink> = {
-        as: NextLink,
-        href: {
-          hostname: 'mongodb.design',
-        },
       };
     }
 
@@ -216,20 +200,6 @@ describe.skip('Inferred Polymorphic types', () => {
       };
     }
 
-    // NextLink
-    {
-      const _N: InferredPolymorphicProps<typeof NextLink> = {
-        as: NextLink,
-        href: '',
-      };
-      const _N2: InferredPolymorphicProps<typeof NextLink> = {
-        as: NextLink,
-        href: {
-          hostname: 'mongodb.design',
-        },
-      };
-    }
-
     // typed generic PolymorphicAs
     {
       const _G0: InferredPolymorphicProps<PolymorphicAs> = {}; // empty object is technically valid
@@ -252,10 +222,6 @@ describe.skip('Inferred Polymorphic types', () => {
         as: TestNodeURLAnchorLike,
         href: { hostname: 'mongodb.design' },
       };
-      const _G6a: InferredPolymorphicProps<PolymorphicAs> = {
-        as: NextLink,
-        href: 'mongodb.design',
-      };
 
       const _G1b: InferredPolymorphicProps<PolymorphicAs> = {
         as: 'a' as PolymorphicAs,
@@ -275,10 +241,6 @@ describe.skip('Inferred Polymorphic types', () => {
       const _G5b: InferredPolymorphicProps<PolymorphicAs> = {
         as: TestNodeURLAnchorLike as PolymorphicAs,
         href: { hostname: 'mongodb.design' },
-      };
-      const _G6b: InferredPolymorphicProps<PolymorphicAs> = {
-        as: NextLink as PolymorphicAs,
-        href: 'mongodb.design',
       };
     }
 
@@ -356,20 +318,6 @@ describe.skip('Inferred Polymorphic types', () => {
       );
     }
 
-    // NextLink
-    {
-      renderInferredPoly({ as: NextLink, href: '' }, null);
-      renderInferredPoly(
-        {
-          as: NextLink,
-          href: {
-            hostname: 'mongodb.design',
-          },
-        },
-        null,
-      );
-    }
-
     // generically typed
     {
       renderInferredPoly({ as: 'a' as PolymorphicAs }, null);
@@ -410,8 +358,6 @@ describe.skip('Inferred Polymorphic types', () => {
         },
         null,
       );
-
-      renderInferredPoly({ as: NextLink as PolymorphicAs, href: '' }, null);
     }
 
     // Arbitrary
@@ -487,11 +433,6 @@ describe.skip('Inferred Polymorphic types', () => {
       <MyInferredPoly as={TestNodeURLAnchorLike} href={{ hostname: '' }} />;
     }
 
-    {
-      <MyInferredPoly as={NextLink} href="" />;
-      <MyInferredPoly as={NextLink} href={{ hostname: '' }} />;
-    }
-
     // generically typed
     {
       <MyInferredPoly as={'a' as PolymorphicAs} />;
@@ -521,9 +462,6 @@ describe.skip('Inferred Polymorphic types', () => {
         // @ts-expect-error - when generically defined, non-JSX Intrinsic Attributes are not valid
         href={{ hostname: '' }}
       />;
-      <MyInferredPoly as={NextLink as PolymorphicAs} href="" />;
-      // @ts-expect-error - when generically defined, non-JSX Intrinsic Attributes are not valid
-      <MyInferredPoly as={NextLink as PolymorphicAs} href={{ hostname: '' }} />;
     }
 
     // arbitrary

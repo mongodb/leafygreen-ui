@@ -1,5 +1,18 @@
 # @leafygreen-ui/loading-indicator
 
+## 3.0.9
+
+### Patch Changes
+
+- Updated dependencies [30b13adec]
+- Updated dependencies [78a36d6bb]
+  - @leafygreen-ui/lib@14.2.0
+  - @leafygreen-ui/emotion@4.1.0
+  - @leafygreen-ui/leafygreen-provider@4.0.6
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.1
+  - @leafygreen-ui/typography@20.1.6
+
 ## 3.0.8
 
 ### Patch Changes
