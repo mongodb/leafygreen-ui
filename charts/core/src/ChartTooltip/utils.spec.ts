@@ -4,7 +4,7 @@ import { ChartStates } from '../Chart';
 
 import { shouldShowTooltip } from './utils';
 
-describe('@lg-chart/core/Tooltip/utils', () => {
+describe('@lg-chart/core/ChartTooltip/utils', () => {
   describe('shouldShowTooltip', () => {
     test('should return true when chartState and chartCardState are undefined', () => {
       const result = shouldShowTooltip({});

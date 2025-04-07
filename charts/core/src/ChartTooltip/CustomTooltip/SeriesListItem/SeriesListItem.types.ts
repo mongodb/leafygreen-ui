@@ -1,4 +1,4 @@
-import { CallbackSeriesDataPoint } from '../../Tooltip.types';
+import { CallbackSeriesDataPoint } from '../../ChartTooltip.types';
 import { SeriesListProps } from '../SeriesList/SeriesList.types';
 
 export interface SeriesListItemProps

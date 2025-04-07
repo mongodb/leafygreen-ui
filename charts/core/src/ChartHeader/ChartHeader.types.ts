@@ -1,6 +1,7 @@
 import { HTMLElementProps } from '@leafygreen-ui/lib';
 
-export interface HeaderProps extends Omit<HTMLElementProps<'div'>, 'title'> {
+export interface ChartHeaderProps
+  extends Omit<HTMLElementProps<'div'>, 'title'> {
   /**
    * The title of the chart
    */

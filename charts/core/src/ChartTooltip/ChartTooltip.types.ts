@@ -13,7 +13,7 @@ export interface SeriesInfo {
   value: OptionDataValue;
 }
 
-export interface TooltipProps {
+export interface ChartTooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
   seriesNameFormatter?: (name: SeriesName) => ReactNode;

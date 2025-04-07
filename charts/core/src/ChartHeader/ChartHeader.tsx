@@ -5,16 +5,16 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { getContainerStyles, titleStyles } from './Header.styles';
-import { HeaderProps } from './Header.types';
+import { getContainerStyles, titleStyles } from './ChartHeader.styles';
+import { ChartHeaderProps } from './ChartHeader.types';
 
-export function Header({
+export function ChartHeader({
   title,
   showDivider,
   headerContent,
   className,
   ...rest
-}: HeaderProps) {
+}: ChartHeaderProps) {
   const { theme } = useDarkMode();
   return (
     <div

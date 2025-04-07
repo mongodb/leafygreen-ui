@@ -1,4 +1,4 @@
-import { CallbackSeriesDataPoint } from '../Tooltip.types';
+import { CallbackSeriesDataPoint } from '../ChartTooltip.types';
 
 export const sampleTooltipParams: Array<CallbackSeriesDataPoint> = [
   {

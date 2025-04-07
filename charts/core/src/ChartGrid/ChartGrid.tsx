@@ -6,7 +6,7 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 import { ChartOptions } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
-import { GridProps } from './Grid.types';
+import { ChartGridProps } from './ChartGrid.types';
 
 const unsetGridOptions = {
   splitLine: {
@@ -14,7 +14,10 @@ const unsetGridOptions = {
   },
 };
 
-export function Grid({ horizontal = true, vertical = true }: GridProps) {
+export function ChartGrid({
+  horizontal = true,
+  vertical = true,
+}: ChartGridProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
@@ -51,4 +54,4 @@ export function Grid({ horizontal = true, vertical = true }: GridProps) {
   return null;
 }
 
-Grid.displayName = 'Grid';
+ChartGrid.displayName = 'ChartGrid';
