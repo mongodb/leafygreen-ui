@@ -9,7 +9,7 @@ import {
 import Icon from '@leafygreen-ui/icon/';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import IconButton, { AccessibleIconButtonProps, Size } from '..';
+import IconButton, { AccessibleIconButtonProps, Size } from './IconButton';
 
 const meta: StoryMetaType<typeof IconButton> = {
   title: 'Components/IconButton',
