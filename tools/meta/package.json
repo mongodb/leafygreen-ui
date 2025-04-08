@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/meta",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Utilities for managing LeafyGreen repositories",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

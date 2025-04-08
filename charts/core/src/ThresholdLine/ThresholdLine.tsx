@@ -103,7 +103,7 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
      * Threshold lines in Echarts are always attached to a series. In order
      * to make this a separate component and not a prop on `Line`, we must add
      * a dummy series with no data, and a mark line. This does not show up as a
-     * series in something like a Tooltip.
+     * series in something like a ChartTooltip.
      */
     chart.addSeries(
       getThresholdLineConfig({ name, position, theme, label, value }),

@@ -1,5 +1,23 @@
 # @lg-tools/create
 
+## 0.3.0
+
+### Minor Changes
+
+- 1d8408da8: - Newly created `tsconfig.json` files will now take the scope into account, and update the references accordingly.
+  - Root sub-component directory will now take `--parent` option into account (no longer need to specify `--directory` as well as `--parent`)
+  - Adds `-dry` flag for dry runs
+  - Improves verbose logging
+
+### Patch Changes
+
+- 014a9ff4f: Fixes install-time warning about missing `bin` files
+- Updated dependencies [fd1696643]
+- Updated dependencies [3978cdbfe]
+- Updated dependencies [3978cdbfe]
+  - @lg-tools/build@0.7.4
+  - @lg-tools/meta@0.4.2
+
 ## 0.2.14
 
 ### Patch Changes
