@@ -1,5 +1,15 @@
 # @lg-charts/drag-provider
 
+## 0.2.2
+
+### Patch Changes
+
+- 7c7fd9d23: Updates spec and story files with updated `@lg-charts/core` component names
+- Updated dependencies [7c7fd9d23]
+- Updated dependencies [8e4acd2a1]
+  - @lg-charts/core@0.16.0
+  - @lg-charts/chart-card@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

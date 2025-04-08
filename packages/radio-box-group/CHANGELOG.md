@@ -1,5 +1,15 @@
 # @leafygreen-ui/radio-box-group
 
+## 14.0.8
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+
 ## 14.0.7
 
 ### Patch Changes

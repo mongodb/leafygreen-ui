@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/chat-window",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "lg-chat Chat Window",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

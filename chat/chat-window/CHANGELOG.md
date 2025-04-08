@@ -1,5 +1,16 @@
 # @lg-chat/chat-window
 
+## 3.0.11
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @lg-chat/avatar@4.0.9
+  - @lg-chat/title-bar@3.0.11
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+
 ## 3.0.10
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # @lg-tools/storybook-addon
 
+## 0.3.6
+
+### Patch Changes
+
+- 963cda31d: Upgrade to Storybook 8.6
+- 106c2a601: Dynamically finds package directories based on "lg" config
+- Updated dependencies [fd1696643]
+- Updated dependencies [3978cdbfe]
+- Updated dependencies [3978cdbfe]
+- Updated dependencies [963cda31d]
+  - @lg-tools/build@0.7.4
+  - @lg-tools/meta@0.4.2
+  - @lg-tools/storybook-decorators@0.4.6
+  - @lg-tools/storybook-utils@0.2.2
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+  - @leafygreen-ui/typography@20.1.7
+
 ## 0.3.5
 
 ### Patch Changes
