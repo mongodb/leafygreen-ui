@@ -1,8 +1,7 @@
 export const XAxisType = {
-  Category: 'category',
-  Value: 'value',
-  Time: 'time',
   Log: 'log',
+  Time: 'time',
+  Value: 'value',
 } as const;
 type XAxisType = (typeof XAxisType)[keyof typeof XAxisType];
 

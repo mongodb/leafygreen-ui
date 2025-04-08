@@ -139,7 +139,7 @@ Renders an x-axis.
 
 | Name                     | Description                                   | Type                                       | Default |
 | ------------------------ | --------------------------------------------- | ------------------------------------------ | ------- |
-| `type`                   | Type of axis.                                 | `'category' \| 'value' \| 'time' \| 'log'` |         |
+| `type`                   | Type of axis.                                 | `'log' \| 'time' \| 'value'`               |         |
 | `label` _(optional)_     | Label name to be rendered on the axis.        | `string`                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | `(value: string, index: number) => string` |         |
 
@@ -151,7 +151,7 @@ Renders a y-axis.
 
 | Name                     | Description                                   | Type                                       | Default |
 | ------------------------ | --------------------------------------------- | ------------------------------------------ | ------- |
-| `type`                   | Type of axis.                                 | `'category' \| 'value' \| 'time' \| 'log'` |         |
+| `type`                   | Type of axis.                                 | `'log' \| 'time' \| 'value'`               |         |
 | `label` _(optional)_     | Label name to be rendered on the axis.        | `string`                                   |         |
 | `formatter` _(optional)_ | Callback function for formatting tick values. | `(value: string, index: number) => string` |         |
 
