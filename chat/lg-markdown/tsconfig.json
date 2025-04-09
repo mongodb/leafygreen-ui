@@ -2,6 +2,7 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
    "compilerOptions": {
+    "moduleResolution": "node",
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src", 
