@@ -6,11 +6,6 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<4.0": {
-      "*": [
-        "dist/ts3.4/*"
-      ]
-    },
     "<5.0": {
       "*": [
         "dist/ts4.9/*"
