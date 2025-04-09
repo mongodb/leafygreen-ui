@@ -1,5 +1,11 @@
 # @leafygreen-ui/confirmation-modal
 
+## 7.0.8
+
+### Patch Changes
+
+- @leafygreen-ui/modal@17.1.5
+
 ## 7.0.7
 
 ### Patch Changes
