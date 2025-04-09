@@ -1,5 +1,11 @@
 # @lg-chat/message-feed
 
+## 4.1.11
+
+### Patch Changes
+
+- @lg-chat/message@5.0.13
+
 ## 4.1.10
 
 ### Patch Changes

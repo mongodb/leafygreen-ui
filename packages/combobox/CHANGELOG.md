@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 11.0.15
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+  - @leafygreen-ui/form-field@2.0.10
+
 ## 11.0.14
 
 ### Patch Changes

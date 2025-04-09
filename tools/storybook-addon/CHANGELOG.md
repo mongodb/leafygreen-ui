@@ -1,5 +1,11 @@
 # @lg-tools/storybook-addon
 
+## 0.3.7
+
+### Patch Changes
+
+- @lg-tools/storybook-decorators@0.4.7
+
 ## 0.3.6
 
 ### Patch Changes

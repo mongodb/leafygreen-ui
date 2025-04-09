@@ -1,5 +1,12 @@
 # @leafygreen-ui/modal
 
+## 17.1.5
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+
 ## 17.1.4
 
 ### Patch Changes

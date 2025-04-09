@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 29.0.2
+
+### Patch Changes
+
+- 936364416: Fix live example stories for www.mongodb.design
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+
 ## 29.0.1
 
 ### Patch Changes
