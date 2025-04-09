@@ -3429,6 +3429,9 @@ importers:
 
   tools/storybook-utils:
     dependencies:
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../meta
       '@storybook/csf':
         specifier: 0.1.13
         version: 0.1.13
