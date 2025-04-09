@@ -1,5 +1,11 @@
 # @leafygreen-ui/pipeline
 
+## 7.0.11
+
+### Patch Changes
+
+- 936364416: Fix live example stories for www.mongodb.design
+
 ## 7.0.10
 
 ### Patch Changes

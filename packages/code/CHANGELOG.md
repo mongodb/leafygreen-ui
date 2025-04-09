@@ -1,5 +1,13 @@
 # @leafygreen-ui/code
 
+## 18.0.2
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+  - @leafygreen-ui/select@14.1.5
+
 ## 18.0.1
 
 ### Patch Changes

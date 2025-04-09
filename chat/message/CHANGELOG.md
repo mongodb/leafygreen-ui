@@ -1,5 +1,12 @@
 # @lg-chat/message
 
+## 5.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.11
+- @lg-chat/lg-markdown@3.0.13
+
 ## 5.0.12
 
 ### Patch Changes

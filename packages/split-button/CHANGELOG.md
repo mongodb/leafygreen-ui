@@ -1,5 +1,12 @@
 # @leafygreen-ui/split-button
 
+## 4.1.12
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/menu@29.0.2
+
 ## 4.1.11
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/table
 
+## 13.1.7
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+
 ## 13.1.6
 
 ### Patch Changes
