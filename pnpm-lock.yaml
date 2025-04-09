@@ -2992,6 +2992,9 @@ importers:
         specifier: ~5.0.4
         version: 5.0.4
     devDependencies:
+      '@types/mock-fs':
+        specifier: ^4.13.4
+        version: 4.13.4
       mock-fs:
         specifier: ^5.5.0
         version: 5.5.0
@@ -5743,6 +5746,9 @@ packages:
 
   '@types/minimist@1.2.2':
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
+
+  '@types/mock-fs@4.13.4':
+    resolution: {integrity: sha512-mXmM0o6lULPI8z3XNnQCpL0BGxPwx1Ul1wXYEPBGl4efShyxW2Rln0JOPEWGyZaYZMM6OVXM/15zUuFMY52ljg==}
 
   '@types/ms@0.7.31':
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
@@ -13049,6 +13055,10 @@ snapshots:
   '@types/minimatch@3.0.5': {}
 
   '@types/minimist@1.2.2': {}
+
+  '@types/mock-fs@4.13.4':
+    dependencies:
+      '@types/node': 20.17.12
 
   '@types/ms@0.7.31': {}
 
