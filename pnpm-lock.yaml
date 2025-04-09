@@ -42,8 +42,8 @@ importers:
         specifier: workspace:^
         version: link:tools/storybook-addon
       '@lg-tools/storybook-utils':
-        specifier: ^0.2.2
-        version: 0.2.2(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)
+        specifier: workspace:^
+        version: link:tools/storybook-utils
       '@lg-tools/test':
         specifier: workspace:^
         version: link:tools/test
@@ -3435,12 +3435,6 @@ importers:
       '@storybook/react':
         specifier: 8.6.12
         version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)
-      glob:
-        specifier: 10.3.12
-        version: 10.3.12
-      leafygreen-ui:
-        specifier: link:/Users/adam.thompson/Documents/GitHub/leafygreen-ui
-        version: link:../..
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4864,9 +4858,6 @@ packages:
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-
-  '@lg-tools/storybook-utils@0.2.2':
-    resolution: {integrity: sha512-FW2nJHvcGkrs8Uqh69EMFseQrj3wz3d2IX5l1unc5QOZHsQJbtVGA76nV6yWNaHSOn6dXdZitpyIwFffyiUW0Q==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -12000,18 +11991,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
 
   '@juggle/resize-observer@3.4.0': {}
-
-  '@lg-tools/storybook-utils@0.2.2(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)':
-    dependencies:
-      '@storybook/csf': 0.1.13
-      '@storybook/react': 8.6.12(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - '@storybook/test'
-      - react
-      - react-dom
-      - storybook
-      - typescript
 
   '@manypkg/find-root@1.1.0':
     dependencies:
