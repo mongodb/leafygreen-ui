@@ -2991,6 +2991,10 @@ importers:
       typescript:
         specifier: ~5.0.4
         version: 5.0.4
+    devDependencies:
+      mock-fs:
+        specifier: ^5.5.0
+        version: 5.5.0
 
   tools/cli:
     dependencies:
@@ -8553,6 +8557,10 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
+
+  mock-fs@5.5.0:
+    resolution: {integrity: sha512-d/P1M/RacgM3dB0sJ8rjeRNXxtapkPCUnMGmIN0ixJ16F/E4GUZCvWcSGfWGz8eaXYvn1s9baUwNjI4LOPEjiA==}
+    engines: {node: '>=12.0.0'}
 
   mockdate@3.0.5:
     resolution: {integrity: sha512-iniQP4rj1FhBdBYS/+eQv7j1tadJ9lJtdzgOpvsOHng/GbcDh2Fhdeq+ZRldrPYdXvCyfFUmFeEwEGXZB5I/AQ==}
@@ -16758,6 +16766,8 @@ snapshots:
   mixme@0.5.9: {}
 
   mkdirp@1.0.4: {}
+
+  mock-fs@5.5.0: {}
 
   mockdate@3.0.5: {}
 
