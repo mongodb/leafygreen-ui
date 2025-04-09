@@ -1,7 +1,7 @@
 import { getLGConfig } from '@lg-tools/meta';
 
 /**
- * Returns a Glob to match all story files,
+ * Returns a glob to match all story files,
  * based on the scopes and directories defined in
  * the package.json "lg" config
  */
