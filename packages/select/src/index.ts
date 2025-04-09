@@ -12,4 +12,3 @@ export {
   Size,
   State,
 } from './Select';
-export { getTestUtils, type GetTestUtilsReturnType } from './utils';
