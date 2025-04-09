@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
