@@ -8,7 +8,7 @@
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "testing": {
+    "./testing": {
       "import": "./dist/esm/testing/index.js",
       "require": "./dist/testing/index.js",
       "types": "./dist/testing/index.d.ts"
