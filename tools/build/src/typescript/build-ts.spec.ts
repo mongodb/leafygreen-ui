@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import mockFs from 'mock-fs';
 
 import { buildTypescript } from './build-ts';
@@ -35,6 +34,20 @@ describe('buildTypescript', () => {
     // Mock console methods for output verification
     consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
     consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+
+    // Set up base mock filesystem for all tests
+    mockFs({
+      '/test-project': {
+        'package.json': '{"name": "test-project"}',
+        'tsconfig.json': '{"compilerOptions": {}}',
+        src: {
+          'index.ts': 'console.log("Hello world");',
+        },
+      },
+    });
+
+    // Set cwd to our test directory
+    jest.spyOn(process, 'cwd').mockReturnValue('/test-project');
   });
 
   afterEach(() => {
@@ -45,8 +58,6 @@ describe('buildTypescript', () => {
 
   test('should run downlevel when option is provided', () => {
     buildTypescript([], { downlevel: true });
-
-    // Only verify the side effect we care about
     expect(runTypescriptDownlevel).toHaveBeenCalled();
   });
 
@@ -57,57 +68,35 @@ describe('buildTypescript', () => {
 
   test('should log verbose information when enabled', () => {
     buildTypescript([], { verbose: true });
-    // Only verify the observable output
     expect(consoleLogSpy).toHaveBeenCalledWith(
-      chalk.blue.bold(expect.stringContaining('Building TypeScript')),
+      expect.stringContaining('Building TypeScript'),
     );
   });
 
-  describe('with mock filesystem', () => {
-    test('should find tsconfig.json in the current directory', () => {
-      // Mock a directory with tsconfig.json
-      mockFs({
-        '/test-project': {
-          'package.json': '{"name": "test-project"}',
-          'tsconfig.json': '{"compilerOptions": {}}',
-          src: {
-            'index.ts': 'console.log("Hello world");',
-          },
+  test('should find tsconfig.json in the current directory', () => {
+    buildTypescript();
+    expect(consoleErrorSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining('Could not find tsconfig'),
+    );
+  });
+
+  test('should exit with error when tsconfig.json is not found', () => {
+    // Remove tsconfig.json from mock filesystem
+    mockFs.restore();
+    mockFs({
+      '/test-project': {
+        'package.json': '{"name": "test-project"}',
+        src: {
+          'index.ts': 'console.log("Hello world");',
         },
-      });
-
-      // Set cwd to our test directory
-      jest.spyOn(process, 'cwd').mockReturnValue('/test-project');
-
-      buildTypescript();
-
-      // Verify no error about missing tsconfig
-      expect(consoleErrorSpy).not.toHaveBeenCalledWith(
-        chalk.red(expect.stringContaining('Could not find tsconfig')),
-      );
+      },
     });
 
-    test('should exit with error when tsconfig.json is not found', () => {
-      // Mock a directory without tsconfig.json
-      mockFs({
-        '/test-project': {
-          'package.json': '{"name": "test-project"}',
-          src: {
-            'index.ts': 'console.log("Hello world");',
-          },
-        },
-      });
+    buildTypescript();
 
-      // Set cwd to our test directory
-      jest.spyOn(process, 'cwd').mockReturnValue('/test-project');
-
-      buildTypescript();
-
-      // Verify error was logged and process exit was called
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        chalk.red(expect.stringContaining('Could not find tsconfig')),
-      );
-      expect(mockExit).toHaveBeenCalledWith(1);
-    });
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Could not find tsconfig'),
+    );
+    expect(mockExit).toHaveBeenCalledWith(1);
   });
 });
