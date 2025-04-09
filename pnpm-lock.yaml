@@ -42,8 +42,8 @@ importers:
         specifier: workspace:^
         version: link:tools/storybook-addon
       '@lg-tools/storybook-utils':
-        specifier: workspace:^
-        version: link:tools/storybook-utils
+        specifier: ^0.2.2
+        version: 0.2.2(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)
       '@lg-tools/test':
         specifier: workspace:^
         version: link:tools/test
@@ -55,7 +55,7 @@ importers:
         version: 14.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@testing-library/user-event':
         specifier: 13.5.0
-        version: 13.5.0(@testing-library/dom@9.3.4)
+        version: 13.5.0(@testing-library/dom@10.4.0)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.14
@@ -2667,7 +2667,7 @@ importers:
         version: 14.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@testing-library/user-event':
         specifier: 13.5.0
-        version: 13.5.0(@testing-library/dom@9.3.4)
+        version: 13.5.0(@testing-library/dom@10.4.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3381,6 +3381,9 @@ importers:
       storybook-dark-mode:
         specifier: ^4.0.1
         version: 4.0.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))
+      stream:
+        specifier: ^0.0.3
+        version: 0.0.3
       stream-browserify:
         specifier: 3.0.0
         version: 3.0.0
@@ -3432,6 +3435,12 @@ importers:
       '@storybook/react':
         specifier: 8.6.12
         version: 8.6.12(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)
+      glob:
+        specifier: 10.3.12
+        version: 10.3.12
+      leafygreen-ui:
+        specifier: link:/Users/adam.thompson/Documents/GitHub/leafygreen-ui
+        version: link:../..
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4856,6 +4865,9 @@ packages:
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
 
+  '@lg-tools/storybook-utils@0.2.2':
+    resolution: {integrity: sha512-FW2nJHvcGkrs8Uqh69EMFseQrj3wz3d2IX5l1unc5QOZHsQJbtVGA76nV6yWNaHSOn6dXdZitpyIwFffyiUW0Q==}
+
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
 
@@ -5554,6 +5566,10 @@ packages:
   '@tanstack/virtual-core@3.10.7':
     resolution: {integrity: sha512-ND5dfsU0n9F4gROzwNNDJmg6y8n9pI8YWxtgbfJ5UcNn7Hx+MxEXtXcQ189tS7sh8pmCObgz2qSiyRKTZxT4dg==}
 
+  '@testing-library/dom@10.4.0':
+    resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
+    engines: {node: '>=18'}
+
   '@testing-library/dom@9.3.4':
     resolution: {integrity: sha512-FlS4ZWlp97iiNWig0Muq8p+3rVDjRiYE+YKGbAqXOu9nwJFFOdL00kFpz42M+4huzYi86vAK1sOOfyOG45muIQ==}
     engines: {node: '>=14'}
@@ -6097,6 +6113,9 @@ packages:
 
   aria-query@5.1.3:
     resolution: {integrity: sha512-R5iJ5lkuHybztUfuOAznmboyjWq8O6sqNqtK7CLOqdydi54VNbORp49mb14KbWgG1QD3JFO9hJdZ+y4KutfdOQ==}
+
+  aria-query@5.3.0:
+    resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
 
   aria-query@5.3.2:
     resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
@@ -8525,10 +8544,6 @@ packages:
   minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
 
-  minipass@7.0.4:
-    resolution: {integrity: sha512-jYofLM5Dam9279rdkWzqHozUo4ybjdZmCsDHePy5V/PbBcVMiSZR97gmAy45aqi8CK1lG2ECd356FU86avfwUQ==}
-    engines: {node: '>=16 || 14 >=14.17'}
-
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -10354,7 +10369,7 @@ snapshots:
   '@babel/code-frame@7.24.2':
     dependencies:
       '@babel/highlight': 7.24.2
-      picocolors: 1.0.0
+      picocolors: 1.1.1
 
   '@babel/compat-data@7.24.1': {}
 
@@ -10554,7 +10569,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.22.20
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.0
+      picocolors: 1.1.1
 
   '@babel/parser@7.16.4':
     dependencies:
@@ -11986,6 +12001,18 @@ snapshots:
 
   '@juggle/resize-observer@3.4.0': {}
 
+  '@lg-tools/storybook-utils@0.2.2(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)':
+    dependencies:
+      '@storybook/csf': 0.1.13
+      '@storybook/react': 8.6.12(@storybook/test@8.6.12(storybook@8.6.12(prettier@2.8.8)))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(storybook@8.6.12(prettier@2.8.8))(typescript@4.9.5)
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - '@storybook/test'
+      - react
+      - react-dom
+      - storybook
+      - typescript
+
   '@manypkg/find-root@1.1.0':
     dependencies:
       '@babel/runtime': 7.24.1
@@ -12807,6 +12834,17 @@ snapshots:
 
   '@tanstack/virtual-core@3.10.7': {}
 
+  '@testing-library/dom@10.4.0':
+    dependencies:
+      '@babel/code-frame': 7.24.2
+      '@babel/runtime': 7.24.1
+      '@types/aria-query': 5.0.1
+      aria-query: 5.3.0
+      chalk: 4.1.2
+      dom-accessibility-api: 0.5.16
+      lz-string: 1.5.0
+      pretty-format: 27.5.1
+
   '@testing-library/dom@9.3.4':
     dependencies:
       '@babel/code-frame': 7.24.2
@@ -12857,6 +12895,11 @@ snapshots:
       '@types/react-dom': 18.2.8
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+
+  '@testing-library/user-event@13.5.0(@testing-library/dom@10.4.0)':
+    dependencies:
+      '@babel/runtime': 7.24.1
+      '@testing-library/dom': 10.4.0
 
   '@testing-library/user-event@13.5.0(@testing-library/dom@9.3.4)':
     dependencies:
@@ -13465,6 +13508,10 @@ snapshots:
   aria-query@5.1.3:
     dependencies:
       deep-equal: 2.2.2
+
+  aria-query@5.3.0:
+    dependencies:
+      dequal: 2.0.3
 
   aria-query@5.3.2: {}
 
@@ -14989,7 +15036,7 @@ snapshots:
       foreground-child: 3.1.1
       jackspeak: 2.1.1
       minimatch: 9.0.5
-      minipass: 7.0.4
+      minipass: 7.1.2
       path-scurry: 1.10.2
 
   glob@11.0.1:
@@ -16722,8 +16769,6 @@ snapshots:
 
   minimist@1.2.8: {}
 
-  minipass@7.0.4: {}
-
   minipass@7.1.2: {}
 
   mixme@0.5.9: {}
@@ -17052,7 +17097,7 @@ snapshots:
   path-scurry@1.10.2:
     dependencies:
       lru-cache: 10.2.0
-      minipass: 7.0.4
+      minipass: 7.1.2
 
   path-scurry@2.0.0:
     dependencies:
