@@ -12,4 +12,3 @@ export {
   Size,
   State,
 } from './Select';
-export * from './testing';
