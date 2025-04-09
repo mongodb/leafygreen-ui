@@ -37,5 +37,12 @@
     "leafygreen",
     "date",
     "date-fns"
-  ]
+  ],
+  "typesVersions": {
+    "<5.0": {
+      "*": [
+        "dist/ts4.9/*"
+      ]
+    }
+  }
 }

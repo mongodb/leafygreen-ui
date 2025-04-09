@@ -6,9 +6,9 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
-    "<3.9": {
+    "<5.0": {
       "*": [
-        "ts3.4/*"
+        "dist/ts4.9/*"
       ]
     }
   },
