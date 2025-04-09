@@ -1,8 +1,7 @@
 export const YAxisType = {
-  Category: 'category',
-  Value: 'value',
-  Time: 'time',
   Log: 'log',
+  Time: 'time',
+  Value: 'value',
 } as const;
 
 type YAxisType = (typeof YAxisType)[keyof typeof YAxisType];
