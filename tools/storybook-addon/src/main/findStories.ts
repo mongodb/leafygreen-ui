@@ -6,6 +6,8 @@ import path from 'path';
  * @param includePattern
  * @param excludePattern
  * @returns Array of all included files
+ *
+ * @deprecated - Storybook now ignores `node_modules` by default
  */
 export function findStories(
   includePattern: string,

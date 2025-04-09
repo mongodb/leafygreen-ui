@@ -2,25 +2,17 @@
  * In this file we create default values for storybook `main.ts` properties
  */
 
+import { getStoriesPattern } from '@lg-tools/storybook-utils';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import isRegExp from 'lodash/isRegExp';
 import { ProvidePlugin, RuleSetRule } from 'webpack';
 
-import { findStories } from './findStories';
 import { isRule } from './utils';
 
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-import { getLGConfig } from '@lg-tools/meta';
-
-const { scopes } = getLGConfig();
-const directories = Object.values(scopes);
-
-export const stories: StorybookConfig['stories'] = findStories(
-  `../{${directories.join(',')}}/**/*.stor@(y|ies).@(js|ts)?(x)`,
-  `../{${directories.join(',')}}/*/node_modules`,
-);
+export const stories: StorybookConfig['stories'] = [getStoriesPattern()];
 
 export const addons: StorybookConfig['addons'] = [
   '@storybook/addon-essentials', // actions, controls & docs
