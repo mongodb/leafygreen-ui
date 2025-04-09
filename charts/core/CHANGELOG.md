@@ -1,5 +1,15 @@
 # @lg-charts/core
 
+## 0.17.0
+
+### Minor Changes
+
+- 706a9b32b: Remove `type` of `"category"` from `XAxis` and `YAxis` components
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.3
+
 ## 0.16.0
 
 ### Minor Changes

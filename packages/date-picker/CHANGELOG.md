@@ -1,5 +1,14 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.13
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+  - @leafygreen-ui/select@14.1.5
+  - @leafygreen-ui/form-field@2.0.10
+
 ## 3.0.12
 
 ### Patch Changes

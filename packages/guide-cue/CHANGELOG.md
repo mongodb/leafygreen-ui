@@ -1,5 +1,12 @@
 # @leafygreen-ui/guide-cue
 
+## 7.0.12
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+
 ## 7.0.11
 
 ### Patch Changes

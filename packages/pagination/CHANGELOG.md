@@ -1,5 +1,13 @@
 # @leafygreen-ui/pagination
 
+## 3.0.12
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+  - @leafygreen-ui/select@14.1.5
+
 ## 3.0.11
 
 ### Patch Changes

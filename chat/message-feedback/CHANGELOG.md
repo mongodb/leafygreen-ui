@@ -1,5 +1,12 @@
 # @lg-chat/message-feedback
 
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+
 ## 4.0.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lg-chat/input-bar
 
+## 7.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/search-input@5.0.11
+
 ## 7.0.11
 
 ### Patch Changes

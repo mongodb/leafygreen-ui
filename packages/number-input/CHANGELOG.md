@@ -1,5 +1,14 @@
 # @leafygreen-ui/number-input
 
+## 4.1.4
+
+### Patch Changes
+
+- 936364416: Fix live example stories for www.mongodb.design
+- Updated dependencies [936364416]
+  - @leafygreen-ui/select@14.1.5
+  - @leafygreen-ui/form-field@2.0.10
+
 ## 4.1.3
 
 ### Patch Changes
