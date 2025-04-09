@@ -8,7 +8,9 @@ import { StoryFn } from '@storybook/react';
 
 import Tooltip from '@leafygreen-ui/tooltip';
 
-import { RadioBox, RadioBoxGroup, type RadioBoxGroupProps, Size } from '..';
+import { RadioBox } from './RadioBox';
+import { RadioBoxGroup } from './RadioBoxGroup';
+import { type RadioBoxGroupProps, Size } from './types';
 
 const meta: StoryMetaType<typeof RadioBoxGroup> = {
   title: 'Components/RadioBoxGroup',
