@@ -4,6 +4,7 @@ export {
   type GeneratedStoryFn,
   type InstanceDecorator,
 } from './GeneratedStoryDecorator.types';
+export { getStoriesPattern } from './getStoriesPattern';
 export { default as IntrinsicElements } from './IntrinsicElements';
 export {
   storybookArgTypes,
