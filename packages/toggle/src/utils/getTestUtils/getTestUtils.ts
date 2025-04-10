@@ -1,17 +1,19 @@
 import { getByLgId } from '@lg-tools/test-harnesses';
 
-import { LGIDS_TOGGLE } from '../../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: string = LGIDS_TOGGLE.root,
+  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
 ): TestUtilsReturnType => {
+  const lgIds = getLgIds(lgId);
+
   /**
    * Queries the DOM for the element using the `data-lgid` data attribute.
    * Will throw if no element is found.
    */
-  const element: HTMLButtonElement = getByLgId!(lgId);
+  const element: HTMLButtonElement = getByLgId!(lgIds.root);
 
   /**
    * Returns the disabled attribute on the input.
