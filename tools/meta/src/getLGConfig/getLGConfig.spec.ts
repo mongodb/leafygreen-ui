@@ -4,7 +4,7 @@ import { getLGConfig } from '../getLGConfig';
 
 describe('tools/meta/getLGConfig', () => {
   beforeAll(() => {
-    fsx.mkdirSync('./tmp/');
+    fsx.ensureDirSync('./tmp/');
   });
   afterEach(() => {
     fsx.emptyDirSync('./tmp');
