@@ -2,4 +2,4 @@
 '@lg-tools/storybook-addon': patch
 ---
 
-Use `getStoriesPattern` instead of `findStories` function
+Use updated `findStories` function exported from `@lg-tools/storybook-utils`

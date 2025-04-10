@@ -1,10 +1,11 @@
+export { findStories } from './findStories';
 export {
   type ExtendedComponentProps,
   type GeneratedStoryConfig,
   type GeneratedStoryFn,
   type InstanceDecorator,
 } from './GeneratedStoryDecorator.types';
-export { getStoriesPattern } from './getStoriesPattern';
+export { getDirectoriesGlob } from './getDirectoriesGlob';
 export { default as IntrinsicElements } from './IntrinsicElements';
 export {
   storybookArgTypes,

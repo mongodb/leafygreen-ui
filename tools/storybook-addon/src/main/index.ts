@@ -2,7 +2,7 @@
  * In this file we create default values for storybook `main.ts` properties
  */
 
-import { getStoriesPattern } from '@lg-tools/storybook-utils';
+import { findStories } from '@lg-tools/storybook-utils';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import isRegExp from 'lodash/isRegExp';
 import webpack, { ProvidePlugin, RuleSetRule } from 'webpack';
@@ -12,7 +12,7 @@ import { isRule } from './utils';
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-export const stories: StorybookConfig['stories'] = [getStoriesPattern()];
+export const stories: StorybookConfig['stories'] = findStories();
 
 export const addons: StorybookConfig['addons'] = [
   '@storybook/addon-essentials', // actions, controls & docs
