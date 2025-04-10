@@ -1,5 +1,12 @@
 # @lg-tools/build
 
+## 0.7.4
+
+### Patch Changes
+
+- fd1696643: Logs `tsconfig.json` path for `--verbose` flag
+- 3978cdbfe: The build script will now check for a repository-level `rollup` config
+
 ## 0.7.3
 
 ### Patch Changes

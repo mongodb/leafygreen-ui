@@ -1,5 +1,40 @@
 # @lg-charts/core
 
+## 0.17.0
+
+### Minor Changes
+
+- 706a9b32b: Remove `type` of `"category"` from `XAxis` and `YAxis` components
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.3
+
+## 0.16.0
+
+### Minor Changes
+
+- 7c7fd9d23: Updates component names with `Chart*` prefix
+  - `Grid` &rarr; `ChartGrid`
+  - `Header` &rarr; `ChartHeader`
+  - `Tooltip` &rarr; `ChartTooltip`
+- 8e4acd2a1: Makes various improvements to the `Tooltip` component
+  - Adds `headerFormatter` prop to allow formatting of header in Tooltip.
+  - Adds `seriesNameFormatter` prop to allow formatting of series names.
+  - Updates prop `valueFormatter` to `seriesValueFormatter`, which can now return a `ReactNode` in addition to a string.
+  - Makes multiple style improvements.
+  - Replaces `sortDirection` and `sortKey` props with `sort` prop that accepts a compare function to be used for custom sorting.
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @lg-charts/chart-card@0.2.2
+  - @lg-charts/colors@0.2.3
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+  - @leafygreen-ui/typography@20.1.7
+
 ## 0.15.1
 
 ### Patch Changes

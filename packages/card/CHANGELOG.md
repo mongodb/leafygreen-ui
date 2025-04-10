@@ -1,5 +1,16 @@
 # @leafygreen-ui/card
 
+## 12.0.8
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+- Updated dependencies [e874aeaf9]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/polymorphic@2.0.9
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+
 ## 12.0.7
 
 ### Patch Changes

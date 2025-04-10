@@ -1,5 +1,28 @@
 # @leafygreen-ui/toast
 
+## 7.0.12
+
+### Patch Changes
+
+- Updated dependencies [936364416]
+  - @leafygreen-ui/icon-button@16.0.10
+
+## 7.0.11
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+- Updated dependencies [2ab660926]
+- Updated dependencies [fd1696643]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/icon@13.2.2
+  - @leafygreen-ui/hooks@8.4.0
+  - @leafygreen-ui/icon-button@16.0.9
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/portal@6.0.5
+  - @leafygreen-ui/tokens@2.12.2
+  - @leafygreen-ui/typography@20.1.7
+
 ## 7.0.10
 
 ### Patch Changes

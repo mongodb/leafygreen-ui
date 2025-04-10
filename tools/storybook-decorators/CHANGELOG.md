@@ -1,5 +1,27 @@
 # @lg-tools/storybook-decorators
 
+## 0.4.7
+
+### Patch Changes
+
+- @leafygreen-ui/banner@9.0.11
+
+## 0.4.6
+
+### Patch Changes
+
+- 963cda31d: Upgrade to Storybook 8.6
+- Updated dependencies [fd1696643]
+- Updated dependencies [3978cdbfe]
+- Updated dependencies [f2ed4b037]
+- Updated dependencies [963cda31d]
+  - @lg-tools/build@0.7.4
+  - @leafygreen-ui/emotion@4.1.1
+  - @lg-tools/storybook-utils@0.2.2
+  - @leafygreen-ui/banner@9.0.10
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+
 ## 0.4.5
 
 ### Patch Changes

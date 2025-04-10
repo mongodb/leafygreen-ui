@@ -1,5 +1,32 @@
 # @lg-tools/cli
 
+## 0.8.0
+
+### Minor Changes
+
+- 1d8408da8: - Newly created `tsconfig.json` files will now take the scope into account, and update the references accordingly.
+  - Root sub-component directory will now take `--parent` option into account (no longer need to specify `--directory` as well as `--parent`)
+  - Adds `-dry` flag for dry runs
+  - Improves verbose logging
+
+### Patch Changes
+
+- Updated dependencies [fd1696643]
+- Updated dependencies [3978cdbfe]
+- Updated dependencies [1d8408da8]
+- Updated dependencies [762b91b6d]
+- Updated dependencies [014a9ff4f]
+  - @lg-tools/build@0.7.4
+  - @lg-tools/create@0.3.0
+  - @lg-tools/lint@2.1.0
+  - @lg-tools/update@0.1.15
+  - @lg-tools/codemods@0.1.5
+  - @lg-tools/install@0.1.15
+  - @lg-tools/link@0.2.10
+  - @lg-tools/slackbot@0.2.14
+  - @lg-tools/test@0.4.16
+  - @lg-tools/validate@0.4.5
+
 ## 0.7.10
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/storybook-utils",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Storybook Utilities for LeafyGreen UI",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@storybook/csf": "0.1.13",
-    "@storybook/react": "8.5.3",
+    "@storybook/react": "8.6.12",
     "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",

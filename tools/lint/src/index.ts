@@ -1,21 +1,29 @@
-import { eslint } from './eslint';
+/* eslint-disable no-console */
+import chalk from 'chalk';
+
+import { runESLint } from './eslint';
 import { LintCommandOptions } from './lint.types';
 import { npmPkgJsonLint } from './npmPkgJsonLint';
-import { prettier } from './prettier';
+import { runPrettier } from './prettier';
+export { formatLG } from './format';
 
 const isTrue = (test: any) => !!test;
 
 export const lint = (options: LintCommandOptions) => {
   const { fix, prettierOnly, eslintOnly, pkgJsonOnly, verbose } = options;
 
+  if (verbose) {
+    console.log('Linting with options:', options);
+  }
+
   const linters: Array<Promise<unknown>> = [];
 
   if (!prettierOnly && !pkgJsonOnly) {
-    linters.push(eslint({ fix, verbose }));
+    linters.push(runESLint({ fix, verbose }));
   }
 
   if (!eslintOnly && !pkgJsonOnly) {
-    linters.push(prettier({ fix, verbose }));
+    linters.push(runPrettier({ fix, verbose }));
   }
 
   if (!prettierOnly && !eslintOnly) {
@@ -25,13 +33,14 @@ export const lint = (options: LintCommandOptions) => {
   Promise.all(linters)
     .then(results => {
       if (results.every(isTrue)) {
+        console.log(chalk.green('All linters passed'));
         process.exit(0);
       }
 
       const total = results.length;
       const successes = results.filter(isTrue).length;
-      verbose && console.error(`${successes} of ${total} linters passing`);
-
+      console.error(chalk.red(`${successes} of ${total} linters passing`));
+      verbose && console.log(results);
       process.exit(1);
     })
     .catch(err => {
