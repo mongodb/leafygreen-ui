@@ -5,6 +5,18 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/esm/index.ts"
+    },
+    "./main": "./dist/main.js",
+    "./manager": "./dist/manager.js",
+    "./preview": "./dist/preview.js",
+    "./preset": "./preset.js",
+    "./package.json": "./package.json"
+  },
   "license": "Apache-2.0",
   "scripts": {
     "build": "lg-internal-build-package",

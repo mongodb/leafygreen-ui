@@ -17,7 +17,7 @@
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
     "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
-    "build-storybook": "npx storybook build",
+    "build-storybook": "pnpm storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
     "clean:builds": "pnpm recursive exec -- rm -rf ./{dist,tsconfig.tsbuildinfo,stories.js}",
