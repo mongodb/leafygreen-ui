@@ -637,6 +637,66 @@ return (
 - Use `errorMessage` prop to set the error message that is displayed next to the input.
 - If `state='error'` but `errorMessage` is not defined, require `aria-describedby`
 
+## getLgIds
+
+The `getLgIds` utility function generates consistent test IDs for components in the LeafyGreen UI library.
+
+The function accepts an optional root identifier, allowing consumers to set a unique base ID for each instance of a component. This base is then used to generate additional, scoped test IDs (e.g., for a button), ensuring consistent and predictable targeting in tests.
+
+#### Usage
+
+Each component should export a `getLgIds.ts` file. For more information on naming testids, [check out the section on BEM-ish patterns](#follow-bem-ish-patterns-when-hard-coding-a-data-testid-or-data-lgid)
+
+```js
+export const DEFAULT_LGID_ROOT = 'lg-component';
+
+export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
+  const ids = {
+    root,
+    button: `${root}-button`,
+  } as const;
+  return ids;
+};
+
+export type GetLgIdsReturnType = ReturnType<typeof getLgIds>;
+```
+
+Inside the component you would use the testids by calling `getLgIds()`
+
+#### Component.tsx
+
+```js
+export const Component = forwardRef<
+  HTMLDivElement,
+  ComponentProps,
+>(
+  (
+    {
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      ...rest
+    },
+    fwdRef: React.Ref<any>,
+  ) => {
+    const lgIds = getLgIds(dataLgId);
+
+    return (
+      <div
+        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
+        ref={fwdRef}
+      >
+        <button
+          data-testid={lgIds.button}
+          data-lgid={lgIds.button}
+        >
+          Click Me I'm Irish
+       </button>
+      </div>
+    );
+  },
+);
+```
+
 ## References
 
 - [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
