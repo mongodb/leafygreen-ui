@@ -23,7 +23,7 @@ export const withMenuContext =
         highlight,
         moveHighlight,
         setHighlight,
-        lgIds,
+        lgIds = getLgIds(),
       },
     } = ctx ?? {
       args: {
