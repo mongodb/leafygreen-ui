@@ -54,6 +54,7 @@ cli
   .description('Installs LeafyGreen packages to the current app')
   .argument('[packages...]', 'A list of packages to install')
   .option('-v --verbose', 'Prints additional information to the console', false)
+  .option('-d, --dry', 'Dry run. Does not install any packages.', false)
   .option(
     '-W, --ignore-workspace-root-check',
     'Pass through flag for pnpm',
