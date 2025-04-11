@@ -1,12 +1,10 @@
 /* eslint-disable no-console */
-import { spawn } from 'cross-spawn';
-import chalk from 'chalk';
-
 import { getPackageManager } from '@lg-tools/meta';
+import chalk from 'chalk';
+import { spawn } from 'cross-spawn';
 
-import type {InstallCommandOptions} from './types'
 import { getPackagesToInstall } from './getPackagesToInstall';
-
+import type { InstallCommandOptions } from './types';
 
 const rootDir = process.cwd();
 
@@ -15,42 +13,46 @@ const rootDir = process.cwd();
  */
 export const installLeafyGreen = (
   packages: Array<string>,
-  { ignoreWorkspaceRootCheck, verbose, dry }: InstallCommandOptions,
+  options: InstallCommandOptions,
 ) => {
+  const { verbose, dry } = options;
+
   console.log('Preparing to install LeafyGreen packages...');
 
-  // Get packages to install (from static file or NPM)
-  const packagesToInstall = getPackagesToInstall(packages, { verbose })
-  
+  // Get packages to install based on options and flags
+  const packagesToInstall = getPackagesToInstall(packages, options);
+
   if (!packagesToInstall.length) {
     console.error('No packages found to install');
     return;
   }
 
-  console.log(chalk.green(`🥬 Installing ${packagesToInstall.length} LeafyGreen packages`));
+  console.log(
+    chalk.green(
+      `🥬 Installing ${packagesToInstall.length} LeafyGreen packages`,
+    ),
+  );
 
   const pkgMgr = getPackageManager(rootDir);
   verbose && console.log(`Detected package manager: ${pkgMgr}`);
-  
+
   const installCommand = pkgMgr === 'yarn' ? 'add' : 'install';
-  const commandOptions = [ignoreWorkspaceRootCheck ? '-W' : '']
 
   if (dry) {
-    console.log(`Dry run: Would have installed ${packagesToInstall.length} packages`);
-    verbose && console.log('Dry run Would have run command: ');
-    verbose && console.log(chalk.gray(`${pkgMgr} ${installCommand} ${packagesToInstall.join(' ')} ${commandOptions.join(' ')}`,));
-    return
+    console.log(
+      `Dry run: Would have installed ${packagesToInstall.length} packages`,
+    );
+    verbose && console.log('Dry run—would have run command: ');
+    verbose &&
+      console.log(
+        chalk.gray(
+          `${pkgMgr} ${installCommand} ${packagesToInstall.join(' ')}`,
+        ),
+      );
+    return;
   }
 
-  spawn(
-    pkgMgr,
-    [
-      installCommand,
-      ...packagesToInstall,
-      ...commandOptions
-    ],
-    {
-      stdio: 'inherit',
-    },
-  );
+  spawn(pkgMgr, [installCommand, ...packagesToInstall], {
+    stdio: 'inherit',
+  });
 };

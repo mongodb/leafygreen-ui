@@ -1,5 +1,9 @@
 export interface InstallCommandOptions {
-  ignoreWorkspaceRootCheck?: boolean;
   dry?: boolean;
   verbose?: boolean;
+  essentials?: boolean;
+  basic?: boolean;
+  core?: boolean;
+  charts?: boolean;
+  chat?: boolean;
 }
