@@ -2834,6 +2834,15 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
 
+  packages/toolbar:
+    dependencies:
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+
   packages/tooltip:
     dependencies:
       '@leafygreen-ui/emotion':
