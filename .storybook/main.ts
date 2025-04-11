@@ -1,9 +1,8 @@
 export default {
   addons: ['@lg-tools/storybook-addon'],
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {
-      fastRefresh: true,
       strictMode: true,
     },
   },

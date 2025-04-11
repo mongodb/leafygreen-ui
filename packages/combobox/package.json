@@ -40,7 +40,8 @@
     "polished": "^4.2.2"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@storybook/test": "8.6.12"
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^"

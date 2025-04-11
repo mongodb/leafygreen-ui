@@ -40,7 +40,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
-    "@leafygreen-ui/text-input": "workspace:^"
+    "@leafygreen-ui/text-input": "workspace:^",
+    "@storybook/test": "8.6.12"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

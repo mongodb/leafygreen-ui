@@ -40,6 +40,7 @@
     "@jest/globals": "^29.7.0",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/modal": "workspace:^",
+    "@storybook/test":"8.6.12",
     "mockdate": "^3.0.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-picker",
