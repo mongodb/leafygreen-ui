@@ -1,12 +1,13 @@
 import fse from 'fs-extra';
 import path from 'path';
 
+import { getRepositoryRoot } from '../getRepositoryRoot';
 import { getLGConfig } from '../getLGConfig';
 import { getPackageName } from '../getPackageName';
 
 /** @returns the absolute paths of all packages in the current repository */
 export const getAllPackages = () => {
-  const rootDir = process.cwd();
+  const rootDir = getRepositoryRoot();
   const { scopes } = getLGConfig();
 
   const paths: Array<string> = [];
