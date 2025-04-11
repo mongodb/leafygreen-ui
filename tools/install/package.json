@@ -7,6 +7,7 @@
   "types": "./dist/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
+    "prebuild": "npx ts-node ./scripts/writePackageNames.ts",
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"
   },
@@ -18,10 +19,11 @@
     "@lg-tools/meta": "workspace:^",
     "@types/cross-spawn": "6.0.2",
     "cross-spawn": "7.0.3",
-    "node-fetch": "2.6.12"
+    "chalk": "4.1.2"
   },
   "devDependencies": {
-    "@types/node-fetch": "^2.6.11"
+    "@types/node-fetch": "^2.6.11",
+    "fs-extra": "^11.3.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
   "repository": {
