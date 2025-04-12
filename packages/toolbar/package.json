@@ -16,6 +16,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/descendants": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",

@@ -31,6 +31,12 @@ export default {
   },
 };
 
-const Template: StoryFn<typeof Toolbar> = props => <Toolbar {...props} />;
+const Template: StoryFn<typeof Toolbar> = props => (
+  <>
+    <button>hey</button>
+    <Toolbar {...props} />
+    <button>hey</button>
+  </>
+);
 
 export const Basic = Template.bind({});
