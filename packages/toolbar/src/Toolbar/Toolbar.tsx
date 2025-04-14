@@ -9,6 +9,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
 import { ToolbarContextProvider, ToolbarDescendantsContext } from '../Context';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { getBaseStyles } from './Toolbar.styles';
 import { type ToolbarProps } from './Toolbar.types';
@@ -18,6 +19,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     {
       children,
       darkMode: darkModeProp,
+      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
       ['aria-controls']: ariaControls,
     }: ToolbarProps,
     forwardedRef,
@@ -30,6 +32,8 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     const childrenLength = descendants?.length ?? 0;
     const toolbarRef = useRef<HTMLUListElement | null>(null);
     const [isUsingKeyboard, setIsUsingKeyboard] = useState(false);
+
+    const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
     // Implements roving tabindex
     const handleKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
@@ -59,6 +63,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
         focusedIndex={focusedIndex}
         shouldFocus={isUsingKeyboard}
         setFocusedIndex={setFocusedIndex}
+        lgids={lgIds}
       >
         <DescendantsProvider
           context={ToolbarDescendantsContext}
@@ -75,6 +80,8 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
             onKeyDownCapture={handleKeyDown}
             onBlur={() => setIsUsingKeyboard(false)}
             onMouseDown={() => setIsUsingKeyboard(false)}
+            data-lgid={lgIds.root}
+            data-testid={lgIds.root}
           >
             {children}
           </ul>

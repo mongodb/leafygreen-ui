@@ -7,9 +7,17 @@ import React, {
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { getLgIds } from '../utils';
+
 import { ToolbarProviderProps } from './ToolbarContext.types';
 
-export const ToolbarContext = createContext<Partial<ToolbarProviderProps>>({});
+export const ToolbarContext = createContext<ToolbarProviderProps>({
+  darkMode: false,
+  focusedIndex: undefined,
+  shouldFocus: false,
+  setFocusedIndex: () => {},
+  lgids: getLgIds(),
+});
 
 export const useToolbarContext = () =>
   useContext<ToolbarProviderProps>(
@@ -22,7 +30,8 @@ export const ToolbarContextProvider = ({
   focusedIndex,
   shouldFocus,
   setFocusedIndex,
-}: PropsWithChildren<Partial<ToolbarProviderProps>>) => {
+  lgids,
+}: PropsWithChildren<ToolbarProviderProps>) => {
   const ToolbarProvider = (
     ToolbarContext as React.Context<ToolbarProviderProps>
   ).Provider;
@@ -33,8 +42,9 @@ export const ToolbarContextProvider = ({
       darkMode,
       shouldFocus,
       setFocusedIndex,
+      lgids,
     };
-  }, [focusedIndex, darkMode, shouldFocus, setFocusedIndex]);
+  }, [focusedIndex, darkMode, shouldFocus, setFocusedIndex, lgids]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

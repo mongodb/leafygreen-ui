@@ -37,8 +37,15 @@ export const ToolbarIconButton = React.forwardRef<
       ToolbarDescendantsContext,
       forwardedRef,
     );
-    const { focusedIndex, shouldFocus, setFocusedIndex } = useToolbarContext();
+    const { focusedIndex, shouldFocus, setFocusedIndex, lgids } =
+      useToolbarContext();
     const isFocusable = index === focusedIndex;
+
+    if (focusedIndex === undefined) {
+      console.error(
+        'ToolbarIconButton should only be used inside the Toolbar component.',
+      );
+    }
 
     useEffect(() => {
       // shouldFocus prevents this component from hijacking focus on initial page load.
@@ -47,13 +54,15 @@ export const ToolbarIconButton = React.forwardRef<
 
     const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onClick?.(event);
-      // This ensures that pressing up/down arrows will focus the correct button
+      // This ensures that on click, the buttons tabIndex is set to 0 so that when the up/down arrows are pressed, the correct button is focused
       setFocusedIndex?.(index);
     };
 
     return (
       <li className={baseStyles}>
         <Tooltip
+          data-testid={lgids?.tooltip}
+          data-lgid={lgids?.tooltip}
           align="left"
           trigger={
             <div className={triggerStyles}>
@@ -67,6 +76,8 @@ export const ToolbarIconButton = React.forwardRef<
                 ref={ref}
                 onClick={handleOnClick}
                 disabled={disabled}
+                data-testid={lgids?.iconButton}
+                data-lgid={lgids?.iconButton}
                 {...rest}
               >
                 <Icon glyph={glyph} />

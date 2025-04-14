@@ -2,6 +2,8 @@ import { PropsWithChildren } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
+import { GetLgIdsReturnType } from '../utils';
+
 export type ToolbarProviderProps = PropsWithChildren<{}> &
   DarkModeProps & {
     /**
@@ -18,4 +20,9 @@ export type ToolbarProviderProps = PropsWithChildren<{}> &
      * Function to set the focused index in the toolbar.
      */
     setFocusedIndex?: React.Dispatch<React.SetStateAction<number>>;
+
+    /**
+     * LGIDs for Toolbar components.
+     */
+    lgids: GetLgIdsReturnType;
   };
