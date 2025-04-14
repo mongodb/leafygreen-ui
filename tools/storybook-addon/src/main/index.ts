@@ -16,10 +16,12 @@ import { isRule } from './utils';
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-export const stories: StorybookConfig['stories'] = findStories(
-  `../{packages,charts,chat,tools}/**/*.stor@(y|ies).@(js|ts)?(x)`,
-  `../**/node_modules`,
-);
+export const stories: StorybookConfig['stories'] = findStories({
+  includePattern: [
+    `../{packages,charts,chat,tools}/**/*.stor@(y|ies).@(js|ts)?(x)`,
+  ],
+  excludePattern: [`../**/node_modules`],
+});
 
 export const addons: StorybookConfig['addons'] = [
   '@storybook/addon-essentials', // actions, controls & docs
