@@ -14,6 +14,7 @@ export const baseStyles = css`
 export const baseIconButtonStyles = css`
   &,
   &:hover,
+  &[data-hover='true'],
   &::before {
     border-radius: 6px;
   }
@@ -35,15 +36,21 @@ export const getIconButtonActiveStyles = ({ theme }: { theme: Theme }) =>
 export const getIconButtonStyles = ({
   active,
   theme,
+  disabled,
 }: {
   active: boolean;
   theme: Theme;
+  disabled: boolean;
 }) =>
   cx(
     css`
       ${baseIconButtonStyles}
     `,
     {
-      [getIconButtonActiveStyles({ theme })]: active,
+      [getIconButtonActiveStyles({ theme })]: active && !disabled,
     },
   );
+
+export const triggerStyles = css`
+  display: flex;
+`;

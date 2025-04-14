@@ -9,15 +9,27 @@ import Tooltip from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 
-import { baseStyles, getIconButtonStyles } from './ToolbarIconButton.styles';
+import {
+  baseStyles,
+  getIconButtonStyles,
+  triggerStyles,
+} from './ToolbarIconButton.styles';
 import { type ToolbarIconButtonProps } from './ToolbarIconButton.types';
 
+// TODO: warning if not inside a Toolbar
 export const ToolbarIconButton = React.forwardRef<
   HTMLButtonElement,
   ToolbarIconButtonProps
 >(
   (
-    { onClick, label, glyph, active = false, ...rest }: ToolbarIconButtonProps,
+    {
+      onClick,
+      label,
+      glyph,
+      disabled = false,
+      active = false,
+      ...rest
+    }: ToolbarIconButtonProps,
     forwardedRef,
   ) => {
     const { theme } = useDarkMode();
@@ -44,16 +56,17 @@ export const ToolbarIconButton = React.forwardRef<
         <Tooltip
           align="left"
           trigger={
-            <div>
+            <div className={triggerStyles}>
               <IconButton
                 aria-label={getNodeTextContent(label)}
                 active={active}
-                className={getIconButtonStyles({ theme, active })}
+                className={getIconButtonStyles({ theme, active, disabled })}
                 tabIndex={isFocusable ? 0 : -1}
                 // TODO: fix me
                 // @ts-ignore
                 ref={ref}
                 onClick={handleOnClick}
+                disabled={disabled}
                 {...rest}
               >
                 <Icon glyph={glyph} />
