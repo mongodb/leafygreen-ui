@@ -19,12 +19,12 @@ export const ToolbarIconButton = React.forwardRef<
   const { index, ref } = useDescendant(ToolbarDescendantsContext, forwardedRef);
   const { focusedIndex, shouldFocus } = useToolbarContext();
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const hasFocus = index === focusedIndex;
+  const isFocusable = index === focusedIndex;
 
-  //TODO: this hijacks the page focus
   useEffect(() => {
-    if (hasFocus && shouldFocus) buttonRef.current?.focus();
-  }, [index, focusedIndex, ref, hasFocus, shouldFocus]);
+    // shouldFocus prevents this component from hijacking focus on initial page load.
+    if (isFocusable && shouldFocus) buttonRef.current?.focus();
+  }, [isFocusable, shouldFocus]);
 
   return (
     <li ref={ref} className={getBaseStyles({ active })}>
@@ -36,7 +36,7 @@ export const ToolbarIconButton = React.forwardRef<
               aria-label={label}
               active={active}
               className={getIconButtonStyles({ theme, active })}
-              tabIndex={hasFocus ? 0 : -1}
+              tabIndex={isFocusable ? 0 : -1}
               ref={buttonRef}
             >
               <Icon glyph={glyph} />

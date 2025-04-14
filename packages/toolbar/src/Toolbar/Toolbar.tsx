@@ -30,7 +30,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     const [focusedIndex, setFocusedIndex] = useState(0);
     const childrenLength = descendants?.length ?? 0;
     const toolbarRef = useRef<HTMLUListElement | null>(null);
-    const [isUsingKeyPress, setIsUsingKeyPress] = useState(false);
+    const [isUsingKeyboard, setIsUsingKeyboard] = useState(false);
 
     // TODO: move to utils
     // Implements roving tabindex
@@ -42,17 +42,17 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
       switch (e.key) {
         case keyMap.ArrowDown:
           e.preventDefault();
-          setIsUsingKeyPress(true);
+          setIsUsingKeyboard(true);
           setFocusedIndex((focusedIndex + 1) % childrenLength);
           break;
         case keyMap.ArrowUp:
           e.preventDefault();
-          setIsUsingKeyPress(true);
+          setIsUsingKeyboard(true);
           setFocusedIndex((focusedIndex - 1 + childrenLength) % childrenLength);
           break;
         case keyMap.Tab:
           setFocusedIndex(0);
-          setIsUsingKeyPress(false);
+          setIsUsingKeyboard(false);
           break;
         default:
           break;
@@ -63,7 +63,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
       <ToolbarContextProvider
         darkMode={darkMode}
         focusedIndex={focusedIndex}
-        shouldFocus={isUsingKeyPress}
+        shouldFocus={isUsingKeyboard}
       >
         <DescendantsProvider
           context={ToolbarDescendantsContext}
@@ -77,8 +77,9 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
             className={getBaseStyles({ theme })}
             aria-controls={ariaControls} //TODO: NEEDS ID
             aria-orientation="vertical"
-            onKeyDownCapture={handleKeyDown} //TODO: why onkeycapture?
-            onBlur={() => setIsUsingKeyPress(false)}
+            onKeyDownCapture={handleKeyDown}
+            onBlur={() => setIsUsingKeyboard(false)}
+            onMouseDown={() => setIsUsingKeyboard(false)}
           >
             {children}
           </ul>
