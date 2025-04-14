@@ -34,21 +34,19 @@ interface FindStoriesOptions {
  *
  * @returns Array of all included story files,
  */
-export function findStories(options: FindStoriesOptions = {}): () => Promise<Array<string>> {
-    const directoriesGlob = getDirectoriesGlob();
+export function findStories(
+  options: FindStoriesOptions = {},
+): () => Promise<Array<string>> {
+  const directoriesGlob = getDirectoriesGlob();
 
-    const {
-      includePattern = [
-        `../${directoriesGlob}/**/*.stor@(y|ies).@(js|ts)?(x)`
-      ],
-      excludePattern = [
-        `../${directoriesGlob}/**/node_modules`
-      ]
-    } = options;
+  const {
+    includePattern = [`../${directoriesGlob}/**/*.stor@(y|ies).@(js|ts)?(x)`],
+    excludePattern = [`../${directoriesGlob}/**/node_modules`],
+  } = options;
 
   return async () => {
     const storybookFolderRelativePaths = globSync(
-      [...includePattern, ...(excludePattern).map(_glob => `!${_glob}`)],
+      [...includePattern, ...excludePattern.map(_glob => `!${_glob}`)],
       {
         cwd: path.join(process.cwd(), '.storybook'),
       },

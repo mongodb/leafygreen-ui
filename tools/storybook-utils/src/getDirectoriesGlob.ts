@@ -26,4 +26,4 @@ export const getDirectoriesGlob = (): string => {
     directories.length === 1 ? directories[0] : `{${directories.join(',')}}`;
 
   return directoriesGlob;
-}
+};
