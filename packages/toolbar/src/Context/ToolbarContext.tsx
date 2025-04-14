@@ -21,6 +21,7 @@ export const ToolbarContextProvider = ({
   darkMode,
   focusedIndex,
   shouldFocus,
+  setFocusedIndex,
 }: PropsWithChildren<Partial<ToolbarProviderProps>>) => {
   const ToolbarProvider = (
     ToolbarContext as React.Context<ToolbarProviderProps>
@@ -31,8 +32,9 @@ export const ToolbarContextProvider = ({
       focusedIndex,
       darkMode,
       shouldFocus,
+      setFocusedIndex,
     };
-  }, [focusedIndex, darkMode, shouldFocus]);
+  }, [focusedIndex, darkMode, shouldFocus, setFocusedIndex]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

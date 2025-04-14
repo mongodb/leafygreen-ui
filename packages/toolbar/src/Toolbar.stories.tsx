@@ -24,7 +24,7 @@ export default {
       <>
         <ToolbarIconButton label="Code" glyph="Code" />
         <ToolbarIconButton label="Key" glyph="Key" active />
-        <ToolbarIconButton label="Megaphone" glyph="Megaphone" />
+        <ToolbarIconButton label={<div>Megaphone</div>} glyph="Megaphone" />
         <ToolbarIconButton label="List" glyph="List" />
       </>
     ),

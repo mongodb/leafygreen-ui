@@ -4,7 +4,7 @@ import {
 } from '@leafygreen-ui/descendants';
 
 export const ToolbarDescendantsContext =
-  createDescendantsContext<HTMLLIElement>('ToolbarDescendantsContext');
+  createDescendantsContext<HTMLButtonElement>('ToolbarDescendantsContext');
 
 export function useToolbarDescendantsContext() {
   return useDescendantsContext(ToolbarDescendantsContext);

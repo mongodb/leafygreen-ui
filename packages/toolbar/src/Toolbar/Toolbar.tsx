@@ -24,7 +24,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     forwardedRef,
   ) => {
     const { darkMode, theme } = useDarkMode(darkModeProp);
-    const { descendants, dispatch } = useInitDescendants<HTMLLIElement>(
+    const { descendants, dispatch } = useInitDescendants<HTMLButtonElement>(
       ToolbarDescendantsContext,
     );
     const [focusedIndex, setFocusedIndex] = useState(0);
@@ -32,27 +32,22 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     const toolbarRef = useRef<HTMLUListElement | null>(null);
     const [isUsingKeyboard, setIsUsingKeyboard] = useState(false);
 
-    // TODO: move to utils
     // Implements roving tabindex
     const handleKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
-      // Note: Arrow keys don't fire a keyPress event — need to use keyDown
-      e.stopPropagation();
-
+      // Note: Arrow keys don't fire a keyPress event — need to use onKeyDownCapture
       // We only handle up and down arrow keys
       switch (e.key) {
         case keyMap.ArrowDown:
+          e.stopPropagation();
           e.preventDefault();
           setIsUsingKeyboard(true);
           setFocusedIndex((focusedIndex + 1) % childrenLength);
           break;
         case keyMap.ArrowUp:
+          e.stopPropagation();
           e.preventDefault();
           setIsUsingKeyboard(true);
           setFocusedIndex((focusedIndex - 1 + childrenLength) % childrenLength);
-          break;
-        case keyMap.Tab:
-          setFocusedIndex(0);
-          setIsUsingKeyboard(false);
           break;
         default:
           break;
@@ -64,6 +59,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
         darkMode={darkMode}
         focusedIndex={focusedIndex}
         shouldFocus={isUsingKeyboard}
+        setFocusedIndex={setFocusedIndex}
       >
         <DescendantsProvider
           context={ToolbarDescendantsContext}

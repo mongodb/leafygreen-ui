@@ -1,9 +1,16 @@
-export interface ToolbarIconButtonProps {
-  glyph: string; // should come from icon package.
+import { GlyphName } from '@leafygreen-ui/icon';
+import { IconButtonProps } from '@leafygreen-ui/icon-button';
 
-  label: string;
+type ButtonProps = Omit<IconButtonProps<'button'>, 'tabIndex' | 'aria-label'>;
 
-  active?: boolean;
+export interface ToolbarIconButtonProps extends ButtonProps {
+  /**
+   * The LG icon that will render in the button
+   */
+  glyph: GlyphName;
 
-  diasbled?: boolean; // is this a prop?
+  /**
+   * The text that will render in the tooltip on hover
+   */
+  label: React.ReactNode;
 }
