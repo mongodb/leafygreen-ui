@@ -2,24 +2,23 @@
  * In this file we create default values for storybook `main.ts` properties
  */
 
+import { findStories } from '@lg-tools/storybook-utils';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import isRegExp from 'lodash/isRegExp';
-import { ProvidePlugin, RuleSetRule } from 'webpack';
+import {
+  NormalModuleReplacementPlugin,
+  ProvidePlugin,
+  RuleSetRule,
+} from 'webpack';
 
-import { findStories } from './findStories';
 import { isRule } from './utils';
 
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-import { getLGConfig } from '@lg-tools/meta';
-
-const { scopes } = getLGConfig();
-const directories = Object.values(scopes);
-
 export const stories: StorybookConfig['stories'] = findStories(
-  `../{${directories.join(',')}}/**/*.stor@(y|ies).@(js|ts)?(x)`,
-  `../{${directories.join(',')}}/*/node_modules`,
+  `../{packages,charts,chat,tools}/**/*.stor@(y|ies).@(js|ts)?(x)`,
+  `../**/node_modules`,
 );
 
 export const addons: StorybookConfig['addons'] = [
@@ -52,6 +51,7 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   config.module.rules = config.module.rules ?? [];
   config.plugins = config.plugins ?? [];
   config.resolve = config.resolve ?? {};
+  config.resolveLoader = config.resolveLoader || {};
 
   // Default rule for images /\.(svg|ico|jpg|jpeg|png|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
   // We want to override this for svg
@@ -94,13 +94,19 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
   // This is no longer the case. Verify if you need this module and configure a polyfill for it.
   config.resolve.fallback = {
+    assert: require.resolve('assert'),
     buffer: require.resolve('buffer'),
-    constants: false,
+    crypto: require.resolve('crypto-browserify'),
+    events: require.resolve('events'),
     fs: false,
     os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
+    process: require.resolve('process/browser'), // Make sure process polyfill is included
     stream: require.resolve('stream-browserify'),
+    string_decoder: require.resolve('string_decoder'),
     tty: require.resolve('tty-browserify'),
+    url: require.resolve('url'),
+    util: require.resolve('util'),
   };
 
   config.plugins.push(
@@ -108,6 +114,13 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
     new ProvidePlugin({
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer'],
+    }),
+  );
+
+  // Add support for "node:" protocol URIs
+  config.plugins.push(
+    new NormalModuleReplacementPlugin(/^node:/, resource => {
+      resource.request = resource.request.replace(/^node:/, '');
     }),
   );
 

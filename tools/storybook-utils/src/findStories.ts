@@ -1,6 +1,3 @@
-import { globSync } from 'glob';
-import path from 'path';
-
 /**
  * Finds story files to include based on the provided include/exclude glob patterns
  * @param includePattern
@@ -12,12 +9,14 @@ export function findStories(
   excludePattern: string,
 ): () => Promise<Array<string>> {
   return async () => {
+    const { globSync } = await import('glob');
+
     const storybookFolderRelativePaths = globSync(
       [includePattern, `!${excludePattern}`],
       {
-        cwd: path.join(process.cwd(), '.storybook'),
+        cwd: `${process.cwd()}/.storybook`,
       },
-    ).filter(path => !/node_modules/.test(path));
+    ).filter(pathItem => !/node_modules/.test(pathItem));
 
     return storybookFolderRelativePaths;
   };
