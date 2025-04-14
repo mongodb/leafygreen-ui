@@ -23,11 +23,8 @@ const EXCLUDED_PACKAGES = [
   '@lg-tools/validate',
 ];
 
-const TYPES_VERSIONS_CONFIG = {
-  '<5.0': {
-    '*': ['dist/ts4.9/*'],
-  },
-};
+// Currently we don't downlevel TS
+const TYPES_VERSIONS_CONFIG = {};
 
 /**
  * Updates the `typesVersions` field in all package.json files

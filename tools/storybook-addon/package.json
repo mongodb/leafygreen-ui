@@ -66,11 +66,5 @@
     "react-dom": "^17.0.0 || ^18.0.0",
     "storybook": "^8.6.0"
   },
-  "typesVersions": {
-    "<5.0": {
-      "*": [
-        "dist/ts4.9/*"
-      ]
-    }
-  }
+  "typesVersions": {}
 }

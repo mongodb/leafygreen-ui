@@ -34,11 +34,5 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {},
-  "typesVersions": {
-    "<5.0": {
-      "*": [
-        "dist/ts4.9/*"
-      ]
-    }
-  }
+  "typesVersions": {}
 }
