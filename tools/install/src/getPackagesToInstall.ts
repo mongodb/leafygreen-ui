@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { ALL_PACKAGES } from './all_packages';
+import { ALL_PACKAGES } from './ALL_PACKAGES';
 import type { InstallCommandOptions } from './types';
 
 // Essential packages that provide core functionality
