@@ -1,6 +1,7 @@
-import { getRepositoryRoot } from '../getRepositoryRoot';
 import fse from 'fs-extra';
 import path from 'path';
+
+import { getRepositoryRoot } from '../getRepositoryRoot';
 
 export function getRootPackageJson(): Record<string, any> | undefined {
   const gitRoot = getRepositoryRoot();

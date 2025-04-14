@@ -9,7 +9,6 @@ export interface LGConfig {
  * @returns The LG config object for the current repository
  */
 export const getLGConfig = (dir?: string): LGConfig => {
-
   // If a directory is provided, use it to resolve the package.json
   const packageJson = dir ? getPackageJson(dir) : getRootPackageJson();
 
