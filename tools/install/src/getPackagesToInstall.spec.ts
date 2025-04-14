@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { ALL_PACKAGES } from './all_packages';
+import { ALL_PACKAGES } from './ALL_PACKAGES';
 import { getPackagesToInstall } from './getPackagesToInstall';
 
 // Mock console.log to reduce noise in tests
