@@ -42,6 +42,11 @@ export default {
     controls: {
       exclude: ['children'],
     },
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+      },
+    },
   },
   decorators: [
     Story => (
@@ -74,6 +79,12 @@ export default {
           glyph="List"
           onClick={() => console.log('LIST')}
         />
+        <ToolbarIconButton
+          label="Plus"
+          glyph="Plus"
+          onClick={() => console.log('Plus')}
+          disabled
+        />
       </>
     ),
   },
@@ -102,3 +113,5 @@ export const InLayout: StoryFn<ToolbarProps> = (args: ToolbarProps) => {
     </div>
   );
 };
+
+export const Generated = () => <></>;
