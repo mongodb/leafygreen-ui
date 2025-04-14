@@ -17,13 +17,14 @@ export const ToolbarIconButton = React.forwardRef<
 >(({ label, glyph, active = false }: ToolbarIconButtonProps, forwardedRef) => {
   const { theme } = useDarkMode();
   const { index, ref } = useDescendant(ToolbarDescendantsContext, forwardedRef);
-  const { focusedIndex } = useToolbarContext();
+  const { focusedIndex, shouldFocus } = useToolbarContext();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const hasFocus = index === focusedIndex;
 
+  //TODO: this hijacks the page focus
   useEffect(() => {
-    if (hasFocus) buttonRef.current?.focus();
-  }, [index, focusedIndex, ref, hasFocus]);
+    if (hasFocus && shouldFocus) buttonRef.current?.focus();
+  }, [index, focusedIndex, ref, hasFocus, shouldFocus]);
 
   return (
     <li ref={ref} className={getBaseStyles({ active })}>

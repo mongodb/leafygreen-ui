@@ -8,4 +8,6 @@ export type ToolbarProviderProps = PropsWithChildren<{}> &
      * The index of the currently focused item in the toolbar.
      */
     focusedIndex?: number;
+
+    shouldFocus?: boolean;
   };

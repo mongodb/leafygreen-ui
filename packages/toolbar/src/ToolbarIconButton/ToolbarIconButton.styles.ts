@@ -14,10 +14,7 @@ export const getBaseStyles = ({ active }: { active: boolean }) =>
 
 export const baseIconButtonStyles = css`
   &,
-  &:hover {
-    border-radius: 6px;
-  }
-
+  &:hover,
   &::before {
     border-radius: 6px;
   }

@@ -7,7 +7,7 @@ export default {
   title: 'Components/Toolbar',
   component: Toolbar,
   parameters: {
-    // default: 'LiveExample',
+    //TODO: default: 'LiveExample',
     controls: {
       exclude: ['children'],
     },

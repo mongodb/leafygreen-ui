@@ -30,23 +30,29 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     const [focusedIndex, setFocusedIndex] = useState(0);
     const childrenLength = descendants?.length ?? 0;
     const toolbarRef = useRef<HTMLUListElement | null>(null);
+    const [isUsingKeyPress, setIsUsingKeyPress] = useState(false);
 
+    // TODO: move to utils
     // Implements roving tabindex
     const handleKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
       // Note: Arrow keys don't fire a keyPress event — need to use keyDown
       e.stopPropagation();
+
       // We only handle up and down arrow keys
       switch (e.key) {
         case keyMap.ArrowDown:
           e.preventDefault();
+          setIsUsingKeyPress(true);
           setFocusedIndex((focusedIndex + 1) % childrenLength);
           break;
         case keyMap.ArrowUp:
           e.preventDefault();
+          setIsUsingKeyPress(true);
           setFocusedIndex((focusedIndex - 1 + childrenLength) % childrenLength);
           break;
         case keyMap.Tab:
           setFocusedIndex(0);
+          setIsUsingKeyPress(false);
           break;
         default:
           break;
@@ -54,7 +60,11 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     };
 
     return (
-      <ToolbarContextProvider darkMode={darkMode} focusedIndex={focusedIndex}>
+      <ToolbarContextProvider
+        darkMode={darkMode}
+        focusedIndex={focusedIndex}
+        shouldFocus={isUsingKeyPress}
+      >
         <DescendantsProvider
           context={ToolbarDescendantsContext}
           descendants={descendants}
@@ -67,7 +77,8 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
             className={getBaseStyles({ theme })}
             aria-controls={ariaControls} //TODO: NEEDS ID
             aria-orientation="vertical"
-            onKeyDownCapture={handleKeyDown}
+            onKeyDownCapture={handleKeyDown} //TODO: why onkeycapture?
+            onBlur={() => setIsUsingKeyPress(false)}
           >
             {children}
           </ul>
