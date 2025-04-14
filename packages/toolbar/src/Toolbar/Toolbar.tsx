@@ -13,7 +13,6 @@ import { ToolbarContextProvider, ToolbarDescendantsContext } from '../Context';
 import { getBaseStyles } from './Toolbar.styles';
 import { type ToolbarProps } from './Toolbar.types';
 
-// TODO: needs a label?
 export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
   (
     {

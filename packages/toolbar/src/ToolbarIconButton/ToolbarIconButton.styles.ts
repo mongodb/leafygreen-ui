@@ -3,14 +3,13 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-export const getBaseStyles = ({ active }: { active: boolean }) =>
-  cx(css`
-    padding: 0;
-    margin: 0;
-    height: ${spacing[1200]}px;
-    display: flex;
-    align-items: center;
-  `);
+export const baseStyles = css`
+  padding: 0;
+  margin: 0;
+  height: ${spacing[1200]}px;
+  display: flex;
+  align-items: center;
+`;
 
 export const baseIconButtonStyles = css`
   &,

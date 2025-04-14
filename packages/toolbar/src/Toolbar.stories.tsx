@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { StoryFn } from '@storybook/react';
 
@@ -22,10 +23,27 @@ export default {
   args: {
     children: (
       <>
-        <ToolbarIconButton label="Code" glyph="Code" />
-        <ToolbarIconButton label="Key" glyph="Key" active />
-        <ToolbarIconButton label={<div>Megaphone</div>} glyph="Megaphone" />
-        <ToolbarIconButton label="List" glyph="List" />
+        <ToolbarIconButton
+          label="Code"
+          glyph="Code"
+          onClick={() => console.log('CODE')}
+        />
+        <ToolbarIconButton
+          label="Key"
+          glyph="Key"
+          active
+          onClick={() => console.log('KEY')}
+        />
+        <ToolbarIconButton
+          label={<div>Megaphone</div>}
+          glyph="Megaphone"
+          onClick={() => console.log('MEGAPHONE')}
+        />
+        <ToolbarIconButton
+          label="List"
+          glyph="List"
+          onClick={() => console.log('LIST')}
+        />
       </>
     ),
   },

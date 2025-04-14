@@ -9,7 +9,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 
-import { getBaseStyles, getIconButtonStyles } from './ToolbarIconButton.styles';
+import { baseStyles, getIconButtonStyles } from './ToolbarIconButton.styles';
 import { type ToolbarIconButtonProps } from './ToolbarIconButton.types';
 
 export const ToolbarIconButton = React.forwardRef<
@@ -40,7 +40,7 @@ export const ToolbarIconButton = React.forwardRef<
     };
 
     return (
-      <li className={getBaseStyles({ active })}>
+      <li className={baseStyles({ active })}>
         <Tooltip
           align="left"
           trigger={

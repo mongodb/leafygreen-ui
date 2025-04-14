@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { color, focusRing, spacing } from '@leafygreen-ui/tokens';
 
 export const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   margin: 0;
@@ -13,4 +13,9 @@ export const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   align-items: center;
   background: ${color[theme].background.primary.default};
   border: 1px solid ${color[theme].border.secondary.default};
+
+  // Show the focus ring on the toolbar itself when a child element is focused and only when navigating with a keyboard
+  &:has(:focus-visible) {
+    box-shadow: ${focusRing[theme].default};
+  }
 `;
