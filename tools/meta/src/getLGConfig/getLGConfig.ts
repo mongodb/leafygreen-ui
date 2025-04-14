@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { getPackageJson } from '../getPackageJson';
 import { getRootPackageJson } from '../getRootPackageJson';
 
