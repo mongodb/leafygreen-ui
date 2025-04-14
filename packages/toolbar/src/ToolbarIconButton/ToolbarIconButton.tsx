@@ -40,7 +40,7 @@ export const ToolbarIconButton = React.forwardRef<
     };
 
     return (
-      <li className={baseStyles({ active })}>
+      <li className={baseStyles}>
         <Tooltip
           align="left"
           trigger={
