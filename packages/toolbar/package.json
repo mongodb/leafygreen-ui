@@ -27,6 +27,11 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar",
   "repository": {
     "type": "git",

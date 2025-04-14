@@ -2836,12 +2836,40 @@ importers:
 
   packages/toolbar:
     dependencies:
+      '@leafygreen-ui/descendants':
+        specifier: workspace:^
+        version: link:../descendants
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../icon-button
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^
+        version: link:../leafygreen-provider
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^8.0.2
+        version: 8.0.2
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
 
   packages/tooltip:
     dependencies:
