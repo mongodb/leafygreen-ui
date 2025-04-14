@@ -62,7 +62,7 @@ export const ToolbarIconButton = React.forwardRef<
                 active={active}
                 className={getIconButtonStyles({ theme, active, disabled })}
                 tabIndex={isFocusable ? 0 : -1}
-                // TODO: fix me
+                // FIXME:
                 // @ts-ignore
                 ref={ref}
                 onClick={handleOnClick}

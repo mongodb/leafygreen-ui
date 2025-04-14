@@ -70,7 +70,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
             role="toolbar"
             ref={useMergeRefs([toolbarRef, forwardedRef])}
             className={getBaseStyles({ theme })}
-            aria-controls={ariaControls} //TODO: NEEDS ID
+            aria-controls={ariaControls}
             aria-orientation="vertical"
             onKeyDownCapture={handleKeyDown}
             onBlur={() => setIsUsingKeyboard(false)}
