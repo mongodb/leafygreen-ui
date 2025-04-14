@@ -16,11 +16,6 @@
     "@testing-library/dom": "9.3.1"
   },
   "typesVersions": {
-    "<4.0": {
-      "*": [
-        "dist/ts3.4/*"
-      ]
-    },
     "<5.0": {
       "*": [
         "dist/ts4.9/*"
