@@ -4,7 +4,7 @@ import { getPackageManager } from './getPackageManager';
 
 describe('tools/meta/getPackageManager', () => {
   beforeAll(() => {
-    fsx.ensureDirSync('./tmp/');
+    fsx.mkdirSync('./tmp/');
   });
 
   afterEach(() => {

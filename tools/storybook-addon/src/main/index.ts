@@ -2,17 +2,25 @@
  * In this file we create default values for storybook `main.ts` properties
  */
 
-import { findStories } from '@lg-tools/storybook-utils';
 import type { StorybookConfig } from '@storybook/react-webpack5';
 import isRegExp from 'lodash/isRegExp';
-import webpack, { ProvidePlugin, RuleSetRule } from 'webpack';
+import { ProvidePlugin, RuleSetRule } from 'webpack';
 
+import { findStories } from './findStories';
 import { isRule } from './utils';
 
 export { managerHead } from './manager-head';
 export { previewHead } from './preview-head';
 
-export const stories: StorybookConfig['stories'] = findStories();
+import { getLGConfig } from '@lg-tools/meta';
+
+const { scopes } = getLGConfig();
+const directories = Object.values(scopes);
+
+export const stories: StorybookConfig['stories'] = findStories(
+  `../{${directories.join(',')}}/**/*.stor@(y|ies).@(js|ts)?(x)`,
+  `../{${directories.join(',')}}/*/node_modules`,
+);
 
 export const addons: StorybookConfig['addons'] = [
   '@storybook/addon-essentials', // actions, controls & docs
@@ -86,10 +94,9 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
   // BREAKING CHANGE: webpack < 5 used to include polyfills for node.js core modules by default.
   // This is no longer the case. Verify if you need this module and configure a polyfill for it.
   config.resolve.fallback = {
+    buffer: require.resolve('buffer'),
     constants: false,
     fs: false,
-    child_process: false,
-    buffer: require.resolve('buffer'),
     os: require.resolve('os-browserify/browser'),
     path: require.resolve('path-browserify'),
     stream: require.resolve('stream-browserify'),
@@ -101,13 +108,6 @@ export const webpackFinal: StorybookConfig['webpackFinal'] = config => {
     new ProvidePlugin({
       process: 'process/browser',
       Buffer: ['buffer', 'Buffer'],
-    }),
-  );
-
-  // Add support for "node:" protocol URIs
-  config.plugins.push(
-    new webpack.NormalModuleReplacementPlugin(/^node:/, resource => {
-      resource.request = resource.request.replace(/^node:/, '');
     }),
   );
 

@@ -17,8 +17,6 @@
   "dependencies": {
     "@storybook/csf": "0.1.13",
     "@storybook/react": "8.6.12",
-    "@lg-tools/meta": "workspace:^",
-    "glob": "10.3.12",
     "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/storybook-utils",
