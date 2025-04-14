@@ -44,5 +44,12 @@
   },
   "peerDependencies": {
     "typescript": "~5.0.0"
+  },
+  "typesVersions": {
+    "<5.0": {
+      "*": [
+        "dist/ts4.9/*"
+      ]
+    }
   }
 }

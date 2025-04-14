@@ -106,5 +106,12 @@
   "bugs": {
     "url": "https://github.com/mongodb/leafygreen-ui/issues"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "typesVersions": {
+    "<5.0": {
+      "*": [
+        "dist/ts4.9/*"
+      ]
+    }
+  }
 }
