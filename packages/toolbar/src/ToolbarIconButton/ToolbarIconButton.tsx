@@ -16,7 +16,6 @@ import {
 } from './ToolbarIconButton.styles';
 import { type ToolbarIconButtonProps } from './ToolbarIconButton.types';
 
-// TODO: warning if not inside a Toolbar
 export const ToolbarIconButton = React.forwardRef<
   HTMLButtonElement,
   ToolbarIconButtonProps
