@@ -3100,6 +3100,9 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
     devDependencies:
+      '@lg-tools/lint':
+        specifier: workspace:^
+        version: link:../lint
       '@types/node-fetch':
         specifier: ^2.6.11
         version: 2.6.12
