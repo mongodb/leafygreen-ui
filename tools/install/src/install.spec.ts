@@ -113,7 +113,7 @@ describe('installLeafyGreen', () => {
       verbose: true,
       essentials: true,
       basic: false,
-      core: true,
+      ui: true,
       charts: false,
       chat: true,
     };

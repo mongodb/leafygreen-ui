@@ -69,7 +69,7 @@ describe('getPackagesToInstall', () => {
   });
 
   test('should return core packages when core option is true', () => {
-    const result = getPackagesToInstall([], { core: true });
+    const result = getPackagesToInstall([], { ui: true });
 
     expect(result).toEqual(
       ALL_PACKAGES.filter(pkg => pkg.startsWith('@leafygreen-ui')).map(
@@ -100,7 +100,7 @@ describe('getPackagesToInstall', () => {
 
   test('should return combined packages when multiple scope options are true', () => {
     const result = getPackagesToInstall([], {
-      core: true,
+      ui: true,
       charts: true,
     });
 
