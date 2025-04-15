@@ -7,7 +7,7 @@ console.log = jest.fn();
 
 describe('tools/meta/getLGConfig', () => {
   beforeAll(() => {
-    fsx.mkdirSync('./tmp/');
+    fsx.ensureDirSync('./tmp/');
   });
   afterEach(() => {
     fsx.emptyDirSync('./tmp');
