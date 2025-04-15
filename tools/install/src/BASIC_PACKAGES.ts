@@ -1,5 +1,5 @@
-import { ALL_PACKAGES } from './ALL_PACKAGES';
 import { ESSENTIAL_PACKAGES } from './ESSENTIAL_PACKAGES';
+import type { PACKAGE_NAME } from './types';
 
 // Basic packages that include essentials plus commonly used components
 // Basic packages that include essentials plus commonly used components
@@ -13,4 +13,4 @@ export const BASIC_PACKAGES = [
   '@leafygreen-ui/modal',
   '@leafygreen-ui/tokens',
   '@leafygreen-ui/typography',
-] as const satisfies Array<(typeof ALL_PACKAGES)[number]>;
+] as const satisfies Readonly<Array<PACKAGE_NAME>>;

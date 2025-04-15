@@ -15,7 +15,7 @@ export function getPackagesToInstall(
   explicitPackages: Array<string>,
   options: InstallCommandOptions,
 ): Array<string> {
-  const { verbose, essentials, basic, core, charts, chat } = options;
+  const { verbose, essentials, basic, ui, charts, chat } = options;
 
   const availablePackages = ALL_PACKAGES;
   verbose &&
@@ -32,7 +32,7 @@ export function getPackagesToInstall(
   }
 
   const scopeFilters: Record<string, boolean> = {
-    '@leafygreen-ui/': core ?? false,
+    '@leafygreen-ui/': ui ?? false,
     '@lg-charts/': charts ?? false,
     '@lg-chat/': chat ?? false,
   };
