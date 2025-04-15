@@ -23,7 +23,6 @@
   },
   "devDependencies": {
     "@lg-tools/lint": "workspace:^",
-    "@types/node-fetch": "^2.6.11",
     "fs-extra": "^11.3.0"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/install",
