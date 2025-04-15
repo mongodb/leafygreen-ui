@@ -65,7 +65,7 @@ cli
     'Install only basic packages. (Essentials, plus some select core components)',
     false,
   )
-  .option('-x, --core', 'Install all `@leafygreen-ui` scoped packages', true)
+  .option('--ui', 'Install all `@leafygreen-ui` scoped packages', true)
   .option('--charts', 'Install all `@lg-charts` packages', false)
   .option('--chat', 'Install all `@lg-chat` packages', false)
   .allowUnknownOption(true)
