@@ -66,12 +66,12 @@ export function getPackagesToInstall(
 
     // Filter by specific package sets based on flags
     if (essentials) {
-      packagesToInstall.concat(ESSENTIAL_PACKAGES);
+      packagesToInstall.push(...ESSENTIAL_PACKAGES);
       verbose && console.log('Installing essential packages');
     }
 
     if (basic) {
-      packagesToInstall.concat(BASIC_PACKAGES);
+      packagesToInstall.push(...BASIC_PACKAGES);
       verbose && console.log('Installing basic packages');
     }
 
@@ -86,7 +86,7 @@ export function getPackagesToInstall(
 
         return false;
       });
-      packagesToInstall.concat(scopedPackages);
+      packagesToInstall.push(...scopedPackages);
 
       verbose &&
         console.log(
@@ -95,7 +95,7 @@ export function getPackagesToInstall(
     }
   } else {
     // If no specific flags are set, install all packages
-    packagesToInstall.concat(availablePackages);
+    packagesToInstall.push(...availablePackages);
     verbose && console.log('Installing all packages');
   }
 
