@@ -105,4 +105,4 @@ export const ALL_PACKAGES = [
   '@lg-tools/test-harnesses',
   '@lg-tools/update',
   '@lg-tools/validate',
-];
+] as const;

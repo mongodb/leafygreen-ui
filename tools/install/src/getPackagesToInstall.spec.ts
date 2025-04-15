@@ -111,6 +111,23 @@ describe('getPackagesToInstall', () => {
     );
   });
 
+  test('should return combined packages when a scope and flag are provided', () => {
+    const result = getPackagesToInstall([], {
+      essentials: true,
+      charts: true,
+    });
+
+    const combinedPkgs = [
+      '@leafygreen-ui/leafygreen-provider@latest',
+      '@leafygreen-ui/emotion@latest',
+      '@leafygreen-ui/lib@latest',
+      ...ALL_PACKAGES.filter(pkg => pkg.startsWith('@lg-charts')).map(
+        pkg => `${pkg}@latest`,
+      ),
+    ];
+    expect(result).toEqual(combinedPkgs);
+  });
+
   test('should return all packages when no options are specified', () => {
     const result = getPackagesToInstall([], {});
 

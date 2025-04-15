@@ -33,7 +33,7 @@ Install only the essential packages
 
 #### Basic Packages
 
-Install basic components. Includes essentials plus commonly used components. (See [`./src/getPackagesToInstall.ts`](./src/getPackagesToInstall.ts) for the latest list of "basic" pacages)
+Install basic components. Includes essentials plus commonly used components. (See [`./src/getPackagesToInstall.ts`](./src/getPackagesToInstall.ts) for the latest list of "basic" packages)
 
 ```bash
 > lg install --basic
@@ -53,6 +53,10 @@ Flags can be combined to install multiple scopes:
 
 ```bash
 > lg install --core --charts  # Install both UI and chart packages
+```
+
+```bash
+> lg install --basic --chat # Install the basic packages and all chat packages
 ```
 
 #### Other Options

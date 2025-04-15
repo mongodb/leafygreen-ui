@@ -19,7 +19,6 @@ describe('tools/meta/getAllPackages', () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(process, 'cwd').mockReturnValue('./tmp');
     (getRepositoryRoot as jest.Mock).mockReturnValue('./tmp');
     // Mock the return value of getLGConfig
     (getLGConfig as jest.Mock).mockReturnValue({

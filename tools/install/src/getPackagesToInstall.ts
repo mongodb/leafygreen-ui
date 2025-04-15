@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import uniq from 'lodash/uniq';
+
 import { ALL_PACKAGES } from './ALL_PACKAGES';
 import type { InstallCommandOptions } from './types';
 
@@ -23,8 +25,9 @@ const BASIC_PACKAGES = [
 ];
 
 /**
- * Read package names from the static file
- * Falls back to fetching from NPM if the file doesn't exist
+ * Returns a list of packages to install based on the provided options.
+ * If specific packages are requested, those will be used,
+ * Otherwise, we filter packages based on the provided flags.
  */
 export function getPackagesToInstall(
   explicitPackages: Array<string>,
@@ -46,29 +49,35 @@ export function getPackagesToInstall(
       .map(pkg => `${pkg}@latest`);
   }
 
-  // Handle flag options to filter packages
-  let packagesToInstall: Array<string> = [];
+  const scopeFilters: Record<string, boolean> = {
+    '@leafygreen-ui/': core ?? false,
+    '@lg-charts/': charts ?? false,
+    '@lg-chat/': chat ?? false,
+  };
+  const hasScopeFilters = Object.values(scopeFilters).some(Boolean);
+  const hasFilterFlags = hasScopeFilters || essentials || basic;
 
-  // Filter by specific package sets based on flags
-  if (basic) {
-    packagesToInstall = BASIC_PACKAGES;
-    verbose && console.log('Installing basic packages');
-  } else if (essentials) {
-    packagesToInstall = ESSENTIAL_PACKAGES;
-    verbose && console.log('Installing essential packages');
-  } else {
-    // Handle scope-based filtering
-    const scopeFilters: Record<string, boolean> = {
-      '@leafygreen-ui/': core ?? false,
-      '@lg-charts/': charts ?? false,
-      '@lg-chat/': chat ?? false,
-    };
+  const packagesToInstall: Array<string> = [];
 
-    // If any scope filter is true, apply filtering
-    const hasScopeFilters = Object.values(scopeFilters).some(Boolean);
+  // If any filter flags are set, we need to filter the packages based on the provided flags
+  // otherwise, we install all packages
+  if (hasFilterFlags) {
+    verbose && console.log('Filtering packages based on flags');
+
+    // Filter by specific package sets based on flags
+    if (essentials) {
+      packagesToInstall.concat(ESSENTIAL_PACKAGES);
+      verbose && console.log('Installing essential packages');
+    }
+
+    if (basic) {
+      packagesToInstall.concat(BASIC_PACKAGES);
+      verbose && console.log('Installing basic packages');
+    }
 
     if (hasScopeFilters) {
-      packagesToInstall = availablePackages.filter(pkg => {
+      // Filter packages based on any scope flags
+      const scopedPackages = availablePackages.filter(pkg => {
         for (const [scope, include] of Object.entries(scopeFilters)) {
           if (include && pkg.startsWith(scope)) {
             return true;
@@ -77,16 +86,19 @@ export function getPackagesToInstall(
 
         return false;
       });
+      packagesToInstall.concat(scopedPackages);
 
       verbose &&
         console.log(
-          `Filtered to ${packagesToInstall.length} packages based on scope flags`,
+          `Filtered to ${scopedPackages.length} packages based on scope flags`,
         );
-    } else {
-      // Default to all packages if no flags are specified
-      packagesToInstall = availablePackages;
     }
+  } else {
+    // If no specific flags are set, install all packages
+    packagesToInstall.concat(availablePackages);
+    verbose && console.log('Installing all packages');
   }
 
-  return packagesToInstall.map(pkg => `${pkg}@latest`);
+  // Remove any duplicates and add @latest tag
+  return uniq(packagesToInstall).map(pkg => `${pkg}@latest`);
 }
