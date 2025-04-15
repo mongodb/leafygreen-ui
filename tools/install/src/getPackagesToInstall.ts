@@ -2,27 +2,9 @@
 import uniq from 'lodash/uniq';
 
 import { ALL_PACKAGES } from './ALL_PACKAGES';
+import { BASIC_PACKAGES } from './BASIC_PACKAGES';
+import { ESSENTIAL_PACKAGES } from './ESSENTIAL_PACKAGES';
 import type { InstallCommandOptions } from './types';
-
-// Essential packages that provide core functionality
-const ESSENTIAL_PACKAGES = [
-  '@leafygreen-ui/leafygreen-provider',
-  '@leafygreen-ui/emotion',
-  '@leafygreen-ui/lib',
-];
-
-// Basic packages that include essentials plus commonly used components
-const BASIC_PACKAGES = [
-  ...ESSENTIAL_PACKAGES,
-  '@leafygreen-ui/banner',
-  '@leafygreen-ui/button',
-  '@leafygreen-ui/card',
-  '@leafygreen-ui/icon',
-  '@leafygreen-ui/icon-button',
-  '@leafygreen-ui/modal',
-  '@leafygreen-ui/tokens',
-  '@leafygreen-ui/typography',
-];
 
 /**
  * Returns a list of packages to install based on the provided options.
