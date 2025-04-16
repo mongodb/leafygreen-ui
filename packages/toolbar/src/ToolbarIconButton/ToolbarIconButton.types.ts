@@ -1,7 +1,10 @@
 import { GlyphName } from '@leafygreen-ui/icon';
 import { IconButtonProps } from '@leafygreen-ui/icon-button';
 
-type ButtonProps = Omit<IconButtonProps<'button'>, 'tabIndex' | 'href' | 'as'>;
+type ButtonProps = Omit<
+  IconButtonProps<'button'>,
+  'tabIndex' | 'href' | 'as' | 'ref'
+>;
 
 export interface ToolbarIconButtonProps extends ButtonProps {
   /**

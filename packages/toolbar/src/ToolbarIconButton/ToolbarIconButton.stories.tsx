@@ -58,8 +58,6 @@ export default {
 
 export const LiveExample: StoryFn<ToolbarIconButtonProps> = (
   args: ToolbarIconButtonProps,
-  // FIXME:
-  // @ts-ignore
 ) => <ToolbarIconButton {...args} label={args.glyph} />;
 
 export const Generated = () => <></>;

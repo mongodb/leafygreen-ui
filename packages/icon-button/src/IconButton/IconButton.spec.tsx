@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
@@ -91,6 +91,17 @@ describe('packages/icon-button', () => {
     const { icon } = renderIconButton({ children: iconWithTitle });
 
     expect(icon.getAttribute('title')).toBe(titleText);
+  });
+
+  // FIXME: ref.current returns null
+  test.skip('accepts a ref', () => {
+    const ref = createRef<HTMLButtonElement>();
+    const rest = { active: true, darkMode: true };
+
+    <IconButton aria-label="button" onClick={() => {}} {...rest} ref={ref} />;
+
+    expect(ref.current).toBeDefined();
+    expect(ref.current).toBeInstanceOf(HTMLButtonElement);
   });
 
   /* eslint-disable jest/no-disabled-tests*/
