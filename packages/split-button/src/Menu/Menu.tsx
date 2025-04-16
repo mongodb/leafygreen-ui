@@ -77,7 +77,9 @@ export const Menu = ({
   };
 
   useEventListener('keydown', handleKeyDown, { enabled: open });
-  useBackdropClick(handleClose, [buttonRef, menuRef], open);
+  useBackdropClick(handleClose, [buttonRef, menuRef], {
+    enabled: open,
+  });
 
   const renderMenuItems = useMemo(() => {
     const onMenuItemClick = (
