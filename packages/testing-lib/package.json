@@ -5,13 +5,7 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "typesVersions": {},
   "dependencies": {
     "@lg-tools/build": "workspace:^",
     "@testing-library/user-event": "13.5.0",
