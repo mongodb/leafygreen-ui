@@ -1,9 +1,11 @@
 import React from 'react';
 import { axe } from 'jest-axe';
-import { renderToolbar } from '../utils/render.testutils';
-import { getTestUtils } from '../utils';
-import { Toolbar } from './Toolbar';
+
 import { ToolbarIconButton } from '../ToolbarIconButton';
+import { getTestUtils } from '../utils';
+import { renderToolbar } from '../utils/render.testutils';
+
+import { Toolbar } from './Toolbar';
 
 describe('packages/toolbar', () => {
   describe('a11y', () => {

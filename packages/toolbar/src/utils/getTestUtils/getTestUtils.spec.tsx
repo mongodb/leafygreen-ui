@@ -2,9 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { Toolbar } from '../../Toolbar';
-import { getTestUtils } from './getTestUtils';
+import { renderToolbar, renderToolbarIconsButtons } from '../render.testutils';
 
-import { renderToolbarIconsButtons, renderToolbar } from '../render.testutils';
+import { getTestUtils } from './getTestUtils';
 
 const renderMultipleToolbars = () => {
   return render(
