@@ -4,7 +4,7 @@ import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
 
-import { Toolbar, ToolbarIconButton, ToolbarProps } from '.';
+import { getTestUtils, Toolbar, ToolbarIconButton, ToolbarProps } from '.';
 
 export default {
   title: 'Components/Toolbar/Ineractions',
@@ -27,7 +27,7 @@ export default {
   args: {
     children: (
       <>
-        <ToolbarIconButton label="Code" glyph="Code" />
+        <ToolbarIconButton label="This is the label" glyph="Code" />
         <ToolbarIconButton label="Plus" glyph="Plus" disabled />
       </>
     ),
@@ -36,15 +36,31 @@ export default {
 
 const Template: StoryFn<typeof Toolbar> = props => <Toolbar {...props} />;
 
+// Hovering over the icon button should show the tooltip
+export const ShowTooltipOnHover = {
+  render: (args: ToolbarProps) => <Template {...args} />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const { getToolbarIconButtonByLabel } = getTestUtils();
+
+    // Hover over the first icon button
+    await userEvent.hover(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
+
+    await waitFor(() =>
+      expect(canvas.getByText('This is the label')).toBeVisible(),
+    );
+  },
+};
+
 // Pressing Tab key should focus the first icon button
 export const FocusFirstIconButtonOnTab = {
   render: (args: ToolbarProps) => <Template {...args} />,
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button1 = await canvas.findByTestId('test-button-1');
-    const toolbarIconButtons = await canvas.findAllByTestId(
-      'lg-toolbar-icon_button',
-    );
+    const { getToolbarIconButtonByLabel } = getTestUtils();
 
     // Focus the first button
     button1.focus();
@@ -55,7 +71,9 @@ export const FocusFirstIconButtonOnTab = {
 
     // First icon button should be focused
     await waitFor(async () => {
-      expect(document.activeElement).toBe(toolbarIconButtons[0]);
+      expect(document.activeElement).toBe(
+        getToolbarIconButtonByLabel('This is the label')?.getElement(),
+      );
     });
   },
 };
@@ -66,9 +84,7 @@ export const FocusNextIconButtonOnArrowDown = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button1 = await canvas.findByTestId('test-button-1');
-    const toolbarIconButtons = await canvas.findAllByTestId(
-      'lg-toolbar-icon_button',
-    );
+    const { getToolbarIconButtonByLabel } = getTestUtils();
 
     // Focus the first button
     button1.focus();
@@ -78,12 +94,16 @@ export const FocusNextIconButtonOnArrowDown = {
     await userEvent.tab();
 
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[0]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
 
     // Press Down arrow key
     await userEvent.keyboard('{ArrowDown}');
     // next icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[1]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('Plus')?.getElement(),
+    );
   },
 };
 
@@ -93,9 +113,7 @@ export const WrapFocusToFirstIconButtonOnArrowDown = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button1 = await canvas.findByTestId('test-button-1');
-    const toolbarIconButtons = await canvas.findAllByTestId(
-      'lg-toolbar-icon_button',
-    );
+    const { getToolbarIconButtonByLabel } = getTestUtils();
 
     // Focus the first button
     button1.focus();
@@ -104,16 +122,22 @@ export const WrapFocusToFirstIconButtonOnArrowDown = {
     // Press Tab key
     await userEvent.tab();
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[0]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
 
     // Press Down arrow key and focus the first icon button
     await userEvent.keyboard('{ArrowDown}');
-    expect(document.activeElement).toBe(toolbarIconButtons[1]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('Plus')?.getElement(),
+    );
 
     // Press Down arrow key
     await userEvent.keyboard('{ArrowDown}');
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[0]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
   },
 };
 
@@ -123,9 +147,7 @@ export const WrapFocusToLastIconButtonOnArrowUp = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     const button1 = await canvas.findByTestId('test-button-1');
-    const toolbarIconButtons = await canvas.findAllByTestId(
-      'lg-toolbar-icon_button',
-    );
+    const { getToolbarIconButtonByLabel } = getTestUtils();
 
     // Focus the first button
     button1.focus();
@@ -136,12 +158,16 @@ export const WrapFocusToLastIconButtonOnArrowUp = {
     await userEvent.tab();
 
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[0]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
 
     // Press Down arrow key
     await userEvent.keyboard('{ArrowUp}');
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[1]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('Plus')?.getElement(),
+    );
   },
 };
 
@@ -152,9 +178,7 @@ export const FocusSecondButtonAfterTwoTabs = {
     const canvas = within(canvasElement);
     const button1 = await canvas.findByTestId('test-button-1');
     const button2 = await canvas.findByTestId('test-button-2');
-    const toolbarIconButtons = await canvas.findAllByTestId(
-      'lg-toolbar-icon_button',
-    );
+    const { getToolbarIconButtonByLabel } = getTestUtils();
 
     // Focus the first button
     button1.focus();
@@ -165,7 +189,9 @@ export const FocusSecondButtonAfterTwoTabs = {
     await userEvent.tab();
 
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[0]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
 
     // Press Tab key
     await userEvent.tab();
@@ -181,9 +207,7 @@ export const ReverseFocusToFirstButtonWithShiftTab = {
     const canvas = within(canvasElement);
     const button1 = await canvas.findByTestId('test-button-1');
     const button2 = await canvas.findByTestId('test-button-2');
-    const toolbarIconButtons = await canvas.findAllByTestId(
-      'lg-toolbar-icon_button',
-    );
+    const { getToolbarIconButtonByLabel } = getTestUtils();
 
     // Focus the second button
     button2.focus();
@@ -194,7 +218,9 @@ export const ReverseFocusToFirstButtonWithShiftTab = {
     await userEvent.keyboard('{Shift>}{Tab}{/Shift}');
 
     // First icon button should be focused
-    expect(document.activeElement).toBe(toolbarIconButtons[0]);
+    expect(document.activeElement).toBe(
+      getToolbarIconButtonByLabel('This is the label')?.getElement(),
+    );
 
     // Press Shift+Tab key
     await userEvent.keyboard('{Shift>}{Tab}{/Shift}');

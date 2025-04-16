@@ -25,8 +25,6 @@ describe('packages/toolbar-icon-button', () => {
   });
 });
 
-// TODO: opens tooltip
-
 /* eslint-disable jest/no-disabled-tests */
 describe.skip('types behave as expected', () => {
   test('TextInput throws error when no label is supplied', () => {
