@@ -9,11 +9,7 @@ import Tooltip from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 
-import {
-  baseStyles,
-  getIconButtonStyles,
-  triggerStyles,
-} from './ToolbarIconButton.styles';
+import { getIconButtonStyles, triggerStyles } from './ToolbarIconButton.styles';
 import { type ToolbarIconButtonProps } from './ToolbarIconButton.types';
 
 // TODO: does this accept testids?
@@ -59,36 +55,34 @@ export const ToolbarIconButton = React.forwardRef<
     };
 
     return (
-      <li className={baseStyles}>
-        <Tooltip
-          data-testid={lgids?.tooltip}
-          data-lgid={lgids?.tooltip}
-          align="left"
-          trigger={
-            <div className={triggerStyles}>
-              <IconButton
-                aria-label={getNodeTextContent(label)}
-                active={active}
-                className={getIconButtonStyles({ theme, active, disabled })}
-                tabIndex={isFocusable ? 0 : -1}
-                // FIXME:
-                // @ts-ignore
-                ref={ref}
-                onClick={handleOnClick}
-                disabled={disabled}
-                data-testid={lgids?.iconButton}
-                data-lgid={lgids?.iconButton}
-                data-active={active}
-                {...rest}
-              >
-                <Icon glyph={glyph} />
-              </IconButton>
-            </div>
-          }
-        >
-          {label}
-        </Tooltip>
-      </li>
+      <Tooltip
+        data-testid={lgids?.tooltip}
+        data-lgid={lgids?.tooltip}
+        align="left"
+        trigger={
+          <div className={triggerStyles}>
+            <IconButton
+              aria-label={getNodeTextContent(label)}
+              active={active}
+              className={getIconButtonStyles({ theme, active, disabled })}
+              tabIndex={isFocusable ? 0 : -1}
+              // FIXME:
+              // @ts-ignore
+              ref={ref}
+              onClick={handleOnClick}
+              disabled={disabled}
+              data-testid={lgids?.iconButton}
+              data-lgid={lgids?.iconButton}
+              data-active={active}
+              {...rest}
+            >
+              <Icon glyph={glyph} />
+            </IconButton>
+          </div>
+        }
+      >
+        {label}
+      </Tooltip>
     );
   },
 );

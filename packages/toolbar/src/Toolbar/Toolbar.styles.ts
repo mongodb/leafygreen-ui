@@ -3,9 +3,9 @@ import { Theme } from '@leafygreen-ui/lib';
 import { color, focusRing, spacing } from '@leafygreen-ui/tokens';
 
 export const getBaseStyles = ({ theme }: { theme: Theme }) => css`
-  margin: 0;
+  /* margin: 0;
   padding: 0;
-  list-style: none;
+  list-style: none; */
   height: 100%;
   width: ${spacing[1200]}px;
   display: flex;

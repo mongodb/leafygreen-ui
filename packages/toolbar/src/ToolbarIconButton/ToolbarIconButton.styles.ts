@@ -3,14 +3,6 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 
-export const baseStyles = css`
-  padding: 0;
-  margin: 0;
-  height: ${spacing[1200]}px;
-  display: flex;
-  align-items: center;
-`;
-
 export const baseIconButtonStyles = css`
   &,
   &:hover,
@@ -53,4 +45,6 @@ export const getIconButtonStyles = ({
 
 export const triggerStyles = css`
   display: flex;
+  height: ${spacing[1200]}px;
+  align-items: center;
 `;

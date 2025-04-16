@@ -14,7 +14,7 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 import { getBaseStyles } from './Toolbar.styles';
 import { type ToolbarProps } from './Toolbar.types';
 
-export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
+export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
   (
     {
       children,
@@ -30,13 +30,13 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
     );
     const [focusedIndex, setFocusedIndex] = useState(0);
     const childrenLength = descendants?.length ?? 0;
-    const toolbarRef = useRef<HTMLUListElement | null>(null);
+    const toolbarRef = useRef<HTMLDivElement | null>(null);
     const [isUsingKeyboard, setIsUsingKeyboard] = useState(false);
 
     const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
     // Implements roving tabindex
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLUListElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
       // Note: Arrow keys don't fire a keyPress event — need to use onKeyDownCapture
       // We only handle up and down arrow keys
       switch (e.key) {
@@ -70,8 +70,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
           descendants={descendants}
           dispatch={dispatch}
         >
-          <ul
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+          <div
             role="toolbar"
             ref={useMergeRefs([toolbarRef, forwardedRef])}
             className={getBaseStyles({ theme })}
@@ -84,7 +83,7 @@ export const Toolbar = React.forwardRef<HTMLUListElement, ToolbarProps>(
             data-testid={lgIds.root}
           >
             {children}
-          </ul>
+          </div>
         </DescendantsProvider>
       </ToolbarContextProvider>
     );
