@@ -17,10 +17,11 @@ import { type ToolbarProps } from './Toolbar.types';
 export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
   (
     {
+      className,
       children,
       darkMode: darkModeProp,
       'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
-      ['aria-controls']: ariaControls,
+      ...rest
     }: ToolbarProps,
     forwardedRef,
   ) => {
@@ -73,14 +74,14 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
           <div
             role="toolbar"
             ref={useMergeRefs([toolbarRef, forwardedRef])}
-            className={getBaseStyles({ theme })}
-            aria-controls={ariaControls}
+            className={getBaseStyles({ theme, className })}
             aria-orientation="vertical"
             onKeyDownCapture={handleKeyDown}
             onBlur={() => setIsUsingKeyboard(false)}
             onMouseDown={() => setIsUsingKeyboard(false)}
             data-lgid={lgIds.root}
             data-testid={lgIds.root}
+            {...rest}
           >
             {children}
           </div>

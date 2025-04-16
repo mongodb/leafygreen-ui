@@ -12,7 +12,7 @@ export type ToolbarProviderProps = PropsWithChildren<{}> &
     focusedIndex?: number;
 
     /**
-     * Whether the toolbar should focus the currently focused item. This will prevent this component from hijakcing focus on initial page load.
+     * Whether the toolbar should focus the currently focused item. This will prevent this component from hijacking focus on initial page load.
      */
     shouldFocus?: boolean;
 

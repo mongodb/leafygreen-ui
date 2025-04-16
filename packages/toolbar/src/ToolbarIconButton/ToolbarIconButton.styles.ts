@@ -29,10 +29,12 @@ export const getIconButtonStyles = ({
   active,
   theme,
   disabled,
+  className,
 }: {
   active: boolean;
   theme: Theme;
   disabled: boolean;
+  className?: string;
 }) =>
   cx(
     css`
@@ -41,6 +43,7 @@ export const getIconButtonStyles = ({
     {
       [getIconButtonActiveStyles({ theme })]: active && !disabled,
     },
+    className,
   );
 
 export const triggerStyles = css`

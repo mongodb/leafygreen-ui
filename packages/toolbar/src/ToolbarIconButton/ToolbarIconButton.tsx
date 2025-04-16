@@ -12,13 +12,13 @@ import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 import { getIconButtonStyles, triggerStyles } from './ToolbarIconButton.styles';
 import { type ToolbarIconButtonProps } from './ToolbarIconButton.types';
 
-// TODO: does this accept testids?
 export const ToolbarIconButton = React.forwardRef<
   HTMLButtonElement,
   ToolbarIconButtonProps
 >(
   (
     {
+      className,
       onClick,
       label,
       glyph,
@@ -64,7 +64,12 @@ export const ToolbarIconButton = React.forwardRef<
             <IconButton
               aria-label={getNodeTextContent(label)}
               active={active}
-              className={getIconButtonStyles({ theme, active, disabled })}
+              className={getIconButtonStyles({
+                theme,
+                active,
+                disabled,
+                className,
+              })}
               tabIndex={isFocusable ? 0 : -1}
               // FIXME:
               // @ts-ignore
