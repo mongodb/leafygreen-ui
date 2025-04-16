@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ComponentPropsWithoutRef, useEffect } from 'react';
 
 import { useDescendant } from '@leafygreen-ui/descendants';
 import Icon from '@leafygreen-ui/icon';
@@ -71,15 +71,13 @@ export const ToolbarIconButton = React.forwardRef<
                 className,
               })}
               tabIndex={isFocusable ? 0 : -1}
-              // FIXME:
-              // @ts-ignore
-              ref={ref}
               onClick={handleOnClick}
               disabled={disabled}
               data-testid={lgids?.iconButton}
               data-lgid={lgids?.iconButton}
               data-active={active}
-              {...rest}
+              ref={ref}
+              {...(rest as ComponentPropsWithoutRef<'button'>)}
             >
               <Icon glyph={glyph} />
             </IconButton>
