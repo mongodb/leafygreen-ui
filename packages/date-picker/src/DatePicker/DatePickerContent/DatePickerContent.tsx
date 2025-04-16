@@ -49,7 +49,6 @@ export const DatePickerContent = forwardRef<
 
   useBackdropClick(closeMenu, [formFieldRef, menuRef], {
     enabled: isOpen && !isSelectOpen,
-    allowPropagation: true,
   });
 
   /**

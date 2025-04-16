@@ -53,7 +53,6 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
    */
   useBackdropClick(closeTooltip, buttonRef, {
     enabled: tooltipOpen,
-    allowPropagation: true,
   });
 
   useEffect(() => {

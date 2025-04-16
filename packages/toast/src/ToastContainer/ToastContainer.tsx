@@ -200,7 +200,6 @@ export const ToastContainer = ({
 
   useBackdropClick(handleBackdropClick, scrollContainerRef, {
     enabled: isExpanded && stack.size > 0,
-    allowPropagation: true,
   });
 
   /**

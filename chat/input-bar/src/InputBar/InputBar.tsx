@@ -342,7 +342,6 @@ export const InputBar = forwardRef<HTMLFormElement, InputBarProps>(
     useAutoScroll(highlightedElementRef, menuRef, 12);
     useBackdropClick(handleBackdropClick, [focusContainerRef, menuRef], {
       enabled: isOpen && withTypeAhead,
-      allowPropagation: true,
     });
 
     useEventListener(
