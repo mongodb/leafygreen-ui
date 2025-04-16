@@ -29,6 +29,9 @@
       "path": "../emotion"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../icon"
     },
     {
@@ -39,6 +42,9 @@
     },
     {
       "path": "../lib"
+    },
+    {
+      "path": "../palette"
     },
     {
       "path": "../tokens"

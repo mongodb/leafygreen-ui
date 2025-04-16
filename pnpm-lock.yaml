@@ -2842,6 +2842,9 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon
@@ -2854,6 +2857,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@leafygreen-ui/palette':
+        specifier: workspace:^
+        version: link:../palette
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
