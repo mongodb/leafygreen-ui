@@ -25,7 +25,7 @@ interface UseBackdropClickOptions {
    *
    * @default false
    */
-  allowPropagation: boolean;
+  allowPropagation?: boolean;
 }
 
 /**

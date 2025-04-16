@@ -198,11 +198,10 @@ export const ToastContainer = ({
     setIsExpanded(getShouldExpand());
   };
 
-  useBackdropClick(
-    handleBackdropClick,
-    scrollContainerRef,
-    isExpanded && stack.size > 0,
-  );
+  useBackdropClick(handleBackdropClick, scrollContainerRef, {
+    enabled: isExpanded && stack.size > 0,
+    allowPropagation: true,
+  });
 
   /**
    * Callback passed into the InternalToast component as `onClose`
