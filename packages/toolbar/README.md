@@ -40,9 +40,10 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 
 #### Props
 
-| Prop       | Type      | Description                                          | Default |
-| ---------- | --------- | ---------------------------------------------------- | ------- |
-| `darkMode` | `boolean` | Determines if the component will render in dark mode | `false` |
+| Prop        | Type           | Description                                          | Default      |
+| ----------- | -------------- | ---------------------------------------------------- | ------------ |
+| `darkMode`  | `boolean`      | Determines if the component will render in dark mode | `false`      |
+| `data-lgid` | `lg-${string}` | Custom testid to pass to getTestUtils                | `lg-toolbar` |
 
 \+ other HTML `div` element props
 
@@ -56,7 +57,7 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 | `glyph`    | `Glyph`                             | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
 | `label`    | `string`                            | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
 | `onClick`  | `(event: React.MouseEvent) => void` | Callback fired when the button is clicked                                                                                                                                                           |         |
-| `disabled` | `boolean`                           | Determines if the component will render in dark mode                                                                                                                                                | `false` |
+| `disabled` | `boolean`                           | Determines if the icon is disabled                                                                                                                                                                  | `false` |
 
 \+ other HTML `button` element props
 

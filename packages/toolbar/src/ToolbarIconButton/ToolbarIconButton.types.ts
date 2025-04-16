@@ -5,7 +5,7 @@ type ButtonProps = Omit<IconButtonProps<'button'>, 'tabIndex' | 'href' | 'as'>;
 
 export interface ToolbarIconButtonProps extends ButtonProps {
   /**
-   * The LG icon that will render in the button
+   * The LG Icon that will render in the button
    */
   glyph: GlyphName;
 

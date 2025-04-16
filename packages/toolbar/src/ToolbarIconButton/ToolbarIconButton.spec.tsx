@@ -31,8 +31,13 @@ describe.skip('types behave as expected', () => {
     <>
       {/* @ts-expect-error - label and glyph are required */}
       <ToolbarIconButton />;
-      <ToolbarIconButton glyph="Code" label="Code" />
-      <ToolbarIconButton glyph="Code" label="Code" onClick={() => {}} />
+      <ToolbarIconButton
+        glyph="Code"
+        label="Code"
+        onClick={() => {}}
+        active
+        disabled
+      />
     </>;
   });
 });

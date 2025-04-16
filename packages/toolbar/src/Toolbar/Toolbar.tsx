@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import {
   DescendantsProvider,
   useInitDescendants,
 } from '@leafygreen-ui/descendants';
-import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { keyMap } from '@leafygreen-ui/lib';
 
@@ -31,7 +30,6 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
     );
     const [focusedIndex, setFocusedIndex] = useState(0);
     const childrenLength = descendants?.length ?? 0;
-    const toolbarRef = useRef<HTMLDivElement | null>(null);
     const [isUsingKeyboard, setIsUsingKeyboard] = useState(false);
 
     const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
@@ -73,7 +71,7 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
         >
           <div
             role="toolbar"
-            ref={useMergeRefs([toolbarRef, forwardedRef])}
+            ref={forwardedRef}
             className={getBaseStyles({ theme, className })}
             aria-orientation="vertical"
             onKeyDownCapture={handleKeyDown}

@@ -36,7 +36,7 @@ describe('packages/toolbar', () => {
         <Toolbar data-lgid="toolbar">
           <ToolbarIconButton glyph="Code" label="Code" />
         </Toolbar>
-        <Toolbar data-lgid="lg-toolbar">
+        <Toolbar data-lgid="lg-toolbar" darkMode>
           <ToolbarIconButton glyph="Code" label="Code" />
         </Toolbar>
       </>;
