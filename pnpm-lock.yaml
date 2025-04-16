@@ -2860,6 +2860,9 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
     devDependencies:
       '@faker-js/faker':
         specifier: ^8.0.2

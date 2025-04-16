@@ -3,4 +3,10 @@ export {
   ToolbarIconButton,
   type ToolbarIconButtonProps,
 } from './ToolbarIconButton';
-export { DEFAULT_LGID_ROOT, getLgIds, type GetLgIdsReturnType } from './utils';
+export {
+  DEFAULT_LGID_ROOT,
+  getLgIds,
+  type GetLgIdsReturnType,
+  getTestUtils,
+  type TestUtilsReturnType,
+} from './utils';

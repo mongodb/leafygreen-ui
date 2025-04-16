@@ -1,20 +1,40 @@
 interface ToolbarIconButtonUtils {
-  element: () => HTMLButtonElement;
-  isActive: () => boolean;
-  isDisabled: () => boolean;
-  // Tooltip? what would it do?
+  getElement: () => HTMLButtonElement | undefined;
+  isActive: () => boolean | undefined;
+  isDisabled: () => boolean | undefined;
 }
 
 export interface TestUtilsReturnType {
   /**
-   * Returns the number of indicators/dots
+   * Returns a promise that resolves to the element using the `data-lgid` data attribute.
+   * The promise is rejected if no elements match or if more than one match is found.
+   */
+  findToolbar: () => Promise<HTMLButtonElement>;
+
+  /**
+   * Returns the element using the `data-lgid` data attribute.
+   * Will throw if no elements match or if more than one match is found.
+   */
+  getToolbar: () => HTMLButtonElement;
+
+  /**
+   * Returns the element using the `data-lgid` data attribute or `null` if no elements match.
+   * Will throw if more than one match is found.
+   */
+  queryToolbar: () => HTMLButtonElement | null;
+
+  /**
+   * Returns an array of all ToolbarIconButtons
    */
   getAllToolbarIconButtons: () => Array<HTMLButtonElement>;
 
   /**
-   * Returns the active indicator index
+   * Returns the ToolbarIconButton based on the label
    */
-  getToolbarIconButtonByIndex: () => ToolbarIconButtonUtils;
-}
+  getToolbarIconButtonByLabel: (label: string) => ToolbarIconButtonUtils | null;
 
-// TODO: ICONBUTTON test harnesses?
+  /**
+   * Returns the first active ToolbarIconButton
+   */
+  getActiveToolbarIconButton: () => HTMLButtonElement | undefined;
+}

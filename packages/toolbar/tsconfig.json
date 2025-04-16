@@ -45,6 +45,9 @@
     },
     {
       "path": "../tooltip"
+    },
+    {
+      "path": "../../tools/test-harnesses"
     }
   ]
 }

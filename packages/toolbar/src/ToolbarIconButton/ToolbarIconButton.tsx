@@ -16,6 +16,7 @@ import {
 } from './ToolbarIconButton.styles';
 import { type ToolbarIconButtonProps } from './ToolbarIconButton.types';
 
+// TODO: does this accept testids?
 export const ToolbarIconButton = React.forwardRef<
   HTMLButtonElement,
   ToolbarIconButtonProps
@@ -77,6 +78,7 @@ export const ToolbarIconButton = React.forwardRef<
                 disabled={disabled}
                 data-testid={lgids?.iconButton}
                 data-lgid={lgids?.iconButton}
+                data-active={active}
                 {...rest}
               >
                 <Icon glyph={glyph} />
