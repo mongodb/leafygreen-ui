@@ -22,9 +22,4 @@ export type ToolbarProviderProps = DarkModeProps & {
    * LGIDs for Toolbar components.
    */
   lgids: GetLgIdsReturnType;
-
-  /**
-   * The children of the ToolbarProvider.
-   */
-  children: React.ReactNode;
 };
