@@ -93,17 +93,6 @@ describe('packages/icon-button', () => {
     expect(icon.getAttribute('title')).toBe(titleText);
   });
 
-  // FIXME: ref.current returns null
-  test.skip('accepts a ref', () => {
-    const ref = createRef<HTMLButtonElement>();
-    const rest = { active: true, darkMode: true };
-
-    <IconButton aria-label="button" onClick={() => {}} {...rest} ref={ref} />;
-
-    expect(ref.current).toBeDefined();
-    expect(ref.current).toBeInstanceOf(HTMLButtonElement);
-  });
-
   /* eslint-disable jest/no-disabled-tests*/
   describe.skip('types behave as expected', () => {
     test('does not throw an error when no children are passed to the component', () => {

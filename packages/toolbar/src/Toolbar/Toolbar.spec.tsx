@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { axe } from 'jest-axe';
 
 import { ToolbarIconButton } from '../ToolbarIconButton';
@@ -21,6 +21,13 @@ describe('packages/toolbar', () => {
     const { getAllToolbarIconButtons } = getTestUtils();
     const buttons = getAllToolbarIconButtons();
     expect(buttons.length).toBe(5);
+  });
+
+  test('accepts a ref', () => {
+    const ref = createRef<HTMLDivElement>();
+    renderToolbar({ ref });
+    expect(ref.current).toBeDefined();
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
 
   /* eslint-disable jest/no-disabled-tests */

@@ -24,10 +24,9 @@ describe('packages/toolbar-icon-button', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  // FIXME: IconButton forwardRef returns null
-  test.skip('accepts a ref', () => {
+  test('accepts a ref', () => {
     const ref = createRef<HTMLButtonElement>();
-    <ToolbarIconButton glyph="Code" label="Code" ref={ref} />;
+    render(<ToolbarIconButton glyph="Code" label="Code" ref={ref} />);
 
     expect(ref.current).toBeDefined();
     expect(ref.current).toBeInstanceOf(HTMLButtonElement);
