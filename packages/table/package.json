@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/table",
-  "version": "13.1.7",
+  "version": "13.1.8",
   "description": "leafyGreen UI Kit Table",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

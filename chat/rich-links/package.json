@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/rich-links",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "lg-chat Rich Links",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

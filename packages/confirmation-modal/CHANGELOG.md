@@ -1,5 +1,15 @@
 # @leafygreen-ui/confirmation-modal
 
+## 7.0.9
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/modal@17.1.6
+- @leafygreen-ui/text-input@14.0.11
+- @leafygreen-ui/button@23.1.6
+- @leafygreen-ui/typography@20.1.8
+
 ## 7.0.8
 
 ### Patch Changes

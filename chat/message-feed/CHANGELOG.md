@@ -1,5 +1,15 @@
 # @lg-chat/message-feed
 
+## 4.1.12
+
+### Patch Changes
+
+- @lg-chat/message-rating@3.0.11
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @lg-chat/message@5.0.14
+- @lg-chat/avatar@4.0.10
+- @leafygreen-ui/button@23.1.6
+
 ## 4.1.11
 
 ### Patch Changes

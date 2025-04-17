@@ -1,5 +1,18 @@
 # @lg-tools/storybook-addon
 
+## 0.4.0
+
+### Minor Changes
+
+- 485b4099c: Updates webpack config to build internal node apis
+
+### Patch Changes
+
+- Updated dependencies [485b4099c]
+  - @lg-tools/storybook-utils@0.2.3
+  - @lg-tools/storybook-decorators@0.4.8
+  - @leafygreen-ui/typography@20.1.8
+
 ## 0.3.7
 
 ### Patch Changes

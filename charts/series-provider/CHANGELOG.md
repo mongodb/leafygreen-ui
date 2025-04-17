@@ -1,5 +1,11 @@
 # @lg-charts/series-provider
 
+## 0.2.2
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 0.2.1
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/toggle
 
+## 11.0.9
+
+### Patch Changes
+
+- @leafygreen-ui/a11y@2.0.7
+- @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 11.0.8
 
 ### Patch Changes

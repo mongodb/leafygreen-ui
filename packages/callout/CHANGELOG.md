@@ -1,5 +1,12 @@
 # @leafygreen-ui/callout
 
+## 11.0.11
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/typography@20.1.8
+
 ## 11.0.10
 
 ### Patch Changes

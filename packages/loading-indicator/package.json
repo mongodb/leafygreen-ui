@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/loading-indicator",
-  "version": "3.0.10",
+  "version": "3.0.11",
   "description": "leafyGreen UI Kit Loading Indicator",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
