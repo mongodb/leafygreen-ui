@@ -3103,9 +3103,6 @@ importers:
       '@lg-tools/lint':
         specifier: workspace:^
         version: link:../lint
-      '@types/node-fetch':
-        specifier: ^2.6.11
-        version: 2.6.12
       fs-extra:
         specifier: ^11.3.0
         version: 11.3.0
