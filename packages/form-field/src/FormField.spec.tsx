@@ -3,13 +3,15 @@ import { render } from '@testing-library/react';
 
 import Icon from '@leafygreen-ui/icon';
 
+import { getLgIds } from './utils';
 import {
   FormField,
   FormFieldInputContainer,
   FormFieldState,
-  LGIDS_FORM_FIELD,
   useFormFieldContext,
 } from '.';
+
+const lgIds = getLgIds();
 
 describe('packages/form-field', () => {
   test('rest passed to outer element', () => {
@@ -309,7 +311,7 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      const feedback = getByTestId(lgIds.feedback);
       expect(feedback).toHaveAttribute('id');
     });
 
@@ -327,7 +329,7 @@ describe('packages/form-field', () => {
         </FormField>,
       );
       const input = getByTestId('input');
-      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      const feedback = getByTestId(lgIds.feedback);
       expect(input).toHaveAttribute('aria-describedby', feedback?.id);
     });
 
@@ -347,7 +349,7 @@ describe('packages/form-field', () => {
       );
       const input = getByTestId('input');
       const description = queryByText('Description');
-      const feedback = getByTestId(LGIDS_FORM_FIELD.feedback);
+      const feedback = getByTestId(lgIds.feedback);
       expect(input).toHaveAttribute(
         'aria-describedby',
         expect.stringContaining(description?.id!),
@@ -462,10 +464,8 @@ describe('packages/form-field', () => {
           </FormFieldInputContainer>
         </FormField>,
       );
-      expect(queryByTestId(LGIDS_FORM_FIELD.optional)).not.toBeInTheDocument();
-      expect(
-        queryByTestId(LGIDS_FORM_FIELD.contentEnd),
-      ).not.toBeInTheDocument();
+      expect(queryByTestId(lgIds.optional)).not.toBeInTheDocument();
+      expect(queryByTestId(lgIds.contentEnd)).not.toBeInTheDocument();
     });
 
     describe('optional text', () => {
@@ -477,7 +477,7 @@ describe('packages/form-field', () => {
             </FormFieldInputContainer>
           </FormField>,
         );
-        expect(getByTestId(LGIDS_FORM_FIELD.optional)).toBeInTheDocument();
+        expect(getByTestId(lgIds.optional)).toBeInTheDocument();
       });
 
       test.each([FormFieldState.Error, FormFieldState.Valid])(
@@ -490,9 +490,7 @@ describe('packages/form-field', () => {
               </FormFieldInputContainer>
             </FormField>,
           );
-          expect(
-            queryByTestId(LGIDS_FORM_FIELD.optional),
-          ).not.toBeInTheDocument();
+          expect(queryByTestId(lgIds.optional)).not.toBeInTheDocument();
         },
       );
 
@@ -509,9 +507,7 @@ describe('packages/form-field', () => {
             </FormFieldInputContainer>
           </FormField>,
         );
-        expect(
-          queryByTestId(LGIDS_FORM_FIELD.optional),
-        ).not.toBeInTheDocument();
+        expect(queryByTestId(lgIds.optional)).not.toBeInTheDocument();
       });
     });
 
@@ -525,7 +521,7 @@ describe('packages/form-field', () => {
           </FormField>,
         );
 
-        const icon = getByTestId(LGIDS_FORM_FIELD.contentEnd);
+        const icon = getByTestId(lgIds.contentEnd);
         expect(icon).toBeInTheDocument();
         expect(icon?.tagName.toLowerCase()).toEqual('svg');
       });
@@ -539,7 +535,7 @@ describe('packages/form-field', () => {
           </FormField>,
         );
 
-        const em = getByTestId(LGIDS_FORM_FIELD.contentEnd);
+        const em = getByTestId(lgIds.contentEnd);
         expect(em).toBeInTheDocument();
         expect(em?.tagName.toLowerCase()).toEqual('em');
       });
@@ -552,7 +548,7 @@ describe('packages/form-field', () => {
             </FormFieldInputContainer>
           </FormField>,
         );
-        const input = getByTestId(LGIDS_FORM_FIELD.contentEnd);
+        const input = getByTestId(lgIds.contentEnd);
         expect(input).toHaveAttribute('disabled');
       });
     });

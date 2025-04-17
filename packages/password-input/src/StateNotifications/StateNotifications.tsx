@@ -7,7 +7,6 @@ import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import ErrorIcon from '@leafygreen-ui/icon/dist/X';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { LGIDS_PASSWORD_INPUT } from '../constants';
 import { State } from '../PasswordInput/PasswordInput.types';
 
 import {
@@ -40,7 +39,6 @@ export const StateNotifications = ({
       aria-relevant="all"
       className={wrapperStyles}
       id={id}
-      data-testid={LGIDS_PASSWORD_INPUT.stateNotifications}
       {...rest}
     >
       {notifications.map((item, index) => {

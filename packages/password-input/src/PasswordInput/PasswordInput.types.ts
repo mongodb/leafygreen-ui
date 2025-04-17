@@ -1,7 +1,7 @@
 import { ChangeEventHandler, ComponentPropsWithoutRef } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 export const State = {
   Error: 'error', // red x icon, red text
@@ -85,7 +85,8 @@ interface BasePasswordInputProps
       ComponentPropsWithoutRef<'input'>,
       'onChange' | 'type' | AriaLabelkeys | 'aria-describedby' | 'size'
     >,
-    DarkModeProps {
+    DarkModeProps,
+    LgIdProps {
   /**
    * The current value of the input.
    */

@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { LGIDS_PASSWORD_INPUT } from '../constants';
+import { getLgIds } from '../utils';
 
 import { PasswordInput } from '.';
 
@@ -30,6 +30,8 @@ const defaultProps = {
   ],
 };
 
+const lgIds = getLgIds();
+
 function renderPasswordInput(props = {}) {
   const utils = render(
     // @ts-expect-error - data-testid gives an error but passes in types checks test below
@@ -37,9 +39,7 @@ function renderPasswordInput(props = {}) {
   );
   const passwordInput = utils.getByTestId('password-input');
   const labelElement = utils.container.querySelector('label');
-  const stateNotifications = utils.queryByTestId(
-    LGIDS_PASSWORD_INPUT.stateNotifications,
-  );
+  const stateNotifications = utils.queryByTestId(lgIds.stateNotifications);
   const toggleButton = utils.container.querySelector('button');
   return {
     ...utils,
