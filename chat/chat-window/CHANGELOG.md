@@ -1,5 +1,13 @@
 # @lg-chat/chat-window
 
+## 3.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @lg-chat/avatar@4.0.10
+- @lg-chat/title-bar@3.0.13
+
 ## 3.0.12
 
 ### Patch Changes

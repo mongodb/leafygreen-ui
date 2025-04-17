@@ -1,5 +1,16 @@
 # @leafygreen-ui/tooltip
 
+## 13.0.11
+
+### Patch Changes
+
+- 21bcd4195: Use latest version of `useBackdropClick` hook
+- Updated dependencies [21bcd4195]
+  - @leafygreen-ui/hooks@8.4.1
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/popover@13.0.10
+  - @leafygreen-ui/typography@20.1.8
+
 ## 13.0.10
 
 ### Patch Changes

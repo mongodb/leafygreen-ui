@@ -1,5 +1,12 @@
 # @leafygreen-ui/icon-button
 
+## 16.0.11
+
+### Patch Changes
+
+- @leafygreen-ui/a11y@2.0.7
+- @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 16.0.10
 
 ### Patch Changes

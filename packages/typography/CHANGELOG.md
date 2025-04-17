@@ -1,5 +1,11 @@
 # @leafygreen-ui/typography
 
+## 20.1.8
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 20.1.7
 
 ### Patch Changes

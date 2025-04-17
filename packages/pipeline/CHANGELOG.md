@@ -1,5 +1,15 @@
 # @leafygreen-ui/pipeline
 
+## 7.0.12
+
+### Patch Changes
+
+- Updated dependencies [21bcd4195]
+- Updated dependencies [21bcd4195]
+  - @leafygreen-ui/hooks@8.4.1
+  - @leafygreen-ui/tooltip@13.0.11
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 7.0.11
 
 ### Patch Changes

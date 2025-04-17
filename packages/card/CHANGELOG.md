@@ -1,5 +1,11 @@
 # @leafygreen-ui/card
 
+## 12.0.9
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 12.0.8
 
 ### Patch Changes

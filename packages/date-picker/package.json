@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/date-picker",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "LeafyGreen UI Kit Date Picker",
   "license": "Apache-2.0",
   "main": "./dist/index.js",

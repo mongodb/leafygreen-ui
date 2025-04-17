@@ -1,5 +1,14 @@
 # @leafygreen-ui/empty-state
 
+## 2.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/badge@9.0.9
+- @leafygreen-ui/button@23.1.6
+- @leafygreen-ui/typography@20.1.8
+
 ## 2.0.12
 
 ### Patch Changes

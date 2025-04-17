@@ -1,5 +1,13 @@
 # @leafygreen-ui/banner
 
+## 9.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/icon-button@16.0.11
+- @leafygreen-ui/typography@20.1.8
+
 ## 9.0.11
 
 ### Patch Changes

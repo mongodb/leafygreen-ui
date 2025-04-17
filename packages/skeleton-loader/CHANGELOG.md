@@ -1,5 +1,13 @@
 # @leafygreen-ui/skeleton-loader
 
+## 2.0.11
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/card@12.0.9
+- @leafygreen-ui/typography@20.1.8
+
 ## 2.0.10
 
 ### Patch Changes

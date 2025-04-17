@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/inline-definition",
-  "version": "8.0.10",
+  "version": "8.0.11",
   "description": "leafyGreen UI Kit Inline Definition",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
