@@ -18,8 +18,9 @@
     "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "@types/cross-spawn": "6.0.2",
+    "chalk": "4.1.2",
     "cross-spawn": "7.0.3",
-    "chalk": "4.1.2"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@lg-tools/lint": "workspace:^",

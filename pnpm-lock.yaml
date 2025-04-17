@@ -3099,6 +3099,9 @@ importers:
       cross-spawn:
         specifier: 7.0.3
         version: 7.0.3
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@lg-tools/lint':
         specifier: workspace:^
