@@ -3,8 +3,6 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { typeScales } from '@leafygreen-ui/tokens';
 
-import { Variant } from './ConfirmationModal.types';
-
 export const titleStyle = css`
   line-height: 32px;
   margin-bottom: 10px;
@@ -12,7 +10,6 @@ export const titleStyle = css`
 
 export const baseModalStyle = css`
   width: 600px;
-  padding: initial;
   letter-spacing: 0;
 `;
 
@@ -24,15 +21,6 @@ export const contentStyle = css`
 export const contentDarkModeStyles = css`
   color: ${palette.gray.light1};
 `;
-
-export const contentVariantStyles: Record<Variant, string> = {
-  [Variant.Default]: css`
-    padding: 40px 36px 0px;
-  `,
-  [Variant.Danger]: css`
-    padding: 40px 36px 0px 78px;
-  `,
-};
 
 export const textEntryInputStyle = css`
   width: 300px;
@@ -79,3 +67,8 @@ export const warningIconThemeStyle: Record<Theme, string> = {
     background: ${palette.red.dark2};
   `,
 };
+
+export const footerStyle = css`
+  margin-top: 24px;
+  padding: 0;
+`;

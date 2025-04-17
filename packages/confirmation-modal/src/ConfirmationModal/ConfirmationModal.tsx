@@ -17,7 +17,7 @@ import {
   buttonStyle,
   contentDarkModeStyles,
   contentStyle,
-  contentVariantStyles,
+  footerStyle,
   textEntryInputStyle,
   titleStyle,
   warningIconStyle,
@@ -40,7 +40,7 @@ export const ConfirmationModal = React.forwardRef(
       cancelButtonProps = {},
       ...modalProps
     }: ConfirmationModalProps,
-    forwardRef: React.ForwardedRef<HTMLDivElement | null>,
+    forwardRef: React.ForwardedRef<HTMLDialogElement | null>,
   ) => {
     const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
     const { theme, darkMode } = useDarkMode(darkModeProp);
@@ -97,13 +97,13 @@ export const ConfirmationModal = React.forwardRef(
     return (
       <Modal
         {...modalProps}
-        contentClassName={baseModalStyle}
+        className={baseModalStyle}
         setOpen={handleCancel}
         darkMode={darkMode}
         ref={forwardRef}
       >
         <div
-          className={cx(contentStyle, contentVariantStyles[variant], {
+          className={cx(contentStyle, {
             [contentDarkModeStyles]: darkMode,
           })}
         >
@@ -125,7 +125,7 @@ export const ConfirmationModal = React.forwardRef(
           {children}
           {textEntryConfirmation}
         </div>
-        <Footer>
+        <Footer className={footerStyle}>
           <Button
             {...confirmButtonProps}
             data-testid={LGIDS_CONFIRMATION_MODAL.confirm}
