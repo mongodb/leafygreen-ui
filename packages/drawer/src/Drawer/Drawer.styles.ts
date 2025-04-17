@@ -43,7 +43,7 @@ const overlayOpenStyles = css`
 `;
 
 const overlayClosedStyles = css`
-  opacity: 0;
+  /* opacity: 0; */
   transform: translate3d(100%, 0, 0);
   pointer-events: none;
 
@@ -67,9 +67,12 @@ const getOverlayStyles = ({
       bottom: 0;
       right: 0;
       overflow: visible;
-      transition: transform ${drawerTransitionDuration}ms ease-in-out,
+      /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
         opacity ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
+
+      transition: transform ${drawerTransitionDuration}ms linear,
+        opacity ${drawerTransitionDuration}ms linear;
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         top: unset;
@@ -91,7 +94,8 @@ const embeddedOpenStyles = css`
 `;
 
 const embeddedClosedStyles = css`
-  width: 0;
+  /* width: 0; */
+  /* right: -${PANEL_WIDTH}px; */
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     width: 100%;
@@ -168,7 +172,7 @@ export const getInnerContainerStyles = ({
   theme: Theme;
 }) =>
   cx(getBaseInnerContainerStyles({ theme }), {
-    [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
+    // [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
   });
 
 export const getHeaderStyles = ({
@@ -224,3 +228,33 @@ export const getInnerChildrenContainerStyles = ({
   cx(baseInnerChildrenContainerStyles, {
     [scrollContainerStyles]: !hasTabs,
   });
+
+// when overlay
+// the drawer is curerntly position fixed and is transformed off screen
+// it should be position absolute instead becuase it should be 100% of the parent container
+
+// with the toolbar, the main wrapper should be shifted to the left
+// the toolbar should also be position absolute
+
+// when the drawer is open, the main layout remains the same
+// the toolbar will transfom to the right and so will the drawer
+
+// embedded drawer
+
+// case 1:
+// embedded drawer with toolbar
+// - needs DrawerLayout
+
+// case 2:
+// embedded drawer without toolbar
+// - does not needs DrawerLayout
+
+// overlay drawer
+
+// case 3:
+// overlay drawer with toolbar
+// - needs DrawerLayout
+
+// case 4:
+// overlay drawer without toolbar
+// - does not needs DrawerLayout

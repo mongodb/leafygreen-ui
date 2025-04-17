@@ -1355,6 +1355,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@leafygreen-ui/toolbar':
+        specifier: workspace:^
+        version: link:../toolbar
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
