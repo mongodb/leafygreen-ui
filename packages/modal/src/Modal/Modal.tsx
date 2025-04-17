@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useEscapeKey,
   useIdAllocator,
@@ -14,13 +14,12 @@ import { PopoverProvider } from '@leafygreen-ui/leafygreen-provider';
 import CloseButton from '../CloseButton';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../constants';
 
-import { modalStyles } from './Modal.styles';
+import { dialogStyles } from './Modal.styles';
 import { ModalProps, ModalSize } from './Modal.types';
 
 /**
  *
  *  Modals place content on top of main window.
- *
  * @param props.open Boolean to describe whether or not Modal is open.
  * @param props.size String to determine size of Modal. ['small', 'default', 'large']
  * @param props.setOpen Callback to change the open state of Modal.
@@ -116,7 +115,15 @@ const Modal = React.forwardRef(
             data-testid={lgIds.root}
             data-lgid={lgIds.root}
             ref={mergedRef}
-            className={cx(modalStyles(theme, size), className)}
+            className={cx(
+              dialogStyles(theme, size),
+              {
+                [css`
+                  overflow: visible;
+                `]: !!portalRef?.current,
+              },
+              className,
+            )}
           >
             {children}
             <CloseButton

@@ -86,7 +86,7 @@ const sizeStyles: Record<ModalSize, string> = {
   `,
 };
 
-export const modalStyles = (theme: Theme, size: ModalSize) => {
+export const dialogStyles = (theme: Theme, size: ModalSize) => {
   return cx(
     sizeStyles[size],
     getDialogContentStyle(theme),
