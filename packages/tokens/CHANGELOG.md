@@ -1,5 +1,13 @@
 # @leafygreen-ui/tokens
 
+## 2.12.2
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/palette@4.1.4
+
 ## 2.12.1
 
 ### Patch Changes

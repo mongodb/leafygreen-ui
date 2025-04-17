@@ -1,5 +1,26 @@
 # @leafygreen-ui/icon-button
 
+## 16.0.10
+
+### Patch Changes
+
+- 936364416: Fix live example stories for www.mongodb.design
+
+## 16.0.9
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+- Updated dependencies [2ab660926]
+- Updated dependencies [fd1696643]
+- Updated dependencies [e874aeaf9]
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/icon@13.2.2
+  - @leafygreen-ui/polymorphic@2.0.9
+  - @leafygreen-ui/a11y@2.0.6
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+
 ## 16.0.8
 
 ### Patch Changes

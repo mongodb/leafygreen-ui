@@ -1,5 +1,19 @@
 # @lg-tools/lint
 
+## 2.1.0
+
+### Minor Changes
+
+- 762b91b6d: - Rewrites `prettier.ts` using the Prettier Node API
+  - Exports `formatLG` function to format miscellaneous blocks of code.
+  - Adds verbose logging to `prettier`
+
+### Patch Changes
+
+- Updated dependencies [fd1696643]
+- Updated dependencies [3978cdbfe]
+  - @lg-tools/build@0.7.4
+
 ## 2.0.4
 
 ### Patch Changes

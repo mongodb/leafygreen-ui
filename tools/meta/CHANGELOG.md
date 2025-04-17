@@ -1,5 +1,14 @@
 # @lg-tools/meta
 
+## 0.4.2
+
+### Patch Changes
+
+- 3978cdbfe: Creates `getRepositoryRoot` that returns the git root of the repo
+- Updated dependencies [fd1696643]
+- Updated dependencies [3978cdbfe]
+  - @lg-tools/build@0.7.4
+
 ## 0.4.1
 
 ### Patch Changes

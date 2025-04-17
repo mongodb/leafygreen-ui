@@ -1,5 +1,16 @@
 # @lg-charts/legend
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [f2ed4b037]
+  - @leafygreen-ui/emotion@4.1.1
+  - @lg-charts/colors@0.2.3
+  - @leafygreen-ui/checkbox@15.2.2
+  - @leafygreen-ui/palette@4.1.4
+  - @leafygreen-ui/tokens@2.12.2
+
 ## 0.2.1
 
 ### Patch Changes

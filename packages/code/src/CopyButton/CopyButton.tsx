@@ -51,7 +51,9 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
    * forcibly closes tooltip if user tabs focus on tooltip and clicks
    * outside of the trigger
    */
-  useBackdropClick(closeTooltip, buttonRef, tooltipOpen);
+  useBackdropClick(closeTooltip, buttonRef, {
+    enabled: tooltipOpen,
+  });
 
   useEffect(() => {
     if (!buttonRef.current) {
