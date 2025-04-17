@@ -18,6 +18,7 @@
     "strictNullChecks": true,
     "pretty": true,
     "skipLibCheck": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "baseUrl": "${configDir}",
     "rootDir": "${configDir}/src",
     "outDir": "${configDir}/dist",
