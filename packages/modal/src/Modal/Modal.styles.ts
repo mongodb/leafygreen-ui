@@ -14,7 +14,7 @@ import {
 
 import { ModalSize } from './Modal.types';
 
-const animationStyles = (theme: Theme) => css`
+const getAnimationStyles = (theme: Theme) => css`
   &[open] {
     animation: fade-in ${transitionDuration.default}ms ease-out;
   }
@@ -49,7 +49,7 @@ const animationStyles = (theme: Theme) => css`
   }
 `;
 
-const dialogContentStyle = (theme: Theme) => css`
+const getDialogContentStyle = (theme: Theme) => css`
   font-family: ${fontFamilies.default};
   pointer-events: all;
   border-radius: ${borderRadius[600]}px;
@@ -89,7 +89,7 @@ const sizeStyles: Record<ModalSize, string> = {
 export const modalStyles = (theme: Theme, size: ModalSize) => {
   return cx(
     sizeStyles[size],
-    dialogContentStyle(theme),
-    animationStyles(theme),
+    getDialogContentStyle(theme),
+    getAnimationStyles(theme),
   );
 };

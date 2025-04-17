@@ -17,7 +17,6 @@ import {
   buttonStyle,
   contentDarkModeStyles,
   contentStyle,
-  contentVariantStyles,
   footerStyle,
   textEntryInputStyle,
   titleStyle,
@@ -104,7 +103,7 @@ export const ConfirmationModal = React.forwardRef(
         ref={forwardRef}
       >
         <div
-          className={cx(contentStyle, contentVariantStyles[variant], {
+          className={cx(contentStyle, {
             [contentDarkModeStyles]: darkMode,
           })}
         >

@@ -365,7 +365,6 @@ describe('packages/confirmation-modal', () => {
       const confirmationButton = getByText('Confirm').closest('button');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'false');
 
-      const modal = getByRole('dialog');
       const button = getByText('Confirm');
       expect(button).toBeVisible();
 
@@ -385,7 +384,6 @@ describe('packages/confirmation-modal', () => {
       const confirmationButton = getByText('Confirm').closest('button');
       expect(confirmationButton).toHaveAttribute('aria-disabled', 'false');
 
-      const modal = getByRole('dialog');
       const button = getByText('Confirm');
       expect(button).toBeVisible();
 

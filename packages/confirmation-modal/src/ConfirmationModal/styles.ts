@@ -24,11 +24,6 @@ export const contentDarkModeStyles = css`
   color: ${palette.gray.light1};
 `;
 
-export const contentVariantStyles: Record<Variant, string> = {
-  [Variant.Default]: css``,
-  [Variant.Danger]: css``,
-};
-
 export const textEntryInputStyle = css`
   width: 300px;
   margin-top: 14px;

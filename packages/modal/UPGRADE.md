@@ -4,7 +4,7 @@
 
 Modal v18 introduces a new approach to rendering popover elements using the top layer, ensuring they appear above all other page content. This aligns with the top layer solution implemented in Popover v12.
 
-Previously, modal and popover elements relied on the usePortal boolean prop to determine whether they should render inline or in a portal appended to the body (or a provided portalContainer). This is no longer necessary with the new implementation.
+Previously, modal and popover elements relied on the `usePortal` boolean prop to determine whether they should render inline or in a portal appended to the body (or a provided portalContainer). This is no longer necessary with the new implementation.
 
 ## Major Changes
 
