@@ -2,7 +2,6 @@
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
     "declarationDir": "dist",
-    "moduleResolution": "node",
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
@@ -12,16 +11,17 @@
       ],
       "@leafygreen-ui/*": [
         "../*/src"
-      ]
+      ],
+      "highlight.js": [
+        "./node_modules/highlight.js"
+      ],
     }
   },
-  "include": [
-    "src/**/*",
-    "../../typings"
-  ],
+  "include": ["src/**/*",],
   "exclude": [
-    "**/*.spec.*",
-    "**/*.stories.*"
+    "**/*.spec.*", 
+    "**/*.stories.*", 
+    "node_modules"
   ],
   "references": [
     {
