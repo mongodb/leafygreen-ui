@@ -54,11 +54,21 @@ cli
   .description('Installs LeafyGreen packages to the current app')
   .argument('[packages...]', 'A list of packages to install')
   .option('-v --verbose', 'Prints additional information to the console', false)
+  .option('-d, --dry', 'Dry run. Does not install any packages.', false)
   .option(
-    '-W, --ignore-workspace-root-check',
-    'Pass through flag for pnpm',
+    '-e, --essentials',
+    'Install only essential packages (includes `leafygreen-provider`, `lg-emotion` and `lib`)',
     false,
   )
+  .option(
+    '-b, --basic',
+    'Install only basic packages. (Essentials, plus some select core components)',
+    false,
+  )
+  .option('--ui', 'Install all `@leafygreen-ui` scoped packages', true)
+  .option('--charts', 'Install all `@lg-charts` packages', false)
+  .option('--chat', 'Install all `@lg-chat` packages', false)
+  .allowUnknownOption(true)
   .action(installLeafyGreen);
 
 /** Link & Unlink */

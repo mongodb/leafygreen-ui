@@ -3,10 +3,11 @@ import path from 'path';
 
 import { getLGConfig } from '../getLGConfig';
 import { getPackageName } from '../getPackageName';
+import { getRepositoryRoot } from '../getRepositoryRoot';
 
 /** @returns the absolute paths of all packages in the current repository */
 export const getAllPackages = () => {
-  const rootDir = process.cwd();
+  const rootDir = getRepositoryRoot();
   const { scopes } = getLGConfig();
 
   const paths: Array<string> = [];

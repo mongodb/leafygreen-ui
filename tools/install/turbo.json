@@ -1,0 +1,10 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "prebuild": {
+      "dependsOn": ["^prebuild", "^build"],
+      "outputs": ["src/ALL_PACKAGES.ts"]
+    }
+  }
+}
