@@ -7,7 +7,7 @@ import {
   renderCode,
   renderCodeWithLanguageSwitcher,
   renderMultipleCodes,
-} from '../../Code.testutils';
+} from '../Code.testutils';
 
 import { getTestUtils } from './getTestUtils';
 

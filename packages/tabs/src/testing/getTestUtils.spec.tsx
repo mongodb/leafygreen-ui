@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { Tab, Tabs } from '../../';
+import { Tab, Tabs } from '../';
 
 import { getTestUtils } from './getTestUtils';
 import { TestUtilsReturnType } from './getTestUtils.types';

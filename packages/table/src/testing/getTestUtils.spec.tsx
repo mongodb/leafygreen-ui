@@ -3,21 +3,18 @@ import { flexRender } from '@tanstack/react-table';
 import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { Cell, HeaderCell } from '../../Cell';
-import ExpandedContent from '../../ExpandedContent';
-import { HeaderRow, Row } from '../../Row';
-import Table from '../../Table';
-import TableBody from '../../TableBody';
-import TableHead from '../../TableHead';
-import {
-  LeafyGreenTableCell,
-  LeafyGreenTableRow,
-} from '../../useLeafyGreenTable';
-import { Person } from '../makeData.testutils';
+import { Cell, HeaderCell } from '../Cell';
+import ExpandedContent from '../ExpandedContent';
+import { HeaderRow, Row } from '../Row';
+import Table from '../Table';
+import TableBody from '../TableBody';
+import TableHead from '../TableHead';
+import { LeafyGreenTableCell, LeafyGreenTableRow } from '../useLeafyGreenTable';
+import { Person } from '../utils/makeData.testutils';
 import {
   TestTableWithHookProps,
   useTestHookCall,
-} from '../testHookCalls.testutils';
+} from '../utils/testHookCalls.testutils';
 
 import { getTestUtils } from './getTestUtils';
 

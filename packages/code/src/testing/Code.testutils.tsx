@@ -1,12 +1,14 @@
 import React from 'react';
 import { render, RenderResult } from '@testing-library/react';
 
-import Code from './Code/Code';
-import { CodeProps } from './Code/Code.types';
-import { PanelProps } from './Panel/Panel.types';
-import { Panel } from './Panel';
-import { Language } from './types';
-import { getTestUtils, TestUtilsReturnType } from './utils';
+import Code from '../Code/Code';
+import { CodeProps } from '../Code/Code.types';
+import { Panel } from '../Panel';
+import { PanelProps } from '../Panel/Panel.types';
+import { Language } from '../types';
+
+import { getTestUtils } from './getTestUtils';
+import type { TestUtilsReturnType } from './getTestUtils.types';
 
 const codeSnippet = `
 import datetime from './';

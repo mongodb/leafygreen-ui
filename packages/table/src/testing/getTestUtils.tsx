@@ -1,6 +1,6 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
-import { LGIDS } from '../../constants';
+import { LGIDS } from '../constants';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
