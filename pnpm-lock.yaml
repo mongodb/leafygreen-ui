@@ -2386,10 +2386,6 @@ importers:
       react-is:
         specifier: ^18.0.1
         version: 18.2.0
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
 
   packages/side-nav:
     dependencies:
