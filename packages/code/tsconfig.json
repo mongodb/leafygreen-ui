@@ -11,16 +11,17 @@
       ],
       "@leafygreen-ui/*": [
         "../*/src"
-      ]
+      ],
+      "highlight.js": [
+        "./node_modules/highlight.js"
+      ],
     }
   },
-  "include": [
-    "src/**/*",
-    "../../typings"
-  ],
+  "include": ["src/**/*",],
   "exclude": [
-    "**/*.spec.*",
-    "**/*.stories.*"
+    "**/*.spec.*", 
+    "**/*.stories.*", 
+    "node_modules"
   ],
   "references": [
     {

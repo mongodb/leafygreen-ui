@@ -60,7 +60,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
 
     const clipboard = new ClipboardJS(buttonRef.current, {
       text: () => contents,
-      container: portalContainer,
+      container: portalContainer ?? undefined,
     });
 
     if (copied) {
