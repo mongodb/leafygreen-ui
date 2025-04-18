@@ -101,6 +101,8 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
+  // const { ready, updateOptions } = chart;
+
   useEffect(() => {
     if (!chart.ready) return;
 
@@ -109,14 +111,13 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
     return () => {
       /**
        * Hides the axis when the component is unmounted.
-       */ chart.updateOptions;
+       */
       chart.updateOptions({
         xAxis: unsetAxisOptions,
       });
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, label, formatter, theme, chart.ready]);
+    // }, [formatter, label, ready, theme, type, updateOptions]);
+  }, [chart, formatter, label, theme, type]);
 
   return null;
 }

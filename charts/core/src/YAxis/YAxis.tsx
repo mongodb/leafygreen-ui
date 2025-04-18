@@ -100,22 +100,22 @@ export function YAxis({ type, label, formatter }: YAxisProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
-  useEffect(() => {
-    if (!chart.ready) return;
+  const { ready, updateOptions } = chart;
 
-    chart.updateOptions(getOptions({ type, label, formatter, theme }));
+  useEffect(() => {
+    if (!ready) return;
+
+    updateOptions(getOptions({ type, label, formatter, theme }));
 
     return () => {
       /**
        * Hides the axis when the component is unmounted.
        */
-      chart.updateOptions({
+      updateOptions({
         yAxis: unsetAxisOptions,
       });
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, label, formatter, theme, chart.ready]);
+  }, [formatter, label, ready, theme, type, updateOptions]);
 
   return null;
 }

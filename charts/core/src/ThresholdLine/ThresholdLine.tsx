@@ -94,10 +94,12 @@ function getThresholdLineConfig({
 export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
+
+  const { addSeries, ready, removeSeries } = chart;
   const name = `threshold-${position}`;
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
     /**
      * Threshold lines in Echarts are always attached to a series. In order
@@ -105,16 +107,12 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a ChartTooltip.
      */
-    chart.addSeries(
-      getThresholdLineConfig({ name, position, theme, label, value }),
-    );
+    addSeries(getThresholdLineConfig({ name, position, theme, label, value }));
 
     return () => {
-      chart.removeSeries(name);
+      removeSeries(name);
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, chart.ready, position, label, value]);
+  }, [addSeries, label, name, position, ready, removeSeries, theme, value]);
 
   return null;
 }

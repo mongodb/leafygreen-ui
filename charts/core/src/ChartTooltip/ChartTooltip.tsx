@@ -20,10 +20,12 @@ export function ChartTooltip({
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
-  useEffect(() => {
-    if (!chart.ready) return;
+  const { ready, updateOptions } = chart;
 
-    chart.updateOptions({
+  useEffect(() => {
+    if (!ready) return;
+
+    updateOptions({
       tooltip: {
         axisPointer: {
           z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
@@ -66,15 +68,20 @@ export function ChartTooltip({
     });
 
     return () => {
-      chart.updateOptions({
+      updateOptions({
         tooltip: {
           show: false,
         },
       });
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, sort, theme, seriesNameFormatter, seriesValueFormatter]);
+  }, [
+    ready,
+    seriesNameFormatter,
+    seriesValueFormatter,
+    sort,
+    theme,
+    updateOptions,
+  ]);
 
   return null;
 }
