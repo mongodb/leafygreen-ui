@@ -1,10 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import {
-  GalleryIndicator,
-  GalleryIndicatorProps,
-} from '../../GalleryIndicator';
+import { GalleryIndicator, GalleryIndicatorProps } from '../GalleryIndicator';
 
 import { getTestUtils } from './getTestUtils';
 

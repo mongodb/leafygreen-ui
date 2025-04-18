@@ -3,7 +3,7 @@ import { renderAsyncTest } from '@lg-tools/test-harnesses';
 import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import Toggle from '../../Toggle/Toggle';
+import Toggle from '../Toggle/Toggle';
 
 import { getTestUtils } from './getTestUtils';
 
