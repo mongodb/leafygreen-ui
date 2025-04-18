@@ -3,7 +3,7 @@ import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 import { LGIDS_FORM_FIELD } from '@leafygreen-ui/form-field';
 import { LGIDS_TYPOGRAPHY } from '@leafygreen-ui/typography';
 
-import { LGIDS_TEXT_INPUT } from '../../constants';
+import { LGIDS_TEXT_INPUT } from '../constants';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
