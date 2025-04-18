@@ -2,10 +2,18 @@
   "name": "@leafygreen-ui/date-utils",
   "version": "0.2.3",
   "description": "LeafyGreen UI Kit Date Utils",
+  "license": "Apache-2.0",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
-  "license": "Apache-2.0",
+  "typesVersions": {},
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",
@@ -33,10 +41,5 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "keywords": [
-    "leafygreen",
-    "date",
-    "date-fns"
-  ],
-  "typesVersions": {}
+  "keywords": ["leafygreen", "date", "date-fns"]
 }

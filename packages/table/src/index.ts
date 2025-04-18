@@ -24,7 +24,6 @@ export {
   type LeafyGreenVirtualTableOptions,
   default as useLeafyGreenVirtualTable,
 } from './useLeafyGreenVirtualTable';
-export { getTestUtils } from './utils/getTestUtils';
 // TODO: Check if some exports might clash with our exports
 export * from '@tanstack/react-table';
 export { type VirtualItem } from '@tanstack/react-virtual';
