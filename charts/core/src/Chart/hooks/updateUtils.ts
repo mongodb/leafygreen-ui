@@ -1,33 +1,41 @@
+import { ECBasicOption } from 'echarts/types/dist/shared';
+
 import { ChartOptions, SeriesOption } from '../Chart.types';
 
 export function addSeries(
-  currentOptions: ChartOptions,
+  currentOptions: ECBasicOption | undefined,
   data: SeriesOption,
 ): Partial<ChartOptions> {
   const updatedOptions = { ...currentOptions };
 
-  if (!updatedOptions.series) {
-    updatedOptions.series = [data];
-  } else {
-    if (!updatedOptions.series.some(series => series.name === data.name)) {
+  if (Array.isArray(updatedOptions.series)) {
+    const hasSeriesData = updatedOptions.series.some(
+      series => series.name === data.name,
+    );
+
+    if (!hasSeriesData) {
       updatedOptions.series.push(data);
     }
+  } else {
+    updatedOptions.series = [data];
   }
 
   return updatedOptions;
 }
 
 export function removeSeries(
-  currentOptions: ChartOptions,
+  currentOptions: ECBasicOption | undefined,
   name: string,
 ): Partial<ChartOptions> {
   const updatedOptions = { ...currentOptions };
 
-  if (updatedOptions.series) {
-    updatedOptions.series = [
-      ...updatedOptions.series.filter(series => series.name !== name),
-    ];
+  if (!Array.isArray(updatedOptions.series)) {
+    return updatedOptions;
   }
+
+  updatedOptions.series = [
+    ...updatedOptions.series.filter(series => series.name !== name),
+  ];
 
   return updatedOptions;
 }
@@ -62,8 +70,8 @@ function recursiveMerge(
 }
 
 export function updateOptions(
-  currentOptions: ChartOptions,
+  currentOptions: ECBasicOption | undefined,
   options: Partial<ChartOptions>,
 ): Partial<ChartOptions> {
-  return recursiveMerge(currentOptions, options);
+  return recursiveMerge(currentOptions || {}, options);
 }
