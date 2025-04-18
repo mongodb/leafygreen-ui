@@ -8,7 +8,6 @@ import type {
   ToolboxComponentOption,
   TooltipComponentOption,
 } from 'echarts/components';
-import type { EChartsType } from 'echarts/core';
 import type { ComposeOption } from 'echarts/core';
 
 import { Theme } from '@leafygreen-ui/lib';
@@ -108,9 +107,7 @@ interface EChartsEventHandlerType {
 }
 
 export interface EChartsInstance {
-  _echartsInstance: EChartsType | null;
   ready: boolean;
-  options: Partial<EChartOptions>;
   updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
   on: EChartsEventHandlerType;
   off: EChartsEventHandlerType;
