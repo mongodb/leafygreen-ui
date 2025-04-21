@@ -9,12 +9,13 @@ import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { color, spacing } from '@leafygreen-ui/tokens';
 
-import { LGIDs } from '../constants';
 import { menuColor } from '../styles';
+import { getLgIds } from '../utils';
 
 import { Variant } from './MenuItem.types';
+const lgIds = getLgIds();
 
-export const menuItemClassName = createUniqueClassName(LGIDs.item);
+export const menuItemClassName = createUniqueClassName(lgIds.item);
 
 export const menuItemContainerStyles = css`
   width: 100%;

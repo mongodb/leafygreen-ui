@@ -24,4 +24,4 @@ export {
   type SubMenuProps,
   subMenuToggleClassName,
 } from './SubMenu';
-export { DEFAULT_LGID_ROOT, getLgIds } from './utils';
+export { DEFAULT_LGID_ROOT, getLgIds, type GetLgIdsReturnType } from './utils';

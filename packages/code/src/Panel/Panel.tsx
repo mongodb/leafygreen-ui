@@ -32,7 +32,7 @@ function Panel({
   const { theme } = useDarkMode();
   const { contents, language } = useCodeContext();
 
-  const lgids = getLgIds();
+  const lgIds = getLgIds();
 
   const hasTitle = !!title;
 
@@ -57,14 +57,14 @@ function Panel({
   return (
     <div
       className={cx(getBasePanelStyle({ hasTitle, theme, className }))}
-      data-lgid={lgids.panel}
-      data-testid={lgids.panel}
+      data-lgid={lgIds.panel}
+      data-testid={lgIds.panel}
       {...rest}
     >
       {hasTitle && (
         <Body
-          data-lgid={lgids.title}
-          data-testid={lgids.title}
+          data-lgid={lgIds.title}
+          data-testid={lgIds.title}
           className={getPanelTitleStyles(theme)}
         >
           {title}

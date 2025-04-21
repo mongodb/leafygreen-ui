@@ -13,7 +13,7 @@ import { getLgIds as getLgModalIds } from '@leafygreen-ui/modal';
 import { getLgIds } from '..';
 import ConfirmationModal from '..';
 
-const lgids = getLgIds();
+const lgIds = getLgIds();
 
 const WrappedModal = ({
   open: initialOpen,
@@ -258,8 +258,8 @@ describe('packages/confirmation-modal', () => {
     ];
 
     const buttonClickCases = [
-      { testCase: 'on cancel', testId: lgids.cancel },
-      { testCase: 'on confirm', testId: lgids.confirm },
+      { testCase: 'on cancel', testId: lgIds.cancel },
+      { testCase: 'on confirm', testId: lgIds.confirm },
       { testCase: 'on modal close', testId: getLgModalIds().close },
     ];
 
@@ -274,7 +274,7 @@ describe('packages/confirmation-modal', () => {
             });
 
           const modal = getByRole('dialog');
-          const confirmationButton = await findByTestId(lgids.confirm);
+          const confirmationButton = await findByTestId(lgIds.confirm);
           const buttonToClick = await findByTestId(testId);
           expect(confirmationButton).toHaveAttribute(
             'aria-disabled',

@@ -2,15 +2,17 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
-import { LGIDs } from '../constants';
 import { menuItemContainerStyles } from '../MenuItem/MenuItem.styles';
 import { menuColor } from '../styles';
+import { getLgIds } from '../utils';
 
 const TRANSITION_DURATION = transitionDuration.default;
 
-export const subMenuContainerClassName = createUniqueClassName(LGIDs.submenu);
+const lgIds = getLgIds();
+
+export const subMenuContainerClassName = createUniqueClassName(lgIds.submenu);
 export const subMenuToggleClassName = createUniqueClassName(
-  LGIDs.submenu + '-trigger',
+  lgIds.submenu + '-trigger',
 );
 
 export const subMenuContainerStyles = css`

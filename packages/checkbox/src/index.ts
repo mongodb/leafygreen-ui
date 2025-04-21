@@ -1,2 +1,7 @@
 export { type CheckboxProps, checkWrapperClassName, default } from './Checkbox';
-export { getLgIds, getTestUtils } from './utils';
+export {
+  getLgIds,
+  getTestUtils,
+  DEFAULT_LGID_ROOT,
+  type GetLgIdsReturnType,
+} from './utils';

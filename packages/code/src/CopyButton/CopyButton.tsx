@@ -39,7 +39,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   const { portalContainer } = usePopoverPortalContainer();
   const { showPanel, isLoading } = useCodeContext();
 
-  const lgids = getLgIds();
+  const lgIds = getLgIds();
 
   /**
    * toggles `tooltipOpen` state
@@ -127,8 +127,8 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
 
   const sharedButtonProps = {
     'aria-label': COPY_TEXT,
-    'data-testid': lgids.copyButton,
-    'data-lgid': lgids.copyButton,
+    'data-testid': lgIds.copyButton,
+    'data-lgid': lgIds.copyButton,
     className: getCopyButtonStyles({
       theme,
       copied,
@@ -147,7 +147,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
   return (
     <Tooltip
       align={Align.Top}
-      data-testid={lgids.copyTooltip}
+      data-testid={lgIds.copyTooltip}
       justify={Justify.Middle}
       open={tooltipOpen}
       renderMode={RenderMode.TopLayer}

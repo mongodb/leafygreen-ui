@@ -1,6 +1,10 @@
-export { LGIDs } from './constants';
 export {
   GalleryIndicator,
   type GalleryIndicatorProps,
 } from './GalleryIndicator';
-export { getTestUtils } from './utils/getTestUtils/getTestUtils';
+export {
+  getTestUtils,
+  getLgIds,
+  DEFAULT_LGID_ROOT,
+  type GetLgIdsReturnType,
+} from './utils';

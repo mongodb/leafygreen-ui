@@ -1,4 +1,3 @@
-export { LGIDS_SELECT } from './constants';
 export { popoverClassName } from './ListMenu';
 export { menuButtonTextClassName } from './MenuButton';
 export { Option, type OptionProps } from './Option';

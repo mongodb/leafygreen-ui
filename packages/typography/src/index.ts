@@ -1,6 +1,5 @@
 export { default as Body } from './Body/Body';
 export type { BodyProps } from './Body/Body.types';
-export * from './constants';
 export { default as Description } from './Description/Description';
 export type { DescriptionProps } from './Description/Description.types';
 export { default as Disclaimer } from './Disclaimer/Disclaimer';
@@ -34,6 +33,6 @@ export type { OverlineProps } from './Overline/Overline.types';
 export { bodyTypeScaleStyles } from './styles';
 export { default as Subtitle } from './Subtitle/Subtitle';
 export type { SubtitleProps } from './Subtitle/Subtitle.types';
-export { getLgIds } from './utils';
+export { getLgIds, DEFAULT_LGID_ROOT, type GetLgIdsReturnType } from './utils';
 export { StaticWidthText } from './utils/StaticWidthText';
 export { useUpdatedBaseFontSize } from './utils/useUpdatedBaseFontSize';
