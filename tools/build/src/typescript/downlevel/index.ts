@@ -4,7 +4,8 @@ import fse from 'fs-extra';
 import path from 'path';
 
 import { downlevelDts } from './downlevel-dts';
-import { getTypeVersions } from './getTypeVersions';
+import { DOWNLEVEL_VERSIONS, EXCLUDED_PACKAGES } from './TYPES_VERSIONS';
+import { updateTypesVersions } from './updateTypesVersions';
 
 interface DownlevelCommandOptions {
   verbose?: boolean;
@@ -16,22 +17,31 @@ interface DownlevelCommandOptions {
  */
 export function runTypescriptDownlevel({ verbose }: DownlevelCommandOptions) {
   const packageDir = process.cwd();
-  console.log('\nRunning TypeScript downleveling...', packageDir);
+  console.log('\nRunning TypeScript downlevel...', packageDir);
 
   const packageJsonPath = path.join(packageDir, 'package.json');
-  const packageJson = fse.readJSONSync(packageJsonPath, 'utf-8');
-  const typesVersions = packageJson?.typesVersions;
-  const downlevelVersions = getTypeVersions(typesVersions);
+  const packageJsonContent = fse.readFileSync(packageJsonPath, 'utf8');
+  const packageJson = JSON.parse(packageJsonContent);
+  const { name: packageName } = packageJson;
 
-  if (downlevelVersions && downlevelVersions?.length > 0) {
-    downlevelVersions.forEach(target => {
+  // Skip excluded packages
+  if (EXCLUDED_PACKAGES.includes(packageName)) {
+    console.log(chalk.gray(`\tSkipping excluded package: ${packageName}`));
+    return;
+  }
+
+  if (DOWNLEVEL_VERSIONS && DOWNLEVEL_VERSIONS?.length > 0) {
+    // First update typesVersions and exports in package.json
+    updateTypesVersions(packageDir, { verbose });
+
+    // Then generate downlevelled TypeScript declaration files
+    DOWNLEVEL_VERSIONS.forEach(({ target }) => {
       downlevelDts({ verbose, target });
     });
   } else {
     verbose &&
-      console.log(chalk.yellow('No typesVersions found in package.json'), {
-        typesVersions,
-        downlevelVersions,
+      console.log(chalk.yellow('No downlevel versions configured'), {
+        DOWNLEVEL_VERSIONS,
       });
   }
 }
