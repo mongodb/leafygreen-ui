@@ -60,7 +60,7 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-  const lgIds = getLgIds(dataLgId);
+  const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
   const showPanel = !!panel;
 
@@ -189,7 +189,7 @@ function Code({
       <div
         className={getWrapperStyles({ theme, className })}
         data-language={languageProp}
-        data-lgid={dataLgId}
+        data-lgid={lgIds.root}
       >
         <div
           className={getCodeStyles({

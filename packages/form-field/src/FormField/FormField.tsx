@@ -53,7 +53,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
   ) => {
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const fontStyles = getFontSizeStyles({ baseFontSize, size });
-    const lgIds = getLgIds(dataLgId);
+    const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
     const { labelId, descriptionId, feedbackId, inputId, inputProps } =
       useFormFieldProps({

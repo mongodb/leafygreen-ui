@@ -106,6 +106,7 @@ const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
         rightGlyph={<CaretDownIcon />}
         size={size}
         data-testid={testId}
+        data-lgid={lgIds.trigger}
         className={cx(
           buttonClassName,
           {

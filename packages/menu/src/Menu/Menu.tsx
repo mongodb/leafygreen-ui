@@ -83,7 +83,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
   forwardRef,
 ) {
   const { theme, darkMode } = useDarkMode(darkModeProp);
-  const lgIds = getLgIds(dataLgId);
+  const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const defaultTriggerRef = useRef<HTMLElement>(null);

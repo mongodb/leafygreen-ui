@@ -37,7 +37,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
   ) => {
     const baseFontSize: BaseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const { theme, darkMode } = useDarkMode(darkModeProp);
-    const lgIds = getLgIds(dataLgId);
+    const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
     const isVirtual = Boolean((table as LeafyGreenVirtualTable<T>)?.virtual);
     const virtualTable = isVirtual

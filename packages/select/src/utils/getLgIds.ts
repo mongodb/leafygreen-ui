@@ -5,6 +5,7 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
     root,
     errorMessage: `${root}-error_message`,
     popover: `${root}-popover`,
+    trigger: `${root}-trigger`,
     buttonText: `${root}-button_text`,
   } as const;
   return ids;
