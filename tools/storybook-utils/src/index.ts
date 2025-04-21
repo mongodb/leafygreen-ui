@@ -1,3 +1,4 @@
+export { findStories } from './findStories';
 export {
   type ExtendedComponentProps,
   type GeneratedStoryConfig,
