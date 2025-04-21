@@ -4,9 +4,9 @@ import rollup, { type MergedRollupOptions } from 'rollup';
 import {
   type BatchWarnings,
   type LoadConfigFile,
-  // @ts-expect-error - type declaration incorrectly defined
-} from 'rollup/dist/loadConfigFile';
-import { loadConfigFile as _loadConfigFile } from 'rollup/loadConfigFile';
+  loadConfigFile as _loadConfigFile,
+  // @ts-expect-error - types not declared correctly in rollup
+} from 'rollup/loadConfigFile';
 
 import { findRollupConfigFile } from './findRollupConfigFile';
 
