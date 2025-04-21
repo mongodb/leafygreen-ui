@@ -1,21 +1,3 @@
 {
-  "compilerOptions": {
-    "module": "CommonJS",
-    "noEmit": true,
-    "tsBuildInfoFile": "./tsconfig.tsbuildinfo",
-    "incremental": true,
-    "target": "ES6",
-    "jsx": "react",
-    "allowJs": true,
-    "pretty": true,
-    "strictNullChecks": true,
-    "noUnusedLocals": false,
-    "esModuleInterop": true,
-    "strict": true,
-    "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
-    "baseUrl": ".",
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-  }
+  "extends": "@lg-tools/build/config/scripts.tsconfig.json",
 }
