@@ -46,12 +46,12 @@
     "rollup-plugin-bundle-stats": "^4.18.2",
     "rollup-plugin-node-externals": "7.1.1",
     "rollup-plugin-polyfill-node": "0.13.0",
-    "typescript": "~5.0.0"
+    "typescript": "~5.8.0"
   },
   "peerDependencies": {
     "@babel/core": "7.24.0",
     "turbo": "^2.0.6",
-    "typescript": "~5.0.0"
+    "typescript": "~5.8.0"
   },
   "devDependencies": {
     "@types/mock-fs": "^4.13.4",
