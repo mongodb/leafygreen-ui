@@ -3,7 +3,6 @@
 '@leafygreen-ui/gallery-indicator': major
 '@leafygreen-ui/password-input': major
 '@leafygreen-ui/split-button': major
-'@leafygreen-ui/date-picker': major
 '@leafygreen-ui/form-footer': major
 '@leafygreen-ui/form-field': major
 '@leafygreen-ui/text-input': major
