@@ -19,6 +19,8 @@ export const drawerTransitionDuration = transitionDuration.slower;
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
+  margin: 0;
+  padding: 0;
   background-color: ${color[theme].background.primary.default};
   border: ${open
     ? `1px solid ${color[theme].border.secondary.default}`
@@ -35,21 +37,23 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
 
 const overlayOpenStyles = css`
   opacity: 1;
-  transform: none;
+  /* transform: none; */
+  transform: translate3d(90%, 0, 0);
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    transform: none;
-  }
+  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    /* transform: none; */
+  /* transform: translate3d(0%, 0, 0); */
+  /* } */
 `;
 
 const overlayClosedStyles = css`
   /* opacity: 0; */
-  transform: translate3d(100%, 0, 0);
+  transform: translate3d(95%, 0, 0);
   pointer-events: none;
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     transform: translate3d(0, 100%, 0);
-  }
+  } */
 `;
 
 const getOverlayStyles = ({
@@ -61,7 +65,8 @@ const getOverlayStyles = ({
 }) =>
   cx(
     css`
-      position: fixed;
+      /* position: fixed; */
+      position: absolute;
       z-index: ${zIndex};
       top: 0;
       bottom: 0;
@@ -71,12 +76,11 @@ const getOverlayStyles = ({
         opacity ${drawerTransitionDuration}ms ease-in-out
           ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
 
-      transition: transform ${drawerTransitionDuration}ms linear,
-        opacity ${drawerTransitionDuration}ms linear;
+      transition: transform 1000ms linear, opacity 1000ms linear;
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-        top: unset;
-        left: 0;
+        /* top: unset;
+        left: 0; */
       }
     `,
     {

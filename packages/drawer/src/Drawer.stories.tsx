@@ -227,7 +227,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
       {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
       <EmbeddedDrawerLayout
         className={css`
-          height: 100vh;
+          height: 80vh;
         `}
         isDrawerOpen={open}
         hasToolbar
@@ -253,6 +253,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
           className={css`
             display: grid;
             grid-template-columns: 48px 432px;
+            grid-area: drawer;
             overflow: hidden;
           `}
         >
@@ -266,21 +267,32 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
                 transition: all ${drawerTransitionDuration}ms linear;
                 transform: translateX(0);
               `,
-              {
-                [css`
-                  transform: translateX(-432px);
-                `]: open,
-              },
+              // {
+              //   [css`
+              //     transform: translate3d(-432px, 0, 0); //3d
+              //   `]: open,
+              // },
             )}
           >
-            <ToolbarIconButton glyph="Code" label="Code" onClick={() => {}} />
-            <ToolbarIconButton glyph="Plus" label="Plus" onClick={() => {}} />
+            <ToolbarIconButton
+              glyph="Code"
+              label="Code"
+              onClick={() => setOpen(prevOpen => !prevOpen)}
+            />
+            <ToolbarIconButton
+              glyph="Plus"
+              label="Plus"
+              onClick={() => setOpen(prevOpen => !prevOpen)}
+            />
           </Toolbar>
           <Drawer
             displayMode="overlay"
             open={open}
             onClose={() => setOpen(false)}
             title="Drawer Title"
+            // className={css`
+            //   position: absolute;
+            // `}
           />
         </div>
         {/*  This logic will be handled internally inside ToolbarDrawerLayout */}

@@ -34,6 +34,7 @@ const drawerOpenStyles = css`
 // TODO: mobile
 const toolbarStyles = css`
   grid-template-columns: auto ${TOOLBAR_WIDTH}px;
+  grid-template-areas: 'main drawer';
 `;
 
 const toolbarEmbeddedOpenStyles = css`
