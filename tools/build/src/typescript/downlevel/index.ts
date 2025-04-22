@@ -5,17 +5,24 @@ import path from 'path';
 
 import { downlevelDts } from './downlevel-dts';
 import { DOWNLEVEL_VERSIONS, EXCLUDED_PACKAGES } from './TYPES_VERSIONS';
-import { updateTypesVersions } from './updateTypesVersions';
+import { updatePackageJsonTypes } from './updatePackageJsonTypes';
 
 interface DownlevelCommandOptions {
   verbose?: boolean;
+  update?: boolean;
 }
 
 /**
  * Downlevel TypeScript definitions
  * based on the typesVersions field in package.json.
+ *
+ * @param options.verbose - Enable verbose logging
+ * @param options.update - When true, updates the package.json typesVersions and exports fields
  */
-export function runTypescriptDownlevel({ verbose }: DownlevelCommandOptions) {
+export function runTypescriptDownlevel({
+  verbose,
+  update = false,
+}: DownlevelCommandOptions) {
   const packageDir = process.cwd();
   console.log('\nRunning TypeScript downlevel...', packageDir);
 
@@ -31,8 +38,13 @@ export function runTypescriptDownlevel({ verbose }: DownlevelCommandOptions) {
   }
 
   if (DOWNLEVEL_VERSIONS && DOWNLEVEL_VERSIONS?.length > 0) {
-    // First update typesVersions and exports in package.json
-    updateTypesVersions(packageDir, { verbose });
+    // Only update typesVersions and exports in package.json when flag is true
+    if (update) {
+      console.log(
+        chalk.blue('Updating package.json typesVersions and exports fields...'),
+      );
+      updatePackageJsonTypes(packageDir, { verbose });
+    }
 
     // Then generate downlevelled TypeScript declaration files
     DOWNLEVEL_VERSIONS.forEach(({ target }) => {

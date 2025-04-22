@@ -1,8 +1,21 @@
+interface DownlevelVersion {
+  /** If the consuming application's TS version satisfies the condition... */
+  condition: `${'<' | '>' | ''}${number}.${number}`;
+  /** ...we should use this version of the package */
+  target: `${number}.${number}`;
+}
+
 // TS Downlevel mapping
 export const DOWNLEVEL_VERSIONS = [
-  { condition: '<4.8', target: '4.0' },
-  { condition: '<5.0', target: '4.9' },
-] as const;
+  {
+    condition: '<4.8',
+    target: '4.0',
+  },
+  {
+    condition: '<5.0',
+    target: '4.9',
+  },
+] as const satisfies Readonly<Array<DownlevelVersion>>;
 
 // Packages to exclude from typesVersions updates
 // These packages are CLI-only, and don't need to be down-leveled

@@ -35,7 +35,7 @@ import { DOWNLEVEL_VERSIONS, EXCLUDED_PACKAGES } from './TYPES_VERSIONS';
  * }
  * ```
  */
-export function updateTypesVersions(
+export function updatePackageJsonTypes(
   packageDir: string = process.cwd(),
   { verbose }: { verbose?: boolean } = {},
 ) {
@@ -56,7 +56,8 @@ export function updateTypesVersions(
 
     // Skip excluded packages
     if (EXCLUDED_PACKAGES.includes(packageName)) {
-      console.log(chalk.gray(`\tSkipping excluded package: ${packageName}`));
+      verbose &&
+        console.log(chalk.gray(`\tSkipping excluded package: ${packageName}`));
       return;
     }
 
@@ -121,16 +122,9 @@ export function updateTypesVersions(
     );
 
     console.log(
-      chalk.green.bold(`Updated typesVersions and exports in ${packageName}`),
+      verbose &&
+        chalk.green.bold(`Updated typesVersions and exports in ${packageName}`),
     );
-    verbose &&
-      console.log(
-        chalk.gray(`typesVersions: ${JSON.stringify(typesVersions, null, 2)}`),
-      );
-    verbose &&
-      console.log(
-        chalk.gray(`exports: ${JSON.stringify(exportsField, null, 2)}`),
-      );
   } catch (error) {
     console.error(chalk.red('Error updating typesVersions:'), error);
   }
