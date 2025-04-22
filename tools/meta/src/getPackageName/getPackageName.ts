@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import trim from 'lodash/trim';
 
-import { getLGConfig, LGConfig } from '../getLGConfig';
+import { getLGConfig, type LGConfig } from '../getLGConfig';
 
 /**
  * Returns the full name of a package at a given directory
