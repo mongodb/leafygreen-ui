@@ -51,15 +51,12 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 
 #### Props
 
-| Prop       | Type                                | Description                                                                                                                                                                                         | Default |
-| ---------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `active`   | `boolean`                           | Determines if the icon button is in an active state                                                                                                                                                 | `false` |
-| `glyph`    | `Glyph`                             | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
-| `label`    | `string`                            | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
-| `onClick`  | `(event: React.MouseEvent) => void` | Callback fired when the button is clicked                                                                                                                                                           |         |
-| `disabled` | `boolean`                           | Determines if the icon is disabled                                                                                                                                                                  | `false` |
+| Prop    | Type     | Description                                                                                                                                                                                         | Default |
+| ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `glyph` | `Glyph`  | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
+| `label` | `string` | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
 
-\+ other HTML `button` element props
+\+ Extends LG [IconButton props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button#properties) with the exception of `as`, `children`, `darkMode`, `href`, `size`, and `tabIndex`
 
 # Test Harnesses
 

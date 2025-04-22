@@ -3,7 +3,7 @@ import { IconButtonProps } from '@leafygreen-ui/icon-button';
 
 type ButtonProps = Omit<
   IconButtonProps<'button'>,
-  'tabIndex' | 'href' | 'as' | 'ref'
+  'tabIndex' | 'href' | 'as' | 'ref' | 'children' | 'size' | 'darkMode'
 >;
 
 export interface ToolbarIconButtonProps extends ButtonProps {

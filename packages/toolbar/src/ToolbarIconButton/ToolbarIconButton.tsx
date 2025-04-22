@@ -43,6 +43,12 @@ export const ToolbarIconButton = React.forwardRef<
       );
     }
 
+    if (glyph === undefined) {
+      console.error(
+        'A glpyh is required for ToolbarIconButton. Please provide a valid glyph. The list of available glyphs can be found in the LG Icon README, https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties.',
+      );
+    }
+
     useEffect(() => {
       // shouldFocus prevents this component from hijacking focus on initial page load.
       if (isFocusable && shouldFocus) ref.current?.focus();
