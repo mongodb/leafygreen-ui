@@ -5,6 +5,7 @@
   "license": "Apache-2.0",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "lg-internal-build-package",
     "tsc": "tsc --build tsconfig.json"

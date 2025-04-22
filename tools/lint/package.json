@@ -4,6 +4,7 @@
   "description": "Lint rules & config for LeafyGreen repositories",
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "publishConfig": {
     "access": "public"
@@ -43,7 +44,7 @@
     "prettier": "2.8.8"
   },
   "peerDependencies": {
-    "typescript": "~5.0.0"
+    "typescript": "~5.8.0"
   },
   "typesVersions": {}
 }
