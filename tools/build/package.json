@@ -8,8 +8,7 @@
   },
   "bin": {
     "lg-internal-build-package": "./bin/build-package.js",
-    "lg-build": "./bin/build.js",
-    "lg-ts-downlevel": "./bin/ts-downlevel.js"
+    "lg-build": "./bin/build.js"
   },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
