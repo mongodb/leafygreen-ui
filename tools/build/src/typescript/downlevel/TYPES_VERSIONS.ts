@@ -6,14 +6,15 @@ interface DownlevelVersion {
 }
 
 // TS Downlevel mapping
+// Note, conditions should be listed in order (i.e. as if they were multiple cascading `if` statements)
 export const DOWNLEVEL_VERSIONS = [
-  {
-    condition: '<4.8',
-    target: '4.0',
-  },
   {
     condition: '<5.0',
     target: '4.9',
+  },
+  {
+    condition: '<5.8',
+    target: '5.0',
   },
 ] as const satisfies Readonly<Array<DownlevelVersion>>;
 
