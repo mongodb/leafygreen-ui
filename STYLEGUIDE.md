@@ -18,6 +18,8 @@
   - [Passing darkMode to children](#passing-darkMode-to-children)
   - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
   - [API Patterns](#api-patterns)
+    - [Input errors](#input-errors)
+  - [getLgIds](#getlgids)
 - [References](#references)
 
 # Contribution Guide
