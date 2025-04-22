@@ -17,6 +17,10 @@
     "strict": true,
     "strictNullChecks": true,
     "pretty": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "${configDir}",
+    "rootDir": "${configDir}/src",
+    "outDir": "${configDir}/dist",
+    "declarationDir": "${configDir}/dist/types"
   }
 }
