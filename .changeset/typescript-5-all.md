@@ -99,4 +99,4 @@
 
 ---
 
-Updates Typescript build to TS5.0
+Updates Typescript build to TS5.8
