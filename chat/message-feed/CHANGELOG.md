@@ -1,5 +1,18 @@
 # @lg-chat/message-feed
 
+## 4.1.12
+
+### Patch Changes
+
+- Updated dependencies [1dbfb7064]
+  - @leafygreen-ui/icon@13.3.0
+  - @lg-chat/message-rating@3.0.11
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/button@23.1.6
+  - @lg-chat/message@5.0.14
+  - @lg-chat/avatar@4.0.10
+
 ## 4.1.11
 
 ### Patch Changes
