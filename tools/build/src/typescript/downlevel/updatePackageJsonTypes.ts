@@ -121,10 +121,10 @@ export function updatePackageJsonTypes(
       JSON.stringify(packageJson, null, 2) + '\n',
     );
 
-    console.log(
-      verbose &&
+    verbose &&
+      console.log(
         chalk.green.bold(`Updated typesVersions and exports in ${packageName}`),
-    );
+      );
   } catch (error) {
     console.error(chalk.red('Error updating typesVersions:'), error);
   }

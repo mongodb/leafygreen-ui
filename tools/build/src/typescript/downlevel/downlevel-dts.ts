@@ -45,6 +45,10 @@ export async function downlevelDts(
     return;
   }
 
+  // Remove existing downlevel directory
+  fse.ensureDirSync(outputDirPath);
+  fse.emptyDirSync(outputDirPath);
+
   console.log(
     chalk.blue.bold(`Downlevelling TypeScript declarations to TS${target}`),
   );
