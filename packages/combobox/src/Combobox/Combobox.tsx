@@ -1115,7 +1115,9 @@ export function Combobox<M extends boolean>({
    *
    */
 
-  useBackdropClick(closeMenu, [menuRef, comboboxRef], isOpen);
+  useBackdropClick(closeMenu, [menuRef, comboboxRef], {
+    enabled: isOpen,
+  });
 
   /**
    * Checks if multi-select and if there are chips selected. The left padding of the wrapper changes when there are chips selected so we use this to conditionally change the padding.

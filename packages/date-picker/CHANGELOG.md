@@ -1,5 +1,23 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.14
+
+### Patch Changes
+
+- 21bcd4195: Use latest version of `useBackdropClick` hook
+- Updated dependencies [21bcd4195]
+- Updated dependencies [1dbfb7064]
+  - @leafygreen-ui/hooks@8.4.1
+  - @leafygreen-ui/icon@13.3.0
+  - @leafygreen-ui/a11y@2.0.7
+  - @leafygreen-ui/form-field@2.0.11
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/popover@13.0.10
+  - @leafygreen-ui/select@14.1.6
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/icon-button@16.0.11
+  - @leafygreen-ui/typography@20.1.8
+
 ## 3.0.13
 
 ### Patch Changes

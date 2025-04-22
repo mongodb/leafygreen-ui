@@ -1,5 +1,18 @@
 # @leafygreen-ui/text-area
 
+## 10.0.11
+
+### Patch Changes
+
+- Updated dependencies [21bcd4195]
+- Updated dependencies [1dbfb7064]
+  - @leafygreen-ui/hooks@8.4.1
+  - @leafygreen-ui/icon@13.3.0
+  - @leafygreen-ui/form-field@2.0.11
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/typography@20.1.8
+
 ## 10.0.10
 
 ### Patch Changes
