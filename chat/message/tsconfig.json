@@ -1,19 +1,23 @@
-
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src", 
-    "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../../packages/*/src"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../../packages/icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../../packages/*/src"
+      ]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
-  "references": [   
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
+  "references": [
     {
       "path": "../avatar"
     },
@@ -25,7 +29,7 @@
     },
     {
       "path": "../message-feedback"
-    }, 
+    },
     {
       "path": "../../packages/emotion"
     },
@@ -43,12 +47,12 @@
     },
     {
       "path": "../../packages/leafygreen-provider"
-    }, 
+    },
     {
       "path": "../../packages/banner"
     },
     {
       "path": "../rich-links"
-    },
+    }
   ]
 }

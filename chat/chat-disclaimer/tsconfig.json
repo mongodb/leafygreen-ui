@@ -1,41 +1,46 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src", 
-    "baseUrl": ".",
     "paths": {
-      "@leafygreen-ui/icon/dist/*": ["../../packages/icon/src/generated/*"],
-      "@leafygreen-ui/*": ["../../packages/*/src"]
+      "@leafygreen-ui/icon/dist/*": [
+        "../../packages/icon/src/generated/*"
+      ],
+      "@leafygreen-ui/*": [
+        "../../packages/*/src"
+      ]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
-   "references": [
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
+  "references": [
     {
       "path": "../../packages/button"
-    }, 
+    },
     {
       "path": "../../packages/emotion"
-    }, 
+    },
     {
       "path": "../../packages/lib"
-    }, 
+    },
     {
       "path": "../../packages/marketing-modal"
-    }, 
+    },
     {
       "path": "../../packages/modal"
-    }, 
+    },
     {
       "path": "../../packages/tokens"
-    }, 
+    },
     {
       "path": "../../packages/typography"
-    }, 
+    },
     {
       "path": "../../packages/leafygreen-provider"
-    }, 
+    }
   ]
 }
