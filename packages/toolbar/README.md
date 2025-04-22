@@ -70,7 +70,7 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 ### Usage
 
 ```tsx
-import { getTestUtils } from '@leafygreen-ui/gallery-indicator';
+import { getTestUtils } from '@leafygreen-ui/toolbar';
 
 const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Toolbar`. It defaults to 'lg-toolbar' if left empty.
 ```

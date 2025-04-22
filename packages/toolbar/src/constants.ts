@@ -1,0 +1,2 @@
+const TOOLBAR_WIDTH = 48;
+const ICON_BUTTON_HEIGHT = 48;

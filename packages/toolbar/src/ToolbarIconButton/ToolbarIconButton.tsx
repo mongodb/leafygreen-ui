@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align } from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 
@@ -33,7 +33,7 @@ export const ToolbarIconButton = React.forwardRef<
       ToolbarDescendantsContext,
       forwardedRef,
     );
-    const { focusedIndex, shouldFocus, setFocusedIndex, lgids } =
+    const { focusedIndex, shouldFocus, setFocusedIndex, lgIds } =
       useToolbarContext();
     const isFocusable = index === focusedIndex;
 
@@ -56,9 +56,9 @@ export const ToolbarIconButton = React.forwardRef<
 
     return (
       <Tooltip
-        data-testid={lgids?.tooltip}
-        data-lgid={lgids?.tooltip}
-        align="left"
+        data-testid={lgIds?.iconButtonTooltip}
+        data-lgid={lgIds?.iconButtonTooltip}
+        align={Align.Left}
         trigger={
           <div className={triggerStyles}>
             <IconButton
@@ -73,8 +73,8 @@ export const ToolbarIconButton = React.forwardRef<
               tabIndex={isFocusable ? 0 : -1}
               onClick={handleOnClick}
               disabled={disabled}
-              data-testid={lgids?.iconButton}
-              data-lgid={lgids?.iconButton}
+              data-testid={lgIds?.iconButton}
+              data-lgid={lgIds?.iconButton}
               data-active={active}
               ref={ref}
               {...(rest as ComponentPropsWithoutRef<'button'>)}

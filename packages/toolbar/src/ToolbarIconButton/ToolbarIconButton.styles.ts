@@ -1,14 +1,14 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { spacing } from '@leafygreen-ui/tokens';
+import { borderRadius } from '@leafygreen-ui/tokens';
 
 export const baseIconButtonStyles = css`
   &,
   &:hover,
   &[data-hover='true'],
   &::before {
-    border-radius: 6px;
+    border-radius: ${borderRadius[150]}px;
   }
 `;
 
@@ -48,6 +48,6 @@ export const getIconButtonStyles = ({
 
 export const triggerStyles = css`
   display: flex;
-  height: ${spacing[1200]}px;
+  height: ${ICON_BUTTON_HEIGHT}px;
   align-items: center;
 `;

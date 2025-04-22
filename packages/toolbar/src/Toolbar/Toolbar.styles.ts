@@ -1,6 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, focusRing, spacing } from '@leafygreen-ui/tokens';
+import { color, focusRing } from '@leafygreen-ui/tokens';
 
 export const getBaseStyles = ({
   theme,
@@ -12,7 +12,7 @@ export const getBaseStyles = ({
   cx(
     css`
       height: 100%;
-      width: ${spacing[1200]}px;
+      width: ${TOOLBAR_WIDTH}px;
       display: flex;
       flex-direction: column;
       align-items: center;

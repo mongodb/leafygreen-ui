@@ -21,5 +21,5 @@ export type ToolbarProviderProps = DarkModeProps & {
   /**
    * LGIDs for Toolbar components.
    */
-  lgids: GetLgIdsReturnType;
+  lgIds: GetLgIdsReturnType;
 };
