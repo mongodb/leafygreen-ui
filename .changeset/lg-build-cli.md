@@ -1,5 +1,5 @@
 ---
-'@lg-tools/build': minor
+'@lg-tools/build': patch
 ---
 
 Adds `lg-build` cli command.
