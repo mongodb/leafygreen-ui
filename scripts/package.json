@@ -1,0 +1,13 @@
+{
+  "name": "lg-scripts",
+  "description": "Defines dependencies for LeafyGreen scripts, so they don't need to be installed at the root level.",
+  "version": "0.0.0",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "@lg-tools/meta": "workspace:*",
+    "chalk": "^4.1.2",
+    "prettier": "^3.5.3"
+  }
+}
