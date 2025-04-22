@@ -250,22 +250,41 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
           <LongContent />
         </main>
         <div
-          className={css`
-            display: grid;
-            grid-template-columns: 48px 432px;
-            grid-area: drawer;
-            overflow: hidden;
-          `}
+          className={cx(
+            css`
+              display: grid;
+              grid-template-columns: 48px 100px;
+              grid-template-areas: 'toolbar2 drawer2';
+              grid-area: drawer;
+              /* overflow: hidden; */
+              position: relative;
+
+              /* width: 432px; */
+              justify-self: end;
+              transition: all ${drawerTransitionDuration}ms ease-in-out;
+            `,
+            {
+              [css`
+                grid-template-columns: 48px 432px;
+
+                @starting-style {
+                  grid-template-columns: 48px 100px;
+                }
+              `]: open,
+            },
+          )}
         >
           <Toolbar
             className={cx(
               css`
-                position: absolute;
-                top: 0;
-                right: 0;
+                /* position: absolute; */
+                /* top: 0;
+                right: 0; */
                 height: 100%;
-                transition: all ${drawerTransitionDuration}ms linear;
-                transform: translateX(0);
+                /* transition: all ${drawerTransitionDuration}ms linear; */
+                /* transform: translateX(0); */
+
+                grid-area: toolbar2;
               `,
               // {
               //   [css`
@@ -290,9 +309,13 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
             open={open}
             onClose={() => setOpen(false)}
             title="Drawer Title"
-            // className={css`
-            //   position: absolute;
-            // `}
+            className={css`
+              /* position: absolute;
+               */
+              width: 432px;
+              grid-area: drawer2;
+              /* position: unset; */
+            `}
           />
         </div>
         {/*  This logic will be handled internally inside ToolbarDrawerLayout */}

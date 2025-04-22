@@ -28,6 +28,11 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
+  /* transition-behavior: allow-discrete; */
+
+  /* @starting-style {
+    transform: translate3d(0%, 0, 0);
+  } */
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
@@ -38,7 +43,7 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
 const overlayOpenStyles = css`
   opacity: 1;
   /* transform: none; */
-  transform: translate3d(90%, 0, 0);
+  /* transform: translate3d(0%, 0, 0); */
 
   /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     /* transform: none; */
@@ -48,7 +53,7 @@ const overlayOpenStyles = css`
 
 const overlayClosedStyles = css`
   /* opacity: 0; */
-  transform: translate3d(95%, 0, 0);
+  /* transform: translate3d(100%, 0, 0); */
   pointer-events: none;
 
   /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -66,17 +71,28 @@ const getOverlayStyles = ({
   cx(
     css`
       /* position: fixed; */
-      position: absolute;
-      z-index: ${zIndex};
-      top: 0;
+      /* position: absolute; */
+      /* z-index: ${zIndex}; */
+      /* top: 0;
       bottom: 0;
-      right: 0;
-      overflow: visible;
+      right: 0; */
+      /* overflow: visible; */
       /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
         opacity ${drawerTransitionDuration}ms ease-in-out
           ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
 
-      transition: transform 1000ms linear, opacity 1000ms linear;
+      /* transition: transform 1000ms linear, opacity 1000ms linear; */
+
+      /* transform: translate3d(0%, 0, 0);
+
+      &:open {
+        color: red;
+        transform: translate3d(0%, 0, 0);
+
+        @starting-style {
+          transform: translate3d(0%, 0, 0);
+        }
+      } */
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         /* top: unset;

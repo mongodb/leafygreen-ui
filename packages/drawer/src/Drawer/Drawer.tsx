@@ -69,19 +69,19 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const showCloseButton = !!onClose;
     const drawerIndex = getDrawerIndex(id);
 
-    // useIsomorphicLayoutEffect(() => {
-    //   const drawerElement = ref.current;
+    useIsomorphicLayoutEffect(() => {
+      const drawerElement = ref.current;
 
-    //   if (!drawerElement || drawerElement instanceof HTMLDivElement) {
-    //     return;
-    //   }
+      if (!drawerElement || drawerElement instanceof HTMLDivElement) {
+        return;
+      }
 
-    //   if (open) {
-    //     drawerElement.show();
-    //   } else {
-    //     drawerElement.close();
-    //   }
-    // }, [ref, open]);
+      if (open) {
+        drawerElement.show();
+      } else {
+        drawerElement.close();
+      }
+    }, [ref, open]);
 
     useEffect(() => {
       if (open) {
@@ -91,7 +91,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    console.log({ displayMode });
+    // console.log({ displayMode });
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
