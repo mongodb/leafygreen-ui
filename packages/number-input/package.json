@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/number-input",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "description": "leafyGreen UI Kit Number Input",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",

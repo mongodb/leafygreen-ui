@@ -1,5 +1,16 @@
 # @lg-charts/core
 
+## 0.17.1
+
+### Patch Changes
+
+- @lg-charts/chart-card@0.2.4
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+- @leafygreen-ui/typography@20.1.8
+- @lg-charts/colors@0.2.4
+- @lg-charts/series-provider@0.2.2
+
 ## 0.17.0
 
 ### Minor Changes

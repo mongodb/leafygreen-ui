@@ -1,5 +1,14 @@
 # @leafygreen-ui/ordered-list
 
+## 2.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/descendants@2.1.5
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+- @leafygreen-ui/typography@20.1.8
+
 ## 2.0.11
 
 ### Patch Changes

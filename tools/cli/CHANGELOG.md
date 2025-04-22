@@ -1,5 +1,25 @@
 # @lg-tools/cli
 
+## 0.9.0
+
+### Minor Changes
+
+- 579c8300c: Updates `cli` to use the updated `install` script
+
+### Patch Changes
+
+- Updated dependencies [579c8300c]
+- Updated dependencies [579c8300c]
+- Updated dependencies [579c8300c]
+  - @lg-tools/install@0.2.0
+  - @lg-tools/lint@2.1.1
+  - @lg-tools/create@0.3.1
+  - @lg-tools/link@0.2.11
+  - @lg-tools/slackbot@0.2.15
+  - @lg-tools/test@0.4.17
+  - @lg-tools/update@0.1.16
+  - @lg-tools/validate@0.4.6
+
 ## 0.8.0
 
 ### Minor Changes

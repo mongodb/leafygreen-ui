@@ -1,5 +1,11 @@
 # @lg-charts/colors
 
+## 0.2.4
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+
 ## 0.2.3
 
 ### Patch Changes

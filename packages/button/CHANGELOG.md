@@ -1,5 +1,12 @@
 # @leafygreen-ui/button
 
+## 23.1.6
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+
 ## 23.1.5
 
 ### Patch Changes

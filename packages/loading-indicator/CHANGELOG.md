@@ -1,5 +1,13 @@
 # @leafygreen-ui/loading-indicator
 
+## 3.0.11
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+- @leafygreen-ui/typography@20.1.8
+
 ## 3.0.10
 
 ### Patch Changes

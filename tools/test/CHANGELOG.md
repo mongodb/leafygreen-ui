@@ -1,5 +1,12 @@
 # @lg-tools/test
 
+## 0.4.17
+
+### Patch Changes
+
+- Updated dependencies [579c8300c]
+  - @lg-tools/meta@0.5.0
+
 ## 0.4.16
 
 ### Patch Changes
