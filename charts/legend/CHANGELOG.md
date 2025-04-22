@@ -1,5 +1,15 @@
 # @lg-charts/legend
 
+## 0.2.3
+
+### Patch Changes
+
+- @leafygreen-ui/checkbox@15.2.3
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+- @lg-charts/colors@0.2.4
+- @lg-charts/series-provider@0.2.2
+
 ## 0.2.2
 
 ### Patch Changes

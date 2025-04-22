@@ -1,5 +1,11 @@
 # @leafygreen-ui/hooks
 
+## 8.4.1
+
+### Patch Changes
+
+- 21bcd4195: Makes `allowPropagation` option optional
+
 ## 8.4.0
 
 ### Minor Changes

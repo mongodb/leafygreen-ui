@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/segmented-control",
-  "version": "10.0.11",
+  "version": "10.0.12",
   "description": "leafyGreen UI Kit Segmented Control",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
