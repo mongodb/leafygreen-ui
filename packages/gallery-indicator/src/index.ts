@@ -3,8 +3,8 @@ export {
   type GalleryIndicatorProps,
 } from './GalleryIndicator';
 export {
-  getTestUtils,
-  getLgIds,
   DEFAULT_LGID_ROOT,
+  getLgIds,
   type GetLgIdsReturnType,
+  getTestUtils,
 } from './utils';

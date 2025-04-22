@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { getLgIds } from '../utils';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 
 import { GalleryIndicator, GalleryIndicatorProps } from '.';

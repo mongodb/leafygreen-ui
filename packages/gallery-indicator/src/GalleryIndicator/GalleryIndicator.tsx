@@ -2,12 +2,13 @@ import React from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+
 import {
   getGalleryIndicatorStyles,
   getIndicatorStyles,
 } from './GalleryIndicator.styles';
 import { GalleryIndicatorProps } from './GalleryIndicator.types';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 export const GalleryIndicator = React.forwardRef<
   HTMLUListElement,

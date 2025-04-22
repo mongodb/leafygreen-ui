@@ -641,13 +641,13 @@ return (
 
 ## getLgIds
 
-The `getLgIds` utility function generates consistent test IDs for components in the LeafyGreen UI library.
+The `getLgIds` utility function generates test IDs for components in the LeafyGreen UI library.
 
-The function accepts an optional root identifier, allowing consumers to set a unique base ID for each instance of a component. This base is then used to generate additional, scoped test IDs (e.g., for a button), ensuring consistent and predictable targeting in tests.
+The function accepts an optional root identifier, allowing consumers to set a unique base ID for each instance of a component. This base is then used to generate, scoped test IDs, ensuring predictable targeting in tests.
 
 #### Usage
 
-Each component should export a `getLgIds.ts` file. For more information on naming testids, [check out the section on BEM-ish patterns](#follow-bem-ish-patterns-when-hard-coding-a-data-testid-or-data-lgid)
+Each component should export a `getLgIds.ts` file. For more information on naming test IDs, [check out the section on BEM-ish patterns](#follow-bem-ish-patterns-when-hard-coding-a-data-testid-or-data-lgid)
 
 ```js
 export const DEFAULT_LGID_ROOT = 'lg-component';
