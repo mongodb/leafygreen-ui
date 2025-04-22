@@ -71,15 +71,14 @@
     "stream": "^0.0.3",
     "ts-node": "10.9.2",
     "turbo": "^2.0.6",
-    "typescript": "~5.0.4"
+    "typescript": "~5.8.0"
   },
   "pnpm": {
     "overrides": {
       "@testing-library/dom": "9.3.4",
       "@testing-library/user-event": "13.5.0",
       "caniuse-lite": "^1.0.30001585",
-      "jackspeak": "2.1.1",
-      "typescript": "~5.0.4"
+      "jackspeak": "2.1.1"
     }
   },
   "lg": {

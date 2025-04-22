@@ -177,7 +177,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       if (renderMode === RenderMode.TopLayer) {
         // @ts-expect-error - `toggle` event not supported pre-typescript v5
         elements.floating?.addEventListener('toggle', onToggle);
-        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
         elements.floating?.showPopover?.();
       }
 
@@ -195,7 +194,6 @@ export const Popover = forwardRef<HTMLDivElement, PopoverComponentProps>(
       if (renderMode === RenderMode.TopLayer) {
         // @ts-expect-error - `toggle` event not supported pre-typescript v5
         elements.floating?.removeEventListener('toggle', onToggle);
-        // @ts-expect-error - Popover API not currently supported in react v18 https://github.com/facebook/react/pull/27981
         elements.floating?.hidePopover?.();
       }
 
