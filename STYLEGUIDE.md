@@ -663,7 +663,7 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
 export type GetLgIdsReturnType = ReturnType<typeof getLgIds>;
 ```
 
-Inside the component you would use the testids by calling `getLgIds()`
+Inside the component you would use the test IDs by calling `getLgIds()`
 
 #### Component.tsx
 
