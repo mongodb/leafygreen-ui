@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/ripple",
   "version": "1.1.20",
   "description": "leafyGreen UI Kit Ripple",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

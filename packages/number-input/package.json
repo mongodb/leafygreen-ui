@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/number-input",
   "version": "4.1.5",
   "description": "leafyGreen UI Kit Number Input",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

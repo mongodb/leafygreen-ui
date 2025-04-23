@@ -6,7 +6,7 @@
   "bin": {
     "lg-slackbot": "./bin/slackbot.js"
   },
-  "main": "dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {

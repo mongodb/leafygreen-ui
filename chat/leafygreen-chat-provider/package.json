@@ -2,7 +2,7 @@
   "name": "@lg-chat/leafygreen-chat-provider",
   "version": "3.0.2",
   "description": "lg-chat LeafyGreen Chat Context",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

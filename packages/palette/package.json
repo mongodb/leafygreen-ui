@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/palette",
   "version": "4.1.4",
   "description": "LeafyGreen UI Palettes",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
