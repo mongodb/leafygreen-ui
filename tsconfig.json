@@ -1,9 +1,12 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "module": "None",
-    "composite": true,
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "baseUrl": ".",
+    "rootDir": ".",
+    "composite": true,
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"],
