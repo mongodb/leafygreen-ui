@@ -62,7 +62,7 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
         focusedIndex={focusedIndex}
         shouldFocus={isUsingKeyboard}
         setFocusedIndex={setFocusedIndex}
-        lgids={lgIds}
+        lgIds={lgIds}
       >
         <DescendantsProvider
           context={ToolbarDescendantsContext}
