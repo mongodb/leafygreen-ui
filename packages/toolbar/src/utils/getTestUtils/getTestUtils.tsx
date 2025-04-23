@@ -35,7 +35,7 @@ export const getTestUtils = (
 
     return Array.from(
       element.querySelectorAll<HTMLButtonElement>(
-        `[data-lgid=${lgIds.iconButton}]`,
+        `[data-lgid^=${lgIds.iconButton}]`,
       ),
     );
   };

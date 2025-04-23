@@ -56,8 +56,8 @@ export const ToolbarIconButton = React.forwardRef<
 
     return (
       <Tooltip
-        data-testid={lgIds?.iconButtonTooltip}
-        data-lgid={lgIds?.iconButtonTooltip}
+        data-testid={`${lgIds.iconButtonTooltip}-${index}`}
+        data-lgid={`${lgIds.iconButtonTooltip}-${index}`}
         align={Align.Left}
         trigger={
           <div className={triggerStyles}>
@@ -75,8 +75,8 @@ export const ToolbarIconButton = React.forwardRef<
                 handleOnIconButtonClick(event, index, onClick)
               }
               disabled={disabled}
-              data-testid={lgIds?.iconButton}
-              data-lgid={lgIds?.iconButton}
+              data-testid={`${lgIds.iconButton}-${index}`}
+              data-lgid={`${lgIds.iconButton}-${index}`}
               data-active={active}
               ref={ref}
               {...(rest as ComponentPropsWithoutRef<'button'>)}
