@@ -10,12 +10,13 @@ export const findRollupConfigFile = (
 ) => {
   const packageDir = process.cwd();
   const workspaceRoot = getRepositoryRoot();
+  const buildPackageDir = getBuildPackageDir(__dirname);
 
   const packageRollupConfigPath = path.join(packageDir, 'rollup.config.mjs');
   const repoRollupConfigPath = path.join(workspaceRoot, 'rollup.config.mjs');
   const defaultRollupConfigPath = path.join(
-    __dirname, // __dirname is `dist`
-    '../config/rollup.config.mjs',
+    buildPackageDir,
+    './config/rollup.config.mjs',
   );
 
   if (fse.existsSync(packageRollupConfigPath)) {
@@ -56,4 +57,21 @@ export const getRepositoryRoot = (): string => {
     console.error(err);
     return '';
   }
+};
+
+export const getBuildPackageDir = (startDir: string): string => {
+  let currentDir = startDir;
+
+  while (currentDir !== '/') {
+    const packageJsonPath = path.join(currentDir, 'package.json');
+
+    if (fse.existsSync(packageJsonPath)) {
+      return currentDir;
+    }
+
+    // Move up one directory
+    currentDir = path.dirname(currentDir);
+  }
+
+  return '/';
 };
