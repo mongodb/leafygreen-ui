@@ -62,8 +62,7 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
 
     const clipboard = new ClipboardJS(buttonRef.current, {
       text: () => contents,
-      // @ts-expect-error TODO: types
-      container: portalContainer,
+      container: portalContainer ?? undefined,
     });
 
     if (copied) {
