@@ -4,14 +4,8 @@
   "description": "leafyGreen UI Kit Toast",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",

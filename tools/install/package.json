@@ -4,7 +4,7 @@
   "description": "LeafyGreen UI Kit Install",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
     "prebuild": "npx ts-node ./scripts/writePackageNames.ts",

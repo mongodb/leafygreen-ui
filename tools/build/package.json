@@ -12,6 +12,7 @@
   },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c ./config/rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json",
