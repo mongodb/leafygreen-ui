@@ -10,11 +10,9 @@ describe('tools/link/createLinkFrom', () => {
   let spawnSpy: jest.SpyInstance<ChildProcess>;
 
   beforeAll(() => {
-    fsx.emptyDirSync('./tmp');
+    fsx.emptyDirSync('./tmp/');
     fsx.rmdirSync('./tmp/');
-    fsx.mkdirSync('./tmp/');
-    fsx.mkdirSync('./tmp/scope');
-    fsx.mkdirSync('./tmp/scope/test-package');
+    fsx.ensureDirSync('./tmp/scope/test-package');
   });
 
   beforeEach(() => {
@@ -24,7 +22,7 @@ describe('tools/link/createLinkFrom', () => {
 
   afterEach(() => {
     spawnSpy.mockRestore();
-    fsx.emptyDirSync('./tmp');
+    fsx.emptyDirSync('./tmp/');
   });
 
   afterAll(() => {
