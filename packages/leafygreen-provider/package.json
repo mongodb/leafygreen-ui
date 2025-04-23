@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/leafygreen-provider",
   "version": "4.0.7",
   "description": "LeafyGreen UI Context Provider",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

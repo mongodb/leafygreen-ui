@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/gallery-indicator",
   "version": "1.0.8",
   "description": "LeafyGreen UI Kit Gallery Indicator",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",

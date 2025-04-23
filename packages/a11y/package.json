@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/a11y",
   "version": "2.0.7",
   "description": "leafyGreen UI Kit A11y",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

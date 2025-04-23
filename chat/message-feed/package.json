@@ -2,7 +2,7 @@
   "name": "@lg-chat/message-feed",
   "version": "4.1.12",
   "description": "lg-chat Message Feed",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

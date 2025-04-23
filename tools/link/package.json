@@ -3,8 +3,8 @@
   "version": "0.2.11",
   "description": "Tools for linking LeafyGreen packages",
   "license": "Apache-2.0",
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "lg-internal-build-package",

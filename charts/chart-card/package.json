@@ -2,7 +2,7 @@
   "name": "@lg-charts/chart-card",
   "version": "0.2.4",
   "description": "lg-charts ChartCard",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",

@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/text-input",
   "version": "14.0.11",
   "description": "leafyGreen UI Kit Text Input",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

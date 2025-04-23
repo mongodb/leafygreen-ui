@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/emotion",
   "version": "4.1.1",
   "description": "leafyGreen UI Kit's Custom Instance of Emotion",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

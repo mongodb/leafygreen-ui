@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/typography",
   "version": "20.1.8",
   "description": "leafyGreen UI Kit Typography",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/toggle",
   "version": "11.0.9",
   "description": "LeafyGreen UI Kit Toggle",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
