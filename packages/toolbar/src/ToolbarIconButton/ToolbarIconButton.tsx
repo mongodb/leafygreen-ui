@@ -24,6 +24,7 @@ export const ToolbarIconButton = React.forwardRef<
       glyph,
       disabled = false,
       active = false,
+      'aria-label': ariaLabel,
       ...rest
     }: ToolbarIconButtonProps,
     forwardedRef,
@@ -62,7 +63,7 @@ export const ToolbarIconButton = React.forwardRef<
         trigger={
           <div className={triggerStyles}>
             <IconButton
-              aria-label={getNodeTextContent(label)}
+              aria-label={ariaLabel || getNodeTextContent(label)}
               active={active}
               className={getIconButtonStyles({
                 theme,
