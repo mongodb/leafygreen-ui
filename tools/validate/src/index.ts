@@ -21,7 +21,7 @@ export const validate = async (options: ValidateCommandOptions) => {
       process.exit(0);
     })
     .catch(err => {
-      console.log('Some validation failed.');
+      console.log('❌ Some validation failed.');
       console.error(err);
       process.exit(1);
     });
