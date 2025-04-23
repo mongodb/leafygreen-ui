@@ -2051,6 +2051,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
       '@rollup/plugin-url':
         specifier: 8.0.2
         version: 8.0.2

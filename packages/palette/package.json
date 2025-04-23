@@ -19,6 +19,7 @@
   "devDependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@lg-tools/build": "workspace:^",
     "@rollup/plugin-url": "8.0.2",
     "polished": "^4.2.2"
   },
