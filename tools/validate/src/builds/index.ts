@@ -3,17 +3,16 @@
  */
 
 /* eslint-disable no-console */
-import { getAllPackages, getPackageName } from '@lg-tools/meta';
+import { getAllPackages, getPackageJson } from '@lg-tools/meta';
 import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
-import vm from 'vm';
 
 import { ValidateCommandOptions } from '../validate.types';
 
-import { ModuleType } from './modules.types';
+import { getModuleTypes } from './getModuleTypes';
 
-// A list of
+// A list of packages to ignore
 const ignorePackages = ['@lg-tools/storybook'];
 
 /**
@@ -31,14 +30,22 @@ export const validateBuilds = ({
 
     // Check that every package's /dist folder has a valid UMD, ESM & TS files
     for (const pkgPath of packagePaths) {
-      const pkgName = getPackageName(pkgPath);
+      const pkgJson = getPackageJson(pkgPath);
 
-      if (!pkgName) {
+      if (!pkgJson) {
         exit1('Invalid package path: ' + pkgPath);
         return;
       }
 
-      // Skip packages
+      // extract the name and output paths from the package.json
+      const {
+        name: pkgName,
+        main: umdPath,
+        module: esmPath,
+        types: typesPath,
+      } = pkgJson;
+
+      // Skip some packages
       if (ignorePackages.includes(pkgName)) {
         continue;
       }
@@ -51,29 +58,65 @@ export const validateBuilds = ({
         return;
       }
 
-      const umdIndex = path.resolve(distDir, `index.js`);
+      const umdIndex = path.resolve(pkgPath, umdPath);
       const umdExists = fse.existsSync(umdIndex);
-      const isCJSValid = umdExists && getModuleTypes(umdIndex).includes('cjs');
+      const isUMDValid = umdExists && getModuleTypes(umdIndex).includes('cjs');
 
-      const esmIndex = path.resolve(distDir, `esm/index.js`);
+      const esmIndex = path.resolve(pkgPath, esmPath);
       const esmExists = fse.existsSync(esmIndex);
       const isESMValid = esmExists && getModuleTypes(esmIndex).includes('esm');
 
-      const tsIndex = path.resolve(distDir, `index.d.ts`);
+      const tsIndex = path.resolve(pkgPath, typesPath);
       const tsExists = fse.existsSync(tsIndex);
 
-      verbose &&
-        console.log({
-          pkgName,
-          umdExists,
-          esmExists,
-          tsExists,
-          isCJSValid,
-          isESMValid,
-        });
+      if (verbose) {
+        console.log(chalk.blue(pkgName));
+        console.log(chalk.gray('UMD: '));
+        console.log(
+          chalk.gray(
+            JSON.stringify(
+              {
+                index: path.relative(pkgPath, umdIndex),
+                exists: umdExists,
+                valid: isUMDValid,
+              },
+              null,
+              2,
+            ),
+          ),
+        );
+        console.log(chalk.gray('ESM: '));
+        console.log(
+          chalk.gray(
+            JSON.stringify(
+              {
+                index: path.relative(pkgPath, umdIndex),
+                exists: umdExists,
+                valid: isUMDValid,
+              },
+              null,
+              2,
+            ),
+          ),
+        );
+        console.log(chalk.gray('Types '));
+        console.log(
+          chalk.gray(
+            JSON.stringify(
+              {
+                index: path.relative(pkgPath, umdIndex),
+                exists: umdExists,
+                valid: isUMDValid,
+              },
+              null,
+              2,
+            ),
+          ),
+        );
+      }
 
       if (
-        ![umdExists, esmExists, tsExists, isCJSValid, isESMValid].every(Boolean)
+        ![umdExists, esmExists, tsExists, isUMDValid, isESMValid].every(Boolean)
       ) {
         const errorMsg: Array<string> = [
           chalk.red.bold(`Error in package \`${pkgName}\`:`),
@@ -82,7 +125,7 @@ export const validateBuilds = ({
         if (!esmExists)
           errorMsg.push(chalk.red('`dist/esm/index.js` not found'));
         if (!tsExists) errorMsg.push(chalk.red('Typescript build not found'));
-        if (!isCJSValid)
+        if (!isUMDValid)
           errorMsg.push(
             chalk.red(`UMD module not valid`),
             chalk.gray(`(${umdIndex})`),
@@ -110,89 +153,3 @@ export const validateBuilds = ({
     }
   });
 };
-
-/**
- * Adapted from https://github.com/formatjs/js-module-formats
- *
- * Analyze JavaScript source, collecting the module or modules information when possible.
- * @method extract
- * @default
- * @param {string} path The JavaScript source path to be analyzed
- * @return {object|array} an object or a collection of object with the info gathered from the analysis, it usually includes objects with `type` and `name` per module.
- **/
-function getModuleTypes(path: string): Array<ModuleType> {
-  // Essentially we're looking for import/export statements
-  const ES6ImportExportRegExp =
-    /(?:^\s*|[}{();,\n]\s*)(import\s*['"][a-zA-Z]+['"]|(import|module)\s*[^"'()\n;]+\s*from\s*['"]|export\s*((\*|\{|default|function|var|const|let|[_$a-zA-Z\xA0-\uFFFF])[\s_$a-zA-Z0-9\xA0-\uFFFF]*))/;
-  const ES6AliasRegExp =
-    /(?:^\s*|[}{();,\n]\s*)(export\s*\*\s*from\s*(?:'([^']+)'|"([^"]+)"))/;
-  const context = vm.createContext({});
-  const mods: Array<ModuleType> = [];
-
-  /**
-   * YUI detection is based on a simple rule:
-   * - if `YUI.add()` is called
-   **/
-  context.YUI = {
-    add: function () {
-      mods.push(ModuleType.yui);
-    },
-  };
-
-  /**
-  AMD detection is based on a simple rule:
-  - if `define()` is called
-  **/
-  context.define = function () {
-    mods.push(ModuleType.amd);
-  };
-
-  /**
-  Steal detection is based on a simple rule:
-  - if `steal()` is called
-  **/
-  context.steal = function () {
-    mods.push(ModuleType.steal);
-  };
-
-  /**
-  CommonJS detection is based on simple rules:
-  -    if the script calls `require()`
-  - or if the script tries to export a function thru `module.exports`
-  - or if the script tries to export an object thru `module.exports`
-  - or if the script tries to export a function thru `exports`
-  - or if the script tries to export an object thru `exports`
-  - or if the script tries to add a new member to `module.exports`
-  **/
-  context.require = function () {
-    mods.push(ModuleType.cjs);
-    throw new Error('Confirmed CJS Package. Stop Execution');
-  };
-  context.exports = Object.create(null);
-  context.module = context;
-
-  const src = fse.readFileSync(path, 'utf-8');
-
-  // executing the JavaScript source into a new context to avoid leaking
-  // globals during the detection process.
-  try {
-    vm.runInContext(src, context);
-  } catch (_e) {
-    if (ES6ImportExportRegExp.test(src) || ES6AliasRegExp.test(src)) {
-      mods.push(ModuleType.esm);
-    }
-  } finally {
-    // very dummy detection process for CommonJS modules
-    if (
-      typeof context.exports === 'function' ||
-      typeof context.exports === 'string' ||
-      typeof context.exports === 'number' ||
-      Object.keys(context.exports).length > 0 ||
-      Object.getPrototypeOf(context.exports)
-    ) {
-      mods.push(ModuleType.cjs);
-    }
-  }
-
-  return mods;
-}
