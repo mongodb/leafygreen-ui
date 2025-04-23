@@ -4,4 +4,3 @@ packages:
   - 'chat/*'
   - 'packages/*'
   - 'tools/*'
-  - 'scripts'
