@@ -35,4 +35,16 @@ const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   })),
 );
 
+iconConfigs.push(
+  ...getGeneratedFiles().map(file => ({
+    ...umdConfig,
+    input: `src/generated/${path.basename(file)}`,
+    output: {
+      ...umdConfig.output,
+      dir: 'dist',
+      name: `${path.basename(file, path.extname(file))}.js`,
+    },
+  })),
+);
+
 export default [esmConfig, umdConfig, storiesConfig, ...iconConfigs];
