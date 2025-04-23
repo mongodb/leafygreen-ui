@@ -1,12 +1,7 @@
+export { getTestUtils, type TestUtilsReturnType } from './testing';
 export { Toolbar, type ToolbarProps } from './Toolbar';
 export {
   ToolbarIconButton,
   type ToolbarIconButtonProps,
 } from './ToolbarIconButton';
-export {
-  DEFAULT_LGID_ROOT,
-  getLgIds,
-  type GetLgIdsReturnType,
-  getTestUtils,
-  type TestUtilsReturnType,
-} from './utils';
+export { DEFAULT_LGID_ROOT, getLgIds, type GetLgIdsReturnType } from './utils';

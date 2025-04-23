@@ -1,6 +1,6 @@
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
 
