@@ -1,5 +1,6 @@
 ---
-'@lg-tools/build': patch
+'@lg-tools/build': minor
 ---
 
-Uses "${configDir}" in base package.json baseUrl, rootDir, outDir, & declarationDir properties
+- Updates default types directory to `./dist/types`
+- Uses "${configDir}" in base package.json baseUrl, rootDir, outDir, & declarationDir properties
