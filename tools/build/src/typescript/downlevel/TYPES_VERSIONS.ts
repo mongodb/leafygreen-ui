@@ -7,14 +7,7 @@ interface DownlevelVersion {
 
 // TS Downlevel mapping
 export const DOWNLEVEL_VERSIONS = [
-  {
-    condition: '<4.8',
-    target: '4.0',
-  },
-  {
-    condition: '<5.0',
-    target: '4.9',
-  },
+  // No downlevelling for now
 ] as const satisfies Readonly<Array<DownlevelVersion>>;
 
 // Packages to exclude from typesVersions updates
