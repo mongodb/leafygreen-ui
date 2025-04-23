@@ -11,19 +11,21 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { ChartOptions } from '../Chart/Chart.types';
+import { type ChartOptions, X_AXIS_ID } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { XAxisProps } from './XAxis.types';
 
 const getOptions = ({
+  id,
   theme,
   type,
   label,
   formatter,
-}: XAxisProps & { theme: Theme }): Partial<ChartOptions> => {
+}: XAxisProps & { id: string; theme: Theme }): Partial<ChartOptions> => {
   const options: Partial<ChartOptions> = {
     xAxis: {
+      id,
       type: type,
       axisLine: {
         show: true,
@@ -101,23 +103,28 @@ export function XAxis({ type, label, formatter }: XAxisProps) {
   const { chart } = useChartContext();
   const { theme } = useDarkMode();
 
-  // const { ready, updateOptions } = chart;
+  const { ready, updateOptions } = chart;
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
-    chart.updateOptions(getOptions({ type, label, formatter, theme }));
+    updateOptions(
+      getOptions({ id: X_AXIS_ID, type, label, formatter, theme }),
+      ['xAxis'],
+    );
 
     return () => {
       /**
        * Hides the axis when the component is unmounted.
        */
-      chart.updateOptions({
-        xAxis: unsetAxisOptions,
-      });
+      updateOptions(
+        {
+          xAxis: { id: X_AXIS_ID, ...unsetAxisOptions },
+        },
+        ['xAxis'],
+      );
     };
-    // }, [formatter, label, ready, theme, type, updateOptions]);
-  }, [chart, formatter, label, theme, type]);
+  }, [formatter, label, ready, theme, type, updateOptions]);
 
   return null;
 }

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
@@ -21,6 +22,7 @@ import {
 } from './ThresholdLine.types';
 
 function getThresholdLineConfig({
+  id,
   name,
   position,
   theme,
@@ -28,6 +30,7 @@ function getThresholdLineConfig({
   value,
 }: GetThresholdLineConfig): SeriesOption {
   return {
+    id,
     name,
     type: 'line', // Requires a type even though it's not an actual series
     markLine: {
@@ -96,6 +99,11 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
   const { theme } = useDarkMode();
 
   const { addSeries, ready, removeSeries } = chart;
+
+  const id = useIdAllocator({
+    prefix: 'threshold-line',
+  });
+
   const name = `threshold-${position}`;
 
   useEffect(() => {
@@ -107,12 +115,14 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a ChartTooltip.
      */
-    addSeries(getThresholdLineConfig({ name, position, theme, label, value }));
+    addSeries(
+      getThresholdLineConfig({ id, name, position, theme, label, value }),
+    );
 
     return () => {
-      removeSeries(name);
+      removeSeries(id);
     };
-  }, [addSeries, label, name, position, ready, removeSeries, theme, value]);
+  }, [addSeries, id, label, name, position, ready, removeSeries, theme, value]);
 
   return null;
 }

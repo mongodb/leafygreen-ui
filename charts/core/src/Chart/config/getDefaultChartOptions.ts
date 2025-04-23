@@ -11,6 +11,10 @@ import {
 
 import { ChartOptions } from '../Chart.types';
 
+export const TOOLBOX_ID = 'toolbox';
+export const X_AXIS_ID = 'x-axis';
+export const Y_AXIS_ID = 'y-axis';
+
 const commonAxisOptions = {
   /**
    * Axes need to be hidden explicitly to prevent error when rendering chart without Axis
@@ -66,17 +70,20 @@ export const getDefaultChartOptions = (
   },
 
   xAxis: {
+    id: X_AXIS_ID,
     type: 'time',
     ...commonAxisOptions,
   },
 
   yAxis: {
+    id: Y_AXIS_ID,
     type: 'value',
     ...commonAxisOptions,
   },
 
   // Sets up zooming
   toolbox: {
+    id: TOOLBOX_ID,
     feature: {
       dataZoom: {
         show: true,
