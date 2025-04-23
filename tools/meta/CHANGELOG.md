@@ -1,5 +1,11 @@
 # @lg-tools/meta
 
+## 0.5.0
+
+### Minor Changes
+
+- 579c8300c: Updates `getAllPackages`, `getLGConfig` and `getRootPackageJson` to read from `getRepositoryRoot` (instead of relying on `process.cwd()`)
+
 ## 0.4.2
 
 ### Patch Changes

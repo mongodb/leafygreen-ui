@@ -1,5 +1,11 @@
 # @lg-tools/lint
 
+## 2.1.1
+
+### Patch Changes
+
+- 579c8300c: Updates `formatLG` to return the original text if no errors are found
+
 ## 2.1.0
 
 ### Minor Changes

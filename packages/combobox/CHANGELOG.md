@@ -1,5 +1,24 @@
 # @leafygreen-ui/combobox
 
+## 11.0.16
+
+### Patch Changes
+
+- 21bcd4195: Use latest version of `useBackdropClick` hook
+- Updated dependencies [21bcd4195]
+- Updated dependencies [1dbfb7064]
+  - @leafygreen-ui/hooks@8.4.1
+  - @leafygreen-ui/icon@13.3.0
+  - @leafygreen-ui/checkbox@15.2.3
+  - @leafygreen-ui/form-field@2.0.11
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/popover@13.0.10
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/chip@3.0.11
+  - @leafygreen-ui/icon-button@16.0.11
+  - @leafygreen-ui/input-option@3.0.11
+  - @leafygreen-ui/typography@20.1.8
+
 ## 11.0.15
 
 ### Patch Changes

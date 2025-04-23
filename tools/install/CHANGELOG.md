@@ -1,5 +1,17 @@
 # @lg-tools/install
 
+## 0.2.0
+
+### Minor Changes
+
+- 579c8300c: Adds `--essentials`, `--basic`, `--core`, `--charts`, and `--chat` flags. See the [README](./README.md) for more details.
+- 579c8300c: Updates install script to read from packages existing in this repository, instead of fetching from npm
+
+### Patch Changes
+
+- Updated dependencies [579c8300c]
+  - @lg-tools/meta@0.5.0
+
 ## 0.1.15
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @leafygreen-ui/inline-definition
 
+## 8.0.11
+
+### Patch Changes
+
+- Updated dependencies [21bcd4195]
+  - @leafygreen-ui/tooltip@13.0.11
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 8.0.10
 
 ### Patch Changes

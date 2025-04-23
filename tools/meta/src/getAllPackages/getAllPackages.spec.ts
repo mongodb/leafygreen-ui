@@ -1,14 +1,33 @@
 import fsx from 'fs-extra';
 
+import { getLGConfig } from '../getLGConfig';
+import { getRepositoryRoot } from '../getRepositoryRoot';
+
 import { getAllPackages } from './getAllPackages';
+
+jest.mock('../getLGConfig', () => ({
+  getLGConfig: jest.fn(),
+}));
+
+jest.mock('../getRepositoryRoot', () => ({
+  getRepositoryRoot: jest.fn(),
+}));
 
 describe('tools/meta/getAllPackages', () => {
   beforeAll(() => {
     fsx.mkdirSync('./tmp/');
   });
+
   beforeEach(() => {
-    jest.spyOn(process, 'cwd').mockReturnValue('./tmp');
+    (getRepositoryRoot as jest.Mock).mockReturnValue('./tmp');
+    // Mock the return value of getLGConfig
+    (getLGConfig as jest.Mock).mockReturnValue({
+      scopes: {
+        '@lg-test': 'test',
+      },
+    });
   });
+
   afterEach(() => {
     fsx.emptyDirSync('./tmp');
     jest.clearAllMocks();
@@ -24,32 +43,22 @@ describe('tools/meta/getAllPackages', () => {
   });
 
   test('returns an array of test packages', () => {
-    fsx.writeJSONSync('./tmp/package.json', {
-      lg: {
-        scopes: {
-          '@lg-test': 'test/',
-        },
-      },
-    });
-    fsx.mkdirSync('./tmp/test');
-    fsx.mkdirSync('./tmp/test/test-package');
+    fsx.ensureDirSync('./tmp/test/test-package');
     const allPackages = getAllPackages();
     expect(allPackages).toEqual([expect.stringMatching(/test-package$/)]);
   });
 
   test('returns an array of test packages in all scopes', () => {
-    fsx.writeJSONSync('./tmp/package.json', {
-      lg: {
-        scopes: {
-          '@lg-test': 'test/',
-          '@lg-mock': 'mock/',
-        },
+    // Mock the return value of getLGConfig
+    (getLGConfig as jest.Mock).mockReturnValue({
+      scopes: {
+        '@lg-test': 'test/',
+        '@lg-mock': 'mock/',
       },
     });
-    fsx.mkdirSync('./tmp/test');
-    fsx.mkdirSync('./tmp/test/test-package');
-    fsx.mkdirSync('./tmp/mock');
-    fsx.mkdirSync('./tmp/mock/mock-package');
+
+    fsx.ensureDirSync('./tmp/test/test-package');
+    fsx.ensureDirSync('./tmp/mock/mock-package');
     const allPackages = getAllPackages();
     expect(allPackages).toHaveLength(2);
   });
