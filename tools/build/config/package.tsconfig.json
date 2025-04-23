@@ -2,8 +2,8 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "node",
-    "target": "ES2017",
+    "moduleResolution": "bundler",
+    "target": "ES2020",
     "jsx": "react",
     "incremental": true,
     "composite": true,
@@ -17,6 +17,11 @@
     "strict": true,
     "strictNullChecks": true,
     "pretty": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "baseUrl": "${configDir}",
+    "rootDir": "${configDir}/src",
+    "outDir": "${configDir}/dist",
+    "declarationDir": "${configDir}/dist/types"
   }
 }

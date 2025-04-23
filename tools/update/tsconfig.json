@@ -1,12 +1,10 @@
 {
   "extends": "@lg-tools/build/config/node.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": ".",
     "paths": {
-      "@lg-tools/*": ["../*/src"]
+      "@lg-tools/*": [
+        "../*/src"
+      ]
     }
   },
   "references": [
@@ -17,6 +15,11 @@
       "path": "../meta"
     }
   ],
-  "include": ["src/**/*"],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ]
 }
