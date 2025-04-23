@@ -2,8 +2,8 @@
   "name": "@lg-tools/lint",
   "version": "2.1.1",
   "description": "Lint rules & config for LeafyGreen repositories",
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "publishConfig": {
@@ -21,6 +21,7 @@
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.16.0",
     "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
     "@types/cli-progress": "^3.11.6",
     "@types/cross-spawn": "6.0.2",
     "@types/prettier": "^2.7.0",

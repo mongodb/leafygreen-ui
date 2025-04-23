@@ -2,7 +2,7 @@
   "name": "@lg-chat/input-bar",
   "version": "7.0.13",
   "description": "lg-chat Input Bar",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

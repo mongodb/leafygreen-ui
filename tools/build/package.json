@@ -10,8 +10,9 @@
     "lg-internal-build-package": "./bin/build-package.js",
     "lg-ts-downlevel": "./bin/ts-downlevel.js"
   },
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "rollup -c ./config/rollup.config.mjs",
     "tsc": "tsc --build tsconfig.json",

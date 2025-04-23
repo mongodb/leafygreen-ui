@@ -2,7 +2,7 @@
   "name": "@lg-charts/series-provider",
   "version": "0.2.2",
   "description": "lg-charts SeriesProvider Component",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",

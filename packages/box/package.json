@@ -2,7 +2,7 @@
   "name": "@leafygreen-ui/box",
   "version": "4.0.3",
   "description": "leafyGreen UI Kit Box",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

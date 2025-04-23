@@ -2,7 +2,7 @@
   "name": "@lg-tools/install",
   "version": "0.2.0",
   "description": "LeafyGreen UI Kit Install",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",

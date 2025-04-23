@@ -6,8 +6,8 @@
   "bin": {
     "lg-slackbot": "./bin/slackbot.js"
   },
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "lg-internal-build-package",
