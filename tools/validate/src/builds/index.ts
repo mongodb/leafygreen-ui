@@ -11,10 +11,6 @@ import path from 'path';
 import { ValidateCommandOptions } from '../validate.types';
 
 import { getModuleTypes } from './getModuleTypes';
-
-// A list of packages to ignore
-const ignorePackages = ['@lg-tools/storybook'];
-
 /**
  * Validates `umd`, `esm` and TS build integrity for all packages in the repository.
  */
@@ -52,12 +48,6 @@ export const validateBuilds = ({
         isESMValid: true,
         tsExists: true,
       };
-
-      // Skip some packages
-      if (ignorePackages.includes(pkgName)) {
-        verbose && console.log(chalk.gray(`Skipping package ${pkgName}`));
-        continue;
-      }
 
       const distDir = path.resolve(pkgPath, 'dist');
       const buildExists = fse.existsSync(distDir);
