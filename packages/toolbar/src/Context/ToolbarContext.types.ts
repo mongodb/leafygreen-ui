@@ -14,12 +14,16 @@ export type ToolbarProviderProps = DarkModeProps & {
   shouldFocus?: boolean;
 
   /**
-   * Function to set the focused index in the toolbar.
-   */
-  setFocusedIndex?: React.Dispatch<React.SetStateAction<number>>;
-
-  /**
    * LGIDs for Toolbar components.
    */
   lgIds: GetLgIdsReturnType;
+
+  /**
+   * Callback to handle clicks on ToolbarIconButtons.
+   */
+  handleOnIconButtonClick: (
+    event: React.MouseEvent<HTMLButtonElement>,
+    focusedIndex: number,
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
+  ) => void;
 };

@@ -14,8 +14,8 @@ import { ToolbarProviderProps } from './ToolbarContext.types';
 export const ToolbarContext = createContext<ToolbarProviderProps>({
   focusedIndex: undefined,
   shouldFocus: false,
-  setFocusedIndex: () => {},
   lgIds: getLgIds(),
+  handleOnIconButtonClick: () => {},
 });
 
 export const useToolbarContext = () =>
@@ -27,8 +27,8 @@ export const ToolbarContextProvider = ({
   children,
   focusedIndex,
   shouldFocus,
-  setFocusedIndex,
   lgIds,
+  handleOnIconButtonClick,
   darkMode = false,
 }: PropsWithChildren<ToolbarProviderProps>) => {
   const ToolbarProvider = (
@@ -39,10 +39,10 @@ export const ToolbarContextProvider = ({
     return {
       focusedIndex,
       shouldFocus,
-      setFocusedIndex,
       lgIds,
+      handleOnIconButtonClick,
     };
-  }, [focusedIndex, shouldFocus, setFocusedIndex, lgIds]);
+  }, [focusedIndex, shouldFocus, lgIds, handleOnIconButtonClick]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

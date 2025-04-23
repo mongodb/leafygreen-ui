@@ -33,7 +33,7 @@ export const ToolbarIconButton = React.forwardRef<
       ToolbarDescendantsContext,
       forwardedRef,
     );
-    const { focusedIndex, shouldFocus, setFocusedIndex, lgIds } =
+    const { focusedIndex, shouldFocus, lgIds, handleOnIconButtonClick } =
       useToolbarContext();
     const isFocusable = index === focusedIndex;
 
@@ -54,12 +54,6 @@ export const ToolbarIconButton = React.forwardRef<
       if (isFocusable && shouldFocus) ref.current?.focus();
     }, [isFocusable, ref, shouldFocus]);
 
-    const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onClick?.(event);
-      // This ensures that on click, the buttons tabIndex is set to 0 so that when the up/down arrows are pressed, the correct button is focused
-      setFocusedIndex?.(index);
-    };
-
     return (
       <Tooltip
         data-testid={lgIds?.iconButtonTooltip}
@@ -77,7 +71,9 @@ export const ToolbarIconButton = React.forwardRef<
                 className,
               })}
               tabIndex={isFocusable ? 0 : -1}
-              onClick={handleOnClick}
+              onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                handleOnIconButtonClick(event, index, onClick)
+              }
               disabled={disabled}
               data-testid={lgIds?.iconButton}
               data-lgid={lgIds?.iconButton}

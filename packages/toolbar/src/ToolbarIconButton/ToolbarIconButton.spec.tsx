@@ -2,6 +2,8 @@ import React, { createRef } from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { Toolbar } from '../Toolbar';
+
 import { ToolbarIconButton } from '.';
 
 describe('packages/toolbar-icon-button', () => {
@@ -18,7 +20,9 @@ describe('packages/toolbar-icon-button', () => {
   test('calls onClick when clicked', () => {
     const onClick = jest.fn();
     const { getByRole } = render(
-      <ToolbarIconButton glyph="Code" label="Code" onClick={onClick} />,
+      <Toolbar>
+        <ToolbarIconButton glyph="Code" label="Code" onClick={onClick} />
+      </Toolbar>,
     );
     getByRole('button').click();
     expect(onClick).toHaveBeenCalledTimes(1);

@@ -34,20 +34,24 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
 
     const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
 
-    // Implements roving tabindex
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    /**
+     * Implements roving tabindex
+     * https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_roving_tabindex
+     * @param event Keyboard event
+     */
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
       // Note: Arrow keys don't fire a keyPress event — need to use onKeyDownCapture
       // We only handle up and down arrow keys
-      switch (e.key) {
+      switch (event.key) {
         case keyMap.ArrowDown:
-          e.stopPropagation();
-          e.preventDefault();
+          event.stopPropagation();
+          event.preventDefault();
           setIsUsingKeyboard(true);
           setFocusedIndex((focusedIndex + 1) % childrenLength);
           break;
         case keyMap.ArrowUp:
-          e.stopPropagation();
-          e.preventDefault();
+          event.stopPropagation();
+          event.preventDefault();
           setIsUsingKeyboard(true);
           setFocusedIndex((focusedIndex - 1 + childrenLength) % childrenLength);
           break;
@@ -56,13 +60,30 @@ export const Toolbar = React.forwardRef<HTMLDivElement, ToolbarProps>(
       }
     };
 
+    /**
+     * Callback to handle click events on ToolbarIconButtons.
+     * Also updates the focused index to ensure that the correct button is focused when using the up/down arrows.
+     * @param event MouseEvent
+     * @param focusedIndex number
+     * @param onClick MouseEvent
+     */
+    const handleOnIconButtonClick = (
+      event: React.MouseEvent<HTMLButtonElement>,
+      focusedIndex: number,
+      onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
+    ) => {
+      onClick?.(event);
+      // This ensures that on click, the buttons tabIndex is set to 0 so that when the up/down arrows are pressed, the correct button is focused
+      setFocusedIndex(focusedIndex);
+    };
+
     return (
       <ToolbarContextProvider
         darkMode={darkMode}
         focusedIndex={focusedIndex}
         shouldFocus={isUsingKeyboard}
-        setFocusedIndex={setFocusedIndex}
         lgIds={lgIds}
+        handleOnIconButtonClick={handleOnIconButtonClick}
       >
         <DescendantsProvider
           context={ToolbarDescendantsContext}
