@@ -16,8 +16,7 @@ import { keyMap } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
-import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
-import { TestUtilsReturnType } from '../utils/getTestUtils/getTestUtils.types';
+import { getTestUtils, type TestUtilsReturnType } from '../testing';
 import { Option, OptionGroup, Select } from '..';
 
 import { SelectProps, State } from './Select.types';

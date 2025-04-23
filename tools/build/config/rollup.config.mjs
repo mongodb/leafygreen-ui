@@ -4,95 +4,26 @@ import { fileURLToPath } from 'node:url';
 import babel from '@rollup/plugin-babel';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import urlPlugin from '@rollup/plugin-url';
 import svgr from '@svgr/rollup';
-import fs from 'fs';
 import { glob } from 'glob';
 import path from 'path';
 import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
-import { bundleStats } from 'rollup-plugin-bundle-stats';
 
-const require = createRequire(import.meta.url);
-const storyGlob = 'src/*.stor{y,ies}.tsx';
+import { getUMDGlobals } from './utils/getUMDGlobals.mjs';
+
 const extensions = ['.ts', '.tsx'];
-
-const {
-  name,
-  dependencies,
-  devDependencies,
-  peerDependencies,
-} = require(path.resolve(process.cwd(), 'package.json'));
+const testUtilsFilename = 'src/testing/index.ts';
+const storyGlob = 'src/*.stor{y,ies}.tsx';
 
 const babelConfigPath = fileURLToPath(
   new URL('babel.config.js', import.meta.url),
 );
 
-const allDependencies = {
-  ...dependencies,
-  ...devDependencies,
-  ...peerDependencies,
-};
-
-/**
- *
- * @returns An array of all glyph import paths
- */
-function getDirectGlyphImports() {
-  const pkgHasIconDependency = allDependencies['@leafygreen-ui/icon'];
-  const glyphsDir = path.resolve(process.cwd(), '../icon/src/glyphs');
-
-  if (pkgHasIconDependency && fs.existsSync(glyphsDir)) {
-    return fs
-      .readdirSync(glyphsDir)
-      .filter(path => /.svg/.test(path))
-      .map(
-        fileName =>
-          `@leafygreen-ui/icon/dist/${path.basename(fileName, '.svg')}`,
-      );
-  }
-
-  return [];
-}
-
-const lgGlobals = Object.keys(allDependencies).reduce((acc, pkg) => {
-  acc[pkg] = pkg;
-  return acc;
-}, {});
-
-const iconGlobals = getDirectGlyphImports().reduce((acc, glyph) => {
-  acc[glyph] = /[^/]+$/.exec(glyph)[0];
-  return acc;
-}, {});
-
-// Mapping of packages to the `window` property they'd be
-// bound to if used in the browser without a module loader.
-// This is defined on a best effort basis since not all
-// modules are compatible with being loaded directly.
-const globalsMap = {
-  clipboard: 'ClipboardJS',
-  'cross-spawn': 'crossSpawn',
-  '@emotion/server/create-instance': 'createEmotionServer',
-  '@emotion/css/create-instance': 'createEmotion',
-  'highlight.js/lib/core': 'hljs',
-  'highlightjs-graphql': 'hljsDefineGraphQL',
-  'fs-extra': 'fse',
-  polished: 'polished',
-  react: 'React',
-  'react-dom': 'ReactDOM',
-  lodash: '_',
-  ...lgGlobals,
-  ...iconGlobals,
-};
-
-const globals = id => {
-  if (globalsMap[id]) return globalsMap[id];
-  if (/lodash/.test(id)) return id.replace(/lodash/, '');
-
-  if (/highlight\.js\/lib\/languages/.test(id)) {
-    return id.replace(/highlight\.js\/lib\/languages/, '');
-  }
-};
+// Read `name` from the current package's package.json
+const { name } = createRequire(import.meta.url)(
+  path.resolve(process.cwd(), 'package.json'),
+);
 
 const external = [/node_modules/];
 
@@ -101,57 +32,74 @@ const moduleFormatToDirectory = {
   umd: 'dist/umd',
 };
 
-const configForFormat = format => ({
-  input: 'src/index.ts',
-  output: {
-    dir: moduleFormatToDirectory[format],
-    name,
-    format,
-    sourcemap: true,
-    globals,
-    interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
-    validate: true,
-  },
-  plugins: [
-    nodePolyfills(),
-    nodeExternals({ deps: true }),
-    nodeResolve({ extensions }),
+const doTestUtilsExist = glob.sync(testUtilsFilename).length > 0;
 
-    babel({
-      babelrc: false,
-      babelHelpers: 'bundled',
-      extensions,
-      configFile: babelConfigPath,
-      sourceMaps: 'inline',
-      envName: 'production',
-    }),
+const createConfigForFormat = format => {
+  const formatConfig = {
+    input: ['src/index.ts'],
+    output: {
+      dir: moduleFormatToDirectory[format],
+      name,
+      format,
+      sourcemap: true,
+      globals: format === 'umd' ? getUMDGlobals() : {},
+      validate: true,
+      interop: 'compat', // https://rollupjs.org/configuration-options/#output-interop
+    },
+    plugins: [
+      nodePolyfills(),
+      nodeExternals({ deps: true }),
+      nodeResolve({ extensions }),
 
-    urlPlugin({
-      limit: 50000,
-      include: ['**/*.png'],
-    }),
+      babel({
+        babelrc: false,
+        babelHelpers: 'bundled',
+        extensions,
+        configFile: babelConfigPath,
+        sourceMaps: 'inline',
+        envName: 'production',
+      }),
 
-    urlPlugin({
-      limit: 0,
-      include: ['**/*.less'],
-      fileName: '[name][extname]',
-    }),
+      svgr(),
 
-    svgr(),
+      terser(),
+    ],
+    external,
+    strictDeprecations: true,
+    treeshake: {
+      preset: 'recommended',
+      moduleSideEffects: false,
+    },
+  };
 
-    terser(),
-  ],
-  external,
-  strictDeprecations: true,
-  treeshake: {
-    preset: 'recommended',
-    moduleSideEffects: false,
-  },
-});
+  // Add code-splitting for test utils to ESM build if they exist
+  if (format === 'esm' && doTestUtilsExist) {
+    formatConfig.input.push(testUtilsFilename);
+  }
 
-const esmConfig = configForFormat('esm');
-const umdConfig = configForFormat('umd');
+  return {
+    ...formatConfig,
+  };
+};
 
+const esmConfig = createConfigForFormat('esm');
+const umdConfig = createConfigForFormat('umd');
+
+const defaultConfig = [esmConfig, umdConfig];
+
+// Add additional entry point to UMD build for test-utils if they exist
+doTestUtilsExist &&
+  defaultConfig.push({
+    ...umdConfig,
+    input: testUtilsFilename,
+    output: {
+      ...umdConfig.output,
+      dir: 'dist/testing',
+    },
+  });
+
+// FIXME: Figure out a way to get rid of this.
+// Creates a super-hacky `stories` bundle
 const storiesExist = glob.sync(storyGlob).length > 0;
 const storiesConfig = {
   ...esmConfig,
@@ -164,7 +112,6 @@ const storiesConfig = {
   },
 };
 
-const defaultConfig = [esmConfig, umdConfig];
 storiesExist && defaultConfig.push(storiesConfig);
 
 export { esmConfig, storiesConfig, umdConfig };
