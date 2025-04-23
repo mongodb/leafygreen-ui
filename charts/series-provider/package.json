@@ -23,6 +23,5 @@
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
-  },
-  "typesVersions": {}
+  }
 }
