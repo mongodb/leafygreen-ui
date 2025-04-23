@@ -3183,6 +3183,9 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../meta
       '@types/cli-progress':
         specifier: ^3.11.6
         version: 3.11.6
