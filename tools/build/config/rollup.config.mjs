@@ -98,7 +98,7 @@ const external = [/node_modules/];
 
 const moduleFormatToDirectory = {
   esm: 'dist/esm/',
-  umd: 'dist',
+  umd: 'dist/umd',
 };
 
 const configForFormat = format => ({
