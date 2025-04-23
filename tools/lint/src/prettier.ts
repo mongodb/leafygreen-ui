@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import fs from 'fs/promises';
-import glob from 'glob';
+import { sync as globSync } from 'glob';
 import prettierAPI from 'prettier';
 
 import {
@@ -35,7 +35,7 @@ export const runPrettier: LintFn = async ({ fix, verbose }) => {
 
     verbose &&
       console.log(chalk.gray(`Ignoring patterns: ${ignorePattern.join(', ')}`));
-    const files = glob.sync(pattern, {
+    const files = globSync(pattern, {
       ignore: ignorePattern,
     });
 
