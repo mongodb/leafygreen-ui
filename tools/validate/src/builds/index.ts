@@ -45,8 +45,17 @@ export const validateBuilds = ({
         types: typesPath,
       } = pkgJson;
 
+      const checks = {
+        umdExists: true,
+        isUMDValid: true,
+        esmExists: true,
+        isESMValid: true,
+        tsExists: true,
+      };
+
       // Skip some packages
       if (ignorePackages.includes(pkgName)) {
+        verbose && console.log(chalk.gray(`Skipping package ${pkgName}`));
         continue;
       }
 
@@ -58,83 +67,61 @@ export const validateBuilds = ({
         return;
       }
 
-      const umdIndex = path.resolve(pkgPath, umdPath);
-      const umdExists = fse.existsSync(umdIndex);
-      const isUMDValid = umdExists && getModuleTypes(umdIndex).includes('cjs');
-
-      const esmIndex = path.resolve(pkgPath, esmPath);
-      const esmExists = fse.existsSync(esmIndex);
-      const isESMValid = esmExists && getModuleTypes(esmIndex).includes('esm');
-
-      const tsIndex = path.resolve(pkgPath, typesPath);
-      const tsExists = fse.existsSync(tsIndex);
-
-      if (verbose) {
-        console.log(chalk.blue(pkgName));
-        console.log(chalk.gray('UMD: '));
-        console.log(
-          chalk.gray(
-            JSON.stringify(
-              {
-                index: path.relative(pkgPath, umdIndex),
-                exists: umdExists,
-                valid: isUMDValid,
-              },
-              null,
-              2,
-            ),
-          ),
-        );
-        console.log(chalk.gray('ESM: '));
-        console.log(
-          chalk.gray(
-            JSON.stringify(
-              {
-                index: path.relative(pkgPath, umdIndex),
-                exists: umdExists,
-                valid: isUMDValid,
-              },
-              null,
-              2,
-            ),
-          ),
-        );
-        console.log(chalk.gray('Types '));
-        console.log(
-          chalk.gray(
-            JSON.stringify(
-              {
-                index: path.relative(pkgPath, umdIndex),
-                exists: umdExists,
-                valid: isUMDValid,
-              },
-              null,
-              2,
-            ),
-          ),
-        );
+      if (umdPath) {
+        const umdIndex = path.resolve(pkgPath, umdPath);
+        checks.umdExists = fse.existsSync(umdIndex);
+        checks.isUMDValid =
+          checks.umdExists && getModuleTypes(umdIndex).includes('cjs');
+        verbose &&
+          console.log(chalk.gray('UMD:'), checks.isUMDValid ? '✅' : '❌');
       }
 
-      if (
-        ![umdExists, esmExists, tsExists, isUMDValid, isESMValid].every(Boolean)
-      ) {
+      if (esmPath) {
+        const esmIndex = path.resolve(pkgPath, esmPath);
+        checks.esmExists = fse.existsSync(esmIndex);
+        checks.isESMValid =
+          checks.esmExists && getModuleTypes(esmIndex).includes('esm');
+        verbose &&
+          console.log(chalk.gray('ESM:'), checks.isESMValid ? '✅' : '❌');
+      }
+
+      if (typesPath) {
+        const tsIndex = path.resolve(pkgPath, typesPath);
+        checks.tsExists = fse.existsSync(tsIndex);
+        verbose &&
+          console.log(chalk.gray('Types:'), checks.tsExists ? '✅' : '❌');
+      }
+
+      if (!Object.values(checks).every(Boolean)) {
         const errorMsg: Array<string> = [
           chalk.red.bold(`Error in package \`${pkgName}\`:`),
         ];
-        if (!umdExists) errorMsg.push(chalk.red('`dist/index.js` not found'));
-        if (!esmExists)
-          errorMsg.push(chalk.red('`dist/esm/index.js` not found'));
-        if (!tsExists) errorMsg.push(chalk.red('Typescript build not found'));
-        if (!isUMDValid)
+
+        if (!checks.umdExists) {
+          errorMsg.push(chalk.red(umdPath, 'not found'));
+        }
+
+        if (!checks.esmExists) {
+          errorMsg.push(chalk.red(esmPath, 'not found'));
+        }
+
+        if (!checks.tsExists) {
+          errorMsg.push(chalk.red('Typescript build not found'));
+        }
+
+        if (!checks.isUMDValid) {
           errorMsg.push(
             chalk.red(`UMD module not valid`),
-            chalk.gray(`(${umdIndex})`),
+            chalk.gray(`(${umdPath})`),
           );
-        if (!isESMValid)
+        }
+
+        if (!checks.isESMValid) {
           errorMsg.push(
             chalk.red(`ESM module not valid`),
-            chalk.gray(`(${esmIndex})`),
+            chalk.gray(`(${esmPath})`),
           );
+        }
 
         if (errorMsg.length > 0) {
           exit1(errorMsg.join('\n'));
