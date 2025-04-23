@@ -44,7 +44,7 @@
     "prettier": "2.8.8"
   },
   "peerDependencies": {
-    "typescript": "~5.0.0"
+    "typescript": "~5.8.0"
   },
   "typesVersions": {}
 }
