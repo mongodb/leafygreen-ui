@@ -51,10 +51,10 @@ import {Toolbar, ToolbarIconButton} from `@leafygreen-ui/toolbar`;
 
 #### Props
 
-| Prop    | Type     | Description                                                                                                                                                                                         | Default |
-| ------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `glyph` | `Glyph`  | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
-| `label` | `string` | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
+| Prop    | Type              | Description                                                                                                                                                                                         | Default |
+| ------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `glyph` | `Glyph`           | Name of the icon glyph to display in the button. List of available glyphs can be found in the [Icon README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties). |         |
+| `label` | `React.ReactNode` | Text that appears in the tooltip on hover/focus                                                                                                                                                     |         |
 
 \+ Extends LG [IconButton props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/icon-button#properties) with the exception of `as`, `children`, `darkMode`, `href`, `size`, and `tabIndex`
 
