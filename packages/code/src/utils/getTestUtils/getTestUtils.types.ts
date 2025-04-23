@@ -1,5 +1,5 @@
 import { GetTestUtilsReturnType as GetButtonTestUtilsReturnType } from '@leafygreen-ui/button';
-import { GetTestUtilsReturnType as GetSelectTestUtilsReturnType } from '@leafygreen-ui/select';
+import type { GetTestUtilsReturnType as GetSelectTestUtilsReturnType } from '@leafygreen-ui/select/testing';
 
 export interface TestUtilsReturnType {
   /**
