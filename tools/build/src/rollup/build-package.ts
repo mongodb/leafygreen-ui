@@ -5,6 +5,7 @@ import {
   type BatchWarnings,
   type LoadConfigFile,
   loadConfigFile as _loadConfigFile,
+  // @ts-expect-error
 } from 'rollup/loadConfigFile';
 
 import { findRollupConfigFile } from './findRollupConfigFile';
