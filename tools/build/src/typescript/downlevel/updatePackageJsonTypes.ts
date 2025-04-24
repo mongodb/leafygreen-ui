@@ -69,28 +69,28 @@ export function updatePackageJsonTypes(
     };
 
     // Construct the exports field with types conditions
-    let exportsField = packageJson.exports || { '.': {} };
+    let { exports } = packageJson;
 
     // If exports field is a string, convert it to an object
-    if (typeof exportsField === 'string') {
-      exportsField = { '.': exportsField };
+    if (typeof exports === 'string') {
+      exports = { '.': exports };
     }
 
     // Ensure the main export path exists
-    if (!exportsField['.']) {
-      exportsField['.'] = {};
-    } else if (typeof exportsField['.'] === 'string') {
+    if (!exports['.']) {
+      exports['.'] = {};
+    } else if (typeof exports['.'] === 'string') {
       // If the main export is a string, convert it to an object
-      const mainExport = exportsField['.'];
-      exportsField['.'] = {
+      const mainExport = exports['.'];
+      exports['.'] = {
         import: mainExport,
         require: mainExport,
       };
     }
 
     // set the default types export
-    if (!exportsField['.'].types) {
-      exportsField['.'].types = './index.d.ts';
+    if (!exports['.'].types) {
+      exports['.'].types = './index.d.ts';
     }
 
     // Add entries for each TypeScript version we support
@@ -104,8 +104,8 @@ export function updatePackageJsonTypes(
       }
 
       // Add to exports field with types condition
-      if (typeof exportsField['.'] === 'object') {
-        exportsField['.'][`types${condition}`] = `./ts${target}/index.d.ts`;
+      if (typeof exports['.'] === 'object') {
+        exports['.'][`types${condition}`] = `./ts${target}/index.d.ts`;
       }
     });
 
