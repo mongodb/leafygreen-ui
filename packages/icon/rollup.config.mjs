@@ -35,6 +35,8 @@ const iconConfigs = [esmConfig, umdConfig].flatMap(config =>
   })),
 );
 
+// Until we explicitly code-split the icons, we need to
+// create a separate build for each icon at the `dist` root
 iconConfigs.push(
   ...getGeneratedFiles().map(file => ({
     ...umdConfig,

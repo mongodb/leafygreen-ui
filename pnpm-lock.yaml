@@ -4993,6 +4993,15 @@ packages:
       rollup:
         optional: true
 
+  '@rollup/plugin-url@8.0.2':
+    resolution: {integrity: sha512-5yW2LP5NBEgkvIRSSEdJkmxe5cUNZKG3eenKtfJvSkxVm/xTTu7w+ayBtNwhozl1ZnTUCU0xFaRQR+cBl2H7TQ==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+
   '@rollup/pluginutils@5.0.2':
     resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
     engines: {node: '>=14.0.0'}
@@ -12376,6 +12385,12 @@ snapshots:
       terser: 5.19.2
     optionalDependencies:
       rollup: 4.16.1
+
+  '@rollup/plugin-url@8.0.2':
+    dependencies:
+      '@rollup/pluginutils': 5.0.2(rollup@4.16.1)
+      make-dir: 3.1.0
+      mime: 3.0.0
 
   '@rollup/plugin-url@8.0.2':
     dependencies:
