@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import chalk from 'chalk';
 import fs from 'fs';
+import cloneDeep from 'lodash/cloneDeep';
 import path from 'path';
 
 import { DOWNLEVEL_VERSIONS, EXCLUDED_PACKAGES } from './TYPES_VERSIONS';
@@ -69,10 +70,10 @@ export function updatePackageJsonTypes(
     };
 
     // Construct the exports field with types conditions
-    let { exports } = packageJson;
+    let exports = cloneDeep(packageJson.exports);
 
     // If exports field is a string, convert it to an object
-    if (typeof exports === 'string') {
+    if (typeof exports === 'string' || !exports) {
       exports = { '.': exports };
     }
 
