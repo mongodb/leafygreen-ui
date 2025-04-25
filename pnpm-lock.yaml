@@ -2940,6 +2940,9 @@ importers:
 
   packages/testing-lib:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
       '@testing-library/react':
         specifier: ^12.0.0 || ^13.1.0 || ^14.0.0
         version: 14.0.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -2953,10 +2956,6 @@ importers:
       '@testing-library/react-hooks':
         specifier: '>=3.7.0'
         version: 8.0.1(@types/react@18.2.23)(react-dom@18.2.0(react@18.2.0))(react-test-renderer@18.2.0(react@18.2.0))(react@18.2.0)
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../../tools/build
 
   packages/text-area:
     dependencies:
@@ -3298,9 +3297,6 @@ importers:
         specifier: ~5.8.0
         version: 5.8.3
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: 'link:'
       '@types/mock-fs':
         specifier: ^4.13.4
         version: 4.13.4
@@ -3310,6 +3306,9 @@ importers:
 
   tools/cli:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/codemods':
         specifier: workspace:^
         version: link:../codemods
@@ -3343,13 +3342,12 @@ importers:
       read-pkg-up:
         specifier: 7.0.1
         version: 7.0.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/codemods:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       chalk:
         specifier: 4.1.2
         version: 4.1.2
@@ -3369,9 +3367,6 @@ importers:
         specifier: 2.8.8
         version: 2.8.8
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
       '@types/fs-extra':
         specifier: 11.0.1
         version: 11.0.1
@@ -3384,6 +3379,9 @@ importers:
 
   tools/create:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3399,13 +3397,12 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/install:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3422,9 +3419,6 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
       '@lg-tools/lint':
         specifier: workspace:^
         version: link:../lint
@@ -3434,6 +3428,9 @@ importers:
 
   tools/link:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3453,9 +3450,6 @@ importers:
         specifier: 11.1.1
         version: 11.1.1
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
       '@lg-tools/test':
         specifier: workspace:^
         version: link:../test
@@ -3480,6 +3474,9 @@ importers:
       '@eslint/js':
         specifier: ^9.16.0
         version: 9.16.0
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3549,13 +3546,12 @@ importers:
       typescript:
         specifier: ~5.8.0
         version: 5.8.3
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/meta:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@types/cross-spawn':
         specifier: 6.0.2
         version: 6.0.2
@@ -3574,13 +3570,12 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/slackbot:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3600,9 +3595,6 @@ importers:
         specifier: 2.6.11
         version: 2.6.11
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
       '@types/node-fetch':
         specifier: ^2.6.11
         version: 2.6.12
@@ -3621,6 +3613,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../../packages/typography
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3750,10 +3745,6 @@ importers:
       webpack:
         specifier: 5.88.0
         version: 5.88.0(@swc/core@1.4.2(@swc/helpers@0.5.1))(esbuild@0.24.2)
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/storybook-decorators:
     dependencies:
@@ -3772,6 +3763,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/storybook-utils':
         specifier: workspace:^
         version: link:../storybook-utils
@@ -3781,10 +3775,6 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/storybook-utils:
     dependencies:
@@ -3825,6 +3815,9 @@ importers:
       '@leafygreen-ui/testing-lib':
         specifier: workspace:^
         version: link:../../packages/testing-lib
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3888,10 +3881,6 @@ importers:
       regenerator-runtime:
         specifier: 0.14.0
         version: 0.14.0
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/test-harnesses:
     dependencies:
@@ -3905,6 +3894,9 @@ importers:
 
   tools/update:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3923,13 +3915,12 @@ importers:
       fs-extra:
         specifier: 11.1.1
         version: 11.1.1
-    devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
 
   tools/validate:
     dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:../meta
@@ -3955,9 +3946,6 @@ importers:
         specifier: 4.17.21
         version: 4.17.21
     devDependencies:
-      '@lg-tools/build':
-        specifier: workspace:^
-        version: link:../build
       '@lg-tools/test':
         specifier: workspace:^
         version: link:../test
