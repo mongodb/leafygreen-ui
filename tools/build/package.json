@@ -8,14 +8,13 @@
   },
   "bin": {
     "lg-internal-build-package": "./bin/build-package.js",
-    "lg-ts-downlevel": "./bin/ts-downlevel.js"
+    "lg-build": "./bin/build.js"
   },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
   "scripts": {
-    "build": "rollup -c ./config/rollup.config.mjs",
-    "tsc": "tsc --build tsconfig.json",
-    "update-types-versions": "ts-node ./scripts/updateTypesVersions.ts"
+    "build": "./scripts/build.sh",
+    "tsc": "./scripts/build-ts.sh"
   },
   "dependencies": {
     "@babel/core": "7.24.3",
@@ -36,6 +35,7 @@
     "@types/cross-spawn": "6.0.2",
     "@types/fs-extra": "11.0.1",
     "chalk": "4.1.2",
+    "commander": "^11.0.0",
     "cross-spawn": "7.0.3",
     "downlevel-dts": "^0.11.0",
     "fs-extra": "11.1.1",
