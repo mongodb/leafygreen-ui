@@ -2042,6 +2042,9 @@ importers:
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
       '@rollup/plugin-url':
         specifier: 8.0.2
         version: 8.0.2
@@ -2935,10 +2938,10 @@ importers:
         version: 8.0.0(@babel/core@7.24.3)
       '@svgr/cli':
         specifier: 8.0.1
-        version: 8.0.1(typescript@5.0.4)
+        version: 8.0.1(typescript@5.8.3)
       '@svgr/rollup':
         specifier: ^8.1.0
-        version: 8.1.0(rollup@4.16.1)(typescript@5.0.4)
+        version: 8.1.0(rollup@4.16.1)(typescript@5.8.3)
       '@types/cross-spawn':
         specifier: 6.0.2
         version: 6.0.2
@@ -2965,7 +2968,7 @@ importers:
         version: 4.17.21
       react-docgen-typescript:
         specifier: 2.2.2
-        version: 2.2.2(typescript@5.0.4)
+        version: 2.2.2(typescript@5.8.3)
       rollup:
         specifier: 4.16.1
         version: 4.16.1
@@ -2982,8 +2985,8 @@ importers:
         specifier: ^2.0.6
         version: 2.0.6
       typescript:
-        specifier: ~5.0.0
-        version: 5.0.4
+        specifier: ~5.8.0
+        version: 5.8.3
     devDependencies:
       '@types/mock-fs':
         specifier: ^4.13.4
@@ -3165,9 +3168,18 @@ importers:
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../build
+      '@lg-tools/meta':
+        specifier: workspace:^
+        version: link:../meta
+      '@types/cli-progress':
+        specifier: ^3.11.6
+        version: 3.11.6
       '@types/cross-spawn':
         specifier: 6.0.2
         version: 6.0.2
+      '@types/prettier':
+        specifier: ^2.7.0
+        version: 2.7.3
       '@typescript-eslint/eslint-plugin':
         specifier: 8.17.0
         version: 8.17.0(@typescript-eslint/parser@8.17.0(eslint@9.16.0)(typescript@5.0.4))(eslint@9.16.0)(typescript@5.0.4)
@@ -3207,6 +3219,9 @@ importers:
       eslint-plugin-storybook:
         specifier: 0.11.1
         version: 0.11.1(eslint@9.16.0)(typescript@5.0.4)
+      glob:
+        specifier: 11.0.1
+        version: 11.0.1
       globals:
         specifier: ^15.13.0
         version: 15.13.0
@@ -5670,6 +5685,9 @@ packages:
   '@types/babel__traverse@7.20.5':
     resolution: {integrity: sha512-WXCyOcRtH37HAUkpXhUduaxdm82b4GSlyTqajXviN4EfiuPgNYR109xMCKvpl6zPIpua0DGlMEDCq+g8EdoheQ==}
 
+  '@types/cli-progress@3.11.6':
+    resolution: {integrity: sha512-cE3+jb9WRlu+uOSAugewNpITJDt1VF8dHOopPO4IABFc3SXYL5WE/+PTz/FCdZRRfIujiWW3n3aMbv1eIGVRWA==}
+
   '@types/cross-spawn@6.0.2':
     resolution: {integrity: sha512-KuwNhp3eza+Rhu8IFI5HUXRP0LIhqH5cAjubUvGXXthh4YYBuP2ntwEX+Cz8GJoZUHlKo247wPWOfA9LYEq4cw==}
 
@@ -5796,6 +5814,9 @@ packages:
 
   '@types/parse-json@4.0.0':
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
+
+  '@types/prettier@2.7.3':
+    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
 
   '@types/prop-types@15.7.11':
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
@@ -7520,6 +7541,11 @@ packages:
     engines: {node: '>=16 || 14 >=14.17'}
     hasBin: true
 
+  glob@11.0.1:
+    resolution: {integrity: sha512-zrQDm8XPnYEKawJScsnM0QzobJxlT/kHOOlRTio8IH/GrmxRE5fjllkzdaHclIuNjUQTJYH2xHNIGfdpJkDJUw==}
+    engines: {node: 20 || >=22}
+    hasBin: true
+
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
@@ -8370,6 +8396,10 @@ packages:
     resolution: {integrity: sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==}
     engines: {node: 14 || >=16.14}
 
+  lru-cache@11.1.0:
+    resolution: {integrity: sha512-QIXZUBJUx+2zHUdQujWejBkcD9+cs94tLn0+YL8UrCh+D5sCXZ4c7LaEH48pNwRY3MLDgqUFyhlCyjJPf1WP0A==}
+    engines: {node: 20 || >=22}
+
   lru-cache@4.1.5:
     resolution: {integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==}
 
@@ -8689,6 +8719,10 @@ packages:
   minimalistic-crypto-utils@1.0.1:
     resolution: {integrity: sha512-JIYlbt6g8i5jKfJ3xz7rF0LXmv2TkDxBLUkiBeZ7bAx4GnnNMr8xFpGnOxn6GhTEHx3SjRrZEoU+j04prX1ktg==}
 
+  minimatch@10.0.1:
+    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
+    engines: {node: 20 || >=22}
+
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -8975,6 +9009,9 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
 
+  package-json-from-dist@1.0.1:
+    resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
+
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
 
@@ -9040,6 +9077,10 @@ packages:
   path-scurry@1.10.2:
     resolution: {integrity: sha512-7xTavNy5RQXnsjANvVvMkEjvloOinkAjv/Z6Ildz9v2RinZ4SBKTWFOVRbaF8p0vpHnyjV/UwNDdKuUv6M5qcA==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  path-scurry@2.0.0:
+    resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
+    engines: {node: 20 || >=22}
 
   path-type@3.0.0:
     resolution: {integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg==}
@@ -12960,12 +13001,12 @@ snapshots:
       '@svgr/babel-plugin-transform-react-native-svg': 8.1.0(@babel/core@7.24.3)
       '@svgr/babel-plugin-transform-svg-component': 8.0.0(@babel/core@7.24.3)
 
-  '@svgr/cli@8.0.1(typescript@5.0.4)':
+  '@svgr/cli@8.0.1(typescript@5.8.3)':
     dependencies:
-      '@svgr/core': 8.0.0(typescript@5.0.4)
-      '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0(typescript@5.0.4))
-      '@svgr/plugin-prettier': 8.0.1(@svgr/core@8.0.0(typescript@5.0.4))
-      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0(typescript@5.0.4))(typescript@5.0.4)
+      '@svgr/core': 8.0.0(typescript@5.8.3)
+      '@svgr/plugin-jsx': 8.0.1(@svgr/core@8.0.0(typescript@5.8.3))
+      '@svgr/plugin-prettier': 8.0.1(@svgr/core@8.0.0(typescript@5.8.3))
+      '@svgr/plugin-svgo': 8.0.1(@svgr/core@8.0.0(typescript@5.8.3))(typescript@5.8.3)
       camelcase: 6.3.0
       chalk: 4.1.2
       commander: 9.5.0
@@ -12984,12 +13025,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@svgr/core@8.0.0(typescript@5.0.4)':
+  '@svgr/core@8.0.0(typescript@5.8.3)':
     dependencies:
       '@babel/core': 7.24.3
       '@svgr/babel-preset': 8.0.0(@babel/core@7.24.3)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@5.0.4)
+      cosmiconfig: 8.3.6(typescript@5.8.3)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -13006,12 +13047,12 @@ snapshots:
       - supports-color
       - typescript
 
-  '@svgr/core@8.1.0(typescript@5.0.4)':
+  '@svgr/core@8.1.0(typescript@5.8.3)':
     dependencies:
       '@babel/core': 7.24.3
       '@svgr/babel-preset': 8.1.0(@babel/core@7.24.3)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@5.0.4)
+      cosmiconfig: 8.3.6(typescript@5.8.3)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -13035,11 +13076,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@svgr/plugin-jsx@8.0.1(@svgr/core@8.0.0(typescript@5.0.4))':
+  '@svgr/plugin-jsx@8.0.1(@svgr/core@8.0.0(typescript@5.8.3))':
     dependencies:
       '@babel/core': 7.24.3
       '@svgr/babel-preset': 8.0.0(@babel/core@7.24.3)
-      '@svgr/core': 8.0.0(typescript@5.0.4)
+      '@svgr/core': 8.0.0(typescript@5.8.3)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
@@ -13055,26 +13096,26 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.0.4))':
+  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.8.3))':
     dependencies:
       '@babel/core': 7.24.3
       '@svgr/babel-preset': 8.1.0(@babel/core@7.24.3)
-      '@svgr/core': 8.1.0(typescript@5.0.4)
+      '@svgr/core': 8.1.0(typescript@5.8.3)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
       - supports-color
 
-  '@svgr/plugin-prettier@8.0.1(@svgr/core@8.0.0(typescript@5.0.4))':
+  '@svgr/plugin-prettier@8.0.1(@svgr/core@8.0.0(typescript@5.8.3))':
     dependencies:
-      '@svgr/core': 8.0.0(typescript@5.0.4)
+      '@svgr/core': 8.0.0(typescript@5.8.3)
       deepmerge: 4.3.1
       prettier: 2.8.8
 
-  '@svgr/plugin-svgo@8.0.1(@svgr/core@8.0.0(typescript@5.0.4))(typescript@5.0.4)':
+  '@svgr/plugin-svgo@8.0.1(@svgr/core@8.0.0(typescript@5.8.3))(typescript@5.8.3)':
     dependencies:
-      '@svgr/core': 8.0.0(typescript@5.0.4)
-      cosmiconfig: 8.3.6(typescript@5.0.4)
+      '@svgr/core': 8.0.0(typescript@5.8.3)
+      cosmiconfig: 8.3.6(typescript@5.8.3)
       deepmerge: 4.3.1
       svgo: 3.0.2
     transitivePeerDependencies:
@@ -13089,16 +13130,16 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@svgr/plugin-svgo@8.1.0(@svgr/core@8.1.0(typescript@5.0.4))(typescript@5.0.4)':
+  '@svgr/plugin-svgo@8.1.0(@svgr/core@8.1.0(typescript@5.8.3))(typescript@5.8.3)':
     dependencies:
-      '@svgr/core': 8.1.0(typescript@5.0.4)
-      cosmiconfig: 8.3.6(typescript@5.0.4)
+      '@svgr/core': 8.1.0(typescript@5.8.3)
+      cosmiconfig: 8.3.6(typescript@5.8.3)
       deepmerge: 4.3.1
       svgo: 3.0.2
     transitivePeerDependencies:
       - typescript
 
-  '@svgr/rollup@8.1.0(rollup@4.16.1)(typescript@5.0.4)':
+  '@svgr/rollup@8.1.0(rollup@4.16.1)(typescript@5.8.3)':
     dependencies:
       '@babel/core': 7.24.3
       '@babel/plugin-transform-react-constant-elements': 7.22.5(@babel/core@7.24.3)
@@ -13106,9 +13147,9 @@ snapshots:
       '@babel/preset-react': 7.24.1(@babel/core@7.24.3)
       '@babel/preset-typescript': 7.24.1(@babel/core@7.24.3)
       '@rollup/pluginutils': 5.0.2(rollup@4.16.1)
-      '@svgr/core': 8.1.0(typescript@5.0.4)
-      '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.0.4))
-      '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.0.4))(typescript@5.0.4)
+      '@svgr/core': 8.1.0(typescript@5.8.3)
+      '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.8.3))
+      '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.8.3))(typescript@5.8.3)
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -13294,6 +13335,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.0
 
+  '@types/cli-progress@3.11.6':
+    dependencies:
+      '@types/node': 20.17.12
+
   '@types/cross-spawn@6.0.2':
     dependencies:
       '@types/node': 20.17.12
@@ -13435,6 +13480,8 @@ snapshots:
   '@types/normalize-package-data@2.4.1': {}
 
   '@types/parse-json@4.0.0': {}
+
+  '@types/prettier@2.7.3': {}
 
   '@types/prop-types@15.7.11': {}
 
@@ -15596,6 +15643,15 @@ snapshots:
       minipass: 7.1.2
       path-scurry: 1.10.2
 
+  glob@11.0.1:
+    dependencies:
+      foreground-child: 3.1.1
+      jackspeak: 2.1.1
+      minimatch: 10.0.1
+      minipass: 7.1.2
+      package-json-from-dist: 1.0.1
+      path-scurry: 2.0.0
+
   glob@7.2.3:
     dependencies:
       fs.realpath: 1.0.0
@@ -16739,6 +16795,8 @@ snapshots:
 
   lru-cache@10.2.0: {}
 
+  lru-cache@11.1.0: {}
+
   lru-cache@4.1.5:
     dependencies:
       pseudomap: 1.0.2
@@ -17334,6 +17392,10 @@ snapshots:
 
   minimalistic-crypto-utils@1.0.1: {}
 
+  minimatch@10.0.1:
+    dependencies:
+      brace-expansion: 2.0.1
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -17686,6 +17748,8 @@ snapshots:
 
   p-try@2.2.0: {}
 
+  package-json-from-dist@1.0.1: {}
+
   pako@1.0.11: {}
 
   param-case@3.0.4:
@@ -17748,6 +17812,11 @@ snapshots:
   path-scurry@1.10.2:
     dependencies:
       lru-cache: 10.2.0
+      minipass: 7.1.2
+
+  path-scurry@2.0.0:
+    dependencies:
+      lru-cache: 11.1.0
       minipass: 7.1.2
 
   path-type@3.0.0:
@@ -17953,9 +18022,9 @@ snapshots:
 
   range-parser@1.2.1: {}
 
-  react-docgen-typescript@2.2.2(typescript@5.0.4):
+  react-docgen-typescript@2.2.2(typescript@5.8.3):
     dependencies:
-      typescript: 5.0.4
+      typescript: 5.8.3
 
   react-docgen-typescript@2.2.2(typescript@5.9.0-dev.20250425):
     dependencies:
