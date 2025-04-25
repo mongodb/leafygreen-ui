@@ -29,7 +29,7 @@ const external = [/node_modules/];
 
 const moduleFormatToDirectory = {
   esm: 'dist/esm/',
-  umd: 'dist/umd',
+  umd: 'dist/umd/',
 };
 
 const doTestUtilsExist = glob.sync(testUtilsFilename).length > 0;

@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "workspace:^",
-    "@leafygreen-ui/loading-indicator": "workspace:^"
+    "@leafygreen-ui/loading-indicator": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

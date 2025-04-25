@@ -21,8 +21,8 @@
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/tooltip": "workspace:^",
     "react-intersection-observer": "^8.25.1"
   },
   "peerDependencies": {
@@ -37,5 +37,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

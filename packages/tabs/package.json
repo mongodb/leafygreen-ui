@@ -55,6 +55,7 @@
     "@leafygreen-ui/card": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
-    "@leafygreen-ui/tooltip": "workspace:^"
+    "@leafygreen-ui/tooltip": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   }
 }

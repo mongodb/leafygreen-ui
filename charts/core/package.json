@@ -34,6 +34,7 @@
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
     "@leafygreen-ui/icon": "workspace:^",
+    "@lg-tools/build": "workspace:^",
     "@types/lodash.debounce": "^4.0.9"
   },
   "repository": {

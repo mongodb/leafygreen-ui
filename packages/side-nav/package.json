@@ -34,7 +34,8 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
-    "@leafygreen-ui/select": "workspace:^"
+    "@leafygreen-ui/select": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/side-nav",
   "repository": {

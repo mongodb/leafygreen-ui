@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
-    "@leafygreen-ui/icon-button": "workspace:^"
+    "@leafygreen-ui/icon-button": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/form-field",
   "repository": {

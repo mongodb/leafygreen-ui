@@ -22,6 +22,7 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
+    "@lg-tools/build": "workspace:^",
     "lodash": "^4.17.21"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/tokens",

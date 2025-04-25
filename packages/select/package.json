@@ -46,7 +46,8 @@
     "react-is": "^18.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/select",
   "repository": {
@@ -56,5 +57,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

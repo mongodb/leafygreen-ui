@@ -17,7 +17,7 @@ const umdTestUtilsConfig = {
   input: 'src/testing/index.ts',
   output: {
     ...umdConfig.output,
-    dir: 'dist/testing',
+    dir: 'dist/umd/testing',
   },
 };
 

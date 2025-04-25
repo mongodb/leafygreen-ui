@@ -28,7 +28,8 @@
     "polished": "^4.2.2"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "workspace:^"
+    "@leafygreen-ui/button": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

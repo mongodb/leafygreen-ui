@@ -24,7 +24,9 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/ordered-list",
   "repository": {
     "type": "git",
