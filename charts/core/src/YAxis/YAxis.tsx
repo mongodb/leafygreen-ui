@@ -33,6 +33,7 @@ const getOptions = ({
           width: 1,
         },
       },
+      // @ts-expect-error TODO:
       axisLabel: {
         show: true,
         fontFamily: fontFamilies.default,

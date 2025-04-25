@@ -4,9 +4,9 @@ import rollup, { type MergedRollupOptions } from 'rollup';
 import {
   type BatchWarnings,
   type LoadConfigFile,
-} from 'rollup/dist/loadConfigFile';
-// @ts-expect-error - type declaration incorrectly defined
-import { loadConfigFile as _loadConfigFile } from 'rollup/loadConfigFile';
+  loadConfigFile as _loadConfigFile,
+  // @ts-expect-error - types not declared correctly in rollup
+} from 'rollup/loadConfigFile';
 
 import { findRollupConfigFile } from './findRollupConfigFile';
 
@@ -35,7 +35,7 @@ export function buildPackage({ direct, verbose }: BuildPackageOptions) {
 
   if (direct && scopeName !== 'tools') {
     console.warn(
-      'Building package using the `lg-build-package` command directly from `@lg-tools/build`.',
+      `Building package @${scopeName}/${packageName} using the \`lg-internal-build-package\` command directly from \`@lg-tools/build\`.`,
       'Consider using the global `lg build-package` command from `@lg-tools/cli` instead.',
     );
   }

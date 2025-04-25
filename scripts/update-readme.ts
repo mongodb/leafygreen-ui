@@ -1,7 +1,6 @@
 import { getAllPackageNames, getLGConfig } from '@lg-tools/meta';
 import fs from 'fs';
 import path from 'path';
-// @ts-expect-error - no prettier types
 import * as prettier from 'prettier';
 
 updateReadme();
