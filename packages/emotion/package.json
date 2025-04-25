@@ -5,7 +5,13 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/index.d.ts",
-  "typesVersions": {},
+  "typesVersions": {
+    "<3.9": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "scripts": {
     "prebuild": "ts-node scripts/prebuild.ts",
     "build": "lg build-package",
