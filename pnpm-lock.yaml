@@ -2954,6 +2954,9 @@ importers:
       chalk:
         specifier: 4.1.2
         version: 4.1.2
+      commander:
+        specifier: ^11.0.0
+        version: 11.0.0
       cross-spawn:
         specifier: 7.0.3
         version: 7.0.3
@@ -12288,7 +12291,7 @@ snapshots:
   '@jridgewell/trace-mapping@0.3.9':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   '@juggle/resize-observer@3.4.0': {}
 

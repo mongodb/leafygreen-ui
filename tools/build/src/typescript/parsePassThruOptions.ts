@@ -5,7 +5,11 @@
 export function parsePassThruOptions(
   passThru?: Array<string>,
 ): Record<string, string | boolean> | undefined {
-  return passThru?.reduce((acc, arg) => {
+  if (!passThru || !Array.isArray(passThru) || passThru.length === 0) {
+    return;
+  }
+
+  return passThru.reduce((acc, arg) => {
     const [_key, value] = arg.split('=');
     const key = _key.replace(/^-+/, '');
 

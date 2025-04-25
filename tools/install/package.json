@@ -8,8 +8,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "prebuild": "npx ts-node ./scripts/writePackageNames.ts",
-    "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "publishConfig": {
     "access": "public"
