@@ -17,7 +17,7 @@
     "build:cli": "turbo run build tsc --filter=@lg-tools/cli",
     "build:docs": "turbo run docs",
     "build:tsc": "turbo run tsc",
-    "build:ts-downlevel": "turbo run tsc -- --downlevel",
+    "build:ts-downlevel": "pnpm recursive exec lg-ts-downlevel",
     "build-storybook": "npx storybook build",
     "chromatic": "npx chromatic",
     "clean": "npm-run-all --parallel clean:*",
@@ -68,6 +68,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^8.6.12",
+    "stream": "^0.0.3",
+    "ts-node": "10.9.2",
+    "turbo": "^2.0.6",
     "typescript": "~5.8.0"
   },
   "pnpm": {
