@@ -13,8 +13,8 @@
     "lg": "./bin/index.js"
   },
   "scripts": {
-    "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "dependencies": {
     "@lg-tools/build": "workspace:^",

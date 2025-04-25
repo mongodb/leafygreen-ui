@@ -238,6 +238,11 @@ cli
     'Builds all TS downlevel targets based on the typesVersions field in package.json',
     false,
   )
+  .option(
+    '-u, --update',
+    'Update package.json typesVersions and exports fields',
+    false,
+  )
   .allowUnknownOption(true)
   .action(buildTypescript);
 cli

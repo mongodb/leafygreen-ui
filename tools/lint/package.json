@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "tsc": "lg-build tsc"
   },
   "dependencies": {
     "@babel/core": "7.23.2",

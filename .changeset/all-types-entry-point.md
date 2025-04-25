@@ -104,4 +104,5 @@
 '@lg-tools/cli': patch
 ---
 
-Updates `types` entry point to `./dist/types`
+Updates `types` entry point to `./dist/types`.
+Removes redundant `compilerOptions` from TSConfig

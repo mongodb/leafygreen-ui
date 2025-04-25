@@ -56,6 +56,7 @@ export async function downlevelDts(
   verbose && console.log(chalk.gray(`Output: ${outputDirPath}`));
 
   try {
+    // adding .0 since `downlevel` expects a full `x.y.z` semver version
     const semverTarget = target + '.0';
     downlevel(typesDirPath, outputDirPath, semverTarget);
 
