@@ -5,7 +5,6 @@ import {
   type BatchWarnings,
   type LoadConfigFile,
   loadConfigFile as _loadConfigFile,
-  // @ts-expect-error - types not declared correctly in rollup
 } from 'rollup/loadConfigFile';
 
 import { findRollupConfigFile } from './findRollupConfigFile';
