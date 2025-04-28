@@ -23,13 +23,12 @@ export function ChartTooltip({
   useEffect(() => {
     if (!chart.ready) return;
 
+    /**
+     * Some settings are configured in default chart options in order to always
+     * render the dashed vertical line on hover, even when no tooltip is shown.
+     */
     chart.updateOptions({
       tooltip: {
-        axisPointer: {
-          z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
-        },
-        show: true,
-        trigger: 'axis',
         // Still adding background color to prevent peak of color at corners
         backgroundColor:
           color[theme].background[Variant.InversePrimary][
@@ -67,8 +66,9 @@ export function ChartTooltip({
 
     return () => {
       chart.updateOptions({
+        // Keeps vertical dashed line on hover, even when no tooltip is shown
         tooltip: {
-          show: false,
+          formatter: () => '',
         },
       });
     };
