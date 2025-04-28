@@ -13,9 +13,9 @@
       "types": "./dist/types/index.d.ts"
     },
     "./testing": {
+      "require": "./dist/umd/testing/index.js",
       "import": "./dist/esm/testing/index.js",
-      "require": "./dist/testing/index.js",
-      "types": "./dist/testing/index.d.ts"
+      "types": "./dist/types/testing/index.d.ts"
     }
   },
   "scripts": {

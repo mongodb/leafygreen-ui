@@ -15,6 +15,6 @@
       "@lg-tools/*": ["tools/*/src"]
     }
   },
-  "include": ["./charts", "./chat", "./packages", "./tools" ],
+  "include": ["./charts", "./chat", "./packages", "./tools"],
   "exclude": ["node_modules", "**/dist"]
 }
