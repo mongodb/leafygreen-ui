@@ -3,7 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import { fontFamilies, fontWeights } from '@leafygreen-ui/tokens';
 
-import { Variant } from './types';
+import { Variant } from './Badge.types';
 
 export const baseStyle = css`
   font-family: ${fontFamilies.default};
@@ -24,15 +24,15 @@ export const baseStyle = css`
 export const badgeVariants: Record<Theme, Record<Variant, string>> = {
   [Theme.Dark]: {
     [Variant.LightGray]: css`
-      background-color: ${palette.gray.dark1};
-      border-color: ${palette.gray.base};
-      color: ${palette.gray.light3};
-    `,
-
-    [Variant.DarkGray]: css`
       background-color: ${palette.gray.dark3};
       border-color: ${palette.gray.dark2};
       color: ${palette.gray.light2};
+    `,
+
+    [Variant.DarkGray]: css`
+      background-color: ${palette.gray.dark1};
+      border-color: ${palette.gray.base};
+      color: ${palette.gray.light3};
     `,
 
     [Variant.Red]: css`
