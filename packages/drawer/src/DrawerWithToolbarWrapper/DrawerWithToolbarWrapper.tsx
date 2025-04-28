@@ -12,7 +12,6 @@ export const DrawerWithToolbarWrapper = forwardRef<
     forwardedRef,
   ) => {
     const [shouldAnimate, setShouldAnimate] = useState(false);
-    // const dialogRef = React.useRef();
 
     useEffect(() => {
       if (isDrawerOpen) setShouldAnimate(true);

@@ -7,6 +7,8 @@ const baseStyles = css`
     grid-template-columns: unset;
     grid-template-rows: auto 0;
   } */
+  width: 100%;
+  position: relative;
 `;
 
 const drawerOpenStyles = css`
@@ -16,16 +18,19 @@ const drawerOpenStyles = css`
     grid-template-columns: unset;
     grid-template-rows: 50% 50%;
   } */
+  /* grid-template-columns: auto ${PANEL_WIDTH}px; */
 `;
 
-const withoutToolbarDrawerBaseStyles = css``;
+const withoutToolbarDrawerBaseStyles = css`
+  display: grid;
+  grid-template-columns: auto 0px;
+  /* grid-template-areas: 'main drawer'; */
+`;
 
 const baseHasToolbarWrapperStyles = css`
-  position: relative;
   display: grid;
   grid-template-columns: auto 48px;
   grid-template-areas: 'main drawer';
-  width: 100%;
 `;
 
 export const getOverlayDrawerLayoutStyles = ({
@@ -40,9 +45,9 @@ export const getOverlayDrawerLayoutStyles = ({
   cx(
     baseStyles,
     {
-      [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
       [baseHasToolbarWrapperStyles]: hasToolbar,
       [withoutToolbarDrawerBaseStyles]: !hasToolbar,
+      [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
     },
     className,
   );

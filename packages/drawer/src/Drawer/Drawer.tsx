@@ -55,6 +55,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
+    const [shouldAnimate, setShouldAnimate] = useState(false);
+
+    useEffect(() => {
+      if (open) setShouldAnimate(true);
+    }, [open]);
+
     // const [hasTabs, setHasTabs] = useState(false);
 
     const lgIds = getLgIds(dataLgId);
@@ -184,6 +190,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 className,
                 displayMode,
                 zIndex: drawerIndex,
+                shouldAnimate,
               }),
             )}
             ref={drawerRef}

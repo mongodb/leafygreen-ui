@@ -32,7 +32,7 @@ const toolbarStyles = css`
   grid-template-areas: 'main drawer';
 `;
 
-const toolbarEmbeddedOpenStyles = css`
+const toolbarDrawerOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
 `;
 
@@ -50,7 +50,7 @@ export const getEmbeddedDrawerLayoutStyles = ({
     {
       [toolbarStyles]: hasToolbar,
       [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
-      [toolbarEmbeddedOpenStyles]: isDrawerOpen && hasToolbar,
+      [toolbarDrawerOpenStyles]: isDrawerOpen && hasToolbar,
     },
     className,
   );

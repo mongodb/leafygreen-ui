@@ -1,5 +1,5 @@
-import { css, cx } from '@leafygreen-ui/emotion';
-import { Theme } from '@leafygreen-ui/lib';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import {
   addOverflowShadow,
   color,
@@ -17,6 +17,33 @@ import { DisplayMode } from './Drawer.types';
 
 export const drawerTransitionDuration = transitionDuration.slower;
 
+export const drawerClassName = createUniqueClassName('drawer');
+
+// const drawerIn = keyframes`
+//   from {
+//     // explain why this is 1px
+//     transform: translate3d(-1%, 0, 0);
+//     /* transform: translate3d(99%, 0, 0); */
+//   },
+//   to {
+//     transform: translate3d(-100%, 0, 0);
+//     /* transform: translate3d(0%, 0, 0); */
+
+//   }
+// `;
+
+// const drawerOut = keyframes`
+//   from {
+//     transform: translate3d(-100%, 0, 0);
+//     /* transform: translate3d(0%, 0, 0); */
+//   },
+//   to {
+//     transform: translate3d(0%, 0, 0);
+//     /* transform: translate3d(100%, 0, 0); */
+
+//   }
+// `;
+
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
   margin: 0;
@@ -28,82 +55,14 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
-  /* transition-behavior: allow-discrete; */
 
-  /* @starting-style {
-    transform: translate3d(0%, 0, 0);
-  } */
+  overflow: hidden;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
     height: 50vh;
   }
 `;
-
-// const overlayOpenStyles = css`
-//   opacity: 1;
-//   /* transform: none; */
-//   /* transform: translate3d(0%, 0, 0); */
-
-//   /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-//     /* transform: none; */
-//   /* transform: translate3d(0%, 0, 0); */
-//   /* } */
-// `;
-
-// const overlayClosedStyles = css`
-//   /* opacity: 0; */
-//   /* transform: translate3d(100%, 0, 0); */
-//   pointer-events: none;
-
-//   /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-//     transform: translate3d(0, 100%, 0);
-//   } */
-// `;
-
-// const getOverlayStyles = ({
-//   open,
-//   zIndex,
-// }: {
-//   open: boolean;
-//   zIndex: number;
-// }) =>
-//   cx(
-//     css`
-//       /* position: fixed; */
-//       /* position: absolute; */
-//       /* z-index: ${zIndex}; */
-//       /* top: 0;
-//       bottom: 0;
-//       right: 0; */
-//       /* overflow: visible; */
-//       /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
-//         opacity ${drawerTransitionDuration}ms ease-in-out
-//           ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
-
-//       /* transition: transform 1000ms linear, opacity 1000ms linear; */
-
-//       /* transform: translate3d(0%, 0, 0);
-
-//       &:open {
-//         color: red;
-//         transform: translate3d(0%, 0, 0);
-
-//         @starting-style {
-//           transform: translate3d(0%, 0, 0);
-//         }
-//       } */
-
-//       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-//         /* top: unset;
-//         left: 0; */
-//       }
-//     `,
-//     {
-//       [overlayOpenStyles]: open,
-//       [overlayClosedStyles]: !open,
-//     },
-//   );
 
 const overlayOpenStyles = css`
   opacity: 1;
@@ -124,12 +83,24 @@ const overlayClosedStyles = css`
   }
 `;
 
+// const overlayOpenStyles = css`
+//   animation-name: ${drawerIn};
+//   animation-fill-mode: forwards;
+//   width: 432px;
+// `;
+
+// const overlayClosedStyles = css`
+//   animation-name: ${drawerOut};
+// `;
+
 const getOverlayStyles = ({
   open,
   zIndex,
+  shouldAnimate,
 }: {
   open: boolean;
   zIndex: number;
+  shouldAnimate?: boolean;
 }) =>
   cx(
     css`
@@ -147,6 +118,11 @@ const getOverlayStyles = ({
         top: unset;
         left: 0;
       }
+
+      /* animation-timing-function: linear;
+      animation-duration: ${drawerTransitionDuration}ms;
+      transform: translate3d(0%, 0, 0);
+      width: 432px; */
     `,
     {
       [overlayOpenStyles]: open,
@@ -188,13 +164,16 @@ const getDisplayModeStyles = ({
   displayMode,
   open,
   zIndex,
+  shouldAnimate,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   zIndex: number;
+  shouldAnimate?: boolean;
 }) =>
   cx({
-    // [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
+    [getOverlayStyles({ open, zIndex, shouldAnimate })]:
+      displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
@@ -204,17 +183,20 @@ export const getDrawerStyles = ({
   open,
   theme,
   zIndex,
+  shouldAnimate,
 }: {
   className?: string;
   displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
   zIndex: number;
+  shouldAnimate?: boolean;
 }) =>
   cx(
     getBaseStyles({ open, theme }),
-    // getDisplayModeStyles({ displayMode, open, zIndex }),
+    getDisplayModeStyles({ displayMode, open, zIndex, shouldAnimate }),
     className,
+    drawerClassName,
   );
 
 const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`

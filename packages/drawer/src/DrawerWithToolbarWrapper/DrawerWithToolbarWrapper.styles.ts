@@ -1,7 +1,10 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 
 import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
+import {
+  drawerClassName,
+  drawerTransitionDuration,
+} from '../Drawer/Drawer.styles';
 
 const drawerIn = keyframes`
   from {
@@ -49,9 +52,18 @@ export const getDrawerWithToolbarWrapperStyles = ({
       position: relative;
       overflow: hidden;
       justify-self: end;
-      // TODO: if not reduce
-      animation-timing-function: linear;
+      // TODO: reduce motion?
+      /* animation-timing-function: linear; */
+      animation-timing-function: ease-in-out;
       animation-duration: ${drawerTransitionDuration}ms;
+
+      .${drawerClassName} {
+        position: unset;
+        transition: none;
+        transform: unset;
+        overflow: hidden;
+        opacity: 1;
+      }
     `,
     {
       [openStyles]: isDrawerOpen,
