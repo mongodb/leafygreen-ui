@@ -196,7 +196,7 @@ export const PortalSelect = (args: ModalProps) => {
         <div className={margin}>
           <Subtitle>Modal Content goes here.</Subtitle>
           {faker.lorem
-            .paragraphs(2, '\n')
+            .paragraphs(5, '\n')
             .split('\n')
             .map(p => (
               <Body>{p}</Body>
@@ -219,6 +219,15 @@ export const PortalSelect = (args: ModalProps) => {
                 <Option value="axolotl">Axolotl</Option>
               </OptionGroup>
             </Select>
+
+            <div id="test">
+              {faker.lorem
+                .paragraphs(5, '\n')
+                .split('\n')
+                .map(p => (
+                  <Body>{p}</Body>
+                ))}
+            </div>
           </div>
         </div>
       </Modal>

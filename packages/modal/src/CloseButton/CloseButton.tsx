@@ -27,6 +27,7 @@ export default function CloseButton({
       onClick={handleClose}
       aria-label="Close modal"
       className={closeButtonStyles(theme, closeIconColor)}
+      autofocus
     >
       <XIcon />
     </IconButton>

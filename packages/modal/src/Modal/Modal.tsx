@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { cx } from '@leafygreen-ui/emotion';
 import {
   useEscapeKey,
   useIdAllocator,
@@ -117,11 +117,11 @@ const Modal = React.forwardRef(
             ref={mergedRef}
             className={cx(
               dialogStyles(theme, size),
-              {
-                [css`
-                  overflow: visible;
-                `]: !!portalRef?.current,
-              },
+              // {
+              //   [css`
+              //     overflow: visible;
+              //   `]: !!portalRef?.current,
+              // },
               className,
             )}
           >

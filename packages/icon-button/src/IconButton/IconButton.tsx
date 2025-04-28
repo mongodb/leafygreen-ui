@@ -97,6 +97,8 @@ export const IconButton = InferredPolymorphic<
       ),
     };
 
+    console.log({ iconButtonProps });
+
     return (
       <Component {...iconButtonProps}>
         <div className={iconStyle}>{processedChildren}</div>
