@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 11.0.17
+
+### Patch Changes
+
+- Updated dependencies [2cb75f722]
+  - @leafygreen-ui/checkbox@16.0.0
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 11.0.16
 
 ### Patch Changes

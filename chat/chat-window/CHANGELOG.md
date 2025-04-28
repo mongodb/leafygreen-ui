@@ -1,5 +1,12 @@
 # @lg-chat/chat-window
 
+## 3.0.14
+
+### Patch Changes
+
+- @lg-chat/title-bar@3.0.14
+- @leafygreen-ui/emotion@4.1.1
+
 ## 3.0.13
 
 ### Patch Changes

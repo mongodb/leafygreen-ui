@@ -1,5 +1,12 @@
 # @leafygreen-ui/badge
 
+## 9.0.10
+
+### Patch Changes
+
+- f9fa0fe83: Updates `darkgray` and `lightgray` variant styles to match Figma specs
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 9.0.9
 
 ### Patch Changes
