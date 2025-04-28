@@ -1,69 +1,49 @@
+import { ECBasicOption } from 'echarts/types/dist/shared';
+
 import { ChartOptions, SeriesOption } from '../Chart.types';
 
-export function addSeries(
-  currentOptions: ChartOptions,
+export function getOptionsToUpdateWithAddedSeries(
+  currentOptions: ECBasicOption | undefined,
   data: SeriesOption,
 ): Partial<ChartOptions> {
-  const updatedOptions = { ...currentOptions };
+  const prevSeries =
+    currentOptions && Array.isArray(currentOptions?.series)
+      ? currentOptions.series
+      : [];
 
-  if (!updatedOptions.series) {
-    updatedOptions.series = [data];
-  } else {
-    if (!updatedOptions.series.some(series => series.name === data.name)) {
-      updatedOptions.series.push(data);
-    }
+  const hasSeriesData = prevSeries.some(
+    series => series.id && series.id === data.id,
+  );
+
+  if (hasSeriesData) {
+    return {
+      series: prevSeries,
+    };
   }
 
-  return updatedOptions;
+  return {
+    series: [...prevSeries, data],
+  };
 }
 
-export function removeSeries(
-  currentOptions: ChartOptions,
-  name: string,
+export function getOptionsToUpdateWithRemovedSeries(
+  currentOptions: ECBasicOption | undefined,
+  id: string,
 ): Partial<ChartOptions> {
-  const updatedOptions = { ...currentOptions };
+  const prevSeries =
+    currentOptions &&
+    currentOptions.series &&
+    Array.isArray(currentOptions?.series)
+      ? currentOptions.series
+      : [];
 
-  if (updatedOptions.series) {
-    updatedOptions.series = [
-      ...updatedOptions.series.filter(series => series.name !== name),
-    ];
-  }
+  const filteredSeries = prevSeries.filter(series => {
+    if (!series) return true;
 
-  return updatedOptions;
-}
+    return series.id && series.id !== id;
+  });
 
-/**
- * Method to recursively merge two objects. It should update keys if they
- * already exist and add them if they don't. However, it shouldn't completely
- * overwrite a key it's an already existing object.
- *
- * They goal is to allow for partial updates to the chart options object.
- */
-function recursiveMerge(
-  target: { [key: string]: any },
-  source: { [key: string]: any },
-) {
-  const updatedObj = { ...target };
-
-  for (const key in source) {
-    if (
-      typeof source[key] === 'object' &&
-      typeof updatedObj[key] === 'object'
-    ) {
-      // Recursively update nested objects
-      updatedObj[key] = recursiveMerge(updatedObj[key], source[key]);
-    } else {
-      // Update or add the value for the key
-      updatedObj[key] = source[key];
-    }
-  }
-
-  return updatedObj;
-}
-
-export function updateOptions(
-  currentOptions: ChartOptions,
-  options: Partial<ChartOptions>,
-): Partial<ChartOptions> {
-  return recursiveMerge(currentOptions, options);
+  return {
+    series: filteredSeries,
+  };
 }
