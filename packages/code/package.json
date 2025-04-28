@@ -4,18 +4,13 @@
   "description": "leafyGreen UI Kit Code Blocks",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "docs": "lg build-tsdoc",
+    "postinstall": "npx ts-node scripts/postinstall.ts"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -46,7 +41,6 @@
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },

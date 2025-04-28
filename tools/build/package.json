@@ -12,6 +12,7 @@
   },
   "main": "dist/index.js",
   "module": "dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "./scripts/build.sh",
     "tsc": "./scripts/build-ts.sh"
