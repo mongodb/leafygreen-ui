@@ -40,25 +40,88 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   }
 `;
 
+// const overlayOpenStyles = css`
+//   opacity: 1;
+//   /* transform: none; */
+//   /* transform: translate3d(0%, 0, 0); */
+
+//   /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+//     /* transform: none; */
+//   /* transform: translate3d(0%, 0, 0); */
+//   /* } */
+// `;
+
+// const overlayClosedStyles = css`
+//   /* opacity: 0; */
+//   /* transform: translate3d(100%, 0, 0); */
+//   pointer-events: none;
+
+//   /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+//     transform: translate3d(0, 100%, 0);
+//   } */
+// `;
+
+// const getOverlayStyles = ({
+//   open,
+//   zIndex,
+// }: {
+//   open: boolean;
+//   zIndex: number;
+// }) =>
+//   cx(
+//     css`
+//       /* position: fixed; */
+//       /* position: absolute; */
+//       /* z-index: ${zIndex}; */
+//       /* top: 0;
+//       bottom: 0;
+//       right: 0; */
+//       /* overflow: visible; */
+//       /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
+//         opacity ${drawerTransitionDuration}ms ease-in-out
+//           ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
+
+//       /* transition: transform 1000ms linear, opacity 1000ms linear; */
+
+//       /* transform: translate3d(0%, 0, 0);
+
+//       &:open {
+//         color: red;
+//         transform: translate3d(0%, 0, 0);
+
+//         @starting-style {
+//           transform: translate3d(0%, 0, 0);
+//         }
+//       } */
+
+//       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+//         /* top: unset;
+//         left: 0; */
+//       }
+//     `,
+//     {
+//       [overlayOpenStyles]: open,
+//       [overlayClosedStyles]: !open,
+//     },
+//   );
+
 const overlayOpenStyles = css`
   opacity: 1;
-  /* transform: none; */
-  /* transform: translate3d(0%, 0, 0); */
+  transform: none;
 
-  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    /* transform: none; */
-  /* transform: translate3d(0%, 0, 0); */
-  /* } */
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    transform: none;
+  }
 `;
 
 const overlayClosedStyles = css`
-  /* opacity: 0; */
-  /* transform: translate3d(100%, 0, 0); */
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
   pointer-events: none;
 
-  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     transform: translate3d(0, 100%, 0);
-  } */
+  }
 `;
 
 const getOverlayStyles = ({
@@ -70,33 +133,19 @@ const getOverlayStyles = ({
 }) =>
   cx(
     css`
-      /* position: fixed; */
-      /* position: absolute; */
-      /* z-index: ${zIndex}; */
-      /* top: 0;
+      position: fixed;
+      z-index: ${zIndex};
+      top: 0;
       bottom: 0;
-      right: 0; */
-      /* overflow: visible; */
-      /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
+      right: 0;
+      overflow: visible;
+      transition: transform ${drawerTransitionDuration}ms ease-in-out,
         opacity ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
-
-      /* transition: transform 1000ms linear, opacity 1000ms linear; */
-
-      /* transform: translate3d(0%, 0, 0);
-
-      &:open {
-        color: red;
-        transform: translate3d(0%, 0, 0);
-
-        @starting-style {
-          transform: translate3d(0%, 0, 0);
-        }
-      } */
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-        /* top: unset;
-        left: 0; */
+        top: unset;
+        left: 0;
       }
     `,
     {
@@ -145,7 +194,7 @@ const getDisplayModeStyles = ({
   zIndex: number;
 }) =>
   cx({
-    [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
+    // [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
@@ -164,7 +213,7 @@ export const getDrawerStyles = ({
 }) =>
   cx(
     getBaseStyles({ open, theme }),
-    getDisplayModeStyles({ displayMode, open, zIndex }),
+    // getDisplayModeStyles({ displayMode, open, zIndex }),
     className,
   );
 
@@ -176,15 +225,16 @@ const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
 `;
 
-const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
-  ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
+// const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
+//   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
-  }
-`;
+//   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+//     ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
+//   }
+// `;
 
 export const getInnerContainerStyles = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   displayMode,
   theme,
 }: {

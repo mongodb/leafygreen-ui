@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
   storybookArgTypes,
@@ -8,15 +8,17 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
+import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 import { Body } from '@leafygreen-ui/typography';
 
+import { drawerTransitionDuration } from './Drawer/Drawer.styles';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
+import { DrawerWithToolbarWrapper } from './DrawerWithToolbarWrapper';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
-import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
-import { drawerTransitionDuration } from './Drawer/Drawer.styles';
+import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -174,7 +176,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
       {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
       <EmbeddedDrawerLayout
         className={css`
-          height: 100vh;
+          height: 80vh;
         `}
         isDrawerOpen={open}
         hasToolbar
@@ -195,13 +197,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
           </Button>
           <LongContent />
         </main>
-        <div
-          className={css`
-            display: grid;
-            grid-template-columns: 48px 432px;
-            overflow: hidden;
-          `}
-        >
+        <DrawerWithToolbarWrapper isDrawerOpen={open}>
           <Toolbar>
             <ToolbarIconButton glyph="Code" label="Code" onClick={() => {}} />
             <ToolbarIconButton glyph="Plus" label="Plus" onClick={() => {}} />
@@ -212,7 +208,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
             onClose={() => setOpen(false)}
             title="Drawer Title"
           />
-        </div>
+        </DrawerWithToolbarWrapper>
         {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
       </EmbeddedDrawerLayout>
     </DrawerStackProvider>
@@ -225,13 +221,12 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <DrawerStackProvider>
       {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-      <EmbeddedDrawerLayout
+      <OverlayDrawerLayout
         className={css`
           height: 80vh;
         `}
         isDrawerOpen={open}
         hasToolbar
-        displayMode={DisplayMode.Overlay}
       >
         <main
           className={css`
@@ -242,55 +237,23 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
             align-items: flex-start;
             gap: ${spacing[200]}px;
             background: aliceblue;
+            grid-area: main;
+            overflow: scroll;
+            height: 100%;
           `}
         >
           <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
             Toggle Drawer
           </Button>
           <LongContent />
+          <LongContent />
         </main>
-        <div
-          className={cx(
-            css`
-              display: grid;
-              grid-template-columns: 48px 100px;
-              grid-template-areas: 'toolbar2 drawer2';
-              grid-area: drawer;
-              /* overflow: hidden; */
-              position: relative;
-
-              /* width: 432px; */
-              justify-self: end;
-              transition: all ${drawerTransitionDuration}ms ease-in-out;
-            `,
-            {
-              [css`
-                grid-template-columns: 48px 432px;
-
-                @starting-style {
-                  grid-template-columns: 48px 100px;
-                }
-              `]: open,
-            },
-          )}
-        >
+        <DrawerWithToolbarWrapper isDrawerOpen={open}>
           <Toolbar
             className={cx(
               css`
-                /* position: absolute; */
-                /* top: 0;
-                right: 0; */
-                height: 100%;
-                /* transition: all ${drawerTransitionDuration}ms linear; */
-                /* transform: translateX(0); */
-
                 grid-area: toolbar2;
               `,
-              // {
-              //   [css`
-              //     transform: translate3d(-432px, 0, 0); //3d
-              //   `]: open,
-              // },
             )}
           >
             <ToolbarIconButton
@@ -310,16 +273,19 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
             onClose={() => setOpen(false)}
             title="Drawer Title"
             className={css`
-              /* position: absolute;
-               */
-              width: 432px;
+              transition: none;
+              translate: unset;
+              all: unset;
               grid-area: drawer2;
-              /* position: unset; */
+              display: block;
+              overflow: hidden;
             `}
-          />
-        </div>
+          >
+            <LongContent />
+          </Drawer>
+        </DrawerWithToolbarWrapper>
         {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-      </EmbeddedDrawerLayout>
+      </OverlayDrawerLayout>
     </DrawerStackProvider>
   );
 };

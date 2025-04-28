@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useIdAllocator,
   useIsomorphicLayoutEffect,
@@ -54,17 +55,17 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
-    const [hasTabs, setHasTabs] = useState(false);
+    // const [hasTabs, setHasTabs] = useState(false);
 
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
     // Track when intercept <span> element is no longer visible to add shadow below drawer header
-    const { ref: interceptRef, inView: isInterceptInView } = useInView({
-      initialInView: true,
-      fallbackInView: true,
-    });
+    // const { ref: interceptRef, inView: isInterceptInView } = useInView({
+    //   initialInView: true,
+    //   fallbackInView: true,
+    // });
 
     const showCloseButton = !!onClose;
     const drawerIndex = getDrawerIndex(id);
@@ -93,25 +94,99 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     // console.log({ displayMode });
 
+    // return (
+    //   <LeafyGreenProvider darkMode={darkMode}>
+    //     <DrawerContext.Provider>
+    //       <Component
+    //         aria-hidden={!open}
+    //         aria-labelledby={titleId}
+    //         // className={getDrawerStyles({
+    //         //   className,
+    //         //   displayMode,
+    //         //   open,
+    //         //   theme,
+    //         //   zIndex: 1000 + drawerIndex,
+    //         // })}
+    //         className={css`
+    //           grid-area: drawer2;
+    //           height: 100%;
+    //           display: block;
+    //           transition: none;
+    //           transform: unset;
+    //           background: darkorange;
+    //           height: 100%;
+    //           display: block;
+    //           position: relative;
+    //           width: 432px;
+    //         `}
+    //         data-lgid={lgIds.root}
+    //         id={id}
+    //         ref={drawerRef}
+    //         {...rest}
+    //       >
+    //         <div
+    //           className={getInnerContainerStyles({
+    //             displayMode,
+    //             theme,
+    //           })}
+    //         >
+    //           <div
+    //           // className={getHeaderStyles({
+    //           //   hasTabs,
+    //           //   theme,
+    //           // })}
+    //           >
+    //             <Body
+    //               as={typeof title === 'string' ? 'h2' : 'div'}
+    //               baseFontSize={BaseFontSize.Body2}
+    //               id={titleId}
+    //               weight="medium"
+    //             >
+    //               {title}
+    //             </Body>
+    //             {showCloseButton && (
+    //               <IconButton
+    //                 aria-label="Close drawer"
+    //                 data-lgid={lgIds.closeButton}
+    //                 onClick={onClose}
+    //               >
+    //                 <XIcon />
+    //               </IconButton>
+    //             )}
+    //           </div>
+    //           <div
+    //           // className={getChildrenContainerStyles({
+    //           //   hasShadowTop: !hasTabs && !isInterceptInView,
+    //           //   theme,
+    //           // })}
+    //           >
+    //             {/* <div className={getInnerChildrenContainerStyles({ hasTabs })}> */}
+    //             {/* Empty span element used to track if children container has scrolled down */}
+    //             {/* {!hasTabs && <span ref={interceptRef} />}
+    //               {children}
+    //             </div> */}
+    //             {children}
+    //           </div>
+    //         </div>
+    //       </Component>
+    //     </DrawerContext.Provider>
+    //   </LeafyGreenProvider>
+    // );
+
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <DrawerContext.Provider
-          value={{ registerTabs: () => setHasTabs(true) }}
-        >
+        <DrawerContext.Provider value={{}}>
           <Component
-            aria-hidden={!open}
-            aria-labelledby={titleId}
-            className={getDrawerStyles({
-              className,
-              displayMode,
-              open,
-              theme,
-              zIndex: 1000 + drawerIndex,
-            })}
-            data-lgid={lgIds.root}
-            id={id}
+            className={cx(
+              getDrawerStyles({
+                theme,
+                open,
+                className,
+                displayMode,
+                zIndex: drawerIndex,
+              }),
+            )}
             ref={drawerRef}
-            {...rest}
           >
             <div
               className={getInnerContainerStyles({
@@ -121,7 +196,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             >
               <div
                 className={getHeaderStyles({
-                  hasTabs,
+                  hasTabs: false,
                   theme,
                 })}
               >
@@ -144,16 +219,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 )}
               </div>
               <div
-                className={getChildrenContainerStyles({
-                  hasShadowTop: !hasTabs && !isInterceptInView,
-                  theme,
-                })}
+                className={css`
+                  overflow: scroll;
+                `}
               >
-                <div className={getInnerChildrenContainerStyles({ hasTabs })}>
-                  {/* Empty span element used to track if children container has scrolled down */}
-                  {!hasTabs && <span ref={interceptRef} />}
-                  {children}
-                </div>
+                {children}
               </div>
             </div>
           </Component>

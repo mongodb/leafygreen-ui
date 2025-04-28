@@ -1,11 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import {
-  DisplayMode,
-  MOBILE_BREAKPOINT,
-  PANEL_WIDTH,
-  TOOLBAR_WIDTH,
-} from '../Drawer';
+import { MOBILE_BREAKPOINT, PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
 const baseStyles = css`
@@ -45,20 +40,17 @@ export const getEmbeddedDrawerLayoutStyles = ({
   className,
   isDrawerOpen,
   hasToolbar = false,
-  displayMode = DisplayMode.Embedded,
 }: {
   className?: string;
   isDrawerOpen: boolean;
   hasToolbar?: boolean;
-  displayMode?: DisplayMode;
 }) =>
   cx(
     baseStyles,
     {
-      [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
       [toolbarStyles]: hasToolbar,
-      [toolbarEmbeddedOpenStyles]:
-        hasToolbar && isDrawerOpen && displayMode === DisplayMode.Embedded,
+      [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
+      [toolbarEmbeddedOpenStyles]: isDrawerOpen && hasToolbar,
     },
     className,
   );
