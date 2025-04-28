@@ -272,14 +272,10 @@ const scrollContainerStyles = css`
   overscroll-behavior: contain;
 `;
 
-export const getInnerChildrenContainerStyles = ({
-  hasTabs,
-}: {
-  hasTabs: boolean;
-}) =>
-  cx(baseInnerChildrenContainerStyles, {
-    [scrollContainerStyles]: !hasTabs,
-  });
+export const innerChildrenContainerStyles = cx(
+  baseInnerChildrenContainerStyles,
+  scrollContainerStyles,
+);
 
 // when overlay
 // the drawer is curerntly position fixed and is transformed off screen

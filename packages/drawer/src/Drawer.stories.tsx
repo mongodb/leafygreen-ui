@@ -196,7 +196,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
           </Button>
           <LongContent />
         </main>
-        <DrawerWithToolbarWrapper isDrawerOpen={open}>
+        <DrawerWithToolbarWrapper displayMode="embedded" isDrawerOpen={open}>
           <Toolbar
             className={cx(
               css`
@@ -300,7 +300,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
           <LongContent />
           <LongContent />
         </main>
-        <DrawerWithToolbarWrapper isDrawerOpen={open}>
+        <DrawerWithToolbarWrapper displayMode="overlay" isDrawerOpen={open}>
           <Toolbar
             className={cx(
               css`

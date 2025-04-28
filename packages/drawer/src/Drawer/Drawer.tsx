@@ -25,8 +25,8 @@ import {
   getChildrenContainerStyles,
   getDrawerStyles,
   getHeaderStyles,
-  getInnerChildrenContainerStyles,
   getInnerContainerStyles,
+  innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
@@ -68,10 +68,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const titleId = useIdAllocator({ prefix: 'drawer' });
 
     // Track when intercept <span> element is no longer visible to add shadow below drawer header
-    // const { ref: interceptRef, inView: isInterceptInView } = useInView({
-    //   initialInView: true,
-    //   fallbackInView: true,
-    // });
+    const { ref: interceptRef, inView: isInterceptInView } = useInView({
+      initialInView: true,
+      fallbackInView: true,
+    });
 
     const showCloseButton = !!onClose;
     const drawerIndex = getDrawerIndex(id);
@@ -194,6 +194,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               }),
             )}
             ref={drawerRef}
+            {...rest}
           >
             <div
               className={getInnerContainerStyles({
@@ -226,11 +227,16 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 )}
               </div>
               <div
-                className={css`
-                  overflow: scroll;
-                `}
+                className={getChildrenContainerStyles({
+                  hasShadowTop: !isInterceptInView,
+                  theme,
+                })}
               >
-                {children}
+                <div className={innerChildrenContainerStyles}>
+                  {/* Empty span element used to track if children container has scrolled down */}
+                  {<span ref={interceptRef} />}
+                  {children}
+                </div>
               </div>
             </div>
           </Component>
