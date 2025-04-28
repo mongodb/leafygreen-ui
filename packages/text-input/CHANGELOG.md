@@ -1,5 +1,12 @@
 # @leafygreen-ui/text-input
 
+## 14.0.12
+
+### Patch Changes
+
+- bce45dba1: `defaultValue` property now works as expected.
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 14.0.11
 
 ### Patch Changes

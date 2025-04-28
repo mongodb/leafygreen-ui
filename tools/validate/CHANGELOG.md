@@ -1,5 +1,16 @@
 # @lg-tools/validate
 
+## 0.5.0
+
+### Minor Changes
+
+- 989387c95: Updates build validation to use the entry files defined in the package.json
+
+### Patch Changes
+
+- Updated dependencies [028147fe1]
+  - @lg-tools/meta@0.5.1
+
 ## 0.4.6
 
 ### Patch Changes
