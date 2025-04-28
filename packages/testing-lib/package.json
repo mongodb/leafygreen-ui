@@ -18,8 +18,8 @@
     "@testing-library/react-hooks": ">=3.7.0"
   },
   "scripts": {
-    "build": "lg-internal-build-package",
-    "tsc": "lg-internal-build-ts"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
