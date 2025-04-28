@@ -2,7 +2,7 @@
   "name": "@lg-chat/lg-markdown",
   "version": "3.0.14",
   "description": "lg-chat LGMarkdown",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

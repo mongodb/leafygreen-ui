@@ -2,7 +2,7 @@
   "name": "@lg-chat/message",
   "version": "5.0.14",
   "description": "lg-chat Message",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},

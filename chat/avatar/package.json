@@ -2,7 +2,7 @@
   "name": "@lg-chat/avatar",
   "version": "4.0.10",
   "description": "lg-chat Avatar",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
