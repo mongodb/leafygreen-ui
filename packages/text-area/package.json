@@ -8,9 +8,9 @@
   "typesVersions": {},
   "exports": {
     ".": {
+      "require": "./dist/umd/index.js",
       "import": "./dist/esm/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/types/index.d.ts"
     },
     "./testing": {
       "import": "./dist/esm/testing/index.js",
