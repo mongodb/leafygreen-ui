@@ -99,10 +99,10 @@ const unsetAxisOptions = {
  * </Chart>
  */
 export function YAxis({ type, label, formatter }: YAxisProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
-
-  const { ready, updateOptions } = chart;
 
   useEffect(() => {
     if (!ready) return;

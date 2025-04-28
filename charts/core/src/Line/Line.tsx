@@ -12,10 +12,10 @@ import { LineProps } from './Line.types';
 
 export function Line({ name, data }: LineProps) {
   const { theme } = useDarkMode();
-  const { chart } = useChartContext();
+  const {
+    chart: { addSeries, ready, removeSeries },
+  } = useChartContext();
   const { getSeriesIndex, isChecked } = useSeriesContext();
-
-  const { addSeries, ready, removeSeries } = chart;
 
   const id = useIdAllocator({ prefix: 'line' });
 

@@ -95,10 +95,10 @@ function getThresholdLineConfig({
 }
 
 export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { addSeries, ready, removeSeries },
+  } = useChartContext();
   const { theme } = useDarkMode();
-
-  const { addSeries, ready, removeSeries } = chart;
 
   const id = useIdAllocator({
     prefix: 'threshold-line',

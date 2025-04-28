@@ -18,10 +18,10 @@ export function ChartGrid({
   horizontal = true,
   vertical = true,
 }: ChartGridProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
-
-  const { ready, updateOptions } = chart;
 
   useEffect(() => {
     if (!ready) return;

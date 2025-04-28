@@ -18,10 +18,10 @@ export function ChartTooltip({
   seriesNameFormatter,
   sort,
 }: ChartTooltipProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
-
-  const { ready, updateOptions } = chart;
 
   const id = useIdAllocator({ prefix: 'tooltip' });
 

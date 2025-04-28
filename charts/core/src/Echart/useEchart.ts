@@ -30,21 +30,6 @@ export function useEchart({
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
 
-  const getEchartsInstance = useCallback(() => {
-    const echartsInstance = echartsInstanceRef.current;
-    return echartsInstance;
-  }, []);
-
-  const getEChartsInstanceOptions = useCallback(() => {
-    const echartsInstance = getEchartsInstance();
-
-    if (!echartsInstance) {
-      return;
-    }
-
-    return echartsInstance.getOption();
-  }, [getEchartsInstance]);
-
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
@@ -60,6 +45,21 @@ export function useEchart({
       return fn(...args);
     };
   };
+
+  const getEchartsInstance = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
+    return echartsInstance;
+  }, []);
+
+  const getEchartOptions = withInstanceCheck(() => {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    return echartsInstance.getOption();
+  });
 
   const setEchartOptions = withInstanceCheck(
     (options: Partial<EChartOptions>, replaceMerge?: Array<string>) => {
@@ -92,7 +92,7 @@ export function useEchart({
   );
 
   const addSeries: EChartsInstance['addSeries'] = withInstanceCheck(data => {
-    const currentOptions = getEChartsInstanceOptions();
+    const currentOptions = getEchartOptions();
     const newSeriesOptions = updateUtils.getOptionsToUpdateWithAddedSeries(
       currentOptions,
       data,
@@ -102,7 +102,7 @@ export function useEchart({
 
   const removeSeries: EChartsInstance['removeSeries'] = withInstanceCheck(
     id => {
-      const currentOptions = getEChartsInstanceOptions();
+      const currentOptions = getEchartOptions();
       const newSeriesOptions = updateUtils.getOptionsToUpdateWithRemovedSeries(
         currentOptions,
         id,
@@ -374,7 +374,7 @@ export function useEchart({
       };
       setEchartOptions(mergeableOptions);
     }
-  }, [getEChartsInstanceOptions, getEchartsInstance, setEchartOptions, theme]);
+  }, [getEchartsInstance, setEchartOptions, theme]);
 
   return {
     _getEChartsInstance: getEchartsInstance,

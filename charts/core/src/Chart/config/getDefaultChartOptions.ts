@@ -10,10 +10,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ChartOptions } from '../Chart.types';
-
-export const TOOLBOX_ID = 'toolbox';
-export const X_AXIS_ID = 'x-axis';
-export const Y_AXIS_ID = 'y-axis';
+import { TOOLBOX_ID, X_AXIS_ID, Y_AXIS_ID } from '../constants';
 
 const commonAxisOptions = {
   /**

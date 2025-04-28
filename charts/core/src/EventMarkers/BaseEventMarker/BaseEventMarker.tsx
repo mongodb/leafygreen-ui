@@ -19,10 +19,10 @@ export function BaseEventMarker({
   level = EventLevel.Warning,
   type,
 }: BaseEventMarkerLineProps | BaseEventMarkerPointProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { addSeries, ready, removeSeries },
+  } = useChartContext();
   const { theme } = useDarkMode();
-
-  const { addSeries, ready, removeSeries } = chart;
 
   const id = useIdAllocator({ prefix: 'event-marker' });
 
