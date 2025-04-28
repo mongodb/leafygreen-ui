@@ -1,7 +1,10 @@
 import React from 'react';
+import { render } from 'react-dom';
+import { renderToString } from 'react-dom/server';
 import { esLint, javascript } from '@codemirror/lang-javascript';
 import { linter, lintGutter } from '@codemirror/lint';
-import CodeMirror from '@uiw/react-codemirror';
+import { search, SearchQuery, selectMatches } from '@codemirror/search';
+import CodeMirror, { EditorView } from '@uiw/react-codemirror';
 // Uses linter.mjs
 import * as eslint from 'eslint-linter-browserify';
 import globals from 'globals';
@@ -52,6 +55,20 @@ const recommendedRules: Record<string, 'error' | 'warn' | 'off'> = {
   'valid-typeof': 'error',
 };
 
+export default function SearchPanel({ view }: { view: EditorView }) {
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        // Handle search submission
+      }}
+    >
+      <input />
+      <button type="submit">Custom Search</button>
+    </form>
+  );
+}
+
 export function CodeEditor() {
   const [value, setValue] = React.useState("console.log('hello world!');");
   const onChange = React.useCallback((val: string) => {
@@ -77,6 +94,13 @@ export function CodeEditor() {
       height="200px"
       width="100%"
       extensions={[
+        search({
+          createPanel: view => {
+            const dom = document.createElement('div');
+            render(<SearchPanel view={view} />, dom);
+            return { dom };
+          },
+        }),
         javascript({ jsx: true }),
         lintGutter(),
         linter(esLint(new eslint.Linter(), config)),
