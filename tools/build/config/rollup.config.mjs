@@ -94,7 +94,7 @@ doTestUtilsExist &&
     input: testUtilsFilename,
     output: {
       ...umdConfig.output,
-      dir: 'dist/testing',
+      dir: 'dist/umd/testing',
     },
   });
 
