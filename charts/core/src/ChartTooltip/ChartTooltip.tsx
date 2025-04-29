@@ -74,6 +74,11 @@ export function ChartTooltip({
         {
           tooltip: {
             id,
+            axisPointer: {
+              z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
+            },
+            show: true,
+            trigger: 'axis',
             formatter: () => '',
           },
         },
