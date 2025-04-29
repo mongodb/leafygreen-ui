@@ -10,6 +10,7 @@ const baseStyles = css`
   transition: all ${drawerTransitionDuration}ms linear;
   overflow: hidden;
   position: relative;
+  height: inherit;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-columns: unset;

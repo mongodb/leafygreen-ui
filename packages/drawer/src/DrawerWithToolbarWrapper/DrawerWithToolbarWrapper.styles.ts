@@ -62,13 +62,14 @@ export const getDrawerWithToolbarWrapperStyles = ({
       grid-template-areas: 'toolbar2 drawer2';
       grid-area: drawer;
       /* position: relative; */
-      overflow: hidden;
+      /* overflow: hidden; */
       justify-self: end;
       // TODO: reduce motion?
       /* animation-timing-function: linear; */
       animation-timing-function: ease-in-out;
       animation-duration: ${drawerTransitionDuration}ms;
       z-index: 0;
+      height: inherit;
 
       /* position: absolute;
       height: 100%;
@@ -80,10 +81,12 @@ export const getDrawerWithToolbarWrapperStyles = ({
         transform: unset;
         overflow: hidden;
         opacity: 1;
+        border-left: 0;
       }
     `,
     {
-      [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
+      [getDrawerShadowStyles({ theme })]:
+        displayMode === DisplayMode.Overlay && isDrawerOpen,
       [openStyles]: isDrawerOpen,
       [closedStyles]: !isDrawerOpen && shouldAnimate,
     },

@@ -55,11 +55,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
-    const [shouldAnimate, setShouldAnimate] = useState(false);
+    // const [shouldAnimate, setShouldAnimate] = useState(false);
 
-    useEffect(() => {
-      if (open) setShouldAnimate(true);
-    }, [open]);
+    // useEffect(() => {
+    //   if (open) setShouldAnimate(true);
+    // }, [open]);
 
     // const [hasTabs, setHasTabs] = useState(false);
 
@@ -179,68 +179,66 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     //   </LeafyGreenProvider>
     // );
 
+    // TODO: you can still tab inside the drawer when it is closed
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <DrawerContext.Provider value={{}}>
-          <Component
-            className={cx(
-              getDrawerStyles({
-                theme,
-                open,
-                className,
-                displayMode,
-                zIndex: drawerIndex,
-                shouldAnimate,
-              }),
-            )}
-            ref={drawerRef}
-            {...rest}
+        <Component
+          className={cx(
+            getDrawerStyles({
+              theme,
+              open,
+              className,
+              displayMode,
+              zIndex: drawerIndex,
+            }),
+          )}
+          ref={drawerRef}
+          {...rest}
+        >
+          <div
+            className={getInnerContainerStyles({
+              displayMode,
+              theme,
+            })}
           >
             <div
-              className={getInnerContainerStyles({
-                displayMode,
+              className={getHeaderStyles({
+                hasTabs: false,
                 theme,
               })}
             >
-              <div
-                className={getHeaderStyles({
-                  hasTabs: false,
-                  theme,
-                })}
+              <Body
+                as={typeof title === 'string' ? 'h2' : 'div'}
+                baseFontSize={BaseFontSize.Body2}
+                id={titleId}
+                weight="medium"
               >
-                <Body
-                  as={typeof title === 'string' ? 'h2' : 'div'}
-                  baseFontSize={BaseFontSize.Body2}
-                  id={titleId}
-                  weight="medium"
+                {title}
+              </Body>
+              {showCloseButton && (
+                <IconButton
+                  aria-label="Close drawer"
+                  data-lgid={lgIds.closeButton}
+                  onClick={onClose}
                 >
-                  {title}
-                </Body>
-                {showCloseButton && (
-                  <IconButton
-                    aria-label="Close drawer"
-                    data-lgid={lgIds.closeButton}
-                    onClick={onClose}
-                  >
-                    <XIcon />
-                  </IconButton>
-                )}
-              </div>
-              <div
-                className={getChildrenContainerStyles({
-                  hasShadowTop: !isInterceptInView,
-                  theme,
-                })}
-              >
-                <div className={innerChildrenContainerStyles}>
-                  {/* Empty span element used to track if children container has scrolled down */}
-                  {<span ref={interceptRef} />}
-                  {children}
-                </div>
+                  <XIcon />
+                </IconButton>
+              )}
+            </div>
+            <div
+              className={getChildrenContainerStyles({
+                hasShadowTop: !isInterceptInView,
+                theme,
+              })}
+            >
+              <div className={innerChildrenContainerStyles}>
+                {/* Empty span element used to track if children container has scrolled down */}
+                {<span ref={interceptRef} />}
+                {children}
               </div>
             </div>
-          </Component>
-        </DrawerContext.Provider>
+          </div>
+        </Component>
       </LeafyGreenProvider>
     );
   },

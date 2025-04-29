@@ -9,6 +9,7 @@ const baseStyles = css`
   } */
   width: 100%;
   position: relative;
+  height: inherit;
 `;
 
 const drawerOpenStyles = css`

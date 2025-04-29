@@ -49,14 +49,17 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   margin: 0;
   padding: 0;
   background-color: ${color[theme].background.primary.default};
-  border: ${open
-    ? `1px solid ${color[theme].border.secondary.default}`
-    : 'none'};
+  border-left: ${open ? '1px solid' : 'none'};
+  border-top: ${open ? '1px solid' : 'none'};
+  border-bottom: ${open ? '1px solid' : 'none'};
+  border-color: ${color[theme].border.secondary.default};
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
 
   overflow: hidden;
+
+  box-sizing: border-box;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
@@ -96,11 +99,9 @@ const overlayClosedStyles = css`
 const getOverlayStyles = ({
   open,
   zIndex,
-  shouldAnimate,
 }: {
   open: boolean;
   zIndex: number;
-  shouldAnimate?: boolean;
 }) =>
   cx(
     css`
