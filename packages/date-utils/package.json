@@ -12,6 +12,11 @@
       "import": "./dist/esm/index.js",
       "require": "./dist/umd/index.js",
       "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "import": "./dist/esm/testing/index.js",
+      "require": "./dist/umd/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
     }
   },
   "scripts": {

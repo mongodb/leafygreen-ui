@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 
 import { Tab, Tabs } from '../..';
-import { getTestUtils } from '..';
+import { getTestUtils } from '../../testing';
 
 import { getEnabledIndices } from './getEnabledIndices';
 
