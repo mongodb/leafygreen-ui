@@ -1,8 +1,10 @@
 import React, { useMemo, useRef, useState } from 'react';
+import isEqual from 'lodash/isEqual';
 
 import {
   useIsomorphicLayoutEffect,
   useObjectDependency,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import {
   useMigrationContext,
@@ -10,7 +12,7 @@ import {
   usePopoverPropsContext,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { getElementDocumentPosition } from '../utils/positionUtils';
+import { getElementDocumentPosition } from '../../utils/positionUtils';
 
 import {
   PopoverProps,
@@ -129,9 +131,14 @@ export function useReferenceElement(
     null,
   );
 
+  const prevReferenceElement = usePrevious(refEl?.current);
+
   useIsomorphicLayoutEffect(() => {
     if (refEl && refEl.current) {
-      setReferenceElement(refEl.current);
+      if (!isEqual(prevReferenceElement, referenceElement)) {
+        setReferenceElement(refEl.current);
+      }
+
       return;
     }
 
@@ -142,7 +149,7 @@ export function useReferenceElement(
       setReferenceElement(maybeParentEl);
       return;
     }
-  }, [placeholderElement, refEl]);
+  }, [placeholderElement, prevReferenceElement, refEl, referenceElement]);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
