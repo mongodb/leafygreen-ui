@@ -152,7 +152,7 @@ export function useReferenceElement(
       setReferenceElement(maybeParentEl);
       return;
     }
-  }, [placeholderElement, didRefElementChange, refEl, referenceElement]);
+  }, [didRefElementChange, placeholderElement, refEl]);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
