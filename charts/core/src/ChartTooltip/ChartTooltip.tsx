@@ -32,11 +32,6 @@ export function ChartTooltip({
       {
         tooltip: {
           id,
-          axisPointer: {
-            z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
-          },
-          show: true,
-          trigger: 'axis',
           // Still adding background color to prevent peak of color at corners
           backgroundColor:
             color[theme].background[Variant.InversePrimary][
@@ -79,7 +74,12 @@ export function ChartTooltip({
         {
           tooltip: {
             id,
-            show: false,
+            axisPointer: {
+              z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
+            },
+            show: true,
+            trigger: 'axis',
+            formatter: () => '',
           },
         },
         ['tooltip'],
