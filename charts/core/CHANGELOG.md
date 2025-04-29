@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.17.2
+
+### Patch Changes
+
+- 89924b8b7: [LG-4803](https://jira.mongodb.org/browse/LG-4803): fix exhaustive dependencies issues and refactor echarts options configuration
+
 ## 0.17.1
 
 ### Patch Changes

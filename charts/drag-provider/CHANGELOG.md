@@ -1,5 +1,12 @@
 # @lg-charts/drag-provider
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies [89924b8b7]
+  - @lg-charts/core@0.17.2
+
 ## 0.2.4
 
 ### Patch Changes
