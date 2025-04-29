@@ -55,7 +55,3 @@ export const getEmbeddedDrawerLayoutStyles = ({
     },
     className,
   );
-
-// When hasToolbar is true, we need to shift the layout by 48px;
-// When hasToolbar is true and isDrawerOpen is true and the displayMode is embedded, we need to shift the layout by 48px + 432px;
-// When hasToolbar is true and isDrawerOpen is true and the displayMode is overlay, the layout remains the same;

@@ -1,4 +1,4 @@
-import { css, cx, keyframes } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import {
   addOverflowShadow,
@@ -56,9 +56,7 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
-
   overflow: hidden;
-
   box-sizing: border-box;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
@@ -165,16 +163,13 @@ const getDisplayModeStyles = ({
   displayMode,
   open,
   zIndex,
-  shouldAnimate,
 }: {
   displayMode: DisplayMode;
   open: boolean;
   zIndex: number;
-  shouldAnimate?: boolean;
 }) =>
   cx({
-    [getOverlayStyles({ open, zIndex, shouldAnimate })]:
-      displayMode === DisplayMode.Overlay,
+    [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
     [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
@@ -184,18 +179,16 @@ export const getDrawerStyles = ({
   open,
   theme,
   zIndex,
-  shouldAnimate,
 }: {
   className?: string;
   displayMode: DisplayMode;
   open: boolean;
   theme: Theme;
   zIndex: number;
-  shouldAnimate?: boolean;
 }) =>
   cx(
     getBaseStyles({ open, theme }),
-    getDisplayModeStyles({ displayMode, open, zIndex, shouldAnimate }),
+    getDisplayModeStyles({ displayMode, open, zIndex }),
     className,
     drawerClassName,
   );
@@ -277,33 +270,3 @@ export const innerChildrenContainerStyles = cx(
   baseInnerChildrenContainerStyles,
   scrollContainerStyles,
 );
-
-// when overlay
-// the drawer is curerntly position fixed and is transformed off screen
-// it should be position absolute instead becuase it should be 100% of the parent container
-
-// with the toolbar, the main wrapper should be shifted to the left
-// the toolbar should also be position absolute
-
-// when the drawer is open, the main layout remains the same
-// the toolbar will transfom to the right and so will the drawer
-
-// embedded drawer
-
-// case 1:
-// embedded drawer with toolbar
-// - needs DrawerLayout
-
-// case 2:
-// embedded drawer without toolbar
-// - does not needs DrawerLayout
-
-// overlay drawer
-
-// case 3:
-// overlay drawer with toolbar
-// - needs DrawerLayout
-
-// case 4:
-// overlay drawer without toolbar
-// - does not needs DrawerLayout
