@@ -13,13 +13,12 @@ import {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { getElementDocumentPosition } from '../../utils/positionUtils';
-
 import {
   PopoverProps,
   RenderMode,
   UseContentNodeReturnObj,
   UseReferenceElementReturnObj,
-} from './Popover.types';
+} from '../Popover.types';
 
 /**
  * This hook handles logic for determining what prop values are used for the `Popover`
@@ -133,9 +132,13 @@ export function useReferenceElement(
 
   const prevReferenceElement = usePrevious(refEl?.current);
 
+  // If the DOM element has changed, we need to update the reference element.
+  // Store this variable so we can trigger the useLayoutEffect
+  const didRefElementChange = !isEqual(prevReferenceElement, refEl?.current);
+
   useIsomorphicLayoutEffect(() => {
     if (refEl && refEl.current) {
-      if (!isEqual(prevReferenceElement, referenceElement)) {
+      if (didRefElementChange) {
         setReferenceElement(refEl.current);
       }
 
@@ -149,7 +152,7 @@ export function useReferenceElement(
       setReferenceElement(maybeParentEl);
       return;
     }
-  }, [placeholderElement, prevReferenceElement, refEl, referenceElement]);
+  }, [placeholderElement, didRefElementChange, refEl, referenceElement]);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(
