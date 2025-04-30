@@ -11,6 +11,7 @@ import { nodeExternals } from 'rollup-plugin-node-externals';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 import { getUMDGlobals } from './utils/getUMDGlobals.mjs';
+import { defaultsDeep } from 'lodash-es';
 
 const extensions = ['.ts', '.tsx'];
 const testUtilsFilename = 'src/testing/index.ts';
@@ -28,13 +29,19 @@ const { name } = createRequire(import.meta.url)(
 const external = [/node_modules/];
 
 const moduleFormatToDirectory = {
-  esm: 'dist/esm/',
-  umd: 'dist/umd/',
+  esm: 'dist/esm',
+  umd: 'dist/umd',
 };
 
 const doTestUtilsExist = glob.sync(testUtilsFilename).length > 0;
 
-const createConfigForFormat = format => {
+/**
+ *
+ * @param {'esm' | 'umd'} format
+ * @param {*} overrides
+ * @returns
+ */
+const createConfigForFormat = (format, overrides) => {
   const formatConfig = {
     input: ['src/index.ts'],
     output: {
@@ -72,14 +79,8 @@ const createConfigForFormat = format => {
     },
   };
 
-  // Add code-splitting for test utils to ESM build if they exist
-  if (format === 'esm' && doTestUtilsExist) {
-    formatConfig.input.push(testUtilsFilename);
-  }
-
-  return {
-    ...formatConfig,
-  };
+  const finalConfig = defaultsDeep({}, overrides, formatConfig);
+  return finalConfig;
 };
 
 const esmConfig = createConfigForFormat('esm');
@@ -89,14 +90,20 @@ const defaultConfig = [esmConfig, umdConfig];
 
 // Add additional entry point to UMD build for test-utils if they exist
 doTestUtilsExist &&
-  defaultConfig.push({
-    ...umdConfig,
-    input: testUtilsFilename,
-    output: {
-      ...umdConfig.output,
-      dir: 'dist/umd/testing',
-    },
-  });
+  defaultConfig.push(
+    createConfigForFormat('esm', {
+      input: testUtilsFilename,
+      output: {
+        dir: `${moduleFormatToDirectory['esm']}/testing`,
+      },
+    }),
+    createConfigForFormat('umd', {
+      input: testUtilsFilename,
+      output: {
+        dir: `${moduleFormatToDirectory['umd']}/testing`,
+      },
+    }),
+  );
 
 // FIXME: Figure out a way to get rid of this.
 // Creates a super-hacky `stories` bundle
