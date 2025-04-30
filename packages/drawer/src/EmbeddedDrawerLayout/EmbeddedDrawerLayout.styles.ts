@@ -1,4 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
+import { breakpoints } from '@leafygreen-ui/tokens';
 
 import { MOBILE_BREAKPOINT, PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
@@ -7,34 +8,40 @@ const baseStyles = css`
   width: 100%;
   display: grid;
   grid-template-columns: auto 0;
-  transition: all ${drawerTransitionDuration}ms linear;
+  transition: all ${drawerTransitionDuration}ms ease-in-out;
   overflow: hidden;
   position: relative;
   height: inherit;
+`;
 
+const drawerBaseStyles = css`
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     grid-template-columns: unset;
-    grid-template-rows: auto 0;
+    grid-template-rows: 100% 0;
   }
 `;
 
+// If there is no toolbar and the drawer is open, we need to shift the layout by 432px;
 const drawerOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH}px;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    grid-template-columns: unset;
     grid-template-rows: 50% 50%;
   }
 `;
 
-// TODO: mobile
-const toolbarStyles = css`
+const withToolbarBaseStyles = css`
   grid-template-columns: auto ${TOOLBAR_WIDTH}px;
   grid-template-areas: 'main drawer';
 `;
 
-const toolbarDrawerOpenStyles = css`
+// If there is a toolbar and the drawer is open, we need to shift the layout by 48px + 432px;
+const withToolbarOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
+
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    grid-template-columns: auto 0;
+  }
 `;
 
 export const getEmbeddedDrawerLayoutStyles = ({
@@ -49,9 +56,10 @@ export const getEmbeddedDrawerLayoutStyles = ({
   cx(
     baseStyles,
     {
-      [toolbarStyles]: hasToolbar,
+      [withToolbarBaseStyles]: hasToolbar,
+      [withToolbarOpenStyles]: isDrawerOpen && hasToolbar,
+      [drawerBaseStyles]: !hasToolbar,
       [drawerOpenStyles]: isDrawerOpen && !hasToolbar,
-      [toolbarDrawerOpenStyles]: isDrawerOpen && hasToolbar,
     },
     className,
   );

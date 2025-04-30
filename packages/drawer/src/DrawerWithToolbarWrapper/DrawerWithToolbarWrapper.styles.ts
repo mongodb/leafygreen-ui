@@ -1,6 +1,6 @@
 import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { addOverflowShadow, Side } from '@leafygreen-ui/tokens';
+import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 
 import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
 import {
@@ -28,16 +28,46 @@ const drawerOut = keyframes`
   }
 `;
 
+const drawerOutMobile = keyframes`
+  from {
+    grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
+  TOOLBAR_WIDTH * 2
+}px);
+  },
+  to {
+    grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
+  }
+`;
+
+const drawerInMobile = keyframes`
+  from {
+    grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
+  },
+  to {
+    grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
+  TOOLBAR_WIDTH * 2
+}px);
+  }
+`;
+
 const openStyles = css`
   animation-name: ${drawerIn};
   animation-fill-mode: forwards;
+
+  // TODO: make a var for breakpoints
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    animation-name: ${drawerInMobile};
+  }
 `;
 
 const closedStyles = css`
   animation-name: ${drawerOut};
+
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    animation-name: ${drawerOutMobile};
+  }
 `;
 
-// TODO: mobile
 const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 `;
@@ -61,19 +91,12 @@ export const getDrawerWithToolbarWrapperStyles = ({
       grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
       grid-template-areas: 'toolbar2 drawer2';
       grid-area: drawer;
-      /* position: relative; */
-      /* overflow: hidden; */
       justify-self: end;
       // TODO: reduce motion?
-      /* animation-timing-function: linear; */
       animation-timing-function: ease-in-out;
       animation-duration: ${drawerTransitionDuration}ms;
       z-index: 0;
       height: inherit;
-
-      /* position: absolute;
-      height: 100%;
-      left: 0; */
 
       .${drawerClassName} {
         position: unset;
@@ -82,6 +105,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
         overflow: hidden;
         opacity: 1;
         border-left: 0;
+        height: 100%;
       }
     `,
     {
@@ -90,8 +114,5 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [openStyles]: isDrawerOpen,
       [closedStyles]: !isDrawerOpen && shouldAnimate,
     },
-    // css`
-    //   position: absolute;
-    // `,
     className,
   );

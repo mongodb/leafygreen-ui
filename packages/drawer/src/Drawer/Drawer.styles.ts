@@ -19,36 +19,12 @@ export const drawerTransitionDuration = transitionDuration.slower;
 
 export const drawerClassName = createUniqueClassName('drawer');
 
-// const drawerIn = keyframes`
-//   from {
-//     // explain why this is 1px
-//     transform: translate3d(-1%, 0, 0);
-//     /* transform: translate3d(99%, 0, 0); */
-//   },
-//   to {
-//     transform: translate3d(-100%, 0, 0);
-//     /* transform: translate3d(0%, 0, 0); */
-
-//   }
-// `;
-
-// const drawerOut = keyframes`
-//   from {
-//     transform: translate3d(-100%, 0, 0);
-//     /* transform: translate3d(0%, 0, 0); */
-//   },
-//   to {
-//     transform: translate3d(0%, 0, 0);
-//     /* transform: translate3d(100%, 0, 0); */
-
-//   }
-// `;
-
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
-  margin: 0;
   padding: 0;
   background-color: ${color[theme].background.primary.default};
+
+  // TODO: mobile borders
   border-left: ${open ? '1px solid' : 'none'};
   border-top: ${open ? '1px solid' : 'none'};
   border-bottom: ${open ? '1px solid' : 'none'};
@@ -58,6 +34,7 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
+  transition: height ${drawerTransitionDuration}ms ease-in-out;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
@@ -83,16 +60,6 @@ const overlayClosedStyles = css`
     transform: translate3d(0, 100%, 0);
   }
 `;
-
-// const overlayOpenStyles = css`
-//   animation-name: ${drawerIn};
-//   animation-fill-mode: forwards;
-//   width: 432px;
-// `;
-
-// const overlayClosedStyles = css`
-//   animation-name: ${drawerOut};
-// `;
 
 const getOverlayStyles = ({
   open,
@@ -132,19 +99,19 @@ const getOverlayStyles = ({
 const embeddedOpenStyles = css`
   width: 100%;
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     height: 50vh;
-  }
+  } */
 `;
 
 const embeddedClosedStyles = css`
   /* width: 0; */
   /* right: -${PANEL_WIDTH}px; */
 
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     width: 100%;
     height: 0;
-  }
+  } */
 `;
 
 const getEmbeddedStyles = ({ open }: { open: boolean }) =>
@@ -170,7 +137,7 @@ const getDisplayModeStyles = ({
 }) =>
   cx({
     [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
-    [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
+    // [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({
@@ -201,16 +168,15 @@ const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
 `;
 
-// const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
-//   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
+const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
+  ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 
-//   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-//     ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
-//   }
-// `;
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+    ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
+  }
+`;
 
 export const getInnerContainerStyles = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   displayMode,
   theme,
 }: {
@@ -218,7 +184,7 @@ export const getInnerContainerStyles = ({
   theme: Theme;
 }) =>
   cx(getBaseInnerContainerStyles({ theme }), {
-    // [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
+    [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
   });
 
 export const getHeaderStyles = ({
