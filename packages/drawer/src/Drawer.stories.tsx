@@ -282,7 +282,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
     >
       <DrawerStackProvider>
         {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        <OverlayDrawerLayout isDrawerOpen={open} hasToolbar>
+        <OverlayDrawerLayout hasToolbar>
           <main
             className={css`
               padding: ${spacing[400]}px;

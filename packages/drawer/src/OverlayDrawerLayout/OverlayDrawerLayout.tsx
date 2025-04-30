@@ -3,12 +3,18 @@ import React, { forwardRef } from 'react';
 import { getOverlayDrawerLayoutStyles } from './OverlayDrawerLayout.styles';
 import { OverlayDrawerLayoutProps } from './OverlayDrawerLayout.types';
 
+/**
+ * This layout wrapper is used to create a layout that has 2 grid columns. The main content is on the left and the drawer is on the right.
+ *
+ * Since this layout is used for overlay drawers, when the drawer is open, the layout will not shift. Instead the shifting is handled by the children of this component.
+ *
+ */
 export const OverlayDrawerLayout = forwardRef<
   HTMLDivElement,
   OverlayDrawerLayoutProps
 >(
   (
-    { children, className, isDrawerOpen, hasToolbar }: OverlayDrawerLayoutProps,
+    { children, className, hasToolbar }: OverlayDrawerLayoutProps,
     forwardedRef,
   ) => {
     return (
@@ -16,7 +22,6 @@ export const OverlayDrawerLayout = forwardRef<
         ref={forwardedRef}
         className={getOverlayDrawerLayoutStyles({
           className,
-          isDrawerOpen,
           hasToolbar,
         })}
       >
