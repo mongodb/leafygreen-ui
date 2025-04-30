@@ -596,7 +596,6 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
             align-items: flex-start;
             gap: ${spacing[200]}px;
             background: aliceblue;
-            /* grid-area: ${GRID_AREA.content};} */
             overflow: scroll;
             height: 100%;
           `}
@@ -612,9 +611,6 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
           open={open}
           onClose={() => setOpen(false)}
           title="Drawer Title"
-          className={css`
-            /* display: block; */
-          `}
         >
           <LongContent />
         </Drawer>
