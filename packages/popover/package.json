@@ -29,6 +29,7 @@
     "@leafygreen-ui/portal": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@types/react-transition-group": "^4.4.5",
+    "lodash": "^4.17.21",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {
