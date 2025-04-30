@@ -126,7 +126,7 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               <UnitSelect
                 id={selectId}
                 disabled={disabled}
-                unit={unit}
+                unit={unit as string}
                 unitOptions={unitOptions}
                 onChange={onSelectChange}
                 size={size}
