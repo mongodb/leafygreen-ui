@@ -2,6 +2,7 @@ import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 
+import { GRID_AREAS } from '../constants';
 import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
 import {
   drawerClassName,
@@ -9,9 +10,11 @@ import {
 } from '../Drawer/Drawer.styles';
 import { DisplayMode } from '../Drawer/Drawer.types';
 
+const MOBILE_BREAKPOINT = breakpoints.Tablet;
+
 const drawerIn = keyframes`
   from {
-    // explain why this is 1px
+    // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Using 1px along with css animations is a workaround to get the animation to work.
     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
   },
   to {
@@ -54,8 +57,7 @@ const openStyles = css`
   animation-name: ${drawerIn};
   animation-fill-mode: forwards;
 
-  // TODO: make a var for breakpoints
-  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerInMobile};
   }
 `;
@@ -63,13 +65,36 @@ const openStyles = css`
 const closedStyles = css`
   animation-name: ${drawerOut};
 
-  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     animation-name: ${drawerOutMobile};
   }
 `;
 
 const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
+`;
+
+const baseStyles = css`
+  display: grid;
+  grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
+  grid-template-areas: '${GRID_AREAS.toolbar} ${GRID_AREAS.innerDrawer}';
+
+  grid-area: ${GRID_AREAS.drawer};
+  justify-self: end;
+  animation-timing-function: ease-in-out;
+  animation-duration: ${drawerTransitionDuration}ms;
+  z-index: 0;
+  height: inherit;
+
+  .${drawerClassName} {
+    position: unset;
+    transition: none;
+    transform: unset;
+    overflow: hidden;
+    opacity: 1;
+    border-left: 0;
+    height: 100%;
+  }
 `;
 
 export const getDrawerWithToolbarWrapperStyles = ({
@@ -86,28 +111,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
   theme: Theme;
 }) =>
   cx(
-    css`
-      display: grid;
-      grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
-      grid-template-areas: 'toolbar2 drawer2';
-      grid-area: drawer;
-      justify-self: end;
-      // TODO: reduce motion?
-      animation-timing-function: ease-in-out;
-      animation-duration: ${drawerTransitionDuration}ms;
-      z-index: 0;
-      height: inherit;
-
-      .${drawerClassName} {
-        position: unset;
-        transition: none;
-        transform: unset;
-        overflow: hidden;
-        opacity: 1;
-        border-left: 0;
-        height: 100%;
-      }
-    `,
+    baseStyles,
     {
       [getDrawerShadowStyles({ theme })]:
         displayMode === DisplayMode.Overlay && isDrawerOpen,

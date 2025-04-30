@@ -5,6 +5,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getDrawerWithToolbarWrapperStyles } from './DrawerWithToolbarWrapper.styles';
 import { DrawerWithToolbarWrapperProps } from './DrawerWithToolbarWrapper.types';
 
+/**
+ * This layout wrapper is used to position the toolbar and drawer together. When the drawer is open, the toolbar and drawer will shift to the right.
+ *
+ * If the drawer is overlay, a box shadow will be applied to the left side of this component.
+ */
 export const DrawerWithToolbarWrapper = forwardRef<
   HTMLDivElement,
   DrawerWithToolbarWrapperProps

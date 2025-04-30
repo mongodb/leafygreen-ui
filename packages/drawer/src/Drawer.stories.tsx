@@ -13,6 +13,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 import { Body } from '@leafygreen-ui/typography';
 
+import { GRID_AREAS } from './constants';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
 import { DrawerWithToolbarWrapper } from './DrawerWithToolbarWrapper';
@@ -200,7 +201,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
             <Toolbar
               className={cx(
                 css`
-                  grid-area: toolbar2;
+                  grid-area: ${GRID_AREAS.toolbar};
                 `,
               )}
             >
@@ -213,7 +214,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
               onClose={() => setOpen(false)}
               title="Drawer Title"
               className={css`
-                grid-area: drawer2;
+                grid-area: ${GRID_AREAS.innerDrawer};
               `}
             >
               <LongContent />
@@ -292,7 +293,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
               align-items: flex-start;
               gap: ${spacing[200]}px;
               background: aliceblue;
-              grid-area: main;
+              grid-area: ${GRID_AREAS.content};
               overflow: scroll;
               height: 100%;
             `}
@@ -307,7 +308,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
             <Toolbar
               className={cx(
                 css`
-                  grid-area: toolbar2;
+                  grid-area: ${GRID_AREAS.toolbar};
                 `,
               )}
             >
@@ -330,7 +331,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
               className={css`
                 transition: none;
                 translate: unset;
-                grid-area: drawer2;
+                grid-area: ${GRID_AREAS.innerDrawer};
                 display: block;
               `}
             >
@@ -392,7 +393,6 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
             className={css`
               height: inherit;
             `}
-            isDrawerOpen={open}
             hasToolbar
           >
             <main
@@ -404,7 +404,7 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
                 align-items: flex-start;
                 gap: ${spacing[200]}px;
                 background: aliceblue;
-                grid-area: main;
+                grid-area: ${GRID_AREAS.content};}
                 overflow: scroll;
                 /* height: 100%; */
                 height: inherit;
@@ -420,7 +420,7 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
               <Toolbar
                 className={cx(
                   css`
-                    grid-area: toolbar2;
+                    grid-area: ${GRID_AREAS.toolbar};};
                   `,
                 )}
               >
@@ -443,7 +443,7 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
                 className={css`
                   transition: none;
                   translate: unset;
-                  grid-area: drawer2;
+                  grid-area: ${GRID_AREAS.innerDrawer};};
                   display: block;
                 `}
               >
@@ -518,7 +518,7 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
                 align-items: flex-start;
                 gap: ${spacing[200]}px;
                 background: aliceblue;
-                grid-area: main;
+                grid-area: ${GRID_AREAS.content};}
                 overflow: scroll;
                 /* height: 100%; */
                 height: inherit;
@@ -537,7 +537,7 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
               <Toolbar
                 className={cx(
                   css`
-                    grid-area: toolbar2;
+                    grid-area: ${GRID_AREAS.toolbar};};
                   `,
                 )}
               >
@@ -560,7 +560,7 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
                 className={css`
                   transition: none;
                   translate: unset;
-                  grid-area: drawer2;
+                  grid-area: ${GRID_AREAS.innerDrawer};};
                   display: block;
                 `}
               >
@@ -588,41 +588,37 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
       `}
     >
       <DrawerStackProvider>
-        {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        <OverlayDrawerLayout isDrawerOpen={open}>
-          <main
-            className={css`
-              padding: ${spacing[400]}px;
-              overflow: auto;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              gap: ${spacing[200]}px;
-              background: aliceblue;
-              /* grid-area: main; */
-              overflow: scroll;
-              height: 100%;
-            `}
-          >
-            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-              Toggle Drawer
-            </Button>
-            <LongContent />
-            <LongContent />
-          </main>
-          <Drawer
-            displayMode="overlay"
-            open={open}
-            onClose={() => setOpen(false)}
-            title="Drawer Title"
-            className={css`
-              /* display: block; */
-            `}
-          >
-            <LongContent />
-          </Drawer>
-          {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        </OverlayDrawerLayout>
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: ${spacing[200]}px;
+            background: aliceblue;
+            /* grid-area: ${GRID_AREAS.content};} */
+            overflow: scroll;
+            height: 100%;
+          `}
+        >
+          <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
+            Toggle Drawer
+          </Button>
+          <LongContent />
+          <LongContent />
+        </main>
+        <Drawer
+          displayMode="overlay"
+          open={open}
+          onClose={() => setOpen(false)}
+          title="Drawer Title"
+          className={css`
+            /* display: block; */
+          `}
+        >
+          <LongContent />
+        </Drawer>
       </DrawerStackProvider>
     </div>
   );

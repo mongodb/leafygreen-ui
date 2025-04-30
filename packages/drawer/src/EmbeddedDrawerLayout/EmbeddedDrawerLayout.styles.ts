@@ -1,6 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { breakpoints } from '@leafygreen-ui/tokens';
 
+import { GRID_AREAS } from '../constants';
 import { MOBILE_BREAKPOINT, PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer';
 import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
@@ -32,7 +33,7 @@ const drawerOpenStyles = css`
 
 const withToolbarBaseStyles = css`
   grid-template-columns: auto ${TOOLBAR_WIDTH}px;
-  grid-template-areas: 'main drawer';
+  grid-template-areas: '${GRID_AREAS.content} ${GRID_AREAS.drawer}';
 `;
 
 // If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;

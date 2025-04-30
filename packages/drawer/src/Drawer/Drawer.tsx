@@ -1,7 +1,6 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { css, cx } from '@leafygreen-ui/emotion';
 import {
   useIdAllocator,
   useIsomorphicLayoutEffect,
@@ -16,7 +15,6 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DrawerContext } from '../DrawerContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
@@ -55,14 +53,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
-    // const [shouldAnimate, setShouldAnimate] = useState(false);
-
-    // useEffect(() => {
-    //   if (open) setShouldAnimate(true);
-    // }, [open]);
-
-    // const [hasTabs, setHasTabs] = useState(false);
-
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
@@ -97,8 +87,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         setTimeout(() => unregisterDrawer(id), drawerTransitionDuration);
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
-
-    // console.log({ displayMode });
 
     // return (
     //   <LeafyGreenProvider darkMode={darkMode}>
@@ -183,15 +171,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
-          className={cx(
-            getDrawerStyles({
-              theme,
-              open,
-              className,
-              displayMode,
-              zIndex: drawerIndex,
-            }),
-          )}
+          className={getDrawerStyles({
+            theme,
+            open,
+            className,
+            displayMode,
+            zIndex: drawerIndex,
+          })}
           ref={drawerRef}
           {...rest}
         >
