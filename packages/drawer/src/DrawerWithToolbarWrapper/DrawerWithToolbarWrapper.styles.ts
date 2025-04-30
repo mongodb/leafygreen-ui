@@ -101,7 +101,7 @@ const baseStyles = css`
   }
 `;
 
-const removeShadowStyles = css`
+const closedDrawerShadowStyles = css`
   ::before {
     opacity: 0;
   }
@@ -124,7 +124,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
     baseStyles,
     {
       [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
-      [removeShadowStyles]:
+      [closedDrawerShadowStyles]:
         displayMode === DisplayMode.Overlay && !isDrawerOpen,
       [openStyles]: isDrawerOpen,
       [closedStyles]: !isDrawerOpen && shouldAnimate,
