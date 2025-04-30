@@ -21,7 +21,7 @@ const drawerBaseStyles = css`
   }
 `;
 
-// If there is no toolbar and the drawer is open, we need to shift the layout by 432px;
+// If there is no toolbar and the drawer is open, we need to shift the layout by the panel width;
 const drawerOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH}px;
 
@@ -35,7 +35,7 @@ const withToolbarBaseStyles = css`
   grid-template-areas: 'main drawer';
 `;
 
-// If there is a toolbar and the drawer is open, we need to shift the layout by 48px + 432px;
+// If there is a toolbar and the drawer is open, we need to shift the layout by toolbar width + panel width;
 const withToolbarOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
 
