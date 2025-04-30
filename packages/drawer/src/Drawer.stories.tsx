@@ -13,7 +13,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 import { Body } from '@leafygreen-ui/typography';
 
-import { GRID_AREAS } from './constants';
+import { GRID_AREA } from './constants';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
 import { DrawerWithToolbarWrapper } from './DrawerWithToolbarWrapper';
@@ -37,7 +37,6 @@ export default {
       <div
         className={css`
           height: 100%;
-          /* width: 100%; */
           display: flex;
           align-items: center;
           margin: -100px;
@@ -201,7 +200,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
             <Toolbar
               className={cx(
                 css`
-                  grid-area: ${GRID_AREAS.toolbar};
+                  grid-area: ${GRID_AREA.toolbar};
                 `,
               )}
             >
@@ -214,7 +213,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
               onClose={() => setOpen(false)}
               title="Drawer Title"
               className={css`
-                grid-area: ${GRID_AREAS.innerDrawer};
+                grid-area: ${GRID_AREA.innerDrawer};
               `}
             >
               <LongContent />
@@ -293,7 +292,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
               align-items: flex-start;
               gap: ${spacing[200]}px;
               background: aliceblue;
-              grid-area: ${GRID_AREAS.content};
+              grid-area: ${GRID_AREA.content};
               overflow: scroll;
               height: 100%;
             `}
@@ -308,7 +307,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
             <Toolbar
               className={cx(
                 css`
-                  grid-area: ${GRID_AREAS.toolbar};
+                  grid-area: ${GRID_AREA.toolbar};
                 `,
               )}
             >
@@ -331,7 +330,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
               className={css`
                 transition: none;
                 translate: unset;
-                grid-area: ${GRID_AREAS.innerDrawer};
+                grid-area: ${GRID_AREA.innerDrawer};
                 display: block;
               `}
             >
@@ -404,7 +403,7 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
                 align-items: flex-start;
                 gap: ${spacing[200]}px;
                 background: aliceblue;
-                grid-area: ${GRID_AREAS.content};}
+                grid-area: ${GRID_AREA.content};}
                 overflow: scroll;
                 /* height: 100%; */
                 height: inherit;
@@ -420,7 +419,7 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
               <Toolbar
                 className={cx(
                   css`
-                    grid-area: ${GRID_AREAS.toolbar};};
+                    grid-area: ${GRID_AREA.toolbar};};
                   `,
                 )}
               >
@@ -443,7 +442,7 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
                 className={css`
                   transition: none;
                   translate: unset;
-                  grid-area: ${GRID_AREAS.innerDrawer};};
+                  grid-area: ${GRID_AREA.innerDrawer};};
                   display: block;
                 `}
               >
@@ -518,7 +517,7 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
                 align-items: flex-start;
                 gap: ${spacing[200]}px;
                 background: aliceblue;
-                grid-area: ${GRID_AREAS.content};}
+                grid-area: ${GRID_AREA.content};}
                 overflow: scroll;
                 /* height: 100%; */
                 height: inherit;
@@ -537,7 +536,7 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
               <Toolbar
                 className={cx(
                   css`
-                    grid-area: ${GRID_AREAS.toolbar};};
+                    grid-area: ${GRID_AREA.toolbar};};
                   `,
                 )}
               >
@@ -560,7 +559,7 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
                 className={css`
                   transition: none;
                   translate: unset;
-                  grid-area: ${GRID_AREAS.innerDrawer};};
+                  grid-area: ${GRID_AREA.innerDrawer};};
                   display: block;
                 `}
               >
@@ -597,7 +596,7 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
             align-items: flex-start;
             gap: ${spacing[200]}px;
             background: aliceblue;
-            /* grid-area: ${GRID_AREAS.content};} */
+            /* grid-area: ${GRID_AREA.content};} */
             overflow: scroll;
             height: 100%;
           `}

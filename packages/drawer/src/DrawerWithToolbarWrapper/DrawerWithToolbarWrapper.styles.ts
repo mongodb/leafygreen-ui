@@ -2,7 +2,7 @@ import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { addOverflowShadow, breakpoints, Side } from '@leafygreen-ui/tokens';
 
-import { GRID_AREAS } from '../constants';
+import { GRID_AREA } from '../constants';
 import { PANEL_WIDTH, TOOLBAR_WIDTH } from '../Drawer/Drawer.constants';
 import {
   drawerClassName,
@@ -72,14 +72,18 @@ const closedStyles = css`
 
 const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
+
+  &::before {
+    transition: opacity ${drawerTransitionDuration}ms ease-in-out;
+    opacity: 1;
+  }
 `;
 
 const baseStyles = css`
   display: grid;
   grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
-  grid-template-areas: '${GRID_AREAS.toolbar} ${GRID_AREAS.innerDrawer}';
-
-  grid-area: ${GRID_AREAS.drawer};
+  grid-template-areas: '${GRID_AREA.toolbar} ${GRID_AREA.innerDrawer}';
+  grid-area: ${GRID_AREA.drawer};
   justify-self: end;
   animation-timing-function: ease-in-out;
   animation-duration: ${drawerTransitionDuration}ms;
@@ -94,6 +98,12 @@ const baseStyles = css`
     opacity: 1;
     border-left: 0;
     height: 100%;
+  }
+`;
+
+const removeShadowStyles = css`
+  ::before {
+    opacity: 0;
   }
 `;
 
@@ -113,8 +123,9 @@ export const getDrawerWithToolbarWrapperStyles = ({
   cx(
     baseStyles,
     {
-      [getDrawerShadowStyles({ theme })]:
-        displayMode === DisplayMode.Overlay && isDrawerOpen,
+      [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
+      [removeShadowStyles]:
+        displayMode === DisplayMode.Overlay && !isDrawerOpen,
       [openStyles]: isDrawerOpen,
       [closedStyles]: !isDrawerOpen && shouldAnimate,
     },

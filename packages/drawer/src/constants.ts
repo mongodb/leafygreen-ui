@@ -1,4 +1,4 @@
-export const GRID_AREAS = {
+export const GRID_AREA = {
   drawer: 'drawer',
   content: 'content',
   toolbar: 'toolbar',
