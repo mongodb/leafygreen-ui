@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.17.3
+
+### Patch Changes
+
+- 30a9d55a9: Renders a vertical line on hover regardless of whether a ChartTooltip is rendered
+
 ## 0.17.2
 
 ### Patch Changes
