@@ -7,6 +7,7 @@ export interface ThresholdLineProps {
 }
 
 export interface GetThresholdLineConfig extends ThresholdLineProps {
+  id: string;
   name: string;
   theme: Theme;
 }

@@ -1,5 +1,11 @@
 # @leafygreen-ui/chip
 
+## 3.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/inline-definition@8.0.12
+
 ## 3.0.11
 
 ### Patch Changes

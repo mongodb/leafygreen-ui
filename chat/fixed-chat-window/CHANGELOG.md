@@ -1,5 +1,13 @@
 # @lg-chat/fixed-chat-window
 
+## 3.0.16
+
+### Patch Changes
+
+- Updated dependencies [2d40eba2a]
+  - @leafygreen-ui/popover@13.0.11
+  - @lg-chat/chat-window@3.0.14
+
 ## 3.0.15
 
 ### Patch Changes

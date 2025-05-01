@@ -15,11 +15,7 @@ import {
   getWindowSafePlacementValues,
 } from '../utils/positionUtils';
 
-import {
-  useContentNode,
-  usePopoverProps,
-  useReferenceElement,
-} from './Popover.hooks';
+import { useContentNode, usePopoverProps, useReferenceElement } from './hooks';
 import {
   contentClassName,
   getPopoverStyles,

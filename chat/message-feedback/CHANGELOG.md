@@ -1,5 +1,12 @@
 # @lg-chat/message-feedback
 
+## 4.0.9
+
+### Patch Changes
+
+- Updated dependencies [2d40eba2a]
+  - @leafygreen-ui/popover@13.0.11
+
 ## 4.0.8
 
 ### Patch Changes

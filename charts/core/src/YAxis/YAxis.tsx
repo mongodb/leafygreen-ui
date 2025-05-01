@@ -11,19 +11,21 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { ChartOptions } from '../Chart/Chart.types';
+import { type ChartOptions, Y_AXIS_ID } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { YAxisProps } from './YAxis.types';
 
 const getOptions = ({
+  id,
   theme,
   type,
   label,
   formatter,
-}: YAxisProps & { theme: Theme }): Partial<ChartOptions> => {
+}: YAxisProps & { id: string; theme: Theme }): Partial<ChartOptions> => {
   const options: Partial<ChartOptions> = {
     yAxis: {
+      id,
       type: type,
       axisLine: {
         show: true,
@@ -98,25 +100,31 @@ const unsetAxisOptions = {
  * </Chart>
  */
 export function YAxis({ type, label, formatter }: YAxisProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
-    chart.updateOptions(getOptions({ type, label, formatter, theme }));
+    updateOptions(
+      getOptions({ id: Y_AXIS_ID, type, label, formatter, theme }),
+      ['yAxis'],
+    );
 
     return () => {
       /**
        * Hides the axis when the component is unmounted.
        */
-      chart.updateOptions({
-        yAxis: unsetAxisOptions,
-      });
+      updateOptions(
+        {
+          yAxis: { id: Y_AXIS_ID, ...unsetAxisOptions },
+        },
+        ['yAxis'],
+      );
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, label, formatter, theme, chart.ready]);
+  }, [formatter, label, ready, theme, type, updateOptions]);
 
   return null;
 }

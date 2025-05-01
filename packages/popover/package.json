@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/popover",
-  "version": "13.0.10",
+  "version": "13.0.11",
   "description": "LeafyGreen UI Kit Popover",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -23,6 +23,7 @@
     "@leafygreen-ui/portal": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@types/react-transition-group": "^4.4.5",
+    "lodash": "^4.17.21",
     "react-transition-group": "^4.4.5"
   },
   "devDependencies": {

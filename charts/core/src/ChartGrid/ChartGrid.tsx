@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
-import { ChartOptions } from '../Chart';
+import { ChartOptions, X_AXIS_ID, Y_AXIS_ID } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { ChartGridProps } from './ChartGrid.types';
@@ -18,11 +18,13 @@ export function ChartGrid({
   horizontal = true,
   vertical = true,
 }: ChartGridProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { ready, updateOptions },
+  } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
     const updatedOptions: Partial<ChartOptions> = {};
     const getUpdatedLineOptions = (show: boolean) => ({
@@ -34,22 +36,29 @@ export function ChartGrid({
         },
       },
     });
-    updatedOptions.xAxis = getUpdatedLineOptions(!!vertical);
-    updatedOptions.yAxis = getUpdatedLineOptions(!!horizontal);
-    chart.updateOptions(updatedOptions);
+    updatedOptions.xAxis = {
+      id: X_AXIS_ID,
+      ...getUpdatedLineOptions(!!vertical),
+    };
+    updatedOptions.yAxis = {
+      id: Y_AXIS_ID,
+      ...getUpdatedLineOptions(!!horizontal),
+    };
+    updateOptions(updatedOptions, ['xAxis', 'yAxis']);
 
     return () => {
       /**
        * Hides the grid lines when the component is unmounted.
        */
-      chart.updateOptions({
-        xAxis: unsetGridOptions,
-        yAxis: unsetGridOptions,
-      });
+      updateOptions(
+        {
+          xAxis: { id: X_AXIS_ID, ...unsetGridOptions },
+          yAxis: { id: Y_AXIS_ID, ...unsetGridOptions },
+        },
+        ['xAxis', 'yAxis'],
+      );
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart.ready, horizontal, vertical, theme]);
+  }, [horizontal, ready, theme, updateOptions, vertical]);
 
   return null;
 }

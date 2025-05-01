@@ -25,6 +25,7 @@ export interface BaseEventMarkerPointProps extends BaseEventMarkerProps {
 }
 
 export interface GetMarkConfigProps extends BaseEventMarkerProps {
+  id: string;
   name: string;
   theme: Theme;
 }

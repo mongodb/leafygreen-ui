@@ -1,5 +1,11 @@
 # @leafygreen-ui/pagination
 
+## 3.0.14
+
+### Patch Changes
+
+- @leafygreen-ui/select@14.1.7
+
 ## 3.0.13
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lg-chat/message
 
+## 5.0.15
+
+### Patch Changes
+
+- @lg-chat/lg-markdown@3.0.15
+
 ## 5.0.14
 
 ### Patch Changes
