@@ -1,5 +1,11 @@
 # @leafygreen-ui/popover
 
+## 13.0.11
+
+### Patch Changes
+
+- 2d40eba2a: Updates reference element positioning logic to ensure the correct element is used as a reference in cases where the element `ref` or DOM node changes in between renders.
+
 ## 13.0.10
 
 ### Patch Changes
