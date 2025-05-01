@@ -1,6 +1,6 @@
 {
   "name": "@lg-tools/update",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Updates all LeafyGreen UI packages to the latest version",
   "main": "dist/umd/index.js",
   "module": "dist/esm/index.js",

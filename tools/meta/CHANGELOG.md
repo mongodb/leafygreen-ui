@@ -1,5 +1,11 @@
 # @lg-tools/meta
 
+## 0.5.1
+
+### Patch Changes
+
+- 028147fe1: Adds `getPackageRoot()` utility
+
 ## 0.5.0
 
 ### Minor Changes

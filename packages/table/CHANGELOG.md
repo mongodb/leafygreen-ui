@@ -1,5 +1,13 @@
 # @leafygreen-ui/table
 
+## 13.1.9
+
+### Patch Changes
+
+- Updated dependencies [2cb75f722]
+  - @leafygreen-ui/checkbox@16.0.0
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 13.1.8
 
 ### Patch Changes

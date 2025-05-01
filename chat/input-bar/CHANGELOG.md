@@ -1,5 +1,13 @@
 # @lg-chat/input-bar
 
+## 7.0.14
+
+### Patch Changes
+
+- Updated dependencies [f9fa0fe83]
+  - @leafygreen-ui/badge@9.0.10
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 7.0.13
 
 ### Patch Changes

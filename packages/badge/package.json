@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/badge",
-  "version": "9.0.9",
+  "version": "9.0.10",
   "description": "leafyGreen UI Kit Badge",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
