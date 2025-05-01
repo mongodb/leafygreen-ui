@@ -8,17 +8,15 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
-import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
 import { Body } from '@leafygreen-ui/typography';
 
 import { GRID_AREA } from './constants';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { DrawerWithToolbarWrapper } from './DrawerWithToolbarWrapper';
+import { DrawerToolbarLayout } from './DrawerToolbarLayout';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
-import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -168,8 +166,6 @@ export const LiveExample: StoryObj<DrawerProps> = {
 export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <div
       className={css`
@@ -177,51 +173,17 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
         width: 100%;
       `}
     >
-      <DrawerStackProvider>
-        {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        <EmbeddedDrawerLayout isDrawerOpen={open} hasToolbar>
-          <main
-            className={css`
-              padding: ${spacing[400]}px;
-              overflow: auto;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              gap: ${spacing[200]}px;
-              background: aliceblue;
-            `}
-          >
-            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-              Toggle Drawer
-            </Button>
-            <LongContent />
-          </main>
-          <DrawerWithToolbarWrapper displayMode="embedded" isDrawerOpen={open}>
-            <Toolbar
-              className={cx(
-                css`
-                  grid-area: ${GRID_AREA.toolbar};
-                `,
-              )}
-            >
-              <ToolbarIconButton glyph="Code" label="Code" onClick={() => {}} />
-              <ToolbarIconButton glyph="Plus" label="Plus" onClick={() => {}} />
-            </Toolbar>
-            <Drawer
-              displayMode="embedded"
-              open={open}
-              onClose={() => setOpen(false)}
-              title="Drawer Title"
-              className={css`
-                grid-area: ${GRID_AREA.innerDrawer};
-              `}
-            >
-              <LongContent />
-            </Drawer>
-          </DrawerWithToolbarWrapper>
-          {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        </EmbeddedDrawerLayout>
-      </DrawerStackProvider>
+      <DrawerToolbarLayout displayMode="embedded">
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            background: aliceblue;
+          `}
+        >
+          <LongContent />
+        </main>
+      </DrawerToolbarLayout>
     </div>
   );
 };
@@ -244,10 +206,6 @@ export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = (
             className={css`
               padding: ${spacing[400]}px;
               overflow: auto;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              gap: ${spacing[200]}px;
               background: aliceblue;
             `}
           >
@@ -272,8 +230,6 @@ export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = (
 
 // FIXME: borders are making the page scroll horizontally:
 export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <div
       className={css`
@@ -281,66 +237,21 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerStackProvider>
-        {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        <OverlayDrawerLayout hasToolbar>
-          <main
-            className={css`
-              padding: ${spacing[400]}px;
-              overflow: auto;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              gap: ${spacing[200]}px;
-              background: aliceblue;
-              grid-area: ${GRID_AREA.content};
-              overflow: scroll;
-              height: 100%;
-            `}
-          >
-            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-              Toggle Drawer
-            </Button>
-            <LongContent />
-            <LongContent />
-          </main>
-          <DrawerWithToolbarWrapper displayMode="overlay" isDrawerOpen={open}>
-            <Toolbar
-              className={cx(
-                css`
-                  grid-area: ${GRID_AREA.toolbar};
-                `,
-              )}
-            >
-              <ToolbarIconButton
-                glyph="Code"
-                label="Code"
-                onClick={() => setOpen(prevOpen => !prevOpen)}
-              />
-              <ToolbarIconButton
-                glyph="Plus"
-                label="Plus"
-                onClick={() => setOpen(prevOpen => !prevOpen)}
-              />
-            </Toolbar>
-            <Drawer
-              displayMode="overlay"
-              open={open}
-              onClose={() => setOpen(false)}
-              title="Drawer Title"
-              className={css`
-                transition: none;
-                translate: unset;
-                grid-area: ${GRID_AREA.innerDrawer};
-                display: block;
-              `}
-            >
-              <LongContent />
-            </Drawer>
-          </DrawerWithToolbarWrapper>
-          {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-        </OverlayDrawerLayout>
-      </DrawerStackProvider>
+      <DrawerToolbarLayout displayMode="overlay">
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            background: aliceblue;
+            grid-area: ${GRID_AREA.content};
+            overflow: scroll;
+            height: 100%;
+          `}
+        >
+          <LongContent />
+          <LongContent />
+        </main>
+      </DrawerToolbarLayout>
     </div>
   );
 };
@@ -348,8 +259,6 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
 export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <div
       className={css`
@@ -387,72 +296,21 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
           height: inherit;
         `}
       >
-        <DrawerStackProvider>
-          {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-          <OverlayDrawerLayout
+        <DrawerToolbarLayout displayMode="overlay">
+          <div
             className={css`
-              height: inherit;
-            `}
-            hasToolbar
-          >
-            <main
-              className={css`
                 padding: ${spacing[400]}px;
                 overflow: auto;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: ${spacing[200]}px;
                 background: aliceblue;
                 grid-area: ${GRID_AREA.content};}
                 overflow: scroll;
-                /* height: 100%; */
                 height: inherit;
               `}
-            >
-              <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-                Toggle Drawer
-              </Button>
-              <LongContent />
-              <LongContent />
-            </main>
-            <DrawerWithToolbarWrapper displayMode="overlay" isDrawerOpen={open}>
-              <Toolbar
-                className={cx(
-                  css`
-                    grid-area: ${GRID_AREA.toolbar};};
-                  `,
-                )}
-              >
-                <ToolbarIconButton
-                  glyph="Code"
-                  label="Code"
-                  onClick={() => setOpen(prevOpen => !prevOpen)}
-                />
-                <ToolbarIconButton
-                  glyph="Plus"
-                  label="Plus"
-                  onClick={() => setOpen(prevOpen => !prevOpen)}
-                />
-              </Toolbar>
-              <Drawer
-                displayMode="overlay"
-                open={open}
-                onClose={() => setOpen(false)}
-                title="Drawer Title"
-                className={css`
-                  transition: none;
-                  translate: unset;
-                  grid-area: ${GRID_AREA.innerDrawer};};
-                  display: block;
-                `}
-              >
-                <LongContent />
-              </Drawer>
-            </DrawerWithToolbarWrapper>
-            {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-          </OverlayDrawerLayout>
-        </DrawerStackProvider>
+          >
+            <LongContent />
+            <LongContent />
+          </div>
+        </DrawerToolbarLayout>
       </div>
     </div>
   );
@@ -461,8 +319,6 @@ export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
 export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <div
       className={css`
@@ -500,17 +356,9 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
           height: inherit;
         `}
       >
-        <DrawerStackProvider>
-          {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-          <EmbeddedDrawerLayout
+        <DrawerToolbarLayout displayMode="embedded">
+          <main
             className={css`
-              height: inherit;
-            `}
-            isDrawerOpen={open}
-            hasToolbar
-          >
-            <main
-              className={css`
                 padding: ${spacing[400]}px;
                 overflow: auto;
                 display: flex;
@@ -520,56 +368,13 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
                 background: aliceblue;
                 grid-area: ${GRID_AREA.content};}
                 overflow: scroll;
-                /* height: 100%; */
                 height: inherit;
               `}
-            >
-              <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-                Toggle Drawer
-              </Button>
-              <LongContent />
-              <LongContent />
-            </main>
-            <DrawerWithToolbarWrapper
-              displayMode="embedded"
-              isDrawerOpen={open}
-            >
-              <Toolbar
-                className={cx(
-                  css`
-                    grid-area: ${GRID_AREA.toolbar};};
-                  `,
-                )}
-              >
-                <ToolbarIconButton
-                  glyph="Code"
-                  label="Code"
-                  onClick={() => setOpen(prevOpen => !prevOpen)}
-                />
-                <ToolbarIconButton
-                  glyph="Plus"
-                  label="Plus"
-                  onClick={() => setOpen(prevOpen => !prevOpen)}
-                />
-              </Toolbar>
-              <Drawer
-                displayMode="embedded"
-                open={open}
-                onClose={() => setOpen(false)}
-                title="Drawer Title"
-                className={css`
-                  transition: none;
-                  translate: unset;
-                  grid-area: ${GRID_AREA.innerDrawer};};
-                  display: block;
-                `}
-              >
-                <LongContent />
-              </Drawer>
-            </DrawerWithToolbarWrapper>
-            {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-          </EmbeddedDrawerLayout>
-        </DrawerStackProvider>
+          >
+            <LongContent />
+            <LongContent />
+          </main>
+        </DrawerToolbarLayout>
       </div>
     </div>
   );
@@ -592,10 +397,6 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
           className={css`
             padding: ${spacing[400]}px;
             overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: ${spacing[200]}px;
             background: aliceblue;
             overflow: scroll;
             height: 100%;

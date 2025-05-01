@@ -1,73 +1,120 @@
-import { css, cx } from '@leafygreen-ui/emotion';
 import React, { useState } from 'react';
+
+import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
+import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
+
+import { GRID_AREA } from '../constants';
+import { Drawer } from '../Drawer/Drawer';
 import { DisplayMode } from '../Drawer/Drawer.types';
+import { DrawerStackProvider } from '../DrawerStackContext';
+import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { EmbeddedDrawerLayout } from '../EmbeddedDrawerLayout';
+import { OverlayDrawerLayout } from '../OverlayDrawerLayout';
+
 import { DrawerToolbarLayoutContainerProps } from './DrawerToolbarLayout.types';
 
-import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
-import { Drawer } from '../Drawer/Drawer';
+// Dummy content for now
+const LongContent = () => {
+  return (
+    <div
+      className={css`
+        display: flex;
+        flex-direction: column;
+        gap: ${spacing[100]}px;
+      `}
+    >
+      <p>
+        Ipsam aspernatur sequi quo esse recusandae aperiam distinctio quod
+        dignissimos. Nihil totam accusamus. Odio occaecati commodi sapiente
+        dolores.
+      </p>
+      <p>
+        Molestiae accusantium porro eum quas praesentium consequuntur deleniti.
+        Fuga mollitia incidunt atque. Minima nisi fugit sapiente.
+      </p>
+      <p>
+        Ratione explicabo saepe occaecati. Et esse eveniet accusamus veritatis
+        esse quod. Vero aliquid quasi saepe vel harum molestiae rerum.
+      </p>
+      <p>
+        Minima distinctio eligendi sit culpa tempore adipisci. Consequuntur
+        consequatur minus quaerat sapiente consectetur esse blanditiis
+        provident. Nulla quas esse quasi a error sint pariatur possimus quia.
+      </p>
+    </div>
+  );
+};
 
 export const DrawerToolbarLayoutContainer = ({
   children,
   displayMode = DisplayMode.Embedded,
   data,
   onClose,
-  className,
-  open: openProp = false,
 }: DrawerToolbarLayoutContainerProps) => {
-  // const [open, setOpen] = useState(initialOpen ?? true);
-  const [open, setOpen] = useState(openProp);
-  console.log({ openProp });
+  const [open, setOpen] = useState(false);
 
   const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClose?.(event);
     setOpen(false);
   };
 
+  const LayoutComponent =
+    displayMode === DisplayMode.Overlay
+      ? OverlayDrawerLayout
+      : EmbeddedDrawerLayout;
+
+  const layoutProps = {
+    hasToolbar: true,
+    isDrawerOpen: displayMode === DisplayMode.Embedded ? open : false,
+  };
+
   return (
-    <EmbeddedDrawerLayout
-      isDrawerOpen={open}
-      hasToolbar
-      displayMode={displayMode}
-      className={className}
-    >
-      {children}
-      <div
-        className={css`
-          display: grid;
-          grid-template-columns: 48px 432px;
-          overflow: hidden;
-        `}
-      >
-        <Toolbar
-          className={cx(
-            css`
-              position: absolute;
-              top: 0;
-              right: 0;
-              height: 100%;
-              transition: all ${drawerTransitionDuration}ms linear;
-              transform: translateX(0);
-            `,
-            {
-              [css`
-                transform: translateX(-432px);
-              `]: open,
-            },
-          )}
-        >
-          <ToolbarIconButton glyph="Code" label="Code" onClick={() => {}} />
-          <ToolbarIconButton glyph="Plus" label="Plus" onClick={() => {}} />
-        </Toolbar>
-        <Drawer
-          displayMode={displayMode}
-          open={open}
-          onClose={handleOnClose}
-          title="Drawer Title"
-        />
-      </div>
-    </EmbeddedDrawerLayout>
+    <DrawerStackProvider>
+      {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
+      <LayoutComponent {...layoutProps}>
+        {children}
+        <DrawerWithToolbarWrapper displayMode={displayMode} isDrawerOpen={open}>
+          {/* Filler for now */}
+          <Toolbar
+            className={cx(
+              css`
+                /* TODO: move this to a className */
+                grid-area: ${GRID_AREA.toolbar};
+              `,
+            )}
+          >
+            <ToolbarIconButton
+              glyph="Code"
+              label="Code"
+              onClick={() => setOpen(true)}
+            />
+            <ToolbarIconButton
+              glyph="Plus"
+              label="Plus"
+              onClick={() => setOpen(true)}
+            />
+          </Toolbar>
+          <Drawer
+            displayMode={displayMode}
+            open={open}
+            onClose={handleOnClose}
+            title="Drawer Title"
+            className={css`
+              grid-area: ${GRID_AREA.innerDrawer};
+            `}
+          >
+            <LongContent />
+            <LongContent />
+            <LongContent />
+            <LongContent />
+            <LongContent />
+            <LongContent />
+          </Drawer>
+        </DrawerWithToolbarWrapper>
+        {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
+      </LayoutComponent>
+    </DrawerStackProvider>
   );
 };
 
