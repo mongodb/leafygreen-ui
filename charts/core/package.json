@@ -19,6 +19,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
@@ -27,7 +28,8 @@
     "@lg-charts/colors": "workspace:^",
     "@lg-charts/series-provider": "workspace:^",
     "echarts": "^5.5.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "polished": "^4.2.2"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

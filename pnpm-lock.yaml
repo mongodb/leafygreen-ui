@@ -187,6 +187,9 @@ importers:
       '@leafygreen-ui/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../../packages/leafygreen-provider
@@ -217,6 +220,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      polished:
+        specifier: ^4.2.2
+        version: 4.3.1
     devDependencies:
       '@faker-js/faker':
         specifier: 8.0.2
