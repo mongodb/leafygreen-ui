@@ -1,5 +1,15 @@
 # @leafygreen-ui/checkbox
 
+## 16.0.0
+
+### Major Changes
+
+- 2cb75f722: Removes `LegacyCheck`, previously deprecated an inaccessible since v7.0
+
+### Patch Changes
+
+- @leafygreen-ui/emotion@4.1.1
+
 ## 15.2.3
 
 ### Patch Changes
