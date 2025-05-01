@@ -90,6 +90,14 @@ const baseStyles = css`
   z-index: 0;
   height: inherit;
 
+  & > :first-child {
+    grid-area: ${GRID_AREA.toolbar};
+  }
+
+  & > :last-child {
+    grid-area: ${GRID_AREA.innerDrawer};
+  }
+
   .${drawerClassName} {
     position: unset;
     transition: none;

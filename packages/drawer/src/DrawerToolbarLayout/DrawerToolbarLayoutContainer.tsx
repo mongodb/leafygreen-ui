@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css } from '@leafygreen-ui/emotion';
+import LeafyGreenProvider, {
+  useDarkMode,
+} from '@leafygreen-ui/leafygreen-provider';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Toolbar, ToolbarIconButton } from '@leafygreen-ui/toolbar';
+import { Body } from '@leafygreen-ui/typography';
 
 import { GRID_AREA } from '../constants';
 import { Drawer } from '../Drawer/Drawer';
@@ -24,24 +28,24 @@ const LongContent = () => {
         gap: ${spacing[100]}px;
       `}
     >
-      <p>
+      <Body>
         Ipsam aspernatur sequi quo esse recusandae aperiam distinctio quod
         dignissimos. Nihil totam accusamus. Odio occaecati commodi sapiente
         dolores.
-      </p>
-      <p>
+      </Body>
+      <Body>
         Molestiae accusantium porro eum quas praesentium consequuntur deleniti.
         Fuga mollitia incidunt atque. Minima nisi fugit sapiente.
-      </p>
-      <p>
+      </Body>
+      <Body>
         Ratione explicabo saepe occaecati. Et esse eveniet accusamus veritatis
         esse quod. Vero aliquid quasi saepe vel harum molestiae rerum.
-      </p>
-      <p>
+      </Body>
+      <Body>
         Minima distinctio eligendi sit culpa tempore adipisci. Consequuntur
         consequatur minus quaerat sapiente consectetur esse blanditiis
         provident. Nulla quas esse quasi a error sint pariatur possimus quia.
-      </p>
+      </Body>
     </div>
   );
 };
@@ -51,12 +55,16 @@ export const DrawerToolbarLayoutContainer = ({
   displayMode = DisplayMode.Embedded,
   data,
   onClose,
+  darkMode: darkModeProp,
 }: DrawerToolbarLayoutContainerProps) => {
+  const { darkMode } = useDarkMode(darkModeProp);
   const [open, setOpen] = useState(false);
 
   const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClose?.(event);
     setOpen(false);
+
+    // TODO: add call to context to update the drawer content
   };
 
   const LayoutComponent =
@@ -69,52 +77,63 @@ export const DrawerToolbarLayoutContainer = ({
     isDrawerOpen: displayMode === DisplayMode.Embedded ? open : false,
   };
 
+  const handleIconClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void,
+  ) => {
+    onClick?.(event);
+    setOpen(true);
+  };
+
   return (
-    <DrawerStackProvider>
-      {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-      <LayoutComponent {...layoutProps}>
-        {children}
-        <DrawerWithToolbarWrapper displayMode={displayMode} isDrawerOpen={open}>
-          {/* Filler for now */}
-          <Toolbar
-            className={cx(
-              css`
-                /* TODO: move this to a className */
-                grid-area: ${GRID_AREA.toolbar};
-              `,
-            )}
-          >
-            <ToolbarIconButton
-              glyph="Code"
-              label="Code"
-              onClick={() => setOpen(true)}
-            />
-            <ToolbarIconButton
-              glyph="Plus"
-              label="Plus"
-              onClick={() => setOpen(true)}
-            />
-          </Toolbar>
-          <Drawer
-            displayMode={displayMode}
-            open={open}
-            onClose={handleOnClose}
-            title="Drawer Title"
+    <LeafyGreenProvider darkMode={darkMode}>
+      <DrawerStackProvider>
+        <LayoutComponent {...layoutProps}>
+          <div
             className={css`
-              grid-area: ${GRID_AREA.innerDrawer};
+              grid-area: ${GRID_AREA.content};
+              overflow: scroll;
+              height: inherit;
             `}
           >
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            <LongContent />
-            <LongContent />
-          </Drawer>
-        </DrawerWithToolbarWrapper>
-        {/*  This logic will be handled internally inside ToolbarDrawerLayout */}
-      </LayoutComponent>
-    </DrawerStackProvider>
+            {children}
+          </div>
+          <DrawerWithToolbarWrapper
+            displayMode={displayMode}
+            isDrawerOpen={open}
+          >
+            <Toolbar>
+              {data?.map(toolbar => (
+                <ToolbarIconButton
+                  key={toolbar.glyph}
+                  glyph={toolbar.glyph}
+                  label={toolbar.label}
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                    handleIconClick(e, toolbar.onClick)
+                  }
+                />
+              ))}
+            </Toolbar>
+            <Drawer
+              displayMode={displayMode}
+              open={open}
+              onClose={handleOnClose}
+              title="Drawer Title"
+            >
+              {/* TODO: get content from context */}
+              {/* Filler for now */}
+              <LongContent />
+              <LongContent />
+              <LongContent />
+              <LongContent />
+              <LongContent />
+              <LongContent />
+              {/* Filler for now */}
+            </Drawer>
+          </DrawerWithToolbarWrapper>
+        </LayoutComponent>
+      </DrawerStackProvider>
+    </LeafyGreenProvider>
   );
 };
 

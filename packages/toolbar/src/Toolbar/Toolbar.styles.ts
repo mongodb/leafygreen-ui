@@ -23,7 +23,7 @@ export const getBaseStyles = ({
       &:has(:focus-visible) {
         box-shadow: ${focusRing[theme].default};
         // So the focus ring overlaps sibling elements
-        z-indxex: 1;
+        z-index: 1;
       }
     `,
     className,

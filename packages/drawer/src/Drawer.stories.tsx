@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
@@ -9,13 +10,16 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { GRID_AREA } from './constants';
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { DrawerToolbarLayout } from './DrawerToolbarLayout';
+import {
+  DrawerToolbarLayout,
+  DrawerToolbarLayoutProps,
+} from './DrawerToolbarLayout';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
@@ -25,6 +29,13 @@ const defaultExcludedControls = [
   ...storybookExcludedControlParams,
   'children',
   'open',
+];
+
+const snapshotStoryExcludedControlParams = [
+  ...defaultExcludedControls,
+  'darkMode',
+  'displayMode',
+  'title',
 ];
 
 export default {
@@ -89,6 +100,76 @@ const LongContent = () => {
     </div>
   );
 };
+
+const CloudNavLayout: React.FC<{ children?: React.ReactNode }> = ({
+  children,
+}) => (
+  <div
+    className={css`
+      display: grid;
+      grid-template:
+        'lg-cloud_nav-side_nav lg-cloud_nav-top_nav' max-content
+        'lg-cloud_nav-side_nav lg-cloud_nav-content' 1fr / 48px auto;
+      height: 100vh;
+      width: 100vw;
+      max-height: 100vh;
+      max-width: 100vw;
+      overflow: hidden;
+    `}
+  >
+    <div
+      className={css`
+        grid-area: lg-cloud_nav-side_nav;
+        background-color: ${palette.gray.dark1};
+      `}
+    ></div>
+    <div
+      className={css`
+        grid-area: lg-cloud_nav-side_nav;
+        background-color: ${palette.gray.dark1};
+      `}
+    ></div>
+    <div
+      className={css`
+        grid-area: lg-cloud_nav-top_nav;
+        background-color: ${palette.gray.dark1};
+        height: 48px;
+      `}
+    ></div>
+    <div
+      className={css`
+        grid-area: lg-cloud_nav-content;
+        overflow: scroll;
+        height: inherit;
+      `}
+    >
+      {children}
+    </div>
+  </div>
+);
+
+const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
+  {
+    id: 'Code',
+    label: 'Code',
+    content: <LongContent />,
+    title: 'Code Title',
+    glyph: 'Code',
+    onClick: () => {
+      console.log('Code clicked');
+    },
+  },
+  {
+    id: 'Plus',
+    label: 'Plus',
+    content: <LongContent />,
+    title: 'Plus Title',
+    glyph: 'Plus',
+    onClick: () => {
+      console.log('Plus clicked');
+    },
+  },
+];
 
 const TemplateComponent: StoryFn<DrawerProps> = ({
   displayMode,
@@ -163,22 +244,20 @@ export const LiveExample: StoryObj<DrawerProps> = {
   },
 };
 
-export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
+export const WithToolbarEmbedded: StoryFn<DrawerProps> = () => {
   return (
     <div
       className={css`
         height: 80vh;
+        border-bottom: 1px solid ${palette.gray.light1};
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout displayMode="embedded">
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
         <main
           className={css`
             padding: ${spacing[400]}px;
             overflow: auto;
-            background: aliceblue;
           `}
         >
           <LongContent />
@@ -188,15 +267,14 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = (
   );
 };
 
-export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
+export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <div
       className={css`
         height: 80vh;
+        border-bottom: 1px solid ${palette.gray.light1};
         width: 100%;
       `}
     >
@@ -206,7 +284,6 @@ export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = (
             className={css`
               padding: ${spacing[400]}px;
               overflow: auto;
-              background: aliceblue;
             `}
           >
             <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
@@ -229,23 +306,19 @@ export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = (
 };
 
 // FIXME: borders are making the page scroll horizontally:
-export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
+export const WithToolbarOverlay: StoryFn<DrawerProps> = () => {
   return (
     <div
       className={css`
         height: 80vh;
+        border-bottom: 1px solid ${palette.gray.light1};
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout displayMode="overlay">
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
         <main
           className={css`
             padding: ${spacing[400]}px;
-            overflow: auto;
-            background: aliceblue;
-            grid-area: ${GRID_AREA.content};
-            overflow: scroll;
-            height: 100%;
           `}
         >
           <LongContent />
@@ -256,63 +329,20 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
+export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = () => {
   return (
-    <div
-      className={css`
-        display: grid;
-        grid-template:
-          'lg-cloud_nav-side_nav lg-cloud_nav-top_nav' max-content
-          'lg-cloud_nav-side_nav lg-cloud_nav-content' 1fr / 48px auto;
-        height: 100vh;
-        width: 100vw;
-        max-height: 100vh;
-        max-width: 100vw;
-        overflow: hidden;
-      `}
-    >
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-side_nav;
-        `}
-      ></div>
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-side_nav;
-        `}
-      ></div>
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-top_nav;
-          height: 48px;
-        `}
-      ></div>
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-content;
-          overflow: scroll;
-          height: inherit;
-        `}
-      >
-        <DrawerToolbarLayout displayMode="overlay">
-          <div
-            className={css`
-                padding: ${spacing[400]}px;
-                overflow: auto;
-                background: aliceblue;
-                grid-area: ${GRID_AREA.content};}
-                overflow: scroll;
-                height: inherit;
-              `}
-          >
-            <LongContent />
-            <LongContent />
-          </div>
-        </DrawerToolbarLayout>
-      </div>
-    </div>
+    <CloudNavLayout>
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
+        <div
+          className={css`
+            padding: ${spacing[400]}px;
+          `}
+        >
+          <LongContent />
+          <LongContent />
+        </div>
+      </DrawerToolbarLayout>
+    </CloudNavLayout>
   );
 };
 
@@ -320,63 +350,18 @@ export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
   return (
-    <div
-      className={css`
-        display: grid;
-        grid-template:
-          'lg-cloud_nav-side_nav lg-cloud_nav-top_nav' max-content
-          'lg-cloud_nav-side_nav lg-cloud_nav-content' 1fr / 48px auto;
-        height: 100vh;
-        width: 100vw;
-        max-height: 100vh;
-        max-width: 100vw;
-        overflow: hidden;
-      `}
-    >
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-side_nav;
-        `}
-      ></div>
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-side_nav;
-        `}
-      ></div>
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-top_nav;
-          height: 48px;
-        `}
-      ></div>
-      <div
-        className={css`
-          grid-area: lg-cloud_nav-content;
-          overflow: scroll;
-          height: inherit;
-        `}
-      >
-        <DrawerToolbarLayout displayMode="embedded">
-          <main
-            className={css`
-                padding: ${spacing[400]}px;
-                overflow: auto;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: ${spacing[200]}px;
-                background: aliceblue;
-                grid-area: ${GRID_AREA.content};}
-                overflow: scroll;
-                height: inherit;
-              `}
-          >
-            <LongContent />
-            <LongContent />
-          </main>
-        </DrawerToolbarLayout>
-      </div>
-    </div>
+    <CloudNavLayout>
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+          `}
+        >
+          <LongContent />
+          <LongContent />
+        </main>
+      </DrawerToolbarLayout>
+    </CloudNavLayout>
   );
 };
 
@@ -389,6 +374,7 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
     <div
       className={css`
         height: 80vh;
+        border-bottom: 1px solid ${palette.gray.light1};
         width: 100%;
       `}
     >
@@ -397,7 +383,6 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
           className={css`
             padding: ${spacing[400]}px;
             overflow: auto;
-            background: aliceblue;
             overflow: scroll;
             height: 100%;
           `}
@@ -487,13 +472,6 @@ export const MultipleDrawers: StoryObj<DrawerProps> = {
     },
   },
 };
-
-const snapshotStoryExcludedControlParams = [
-  ...defaultExcludedControls,
-  'darkMode',
-  'displayMode',
-  'title',
-];
 
 export const LightModeOverlay: StoryObj<DrawerProps> = {
   render: TemplateComponent,

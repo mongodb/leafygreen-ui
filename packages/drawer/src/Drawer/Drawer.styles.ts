@@ -17,7 +17,7 @@ import { DisplayMode } from './Drawer.types';
 
 export const drawerTransitionDuration = transitionDuration.slower;
 
-export const drawerClassName = createUniqueClassName('drawer');
+export const drawerClassName = createUniqueClassName('lg-drawer');
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
