@@ -270,6 +270,7 @@ export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = (
   );
 };
 
+// FIXME: borders are making the page scroll horizontally:
 export const WithToolbarOverlay: StoryFn<DrawerProps> = (args: DrawerProps) => {
   const [open, setOpen] = useState(false);
 

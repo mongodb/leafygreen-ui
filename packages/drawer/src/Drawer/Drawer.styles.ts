@@ -25,10 +25,13 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   background-color: ${color[theme].background.primary.default};
 
   // TODO: mobile borders
-  border-left: ${open ? '1px solid' : 'none'};
+  /* border-left: ${open ? '1px solid' : 'none'};
   border-top: ${open ? '1px solid' : 'none'};
   border-bottom: ${open ? '1px solid' : 'none'};
-  border-color: ${color[theme].border.secondary.default};
+  border-color: ${open
+    ? color[theme].border.secondary.default
+    : 'transparent'}; */
+  border: 1px solid ${color[theme].border.secondary.default};
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
   height: 100%;
@@ -84,45 +87,10 @@ const getOverlayStyles = ({
         top: unset;
         left: 0;
       }
-
-      /* animation-timing-function: linear;
-      animation-duration: ${drawerTransitionDuration}ms;
-      transform: translate3d(0%, 0, 0);
-      width: 432px; */
     `,
     {
       [overlayOpenStyles]: open,
       [overlayClosedStyles]: !open,
-    },
-  );
-
-const embeddedOpenStyles = css`
-  width: 100%;
-
-  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    height: 50vh;
-  } */
-`;
-
-const embeddedClosedStyles = css`
-  /* width: 0; */
-  /* right: -${PANEL_WIDTH}px; */
-
-  /* @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    width: 100%;
-    height: 0;
-  } */
-`;
-
-const getEmbeddedStyles = ({ open }: { open: boolean }) =>
-  cx(
-    css`
-      position: relative;
-      overflow: auto;
-    `,
-    {
-      [embeddedOpenStyles]: open,
-      [embeddedClosedStyles]: !open,
     },
   );
 
@@ -137,7 +105,6 @@ const getDisplayModeStyles = ({
 }) =>
   cx({
     [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
-    // [getEmbeddedStyles({ open })]: displayMode === DisplayMode.Embedded,
   });
 
 export const getDrawerStyles = ({
