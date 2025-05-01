@@ -38,6 +38,12 @@ const snapshotStoryExcludedControlParams = [
   'title',
 ];
 
+const toolbarExcludedControls = [
+  ...defaultExcludedControls,
+  'displayMode',
+  'title',
+];
+
 export default {
   title: 'Components/Drawer',
   component: Drawer,
