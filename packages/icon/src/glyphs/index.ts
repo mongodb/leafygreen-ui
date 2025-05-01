@@ -151,6 +151,7 @@ import SplitHorizontal from './SplitHorizontal.svg';
 import SplitVertical from './SplitVertical.svg';
 import Stitch from './Stitch.svg';
 import Stop from './Stop.svg';
+import Streaming from './Streaming.svg';
 import String from './String.svg';
 import Sun from './Sun.svg';
 import Support from './Support.svg';
@@ -330,6 +331,7 @@ const _glyphs = {
   SplitVertical,
   Stitch,
   Stop,
+  Streaming,
   String,
   Sun,
   Support,
