@@ -1,5 +1,13 @@
 # @leafygreen-ui/number-input
 
+## 4.1.6
+
+### Patch Changes
+
+- f99daf8fe: `unit` prop now accepts `React.ReactNode` when select input is not used
+  - @leafygreen-ui/select@14.1.7
+  - @leafygreen-ui/tooltip@13.0.12
+
 ## 4.1.5
 
 ### Patch Changes

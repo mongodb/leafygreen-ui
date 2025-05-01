@@ -1,5 +1,13 @@
 # @leafygreen-ui/date-picker
 
+## 3.0.15
+
+### Patch Changes
+
+- Updated dependencies [2d40eba2a]
+  - @leafygreen-ui/popover@13.0.11
+  - @leafygreen-ui/select@14.1.7
+
 ## 3.0.14
 
 ### Patch Changes

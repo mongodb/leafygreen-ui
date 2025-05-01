@@ -1,5 +1,13 @@
 # @leafygreen-ui/menu
 
+## 29.0.4
+
+### Patch Changes
+
+- Updated dependencies [2d40eba2a]
+  - @leafygreen-ui/popover@13.0.11
+  - @leafygreen-ui/descendants@2.1.5
+
 ## 29.0.3
 
 ### Patch Changes

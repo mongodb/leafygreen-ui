@@ -1,5 +1,11 @@
 # @leafygreen-ui/stepper
 
+## 5.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.12
+
 ## 5.0.11
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/info-sprinkle
 
+## 4.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.12
+
 ## 4.0.12
 
 ### Patch Changes

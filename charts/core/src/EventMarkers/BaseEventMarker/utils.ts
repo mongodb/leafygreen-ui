@@ -14,6 +14,7 @@ import { infoIcon, warningIcon } from '../iconsSvgPaths';
 import { EventLevel, GetMarkConfigProps } from './BaseEventMarker.types';
 
 export function getMarkConfig({
+  id,
   name,
   theme,
   label,
@@ -51,6 +52,7 @@ export function getMarkConfig({
 
   const commonConfig = {
     animation: false,
+    id,
     name,
     type: 'line', // Requires a type even though it's not an actual series
   };

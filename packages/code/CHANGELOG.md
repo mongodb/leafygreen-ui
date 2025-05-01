@@ -1,5 +1,12 @@
 # @leafygreen-ui/code
 
+## 18.0.4
+
+### Patch Changes
+
+- @leafygreen-ui/select@14.1.7
+- @leafygreen-ui/tooltip@13.0.12
+
 ## 18.0.3
 
 ### Patch Changes

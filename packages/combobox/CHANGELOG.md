@@ -1,5 +1,13 @@
 # @leafygreen-ui/combobox
 
+## 11.0.18
+
+### Patch Changes
+
+- Updated dependencies [2d40eba2a]
+  - @leafygreen-ui/popover@13.0.11
+  - @leafygreen-ui/chip@3.0.12
+
 ## 11.0.17
 
 ### Patch Changes
