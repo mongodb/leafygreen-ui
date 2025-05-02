@@ -1,33 +1,50 @@
+import { transparentize } from 'polished';
+
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import {
-  borderRadius,
   color,
-  fontFamilies,
-  fontWeights,
   InteractionState,
   spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
 
-export const getContainerStyles = (theme: Theme) => css`
-  width: 261px;
-  overflow-y: auto;
-  background: ${color[theme].background[Variant.InversePrimary][
-    InteractionState.Default
-  ]};
-  color: ${color[theme].text[Variant.InversePrimary][InteractionState.Default]};
-  padding: ${spacing[150]}px;
-  border-radius: ${borderRadius[150]}px;
-  font-family: ${fontFamilies.default};
-  font-size: 12px;
-  line-height: 20px;
-  font-weight: ${fontWeights.regular};
-`;
+const CLOSE_BUTTON_SIZE = 14;
 
 export const getHeaderStyles = (theme: Theme) => css`
   color: ${color[theme].text[Variant.InverseSecondary][
     InteractionState.Default
   ]};
   margin-bottom: ${spacing[100]}px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const getCloseButtonStyles = (theme: Theme) => css`
+  height: ${CLOSE_BUTTON_SIZE}px;
+  width: ${CLOSE_BUTTON_SIZE}px;
+  color: ${color[theme].icon[Variant.Primary][InteractionState.Default]};
+
+  &:active,
+  &:hover {
+    color: ${color[theme].icon[Variant.Primary][InteractionState.Hover]};
+
+    &:before {
+      background-color: ${transparentize(
+        0.9,
+        color[theme].background[Variant.Secondary][InteractionState.Hover],
+      )};
+    }
+  }
+
+  &:focus-visible {
+    color: ${color[theme].icon[Variant.Primary][InteractionState.Focus]};
+
+    &:before {
+      background-color: ${transparentize(
+        0.9,
+        color[theme].background[Variant.Secondary][InteractionState.Focus],
+      )};
+    }
+  }
 `;

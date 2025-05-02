@@ -7,6 +7,7 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 import { TOOLTIP_ID } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
+import { getRootStylesText } from './ChartTooltip.styles';
 import {
   CallbackSeriesDataPoint,
   ChartTooltipProps,
@@ -19,9 +20,17 @@ export function ChartTooltip({
   sort,
 }: ChartTooltipProps) {
   const {
-    chart: { ready, updateOptions },
+    chart: { ready, setTooltipMounted, tooltipPinned, updateOptions },
   } = useChartContext();
   const { theme } = useDarkMode();
+
+  useEffect(() => {
+    setTooltipMounted(true);
+
+    return () => {
+      setTooltipMounted(false);
+    };
+  }, [setTooltipMounted]);
 
   useEffect(() => {
     if (!ready) return;
@@ -30,14 +39,23 @@ export function ChartTooltip({
       {
         tooltip: {
           id: TOOLTIP_ID,
+          /**
+           * using `extraCssText` instead of `className` because emotion-defined class
+           * didn't have high-enough specificity
+           */
+          extraCssText: getRootStylesText(theme),
+          trigger: 'axis',
+          triggerOn: 'none',
           // Still adding background color to prevent peak of color at corners
           backgroundColor:
             color[theme].background[Variant.InversePrimary][
               InteractionState.Default
             ],
           borderWidth: 0,
-          enterable: false,
+          alwaysShowContent: tooltipPinned,
+          enterable: tooltipPinned,
           confine: true,
+          renderMode: 'html',
           appendTo: 'body',
           showDelay: 0,
           hideDelay: 0,
@@ -59,6 +77,7 @@ export function ChartTooltip({
                 sort={sort}
                 seriesValueFormatter={seriesValueFormatter}
                 seriesNameFormatter={seriesNameFormatter}
+                showCloseButton={tooltipPinned}
               />,
             );
           },
@@ -89,6 +108,7 @@ export function ChartTooltip({
     seriesValueFormatter,
     sort,
     theme,
+    tooltipPinned,
     updateOptions,
   ]);
 
