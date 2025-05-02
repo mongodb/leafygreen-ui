@@ -29,8 +29,7 @@
     "@lg-charts/colors": "workspace:^",
     "@lg-charts/series-provider": "workspace:^",
     "echarts": "^5.5.1",
-    "lodash": "^4.17.21",
-    "polished": "^4.2.2"
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

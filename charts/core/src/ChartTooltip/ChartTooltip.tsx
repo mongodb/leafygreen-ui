@@ -21,7 +21,7 @@ export function ChartTooltip({
   const {
     chart: { ready, setTooltipMounted, tooltipPinned, updateOptions },
   } = useChartContext();
-  const { theme } = useDarkMode();
+  const { darkMode, theme } = useDarkMode();
 
   useEffect(() => {
     setTooltipMounted(true);
@@ -71,11 +71,12 @@ export function ChartTooltip({
 
             return renderToString(
               <CustomTooltip
+                darkMode={darkMode}
                 seriesData={seriesDataArr}
                 sort={sort}
                 seriesValueFormatter={seriesValueFormatter}
                 seriesNameFormatter={seriesNameFormatter}
-                showCloseButton={tooltipPinned}
+                tooltipPinned={tooltipPinned}
               />,
             );
           },
@@ -96,6 +97,7 @@ export function ChartTooltip({
       });
     };
   }, [
+    darkMode,
     ready,
     seriesNameFormatter,
     seriesValueFormatter,

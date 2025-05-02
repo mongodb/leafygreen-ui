@@ -1,12 +1,17 @@
 import React, { ReactNode } from 'react';
 
+import CursorIcon from '@leafygreen-ui/icon/dist/Cursor';
 import XIcon from '@leafygreen-ui/icon/dist/X';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { TOOLTIP_CLOSE_BTN_ID } from '../../Chart';
 
-import { getCloseButtonStyles, getHeaderStyles } from './CustomTooltip.styles';
+import {
+  closeButtonStyles,
+  getHeaderStyles,
+  pinTooltipNoteStyles,
+} from './CustomTooltip.styles';
 import { CustomTooltipProps } from './CustomTooltip.types';
 import { SeriesList } from './SeriesList';
 
@@ -31,7 +36,7 @@ export function CustomTooltip({
   headerFormatter,
   sort,
   darkMode,
-  showCloseButton,
+  tooltipPinned,
 }: CustomTooltipProps) {
   const { theme } = useDarkMode(darkMode);
 
@@ -57,15 +62,21 @@ export function CustomTooltip({
   return (
     <>
       <div className={getHeaderStyles(theme)}>
-        {axisValueLabel}
-        {showCloseButton && (
+        <span>{axisValueLabel}</span>
+        {tooltipPinned ? (
           <IconButton
             id={TOOLTIP_CLOSE_BTN_ID}
             aria-label="Unpin tooltip"
-            className={getCloseButtonStyles(theme)}
+            className={closeButtonStyles}
+            darkMode={!darkMode}
           >
             <XIcon size="small" />
           </IconButton>
+        ) : (
+          <div className={pinTooltipNoteStyles}>
+            <CursorIcon size={11} />
+            <span>Click to Pin</span>
+          </div>
         )}
       </div>
       <SeriesList
