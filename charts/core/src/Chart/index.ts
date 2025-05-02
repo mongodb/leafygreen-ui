@@ -6,3 +6,4 @@ export {
   type SeriesOption,
   type ZoomSelectionEvent,
 } from './Chart.types';
+export { TOOLTIP_CLOSE_BTN_ID } from './constants';

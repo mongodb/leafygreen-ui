@@ -6,6 +6,7 @@ import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { useChartContext } from '../ChartContext';
 
+import { getRootStylesText } from './ChartTooltip.styles';
 import {
   CallbackSeriesDataPoint,
   ChartTooltipProps,
@@ -18,49 +19,69 @@ export function ChartTooltip({
   sort,
 }: ChartTooltipProps) {
   const {
-    chart: { ready, updateOptions },
+    chart: { ready, setTooltipMounted, tooltipPinned, updateOptions },
   } = useChartContext();
   const { theme } = useDarkMode();
 
   useEffect(() => {
+    setTooltipMounted(true);
+
+    return () => {
+      setTooltipMounted(false);
+    };
+  }, [setTooltipMounted]);
+
+  useEffect(() => {
     if (!ready) return;
 
-    updateOptions({
-      tooltip: {
-        // Still adding background color to prevent peak of color at corners
-        backgroundColor:
-          color[theme].background[Variant.InversePrimary][
-            InteractionState.Default
-          ],
-        borderWidth: 0,
-        enterable: false,
-        confine: true,
-        appendTo: 'body',
-        showDelay: 0,
-        hideDelay: 0,
-        transitionDuration: 0,
-        padding: 0,
-        /**
-         * Since the formatter trigger is set to 'axis', the seriesData will be
-         * an array of objects. Additionally, it should contain axis related
-         * data.
-         * See https://echarts.apache.org/en/option.html#tooltip.formatter
-         * for more info.
-         */
-        formatter: (seriesData: Array<CallbackSeriesDataPoint>) => {
-          const seriesDataArr = seriesData;
+    updateOptions(
+      {
+        tooltip: {
+          /**
+           * use `extraCssText` instead of `className` because emotion-defined class
+           * does not have high-enough specificity
+           */
+          extraCssText: getRootStylesText(theme),
+          trigger: 'axis',
+          triggerOn: 'none',
+          // Still adding background color to prevent peak of color at corners
+          backgroundColor:
+            color[theme].background[Variant.InversePrimary][
+              InteractionState.Default
+            ],
+          borderWidth: 0,
+          alwaysShowContent: tooltipPinned,
+          enterable: tooltipPinned,
+          confine: true,
+          renderMode: 'html',
+          appendTo: 'body',
+          showDelay: 0,
+          hideDelay: 0,
+          transitionDuration: 0,
+          padding: 0,
+          /**
+           * Since the formatter trigger is set to 'axis', the seriesData will be
+           * an array of objects. Additionally, it should contain axis related
+           * data.
+           * See https://echarts.apache.org/en/option.html#tooltip.formatter
+           * for more info.
+           */
+          formatter: (seriesData: Array<CallbackSeriesDataPoint>) => {
+            const seriesDataArr = seriesData;
 
-          return renderToString(
-            <CustomTooltip
-              seriesData={seriesDataArr}
-              sort={sort}
-              seriesValueFormatter={seriesValueFormatter}
-              seriesNameFormatter={seriesNameFormatter}
-            />,
-          );
+            return renderToString(
+              <CustomTooltip
+                seriesData={seriesDataArr}
+                sort={sort}
+                seriesValueFormatter={seriesValueFormatter}
+                seriesNameFormatter={seriesNameFormatter}
+                showCloseButton={tooltipPinned}
+              />,
+            );
+          },
         },
       },
-    });
+    );
 
     return () => {
       updateOptions({
@@ -80,6 +101,7 @@ export function ChartTooltip({
     seriesValueFormatter,
     sort,
     theme,
+    tooltipPinned,
     updateOptions,
   ]);
 

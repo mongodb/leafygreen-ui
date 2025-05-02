@@ -5,6 +5,7 @@ import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
 
 import type { ChartHookProps, ChartInstance } from './useChart.types';
+import { useTooltipVisibility } from './useTooltipVisibility';
 
 export function useChart({
   onChartReady = () => {},
@@ -33,7 +34,6 @@ export function useChart({
   const {
     addToGroup,
     enableZoom,
-    hideTooltip,
     off,
     on,
     ready,
@@ -96,26 +96,7 @@ export function useChart({
     });
   }, [ready, onZoomSelect, on]);
 
-  // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
-  useEffect(() => {
-    if (!ready) {
-      return;
-    }
-
-    on('mouseover', e => {
-      if (e.componentType === 'markPoint') {
-        hideTooltip();
-        on('mousemove', hideTooltip);
-      }
-    });
-
-    // Stop hiding once the mouse leaves the `EventMarkerPoint`
-    on('mouseout', e => {
-      if (e.componentType === 'markPoint') {
-        off('mousemove', hideTooltip);
-      }
-    });
-  }, [echart, hideTooltip, off, on, ready]);
+  const { tooltipPinned, setTooltipMounted } = useTooltipVisibility({ echart });
 
   const initialRenderRef = useRef(true);
 
@@ -171,6 +152,8 @@ export function useChart({
   return {
     ...echart,
     ref: setContainer,
+    setTooltipMounted,
     state,
+    tooltipPinned,
   };
 }
