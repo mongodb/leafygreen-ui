@@ -33,8 +33,6 @@ export function CustomTooltip({
   darkMode,
   showCloseButton,
 }: CustomTooltipProps) {
-  // console.log('CustomTooltip', { onClose, showCloseButton });
-
   const { theme } = useDarkMode(darkMode);
 
   if (seriesData.length === 0 || !seriesData[0].data[0]) {

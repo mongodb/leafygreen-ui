@@ -177,6 +177,9 @@ importers:
       '@leafygreen-ui/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
       '@leafygreen-ui/icon-button':
         specifier: workspace:^
         version: link:../../packages/icon-button
@@ -207,9 +210,6 @@ importers:
       echarts:
         specifier: ^5.5.1
         version: 5.5.1
-      lodash.debounce:
-        specifier: ^4.0.8
-        version: 4.0.8
       polished:
         specifier: ^4.2.2
         version: 4.3.1
@@ -217,9 +217,6 @@ importers:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
-      '@leafygreen-ui/icon':
-        specifier: workspace:^
-        version: link:../../packages/icon
       '@types/lodash.debounce':
         specifier: ^4.0.9
         version: 4.0.9
