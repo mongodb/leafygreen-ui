@@ -106,13 +106,16 @@ export const useTooltipVisibility = ({
    * Event listener callback that is called when mousing over a mark point.
    * It hides the tooltip and disables the chart click event listener.
    */
-  const hideTooltipOnMouseOverMarkPoint = useCallback(
+  const hideTooltipOnMouseOverMark = useCallback(
     (params: any) => {
       if (!tooltipMounted) {
         return;
       }
 
-      if (params.componentType === 'markPoint') {
+      if (
+        params.componentType === 'markPoint' ||
+        params.componentType === 'markLine'
+      ) {
         hideTooltip();
         on(EChartEvents.MouseMove, hideTooltip);
         off(EChartEvents.Click, pinTooltipOnClick, {
@@ -127,13 +130,16 @@ export const useTooltipVisibility = ({
    * Event listener callback that is called when mousing out of a mark point.
    * It stops hiding the tooltip and re-enables the chart click event listener.
    */
-  const stopHideTooltipOnMouseOutMarkPoint = useCallback(
+  const stopHideTooltipOnMouseOutMark = useCallback(
     (params: any) => {
       if (!tooltipMounted) {
         return;
       }
 
-      if (params.componentType === 'markPoint') {
+      if (
+        params.componentType === 'markPoint' ||
+        params.componentType === 'markLine'
+      ) {
         off(EChartEvents.MouseMove, hideTooltip);
         on(EChartEvents.Click, pinTooltipOnClick, {
           useCanvasAsTrigger: true,
@@ -172,13 +178,13 @@ export const useTooltipVisibility = ({
       return;
     }
 
-    on(EChartEvents.MouseOver, hideTooltipOnMouseOverMarkPoint);
-    on(EChartEvents.MouseOut, stopHideTooltipOnMouseOutMarkPoint);
+    on(EChartEvents.MouseOver, hideTooltipOnMouseOverMark);
+    on(EChartEvents.MouseOut, stopHideTooltipOnMouseOutMark);
   }, [
     pinTooltipOnClick,
     showTooltipOnMouseMove,
-    hideTooltipOnMouseOverMarkPoint,
-    stopHideTooltipOnMouseOutMarkPoint,
+    hideTooltipOnMouseOverMark,
+    stopHideTooltipOnMouseOutMark,
     hideTooltip,
     off,
     on,
