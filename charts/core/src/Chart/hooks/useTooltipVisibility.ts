@@ -49,7 +49,7 @@ export const useTooltipVisibility = ({
    * in the tooltip. The echarts tooltip `formatter` cannot pass the `onClick`
    * event to the button, so we have to add it manually.
    */
-  const addCb = useCallback(() => {
+  const addUnpinCallbackToCloseButton = useCallback(() => {
     const btn = document.getElementById(TOOLTIP_CLOSE_BTN_ID);
 
     if (btn && !btn.dataset.bound) {
@@ -88,12 +88,12 @@ export const useTooltipVisibility = ({
        */
       requestAnimationFrame(() => {
         showTooltip(x, y);
-        addCb();
+        addUnpinCallbackToCloseButton();
       });
       setTooltipPinned(true);
     },
     [
-      addCb,
+      addUnpinCallbackToCloseButton,
       showTooltipOnMouseMove,
       off,
       showTooltip,
