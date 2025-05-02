@@ -250,7 +250,7 @@ export const LiveExample: StoryObj<DrawerProps> = {
   },
 };
 
-export const WithToolbarEmbedded: StoryFn<DrawerProps> = () => {
+const WithToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
   return (
     <div
       className={css`
@@ -273,7 +273,7 @@ export const WithToolbarEmbedded: StoryFn<DrawerProps> = () => {
   );
 };
 
-export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = () => {
+const WithoutToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -312,7 +312,7 @@ export const WithoutToolbarEmbedded: StoryFn<DrawerProps> = () => {
 };
 
 // FIXME: borders are making the page scroll horizontally:
-export const WithToolbarOverlay: StoryFn<DrawerProps> = () => {
+const WithToolbarOverlayComponent: StoryFn<DrawerProps> = () => {
   return (
     <div
       className={css`
@@ -335,43 +335,7 @@ export const WithToolbarOverlay: StoryFn<DrawerProps> = () => {
   );
 };
 
-export const WithToolbarOverlayCloudNav: StoryFn<DrawerProps> = () => {
-  return (
-    <CloudNavLayout>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <div
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </div>
-      </DrawerToolbarLayout>
-    </CloudNavLayout>
-  );
-};
-
-export const WithToolbarEmbeddedCloudNav: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  return (
-    <CloudNavLayout>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </CloudNavLayout>
-  );
-};
-
-export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
+const WithoutToolbarOverlayComponent: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
   const [open, setOpen] = useState(false);
@@ -410,6 +374,98 @@ export const WithoutToolbarOverlay: StoryFn<DrawerProps> = (
       </DrawerStackProvider>
     </div>
   );
+};
+
+const WithToolbarOverlayCloudNavComponent: StoryFn<DrawerProps> = (
+  args: DrawerProps,
+) => {
+  return (
+    <CloudNavLayout>
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
+        <div
+          className={css`
+            padding: ${spacing[400]}px;
+          `}
+        >
+          <LongContent />
+          <LongContent />
+        </div>
+      </DrawerToolbarLayout>
+    </CloudNavLayout>
+  );
+};
+
+const WithToolbarEmbeddedCloudNavComponent: StoryFn<DrawerProps> = (
+  args: DrawerProps,
+) => {
+  return (
+    <CloudNavLayout>
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+          `}
+        >
+          <LongContent />
+          <LongContent />
+        </main>
+      </DrawerToolbarLayout>
+    </CloudNavLayout>
+  );
+};
+
+export const WithToolbarOverlayCloudNav: StoryObj<DrawerProps> = {
+  render: WithToolbarOverlayCloudNavComponent,
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const WithToolbarEmbeddedCloudNav: StoryObj<DrawerProps> = {
+  render: WithToolbarEmbeddedCloudNavComponent,
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const WithToolbarOverlay: StoryObj<DrawerProps> = {
+  render: WithToolbarOverlayComponent,
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const WithoutToolbarOverlay: StoryObj<DrawerProps> = {
+  render: WithoutToolbarOverlayComponent,
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const WithToolbarEmbedded: StoryObj<DrawerProps> = {
+  render: WithToolbarEmbeddedComponent,
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const WithoutToolbarEmbedded: StoryObj<DrawerProps> = {
+  render: WithoutToolbarEmbeddedComponent,
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
 };
 
 const MultipleDrawersComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
