@@ -1,12 +1,13 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
+import { LgIdString } from '@leafygreen-ui/lib';
 import { getLgIds as getLgTypographyLgIds } from '@leafygreen-ui/typography';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
 import { CheckboxTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = (
-  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): CheckboxTestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
   const typographyLgIds = getLgTypographyLgIds(lgIds.root);

@@ -1,6 +1,8 @@
+import { LgIdString } from '@leafygreen-ui/lib';
+
 export const DEFAULT_LGID_ROOT = 'lg-form_footer';
 
-export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
+export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     backButton: `${root}-back_button`,

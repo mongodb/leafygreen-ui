@@ -1,6 +1,7 @@
 import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
 
 import { getLgIds as getLgFormFieldIds } from '@leafygreen-ui/form-field';
+import { LgIdString } from '@leafygreen-ui/lib';
 import { transitionDuration } from '@leafygreen-ui/tokens';
 import { getLgIds as getLgTypographyLgIds } from '@leafygreen-ui/typography';
 
@@ -15,7 +16,7 @@ export function waitForSelectTransitionDuration() {
 const lgFormFieldIds = getLgFormFieldIds();
 
 export const getTestUtils = (
-  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType => {
   const lgIds = getLgIds(lgId);
   const typographyLgIds = getLgTypographyLgIds(lgIds.root);

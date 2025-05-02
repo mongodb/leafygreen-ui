@@ -647,15 +647,20 @@ The function accepts an optional root identifier, allowing consumers to set a un
 
 #### Usage
 
-Each component should export a `getLgIds.ts` file. For more information on naming test IDs, [check out the section on BEM-ish patterns](#follow-bem-ish-patterns-when-hard-coding-a-data-testid-or-data-lgid)
+Each component includes a `getLgIds.ts` file that exports the `getLgIds` utility. This function returns an object containing IDs for each trackable element within the component.
+
+For more information on naming test IDs, [check out the section on BEM-ish patterns](#follow-bem-ish-patterns-when-hard-coding-a-data-testid-or-data-lgid).
 
 ```js
+// getLgIds.ts
+
 export const DEFAULT_LGID_ROOT = 'lg-component';
 
 export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     button: `${root}-button`,
+    input: `${root}-input`,
   } as const;
   return ids;
 };
@@ -663,7 +668,17 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
 export type GetLgIdsReturnType = ReturnType<typeof getLgIds>;
 ```
 
-Inside the component you would use the test IDs by calling `getLgIds()`
+Inside the component you can use the test IDs by calling `getLgIds()`:
+
+```js
+// Component.tsx
+
+const lgIds = getLgIds();
+
+// lgIds.root = 'lg-component'
+// lgIds.button = 'lg-component-button'
+// lgIds.input -> 'lg-component-input'
+```
 
 #### Component.tsx
 

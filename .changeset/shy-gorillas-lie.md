@@ -17,7 +17,7 @@
 '@leafygreen-ui/tabs': major
 ---
 
-Updates `data-lgid` to use scope based test ids. These test ids are generated uisng the helper function `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/d55ae3319908bf68460d15520c499f0092355ca6/STYLEGUIDE.md#getlgids).
+Updates `data-lgid` to use scope based test ids. These test ids are generated uisng the helper function `getLgIds`. For more information [check out the section in the styleguide about getLgIds](https://github.com/mongodb/leafygreen-ui/blob/main/STYLEGUIDE.md#getlgids).
 
 Removes public exports for:
 - `LGIDs`
