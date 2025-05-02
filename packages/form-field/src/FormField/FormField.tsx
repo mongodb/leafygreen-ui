@@ -12,7 +12,7 @@ import {
 import { DEFAULT_MESSAGES } from '../constants';
 import { FormFieldProvider } from '../FormFieldContext';
 import { FormFieldFeedback } from '../FormFieldFeedback';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils/getLgIds';
 
 import {
   getFontSizeStyles,
@@ -46,7 +46,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       darkMode,
       optional,
       id,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       ...rest
     }: FormFieldProps,
     fwdRef,

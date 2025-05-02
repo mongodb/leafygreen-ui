@@ -9,8 +9,6 @@ import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { DEFAULT_LGID_ROOT } from '../utils';
-
 import { textAreaContainerStyles, textAreaStyles } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
 
@@ -64,7 +62,7 @@ export const TextArea: TextArea = forwardRef<
     'aria-labelledby': ariaLabelledby,
     'aria-invalid': ariaInvalid,
     baseFontSize: baseFontSizeProp,
-    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    'data-lgid': dataLgId = getLgIds().root,
     defaultValue = '',
     ...rest
   }: TextAreaProps,

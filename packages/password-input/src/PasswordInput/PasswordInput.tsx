@@ -10,7 +10,7 @@ import { Label } from '@leafygreen-ui/typography';
 
 import { PasswordInputFeedback } from '../PasswordInputFeedback';
 import { PasswordToggle } from '../PasswordToggle';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import {
   getInputDisabledStyles,
@@ -49,7 +49,7 @@ export const PasswordInput = React.forwardRef<
       stateNotifications = [],
       disabled = false,
       autoComplete = 'new-password',
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       className,
       label,
       ...rest

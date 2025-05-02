@@ -9,7 +9,7 @@ import { palette } from '@leafygreen-ui/palette';
 import TextInput from '@leafygreen-ui/text-input';
 import { H3 } from '@leafygreen-ui/typography';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils/getLgIds';
 
 import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
@@ -38,7 +38,7 @@ export const ConfirmationModal = React.forwardRef(
       darkMode: darkModeProp,
       confirmButtonProps = {},
       cancelButtonProps = {},
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       ...modalProps
     }: ConfirmationModalProps,
     forwardRef: React.ForwardedRef<HTMLDivElement | null>,

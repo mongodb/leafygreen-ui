@@ -18,7 +18,7 @@ import {
 } from './FormFooter.styles';
 import { FormFooterProps } from './FormFooter.types';
 import PrimaryButton, { PrimaryButtonProps } from './PrimaryButton';
-import { DEFAULT_LGID_ROOT, getLgIds } from './utils';
+import { getLgIds } from './utils';
 
 export default function FormFooter({
   primaryButton,
@@ -29,7 +29,7 @@ export default function FormFooter({
   contentClassName,
   className,
   darkMode: darkModeProp,
-  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+  'data-lgid': dataLgId = getLgIds().root,
   ...rest
 }: FormFooterProps) {
   const { theme, darkMode } = useDarkMode(darkModeProp);

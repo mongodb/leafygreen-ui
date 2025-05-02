@@ -14,7 +14,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import Portal from '@leafygreen-ui/portal';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../constants';
+import { getLgIds } from '../constants';
 
 import {
   backdropBaseStyle,
@@ -53,7 +53,7 @@ const ModalView = React.forwardRef(
       className,
       contentClassName,
       initialFocus,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       ...rest
     }: ModalProps,
     forwardedRef: ForwardedRef,

@@ -13,7 +13,7 @@ import {
 import { RenderMode } from '@leafygreen-ui/popover';
 
 import { Menu } from '../Menu';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils/getLgIds';
 
 import {
   buttonBaseStyles,
@@ -59,7 +59,7 @@ export const SplitButton = InferredPolymorphic<
       triggerAriaLabel,
       onChange,
       renderDarkMenu,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       ...rest
     },
     ref: React.Ref<any>,

@@ -5,7 +5,6 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Polymorphic, usePolymorphic } from '@leafygreen-ui/polymorphic';
 
 import { getLgIds } from '../utils';
-import { DEFAULT_LGID_ROOT } from '../utils/getLgIds';
 import { useUpdatedBaseFontSize } from '../utils/useUpdatedBaseFontSize';
 
 import {
@@ -22,7 +21,7 @@ export const Description = Polymorphic<DescriptionProps>(
     children,
     className,
     darkMode: darkModeProp,
-    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    'data-lgid': dataLgId = getLgIds().root,
     disabled = false,
     ...rest
   }) => {

@@ -28,7 +28,7 @@ import MenuButton from '../MenuButton';
 import { InternalOption, OptionElement } from '../Option';
 import SelectContext from '../SelectContext';
 import { mobileSizeSet } from '../styleSets';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 import {
   convertToInternalElements,
   getOptionValue,
@@ -74,7 +74,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       state = State.None,
       dropdownWidthBasis = DropdownWidthBasis.Trigger,
       baseFontSize = BaseFontSize.Body1,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       id: idProp,
       'aria-labelledby': ariaLabelledby,
       'aria-label': ariaLabel,

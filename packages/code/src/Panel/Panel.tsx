@@ -9,7 +9,6 @@ import { Body } from '@leafygreen-ui/typography';
 import { useCodeContext } from '../CodeContext/CodeContext';
 import CopyButton from '../CopyButton/CopyButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
-import { getLgIds } from '../utils';
 
 import {
   getBasePanelStyle,
@@ -30,9 +29,7 @@ function Panel({
   ...rest
 }: PanelProps) {
   const { theme } = useDarkMode();
-  const { contents, language } = useCodeContext();
-
-  const lgIds = getLgIds();
+  const { contents, language, lgIds } = useCodeContext();
 
   const hasTitle = !!title;
 

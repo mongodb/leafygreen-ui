@@ -9,7 +9,7 @@ import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 import { TableContextProvider } from '../TableContext';
 import { LGRowData } from '../useLeafyGreenTable';
 import { LeafyGreenVirtualTable } from '../useLeafyGreenVirtualTable/useLeafyGreenVirtualTable.types';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import {
   getTableContainerStyles,
@@ -30,7 +30,7 @@ const Table = forwardRef<HTMLDivElement, TableProps<any>>(
       shouldTruncate = false,
       baseFontSize: baseFontSizeProp,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       ...rest
     }: TableProps<T>,
     containerRef: ForwardedRef<HTMLDivElement>,

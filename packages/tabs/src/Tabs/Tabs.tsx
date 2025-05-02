@@ -17,12 +17,7 @@ import {
 } from '../context';
 import TabPanel from '../TabPanel';
 import TabTitle from '../TabTitle';
-import {
-  DEFAULT_LGID_ROOT,
-  getEnabledIndices,
-  getLgIds,
-  getSelectedIndex,
-} from '../utils';
+import { getEnabledIndices, getLgIds, getSelectedIndex } from '../utils';
 
 import {
   getTabContainerStyles,
@@ -65,7 +60,7 @@ const Tabs = <SelectedType extends number | string>(
     selected: controlledSelected,
     setSelected: setControlledSelected,
     size = 'default',
-    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    'data-lgid': dataLgId = getLgIds().root,
     'aria-labelledby': ariaLabelledby,
     'aria-label': ariaLabel,
     ...rest

@@ -6,7 +6,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { consoleOnce } from '@leafygreen-ui/lib';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import { textInputStyle } from './TextInput.styles';
 import {
@@ -64,7 +64,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
       sizeVariant: size = SizeVariant.Default,
       handleValidation,
       baseFontSize: baseFontSizeProp,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledby,
       'aria-invalid': ariaInvalid,

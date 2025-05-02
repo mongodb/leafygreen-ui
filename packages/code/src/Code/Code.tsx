@@ -14,7 +14,7 @@ import { numOfCollapsedLinesOfCode } from '../constants';
 import CopyButton from '../CopyButton/CopyButton';
 import { Syntax } from '../Syntax';
 import { Language } from '../types';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+import { getLgIds } from '../utils/getLgIds';
 
 import {
   getCodeStyles,
@@ -46,7 +46,7 @@ function Code({
   onCopy,
   panel,
   customKeywords,
-  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+  'data-lgid': dataLgId = getLgIds().root,
   baseFontSize: baseFontSizeProp,
   ...rest
 }: CodeProps) {
@@ -184,7 +184,7 @@ function Code({
       language={languageProp}
       isLoading={isLoading}
       showPanel={showPanel}
-      lgids={lgIds}
+      lgIds={lgIds}
     >
       <div
         className={getWrapperStyles({ theme, className })}

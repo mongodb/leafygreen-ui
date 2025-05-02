@@ -26,7 +26,7 @@ import {
   MenuContext,
   MenuDescendantsContext,
 } from '../MenuContext/MenuContext';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import { useMenuHeight } from './utils/useMenuHeight';
 import {
@@ -67,7 +67,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(function Menu(
     setOpen: controlledSetOpen,
     darkMode: darkModeProp,
     renderDarkMenu = true,
-    'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+    'data-lgid': dataLgId = getLgIds().root,
     children,
     className,
     refEl,
