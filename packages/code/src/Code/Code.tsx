@@ -60,7 +60,7 @@ function Code({
   const { theme, darkMode } = useDarkMode(darkModeProp);
   const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
 
-  const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
+  const lgIds = getLgIds(dataLgId);
 
   const showPanel = !!panel;
 

@@ -116,7 +116,7 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
 
     const { darkMode } = useDarkMode(darkModeProp);
 
-    const lgIds = React.useMemo(() => getLgIds(dataLgId), [dataLgId]);
+    const lgIds = getLgIds(dataLgId);
 
     const descriptionId = `${id}-description`;
     const menuId = `${id}-menu`;
