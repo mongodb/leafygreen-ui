@@ -11,5 +11,5 @@ export interface CustomTooltipProps extends DarkModeProps {
   seriesValueFormatter?: ChartTooltipProps['seriesValueFormatter'];
   seriesNameFormatter?: ChartTooltipProps['seriesNameFormatter'];
   headerFormatter?: ChartTooltipProps['headerFormatter'];
-  showCloseButton: boolean;
+  tooltipPinned: boolean;
 }

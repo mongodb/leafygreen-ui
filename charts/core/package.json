@@ -28,8 +28,7 @@
     "@lg-charts/chart-card": "workspace:^",
     "@lg-charts/colors": "workspace:^",
     "@lg-charts/series-provider": "workspace:^",
-    "echarts": "^5.5.1",
-    "polished": "^4.2.2"
+    "echarts": "^5.5.1"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
