@@ -1,13 +1,11 @@
 import React, { forwardRef, useState } from 'react';
 
-import {
-  FormField,
-  FormFieldInputContainer,
-  getLgIds,
-} from '@leafygreen-ui/form-field';
+import { FormField, FormFieldInputContainer } from '@leafygreen-ui/form-field';
 import { useIdAllocator, useValidation } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
+
+import { getLgIds } from '../utils';
 
 import { textAreaContainerStyles, textAreaStyles } from './TextArea.styles';
 import { State, TextAreaProps } from './TextArea.types';
