@@ -18,5 +18,10 @@
     {
       "file": ".github/copilotInstructions/codeGeneration.md"
     }
+  ],
+  "github.copilot.chat.testGeneration.instructions": [
+    {
+      "file": ".github/copilotInstructions/testGeneration.md"
+    }
   ]
 }
