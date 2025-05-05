@@ -36,7 +36,7 @@ export const Description = Polymorphic<DescriptionProps>(
     return (
       <Component
         data-lgid={getLgIds(dataLgId).description}
-        data-testid={getLgIds(dataLgId).label}
+        data-testid={getLgIds(dataLgId).description}
         className={cx(
           getDescriptionStyle(theme),
           descriptionTypeScaleStyles[baseFontSize],
