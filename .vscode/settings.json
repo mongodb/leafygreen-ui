@@ -13,5 +13,10 @@
   "eslint.format.enable": true,
   "eslint.runtime": "node",
   "eslint.workingDirectories": ["./"],
-  "typescript.preferences.importModuleSpecifier": "project-relative"
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "github.copilot.chat.codeGeneration.instructions": [
+    {
+      "file": ".github/copilotInstructions/codeGeneration.md"
+    }
+  ]
 }
