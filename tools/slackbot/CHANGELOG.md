@@ -1,5 +1,12 @@
 # @lg-tools/slackbot
 
+## 0.2.16
+
+### Patch Changes
+
+- Updated dependencies [028147fe1]
+  - @lg-tools/meta@0.5.1
+
 ## 0.2.15
 
 ### Patch Changes

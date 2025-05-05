@@ -1,5 +1,21 @@
 # @leafygreen-ui/combobox
 
+## 11.0.18
+
+### Patch Changes
+
+- Updated dependencies [2d40eba2a]
+  - @leafygreen-ui/popover@13.0.11
+  - @leafygreen-ui/chip@3.0.12
+
+## 11.0.17
+
+### Patch Changes
+
+- Updated dependencies [2cb75f722]
+  - @leafygreen-ui/checkbox@16.0.0
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 11.0.16
 
 ### Patch Changes

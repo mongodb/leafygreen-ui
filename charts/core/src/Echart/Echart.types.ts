@@ -8,8 +8,7 @@ import type {
   ToolboxComponentOption,
   TooltipComponentOption,
 } from 'echarts/components';
-import type { EChartsType } from 'echarts/core';
-import type { ComposeOption } from 'echarts/core';
+import type { ComposeOption, EChartsType } from 'echarts/core';
 
 import { Theme } from '@leafygreen-ui/lib';
 
@@ -108,22 +107,24 @@ interface EChartsEventHandlerType {
 }
 
 export interface EChartsInstance {
-  _echartsInstance: EChartsType | null;
-  ready: boolean;
-  options: Partial<EChartOptions>;
-  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
-  on: EChartsEventHandlerType;
-  off: EChartsEventHandlerType;
+  _getEChartsInstance: () => EChartsType | null;
   addSeries: (series: EChartSeriesOption) => void;
-  removeSeries: (name: string) => void;
   addToGroup: (groupId: string) => void;
-  removeFromGroup: () => void;
-  enableZoom: () => void;
   disableZoom: () => void;
-  setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
+  enableZoom: () => void;
   error: Error | null;
   hideTooltip: () => void;
+  off: EChartsEventHandlerType;
+  on: EChartsEventHandlerType;
+  ready: boolean;
+  removeFromGroup: () => void;
+  removeSeries: (id: string) => void;
   resize: () => void;
+  setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
+  updateOptions: (
+    options: Omit<Partial<EChartOptions>, 'series'>,
+    replaceMerge?: Array<string>,
+  ) => void;
 }
 
 export interface EChartHookProps {

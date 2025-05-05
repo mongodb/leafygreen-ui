@@ -10,6 +10,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ChartOptions } from '../Chart.types';
+import { TOOLBOX_ID, X_AXIS_ID, Y_AXIS_ID } from '../constants';
 
 const commonAxisOptions = {
   /**
@@ -66,17 +67,20 @@ export const getDefaultChartOptions = (
   },
 
   xAxis: {
+    id: X_AXIS_ID,
     type: 'time',
     ...commonAxisOptions,
   },
 
   yAxis: {
+    id: Y_AXIS_ID,
     type: 'value',
     ...commonAxisOptions,
   },
 
   // Sets up zooming
   toolbox: {
+    id: TOOLBOX_ID,
     feature: {
       dataZoom: {
         show: true,
@@ -90,5 +94,15 @@ export const getDefaultChartOptions = (
         },
       },
     },
+  },
+
+  // Adds vertical dashed line on hover, even when no tooltip is shown
+  tooltip: {
+    axisPointer: {
+      z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
+    },
+    show: true,
+    trigger: 'axis',
+    formatter: () => '',
   },
 });

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
@@ -21,6 +22,7 @@ import {
 } from './ThresholdLine.types';
 
 function getThresholdLineConfig({
+  id,
   name,
   position,
   theme,
@@ -28,6 +30,7 @@ function getThresholdLineConfig({
   value,
 }: GetThresholdLineConfig): SeriesOption {
   return {
+    id,
     name,
     type: 'line', // Requires a type even though it's not an actual series
     markLine: {
@@ -92,12 +95,19 @@ function getThresholdLineConfig({
 }
 
 export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
-  const { chart } = useChartContext();
+  const {
+    chart: { addSeries, ready, removeSeries },
+  } = useChartContext();
   const { theme } = useDarkMode();
+
+  const id = useIdAllocator({
+    prefix: 'threshold-line',
+  });
+
   const name = `threshold-${position}`;
 
   useEffect(() => {
-    if (!chart.ready) return;
+    if (!ready) return;
 
     /**
      * Threshold lines in Echarts are always attached to a series. In order
@@ -105,16 +115,14 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
      * a dummy series with no data, and a mark line. This does not show up as a
      * series in something like a ChartTooltip.
      */
-    chart.addSeries(
-      getThresholdLineConfig({ name, position, theme, label, value }),
+    addSeries(
+      getThresholdLineConfig({ id, name, position, theme, label, value }),
     );
 
     return () => {
-      chart.removeSeries(name);
+      removeSeries(id);
     };
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, chart.ready, position, label, value]);
+  }, [addSeries, id, label, name, position, ready, removeSeries, theme, value]);
 
   return null;
 }

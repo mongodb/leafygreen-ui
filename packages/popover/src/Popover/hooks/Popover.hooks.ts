@@ -1,8 +1,10 @@
 import React, { useMemo, useRef, useState } from 'react';
+import isEqual from 'lodash/isEqual';
 
 import {
   useIsomorphicLayoutEffect,
   useObjectDependency,
+  usePrevious,
 } from '@leafygreen-ui/hooks';
 import {
   useMigrationContext,
@@ -10,14 +12,13 @@ import {
   usePopoverPropsContext,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { getElementDocumentPosition } from '../utils/positionUtils';
-
+import { getElementDocumentPosition } from '../../utils/positionUtils';
 import {
   PopoverProps,
   RenderMode,
   UseContentNodeReturnObj,
   UseReferenceElementReturnObj,
-} from './Popover.types';
+} from '../Popover.types';
 
 /**
  * This hook handles logic for determining what prop values are used for the `Popover`
@@ -129,9 +130,18 @@ export function useReferenceElement(
     null,
   );
 
+  const prevReferenceElement = usePrevious(refEl?.current);
+
+  // If the DOM element has changed, we need to update the reference element.
+  // Store this variable so we can trigger the useLayoutEffect
+  const didRefElementChange = !isEqual(prevReferenceElement, refEl?.current);
+
   useIsomorphicLayoutEffect(() => {
     if (refEl && refEl.current) {
-      setReferenceElement(refEl.current);
+      if (didRefElementChange) {
+        setReferenceElement(refEl.current);
+      }
+
       return;
     }
 
@@ -142,7 +152,7 @@ export function useReferenceElement(
       setReferenceElement(maybeParentEl);
       return;
     }
-  }, [placeholderElement, refEl]);
+  }, [didRefElementChange, placeholderElement, refEl]);
 
   const referenceElDocumentPos = useObjectDependency(
     useMemo(

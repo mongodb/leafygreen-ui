@@ -47,6 +47,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     {
       label,
       description,
+      defaultValue,
       onChange,
       onBlur,
       placeholder,
@@ -75,7 +76,7 @@ const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>(
     const { darkMode } = useDarkMode(darkModeProp);
     const inputRef = useForwardedRef(forwardRef, null);
     const isControlled = typeof controlledValue === 'string';
-    const [uncontrolledValue, setValue] = useState('');
+    const [uncontrolledValue, setValue] = useState(defaultValue ?? '');
     const value = isControlled ? controlledValue : uncontrolledValue;
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeProp);
     const lgIds = getLgIds(dataLgId);
