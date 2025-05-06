@@ -4,6 +4,7 @@ import { SeriesName } from '@lg-charts/series-provider';
 import { OptionDataValue } from '../../ChartTooltip.types';
 import { SeriesListItem } from '../SeriesListItem';
 
+import { getSeriesListStyles } from './SeriesList.styles';
 import { SeriesListProps } from './SeriesList.types';
 
 function descendingCompareFn(valueA: OptionDataValue, valueB: OptionDataValue) {
@@ -23,9 +24,10 @@ export function SeriesList({
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
+  tooltipPinned,
 }: SeriesListProps) {
   return (
-    <>
+    <ul className={getSeriesListStyles(tooltipPinned)}>
       {seriesData
         .sort((a, b) => {
           const [nameA, valueA] = a.data;
@@ -50,6 +52,6 @@ export function SeriesList({
             seriesNameFormatter={seriesNameFormatter}
           />
         ))}
-    </>
+    </ul>
   );
 }

@@ -14,6 +14,7 @@ export const getHeaderStyles = (theme: Theme) => css`
     InteractionState.Default
   ]};
   margin-bottom: ${spacing[100]}px;
+  padding: ${spacing[150]}px ${spacing[150]}px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

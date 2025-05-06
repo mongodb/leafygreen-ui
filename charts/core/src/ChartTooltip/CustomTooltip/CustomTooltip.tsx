@@ -84,6 +84,7 @@ export function CustomTooltip({
         seriesValueFormatter={seriesValueFormatter}
         seriesNameFormatter={seriesNameFormatter}
         sort={sort}
+        tooltipPinned={tooltipPinned}
       />
     </>
   );
