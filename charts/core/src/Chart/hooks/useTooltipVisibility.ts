@@ -40,8 +40,15 @@ export const useTooltipVisibility = ({
    * it hides the tooltip and sets the `tooltipPinned` state to false.
    */
   const unpinTooltip = useCallback(() => {
-    hideTooltip();
     setTooltipPinned(false);
+
+    /**
+     * We need to use requestAnimationFrame to ensure that the tooltip is hidden
+     * after the `tooltipPinned` state updates.
+     */
+    requestAnimationFrame(() => {
+      hideTooltip();
+    });
   }, [hideTooltip]);
 
   /**
@@ -81,16 +88,16 @@ export const useTooltipVisibility = ({
       const x = params.offsetX;
       const y = params.offsetY;
 
+      setTooltipPinned(true);
+
       /**
        * We need to use requestAnimationFrame to ensure that the tooltip is shown
-       * after the click event has been processed. Otherwise, the tooltip will
-       * unmount/remount, and the tooltip will not be shown.
+       * after the `tooltipPinned` state updates.
        */
       requestAnimationFrame(() => {
         showTooltip(x, y);
         addUnpinCallbackToCloseButton();
       });
-      setTooltipPinned(true);
     },
     [
       addUnpinCallbackToCloseButton,
