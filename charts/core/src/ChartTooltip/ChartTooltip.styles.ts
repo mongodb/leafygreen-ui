@@ -5,18 +5,17 @@ import {
   fontFamilies,
   fontWeights,
   InteractionState,
-  spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
 
+const TOOLTIP_WIDTH = 261;
+
 export const getRootStylesText = (theme: Theme) => `
-  width: 261px;
-  overflow-y: auto;
+  width: ${TOOLTIP_WIDTH}px;
   background: ${
     color[theme].background[Variant.InversePrimary][InteractionState.Default]
   };
   color: ${color[theme].text[Variant.InversePrimary][InteractionState.Default]};
-  padding: ${spacing[150]}px;
   border-radius: ${borderRadius[150]}px;
   font-family: ${fontFamilies.default};
   font-size: 12px;
