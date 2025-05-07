@@ -1,20 +1,19 @@
-import { useState } from "react";
+import React from 'react';
 import Chatbot, {
-  ChatWindow,
   FloatingActionButtonTrigger,
-  InputBarTrigger,
   ModalView,
-} from "mongodb-chatbot-ui";
-import { css } from "@emotion/css";
+} from 'mongodb-chatbot-ui';
+
+// import { css } from '@emotion/css';
 
 const suggestedPrompts = [
-  "Why should I use the MongoDB Chatbot Framework?",
-  "How does the framework use Atlas Vector Search?",
-  "Do you support using LLMs from OpenAI?",
+  'Why should I use the MongoDB Chatbot Framework?',
+  'How does the framework use Atlas Vector Search?',
+  'Do you support using LLMs from OpenAI?',
 ];
 
 function MyApp() {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   return (
     <div>
