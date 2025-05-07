@@ -3,27 +3,27 @@ import {
   makeMongoDbPageStore,
   makeOpenAiEmbedder,
 } from 'mongodb-rag-core';
-import { OpenAI } from 'mongodb-rag-core/openai';
+import { AzureOpenAI } from 'mongodb-rag-core/openai';
 import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
-import path from 'path';
 
-import { leafygreenGithubSourceConstructor } from './LGGithubDataSource';
-import { loadEnvVars } from './loadEnvVars';
-import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './mongodbChatbotFrameworkDataSource';
+import { loadEnvVars } from './utils/loadEnv';
 
 // Load project environment variables
-const dotenvPath = path.join(__dirname, '..', '..', '..', '.env'); // .env at project root
 const {
   MONGODB_CONNECTION_URI,
   MONGODB_DATABASE_NAME,
-  OPENAI_API_KEY,
   OPENAI_EMBEDDING_MODEL,
-} = loadEnvVars(dotenvPath);
+} = loadEnvVars();
 
 export default {
   embedder: async () => {
     return makeOpenAiEmbedder({
-      openAiClient: new OpenAI({ apiKey: OPENAI_API_KEY }),
+      openAiClient: new AzureOpenAI({
+        endpoint: process.env.AZURE_OPENAI_ENDPOINT,
+        apiKey: process.env.AZURE_API_KEY1,
+        deployment: process.env.AZURE_OPENAI_DEPLOYMENT,
+        apiVersion: '2024-04-01-preview',
+      }),
       deployment: OPENAI_EMBEDDING_MODEL,
       backoffOptions: {
         numOfAttempts: 25,
@@ -52,11 +52,12 @@ export default {
     }),
   // Add data sources here
   dataSources: async () => {
-    const mongodbChatbotFrameworkSource =
-      await mongoDbChatbotFrameworkDocsDataSourceConstructor();
+    return [];
+    // const mongodbChatbotFrameworkSource =
+    //   await mongoDbChatbotFrameworkDocsDataSourceConstructor();
 
-    const leafyGreenGithubSource = await leafygreenGithubSourceConstructor();
+    // const leafyGreenGithubSource = await leafygreenGithubSourceConstructor();
 
-    return [mongodbChatbotFrameworkSource, leafyGreenGithubSource];
+    // return [mongodbChatbotFrameworkSource, leafyGreenGithubSource];
   },
 } satisfies Config;
