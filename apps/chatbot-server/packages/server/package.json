@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "0.0.0",
+  "description": "Quick start for MongoDB Chatbot Server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/node": "^16.0.0",
+    "express": "^4.18.2",
+    "mongodb-chatbot-server": "*",
+    "mongodb-rag-core": "*"
+  }
+}
