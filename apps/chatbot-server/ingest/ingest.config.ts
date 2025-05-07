@@ -1,13 +1,14 @@
 import {
   makeMongoDbEmbeddedContentStore,
   makeMongoDbPageStore,
-  makeOpenAiEmbedder,
 } from 'mongodb-rag-core';
 import { AzureOpenAI } from 'mongodb-rag-core/openai';
 import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
 
+import { leafygreenGithubSourceConstructor } from './sources/github-leafygreen-ui';
+import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './sources/github-mdb-chatbot-framework';
+import { createAzureEmbedderConstructor } from './utils/createAzureEmbedderConstructor';
 import { loadEnvVars } from './utils/loadEnv';
-import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './mongodbChatbotFrameworkDataSource';
 
 // Load project environment variables
 const {
@@ -17,21 +18,15 @@ const {
 } = loadEnvVars();
 
 export default {
-  embedder: async () => {
-    return makeOpenAiEmbedder({
-      openAiClient: new AzureOpenAI({
-        endpoint: process.env.AZURE_OPENAI_ENDPOINT,
-        apiKey: process.env.AZURE_API_KEY1,
-        deployment: process.env.AZURE_OPENAI_DEPLOYMENT,
-        apiVersion: '2024-04-01-preview',
-      }),
-      deployment: OPENAI_EMBEDDING_MODEL,
-      backoffOptions: {
-        numOfAttempts: 25,
-        startingDelay: 1000,
-      },
-    });
-  },
+  embedder: createAzureEmbedderConstructor({
+    azureClient: new AzureOpenAI({
+      endpoint: process.env.AZURE_OPENAI_ENDPOINT,
+      apiKey: process.env.AZURE_API_KEY1,
+      apiVersion: '2024-04-01-preview',
+      deployment: process.env.AZURE_OPENAI_DEPLOYMENT,
+    }),
+    model: OPENAI_EMBEDDING_MODEL,
+  }),
   embeddedContentStore: () =>
     makeMongoDbEmbeddedContentStore({
       connectionUri: MONGODB_CONNECTION_URI,
@@ -53,14 +48,9 @@ export default {
     }),
   // Add data sources here
   dataSources: async () => {
-    const mongodbChatbotFrameworkSource =
-      await mongoDbChatbotFrameworkDocsDataSourceConstructor();
-
-    // const leafyGreenGithubSource = await leafygreenGithubSourceConstructor();
-
-    return [
-      mongodbChatbotFrameworkSource,
-      //  leafyGreenGithubSource
-    ];
+    return Promise.all([
+      mongoDbChatbotFrameworkDocsDataSourceConstructor(),
+      leafygreenGithubSourceConstructor(),
+    ]);
   },
 } satisfies Config;
