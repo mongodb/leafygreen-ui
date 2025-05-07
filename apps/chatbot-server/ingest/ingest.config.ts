@@ -12,6 +12,7 @@ import { loadEnvVars } from './utils/loadEnv';
 
 // Load project environment variables
 const {
+  // BRAINTRUST_API_KEY,
   MONGODB_CONNECTION_URI,
   MONGODB_DATABASE_NAME,
   OPENAI_EMBEDDING_MODEL,
