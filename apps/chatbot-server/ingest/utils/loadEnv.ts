@@ -9,22 +9,41 @@ import dotenv from 'dotenv';
 export function loadEnvVars() {
   dotenv.config();
   const {
-    MONGODB_CONNECTION_URI,
+    MONGODB_USER,
+    MONGODB_PASSWORD,
+    MONGODB_PROJECT_URL,
+    MONGODB_APP_NAME,
     MONGODB_DATABASE_NAME,
     VECTOR_SEARCH_INDEX_NAME,
     OPENAI_API_KEY,
     OPENAI_EMBEDDING_MODEL,
   } = process.env;
-  assert(MONGODB_CONNECTION_URI, 'MONGODB_CONNECTION_URI is required');
-  assert(MONGODB_DATABASE_NAME, 'MONGODB_DATABASE_NAME is required');
-  assert(VECTOR_SEARCH_INDEX_NAME, 'VECTOR_SEARCH_INDEX_NAME is required');
-  assert(OPENAI_API_KEY, 'OPENAI_API_KEY is required');
-  assert(OPENAI_EMBEDDING_MODEL, 'OPENAI_EMBEDDING_MODEL is required');
-  return {
-    MONGODB_CONNECTION_URI,
+  const requiredEnvVars = {
+    MONGODB_USER,
+    MONGODB_PASSWORD,
+    MONGODB_PROJECT_URL,
+    MONGODB_APP_NAME,
     MONGODB_DATABASE_NAME,
     VECTOR_SEARCH_INDEX_NAME,
     OPENAI_API_KEY,
     OPENAI_EMBEDDING_MODEL,
-  };
+  } as const;
+
+  for (const [name, value] of Object.entries(requiredEnvVars)) {
+    assert(value, `${name} is required`);
+  }
+
+  const MONGODB_CONNECTION_URI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_PROJECT_URL}/?retryWrites=true&w=majority&appName=${MONGODB_APP_NAME}`;
+
+  return {
+    MONGODB_CONNECTION_URI,
+    MONGODB_USER,
+    MONGODB_PASSWORD,
+    MONGODB_PROJECT_URL,
+    MONGODB_APP_NAME,
+    MONGODB_DATABASE_NAME,
+    VECTOR_SEARCH_INDEX_NAME,
+    OPENAI_API_KEY,
+    OPENAI_EMBEDDING_MODEL,
+  } as Record<string, string>;
 }

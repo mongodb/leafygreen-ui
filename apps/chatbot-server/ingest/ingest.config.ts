@@ -7,6 +7,7 @@ import { AzureOpenAI } from 'mongodb-rag-core/openai';
 import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
 
 import { loadEnvVars } from './utils/loadEnv';
+import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './mongodbChatbotFrameworkDataSource';
 
 // Load project environment variables
 const {
@@ -52,12 +53,14 @@ export default {
     }),
   // Add data sources here
   dataSources: async () => {
-    return [];
-    // const mongodbChatbotFrameworkSource =
-    //   await mongoDbChatbotFrameworkDocsDataSourceConstructor();
+    const mongodbChatbotFrameworkSource =
+      await mongoDbChatbotFrameworkDocsDataSourceConstructor();
 
     // const leafyGreenGithubSource = await leafygreenGithubSourceConstructor();
 
-    // return [mongodbChatbotFrameworkSource, leafyGreenGithubSource];
+    return [
+      mongodbChatbotFrameworkSource,
+      //  leafyGreenGithubSource
+    ];
   },
 } satisfies Config;
