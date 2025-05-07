@@ -1,6 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import Chatbot, {
+  ChatWindow,
   FloatingActionButtonTrigger,
+  InputBarTrigger,
   ModalView,
 } from 'mongodb-chatbot-ui';
 
