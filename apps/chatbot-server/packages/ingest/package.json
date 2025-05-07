@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "Apache-2.0",
+  "license": "ISC",
   "dependencies": {
     "mongodb-rag-ingest": "^0.3.1"
   },
