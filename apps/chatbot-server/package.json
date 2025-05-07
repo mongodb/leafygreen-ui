@@ -22,7 +22,6 @@
   "devDependencies": {
     "mongodb-rag-core": "^0.6.3",
     "mongodb-rag-ingest": "^0.3.1",
-    "ts-node": "^10.9.2",
     "tsx": "^4.19.4"
   }
 }
