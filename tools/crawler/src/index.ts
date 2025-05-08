@@ -4,10 +4,10 @@ export {
   loadPageContents,
 } from './utils/loadPageContents';
 export {
-  processSingleUrl,
-  type ProcessSingleUrlOptions,
-  type ProcessSingleUrlResult,
-} from './utils/processSingleUrl';
+  processLangchainDocument,
+  type ProcessLangchainDocumentOptions as ProcessSingleUrlOptions,
+  type ProcessLangchainDocumentResult as ProcessSingleUrlResult,
+} from './utils/processLangchainDocument';
 export {
   recursiveCrawlFromBaseURL,
   type RecursiveCrawlOptions,

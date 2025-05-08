@@ -42,13 +42,10 @@ export const SOURCES = [
     url: 'https://atomicdesign.bradfrost.com/table-of-contents',
     collection: 'atomic-design',
   },
-] as const;
+];
 
 /**
  * Allow the crawler to follow links to these domains
  * (with restricted depth)
  */
-export const allowedDomains = [
-  'https://www.mongodb.com',
-  'https://github.com',
-] as const;
+export const allowedDomains = ['https://www.mongodb.com', 'https://github.com'];
