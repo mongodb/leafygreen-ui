@@ -3017,6 +3017,9 @@ importers:
       '@lg-tools/lint':
         specifier: workspace:^
         version: link:../lint
+      '@lg-tools/prompt-kit':
+        specifier: workspace:^
+        version: link:../prompt-kit
       '@lg-tools/slackbot':
         specifier: workspace:^
         version: link:../slackbot
