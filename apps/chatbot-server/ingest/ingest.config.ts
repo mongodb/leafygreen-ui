@@ -7,6 +7,7 @@ import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
 
 import { leafygreenGithubSourceConstructor } from './sources/github-leafygreen-ui';
 import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './sources/github-mdb-chatbot-framework';
+import { mongoDbDesignDataSourceConstructor } from './sources/mongodb-design';
 import { createAzureEmbedderConstructor } from './utils/createAzureEmbedderConstructor';
 import { loadEnvVars } from './utils/loadEnv';
 
@@ -52,6 +53,7 @@ export default {
     return Promise.all([
       mongoDbChatbotFrameworkDocsDataSourceConstructor(),
       leafygreenGithubSourceConstructor(),
+      mongoDbDesignDataSourceConstructor(), // Add MongoDB Design website data source
     ]);
   },
 } satisfies Config;
