@@ -32,10 +32,6 @@ const {
 // Create the OpenAI client
 // for interacting with the OpenAI API (ChatGPT API and Embedding API)
 const openAiClient = new OpenAI({ apiKey: OPENAI_API_KEY });
-// const openAiClient = new OpenAI({
-//   baseURL: "https://api.braintrust.dev/v1/proxy",
-//   apiKey: "sk-TML74DZxKZRCSWBjpYku134xXzYRSx08LZQ0qz0LPIylC5hK",
-// });
 
 // Chatbot LLM for responding to the user's query.
 const llm = makeOpenAiChatLlm({
@@ -43,7 +39,6 @@ const llm = makeOpenAiChatLlm({
   deployment: OPENAI_CHAT_COMPLETION_MODEL,
   openAiLmmConfigOptions: {
     temperature: 0.5,
-    // max_tokens: 500,
   },
 });
 
