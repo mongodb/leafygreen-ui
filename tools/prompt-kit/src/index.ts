@@ -1,0 +1,1 @@
+export { injectPromptsToVSCode } from './settings';
