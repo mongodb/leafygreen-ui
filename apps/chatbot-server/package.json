@@ -22,8 +22,8 @@
     "dotenv": "^16.5.0",
     "express": "^4.18.2",
     "jsdom": "^26.1.0",
-    "mongodb-chatbot-server": "^0.10.1",
-    "mongodb-rag-core": "^0.6.3"
+    "mongodb-chatbot-server": "^0.11.0",
+    "mongodb-rag-core": "^0.7.0"
   },
   "devDependencies": {
     "mongodb-rag-ingest": "^0.3.1",

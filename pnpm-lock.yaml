@@ -129,11 +129,11 @@ importers:
         specifier: ^26.1.0
         version: 26.1.0
       mongodb-chatbot-server:
-        specifier: ^0.10.1
-        version: 0.10.1(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(ignore@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mongodb@6.16.0(socks@2.8.4))(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
+        specifier: ^0.11.0
+        version: 0.11.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(ignore@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mongodb@6.16.0(socks@2.8.4))(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
       mongodb-rag-core:
-        specifier: ^0.6.3
-        version: 0.6.3(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
+        specifier: ^0.7.0
+        version: 0.7.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
     devDependencies:
       mongodb-rag-ingest:
         specifier: ^0.3.1
@@ -3768,6 +3768,18 @@ packages:
 
   '@adobe/css-tools@4.4.1':
     resolution: {integrity: sha512-12WGKBQzjUAI4ayyF4IAtfw2QR/IDoqk6jTddXDhtYTJF9ASmoE1zst7cVtP0aL/F1jUJL5r+JxKXKEgHNbEUQ==}
+
+  '@ai-sdk/azure@1.3.23':
+    resolution: {integrity: sha512-vpsaPtU24RBVk/IMM5UylR/N4RtAuL2NZLWc7LJ3tvMTHu6pI46a7w+1qIwR3F6yO9ehWR8qvfLaBefJNFxaVw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
+
+  '@ai-sdk/openai@1.3.22':
+    resolution: {integrity: sha512-QwA+2EkG0QyjVR+7h6FE7iOu2ivNqAVMm9UJZkVxxTk5OIq5fFJDTEI/zICEMuHImTTXR2JjsL6EirJ28Jc4cw==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.0.0
 
   '@ai-sdk/provider-utils@1.0.22':
     resolution: {integrity: sha512-YHK2rpj++wnLVc9vPGzGFP3Pjeld2MwhKinetA0zKXOoHAT/Jit5O8kZsxcSlJPu9wvcGT1UGZEjZrtO7PfFOQ==}
@@ -11639,8 +11651,8 @@ packages:
   module-details-from-path@1.0.4:
     resolution: {integrity: sha512-EGWKgxALGMgzvxYF1UyGTy0HXX/2vHLkw6+NvDKW2jypWbHpjQuj4UMcqQWXHERJhVGKikolT06G3bcKe4fi7w==}
 
-  mongodb-chatbot-server@0.10.1:
-    resolution: {integrity: sha512-EdTZaAJxSjvGjgyqkJH4PmltLrp9C7T0EWB5hjkCokUEGFt/LVXKWu0HmhddPXZfDfOI4+fRL+QvJz1aAONRXQ==}
+  mongodb-chatbot-server@0.11.0:
+    resolution: {integrity: sha512-2wb5FHLBECyizstSzoTikezEm9rjEyj9EJ4aRKnFRO7eUjN00mBHoRaoLA25aIgVJVFf6K5L4qispUl+N523Sg==}
     engines: {node: '>=18', npm: '>=8'}
 
   mongodb-chatbot-ui@0.14.1:
@@ -11650,8 +11662,8 @@ packages:
   mongodb-connection-string-url@3.0.2:
     resolution: {integrity: sha512-rMO7CGo/9BFwyZABcKAWL8UJwH/Kc2x0g72uhDWzG48URRax5TCIcJ7Rc3RZqffZzO/Gwff/jyKwCU9TN8gehA==}
 
-  mongodb-rag-core@0.6.3:
-    resolution: {integrity: sha512-DsMm5YHGphpHIaLpf5DSm5N2zsQFFxDC3DNhMzRABJFn1TR1ESoftZmB5Xri6kjRyHe4OCQymeL+9/ovyaz98g==}
+  mongodb-rag-core@0.7.0:
+    resolution: {integrity: sha512-fjW67idOhsyAb5l6UiulxYZAltpcyHUjfeWhx6nWF9H/PnAnZaBQ6KwfHnXDRi0uQjIVNujeuSez2j5usU0pAg==}
     engines: {node: '>=18', npm: '>=8'}
 
   mongodb-rag-ingest@0.3.1:
@@ -14229,6 +14241,19 @@ snapshots:
       undici: 5.27.2
 
   '@adobe/css-tools@4.4.1': {}
+
+  '@ai-sdk/azure@1.3.23(zod@3.24.4)':
+    dependencies:
+      '@ai-sdk/openai': 1.3.22(zod@3.24.4)
+      '@ai-sdk/provider': 1.1.3
+      '@ai-sdk/provider-utils': 2.2.8(zod@3.24.4)
+      zod: 3.24.4
+
+  '@ai-sdk/openai@1.3.22(zod@3.24.4)':
+    dependencies:
+      '@ai-sdk/provider': 1.1.3
+      '@ai-sdk/provider-utils': 2.2.8(zod@3.24.4)
+      zod: 3.24.4
 
   '@ai-sdk/provider-utils@1.0.22(zod@3.24.4)':
     dependencies:
@@ -23667,7 +23692,7 @@ snapshots:
 
   module-details-from-path@1.0.4: {}
 
-  mongodb-chatbot-server@0.10.1(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(ignore@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mongodb@6.16.0(socks@2.8.4))(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2):
+  mongodb-chatbot-server@0.11.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(ignore@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mongodb@6.16.0(socks@2.8.4))(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2):
     dependencies:
       '@langchain/core': 0.2.36(openai@3.3.0)
       common-tags: 1.8.2
@@ -23681,7 +23706,7 @@ snapshots:
       ip-address: 8.1.0
       langchain: 0.2.20(@browserbasehq/sdk@2.5.0)(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ignore@5.3.2)(jsdom@26.1.0)(mongodb@6.16.0(socks@2.8.4))(openai@3.3.0)(playwright@1.52.0)(ws@8.18.2)
       lodash.clonedeep: 4.5.0
-      mongodb-rag-core: 0.6.3(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
+      mongodb-rag-core: 0.7.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
       openai: 3.3.0
       pm2: 5.4.3
       rate-limit-mongo: 2.3.2
@@ -23916,8 +23941,10 @@ snapshots:
       '@types/whatwg-url': 11.0.5
       whatwg-url: 14.2.0
 
-  mongodb-rag-core@0.6.3(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2):
+  mongodb-rag-core@0.7.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2):
     dependencies:
+      '@ai-sdk/azure': 1.3.23(zod@3.24.4)
+      '@ai-sdk/openai': 1.3.22(zod@3.24.4)
       '@apidevtools/swagger-parser': 10.1.1(openapi-types@12.1.3)
       '@langchain/anthropic': 0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4)))
       '@langchain/community': 0.3.42(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4)))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(google-auth-library@9.15.1)(ibm-cloud-sdk-core@5.3.2)(ignore@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mongodb@6.16.0(socks@2.8.4))(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(playwright@1.52.0)(ws@8.18.2)
@@ -24107,7 +24134,7 @@ snapshots:
   mongodb-rag-ingest@0.3.1(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2):
     dependencies:
       dotenv: 16.5.0
-      mongodb-rag-core: 0.6.3(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
+      mongodb-rag-core: 0.7.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@4.9.5))(ws@8.18.2)
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@arcjet/redact'
