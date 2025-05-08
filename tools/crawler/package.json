@@ -1,0 +1,55 @@
+{
+  "name": "@lg-tools/crawler",
+  "version": "0.0.2",
+  "description": "Crawler for MongoDB documentation and other sites",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "bin": {
+    "lg-crawler": "./bin/cli.js"
+  },
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "postbuild": "zip -r dist/lambda.zip dist/lambda.js node_modules package.json",
+    "crawl": "tsx src/cli.ts crawl",
+    "prune": "tsx src/cli.ts prune",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "mongodb",
+    "ui",
+    "kit",
+    "components",
+    "react",
+    "uikit",
+    "leafygreen",
+    "crawler",
+    "ai"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@azure/identity": "^4.9.1",
+    "@langchain/community": "^0.3.42",
+    "@langchain/core": "^0.3.42",
+    "chalk": "4.1.2",
+    "cheerio": "^1.0.0",
+    "commander": "^13.1.0",
+    "dotenv": "^16.5.0",
+    "langchain": "^0.3.24",
+    "lodash": "^4.17.21",
+    "mongodb": "^6.16.0",
+    "openai": "^4.97.0",
+    "ora": "^8.2.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^",
+    "@lg-tools/meta": "workspace:^",
+    "tsx": "^4.19.4"
+  }
+}
