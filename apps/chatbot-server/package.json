@@ -3,23 +3,25 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "workspaces": [
-    "packages/*"
-  ],
   "publishConfig": {
     "access": "restricted"
   },
   "scripts": {
-    "ingest:all": "npm run ingest:all --workspace=ingest",
+    "build:ingest": "tsc -p ./ingest",
+    "ingest": "pnpm build:ingest && ingest all --config ./dist/ingest.config.js",
     "dev": "npm run dev --workspace=server & npm run dev --workspace=ui"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
-  "devDependencies": {
-    "ts-node": "^10.9.2"
-  },
   "dependencies": {
+    "@emotion/css": "^11.13.5",
+    "dotenv": "^16.5.0",
     "jsdom": "^26.1.0"
+  },
+  "devDependencies": {
+    "mongodb-rag-core": "^0.6.3",
+    "mongodb-rag-ingest": "^0.3.1",
+    "tsx": "^4.19.4"
   }
 }
