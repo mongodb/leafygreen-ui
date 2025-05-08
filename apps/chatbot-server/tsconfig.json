@@ -6,8 +6,7 @@
     "target": "ES2020",
     "rootDir": ".",
     "outDir": "dist",
-    "declarationDir": "dist",
-
+    "declarationDir": "dist/types",
   },
   "include": ["./src/**/*.ts"],
   "exclude": ["node_modules", "dist"],

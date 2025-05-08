@@ -10,7 +10,7 @@
   "scripts": {
     "build": "lg build-package",
     "tsc": "lg build-ts",
-    "ingest": "pnpm build && ingest all --config ./dist/ingest.config.js",
+    "ingest": "pnpm build && ingest all --config ./dist/esm/ingest.config.js",
     "dev": "tsx src/index.ts"
   },
   "keywords": [],
