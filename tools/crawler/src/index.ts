@@ -9,6 +9,7 @@ export {
   type ProcessLangchainDocumentResult as ProcessSingleUrlResult,
 } from './utils/processLangchainDocument';
 export {
+  type CrawlerCallback,
   recursiveCrawlFromBaseURL,
   type RecursiveCrawlOptions,
 } from './utils/recursiveCrawlFromBase';

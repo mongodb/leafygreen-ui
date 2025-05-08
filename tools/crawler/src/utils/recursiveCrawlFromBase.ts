@@ -1,8 +1,7 @@
 /* eslint-disable no-console */
 import { Document as LangChainDocument } from '@langchain/core/documents';
 import chalk from 'chalk';
-import trimEnd from 'lodash/trimEnd';
-import trimStart from 'lodash/trimStart';
+import { trimEnd, trimStart } from 'lodash-es';
 
 import { allowedDomains, SOURCES } from '../constants';
 
