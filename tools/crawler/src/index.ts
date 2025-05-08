@@ -1,5 +1,13 @@
 export { allowedDomains, MDB_DB, SOURCES } from './constants';
-export { processSingleUrl } from './utils/processSingleUrl';
+export {
+  type LoadedPageContents,
+  loadPageContents,
+} from './utils/loadPageContents';
+export {
+  processSingleUrl,
+  type ProcessSingleUrlOptions,
+  type ProcessSingleUrlResult,
+} from './utils/processSingleUrl';
 export {
   recursiveCrawlFromBaseURL,
   type RecursiveCrawlOptions,

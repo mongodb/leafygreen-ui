@@ -12,7 +12,7 @@ import { insertDocuments } from './insertDocuments';
 import { loadPageContents } from './loadPageContents';
 import { makeLangChainDocumentMapper } from './mapLangChainDocument';
 
-interface ProcessSingleUrlOptions {
+export interface ProcessSingleUrlOptions {
   href: string;
   collectionName: string;
   mongoClient: MongoClient;
@@ -20,7 +20,7 @@ interface ProcessSingleUrlOptions {
   dryRun?: boolean;
 }
 
-interface ProcessSingleUrlResult {
+export interface ProcessSingleUrlResult {
   docCount: number;
   links: Array<string>;
   documents?: Array<CrawlerDocument>;

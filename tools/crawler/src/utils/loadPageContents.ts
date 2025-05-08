@@ -1,7 +1,7 @@
 import { CheerioWebBaseLoader } from '@langchain/community/document_loaders/web/cheerio';
 import { Document as LangChainDocument } from '@langchain/core/documents';
 
-interface LoadedPageContents {
+export interface LoadedPageContents {
   doc: LangChainDocument;
   title: string;
   links: Array<string>;
