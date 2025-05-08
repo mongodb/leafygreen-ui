@@ -5,7 +5,7 @@
     "moduleResolution": "nodenext",
     "target": "ES2017",
     "rootDir": ".",
-    "outDir": "../dist",
+    "outDir": "../../dist",
     "emitDeclarationOnly": false,
     "composite": false,
     "declaration": false,

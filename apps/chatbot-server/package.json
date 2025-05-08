@@ -8,7 +8,7 @@
     "access": "restricted"
   },
   "scripts": {
-    "build:ingest": "tsc -p ./ingest",
+    "build:ingest": "tsc -p ./src/ingest",
     "ingest": "pnpm build:ingest && ingest all --config ./dist/ingest.config.js",
     "dev": "npm run dev --workspace=server & npm run dev --workspace=ui"
   },
@@ -16,13 +16,14 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@lg-tools/crawler": "workspace:^",
     "@emotion/css": "^11.13.5",
+    "@lg-tools/crawler": "workspace:^",
     "dotenv": "^16.5.0",
-    "jsdom": "^26.1.0"
+    "jsdom": "^26.1.0",
+    "mongodb-chatbot-server": "^0.10.1",
+    "mongodb-rag-core": "^0.6.3"
   },
   "devDependencies": {
-    "mongodb-rag-core": "^0.6.3",
     "mongodb-rag-ingest": "^0.3.1",
     "tsx": "^4.19.4"
   }
