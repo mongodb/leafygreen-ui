@@ -50,8 +50,6 @@ export default {
   // Add data sources here
   dataSources: async () => {
     return Promise.all([
-      mongoDbChatbotFrameworkDocsDataSourceConstructor(),
-      leafygreenGithubSourceConstructor(),
       ...[
         'https://mongodb.design',
         'https://react.dev/reference/react',
@@ -61,6 +59,8 @@ export default {
         'https://www.w3.org/WAI/standards-guidelines/wcag',
         'https://atomicdesign.bradfrost.com/table-of-contents',
       ].map(source => webSourceConstructor(source, {})),
+      mongoDbChatbotFrameworkDocsDataSourceConstructor(),
+      leafygreenGithubSourceConstructor(),
     ]);
   },
 } satisfies Config;
