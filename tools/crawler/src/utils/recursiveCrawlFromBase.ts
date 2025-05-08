@@ -51,6 +51,12 @@ export async function recursiveCrawlFromBaseURL(
   }`;
 
   const fullUrl = newURL(fullHref);
+
+  if (!fullUrl) {
+    verbose && console.log(chalk.red(`Invalid URL. Skipping ${fullHref}`));
+    return;
+  }
+
   const { hostname, pathname } = fullUrl;
 
   // Don't crawl if we've reached max depth or already visited this URL
@@ -134,6 +140,11 @@ export async function recursiveCrawlFromBaseURL(
       const linkUrl = isRelative
         ? newURL(fullUrl.origin + '/' + trimStart(link, '/'))
         : newURL(link);
+
+      if (!linkUrl) {
+        verbose && console.log(chalk.red(`Invalid link. Skipping ${link}`));
+        continue;
+      }
 
       const isVisited = visited.has(linkUrl.href);
       const isSameDomain = link.startsWith(baseUrl);
