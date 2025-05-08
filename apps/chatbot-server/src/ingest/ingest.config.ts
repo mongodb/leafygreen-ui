@@ -5,10 +5,11 @@ import {
 import { AzureOpenAI } from 'mongodb-rag-core/openai';
 import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
 
+import { createAzureEmbedderConstructor } from '../utils/createAzureEmbedderConstructor.js';
+import { loadEnvVars } from '../utils/loadEnv.js';
+
 import { leafygreenGithubSourceConstructor } from './sources/github-leafygreen-ui.js';
 import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './sources/github-mdb-chatbot-framework.js';
-import { createAzureEmbedderConstructor } from './utils/createAzureEmbedderConstructor.js';
-import { loadEnvVars } from './utils/loadEnv.js';
 import { webSourceConstructor } from './utils/webSourceConstructor.js';
 
 // Load project environment variables
