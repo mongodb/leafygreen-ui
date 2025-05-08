@@ -1,6 +1,3 @@
-/**
-  @fileoverview Data source for the MongoDB Chatbot Framework docs.
- */
 import {
   makeMdOnGithubDataSource,
   MakeMdOnGithubDataSourceParams,
