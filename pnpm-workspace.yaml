@@ -1,7 +1,8 @@
 packages:
-  # all packages in direct subdirectories of charts/, chat/, packages/, & tools/
+  # any custom apps
+  - 'apps/*'
+  # all leafygreen packages in direct subdirectories of charts/, chat/, packages/, & tools/
   - 'charts/*'
   - 'chat/*'
   - 'packages/*'
   - 'tools/*'
-  - 'apps/*'
