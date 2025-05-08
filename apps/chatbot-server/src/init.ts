@@ -11,12 +11,12 @@ import {
   makeMongoDbConversationsService,
   makeMongoDbEmbeddedContentStore,
   makeOpenAiChatLlm,
+  makeOpenAiEmbedder,
   MongoDbEmbeddedContentStore,
 } from 'mongodb-rag-core';
 import { MongoClient } from 'mongodb-rag-core/mongodb';
 import { AzureOpenAI } from 'mongodb-rag-core/openai';
 
-import { createAzureEmbedderConstructor } from './utils/createAzureEmbedderConstructor';
 import { loadEnvVars } from './utils/loadEnv';
 
 export async function initChatBot(): Promise<{
@@ -62,10 +62,11 @@ export async function initChatBot(): Promise<{
 
   // Creates vector embeddings for user queries to find matching content
   // in the embeddedContentStore using Atlas Vector Search.
-  const embedder: Embedder = await createAzureEmbedderConstructor({
-    azureClient: azureOpenAIEmbeddingClient,
-    model: AZURE_OPENAI_EMBEDDING_MODEL,
-  })();
+  const embedder: Embedder = makeOpenAiEmbedder({
+    openAiClient: azureOpenAIEmbeddingClient,
+    deployment: AZURE_OPENAI_EMBEDDING_MODEL,
+    backoffOptions: {},
+  });
 
   // MongoDB data source for the content used in RAG.
   // Generated with the Ingest CLI.

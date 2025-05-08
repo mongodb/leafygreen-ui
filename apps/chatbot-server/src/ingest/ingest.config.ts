@@ -1,11 +1,11 @@
 import {
   makeMongoDbEmbeddedContentStore,
   makeMongoDbPageStore,
+  makeOpenAiEmbedder,
 } from 'mongodb-rag-core';
 import { AzureOpenAI } from 'mongodb-rag-core/openai';
 import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
 
-import { createAzureEmbedderConstructor } from '../utils/createAzureEmbedderConstructor';
 import { loadEnvVars } from '../utils/loadEnv';
 
 import { leafygreenGithubSourceConstructor } from './sources/github-leafygreen-ui';
@@ -16,28 +16,30 @@ import { webSourceConstructor } from './utils/webSourceConstructor';
 const {
   MONGODB_CONNECTION_URI,
   MONGODB_DATABASE_NAME,
-  OPENAI_EMBEDDING_MODEL,
   AZURE_OPENAI_API_KEY,
   AZURE_OPENAI_ENDPOINT,
   AZURE_OPENAI_DEPLOYMENT,
 } = loadEnvVars();
 
+const azureClient = new AzureOpenAI({
+  endpoint: AZURE_OPENAI_ENDPOINT,
+  apiKey: AZURE_OPENAI_API_KEY,
+  apiVersion: '2024-04-01-preview',
+  deployment: AZURE_OPENAI_DEPLOYMENT,
+});
+
 export default {
-  embedder: createAzureEmbedderConstructor({
-    azureClient: new AzureOpenAI({
-      endpoint: AZURE_OPENAI_ENDPOINT,
-      apiKey: AZURE_OPENAI_API_KEY,
-      apiVersion: '2024-04-01-preview',
+  embedder: () =>
+    makeOpenAiEmbedder({
+      openAiClient: azureClient,
       deployment: AZURE_OPENAI_DEPLOYMENT,
     }),
-    model: OPENAI_EMBEDDING_MODEL,
-  }),
   embeddedContentStore: () =>
     makeMongoDbEmbeddedContentStore({
       connectionUri: MONGODB_CONNECTION_URI,
       databaseName: MONGODB_DATABASE_NAME,
       searchIndex: {
-        embeddingName: OPENAI_EMBEDDING_MODEL,
+        embeddingName: AZURE_OPENAI_DEPLOYMENT,
       },
     }),
   pageStore: () =>
