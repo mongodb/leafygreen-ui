@@ -17,15 +17,18 @@ const {
   MONGODB_CONNECTION_URI,
   MONGODB_DATABASE_NAME,
   OPENAI_EMBEDDING_MODEL,
+  AZURE_OPENAI_API_KEY,
+  AZURE_OPENAI_ENDPOINT,
+  AZURE_OPENAI_DEPLOYMENT,
 } = loadEnvVars();
 
 export default {
   embedder: createAzureEmbedderConstructor({
     azureClient: new AzureOpenAI({
-      endpoint: process.env.AZURE_OPENAI_ENDPOINT,
-      apiKey: process.env.AZURE_API_KEY1,
+      endpoint: AZURE_OPENAI_ENDPOINT,
+      apiKey: AZURE_OPENAI_API_KEY,
       apiVersion: '2024-04-01-preview',
-      deployment: process.env.AZURE_OPENAI_DEPLOYMENT,
+      deployment: AZURE_OPENAI_DEPLOYMENT,
     }),
     model: OPENAI_EMBEDDING_MODEL,
   }),
