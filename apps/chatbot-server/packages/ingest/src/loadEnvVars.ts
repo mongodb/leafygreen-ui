@@ -9,7 +9,6 @@ import dotenv from 'dotenv';
 export function loadEnvVars(path: string) {
   dotenv.config({ path });
   const {
-    BRAINTRUST_API_KEY,
     MONGODB_CONNECTION_URI,
     MONGODB_DATABASE_NAME,
     VECTOR_SEARCH_INDEX_NAME,
@@ -22,7 +21,6 @@ export function loadEnvVars(path: string) {
   assert(OPENAI_API_KEY, 'OPENAI_API_KEY is required');
   assert(OPENAI_EMBEDDING_MODEL, 'OPENAI_EMBEDDING_MODEL is required');
   return {
-    BRAINTRUST_API_KEY,
     MONGODB_CONNECTION_URI,
     MONGODB_DATABASE_NAME,
     VECTOR_SEARCH_INDEX_NAME,
