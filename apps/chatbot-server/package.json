@@ -1,0 +1,26 @@
+{
+  "name": "@leafygreen-ui/chatbot-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+    "ingest:all": "npm run ingest:all --workspace=ingest",
+    "dev": "npm run dev --workspace=server & npm run dev --workspace=ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.13.5",
+    "jsdom": "^26.1.0"
+  }
+}
