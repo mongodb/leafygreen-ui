@@ -16,4 +16,9 @@
     "./ingest.config.ts"
   ],
   "include": ["./**/*.ts"],
+  "references": [
+    {
+      "path": "../../../tools/crawler"
+    },
+  ]
 }
