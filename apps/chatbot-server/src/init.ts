@@ -11,13 +11,13 @@ import {
   makeMongoDbConversationsService,
   makeMongoDbEmbeddedContentStore,
   makeOpenAiChatLlm,
-  makeOpenAiEmbedder,
   MongoDbEmbeddedContentStore,
 } from 'mongodb-rag-core';
 import { MongoClient } from 'mongodb-rag-core/mongodb';
 import { AzureOpenAI } from 'mongodb-rag-core/openai';
 
 import { loadEnvVars } from './utils/loadEnv';
+import { makeEmbedder } from './utils/makeEmbedder';
 
 export async function initChatBot(): Promise<{
   llm: ChatLlm;
@@ -37,13 +37,6 @@ export async function initChatBot(): Promise<{
     AZURE_OPENAI_CHAT_COMPLETION_MODEL,
   } = loadEnvVars();
 
-  const azureOpenAIEmbeddingClient = new AzureOpenAI({
-    endpoint: AZURE_OPENAI_ENDPOINT,
-    apiKey: AZURE_OPENAI_API_KEY,
-    apiVersion: '2024-04-01-preview',
-    deployment: AZURE_OPENAI_EMBEDDING_MODEL,
-  });
-
   const azureOpenAIChatClient = new AzureOpenAI({
     endpoint: AZURE_OPENAI_ENDPOINT,
     apiKey: AZURE_OPENAI_API_KEY,
@@ -62,11 +55,7 @@ export async function initChatBot(): Promise<{
 
   // Creates vector embeddings for user queries to find matching content
   // in the embeddedContentStore using Atlas Vector Search.
-  const embedder: Embedder = makeOpenAiEmbedder({
-    openAiClient: azureOpenAIEmbeddingClient,
-    deployment: AZURE_OPENAI_EMBEDDING_MODEL,
-    backoffOptions: {},
-  });
+  const embedder: Embedder = makeEmbedder();
 
   // MongoDB data source for the content used in RAG.
   // Generated with the Ingest CLI.
@@ -85,7 +74,7 @@ export async function initChatBot(): Promise<{
     store: embeddedContentStore,
     findNearestNeighborsOptions: {
       k: 5,
-      path: 'embeddings.text-embedding-3-small',
+      path: `embeddings.${AZURE_OPENAI_EMBEDDING_MODEL}`,
       indexName: VECTOR_SEARCH_INDEX_NAME,
       // Note: you may want to adjust the minScore depending
       // on the embedding model you use. We've found 0.9 works well
