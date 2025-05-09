@@ -5,10 +5,11 @@ import {
 import { AzureOpenAI } from 'mongodb-rag-core/openai';
 import { Config, makeIngestMetaStore } from 'mongodb-rag-ingest';
 
-import { leafygreenGithubSourceConstructor } from './sources/github-leafygreen-ui';
-import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './sources/github-mdb-chatbot-framework';
-import { createAzureEmbedderConstructor } from './utils/createAzureEmbedderConstructor';
-import { loadEnvVars } from './utils/loadEnv';
+import { leafygreenGithubSourceConstructor } from './sources/github-leafygreen-ui.js';
+import { mongoDbChatbotFrameworkDocsDataSourceConstructor } from './sources/github-mdb-chatbot-framework.js';
+import { createAzureEmbedderConstructor } from './utils/createAzureEmbedderConstructor.js';
+import { loadEnvVars } from './utils/loadEnv.js';
+import { webSourceConstructor } from './utils/webSourceConstructor.js';
 
 // Load project environment variables
 const {
@@ -49,6 +50,15 @@ export default {
   // Add data sources here
   dataSources: async () => {
     return Promise.all([
+      ...[
+        'https://mongodb.design',
+        'https://react.dev/reference/react',
+        'https://developer.mozilla.org/en-US/docs/Web',
+        'https://css-tricks.com/category/articles',
+        'https://www.nngroup.com/articles',
+        'https://www.w3.org/WAI/standards-guidelines/wcag',
+        'https://atomicdesign.bradfrost.com/table-of-contents',
+      ].map(source => webSourceConstructor(source, {})),
       mongoDbChatbotFrameworkDocsDataSourceConstructor(),
       leafygreenGithubSourceConstructor(),
     ]);

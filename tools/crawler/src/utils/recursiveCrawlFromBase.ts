@@ -1,43 +1,46 @@
 /* eslint-disable no-console */
+import { Document as LangChainDocument } from '@langchain/core/documents';
 import chalk from 'chalk';
-import trimEnd from 'lodash/trimEnd';
-import trimStart from 'lodash/trimStart';
-import { type MongoClient } from 'mongodb';
+import { trimEnd, trimStart } from 'lodash-es';
 
 import { allowedDomains, SOURCES } from '../constants';
 
-import { createCollectionNameFromURL } from './createCollectionNameFromURL';
+import { checkRobots } from './checkRobots';
+import { loadPageContents } from './loadPageContents';
 import { newURL } from './newURL';
-import { processSingleUrl } from './processSingleUrl';
+
+export type CrawlerCallback = (arg: {
+  document: LangChainDocument;
+  title: string;
+  href: string;
+  links?: Array<string>;
+}) => void;
 
 export interface RecursiveCrawlOptions {
   baseUrl: string;
-  collectionName: string;
-  mongoClient: MongoClient;
   maxDepth: number;
   relativePath?: string;
   currentDepth?: number;
   visited?: Set<string>;
   verbose?: boolean;
-  dryRun?: boolean;
   enableRecursion?: boolean; // New flag to track if we're crawling an allowed external domain
 }
 
 /**
  * Recursively crawl a website following links up to a maximum depth
  */
-export async function recursiveCrawlFromBaseURL({
-  baseUrl,
-  collectionName,
-  mongoClient,
-  relativePath,
-  maxDepth = 3,
-  currentDepth = 0,
-  visited = new Set<string>(),
-  verbose = false,
-  dryRun = false,
-  enableRecursion = true, // Default to false for initial base URL crawling
-}: RecursiveCrawlOptions): Promise<void> {
+export async function recursiveCrawlFromBaseURL(
+  callback: CrawlerCallback,
+  {
+    baseUrl,
+    relativePath,
+    maxDepth = 3,
+    currentDepth = 0,
+    visited = new Set<string>(),
+    verbose = false,
+    enableRecursion = true, // Default to false for initial base URL crawling
+  }: RecursiveCrawlOptions,
+): Promise<void> {
   currentDepth === 0 &&
     verbose &&
     console.log(chalk.green('\nStarting crawl of ' + baseUrl));
@@ -48,6 +51,13 @@ export async function recursiveCrawlFromBaseURL({
   }`;
 
   const fullUrl = newURL(fullHref);
+
+  if (!fullUrl) {
+    verbose && console.log(chalk.red(`Invalid URL. Skipping ${fullHref}`));
+    return;
+  }
+
+  const { hostname, pathname } = fullUrl;
 
   // Don't crawl if we've reached max depth or already visited this URL
   if (currentDepth > maxDepth || visited.has(fullUrl.href)) {
@@ -87,13 +97,26 @@ export async function recursiveCrawlFromBaseURL({
   // Mark this URL as visited
   visited.add(fullUrl.href);
 
-  // Process the current URL
-  const { links } = await processSingleUrl({
-    href: fullUrl.href,
-    collectionName,
-    mongoClient,
-    verbose,
-    dryRun,
+  // Start crawling the page
+  const isCrawlingAllowed = checkRobots(hostname, pathname, verbose);
+
+  if (!isCrawlingAllowed) {
+    verbose &&
+      console.log(
+        chalk.red(
+          `Crawling disallowed by robots.txt for ${hostname}. Skipping...`,
+        ),
+      );
+    return;
+  }
+
+  const { doc, title, links } = await loadPageContents(fullHref);
+
+  callback({
+    document: doc,
+    title,
+    href: fullHref,
+    links,
   });
 
   // If we've reached max depth, don't crawl further.
@@ -117,6 +140,11 @@ export async function recursiveCrawlFromBaseURL({
       const linkUrl = isRelative
         ? newURL(fullUrl.origin + '/' + trimStart(link, '/'))
         : newURL(link);
+
+      if (!linkUrl) {
+        verbose && console.log(chalk.red(`Invalid link. Skipping ${link}`));
+        continue;
+      }
 
       const isVisited = visited.has(linkUrl.href);
       const isSameDomain = link.startsWith(baseUrl);
@@ -152,21 +180,14 @@ export async function recursiveCrawlFromBaseURL({
           ),
         );
 
-      const _collectionName = isExternalLink
-        ? createCollectionNameFromURL(linkUrl.href)
-        : collectionName;
-
       // For internal links, continue with original base URL
-      await recursiveCrawlFromBaseURL({
+      await recursiveCrawlFromBaseURL(callback, {
         baseUrl: linkUrl.origin,
         relativePath: linkUrl.pathname,
-        collectionName: _collectionName,
-        mongoClient,
         maxDepth,
         currentDepth: currentDepth + 1,
         visited,
         verbose,
-        dryRun,
         enableRecursion: !isExternalLink,
       });
     }

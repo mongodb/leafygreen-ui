@@ -2,6 +2,7 @@
   "name": "@leafygreen-ui/chatbot-server",
   "version": "0.0.1",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "publishConfig": {
     "access": "restricted"
@@ -15,6 +16,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@lg-tools/crawler": "workspace:^",
     "@emotion/css": "^11.13.5",
     "dotenv": "^16.5.0",
     "jsdom": "^26.1.0"
