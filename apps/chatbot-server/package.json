@@ -17,7 +17,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@lg-tools/crawler": "workspace:^",
     "@emotion/css": "^11.13.5",
     "@lg-tools/crawler": "workspace:^",
     "dotenv": "^16.5.0",
