@@ -1,8 +1,6 @@
 {
-  "extends": "@lg-tools/build/config/root.tsconfig.json",
+  "extends": "@lg-tools/build/config/script.tsconfig.json",
   "compilerOptions": {
-    "noUnusedLocals": false,
-    "strict": true,
     "baseUrl": ".",
   }
 }

@@ -36,6 +36,7 @@ export const BasePolymorph = <T extends PolymorphicAs = 'div'>(
  * However: If you want to expose `as` as a prop of your component,
  * prefer the `{@link Polymorphic}` factory function and related hooks.
  */
+// @ts-expect-error TODO: Polymorphic TS
 export const Polymorph: PolymorphicComponentType =
   React.forwardRef(BasePolymorph);
 Polymorph.displayName = 'Polymorph';

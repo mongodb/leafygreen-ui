@@ -1,14 +1,11 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src",
     "noErrorTruncation": false,
     "noUnusedLocals": false
   },
   "include": [
-    "src/**/*",
+    "src/**/*"
   ],
   "exclude": ["src/Example/*", "**/*.stories.*"],
   "references": [
