@@ -128,6 +128,9 @@ importers:
       jsdom:
         specifier: ^26.1.0
         version: 26.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       mongodb-chatbot-server:
         specifier: ^0.11.0
         version: 0.11.0(@browserbasehq/sdk@2.5.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.5.0)(openai@4.97.0(ws@8.18.2)(zod@3.24.4))(zod@3.24.4))(@ibm-cloud/watsonx-ai@1.6.4(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(@langchain/anthropic@0.3.20(@langchain/core@0.3.54(openai@4.97.0(ws@8.18.2)(zod@3.24.4))))(axios@1.9.0)(cheerio@1.0.0)(fast-xml-parser@4.5.3)(ibm-cloud-sdk-core@5.3.2)(ignore@5.3.2)(jsdom@26.1.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(mongodb@6.16.0(socks@2.8.4))(openapi-types@12.1.3)(playwright@1.52.0)(react@18.2.0)(socks@2.8.4)(sswr@2.2.0(svelte@5.28.2))(svelte@5.28.2)(vue@3.5.13(typescript@5.8.3))(ws@8.18.2)

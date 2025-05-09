@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { recursiveCrawlFromBaseURL } from '@lg-tools/crawler';
-import { trimEnd } from 'lodash';
+import { trimEnd } from 'lodash-es';
 import { Page } from 'mongodb-rag-core';
 import { type DataSource } from 'mongodb-rag-core/dataSources';
 
