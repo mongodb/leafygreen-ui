@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import fse from 'fs-extra';
 import path from 'path';
 
-import { InjectPromptsOptions } from './injectPromptsToVSCode.types';
+import { MergePromptsOptions } from './mergePromptsVSCode.types';
 
 const vscodeSettingsPaths = {
   root: path.resolve('.vscode/settings.json'),
@@ -12,7 +12,7 @@ const vscodeSettingsPaths = {
   ),
 } as const;
 
-export async function injectPromptsToVSCode(options: InjectPromptsOptions) {
+export async function mergePromptsVSCode(options: MergePromptsOptions) {
   const { dry, verbose } = options;
 
   verbose &&
@@ -41,18 +41,18 @@ export async function injectPromptsToVSCode(options: InjectPromptsOptions) {
       );
 
     // Read and parse the settings.json to merge
-    const settingsToInject = await fse.readJSON(vscodeSettingsPaths.promptKit);
+    const settingsToMerge = await fse.readJSON(vscodeSettingsPaths.promptKit);
 
     verbose &&
       console.log(
-        '\nVS Code settings to inject:\n',
-        JSON.stringify(settingsToInject, null, 2),
+        '\nVS Code settings to merge:\n',
+        JSON.stringify(settingsToMerge, null, 2),
       );
 
     // Merge the objects
     const mergedSettings = {
       ...existingVscodeSettings,
-      ...settingsToInject,
+      ...settingsToMerge,
     };
 
     verbose &&
@@ -72,12 +72,10 @@ export async function injectPromptsToVSCode(options: InjectPromptsOptions) {
         spaces: 2,
       });
       console.log(
-        chalk.green(
-          '\n✅ Prompts successfully injected into VS Code settings!',
-        ),
+        chalk.green('\n✅ Prompts successfully merged into VS Code settings!'),
       );
     }
   } catch (error) {
-    console.error(chalk.red('\nError injecting prompts:', error));
+    console.error(chalk.red('\nError merging prompts:', error));
   }
 }

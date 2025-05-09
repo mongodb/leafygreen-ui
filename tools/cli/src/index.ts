@@ -4,7 +4,7 @@ import { createPackage } from '@lg-tools/create';
 import { installLeafyGreen } from '@lg-tools/install';
 import { linkPackages, unlinkPackages } from '@lg-tools/link';
 import { lint } from '@lg-tools/lint';
-import { injectPromptsToVSCode } from '@lg-tools/prompt-kit';
+import { mergePromptsVSCode } from '@lg-tools/prompt-kit';
 import { releaseBot } from '@lg-tools/slackbot';
 import { test } from '@lg-tools/test';
 import { update } from '@lg-tools/update';
@@ -245,7 +245,7 @@ cli
 
 /** Merge editor settings */
 cli
-  .command('inject-prompts-vscode')
+  .command('merge-prompts-vscode')
   .description('Merges the prompts settings into the VSCode settings file')
   .option('-d, --dry', 'Dry run. Does not write to the filesystem.', false)
   .option(
@@ -253,6 +253,6 @@ cli
     'Prints additional information to the console',
     false,
   )
-  .action(injectPromptsToVSCode);
+  .action(mergePromptsVSCode);
 
 cli.parse(process.argv);

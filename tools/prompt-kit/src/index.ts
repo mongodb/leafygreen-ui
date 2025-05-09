@@ -1,1 +1,1 @@
-export { injectPromptsToVSCode } from './settings';
+export { mergePromptsVSCode } from './settings';

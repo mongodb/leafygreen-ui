@@ -1,1 +1,1 @@
-export { injectPromptsToVSCode } from './injectPromptsToVSCode';
+export { mergePromptsVSCode } from './mergePromptsVSCode';
