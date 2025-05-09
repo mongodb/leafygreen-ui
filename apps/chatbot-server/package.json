@@ -1,9 +1,10 @@
 {
-  "name": "@leafygreen-ui/chatbot-server",
+  "name": "lg-chatbot-server",
   "version": "0.0.1",
   "description": "",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "publishConfig": {
     "access": "restricted"
   },
@@ -22,12 +23,14 @@
     "dotenv": "^16.5.0",
     "express": "^4.18.2",
     "jsdom": "^26.1.0",
+    "lodash-es": "^4.17.21",
     "mongodb-chatbot-server": "^0.11.0",
     "mongodb-rag-core": "^0.7.0"
   },
   "devDependencies": {
     "mongodb-rag-ingest": "^0.3.1",
     "nodemon": "^3.0.1",
-    "tsx": "^4.19.4"
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.0"
   }
 }
