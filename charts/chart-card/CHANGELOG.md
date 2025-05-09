@@ -1,5 +1,14 @@
 # @lg-charts/chart-card
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/typography@20.1.9
+
 ## 0.2.4
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/text-input
 
+## 14.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/form-field@2.0.12
+- @leafygreen-ui/typography@20.1.9
+
 ## 14.0.12
 
 ### Patch Changes

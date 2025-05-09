@@ -1,5 +1,11 @@
 # @lg-charts/legend
 
+## 0.2.5
+
+### Patch Changes
+
+- @leafygreen-ui/checkbox@16.0.1
+
 ## 0.2.4
 
 ### Patch Changes

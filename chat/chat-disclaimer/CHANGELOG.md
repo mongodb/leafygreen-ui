@@ -1,5 +1,12 @@
 # @lg-chat/chat-disclaimer
 
+## 3.0.18
+
+### Patch Changes
+
+- @leafygreen-ui/typography@20.1.9
+- @leafygreen-ui/marketing-modal@5.0.15
+
 ## 3.0.17
 
 ### Patch Changes
