@@ -842,6 +842,24 @@ export const WithTooltip: StoryObj<{}> = {
   },
 };
 
+export const WithZoomAndTooltip: StoryObj<{}> = {
+  render: () => {
+    return (
+      <Chart
+        zoomSelect={{
+          xAxis: true,
+          yAxis: true,
+        }}
+      >
+        <ChartTooltip />
+        {lineData.map(({ name, data }) => (
+          <Line name={name} data={data} key={name} />
+        ))}
+      </Chart>
+    );
+  },
+};
+
 export const WithXAxis: StoryObj<{}> = {
   render: () => {
     return (
@@ -1064,23 +1082,6 @@ export const WithWarningEventMarkerLine: StoryObj<{}> = {
           message="Event marker line message"
           level="warning"
         />
-        {lineData.map(({ name, data }) => (
-          <Line name={name} data={data} key={name} />
-        ))}
-      </Chart>
-    );
-  },
-};
-
-export const WithZoomAndTooltip: StoryObj<{}> = {
-  render: () => {
-    return (
-      <Chart
-        zoomSelect={{
-          xAxis: true,
-          yAxis: true,
-        }}
-      >
         {lineData.map(({ name, data }) => (
           <Line name={name} data={data} key={name} />
         ))}

@@ -171,7 +171,7 @@ export function useEchart({
     const isZoomed = params?.start !== 0 || params?.end !== 100;
 
     if (isZoomed) {
-      echartsInstance?.dispatchAction({
+      echartsInstance!.dispatchAction({
         type: 'dataZoom',
         start: 0, // percentage of starting position
         end: 100, // percentage of ending position
@@ -182,7 +182,7 @@ export function useEchart({
   const enableZoom = withInstanceCheck(() => {
     const echartsInstance = getEchartsInstance();
 
-    echartsInstance?.dispatchAction({
+    echartsInstance!.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: true,
@@ -192,7 +192,7 @@ export function useEchart({
   const disableZoom = withInstanceCheck(() => {
     const echartsInstance = getEchartsInstance();
 
-    echartsInstance?.dispatchAction({
+    echartsInstance!.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: false,
@@ -212,96 +212,114 @@ export function useEchart({
         yAxisIndex,
       });
 
-      echartsInstance?.off('dataZoom', clearDataZoom); // prevent adding dupes
-      echartsInstance?.on('dataZoom', clearDataZoom);
+      echartsInstance!.off('dataZoom', clearDataZoom); // prevent adding dupes
+      echartsInstance!.on('dataZoom', clearDataZoom);
     },
   );
 
-  const off: EChartsInstance['off'] = withInstanceCheck((action, callback) => {
+  const off: EChartsInstance['off'] = withInstanceCheck(
+    (action, callback, options) => {
+      const echartsInstance = getEchartsInstance();
+
+      switch (action) {
+        case EChartEvents.ZoomSelect: {
+          echartsInstance!.off('datazoom', callback);
+          // Remove from active handlers
+          activeHandlers.current.delete(`${action}-${callback.toString()}`);
+          break;
+        }
+
+        default: {
+          options?.useCanvasAsTrigger
+            ? echartsInstance!.getZr().off(action, callback)
+            : echartsInstance!.off(action, callback);
+          activeHandlers.current.delete(`${action}-${callback.toString()}`);
+        }
+      }
+    },
+  );
+
+  const on: EChartsInstance['on'] = withInstanceCheck(
+    (action, callback, options) => {
+      const echartsInstance = getEchartsInstance();
+
+      // Create a unique key for this handler
+      const handlerKey = `${action}-${callback.toString()}`;
+
+      // If this exact handler is already registered, skip
+      if (activeHandlers.current.has(handlerKey)) {
+        return;
+      }
+
+      switch (action) {
+        case EChartEvents.ZoomSelect: {
+          const zoomHandler = (params: any) => {
+            const zoomSelectionEvent: EChartZoomSelectionEvent = {};
+            const isSingleAxisZoom =
+              params.startValue !== undefined && params.endValue !== undefined;
+
+            if (isSingleAxisZoom) {
+              const axis = params.dataZoomId?.includes('y') ? 'yAxis' : 'xAxis';
+              zoomSelectionEvent[axis] = {
+                startValue: params.startValue,
+                endValue: params.endValue,
+              };
+              callback(zoomSelectionEvent);
+            } else if (params.batch) {
+              // Handle batch zoom (multiple axes)
+              params.batch.forEach((batchItem: any) => {
+                if (batchItem.dataZoomId?.includes('y')) {
+                  zoomSelectionEvent.yAxis = {
+                    startValue: batchItem.startValue,
+                    endValue: batchItem.endValue,
+                  };
+                } else {
+                  zoomSelectionEvent.xAxis = {
+                    startValue: batchItem.startValue,
+                    endValue: batchItem.endValue,
+                  };
+                }
+              });
+              callback(zoomSelectionEvent);
+            }
+          };
+
+          // Store the wrapper function so we can remove it later
+          activeHandlers.current.set(handlerKey, zoomHandler);
+          echartsInstance!.on('datazoom', zoomHandler);
+          break;
+        }
+
+        default: {
+          activeHandlers.current.set(handlerKey, callback);
+          options?.useCanvasAsTrigger
+            ? echartsInstance!.getZr().on(action, callback)
+            : echartsInstance!.on(action, callback);
+          break;
+        }
+      }
+    },
+  );
+
+  const showTooltip = withInstanceCheck((x, y) => {
     const echartsInstance = getEchartsInstance();
-
-    switch (action) {
-      case EChartEvents.ZoomSelect: {
-        echartsInstance?.off('datazoom', callback);
-        // Remove from active handlers
-        activeHandlers.current.delete(`${action}-${callback.toString()}`);
-        break;
-      }
-
-      default: {
-        echartsInstance?.off(action, callback);
-        activeHandlers.current.delete(`${action}-${callback.toString()}`);
-      }
-    }
-  });
-
-  const on: EChartsInstance['on'] = withInstanceCheck((action, callback) => {
-    const echartsInstance = getEchartsInstance();
-
-    // Create a unique key for this handler
-    const handlerKey = `${action}-${callback.toString()}`;
-
-    // If this exact handler is already registered, skip
-    if (activeHandlers.current.has(handlerKey)) {
-      return;
-    }
-
-    switch (action) {
-      case EChartEvents.ZoomSelect: {
-        const zoomHandler = (params: any) => {
-          const zoomSelectionEvent: EChartZoomSelectionEvent = {};
-          const isSingleAxisZoom =
-            params.startValue !== undefined && params.endValue !== undefined;
-
-          if (isSingleAxisZoom) {
-            const axis = params.dataZoomId?.includes('y') ? 'yAxis' : 'xAxis';
-            zoomSelectionEvent[axis] = {
-              startValue: params.startValue,
-              endValue: params.endValue,
-            };
-            callback(zoomSelectionEvent);
-          } else if (params.batch) {
-            // Handle batch zoom (multiple axes)
-            params.batch.forEach((batchItem: any) => {
-              if (batchItem.dataZoomId?.includes('y')) {
-                zoomSelectionEvent.yAxis = {
-                  startValue: batchItem.startValue,
-                  endValue: batchItem.endValue,
-                };
-              } else {
-                zoomSelectionEvent.xAxis = {
-                  startValue: batchItem.startValue,
-                  endValue: batchItem.endValue,
-                };
-              }
-            });
-            callback(zoomSelectionEvent);
-          }
-        };
-
-        // Store the wrapper function so we can remove it later
-        activeHandlers.current.set(handlerKey, zoomHandler);
-        echartsInstance?.on('datazoom', zoomHandler);
-        break;
-      }
-
-      default: {
-        activeHandlers.current.set(handlerKey, callback);
-        echartsInstance?.on(action, callback);
-      }
-    }
+    echartsInstance!.dispatchAction({
+      type: 'showTip',
+      x,
+      y,
+    });
   });
 
   const hideTooltip = withInstanceCheck(() => {
     const echartsInstance = getEchartsInstance();
-    echartsInstance?.dispatchAction({
+    echartsInstance!.dispatchAction({
       type: 'hideTip',
     });
   });
 
   const resize = withInstanceCheck(() => {
     const echartsInstance = getEchartsInstance();
-    echartsInstance?.resize();
+    echartsInstance!.resize();
   });
 
   /**
@@ -391,6 +409,7 @@ export function useEchart({
     removeSeries,
     resize,
     setupZoomSelect,
+    showTooltip,
     updateOptions,
   };
 }
