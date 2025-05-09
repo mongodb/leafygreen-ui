@@ -13,7 +13,7 @@ const suggestedPrompts = [
 function App() {
   return (
     <div>
-      <Chatbot darkMode={true} serverBaseUrl="http://localhost:3000/api/v1">
+      <Chatbot darkMode={true} serverBaseUrl="http://localhost:3030/api/v1">
         <>
           <FloatingActionButtonTrigger text="Ask LeafyGreen AI" />
           <ModalView

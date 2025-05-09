@@ -8,9 +8,10 @@
     "access": "restricted"
   },
   "scripts": {
-    "build:ingest": "tsc -p ./ingest",
-    "ingest": "pnpm build:ingest && ingest all --config ./dist/ingest.config.js",
-    "dev": "npm run dev --workspace=server & npm run dev --workspace=ui"
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "ingest": "pnpm build && ingest all --config ./dist/esm/ingest.config.js",
+    "dev": "tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,12 +19,16 @@
   "dependencies": {
     "@lg-tools/crawler": "workspace:^",
     "@emotion/css": "^11.13.5",
+    "@lg-tools/crawler": "workspace:^",
     "dotenv": "^16.5.0",
-    "jsdom": "^26.1.0"
+    "express": "^4.18.2",
+    "jsdom": "^26.1.0",
+    "mongodb-chatbot-server": "^0.11.0",
+    "mongodb-rag-core": "^0.7.0"
   },
   "devDependencies": {
-    "mongodb-rag-core": "^0.6.3",
     "mongodb-rag-ingest": "^0.3.1",
+    "nodemon": "^3.0.1",
     "tsx": "^4.19.4"
   }
 }
