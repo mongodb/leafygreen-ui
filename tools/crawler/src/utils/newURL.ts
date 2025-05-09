@@ -5,6 +5,6 @@ export const newURL = (href: string) => {
     return new URL(href);
   } catch (error) {
     console.error(chalk.red(`Invalid URL: ${href}`), error);
-    process.exit(1);
+    return null;
   }
 };

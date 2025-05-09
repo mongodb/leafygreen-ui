@@ -1,4 +1,5 @@
 import { connectToMongoDB } from './utils/connectToMongoDB';
+import { processLangchainDocument } from './utils/processLangchainDocument';
 import { recursiveCrawlFromBaseURL } from './utils/recursiveCrawlFromBase';
 import { SOURCES } from './constants';
 
@@ -17,12 +18,20 @@ exports.handler = async (_e: any) => {
 
   try {
     for (const source of SOURCES) {
-      await recursiveCrawlFromBaseURL({
-        baseUrl: source.url,
-        collectionName: source.collection,
-        mongoClient,
-        maxDepth: 3,
-      });
+      await recursiveCrawlFromBaseURL(
+        ({ document, title, href }) =>
+          processLangchainDocument({
+            doc: document,
+            title,
+            href,
+            collectionName: source.collection,
+            mongoClient,
+          }),
+        {
+          baseUrl: source.url,
+          maxDepth: 3,
+        },
+      );
     }
   } catch (error) {
     console.error('Error during crawling:', error);

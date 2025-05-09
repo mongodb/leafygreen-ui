@@ -6,6 +6,11 @@
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    "types": "./dist/types/index.d.ts",
+    "require": "./dist/index.js",
+    "import": "./dist/esm/index.js"
+  },
   "bin": {
     "lg-crawler": "./bin/cli.js"
   },
@@ -42,12 +47,13 @@
     "commander": "^13.1.0",
     "dotenv": "^16.5.0",
     "langchain": "^0.3.24",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "mongodb": "^6.16.0",
     "openai": "^4.97.0",
     "ora": "^8.2.0"
   },
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
     "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "tsx": "^4.19.4"

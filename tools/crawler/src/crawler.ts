@@ -3,6 +3,7 @@ import chalk from 'chalk';
 
 import { connectToMongoDB } from './utils/connectToMongoDB';
 import { createCollectionNameFromURL } from './utils/createCollectionNameFromURL';
+import { processLangchainDocument } from './utils/processLangchainDocument';
 import { recursiveCrawlFromBaseURL } from './utils/recursiveCrawlFromBase';
 import { SOURCES } from './constants';
 import { CrawlerOptions } from './types';
@@ -36,14 +37,23 @@ export async function crawl(options: CrawlerOptions) {
               `Crawling URL ${url} with collection name ${matchedSource.collection}`,
             ),
           );
-        await recursiveCrawlFromBaseURL({
-          baseUrl: url,
-          collectionName: matchedSource.collection,
-          mongoClient,
-          maxDepth,
-          verbose,
-          dryRun,
-        });
+        await recursiveCrawlFromBaseURL(
+          ({ document, title, href }) => {
+            processLangchainDocument({
+              doc: document,
+              title,
+              href,
+              collectionName: matchedSource.collection,
+              mongoClient,
+              dryRun,
+            });
+          },
+          {
+            baseUrl: url,
+            maxDepth,
+            verbose,
+          },
+        );
       } else {
         const newCollectionName = createCollectionNameFromURL(url);
         verbose &&
@@ -53,14 +63,23 @@ export async function crawl(options: CrawlerOptions) {
             ),
           );
 
-        await recursiveCrawlFromBaseURL({
-          baseUrl: url,
-          collectionName: newCollectionName,
-          mongoClient,
-          maxDepth,
-          verbose,
-          dryRun,
-        });
+        await recursiveCrawlFromBaseURL(
+          ({ document, title, href }) => {
+            processLangchainDocument({
+              doc: document,
+              title,
+              href,
+              collectionName: newCollectionName,
+              mongoClient,
+              dryRun,
+            });
+          },
+          {
+            baseUrl: url,
+            maxDepth,
+            verbose,
+          },
+        );
       }
     }
     // Otherwise crawl all sources
@@ -71,14 +90,23 @@ export async function crawl(options: CrawlerOptions) {
         );
 
       for (const source of SOURCES) {
-        await recursiveCrawlFromBaseURL({
-          baseUrl: source.url,
-          collectionName: source.collection,
-          mongoClient,
-          maxDepth,
-          verbose,
-          dryRun,
-        });
+        await recursiveCrawlFromBaseURL(
+          ({ document, title, href }) => {
+            processLangchainDocument({
+              doc: document,
+              title,
+              href,
+              collectionName: source.collection,
+              mongoClient,
+              dryRun,
+            });
+          },
+          {
+            baseUrl: source.url,
+            maxDepth,
+            verbose,
+          },
+        );
       }
     }
 

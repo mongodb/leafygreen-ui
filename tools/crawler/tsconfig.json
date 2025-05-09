@@ -3,11 +3,8 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "composite": true,
-    "declaration": true,
     "declarationDir": "./dist/types",
-    "sourceMap": true,
-    "strict": true,
-    "skipLibCheck": true
-  }
+  },
+  "include": ["./src/**/*.ts"],
+
 }
