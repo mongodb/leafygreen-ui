@@ -7,7 +7,7 @@ import dotenv from 'dotenv';
   you need to update this function to support those environment variables.
  */
 export function loadEnvVars() {
-  dotenv.config();
+  dotenv.config({});
   const {
     MONGODB_USER,
     MONGODB_PASSWORD,
@@ -17,6 +17,10 @@ export function loadEnvVars() {
     VECTOR_SEARCH_INDEX_NAME,
     OPENAI_API_KEY,
     OPENAI_EMBEDDING_MODEL,
+    AZURE_OPENAI_ENDPOINT,
+    AZURE_OPENAI_API_KEY,
+    AZURE_OPENAI_EMBEDDING_MODEL,
+    AZURE_OPENAI_CHAT_COMPLETION_MODEL,
   } = process.env;
   const requiredEnvVars = {
     MONGODB_USER,
@@ -27,6 +31,10 @@ export function loadEnvVars() {
     VECTOR_SEARCH_INDEX_NAME,
     OPENAI_API_KEY,
     OPENAI_EMBEDDING_MODEL,
+    AZURE_OPENAI_ENDPOINT,
+    AZURE_OPENAI_API_KEY,
+    AZURE_OPENAI_EMBEDDING_MODEL,
+    AZURE_OPENAI_CHAT_COMPLETION_MODEL,
   } as const;
 
   for (const [name, value] of Object.entries(requiredEnvVars)) {
@@ -35,15 +43,8 @@ export function loadEnvVars() {
 
   const MONGODB_CONNECTION_URI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_PROJECT_URL}/?retryWrites=true&w=majority&appName=${MONGODB_APP_NAME}`;
 
-  return {
-    MONGODB_CONNECTION_URI,
-    MONGODB_USER,
-    MONGODB_PASSWORD,
-    MONGODB_PROJECT_URL,
-    MONGODB_APP_NAME,
-    MONGODB_DATABASE_NAME,
-    VECTOR_SEARCH_INDEX_NAME,
-    OPENAI_API_KEY,
-    OPENAI_EMBEDDING_MODEL,
-  } as Record<string, string>;
+  return { ...requiredEnvVars, MONGODB_CONNECTION_URI } as Record<
+    string,
+    string
+  >;
 }
