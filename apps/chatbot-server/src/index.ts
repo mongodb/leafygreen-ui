@@ -10,10 +10,7 @@ import { initChatBot } from './init';
 // System prompt for chatbot
 const systemPrompt: SystemPrompt = {
   role: 'system',
-  content: `You are an assistant to users of the MongoDB Chatbot Framework.
-Answer their questions about the framework in a friendly conversational tone.
-Format your answers in Markdown.
-Be concise in your answers.
+  content: `
 `,
 };
 
