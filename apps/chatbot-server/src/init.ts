@@ -18,6 +18,7 @@ import { AzureOpenAI } from 'mongodb-rag-core/openai';
 
 import { loadEnvVars } from './utils/loadEnv';
 import { makeEmbedder } from './utils/makeEmbedder';
+import { testOpenAIClient } from './utils/testOpenAIClient';
 
 export async function initChatBot(): Promise<{
   llm: ChatLlm;
@@ -34,6 +35,7 @@ export async function initChatBot(): Promise<{
     AZURE_OPENAI_ENDPOINT,
     AZURE_OPENAI_API_KEY,
     AZURE_OPENAI_EMBEDDING_MODEL,
+    AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
     AZURE_OPENAI_CHAT_COMPLETION_MODEL,
   } = loadEnvVars();
 
@@ -41,13 +43,19 @@ export async function initChatBot(): Promise<{
     endpoint: AZURE_OPENAI_ENDPOINT,
     apiKey: AZURE_OPENAI_API_KEY,
     apiVersion: '2024-04-01-preview',
-    deployment: AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    deployment: AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
+  });
+
+  testOpenAIClient({
+    client: azureOpenAIChatClient,
+    model: AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    type: 'chat',
   });
 
   // Chatbot LLM for responding to the user's query.
   const llm = makeOpenAiChatLlm({
     openAiClient: azureOpenAIChatClient,
-    deployment: AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    deployment: AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
     openAiLmmConfigOptions: {
       temperature: 0.5,
     },
@@ -100,6 +108,7 @@ export async function initChatBot(): Promise<{
   
   
   User query: ${originalUserMessage}`;
+
     return { role: 'user', content: contentForLlm };
   };
 
@@ -114,6 +123,10 @@ export async function initChatBot(): Promise<{
   const mongodbClient = new MongoClient(MONGODB_CONNECTION_URI);
   const conversations = makeMongoDbConversationsService(
     mongodbClient.db(MONGODB_DATABASE_NAME),
+    {
+      LLM_NOT_WORKING: 'LLM_NOT_WORKING',
+      NO_RELEVANT_CONTENT: 'NO_RELEVANT_CONTENT',
+    },
   );
 
   return {
