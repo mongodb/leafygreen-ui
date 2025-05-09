@@ -62,4 +62,6 @@ const preview: Preview = {
   decorators,
 };
 
+console.log('🎨🎨🎨 Loading Preview', preview);
+
 export default preview;

@@ -16,7 +16,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "workspace:^"
+    "@leafygreen-ui/button": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",

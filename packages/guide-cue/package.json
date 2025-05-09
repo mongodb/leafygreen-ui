@@ -39,7 +39,9 @@
     "focus-trap-react": "9.0.2",
     "polished": "^4.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   }

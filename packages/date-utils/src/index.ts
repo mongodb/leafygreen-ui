@@ -35,9 +35,6 @@ export { setToUTCMidnight } from './setToUTCMidnight';
 export { setUTCDate } from './setUTCDate';
 export { setUTCMonth } from './setUTCMonth';
 export { setUTCYear } from './setUTCYear';
-export { SupportedLocales } from './types/locales';
-// TODO: export /testing as a separate sub-directory
-// i.e. `import {} from '@leafygreen-ui/date-utils/testing'`
-export * from './testing';
 export { toDate } from './toDate';
 export * from './types';
+export { SupportedLocales } from './types/locales';

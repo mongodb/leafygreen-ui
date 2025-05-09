@@ -8,4 +8,3 @@ export {
   TextInputFontSize,
   TextInputType,
 } from './TextInput';
-export { getTestUtils } from './utils';

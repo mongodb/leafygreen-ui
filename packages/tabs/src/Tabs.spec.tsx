@@ -5,8 +5,7 @@ import { axe } from 'jest-axe';
 
 import { keyMap } from '@leafygreen-ui/lib';
 
-import { TestUtilsReturnType } from './utils/getTestUtils/getTestUtils.types';
-import { getTestUtils } from './utils';
+import { getTestUtils, TestUtilsReturnType } from './testing';
 import { Tab, Tabs } from '.';
 
 const tabsClassName = 'tabs-class-name';

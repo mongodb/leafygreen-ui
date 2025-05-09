@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "workspace:^",
-    "@lg-charts/core": "workspace:^"
+    "@lg-charts/core": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "repository": {
     "type": "git",

@@ -24,7 +24,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@emotion/styled": "^11.10.5"
+    "@emotion/styled": "^11.10.5",
+    "@lg-tools/build": "workspace:^"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",

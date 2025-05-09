@@ -35,5 +35,7 @@
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

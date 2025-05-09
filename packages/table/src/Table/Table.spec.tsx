@@ -11,13 +11,13 @@ import { Cell, HeaderCell } from '../Cell';
 import { HeaderRow, Row } from '../Row';
 import TableBody from '../TableBody';
 import TableHead from '../TableHead';
+import { getTestUtils } from '../testing';
 import useLeafyGreenTable, {
   LeafyGreenTable,
   LeafyGreenTableCell,
   LeafyGreenTableRow,
 } from '../useLeafyGreenTable';
 import useLeafyGreenVirtualTable from '../useLeafyGreenVirtualTable';
-import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
   getDefaultTestColumns,

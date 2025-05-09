@@ -1,3 +1,4 @@
+console.log('🚧🚧🚧🚧🚧 Running Storybook main.ts configuration');
 export default {
   addons: ['@lg-tools/storybook-addon'],
   framework: {

@@ -4,13 +4,15 @@ import { StoryFn } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import {
-  DateType,
+  type DateType,
   Month,
   newUTC,
+  SupportedLocales,
+} from '@leafygreen-ui/date-utils';
+import {
   testLocales,
   testTimeZoneLabels,
-} from '@leafygreen-ui/date-utils';
-import { SupportedLocales } from '@leafygreen-ui/date-utils';
+} from '@leafygreen-ui/date-utils/testing';
 import { css } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import Modal from '@leafygreen-ui/modal';

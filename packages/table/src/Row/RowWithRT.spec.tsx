@@ -7,8 +7,8 @@ import { renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Cell } from '../Cell';
 import TableBody from '../TableBody';
+import { getTestUtils } from '../testing';
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
-import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import {
   useMockTestRowData,
