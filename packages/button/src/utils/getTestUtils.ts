@@ -1,12 +1,12 @@
-// import { queryByLgId } from '@lg-tools/test-harnesses';
-// import { findByLgId } from '@lg-tools/test-harnesses';
 import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
+
+import { LgIdString } from '@leafygreen-ui/lib';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(
-  lgId: `lg-${string}` = DEFAULT_LGID_ROOT,
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
 ): GetTestUtilsReturnType<T> => {
   const lgIds = getLgIds(lgId);
 

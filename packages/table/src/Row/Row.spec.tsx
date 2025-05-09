@@ -6,7 +6,7 @@ import { axe } from 'jest-axe';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { LGIDS } from '../constants';
+import { getLgIds } from '../utils';
 import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
 import { Person } from '../utils/makeData.testutils';
 import { useMockTestRowData } from '../utils/testHookCalls.testutils';
@@ -15,14 +15,16 @@ import { Row, RowProps } from '.';
 
 const defaultProps: RowProps<Person> = {};
 
+const lgIds = getLgIds();
+
 function renderRow(props: RowProps<Person>) {
   return render(
-    <table data-lgid={LGIDS.root}>
+    <table data-lgid={lgIds.root}>
       <tbody>
         <Row {...props} data-testid="lg-test-row-1">
-          <td data-lgid={LGIDS.cell} />
-          <td data-lgid={LGIDS.cell} />
-          <td data-lgid={LGIDS.cell} />
+          <td data-lgid={lgIds.cell} />
+          <td data-lgid={lgIds.cell} />
+          <td data-lgid={lgIds.cell} />
         </Row>
         <Row {...props} data-testid="lg-test-row-2" />
         <Row {...props} data-testid="lg-test-row-3" />

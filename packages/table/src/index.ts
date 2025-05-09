@@ -1,5 +1,4 @@
 export { Cell, type CellProps, HeaderCell, type HeaderCellProps } from './Cell';
-export { LGIDS } from './constants';
 export {
   default as ExpandedContent,
   type ExpandedContentProps,
@@ -24,6 +23,7 @@ export {
   type LeafyGreenVirtualTableOptions,
   default as useLeafyGreenVirtualTable,
 } from './useLeafyGreenVirtualTable';
+export { DEFAULT_LGID_ROOT, getLgIds } from './utils';
 export { getTestUtils } from './utils/getTestUtils';
 // TODO: Check if some exports might clash with our exports
 export * from '@tanstack/react-table';
