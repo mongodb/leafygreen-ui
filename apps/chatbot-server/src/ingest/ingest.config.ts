@@ -48,12 +48,12 @@ export default {
     return Promise.all([
       ...[
         'https://mongodb.design',
-        // 'https://react.dev/reference/react',
-        // 'https://developer.mozilla.org/en-US/docs/Web',
-        // 'https://css-tricks.com/category/articles',
-        // 'https://www.nngroup.com/articles',
-        // 'https://www.w3.org/WAI/standards-guidelines/wcag',
-        // 'https://atomicdesign.bradfrost.com/table-of-contents',
+        'https://react.dev/reference/react',
+        'https://developer.mozilla.org/en-US/docs/Web',
+        'https://css-tricks.com/category/articles',
+        'https://www.nngroup.com/articles',
+        'https://www.w3.org/WAI/standards-guidelines/wcag',
+        'https://atomicdesign.bradfrost.com/table-of-contents',
       ].map(source => webSourceConstructor(source, {})),
       leafygreenGithubSourceConstructor(),
     ]);
