@@ -23,6 +23,11 @@ export function loadEnvVars() {
     AZURE_OPENAI_CHAT_COMPLETION_MODEL,
     AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
     AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_URL,
+    CREDAL_BASE_URL,
+    CREDAL_API_TOKEN,
+    CREDAL_AGENT_ID,
+    CREDAL_USER_EMAIL,
+    KANOPY_BINARY_PATH,
   } = process.env;
   const requiredEnvVars = {
     MONGODB_USER,
@@ -39,13 +44,24 @@ export function loadEnvVars() {
     AZURE_OPENAI_CHAT_COMPLETION_MODEL,
     AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
     AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_URL,
+    CREDAL_BASE_URL,
+    CREDAL_API_TOKEN,
+    CREDAL_AGENT_ID,
+    CREDAL_USER_EMAIL,
+    KANOPY_BINARY_PATH,
   } as const;
 
   for (const [name, value] of Object.entries(requiredEnvVars)) {
     assert(value, `${name} is required`);
   }
 
-  const MONGODB_CONNECTION_URI = `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_PROJECT_URL}/?retryWrites=true&w=majority&appName=${MONGODB_APP_NAME}`;
+  const encodedMongodbUser = encodeURIComponent(MONGODB_USER || '');
+  const encodedMongodbPassword = encodeURIComponent(MONGODB_PASSWORD || '');
+  const encodedMongodbProjectUrl = encodeURIComponent(
+    MONGODB_PROJECT_URL || '',
+  );
+  const encodedMongodbAppName = encodeURIComponent(MONGODB_APP_NAME || '');
+  const MONGODB_CONNECTION_URI = `mongodb+srv://${encodedMongodbUser}:${encodedMongodbPassword}@${encodedMongodbProjectUrl}/?retryWrites=true&w=majority&appName=${encodedMongodbAppName}`;
 
   return {
     ...requiredEnvVars,

@@ -10,15 +10,13 @@ import {
   makeDefaultFindContent,
   makeMongoDbConversationsService,
   makeMongoDbEmbeddedContentStore,
-  makeOpenAiChatLlm,
   MongoDbEmbeddedContentStore,
 } from 'mongodb-rag-core';
 import { MongoClient } from 'mongodb-rag-core/mongodb';
-import { AzureOpenAI } from 'mongodb-rag-core/openai';
 
 import { loadEnvVars } from './utils/loadEnv';
 import { makeEmbedder } from './utils/makeEmbedder';
-import { testOpenAIClient } from './utils/testOpenAIClient';
+import { makeCredalChatLlm } from './makeCredalChatLlm';
 
 export async function initChatBot(): Promise<{
   llm: ChatLlm;
@@ -32,33 +30,20 @@ export async function initChatBot(): Promise<{
     MONGODB_CONNECTION_URI,
     MONGODB_DATABASE_NAME,
     VECTOR_SEARCH_INDEX_NAME,
-    AZURE_OPENAI_ENDPOINT,
-    AZURE_OPENAI_API_KEY,
     AZURE_OPENAI_EMBEDDING_MODEL,
-    AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
-    AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    CREDAL_BASE_URL,
+    CREDAL_API_TOKEN,
+    CREDAL_AGENT_ID,
+    KANOPY_BINARY_PATH,
+    USER_EMAIL_FOR_CREDAL,
   } = loadEnvVars();
 
-  const azureOpenAIChatClient = new AzureOpenAI({
-    endpoint: AZURE_OPENAI_ENDPOINT,
-    apiKey: AZURE_OPENAI_API_KEY,
-    apiVersion: '2024-04-01-preview',
-    deployment: AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
-  });
-
-  testOpenAIClient({
-    client: azureOpenAIChatClient,
-    model: AZURE_OPENAI_CHAT_COMPLETION_MODEL,
-    type: 'chat',
-  });
-
-  // Chatbot LLM for responding to the user's query.
-  const llm = makeOpenAiChatLlm({
-    openAiClient: azureOpenAIChatClient,
-    deployment: AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
-    openAiLmmConfigOptions: {
-      temperature: 0.5,
-    },
+  const llm = makeCredalChatLlm({
+    credalBaseUrl: CREDAL_BASE_URL,
+    credalApiKey: CREDAL_API_TOKEN,
+    credalAgentId: CREDAL_AGENT_ID,
+    credalUserEmail: USER_EMAIL_FOR_CREDAL,
+    kanopyBinaryPath: KANOPY_BINARY_PATH,
   });
 
   // Creates vector embeddings for user queries to find matching content

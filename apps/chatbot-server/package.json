@@ -12,12 +12,13 @@
     "build": "lg build-package",
     "tsc": "lg build-ts",
     "ingest": "pnpm build && ingest all --config ./dist/esm/ingest.config.js",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx watch src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
+    "@credal/sdk": "^0.0.27",
     "@emotion/css": "^11.13.5",
     "@lg-tools/crawler": "workspace:^",
     "dotenv": "^16.5.0",
