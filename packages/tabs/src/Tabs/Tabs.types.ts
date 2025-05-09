@@ -71,7 +71,9 @@ export interface TabsProps<SelectedType extends number | string>
   /**
    * Callback to be executed when Tab is selected. Receives index or name of activated Tab as the first argument.
    */
-  setSelected?: React.Dispatch<React.SetStateAction<SelectedType>>;
+  setSelected?:
+    | React.Dispatch<SelectedType>
+    | React.Dispatch<React.SetStateAction<SelectedType>>;
 
   /**
    * The size of the title. `size='small'` overrides `baseFontSize` to be `BaseFontSize.Body1`
