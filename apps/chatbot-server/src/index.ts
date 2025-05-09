@@ -17,29 +17,29 @@ Be concise in your answers.
 `,
 };
 
-const {
-  llm,
-  embeddedContentStore,
-  generateUserPrompt,
-  mongodbClient,
-  conversations,
-} = await initChatBot();
-
-// Create the MongoDB Chatbot Server Express.js app configuration
-const config: AppConfig = {
-  conversationsRouterConfig: {
-    llm,
-    conversations,
-    generateUserPrompt,
-    systemPrompt,
-  },
-  maxRequestTimeoutMs: 30000,
-};
-
 // Start the server and clean up resources on SIGINT.
 const PORT = process.env.PORT || 3030;
 
 const startServer = async () => {
+  const {
+    llm,
+    embeddedContentStore,
+    generateUserPrompt,
+    mongodbClient,
+    conversations,
+  } = await initChatBot();
+
+  // Create the MongoDB Chatbot Server Express.js app configuration
+  const config: AppConfig = {
+    conversationsRouterConfig: {
+      llm,
+      conversations,
+      generateUserPrompt,
+      systemPrompt,
+    },
+    maxRequestTimeoutMs: 30000,
+  };
+
   logger.info('Starting server...');
   const app = await makeApp(config);
   const server = app.listen(PORT, () => {
