@@ -3,8 +3,9 @@ import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
-import { ChartOptions, X_AXIS_ID, Y_AXIS_ID } from '../Chart';
+import { ChartOptions } from '../Chart';
 import { useChartContext } from '../ChartContext';
+import { X_AXIS_ID, Y_AXIS_ID } from '../constants';
 
 import { ChartGridProps } from './ChartGrid.types';
 

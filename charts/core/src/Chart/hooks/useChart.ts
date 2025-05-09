@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useEchart } from '../../Echart';
-import { EChartEvents } from '../../Echart';
+import { EChartEvents, useEchart } from '../../Echart';
+import type { ChartHookProps, ChartInstance } from '../Chart.types';
 import { getDefaultChartOptions } from '../config';
-
-import type { ChartHookProps, ChartInstance } from './useChart.types';
 
 export function useChart({
   onChartReady = () => {},

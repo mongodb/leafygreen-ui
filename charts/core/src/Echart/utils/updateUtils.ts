@@ -1,11 +1,13 @@
-import { ECBasicOption } from 'echarts/types/dist/shared';
-
-import { ChartOptions, SeriesOption } from '../Chart.types';
+import {
+  EChartOptions,
+  EChartSeriesOption,
+  EChartsGetOptionReturnType,
+} from '../Echart.types';
 
 export function getOptionsToUpdateWithAddedSeries(
-  currentOptions: ECBasicOption | undefined,
-  data: SeriesOption,
-): Partial<ChartOptions> {
+  currentOptions: EChartsGetOptionReturnType | undefined,
+  data: EChartSeriesOption,
+): Partial<EChartOptions> {
   const prevSeries =
     currentOptions && Array.isArray(currentOptions?.series)
       ? currentOptions.series
@@ -27,9 +29,9 @@ export function getOptionsToUpdateWithAddedSeries(
 }
 
 export function getOptionsToUpdateWithRemovedSeries(
-  currentOptions: ECBasicOption | undefined,
+  currentOptions: EChartsGetOptionReturnType | undefined,
   id: string,
-): Partial<ChartOptions> {
+): Partial<EChartOptions> {
   const prevSeries =
     currentOptions &&
     currentOptions.series &&
