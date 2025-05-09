@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { recursiveCrawlFromBaseURL } from '@lg-tools/crawler';
+import { trimEnd } from 'lodash';
 import { Page } from 'mongodb-rag-core';
 import { type DataSource } from 'mongodb-rag-core/dataSources';
 
@@ -16,6 +17,7 @@ export async function webSourceConstructor(
   source: string,
   options?: WebSourceConstructorOptions,
 ): Promise<DataSource> {
+  source = trimEnd(source, '/');
   const { maxDepth = 3, verbose = false } = {
     maxDepth: 3,
     verbose: false,
