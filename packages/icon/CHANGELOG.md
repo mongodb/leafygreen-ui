@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 13.4.0
+
+### Minor Changes
+
+- eca6e3fdc: Adds `'Streaming'` glyph to the set
+
 ## 13.3.0
 
 ### Minor Changes
