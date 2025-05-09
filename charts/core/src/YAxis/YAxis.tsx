@@ -11,8 +11,9 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { type ChartOptions, Y_AXIS_ID } from '../Chart';
+import { type ChartOptions } from '../Chart';
 import { useChartContext } from '../ChartContext';
+import { Y_AXIS_ID } from '../constants';
 
 import { YAxisProps } from './YAxis.types';
 

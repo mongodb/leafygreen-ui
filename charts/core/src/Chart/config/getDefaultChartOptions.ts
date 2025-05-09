@@ -9,8 +9,8 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { TOOLBOX_ID, X_AXIS_ID, Y_AXIS_ID } from '../../constants';
 import { ChartOptions } from '../Chart.types';
-import { TOOLBOX_ID, X_AXIS_ID, Y_AXIS_ID } from '../constants';
 
 const commonAxisOptions = {
   /**

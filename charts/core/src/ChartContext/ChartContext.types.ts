@@ -1,4 +1,4 @@
-import { ChartInstance } from '../Chart/hooks/useChart.types';
+import { type ChartInstance } from '../Chart/hooks';
 
 export interface ChartContextType {
   chart: ChartInstance;

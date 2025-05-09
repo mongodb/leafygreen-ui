@@ -2,8 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { colors } from '@lg-charts/colors';
 import type { EChartsType } from 'echarts/core';
 
-import { TOOLBOX_ID } from '../Chart';
-import * as updateUtils from '../Chart/hooks/updateUtils';
+import { TOOLBOX_ID } from '../constants';
 
 import {
   EChartEvents,
@@ -13,6 +12,10 @@ import {
   type EChartZoomSelectionEvent,
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
+import {
+  getOptionsToUpdateWithAddedSeries,
+  getOptionsToUpdateWithRemovedSeries,
+} from './utils';
 
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
@@ -93,7 +96,7 @@ export function useEchart({
 
   const addSeries: EChartsInstance['addSeries'] = withInstanceCheck(data => {
     const currentOptions = getEchartOptions();
-    const newSeriesOptions = updateUtils.getOptionsToUpdateWithAddedSeries(
+    const newSeriesOptions = getOptionsToUpdateWithAddedSeries(
       currentOptions,
       data,
     );
@@ -103,7 +106,7 @@ export function useEchart({
   const removeSeries: EChartsInstance['removeSeries'] = withInstanceCheck(
     id => {
       const currentOptions = getEchartOptions();
-      const newSeriesOptions = updateUtils.getOptionsToUpdateWithRemovedSeries(
+      const newSeriesOptions = getOptionsToUpdateWithRemovedSeries(
         currentOptions,
         id,
       );

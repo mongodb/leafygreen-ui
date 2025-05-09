@@ -2,9 +2,7 @@ import { act } from 'react-dom/test-utils';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
-import { type SeriesOption } from '../Chart';
-
-import { useEchart } from './useEchart';
+import { type EChartSeriesOption, useEchart } from './useEchart';
 
 // Mock echarts instance creation with all required methods
 const mockEchartsInstance = {
@@ -90,7 +88,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   test('should properly update echarts instance on addSeries call', async () => {
     const { result } = await setupHook();
 
-    const newSeries: SeriesOption = {
+    const newSeries: EChartSeriesOption = {
       id: 'series-1',
       name: 'test-series',
       data: [[1, 2]],
@@ -124,7 +122,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   test('should properly update echarts instance on removeSeries call', async () => {
     const { result } = await setupHook();
 
-    const series: SeriesOption = {
+    const series: EChartSeriesOption = {
       id: 'series-1',
       name: 'test-series',
       data: [[1, 2]],

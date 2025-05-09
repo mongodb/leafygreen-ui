@@ -12,6 +12,8 @@ import type { ComposeOption, EChartsType } from 'echarts/core';
 
 import { Theme } from '@leafygreen-ui/lib';
 
+export { ECBasicOption as EChartsGetOptionReturnType } from 'echarts/types/dist/shared';
+
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
   Partial<Omit<LineSeriesOption, RequiredSeriesProps>>;
