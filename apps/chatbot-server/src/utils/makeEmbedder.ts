@@ -9,13 +9,15 @@ import { makeEmbeddingClient } from './makeEmbeddingClient';
  * and in the chatbot server.
  */
 export const makeEmbedder = () => {
-  const { AZURE_OPENAI_DEPLOYMENT } = loadEnvVars();
+  const { AZURE_OPENAI_API_EMBEDDING_DEPLOYMENT_NAME } = loadEnvVars();
 
   const azureClient = makeEmbeddingClient();
 
-  return makeOpenAiEmbedder({
+  const embedder = makeOpenAiEmbedder({
     openAiClient: azureClient,
-    deployment: AZURE_OPENAI_DEPLOYMENT,
+    deployment: AZURE_OPENAI_API_EMBEDDING_DEPLOYMENT_NAME,
     backoffOptions: {},
   });
+
+  return embedder;
 };

@@ -34,20 +34,21 @@ export async function initChatBot(): Promise<{
     AZURE_OPENAI_ENDPOINT,
     AZURE_OPENAI_API_KEY,
     AZURE_OPENAI_EMBEDDING_MODEL,
-    AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
+    AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_URL,
   } = loadEnvVars();
 
   const azureOpenAIChatClient = new AzureOpenAI({
     endpoint: AZURE_OPENAI_ENDPOINT,
     apiKey: AZURE_OPENAI_API_KEY,
     apiVersion: '2024-04-01-preview',
-    deployment: AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    deployment: AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_URL,
   });
 
   // Chatbot LLM for responding to the user's query.
   const llm = makeOpenAiChatLlm({
     openAiClient: azureOpenAIChatClient,
-    deployment: AZURE_OPENAI_CHAT_COMPLETION_MODEL,
+    deployment: AZURE_OPENAI_API_CHAT_COMPLETION_DEPLOYMENT_NAME,
     openAiLmmConfigOptions: {
       temperature: 0.5,
     },
