@@ -5,6 +5,7 @@ These guidelines are intended to standardize how tests are generated for this co
 ## Scope of Test Generation
 
 When generating tests, prioritize:
+
 - Component rendering (with and without props)
 - Behavioral logic (interactions, conditional rendering)
 - Accessibility (use `jest-axe`)

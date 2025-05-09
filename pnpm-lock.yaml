@@ -38,6 +38,9 @@ importers:
       '@lg-tools/meta':
         specifier: workspace:^
         version: link:tools/meta
+      '@lg-tools/prompt-kit':
+        specifier: workspace:^
+        version: link:tools/prompt-kit
       '@lg-tools/storybook-addon':
         specifier: workspace:^
         version: link:tools/storybook-addon
@@ -3014,6 +3017,9 @@ importers:
       '@lg-tools/lint':
         specifier: workspace:^
         version: link:../lint
+      '@lg-tools/prompt-kit':
+        specifier: workspace:^
+        version: link:../prompt-kit
       '@lg-tools/slackbot':
         specifier: workspace:^
         version: link:../slackbot
@@ -3257,6 +3263,21 @@ importers:
       lodash:
         specifier: 4.17.21
         version: 4.17.21
+
+  tools/prompt-kit:
+    dependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../build
+      '@types/fs-extra':
+        specifier: 11.0.1
+        version: 11.0.1
+      chalk:
+        specifier: 4.1.2
+        version: 4.1.2
+      fs-extra:
+        specifier: 11.1.1
+        version: 11.1.1
 
   tools/slackbot:
     dependencies:
@@ -14227,7 +14248,7 @@ snapshots:
   '@types/fs-extra@11.0.1':
     dependencies:
       '@types/jsonfile': 6.1.1
-      '@types/node': 20.4.8
+      '@types/node': 20.17.12
 
   '@types/graceful-fs@4.1.6':
     dependencies:
@@ -14295,7 +14316,7 @@ snapshots:
 
   '@types/jsonfile@6.1.1':
     dependencies:
-      '@types/node': 20.4.8
+      '@types/node': 20.17.12
 
   '@types/lodash.debounce@4.0.9':
     dependencies:

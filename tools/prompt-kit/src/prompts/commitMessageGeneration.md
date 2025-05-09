@@ -8,6 +8,7 @@ These guidelines are intended to standardize how commit messages are generated f
 - Include a `(scope)` where helpful - like a component or file
 
 Examples:
+
 - `feat(button): add size prop`
 - `fix(popover): resolve positioning issue`
 - `chore: update dependencies`

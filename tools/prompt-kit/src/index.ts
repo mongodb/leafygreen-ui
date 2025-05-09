@@ -1,0 +1,1 @@
+export { mergePromptsVSCode } from './settings';

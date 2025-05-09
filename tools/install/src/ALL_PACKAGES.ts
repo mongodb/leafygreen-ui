@@ -97,6 +97,7 @@ export const ALL_PACKAGES = [
   '@lg-tools/link',
   '@lg-tools/lint',
   '@lg-tools/meta',
+  '@lg-tools/prompt-kit',
   '@lg-tools/slackbot',
   '@lg-tools/storybook-addon',
   '@lg-tools/storybook-decorators',
