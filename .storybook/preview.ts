@@ -1,5 +1,6 @@
 import { Preview } from '@storybook/react';
 
+console.log('📍📍📍 Running Local Storybook preview.ts configuration');
 const parameters = {
   options: {
     storySort: {
@@ -22,6 +23,7 @@ const parameters = {
 
 const preview: Preview = {
   parameters,
+  decorators: [],
 };
 
 export default preview;
