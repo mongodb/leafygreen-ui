@@ -7,9 +7,9 @@
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/polymorphic",
@@ -24,7 +24,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@emotion/styled": "^11.10.5"
+    "@emotion/styled": "^11.10.5",
+    "@lg-tools/build": "workspace:^"
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",

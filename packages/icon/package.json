@@ -8,9 +8,9 @@
   "typesVersions": {},
   "scripts": {
     "prebuild": "ts-node ./scripts/prebuild.ts",
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
+    "@lg-tools/build": "workspace:^",
     "@lg-tools/lint": "workspace:^",
     "@svgr/core": "^5.3.1",
     "@types/xml2json": "^0.11.0",

@@ -7,9 +7,9 @@
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -30,5 +30,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
   }
 }
