@@ -6,7 +6,6 @@
 '@leafygreen-ui/inline-definition': patch
 '@leafygreen-ui/loading-indicator': patch
 '@leafygreen-ui/segmented-control': patch
-'@lg-tools/storybook-decorators': patch
 '@leafygreen-ui/expandable-card': patch
 '@leafygreen-ui/marketing-modal': patch
 '@leafygreen-ui/radio-box-group': patch
@@ -21,7 +20,6 @@
 '@leafygreen-ui/ordered-list': patch
 '@leafygreen-ui/search-input': patch
 '@leafygreen-ui/split-button': patch
-'@lg-tools/storybook-addon': patch
 '@lg-tools/storybook-utils': patch
 '@lg-charts/drag-provider': patch
 '@lg-chat/chat-disclaimer': patch
@@ -33,7 +31,6 @@
 '@leafygreen-ui/icon-button': patch
 '@leafygreen-ui/polymorphic': patch
 '@leafygreen-ui/radio-group': patch
-'@leafygreen-ui/testing-lib': patch
 '@lg-tools/test-harnesses': patch
 '@lg-chat/message-rating': patch
 '@leafygreen-ui/date-utils': patch
@@ -75,9 +72,6 @@
 '@leafygreen-ui/modal': patch
 '@leafygreen-ui/table': patch
 '@leafygreen-ui/toast': patch
-'@lg-tools/codemods': patch
-'@lg-tools/slackbot': patch
-'@lg-tools/validate': patch
 '@lg-charts/colors': patch
 '@lg-charts/legend': patch
 '@leafygreen-ui/a11y': patch
@@ -88,20 +82,12 @@
 '@leafygreen-ui/logo': patch
 '@leafygreen-ui/menu': patch
 '@leafygreen-ui/tabs': patch
-'@lg-tools/install': patch
 '@lg-chat/message': patch
 '@leafygreen-ui/box': patch
 '@leafygreen-ui/lib': patch
-'@lg-tools/create': patch
-'@lg-tools/update': patch
 '@lg-charts/core': patch
 '@lg-chat/avatar': patch
-'@lg-tools/build': patch
-'@lg-tools/link': patch
-'@lg-tools/lint': patch
-'@lg-tools/meta': patch
-'@lg-tools/test': patch
-'@lg-tools/cli': patch
 ---
 
-Updates `main` entry point in package.json to `./dist/umd`
+Adds missing `@lg-tools/` devDependencies.
+Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli

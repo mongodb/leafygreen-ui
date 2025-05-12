@@ -14,9 +14,9 @@ For each package you want turbo to build, add the following scripts to package.j
 
 ```json
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   }
 ```
 

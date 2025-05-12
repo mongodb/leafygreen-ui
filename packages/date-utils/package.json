@@ -7,9 +7,9 @@
   "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "publishConfig": {
     "access": "public"
@@ -23,6 +23,7 @@
     "weekstart": "^2.0.0"
   },
   "devDependencies": {
+    "@lg-tools/build": "workspace:^",
     "@types/jest": "^29.5.12"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/date-utils",
