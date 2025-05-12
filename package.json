@@ -47,6 +47,7 @@
     "@lg-tools/cli": "workspace:^",
     "@lg-tools/lint": "workspace:^",
     "@lg-tools/meta": "workspace:^",
+    "@lg-tools/prompt-kit": "workspace:^",
     "@lg-tools/storybook-addon": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^",
     "@lg-tools/test": "workspace:^",
