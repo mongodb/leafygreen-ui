@@ -72,7 +72,7 @@ enum someConstant = {
 
 ---
 
-### When creating TS entities, place them at the top of the file, above JS
+### When creating TS entities, place them at the top of the file above functional code. Use a separate `*.types.ts` file if multiple types are declared.
 
 #### Why
 
@@ -261,7 +261,7 @@ The main issue with strict BEM syntax is that it creates a poor user experience 
 
 ---
 
-## Variable placement
+## Variable Placement
 
 ### Avoid inline declaration of static variables when they can be moved to top of file or refactored into new file
 

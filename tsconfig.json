@@ -1,16 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@lg-tools/build/config/root.tsconfig.json",
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
     "baseUrl": ".",
+    "rootDir": ".",
+    "composite": true,
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["./packages/icon/src/generated/*"],
       "@leafygreen-ui/*": ["packages/*/src"],
       "@lg-charts/*": ["charts/*/src"],
       "@lg-chat/*": ["chat/*/src"],
-      "@lg-tools/*": ["tools/*/src"],
+      "@lg-tools/*": ["tools/*/src"]
     }
   },
-  "include": ["./charts", "./chat", "./packages", "./tools", "./scripts" ],
+  "include": ["./charts", "./chat", "./packages", "./tools"],
   "exclude": ["node_modules", "**/dist"]
 }

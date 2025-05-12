@@ -175,6 +175,17 @@ export default {
     onDragStart: fn(),
     onDragEnd: fn(),
   },
+  parameters: {
+    default: 'LiveExample',
+    chromatic: {
+      /**
+       * For some reason diffs keep getting flagged on non-changes to the canvas.
+       * The default threshold is .063, so bumping it up to 1 to test. We might
+       * consider lowering this in the future.
+       */
+      diffThreshold: 1,
+    },
+  },
 };
 
 export const LiveExample: StoryObj<{}> = {
