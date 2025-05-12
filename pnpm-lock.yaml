@@ -3535,6 +3535,9 @@ importers:
       fs-extra:
         specifier: ^11.3.0
         version: 11.3.0
+      tsx:
+        specifier: ^4.19.4
+        version: 4.19.4
 
   tools/link:
     dependencies:
