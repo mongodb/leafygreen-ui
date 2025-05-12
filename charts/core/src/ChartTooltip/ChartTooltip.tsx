@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
+import { TOOLTIP_ID } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
+import { getRootStylesText } from './ChartTooltip.styles';
 import {
   CallbackSeriesDataPoint,
   ChartTooltipProps,
@@ -19,11 +20,17 @@ export function ChartTooltip({
   sort,
 }: ChartTooltipProps) {
   const {
-    chart: { ready, updateOptions },
+    chart: { ready, setTooltipMounted, tooltipPinned, updateOptions },
   } = useChartContext();
-  const { theme } = useDarkMode();
+  const { darkMode, theme } = useDarkMode();
 
-  const id = useIdAllocator({ prefix: 'tooltip' });
+  useEffect(() => {
+    setTooltipMounted(true);
+
+    return () => {
+      setTooltipMounted(false);
+    };
+  }, [setTooltipMounted]);
 
   useEffect(() => {
     if (!ready) return;
@@ -31,15 +38,24 @@ export function ChartTooltip({
     updateOptions(
       {
         tooltip: {
-          id,
+          id: TOOLTIP_ID,
+          /**
+           * using `extraCssText` instead of `className` because emotion-defined class
+           * didn't have high-enough specificity
+           */
+          extraCssText: getRootStylesText(theme),
+          trigger: 'axis',
+          triggerOn: 'none',
           // Still adding background color to prevent peak of color at corners
           backgroundColor:
             color[theme].background[Variant.InversePrimary][
               InteractionState.Default
             ],
           borderWidth: 0,
-          enterable: false,
+          alwaysShowContent: tooltipPinned,
+          enterable: tooltipPinned,
           confine: true,
+          renderMode: 'html',
           appendTo: 'body',
           showDelay: 0,
           hideDelay: 0,
@@ -57,10 +73,12 @@ export function ChartTooltip({
 
             return renderToString(
               <CustomTooltip
+                darkMode={darkMode}
                 seriesData={seriesDataArr}
                 sort={sort}
                 seriesValueFormatter={seriesValueFormatter}
                 seriesNameFormatter={seriesNameFormatter}
+                tooltipPinned={tooltipPinned}
               />,
             );
           },
@@ -73,7 +91,7 @@ export function ChartTooltip({
       updateOptions(
         {
           tooltip: {
-            id,
+            id: TOOLTIP_ID,
             axisPointer: {
               z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
             },
@@ -86,12 +104,13 @@ export function ChartTooltip({
       );
     };
   }, [
-    id,
+    darkMode,
     ready,
     seriesNameFormatter,
     seriesValueFormatter,
     sort,
     theme,
+    tooltipPinned,
     updateOptions,
   ]);
 
