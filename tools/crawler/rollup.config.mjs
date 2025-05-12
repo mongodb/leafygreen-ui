@@ -5,10 +5,4 @@ const cli = {
   input: ['./src/cli.ts'],
 };
 
-const lambda = {
-  ...umdConfig,
-  input: ['./src/lambda.ts'],
-  external: [],
-};
-
-export default [esmConfig, umdConfig, cli, lambda];
+export default [esmConfig, umdConfig, cli];
