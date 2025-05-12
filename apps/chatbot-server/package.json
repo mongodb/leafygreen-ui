@@ -9,8 +9,8 @@
     "access": "restricted"
   },
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
     "ingest": "pnpm build && ingest all --config ./dist/esm/ingest.config.js",
     "dev": "tsx src/index.ts",
     "start": "node dist/esm/index.js",
@@ -32,6 +32,7 @@
     "mongodb-rag-core": "^0.7.0"
   },
   "devDependencies": {
+    "@lg-tools/build": "workspace:^",
     "mongodb-rag-ingest": "^0.3.1",
     "nodemon": "^3.0.1",
     "tsx": "^4.19.4",
