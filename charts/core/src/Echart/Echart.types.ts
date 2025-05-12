@@ -9,10 +9,11 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components';
 import type { ComposeOption, EChartsType } from 'echarts/core';
+import { ECBasicOption } from 'echarts/types/dist/shared';
 
 import { Theme } from '@leafygreen-ui/lib';
 
-export { ECBasicOption as EChartsGetOptionReturnType } from 'echarts/types/dist/shared';
+export type EChartsGetOptionReturnType = ECBasicOption;
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
