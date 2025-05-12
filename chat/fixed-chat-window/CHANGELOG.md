@@ -1,5 +1,15 @@
 # @lg-chat/fixed-chat-window
 
+## 3.0.17
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @lg-chat/title-bar@3.0.15
+  - @leafygreen-ui/typography@20.1.9
+  - @lg-chat/chat-window@3.0.15
+
 ## 3.0.16
 
 ### Patch Changes

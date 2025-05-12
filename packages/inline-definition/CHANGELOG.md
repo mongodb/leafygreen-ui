@@ -1,5 +1,11 @@
 # @leafygreen-ui/inline-definition
 
+## 8.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/tooltip@13.0.13
+
 ## 8.0.12
 
 ### Patch Changes

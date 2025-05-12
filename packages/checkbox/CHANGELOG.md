@@ -1,5 +1,11 @@
 # @leafygreen-ui/checkbox
 
+## 16.0.1
+
+### Patch Changes
+
+- @leafygreen-ui/typography@20.1.9
+
 ## 16.0.0
 
 ### Major Changes

@@ -1,5 +1,18 @@
 # @leafygreen-ui/combobox
 
+## 11.0.19
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/chip@3.0.13
+  - @leafygreen-ui/form-field@2.0.12
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/input-option@3.0.12
+  - @leafygreen-ui/typography@20.1.9
+  - @leafygreen-ui/checkbox@16.0.1
+
 ## 11.0.18
 
 ### Patch Changes

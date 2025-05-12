@@ -1,5 +1,11 @@
 # @lg-tools/codemods
 
+## 0.1.6
+
+### Patch Changes
+
+- 92fafc876: [LG-5015](https://jira.mongodb.org/browse/LG-5015): bump `jscodeshift` to 17.3.0
+
 ## 0.1.5
 
 ### Patch Changes
