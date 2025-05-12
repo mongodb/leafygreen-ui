@@ -11,7 +11,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { ButtonContent } from '../ButtonContent/ButtonContent';
 import { ButtonClassName } from '../styles';
 import { BaseButtonProps, Size, Variant } from '../types';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
+import { getLgIds } from '../utils';
 
 import { getClassName } from './Button.styles';
 
@@ -24,7 +24,7 @@ export const Button = InferredPolymorphic<BaseButtonProps, 'button'>(
       variant = Variant.Default,
       size = Size.Default,
       darkMode: darkModeProp,
-      'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+      'data-lgid': dataLgId = getLgIds().root,
       baseFontSize = BaseFontSize.Body1,
       disabled = false,
       onClick,

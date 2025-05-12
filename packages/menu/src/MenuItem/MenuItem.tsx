@@ -4,8 +4,7 @@ import { useDescendant } from '@leafygreen-ui/descendants';
 import { cx } from '@leafygreen-ui/emotion';
 import { InferredPolymorphic } from '@leafygreen-ui/polymorphic';
 
-import { LGIDs } from '../constants';
-import { MenuDescendantsContext } from '../MenuContext';
+import { MenuDescendantsContext, useMenuContext } from '../MenuContext';
 
 import { InternalMenuItemContent } from './InternalMenuItemContent';
 import { menuItemClassName, menuItemContainerStyles } from './MenuItem.styles';
@@ -16,6 +15,8 @@ export const MenuItem = InferredPolymorphic<InternalMenuItemProps, 'button'>(
     { as, disabled = false, active = false, onClick, ...rest },
     fwdRef: React.Ref<any>,
   ) => {
+    const { lgIds } = useMenuContext();
+
     const { index, ref, id } = useDescendant(MenuDescendantsContext, fwdRef, {
       active,
       disabled,
@@ -31,7 +32,7 @@ export const MenuItem = InferredPolymorphic<InternalMenuItemProps, 'button'>(
         id={id}
         role="none"
         className={cx(menuItemClassName, menuItemContainerStyles)}
-        data-testid={LGIDs.item}
+        data-testid={lgIds.item}
       >
         <InternalMenuItemContent
           as={as}
