@@ -8,7 +8,6 @@ platform:
 trigger:
   branch:
     - main
-    - integration/chat
     - a/kanopy
 
 steps:
