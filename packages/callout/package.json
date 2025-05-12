@@ -24,7 +24,8 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "devDependencies": {
-    "@leafygreen-ui/code": "workspace:^"
+    "@leafygreen-ui/code": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

@@ -7,7 +7,7 @@ import {
   storybookExcludedArgTypes,
   storybookExcludedControlParams,
 } from '@lg-tools/storybook-utils';
-import { Preview } from '@storybook/react';
+import type { Preview } from '@storybook/react';
 
 import {
   Body,
@@ -55,11 +55,9 @@ const parameters = {
   },
 };
 
-const decorators = [PropCombinations, ReactStrictMode, ComponentPreview];
-
 const preview: Preview = {
   parameters,
-  decorators,
+  decorators: [ReactStrictMode, ComponentPreview, PropCombinations],
 };
 
 export default preview;

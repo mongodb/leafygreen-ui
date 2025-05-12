@@ -6,6 +6,7 @@ interface DownlevelVersion {
 }
 
 // TS Downlevel mapping
+// Note, conditions should be listed in order (i.e. as if they were multiple cascading `if` statements)
 export const DOWNLEVEL_VERSIONS = [
   // No downlevelling for now
 ] as const satisfies Readonly<Array<DownlevelVersion>>;

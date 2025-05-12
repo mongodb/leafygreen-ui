@@ -19,6 +19,8 @@ import { Decorator, StoryContext, StoryFn } from '@storybook/react';
 import entries from 'lodash/entries';
 import isUndefined from 'lodash/isUndefined';
 
+import { cx } from '@leafygreen-ui/emotion';
+
 import { Err, PropCombinations } from './components';
 import { PARAM_NAME } from './constants';
 import { generatedStoryWrapper } from './PropCombinations.styles';
@@ -72,7 +74,7 @@ const PropCombinationsDecorator: Decorator = (
         const variables = entries(combineArgs).sort(sortDarkMode);
 
         const GeneratedStory: StoryType<typeof component> = () => (
-          <div className={generatedStoryWrapper}>
+          <div className={cx(generatedStoryWrapper, 'generated-stories')}>
             <PropCombinations
               component={component}
               variables={variables}
@@ -87,7 +89,7 @@ const PropCombinationsDecorator: Decorator = (
     }
   }
 
-  return <StoryFn />;
+  return <StoryFn {...context} />;
 };
 
 export default PropCombinationsDecorator;

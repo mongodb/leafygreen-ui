@@ -16,5 +16,8 @@
   },
   "dependencies": {
     "use-resize-observer": "^9.1.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
   }
 }

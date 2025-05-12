@@ -22,6 +22,7 @@
     "@emotion/server": "^11.4.0"
   },
   "devDependencies": {
+    "@lg-tools/build": "workspace:^",
     "@lg-tools/meta": "workspace:^",
     "fs-extra": "11.1.1"
   },

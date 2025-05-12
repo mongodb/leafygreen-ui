@@ -8,14 +8,14 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { Context, jest as Jest } from '@leafygreen-ui/testing-lib';
 
+import { numOfCollapsedLinesOfCode } from '../constants';
+import { Panel } from '../Panel';
+import { getTestUtils } from '../testing';
 import {
   languageOptions,
   renderCode,
   renderCodeWithLanguageSwitcher,
-} from '../Code.testutils';
-import { numOfCollapsedLinesOfCode } from '../constants';
-import { Panel } from '../Panel';
-import { getTestUtils } from '../utils/getTestUtils/getTestUtils';
+} from '../testing/Code.testutils';
 
 import Code from './Code';
 import { hasMultipleLines } from './utils';

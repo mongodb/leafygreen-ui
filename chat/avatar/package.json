@@ -25,5 +25,7 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@lg-chat/leafygreen-chat-provider": "workspace:^"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

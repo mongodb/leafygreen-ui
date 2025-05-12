@@ -15,7 +15,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {},
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/box",
   "repository": {
     "type": "git",
@@ -24,5 +23,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

@@ -23,7 +23,8 @@
     "@faker-js/faker": "^8.0.0",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/popover": "workspace:^"
+    "@leafygreen-ui/popover": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

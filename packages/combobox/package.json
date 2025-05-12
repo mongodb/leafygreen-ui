@@ -37,7 +37,8 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
-    "@leafygreen-ui/button": "workspace:^"
+    "@leafygreen-ui/button": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/combobox",
   "repository": {

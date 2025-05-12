@@ -4,10 +4,6 @@ export const tsConfig = (scope: string) => {
   return `{
   "extends": "@lg-tools/build/config/package.tsconfig.json",
    "compilerOptions": {
-    "declarationDir": "dist",
-    "outDir": "dist",
-    "rootDir": "src",
-    "baseUrl": ".",
     "paths": {
       "@leafygreen-ui/icon/dist/*": ["${pathToPackagesRoot}/icon/src/generated/*"],
       "@leafygreen-ui/*": ["${pathToPackagesRoot}/*/src"]

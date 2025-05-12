@@ -36,7 +36,8 @@
     "@leafygreen-ui/code": "workspace:^",
     "@leafygreen-ui/copyable": "workspace:^",
     "@leafygreen-ui/select": "workspace:^",
-    "@leafygreen-ui/typography": "workspace:^"
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
