@@ -29,7 +29,7 @@ For a package that cli depends on, define the following scripts in its `package.
 
 ```json
   "scripts": {
-    "build": "lg-internal-build-package",
+    "build": "lg-build bundle",
     "tsc": "lg-build tsc"
   }
 ```
