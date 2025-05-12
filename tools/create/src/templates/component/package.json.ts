@@ -12,14 +12,14 @@ export const pkgJson = ({
   "name": "${scope}/${packageNameKebab}",
   "version": "0.1.0",
   "description": "LeafyGreen UI Kit ${packageNameTitle}",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "publishConfig": {
     "access": "public"

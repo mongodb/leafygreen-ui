@@ -2,20 +2,14 @@
   "name": "@leafygreen-ui/hooks",
   "version": "8.4.1",
   "description": "LeafyGreen UI Kit Custom Hooks",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -35,6 +29,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/emotion": "workspace:^"
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   }
 }

@@ -3,12 +3,12 @@
   "name": "@lg-tools/prompt-kit",
   "version": "0.1.0",
   "description": "Prompts for personalizing LLM usage",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "publishConfig": {
     "access": "public"
