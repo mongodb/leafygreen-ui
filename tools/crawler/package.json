@@ -15,8 +15,8 @@
     "lg-crawler": "./bin/cli.js"
   },
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
     "postbuild": "zip -r dist/lambda.zip dist/lambda.js node_modules package.json",
     "crawl": "tsx src/cli.ts crawl",
     "prune": "tsx src/cli.ts prune",
