@@ -1,0 +1,44 @@
+---
+kind: pipeline
+type: kubernetes
+name: default
+platform:
+  arch: arm64
+
+trigger:
+  branch:
+    - main
+
+steps:
+  - name: publish
+    image: plugins/kaniko-ecr
+    settings:
+      create_repository: true
+      registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
+      repo: skunkworks/${DRONE_REPO_NAME}
+      tags:
+        - git-${DRONE_COMMIT_SHA:0:7}
+        - latest
+      access_key:
+        from_secret: ecr_access_key
+      secret_key:
+        from_secret: ecr_secret_key
+    when:
+      event:
+        - push
+
+  - name: deploy-staging
+    image: public.ecr.aws/kanopy/drone-helm:v3
+    settings:
+      chart: mongodb/web-app
+      chart_version: 4.25.0
+      add_repos: [mongodb=https://10gen.github.io/helm-charts]
+      namespace: skunkworks
+      release: lg-chatbot-server
+      values: arch=arm64,image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/skunkworks/${DRONE_REPO_NAME},ingress.enabled=true,ingress.hosts[0]=lg-chatbot-server.skunkworks.staging.corp.mongodb.com,mesh.enabled=true
+      api_server: https://api.staging.corp.mongodb.com
+      kubernetes_token:
+        from_secret: staging_kubernetes_token
+    when:
+      event:
+        - push
