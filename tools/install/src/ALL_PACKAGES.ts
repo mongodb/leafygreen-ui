@@ -67,6 +67,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/toast',
   '@leafygreen-ui/toggle',
   '@leafygreen-ui/tokens',
+  '@leafygreen-ui/toolbar',
   '@leafygreen-ui/tooltip',
   '@leafygreen-ui/typography',
   '@lg-charts/chart-card',
