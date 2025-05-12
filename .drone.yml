@@ -8,6 +8,8 @@ platform:
 trigger:
   branch:
     - main
+    - integration/chat
+    - a/kanopy
 
 steps:
   - name: publish
@@ -16,6 +18,7 @@ steps:
       create_repository: true
       registry: 795250896452.dkr.ecr.us-east-1.amazonaws.com
       repo: skunkworks/${DRONE_REPO_NAME}
+      dockerfile: ./apps/chatbot-server/Dockerfile
       tags:
         - git-${DRONE_COMMIT_SHA:0:7}
         - latest
