@@ -1,9 +1,0 @@
-{
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@lg-tools/build/config/root.tsconfig.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/dist"]
-}
