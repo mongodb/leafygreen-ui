@@ -89,4 +89,5 @@
 '@lg-chat/avatar': patch
 ---
 
-Adds missing `@lg-tools/` devDependencies
+Adds missing `@lg-tools/` devDependencies.
+Updates `build`, `tsc` & `docs` scripts to use `lg-build *` cli
