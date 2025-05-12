@@ -21,7 +21,6 @@ import {
   nowrap,
 } from './InlineCode.styles';
 import { BaseInlineCodeProps } from './InlineCode.types';
-import { getChildrenLength } from './utils';
 
 const InlineCode = InferredPolymorphic<BaseInlineCodeProps, 'code'>(
   (
@@ -39,7 +38,7 @@ const InlineCode = InferredPolymorphic<BaseInlineCodeProps, 'code'>(
     const baseFontSize = useUpdatedBaseFontSize(baseFontSizeOverride);
     const { Component } = useInferredPolymorphic(as, rest, 'code');
 
-    const charsCount = getChildrenLength(children);
+    const charsCount = children.match(/./gu)?.length ?? 0;
     const whiteSpace = charsCount <= 30 ? nowrap : normal;
     const needsWrapper = Component !== 'code';
 
