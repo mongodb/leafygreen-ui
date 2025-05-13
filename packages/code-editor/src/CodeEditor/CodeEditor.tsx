@@ -7,7 +7,7 @@ import CodeMirror, {
   type ReactCodeMirrorRef,
 } from '@uiw/react-codemirror';
 
-import { CodeEditorProps } from './CodeEditor.types';
+import { type CodeEditorProps } from './CodeEditor.types';
 
 export function CodeEditor({
   enableActiveLineHighlighting = true,
