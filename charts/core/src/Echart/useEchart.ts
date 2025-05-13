@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { colors } from '@lg-charts/colors';
 import type { EChartsType } from 'echarts/core';
 
@@ -55,22 +55,14 @@ export function useEchart({
   }, []);
 
   const getEchartOptions = withInstanceCheck(() => {
-    const echartsInstance = echartsInstanceRef.current;
+    const echartsInstance = getEchartsInstance();
 
-    if (!echartsInstance) {
-      return;
-    }
-
-    return echartsInstance.getOption();
+    return echartsInstance!.getOption();
   });
 
   const setEchartOptions = withInstanceCheck(
     (options: Partial<EChartOptions>, replaceMerge?: Array<string>) => {
-      const echartsInstance = echartsInstanceRef.current;
-
-      if (!echartsInstance) {
-        return;
-      }
+      const echartsInstance = getEchartsInstance();
 
       /**
        * ECharts has a concept of "component main types" which are the properties under the root option tree
@@ -83,7 +75,7 @@ export function useEchart({
        *
        * API docs: https://echarts.apache.org/en/api.html#echartsInstance.setOption
        * */
-      echartsInstance.setOption(
+      echartsInstance!.setOption(
         options,
         replaceMerge
           ? {
@@ -318,7 +310,7 @@ export function useEchart({
 
     setError(null);
 
-    if (!container || !!echartsInstance) return;
+    if (!container) return;
 
     initializeEcharts()
       .then(echartsCore => {
@@ -338,7 +330,9 @@ export function useEchart({
         newChart.setOption(initialOptions || {});
 
         // Set the echarts instance ref
-        echartsInstanceRef.current = newChart;
+        if (echartsInstance === null) {
+          echartsInstanceRef.current = newChart;
+        }
 
         setReady(true);
       })
@@ -355,8 +349,8 @@ export function useEchart({
     return () => {
       activeHandlersMap.clear();
 
-      if (echartsInstance) {
-        (echartsInstance as EChartsType).dispose();
+      if (echartsInstance !== null && !echartsInstance.isDisposed()) {
+        echartsInstance.dispose();
       }
     };
   }, [container, getEchartsInstance, initialOptions]);
@@ -379,7 +373,7 @@ export function useEchart({
     }
   }, [getEchartsInstance, setEchartOptions, theme]);
 
-  return {
+  return useMemo(() => ({
     _getEChartsInstance: getEchartsInstance,
     addSeries,
     addToGroup,
@@ -395,5 +389,21 @@ export function useEchart({
     resize,
     setupZoomSelect,
     updateOptions,
-  };
+  }), [
+    addSeries,
+    addToGroup,
+    disableZoom,
+    enableZoom,
+    error,
+    hideTooltip,
+    off,
+    on,
+    ready,
+    removeFromGroup,
+    removeSeries,
+    resize,
+    setupZoomSelect,
+    updateOptions,
+    getEchartsInstance,
+  ]);
 }

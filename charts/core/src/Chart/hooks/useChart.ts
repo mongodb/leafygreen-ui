@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { EChartEvents, useEchart } from '../../Echart';
 import type { ChartHookProps, ChartInstance } from '../Chart.types';
@@ -155,9 +155,9 @@ export function useChart({
     }
   }, [ready, container, handleResize]);
 
-  return {
+  return useMemo(() => ({
     ...echart,
     ref: setContainer,
     state,
-  };
+  }), [echart, setContainer, state]);
 }
