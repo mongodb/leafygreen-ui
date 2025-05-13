@@ -35,14 +35,14 @@ export async function initChatBot(): Promise<{
     CREDAL_API_TOKEN,
     CREDAL_AGENT_ID,
     KANOPY_BINARY_PATH,
-    USER_EMAIL_FOR_CREDAL,
+    CREDAL_USER_EMAIL,
   } = loadEnvVars();
 
   const llm = makeCredalChatLlm({
     credalBaseUrl: CREDAL_BASE_URL,
     credalApiKey: CREDAL_API_TOKEN,
     credalAgentId: CREDAL_AGENT_ID,
-    credalUserEmail: USER_EMAIL_FOR_CREDAL,
+    credalUserEmail: CREDAL_USER_EMAIL,
     kanopyBinaryPath: KANOPY_BINARY_PATH,
   });
 
