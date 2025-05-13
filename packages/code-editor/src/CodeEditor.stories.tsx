@@ -13,8 +13,45 @@ export default {
       </div>
     ),
   ],
+  args: {
+    enableActiveLineHighlighting: true,
+    enableClickableUrls: true,
+    enableCodeFolding: true,
+    enableLineNumbers: true,
+    enableLineWrapping: true,
+    forceParsing: false,
+    placeholder: 'Type your code here...',
+    readOnly: false,
+    value: 'console.log("Hello, world!");',
+  },
+  argTypes: {
+    enableActiveLineHighlighting: {
+      control: { type: 'boolean' },
+    },
+    enableClickableUrls: {
+      control: { type: 'boolean' },
+    },
+    enableCodeFolding: {
+      control: { type: 'boolean' },
+    },
+    enableLineNumbers: {
+      control: { type: 'boolean' },
+    },
+    enableLineWrapping: {
+      control: { type: 'boolean' },
+    },
+    placeholder: {
+      control: { type: 'text' },
+    },
+    readOnly: {
+      control: { type: 'boolean' },
+    },
+    value: {
+      control: { type: 'text' },
+    },
+  },
 };
 
-const Template: StoryFn<typeof CodeEditor> = () => <CodeEditor />;
+const Template: StoryFn<typeof CodeEditor> = args => <CodeEditor {...args} />;
 
-export const Basic = Template.bind({});
+export const LiveExample = Template.bind({});
