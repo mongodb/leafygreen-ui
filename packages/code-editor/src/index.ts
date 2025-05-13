@@ -1,1 +1,1 @@
-export { CodeEditor } from './CodeEditor';
+export { CodeEditor, type CodeEditorProps } from './CodeEditor';
