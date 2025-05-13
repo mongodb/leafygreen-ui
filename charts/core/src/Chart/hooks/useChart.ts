@@ -155,9 +155,12 @@ export function useChart({
     }
   }, [ready, container, handleResize]);
 
-  return useMemo(() => ({
-    ...echart,
-    ref: setContainer,
-    state,
-  }), [echart, setContainer, state]);
+  return useMemo(
+    () => ({
+      ...echart,
+      ref: setContainer,
+      state,
+    }),
+    [echart, setContainer, state],
+  );
 }

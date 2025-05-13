@@ -110,7 +110,7 @@ interface EChartsEventHandlerType {
 }
 
 export interface EChartsInstance {
-  _getEChartsInstance: () => EChartsType | null;
+  _getEChartsInstance: () => EChartsType | null | undefined;
   addSeries: (series: EChartSeriesOption) => void;
   addToGroup: (groupId: string) => void;
   disableZoom: () => void;

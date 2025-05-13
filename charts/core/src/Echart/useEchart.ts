@@ -28,7 +28,6 @@ export function useEchart({
   theme,
 }: EChartHookProps): EChartsInstance {
   const echartsCoreRef = useRef<typeof import('echarts/core') | null>(null);
-  const echartsInstanceRef = useRef<EChartsType | null>(null);
 
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
@@ -50,14 +49,18 @@ export function useEchart({
   };
 
   const getEchartsInstance = useCallback(() => {
-    const echartsInstance = echartsInstanceRef.current;
+    if (!container) {
+      return null;
+    }
+
+    const echartsInstance = echartsCoreRef.current?.getInstanceByDom(container);
     return echartsInstance;
-  }, []);
+  }, [container]);
 
   const getEchartOptions = withInstanceCheck(() => {
     const echartsInstance = getEchartsInstance();
 
-    return echartsInstance!.getOption();
+    return echartsInstance?.getOption();
   });
 
   const setEchartOptions = withInstanceCheck(
@@ -75,7 +78,7 @@ export function useEchart({
        *
        * API docs: https://echarts.apache.org/en/api.html#echartsInstance.setOption
        * */
-      echartsInstance!.setOption(
+      echartsInstance?.setOption(
         options,
         replaceMerge
           ? {
@@ -329,11 +332,6 @@ export function useEchart({
         // Set the initial options on the instance
         newChart.setOption(initialOptions || {});
 
-        // Set the echarts instance ref
-        if (echartsInstance === null) {
-          echartsInstanceRef.current = newChart;
-        }
-
         setReady(true);
       })
       .catch(err => {
@@ -349,7 +347,7 @@ export function useEchart({
     return () => {
       activeHandlersMap.clear();
 
-      if (echartsInstance !== null && !echartsInstance.isDisposed()) {
+      if (!!echartsInstance && !echartsInstance.isDisposed()) {
         echartsInstance.dispose();
       }
     };
@@ -373,37 +371,40 @@ export function useEchart({
     }
   }, [getEchartsInstance, setEchartOptions, theme]);
 
-  return useMemo(() => ({
-    _getEChartsInstance: getEchartsInstance,
-    addSeries,
-    addToGroup,
-    disableZoom,
-    enableZoom,
-    error,
-    hideTooltip,
-    off,
-    on,
-    ready,
-    removeFromGroup,
-    removeSeries,
-    resize,
-    setupZoomSelect,
-    updateOptions,
-  }), [
-    addSeries,
-    addToGroup,
-    disableZoom,
-    enableZoom,
-    error,
-    hideTooltip,
-    off,
-    on,
-    ready,
-    removeFromGroup,
-    removeSeries,
-    resize,
-    setupZoomSelect,
-    updateOptions,
-    getEchartsInstance,
-  ]);
+  return useMemo(
+    () => ({
+      _getEChartsInstance: getEchartsInstance,
+      addSeries,
+      addToGroup,
+      disableZoom,
+      enableZoom,
+      error,
+      hideTooltip,
+      off,
+      on,
+      ready,
+      removeFromGroup,
+      removeSeries,
+      resize,
+      setupZoomSelect,
+      updateOptions,
+    }),
+    [
+      addSeries,
+      addToGroup,
+      disableZoom,
+      enableZoom,
+      error,
+      hideTooltip,
+      off,
+      on,
+      ready,
+      removeFromGroup,
+      removeSeries,
+      resize,
+      setupZoomSelect,
+      updateOptions,
+      getEchartsInstance,
+    ],
+  );
 }
