@@ -1,4 +1,9 @@
+import { type Extension } from '@uiw/react-codemirror';
+
 import { DarkModeProps } from '@leafygreen-ui/lib';
+
+export type CodeMirrorExtension = Extension;
+export type { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 
 export interface CodeEditorProps extends DarkModeProps {
   enableActiveLineHighlighting?: boolean;
