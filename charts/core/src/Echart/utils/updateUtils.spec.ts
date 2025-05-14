@@ -1,13 +1,13 @@
-import { ChartOptions } from '../Chart.types';
+import { EChartOptions } from '../Echart.types';
 
 import {
   getOptionsToUpdateWithAddedSeries,
   getOptionsToUpdateWithRemovedSeries,
 } from './updateUtils';
 
-describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
+describe('@lg-charts/core/Echart/utils/updateUtils', () => {
   test('getOptionsToUpdateWithAddedSeries should return options with an added series', () => {
-    const currentOptions: Partial<ChartOptions> = {
+    const currentOptions: Partial<EChartOptions> = {
       series: [{ id: 'series-1' }],
     };
     const newSeriesId = 'series-2';
@@ -21,7 +21,7 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
   });
 
   test('getOptionsToUpdateWithAddedSeries should return options without an added series if a series with the same id exists', () => {
-    const currentOptions: Partial<ChartOptions> = {
+    const currentOptions: Partial<EChartOptions> = {
       series: [{ id: 'series-1' }],
     };
     const existingSeriesId = 'series-1';
@@ -35,7 +35,7 @@ describe('@lg-charts/core/Chart/hooks/updateUtils', () => {
   });
 
   test('getOptionsToUpdateWithRemovedSeries should return options with a removed series', () => {
-    const currentOptions: Partial<ChartOptions> = {
+    const currentOptions: Partial<EChartOptions> = {
       series: [{ id: 'series-1' }, { id: 'series-2' }],
     };
     const seriesId1 = 'series-1';
