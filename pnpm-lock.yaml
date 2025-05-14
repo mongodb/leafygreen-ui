@@ -1190,8 +1190,8 @@ importers:
         specifier: workspace:^
         version: link:../emotion
       '@leafygreen-ui/hooks':
-        specifier: ^8.4.1
-        version: 8.4.1(react@18.2.0)
+        specifier: workspace:^
+        version: link:../hooks
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../leafygreen-provider
@@ -5457,14 +5457,6 @@ packages:
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
-
-  '@leafygreen-ui/hooks@8.4.1':
-    resolution: {integrity: sha512-WZ1p+HeYqqbWVDGTffkRLDE83K/GbjRDYW8jcSYgznba0NAkOkWT9n/+MJp83rd55iyPhBopOKx7270s/sIH4A==}
-
-  '@leafygreen-ui/lib@14.2.0':
-    resolution: {integrity: sha512-JWHFwtWXY52YL1uNFpHWvRUWVl5tkXQzyq2uEMFHyZQKYUG0of9o5V+Zc6vAXdMvvAhE3DeYvDjTpaQbUk1PrQ==}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0
 
   '@lezer/common@1.2.3':
     resolution: {integrity: sha512-w7ojc8ejBqr2REPsWxJjrMFsA/ysDCFICn8zEOR9mrqzOu2amhITYuLD8ag6XZf0CFXDrhKqw7+tW8cX66NaDA==}
@@ -13839,18 +13831,6 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
 
   '@juggle/resize-observer@3.4.0': {}
-
-  '@leafygreen-ui/hooks@8.4.1(react@18.2.0)':
-    dependencies:
-      '@leafygreen-ui/lib': 14.2.0(react@18.2.0)
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - react
-
-  '@leafygreen-ui/lib@14.2.0(react@18.2.0)':
-    dependencies:
-      lodash: 4.17.21
-      react: 18.2.0
 
   '@lezer/common@1.2.3': {}
 

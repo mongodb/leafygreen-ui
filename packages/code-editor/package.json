@@ -17,7 +17,7 @@
   "dependencies": {
     "@codemirror/language": "^6.11.0",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/hooks": "^8.4.1",
+    "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/leafygreen-provider": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",

@@ -18,6 +18,7 @@ const selectorMap = {
 };
 
 function expectSelectorInDocument(selector: string, inDocument = true) {
+  // TODO: wait for editor view
   const element = editorView.view.dom.querySelector(selector);
 
   if (inDocument) {
