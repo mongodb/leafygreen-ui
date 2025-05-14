@@ -59,6 +59,16 @@ export function useChart({
 
   // SETUP AND ENABLE ZOOM
   useEffect(() => {
+    function enableZoomOnRender() {
+      enableZoom();
+      /**
+       * Enabling zoom triggers a render, so once we enable it, we want to
+       * remove the handler or else there will be an infinite loop of
+       * render -> enable -> render -> etc.
+       */
+      off('rendered', enableZoomOnRender);
+    }
+
     if (ready) {
       setupZoomSelect({
         xAxis: zoomSelect?.xAxis,
@@ -66,19 +76,13 @@ export function useChart({
       });
 
       if (zoomSelect?.xAxis || zoomSelect?.yAxis) {
-        function enableZoomOnRender() {
-          enableZoom();
-          /**
-           * Enabling zoom triggers a render, so once we enable it, we want to
-           * remove the handler or else there will be an infinite loop of
-           * render -> enable -> render -> etc.
-           */
-          off('rendered', enableZoomOnRender);
-        }
-
         on('rendered', enableZoomOnRender);
       }
     }
+
+    return () => {
+      off('rendered', enableZoomOnRender);
+    };
   }, [enableZoom, off, on, ready, setupZoomSelect, zoomSelect]);
 
   useEffect(() => {
@@ -87,26 +91,55 @@ export function useChart({
         onZoomSelect(zoomEventResponse);
       });
     }
-  }, [ready, onZoomSelect, on]);
+
+    return () => {
+      off(EChartEvents.ZoomSelect, zoomEventResponse => {
+        onZoomSelect?.(zoomEventResponse);
+      });
+    };
+  }, [ready, onZoomSelect, on, off]);
+
+  const turnOffTooltipVisOnMouseOverMark = useCallback(
+    (params: any) => {
+      if (params.componentType === 'markPoint') {
+        hideTooltip();
+        on(EChartEvents.MouseMove, hideTooltip);
+      }
+    },
+    [hideTooltip, on],
+  );
+
+  const turnOnTooltipVisOnMouseOutMark = useCallback(
+    (params: any) => {
+      if (params.componentType === 'markPoint') {
+        off(EChartEvents.MouseMove, hideTooltip);
+      }
+    },
+    [hideTooltip, off],
+  );
 
   // We want to hide the tooltip when it's hovered over any `EventMarkerPoint`
   useEffect(() => {
     if (ready) {
-      on('mouseover', e => {
-        if (e.componentType === 'markPoint') {
-          hideTooltip();
-          on('mousemove', hideTooltip);
-        }
-      });
+      on('mouseover', turnOffTooltipVisOnMouseOverMark);
 
       // Stop hiding once the mouse leaves the `EventMarkerPoint`
-      on('mouseout', e => {
-        if (e.componentType === 'markPoint') {
-          off('mousemove', hideTooltip);
-        }
-      });
+      on('mouseout', turnOnTooltipVisOnMouseOutMark);
     }
-  }, [echart, hideTooltip, off, on, ready]);
+
+    return () => {
+      off('mouseover', turnOffTooltipVisOnMouseOverMark);
+      off('mouseout', turnOnTooltipVisOnMouseOutMark);
+    };
+  }, [
+    echart,
+    hideTooltip,
+    off,
+    on,
+    ready,
+    turnOffTooltipVisOnMouseOverMark,
+    turnOnTooltipVisOnMouseOutMark,
+  ]);
 
   const initialRenderRef = useRef(true);
 
