@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import {
   borderRadius,
@@ -100,10 +99,6 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
   } = useChartContext();
   const { theme } = useDarkMode();
 
-  const id = useIdAllocator({
-    prefix: 'threshold-line',
-  });
-
   const name = `threshold-${position}`;
 
   useEffect(() => {
@@ -116,13 +111,13 @@ export function ThresholdLine({ position, label, value }: ThresholdLineProps) {
      * series in something like a ChartTooltip.
      */
     addSeries(
-      getThresholdLineConfig({ id, name, position, theme, label, value }),
+      getThresholdLineConfig({ id: name, name, position, theme, label, value }),
     );
 
     return () => {
-      removeSeries(id);
+      removeSeries(name);
     };
-  }, [addSeries, id, label, name, position, ready, removeSeries, theme, value]);
+  }, [addSeries, label, name, position, ready, removeSeries, theme, value]);
 
   return null;
 }

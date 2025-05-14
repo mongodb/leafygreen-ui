@@ -35,6 +35,16 @@ export function useEchart({
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
+
+  const getEchartsInstance = useCallback(() => {
+    if (!container) {
+      return null;
+    }
+
+    const echartsInstance = echartsCoreRef.current?.getInstanceByDom(container);
+    return echartsInstance;
+  }, [container]);
+
   const withInstanceCheck = <T extends (...args: Array<any>) => any>(fn: T) => {
     return (...args: Parameters<T>): ReturnType<T> => {
       const echartsInstance = getEchartsInstance();
@@ -47,15 +57,6 @@ export function useEchart({
       return fn(...args);
     };
   };
-
-  const getEchartsInstance = useCallback(() => {
-    if (!container) {
-      return null;
-    }
-
-    const echartsInstance = echartsCoreRef.current?.getInstanceByDom(container);
-    return echartsInstance;
-  }, [container]);
 
   const getEchartOptions = withInstanceCheck(() => {
     const echartsInstance = getEchartsInstance();
@@ -80,11 +81,10 @@ export function useEchart({
        * */
       echartsInstance?.setOption(
         options,
-        replaceMerge
-          ? {
-              replaceMerge,
-            }
-          : undefined,
+        {
+          lazyUpdate: true,
+          replaceMerge,
+        }
       );
     },
   );
@@ -330,7 +330,10 @@ export function useEchart({
         });
 
         // Set the initial options on the instance
-        newChart.setOption(initialOptions || {});
+        newChart.setOption(initialOptions || {}, {
+          lazyUpdate: true,
+          replaceMerge: ['xAxis', 'yAxis', 'toolbox', 'tooltip'],
+        });
 
         setReady(true);
       })
