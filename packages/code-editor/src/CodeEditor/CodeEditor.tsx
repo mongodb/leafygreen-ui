@@ -14,10 +14,10 @@ import { useMergeRefs } from '@leafygreen-ui/hooks';
 import {
   type CodeEditorProps,
   type CodeMirrorExtension,
-  type ReactCodeMirrorRef,
+  type CodeMirrorRef,
 } from './CodeEditor.types';
 
-export const CodeEditor = forwardRef<ReactCodeMirrorRef, CodeEditorProps>(
+export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
     {
       enableActiveLineHighlighting = true,
@@ -26,19 +26,27 @@ export const CodeEditor = forwardRef<ReactCodeMirrorRef, CodeEditorProps>(
       enableLineNumbers = true,
       enableLineWrapping = true,
       forceParsing: forceParsingProp = false,
+      intialValue,
+      onChange: onChangeProp,
       placeholder,
       readOnly = false,
-      value: valueProp,
       ...rest
     },
     forwardedRef,
   ) => {
-    const [value, setValue] = useState(valueProp || '');
-    const editorRef = useRef<ReactCodeMirrorRef>(null);
+    const [value, setValue] = useState(intialValue || '');
+    const editorRef = useRef<CodeMirrorRef>(null);
 
-    const onChange = useCallback((val: string) => {
-      setValue(val);
-    }, []);
+    const onChange = useCallback(
+      (val: string) => {
+        setValue(val);
+
+        if (onChangeProp) {
+          onChangeProp(val);
+        }
+      },
+      [onChangeProp],
+    );
 
     const onCreateEditor = useCallback(
       (editorView: EditorView) => {
