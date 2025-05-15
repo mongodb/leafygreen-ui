@@ -19,10 +19,10 @@ export default {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
+    defaultValue: '',
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
-    initialValue: 'console.log("Hello, world!");',
   },
   argTypes: {
     enableActiveLineHighlighting: {
@@ -46,7 +46,7 @@ export default {
     readOnly: {
       control: { type: 'boolean' },
     },
-    initialValue: {
+    defaultValue: {
       control: { type: 'text' },
     },
   },
