@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { forceParsing } from '@codemirror/language';
 import { hyperLink } from '@uiw/codemirror-extensions-hyper-link';
-import CodeMirror, { EditorView } from '@uiw/react-codemirror';
+import CodeMirror, { Compartment, EditorView } from '@uiw/react-codemirror';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
@@ -56,13 +56,22 @@ export const CodeEditor = forwardRef<ReactCodeMirrorRef, CodeEditorProps>(
     const extensions = useMemo(() => {
       const extensions: Array<CodeMirrorExtension> = [];
 
-      if (enableClickableUrls) {
-        extensions.push(hyperLink);
-      }
+      /**
+       * CodeMirror state is immutable. Once configuration is set, the entire
+       * state would need to be updated to update one facet. Compartments allow
+       * us to dynamically change parts of the configuration after
+       * initialization, without needing to recreate the entire editor state.
+       * See https://codemirror.net/examples/config/#dynamic-configuration
+       */
+      const hyperLinkCompartment = new Compartment();
+      const lineWrappingCompartment = new Compartment();
 
-      if (enableLineWrapping) {
-        extensions.push(EditorView.lineWrapping);
-      }
+      extensions.push(
+        hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
+        lineWrappingCompartment.of(
+          enableLineWrapping ? EditorView.lineWrapping : [],
+        ),
+      );
 
       return extensions;
     }, [enableClickableUrls, enableLineWrapping]);
