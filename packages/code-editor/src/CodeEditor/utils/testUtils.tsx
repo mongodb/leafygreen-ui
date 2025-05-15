@@ -9,13 +9,6 @@ import {
   CodeMirrorView,
 } from '..';
 
-global.MutationObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-  takeRecords: jest.fn().mockReturnValue([]),
-}));
-
 let editorView: CodeMirrorView;
 
 function getBySelector(
