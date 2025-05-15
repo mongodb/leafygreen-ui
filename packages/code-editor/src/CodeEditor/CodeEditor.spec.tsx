@@ -120,7 +120,7 @@ function renderEditor(props: Partial<CodeEditorProps> = {}) {
 
 describe('packages/code-editor', () => {
   test('Renders value in editor', () => {
-    const { container } = renderEditor({ intialValue: 'content' });
+    const { container } = renderEditor({ defaultValue: 'content' });
     expect(container).toHaveTextContent('content');
   });
 
@@ -151,7 +151,7 @@ describe('packages/code-editor', () => {
   });
 
   test('Line numbers render when enabled', () => {
-    renderEditor({ intialValue: 'content', enableLineNumbers: true });
+    renderEditor({ defaultValue: 'content', enableLineNumbers: true });
     expect(
       editor.getBySelector(EditorSelectors.GutterElement, {
         text: '1',

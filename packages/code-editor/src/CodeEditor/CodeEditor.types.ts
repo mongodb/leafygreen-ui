@@ -7,6 +7,10 @@ export type CodeMirrorRef = ReactCodeMirrorRef;
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
+   * Initial value to render in the editor.
+   */
+  defaultValue?: string;
+  /**
    * Enables highlighting of the active line.
    */
   enableActiveLineHighlighting?: boolean;
@@ -34,10 +38,6 @@ export interface CodeEditorProps extends DarkModeProps {
    * This should only be used in exceptional cases.
    */
   forceParsing?: boolean;
-  /**
-   * Initial value to render in the editor.
-   */
-  intialValue?: string;
   /**
    * Callback that receives the updated editor value when changes are made.
    */

@@ -20,13 +20,13 @@ import {
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
     {
+      defaultValue,
       enableActiveLineHighlighting = true,
       enableClickableUrls = true,
       enableCodeFolding = true,
       enableLineNumbers = true,
       enableLineWrapping = true,
       forceParsing: forceParsingProp = false,
-      intialValue,
       onChange: onChangeProp,
       placeholder,
       readOnly = false,
@@ -34,7 +34,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     },
     forwardedRef,
   ) => {
-    const [value, setValue] = useState(intialValue || '');
+    const [value, setValue] = useState(defaultValue || '');
     const editorRef = useRef<CodeMirrorRef>(null);
 
     const onChange = useCallback(
