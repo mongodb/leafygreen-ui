@@ -97,6 +97,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         basicSetup={{
           allowMultipleSelections: true,
           foldGutter: enableCodeFolding,
+          highlightActiveLine: enableActiveLineHighlighting,
           highlightActiveLineGutter: enableActiveLineHighlighting,
           lineNumbers: enableLineNumbers,
         }}
