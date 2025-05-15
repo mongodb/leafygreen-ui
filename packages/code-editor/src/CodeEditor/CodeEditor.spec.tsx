@@ -4,6 +4,13 @@ import { act } from '@testing-library/react';
 import { renderCodeEditor } from './utils/testUtils';
 import { CodeEditorSelectors } from '.';
 
+global.MutationObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+  takeRecords: jest.fn().mockReturnValue([]),
+}));
+
 jest.mock('@codemirror/language', () => {
   const actualModule = jest.requireActual('@codemirror/language');
   return {
