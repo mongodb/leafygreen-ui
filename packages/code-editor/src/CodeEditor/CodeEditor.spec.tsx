@@ -1,6 +1,6 @@
 import React from 'react';
-// import { forceParsing } from '@codemirror/language';
-import { act, render, waitFor } from '@testing-library/react';
+import { forceParsing } from '@codemirror/language';
+import { act, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { EditorView } from '@uiw/react-codemirror';
 
@@ -121,13 +121,13 @@ function renderEditor(props: Partial<CodeEditorProps> = {}) {
   return { container };
 }
 
-// jest.mock('@codemirror/language', () => {
-//   const actualModule = jest.requireActual('@codemirror/language');
-//   return {
-//     ...actualModule,
-//     forceParsing: jest.fn(),
-//   };
-// });
+jest.mock('@codemirror/language', () => {
+  const actualModule = jest.requireActual('@codemirror/language');
+  return {
+    ...actualModule,
+    forceParsing: jest.fn(),
+  };
+});
 
 describe('packages/code-editor', () => {
   test('Renders default value in editor', () => {
@@ -252,10 +252,8 @@ describe('packages/code-editor', () => {
     );
   });
 
-  // test('the forceParsing() method is called when enabled', async () => {
-  //   renderEditor({ forceParsing: true });
-  //   await waitFor(() => {
-  //     expect(forceParsing as jest.Mock).toHaveBeenCalledTimes(1);
-  //   });
-  // });
+  test('the forceParsing() method is called when enabled', async () => {
+    renderEditor({ forceParsing: true, defaultValue: 'content' });
+    expect(forceParsing as jest.Mock).toHaveBeenCalledTimes(1);
+  });
 });
