@@ -1,9 +1,28 @@
-import type { Extension, ReactCodeMirrorRef } from '@uiw/react-codemirror';
+import type {
+  EditorState,
+  EditorView,
+  Extension,
+  ReactCodeMirrorRef,
+} from '@uiw/react-codemirror';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export type CodeMirrorExtension = Extension;
 export type CodeMirrorRef = ReactCodeMirrorRef;
+export type CodeMirrorState = EditorState;
+export type CodeMirrorView = EditorView;
+
+export const CodeEditorSelectors = {
+  ActiveLine: '.cm-activeLine',
+  ActiveLineGutter: '.cm-activeLineGutter',
+  Content: '.cm-content',
+  FoldGutter: '.cm-foldGutter',
+  GutterElement: '.cm-gutterElement',
+  HyperLink: '.cm-hyper-link-icon',
+  LineWrapping: '.cm-lineWrapping',
+} as const;
+export type CodeEditorSelectors =
+  (typeof CodeEditorSelectors)[keyof typeof CodeEditorSelectors];
 
 export interface CodeEditorProps extends DarkModeProps {
   /**
