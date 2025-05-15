@@ -22,7 +22,7 @@ export default {
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
-    value: 'console.log("Hello, world!");',
+    initialValue: 'console.log("Hello, world!");',
   },
   argTypes: {
     enableActiveLineHighlighting: {
@@ -46,7 +46,7 @@ export default {
     readOnly: {
       control: { type: 'boolean' },
     },
-    value: {
+    initialValue: {
       control: { type: 'text' },
     },
   },
