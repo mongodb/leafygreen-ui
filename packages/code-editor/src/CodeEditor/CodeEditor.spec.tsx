@@ -31,7 +31,7 @@ describe('packages/code-editor', () => {
       editor.getBySelector(CodeEditorSelectors.Content),
     ).not.toHaveTextContent('new content');
     act(() => {
-      editor.userEvent.type('new content');
+      editor.interactions.insertText('new content');
     });
     expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
       'new content',

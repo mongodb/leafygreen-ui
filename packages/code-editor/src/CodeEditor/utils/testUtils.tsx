@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { ChangeSpec } from '@uiw/react-codemirror';
 
 import {
   CodeEditor,
@@ -89,10 +89,22 @@ function isLineWrappingEnabled() {
   return !!queryBySelector(CodeEditorSelectors.LineWrapping);
 }
 
-function type(text: string) {
-  const content = getBySelector(CodeEditorSelectors.Content);
-  userEvent.click(content);
-  userEvent.type(content, text);
+function insertText(text: string, options?: { from?: number; to?: number }) {
+  if (!editorView) {
+    throw new Error('Editor view is not initialized');
+  }
+
+  const changes: ChangeSpec = { insert: text, from: options?.from || 0 };
+
+  if (options?.to) {
+    changes.to = options.to;
+  }
+
+  const transaction = editorView.state.update({
+    changes,
+  });
+
+  editorView.dispatch(transaction);
 }
 
 export const editor = {
@@ -100,8 +112,8 @@ export const editor = {
   queryBySelector,
   isLineWrappingEnabled,
   isReadOnly,
-  userEvent: {
-    type,
+  interactions: {
+    insertText,
   },
 };
 
