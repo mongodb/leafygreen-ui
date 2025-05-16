@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
-import { ChartOptions, X_AXIS_ID, Y_AXIS_ID } from '../Chart';
+import { ChartOptions } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { ChartGridProps } from './ChartGrid.types';
@@ -37,26 +37,21 @@ export function ChartGrid({
       },
     });
     updatedOptions.xAxis = {
-      id: X_AXIS_ID,
       ...getUpdatedLineOptions(!!vertical),
     };
     updatedOptions.yAxis = {
-      id: Y_AXIS_ID,
       ...getUpdatedLineOptions(!!horizontal),
     };
-    updateOptions(updatedOptions, ['xAxis', 'yAxis']);
+    updateOptions(updatedOptions);
 
     return () => {
       /**
        * Hides the grid lines when the component is unmounted.
        */
-      updateOptions(
-        {
-          xAxis: { id: X_AXIS_ID, ...unsetGridOptions },
-          yAxis: { id: Y_AXIS_ID, ...unsetGridOptions },
-        },
-        ['xAxis', 'yAxis'],
-      );
+      updateOptions({
+        xAxis: unsetGridOptions,
+        yAxis: unsetGridOptions,
+      });
     };
   }, [horizontal, ready, theme, updateOptions, vertical]);
 

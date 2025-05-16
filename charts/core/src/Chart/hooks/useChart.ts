@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useEchart } from '../../Echart';
 import { EChartEvents } from '../../Echart';
@@ -14,7 +14,7 @@ export function useChart({
   theme,
   state,
 }: ChartHookProps): ChartInstance {
-  const initialOptions = getDefaultChartOptions(theme);
+  const initialOptions = useMemo(() => getDefaultChartOptions(theme), [theme]);
 
   /**
    * It is necessary for `useEchart` to know when the container exists
@@ -23,6 +23,13 @@ export function useChart({
    * element only gets populated after render.
    */
   const [container, setContainer] = useState<HTMLDivElement | null>(null);
+  // const containerRef = useRef<HTMLDivElement | null>(null);
+  // const [container, setContainer, _] = useStateRef<HTMLDivElement | null>(null);
+
+  // const setContainer = useCallback((node: HTMLDivElement | null) => {
+  //   containerRef.current = node;
+  // }, []);
+
   const echart = useEchart({
     container,
     initialOptions,
@@ -48,19 +55,24 @@ export function useChart({
   }, [ready, onChartReady]);
 
   useEffect(() => {
-    if (ready) {
-      if (groupId) {
-        addToGroup(groupId);
-      }
-
-      return () => {
-        removeFromGroup();
-      };
+    if (!ready) {
+      return;
     }
+
+    if (!groupId) {
+      return;
+    }
+
+    addToGroup(groupId);
+
+    return () => {
+      removeFromGroup();
+    };
   }, [ready, groupId, addToGroup, removeFromGroup]);
 
   // SETUP AND ENABLE ZOOM
   useEffect(() => {
+    console.info('setup/enable zoom', ready);
     if (ready) {
       setupZoomSelect({
         xAxis: zoomSelect?.xAxis,
@@ -82,7 +94,7 @@ export function useChart({
       }
     }
   }, [enableZoom, off, on, ready, setupZoomSelect, zoomSelect]);
-
+  // enableZoom, off, on, ready, setupZoomSelect, zoomSelect
   useEffect(() => {
     if (ready && onZoomSelect) {
       on(EChartEvents.ZoomSelect, zoomEventResponse => {
@@ -155,8 +167,8 @@ export function useChart({
         resizeObserver.disconnect();
       };
     }
-  }, [ready, container, handleResize]);
-
+  }, [container, ready, handleResize]);
+  // console.log('useChart', container)
   return {
     ...echart,
     ref: setContainer,

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { colors } from '@lg-charts/colors';
 import type { EChartsType } from 'echarts/core';
+import isEqual from 'lodash/isEqual';
 
-import { TOOLBOX_ID } from '../Chart';
-import * as updateUtils from '../Chart/hooks/updateUtils';
+import { usePrevious } from '@leafygreen-ui/hooks';
 
 import {
   EChartEvents,
@@ -13,6 +13,7 @@ import {
   type EChartZoomSelectionEvent,
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
+import * as updateUtils from './updateUtils';
 
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
@@ -27,141 +28,106 @@ export function useEchart({
   const echartsCoreRef = useRef<typeof import('echarts/core') | null>(null);
   const echartsInstanceRef = useRef<EChartsType | null>(null);
 
+  const [options, setOptions] = useState<EChartOptions>(initialOptions || {});
+  const previousOptions = usePrevious(options);
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
 
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
-  const withInstanceCheck = <T extends (...args: Array<any>) => any>(fn: T) => {
-    return (...args: Parameters<T>): ReturnType<T> => {
-      const echartsInstance = getEchartsInstance();
-
-      if (!echartsInstance) {
-        console.error('Echart instance not initialized');
-        return undefined as ReturnType<T>;
+  const addSeries: EChartsInstance['addSeries'] = useCallback(
+    data => {
+      if (!echartsInstanceRef.current) {
+        console.error(
+          'Cannot add series because Echart instance not initialized',
+          echartsInstanceRef.current,
+        );
+        return;
       }
+      console.log('adding series', data);
+      setOptions(prevOptions => {
+        const updatedOptions = updateUtils.addSeries(prevOptions, data);
+        return updatedOptions;
+      });
+    },
+    [setOptions],
+  );
 
-      return fn(...args);
-    };
-  };
-
-  const getEchartsInstance = useCallback(() => {
-    const echartsInstance = echartsInstanceRef.current;
-    return echartsInstance;
-  }, []);
-
-  const getEchartOptions = withInstanceCheck(() => {
-    const echartsInstance = echartsInstanceRef.current;
-
-    if (!echartsInstance) {
-      return;
-    }
-
-    return echartsInstance.getOption();
-  });
-
-  const setEchartOptions = withInstanceCheck(
-    (options: Partial<EChartOptions>, replaceMerge?: Array<string>) => {
-      const echartsInstance = echartsInstanceRef.current;
-
-      if (!echartsInstance) {
+  const removeSeries: EChartsInstance['removeSeries'] = useCallback(
+    name => {
+      if (!echartsInstanceRef.current) {
         return;
       }
 
-      /**
-       * ECharts has a concept of "component main types" which are the properties under the root option tree
-       * in the configuration item manual: https://echarts.apache.org/en/option.html#title
-       *
-       * e.g. 'series', 'xAxis', 'tooltip', etc.
-       *
-       * The `replaceMerge` option is used to to achieve targeted adding, updating, and removing of the options
-       * in a given ECharts instance.
-       *
-       * API docs: https://echarts.apache.org/en/api.html#echartsInstance.setOption
-       * */
-      echartsInstance.setOption(
-        options,
-        replaceMerge
-          ? {
-              replaceMerge,
-            }
-          : undefined,
-      );
+      setOptions(prevOptions => {
+        const updatedOptions = updateUtils.removeSeries(prevOptions, name);
+        return updatedOptions;
+      });
     },
+    [setOptions],
   );
 
-  const addSeries: EChartsInstance['addSeries'] = withInstanceCheck(data => {
-    const currentOptions = getEchartOptions();
-    const newSeriesOptions = updateUtils.getOptionsToUpdateWithAddedSeries(
-      currentOptions,
-      data,
-    );
-    setEchartOptions(newSeriesOptions, ['series']);
-  });
-
-  const removeSeries: EChartsInstance['removeSeries'] = withInstanceCheck(
-    id => {
-      const currentOptions = getEchartOptions();
-      const newSeriesOptions = updateUtils.getOptionsToUpdateWithRemovedSeries(
-        currentOptions,
-        id,
-      );
-      setEchartOptions(newSeriesOptions, ['series']);
+  const updateOptions: EChartsInstance['updateOptions'] = useCallback(
+    options => {
+      if (!echartsInstanceRef.current) {
+        console.error(
+          'Cannot update options because Echart instance not initialized',
+          echartsInstanceRef.current,
+        );
+        return;
+      }
+      console.log('updating options', options);
+      setOptions(prevOptions => {
+        const updatedOptions = updateUtils.updateOptions(prevOptions, options);
+        return updatedOptions;
+      });
     },
+    [setOptions],
   );
 
-  const updateOptions: EChartsInstance['updateOptions'] = withInstanceCheck(
-    (options, replaceMerge) => {
-      const mergeableOptions = {
-        ...options,
-      };
-      setEchartOptions(mergeableOptions, replaceMerge);
-    },
-  );
-
-  const updateDataZoom: EChartsInstance['updateOptions'] = withInstanceCheck(
-    ({ xAxisIndex, yAxisIndex }) => {
-      const mergeableOptions = {
-        toolbox: {
-          id: TOOLBOX_ID,
-          feature: {
-            dataZoom: {
-              xAxisIndex,
-              yAxisIndex,
-            },
-          },
-        },
-      };
-      setEchartOptions(mergeableOptions, ['toolbox']);
-    },
-  );
-
-  const addToGroup: EChartsInstance['addToGroup'] = withInstanceCheck(
+  const addToGroup: EChartsInstance['addToGroup'] = useCallback(
     (groupId: string) => {
       // echartsCoreRef.current should exist if instance does, but checking for extra safety
       if (!echartsCoreRef.current) {
         return;
       }
 
-      const echartsInstance = getEchartsInstance();
+      const echartsInstance = echartsInstanceRef.current;
+
+      if (!echartsInstance) {
+        console.error(
+          'Cannot add to group because Echart instance not initialized',
+          echartsInstanceRef.current,
+        );
+        return;
+      }
 
       if ((echartsInstance as EChartsType).group !== groupId) {
         (echartsInstance as EChartsType).group = groupId;
         echartsCoreRef.current.connect(groupId);
       }
     },
+    [],
   );
 
-  const removeFromGroup: EChartsInstance['removeFromGroup'] = withInstanceCheck(
-    () => {
-      const echartsInstance = getEchartsInstance();
+  const removeFromGroup: EChartsInstance['removeFromGroup'] =
+    useCallback(() => {
+      const echartsInstance = echartsInstanceRef.current;
+
+      if (!echartsInstance) {
+        console.error(
+          'Cannot remove from group because Echart instance not initialized',
+          echartsInstanceRef.current,
+        );
+        return;
+      }
+
       (echartsInstance as EChartsType).group = '';
-    },
-  );
+    }, []);
 
-  const clearDataZoom = withInstanceCheck((params: any) => {
-    const echartsInstance = getEchartsInstance();
+  const clearDataZoom = useCallback((params: any) => {
+    const echartsInstance = echartsInstanceRef.current;
 
     /**
      * If start is not 0% or end is not 100%, the 'dataZoom' event was
@@ -177,48 +143,55 @@ export function useEchart({
         end: 100, // percentage of ending position
       });
     }
-  });
+  }, []);
 
-  const enableZoom = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
-
+  const enableZoom = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
+    console.log('enabling zoom', echartsInstance);
     echartsInstance?.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: true,
     });
-  });
+  }, []);
 
-  const disableZoom = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
+  const disableZoom = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
 
     echartsInstance?.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: false,
     });
-  });
+  }, []);
 
-  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = withInstanceCheck(
+  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
     ({ xAxis, yAxis }) => {
-      const echartsInstance = getEchartsInstance();
+      const echartsInstance = echartsInstanceRef.current;
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       const xAxisIndex: number | string = xAxis ? 0 : 'none';
       const yAxisIndex: number | string = yAxis ? 0 : 'none';
 
-      updateDataZoom({
-        xAxisIndex,
-        yAxisIndex,
+      updateOptions({
+        toolbox: {
+          feature: {
+            dataZoom: {
+              xAxisIndex,
+              yAxisIndex,
+            },
+          },
+        },
       });
 
       echartsInstance?.off('dataZoom', clearDataZoom); // prevent adding dupes
       echartsInstance?.on('dataZoom', clearDataZoom);
     },
+    [clearDataZoom, updateOptions],
   );
 
-  const off: EChartsInstance['off'] = withInstanceCheck((action, callback) => {
-    const echartsInstance = getEchartsInstance();
+  const off: EChartsInstance['off'] = useCallback((action, callback) => {
+    const echartsInstance = echartsInstanceRef.current;
 
     switch (action) {
       case EChartEvents.ZoomSelect: {
@@ -233,10 +206,18 @@ export function useEchart({
         activeHandlers.current.delete(`${action}-${callback.toString()}`);
       }
     }
-  });
+  }, []);
 
-  const on: EChartsInstance['on'] = withInstanceCheck((action, callback) => {
-    const echartsInstance = getEchartsInstance();
+  const on: EChartsInstance['on'] = useCallback((action, callback) => {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      console.error(
+        'Cannot add event handler because Echart instance not initialized',
+        echartsInstanceRef.current,
+      );
+      return;
+    }
 
     // Create a unique key for this handler
     const handlerKey = `${action}-${callback.toString()}`;
@@ -287,22 +268,22 @@ export function useEchart({
 
       default: {
         activeHandlers.current.set(handlerKey, callback);
-        echartsInstance?.on(action, callback);
+        echartsInstance?.on(action, callback as (...args: any) => void);
       }
     }
-  });
+  }, []);
 
-  const hideTooltip = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
+  const hideTooltip = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
     echartsInstance?.dispatchAction({
       type: 'hideTip',
     });
-  });
+  }, []);
 
-  const resize = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
+  const resize = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
     echartsInstance?.resize();
-  });
+  }, []);
 
   /**
    * CHART INITIALIZATION ---------------------
@@ -311,20 +292,35 @@ export function useEchart({
    */
   useEffect(() => {
     const activeHandlersMap = activeHandlers.current;
-    const echartsInstance = getEchartsInstance();
 
     setError(null);
 
-    if (!container || !!echartsInstance) return;
+    if (!container) {
+      console.warn('Container is null, not initializing ECharts');
+      return;
+    }
+
+    if (
+      echartsInstanceRef.current &&
+      echartsInstanceRef.current.getDom() === container
+    ) {
+      return;
+    }
 
     initializeEcharts()
       .then(echartsCore => {
-        echartsCoreRef.current = echartsCore;
+        if (!container) return;
 
-        if (echartsInstance) {
+        if (
+          echartsInstanceRef.current &&
+          echartsInstanceRef.current.getDom() === container
+        ) {
           return;
         }
 
+        echartsCoreRef.current = echartsCore;
+
+        console.info('Initializing ECharts', container);
         // Init an echart instance
         const newChart = echartsCoreRef.current.init(container, null, {
           devicePixelRatio: window.devicePixelRatio || 1,
@@ -350,13 +346,26 @@ export function useEchart({
       });
 
     return () => {
-      activeHandlersMap.clear();
+      console.error(
+        'unmounting echart instance',
+        echartsInstanceRef.current,
+        container,
+      );
+      const echartsInstance = echartsInstanceRef.current;
+      const instanceContainer = echartsInstance?.getDom();
 
-      if (echartsInstance) {
-        (echartsInstance as EChartsType).dispose();
+      if (
+        echartsInstance &&
+        !echartsInstance.isDisposed() &&
+        instanceContainer === container
+      ) {
+        console.log('cleanup: disposing echart instance', container);
+        activeHandlersMap.clear();
+        echartsInstance.dispose();
+        echartsInstanceRef.current = null;
       }
     };
-  }, [container, getEchartsInstance, initialOptions]);
+  }, [container, initialOptions]);
 
   /**
    * SETTING THEME ---------------------
@@ -366,18 +375,60 @@ export function useEchart({
    * for updating the theme if the theme changes.
    */
   useEffect(() => {
-    const echartsInstance = getEchartsInstance();
+    if (!ready) {
+      return;
+    }
 
-    if (echartsInstance) {
-      const mergeableOptions = {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    setOptions(prevOptions => {
+      const updatedOptions = {
+        ...prevOptions,
         color: colors[theme],
       };
-      setEchartOptions(mergeableOptions);
+      return updatedOptions;
+    });
+  }, [ready, theme]);
+
+  // useEffect(() => {
+  //   if (ready && !echartsInstanceRef.current) {
+  //     console.error('ready is true but echartsInstanceRef is null', container);
+  //   }
+  // }, [container, ready]);
+
+  /**
+   *
+   */
+  useEffect(() => {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      console.warn(
+        'Cannot update options because echarts instance not initialized',
+      );
+      return;
     }
-  }, [getEchartsInstance, setEchartOptions, theme]);
+
+    if (isEqual(options, previousOptions)) {
+      console.warn(
+        'Cannot update options because options are equal',
+        options,
+        previousOptions,
+      );
+      return;
+    }
+
+    console.info('Updating options', options, previousOptions);
+    echartsInstance.setOption(options, {
+      notMerge: true,
+    });
+  }, [options, previousOptions]);
 
   return {
-    _getEChartsInstance: getEchartsInstance,
     addSeries,
     addToGroup,
     disableZoom,

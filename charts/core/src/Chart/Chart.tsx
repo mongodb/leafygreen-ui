@@ -52,7 +52,7 @@ export function Chart({
   const { attributes, listeners, setNodeRef, transform, transition, items } =
     useSortable({ id: dragId });
   const isDraggable = !!(items.length && dragId);
-
+  // console.log('CHART', chart.ref);
   return (
     <LeafyGreenProvider darkMode={darkModeProp}>
       <ChartProvider chart={chart}>

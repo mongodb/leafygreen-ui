@@ -70,7 +70,6 @@ describe('@lg-echarts/core/hooks/useChart', () => {
   test('should return a chart instance with the correct properties', async () => {
     const { result } = await setupHook();
 
-    expect(result.current).toHaveProperty('_getEChartsInstance');
     expect(result.current).toHaveProperty('addSeries');
     expect(result.current).toHaveProperty('addToGroup');
     expect(result.current).toHaveProperty('disableZoom');

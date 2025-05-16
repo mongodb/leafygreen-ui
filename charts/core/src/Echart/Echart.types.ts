@@ -8,7 +8,7 @@ import type {
   ToolboxComponentOption,
   TooltipComponentOption,
 } from 'echarts/components';
-import type { ComposeOption, EChartsType } from 'echarts/core';
+import type { ComposeOption } from 'echarts/core';
 
 import { Theme } from '@leafygreen-ui/lib';
 
@@ -107,7 +107,6 @@ interface EChartsEventHandlerType {
 }
 
 export interface EChartsInstance {
-  _getEChartsInstance: () => EChartsType | null;
   addSeries: (series: EChartSeriesOption) => void;
   addToGroup: (groupId: string) => void;
   disableZoom: () => void;
@@ -118,13 +117,10 @@ export interface EChartsInstance {
   on: EChartsEventHandlerType;
   ready: boolean;
   removeFromGroup: () => void;
-  removeSeries: (id: string) => void;
+  removeSeries: (name: string) => void;
   resize: () => void;
   setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
-  updateOptions: (
-    options: Omit<Partial<EChartOptions>, 'series'>,
-    replaceMerge?: Array<string>,
-  ) => void;
+  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
 }
 
 export interface EChartHookProps {

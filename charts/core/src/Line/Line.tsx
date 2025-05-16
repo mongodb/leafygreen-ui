@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { colors } from '@lg-charts/colors';
 import { useSeriesContext } from '@lg-charts/series-provider';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
@@ -17,8 +16,6 @@ export function Line({ name, data }: LineProps) {
   } = useChartContext();
   const { getSeriesIndex, isChecked } = useSeriesContext();
 
-  const id = useIdAllocator({ prefix: 'line' });
-
   const themedColors = colors[theme];
   const colorIndex = getSeriesIndex(name) % themedColors.length; // loop through colors if more lines than available colors
   const color = themedColors[colorIndex];
@@ -26,12 +23,13 @@ export function Line({ name, data }: LineProps) {
   const isVisible = isChecked(name);
 
   useEffect(() => {
+    // console.log({ ready })
     if (!ready) return;
 
     if (isVisible) {
+      console.log('adding line series', name);
       addSeries({
         ...defaultLineOptions,
-        id,
         name,
         data,
         lineStyle: {
@@ -44,7 +42,7 @@ export function Line({ name, data }: LineProps) {
         },
       });
     } else {
-      removeSeries(id);
+      removeSeries(name);
     }
 
     return () => {
@@ -52,9 +50,9 @@ export function Line({ name, data }: LineProps) {
        * Remove the series when the component unmounts to make sure the series
        * is removed when a `Line` is hidden.
        */
-      removeSeries(id);
+      removeSeries(name);
     };
-  }, [addSeries, color, data, id, isVisible, name, ready, removeSeries, theme]);
+  }, [addSeries, color, data, isVisible, name, ready, removeSeries, theme]);
 
   return null;
 }

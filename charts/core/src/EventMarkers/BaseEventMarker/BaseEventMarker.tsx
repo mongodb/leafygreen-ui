@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../../ChartContext';
@@ -24,8 +23,6 @@ export function BaseEventMarker({
   } = useChartContext();
   const { theme } = useDarkMode();
 
-  const id = useIdAllocator({ prefix: 'event-marker' });
-
   const name =
     type === 'line'
       ? `event-marker-${position}`
@@ -41,15 +38,14 @@ export function BaseEventMarker({
      * series in something like a ChartTooltip.
      */
     addSeries(
-      getMarkConfig({ id, name, theme, label, message, level, position, type }),
+      getMarkConfig({ name, theme, label, message, level, position, type }),
     );
 
     return () => {
-      removeSeries(id);
+      removeSeries(name);
     };
   }, [
     addSeries,
-    id,
     label,
     level,
     message,
