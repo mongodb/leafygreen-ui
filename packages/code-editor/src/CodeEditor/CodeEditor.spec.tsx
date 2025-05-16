@@ -153,7 +153,7 @@ describe('packages/code-editor', () => {
     );
   });
 
-  test('the forceParsing() method is called when enabled', async () => {
+  test('the forceParsing() method is called when enabled', () => {
     renderCodeEditor({ forceParsing: true, defaultValue: 'content' });
     expect(forceParsing as jest.Mock).toHaveBeenCalledTimes(1);
   });
