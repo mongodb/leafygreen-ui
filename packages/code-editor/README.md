@@ -106,9 +106,9 @@ Has the following interface:
   isLineWrappingEnabled(): boolean;
 
   // Group of actions that can be performed on the editor.
-  userEvent: {
-    // Type into the editor
-    type(text: string): undefined;
+  interactions: {
+    // Insert text into the editor
+    insertText(text: string, options?: { to?: number; from?: number; }): undefined;
   }
 }
 ```
@@ -154,7 +154,7 @@ test('Updates value on when user types', () => {
   ).not.toHaveTextContent('new content');
 
   act(() => {
-    editor.userEvent.type('new content');
+    editor.interactions.insertText('new content');
   });
 
   expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
