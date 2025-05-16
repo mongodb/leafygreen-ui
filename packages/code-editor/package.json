@@ -1,0 +1,35 @@
+{
+  "name": "@leafygreen-ui/code-editor",
+  "version": "0.1.0",
+  "description": "LeafyGreen UI Kit Code Editor",
+  "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg build-package",
+    "tsc": "lg build-ts",
+    "docs": "lg build-tsdoc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@codemirror/language": "^6.11.0",
+    "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
+    "@uiw/react-codemirror": "^4.23.10"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code-editor",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
+}
