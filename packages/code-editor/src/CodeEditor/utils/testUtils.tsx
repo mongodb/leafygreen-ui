@@ -95,12 +95,14 @@ function type(text: string) {
   userEvent.type(content, text);
 }
 
-const editor = {
+export const editor = {
   getBySelector,
   queryBySelector,
   isLineWrappingEnabled,
   isReadOnly,
-  type,
+  userEvent: {
+    type,
+  },
 };
 
 export function renderCodeEditor(props: Partial<CodeEditorProps> = {}) {
