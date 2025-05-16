@@ -7,7 +7,7 @@ import {
   CodeEditorProps,
   CodeEditorSelectors,
   CodeMirrorView,
-} from '..';
+} from '.';
 
 let editorView: CodeMirrorView;
 
