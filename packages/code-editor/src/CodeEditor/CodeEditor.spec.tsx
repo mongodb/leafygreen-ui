@@ -25,13 +25,13 @@ describe('packages/code-editor', () => {
     expect(container).toHaveTextContent('content');
   });
 
-  test('Updates value on when user types', async () => {
+  test('Updates value on when user types', () => {
     const { editor } = renderCodeEditor();
     expect(
       editor.getBySelector(CodeEditorSelectors.Content),
     ).not.toHaveTextContent('new content');
     act(() => {
-      editor.type('new content');
+      editor.userEvent.type('new content');
     });
     expect(editor.getBySelector(CodeEditorSelectors.Content)).toHaveTextContent(
       'new content',
