@@ -1,4 +1,5 @@
 export { CodeEditor } from './CodeEditor';
+export { renderCodeEditor } from './CodeEditor.testUtils';
 export {
   type CodeEditorProps,
   CodeEditorSelectors,
@@ -7,4 +8,3 @@ export {
   type CodeMirrorState,
   type CodeMirrorView,
 } from './CodeEditor.types';
-export { renderCodeEditor } from './utils/testUtils';
