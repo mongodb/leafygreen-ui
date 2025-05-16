@@ -1,3 +1,9 @@
+import { renderCodeEditor } from './CodeEditor';
+
+export const TestUtils = {
+  renderCodeEditor,
+};
+
 export {
   CodeEditor,
   type CodeEditorProps,
@@ -6,5 +12,4 @@ export {
   type CodeMirrorRef,
   type CodeMirrorState,
   type CodeMirrorView,
-  renderCodeEditor,
 } from './CodeEditor';

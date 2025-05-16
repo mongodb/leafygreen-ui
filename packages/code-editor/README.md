@@ -118,6 +118,10 @@ Has the following interface:
 #### Test selector has rendered
 
 ```ts
+import { TestUtils } from '@leafygreen-ui/code-editor';
+
+const { renderEditor } = TestUtils;
+
 test('Line numbers rendered', () => {
   const { editor } = renderCodeEditor({
     defaultValue: 'content',
@@ -134,6 +138,10 @@ test('Line numbers rendered', () => {
 #### Test selector has not rendered
 
 ```ts
+import { TestUtils } from '@leafygreen-ui/code-editor';
+
+const { renderEditor } = TestUtils;
+
 test('Fold gutter does not render', () => {
   const { editor } = renderCodeEditor({ enableCodeFolding: false });
   expect(
@@ -146,6 +154,10 @@ test('Fold gutter does not render', () => {
 #### Test user interaction
 
 ```ts
+import { TestUtils } from '@leafygreen-ui/code-editor';
+
+const { renderEditor } = TestUtils;
+
 test('Updates value on when user types', () => {
   const { editor } = renderCodeEditor();
 
