@@ -1,5 +1,14 @@
 # @lg-tools/cli
 
+## 0.9.2
+
+### Patch Changes
+
+- Updated dependencies [92fafc876]
+- Updated dependencies [e14fc7768]
+  - @lg-tools/codemods@0.1.6
+  - @lg-tools/prompt-kit@0.2.0
+
 ## 0.9.1
 
 ### Patch Changes

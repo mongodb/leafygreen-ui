@@ -1,5 +1,13 @@
 # @lg-chat/message-rating
 
+## 3.0.12
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/typography@20.1.9
+
 ## 3.0.11
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/empty-state
 
+## 2.0.15
+
+### Patch Changes
+
+- @leafygreen-ui/button@23.1.6
+- @leafygreen-ui/typography@20.1.9
+
 ## 2.0.14
 
 ### Patch Changes
