@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { colors } from '@lg-charts/colors';
 import type { EChartsType } from 'echarts/core';
 
-import { TOOLBOX_ID } from '../Chart';
-import * as updateUtils from '../Chart/hooks/updateUtils';
+import { TOOLBOX_ID } from '../constants';
 
 import {
   EChartEvents,
@@ -13,6 +12,10 @@ import {
   type EChartZoomSelectionEvent,
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
+import {
+  getOptionsToUpdateWithAddedSeries,
+  getOptionsToUpdateWithRemovedSeries,
+} from './utils';
 
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
@@ -25,13 +28,22 @@ export function useEchart({
   theme,
 }: EChartHookProps): EChartsInstance {
   const echartsCoreRef = useRef<typeof import('echarts/core') | null>(null);
-  const echartsInstanceRef = useRef<EChartsType | null>(null);
 
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
 
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
+
+
+  const getEchartsInstance = useCallback(() => {
+    if (!container) {
+      return null;
+    }
+
+    const echartsInstance = echartsCoreRef.current?.getInstanceByDom(container);
+    return echartsInstance;
+  }, [container]);
 
   const withInstanceCheck = <T extends (...args: Array<any>) => any>(fn: T) => {
     return (...args: Parameters<T>): ReturnType<T> => {
@@ -46,28 +58,15 @@ export function useEchart({
     };
   };
 
-  const getEchartsInstance = useCallback(() => {
-    const echartsInstance = echartsInstanceRef.current;
-    return echartsInstance;
-  }, []);
-
   const getEchartOptions = withInstanceCheck(() => {
-    const echartsInstance = echartsInstanceRef.current;
+    const echartsInstance = getEchartsInstance();
 
-    if (!echartsInstance) {
-      return;
-    }
-
-    return echartsInstance.getOption();
+    return echartsInstance?.getOption();
   });
 
   const setEchartOptions = withInstanceCheck(
     (options: Partial<EChartOptions>, replaceMerge?: Array<string>) => {
-      const echartsInstance = echartsInstanceRef.current;
-
-      if (!echartsInstance) {
-        return;
-      }
+      const echartsInstance = getEchartsInstance();
 
       /**
        * ECharts has a concept of "component main types" which are the properties under the root option tree
@@ -80,20 +79,19 @@ export function useEchart({
        *
        * API docs: https://echarts.apache.org/en/api.html#echartsInstance.setOption
        * */
-      echartsInstance.setOption(
+      echartsInstance?.setOption(
         options,
-        replaceMerge
-          ? {
-              replaceMerge,
-            }
-          : undefined,
+        {
+          lazyUpdate: true,
+          replaceMerge,
+        }
       );
     },
   );
 
   const addSeries: EChartsInstance['addSeries'] = withInstanceCheck(data => {
     const currentOptions = getEchartOptions();
-    const newSeriesOptions = updateUtils.getOptionsToUpdateWithAddedSeries(
+    const newSeriesOptions = getOptionsToUpdateWithAddedSeries(
       currentOptions,
       data,
     );
@@ -103,7 +101,7 @@ export function useEchart({
   const removeSeries: EChartsInstance['removeSeries'] = withInstanceCheck(
     id => {
       const currentOptions = getEchartOptions();
-      const newSeriesOptions = updateUtils.getOptionsToUpdateWithRemovedSeries(
+      const newSeriesOptions = getOptionsToUpdateWithRemovedSeries(
         currentOptions,
         id,
       );
@@ -315,7 +313,7 @@ export function useEchart({
 
     setError(null);
 
-    if (!container || !!echartsInstance) return;
+    if (!container) return;
 
     initializeEcharts()
       .then(echartsCore => {
@@ -332,10 +330,10 @@ export function useEchart({
         });
 
         // Set the initial options on the instance
-        newChart.setOption(initialOptions || {});
-
-        // Set the echarts instance ref
-        echartsInstanceRef.current = newChart;
+        newChart.setOption(initialOptions || {}, {
+          lazyUpdate: true,
+          replaceMerge: ['xAxis', 'yAxis', 'toolbox', 'tooltip'],
+        });
 
         setReady(true);
       })
@@ -352,8 +350,8 @@ export function useEchart({
     return () => {
       activeHandlersMap.clear();
 
-      if (echartsInstance) {
-        (echartsInstance as EChartsType).dispose();
+      if (!!echartsInstance && !echartsInstance.isDisposed()) {
+        echartsInstance.dispose();
       }
     };
   }, [container, getEchartsInstance, initialOptions]);
@@ -376,21 +374,40 @@ export function useEchart({
     }
   }, [getEchartsInstance, setEchartOptions, theme]);
 
-  return {
-    _getEChartsInstance: getEchartsInstance,
-    addSeries,
-    addToGroup,
-    disableZoom,
-    enableZoom,
-    error,
-    hideTooltip,
-    off,
-    on,
-    ready,
-    removeFromGroup,
-    removeSeries,
-    resize,
-    setupZoomSelect,
-    updateOptions,
-  };
+  return useMemo(
+    () => ({
+      _getEChartsInstance: getEchartsInstance,
+      addSeries,
+      addToGroup,
+      disableZoom,
+      enableZoom,
+      error,
+      hideTooltip,
+      off,
+      on,
+      ready,
+      removeFromGroup,
+      removeSeries,
+      resize,
+      setupZoomSelect,
+      updateOptions,
+    }),
+    [
+      addSeries,
+      addToGroup,
+      disableZoom,
+      enableZoom,
+      error,
+      hideTooltip,
+      off,
+      on,
+      ready,
+      removeFromGroup,
+      removeSeries,
+      resize,
+      setupZoomSelect,
+      updateOptions,
+      getEchartsInstance,
+    ],
+  );
 }

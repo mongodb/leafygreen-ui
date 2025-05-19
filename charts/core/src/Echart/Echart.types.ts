@@ -9,8 +9,11 @@ import type {
   TooltipComponentOption,
 } from 'echarts/components';
 import type { ComposeOption, EChartsType } from 'echarts/core';
+import { ECBasicOption } from 'echarts/types/dist/shared';
 
 import { Theme } from '@leafygreen-ui/lib';
+
+export type EChartsGetOptionReturnType = ECBasicOption;
 
 type RequiredSeriesProps = 'type' | 'name' | 'data';
 export type EChartSeriesOption = Pick<LineSeriesOption, RequiredSeriesProps> &
@@ -107,7 +110,7 @@ interface EChartsEventHandlerType {
 }
 
 export interface EChartsInstance {
-  _getEChartsInstance: () => EChartsType | null;
+  _getEChartsInstance: () => EChartsType | null | undefined;
   addSeries: (series: EChartSeriesOption) => void;
   addToGroup: (groupId: string) => void;
   disableZoom: () => void;

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { useChartContext } from '../ChartContext';
+import { TOOLTIP_ID } from '../constants';
 
 import {
   CallbackSeriesDataPoint,
@@ -23,15 +23,13 @@ export function ChartTooltip({
   } = useChartContext();
   const { theme } = useDarkMode();
 
-  const id = useIdAllocator({ prefix: 'tooltip' });
-
   useEffect(() => {
     if (!ready) return;
 
     updateOptions(
       {
         tooltip: {
-          id,
+          id: TOOLTIP_ID,
           // Still adding background color to prevent peak of color at corners
           backgroundColor:
             color[theme].background[Variant.InversePrimary][
@@ -73,7 +71,7 @@ export function ChartTooltip({
       updateOptions(
         {
           tooltip: {
-            id,
+            id: TOOLTIP_ID,
             axisPointer: {
               z: 0, // Prevents dashed emphasis line from being rendered on top of mark lines and labels
             },
@@ -86,7 +84,6 @@ export function ChartTooltip({
       );
     };
   }, [
-    id,
     ready,
     seriesNameFormatter,
     seriesValueFormatter,
