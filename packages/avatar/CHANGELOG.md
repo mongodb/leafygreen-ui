@@ -1,5 +1,12 @@
 # @leafygreen-ui/avatar
 
+## 2.0.10
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+
 ## 2.0.9
 
 ### Patch Changes

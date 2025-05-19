@@ -1,5 +1,13 @@
 # @leafygreen-ui/info-sprinkle
 
+## 4.0.14
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/tooltip@13.0.13
+
 ## 4.0.13
 
 ### Patch Changes

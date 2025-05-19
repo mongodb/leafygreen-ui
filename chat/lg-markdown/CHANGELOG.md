@@ -1,5 +1,12 @@
 # @lg-chat/lg-markdown
 
+## 3.0.16
+
+### Patch Changes
+
+- @leafygreen-ui/code@18.0.5
+- @leafygreen-ui/typography@20.1.9
+
 ## 3.0.15
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @leafygreen-ui/guide-cue
 
+## 7.0.15
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/button@23.1.6
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/tooltip@13.0.13
+  - @leafygreen-ui/typography@20.1.9
+
 ## 7.0.14
 
 ### Patch Changes

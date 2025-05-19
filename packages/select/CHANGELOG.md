@@ -1,5 +1,16 @@
 # @leafygreen-ui/select
 
+## 14.1.8
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/button@23.1.6
+  - @leafygreen-ui/form-field@2.0.12
+  - @leafygreen-ui/input-option@3.0.12
+  - @leafygreen-ui/typography@20.1.9
+
 ## 14.1.7
 
 ### Patch Changes

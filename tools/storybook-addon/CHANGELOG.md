@@ -1,5 +1,12 @@
 # @lg-tools/storybook-addon
 
+## 0.4.2
+
+### Patch Changes
+
+- @leafygreen-ui/typography@20.1.9
+- @lg-tools/storybook-decorators@0.4.9
+
 ## 0.4.1
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @lg-chat/message-prompts
 
+## 3.0.12
+
+### Patch Changes
+
+- @leafygreen-ui/typography@20.1.9
+
 ## 3.0.11
 
 ### Patch Changes
