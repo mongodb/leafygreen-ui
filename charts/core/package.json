@@ -27,15 +27,14 @@
     "@lg-charts/colors": "workspace:^",
     "@lg-charts/series-provider": "workspace:^",
     "echarts": "^5.5.1",
-    "lodash.debounce": "^4.0.8"
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
   "devDependencies": {
     "@faker-js/faker": "8.0.2",
-    "@leafygreen-ui/icon": "workspace:^",
-    "@types/lodash.debounce": "^4.0.9"
+    "@leafygreen-ui/icon": "workspace:^"
   },
   "repository": {
     "type": "git",

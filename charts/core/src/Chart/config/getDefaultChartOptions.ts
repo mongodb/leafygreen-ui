@@ -10,7 +10,6 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { ChartOptions } from '../Chart.types';
-import { TOOLBOX_ID, X_AXIS_ID, Y_AXIS_ID } from '../constants';
 
 const commonAxisOptions = {
   /**
@@ -67,20 +66,17 @@ export const getDefaultChartOptions = (
   },
 
   xAxis: {
-    id: X_AXIS_ID,
     type: 'time',
     ...commonAxisOptions,
   },
 
   yAxis: {
-    id: Y_AXIS_ID,
     type: 'value',
     ...commonAxisOptions,
   },
 
   // Sets up zooming
   toolbox: {
-    id: TOOLBOX_ID,
     feature: {
       dataZoom: {
         show: true,
