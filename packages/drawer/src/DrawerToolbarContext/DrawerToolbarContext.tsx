@@ -10,6 +10,7 @@ import {
   ContextData,
   DataId,
   DrawerToolbarContextType,
+  DrawerToolbarProviderProps,
 } from './DrawerToolbarContext.types';
 
 export const DrawerToolbarContext =
@@ -18,10 +19,7 @@ export const DrawerToolbarContext =
 export const DrawerToolbarProvider = ({
   children,
   data,
-}: {
-  children: React.ReactNode;
-  data: Array<ContextData>;
-}) => {
+}: DrawerToolbarProviderProps) => {
   const [content, setContent] = useState<ContextData>(undefined);
 
   const openDrawer = useCallback(

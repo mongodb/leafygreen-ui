@@ -6,13 +6,6 @@ export type DataId = LayoutData['id'];
 
 export interface DrawerToolbarContextType {
   /**
-   * This function stores all the drawer data in the context.
-   * @param data - An array of drawer data
-   * @returns void
-   */
-  // registerAllData: (data: Array<ContextData>) => void;
-
-  /**
    * This function is used to open the drawer with the given data.
    * @param id - The id of the drawer to open
    * @returns void
@@ -30,4 +23,16 @@ export interface DrawerToolbarContextType {
    * @returns The active drawer data
    */
   getActiveDrawerContent: () => ContextData;
+}
+
+export interface DrawerToolbarProviderProps {
+  /**
+   * The children of the provider
+   */
+  children: React.ReactNode;
+
+  /**
+   * The data to be used in the drawer
+   */
+  data: Array<ContextData>;
 }
