@@ -33,7 +33,7 @@ export const DrawerToolbarProvider = ({
         });
       } else {
         console.error(
-          `The id, ${id}, does not correlate with any of the items in the toolbar. Please make sure the id is correct.`,
+          `No matching item found in the toolbar for the provided id: ${id}. Please verify that the id is correct.`,
         );
       }
     },

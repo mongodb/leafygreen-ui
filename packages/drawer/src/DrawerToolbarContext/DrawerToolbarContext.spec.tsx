@@ -30,6 +30,11 @@ const mockData: Array<ContextData> = [
     glyph: 'Bell',
     title: 'Drawer 3',
   },
+  {
+    id: 'four',
+    glyph: 'Plus',
+    label: 'Drawer 4',
+  },
 ];
 
 describe('useDrawerToolbarContext', () => {
@@ -89,7 +94,7 @@ describe('useDrawerToolbarContext', () => {
 
         act(() => result.current.openDrawer('onee'));
         expect(consoleSpy).toHaveBeenCalledWith(
-          `The id, onee, does not corralate with any of the items in the toolbar. Please make sure the id is correct.`,
+          'No matching item found in the toolbar for the provided id: onee. Please verify that the id is correct.',
         );
       });
 
@@ -191,7 +196,7 @@ describe('useDrawerToolbarContext', () => {
         expect(result.current.getActiveDrawerContent()).toEqual(mockData[0]);
         act(() => result.current.openDrawer('twoo'));
         expect(consoleSpy).toHaveBeenCalledWith(
-          `The id, twoo, does not corralate with any of the items in the toolbar. Please make sure the id is correct.`,
+          'No matching item found in the toolbar for the provided id: twoo. Please verify that the id is correct.',
         );
       });
 

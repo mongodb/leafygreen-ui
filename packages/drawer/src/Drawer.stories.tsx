@@ -111,7 +111,7 @@ const LongContent = () => {
   );
 };
 
-const CloudNavLayout: React.FC<{ children?: React.ReactNode }> = ({
+const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
   <div
@@ -170,13 +170,21 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
     },
   },
   {
+    id: 'Dashboard',
+    label: 'Dashboard',
+    content: <LongContent />,
+    title: 'Dashboard Title',
+    glyph: 'Dashboard',
+    onClick: () => {
+      console.log('Dashboard clicked');
+    },
+  },
+  {
     id: 'Plus',
     label: 'Plus',
-    content: <LongContent />,
-    title: 'Plus Title',
     glyph: 'Plus',
     onClick: () => {
-      console.log('Plus clicked');
+      console.log('Plus clicked, does not update drawer');
     },
   },
 ];
@@ -384,7 +392,7 @@ const WithToolbarOverlayCloudNavComponent: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
   return (
-    <CloudNavLayout>
+    <CloudNavLayoutMock>
       <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
         <div
           className={css`
@@ -395,7 +403,7 @@ const WithToolbarOverlayCloudNavComponent: StoryFn<DrawerProps> = (
           <LongContent />
         </div>
       </DrawerToolbarLayout>
-    </CloudNavLayout>
+    </CloudNavLayoutMock>
   );
 };
 
@@ -403,7 +411,7 @@ const WithToolbarEmbeddedCloudNavComponent: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
   return (
-    <CloudNavLayout>
+    <CloudNavLayoutMock>
       <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
         <main
           className={css`
@@ -414,7 +422,7 @@ const WithToolbarEmbeddedCloudNavComponent: StoryFn<DrawerProps> = (
           <LongContent />
         </main>
       </DrawerToolbarLayout>
-    </CloudNavLayout>
+    </CloudNavLayoutMock>
   );
 };
 

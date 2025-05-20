@@ -34,6 +34,7 @@ export const DrawerToolbarLayoutContainer = ({
   const isDrawerOpen = !!getActiveDrawerContent();
   const { id, title, content } = getActiveDrawerContent() || {};
 
+  // If there is no data, we don't want to render anything
   if (!data || data.length === 0) return null;
 
   const handleOnClose = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,11 +42,13 @@ export const DrawerToolbarLayoutContainer = ({
     closeDrawer();
   };
 
+  // If the display mode is overlay, we want to use the OverlayDrawerLayout else we want to use the EmbeddedDrawerLayout
   const LayoutComponent =
     displayMode === DisplayMode.Overlay
       ? OverlayDrawerLayout
       : EmbeddedDrawerLayout;
 
+  // We want to pass the isDrawerOpen prop to the LayoutComponent only if the display mode is embedded
   const layoutProps = {
     hasToolbar: true,
     isDrawerOpen: displayMode === DisplayMode.Embedded ? isDrawerOpen : false,
@@ -83,9 +86,15 @@ export const DrawerToolbarLayoutContainer = ({
                   key={toolbar.glyph}
                   glyph={toolbar.glyph}
                   label={toolbar.label}
-                  onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
-                    handleIconClick(e, toolbar.id, toolbar.onClick)
-                  }
+                  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+                    if (!toolbar.content) {
+                      // If the toolbar item does not have content, we don't want to open/update/close the drawer
+                      // but we still want to call the onClick function if it exists. E.g. open a modal or perform an action
+                      toolbar.onClick?.(event);
+                      return;
+                    }
+                    return handleIconClick(event, toolbar.id, toolbar.onClick);
+                  }}
                   active={toolbar.id === id}
                 />
               ))}

@@ -54,6 +54,8 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     return isAriaVisible && isCSSVisible;
   };
 
+  // TODO: add Toolbar test utils
+
   return {
     findDrawer,
     getDrawer,
