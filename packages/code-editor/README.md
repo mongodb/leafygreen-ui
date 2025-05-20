@@ -30,7 +30,7 @@ npm install @leafygreen-ui/code-editor
 
 #### Example
 
-```ts
+```tsx
 import { CodeEditor } from '@leafygreen-ui/code-editor';
 
 <CodeEditor />;
@@ -70,7 +70,7 @@ import { CodeEditor } from '@leafygreen-ui/code-editor';
 
 Renders the editor in a Jest test.
 
-```ts
+```tsx
 function renderEditor(props?: Partial<CodeEditorProps>): RenderResult;
 ```
 
@@ -86,7 +86,7 @@ Editor object used for querying and interacting with the rendered editor.
 
 Has the following interface:
 
-```ts
+```tsx
 {
   // Used to find single element in the editor. Will throw error if not found.
   getBySelector(
@@ -117,7 +117,7 @@ Has the following interface:
 
 #### Test selector has rendered
 
-```ts
+```tsx
 import { TestUtils } from '@leafygreen-ui/code-editor';
 
 const { renderEditor } = TestUtils;
@@ -137,7 +137,7 @@ test('Line numbers rendered', () => {
 
 #### Test selector has not rendered
 
-```ts
+```tsx
 import { TestUtils } from '@leafygreen-ui/code-editor';
 
 const { renderEditor } = TestUtils;
@@ -153,7 +153,7 @@ test('Fold gutter does not render', () => {
 
 #### Test user interaction
 
-```ts
+```tsx
 import { TestUtils } from '@leafygreen-ui/code-editor';
 
 const { renderEditor } = TestUtils;

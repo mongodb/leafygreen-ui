@@ -45,7 +45,7 @@ describe('packages/code-editor', () => {
     ).toBeInTheDocument();
   });
 
-  test('Fold gutter does not renders when disabled', () => {
+  test('Fold gutter does not render when disabled', () => {
     const { editor } = renderCodeEditor({ enableCodeFolding: false });
     expect(
       editor.queryBySelector(CodeEditorSelectors.FoldGutter),

@@ -17,6 +17,9 @@ import {
   type CodeMirrorRef,
 } from './CodeEditor.types';
 
+const CODE_MIRROR_HEIGHT = '200px';
+const CODE_MIRROR_WIDTH = '100%';
+
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
     {
@@ -87,8 +90,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
     return (
       <CodeMirror
         value={value}
-        height="200px"
-        width="100%"
+        height={CODE_MIRROR_HEIGHT}
+        width={CODE_MIRROR_WIDTH}
         onChange={onChange}
         onCreateEditor={onCreateEditor}
         readOnly={readOnly}
