@@ -1,4 +1,4 @@
-import {
+export {
   DrawerToolbarProvider,
   useDrawerToolbarContext,
 } from './DrawerToolbarContext';

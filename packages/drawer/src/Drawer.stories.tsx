@@ -87,12 +87,16 @@ export default {
 } satisfies StoryMetaType<typeof Drawer>;
 
 const LongContent = () => {
-  const paragraphs = useMemo(() => {
-    return faker.lorem
-      .paragraphs(30, '\n')
-      .split('\n')
-      .map((p, i) => <Body key={i}>{p}</Body>);
+  // Generate a unique seed based on timestamp for different content each time
+  React.useEffect(() => {
+    faker.seed(Date.now());
   }, []);
+
+  // Generate paragraphs without memoization so they're different each render
+  const paragraphs = faker.lorem
+    .paragraphs(30, '\n')
+    .split('\n')
+    .map((p, i) => <Body key={i}>{p}</Body>);
 
   return (
     <div
