@@ -8,12 +8,12 @@ import { DrawerProps } from '../Drawer/Drawer.types';
 type PickedRequiredDrawerProps = Required<Pick<DrawerProps, 'displayMode'>>;
 type PickedDrawerProps = Pick<DrawerProps, 'onClose'>;
 
-interface LayoutData {
+export interface LayoutData {
   id: string;
   glyph: GlyphName;
   content: React.ReactNode;
   label: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   title: string;
 }
 
