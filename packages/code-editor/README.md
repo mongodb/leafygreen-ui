@@ -33,7 +33,14 @@ npm install @leafygreen-ui/code-editor
 ```tsx
 import { CodeEditor } from '@leafygreen-ui/code-editor';
 
-<CodeEditor />;
+const sampleCode = `// Your code goes here
+function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}
+
+console.log(greet('MongoDB user'));`;
+
+<CodeEditor defaultValue={sampleCode} />;
 ```
 
 #### Properties
