@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 0.18.0
+
+### Minor Changes
+
+- 9173c66ff: [LG-5137](https://jira.mongodb.org/browse/LG-5137): refactor option updates and improve memory usage
+
 ## 0.17.4
 
 ### Patch Changes
