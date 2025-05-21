@@ -11,21 +11,19 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-import { type ChartOptions, Y_AXIS_ID } from '../Chart';
+import { type ChartOptions } from '../Chart';
 import { useChartContext } from '../ChartContext';
 
 import { YAxisProps } from './YAxis.types';
 
 const getOptions = ({
-  id,
   theme,
   type,
   label,
   formatter,
-}: YAxisProps & { id: string; theme: Theme }): Partial<ChartOptions> => {
+}: YAxisProps & { theme: Theme }): Partial<ChartOptions> => {
   const options: Partial<ChartOptions> = {
     yAxis: {
-      id,
       type: type,
       axisLine: {
         show: true,
@@ -108,21 +106,15 @@ export function YAxis({ type, label, formatter }: YAxisProps) {
   useEffect(() => {
     if (!ready) return;
 
-    updateOptions(
-      getOptions({ id: Y_AXIS_ID, type, label, formatter, theme }),
-      ['yAxis'],
-    );
+    updateOptions(getOptions({ type, label, formatter, theme }));
 
     return () => {
       /**
        * Hides the axis when the component is unmounted.
        */
-      updateOptions(
-        {
-          yAxis: { id: Y_AXIS_ID, ...unsetAxisOptions },
-        },
-        ['yAxis'],
-      );
+      updateOptions({
+        yAxis: { ...unsetAxisOptions },
+      });
     };
   }, [formatter, label, ready, theme, type, updateOptions]);
 

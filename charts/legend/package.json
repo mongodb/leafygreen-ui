@@ -1,6 +1,6 @@
 {
   "name": "@lg-charts/legend",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "lg-charts Legend",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
