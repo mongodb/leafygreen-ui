@@ -32,8 +32,9 @@
     "@lg-chat/leafygreen-chat-provider": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-feed": "workspace:^",
+    "@lg-chat/message-feedback": "workspace:^",
     "@lg-chat/message-prompts": "workspace:^",
-    "@lg-chat/message-feedback": "workspace:^"
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

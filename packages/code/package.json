@@ -6,6 +6,18 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",

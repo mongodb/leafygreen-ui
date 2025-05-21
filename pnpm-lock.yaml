@@ -355,6 +355,9 @@ importers:
       '@leafygreen-ui/modal':
         specifier: workspace:^
         version: link:../../packages/modal
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/chat-window:
     dependencies:
@@ -401,6 +404,9 @@ importers:
       '@lg-chat/message-prompts':
         specifier: workspace:^
         version: link:../message-prompts
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/fixed-chat-window:
     dependencies:
@@ -459,6 +465,9 @@ importers:
       '@lg-chat/message-prompts':
         specifier: workspace:^
         version: link:../message-prompts
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/input-bar:
     dependencies:
@@ -516,6 +525,10 @@ importers:
       react-textarea-autosize:
         specifier: ^8.3.2
         version: 8.5.3(@types/react@18.2.23)(react@18.2.0)
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/leafygreen-chat-provider:
     dependencies:
@@ -550,6 +563,10 @@ importers:
       react-markdown:
         specifier: ^8.0.7
         version: 8.0.7(@types/react@18.2.23)(react@18.2.0)
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/message:
     dependencies:
@@ -593,6 +610,9 @@ importers:
       '@lg-chat/message-feedback':
         specifier: workspace:^
         version: link:../message-feedback
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/message-feed:
     dependencies:
@@ -642,6 +662,9 @@ importers:
       '@lg-chat/message-prompts':
         specifier: workspace:^
         version: link:../message-prompts
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/message-feedback:
     dependencies:
@@ -685,6 +708,9 @@ importers:
       '@lg-chat/message-rating':
         specifier: workspace:^
         version: link:../message-rating
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   chat/message-prompts:
     dependencies:
@@ -986,6 +1012,9 @@ importers:
       '@leafygreen-ui/code':
         specifier: workspace:^
         version: link:../code
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/card:
     dependencies:
@@ -1075,6 +1104,10 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/code:
     dependencies:
@@ -1205,6 +1238,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/confirmation-modal:
     dependencies:
@@ -1238,6 +1274,10 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/copyable:
     dependencies:
@@ -1277,6 +1317,10 @@ importers:
       polished:
         specifier: ^4.2.2
         version: 4.3.1
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/date-picker:
     dependencies:
@@ -1344,6 +1388,12 @@ importers:
       '@leafygreen-ui/modal':
         specifier: workspace:^
         version: link:../modal
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
+      '@storybook/test':
+        specifier: ^8.6.12
+        version: 8.6.12(storybook@8.6.12(prettier@3.5.3))
       mockdate:
         specifier: ^3.0.5
         version: 3.0.5
@@ -1403,6 +1453,9 @@ importers:
       '@leafygreen-ui/popover':
         specifier: workspace:^
         version: link:../popover
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/drawer:
     dependencies:
@@ -1455,6 +1508,9 @@ importers:
       '@faker-js/faker':
         specifier: ^8.0.2
         version: 8.0.2
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/emotion:
     dependencies:
@@ -1686,6 +1742,10 @@ importers:
       polished:
         specifier: ^4.2.2
         version: 4.3.1
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/hooks:
     dependencies:
@@ -1797,6 +1857,10 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/inline-definition:
     dependencies:
@@ -1822,6 +1886,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/input-option:
     dependencies:
@@ -1956,6 +2023,10 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/menu:
     dependencies:
@@ -2014,6 +2085,9 @@ importers:
       '@leafygreen-ui/text-input':
         specifier: workspace:^
         version: link:../text-input
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/modal:
     dependencies:
@@ -2078,6 +2152,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/number-input:
     dependencies:
@@ -2123,6 +2200,10 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/ordered-list:
     dependencies:
@@ -2144,6 +2225,10 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/pagination:
     dependencies:
@@ -2177,6 +2262,10 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/palette:
     devDependencies:
@@ -2231,6 +2320,10 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/pipeline:
     dependencies:
@@ -2261,6 +2354,10 @@ importers:
       react-intersection-observer:
         specifier: ^8.25.1
         version: 8.34.0(react@18.2.0)
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/polymorphic:
     dependencies:
@@ -2364,6 +2461,9 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/radio-group:
     dependencies:
@@ -2450,6 +2550,10 @@ importers:
       polished:
         specifier: ^4.2.2
         version: 4.3.1
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/segmented-control:
     dependencies:
@@ -2547,6 +2651,10 @@ importers:
       react-is:
         specifier: ^18.0.1
         version: 18.2.0
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/side-nav:
     dependencies:
@@ -2596,6 +2704,9 @@ importers:
       '@leafygreen-ui/select':
         specifier: workspace:^
         version: link:../select
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/skeleton-loader:
     dependencies:
@@ -2666,6 +2777,10 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/stepper:
     dependencies:
@@ -2693,6 +2808,10 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/table:
     dependencies:
@@ -2772,6 +2891,9 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/tabs:
     dependencies:
@@ -2824,6 +2946,9 @@ importers:
       '@leafygreen-ui/tooltip':
         specifier: workspace:^
         version: link:../tooltip
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/testing-lib:
     dependencies:
@@ -2876,6 +3001,10 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/text-input:
     dependencies:
@@ -2903,6 +3032,10 @@ importers:
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses
+    devDependencies:
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/toast:
     dependencies:
@@ -3051,6 +3184,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@lg-tools/build':
+        specifier: workspace:^
+        version: link:../../tools/build
 
   packages/typography:
     dependencies:
@@ -3115,9 +3251,6 @@ importers:
       '@rollup/plugin-terser':
         specifier: 0.4.3
         version: 0.4.3(rollup@4.16.1)
-      '@rollup/plugin-url':
-        specifier: 8.0.1
-        version: 8.0.1(rollup@4.16.1)
       '@svgr/babel-plugin-replace-jsx-attribute-value':
         specifier: 8.0.0
         version: 8.0.0(@babel/core@7.24.3)
@@ -3153,6 +3286,9 @@ importers:
         version: 10.3.12
       lodash:
         specifier: 4.17.21
+        version: 4.17.21
+      lodash-es:
+        specifier: ^4.17.21
         version: 4.17.21
       react-docgen-typescript:
         specifier: 2.2.2
@@ -5343,15 +5479,6 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.x || ^3.x
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
-  '@rollup/plugin-url@8.0.1':
-    resolution: {integrity: sha512-8ajztphXb5e19dk3Iwjtm2eSYJR8jFQubZ8pJ1GG2MBMM7/qUedLnZAN+Vt4jqbcT/m27jfjIBocvrzV0giNRw==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -8753,6 +8880,9 @@ packages:
   locate-path@7.2.0:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -13630,14 +13760,6 @@ snapshots:
     optionalDependencies:
       rollup: 4.16.1
 
-  '@rollup/plugin-url@8.0.1(rollup@4.16.1)':
-    dependencies:
-      '@rollup/pluginutils': 5.0.2(rollup@4.16.1)
-      make-dir: 3.1.0
-      mime: 3.0.0
-    optionalDependencies:
-      rollup: 4.16.1
-
   '@rollup/plugin-url@8.0.2':
     dependencies:
       '@rollup/pluginutils': 5.0.2(rollup@4.16.1)
@@ -18052,6 +18174,8 @@ snapshots:
   locate-path@7.2.0:
     dependencies:
       p-locate: 6.0.0
+
+  lodash-es@4.17.21: {}
 
   lodash.debounce@4.0.8: {}
 

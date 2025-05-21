@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "@lg-chat/avatar": "workspace:^",
-    "@lg-chat/message-feedback": "workspace:^"
+    "@lg-chat/message-feedback": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^",

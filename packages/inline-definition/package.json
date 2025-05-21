@@ -34,6 +34,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
-    "@leafygreen-ui/typography": "workspace:^"
+    "@leafygreen-ui/typography": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   }
 }

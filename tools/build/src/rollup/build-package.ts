@@ -44,6 +44,15 @@ export function buildPackage({ verbose }: BuildPackageOptions) {
       options: Array<MergedRollupOptions>;
       warnings: BatchWarnings;
     }) => {
+      verbose &&
+        console.log(
+          `Building ${packageName} with the following config:`,
+          options.map(config => ({
+            input: config.input,
+            output: config.output[0].dir ?? config.output[0].file,
+          })),
+        );
+
       if (warnings.count > 0) {
         if (verbose) {
           // This prints all deferred warnings

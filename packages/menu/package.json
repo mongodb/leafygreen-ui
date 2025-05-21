@@ -24,8 +24,8 @@
     "@leafygreen-ui/input-option": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
-    "@leafygreen-ui/popover": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
+    "@leafygreen-ui/popover": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "lodash": "^4.17.21",
@@ -34,7 +34,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/button": "workspace:^",
-    "@leafygreen-ui/text-input": "workspace:^"
+    "@leafygreen-ui/text-input": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

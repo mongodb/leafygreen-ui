@@ -29,7 +29,8 @@
   "devDependencies": {
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/chat-disclaimer": "workspace:^",
-    "@lg-chat/message-prompts": "workspace:^"
+    "@lg-chat/message-prompts": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^",

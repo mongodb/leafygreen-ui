@@ -6,6 +6,18 @@
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
@@ -34,7 +46,8 @@
     "react-is": "^18.0.1"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/select",
   "repository": {
@@ -44,5 +57,7 @@
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
+  }
 }

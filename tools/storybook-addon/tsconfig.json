@@ -4,5 +4,32 @@
   "include": [
     "src/**/*"
   ],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"]
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/palette"
+    },
+    {
+      "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
+    },
+    {
+      "path": "../../tools/build"
+    },
+    {
+      "path": "../../tools/meta"
+    },
+    {
+      "path": "../../tools/storybook-decorators"
+    },
+    {
+      "path": "../../tools/storybook-utils"
+    },
+
+  ]
 }
