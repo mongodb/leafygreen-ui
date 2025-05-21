@@ -1,4 +1,4 @@
-export { renderAsyncTest } from './testUtils';
+export { renderAsyncTest, type RenderAsyncTestReturnType } from './testUtils';
 export {
   type DropdownElements,
   type FormElements,

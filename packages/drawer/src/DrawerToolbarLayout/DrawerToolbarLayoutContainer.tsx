@@ -20,14 +20,14 @@ import {
 } from './DrawerToolbarLayout.types';
 
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
-import { DEFAULT_LGID_DRAWER_TOOLBAR } from '../utils';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 export const DrawerToolbarLayoutContainer = ({
   children,
   data,
   onClose,
   displayMode = DisplayMode.Embedded,
-  'data-lgid': dataLgId = DEFAULT_LGID_DRAWER_TOOLBAR,
+  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
   darkMode: darkModeProp,
 }: DrawerToolbarLayoutContainerProps) => {
   const { darkMode } = useDarkMode(darkModeProp);
@@ -35,6 +35,7 @@ export const DrawerToolbarLayoutContainer = ({
     useDrawerToolbarContext();
   const isDrawerOpen = !!getActiveDrawerContent();
   const { id, title, content } = getActiveDrawerContent() || {};
+  const lgIds = getLgIds(dataLgId);
 
   // If there is no data, we don't want to render anything
   if (!data || data.length === 0) return null;
@@ -70,7 +71,6 @@ export const DrawerToolbarLayoutContainer = ({
       <DrawerStackProvider>
         <LayoutComponent {...layoutProps}>
           <div
-            data-lgid={dataLgId}
             className={css`
               grid-area: ${GRID_AREA.content};
               overflow: scroll;
@@ -83,7 +83,7 @@ export const DrawerToolbarLayoutContainer = ({
             displayMode={displayMode}
             isDrawerOpen={isDrawerOpen}
           >
-            <Toolbar data-lgid={`${dataLgId}-toolbar`}>
+            <Toolbar data-lgid={lgIds.toolbar}>
               {data?.map(toolbar => (
                 <ToolbarIconButton
                   key={toolbar.glyph}
@@ -107,7 +107,7 @@ export const DrawerToolbarLayoutContainer = ({
               open={isDrawerOpen}
               onClose={handleOnClose}
               title={title}
-              data-lgid={`${dataLgId}-drawer`}
+              data-lgid={`${dataLgId}`}
             >
               {content}
             </Drawer>

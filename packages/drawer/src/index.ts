@@ -3,4 +3,5 @@ export {
   DrawerStackProvider,
   useDrawerStackContext,
 } from './DrawerStackContext';
-export { getLgIds, getTestUtils, type GetTestUtilsReturnType } from './utils';
+export { getLgIds } from './utils';
+export { getTestUtils, type GetTestUtilsReturnType } from './testing';
