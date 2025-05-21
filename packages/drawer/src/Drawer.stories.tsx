@@ -263,7 +263,6 @@ const WithToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
         <main
           className={css`
             padding: ${spacing[400]}px;
-            overflow: auto;
           `}
         >
           <LongContent />
@@ -274,7 +273,7 @@ const WithToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
 };
 
 const WithoutToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div
@@ -338,7 +337,7 @@ const WithToolbarOverlayComponent: StoryFn<DrawerProps> = () => {
 const WithoutToolbarOverlayComponent: StoryFn<DrawerProps> = (
   args: DrawerProps,
 ) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <div
@@ -450,6 +449,27 @@ export const WithoutToolbarOverlay: StoryObj<DrawerProps> = {
   },
 };
 
+export const WithoutToolbarOverlayMobile: StoryObj<DrawerProps> = {
+  render: WithoutToolbarOverlayComponent,
+  parameters: {
+    viewport: {
+      viewports: {
+        mobile: {
+          name: 'Mobile',
+          styles: {
+            width: '375px',
+            height: '667px',
+          },
+        },
+      },
+      defaultViewport: 'mobile',
+    },
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
 export const WithToolbarEmbedded: StoryObj<DrawerProps> = {
   render: WithToolbarEmbeddedComponent,
   parameters: {
@@ -462,6 +482,27 @@ export const WithToolbarEmbedded: StoryObj<DrawerProps> = {
 export const WithoutToolbarEmbedded: StoryObj<DrawerProps> = {
   render: WithoutToolbarEmbeddedComponent,
   parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
+
+export const WithoutToolbarEmbeddedMobile: StoryObj<DrawerProps> = {
+  render: WithoutToolbarEmbeddedComponent,
+  parameters: {
+    viewport: {
+      viewports: {
+        mobile: {
+          name: 'Mobile',
+          styles: {
+            width: '375px',
+            height: '667px',
+          },
+        },
+      },
+      defaultViewport: 'mobile',
+    },
     controls: {
       exclude: toolbarExcludedControls,
     },
