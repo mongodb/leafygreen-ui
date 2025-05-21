@@ -14,8 +14,8 @@
   "module": "dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "./scripts/build.sh",
-    "tsc": "./scripts/build-ts.sh" 
+    "build": "sh ./scripts/build.sh",
+    "tsc": "sh ./scripts/build-ts.sh" 
   },
   "dependencies": {
     "@babel/core": "7.24.3",
