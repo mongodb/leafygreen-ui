@@ -79,8 +79,10 @@ export default {
 
 const LongContent = () => {
   const paragraphs = useMemo(() => {
-    const text = faker.lorem.paragraphs(30, '\n');
-    return text.split('\n').map((p, i) => <Body key={i}>{p}</Body>);
+    return faker.lorem
+      .paragraphs(30, '\n')
+      .split('\n')
+      .map((p, i) => <Body key={i}>{p}</Body>);
   }, []);
 
   return (
@@ -245,7 +247,6 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-// TODO: uncomment when the DrawerToolbarContext is implemented
 const ComponentOpen: StoryFn<DrawerProps> = ({
   displayMode = DisplayMode.Embedded,
   ...rest
