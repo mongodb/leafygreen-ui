@@ -83,18 +83,15 @@ export function useEchart({
 
   const addToGroup: EChartsInstance['addToGroup'] = useCallback(
     (groupId: string) => {
-      // echartsCoreRef.current should exist if instance does, but checking for extra safety
-      if (!echartsCoreRef.current) {
-        return;
-      }
-
       const echartsInstance = echartsInstanceRef.current;
+      const isInstanceAlreadyGrouped = echartsInstance?.group === groupId;
 
-      if (!echartsInstance) {
-        return;
-      }
-
-      if (echartsInstance.group === groupId) {
+      // echartsCoreRef.current should exist if instance does, but checking for extra safety
+      if (
+        !echartsCoreRef.current ||
+        !echartsInstance ||
+        isInstanceAlreadyGrouped
+      ) {
         return;
       }
 
@@ -125,13 +122,15 @@ export function useEchart({
      */
     const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-    if (isZoomed) {
-      echartsInstance?.dispatchAction({
-        type: 'dataZoom',
-        start: 0, // percentage of starting position
-        end: 100, // percentage of ending position
-      });
+    if (!isZoomed) {
+      return;
     }
+
+    echartsInstance?.dispatchAction({
+      type: 'dataZoom',
+      start: 0, // percentage of starting position
+      end: 100, // percentage of ending position
+    });
   }, []);
 
   const enableZoom = useCallback(() => {
@@ -145,7 +144,6 @@ export function useEchart({
 
   const disableZoom = useCallback(() => {
     const echartsInstance = echartsInstanceRef.current;
-
     echartsInstance?.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
@@ -275,15 +273,15 @@ export function useEchart({
 
     setError(null);
 
-    if (!container) {
-      return;
-    }
+    const echartsInstance = echartsInstanceRef.current;
+    const doesInstanceMatchContainer = echartsInstance
+      ? echartsInstance.getDom() === container
+      : false;
+    const isInstanceDisposed = echartsInstance
+      ? echartsInstance.isDisposed()
+      : false;
 
-    if (
-      echartsInstanceRef.current &&
-      echartsInstanceRef.current.getDom() === container &&
-      !echartsInstanceRef.current.isDisposed()
-    ) {
+    if (!container || (doesInstanceMatchContainer && !isInstanceDisposed)) {
       return;
     }
 
@@ -316,17 +314,11 @@ export function useEchart({
       });
 
     return () => {
-      const echartsInstance = echartsInstanceRef.current;
-
-      if (!echartsInstance) {
-        return;
-      }
-
-      if (echartsInstance.isDisposed()) {
-        return;
-      }
-
-      if (echartsInstance.getDom() !== container) {
+      if (
+        !echartsInstance ||
+        isInstanceDisposed ||
+        !doesInstanceMatchContainer
+      ) {
         return;
       }
 
