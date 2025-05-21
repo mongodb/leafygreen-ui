@@ -1,5 +1,15 @@
 # @leafygreen-ui/chip
 
+## 3.0.11
+
+### Patch Changes
+
+- Updated dependencies [1dbfb7064]
+  - @leafygreen-ui/icon@13.3.0
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/inline-definition@8.0.11
+
 ## 3.0.10
 
 ### Patch Changes

@@ -1,5 +1,12 @@
 # @leafygreen-ui/badge
 
+## 9.0.9
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+
 ## 9.0.8
 
 ### Patch Changes

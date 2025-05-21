@@ -1,0 +1,7 @@
+{
+  "extends": "@lg-tools/build/config/root.tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+  }
+}

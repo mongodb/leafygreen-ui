@@ -4,7 +4,7 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     iconButton: `${DEFAULT_LGID_ROOT}-icon_button`,
-    tooltip: `${DEFAULT_LGID_ROOT}-tooltip`,
+    iconButtonTooltip: `${DEFAULT_LGID_ROOT}-icon_button-tooltip`,
   } as const;
   return ids;
 };
