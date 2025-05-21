@@ -28,6 +28,9 @@
       "path": "../lint"
     },
     {
+      "path": "../prompt-kit"
+    },
+    {
       "path": "../slackbot"
     },
     {

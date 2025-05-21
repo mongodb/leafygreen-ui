@@ -1,5 +1,24 @@
 # @leafygreen-ui/code
 
+## 18.1.0
+
+### Minor Changes
+
+- 5c80334ed: [LG-4972](https://jira.mongodb.org/browse/LG-4972): add language support for `markdown`
+
+## 18.0.5
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/button@23.1.6
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/select@14.1.8
+  - @leafygreen-ui/skeleton-loader@2.0.12
+  - @leafygreen-ui/tooltip@13.0.13
+  - @leafygreen-ui/typography@20.1.9
+
 ## 18.0.4
 
 ### Patch Changes

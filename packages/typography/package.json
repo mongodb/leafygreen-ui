@@ -1,15 +1,15 @@
 {
   "name": "@leafygreen-ui/typography",
-  "version": "20.1.8",
+  "version": "20.1.9",
   "description": "leafyGreen UI Kit Typography",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "license": "Apache-2.0",
   "publishConfig": {

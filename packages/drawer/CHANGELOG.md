@@ -1,5 +1,16 @@
 # @leafygreen-ui/drawer
 
+## 2.0.5
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/button@23.1.6
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/tabs@14.2.5
+  - @leafygreen-ui/typography@20.1.9
+
 ## 2.0.4
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 14.2.5
+
+### Patch Changes
+
+- @leafygreen-ui/typography@20.1.9
+
 ## 14.2.4
 
 ### Patch Changes

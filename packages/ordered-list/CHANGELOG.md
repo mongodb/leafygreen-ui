@@ -1,5 +1,11 @@
 # @leafygreen-ui/ordered-list
 
+## 2.0.13
+
+### Patch Changes
+
+- @leafygreen-ui/typography@20.1.9
+
 ## 2.0.12
 
 ### Patch Changes

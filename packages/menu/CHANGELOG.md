@@ -1,5 +1,15 @@
 # @leafygreen-ui/menu
 
+## 29.0.5
+
+### Patch Changes
+
+- Updated dependencies [eca6e3fdc]
+  - @leafygreen-ui/icon@13.4.0
+  - @leafygreen-ui/icon-button@16.0.12
+  - @leafygreen-ui/input-option@3.0.12
+  - @leafygreen-ui/typography@20.1.9
+
 ## 29.0.4
 
 ### Patch Changes

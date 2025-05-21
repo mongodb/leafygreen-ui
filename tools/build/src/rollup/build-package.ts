@@ -25,19 +25,11 @@ interface BuildPackageOptions {
 /**
  * Builds packages using rollup for the current directory
  */
-export function buildPackage({ direct, verbose }: BuildPackageOptions) {
+export function buildPackage({ verbose }: BuildPackageOptions) {
   const packageDir = process.cwd();
 
   const splitPath = packageDir.split('/');
   const packageName = splitPath[splitPath.length - 1];
-  const scopeName = splitPath[splitPath.length - 2];
-
-  if (direct && scopeName !== 'tools') {
-    console.warn(
-      `Building package @${scopeName}/${packageName} using the \`lg-internal-build-package\` command directly from \`@lg-tools/build\`.`,
-      'Consider using the global `lg build-package` command from `@lg-tools/cli` instead.',
-    );
-  }
 
   // If there is a local rollup config defined, use that
   // Otherwise use the default one

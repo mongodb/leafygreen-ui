@@ -1,14 +1,14 @@
 {
   "name": "@lg-chat/title-bar",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "description": "lg-chat Title Bar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "license": "Apache-2.0",
   "publishConfig": {

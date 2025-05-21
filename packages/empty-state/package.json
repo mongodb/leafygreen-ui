@@ -1,15 +1,15 @@
 {
   "name": "@leafygreen-ui/empty-state",
-  "version": "2.0.14",
+  "version": "2.0.15",
   "description": "leafyGreen UI Kit Empty State",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "license": "Apache-2.0",
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/empty-state",

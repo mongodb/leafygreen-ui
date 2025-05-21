@@ -102,7 +102,6 @@
 '@lg-tools/meta': patch
 '@lg-tools/test': patch
 '@lg-tools/cli': patch
-'lg-scripts': patch
 ---
 
 Updates `main` entry point in package.json to `./dist/umd`

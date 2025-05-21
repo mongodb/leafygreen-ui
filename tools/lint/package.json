@@ -10,7 +10,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "lg-internal-build-package",
+    "build": "lg-build bundle",
     "tsc": "lg-build tsc"
   },
   "dependencies": {
