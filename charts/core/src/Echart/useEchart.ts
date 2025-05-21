@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { colors } from '@lg-charts/colors';
 import type { EChartsType } from 'echarts/core';
+import isEqual from 'lodash/isEqual';
 
-import { TOOLBOX_ID } from '../Chart';
-import * as updateUtils from '../Chart/hooks/updateUtils';
+import { usePrevious } from '@leafygreen-ui/hooks';
 
 import {
   EChartEvents,
@@ -13,6 +13,7 @@ import {
   type EChartZoomSelectionEvent,
 } from './Echart.types';
 import { initializeEcharts } from './initializeEcharts';
+import * as utils from './utils';
 
 /**
  * Wrapper around the ECharts library. Instantiates an ECharts instance.
@@ -26,142 +27,93 @@ export function useEchart({
 }: EChartHookProps): EChartsInstance {
   const echartsCoreRef = useRef<typeof import('echarts/core') | null>(null);
   const echartsInstanceRef = useRef<EChartsType | null>(null);
+  const initialOptionsRef = useRef(initialOptions);
 
+  const [options, setOptions] = useState<EChartOptions>(
+    initialOptionsRef.current || {},
+  );
+  const previousOptions = usePrevious(options);
   const [error, setError] = useState<EChartsInstance['error']>(null);
   const [ready, setReady] = useState<EChartsInstance['ready']>(false);
 
   // Keep track of active handlers
   const activeHandlers = useRef(new Map());
 
-  const withInstanceCheck = <T extends (...args: Array<any>) => any>(fn: T) => {
-    return (...args: Parameters<T>): ReturnType<T> => {
-      const echartsInstance = getEchartsInstance();
-
-      if (!echartsInstance) {
-        console.error('Echart instance not initialized');
-        return undefined as ReturnType<T>;
+  const addSeries: EChartsInstance['addSeries'] = useCallback(
+    data => {
+      if (!echartsInstanceRef.current) {
+        return;
       }
 
-      return fn(...args);
-    };
-  };
+      setOptions(prevOptions => {
+        const updatedOptions = utils.addSeries(prevOptions, data);
+        return updatedOptions;
+      });
+    },
+    [setOptions],
+  );
 
-  const getEchartsInstance = useCallback(() => {
-    const echartsInstance = echartsInstanceRef.current;
-    return echartsInstance;
-  }, []);
+  const removeSeries: EChartsInstance['removeSeries'] = useCallback(
+    name => {
+      if (!echartsInstanceRef.current) {
+        return;
+      }
 
-  const getEchartOptions = withInstanceCheck(() => {
-    const echartsInstance = echartsInstanceRef.current;
+      setOptions(prevOptions => {
+        const updatedOptions = utils.removeSeries(prevOptions, name);
+        return updatedOptions;
+      });
+    },
+    [setOptions],
+  );
 
-    if (!echartsInstance) {
-      return;
-    }
+  const updateOptions: EChartsInstance['updateOptions'] = useCallback(
+    options => {
+      if (!echartsInstanceRef.current) {
+        return;
+      }
 
-    return echartsInstance.getOption();
-  });
+      setOptions(prevOptions => {
+        const updatedOptions = utils.updateOptions(prevOptions, options);
+        return updatedOptions;
+      });
+    },
+    [setOptions],
+  );
 
-  const setEchartOptions = withInstanceCheck(
-    (options: Partial<EChartOptions>, replaceMerge?: Array<string>) => {
+  const addToGroup: EChartsInstance['addToGroup'] = useCallback(
+    (groupId: string) => {
+      const echartsInstance = echartsInstanceRef.current;
+      const isInstanceAlreadyGrouped = echartsInstance?.group === groupId;
+
+      // echartsCoreRef.current should exist if instance does, but checking for extra safety
+      if (
+        !echartsCoreRef.current ||
+        !echartsInstance ||
+        isInstanceAlreadyGrouped
+      ) {
+        return;
+      }
+
+      echartsInstance.group = groupId;
+      echartsCoreRef.current.connect(groupId);
+    },
+    [],
+  );
+
+  const removeFromGroup: EChartsInstance['removeFromGroup'] =
+    useCallback(() => {
       const echartsInstance = echartsInstanceRef.current;
 
       if (!echartsInstance) {
         return;
       }
 
-      /**
-       * ECharts has a concept of "component main types" which are the properties under the root option tree
-       * in the configuration item manual: https://echarts.apache.org/en/option.html#title
-       *
-       * e.g. 'series', 'xAxis', 'tooltip', etc.
-       *
-       * The `replaceMerge` option is used to to achieve targeted adding, updating, and removing of the options
-       * in a given ECharts instance.
-       *
-       * API docs: https://echarts.apache.org/en/api.html#echartsInstance.setOption
-       * */
-      echartsInstance.setOption(
-        options,
-        replaceMerge
-          ? {
-              replaceMerge,
-            }
-          : undefined,
-      );
-    },
-  );
+      echartsInstance.group = '';
+    }, []);
 
-  const addSeries: EChartsInstance['addSeries'] = withInstanceCheck(data => {
-    const currentOptions = getEchartOptions();
-    const newSeriesOptions = updateUtils.getOptionsToUpdateWithAddedSeries(
-      currentOptions,
-      data,
-    );
-    setEchartOptions(newSeriesOptions, ['series']);
-  });
-
-  const removeSeries: EChartsInstance['removeSeries'] = withInstanceCheck(
-    id => {
-      const currentOptions = getEchartOptions();
-      const newSeriesOptions = updateUtils.getOptionsToUpdateWithRemovedSeries(
-        currentOptions,
-        id,
-      );
-      setEchartOptions(newSeriesOptions, ['series']);
-    },
-  );
-
-  const updateOptions: EChartsInstance['updateOptions'] = withInstanceCheck(
-    (options, replaceMerge) => {
-      const mergeableOptions = {
-        ...options,
-      };
-      setEchartOptions(mergeableOptions, replaceMerge);
-    },
-  );
-
-  const updateDataZoom: EChartsInstance['updateOptions'] = withInstanceCheck(
-    ({ xAxisIndex, yAxisIndex }) => {
-      const mergeableOptions = {
-        toolbox: {
-          id: TOOLBOX_ID,
-          feature: {
-            dataZoom: {
-              xAxisIndex,
-              yAxisIndex,
-            },
-          },
-        },
-      };
-      setEchartOptions(mergeableOptions, ['toolbox']);
-    },
-  );
-
-  const addToGroup: EChartsInstance['addToGroup'] = withInstanceCheck(
-    (groupId: string) => {
-      // echartsCoreRef.current should exist if instance does, but checking for extra safety
-      if (!echartsCoreRef.current) {
-        return;
-      }
-
-      const echartsInstance = getEchartsInstance();
-
-      if ((echartsInstance as EChartsType).group !== groupId) {
-        (echartsInstance as EChartsType).group = groupId;
-        echartsCoreRef.current.connect(groupId);
-      }
-    },
-  );
-
-  const removeFromGroup: EChartsInstance['removeFromGroup'] = withInstanceCheck(
-    () => {
-      const echartsInstance = getEchartsInstance();
-      (echartsInstance as EChartsType).group = '';
-    },
-  );
-
-  const clearDataZoom = withInstanceCheck((params: any) => {
-    const echartsInstance = getEchartsInstance();
+  const clearDataZoom = useCallback((params: any) => {
+    const echartsInstance = echartsInstanceRef.current;
 
     /**
      * If start is not 0% or end is not 100%, the 'dataZoom' event was
@@ -170,55 +122,62 @@ export function useEchart({
      */
     const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-    if (isZoomed) {
-      echartsInstance?.dispatchAction({
-        type: 'dataZoom',
-        start: 0, // percentage of starting position
-        end: 100, // percentage of ending position
-      });
+    if (!isZoomed) {
+      return;
     }
-  });
 
-  const enableZoom = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
+    echartsInstance?.dispatchAction({
+      type: 'dataZoom',
+      start: 0, // percentage of starting position
+      end: 100, // percentage of ending position
+    });
+  }, []);
 
+  const enableZoom = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
     echartsInstance?.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: true,
     });
-  });
+  }, []);
 
-  const disableZoom = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
-
+  const disableZoom = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
     echartsInstance?.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: false,
     });
-  });
+  }, []);
 
-  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = withInstanceCheck(
+  const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
     ({ xAxis, yAxis }) => {
-      const echartsInstance = getEchartsInstance();
+      const echartsInstance = echartsInstanceRef.current;
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       const xAxisIndex: number | string = xAxis ? 0 : 'none';
       const yAxisIndex: number | string = yAxis ? 0 : 'none';
 
-      updateDataZoom({
-        xAxisIndex,
-        yAxisIndex,
+      updateOptions({
+        toolbox: {
+          feature: {
+            dataZoom: {
+              xAxisIndex,
+              yAxisIndex,
+            },
+          },
+        },
       });
 
       echartsInstance?.off('dataZoom', clearDataZoom); // prevent adding dupes
       echartsInstance?.on('dataZoom', clearDataZoom);
     },
+    [clearDataZoom, updateOptions],
   );
 
-  const off: EChartsInstance['off'] = withInstanceCheck((action, callback) => {
-    const echartsInstance = getEchartsInstance();
+  const off: EChartsInstance['off'] = useCallback((action, callback) => {
+    const echartsInstance = echartsInstanceRef.current;
 
     switch (action) {
       case EChartEvents.ZoomSelect: {
@@ -233,10 +192,10 @@ export function useEchart({
         activeHandlers.current.delete(`${action}-${callback.toString()}`);
       }
     }
-  });
+  }, []);
 
-  const on: EChartsInstance['on'] = withInstanceCheck((action, callback) => {
-    const echartsInstance = getEchartsInstance();
+  const on: EChartsInstance['on'] = useCallback((action, callback) => {
+    const echartsInstance = echartsInstanceRef.current;
 
     // Create a unique key for this handler
     const handlerKey = `${action}-${callback.toString()}`;
@@ -287,22 +246,22 @@ export function useEchart({
 
       default: {
         activeHandlers.current.set(handlerKey, callback);
-        echartsInstance?.on(action, callback);
+        echartsInstance?.on(action, callback as (...args: any) => void);
       }
     }
-  });
+  }, []);
 
-  const hideTooltip = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
+  const hideTooltip = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
     echartsInstance?.dispatchAction({
       type: 'hideTip',
     });
-  });
+  }, []);
 
-  const resize = withInstanceCheck(() => {
-    const echartsInstance = getEchartsInstance();
+  const resize = useCallback(() => {
+    const echartsInstance = echartsInstanceRef.current;
     echartsInstance?.resize();
-  });
+  }, []);
 
   /**
    * CHART INITIALIZATION ---------------------
@@ -311,19 +270,24 @@ export function useEchart({
    */
   useEffect(() => {
     const activeHandlersMap = activeHandlers.current;
-    const echartsInstance = getEchartsInstance();
 
     setError(null);
 
-    if (!container || !!echartsInstance) return;
+    const echartsInstance = echartsInstanceRef.current;
+    const doesInstanceMatchContainer = echartsInstance
+      ? echartsInstance.getDom() === container
+      : false;
+    const isInstanceDisposed = echartsInstance
+      ? echartsInstance.isDisposed()
+      : false;
+
+    if (!container || (doesInstanceMatchContainer && !isInstanceDisposed)) {
+      return;
+    }
 
     initializeEcharts()
       .then(echartsCore => {
         echartsCoreRef.current = echartsCore;
-
-        if (echartsInstance) {
-          return;
-        }
 
         // Init an echart instance
         const newChart = echartsCoreRef.current.init(container, null, {
@@ -332,7 +296,7 @@ export function useEchart({
         });
 
         // Set the initial options on the instance
-        newChart.setOption(initialOptions || {});
+        newChart.setOption(initialOptionsRef.current || {});
 
         // Set the echarts instance ref
         echartsInstanceRef.current = newChart;
@@ -350,13 +314,19 @@ export function useEchart({
       });
 
     return () => {
-      activeHandlersMap.clear();
-
-      if (echartsInstance) {
-        (echartsInstance as EChartsType).dispose();
+      if (
+        !echartsInstance ||
+        isInstanceDisposed ||
+        !doesInstanceMatchContainer
+      ) {
+        return;
       }
+
+      activeHandlersMap.clear();
+      echartsInstance.dispose();
+      echartsInstanceRef.current = null;
     };
-  }, [container, getEchartsInstance, initialOptions]);
+  }, [container]);
 
   /**
    * SETTING THEME ---------------------
@@ -366,18 +336,47 @@ export function useEchart({
    * for updating the theme if the theme changes.
    */
   useEffect(() => {
-    const echartsInstance = getEchartsInstance();
+    if (!ready) {
+      return;
+    }
 
-    if (echartsInstance) {
-      const mergeableOptions = {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    setOptions(prevOptions => {
+      const updatedOptions = {
+        ...prevOptions,
         color: colors[theme],
       };
-      setEchartOptions(mergeableOptions);
+      return updatedOptions;
+    });
+  }, [ready, theme]);
+
+  /**
+   *
+   */
+  useEffect(() => {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      return;
     }
-  }, [getEchartsInstance, setEchartOptions, theme]);
+
+    if (isEqual(options, previousOptions)) {
+      return;
+    }
+
+    echartsInstance.setOption(options, {
+      notMerge: true,
+    });
+  }, [options, previousOptions]);
 
   return {
-    _getEChartsInstance: getEchartsInstance,
+    _getEChartsInstance: () => echartsInstanceRef.current,
+    _getOptions: () => options,
     addSeries,
     addToGroup,
     disableZoom,

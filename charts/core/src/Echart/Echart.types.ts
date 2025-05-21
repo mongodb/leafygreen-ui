@@ -108,6 +108,7 @@ interface EChartsEventHandlerType {
 
 export interface EChartsInstance {
   _getEChartsInstance: () => EChartsType | null;
+  _getOptions: () => Partial<EChartOptions>;
   addSeries: (series: EChartSeriesOption) => void;
   addToGroup: (groupId: string) => void;
   disableZoom: () => void;
@@ -118,13 +119,10 @@ export interface EChartsInstance {
   on: EChartsEventHandlerType;
   ready: boolean;
   removeFromGroup: () => void;
-  removeSeries: (id: string) => void;
+  removeSeries: (name: string) => void;
   resize: () => void;
   setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
-  updateOptions: (
-    options: Omit<Partial<EChartOptions>, 'series'>,
-    replaceMerge?: Array<string>,
-  ) => void;
+  updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
 }
 
 export interface EChartHookProps {
