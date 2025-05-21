@@ -88,85 +88,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    // return (
-    //   <LeafyGreenProvider darkMode={darkMode}>
-    //     <DrawerContext.Provider>
-    //       <Component
-    //         aria-hidden={!open}
-    //         aria-labelledby={titleId}
-    //         // className={getDrawerStyles({
-    //         //   className,
-    //         //   displayMode,
-    //         //   open,
-    //         //   theme,
-    //         //   zIndex: 1000 + drawerIndex,
-    //         // })}
-    //         className={css`
-    //           grid-area: drawer2;
-    //           height: 100%;
-    //           display: block;
-    //           transition: none;
-    //           transform: unset;
-    //           background: darkorange;
-    //           height: 100%;
-    //           display: block;
-    //           position: relative;
-    //           width: 432px;
-    //         `}
-    //         data-lgid={lgIds.root}
-    //         id={id}
-    //         ref={drawerRef}
-    //         {...rest}
-    //       >
-    //         <div
-    //           className={getInnerContainerStyles({
-    //             displayMode,
-    //             theme,
-    //           })}
-    //         >
-    //           <div
-    //           // className={getHeaderStyles({
-    //           //   hasTabs,
-    //           //   theme,
-    //           // })}
-    //           >
-    //             <Body
-    //               as={typeof title === 'string' ? 'h2' : 'div'}
-    //               baseFontSize={BaseFontSize.Body2}
-    //               id={titleId}
-    //               weight="medium"
-    //             >
-    //               {title}
-    //             </Body>
-    //             {showCloseButton && (
-    //               <IconButton
-    //                 aria-label="Close drawer"
-    //                 data-lgid={lgIds.closeButton}
-    //                 onClick={onClose}
-    //               >
-    //                 <XIcon />
-    //               </IconButton>
-    //             )}
-    //           </div>
-    //           <div
-    //           // className={getChildrenContainerStyles({
-    //           //   hasShadowTop: !hasTabs && !isInterceptInView,
-    //           //   theme,
-    //           // })}
-    //           >
-    //             {/* <div className={getInnerChildrenContainerStyles({ hasTabs })}> */}
-    //             {/* Empty span element used to track if children container has scrolled down */}
-    //             {/* {!hasTabs && <span ref={interceptRef} />}
-    //               {children}
-    //             </div> */}
-    //             {children}
-    //           </div>
-    //         </div>
-    //       </Component>
-    //     </DrawerContext.Provider>
-    //   </LeafyGreenProvider>
-    // );
-
     // TODO: you can still tab inside the drawer when it is closed
     return (
       <LeafyGreenProvider darkMode={darkMode}>
@@ -178,7 +99,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             open,
             className,
             displayMode,
-            zIndex: drawerIndex,
+            zIndex: 1000 + drawerIndex,
           })}
           data-lgid={lgIds.root}
           id={id}

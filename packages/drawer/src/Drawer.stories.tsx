@@ -16,10 +16,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-import {
-  DrawerToolbarLayout,
-  DrawerToolbarLayoutProps,
-} from './DrawerToolbarLayout';
+import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
@@ -34,12 +31,6 @@ const defaultExcludedControls = [
 const snapshotStoryExcludedControlParams = [
   ...defaultExcludedControls,
   'darkMode',
-  'displayMode',
-  'title',
-];
-
-const toolbarExcludedControls = [
-  ...defaultExcludedControls,
   'displayMode',
   'title',
 ];
@@ -87,16 +78,12 @@ export default {
 } satisfies StoryMetaType<typeof Drawer>;
 
 const LongContent = () => {
-  // Generate a unique seed based on timestamp for different content each time
-  React.useEffect(() => {
-    faker.seed(Date.now());
+  const paragraphs = useMemo(() => {
+    return faker.lorem
+      .paragraphs(30, '\n')
+      .split('\n')
+      .map((p, i) => <Body key={i}>{p}</Body>);
   }, []);
-
-  // Generate paragraphs without memoization so they're different each render
-  const paragraphs = faker.lorem
-    .paragraphs(30, '\n')
-    .split('\n')
-    .map((p, i) => <Body key={i}>{p}</Body>);
 
   return (
     <div
@@ -110,84 +97,6 @@ const LongContent = () => {
     </div>
   );
 };
-
-const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
-  children,
-}) => (
-  <div
-    className={css`
-      display: grid;
-      grid-template:
-        'lg-cloud_nav-side_nav lg-cloud_nav-top_nav' max-content
-        'lg-cloud_nav-side_nav lg-cloud_nav-content' 1fr / 48px auto;
-      height: 100vh;
-      width: 100vw;
-      max-height: 100vh;
-      max-width: 100vw;
-      overflow: hidden;
-    `}
-  >
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-side_nav;
-        background-color: ${palette.gray.dark1};
-      `}
-    ></div>
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-side_nav;
-        background-color: ${palette.gray.dark1};
-      `}
-    ></div>
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-top_nav;
-        background-color: ${palette.gray.dark1};
-        height: 48px;
-      `}
-    ></div>
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-content;
-        overflow: scroll;
-        height: inherit;
-      `}
-    >
-      {children}
-    </div>
-  </div>
-);
-
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <LongContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
-  },
-  {
-    id: 'Dashboard',
-    label: 'Dashboard',
-    content: <LongContent />,
-    title: 'Dashboard Title',
-    glyph: 'Dashboard',
-    onClick: () => {
-      console.log('Dashboard clicked');
-    },
-  },
-  {
-    id: 'Plus',
-    label: "Perform some action, doesn't open a drawer",
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked, does not update drawer');
-    },
-  },
-];
 
 const TemplateComponent: StoryFn<DrawerProps> = ({
   displayMode,
@@ -217,7 +126,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <EmbeddedDrawerLayout
         className={css`
-          height: 500px;
+          height: 80vh;
         `}
         isDrawerOpen={open}
       >
@@ -239,8 +148,25 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     </DrawerStackProvider>
   ) : (
     <DrawerStackProvider>
-      <div>
-        {renderTrigger()}
+      <div
+        className={css`
+          height: 80vh;
+          overflow: auto;
+        `}
+      >
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: ${spacing[200]}px;
+          `}
+        >
+          {renderTrigger()}
+          <LongContent />
+        </main>
         {renderDrawer()}
       </div>
     </DrawerStackProvider>
@@ -258,223 +184,6 @@ export const LiveExample: StoryObj<DrawerProps> = {
     },
     controls: {
       exclude: [...defaultExcludedControls, 'initialOpen'],
-    },
-  },
-};
-
-const WithToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </div>
-  );
-};
-
-const WithoutToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerStackProvider>
-        <EmbeddedDrawerLayout isDrawerOpen={open}>
-          <main
-            className={css`
-              padding: ${spacing[400]}px;
-              overflow: auto;
-            `}
-          >
-            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-              Toggle Drawer
-            </Button>
-            <LongContent />
-          </main>
-          <Drawer
-            displayMode="embedded"
-            open={open}
-            onClose={() => setOpen(false)}
-            title="Drawer Title"
-          >
-            <LongContent />
-          </Drawer>
-        </EmbeddedDrawerLayout>
-      </DrawerStackProvider>
-    </div>
-  );
-};
-
-// FIXME: borders are making the page scroll horizontally:
-const WithToolbarOverlayComponent: StoryFn<DrawerProps> = () => {
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </div>
-  );
-};
-
-const WithoutToolbarOverlayComponent: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerStackProvider>
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-            overflow: scroll;
-            height: 100%;
-          `}
-        >
-          <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-            Toggle Drawer
-          </Button>
-          <LongContent />
-          <LongContent />
-        </main>
-        <Drawer
-          displayMode="overlay"
-          open={open}
-          onClose={() => setOpen(false)}
-          title="Drawer Title"
-        >
-          <LongContent />
-        </Drawer>
-      </DrawerStackProvider>
-    </div>
-  );
-};
-
-const WithToolbarOverlayCloudNavComponent: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  return (
-    <CloudNavLayoutMock>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <div
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </div>
-      </DrawerToolbarLayout>
-    </CloudNavLayoutMock>
-  );
-};
-
-const WithToolbarEmbeddedCloudNavComponent: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  return (
-    <CloudNavLayoutMock>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </CloudNavLayoutMock>
-  );
-};
-
-export const WithToolbarOverlayCloudNav: StoryObj<DrawerProps> = {
-  render: WithToolbarOverlayCloudNavComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithToolbarEmbeddedCloudNav: StoryObj<DrawerProps> = {
-  render: WithToolbarEmbeddedCloudNavComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithToolbarOverlay: StoryObj<DrawerProps> = {
-  render: WithToolbarOverlayComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithoutToolbarOverlay: StoryObj<DrawerProps> = {
-  render: WithoutToolbarOverlayComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithToolbarEmbedded: StoryObj<DrawerProps> = {
-  render: WithToolbarEmbeddedComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithoutToolbarEmbedded: StoryObj<DrawerProps> = {
-  render: WithoutToolbarEmbeddedComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
     },
   },
 };
