@@ -20,12 +20,14 @@ import {
 } from './DrawerToolbarLayout.types';
 
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
+import { DEFAULT_LGID_DRAWER_TOOLBAR } from '../utils';
 
 export const DrawerToolbarLayoutContainer = ({
   children,
-  displayMode = DisplayMode.Embedded,
   data,
   onClose,
+  displayMode = DisplayMode.Embedded,
+  'data-lgid': dataLgId = DEFAULT_LGID_DRAWER_TOOLBAR,
   darkMode: darkModeProp,
 }: DrawerToolbarLayoutContainerProps) => {
   const { darkMode } = useDarkMode(darkModeProp);
@@ -68,6 +70,7 @@ export const DrawerToolbarLayoutContainer = ({
       <DrawerStackProvider>
         <LayoutComponent {...layoutProps}>
           <div
+            data-lgid={dataLgId}
             className={css`
               grid-area: ${GRID_AREA.content};
               overflow: scroll;
@@ -80,7 +83,7 @@ export const DrawerToolbarLayoutContainer = ({
             displayMode={displayMode}
             isDrawerOpen={isDrawerOpen}
           >
-            <Toolbar>
+            <Toolbar data-lgid={`${dataLgId}-toolbar`}>
               {data?.map(toolbar => (
                 <ToolbarIconButton
                   key={toolbar.glyph}
@@ -104,6 +107,7 @@ export const DrawerToolbarLayoutContainer = ({
               open={isDrawerOpen}
               onClose={handleOnClose}
               title={title}
+              data-lgid={`${dataLgId}-drawer`}
             >
               {content}
             </Drawer>

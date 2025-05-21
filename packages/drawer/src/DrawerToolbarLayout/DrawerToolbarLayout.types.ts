@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 
 import { GlyphName } from '@leafygreen-ui/icon';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 import { DrawerProps } from '../Drawer/Drawer.types';
 
@@ -61,6 +61,7 @@ export type LayoutData = LayoutWithContent | LayoutWithoutContent;
 export type DrawerToolbarLayoutProps = PickedDrawerProps &
   PickedRequiredDrawerProps &
   DarkModeProps &
+  LgIdProps &
   PropsWithChildren<{
     data?: Array<LayoutData>;
     className?: string;

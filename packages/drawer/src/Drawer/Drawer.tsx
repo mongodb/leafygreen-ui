@@ -171,6 +171,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
+          aria-hidden={!open}
+          aria-labelledby={titleId}
           className={getDrawerStyles({
             theme,
             open,
@@ -178,6 +180,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             displayMode,
             zIndex: drawerIndex,
           })}
+          data-lgid={lgIds.root}
+          id={id}
           ref={drawerRef}
           {...rest}
         >
