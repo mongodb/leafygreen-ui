@@ -189,6 +189,14 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
       console.log('Dashboard clicked');
     },
   },
+  {
+    id: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
+    glyph: 'Plus',
+    onClick: () => {
+      console.log('Plus clicked, does not update drawer');
+    },
+  },
 ];
 
 const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
@@ -293,7 +301,7 @@ const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const OverlayCloudNav: StoryObj<DrawerProps> = {
+export const OverlayCloudNavMock: StoryObj<DrawerProps> = {
   render: OverlayCloudNavComponent,
   parameters: {
     controls: {
@@ -340,7 +348,7 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const EmbeddedCloudNav: StoryObj<DrawerProps> = {
+export const EmbeddedCloudNavMock: StoryObj<DrawerProps> = {
   render: EmbeddedCloudNavComponent,
   parameters: {
     controls: {
