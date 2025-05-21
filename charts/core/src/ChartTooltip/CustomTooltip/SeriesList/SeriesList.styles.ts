@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
-const PINNED_SERIES_LIST_MAX_HEIGHT = 116;
+const PINNED_SERIES_LIST_MAX_HEIGHT = 102;
 
 export const getSeriesListStyles = (tooltipPinned: boolean) => css`
   all: unset;

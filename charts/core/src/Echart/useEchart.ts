@@ -250,6 +250,7 @@ export function useEchart({
           activeHandlers.current.set(handlerKey, callback);
           options?.useCanvasAsTrigger
             ? echartsInstance?.getZr().on(action, callback)
+            // @ts-ignore
             : echartsInstance?.on(action, callback);
           break;
         }
@@ -258,6 +259,7 @@ export function useEchart({
 
   const showTooltip: EChartsInstance['showTooltip'] = useCallback((x, y) => {
     const echartsInstance = echartsInstanceRef.current;
+    console.log('showTooltip', x, y);
     echartsInstance?.dispatchAction({
       type: 'showTip',
       x,

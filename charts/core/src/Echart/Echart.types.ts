@@ -100,12 +100,12 @@ export interface EChartSetupZoomSelectProps {
 
 interface EChartsEventHandlerType {
   (
-    event: EChartEventsType,
+    action: EChartEventsType,
     callback: (params: any) => void,
     options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;
   (
-    event: 'zoomselect',
+    action: 'zoomselect',
     callback: (params: EChartZoomSelectionEvent) => void,
     options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;

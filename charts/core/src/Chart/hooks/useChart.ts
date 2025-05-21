@@ -49,11 +49,17 @@ export function useChart({
     onChartReady();
   }, [ready, onChartReady]);
 
+  const { foo, tooltipPinned, setTooltipMounted, tooltipPos } = useTooltipVisibility({
+    container,
+    echart,
+    groupId,
+  });
+
   useEffect(() => {
-    if (!ready || !groupId) {
+    if (!ready || !groupId || tooltipPinned) {
       return;
     }
-
+    
     addToGroup(groupId);
 
     return () => {
@@ -95,8 +101,6 @@ export function useChart({
       onZoomSelect(zoomEventResponse);
     });
   }, [ready, onZoomSelect, on]);
-
-  const { tooltipPinned, setTooltipMounted } = useTooltipVisibility({ echart });
 
   const initialRenderRef = useRef(true);
 
@@ -151,9 +155,11 @@ export function useChart({
 
   return {
     ...echart,
+    foo,
     ref: setContainer,
     setTooltipMounted,
     state,
     tooltipPinned,
+    tooltipPos,
   };
 }

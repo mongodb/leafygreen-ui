@@ -19,7 +19,7 @@ export function ChartTooltip({
   sort,
 }: ChartTooltipProps) {
   const {
-    chart: { ready, setTooltipMounted, tooltipPinned, updateOptions },
+    chart: { foo, ready, setTooltipMounted, tooltipPinned, tooltipPos, updateOptions },
   } = useChartContext();
   const { darkMode, theme } = useDarkMode();
 
@@ -33,7 +33,7 @@ export function ChartTooltip({
 
   useEffect(() => {
     if (!ready) return;
-
+    console.log('updating', foo);
     updateOptions(
       {
         tooltip: {
@@ -44,17 +44,24 @@ export function ChartTooltip({
           extraCssText: getRootStylesText(theme),
           trigger: 'axis',
           triggerOn: 'none',
-          // Still adding background color to prevent peak of color at corners
-          backgroundColor:
-            color[theme].background[Variant.InversePrimary][
-              InteractionState.Default
-            ],
+          // // Still adding background color to prevent peak of color at corners
+          // backgroundColor:
+          //   color[theme].background[Variant.InversePrimary][
+          //     InteractionState.Default
+          //   ],
           borderWidth: 0,
+          showContent: foo || tooltipPinned,
           alwaysShowContent: tooltipPinned,
           enterable: tooltipPinned,
+          position: () => {
+            if (!tooltipPinned) {
+              return [tooltipPos[0], tooltipPos[1]];
+            }
+            return null;
+          },
           confine: true,
           renderMode: 'html',
-          appendTo: 'body',
+          appendTo: document.body,
           showDelay: 0,
           hideDelay: 0,
           transitionDuration: 0,
@@ -98,12 +105,14 @@ export function ChartTooltip({
     };
   }, [
     darkMode,
+    foo,
     ready,
     seriesNameFormatter,
     seriesValueFormatter,
     sort,
     theme,
     tooltipPinned,
+    tooltipPos,
     updateOptions,
   ]);
 

@@ -1,3 +1,4 @@
+import { remove } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 
 import { EChartEvents, EChartsInstance } from '../../Echart';
@@ -9,14 +10,28 @@ import { UseTooltipVisibilityReturnObj } from './useTooltipVisibility.types';
  * Hook to manage the visibility of the tooltip in the chart including pinning behavior.
  */
 export const useTooltipVisibility = ({
+  container,
   echart,
+  groupId,
 }: {
+    container: HTMLDivElement | null;
   echart: EChartsInstance;
+    groupId?: string;
 }): UseTooltipVisibilityReturnObj => {
+  const [foo, setFoo] = useState(false);
   const [tooltipMounted, setTooltipMounted] = useState(false);
   const [tooltipPinned, setTooltipPinned] = useState(false);
+  const [tooltipPos, setTooltipPos] = useState([0, 0]);
 
-  const { hideTooltip, off, on, ready, showTooltip } = echart;
+  const {
+    addToGroup,
+    hideTooltip,
+    off,
+    on,
+    ready,
+    removeFromGroup,
+    showTooltip,
+  } = echart;
 
   /**
    * Event listener callback added to the chart that is called on mouse move
@@ -24,13 +39,13 @@ export const useTooltipVisibility = ({
    */
   const showTooltipOnMouseMove = useCallback(
     (params: any) => {
+      console.log('showTooltipOnMouseMove');
       if (!tooltipMounted || tooltipPinned) {
         return;
       }
 
-      const x = params.offsetX;
-      const y = params.offsetY;
-      showTooltip(x, y);
+      const { offsetX, offsetY } = params;
+      showTooltip(offsetX, offsetY);
     },
     [showTooltip, tooltipMounted, tooltipPinned],
   );
@@ -40,6 +55,7 @@ export const useTooltipVisibility = ({
    * it hides the tooltip and sets the `tooltipPinned` state to false.
    */
   const unpinTooltip = useCallback(() => {
+    console.log('unpinTooltip');
     setTooltipPinned(false);
 
     /**
@@ -47,9 +63,12 @@ export const useTooltipVisibility = ({
      * after the `tooltipPinned` state updates.
      */
     requestAnimationFrame(() => {
+      if (groupId) {
+        addToGroup(groupId);
+      }
       hideTooltip();
     });
-  }, [hideTooltip]);
+  }, [addToGroup, groupId, hideTooltip]);
 
   /**
    * Helper method to add the `unpinTooltip` event listener to the close button
@@ -57,6 +76,7 @@ export const useTooltipVisibility = ({
    * event to the button, so we have to add it manually.
    */
   const addUnpinCallbackToCloseButton = useCallback(() => {
+    console.log('addUnpinCallbackToCloseButton');
     const btn = document.getElementById(TOOLTIP_CLOSE_BTN_ID);
 
     if (btn && !btn.dataset.bound) {
@@ -71,9 +91,12 @@ export const useTooltipVisibility = ({
    */
   const pinTooltipOnClick = useCallback(
     (params: any) => {
+      console.log('pinTooltipOnClick');
       if (!tooltipMounted || tooltipPinned) {
         return;
       }
+
+      removeFromGroup();
 
       /**
        * Remove the mouse move and click event listeners to prevent the tooltip
@@ -89,6 +112,7 @@ export const useTooltipVisibility = ({
       const y = params.offsetY;
 
       setTooltipPinned(true);
+      setTooltipPos([x, y]);
 
       /**
        * We need to use requestAnimationFrame to ensure that the tooltip is shown
@@ -101,9 +125,11 @@ export const useTooltipVisibility = ({
     },
     [
       addUnpinCallbackToCloseButton,
-      showTooltipOnMouseMove,
+      groupId,
       off,
+      removeFromGroup,
       showTooltip,
+      showTooltipOnMouseMove,
       tooltipMounted,
       tooltipPinned,
     ],
@@ -115,6 +141,7 @@ export const useTooltipVisibility = ({
    */
   const hideTooltipOnMouseOverMark = useCallback(
     (params: any) => {
+      console.log('hideTooltipOnMouseOverMark');
       if (!tooltipMounted) {
         return;
       }
@@ -139,10 +166,10 @@ export const useTooltipVisibility = ({
    */
   const stopHideTooltipOnMouseOutMark = useCallback(
     (params: any) => {
+      console.log('stopHideTooltipOnMouseOutMark');
       if (!tooltipMounted) {
         return;
       }
-
       if (
         params.componentType === 'markPoint' ||
         params.componentType === 'markLine'
@@ -155,6 +182,36 @@ export const useTooltipVisibility = ({
     },
     [hideTooltip, off, on, pinTooltipOnClick, tooltipMounted],
   );
+
+  const handleFooOnMouseEnter = useCallback(() => {
+    console.log('setting foo to true');
+    setFoo(true);
+  }, []);
+
+  const handleFooOnMouseLeave = useCallback(() => {
+    console.log('setting foo to false', { tooltipMounted, tooltipPinned, tooltipPos });
+    setFoo(false);
+    if (!tooltipPinned) {
+      console.log('resetting axis pos')
+      setTimeout(() => {
+        showTooltip(300, 60);
+      }, 0);
+    }
+  }, [setFoo, showTooltip, tooltipPinned, tooltipPos]);
+
+  useEffect(() => {
+    if (!container) {
+      return;
+    }
+
+    container.addEventListener('mouseenter', handleFooOnMouseEnter);
+    container.addEventListener('mouseleave', handleFooOnMouseLeave);
+
+    return () => {
+      container.removeEventListener('mouseenter', handleFooOnMouseEnter);
+      container.removeEventListener('mouseleave', handleFooOnMouseLeave);
+    }
+  }, [container]);
 
   /**
    * Effect to turn on the tooltip event listeners when the chart is ready and tooltip
@@ -200,7 +257,9 @@ export const useTooltipVisibility = ({
   ]);
 
   return {
+    foo,
     setTooltipMounted,
     tooltipPinned,
+    tooltipPos,
   };
 };
