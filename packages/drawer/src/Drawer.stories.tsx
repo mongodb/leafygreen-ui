@@ -16,10 +16,7 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-import {
-  DrawerToolbarLayout,
-  DrawerToolbarLayoutProps,
-} from './DrawerToolbarLayout';
+import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout';
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 
 const SEED = 0;
@@ -34,12 +31,6 @@ const defaultExcludedControls = [
 const snapshotStoryExcludedControlParams = [
   ...defaultExcludedControls,
   'darkMode',
-  'displayMode',
-  'title',
-];
-
-const toolbarExcludedControls = [
-  ...defaultExcludedControls,
   'displayMode',
   'title',
 ];
@@ -205,7 +196,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <EmbeddedDrawerLayout
         className={css`
-          height: 500px;
+          height: 80vh;
         `}
         isDrawerOpen={open}
       >
@@ -227,8 +218,25 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     </DrawerStackProvider>
   ) : (
     <DrawerStackProvider>
-      <div>
-        {renderTrigger()}
+      <div
+        className={css`
+          height: 80vh;
+          overflow: auto;
+        `}
+      >
+        <main
+          className={css`
+            padding: ${spacing[400]}px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: ${spacing[200]}px;
+          `}
+        >
+          {renderTrigger()}
+          <LongContent />
+        </main>
         {renderDrawer()}
       </div>
     </DrawerStackProvider>
@@ -246,265 +254,6 @@ export const LiveExample: StoryObj<DrawerProps> = {
     },
     controls: {
       exclude: [...defaultExcludedControls, 'initialOpen'],
-    },
-  },
-};
-
-const WithToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </div>
-  );
-};
-
-const WithoutToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerStackProvider>
-        <EmbeddedDrawerLayout isDrawerOpen={open}>
-          <main
-            className={css`
-              padding: ${spacing[400]}px;
-              overflow: auto;
-            `}
-          >
-            <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-              Toggle Drawer
-            </Button>
-            <LongContent />
-          </main>
-          <Drawer
-            displayMode="embedded"
-            open={open}
-            onClose={() => setOpen(false)}
-            title="Drawer Title"
-          >
-            <LongContent />
-          </Drawer>
-        </EmbeddedDrawerLayout>
-      </DrawerStackProvider>
-    </div>
-  );
-};
-
-// FIXME: borders are making the page scroll horizontally:
-const WithToolbarOverlayComponent: StoryFn<DrawerProps> = () => {
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </div>
-  );
-};
-
-const WithoutToolbarOverlayComponent: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerStackProvider>
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-            overflow: scroll;
-            height: 100%;
-          `}
-        >
-          <Button onClick={() => setOpen(prevOpen => !prevOpen)}>
-            Toggle Drawer
-          </Button>
-          <LongContent />
-          <LongContent />
-        </main>
-        <Drawer
-          displayMode="overlay"
-          open={open}
-          onClose={() => setOpen(false)}
-          title="Drawer Title"
-        >
-          <LongContent />
-        </Drawer>
-      </DrawerStackProvider>
-    </div>
-  );
-};
-
-const WithToolbarOverlayCloudNavComponent: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  return (
-    <CloudNavLayout>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <div
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </div>
-      </DrawerToolbarLayout>
-    </CloudNavLayout>
-  );
-};
-
-const WithToolbarEmbeddedCloudNavComponent: StoryFn<DrawerProps> = (
-  args: DrawerProps,
-) => {
-  return (
-    <CloudNavLayout>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </CloudNavLayout>
-  );
-};
-
-export const WithToolbarOverlayCloudNav: StoryObj<DrawerProps> = {
-  render: WithToolbarOverlayCloudNavComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithToolbarEmbeddedCloudNav: StoryObj<DrawerProps> = {
-  render: WithToolbarEmbeddedCloudNavComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithToolbarOverlay: StoryObj<DrawerProps> = {
-  render: WithToolbarOverlayComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithoutToolbarOverlay: StoryObj<DrawerProps> = {
-  render: WithoutToolbarOverlayComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithoutToolbarOverlayMobile: StoryObj<DrawerProps> = {
-  render: WithoutToolbarOverlayComponent,
-  parameters: {
-    viewport: {
-      viewports: {
-        mobile: {
-          name: 'Mobile',
-          styles: {
-            width: '375px',
-            height: '667px',
-          },
-        },
-      },
-      defaultViewport: 'mobile',
-    },
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithToolbarEmbedded: StoryObj<DrawerProps> = {
-  render: WithToolbarEmbeddedComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithoutToolbarEmbedded: StoryObj<DrawerProps> = {
-  render: WithoutToolbarEmbeddedComponent,
-  parameters: {
-    controls: {
-      exclude: toolbarExcludedControls,
-    },
-  },
-};
-
-export const WithoutToolbarEmbeddedMobile: StoryObj<DrawerProps> = {
-  render: WithoutToolbarEmbeddedComponent,
-  parameters: {
-    viewport: {
-      viewports: {
-        mobile: {
-          name: 'Mobile',
-          styles: {
-            width: '375px',
-            height: '667px',
-          },
-        },
-      },
-      defaultViewport: 'mobile',
-    },
-    controls: {
-      exclude: toolbarExcludedControls,
     },
   },
 };
