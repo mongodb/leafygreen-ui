@@ -2,13 +2,42 @@
   "name": "@lg-tools/storybook-addon",
   "version": "0.4.2",
   "description": "Storybook Addon for LeafyGreen UI Kit",
-  "main": "./dist/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
   "license": "Apache-2.0",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "node": "./dist/umd/index.js",
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js"
+    },
+    "./main": {
+      "types": "./dist/types/main.d.ts",
+      "node": "./dist/umd/main.js",
+      "require": "./dist/umd/main.js",
+      "import": "./dist/esm/main.js"
+    },
+    "./manager": {
+      "types": "./dist/types/manager.d.ts",
+      "node": "./dist/umd/manager.js",
+      "require": "./dist/umd/manager.js",
+      "import": "./dist/esm/manager.js"
+    },
+    "./preview": {
+      "types": "./dist/types/preview.d.ts",
+      "node": "./dist/umd/preview.js",
+      "require": "./dist/umd/preview.js",
+      "import": "./dist/esm/preview.js"
+    },
+    "./preset": "./preset.js",
+    "./package.json": "./package.json"
+  },
+  "files": ["dist/**/*", "*.js", "*.d.ts",  "README.md", "package.json", "preset.js"],
   "scripts": {
-    "build": "lg-internal-build-package",
-    "tsc": "tsc --build tsconfig.json",
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
     "upgrade": "npx storybook@latest upgrade --config-dir ."
   },
   "publishConfig": {

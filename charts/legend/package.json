@@ -2,14 +2,14 @@
   "name": "@lg-charts/legend",
   "version": "0.2.5",
   "description": "lg-charts Legend",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "publishConfig": {
     "access": "public"
@@ -28,7 +28,8 @@
   },
   "devDependencies": {
     "@leafygreen-ui/icon": "workspace:^",
-    "@lg-charts/core": "workspace:^"
+    "@lg-charts/core": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "repository": {
     "type": "git",

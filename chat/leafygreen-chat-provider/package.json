@@ -2,19 +2,13 @@
   "name": "@lg-chat/leafygreen-chat-provider",
   "version": "3.0.2",
   "description": "lg-chat LeafyGreen Chat Context",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  },
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc"
   },
   "license": "Apache-2.0",
   "publishConfig": {
@@ -22,5 +16,8 @@
   },
   "dependencies": {
     "use-resize-observer": "^9.1.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
   }
 }

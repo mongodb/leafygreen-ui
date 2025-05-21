@@ -10,10 +10,8 @@ describe('tools/link/linkPackageTo', () => {
   let spawnSpy: jest.SpyInstance<ChildProcess>;
 
   beforeAll(() => {
-    fsx.emptyDirSync('./tmp');
-    fsx.rmdirSync('./tmp/');
-    fsx.mkdirSync('./tmp/');
-    fsx.mkdirSync('./tmp/app');
+    fsx.ensureDirSync('./tmp/app');
+    fsx.emptyDirSync('./tmp/app');
   });
 
   beforeEach(() => {

@@ -2,14 +2,14 @@
   "name": "@leafygreen-ui/descendants",
   "version": "2.1.5",
   "description": "LeafyGreen UI Kit Descendants",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
   },
   "publishConfig": {
     "access": "public"
@@ -23,7 +23,8 @@
     "@faker-js/faker": "^8.0.0",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
-    "@leafygreen-ui/popover": "workspace:^"
+    "@leafygreen-ui/popover": "workspace:^",
+    "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"

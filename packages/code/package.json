@@ -2,20 +2,27 @@
   "name": "@leafygreen-ui/code",
   "version": "18.1.0",
   "description": "leafyGreen UI Kit Code Blocks",
-  "main": "./dist/index.js",
+  "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "<3.9": {
-      "*": [
-        "ts3.4/*"
-      ]
+  "types": "./dist/types/index.d.ts",
+  "typesVersions": {},
+  "exports": {
+    ".": {
+      "require": "./dist/umd/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./testing": {
+      "require": "./dist/umd/testing/index.js",
+      "import": "./dist/esm/testing/index.js",
+      "types": "./dist/types/testing/index.d.ts"
     }
   },
   "scripts": {
-    "build": "lg build-package",
-    "tsc": "lg build-ts",
-    "docs": "lg build-tsdoc"
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs",
+    "postinstall": "npx ts-node scripts/postinstall.ts"
   },
   "keywords": [],
   "license": "Apache-2.0",
@@ -46,7 +53,6 @@
     "lodash": "^4.17.21",
     "polished": "^4.2.2"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "@leafygreen-ui/leafygreen-provider": "workspace:^"
   },
