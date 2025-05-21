@@ -181,7 +181,7 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
   },
   {
     id: 'Plus',
-    label: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
     glyph: 'Plus',
     onClick: () => {
       console.log('Plus clicked, does not update drawer');
