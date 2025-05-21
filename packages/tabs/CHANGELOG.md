@@ -1,5 +1,17 @@
 # @leafygreen-ui/tabs
 
+## 14.2.4
+
+### Patch Changes
+
+- Updated dependencies [21bcd4195]
+  - @leafygreen-ui/hooks@8.4.1
+  - @leafygreen-ui/a11y@2.0.7
+  - @leafygreen-ui/descendants@2.1.5
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/emotion@4.1.1
+  - @leafygreen-ui/typography@20.1.8
+
 ## 14.2.3
 
 ### Patch Changes

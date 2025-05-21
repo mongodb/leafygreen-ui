@@ -5,7 +5,7 @@ import Icon from '@leafygreen-ui/icon';
 import IconButton from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { getNodeTextContent } from '@leafygreen-ui/lib';
-import Tooltip from '@leafygreen-ui/tooltip';
+import Tooltip, { Align } from '@leafygreen-ui/tooltip';
 
 import { ToolbarDescendantsContext, useToolbarContext } from '../Context';
 
@@ -24,6 +24,7 @@ export const ToolbarIconButton = React.forwardRef<
       glyph,
       disabled = false,
       active = false,
+      'aria-label': ariaLabel,
       ...rest
     }: ToolbarIconButtonProps,
     forwardedRef,
@@ -33,7 +34,7 @@ export const ToolbarIconButton = React.forwardRef<
       ToolbarDescendantsContext,
       forwardedRef,
     );
-    const { focusedIndex, shouldFocus, setFocusedIndex, lgids } =
+    const { focusedIndex, shouldFocus, lgIds, handleOnIconButtonClick } =
       useToolbarContext();
     const isFocusable = index === focusedIndex;
 
@@ -43,26 +44,26 @@ export const ToolbarIconButton = React.forwardRef<
       );
     }
 
+    if (glyph === undefined) {
+      console.error(
+        'A glpyh is required for ToolbarIconButton. Please provide a valid glyph. The list of available glyphs can be found in the LG Icon README, https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#properties.',
+      );
+    }
+
     useEffect(() => {
       // shouldFocus prevents this component from hijacking focus on initial page load.
       if (isFocusable && shouldFocus) ref.current?.focus();
     }, [isFocusable, ref, shouldFocus]);
 
-    const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onClick?.(event);
-      // This ensures that on click, the buttons tabIndex is set to 0 so that when the up/down arrows are pressed, the correct button is focused
-      setFocusedIndex?.(index);
-    };
-
     return (
       <Tooltip
-        data-testid={lgids?.tooltip}
-        data-lgid={lgids?.tooltip}
-        align="left"
+        data-testid={`${lgIds.iconButtonTooltip}-${index}`}
+        data-lgid={`${lgIds.iconButtonTooltip}-${index}`}
+        align={Align.Left}
         trigger={
           <div className={triggerStyles}>
             <IconButton
-              aria-label={getNodeTextContent(label)}
+              aria-label={ariaLabel || getNodeTextContent(label)}
               active={active}
               className={getIconButtonStyles({
                 theme,
@@ -71,10 +72,12 @@ export const ToolbarIconButton = React.forwardRef<
                 className,
               })}
               tabIndex={isFocusable ? 0 : -1}
-              onClick={handleOnClick}
+              onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                handleOnIconButtonClick(event, index, onClick)
+              }
               disabled={disabled}
-              data-testid={lgids?.iconButton}
-              data-lgid={lgids?.iconButton}
+              data-testid={`${lgIds.iconButton}-${index}`}
+              data-lgid={`${lgIds.iconButton}-${index}`}
               data-active={active}
               ref={ref}
               {...(rest as ComponentPropsWithoutRef<'button'>)}

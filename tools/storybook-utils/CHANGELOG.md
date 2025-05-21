@@ -1,5 +1,11 @@
 # @lg-tools/storybook-utils
 
+## 0.2.3
+
+### Patch Changes
+
+- 485b4099c: Exports `findStories` from utils
+
 ## 0.2.2
 
 ### Patch Changes

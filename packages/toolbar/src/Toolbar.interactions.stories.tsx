@@ -7,7 +7,7 @@ import Button from '@leafygreen-ui/button';
 import { getTestUtils, Toolbar, ToolbarIconButton, ToolbarProps } from '.';
 
 export default {
-  title: 'Components/Toolbar/Ineractions',
+  title: 'Components/Toolbar/Interactions',
   component: Toolbar,
   parameters: {
     default: 'LiveExample',

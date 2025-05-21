@@ -1,5 +1,15 @@
 # @leafygreen-ui/toggle
 
+## 11.0.9
+
+### Patch Changes
+
+- Updated dependencies [1dbfb7064]
+  - @leafygreen-ui/icon@13.3.0
+  - @leafygreen-ui/a11y@2.0.7
+  - @leafygreen-ui/leafygreen-provider@4.0.7
+  - @leafygreen-ui/emotion@4.1.1
+
 ## 11.0.8
 
 ### Patch Changes

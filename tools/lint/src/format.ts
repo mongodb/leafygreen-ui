@@ -41,9 +41,7 @@ export async function formatESLint(
   const [result] = await eslint.lintText(fileContent, { filePath });
   const output = result.output;
 
-  if (!output) {
-    throw new Error('No output from ESLint');
-  }
-
-  return output ?? '';
+  // output is undefined if any fixable messages didn’t exist.
+  // https://eslint.org/docs/latest/integrate/nodejs-api#-lintresult-type
+  return output ?? fileContent;
 }

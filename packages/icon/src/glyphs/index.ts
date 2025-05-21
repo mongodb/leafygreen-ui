@@ -76,6 +76,7 @@ import Function from './Function.svg';
 import Gauge from './Gauge.svg';
 import GlobeAmericas from './GlobeAmericas.svg';
 import GovernmentBuilding from './GovernmentBuilding.svg';
+import Guide from './Guide.svg';
 import Hash from './Hash.svg';
 import HiddenSecondaryNode from './HiddenSecondaryNode.svg';
 import Highlight from './Highlight.svg';
@@ -130,6 +131,7 @@ import Refresh from './Refresh.svg';
 import Relationship from './Relationship.svg';
 import ReplicaSet from './ReplicaSet.svg';
 import Resize from './Resize.svg';
+import Resource from './Resource.svg';
 import Return from './Return.svg';
 import Revert from './Revert.svg';
 import Router from './Router.svg';
@@ -253,6 +255,7 @@ const _glyphs = {
   Gauge,
   GlobeAmericas,
   GovernmentBuilding,
+  Guide,
   Hash,
   HiddenSecondaryNode,
   Highlight,
@@ -307,6 +310,7 @@ const _glyphs = {
   Relationship,
   ReplicaSet,
   Resize,
+  Resource,
   Return,
   Revert,
   Router,

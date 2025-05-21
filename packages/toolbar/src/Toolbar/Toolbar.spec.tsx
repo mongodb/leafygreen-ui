@@ -1,9 +1,9 @@
 import React, { createRef } from 'react';
 import { axe } from 'jest-axe';
 
+import { getTestUtils } from '../testing';
+import { renderToolbar } from '../testing/render.testutils';
 import { ToolbarIconButton } from '../ToolbarIconButton';
-import { getTestUtils } from '../utils';
-import { renderToolbar } from '../utils/render.testutils';
 
 import { Toolbar } from './Toolbar';
 

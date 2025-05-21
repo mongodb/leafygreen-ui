@@ -1,17 +1,26 @@
 import fsx from 'fs-extra';
 
+import { getLGConfig } from '../getLGConfig';
+
 import { getPackageName } from './getPackageName';
+
+jest.mock('../getLGConfig', () => ({
+  getLGConfig: jest.fn(),
+}));
+
+// eslint-disable-next-line no-console
+console.log = jest.fn();
 
 describe('tools/meta/getPackageName', () => {
   beforeAll(() => {
     fsx.mkdirSync('./tmp/');
+    // Mock the getLGConfig function
   });
   beforeEach(() => {
-    fsx.writeJSONSync('./tmp/package.json', {
-      lg: {
-        scopes: {
-          '@lg-test': 'test/',
-        },
+    // Mock the return value of getLGConfig
+    (getLGConfig as jest.Mock).mockReturnValue({
+      scopes: {
+        '@lg-test': 'test',
       },
     });
     jest.spyOn(process, 'cwd').mockReturnValue('./tmp');
@@ -30,8 +39,7 @@ describe('tools/meta/getPackageName', () => {
   });
 
   test('returns the package name if the directory exists', () => {
-    fsx.mkdirSync('./tmp/test');
-    fsx.mkdirSync('./tmp/test/test-package');
+    fsx.ensureDirSync('./tmp/test/test-package');
     const packageName = getPackageName('./tmp/test/test-package');
     expect(packageName).toBe('@lg-test/test-package');
   });

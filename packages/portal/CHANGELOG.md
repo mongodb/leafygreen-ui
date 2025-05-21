@@ -1,5 +1,12 @@
 # @leafygreen-ui/portal
 
+## 6.0.6
+
+### Patch Changes
+
+- Updated dependencies [21bcd4195]
+  - @leafygreen-ui/hooks@8.4.1
+
 ## 6.0.5
 
 ### Patch Changes

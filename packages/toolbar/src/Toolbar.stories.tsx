@@ -59,7 +59,7 @@ export default {
     children: (
       <>
         <ToolbarIconButton
-          label="Code"
+          label="View Code"
           glyph="Code"
           onClick={() => console.log('CODE')}
         />
@@ -80,7 +80,7 @@ export default {
           onClick={() => console.log('LIST')}
         />
         <ToolbarIconButton
-          label="Plus"
+          label="Open Modal"
           glyph="Plus"
           onClick={() => console.log('Plus')}
           disabled
