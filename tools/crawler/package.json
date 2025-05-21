@@ -17,10 +17,8 @@
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc",
-    "postbuild": "zip -r dist/lambda.zip dist/lambda.js node_modules package.json",
     "crawl": "tsx src/cli.ts crawl",
-    "prune": "tsx src/cli.ts prune",
-    "deploy": "bash scripts/deploy.sh"
+    "prune": "tsx src/cli.ts prune"
   },
   "publishConfig": {
     "access": "public"
