@@ -26,7 +26,7 @@ describe('CopyButton', () => {
     return render(
       <CodeContextProvider
         // @ts-expect-error - other ids are missing but not needed for test
-        lgids={{
+        lgIds={{
           copyButton: `lg-code-copy_button`,
           copyTooltip: `lg-code-copy_tooltip`,
         }}

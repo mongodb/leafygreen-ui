@@ -1,5 +1,6 @@
 import { ReactElement, ReactNode } from 'react';
 
+import { LgIdProps } from '@leafygreen-ui/lib';
 import {
   InferredPolymorphicPropsWithRef,
   PolymorphicAs,
@@ -13,7 +14,8 @@ export type SubMenuType = ReactElement<
 >;
 
 export interface MenuProps
-  extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'> {
+  extends Omit<PopoverProps, 'active' | 'dismissMode' | 'onToggle'>,
+    LgIdProps {
   /**
    * The menu items, or submenus
    * @type `<MenuItem />` | `<SubMenu />` | `<MenuGroup />` | `<MenuSeparator />`

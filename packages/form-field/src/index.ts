@@ -21,3 +21,4 @@ export {
   FormFieldInputContainer,
   type FormFieldInputContainerProps,
 } from './FormFieldInputContainer';
+export { getLgIds } from './utils';
