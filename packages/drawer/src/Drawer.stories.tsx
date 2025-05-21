@@ -275,7 +275,6 @@ const WithToolbarEmbeddedComponent: StoryFn<DrawerProps> = () => {
         <main
           className={css`
             padding: ${spacing[400]}px;
-            overflow: auto;
           `}
         >
           <LongContent />

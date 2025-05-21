@@ -41,7 +41,7 @@ const withToolbarOpenStyles = css`
   grid-template-columns: auto ${PANEL_WIDTH + TOOLBAR_WIDTH}px;
 
   @media only screen and (max-width: ${breakpoints.Tablet}px) {
-    grid-template-columns: auto 0;
+    grid-template-columns: auto ${TOOLBAR_WIDTH}px;
   }
 `;
 
