@@ -44,7 +44,7 @@ const startServer = async () => {
     corsOptions: {
       withCredentials: true,
       methods: ['GET'],
-      origin: 'https://mongodb.design', // 'http://localhost:3000' // https://staging.mongodb.design
+      origin: process.env.CORS_ORIGIN || '*',
     },
     maxRequestTimeoutMs: 30000,
   };
