@@ -41,6 +41,11 @@ const startServer = async () => {
       generateUserPrompt,
       systemPrompt,
     },
+    corsOptions: {
+      withCredentials: true,
+      methods: ['GET'],
+      origin: 'https://mongodb.design', // 'http://localhost:3000' // https://staging.mongodb.design
+    },
     maxRequestTimeoutMs: 30000,
   };
 
