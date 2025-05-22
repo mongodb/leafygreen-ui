@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
-import { getContainerStyles, getHeaderStyles } from './CustomTooltip.styles';
+import { getHeaderStyles } from './CustomTooltip.styles';
 import { CustomTooltipProps } from './CustomTooltip.types';
 import { SeriesList } from './SeriesList';
 
@@ -50,7 +50,7 @@ export function CustomTooltip({
   }
 
   return (
-    <div className={getContainerStyles(theme)}>
+    <>
       <div className={getHeaderStyles(theme)}>{axisValueLabel}</div>
       <SeriesList
         seriesData={seriesData}
@@ -58,6 +58,6 @@ export function CustomTooltip({
         seriesNameFormatter={seriesNameFormatter}
         sort={sort}
       />
-    </div>
+    </>
   );
 }

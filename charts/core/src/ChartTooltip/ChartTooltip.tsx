@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { color, InteractionState, Variant } from '@leafygreen-ui/tokens';
 
 import { useChartContext } from '../ChartContext';
 
+import { getRootStylesText } from './ChartTooltip.styles';
 import {
   CallbackSeriesDataPoint,
   ChartTooltipProps,
@@ -27,19 +27,23 @@ export function ChartTooltip({
 
     updateOptions({
       tooltip: {
-        // Still adding background color to prevent peak of color at corners
-        backgroundColor:
-          color[theme].background[Variant.InversePrimary][
-            InteractionState.Default
-          ],
-        borderWidth: 0,
-        enterable: false,
-        confine: true,
+        /* LOGIC PROPERTIES */
         appendTo: 'body',
+        confine: true,
+        enterable: false,
+        trigger: 'axis',
+
+        /* STYLING PROPERTIES */
+        /**
+         * using `extraCssText` instead of `className` because emotion-defined class
+         * didn't have high-enough specificity
+         */
+        extraCssText: getRootStylesText(theme),
+        borderWidth: 0,
+        padding: 0,
         showDelay: 0,
         hideDelay: 0,
         transitionDuration: 0,
-        padding: 0,
         /**
          * Since the formatter trigger is set to 'axis', the seriesData will be
          * an array of objects. Additionally, it should contain axis related
