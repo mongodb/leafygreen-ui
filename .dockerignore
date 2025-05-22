@@ -1,3 +1,6 @@
+.git
+.gitignore
+
 # Node.js dependencies
 node_modules/
 **/node_modules/
@@ -5,9 +8,6 @@ node_modules/
 # Turborepo cache
 .turbo/
 **/.turbo
-
-# Build output
-**/dist
 
 # TypeScript type-checking artifact
 **/tsconfig.tsbuildinfo

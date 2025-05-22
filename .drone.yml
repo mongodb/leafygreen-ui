@@ -12,6 +12,17 @@ trigger:
     - a/kanopy
 
 steps:
+  - name: build
+    image: node:18
+    volumes:
+      - name: pnpm-store
+        path: /drone/.pnpm-store
+    commands:
+      - corepack enable
+      - pnpm config set store-dir .pnpm-store
+      - pnpm install
+      - pnpm run build --filter "lg-chatbot-server"
+
   - name: publish
     image: plugins/kaniko-ecr
     settings:

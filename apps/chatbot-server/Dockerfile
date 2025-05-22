@@ -1,40 +1,36 @@
-# Use Node.js 20 as the base image
-FROM node:20-alpine
-
-# Expects the context `./` to be the root of the monorepo
-# and expects the package to be built
-
-COPY ./apps/chatbot-server/ apps/chatbot-server/
+# Use Node.js 18 as the base image
+FROM node:18-alpine AS base
+RUN apk add --no-cache py3-pip make g++ git
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 # Copy package files and workspace configuration
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json tsconfig.json ./
 
-# Copy all required directories with their content
-COPY tools/ tools/
-COPY packages/ packages/
+RUN pnpm fetch
 
-# Ensure the build scripts are executable
-RUN chmod +x tools/build/scripts/build.sh
-RUN chmod +x tools/build/scripts/build-ts.sh
-RUN ls -la tools/build/scripts/
+# Copy the chatbot-server app
+COPY ./apps/chatbot-server/ chatbot-server/
 
-# Install pnpm globally
-RUN npm install -g pnpm@9.15.6
+# Copy all required directories with their content, excluding unnecessary directories
+# COPY tools/ tools/
+# COPY packages/ packages/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+# WORKDIR ./
+# RUN pnpm install --frozen-lockfile
+
+# RUN ls -la ./node_modules
+# RUN ls -la ./tools/crawler
+RUN ls -la ./chatbot-server/dist
 
 # Build the server
-RUN pnpm build --filter "lg-chatbot-server"
+# RUN pnpm run build --filter "lg-chatbot-server" -- --verbose
 
 # Set the working directory to the chatbot-server
-WORKDIR ./apps/chatbot-server
-
-# Expose port 3030
-EXPOSE 3030
-
-# Set environment variable to use port 3030
+WORKDIR ./chatbot-server
 ENV PORT=3030
+EXPOSE 3030
 
 # Start the server
 CMD ["pnpm", "start"]
