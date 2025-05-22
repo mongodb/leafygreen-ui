@@ -12,7 +12,6 @@ RUN pnpm fetch --prod
 
 # Copy the chatbot-server app
 COPY ./apps/chatbot-server/ chatbot-server/
-COPY ./.env chatbot-server/.env.local
 
 RUN ls -la chatbot-server/
 
