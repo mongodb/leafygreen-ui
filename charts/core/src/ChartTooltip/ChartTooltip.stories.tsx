@@ -1,21 +1,56 @@
 import React from 'react';
 import { storybookArgTypes } from '@lg-tools/storybook-utils';
-import type { StoryObj } from '@storybook/react';
+import type { StoryFn, StoryObj } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
 import Icon from '@leafygreen-ui/icon';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { CustomTooltip } from './CustomTooltip';
-import { sampleTooltipParams } from './CustomTooltip.testUtils';
-import { CustomTooltipProps } from './CustomTooltip.types';
+import { getRootStylesText } from './ChartTooltip.styles';
+import {
+  CustomTooltip,
+  CustomTooltipProps,
+  sampleTooltipParams,
+} from './CustomTooltip';
+
+const TooltipRoot = (Story: StoryFn, ctx: any) => {
+  const rootClassName = css`
+    ${getRootStylesText(ctx.args.darkMode ? 'dark' : 'light')}
+  `;
+
+  return (
+    <LeafyGreenProvider darkMode={!!ctx.args.darkMode}>
+      <div className={rootClassName}>
+        <Story />
+      </div>
+    </LeafyGreenProvider>
+  );
+};
 
 export default {
   title: 'Charts/ChartTooltip',
   component: CustomTooltip,
+  decorators: [TooltipRoot],
   args: {
     seriesData: sampleTooltipParams,
   },
   argTypes: {
+    chartId: {
+      table: {
+        disable: true,
+      },
+    },
     darkMode: storybookArgTypes.darkMode,
+    headerFormatter: {
+      table: {
+        disable: true,
+      },
+    },
+    seriesData: {
+      table: {
+        disable: true,
+      },
+    },
     seriesNameFormatter: {
       table: {
         disable: true,
@@ -26,12 +61,19 @@ export default {
         disable: true,
       },
     },
+    sort: {
+      table: {
+        disable: true,
+      },
+    },
   },
   parameters: {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        tooltipPinned: [false, true],
       },
+      decorator: TooltipRoot,
     },
   },
 };
