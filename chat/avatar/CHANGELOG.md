@@ -1,5 +1,13 @@
 # @lg-chat/avatar
 
+## 4.0.10
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+- @leafygreen-ui/avatar@2.0.9
+
 ## 4.0.9
 
 ### Patch Changes

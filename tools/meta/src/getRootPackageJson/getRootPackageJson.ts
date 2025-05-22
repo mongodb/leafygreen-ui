@@ -1,9 +1,11 @@
 import fse from 'fs-extra';
 import path from 'path';
 
+import { getRepositoryRoot } from '../getRepositoryRoot';
+
 export function getRootPackageJson(): Record<string, any> | undefined {
-  const rootDir = process.cwd();
-  const pkgJsonPath = path.resolve(rootDir, 'package.json');
+  const gitRoot = getRepositoryRoot();
+  const pkgJsonPath = path.resolve(gitRoot, 'package.json');
   const pkgJsonStr = fse.readFileSync(pkgJsonPath, 'utf-8');
 
   if (isValidJSON(pkgJsonStr)) {

@@ -1,5 +1,12 @@
 # @leafygreen-ui/gallery-indicator
 
+## 1.0.8
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/emotion@4.1.1
+
 ## 1.0.7
 
 ### Patch Changes

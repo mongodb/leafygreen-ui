@@ -1,5 +1,15 @@
 # @leafygreen-ui/marketing-modal
 
+## 5.0.14
+
+### Patch Changes
+
+- @leafygreen-ui/leafygreen-provider@4.0.7
+- @leafygreen-ui/modal@17.1.6
+- @leafygreen-ui/emotion@4.1.1
+- @leafygreen-ui/button@23.1.6
+- @leafygreen-ui/typography@20.1.8
+
 ## 5.0.13
 
 ### Patch Changes

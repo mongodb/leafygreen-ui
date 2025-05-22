@@ -1,5 +1,15 @@
 # @leafygreen-ui/icon
 
+## 13.3.0
+
+### Minor Changes
+
+- 1dbfb7064: Adds `Guide` and `Resource` to glyph set
+
+### Patch Changes
+
+- @leafygreen-ui/emotion@4.1.1
+
 ## 13.2.2
 
 ### Patch Changes

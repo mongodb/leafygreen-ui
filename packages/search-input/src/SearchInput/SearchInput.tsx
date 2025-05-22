@@ -359,11 +359,9 @@ export const SearchInput = React.forwardRef<HTMLInputElement, SearchInputProps>(
     };
 
     useAutoScroll(highlightedElementRef, menuRef, 12);
-    useBackdropClick(
-      handleBackdropClick,
-      [searchBoxRef, menuRef],
-      isOpen && withTypeAhead,
-    );
+    useBackdropClick(handleBackdropClick, [searchBoxRef, menuRef], {
+      enabled: isOpen && withTypeAhead,
+    });
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>

@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/avatar",
-  "version": "4.0.9",
+  "version": "4.0.10",
   "description": "lg-chat Avatar",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
