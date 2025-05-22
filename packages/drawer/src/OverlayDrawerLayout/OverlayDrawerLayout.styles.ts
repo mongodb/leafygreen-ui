@@ -12,6 +12,7 @@ const baseStyles = css`
 const drawerBaseStyles = css`
   display: grid;
   grid-template-columns: auto 0px;
+  overflow: hidden;
 `;
 
 const toolbarBaseStyles = css`

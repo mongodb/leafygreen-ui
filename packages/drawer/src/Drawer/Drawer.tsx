@@ -66,6 +66,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const showCloseButton = !!onClose;
     const drawerIndex = getDrawerIndex(id);
 
+    const [delayedOpen, setDelayedOpen] = React.useState(false);
+
     useIsomorphicLayoutEffect(() => {
       const drawerElement = ref.current;
 
@@ -75,8 +77,20 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
       if (open) {
         drawerElement.show();
+
+        // requestAnimationFrame(() => {
+        //   setDelayedOpen(false);
+        //   console.log('🚨');
+        // });
+
+        setTimeout(() => {
+          setDelayedOpen(true);
+          console.log('🚨');
+        }, 3000);
       } else {
         drawerElement.close();
+
+        setDelayedOpen(false);
       }
     }, [ref, open]);
 

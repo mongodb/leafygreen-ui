@@ -106,6 +106,7 @@ const baseStyles = css`
     opacity: 1;
     border-left: 0;
     height: 100%;
+    animation: none;
   }
 `;
 

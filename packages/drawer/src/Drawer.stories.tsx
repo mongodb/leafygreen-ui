@@ -10,14 +10,15 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-import { palette } from '@leafygreen-ui/palette';
+
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout';
+
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
+import { OverlayDrawerLayout } from './OverlayDrawerLayout';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -98,76 +99,6 @@ const LongContent = () => {
   );
 };
 
-const CloudNavLayout: React.FC<{ children?: React.ReactNode }> = ({
-  children,
-}) => (
-  <div
-    className={css`
-      display: grid;
-      grid-template:
-        'lg-cloud_nav-side_nav lg-cloud_nav-top_nav' max-content
-        'lg-cloud_nav-side_nav lg-cloud_nav-content' 1fr / 48px auto;
-      height: 100vh;
-      width: 100vw;
-      max-height: 100vh;
-      max-width: 100vw;
-      overflow: hidden;
-    `}
-  >
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-side_nav;
-        background-color: ${palette.gray.dark1};
-      `}
-    ></div>
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-side_nav;
-        background-color: ${palette.gray.dark1};
-      `}
-    ></div>
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-top_nav;
-        background-color: ${palette.gray.dark1};
-        height: 48px;
-      `}
-    ></div>
-    <div
-      className={css`
-        grid-area: lg-cloud_nav-content;
-        overflow: scroll;
-        height: inherit;
-      `}
-    >
-      {children}
-    </div>
-  </div>
-);
-
-const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
-  {
-    id: 'Code',
-    label: 'Code',
-    content: <LongContent />,
-    title: 'Code Title',
-    glyph: 'Code',
-    onClick: () => {
-      console.log('Code clicked');
-    },
-  },
-  {
-    id: 'Plus',
-    label: 'Plus',
-    content: <LongContent />,
-    title: 'Plus Title',
-    glyph: 'Plus',
-    onClick: () => {
-      console.log('Plus clicked');
-    },
-  },
-];
-
 const TemplateComponent: StoryFn<DrawerProps> = ({
   displayMode,
   initialOpen,
@@ -222,22 +153,25 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
         className={css`
           height: 80vh;
           overflow: auto;
+          width: 100%;
         `}
       >
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-            overflow: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: ${spacing[200]}px;
-          `}
-        >
-          {renderTrigger()}
-          <LongContent />
-        </main>
-        {renderDrawer()}
+        <OverlayDrawerLayout>
+          <main
+            className={css`
+              padding: ${spacing[400]}px;
+              overflow: auto;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: ${spacing[200]}px;
+            `}
+          >
+            {renderTrigger()}
+            <LongContent />
+          </main>
+          {renderDrawer()}
+        </OverlayDrawerLayout>
       </div>
     </DrawerStackProvider>
   );
