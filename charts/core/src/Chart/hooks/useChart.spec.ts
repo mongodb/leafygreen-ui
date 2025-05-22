@@ -130,6 +130,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     expect(result.current).toEqual({
       ...mockEchartInstance,
       ref: expect.any(Function),
+      setTooltipMounted: expect.any(Function),
+      state: undefined,
+      tooltipPinned: false,
     });
   });
 

@@ -280,7 +280,7 @@ export function useEchart({
     }
   }, []);
 
-  const showTooltip = useCallback((x, y) => {
+  const showTooltip: EChartsInstance['showTooltip'] = useCallback((x, y) => {
     const echartsInstance = echartsInstanceRef.current;
 
     if (!echartsInstance) {
@@ -411,7 +411,7 @@ export function useEchart({
   /**
    * UPDATING OPTIONS ---------------------
    * Sets the options on the instance when the options meaningfully change.
-   * 
+   *
    * The `notMerge` option set to true means that all of the current echarts
    * components will be removed and new components will be created according
    * to the new options object.
