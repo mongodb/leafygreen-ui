@@ -68,7 +68,7 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
 ];
 
 export default {
-  title: 'Components/Drawer/Toolbar/interactions',
+  title: 'Components/Drawer/Toolbar/Interactions',
   component: Drawer,
   parameters: {
     default: 'LiveExample',
