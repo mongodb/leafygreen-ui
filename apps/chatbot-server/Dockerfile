@@ -8,24 +8,13 @@ RUN corepack enable
 # Copy package files and workspace configuration
 COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json tsconfig.json ./
 
-RUN pnpm fetch
+RUN pnpm fetch --prod
 
 # Copy the chatbot-server app
 COPY ./apps/chatbot-server/ chatbot-server/
+COPY ./.env chatbot-server/.env.local
 
-# Copy all required directories with their content, excluding unnecessary directories
-# COPY tools/ tools/
-# COPY packages/ packages/
-
-# WORKDIR ./
-# RUN pnpm install --frozen-lockfile
-
-# RUN ls -la ./node_modules
-# RUN ls -la ./tools/crawler
-RUN ls -la ./chatbot-server/dist
-
-# Build the server
-# RUN pnpm run build --filter "lg-chatbot-server" -- --verbose
+RUN ls -la chatbot-server/
 
 # Set the working directory to the chatbot-server
 WORKDIR ./chatbot-server

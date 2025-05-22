@@ -12,7 +12,7 @@ trigger:
     - a/kanopy
 
 steps:
-  - name: build
+  - name: build-server
     image: node:18
     volumes:
       - name: pnpm-store
