@@ -16,7 +16,9 @@
     "start": "node dist/esm/index.js",
     "docker:build": "docker build -t chatbot-server --file ./Dockerfile ../..",
     "docker:prune": "docker builder prune --filter \"label=app=chatbot-server\" -f",
-    "docker:start": "docker run -p 3030:3030 chatbot-server"
+    "docker:start": "docker run -p 3030:3030 chatbot-server",
+    "kanopy:init": "sh ./scripts/init.sh",
+    "kanopy:forward": "kubectl port-forward --namespace=skunkworks lg-chatbot-server-web-app-59457455f-ndsh9 3030:3030"
   },
   "keywords": [],
   "author": "",
