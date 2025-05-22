@@ -187,6 +187,12 @@ importers:
       '@leafygreen-ui/hooks':
         specifier: workspace:^
         version: link:../../packages/hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../../packages/icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../../packages/icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^
         version: link:../../packages/leafygreen-provider
@@ -221,15 +227,9 @@ importers:
       '@faker-js/faker':
         specifier: 8.0.2
         version: 8.0.2
-      '@leafygreen-ui/icon':
-        specifier: workspace:^
-        version: link:../../packages/icon
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
-      '@types/lodash.debounce':
-        specifier: ^4.0.9
-        version: 4.0.9
 
   charts/drag-provider:
     dependencies:
@@ -6265,9 +6265,6 @@ packages:
 
   '@types/jsonfile@6.1.1':
     resolution: {integrity: sha512-GSgiRCVeapDN+3pqA35IkQwasaCh/0YFH5dEF6S88iDvEn901DjOeH3/QPY+XYP1DFzDZPvIvfeEgk+7br5png==}
-
-  '@types/lodash.debounce@4.0.9':
-    resolution: {integrity: sha512-Ma5JcgTREwpLRwMM+XwBR7DaWe96nC38uCBDFKZWbNKD+osjVzdpnUSwBcqCptrp16sSOLBAUb50Car5I0TCsQ==}
 
   '@types/lodash@4.17.10':
     resolution: {integrity: sha512-YpS0zzoduEhuOWjAotS6A5AVCva7X4lVlYLF0FYHAY9sdraBfnatttHItlWeZdGhuEkf+OzMNg2ZYAx8t+52uQ==}
@@ -14787,10 +14784,6 @@ snapshots:
   '@types/jsonfile@6.1.1':
     dependencies:
       '@types/node': 20.17.12
-
-  '@types/lodash.debounce@4.0.9':
-    dependencies:
-      '@types/lodash': 4.17.10
 
   '@types/lodash@4.17.10': {}
 
