@@ -409,7 +409,14 @@ export function useEchart({
   }, [ready, theme]);
 
   /**
+   * UPDATING OPTIONS ---------------------
+   * Sets the options on the instance when the options meaningfully change.
+   * 
+   * The `notMerge` option set to true means that all of the current echarts
+   * components will be removed and new components will be created according
+   * to the new options object.
    *
+   * API docs: https://echarts.apache.org/en/api.html#echartsInstance.setOption
    */
   useEffect(() => {
     const echartsInstance = echartsInstanceRef.current;
