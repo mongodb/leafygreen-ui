@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { faker } from '@faker-js/faker';
 import {
   storybookArgTypes,
@@ -18,7 +18,8 @@ import {
   DrawerToolbarLayout,
   DrawerToolbarLayoutProps,
 } from '../DrawerToolbarLayout';
-// import { useDrawerToolbarContext } from '../DrawerToolbarContext';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext';
+import Button from '@leafygreen-ui/button';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -79,8 +80,10 @@ export default {
 
 const LongContent = () => {
   const paragraphs = useMemo(() => {
-    const text = faker.lorem.paragraphs(30, '\n');
-    return text.split('\n').map((p, i) => <Body key={i}>{p}</Body>);
+    return faker.lorem
+      .paragraphs(30, '\n')
+      .split('\n')
+      .map((p, i) => <Body key={i}>{p}</Body>);
   }, []);
 
   return (
@@ -189,9 +192,37 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
       console.log('Dashboard clicked');
     },
   },
+  {
+    id: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
+    glyph: 'Plus',
+    onClick: () => {
+      console.log('Plus clicked, does not update drawer');
+    },
+  },
 ];
 
-const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+// FIXME: borders are making the page scroll horizontally with overlay
+const Component: StoryFn<DrawerProps> = ({
+  displayMode = DisplayMode.Embedded,
+  ...rest
+}: DrawerProps) => {
+  const MainContent = () => {
+    const { openDrawer } = useDrawerToolbarContext();
+
+    return (
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+        `}
+      >
+        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <LongContent />
+        <LongContent />
+      </main>
+    );
+  };
+
   return (
     <div
       className={css`
@@ -200,21 +231,39 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-        </main>
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode={displayMode!}
+      >
+        <MainContent />
       </DrawerToolbarLayout>
     </div>
   );
 };
 
-// FIXME: borders are making the page scroll horizontally:
-const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+const ComponentOpen: StoryFn<DrawerProps> = ({
+  displayMode = DisplayMode.Embedded,
+  ...rest
+}: DrawerProps) => {
+  const MainContent = () => {
+    const { openDrawer } = useDrawerToolbarContext();
+
+    useEffect(() => {
+      openDrawer('Code');
+    }, []);
+
+    return (
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+        `}
+      >
+        <LongContent />
+        <LongContent />
+      </main>
+    );
+  };
+
   return (
     <div
       className={css`
@@ -223,58 +272,12 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode={displayMode}>
+        <MainContent />
       </DrawerToolbarLayout>
     </div>
   );
 };
-
-// TODO: uncomment when the DrawerToolbarContext is implemented
-// const ComponentOpen: StoryFn<DrawerProps> = ({
-//   displayMode = DisplayMode.Embedded,
-//   ...rest
-// }: DrawerProps) => {
-//   const Main = () => {
-//     const { openDrawer } = useDrawerToolbarContext();
-
-//     useEffect(() => {
-//       openDrawer('Code');
-//     }, []);
-
-//     return (
-//       <main
-//         className={css`
-//           padding: ${spacing[400]}px;
-//         `}
-//       >
-//         <LongContent />
-//         <LongContent />
-//       </main>
-//     );
-//   };
-
-//   return (
-//     <div
-//       className={css`
-//         height: 80vh;
-//         border-bottom: 1px solid ${palette.gray.light1};
-//         width: 100%;
-//       `}
-//     >
-//       <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode={displayMode}>
-//         <Main />
-//       </DrawerToolbarLayout>
-//     </div>
-//   );
-// };
 
 const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
@@ -293,7 +296,7 @@ const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const OverlayCloudNav: StoryObj<DrawerProps> = {
+export const OverlayCloudNavMock: StoryObj<DrawerProps> = {
   render: OverlayCloudNavComponent,
   parameters: {
     controls: {
@@ -303,7 +306,10 @@ export const OverlayCloudNav: StoryObj<DrawerProps> = {
 };
 
 export const Overlay: StoryObj<DrawerProps> = {
-  render: OverlayComponent,
+  render: Component,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
@@ -311,17 +317,17 @@ export const Overlay: StoryObj<DrawerProps> = {
   },
 };
 
-// export const OverlayOpen: StoryObj<DrawerProps> = {
-//   render: ComponentOpen,
-//   args: {
-//     displayMode: DisplayMode.Overlay,
-//   },
-//   parameters: {
-//     controls: {
-//       exclude: toolbarExcludedControls,
-//     },
-//   },
-// };
+export const OverlayOpen: StoryObj<DrawerProps> = {
+  render: ComponentOpen,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};
 
 const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
@@ -340,7 +346,7 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-export const EmbeddedCloudNav: StoryObj<DrawerProps> = {
+export const EmbeddedCloudNavMock: StoryObj<DrawerProps> = {
   render: EmbeddedCloudNavComponent,
   parameters: {
     controls: {
@@ -350,7 +356,10 @@ export const EmbeddedCloudNav: StoryObj<DrawerProps> = {
 };
 
 export const Embedded: StoryObj<DrawerProps> = {
-  render: EmbeddedComponent,
+  render: Component,
+  args: {
+    displayMode: DisplayMode.Embedded,
+  },
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
@@ -358,14 +367,14 @@ export const Embedded: StoryObj<DrawerProps> = {
   },
 };
 
-// export const WithToolbarEmbeddedOpen: StoryObj<DrawerProps> = {
-//   render: WithToolbarComponentOpen,
-//   args: {
-//     displayMode: DisplayMode.Embedded,
-//   },
-//   parameters: {
-//     controls: {
-//       exclude: toolbarExcludedControls,
-//     },
-//   },
-// };
+export const EmbeddedOpen: StoryObj<DrawerProps> = {
+  render: ComponentOpen,
+  args: {
+    displayMode: DisplayMode.Embedded,
+  },
+  parameters: {
+    controls: {
+      exclude: toolbarExcludedControls,
+    },
+  },
+};

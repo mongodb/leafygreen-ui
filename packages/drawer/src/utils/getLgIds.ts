@@ -4,4 +4,5 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) =>
   ({
     root,
     closeButton: `${root}-close_button`,
+    toolbar: `${root}-toolbar`,
   } as const);

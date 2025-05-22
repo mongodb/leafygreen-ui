@@ -1,4 +1,5 @@
 import { GetTestUtilsReturnType as ButtonTestUtilsReturnType } from '@leafygreen-ui/button';
+import { TestUtilsReturnType as ToolbarTestUtilsReturnType } from '@leafygreen-ui/toolbar';
 
 export interface GetTestUtilsReturnType<T extends HTMLElement> {
   findDrawer: () => Promise<T>;
@@ -6,4 +7,5 @@ export interface GetTestUtilsReturnType<T extends HTMLElement> {
   queryDrawer: () => T | null;
   getCloseButtonUtils: () => ButtonTestUtilsReturnType<HTMLButtonElement>;
   isOpen: () => boolean;
+  getDrawerToolbarTestUtils: () => ToolbarTestUtilsReturnType;
 }
