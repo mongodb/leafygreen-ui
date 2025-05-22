@@ -5,4 +5,5 @@ export interface SeriesListProps {
   seriesValueFormatter?: CustomTooltipProps['seriesValueFormatter'];
   seriesNameFormatter?: CustomTooltipProps['seriesNameFormatter'];
   sort: CustomTooltipProps['sort'];
+  tooltipPinned: CustomTooltipProps['tooltipPinned'];
 }

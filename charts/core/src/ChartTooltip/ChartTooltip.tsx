@@ -13,14 +13,30 @@ import {
 import { CustomTooltip } from './CustomTooltip';
 
 export function ChartTooltip({
+  headerFormatter,
   seriesValueFormatter,
   seriesNameFormatter,
   sort,
 }: ChartTooltipProps) {
   const {
-    chart: { ready, updateOptions },
+    chart: {
+      id: chartId,
+      isChartHovered,
+      ready,
+      setTooltipMounted,
+      tooltipPinned,
+      updateOptions,
+    },
   } = useChartContext();
-  const { theme } = useDarkMode();
+  const { darkMode, theme } = useDarkMode();
+
+  useEffect(() => {
+    setTooltipMounted(true);
+
+    return () => {
+      setTooltipMounted(false);
+    };
+  }, [isChartHovered, setTooltipMounted, tooltipPinned]);
 
   useEffect(() => {
     if (!ready) return;
@@ -28,10 +44,14 @@ export function ChartTooltip({
     updateOptions({
       tooltip: {
         /* LOGIC PROPERTIES */
+        alwaysShowContent: tooltipPinned,
         appendTo: 'body',
         confine: true,
-        enterable: false,
+        enterable: tooltipPinned,
+        renderMode: 'html',
+        showContent: isChartHovered || tooltipPinned,
         trigger: 'axis',
+        triggerOn: 'none',
 
         /* STYLING PROPERTIES */
         /**
@@ -56,10 +76,14 @@ export function ChartTooltip({
 
           return renderToString(
             <CustomTooltip
+              chartId={chartId}
+              darkMode={darkMode}
+              headerFormatter={headerFormatter}
               seriesData={seriesDataArr}
-              sort={sort}
-              seriesValueFormatter={seriesValueFormatter}
               seriesNameFormatter={seriesNameFormatter}
+              seriesValueFormatter={seriesValueFormatter}
+              sort={sort}
+              tooltipPinned={tooltipPinned}
             />,
           );
         },
@@ -79,11 +103,16 @@ export function ChartTooltip({
       });
     };
   }, [
+    chartId,
+    darkMode,
+    headerFormatter,
+    isChartHovered,
     ready,
     seriesNameFormatter,
     seriesValueFormatter,
     sort,
     theme,
+    tooltipPinned,
     updateOptions,
   ]);
 

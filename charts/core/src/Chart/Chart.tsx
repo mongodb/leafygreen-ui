@@ -38,6 +38,7 @@ export function Chart({
   className,
   state = ChartStates.Unset,
   dragId = '',
+  id: idProp,
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
@@ -46,6 +47,7 @@ export function Chart({
     onChartReady,
     zoomSelect,
     onZoomSelect,
+    chartId: idProp,
     groupId,
     state,
   });
@@ -102,6 +104,7 @@ export function Chart({
               ref={chart.ref}
               className={chartStyles}
               data-testid="lg-charts-core-chart-echart"
+              id={chart.id}
               {...rest}
             />
           </div>
