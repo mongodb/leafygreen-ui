@@ -122,11 +122,11 @@ export function useEchart({
      */
     const isZoomed = params?.start !== 0 || params?.end !== 100;
 
-    if (!isZoomed) {
+    if (!isZoomed || !echartsInstance) {
       return;
     }
 
-    echartsInstance?.dispatchAction({
+    echartsInstance.dispatchAction({
       type: 'dataZoom',
       start: 0, // percentage of starting position
       end: 100, // percentage of ending position
@@ -135,7 +135,12 @@ export function useEchart({
 
   const enableZoom = useCallback(() => {
     const echartsInstance = echartsInstanceRef.current;
-    echartsInstance?.dispatchAction({
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    echartsInstance.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: true,
@@ -144,7 +149,12 @@ export function useEchart({
 
   const disableZoom = useCallback(() => {
     const echartsInstance = echartsInstanceRef.current;
-    echartsInstance?.dispatchAction({
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    echartsInstance.dispatchAction({
       type: 'takeGlobalCursor',
       key: 'dataZoomSelect',
       dataZoomSelectActive: false,
@@ -154,6 +164,10 @@ export function useEchart({
   const setupZoomSelect: EChartsInstance['setupZoomSelect'] = useCallback(
     ({ xAxis, yAxis }) => {
       const echartsInstance = echartsInstanceRef.current;
+
+      if (!echartsInstance) {
+        return;
+      }
 
       // `0` index enables zoom on that index, `'none'` disables zoom on that index
       const xAxisIndex: number | string = xAxis ? 0 : 'none';
@@ -170,32 +184,45 @@ export function useEchart({
         },
       });
 
-      echartsInstance?.off('dataZoom', clearDataZoom); // prevent adding dupes
-      echartsInstance?.on('dataZoom', clearDataZoom);
+      echartsInstance.off('dataZoom', clearDataZoom); // prevent adding dupes
+      echartsInstance.on('dataZoom', clearDataZoom);
     },
     [clearDataZoom, updateOptions],
   );
 
-  const off: EChartsInstance['off'] = useCallback((action, callback) => {
+  const off: EChartsInstance['off'] = useCallback(
+    (action, callback, options) => {
+      const echartsInstance = echartsInstanceRef.current;
+
+      if (!echartsInstance) {
+        return;
+      }
+
+      switch (action) {
+        case EChartEvents.ZoomSelect: {
+          echartsInstance.off('datazoom', callback);
+          // Remove from active handlers
+          activeHandlers.current.delete(`${action}-${callback.toString()}`);
+          break;
+        }
+
+        default: {
+          options?.useCanvasAsTrigger
+            ? echartsInstance.getZr().off(action, callback)
+            : echartsInstance.off(action, callback);
+          activeHandlers.current.delete(`${action}-${callback.toString()}`);
+        }
+      }
+    },
+    [],
+  );
+
+  const on: EChartsInstance['on'] = useCallback((action, callback, options) => {
     const echartsInstance = echartsInstanceRef.current;
 
-    switch (action) {
-      case EChartEvents.ZoomSelect: {
-        echartsInstance?.off('datazoom', callback);
-        // Remove from active handlers
-        activeHandlers.current.delete(`${action}-${callback.toString()}`);
-        break;
-      }
-
-      default: {
-        echartsInstance?.off(action, callback);
-        activeHandlers.current.delete(`${action}-${callback.toString()}`);
-      }
+    if (!echartsInstance) {
+      return;
     }
-  }, []);
-
-  const on: EChartsInstance['on'] = useCallback((action, callback) => {
-    const echartsInstance = echartsInstanceRef.current;
 
     // Create a unique key for this handler
     const handlerKey = `${action}-${callback.toString()}`;
@@ -240,27 +267,53 @@ export function useEchart({
 
         // Store the wrapper function so we can remove it later
         activeHandlers.current.set(handlerKey, zoomHandler);
-        echartsInstance?.on('datazoom', zoomHandler);
+        echartsInstance.on('datazoom', zoomHandler);
         break;
       }
 
       default: {
         activeHandlers.current.set(handlerKey, callback);
-        echartsInstance?.on(action, callback as (...args: any) => void);
+        options?.useCanvasAsTrigger
+          ? echartsInstance.getZr().on(action, callback)
+          : echartsInstance.on(action, callback as (...args: any) => void);
       }
     }
   }, []);
 
+  const showTooltip = useCallback((x, y) => {
+    const echartsInstance = echartsInstanceRef.current;
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    echartsInstance.dispatchAction({
+      type: 'showTip',
+      x,
+      y,
+    });
+  }, []);
+
   const hideTooltip = useCallback(() => {
     const echartsInstance = echartsInstanceRef.current;
-    echartsInstance?.dispatchAction({
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    echartsInstance.dispatchAction({
       type: 'hideTip',
     });
   }, []);
 
   const resize = useCallback(() => {
     const echartsInstance = echartsInstanceRef.current;
-    echartsInstance?.resize();
+
+    if (!echartsInstance) {
+      return;
+    }
+
+    echartsInstance.resize();
   }, []);
 
   /**
@@ -390,6 +443,7 @@ export function useEchart({
     removeSeries,
     resize,
     setupZoomSelect,
+    showTooltip,
     updateOptions,
   };
 }
