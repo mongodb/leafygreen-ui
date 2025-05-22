@@ -19,6 +19,7 @@ import {
   DrawerToolbarLayoutProps,
 } from '../DrawerToolbarLayout';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
+import Button from '@leafygreen-ui/button';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -201,30 +202,27 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
   },
 ];
 
-const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
-  return (
-    <div
-      className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
-        width: 100%;
-      `}
-    >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-        </main>
-      </DrawerToolbarLayout>
-    </div>
-  );
-};
+// FIXME: borders are making the page scroll horizontally with overlay
+const Component: StoryFn<DrawerProps> = ({
+  displayMode = DisplayMode.Embedded,
+  ...rest
+}: DrawerProps) => {
+  const MainContent = () => {
+    const { openDrawer } = useDrawerToolbarContext();
 
-// FIXME: borders are making the page scroll horizontally:
-const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
+    return (
+      <main
+        className={css`
+          padding: ${spacing[400]}px;
+        `}
+      >
+        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <LongContent />
+        <LongContent />
+      </main>
+    );
+  };
+
   return (
     <div
       className={css`
@@ -233,15 +231,11 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
-        <main
-          className={css`
-            padding: ${spacing[400]}px;
-          `}
-        >
-          <LongContent />
-          <LongContent />
-        </main>
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode={displayMode!}
+      >
+        <MainContent />
       </DrawerToolbarLayout>
     </div>
   );
@@ -251,7 +245,7 @@ const ComponentOpen: StoryFn<DrawerProps> = ({
   displayMode = DisplayMode.Embedded,
   ...rest
 }: DrawerProps) => {
-  const Main = () => {
+  const MainContent = () => {
     const { openDrawer } = useDrawerToolbarContext();
 
     useEffect(() => {
@@ -279,7 +273,7 @@ const ComponentOpen: StoryFn<DrawerProps> = ({
       `}
     >
       <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode={displayMode}>
-        <Main />
+        <MainContent />
       </DrawerToolbarLayout>
     </div>
   );
@@ -312,7 +306,10 @@ export const OverlayCloudNavMock: StoryObj<DrawerProps> = {
 };
 
 export const Overlay: StoryObj<DrawerProps> = {
-  render: OverlayComponent,
+  render: Component,
+  args: {
+    displayMode: DisplayMode.Overlay,
+  },
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
@@ -359,7 +356,10 @@ export const EmbeddedCloudNavMock: StoryObj<DrawerProps> = {
 };
 
 export const Embedded: StoryObj<DrawerProps> = {
-  render: EmbeddedComponent,
+  render: Component,
+  args: {
+    displayMode: DisplayMode.Embedded,
+  },
   parameters: {
     controls: {
       exclude: toolbarExcludedControls,
