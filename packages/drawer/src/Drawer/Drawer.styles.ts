@@ -19,14 +19,14 @@ export const drawerTransitionDuration = transitionDuration.slower;
 
 export const drawerClassName = createUniqueClassName('lg-drawer');
 
+// TODO: explain this hackyiness
 const drawerIn = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
     opacity: 0;
     visibility: hidden;
   }
-  2%{
-
+  1% {
   transform: translate3d(100%, 0, 0);
     opacity: 1;
     visibility: visible;
