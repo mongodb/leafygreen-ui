@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
@@ -9,12 +10,16 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
+
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
+
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
+import { OverlayDrawerLayout } from './OverlayDrawerLayout';
+import { palette } from '@leafygreen-ui/palette';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -25,6 +30,13 @@ const defaultExcludedControls = [
   'open',
 ];
 
+const snapshotStoryExcludedControlParams = [
+  ...defaultExcludedControls,
+  'darkMode',
+  'displayMode',
+  'title',
+];
+
 export default {
   title: 'Components/Drawer',
   component: Drawer,
@@ -33,9 +45,11 @@ export default {
       <div
         className={css`
           height: 100%;
-          width: 100%;
           display: flex;
           align-items: center;
+          margin: -100px;
+          width: 100vw;
+          border-bottom: 3px solid ${palette.green.base};
         `}
       >
         <StoryFn />
@@ -69,7 +83,7 @@ export default {
 const LongContent = () => {
   const paragraphs = useMemo(() => {
     return faker.lorem
-      .paragraphs(20, '\n')
+      .paragraphs(30, '\n')
       .split('\n')
       .map((p, i) => <Body key={i}>{p}</Body>);
   }, []);
@@ -115,7 +129,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <EmbeddedDrawerLayout
         className={css`
-          height: 500px;
+          height: 90vh;
         `}
         isDrawerOpen={open}
       >
@@ -137,9 +151,29 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     </DrawerStackProvider>
   ) : (
     <DrawerStackProvider>
-      <div>
-        {renderTrigger()}
-        {renderDrawer()}
+      <div
+        className={css`
+          height: 90vh;
+          overflow: auto;
+          width: 100%;
+        `}
+      >
+        <OverlayDrawerLayout>
+          <main
+            className={css`
+              padding: ${spacing[400]}px;
+              overflow: auto;
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              gap: ${spacing[200]}px;
+            `}
+          >
+            {renderTrigger()}
+            <LongContent />
+          </main>
+          {renderDrawer()}
+        </OverlayDrawerLayout>
       </div>
     </DrawerStackProvider>
   );
@@ -149,7 +183,6 @@ export const LiveExample: StoryObj<DrawerProps> = {
   render: TemplateComponent,
   args: {
     children: <LongContent />,
-    initialOpen: false,
   },
   parameters: {
     chromatic: {
@@ -227,13 +260,6 @@ export const MultipleDrawers: StoryObj<DrawerProps> = {
     },
   },
 };
-
-const snapshotStoryExcludedControlParams = [
-  ...defaultExcludedControls,
-  'darkMode',
-  'displayMode',
-  'title',
-];
 
 export const LightModeOverlay: StoryObj<DrawerProps> = {
   render: TemplateComponent,

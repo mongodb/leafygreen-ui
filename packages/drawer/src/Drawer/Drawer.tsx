@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
@@ -15,7 +15,6 @@ import { usePolymorphic } from '@leafygreen-ui/polymorphic';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
-import { DrawerContext } from '../DrawerContext';
 import { useDrawerStackContext } from '../DrawerStackContext';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
@@ -24,8 +23,8 @@ import {
   getChildrenContainerStyles,
   getDrawerStyles,
   getHeaderStyles,
-  getInnerChildrenContainerStyles,
   getInnerContainerStyles,
+  innerChildrenContainerStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
 
@@ -54,8 +53,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
-    const [hasTabs, setHasTabs] = useState(false);
-
     const lgIds = getLgIds(dataLgId);
     const id = useIdAllocator({ prefix: 'drawer', id: idProp });
     const titleId = useIdAllocator({ prefix: 'drawer' });
@@ -69,6 +66,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const showCloseButton = !!onClose;
     const drawerIndex = getDrawerIndex(id);
 
+    const [delayedOpen, setDelayedOpen] = React.useState(false);
+
     useIsomorphicLayoutEffect(() => {
       const drawerElement = ref.current;
 
@@ -78,8 +77,20 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
       if (open) {
         drawerElement.show();
+
+        // requestAnimationFrame(() => {
+        //   setDelayedOpen(false);
+        //   console.log('🚨');
+        // });
+
+        setTimeout(() => {
+          setDelayedOpen(true);
+          console.log('🚨');
+        }, 3000);
       } else {
         drawerElement.close();
+
+        setDelayedOpen(false);
       }
     }, [ref, open]);
 
@@ -91,71 +102,68 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
+    // TODO: you can still tab inside the drawer when it is closed
     return (
       <LeafyGreenProvider darkMode={darkMode}>
-        <DrawerContext.Provider
-          value={{ registerTabs: () => setHasTabs(true) }}
+        <Component
+          aria-hidden={!open}
+          aria-labelledby={titleId}
+          className={getDrawerStyles({
+            theme,
+            open,
+            className,
+            displayMode,
+            zIndex: 1000 + drawerIndex,
+          })}
+          data-lgid={lgIds.root}
+          id={id}
+          ref={drawerRef}
+          {...rest}
         >
-          <Component
-            aria-hidden={!open}
-            aria-labelledby={titleId}
-            className={getDrawerStyles({
-              className,
+          <div
+            className={getInnerContainerStyles({
               displayMode,
-              open,
               theme,
-              zIndex: 1000 + drawerIndex,
             })}
-            data-lgid={lgIds.root}
-            id={id}
-            ref={drawerRef}
-            {...rest}
           >
             <div
-              className={getInnerContainerStyles({
-                displayMode,
+              className={getHeaderStyles({
+                hasTabs: false,
                 theme,
               })}
             >
-              <div
-                className={getHeaderStyles({
-                  hasTabs,
-                  theme,
-                })}
+              <Body
+                as={typeof title === 'string' ? 'h2' : 'div'}
+                baseFontSize={BaseFontSize.Body2}
+                id={titleId}
+                weight="medium"
               >
-                <Body
-                  as={typeof title === 'string' ? 'h2' : 'div'}
-                  baseFontSize={BaseFontSize.Body2}
-                  id={titleId}
-                  weight="medium"
+                {title}
+              </Body>
+              {showCloseButton && (
+                <IconButton
+                  aria-label="Close drawer"
+                  data-lgid={lgIds.closeButton}
+                  onClick={onClose}
                 >
-                  {title}
-                </Body>
-                {showCloseButton && (
-                  <IconButton
-                    aria-label="Close drawer"
-                    data-lgid={lgIds.closeButton}
-                    onClick={onClose}
-                  >
-                    <XIcon />
-                  </IconButton>
-                )}
-              </div>
-              <div
-                className={getChildrenContainerStyles({
-                  hasShadowTop: !hasTabs && !isInterceptInView,
-                  theme,
-                })}
-              >
-                <div className={getInnerChildrenContainerStyles({ hasTabs })}>
-                  {/* Empty span element used to track if children container has scrolled down */}
-                  {!hasTabs && <span ref={interceptRef} />}
-                  {children}
-                </div>
+                  <XIcon />
+                </IconButton>
+              )}
+            </div>
+            <div
+              className={getChildrenContainerStyles({
+                hasShadowTop: !isInterceptInView,
+                theme,
+              })}
+            >
+              <div className={innerChildrenContainerStyles}>
+                {/* Empty span element used to track if children container has scrolled down */}
+                {<span ref={interceptRef} />}
+                {children}
               </div>
             </div>
-          </Component>
-        </DrawerContext.Provider>
+          </div>
+        </Component>
       </LeafyGreenProvider>
     );
   },
