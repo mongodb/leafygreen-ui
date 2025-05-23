@@ -31,5 +31,8 @@
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/LG/summary"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
   }
 }
