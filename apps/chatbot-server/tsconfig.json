@@ -1,0 +1,16 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2020",
+    "rootDir": ".",
+    "outDir": "dist",
+    "declarationDir": "dist/types",
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../../tools/crawler" },
+  ],
+}
