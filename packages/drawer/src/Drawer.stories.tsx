@@ -19,6 +19,7 @@ import { DrawerStackProvider } from './DrawerStackContext';
 
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 import { OverlayDrawerLayout } from './OverlayDrawerLayout';
+import { palette } from '@leafygreen-ui/palette';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -48,6 +49,7 @@ export default {
           align-items: center;
           margin: -100px;
           width: 100vw;
+          border-bottom: 3px solid ${palette.green.base};
         `}
       >
         <StoryFn />
@@ -127,7 +129,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <EmbeddedDrawerLayout
         className={css`
-          height: 80vh;
+          height: 90vh;
         `}
         isDrawerOpen={open}
       >
@@ -151,7 +153,7 @@ const TemplateComponent: StoryFn<DrawerProps> = ({
     <DrawerStackProvider>
       <div
         className={css`
-          height: 80vh;
+          height: 90vh;
           overflow: auto;
           width: 100%;
         `}

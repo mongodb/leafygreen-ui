@@ -47,6 +47,7 @@ export default {
           align-items: center;
           margin: -100px;
           width: 100vw;
+          border-bottom: 3px solid ${palette.green.base};
         `}
       >
         <StoryFn />
@@ -195,8 +196,7 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <div
       className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
+        height: 90vh;
         width: 100%;
       `}
     >
@@ -213,13 +213,12 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-// FIXME: borders are making the page scroll horizontally:
 const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <div
       className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
+        height: 90vh;
+
         width: 100%;
       `}
     >
@@ -264,8 +263,8 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
 //   return (
 //     <div
 //       className={css`
-//         height: 80vh;
-//         border-bottom: 1px solid ${palette.gray.light1};
+//         height: 90vh;
+//
 //         width: 100%;
 //       `}
 //     >
@@ -358,8 +357,8 @@ export const Embedded: StoryObj<DrawerProps> = {
   },
 };
 
-// export const WithToolbarEmbeddedOpen: StoryObj<DrawerProps> = {
-//   render: WithToolbarComponentOpen,
+// export const EmbeddedOpen: StoryObj<DrawerProps> = {
+//   render: ComponentOpen,
 //   args: {
 //     displayMode: DisplayMode.Embedded,
 //   },

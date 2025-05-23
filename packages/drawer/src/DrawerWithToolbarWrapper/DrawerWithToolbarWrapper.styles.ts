@@ -105,6 +105,7 @@ const baseStyles = css`
     overflow: hidden;
     opacity: 1;
     border-left: 0;
+    border-right: 0;
     height: 100%;
     animation: none;
   }

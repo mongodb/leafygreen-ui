@@ -19,7 +19,7 @@ export const drawerTransitionDuration = transitionDuration.slower;
 
 export const drawerClassName = createUniqueClassName('lg-drawer');
 
-// TODO: explain this hackyiness
+// Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Having the drawer start at the open position while hidden, moving to the closed position, and then animating to the open position is a workaround to get the animation to work.
 const drawerIn = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
@@ -27,7 +27,7 @@ const drawerIn = keyframes`
     visibility: hidden;
   }
   1% {
-  transform: translate3d(100%, 0, 0);
+   transform: translate3d(100%, 0, 0);
     opacity: 1;
     visibility: visible;
   }
@@ -42,30 +42,9 @@ const drawerOut = keyframes`
   }
   to {
     transform: translate3d(100%, 0, 0);
+    opacity: 0;
   }
 `;
-
-// const drawerOutMobile = keyframes`
-//   from {
-//     grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
-//   TOOLBAR_WIDTH * 2
-// }px);
-//   },
-//   to {
-//     grid-template-columns: ${TOOLBAR_WIDTH}px 0px;
-//   }
-// `;
-
-// const drawerInMobile = keyframes`
-//   from {
-//     grid-template-columns: ${TOOLBAR_WIDTH}px 1px;
-//   },
-//   to {
-//     grid-template-columns: ${TOOLBAR_WIDTH}px calc(100vw - ${
-//   TOOLBAR_WIDTH * 2
-// }px);
-//   }
-// `;
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
@@ -95,9 +74,6 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
 
 const overlayOpenStyles = css`
   opacity: 1;
-  /* transform: none; */
-  /* transform: translate3d(0, 0, 0); */
-
   animation-name: ${drawerIn};
   animation-fill-mode: forwards;
 
@@ -107,15 +83,13 @@ const overlayOpenStyles = css`
 `;
 
 const overlayClosedStyles = css`
-  /* opacity: 0; */
-  /* transform: translate3d(99%, 0, 0); */
   pointer-events: none;
-
   animation-name: ${drawerOut};
   animation-fill-mode: forwards;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     transform: translate3d(0, 100%, 0);
+    opacity: 0;
   }
 `;
 
@@ -129,16 +103,14 @@ const getOverlayStyles = ({
   cx(
     css`
       position: absolute;
-      /* position: fixed; */
       z-index: ${zIndex};
       top: 0;
       bottom: 0;
       right: 0;
       overflow: visible;
-      /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
+      transition: transform ${drawerTransitionDuration}ms ease-in-out,
         opacity ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
-      /* transform: translate3d(99%, 0, 0); */
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
 
       animation-timing-function: ease-in-out;
       animation-duration: ${drawerTransitionDuration}ms;
@@ -146,6 +118,8 @@ const getOverlayStyles = ({
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         top: unset;
         left: 0;
+        animation: none;
+        position: fixed;
       }
     `,
     {
