@@ -99,10 +99,15 @@ export interface EChartSetupZoomSelectProps {
 }
 
 interface EChartsEventHandlerType {
-  (event: EChartEventsType, callback: (params: any) => void): void;
+  (
+    event: EChartEventsType,
+    callback: (params: any) => void,
+    options?: Partial<{ useCanvasAsTrigger: boolean }>,
+  ): void;
   (
     event: 'zoomselect',
     callback: (params: EChartZoomSelectionEvent) => void,
+    options?: Partial<{ useCanvasAsTrigger: boolean }>,
   ): void;
 }
 
@@ -122,6 +127,7 @@ export interface EChartsInstance {
   removeSeries: (name: string) => void;
   resize: () => void;
   setupZoomSelect: (props: EChartSetupZoomSelectProps) => void;
+  showTooltip: (x: number, y: number) => void;
   updateOptions: (options: Omit<Partial<EChartOptions>, 'series'>) => void;
 }
 
