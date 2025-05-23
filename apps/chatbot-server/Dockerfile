@@ -17,8 +17,8 @@ RUN ls -la chatbot-server/
 
 # Set the working directory to the chatbot-server
 WORKDIR ./chatbot-server
-ENV PORT=3030
-EXPOSE 3030
+ENV PORT=8080
+EXPOSE 8080
 
 # Start the server
 CMD ["pnpm", "start"]
