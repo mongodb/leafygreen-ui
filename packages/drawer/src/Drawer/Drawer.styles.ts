@@ -1,4 +1,4 @@
-import { css, cx } from '@leafygreen-ui/emotion';
+import { css, cx, keyframes } from '@leafygreen-ui/emotion';
 import { createUniqueClassName, Theme } from '@leafygreen-ui/lib';
 import {
   addOverflowShadow,
@@ -18,6 +18,33 @@ import { DisplayMode } from './Drawer.types';
 export const drawerTransitionDuration = transitionDuration.slower;
 
 export const drawerClassName = createUniqueClassName('lg-drawer');
+
+// Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Having the drawer start at the open position while hidden, moving to the closed position, and then animating to the open position is a workaround to get the animation to work.
+const drawerIn = keyframes`
+  0% {
+    transform: translate3d(0%, 0, 0);
+    opacity: 0;
+    visibility: hidden;
+  }
+  1% {
+   transform: translate3d(100%, 0, 0);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+`;
+
+const drawerOut = keyframes`
+  from {
+    transform: translate3d(0%, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+  }
+`;
 
 const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
   all: unset;
@@ -47,7 +74,8 @@ const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
 
 const overlayOpenStyles = css`
   opacity: 1;
-  transform: none;
+  animation-name: ${drawerIn};
+  animation-fill-mode: forwards;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     transform: none;
@@ -55,12 +83,13 @@ const overlayOpenStyles = css`
 `;
 
 const overlayClosedStyles = css`
-  opacity: 0;
-  transform: translate3d(100%, 0, 0);
   pointer-events: none;
+  animation-name: ${drawerOut};
+  animation-fill-mode: forwards;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     transform: translate3d(0, 100%, 0);
+    opacity: 0;
   }
 `;
 
@@ -73,19 +102,25 @@ const getOverlayStyles = ({
 }) =>
   cx(
     css`
-      position: fixed;
+      position: absolute;
       z-index: ${zIndex};
       top: 0;
       bottom: 0;
       right: 0;
       overflow: visible;
-      transition: transform ${drawerTransitionDuration}ms ease-in-out,
+      /* transition: transform ${drawerTransitionDuration}ms ease-in-out,
         opacity ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
+          ${open ? '0ms' : `${drawerTransitionDuration}ms`}; */
+      transition: transform ${drawerTransitionDuration}ms ease-in-out;
+
+      animation-timing-function: ease-in-out;
+      animation-duration: ${drawerTransitionDuration}ms;
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         top: unset;
         left: 0;
+        animation: none;
+        position: fixed;
       }
     `,
     {

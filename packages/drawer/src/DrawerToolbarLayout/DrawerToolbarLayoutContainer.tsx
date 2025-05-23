@@ -31,11 +31,13 @@ export const DrawerToolbarLayoutContainer = ({
   darkMode: darkModeProp,
 }: DrawerToolbarLayoutContainerProps) => {
   const { darkMode } = useDarkMode(darkModeProp);
-  const { openDrawer, closeDrawer, getActiveDrawerContent } =
+  const { openDrawer, closeDrawer, getActiveDrawerContent, shouldCloseDrawer } =
     useDrawerToolbarContext();
-  const isDrawerOpen = !!getActiveDrawerContent();
+  const isDrawerOpen = shouldCloseDrawer;
   const { id, title, content } = getActiveDrawerContent() || {};
   const lgIds = getLgIds(dataLgId);
+
+  console.log({ shouldCloseDrawer });
 
   // If there is no data, we don't want to render anything
   if (!data || data.length === 0) return null;

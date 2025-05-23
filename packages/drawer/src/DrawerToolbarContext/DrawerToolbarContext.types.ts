@@ -19,6 +19,11 @@ export interface DrawerToolbarContextType {
   closeDrawer: () => void;
 
   /**
+   * This boolean is used to determine if the drawer should close. This prevents the drawer content from being removed immediately while the drawer is transitioning closed.
+   */
+  shouldCloseDrawer: boolean;
+
+  /**
    * This function is used to get the active drawer content.
    * @returns The active drawer data
    */
