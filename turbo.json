@@ -2,7 +2,7 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "prebuild": {
-      "dependsOn": ["^prebuild", "^build"]
+      "dependsOn": ["^prebuild", "^build", "^tsc"]
     },
     "build": {
       "dependsOn": ["^build", "^prebuild", "prebuild"],
