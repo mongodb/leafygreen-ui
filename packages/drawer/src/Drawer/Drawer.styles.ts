@@ -24,7 +24,6 @@ const drawerIn = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
     opacity: 0;
-    visibility: hidden;
   }
   1% {
    transform: translate3d(100%, 0, 0);
@@ -36,28 +35,25 @@ const drawerIn = keyframes`
   }
 `;
 
+// Keep the drawer opacity at 1 until the end of the animation. The inner container
 const drawerOut = keyframes`
-  from {
+  0% {
     transform: translate3d(0%, 0, 0);
   }
-  to {
+  99% {
     transform: translate3d(100%, 0, 0);
+    opacity: 1;
+  }
+  100% {
     opacity: 0;
+    visibility: hidden;
   }
 `;
 
-const getBaseStyles = ({ open, theme }: { open: boolean; theme: Theme }) => css`
+const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   all: unset;
   padding: 0;
   background-color: ${color[theme].background.primary.default};
-
-  // TODO: mobile borders
-  /* border-left: ${open ? '1px solid' : 'none'};
-  border-top: ${open ? '1px solid' : 'none'};
-  border-bottom: ${open ? '1px solid' : 'none'};
-  border-color: ${open
-    ? color[theme].border.secondary.default
-    : 'transparent'}; */
   border: 1px solid ${color[theme].border.secondary.default};
   width: 100%;
   max-width: ${PANEL_WIDTH}px;
@@ -95,9 +91,11 @@ const overlayClosedStyles = css`
 
 const getOverlayStyles = ({
   open,
+  shouldAnimate,
   zIndex,
 }: {
   open: boolean;
+  shouldAnimate: boolean;
   zIndex: number;
 }) =>
   cx(
@@ -108,10 +106,8 @@ const getOverlayStyles = ({
       bottom: 0;
       right: 0;
       overflow: visible;
-      transition: transform ${drawerTransitionDuration}ms ease-in-out,
-        opacity ${drawerTransitionDuration}ms ease-in-out
-          ${open ? '0ms' : `${drawerTransitionDuration}ms`};
 
+      transform: translate3d(100%, 0, 0);
       animation-timing-function: ease-in-out;
       animation-duration: ${drawerTransitionDuration}ms;
 
@@ -120,45 +116,76 @@ const getOverlayStyles = ({
         left: 0;
         animation: none;
         position: fixed;
+        transition: transform ${drawerTransitionDuration}ms ease-in-out,
+          opacity ${drawerTransitionDuration}ms ease-in-out
+            ${open ? '0ms' : `${drawerTransitionDuration}ms`};
       }
     `,
     {
       [overlayOpenStyles]: open,
-      [overlayClosedStyles]: !open,
+      [overlayClosedStyles]: !open && shouldAnimate,
     },
   );
 
 const getDisplayModeStyles = ({
   displayMode,
   open,
+  shouldAnimate,
   zIndex,
 }: {
   displayMode: DisplayMode;
   open: boolean;
+  shouldAnimate: boolean;
   zIndex: number;
 }) =>
   cx({
-    [getOverlayStyles({ open, zIndex })]: displayMode === DisplayMode.Overlay,
+    [getOverlayStyles({ open, shouldAnimate, zIndex })]:
+      displayMode === DisplayMode.Overlay,
   });
 
 export const getDrawerStyles = ({
   className,
   displayMode,
   open,
+  shouldAnimate,
   theme,
   zIndex,
 }: {
   className?: string;
   displayMode: DisplayMode;
   open: boolean;
+  shouldAnimate: boolean;
   theme: Theme;
   zIndex: number;
 }) =>
   cx(
-    getBaseStyles({ open, theme }),
-    getDisplayModeStyles({ displayMode, open, zIndex }),
+    getBaseStyles({ theme }),
+    getDisplayModeStyles({ displayMode, open, shouldAnimate, zIndex }),
     className,
     drawerClassName,
+  );
+
+export const getDrawerShadowStyles = ({
+  theme,
+  displayMode,
+}: {
+  theme: Theme;
+  displayMode: DisplayMode;
+}) =>
+  cx(
+    css`
+      height: 100%;
+      background-color: ${color[theme].background.primary.default};
+    `,
+    {
+      [css`
+        ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
+
+        @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
+          ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
+        }
+      `]: displayMode === DisplayMode.Overlay,
+    },
   );
 
 const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
@@ -167,25 +194,24 @@ const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   display: flex;
   flex-direction: column;
   background-color: ${color[theme].background.primary.default};
+  opacity: 0;
+  transition: opacity ${transitionDuration.faster}ms linear; //TODO: break down
 `;
 
-const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
-  ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
-
-  @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    ${addOverflowShadow({ isInside: false, side: Side.Top, theme })};
-  }
+const getInnerOpenContainerStyles = css`
+  transition: opacity ${transitionDuration.slowest}ms linear 200ms;
+  opacity: 1;
 `;
 
 export const getInnerContainerStyles = ({
-  displayMode,
   theme,
+  open,
 }: {
-  displayMode: DisplayMode;
   theme: Theme;
+  open: boolean;
 }) =>
   cx(getBaseInnerContainerStyles({ theme }), {
-    [getDrawerShadowStyles({ theme })]: displayMode === DisplayMode.Overlay,
+    [getInnerOpenContainerStyles]: open,
   });
 
 export const getHeaderStyles = ({

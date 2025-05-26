@@ -108,6 +108,10 @@ const baseStyles = css`
     border-right: 0;
     height: 100%;
     animation: none;
+
+    > div::before {
+      box-shadow: unset;
+    }
   }
 `;
 
