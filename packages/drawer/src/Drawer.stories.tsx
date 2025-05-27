@@ -46,7 +46,7 @@ export default {
           align-items: center;
           margin: -100px;
           width: 100vw;
-          border-bottom: 3px solid ${palette.green.base};
+          border-bottom: 3px solid ${palette.green.base}; // Used to visualize the height of the parent container
         `}
       >
         <StoryFn />

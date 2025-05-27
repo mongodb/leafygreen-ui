@@ -164,7 +164,9 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
       className={css`
         grid-area: lg-cloud_nav-content;
         overflow: scroll;
-        height: inherit;
+        height: calc(
+          100vh - 48px
+        ); // Temp height until the height is added in the CloudNav component
       `}
     >
       {children}
@@ -232,6 +234,7 @@ const Component: StoryFn<DrawerProps> = ({
     >
       <DrawerToolbarLayout
         data={DRAWER_TOOLBAR_DATA}
+        {...rest}
         displayMode={displayMode!}
       >
         <MainContent />
@@ -271,7 +274,11 @@ const ComponentOpen: StoryFn<DrawerProps> = ({
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode={displayMode}>
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        {...rest}
+        displayMode={displayMode}
+      >
         <MainContent />
       </DrawerToolbarLayout>
     </div>
@@ -281,7 +288,11 @@ const ComponentOpen: StoryFn<DrawerProps> = ({
 const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        {...args}
+        displayMode="overlay"
+      >
         <div
           className={css`
             padding: ${spacing[400]}px;
@@ -331,7 +342,11 @@ export const OverlayOpen: StoryObj<DrawerProps> = {
 const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        {...args}
+        displayMode="embedded"
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
