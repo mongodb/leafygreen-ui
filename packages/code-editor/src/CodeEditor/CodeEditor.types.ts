@@ -53,6 +53,12 @@ export const CodeEditorSelectors = {
 export type CodeEditorSelectors =
   (typeof CodeEditorSelectors)[keyof typeof CodeEditorSelectors];
 
+export const IndentUnits = {
+  Space: 'space',
+  Tab: 'tab',
+} as const;
+export type IndentUnits = (typeof IndentUnits)[keyof typeof IndentUnits];
+
 export interface CodeEditorProps extends DarkModeProps {
   /**
    * Initial value to render in the editor.
@@ -107,4 +113,14 @@ export interface CodeEditorProps extends DarkModeProps {
    * Enables read only mode, making the contents uneditable.
    */
   readOnly?: boolean;
+
+  /**
+   * Sets the editor's indent unit on tab click.
+   */
+  indentUnit?: IndentUnits;
+
+  /**
+   * Sets the editor's indent size on tab click.
+   */
+  indentSize?: number;
 }
