@@ -15,5 +15,3 @@ export const DrawerToolbarLayout = ({
 };
 
 DrawerToolbarLayout.displayName = 'DrawerToolbarLayout';
-
-// TODO: spec file

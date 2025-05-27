@@ -6,9 +6,8 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import { DrawerProps } from '../Drawer/Drawer.types';
 
 type PickedRequiredDrawerProps = Required<Pick<DrawerProps, 'displayMode'>>;
-type PickedDrawerProps = Pick<DrawerProps, 'onClose'>;
+type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose'>;
 
-// TODO: naming
 interface LayoutData {
   /**
    * The id of the layout. This is used to open the drawer.
@@ -43,7 +42,7 @@ interface LayoutData {
   title: string;
 }
 
-export type DrawerToolbarLayoutProps = PickedDrawerProps &
+export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
   PickedRequiredDrawerProps &
   DarkModeProps &
   PropsWithChildren<{
