@@ -123,14 +123,4 @@ export interface CodeEditorProps extends DarkModeProps {
    * Enables read only mode, making the contents uneditable.
    */
   readOnly?: boolean;
-
-  /**
-   * Sets the editor's indent unit on tab click.
-   */
-  indentUnit?: IndentUnits;
-
-  /**
-   * Sets the editor's indent size on tab click.
-   */
-  indentSize?: number;
 }
