@@ -129,7 +129,7 @@ const getOverlayStyles = ({
     `,
     {
       [overlayOpenStyles]: open,
-      [overlayClosedStyles]: !open && shouldAnimate,
+      [overlayClosedStyles]: !open && shouldAnimate, // This ensures that the drawer does not animate closed on initial render
     },
   );
 
@@ -207,7 +207,9 @@ const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
 `;
 
 const getInnerOpenContainerStyles = css`
-  transition: opacity ${transitionDuration.slowest}ms linear 200ms;
+  transition-property: opacity;
+  transition-duration: ${transitionDuration.slowest}ms;
+  transition-timing-function: linear;
   opacity: 1;
 `;
 
@@ -222,21 +224,13 @@ export const getInnerContainerStyles = ({
     [getInnerOpenContainerStyles]: open,
   });
 
-export const getHeaderStyles = ({
-  hasTabs,
-  theme,
-}: {
-  hasTabs: boolean;
-  theme: Theme;
-}) => css`
+export const getHeaderStyles = ({ theme }: { theme: Theme }) => css`
   height: ${HEADER_HEIGHT}px;
   padding: ${spacing[400]}px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: ${hasTabs
-    ? 'none'
-    : `1px solid ${color[theme].border.secondary.default}`};
+  border-bottom: 1px solid ${color[theme].border.secondary.default};
   transition-property: box-shadow;
   transition-duration: ${transitionDuration.faster}ms;
   transition-timing-function: ease-in-out;

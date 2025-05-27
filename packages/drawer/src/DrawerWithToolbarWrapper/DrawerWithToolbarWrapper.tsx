@@ -26,7 +26,6 @@ export const DrawerWithToolbarWrapper = forwardRef<
     const { theme } = useDarkMode();
     const [shouldAnimate, setShouldAnimate] = useState(false);
 
-    // TODO: add why this is needed
     useEffect(() => {
       if (isDrawerOpen) setShouldAnimate(true);
     }, [isDrawerOpen]);

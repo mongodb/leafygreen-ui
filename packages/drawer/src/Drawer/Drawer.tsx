@@ -50,7 +50,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     );
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
-
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
@@ -119,7 +118,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             >
               <div
                 className={getHeaderStyles({
-                  hasTabs: false,
                   theme,
                 })}
               >
