@@ -8,6 +8,7 @@ import { DrawerProps } from '../Drawer/Drawer.types';
 type PickedRequiredDrawerProps = Required<Pick<DrawerProps, 'displayMode'>>;
 type PickedDrawerProps = Pick<DrawerProps, 'onClose'>;
 
+// TODO: naming
 interface LayoutData {
   /**
    * The id of the layout. This is used to open the drawer.
@@ -30,7 +31,7 @@ interface LayoutData {
   label: React.ReactNode;
 
   /**
-   * Callback function that is called when the button is clicked.
+   * Callback function that is called when the toolbar item is clicked.
    * @param event
    * @returns void
    */

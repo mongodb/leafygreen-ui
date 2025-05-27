@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import {
@@ -10,16 +9,14 @@ import { StoryFn, StoryObj } from '@storybook/react';
 
 import Button from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
-
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { DisplayMode, Drawer, DrawerProps } from './Drawer';
 import { DrawerStackProvider } from './DrawerStackContext';
-
 import { EmbeddedDrawerLayout } from './EmbeddedDrawerLayout';
 import { OverlayDrawerLayout } from './OverlayDrawerLayout';
-import { palette } from '@leafygreen-ui/palette';
 
 const SEED = 0;
 faker.seed(SEED);
