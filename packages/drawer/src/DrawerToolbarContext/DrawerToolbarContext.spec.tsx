@@ -1,5 +1,5 @@
 import React from 'react';
-import { act } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
@@ -8,6 +8,7 @@ import {
   useDrawerToolbarContext,
 } from './DrawerToolbarContext';
 import { ContextData } from './DrawerToolbarContext.types';
+import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
 const mockData: Array<ContextData> = [
   {
@@ -201,7 +202,7 @@ describe('useDrawerToolbarContext', () => {
         );
       });
 
-      test('returns undefined when closeDrawer is called', () => {
+      test('returns undefined when closeDrawer is called', async () => {
         const { result } = renderHook(useDrawerToolbarContext, {
           wrapper: ({ children }) => (
             <DrawerToolbarProvider data={mockData}>
@@ -214,7 +215,12 @@ describe('useDrawerToolbarContext', () => {
         expect(result.current.getActiveDrawerContent()).toEqual(mockData[0]);
 
         act(() => result.current.closeDrawer());
-        expect(result.current.getActiveDrawerContent()).toEqual(undefined);
+        await new Promise(resolve =>
+          setTimeout(resolve, drawerTransitionDuration),
+        );
+        await waitFor(() =>
+          expect(result.current.getActiveDrawerContent()).toBeUndefined(),
+        );
       });
     });
   });
@@ -233,7 +239,7 @@ describe('useDrawerToolbarContext', () => {
     });
   });
 
-  test('handles multiple closeDrawer calls gracefully', () => {
+  test('handles multiple closeDrawer calls gracefully', async () => {
     const { result } = renderHook(useDrawerToolbarContext, {
       wrapper: ({ children }) => (
         <DrawerToolbarProvider data={mockData}>
@@ -247,6 +253,9 @@ describe('useDrawerToolbarContext', () => {
 
     act(() => result.current.closeDrawer());
     act(() => result.current.closeDrawer()); // Call close multiple times
-    expect(result.current.getActiveDrawerContent()).toBeUndefined();
+    await new Promise(resolve => setTimeout(resolve, drawerTransitionDuration));
+    await waitFor(() =>
+      expect(result.current.getActiveDrawerContent()).toBeUndefined(),
+    );
   });
 });
