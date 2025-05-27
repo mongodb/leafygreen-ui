@@ -6,7 +6,7 @@ import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { DrawerProps } from '../Drawer/Drawer.types';
 
 type PickedRequiredDrawerProps = Required<Pick<DrawerProps, 'displayMode'>>;
-type PickedDrawerProps = Pick<DrawerProps, 'onClose'>;
+type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose'>;
 
 interface LayoutBase {
   /**
@@ -25,7 +25,7 @@ interface LayoutBase {
   label: React.ReactNode;
 
   /**
-   * Callback function that is called when the button is clicked.
+   * Callback function that is called when the toolbar item is clicked.
    * @param event
    * @returns void
    */
@@ -58,7 +58,7 @@ interface LayoutWithoutContent extends LayoutBase {
 
 export type LayoutData = LayoutWithContent | LayoutWithoutContent;
 
-export type DrawerToolbarLayoutProps = PickedDrawerProps &
+export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
   PickedRequiredDrawerProps &
   DarkModeProps &
   LgIdProps &

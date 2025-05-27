@@ -74,7 +74,9 @@ const getDrawerShadowStyles = ({ theme }: { theme: Theme }) => css`
   ${addOverflowShadow({ isInside: false, side: Side.Left, theme })};
 
   &::before {
-    transition: opacity ${drawerTransitionDuration}ms ease-in-out;
+    transition-property: opacity;
+    transition-duration: ${drawerTransitionDuration}ms;
+    transition-timing-function: ease-in-out;
     opacity: 1;
   }
 `;
@@ -94,19 +96,21 @@ const baseStyles = css`
     grid-area: ${GRID_AREA.toolbar};
   }
 
-  & > :last-child {
-    grid-area: ${GRID_AREA.innerDrawer};
-  }
-
   .${drawerClassName} {
+    grid-area: ${GRID_AREA.innerDrawer};
     position: unset;
     transition: none;
     transform: unset;
     overflow: hidden;
     opacity: 1;
     border-left: 0;
+    border-right: 0;
     height: 100%;
     animation: none;
+
+    > div::before {
+      box-shadow: unset;
+    }
   }
 `;
 
@@ -136,7 +140,7 @@ export const getDrawerWithToolbarWrapperStyles = ({
       [closedDrawerShadowStyles]:
         displayMode === DisplayMode.Overlay && !isDrawerOpen,
       [openStyles]: isDrawerOpen,
-      [closedStyles]: !isDrawerOpen && shouldAnimate,
+      [closedStyles]: !isDrawerOpen && shouldAnimate, // This ensures that the drawer does not animate closed on initial render
     },
     className,
   );

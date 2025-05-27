@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
@@ -21,6 +21,7 @@ import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 import {
   drawerTransitionDuration,
   getChildrenContainerStyles,
+  getDrawerShadowStyles,
   getDrawerStyles,
   getHeaderStyles,
   getInnerContainerStyles,
@@ -49,7 +50,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     );
     const { getDrawerIndex, registerDrawer, unregisterDrawer } =
       useDrawerStackContext();
-
+    const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const drawerRef = useMergeRefs([fwdRef, ref]);
 
@@ -75,6 +76,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
       if (open) {
         drawerElement.show();
+        setShouldAnimate(true);
       } else {
         drawerElement.close();
       }
@@ -88,7 +90,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    // TODO: you can still tab inside the drawer when it is closed
+    // TODO: you can still tab inside the drawer when it is closed. tabIndex?
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component
@@ -97,6 +99,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           className={getDrawerStyles({
             theme,
             open,
+            shouldAnimate,
             className,
             displayMode,
             zIndex: 1000 + drawerIndex,
@@ -106,46 +109,47 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           ref={drawerRef}
           {...rest}
         >
-          <div
-            className={getInnerContainerStyles({
-              displayMode,
-              theme,
-            })}
-          >
+          <div className={getDrawerShadowStyles({ theme, displayMode })}>
             <div
-              className={getHeaderStyles({
-                hasTabs: false,
+              className={getInnerContainerStyles({
                 theme,
+                open,
               })}
             >
-              <Body
-                as={typeof title === 'string' ? 'h2' : 'div'}
-                baseFontSize={BaseFontSize.Body2}
-                id={titleId}
-                weight="medium"
+              <div
+                className={getHeaderStyles({
+                  theme,
+                })}
               >
-                {title}
-              </Body>
-              {showCloseButton && (
-                <IconButton
-                  aria-label="Close drawer"
-                  data-lgid={lgIds.closeButton}
-                  onClick={onClose}
+                <Body
+                  as={typeof title === 'string' ? 'h2' : 'div'}
+                  baseFontSize={BaseFontSize.Body2}
+                  id={titleId}
+                  weight="medium"
                 >
-                  <XIcon />
-                </IconButton>
-              )}
-            </div>
-            <div
-              className={getChildrenContainerStyles({
-                hasShadowTop: !isInterceptInView,
-                theme,
-              })}
-            >
-              <div className={innerChildrenContainerStyles}>
-                {/* Empty span element used to track if children container has scrolled down */}
-                {<span ref={interceptRef} />}
-                {children}
+                  {title}
+                </Body>
+                {showCloseButton && (
+                  <IconButton
+                    aria-label="Close drawer"
+                    data-lgid={lgIds.closeButton}
+                    onClick={onClose}
+                  >
+                    <XIcon />
+                  </IconButton>
+                )}
+              </div>
+              <div
+                className={getChildrenContainerStyles({
+                  hasShadowTop: !isInterceptInView,
+                  theme,
+                })}
+              >
+                <div className={innerChildrenContainerStyles}>
+                  {/* Empty span element used to track if children container has scrolled down */}
+                  {<span ref={interceptRef} />}
+                  {children}
+                </div>
               </div>
             </div>
           </div>

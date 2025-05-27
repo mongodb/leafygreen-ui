@@ -48,6 +48,7 @@ export default {
           align-items: center;
           margin: -100px;
           width: 100vw;
+          border-bottom: 3px solid ${palette.green.base};
         `}
       >
         <StoryFn />
@@ -202,7 +203,6 @@ const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
   },
 ];
 
-// FIXME: borders are making the page scroll horizontally with overlay
 const Component: StoryFn<DrawerProps> = ({
   displayMode = DisplayMode.Embedded,
   ...rest
@@ -226,8 +226,7 @@ const Component: StoryFn<DrawerProps> = ({
   return (
     <div
       className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
+        height: 90vh;
         width: 100%;
       `}
     >
@@ -267,8 +266,8 @@ const ComponentOpen: StoryFn<DrawerProps> = ({
   return (
     <div
       className={css`
-        height: 80vh;
-        border-bottom: 1px solid ${palette.gray.light1};
+        height: 90vh;
+
         width: 100%;
       `}
     >
