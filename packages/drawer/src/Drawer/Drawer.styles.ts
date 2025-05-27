@@ -20,10 +20,12 @@ export const drawerTransitionDuration = transitionDuration.slower;
 export const drawerClassName = createUniqueClassName('lg-drawer');
 
 // Because of .show() and .close() in the drawer component, transitioning from 0px to (x)px does not transition correctly. Having the drawer start at the open position while hidden, moving to the closed position, and then animating to the open position is a workaround to get the animation to work.
+// These styles are used for a standalone drawer in overlay mode since it is not part of a grid layout.
 const drawerIn = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
     opacity: 0;
+    visibility: hidden;
   }
   1% {
    transform: translate3d(100%, 0, 0);
@@ -35,7 +37,7 @@ const drawerIn = keyframes`
   }
 `;
 
-// Keep the drawer opacity at 1 until the end of the animation. The inner container
+// Keep the drawer opacity at 1 until the end of the animation. The inner container opacity is transitioned separately.
 const drawerOut = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
@@ -71,18 +73,18 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
 const overlayOpenStyles = css`
   opacity: 1;
   animation-name: ${drawerIn};
-  animation-fill-mode: forwards;
 
+  // On mobile, the drawer should be positioned at the bottom of the screen when closed, and slide up to the top when opened.
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    transform: none;
+    transform: translate3d(0, 0, 0);
   }
 `;
 
 const overlayClosedStyles = css`
   pointer-events: none;
   animation-name: ${drawerOut};
-  animation-fill-mode: forwards;
 
+  // On mobile, the drawer should be positioned at the bottom of the screen when closed, and slide up to the top when opened.
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     transform: translate3d(0, 100%, 0);
     opacity: 0;
@@ -107,15 +109,19 @@ const getOverlayStyles = ({
       right: 0;
       overflow: visible;
 
+      // By default, the drawer is positioned off-screen to the right.
       transform: translate3d(100%, 0, 0);
       animation-timing-function: ease-in-out;
       animation-duration: ${drawerTransitionDuration}ms;
+      animation-fill-mode: forwards;
 
       @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
         top: unset;
         left: 0;
+        // Since the drawer has position: fixed, we can use normal transitions
         animation: none;
         position: fixed;
+        transform: translate3d(0, 100%, 0);
         transition: transform ${drawerTransitionDuration}ms ease-in-out,
           opacity ${drawerTransitionDuration}ms ease-in-out
             ${open ? '0ms' : `${drawerTransitionDuration}ms`};
@@ -195,7 +201,9 @@ const getBaseInnerContainerStyles = ({ theme }: { theme: Theme }) => css`
   flex-direction: column;
   background-color: ${color[theme].background.primary.default};
   opacity: 0;
-  transition: opacity ${transitionDuration.faster}ms linear; //TODO: break down
+  transition-property: opacity;
+  transition-duration: ${transitionDuration.faster}ms;
+  transition-timing-function: linear;
 `;
 
 const getInnerOpenContainerStyles = css`
@@ -229,7 +237,9 @@ export const getHeaderStyles = ({
   border-bottom: ${hasTabs
     ? 'none'
     : `1px solid ${color[theme].border.secondary.default}`};
-  transition: box-shadow ${transitionDuration.faster}ms ease-in-out;
+  transition-property: box-shadow;
+  transition-duration: ${transitionDuration.faster}ms;
+  transition-timing-function: ease-in-out;
 `;
 
 const baseChildrenContainerStyles = css`
