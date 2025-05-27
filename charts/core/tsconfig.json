@@ -1,6 +1,7 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "node",
     "paths": {
       "@leafygreen-ui/icon/dist/*": [
         "../../packages/icon/src/generated/*"
@@ -10,8 +11,13 @@
       ]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "**/*.spec.*",
+    "**/*.stories.*"
+  ],
   "references": [
     {
       "path": "../chart-card"

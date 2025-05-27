@@ -1,6 +1,8 @@
 {
   "extends": "@lg-tools/build/config/package.tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "node",
+
     "paths": {
       "@leafygreen-ui/icon/dist/*": [
         "../../packages/icon/src/generated/*"

@@ -30,7 +30,7 @@ export async function downlevelDts(
   const packageDir = process.cwd();
 
   // Default to types directory if not specified
-  const typesDirPath = path.resolve(packageDir, 'dist/types');
+  const typesDirPath = path.resolve(packageDir, 'dist');
 
   // Default output directory
   const defaultOutDir = `ts${target}`;
