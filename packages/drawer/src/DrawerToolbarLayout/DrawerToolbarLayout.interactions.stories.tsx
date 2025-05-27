@@ -167,6 +167,7 @@ export const OverlaySwitchesToolbarItems = {
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
 
     await userEvent.unhover(codeButton);
+    // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     await userEvent.click(dashboardButton);
@@ -191,7 +192,7 @@ export const OverlayClosesDrawer = {
 
     await userEvent.click(codeButton);
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
-
+    // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     await userEvent.click(closeButton);
@@ -233,6 +234,7 @@ export const EmbeddedSwitchesToolbarItems = {
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
 
     await userEvent.unhover(codeButton);
+    // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     await userEvent.click(dashboardButton);
@@ -257,7 +259,7 @@ export const EmbeddedClosesDrawer = {
 
     await userEvent.click(codeButton);
     await waitFor(() => expect(canvas.getByText('Code Title')).toBeVisible());
-
+    // Pause so the change is visible in the story
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     await userEvent.click(closeButton);

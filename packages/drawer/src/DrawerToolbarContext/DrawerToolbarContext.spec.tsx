@@ -3,12 +3,13 @@ import { act, waitFor } from '@testing-library/react';
 
 import { renderHook } from '@leafygreen-ui/testing-lib';
 
+import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
+
 import {
   DrawerToolbarProvider,
   useDrawerToolbarContext,
 } from './DrawerToolbarContext';
 import { ContextData } from './DrawerToolbarContext.types';
-import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
 
 const mockData: Array<ContextData> = [
   {
