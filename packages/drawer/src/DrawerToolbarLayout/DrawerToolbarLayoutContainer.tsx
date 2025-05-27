@@ -10,17 +10,16 @@ import { GRID_AREA } from '../constants';
 import { Drawer } from '../Drawer/Drawer';
 import { DisplayMode } from '../Drawer/Drawer.types';
 import { DrawerStackProvider } from '../DrawerStackContext';
+import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 import { DrawerWithToolbarWrapper } from '../DrawerWithToolbarWrapper';
 import { EmbeddedDrawerLayout } from '../EmbeddedDrawerLayout';
 import { OverlayDrawerLayout } from '../OverlayDrawerLayout';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import {
   DrawerToolbarLayoutContainerProps,
   LayoutData,
 } from './DrawerToolbarLayout.types';
-
-import { useDrawerToolbarContext } from '../DrawerToolbarContext';
-import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 export const DrawerToolbarLayoutContainer = ({
   children,
@@ -37,8 +36,6 @@ export const DrawerToolbarLayoutContainer = ({
   const { id, title, content } = getActiveDrawerContent() || {};
   const lgIds = getLgIds(dataLgId);
 
-  console.log({ shouldCloseDrawer });
-
   // If there is no data, we don't want to render anything
   if (!data || data.length === 0) return null;
 
@@ -47,7 +44,7 @@ export const DrawerToolbarLayoutContainer = ({
     closeDrawer();
   };
 
-  // If the display mode is overlay, we want to use the OverlayDrawerLayout else we want to use the EmbeddedDrawerLayout
+  // If the display mode is overlay, we want to use the OverlayDrawerLayout, else we want to use the EmbeddedDrawerLayout
   const LayoutComponent =
     displayMode === DisplayMode.Overlay
       ? OverlayDrawerLayout
@@ -98,6 +95,7 @@ export const DrawerToolbarLayoutContainer = ({
                       toolbar.onClick?.(event);
                       return;
                     }
+
                     return handleIconClick(event, toolbar.id, toolbar.onClick);
                   }}
                   active={toolbar.id === id}

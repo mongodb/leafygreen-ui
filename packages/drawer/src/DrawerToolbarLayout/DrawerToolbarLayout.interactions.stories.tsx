@@ -1,19 +1,21 @@
+/* eslint-disable no-console */
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
 import { StoryFn } from '@storybook/react';
 import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import Button from '@leafygreen-ui/button';
-
-import { DisplayMode, Drawer, DrawerProps } from '../Drawer';
 import { css } from '@leafygreen-ui/emotion';
+import { palette } from '@leafygreen-ui/palette';
 import { spacing } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
-import { DrawerToolbarLayout } from './DrawerToolbarLayout';
+
+import { DisplayMode, Drawer, DrawerProps } from '../Drawer';
 import { useDrawerToolbarContext } from '../DrawerToolbarContext';
-import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
-import { palette } from '@leafygreen-ui/palette';
 import { getTestUtils } from '../testing';
+
+import { DrawerToolbarLayout } from './DrawerToolbarLayout';
+import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';
 
 const LongContent = () => {
   const paragraphs = useMemo(() => {

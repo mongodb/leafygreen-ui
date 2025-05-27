@@ -13,13 +13,14 @@ export interface DrawerToolbarContextType {
   openDrawer: (id: DataId) => void;
 
   /**
-   * This function is used to close the drawer.
+   * This function is used to clear the active drawer data and indicates that the drawer should close.
    * @returns void
    */
   closeDrawer: () => void;
 
   /**
-   * This boolean is used to determine if the drawer should close. This prevents the drawer content from being removed immediately while the drawer is transitioning closed.
+   * Indicates whether the drawer should be closed. Used to manage transition states.
+   * For example, during close animations, content should remain until the transition completes.
    */
   shouldCloseDrawer: boolean;
 

@@ -6,6 +6,8 @@ import React, {
   useState,
 } from 'react';
 
+import { drawerTransitionDuration } from '../Drawer/Drawer.styles';
+
 import {
   ContextData,
   DataId,
@@ -39,14 +41,14 @@ export const DrawerToolbarProvider = ({
         );
       }
     },
-    [setContent],
+    [setContent, data, setShouldCloseDrawer],
   );
 
   const closeDrawer = useCallback(() => {
     // Delay the removal of the content to allow the drawer to close before removing the content
     setTimeout(() => {
       setContent(undefined);
-    }, 300);
+    }, drawerTransitionDuration);
     setShouldCloseDrawer(false);
   }, [setContent]);
 

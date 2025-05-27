@@ -4,6 +4,7 @@ import { getTestUtils as getButtonTestUtils } from '@leafygreen-ui/button';
 import { getTestUtils as getToolbarTestUtils } from '@leafygreen-ui/toolbar';
 
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils/getLgIds';
+
 import { GetTestUtilsReturnType } from './getTestUtils.types';
 
 export const getTestUtils = <T extends HTMLElement = HTMLElement>(

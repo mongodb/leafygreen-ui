@@ -2,15 +2,15 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { getTestUtils } from './getTestUtils';
-
-import {
-  renderDrawerAsync,
-  renderDrawer,
-  renderMultipleDrawers,
-  renderDrawerToolbarLayout,
-} from './render.testutils';
 import { DEFAULT_LGID_ROOT } from '../utils';
+
+import { getTestUtils } from './getTestUtils';
+import {
+  renderDrawer,
+  renderDrawerAsync,
+  renderDrawerToolbarLayout,
+  renderMultipleDrawers,
+} from './render.testutils';
 
 describe('packages/drawer/getTestUtils', () => {
   beforeAll(() => {
