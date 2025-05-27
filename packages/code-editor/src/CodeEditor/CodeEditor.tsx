@@ -5,9 +5,16 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { forceParsing } from '@codemirror/language';
+import {
+  forceParsing,
+  indentUnit as indentUnitFacet,
+} from '@codemirror/language';
 import { hyperLink } from '@uiw/codemirror-extensions-hyper-link';
-import CodeMirror, { Compartment, EditorView } from '@uiw/react-codemirror';
+import CodeMirror, {
+  Compartment,
+  EditorState,
+  EditorView,
+} from '@uiw/react-codemirror';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 
@@ -15,6 +22,7 @@ import {
   type CodeEditorProps,
   type CodeMirrorExtension,
   type CodeMirrorRef,
+  IndentUnits,
 } from './CodeEditor.types';
 
 const CODE_MIRROR_HEIGHT = '200px';
@@ -33,6 +41,8 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       onChange: onChangeProp,
       placeholder,
       readOnly = false,
+      indentUnit = IndentUnits.Space,
+      indentSize = 2,
       ...rest
     },
     forwardedRef,
@@ -64,6 +74,21 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       [forceParsingProp],
     );
 
+    const createIndentExtension = useCallback(
+      (unit: IndentUnits, size: number) => {
+        let indentString: string;
+
+        if (unit === IndentUnits.Tab) {
+          indentString = '\t';
+        } else {
+          indentString = ' '.repeat(size);
+        }
+
+        return [indentUnitFacet.of(indentString), EditorState.tabSize.of(size)];
+      },
+      [],
+    );
+
     const extensions = useMemo(() => {
       const extensions: Array<CodeMirrorExtension> = [];
 
@@ -76,16 +101,26 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
        */
       const hyperLinkCompartment = new Compartment();
       const lineWrappingCompartment = new Compartment();
+      const indentExtensionCompartment = new Compartment();
 
       extensions.push(
         hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
         lineWrappingCompartment.of(
           enableLineWrapping ? EditorView.lineWrapping : [],
         ),
+        indentExtensionCompartment.of(
+          createIndentExtension(indentUnit, indentSize),
+        ),
       );
 
       return extensions;
-    }, [enableClickableUrls, enableLineWrapping]);
+    }, [
+      enableClickableUrls,
+      enableLineWrapping,
+      indentUnit,
+      indentSize,
+      createIndentExtension,
+    ]);
 
     return (
       <CodeMirror

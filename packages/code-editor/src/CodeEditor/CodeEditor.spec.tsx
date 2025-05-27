@@ -157,4 +157,30 @@ describe('packages/code-editor', () => {
     renderCodeEditor({ forceParsing: true, defaultValue: 'content' });
     expect(forceParsing as jest.Mock).toHaveBeenCalledTimes(1);
   });
+
+  test('correct indentUnit is set on the editor when indentUnit is "space" and indentSize is 2', () => {
+    const { editor } = renderCodeEditor({
+      indentUnit: 'space',
+      indentSize: 2,
+    });
+
+    expect(editor.getIndentUnit()).toBe('  ');
+  });
+
+  test('correct indentUnit is set on the editor when indentUnit is "space" and indentSize is 4', () => {
+    const { editor } = renderCodeEditor({
+      indentUnit: 'space',
+      indentSize: 4,
+    });
+
+    expect(editor.getIndentUnit()).toBe('    ');
+  });
+
+  test('correct indentUnit is set on the editor when indentUnit is "tab"', () => {
+    const { editor } = renderCodeEditor({
+      indentUnit: 'tab',
+    });
+
+    expect(editor.getIndentUnit()).toBe('\t');
+  });
 });
