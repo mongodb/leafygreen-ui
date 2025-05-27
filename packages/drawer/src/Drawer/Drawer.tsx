@@ -90,7 +90,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    // TODO: you can still tab inside the drawer when it is closed. tabIndex?
     return (
       <LeafyGreenProvider darkMode={darkMode}>
         <Component

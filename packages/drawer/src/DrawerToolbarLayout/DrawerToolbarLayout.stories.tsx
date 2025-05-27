@@ -18,7 +18,6 @@ import {
   DrawerToolbarLayout,
   DrawerToolbarLayoutProps,
 } from '../DrawerToolbarLayout';
-// import { useDrawerToolbarContext } from '../DrawerToolbarContext';
 
 const SEED = 0;
 faker.seed(SEED);
@@ -202,7 +201,11 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode="embedded"
+        {...args}
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -224,7 +227,11 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
         width: 100%;
       `}
     >
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode="overlay"
+        {...args}
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -238,49 +245,14 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   );
 };
 
-// TODO: uncomment when the DrawerToolbarContext is implemented
-// const ComponentOpen: StoryFn<DrawerProps> = ({
-//   displayMode = DisplayMode.Embedded,
-//   ...rest
-// }: DrawerProps) => {
-//   const Main = () => {
-//     const { openDrawer } = useDrawerToolbarContext();
-
-//     useEffect(() => {
-//       openDrawer('Code');
-//     }, []);
-
-//     return (
-//       <main
-//         className={css`
-//           padding: ${spacing[400]}px;
-//         `}
-//       >
-//         <LongContent />
-//         <LongContent />
-//       </main>
-//     );
-//   };
-
-//   return (
-//     <div
-//       className={css`
-//         height: 90vh;
-//
-//         width: 100%;
-//       `}
-//     >
-//       <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode={displayMode}>
-//         <Main />
-//       </DrawerToolbarLayout>
-//     </div>
-//   );
-// };
-
 const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="overlay">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode="overlay"
+        {...args}
+      >
         <div
           className={css`
             padding: ${spacing[400]}px;
@@ -312,22 +284,14 @@ export const Overlay: StoryObj<DrawerProps> = {
   },
 };
 
-// export const OverlayOpen: StoryObj<DrawerProps> = {
-//   render: ComponentOpen,
-//   args: {
-//     displayMode: DisplayMode.Overlay,
-//   },
-//   parameters: {
-//     controls: {
-//       exclude: toolbarExcludedControls,
-//     },
-//   },
-// };
-
 const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
   return (
     <CloudNavLayoutMock>
-      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+      <DrawerToolbarLayout
+        data={DRAWER_TOOLBAR_DATA}
+        displayMode="embedded"
+        {...args}
+      >
         <main
           className={css`
             padding: ${spacing[400]}px;
@@ -358,15 +322,3 @@ export const Embedded: StoryObj<DrawerProps> = {
     },
   },
 };
-
-// export const EmbeddedOpen: StoryObj<DrawerProps> = {
-//   render: ComponentOpen,
-//   args: {
-//     displayMode: DisplayMode.Embedded,
-//   },
-//   parameters: {
-//     controls: {
-//       exclude: toolbarExcludedControls,
-//     },
-//   },
-// };
