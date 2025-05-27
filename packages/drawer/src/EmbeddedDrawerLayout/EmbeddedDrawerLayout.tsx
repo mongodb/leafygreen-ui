@@ -18,7 +18,7 @@ export const EmbeddedDrawerLayout = forwardRef<
       children,
       className,
       isDrawerOpen,
-      hasToolbar,
+      hasToolbar = false,
     }: EmbeddedDrawerLayoutProps,
     forwardedRef,
   ) => {

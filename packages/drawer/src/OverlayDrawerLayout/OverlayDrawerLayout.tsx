@@ -14,7 +14,7 @@ export const OverlayDrawerLayout = forwardRef<
   OverlayDrawerLayoutProps
 >(
   (
-    { children, className, hasToolbar }: OverlayDrawerLayoutProps,
+    { children, className, hasToolbar = false }: OverlayDrawerLayoutProps,
     forwardedRef,
   ) => {
     return (
