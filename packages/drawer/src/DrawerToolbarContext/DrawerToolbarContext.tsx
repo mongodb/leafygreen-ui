@@ -27,7 +27,9 @@ export const DrawerToolbarProvider = ({
 
   const openDrawer = useCallback(
     (id: DataId) => {
-      const getActiveDrawerContent = data.find(item => item?.id === id);
+      const getActiveDrawerContent = data.find(
+        item => item?.id === id && item?.content,
+      );
 
       if (getActiveDrawerContent) {
         setShouldCloseDrawer(true);

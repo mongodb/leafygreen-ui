@@ -184,13 +184,14 @@ function ExampleComponent() {
 
 ### Drawer
 
-| Prop                       | Type                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Default     |
-| -------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| `children` _(optional)_    | `React.ReactNode`                            | Children that will be rendered inside the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                           |             |
-| `displayMode` _(optional)_ | `'embedded'` \| `'overlay'`                  | Options to control how the drawer element is displayed <br> \* `'embedded'` will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap an embedded drawer within the `EmbeddedDrawerLayout` container <br> \* `'overlay'` will display a drawer as a `<dialog>` element that takes up the full viewport height and elevated above main page content | `'overlay'` |
-| `onClose` _(optional)_     | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header                                                                                                                                                                                                                                                                                                                                              |             |
-| `open` _(optional)_        | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                 | `false`     |
-| `title`                    | `React.ReactNode`                            | Title of the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                        |             |
+| Prop                       | Type                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | Default     |
+| -------------------------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `children` _(optional)_    | `React.ReactNode`                            | Children that will be rendered inside the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |             |
+| `displayMode` _(optional)_ | `'embedded'` \| `'overlay'`                  | Options to control how the drawer + toolbar element is displayed <br> \* `'embedded'` will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap an embedded drawer within the `EmbeddedDrawerLayout` container <br> \* `'overlay'` will display a drawer as a `<dialog>` element. It is recommended to wrap an overlay drawer within the `OverlayDrawerLayout` container if you want the drawer to take up the full height of the parent container and is on the same elevation as main page content. | `'overlay'` |
+| `onClose` _(optional)_     | `React.MouseEventHandler<HTMLButtonElement>` | Event handler called on close button click. If provided, a close button will be rendered in the `Drawer` header                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |             |
+| `open` _(optional)_        | `boolean`                                    | Determines if the `Drawer` is open or closed                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `false`     |
+| `title`                    | `React.ReactNode`                            | Title of the `Drawer`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |             |
+| `darkMode`                 | `boolean`                                    | Whether the `Drawer` renders in darkMode                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |             |
 
 ### EmbeddedDrawerLayout
 
@@ -211,7 +212,101 @@ Use `OverlayDrawerLayout` when you need an overlay `Drawer` that is positioned r
 
 ## DrawerToolbarLayout
 
-// TODO: Add in separate PR
+Use `DrawerToolbarLayout` when you want to combine a `Drawer` with a `Toolbar`. This component handles rendering both elements and manages their state together.
+
+```tsx
+// Dummy Data
+
+const DRAWER_TOOLBAR_DATA: DrawerToolbarLayoutProps['data'] = [
+  {
+    id: 'Code',
+    label: 'Code',
+    content: <DrawerContent />,
+    title: 'Code Title',
+    glyph: 'Code',
+    onClick: () => {
+      console.log('Code clicked');
+    },
+  },
+  {
+    id: 'Dashboard',
+    label: 'Dashboard',
+    content: <DrawerContent />,
+    title: 'Dashboard Title',
+    glyph: 'Dashboard',
+    onClick: () => {
+      console.log('Dashboard clicked');
+    },
+  },
+  {
+    id: 'Plus',
+    label: "Perform some action, doesn't open a drawer",
+    glyph: 'Plus',
+    onClick: () => {
+      console.log('Plus clicked, does not update drawer');
+    },
+  },
+];
+```
+
+```tsx
+import React, { useState } from 'react';
+
+import Button from '@leafygreen-ui/button';
+import {
+  DrawerToolbarLayout,
+  useDrawerToolbarContext,
+} from '@leafygreen-ui/drawer';
+
+const Component = () => {
+  const Main = () => {
+    const { openDrawer, closeDrawer } = useDrawerToolbarContext();
+
+    return (
+      <main>
+        <Button onClick={() => openDrawer('Code')}>Open Code Drawer</Button>
+        <Content />
+        <Button onClick={() => closeDrawer()}>Close Drawer</Button>
+      </main>
+    );
+  };
+
+  return (
+    <div>
+      <DrawerToolbarLayout data={DRAWER_TOOLBAR_DATA} displayMode="embedded">
+        <Main />
+      </DrawerToolbarLayout>
+    </div>
+  );
+};
+```
+
+## DrawerToolbarLayout
+
+| Prop        | Type                        | Default   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ----------- | --------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| darkMode    | boolean                     | `false`   | Whether `DrawerToolbarLayout` renders in `darkMode`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| displayMode | `'embedded'` \| `'overlay'` | `overlay` | Options to control how the drawer + toolbar element is displayed <br> \* `'embedded'` will display a drawer as a `<div>` element that takes up the full parent container height and on the same elevation as main page content. It is recommended to wrap an embedded drawer within the `EmbeddedDrawerLayout` container <br> \* `'overlay'` will display a drawer as a `<dialog>` element. It is recommended to wrap an overlay drawer within the `OverlayDrawerLayout` container if you want the drawer to take up the full height of the parent container and is on the same elevation as main page content. |
+| data        | `Array<LayoutData>`         |           | The array of data that will be used to render the toolbar items and the drawer content. See below for `LayoutData` props                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+
+### LayoutData
+
+| Prop    | Type   | Default | Description                                                                                   |
+| ------- | ------ | ------- | --------------------------------------------------------------------------------------------- |
+| id      | string |         | The required id of the layout. This is used to open the drawer with `openDrawer(id)`.         |
+| title   | string |         | The title of the drawer. This is not required if the toolbar item should not open a drawer.   |
+| content | string |         | The content of the drawer. This is not required if the toolbar item should not open a drawer. |
+
+\+ Extends the following from LG [Toolbar props](https://github.com/mongodb/leafygreen-ui/tree/main/packages/toolbar/README.md#toolbariconbutton): `glyph`, `label`, and `onClick`
+
+### useDrawerToolbarContext
+
+`useDrawerToolbarContext` is a React hook that enables a consumer to interact with `DrawerToolbarLayout`. It may only be used inside of `DrawerToolbarLayout`. The hook takes no arguments and returns the following functions:
+
+| Name        | Signature              |
+| ----------- | ---------------------- |
+| openDrawer  | `(id: DataId) => void` |
+| closeDrawer | `() => void`           |
 
 # Test Harnesses
 

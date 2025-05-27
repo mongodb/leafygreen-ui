@@ -1,35 +1,22 @@
 import React, { PropsWithChildren } from 'react';
 
-import { GlyphName } from '@leafygreen-ui/icon';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
 import { DrawerProps } from '../Drawer/Drawer.types';
 
-type PickedRequiredDrawerProps = Required<Pick<DrawerProps, 'displayMode'>>;
-type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose'>;
+import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
 
-interface LayoutBase {
+type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose' | 'displayMode'>;
+type PickedRequiredToolbarIconButtonProps = Pick<
+  ToolbarIconButtonProps,
+  'glyph' | 'label' | 'onClick'
+>;
+
+interface LayoutBase extends PickedRequiredToolbarIconButtonProps {
   /**
    * The id of the layout. This is used to open the drawer.
    */
   id: string;
-
-  /**
-   * The LG Icon that will render in the ToolbarIcon.
-   */
-  glyph: GlyphName;
-
-  /**
-   * The text that will render in the tooltip on hover
-   */
-  label: React.ReactNode;
-
-  /**
-   * Callback function that is called when the toolbar item is clicked.
-   * @param event
-   * @returns void
-   */
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 interface LayoutWithContent extends LayoutBase {
@@ -59,10 +46,12 @@ interface LayoutWithoutContent extends LayoutBase {
 export type LayoutData = LayoutWithContent | LayoutWithoutContent;
 
 export type DrawerToolbarLayoutProps = PickedOptionalDrawerProps &
-  PickedRequiredDrawerProps &
   DarkModeProps &
   LgIdProps &
   PropsWithChildren<{
+    /**
+     * An array of data that will be used to render the toolbar items and the drawer content.
+     */
     data?: Array<LayoutData>;
     className?: string;
   }>;
