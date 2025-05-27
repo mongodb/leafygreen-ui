@@ -25,12 +25,11 @@ const drawerIn = keyframes`
   0% {
     transform: translate3d(0%, 0, 0);
     opacity: 0;
-    visibility: hidden;
+    visibility: visible; // Adding visibility: hidden break autoFocus of the close button when using the dialog component
   }
   1% {
    transform: translate3d(100%, 0, 0);
     opacity: 1;
-    visibility: visible;
   }
   100% {
     transform: translate3d(0%, 0, 0);

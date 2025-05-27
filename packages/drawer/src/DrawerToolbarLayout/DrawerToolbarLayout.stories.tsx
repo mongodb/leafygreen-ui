@@ -203,8 +203,8 @@ const EmbeddedComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
     >
       <DrawerToolbarLayout
         data={DRAWER_TOOLBAR_DATA}
-        displayMode="embedded"
         {...args}
+        displayMode="embedded"
       >
         <main
           className={css`
@@ -229,8 +229,8 @@ const OverlayComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
     >
       <DrawerToolbarLayout
         data={DRAWER_TOOLBAR_DATA}
-        displayMode="overlay"
         {...args}
+        displayMode="overlay"
       >
         <main
           className={css`
@@ -250,8 +250,8 @@ const OverlayCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
     <CloudNavLayoutMock>
       <DrawerToolbarLayout
         data={DRAWER_TOOLBAR_DATA}
-        displayMode="overlay"
         {...args}
+        displayMode="overlay"
       >
         <div
           className={css`
@@ -289,8 +289,8 @@ const EmbeddedCloudNavComponent: StoryFn<DrawerProps> = (args: DrawerProps) => {
     <CloudNavLayoutMock>
       <DrawerToolbarLayout
         data={DRAWER_TOOLBAR_DATA}
-        displayMode="embedded"
         {...args}
+        displayMode="embedded"
       >
         <main
           className={css`
