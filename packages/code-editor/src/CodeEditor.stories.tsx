@@ -10,6 +10,39 @@ import { css } from '@leafygreen-ui/emotion';
 import { IndentUnits } from './CodeEditor/CodeEditor.types';
 import { CodeEditor } from '.';
 
+const MyTooltip = ({ line, column }: { line: number; column: number }) => {
+  return (
+    <div
+      className={css`
+        padding: 8px;
+      `}
+    >
+      <div
+        className={css`
+          font-weight: bold;
+          margin-bottom: 4px;
+        `}
+      >
+        My Tooltip
+      </div>
+      <div
+        className={css`
+          margin-bottom: 4px;
+        `}
+      >
+        Line: {line}
+      </div>
+      <div
+        className={css`
+          margin-bottom: 4px;
+        `}
+      >
+        Column: {column}
+      </div>
+    </div>
+  );
+};
+
 const meta: StoryMetaType<typeof CodeEditor> = {
   title: 'Components/CodeEditor',
   component: CodeEditor,
@@ -38,12 +71,20 @@ const meta: StoryMetaType<typeof CodeEditor> = {
     enableCodeFolding: true,
     enableLineNumbers: true,
     enableLineWrapping: true,
-    defaultValue: '',
+    defaultValue: 'test\n'.repeat(5),
     forceParsing: false,
     placeholder: 'Type your code here...',
     readOnly: false,
     indentSize: 2,
     indentUnit: IndentUnits.Space,
+    tooltips: [
+      {
+        line: 2,
+        column: 2,
+        content: <MyTooltip line={2} column={2} />,
+        above: true,
+      },
+    ],
   },
   argTypes: {
     enableActiveLineHighlighting: {

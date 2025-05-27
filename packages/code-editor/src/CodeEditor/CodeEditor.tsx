@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { renderToString } from 'react-dom/server';
 import {
   forceParsing,
   indentUnit as indentUnitFacet,
@@ -14,6 +15,7 @@ import CodeMirror, {
   Compartment,
   EditorState,
   EditorView,
+  hoverTooltip,
 } from '@uiw/react-codemirror';
 
 import { useMergeRefs } from '@leafygreen-ui/hooks';
@@ -23,10 +25,36 @@ import {
   type CodeMirrorExtension,
   type CodeMirrorRef,
   IndentUnits,
+  type Tooltip,
 } from './CodeEditor.types';
 
 const CODE_MIRROR_HEIGHT = '200px';
 const CODE_MIRROR_WIDTH = '100%';
+
+const createTooltipExtension = ({
+  line,
+  column = 0,
+  content,
+  above = true,
+}: Tooltip): CodeMirrorExtension => {
+  return hoverTooltip(view => {
+    const lineInfo = view.state.doc.line(line + 1); // CodeMirror lines are 1-indexed
+
+    return {
+      pos: lineInfo.from + column,
+      end: lineInfo.to,
+      above: above,
+      create() {
+        const dom = document.createElement('div');
+        const contentString = renderToString(
+          React.createElement(React.Fragment, null, content),
+        );
+        dom.innerHTML = contentString;
+        return { dom };
+      },
+    };
+  });
+};
 
 export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
   (
@@ -43,6 +71,7 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       readOnly = false,
       indentUnit = IndentUnits.Space,
       indentSize = 2,
+      tooltips = [],
       ...rest
     },
     forwardedRef,
@@ -103,6 +132,13 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
       const lineWrappingCompartment = new Compartment();
       const indentExtensionCompartment = new Compartment();
 
+      const tooltipCompartment = new Compartment();
+      const tooltipExtensions: Array<CodeMirrorExtension> = [];
+
+      for (const tooltip of tooltips) {
+        tooltipExtensions.push(createTooltipExtension(tooltip));
+      }
+
       extensions.push(
         hyperLinkCompartment.of(enableClickableUrls ? hyperLink : []),
         lineWrappingCompartment.of(
@@ -111,15 +147,17 @@ export const CodeEditor = forwardRef<CodeMirrorRef, CodeEditorProps>(
         indentExtensionCompartment.of(
           createIndentExtension(indentUnit, indentSize),
         ),
+        tooltipCompartment.of(tooltipExtensions),
       );
 
       return extensions;
     }, [
+      createIndentExtension,
       enableClickableUrls,
       enableLineWrapping,
       indentUnit,
       indentSize,
-      createIndentExtension,
+      tooltips,
     ]);
 
     return (
