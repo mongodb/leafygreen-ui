@@ -161,7 +161,9 @@ const CloudNavLayoutMock: React.FC<{ children?: React.ReactNode }> = ({
       className={css`
         grid-area: lg-cloud_nav-content;
         overflow: scroll;
-        height: inherit;
+        height: calc(
+          100vh - 48px
+        ); // Temp height until the height is added in the CloudNav component
       `}
     >
       {children}
