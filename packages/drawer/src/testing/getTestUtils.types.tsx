@@ -7,5 +7,5 @@ export interface GetTestUtilsReturnType<T extends HTMLElement> {
   queryDrawer: () => T | null;
   getCloseButtonUtils: () => ButtonTestUtilsReturnType<HTMLButtonElement>;
   isOpen: () => boolean;
-  getDrawerToolbarTestUtils: () => ToolbarTestUtilsReturnType;
+  getToolbarTestUtils: () => ToolbarTestUtilsReturnType;
 }

@@ -140,8 +140,8 @@ export const OverlayOpensFirstToolbarItem = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getDrawerToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+    const { getToolbarTestUtils } = getTestUtils();
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
     await userEvent.click(codeButton);
@@ -157,8 +157,8 @@ export const OverlaySwitchesToolbarItems = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getDrawerToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+    const { getToolbarTestUtils, getDrawer } = getTestUtils();
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const dashboardButton =
       getToolbarIconButtonByLabel('Dashboard')?.getElement();
@@ -171,9 +171,10 @@ export const OverlaySwitchesToolbarItems = {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     await userEvent.click(dashboardButton);
-    await waitFor(() =>
-      expect(canvas.getByText('Dashboard Title')).toBeVisible(),
-    );
+    await waitFor(() => {
+      expect(canvas.getByText('Dashboard Title')).toBeVisible();
+      expect(getDrawer().textContent).toContain('Dashboard Title');
+    });
   },
 };
 
@@ -184,9 +185,8 @@ export const OverlayClosesDrawer = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getDrawerToolbarTestUtils, getCloseButtonUtils, isOpen } =
-      getTestUtils();
-    const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+    const { getToolbarTestUtils, getCloseButtonUtils, isOpen } = getTestUtils();
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 
@@ -207,8 +207,8 @@ export const EmbeddedOpensFirstToolbarItem = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getDrawerToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+    const { getToolbarTestUtils } = getTestUtils();
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
 
     await userEvent.click(codeButton);
@@ -224,8 +224,8 @@ export const EmbeddedSwitchesToolbarItems = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getDrawerToolbarTestUtils } = getTestUtils();
-    const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+    const { getToolbarTestUtils } = getTestUtils();
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const dashboardButton =
       getToolbarIconButtonByLabel('Dashboard')?.getElement();
@@ -251,9 +251,8 @@ export const EmbeddedClosesDrawer = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    const { getDrawerToolbarTestUtils, getCloseButtonUtils, isOpen } =
-      getTestUtils();
-    const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+    const { getToolbarTestUtils, getCloseButtonUtils, isOpen } = getTestUtils();
+    const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
     const codeButton = getToolbarIconButtonByLabel('Code')?.getElement();
     const closeButton = getCloseButtonUtils().getButton();
 

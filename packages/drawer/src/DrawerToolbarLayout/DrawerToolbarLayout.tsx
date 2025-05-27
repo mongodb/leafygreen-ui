@@ -1,9 +1,10 @@
+import React from 'react';
+
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import React from 'react';
-import { DisplayMode } from '../Drawer/Drawer.types';
 
+import { DisplayMode } from '../Drawer/Drawer.types';
 import { DrawerToolbarProvider } from '../DrawerToolbarContext';
 
 import { DrawerToolbarLayoutProps } from './DrawerToolbarLayout.types';

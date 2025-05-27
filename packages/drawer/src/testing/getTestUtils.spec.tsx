@@ -101,11 +101,11 @@ describe('packages/drawer/getTestUtils', () => {
     });
   });
 
-  describe('getDrawerToolbarTestUtils', () => {
+  describe('getToolbarTestUtils', () => {
     test('findToolbar', async () => {
       renderDrawerToolbarLayout();
-      const { getDrawerToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { findToolbar } = getDrawerToolbarTestUtils();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { findToolbar } = getToolbarTestUtils();
       const toolbar = await findToolbar();
 
       expect(toolbar).toBeInTheDocument();
@@ -113,8 +113,8 @@ describe('packages/drawer/getTestUtils', () => {
 
     test('getToolbar', () => {
       renderDrawerToolbarLayout();
-      const { getDrawerToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getToolbar } = getDrawerToolbarTestUtils();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getToolbar } = getToolbarTestUtils();
       const toolbar = getToolbar();
 
       expect(toolbar).toBeInTheDocument();
@@ -122,8 +122,8 @@ describe('packages/drawer/getTestUtils', () => {
 
     test('queryToolbar', () => {
       renderDrawerToolbarLayout();
-      const { getDrawerToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { queryToolbar } = getDrawerToolbarTestUtils();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { queryToolbar } = getToolbarTestUtils();
       const toolbar = queryToolbar();
 
       expect(toolbar).toBeInTheDocument();
@@ -131,8 +131,8 @@ describe('packages/drawer/getTestUtils', () => {
 
     test('getAllToolbarIconButtons', () => {
       renderDrawerToolbarLayout();
-      const { getDrawerToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getAllToolbarIconButtons } = getDrawerToolbarTestUtils();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getAllToolbarIconButtons } = getToolbarTestUtils();
       const buttons = getAllToolbarIconButtons();
 
       expect(buttons).toHaveLength(3);
@@ -140,8 +140,8 @@ describe('packages/drawer/getTestUtils', () => {
 
     test('getToolbarIconButtonByLabel', () => {
       renderDrawerToolbarLayout();
-      const { getDrawerToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
-      const { getToolbarIconButtonByLabel } = getDrawerToolbarTestUtils();
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getToolbarIconButtonByLabel } = getToolbarTestUtils();
 
       expect(
         getToolbarIconButtonByLabel('Code')?.getElement(),
@@ -150,9 +150,9 @@ describe('packages/drawer/getTestUtils', () => {
 
     test('getActiveToolbarIconButton', () => {
       renderDrawerToolbarLayout();
-      const { getDrawerToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
+      const { getToolbarTestUtils } = getTestUtils(DEFAULT_LGID_ROOT);
       const { getActiveToolbarIconButton, getToolbarIconButtonByLabel } =
-        getDrawerToolbarTestUtils();
+        getToolbarTestUtils();
 
       const button = getToolbarIconButtonByLabel('Code')?.getElement();
       userEvent.click(button!);

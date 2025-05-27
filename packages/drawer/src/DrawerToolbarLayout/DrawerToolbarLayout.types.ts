@@ -1,10 +1,9 @@
 import React, { PropsWithChildren } from 'react';
 
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
+import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
 
 import { DrawerProps } from '../Drawer/Drawer.types';
-
-import { ToolbarIconButtonProps } from '@leafygreen-ui/toolbar';
 
 type PickedOptionalDrawerProps = Pick<DrawerProps, 'onClose' | 'displayMode'>;
 type PickedRequiredToolbarIconButtonProps = Pick<
