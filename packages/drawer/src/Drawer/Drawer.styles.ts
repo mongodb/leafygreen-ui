@@ -61,7 +61,6 @@ const getBaseStyles = ({ theme }: { theme: Theme }) => css`
   height: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  transition: height ${drawerTransitionDuration}ms ease-in-out;
 
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
     max-width: 100%;
@@ -75,7 +74,7 @@ const overlayOpenStyles = css`
 
   // On mobile, the drawer should be positioned at the bottom of the screen when closed, and slide up to the top when opened.
   @media only screen and (max-width: ${MOBILE_BREAKPOINT}px) {
-    transform: translate3d(0, 0, 0);
+    transform: none;
   }
 `;
 
