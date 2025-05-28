@@ -28,11 +28,11 @@ export function Line({ name, data }: LineProps) {
         data,
         lineStyle: {
           ...defaultLineOptions.lineStyle,
-          color,
+          color: color || undefined,
         },
         itemStyle: {
           ...defaultLineOptions.itemStyle,
-          color,
+          color: color || undefined,
         },
       });
     } else {
